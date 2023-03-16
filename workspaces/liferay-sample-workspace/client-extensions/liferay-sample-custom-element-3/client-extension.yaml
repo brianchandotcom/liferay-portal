@@ -1,10 +1,9 @@
 assemble:
-    - from: dist
-      include: liferay-sample-custom-element-3
+    - from: dist/liferay-sample-custom-element-3
       into: static
 liferay-sample-custom-element-3:
     cssURLs:
-        - liferay-sample-custom-element-3/styles.*.css
+        - styles.*.css
     friendlyURLMapping: liferay-sample-custom-element-3
     htmlElementName: liferay-sample-custom-element-3
     instanceable: false
@@ -12,7 +11,7 @@ liferay-sample-custom-element-3:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - liferay-sample-custom-element-3/main.*.js
-        - liferay-sample-custom-element-3/polyfills.*.js
-        - liferay-sample-custom-element-3/runtime.*.js
+        - main.*.js
+        - polyfills.*.js
+        - runtime.*.js
     useESM: true

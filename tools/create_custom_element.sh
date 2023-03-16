@@ -222,12 +222,11 @@ function main {
 
 function write_angular_client_extension {
 	echo "assemble:" > client-extension.yaml
-	echo "    - from: dist" >> client-extension.yaml
-	echo "      include: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
+	echo "    - from: dist/${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
 	echo "      into: static" >> client-extension.yaml
 	echo "${CUSTOM_ELEMENT_NAME}:" >> client-extension.yaml
 	echo "    cssURLs:" >> client-extension.yaml
-	echo "        - ${CUSTOM_ELEMENT_NAME}/styles.*.css" >> client-extension.yaml
+	echo "        - styles.*.css" >> client-extension.yaml
 	echo "    friendlyURLMapping: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
 	echo "    htmlElementName: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
 	echo "    instanceable: false" >> client-extension.yaml
@@ -235,9 +234,9 @@ function write_angular_client_extension {
 	echo "    portletCategoryName: category.client-extensions" >> client-extension.yaml
 	echo "    type: customElement" >> client-extension.yaml
 	echo "    urls:" >> client-extension.yaml
-	echo "        - ${CUSTOM_ELEMENT_NAME}/main.*.js" >> client-extension.yaml
-	echo "        - ${CUSTOM_ELEMENT_NAME}/polyfills.*.js" >> client-extension.yaml
-	echo "        - ${CUSTOM_ELEMENT_NAME}/runtime.*.js" >> client-extension.yaml
+	echo "        - main.*.js" >> client-extension.yaml
+	echo "        - polyfills.*.js" >> client-extension.yaml
+	echo "        - runtime.*.js" >> client-extension.yaml
 	echo -n "    useESM: true" >> client-extension.yaml
 }
 

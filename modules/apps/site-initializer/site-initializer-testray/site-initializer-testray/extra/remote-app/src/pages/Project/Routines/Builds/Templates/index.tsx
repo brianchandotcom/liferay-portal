@@ -27,13 +27,14 @@ import useBuildTemplateActions from './useBuildTemplateActions';
 const templateFilterInitialContext = {
 	entries: [
 		{
-			label: 'Status',
+			label: i18n.translate('status'),
 			name: 'dueStatus',
 			value: BuildStatuses.ACTIVATED,
 		},
 	],
 	filter: {dueStatus: BuildStatuses.ACTIVATED},
 };
+
 const BuildTemplates = () => {
 	const {actions} = useBuildTemplateActions();
 	const {projectId, routineId} = useParams();

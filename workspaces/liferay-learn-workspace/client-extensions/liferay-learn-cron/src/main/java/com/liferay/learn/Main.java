@@ -20,14 +20,10 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Site;
 import com.liferay.headless.admin.user.client.resource.v1_0.SiteResource;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
-import com.liferay.headless.delivery.client.dto.v1_0.Document;
-import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
-import com.liferay.headless.delivery.client.resource.v1_0.DocumentFolderResource;
-import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.CharPool;
@@ -60,6 +56,7 @@ import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterVisitorExt;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Document;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.ast.NodeVisitor;
 import com.vladsch.flexmark.util.ast.TextCollectingVisitor;
@@ -67,7 +64,6 @@ import com.vladsch.flexmark.util.ast.VisitHandler;
 import com.vladsch.flexmark.util.ast.Visitor;
 import com.vladsch.flexmark.util.data.MutableDataSet;
 import com.vladsch.flexmark.util.sequence.BasedSequence;
-import com.vladsch.flexmark.util.sequence.CharSubSequence;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -487,110 +483,13 @@ public class Main {
 		return dirNames.toArray(new String[0]);
 	}
 
-	private Map<String, Document> _getDocumentFolderDocuments(
-			long documentFolderId)
-		throws Exception {
-
-		Map<String, Document> documents = new HashMap<>();
-
-		for (int page = 1;; page++) {
-			Page<Document> documentsPage =
-				_documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, false, null, null, null,
-					Pagination.of(page, 100), null);
-
-			for (Document document : documentsPage.getItems()) {
-				documents.put(document.getTitle(), document);
-			}
-
-			if (documentsPage.getLastPage() == page) {
-				break;
-			}
-		}
-
-		return documents;
-	}
-
-	private Long _getDocumentFolderId(String fileName) throws Exception {
-		Long documentFolderId = 0L;
-
-		for (String dirName : _getDirNames(fileName)) {
-			documentFolderId = _getDocumentFolderId(dirName, documentFolderId);
-		}
-
-		return documentFolderId;
-	}
-
-	private Long _getDocumentFolderId(
-			String dirName, Long parentDocumentFolderId)
-		throws Exception {
-
-		String key = parentDocumentFolderId + "#" + dirName;
-
-		Long documentFolderId = _documentFolderIds.get(key);
-
-		if (documentFolderId != null) {
-			return documentFolderId;
-		}
-
-		DocumentFolder documentFolder = null;
-
-		if (parentDocumentFolderId == 0) {
-			Page<DocumentFolder> page =
-				_documentFolderResource.getSiteDocumentFoldersPage(
-					_liferaySiteId, null, null, null,
-					"name eq '" + dirName + "'", null, null);
-
-			documentFolder = page.fetchFirstItem();
-
-			if (documentFolder == null) {
-				documentFolder = _documentFolderResource.postSiteDocumentFolder(
-					_liferaySiteId,
-					new DocumentFolder() {
-						{
-							description = "";
-							name = dirName;
-							viewableBy = ViewableBy.ANYONE;
-						}
-					});
-			}
-		}
-		else {
-			Page<DocumentFolder> page =
-				_documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					parentDocumentFolderId, null, null, null,
-					"name eq '" + dirName + "'", null, null);
-
-			documentFolder = page.fetchFirstItem();
-
-			if (documentFolder == null) {
-				documentFolder =
-					_documentFolderResource.postDocumentFolderDocumentFolder(
-						parentDocumentFolderId,
-						new DocumentFolder() {
-							{
-								description = "";
-								name = dirName;
-								viewableBy = ViewableBy.ANYONE;
-							}
-						});
-			}
-		}
-
-		documentFolderId = documentFolder.getId();
-
-		_documentFolderIds.put(key, documentFolderId);
-
-		return documentFolderId;
-	}
-
 	private JSONArray _getNavigationLinksJSONArray(
 			File navigationFile, File file, String text)
 		throws Exception {
 
 		JSONArray navigationLinksJSONArray = new JSONArray();
 
-		com.vladsch.flexmark.util.ast.Document document = _parser.parse(text);
+		Document document = _parser.parse(text);
 
 		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
 			new SnakeYamlFrontMatterVisitor();
@@ -785,7 +684,7 @@ public class Main {
 		for (int page = 1;; page++) {
 			Page<StructuredContent> structuredContentsPage =
 				_structuredContentResource.getSiteStructuredContentsPage(
-					siteId, true, null, null, null, Pagination.of(page, 100),
+					siteId, true, null, null, null, Pagination.of(page, 50),
 					null);
 
 			structuredContents.addAll(structuredContentsPage.getItems());
@@ -890,7 +789,7 @@ public class Main {
 	}
 
 	private String _getUuid(String text) {
-		com.vladsch.flexmark.util.ast.Document document = _parser.parse(text);
+		Document document = _parser.parse(text);
 
 		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
 			new SnakeYamlFrontMatterVisitor();
@@ -969,26 +868,6 @@ public class Main {
 			DataDefinitionResource.builder();
 
 		_dataDefinitionResource = dataDefinitionResourceBuilder.header(
-			"Authorization", authorization
-		).endpoint(
-			_liferayURL.getHost(), _liferayURL.getPort(),
-			_liferayURL.getProtocol()
-		).build();
-
-		DocumentFolderResource.Builder documentFolderResourceBuilder =
-			DocumentFolderResource.builder();
-
-		_documentFolderResource = documentFolderResourceBuilder.header(
-			"Authorization", authorization
-		).endpoint(
-			_liferayURL.getHost(), _liferayURL.getPort(),
-			_liferayURL.getProtocol()
-		).build();
-
-		DocumentResource.Builder documentResourceBuilder =
-			DocumentResource.builder();
-
-		_documentResource = documentResourceBuilder.header(
 			"Authorization", authorization
 		).endpoint(
 			_liferayURL.getHost(), _liferayURL.getPort(),
@@ -1444,10 +1323,6 @@ public class Main {
 		return line;
 	}
 
-	private BasedSequence _toBasedSequence(String string) {
-		return CharSubSequence.of(string.toCharArray(), 0, string.length());
-	}
-
 	private String _toFriendlyURLPath(File file) {
 		String filePathString = file.getPath();
 
@@ -1463,7 +1338,7 @@ public class Main {
 	private String _toHTML(File file, String text) throws Exception {
 		_write(text, "build/markdown", file);
 
-		com.vladsch.flexmark.util.ast.Document document = _parser.parse(text);
+		Document document = _parser.parse(text);
 
 		_markdownFile = file;
 
@@ -1762,11 +1637,9 @@ public class Main {
 		String fileName =
 			FilenameUtils.getFullPath(_markdownFile.getPath()) + basedSequence;
 
-		File file = new File(fileName);
+		fileName = fileName.replaceAll("/ja/", "/en/");
 
-		if (!file.exists()) {
-			file = new File(fileName.replaceAll("/ja/", "/en/"));
-		}
+		File file = new File(fileName);
 
 		if (!file.exists()) {
 			_warn(
@@ -1777,58 +1650,12 @@ public class Main {
 			return;
 		}
 
-		if (_offline) {
-			return;
-		}
+		String canonicalPath = file.getCanonicalPath();
 
-		File finalFile = file;
-
-		String filePathString = file.getCanonicalPath();
-
-		String imageURL = _imageURLs.get(filePathString);
-
-		if (imageURL == null) {
-			Document importedDocument = null;
-
-			Document document = new Document() {
-				{
-					title = finalFile.getName();
-					viewableBy = Document.ViewableBy.ANYONE;
-				}
-			};
-
-			long documentFolderId = _getDocumentFolderId(
-				FilenameUtils.getPathNoEndSeparator(
-					filePathString.substring(_markdownImportDirName.length())));
-
-			Map<String, Document> documentFolderDocuments =
-				_getDocumentFolderDocuments(documentFolderId);
-
-			Map<String, File> multipartFiles = HashMapBuilder.<String, File>put(
-				"file", finalFile
-			).build();
-
-			if (documentFolderDocuments.containsKey(document.getTitle())) {
-				Document documentFolderDocument = documentFolderDocuments.get(
-					document.getTitle());
-
-				_documentResource.deleteDocument(
-					documentFolderDocument.getId());
-
-				importedDocument = _documentResource.postDocumentFolderDocument(
-					documentFolderId, document, multipartFiles);
-			}
-			else {
-				importedDocument = _documentResource.postDocumentFolderDocument(
-					documentFolderId, document, multipartFiles);
-			}
-
-			imageURL = importedDocument.getContentUrl();
-
-			_imageURLs.put(filePathString, imageURL);
-		}
-
-		image.setUrl(_toBasedSequence(imageURL));
+		image.setUrl(
+			BasedSequence.of(
+				_liferayLearnResourcesDomain + "/images" +
+					canonicalPath.substring(_markdownImportDirName.length())));
 
 		_nodeVisitor.visitChildren(image);
 	}
@@ -1893,12 +1720,8 @@ public class Main {
 		"\\{bdg-(.*)\\}`(.*)`");
 
 	private DataDefinitionResource _dataDefinitionResource;
-	private final Map<String, Long> _documentFolderIds = new HashMap<>();
-	private DocumentFolderResource _documentFolderResource;
-	private DocumentResource _documentResource;
 	private final List<String> _errorMessages = new ArrayList<>();
 	private final Set<String> _fileNames = new TreeSet<>();
-	private final Map<String, String> _imageURLs = new HashMap<>();
 	private final Set<File> _landingPageFiles = new HashSet<>();
 	private final long _liferayContentStructureId;
 	private final String _liferayLearnResourcesDomain;

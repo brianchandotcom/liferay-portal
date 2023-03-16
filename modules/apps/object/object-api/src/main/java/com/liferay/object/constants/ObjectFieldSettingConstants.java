@@ -33,6 +33,8 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_STATE_FLOW = "stateFlow";
 
+	public static final String VALUE_EXPRESSION_BUILDER = "expressionBuilder";
+
 	public static final String VALUE_INPUT_AS_VALUE = "inputAsValue";
 
 }

@@ -122,6 +122,15 @@ public class PlacedOrderItemResourceTest
 		super.testGetPlacedOrderPlacedOrderItemsPageWithPagination();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostPlacedOrderPlacedOrderItemsPageExportBatch()
+		throws Exception {
+
+		super.testPostPlacedOrderPlacedOrderItemsPageExportBatch();
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

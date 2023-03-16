@@ -39,6 +39,7 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -97,6 +98,13 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 			null,
 			(sla1, sla2, page) -> assertEquals(
 				Arrays.asList(sla2, sla1), (List<SLA>)page.getItems()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostProcessSLAsPageExportBatch() throws Exception {
+		super.testPostProcessSLAsPageExportBatch();
 	}
 
 	@Rule

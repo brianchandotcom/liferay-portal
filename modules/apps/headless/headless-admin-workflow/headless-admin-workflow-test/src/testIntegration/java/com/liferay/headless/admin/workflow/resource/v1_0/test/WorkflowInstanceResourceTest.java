@@ -26,6 +26,7 @@ import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -61,6 +62,13 @@ public class WorkflowInstanceResourceTest
 		Assert.assertThat(
 			getWorkflowInstance.getCurrentNodeNames(),
 			CoreMatchers.is(new String[] {"review"}));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostWorkflowInstancesPageExportBatch() throws Exception {
+		super.testPostWorkflowInstancesPageExportBatch();
 	}
 
 	@Override

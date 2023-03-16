@@ -12,10 +12,15 @@
  * details.
  */
 
+// @ts-ignore
+
 import {dataRenderers, inputRenderers} from '../data_renderers/index';
+
+// @ts-ignore
+
 import {getJsModule} from './modules';
 
-export function getInputRendererById(id) {
+export function getInputRendererById(id: string): any {
 	const inputRenderer = inputRenderers[id];
 
 	if (!inputRenderer) {
@@ -25,7 +30,7 @@ export function getInputRendererById(id) {
 	return inputRenderer;
 }
 
-export function getDataRendererById(id) {
+export function getDataRendererById(id: string): any {
 	const dataRenderer = dataRenderers[id];
 
 	if (!dataRenderer) {
@@ -35,26 +40,25 @@ export function getDataRendererById(id) {
 	return dataRenderer;
 }
 
-export const fetchedContentRenderers = [];
+export const fetchedContentRenderers: Array<{
+	component: React.ComponentClass<any>;
+	url: string;
+}> = [];
 
-export function getDataRendererByURL(url) {
-	return new Promise((resolve, reject) => {
-		const addedDataRenderer = fetchedContentRenderers.find(
-			(contentRenderer) => contentRenderer.url === url
-		);
-		if (addedDataRenderer) {
-			resolve(addedDataRenderer.component);
-		}
+export async function getDataRendererByURL(url: string): Promise<any> {
+	const addedDataRenderer = fetchedContentRenderers.find(
+		(contentRenderer) => contentRenderer.url === url
+	);
+	if (addedDataRenderer) {
+		return addedDataRenderer.component;
+	}
 
-		return getJsModule(url)
-			.then((fetchedComponent) => {
-				fetchedContentRenderers.push({
-					component: fetchedComponent,
-					url,
-				});
+	const fetchedComponent = await getJsModule(url);
 
-				return resolve(fetchedComponent);
-			})
-			.catch(reject);
+	fetchedContentRenderers.push({
+		component: fetchedComponent,
+		url,
 	});
+
+	return fetchedComponent;
 }

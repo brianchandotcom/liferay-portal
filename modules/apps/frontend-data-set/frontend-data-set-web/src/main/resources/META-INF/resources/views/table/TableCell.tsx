@@ -14,13 +14,21 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 
+// @ts-ignore
+
 import FrontendDataSetContext from '../../FrontendDataSetContext';
+
+// @ts-ignore
+
 import DefaultRenderer from '../../data_renderers/DefaultRenderer';
 import {
 	getDataRendererById,
 	getDataRendererByURL,
 	getInputRendererById,
 } from '../../utils/dataRenderers';
+
+// @ts-ignore
+
 import DndTableCell from './dnd_table/Cell';
 
 function InlineEditInputRenderer({
@@ -31,8 +39,10 @@ function InlineEditInputRenderer({
 	value,
 	valuePath,
 	...otherProps
-}) {
-	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
+}: any) {
+	const {itemsChanges, updateItem} = useContext(
+		FrontendDataSetContext as React.Context<any>
+	);
 
 	const [InputRenderer, setInputRenderer] = useState(() =>
 		getInputRendererById(type)
@@ -56,7 +66,7 @@ function InlineEditInputRenderer({
 			{...otherProps}
 			itemId={itemId}
 			options={options}
-			updateItem={(newValue) =>
+			updateItem={(newValue: any) =>
 				updateItem(itemId, rootPropertyName, valuePath, newValue)
 			}
 			value={inputValue}
@@ -75,13 +85,13 @@ function TableCell({
 	value,
 	valuePath,
 	view,
-}) {
+}: any) {
 	const {
 		customDataRenderers,
 		inlineEditingSettings,
 		loadData,
 		openSidePanel,
-	} = useContext(FrontendDataSetContext);
+	} = useContext(FrontendDataSetContext as React.Context<any>);
 
 	const [loading, setLoading] = useState(false);
 

@@ -14,6 +14,9 @@
 
 package com.liferay.object.field.business.type;
 
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.exception.ObjectFieldDefaultValueException;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
@@ -21,6 +24,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -126,6 +131,17 @@ public interface ObjectFieldBusinessType {
 			getRequiredObjectFieldSettingsNames(objectField));
 
 		if (!notAllowedObjectFieldSettingsNames.isEmpty()) {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-163716") &&
+				notAllowedObjectFieldSettingsNames.contains(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE)) {
+
+				throw new ObjectFieldDefaultValueException(
+					StringBundler.concat(
+						"Object field can only have a default type when the ",
+						"business type is \"",
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "\""));
+			}
+
 			throw new ObjectFieldSettingNameException.NotAllowedNames(
 				objectField.getName(), notAllowedObjectFieldSettingsNames);
 		}

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<project basedir="." name="portal-test-saml" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." name="portal-test-multi-factor-authentication" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="prepare-mfa-osgi-configuration">
-		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/mfa/dependencies" />
+	<target name="prepare-multi-factor-authentication-osgi-configuration">
+		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/multi-factor-authentication/dependencies" />
 
 		<copy
 			file="${osgi.dependency.dir}/${osgi.config.file.name}"

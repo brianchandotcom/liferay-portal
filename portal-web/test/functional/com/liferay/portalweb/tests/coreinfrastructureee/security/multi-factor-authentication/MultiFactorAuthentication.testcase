@@ -1000,7 +1000,7 @@ definition {
 
 		task ("Deploy the OSGI configuration file with CompanyWebId") {
 			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/mfa/dependencies",
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/multi-factor-authentication/dependencies",
 				osgiConfigFileName = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.scoped~CompanyWebId.config");
 		}
 

@@ -1,6 +1,5 @@
 assemble:
     - from: assets
-      include: "**/*"
       into: static
 liferay-sample-theme-spritemap:
     name: Liferay Sample Theme Spritemap

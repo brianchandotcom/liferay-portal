@@ -1,6 +1,5 @@
 assemble:
     - from: assets
-      include: "**/*"
       into: static
 liferay-sample-global-css:
     name: Liferay Sample Global CSS

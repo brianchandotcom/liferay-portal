@@ -1,6 +1,5 @@
 assemble:
     - from: build
-      include: "static/**/*"
       into: static
 liferay-marketplace-custom-element:
     cssURLs:

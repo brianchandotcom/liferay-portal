@@ -1,6 +1,5 @@
 assemble:
     - from: assets
-      include: "**/*"
       into: static
 liferay-learn-static-content:
     name: Liferay Learn Static Content

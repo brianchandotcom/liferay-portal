@@ -1,6 +1,5 @@
 assemble:
     - from: build
-      include: "*.js"
       into: static
 liferay-dotcom-global-js:
     name: Liferay Dotcom Global JS

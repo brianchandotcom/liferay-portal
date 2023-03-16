@@ -1,7 +1,6 @@
 assemble:
-    - from: build/buildTheme
-      include: "fonts/*"
-      into: static
+    - from: src/fonts
+      into: static/fonts
 liferay-marketplace-theme-css:
     clayURL: css/clay.css
     mainURL: css/main.css

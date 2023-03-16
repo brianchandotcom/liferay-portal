@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -74,18 +73,20 @@ public class DepotEntryFileEntryFriendlyURLTest {
 
 	@After
 	public void tearDown() throws Exception {
-		if (_stagingDepotEntry == null) {
-			return;
+		if (_stagingDepotEntry != null) {
+			Group stagingDepotEntryGroup = _stagingDepotEntry.getGroup();
+
+			if (stagingDepotEntryGroup.isStagedRemotely()) {
+				DepotStagingTestUtil.disableRemoteStaging(_stagingDepotEntry);
+			}
+			else {
+				DepotStagingTestUtil.disableStaging(_liveDepotEntry.getGroup());
+			}
+
+			_depotEntryLocalService.deleteDepotEntry(_stagingDepotEntry);
 		}
 
-		Group stagingDepotEntryGroup = _stagingDepotEntry.getGroup();
-
-		if (stagingDepotEntryGroup.isStagedRemotely()) {
-			DepotStagingTestUtil.disableRemoteStaging(_stagingDepotEntry);
-		}
-		else {
-			DepotStagingTestUtil.disableStaging(_liveDepotEntry.getGroup());
-		}
+		_depotEntryLocalService.deleteDepotEntry(_liveDepotEntry);
 	}
 
 	@Test
@@ -372,13 +373,11 @@ public class DepotEntryFileEntryFriendlyURLTest {
 	@Inject
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
-	@DeleteAfterTestRun
 	private DepotEntry _liveDepotEntry;
 
 	@Inject
 	private Portal _portal;
 
-	@DeleteAfterTestRun
 	private DepotEntry _stagingDepotEntry;
 
 }

@@ -438,11 +438,11 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				order.getOrderTypeExternalReferenceCode(),
 				contextCompany.getCompanyId());
 
-		if (commerceOrderType != null) {
-			return commerceOrderType.getCommerceOrderTypeId();
+		if (commerceOrderType == null) {
+			return 0;
 		}
 
-		return 0;
+		return commerceOrderType.getCommerceOrderTypeId();
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -481,11 +481,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	private Method _getMethod(Class<?> clazz, String methodName) {
 		for (Method method : clazz.getMethods()) {
-			if (!methodName.equals(method.getName())) {
-				continue;
+			if (methodName.equals(method.getName())) {
+				return method;
 			}
-
-			return method;
 		}
 
 		return null;
@@ -530,15 +528,13 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	}
 
 	private String _getVersion(UriInfo uriInfo) {
-		String version = "";
-
 		List<String> matchedURIs = uriInfo.getMatchedURIs();
 
 		if (!matchedURIs.isEmpty()) {
-			version = matchedURIs.get(matchedURIs.size() - 1);
+			return matchedURIs.get(matchedURIs.size() - 1);
 		}
 
-		return version;
+		return "";
 	}
 
 	private CommerceOrder _updateNestedResources(

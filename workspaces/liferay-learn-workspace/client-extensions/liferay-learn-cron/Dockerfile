@@ -1,16 +1,13 @@
 FROM liferay/jdk11-jdk8:latest
 
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-	\
-	apt-get install -y git nodejs p7zip-full \
-	\
-	npm install -g generator-liferay-fragments generator-liferay-theme yarn yo \
-	\
-	mkdir /public_html \
+COPY liferay_learn_cron_entrypoint.sh *.jar /usr/local/bin
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/liferay_learn_cron_entrypoint.sh"]
+
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x && \
+	apt-get install --yes git nodejs p7zip-full && \
+	npm install --global generator-liferay-fragments generator-liferay-theme yarn yo && \
+	mkdir /public_html && \
 	chown liferay:liferay /public_html
 
 USER liferay
-
-COPY liferay_learn_cron_entrypoint.sh *.jar /home/liferay
-
-ENTRYPOINT ["/usr/bin/tini", "--", "/home/liferay/liferay_learn_cron_entrypoint.sh"]

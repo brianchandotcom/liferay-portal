@@ -50,18 +50,19 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_resourceOwnerGrantHandler = new ResourceOwnerGrantHandler();
-
-		_resourceOwnerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
-		_resourceOwnerGrantHandler.setLoginHandler(_resourceOwnerLoginHandler);
-
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
 	}
 
 	@Override
 	protected AccessTokenGrantHandler getAccessTokenGrantHandler() {
-		return _resourceOwnerGrantHandler;
+		ResourceOwnerGrantHandler resourceOwnerGrantHandler =
+			new ResourceOwnerGrantHandler();
+
+		resourceOwnerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
+		resourceOwnerGrantHandler.setLoginHandler(_resourceOwnerLoginHandler);
+
+		return resourceOwnerGrantHandler;
 	}
 
 	@Override
@@ -112,11 +113,6 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 		LiferayOAuthDataProvider liferayOAuthDataProvider) {
 
 		_liferayOAuthDataProvider = liferayOAuthDataProvider;
-
-		if (_resourceOwnerGrantHandler != null) {
-			_resourceOwnerGrantHandler.setDataProvider(
-				_liferayOAuthDataProvider);
-		}
 	}
 
 	@Reference(
@@ -127,11 +123,6 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 		ResourceOwnerLoginHandler resourceOwnerLoginHandler) {
 
 		_resourceOwnerLoginHandler = resourceOwnerLoginHandler;
-
-		if (_resourceOwnerGrantHandler != null) {
-			_resourceOwnerGrantHandler.setLoginHandler(
-				_resourceOwnerLoginHandler);
-		}
 	}
 
 	protected void unsetLiferayOAuthDataProvider(
@@ -147,7 +138,6 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 
 	private volatile LiferayOAuthDataProvider _liferayOAuthDataProvider;
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
-	private ResourceOwnerGrantHandler _resourceOwnerGrantHandler;
 	private volatile ResourceOwnerLoginHandler _resourceOwnerLoginHandler;
 
 }

@@ -84,8 +84,6 @@ public abstract class BaseAccessTokenGrantHandler
 	protected abstract ServerAccessToken doCreateAccessToken(
 		Client client, MultivaluedMap<String, String> params);
 
-	protected abstract AccessTokenGrantHandler getAccessTokenGrantHandler();
-
 	protected boolean hasCreateTokenPermission(
 		long userId, OAuth2Application oAuth2Application) {
 

@@ -42,11 +42,11 @@ export default function SubmitWarningModal({
 							displayType="secondary"
 							onClick={handleClose}
 						>
-							{Liferay.Language.get('close')}
+							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton onClick={onSubmit}>
-							{Liferay.Language.get('continue')}
+							{Liferay.Language.get('continue-to-save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

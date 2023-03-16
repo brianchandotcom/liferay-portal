@@ -1,0 +1,12 @@
+#userIdContainer {
+	display: none;
+}
+
+.input-group-item > .btn {
+	align-self: flex-start;
+	height: 42px;
+}
+
+.lexicon-icon {
+	margin-top: -8px;
+}

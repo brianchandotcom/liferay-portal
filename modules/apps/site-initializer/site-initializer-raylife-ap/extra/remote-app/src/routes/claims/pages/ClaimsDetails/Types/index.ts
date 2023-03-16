@@ -41,3 +41,7 @@ export type ClaimDetailDataType = {
 	text: string;
 	type?: string;
 };
+
+export type ClaimStatusType = {
+	claimStatus: string;
+};

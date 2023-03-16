@@ -19,6 +19,7 @@ type ConstantsType = {
 	CLAIM_STATUS: {[keys: string]: {INDEX: number; NAME: string}};
 	DEVICES: ConstantListType;
 	MONTHS_ABREVIATIONS: string[];
+	REPAIR_ACTIONS_OPTIONS: ConstantListType[];
 	US_STATES: ConstantListType[];
 };
 
@@ -65,6 +66,27 @@ export const CONSTANTS: ConstantsType = {
 		'Oct',
 		'Nov',
 		'Dec',
+	],
+
+	REPAIR_ACTIONS_OPTIONS: [
+		{
+			city: 'Los Angeles, CA 90005',
+			name: 'Lyons Auto Pro Plus',
+			phone: '(310) 987-4567',
+			street: '675 Main Street',
+		},
+		{
+			city: 'Los Angeles, CA 90010',
+			name: 'Diamond Auto Repair',
+			phone: '(310) 458-3492',
+			street: '1432 Wilshire Blvd.',
+		},
+		{
+			city: 'Los Angeles, CA 90027',
+			name: 'Hyperion Automotive Center',
+			phone: '(323) 665-7864',
+			street: '2938 Hyperion Ave',
+		},
 	],
 
 	US_STATES: [

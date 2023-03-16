@@ -88,39 +88,37 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 
 					<div class="sheet">
 						<div class="panel-group panel-group-flush">
-							<aui:fieldset cssClass="lfr-portrait-editor">
-								<div class="h4 text-default">
-									<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
-								</div>
+							<div class="h4 text-default">
+								<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
+							</div>
 
-								<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
-									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" class="img-fluid lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
-								</div>
+							<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
+								<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" class="img-fluid lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
+							</div>
 
-								<c:if test='<%= Validator.isNull(currentImageURL) || currentImageURL.contains("/spacer.png") %>'>
-									<p class="text-muted" id="<portlet:namespace />emptyResultMessage">
-										<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
-									</p>
-								</c:if>
+							<c:if test='<%= Validator.isNull(currentImageURL) || currentImageURL.contains("/spacer.png") %>'>
+								<p class="text-muted" id="<portlet:namespace />emptyResultMessage">
+									<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+								</p>
+							</c:if>
 
-								<div class="button-holder">
-									<label for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage">
-										<span aria-label="<%= LanguageUtil.format(request, "select-x", "image") %>" class="btn btn-secondary mt-2" role="button" tabindex="0">
-											<liferay-ui:message key="select" />
-										<span>
-									</label>
+							<div class="button-holder">
+								<label for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage">
+									<span aria-label="<%= LanguageUtil.format(request, "select-x", "image") %>" class="btn btn-secondary mt-2" role="button" tabindex="0">
+										<liferay-ui:message key="select" />
+									<span>
+								</label>
 
-									<aui:input cssClass="hide" label="" name="fileName" type="file">
-										<aui:validator name="acceptFiles">
-											'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
-										</aui:validator>
+								<aui:input cssClass="hide" label="" name="fileName" type="file">
+									<aui:validator name="acceptFiles">
+										'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
+									</aui:validator>
 
-										<aui:validator errorMessage='<%= LanguageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x", LanguageUtil.formatStorageSize(maxFileSize, locale)) %>' name="maxFileSize">
-											'<%= String.valueOf(maxFileSize) %>'
-										</aui:validator>
-									</aui:input>
-								</div>
-							</aui:fieldset>
+									<aui:validator errorMessage='<%= LanguageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x", LanguageUtil.formatStorageSize(maxFileSize, locale)) %>' name="maxFileSize">
+										'<%= String.valueOf(maxFileSize) %>'
+									</aui:validator>
+								</aui:input>
+							</div>
 						</div>
 					</div>
 				</clay:container-fluid>

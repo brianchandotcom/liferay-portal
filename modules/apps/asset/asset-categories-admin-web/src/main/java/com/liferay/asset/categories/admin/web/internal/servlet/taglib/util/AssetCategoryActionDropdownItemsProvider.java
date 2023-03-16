@@ -65,6 +65,9 @@ public class AssetCategoryActionDropdownItemsProvider {
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_assetCategoriesLimitExceeded = _isAssetCategoriesLimitExceeded(
 			assetCategoriesDisplayContext);
 		_assetDisplayPageFriendlyURLProvider =
@@ -72,8 +75,6 @@ public class AssetCategoryActionDropdownItemsProvider {
 				httpServletRequest.getAttribute(
 					AssetCategoriesAdminWebKeys.
 						ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER);
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(AssetCategory category) {

@@ -59,7 +59,7 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), null,
 				ObjectActionKeys.EXTEND_SYSTEM_OBJECT_DEFINITION);

@@ -128,8 +128,8 @@ const getUser = async () => {
 
 getUser();
 
-const grantInput = document.querySelector('#psew-numeric-input');
-const hoursInput = document.querySelector('#cxws-numeric-input');
+const grantInput = document.querySelector('input[name="grantAmount"]');
+const hoursInput = document.querySelector('input[name="totalHoursRequested"]');
 const grantInputDiv = grantInput.parentNode;
 grantInputDiv.style.position = 'relative';
 const hoursInputDiv = hoursInput.parentNode;
@@ -152,10 +152,10 @@ const compareGrants = async () => {
 
 		document.querySelector('.error-msg').innerText = 'No funds available.';
 		document.querySelector('.error-msg').style.display = 'block';
-		document.querySelector('#fragment-aqdt-submit-button').disabled = true;
+		document.querySelector('button[type="submit"]').disabled = true;
 	} else {
 		document.querySelector('.error-msg').style.display = 'none';
-		document.querySelector('#fragment-aqdt-submit-button').disabled = false;
+		document.querySelector('button[type="submit"]').disabled = false;
 	}
 };
 
@@ -173,10 +173,10 @@ const compareHours = async () => {
 			'No service hours available.';
 
 		document.querySelector('.error-msg').style.display = 'block';
-		document.querySelector('#fragment-aqdt-submit-button').disabled = true;
+		document.querySelector('button[type="submit"]').disabled = true;
 	} else {
 		document.querySelector('.error-msg').style.display = 'none';
-		document.querySelector('#fragment-aqdt-submit-button').disabled = false;
+		document.querySelector('button[type="submit"]').disabled = false;
 	}
 };
 

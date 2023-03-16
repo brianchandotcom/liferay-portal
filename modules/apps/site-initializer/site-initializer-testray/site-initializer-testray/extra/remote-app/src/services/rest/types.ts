@@ -75,7 +75,6 @@ export type UserRole = {
 };
 
 export type TestrayBuild = {
-	active: boolean;
 	buildToTasks: TestrayTask[];
 	caseResultBlocked: string;
 	caseResultFailed: string;

@@ -18,7 +18,7 @@ import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
-import {BuildStatuses, CaseResultStatuses} from '../../util/statuses';
+import {CaseResultStatuses} from '../../util/statuses';
 import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testrayFactorRest} from './TestrayFactor';
 import {testrayRunImpl} from './TestrayRun';
@@ -36,8 +36,8 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 	constructor() {
 		super({
 			adapter: ({
-				active,
 				description,
+				dueStatus,
 				gitHash,
 				name,
 				productVersionId: r_productVersionToBuilds_c_productVersionId,
@@ -47,9 +47,8 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				template,
 				templateTestrayBuildId,
 			}) => ({
-				active,
 				description,
-				dueStatus: BuildStatuses.ACTIVE,
+				dueStatus,
 				gitHash,
 				name,
 				promoted,

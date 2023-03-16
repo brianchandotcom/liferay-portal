@@ -13,7 +13,7 @@
  */
 
 export enum BuildStatuses {
-	ACTIVE = 'ACTIVE',
+	ACTIVATED = 'ACTIVATED',
 	ARCHIVED = 'ARCHIVED',
 	DEACTIVATED = 'DEACTIVATED',
 }

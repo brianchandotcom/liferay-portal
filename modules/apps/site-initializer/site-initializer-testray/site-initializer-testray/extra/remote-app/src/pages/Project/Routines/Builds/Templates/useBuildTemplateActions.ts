@@ -13,6 +13,7 @@
  */
 
 import {useRef} from 'react';
+import {BuildStatuses} from '~/util/statuses';
 
 import useFormActions from '../../../../../hooks/useFormActions';
 import useFormModal from '../../../../../hooks/useFormModal';
@@ -30,19 +31,27 @@ const useBuildTemplateActions = () => {
 		{
 			action: (build, mutate) => {
 				testrayBuildImpl
-					.update(build.id, {active: !build.active})
-					.then(() =>
+					.update(build.id, {
+						dueStatus:
+							build.dueStatus.key === BuildStatuses.ACTIVATED
+								? BuildStatuses.DEACTIVATED
+								: BuildStatuses.ACTIVATED,
+					})
+					.then((templateResponse) =>
 						updateItemFromList(mutate, build.id, {
-							active: !build.active,
+							dueStatus: templateResponse.dueStatus,
 						})
 					)
-					.then(() => removeItemFromList(mutate, build.id))
 					.then(form.onSuccess)
 					.catch(form.onError);
 			},
 			icon: 'logout',
-			name: (build) =>
-				i18n.translate(build.active ? 'deactivate' : 'active'),
+			name: ({dueStatus}) =>
+				i18n.translate(
+					dueStatus.key === BuildStatuses.ACTIVATED
+						? 'deactivate'
+						: 'activate'
+				),
 			permission: 'UPDATE',
 		},
 		{
@@ -53,7 +62,7 @@ const useBuildTemplateActions = () => {
 					.then(form.onSuccess)
 					.catch(form.onError);
 			},
-			hidden: (build) => build.active,
+			hidden: (build) => build.dueStatus.key === BuildStatuses.ACTIVATED,
 			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',

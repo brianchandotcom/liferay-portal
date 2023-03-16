@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.cxf.rs.security.oauth2.common.Client;
+import org.apache.cxf.rs.security.oauth2.common.ServerAccessToken;
 import org.apache.cxf.rs.security.oauth2.common.UserSubject;
 import org.apache.cxf.rs.security.oauth2.grants.owner.ResourceOwnerGrantHandler;
 import org.apache.cxf.rs.security.oauth2.grants.owner.ResourceOwnerLoginHandler;
@@ -61,6 +62,16 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 	protected void activate(Map<String, Object> properties) {
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
+	}
+
+	@Override
+	protected ServerAccessToken doCreateAccessToken(
+		Client client, MultivaluedMap<String, String> params) {
+
+		AccessTokenGrantHandler accessTokenGrantHandler =
+			getAccessTokenGrantHandler();
+
+		return accessTokenGrantHandler.createAccessToken(client, params);
 	}
 
 	@Override

@@ -14,12 +14,6 @@ components:
                         Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
-                comment:  
-                    # @review
-                    description:
-                        The user notification's comment.
-                    readOnly: true
-                    type: string
                 dateCreated:
                     # @review
                     description:

@@ -194,13 +194,7 @@ public class JournalArticleAssetRendererFactory
 		itemSelectorCriterion.setItemType(JournalArticle.class.getName());
 
 		if (classTypeId > 0) {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchDDMStructure(classTypeId);
-
-			if (ddmStructure != null) {
-				itemSelectorCriterion.setItemSubtype(
-					String.valueOf(ddmStructure.getStructureId()));
-			}
+			itemSelectorCriterion.setItemSubtype(String.valueOf(classTypeId));
 		}
 
 		itemSelectorCriterion.setMultiSelection(multiSelection);
@@ -261,26 +255,22 @@ public class JournalArticleAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
 				JournalPortletKeys.JOURNAL, 0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/edit_article.jsp"
-		).buildPortletURL();
+		).setParameter(
+			"ddmStructureId",
+			() -> {
+				if (classTypeId > 0) {
+					return classTypeId;
+				}
 
-		if (classTypeId > 0) {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchDDMStructure(classTypeId);
-
-			if (ddmStructure != null) {
-				portletURL.setParameter(
-					"ddmStructureId",
-					String.valueOf(ddmStructure.getStructureId()));
+				return null;
 			}
-		}
-
-		return portletURL;
+		).buildPortletURL();
 	}
 
 	@Override

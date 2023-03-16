@@ -14,12 +14,10 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.testsuite.TestSuiteFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -73,23 +71,7 @@ public class TestSuiteDALO extends BaseDALO {
 	}
 
 	public TestSuite updateTestSuite(TestSuite testSuite) {
-		List<Project> retrievedProjects =
-			_projectTestSuiteDALO.retrieveProjects(testSuite);
-
-		for (Project project : testSuite.getProjects()) {
-			if (retrievedProjects.contains(project)) {
-				retrievedProjects.removeAll(Collections.singletonList(project));
-
-				continue;
-			}
-
-			_projectTestSuiteDALO.createRelationship(project, testSuite);
-		}
-
-		for (Project retrievedProject : retrievedProjects) {
-			_projectTestSuiteDALO.deleteRelationship(
-				retrievedProject, testSuite);
-		}
+		_projectTestSuiteDALO.updateRelationships(testSuite);
 
 		JSONObject responseJSONObject = update(testSuite.getJSONObject());
 

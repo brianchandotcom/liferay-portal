@@ -14,12 +14,10 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -81,30 +79,8 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 	public ProjectPrioritizer updateProjectPrioritizer(
 		ProjectPrioritizer projectPrioritizer) {
 
-		List<ProjectComparator> retrievedProjectComparators =
-			_projectPrioritizerComparatorDALO.retrieveProjectComparators(
-				projectPrioritizer);
-
-		for (ProjectComparator projectComparator :
-				projectPrioritizer.getProjectComparators()) {
-
-			if (retrievedProjectComparators.contains(projectComparator)) {
-				retrievedProjectComparators.removeAll(
-					Collections.singletonList(projectComparator));
-
-				continue;
-			}
-
-			_projectPrioritizerComparatorDALO.createRelationship(
-				projectPrioritizer, projectComparator);
-		}
-
-		for (ProjectComparator retrievedProjectComparator :
-				retrievedProjectComparators) {
-
-			_projectPrioritizerComparatorDALO.deleteRelationship(
-				projectPrioritizer, retrievedProjectComparator);
-		}
+		_projectPrioritizerComparatorDALO.updateRelationships(
+			projectPrioritizer);
 
 		JSONObject responseJSONObject = update(
 			projectPrioritizer.getJSONObject());

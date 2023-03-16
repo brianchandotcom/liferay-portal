@@ -13,12 +13,8 @@ import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
 import DonutChart from '../../common/components/donut-chart';
+import {revenueChartColumnColors} from '../../common/utils/constants/chartColumnsColors';
 import getRevenueChartColumns from '../../common/utils/getRevenueChartColumns';
-
-const colors = {
-	'Growth Revenue': '#000239',
-	'Renewal Revenue': '#83B6FE',
-};
 
 export default function () {
 	const [titleChart, setTitleChart] = useState('');
@@ -60,13 +56,13 @@ export default function () {
 	}, []);
 
 	const chartData = {
-		colors,
+		colors: revenueChartColumnColors,
 		columns: columnsRevenueChart,
 		type: 'donut',
 	};
 
 	return (
-		<Container title="Revenue">
+		<Container className="dashboard-mdf-revenue-chart" title="Revenue">
 			<DonutChart
 				chartData={chartData}
 				isLoading={loading}

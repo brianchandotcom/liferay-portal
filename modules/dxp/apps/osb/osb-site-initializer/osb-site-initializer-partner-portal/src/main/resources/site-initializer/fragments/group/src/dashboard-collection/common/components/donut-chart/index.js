@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useCallback, useMemo} from 'react';
@@ -52,7 +53,13 @@ const DonutChart = ({
 
 		if (!hasChartData && !isLoading) {
 			return (
-				<h2 className="mb-10 mt-9 text-center">No Data Available</h2>
+				<ClayAlert
+					className="mb-10 mt-9 text-center w-50"
+					displayType="info"
+					title="Info:"
+				>
+					No Data Available
+				</ClayAlert>
 			);
 		}
 
@@ -66,7 +73,6 @@ const DonutChart = ({
 					<div className="d-flex flex-column flex-sm-row justify-content-start">
 						<>
 							<ClayChart
-								className="dashboard-donut-chart"
 								data={chartData}
 								donut={{
 									label: {show: showLabel},
@@ -130,7 +136,7 @@ const DonutChart = ({
 	};
 
 	return (
-		<div className="align-items-stretch d-flex flex-column">
+		<div className="align-items-center d-flex flex-column justify-content-center">
 			{buildChart()}
 		</div>
 	);

@@ -9,69 +9,71 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
-const colors = {
-	approved: '#8FB5FF',
-	closedwon: '#002C62',
-	rejected: '#FF6060',
-	submitted: '#E7EFFF',
-};
-
-const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
-	.split('/')
-	.slice(0, 3)
-	.join('/');
+import {dealsChartColumnColors} from '../../common/utils/constants/chartColumnsColors';
+import {dealsChartStatus} from '../../common/utils/constants/dealsChartStatus';
+import {siteURL} from '../../common/utils/getSiteURL';
 
 export default function () {
 	const [opportunities, setOpportunities] = useState();
 	const [leads, setLeads] = useState();
+	const [loading, setLoading] = useState(false);
+
+	const getOpportunities = async () => {
+		setLoading(true);
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const response = await fetch('/o/c/opportunitysfs?pageSize=200', {
+			headers: {
+				'accept': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		});
+		if (response.ok) {
+			const data = await response.json();
+			setOpportunities(data?.items);
+			setLoading(false);
+
+			return;
+		}
+		setLoading(false);
+
+		Liferay.Util.openToast({
+			message: 'An unexpected error occured.',
+			type: 'danger',
+		});
+	};
+
+	const getLeads = async () => {
+		setLoading(true);
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const response = await fetch('/o/c/leadsfs?pageSize=200', {
+			headers: {
+				'accept': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		});
+		if (response.ok) {
+			const data = await response.json();
+			setLeads(data?.items);
+			setLoading(false);
+
+			return;
+		}
+		setLoading(false);
+
+		Liferay.Util.openToast({
+			message: 'An unexpected error occured.',
+			type: 'danger',
+		});
+	};
 
 	useEffect(() => {
-		const getOpportunities = async () => {
-			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch('/o/c/opportunitysfs?pageSize=200', {
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			});
-			if (response.ok) {
-				const data = await response.json();
-				setOpportunities(data?.items);
-
-				return;
-			}
-			Liferay.Util.openToast({
-				message: 'An unexpected error occured.',
-				type: 'danger',
-			});
-		};
-
-		const getLeads = async () => {
-			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch('/o/c/leadsfs?pageSize=200', {
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			});
-			if (response.ok) {
-				const data = await response.json();
-				setLeads(data?.items);
-
-				return;
-			}
-			Liferay.Util.openToast({
-				message: 'An unexpected error occured.',
-				type: 'danger',
-			});
-		};
-
 		getOpportunities();
 		getLeads();
 	}, []);
@@ -80,45 +82,36 @@ export default function () {
 	const QUARTER_2_INDEX = 1;
 	const QUARTER_3_INDEX = 2;
 	const QUARTER_4_INDEX = 3;
-	const JANUARY = 1;
-	const FEBRUARY = 2;
-	const MARCH = 3;
-	const APRIL = 4;
-	const MAY = 5;
-	const JUNE = 6;
-	const JULY = 7;
-	const AUGUST = 8;
-	const SEPTEMBER = 9;
-	const OCTOBER = 10;
-	const NOVEMBER = 11;
-	const DECEMBER = 12;
-
-	const STAGE_CLOSEDLOST = 'Closed Lost';
-	const STAGE_DISQUALIFIED = 'Disqualified';
-	const STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY =
-		'Rolled into another opportunity';
-	const STAGE_CLOSEDWON = 'Closed Won';
-	const STAGE_REJECTED = 'Rejected';
-	const STATUS_CAMREJECTED = 'CAM rejected';
-	const STATUS_SALES_QUALIFIED_OPPORTUNITY = 'Sales Qualified Opportunity';
-	const TYPE_PARTNER_QUALIFIED_LEAD = 'Partner Qualified Lead (PQL)';
 
 	const getChartQuarterCount = (values, dateCreated) => {
-		const month = new Date(dateCreated).getMonth() + 1;
-		if (month === JANUARY || month === FEBRUARY || month === MARCH) {
-			values[QUARTER_1_INDEX] = values[QUARTER_1_INDEX] + 1;
+		const quarter = Math.ceil((new Date(dateCreated).getMonth() + 1) / 3);
+
+		if (quarter === 1) {
+			values[QUARTER_1_INDEX]++;
 		}
-		if (month === APRIL || month === MAY || month === JUNE) {
-			values[QUARTER_2_INDEX] = values[QUARTER_2_INDEX] + 1;
+		if (quarter === 2) {
+			values[QUARTER_2_INDEX]++;
 		}
-		if (month === JULY || month === AUGUST || month === SEPTEMBER) {
-			values[QUARTER_3_INDEX] = values[QUARTER_3_INDEX] + 1;
+		if (quarter === 3) {
+			values[QUARTER_3_INDEX]++;
 		}
-		if (month === OCTOBER || month === NOVEMBER || month === DECEMBER) {
-			values[QUARTER_4_INDEX] = values[QUARTER_4_INDEX] + 1;
+		if (quarter === 4) {
+			values[QUARTER_4_INDEX]++;
 		}
 
 		return values;
+	};
+
+	const isNotOpportunity = (opportunity) => {
+		const stagesToSkip = [
+			dealsChartStatus.STAGE_CLOSEDLOST,
+			dealsChartStatus.STAGE_CLOSEDWON,
+			dealsChartStatus.STAGE_DISQUALIFIED,
+			dealsChartStatus.STAGE_REJECTED,
+			dealsChartStatus.STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY,
+		];
+
+		return stagesToSkip.includes(opportunity.stage);
 	};
 
 	const opportunitiesChartValues = useMemo(() => {
@@ -130,26 +123,25 @@ export default function () {
 
 		return opportunities?.reduce(
 			(accumulatedChartValues, currentOpportunity) => {
-				if (
-					currentOpportunity.stage !== STAGE_CLOSEDWON ||
-					currentOpportunity.stage !== STAGE_CLOSEDLOST ||
-					currentOpportunity.stage !== STAGE_DISQUALIFIED ||
-					currentOpportunity.stage !==
-						STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY ||
-					currentOpportunity.stage !== STAGE_REJECTED
-				) {
+				if (!isNotOpportunity(currentOpportunity)) {
 					accumulatedChartValues.approved = getChartQuarterCount(
 						accumulatedChartValues.approved,
 						currentOpportunity.dateCreated
 					);
 				}
-				if (currentOpportunity.stage === STAGE_CLOSEDWON) {
+
+				if (
+					currentOpportunity.stage ===
+					dealsChartStatus.STAGE_CLOSEDWON
+				) {
 					accumulatedChartValues.closedWon = getChartQuarterCount(
 						accumulatedChartValues.closedWon,
 						currentOpportunity.dateCreated
 					);
 				}
-				if (currentOpportunity.stage === STAGE_REJECTED) {
+				if (
+					currentOpportunity.stage === dealsChartStatus.STAGE_REJECTED
+				) {
 					accumulatedChartValues.rejected = getChartQuarterCount(
 						accumulatedChartValues.rejected,
 						currentOpportunity.dateCreated
@@ -169,16 +161,18 @@ export default function () {
 		};
 
 		return leads?.reduce((accumulatedChartValues, item) => {
-			if (item.leadStatus === STATUS_CAMREJECTED) {
+			if (item.leadStatus === dealsChartStatus.STATUS_CAMREJECTED) {
 				accumulatedChartValues.rejected = getChartQuarterCount(
 					accumulatedChartValues.rejected,
 					item.dateCreated
 				);
 			}
 			if (
-				item.leadType === TYPE_PARTNER_QUALIFIED_LEAD &&
-				(item.leadStatus !== STATUS_SALES_QUALIFIED_OPPORTUNITY ||
-					item.leadStatus !== STATUS_CAMREJECTED)
+				item.leadType ===
+					dealsChartStatus.TYPE_PARTNER_QUALIFIED_LEAD &&
+				(item.leadStatus !==
+					dealsChartStatus.STATUS_SALES_QUALIFIED_OPPORTUNITY ||
+					item.leadStatus !== dealsChartStatus.STATUS_CAMREJECTED)
 			) {
 				accumulatedChartValues.submitted = getChartQuarterCount(
 					accumulatedChartValues.submitted,
@@ -210,7 +204,7 @@ export default function () {
 				},
 			},
 			data: {
-				colors,
+				colors: dealsChartColumnColors,
 				columns: [
 					['x', '1', '2', '3', '4'],
 					['Submitted', ...leadsChartValues.submitted],
@@ -279,8 +273,18 @@ export default function () {
 			}
 			title="Deals"
 		>
-			{!(opportunitiesChartValues && leadsChartValues) && (
+			{loading && !(opportunitiesChartValues && leadsChartValues) && (
 				<ClayLoadingIndicator className="mb-10 mt-9" size="md" />
+			)}
+
+			{!loading && !(opportunitiesChartValues || leadsChartValues) && (
+				<ClayAlert
+					className="mx-auto w-50"
+					displayType="info"
+					title="Info:"
+				>
+					No Data Available
+				</ClayAlert>
 			)}
 
 			{opportunitiesChartValues && leadsChartValues && getChart()}

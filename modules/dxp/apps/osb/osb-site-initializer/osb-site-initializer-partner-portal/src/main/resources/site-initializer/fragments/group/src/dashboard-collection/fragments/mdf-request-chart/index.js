@@ -14,16 +14,9 @@ import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
 import DonutChart from '../../common/components/donut-chart';
+import {mdfChartColumnColors} from '../../common/utils/constants/chartColumnsColors';
 import getChartColumns from '../../common/utils/getChartColumns';
-
-const colors = {
-	'Approved': '#003EB3',
-	'Claim Approved': '#377CFF',
-	'Claimed': '#0053F0',
-	'Expired': '#BBD2FF',
-	'Expiring Soon': '#8FB5FF',
-	'Requested': '#00256C',
-};
+import {siteURL} from '../../common/utils/getSiteURL';
 
 export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
@@ -31,11 +24,6 @@ export default function () {
 	const [valueChart, setValueChart] = useState('');
 
 	const [loading, setLoading] = useState(false);
-
-	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
-		.split('/')
-		.slice(0, 3)
-		.join('/');
 
 	const getMDFRequests = async () => {
 		setLoading(true);
@@ -68,6 +56,7 @@ export default function () {
 			message: 'An unexpected error occured.',
 			type: 'danger',
 		});
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -75,13 +64,14 @@ export default function () {
 	}, []);
 
 	const chartData = {
-		colors,
+		colors: mdfChartColumnColors,
 		columns: columnsMDFChart,
 		type: 'donut',
 	};
 
 	return (
 		<Container
+			className="dashboard-mdf-request-chart"
 			footer={
 				<>
 					<ClayButton

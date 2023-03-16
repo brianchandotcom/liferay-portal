@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -74,13 +73,13 @@ import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
@@ -495,41 +494,39 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private String[] _getOrderItemExternalReferenceCodes(
 		OrderItem[] orderItems) {
 
-		Stream<OrderItem> stream = Arrays.stream(orderItems);
+		Set<String> strings = new HashSet<>();
 
-		String[] strings = stream.map(
-			OrderItem::getExternalReferenceCode
-		).filter(
-			Objects::nonNull
-		).distinct(
-		).toArray(
-			String[]::new
-		);
+		for (OrderItem orderItem : orderItems) {
+			String externalReferenceCode = orderItem.getExternalReferenceCode();
 
-		if (ArrayUtil.isEmpty(strings)) {
-			strings = null;
+			if (Objects.nonNull(externalReferenceCode)) {
+				strings.add(externalReferenceCode);
+			}
 		}
 
-		return strings;
+		if (strings.isEmpty()) {
+			return null;
+		}
+
+		return transformToArray(strings, string -> string, String.class);
 	}
 
 	private Long[] _getOrderItemIds(OrderItem[] orderItems) {
-		Stream<OrderItem> stream = Arrays.stream(orderItems);
+		Set<Long> longs = new HashSet<>();
 
-		Long[] longs = stream.map(
-			OrderItem::getId
-		).filter(
-			Objects::nonNull
-		).distinct(
-		).toArray(
-			Long[]::new
-		);
+		for (OrderItem orderItem : orderItems) {
+			Long id = orderItem.getId();
 
-		if (ArrayUtil.isEmpty(longs)) {
-			longs = new Long[] {0L};
+			if (Objects.nonNull(id)) {
+				longs.add(id);
+			}
 		}
 
-		return longs;
+		if (longs.isEmpty()) {
+			return new Long[] {0L};
+		}
+
+		return transformToArray(longs, id -> id, Long.class);
 	}
 
 	private String _getVersion(UriInfo uriInfo) {

@@ -29,66 +29,67 @@ definition {
 		}
 	}
 
-    @description = "Confirm that the user can create a data set view"
+	@description = "Confirm that the user can change the pagination on the dataset admin page"
 	@ignore = "Test Stub"
-    @priority = "5"
-	test  CanCreateDataSet {
-
-		// TODO CanCreateDataSet pending implementation JQuery enabled
-
-	}
-
-    @description = "Confirm that the user can cancel the creation of a data set view"
-	@ignore = "Test Stub"
-    @priority = "5"
-	test NotCreatedAfterCancel {
-
-		// TODO NotCreatedAfterCancel pending implementation JQuery enabled
-
-	}
-
-    @description = "Confirm the error message that appears when the user tries to create a data set view without the filled name"
-	@ignore = "Test Stub"
-    @priority = "3"
-	test ErrorAppearsWhenNameBlank {
-
-		// TODO ErrorAppearsWhenNameBlank pending implementation JQuery enabled
-
-	}
-
-    @description = "Confirm that the user can change the pagination on the dataset admin page"
-	@ignore = "Test Stub"
-    @priority = "4"
+	@priority = 4
 	test CanChangePaginationInAdminPage {
 
 		// TODO CanChangePaginationInAdminPage pending implementation JQuery enabled
 
 	}
 
-    @description = "Confirm that the user can create a dataset view via API"
+	@description = "Confirm that the user can create a data set view"
 	@ignore = "Test Stub"
-    @priority = "5"
+	@priority = 5
+	test CanCreateDataSet {
+
+		// TODO CanCreateDataSet pending implementation JQuery enabled
+
+	}
+
+	@description = "Confirm that the user can create a dataset view via API"
+	@ignore = "Test Stub"
+	@priority = 5
 	test CanCreateDataSetViaAPI {
 
 		// TODO CanCreateDataSetViaAPI pending implementation JQuery enabled
 
 	}
 
-    @description = "Confirm the error message that appears when the user tries to create a dataset view with more than 280 characters in the name field"
+	@description = "Confirm the error message that appears when the user tries to create a dataset view with more than 280 characters in the name field"
 	@ignore = "Test Stub"
-    @priority = "3"
+	@priority = 3
 	test CannotExceed280Characters {
 
 		// TODO CannotExceed280Characters pending implementation JQuery enabled
 
 	}
 
-    @description = "Confirm the error message that appears when the user tries to create a Data Set without the filled provider"
+	@description = "Confirm the error message that appears when the user tries to create a data set view without the filled name"
 	@ignore = "Test Stub"
-    @priority = "3"
+	@priority = 3
+	test ErrorAppearsWhenNameBlank {
+
+		// TODO ErrorAppearsWhenNameBlank pending implementation JQuery enabled
+
+	}
+
+	@description = "Confirm the error message that appears when the user tries to create a Data Set without the filled provider"
+	@ignore = "Test Stub"
+	@priority = 3
 	test ErrorAppearsWhenProviderBlank {
 
 		// TODO CannotExceed280Characters pending implementation JQuery enabled
 
 	}
+
+	@description = "Confirm that the user can cancel the creation of a data set view"
+	@ignore = "Test Stub"
+	@priority = 5
+	test NotCreatedAfterCancel {
+
+		// TODO NotCreatedAfterCancel pending implementation JQuery enabled
+
+	}
+
 }

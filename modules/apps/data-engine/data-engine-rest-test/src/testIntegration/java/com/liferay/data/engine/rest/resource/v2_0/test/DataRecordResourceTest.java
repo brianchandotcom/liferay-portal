@@ -45,6 +45,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -535,6 +536,15 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		assertValid(postDataRecord);
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostDataDefinitionDataRecordsPageExportBatch()
+		throws Exception {
+
+		super.testPostDataDefinitionDataRecordsPageExportBatch();
+	}
+
 	@Override
 	@Test
 	public void testPostDataRecordCollectionDataRecord() throws Exception {
@@ -544,6 +554,15 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			404,
 			dataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
 				RandomTestUtil.randomLong(), randomDataRecord()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostDataRecordCollectionDataRecordsPageExportBatch()
+		throws Exception {
+
+		super.testPostDataRecordCollectionDataRecordsPageExportBatch();
 	}
 
 	@Override

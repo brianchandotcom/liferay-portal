@@ -187,11 +187,15 @@ public class LocalizedValueUtil {
 
 				if (deserializedObject instanceof List) {
 					localizedValues.put(
-						languageId, JSONFactoryUtil.createJSONArray(value));
+						languageId,
+						JSONFactoryUtil.createJSONArray(
+							(List<?>)deserializedObject));
 				}
 				else if (deserializedObject instanceof Map) {
 					localizedValues.put(
-						languageId, JSONFactoryUtil.createJSONObject(value));
+						languageId,
+						JSONFactoryUtil.createJSONObject(
+							(Map<?, ?>)deserializedObject));
 				}
 			}
 			catch (Exception exception) {

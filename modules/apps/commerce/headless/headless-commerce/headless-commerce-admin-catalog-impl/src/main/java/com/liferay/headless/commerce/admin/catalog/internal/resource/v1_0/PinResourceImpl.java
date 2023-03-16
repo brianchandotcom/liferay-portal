@@ -42,10 +42,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.io.Serializable;
-
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -223,15 +220,10 @@ public class PinResourceImpl
 			ServiceContext serviceContext =
 				_serviceContextHelper.getServiceContext(groupId);
 
-			Map<String, Serializable> expandoBridgeAttributes =
+			serviceContext.setExpandoBridgeAttributes(
 				MappedProductUtil.getExpandoBridgeAttributes(
 					contextCompany.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale(), mappedProduct);
-
-			if (expandoBridgeAttributes != null) {
-				serviceContext.setExpandoBridgeAttributes(
-					expandoBridgeAttributes);
-			}
+					contextAcceptLanguage.getPreferredLocale(), mappedProduct));
 
 			CSDiagramEntry csDiagramEntry =
 				_csDiagramEntryService.fetchCSDiagramEntry(

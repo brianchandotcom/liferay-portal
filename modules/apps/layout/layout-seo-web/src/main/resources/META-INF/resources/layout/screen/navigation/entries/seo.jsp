@@ -60,6 +60,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 			<h3 class="sheet-subtitle"><liferay-ui:message key="general-settings" /></h3>
 
 			<clay:alert
+				cssClass="mb-4"
 				displayType="info"
 				message='<%= LanguageUtil.get(request, "add-multiple-fields-to-define-how-the-meta-tags-will-be-filled") %>'
 			/>

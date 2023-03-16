@@ -25,6 +25,7 @@
 		},
 		{
 			"actionIds": [
+				"VIEW"
 			],
 			"roleName": "EVP Manager",
 			"scope": 4

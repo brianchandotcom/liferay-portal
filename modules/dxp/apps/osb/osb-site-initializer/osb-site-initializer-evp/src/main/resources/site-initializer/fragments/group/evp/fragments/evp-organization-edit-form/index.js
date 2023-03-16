@@ -10,12 +10,23 @@
  * distribution rights of the Software.
  */
 
+const ROLE = {
+	EVP_MANAGER: 'EVP Manager',
+};
+
+const FIELD = {
+	BANKINGINFO: 'bankingInfo',
+	TAXID: 'taxId',
+};
+
 const queryString = window.location.search;
 const urlParams = queryString.split('=');
 const organizationId = urlParams[1];
 const liferayUrl = window.location.origin;
 
 const searchParams = new URLSearchParams();
+
+const userRoles = document.querySelector('.userRoles').value;
 
 searchParams.set('filter', `id eq '${organizationId}'`);
 searchParams.set(
@@ -66,6 +77,14 @@ getEVPOrganizations().then((organizations) => {
 			const inputName = document.querySelector(`[name='${key}']`);
 
 			if (inputName) {
+				if (userRoles === ROLE.EVP_MANAGER) {
+					if (
+						inputName.name === FIELD.BANKINGINFO ||
+						inputName.name === FIELD.TAXID
+					) {
+						inputName.setAttribute('disabled', 'disabled');
+					}
+				}
 				inputName.value = organization[key];
 			}
 		}

@@ -27,7 +27,9 @@
 			/]
 
 			[#list userRoles as role]
-				[#if approvedRoles?seqContains(role.name) && organizationStatus == "awaitingFinanceApproval"]
+				[#if role.name == "Administrator" || role.name == "EVP Manager" && organizationStatus == "verified" ||
+					role.name == "Finance User" && organizationStatus == "awaitingFinanceApproval"
+				]
 
 					[@liferay_ui["icon"]
 						message="Edit"

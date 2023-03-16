@@ -88,7 +88,6 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -607,32 +606,27 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 						commerceOrderValidatorResults.get(
 							commerceOrderItem.getCommerceOrderItemId());
 
-				Stream<CommerceOrderValidatorResult>
-					commerceOrderValidatorResultStream =
-						commerceOrderItemValidatorResults.stream();
+				boolean cartItemValid = true;
 
-				boolean cartItemValid = commerceOrderValidatorResultStream.map(
-					commerceOrderItemValidatorResult ->
-						commerceOrderItemValidatorResult.isValid()
-				).reduce(
-					true, Boolean::logicalAnd
-				);
+				for (CommerceOrderValidatorResult commerceOrderValidatorResult :
+						commerceOrderItemValidatorResults) {
+
+					if (!commerceOrderValidatorResult.isValid()) {
+						cartItemValid = false;
+
+						break;
+					}
+				}
 
 				cartItem.setValid(cartItemValid);
 
 				cart.setValid(cartItemValid);
 
-				commerceOrderValidatorResultStream =
-					commerceOrderItemValidatorResults.stream();
-
 				cartItem.setErrorMessages(
-					commerceOrderValidatorResultStream.map(
-						commerceOrderItemValidatorResult ->
-							commerceOrderItemValidatorResult.
-								getLocalizedMessage()
-					).toArray(
-						String[]::new
-					));
+					transformToArray(
+						commerceOrderItemValidatorResults,
+						CommerceOrderValidatorResult::getLocalizedMessage,
+						String.class));
 			}
 
 			cartItems.add(cartItem);

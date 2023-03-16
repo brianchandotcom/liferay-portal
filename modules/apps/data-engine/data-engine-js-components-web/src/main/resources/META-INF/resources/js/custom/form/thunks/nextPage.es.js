@@ -113,7 +113,9 @@ export default function nextPage({
 					title,
 				});
 
-				const formPagination = document.getElementsByClassName('ddm-form-pagination')[0];
+				const formPagination = document.getElementsByClassName(
+					'ddm-form-pagination'
+				)[0];
 
 				formPagination.scrollIntoView();
 			}

@@ -50,10 +50,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	public ObjectField addCustomObjectField(
 			String externalReferenceCode, long listTypeDefinitionId,
 			long objectDefinitionId, String businessType, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state,
-			List<ObjectFieldSetting> objectFieldSettings)
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -72,9 +71,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 		return objectFieldLocalService.addCustomObjectField(
 			externalReferenceCode, getUserId(), listTypeDefinitionId,
-			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			objectDefinitionId, businessType, dbType, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state,
+			objectFieldSettings);
 	}
 
 	@Override
@@ -107,10 +106,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	public ObjectField updateObjectField(
 			String externalReferenceCode, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state,
-			List<ObjectFieldSetting> objectFieldSettings)
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
@@ -124,9 +122,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			externalReferenceCode, objectFieldId, getUserId(),
 			listTypeDefinitionId, objectField.getObjectDefinitionId(),
 			businessType, objectField.getDBColumnName(),
-			objectField.getDBTableName(), dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectField.isSystem(), objectFieldSettings);
+			objectField.getDBTableName(), dbType, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state,
+			objectField.isSystem(), objectFieldSettings);
 	}
 
 	@Reference(

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -74,11 +72,6 @@ public class SynchronizeSiteInitializerMVCActionCommand
 
 		try {
 			TransactionInvokerUtil.invoke(_transactionConfig, groupCallable);
-			SessionMessages.add(actionRequest, "synchronizerSiteSuccess");
-		}
-		catch (Exception exception) {
-			SessionErrors.add(
-				actionRequest, "synchronizerSiteFailException", exception);
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);

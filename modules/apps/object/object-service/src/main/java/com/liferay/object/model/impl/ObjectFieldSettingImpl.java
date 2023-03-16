@@ -18,11 +18,21 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.model.ObjectStateFlow;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
  */
 public class ObjectFieldSettingImpl extends ObjectFieldSettingBaseImpl {
+
+	@Override
+	public boolean compareName(String value) {
+		if (Objects.equals(getName(), value)) {
+			return true;
+		}
+
+		return false;
+	}
 
 	public List<ObjectFilter> getObjectFilters() {
 		return _objectFilters;

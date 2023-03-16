@@ -58,7 +58,7 @@
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
-										"hidden": true
+										"hidden": false
 									},
 									"id": "landscapeMobile"
 								},
@@ -70,7 +70,7 @@
 								},
 								{
 									"fragmentViewportStyle": {
-										"hidden": true
+										"hidden": false
 									},
 									"id": "tablet"
 								}
@@ -320,7 +320,8 @@
 																	"fragmentStyle": {
 																		"borderRadius": "",
 																		"fontFamily": "fontFamilyMonospace",
-																		"fontSize": "16px",
+																		"fontSize": "20px",
+																		"fontWeight": "700",
 																		"marginTop": "-16px",
 																		"shadow": "",
 																		"textAlign": "center",

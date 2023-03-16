@@ -89,9 +89,9 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 					<div class="sheet">
 						<div class="panel-group panel-group-flush">
 							<aui:fieldset cssClass="lfr-portrait-editor">
-								<h4 class="text-default">
+								<div class="h4 text-default">
 									<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
-								</h4>
+								</div>
 
 								<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
 									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" class="img-fluid lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />

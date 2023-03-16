@@ -32,8 +32,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored until LPS-175970 is completed"
-	@ignore = "true"
 	@priority = 4
 	test CanAutoDeployBlogPostingZipWithCsv {
 		property portal.acceptance = "true";
@@ -67,8 +65,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored until LPS-175970 is completed"
-	@ignore = "true"
 	@priority = 4
 	test CanAutoDeployMultipleBatchPairsZip {
 		property portal.acceptance = "true";
@@ -114,8 +110,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored until LPS-175970 is completed"
-	@ignore = "true"
 	@priority = 4
 	test CanAutoDeployObjectDefinitionZipWithJsonl {
 		property portal.acceptance = "true";
@@ -150,8 +144,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored until LPS-175970 is completed"
-	@ignore = "true"
 	@priority = 4
 	test CanAutoDeployStructuredWebContentZipWithJson {
 		property portal.acceptance = "true";

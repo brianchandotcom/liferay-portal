@@ -221,20 +221,16 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 					infoItemFieldValues.getInfoFieldValue("title");
 
 				if (titleInfoFieldValue != null) {
-					return HtmlUtil.escape(
-						String.valueOf(
-							titleInfoFieldValue.getValue(
-								themeDisplay.getLocale())));
+					return String.valueOf(
+						titleInfoFieldValue.getValue(themeDisplay.getLocale()));
 				}
 
 				InfoFieldValue<Object> nameInfoFieldValue =
 					infoItemFieldValues.getInfoFieldValue("name");
 
 				if (nameInfoFieldValue != null) {
-					return HtmlUtil.escape(
-						String.valueOf(
-							nameInfoFieldValue.getValue(
-								themeDisplay.getLocale())));
+					return String.valueOf(
+						nameInfoFieldValue.getValue(themeDisplay.getLocale()));
 				}
 			}
 
@@ -242,12 +238,11 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 				WebKeys.LAYOUT_ASSET_ENTRY);
 
 			if (assetEntry != null) {
-				return HtmlUtil.escape(
-					assetEntry.getTitle(themeDisplay.getLanguageId()));
+				return assetEntry.getTitle(themeDisplay.getLanguageId());
 			}
 		}
 
-		return HtmlUtil.escape(layout.getName(themeDisplay.getLocale()));
+		return layout.getName(themeDisplay.getLocale());
 	}
 
 	private boolean _hasDraftLayout(HttpServletRequest httpServletRequest) {

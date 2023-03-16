@@ -17,17 +17,12 @@ package com.liferay.layout.type.controller.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.List;
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,29 +53,18 @@ public abstract class BaseLayoutTypeAccessPolicy
 				httpServletRequest, layout, portlet);
 		}
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences portletPreferences =
 			portletPreferencesLocalService.fetchPreferences(
 				portletPreferencesFactory.getPortletPreferencesIds(
 					httpServletRequest, masterLayout, portlet.getPortletId()));
 
-		if (jxPortletPreferences == null) {
+		if (portletPreferences == null) {
 			return super.hasAccessPermission(
 				httpServletRequest, layout, portlet);
 		}
 
-		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-			masterLayout.getPlid(), portlet.getPortletId());
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getResourceResourcePermissions(
-				masterLayout.getCompanyId(), masterLayout.getGroupId(),
-				portlet.getPortletName(), resourcePrimKey);
-
-		if (ListUtil.isNotEmpty(resourcePermissions)) {
-			layout = masterLayout;
-		}
-
-		return super.hasAccessPermission(httpServletRequest, layout, portlet);
+		return super.hasAccessPermission(
+			httpServletRequest, masterLayout, portlet);
 	}
 
 	@Reference
@@ -91,8 +75,5 @@ public abstract class BaseLayoutTypeAccessPolicy
 
 	@Reference
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
-
-	@Reference
-	protected ResourcePermissionLocalService resourcePermissionLocalService;
 
 }

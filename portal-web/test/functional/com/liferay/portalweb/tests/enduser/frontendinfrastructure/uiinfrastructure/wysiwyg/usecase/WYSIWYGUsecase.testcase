@@ -180,7 +180,6 @@ definition {
 	@refactordone
 	test CanDisplayContentRightToLeft {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 
 		JSONLayout.addPublicLayout(
 			groupName = "WYSIWYG Site Name",

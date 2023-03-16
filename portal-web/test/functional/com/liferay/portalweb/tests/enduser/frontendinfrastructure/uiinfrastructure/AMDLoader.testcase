@@ -39,7 +39,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test LogLevelCanBeConfigured {
-		property test.name.skip.portal.instance = "AMDLoader#LogLevelCanBeConfigured";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

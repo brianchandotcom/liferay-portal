@@ -27,7 +27,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeEnabledToPreloadModules {
-		property test.name.skip.portal.instance = "AUI#CanBeEnabledToPreloadModules";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

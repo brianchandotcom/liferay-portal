@@ -74,7 +74,6 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 		return accessTokenGrantHandler.createAccessToken(client, params);
 	}
 
-	@Override
 	protected AccessTokenGrantHandler getAccessTokenGrantHandler() {
 		ResourceOwnerGrantHandler resourceOwnerGrantHandler =
 			new ResourceOwnerGrantHandler();

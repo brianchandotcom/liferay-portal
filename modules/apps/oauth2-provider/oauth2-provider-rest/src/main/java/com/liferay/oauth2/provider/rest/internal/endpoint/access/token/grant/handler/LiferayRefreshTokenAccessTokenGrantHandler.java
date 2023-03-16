@@ -50,10 +50,7 @@ public class LiferayRefreshTokenAccessTokenGrantHandler
 
 	@Override
 	public List<String> getSupportedGrantTypes() {
-		AccessTokenGrantHandler accessTokenGrantHandler =
-			getAccessTokenGrantHandler();
-
-		return accessTokenGrantHandler.getSupportedGrantTypes();
+		return _refreshTokenGrantHandler.getSupportedGrantTypes();
 	}
 
 	@Activate
@@ -70,15 +67,7 @@ public class LiferayRefreshTokenAccessTokenGrantHandler
 	protected ServerAccessToken doCreateAccessToken(
 		Client client, MultivaluedMap<String, String> params) {
 
-		AccessTokenGrantHandler accessTokenGrantHandler =
-			getAccessTokenGrantHandler();
-
-		return accessTokenGrantHandler.createAccessToken(client, params);
-	}
-
-	@Override
-	protected AccessTokenGrantHandler getAccessTokenGrantHandler() {
-		return _refreshTokenGrantHandler;
+		return _refreshTokenGrantHandler.createAccessToken(client, params);
 	}
 
 	@Override

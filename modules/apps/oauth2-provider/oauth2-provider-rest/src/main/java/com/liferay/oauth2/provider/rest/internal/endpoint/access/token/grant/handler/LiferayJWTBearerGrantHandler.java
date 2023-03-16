@@ -82,7 +82,6 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 		return accessTokenGrantHandler.createAccessToken(client, params);
 	}
 
-	@Override
 	protected AccessTokenGrantHandler getAccessTokenGrantHandler() {
 		CustomJWTBearerGrantHandler customJWTBearerGrantHandler =
 			new CustomJWTBearerGrantHandler();

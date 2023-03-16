@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -64,14 +63,6 @@ public abstract class BaseAccessTokenGrantHandler
 			getAccessTokenGrantHandler();
 
 		return accessTokenGrantHandler.createAccessToken(client, params);
-	}
-
-	@Override
-	public List<String> getSupportedGrantTypes() {
-		AccessTokenGrantHandler accessTokenGrantHandler =
-			getAccessTokenGrantHandler();
-
-		return accessTokenGrantHandler.getSupportedGrantTypes();
 	}
 
 	protected boolean clientsMatch(Client client1, Client client2) {

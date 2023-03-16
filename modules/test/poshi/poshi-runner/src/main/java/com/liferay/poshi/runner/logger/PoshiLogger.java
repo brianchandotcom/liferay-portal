@@ -46,7 +46,7 @@ public class PoshiLogger {
 		_testNamespacedClassCommandName = testNamespacedClassCommandName;
 
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
-			_testNamespacedClassCommandName);
+			testNamespacedClassCommandName);
 	}
 
 	public void createPoshiReport() throws IOException {

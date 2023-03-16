@@ -35,7 +35,7 @@ public class PortalFixpackRelease {
 		_portalRelease = portalRelease;
 
 		try {
-			String portalVersion = _portalRelease.getPortalVersion();
+			String portalVersion = portalRelease.getPortalVersion();
 			String portalFixpackType = "dxp";
 
 			if (portalVersion.contains("7.0")) {

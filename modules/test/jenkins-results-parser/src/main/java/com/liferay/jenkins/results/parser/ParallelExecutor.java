@@ -39,7 +39,7 @@ public class ParallelExecutor<T> {
 
 		_executorService = executorService;
 
-		if (_executorService == null) {
+		if (executorService == null) {
 			_disposeExecutor = true;
 			_executorService = Executors.newSingleThreadExecutor();
 		}

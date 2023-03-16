@@ -55,9 +55,9 @@ public final class CommandLogger {
 		_testNamespacedClassCommandName = testNamespacedClassCommandName;
 
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
-			_testNamespacedClassCommandName);
+			testNamespacedClassCommandName);
 		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariablesContext(
-			_testNamespacedClassCommandName);
+			testNamespacedClassCommandName);
 	}
 
 	public void copyOcularImage(

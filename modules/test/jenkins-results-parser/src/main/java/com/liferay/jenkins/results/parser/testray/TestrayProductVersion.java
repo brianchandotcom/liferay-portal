@@ -32,12 +32,12 @@ public class TestrayProductVersion {
 		_testrayProject = testrayProject;
 		_jsonObject = jsonObject;
 
-		_testrayServer = _testrayProject.getTestrayServer();
+		_testrayServer = testrayProject.getTestrayServer();
 
 		String urlString = JenkinsResultsParserUtil.combine(
 			String.valueOf(_testrayServer.getURL()),
 			"/home/-/testray/product_versions?testrayProjectId=",
-			String.valueOf(_testrayProject.getID()));
+			String.valueOf(testrayProject.getID()));
 
 		try {
 			_url = new URL(urlString);

@@ -41,11 +41,11 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_testrayRoutine = testrayRoutine;
 		_jsonObject = jsonObject;
 
-		_testrayProject = _testrayRoutine.getTestrayProject();
-		_testrayServer = _testrayRoutine.getTestrayServer();
+		_testrayProject = testrayRoutine.getTestrayProject();
+		_testrayServer = testrayRoutine.getTestrayServer();
 
 		_testrayProductVersion = _testrayProject.getTestrayProductVersionByID(
-			_jsonObject.getLong("testrayProductVersionId"));
+			jsonObject.getLong("testrayProductVersionId"));
 	}
 
 	@Override

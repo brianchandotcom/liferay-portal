@@ -32,7 +32,7 @@ public class LegacyDataArchiveGroup {
 		_dataArchiveType = dataArchiveType;
 
 		_legacyDataArchiveHelper =
-			_legacyDataArchivePortalVersion.getLegacyDataArchiveHelper();
+			legacyDataArchivePortalVersion.getLegacyDataArchiveHelper();
 
 		_legacyGitWorkingDirectory =
 			_legacyDataArchiveHelper.getLegacyGitWorkingDirectory();

@@ -35,7 +35,7 @@ public class LegacyDataArchivePortalVersion {
 		_portalVersion = portalVersion;
 
 		_legacyGitWorkingDirectory =
-			_legacyDataArchiveHelper.getLegacyGitWorkingDirectory();
+			legacyDataArchiveHelper.getLegacyGitWorkingDirectory();
 
 		_portalVersionDirectory = new File(
 			_legacyGitWorkingDirectory.getWorkingDirectory(), _portalVersion);

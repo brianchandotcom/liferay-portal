@@ -1180,7 +1180,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#PAGINATION_RESULTS",
-			value1 = "Showing 1 to 2 of 2");
+			value1 = "Showing 1 to 2 of 2 entries.");
 	}
 
 	@description = "COMMERCE-6375. As a buyer, I want to be able to search for one pending order using the search bar"

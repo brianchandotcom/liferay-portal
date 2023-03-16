@@ -3213,7 +3213,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#PAGINATION_RESULTS",
-			value1 = "Showing 1 to 1 of 1");
+			value1 = "Showing 1 to 1 of 1 entries.");
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"

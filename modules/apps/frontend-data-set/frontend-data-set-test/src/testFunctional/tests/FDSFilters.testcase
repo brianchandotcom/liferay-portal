@@ -61,7 +61,7 @@ definition {
 		task ("Then the results will be displayed updated accordingly to it") {
 			AssertTextEquals(
 				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
-				value1 = "Showing 1 to 10 of 100");
+				value1 = "Showing 1 to 10 of 100 entries.");
 		}
 
 		task ("And the Filters Summary boxes will be updated accordingly to it") {
@@ -265,7 +265,7 @@ definition {
 		task ("Then the results will be displayed updated accordingly to it") {
 			AssertTextEquals(
 				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
-				value1 = "Showing 1 to 10 of 100");
+				value1 = "Showing 1 to 10 of 100 entries.");
 		}
 
 		task ("And the Filters Summary boxes will be updated accordingly to it") {
@@ -333,7 +333,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
-				value1 = "Showing 1 to 10 of 75");
+				value1 = "Showing 1 to 10 of 75 entries.");
 		}
 
 		task ("And Then the Filters Summary boxes will be displayed accordingly to it") {

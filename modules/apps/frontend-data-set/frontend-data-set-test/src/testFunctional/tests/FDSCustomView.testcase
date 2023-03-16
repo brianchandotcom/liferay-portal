@@ -114,7 +114,7 @@ definition {
 
 			Pagination.changePagination(itemsPerPage = "4 items");
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 25");
+			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 
 			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
 
@@ -226,7 +226,7 @@ definition {
 
 			FDSCustomView.changeCustomView(key_itemName = "FrontendDataSet View 2");
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 25");
+			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 
 			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Red");
 

@@ -98,14 +98,43 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
+			"businessType": "Picklist",
 			"externalReferenceCode": "CurrencyIsoCode",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Currency"
 			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
 			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "Tactic__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Tactic"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Tactic$]",
+			"name": "tactic",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "Activity_Type__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type Of Activity"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type Of Activity$]",
+			"name": "typeActivity",
 			"required": false,
 			"type": "String"
 		}

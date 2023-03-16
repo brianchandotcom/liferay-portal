@@ -1,6 +1,7 @@
 [
 	{
 		"key": "USD",
+		"externalReferenceCode": "USD",
 		"name": "US Dollar",
 		"name_i18n": {
 			"en-US": "US Dollar"
@@ -9,6 +10,7 @@
 	},
 	{
 		"key": "AUD",
+		"externalReferenceCode": "AUD",
 		"name": "Australian Dollar",
 		"name_i18n": {
 			"en-US": "Australian Dollar"
@@ -17,6 +19,7 @@
 	},
 	{
 		"key": "GBP",
+		"externalReferenceCode": "GBP",
 		"name": "British Pound",
 		"name_i18n": {
 			"en-US": "British Pound"
@@ -25,6 +28,7 @@
 	},
 	{
 		"key": "CAD",
+		"externalReferenceCode": "CAD",
 		"name": "Canadian Dollar",
 		"name_i18n": {
 			"en-US": "Canadian Dollar"
@@ -33,6 +37,7 @@
 	},
 	{
 		"key": "EUR",
+		"externalReferenceCode": "EUR",
 		"name": "Euro",
 		"name_i18n": {
 			"en-US": "Euro"
@@ -41,6 +46,7 @@
 	},
 	{
 		"key": "HKD",
+		"externalReferenceCode": "HKD",
 		"name": "Hong Kong Dollar",
 		"name_i18n": {
 			"en-US": "Hong Kong Dollar"
@@ -49,6 +55,7 @@
 	},
 	{
 		"key": "BRL",
+		"externalReferenceCode": "BRL",
 		"name": "Brazilian Real",
 		"name_i18n": {
 			"en-US": "Brazilian Real"
@@ -57,6 +64,7 @@
 	},
 	{
 		"key": "JPY",
+		"externalReferenceCode": "JPY",
 		"name": "Japanese Yen",
 		"name_i18n": {
 			"en-US": "Japanese Yen"
@@ -65,6 +73,7 @@
 	},
 	{
 		"key": "INR",
+		"externalReferenceCode": "INR",
 		"name": "Indian Rupee",
 		"name_i18n": {
 			"en-US": "Indian Rupee"

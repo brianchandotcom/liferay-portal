@@ -1,6 +1,7 @@
 [
 	{
 		"key": "prmtact001",
+		"externalReferenceCode": "Event",
 		"name": "Event",
 		"name_i18n": {
 			"en-US": "Event"
@@ -9,6 +10,7 @@
 	},
 	{
 		"key": "prmtact002",
+		"externalReferenceCode": "Digital Marketing",
 		"name": "Digital Marketing",
 		"name_i18n": {
 			"en-US": "Digital Marketing"
@@ -17,6 +19,7 @@
 	},
 	{
 		"key": "prmtact003",
+		"externalReferenceCode": "Content Marketing",
 		"name": "Content Marketing",
 		"name_i18n": {
 			"en-US": "Content Marketing"
@@ -25,6 +28,7 @@
 	},
 	{
 		"key": "prmtact004",
+		"externalReferenceCode": "Miscellaneous Marketing",
 		"name": "Miscellaneous Marketing",
 		"name_i18n": {
 			"en-US": "Miscellaneous Marketing"

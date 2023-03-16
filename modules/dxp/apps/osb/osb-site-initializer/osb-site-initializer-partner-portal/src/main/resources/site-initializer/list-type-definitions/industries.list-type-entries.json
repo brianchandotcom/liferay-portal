@@ -1,6 +1,7 @@
 [
 	{
 		"key": "aerospaceDefense",
+		"externalReferenceCode": "Aerospace & Defense",
 		"name": "Aerospace & Defense",
 		"name_i18n": {
 			"en-US": "Aerospace & Defense"
@@ -9,6 +10,7 @@
 	},
 	{
 		"key": "agriculture",
+		"externalReferenceCode": "Agriculture",
 		"name": "Agriculture",
 		"name_i18n": {
 			"en-US": "Agriculture"
@@ -17,6 +19,7 @@
 	},
 	{
 		"key": "consultingMarketResearch",
+		"externalReferenceCode": "Consulting/Market Research",
 		"name": "Consulting/Market Research",
 		"name_i18n": {
 			"en-US": "Consulting/Market Research"
@@ -25,6 +28,7 @@
 	},
 	{
 		"key": "education",
+		"externalReferenceCode": "Education",
 		"name": "Education",
 		"name_i18n": {
 			"en-US": "Education"
@@ -33,6 +37,7 @@
 	},
 	{
 		"key": "energy",
+		"externalReferenceCode": "Energy",
 		"name": "Energy",
 		"name_i18n": {
 			"en-US": "Energy"
@@ -41,6 +46,7 @@
 	},
 	{
 		"key": "engineering",
+		"externalReferenceCode": "Engineering",
 		"name": "Engineering",
 		"name_i18n": {
 			"en-US": "Engineering"
@@ -49,6 +55,7 @@
 	},
 	{
 		"key": "financialServices",
+		"externalReferenceCode": "Financial Services",
 		"name": "Financial Services",
 		"name_i18n": {
 			"en-US": "Financial Services"
@@ -57,6 +64,7 @@
 	},
 	{
 		"key": "governmentFederal",
+		"externalReferenceCode": "Government (Federal)",
 		"name": "Government (Federal)",
 		"name_i18n": {
 			"en-US": "Government (Federal)"
@@ -65,6 +73,7 @@
 	},
 	{
 		"key": "governmentStateLocal",
+		"externalReferenceCode": "Government (State/Local)",
 		"name": "Government (State/Local)",
 		"name_i18n": {
 			"en-US": "Government (State/Local)"
@@ -73,6 +82,7 @@
 	},
 	{
 		"key": "healthcare",
+		"externalReferenceCode": "Healthcare",
 		"name": "Healthcare",
 		"name_i18n": {
 			"en-US": "Healthcare"
@@ -81,6 +91,7 @@
 	},
 	{
 		"key": "hospitalityLeisure",
+		"externalReferenceCode": "Hospitality/Leisure",
 		"name": "Hospitality/Leisure",
 		"name_i18n": {
 			"en-US": "Hospitality/Leisure"
@@ -89,6 +100,7 @@
 	},
 	{
 		"key": "insurance",
+		"externalReferenceCode": "Insurance",
 		"name": "Insurance",
 		"name_i18n": {
 			"en-US": "Insurance"
@@ -97,6 +109,7 @@
 	},
 	{
 		"key": "mediaEntertainment",
+		"externalReferenceCode": "Media/Entertainment",
 		"name": "Media/Entertainment",
 		"name_i18n": {
 			"en-US": "Media/Entertainment"
@@ -105,6 +118,7 @@
 	},
 	{
 		"key": "manufacturing",
+		"externalReferenceCode": "Manufacturing",
 		"name": "Manufacturing",
 		"name_i18n": {
 			"en-US": "Manufacturing"
@@ -113,6 +127,7 @@
 	},
 	{
 		"key": "notForProfitNGO",
+		"externalReferenceCode": "Not For Profit/NGO",
 		"name": "Not For Profit/NGO",
 		"name_i18n": {
 			"en-US": "Not For Profit/NGO"
@@ -121,6 +136,7 @@
 	},
 	{
 		"key": "other",
+		"externalReferenceCode": "Other",
 		"name": "Other",
 		"name_i18n": {
 			"en-US": "Other"
@@ -129,6 +145,7 @@
 	},
 	{
 		"key": "pharmaceuticals",
+		"externalReferenceCode": "Pharmaceuticals",
 		"name": "Pharmaceuticals",
 		"name_i18n": {
 			"en-US": "Pharmaceuticals"
@@ -137,6 +154,7 @@
 	},
 	{
 		"key": "professionalServicesAgencyBusiness",
+		"externalReferenceCode": "Professional Services (Agency/Business)",
 		"name": "Professional Services (Agency/Business)",
 		"name_i18n": {
 			"en-US": "Professional Services (Agency/Business)"
@@ -145,6 +163,7 @@
 	},
 	{
 		"key": "professionalServicesTechnicalWebIT",
+		"externalReferenceCode": "Professional Services (Technical/Web/IT)",
 		"name": "Professional Services (Technical/Web/IT)",
 		"name_i18n": {
 			"en-US": "Professional Services (Technical/Web/IT)"
@@ -153,6 +172,7 @@
 	},
 	{
 		"key": "retailConsumerProducts",
+		"externalReferenceCode": "Retail/Consumer Products",
 		"name": "Retail/Consumer Products",
 		"name_i18n": {
 			"en-US": "Retail/Consumer Products"
@@ -161,6 +181,7 @@
 	},
 	{
 		"key": "technology",
+		"externalReferenceCode": "Technology",
 		"name": "Technology",
 		"name_i18n": {
 			"en-US": "Technology"
@@ -169,6 +190,7 @@
 	},
 	{
 		"key": "telecommunications",
+		"externalReferenceCode": "Telecommunications",
 		"name": "Telecommunications",
 		"name_i18n": {
 			"en-US": "Telecommunications"
@@ -177,6 +199,7 @@
 	},
 	{
 		"key": "transportation",
+		"externalReferenceCode": "Transportation",
 		"name": "Transportation",
 		"name_i18n": {
 			"en-US": "Transportation"
@@ -185,6 +208,7 @@
 	},
 	{
 		"key": "utilities",
+		"externalReferenceCode": "Utilities",
 		"name": "Utilities",
 		"name_i18n": {
 			"en-US": "Utilities"

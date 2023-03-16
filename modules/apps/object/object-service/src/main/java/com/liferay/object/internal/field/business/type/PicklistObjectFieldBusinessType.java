@@ -23,11 +23,13 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -100,8 +102,18 @@ public class PicklistObjectFieldBusinessType
 			_getDDMFormFieldOptions(objectField, objectFieldRenderingContext)
 		).put(
 			"predefinedValue",
-			_getDDMFormFieldPredefinedValue(
-				objectField, objectFieldRenderingContext)
+			() -> {
+				LocalizedValue localizedValue = new LocalizedValue(
+					objectFieldRenderingContext.getLocale());
+
+				localizedValue.addString(
+					objectFieldRenderingContext.getLocale(),
+					ObjectFieldSettingUtil.getDefaultValueAsString(
+						null, objectField.getObjectFieldId(),
+						_objectFieldSettingLocalService, null));
+
+				return localizedValue;
+			}
 		).build();
 	}
 
@@ -167,22 +179,6 @@ public class PicklistObjectFieldBusinessType
 		return ddmFormFieldOptions;
 	}
 
-	private LocalizedValue _getDDMFormFieldPredefinedValue(
-		ObjectField objectField,
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
-
-		LocalizedValue ddmFormFieldPredefinedValueLocalizedValue =
-			new LocalizedValue(objectFieldRenderingContext.getLocale());
-
-		if (objectField.isState()) {
-			ddmFormFieldPredefinedValueLocalizedValue.addString(
-				objectFieldRenderingContext.getLocale(),
-				objectField.getDefaultValue());
-		}
-
-		return ddmFormFieldPredefinedValueLocalizedValue;
-	}
-
 	private List<ListTypeEntry> _getListTypeEntries(
 			ObjectField objectField,
 			ObjectFieldRenderingContext objectFieldRenderingContext)
@@ -193,7 +189,9 @@ public class PicklistObjectFieldBusinessType
 				objectField.getListTypeDefinitionId());
 		}
 
-		String listEntryKey = objectField.getDefaultValue();
+		String listEntryKey = ObjectFieldSettingUtil.getDefaultValueAsString(
+			null, objectField.getObjectFieldId(),
+			_objectFieldSettingLocalService, null);
 
 		if (MapUtil.isNotEmpty(objectFieldRenderingContext.getProperties())) {
 			ListEntry listEntry =
@@ -243,6 +241,9 @@ public class PicklistObjectFieldBusinessType
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;

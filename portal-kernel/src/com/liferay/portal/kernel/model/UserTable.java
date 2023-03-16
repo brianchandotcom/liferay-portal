@@ -49,8 +49,6 @@ public class UserTable extends BaseTable<UserTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<UserTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<UserTable, Boolean> defaultUser = createColumn(
-		"defaultUser", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<UserTable, Long> contactId = createColumn(
 		"contactId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<UserTable, String> password = createColumn(
@@ -126,6 +124,8 @@ public class UserTable extends BaseTable<UserTable> {
 	public final Column<UserTable, Boolean> emailAddressVerified = createColumn(
 		"emailAddressVerified", Boolean.class, Types.BOOLEAN,
 		Column.FLAG_DEFAULT);
+	public final Column<UserTable, Integer> type = createColumn(
+		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<UserTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 

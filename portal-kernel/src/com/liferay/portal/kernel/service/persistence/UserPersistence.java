@@ -1205,56 +1205,6 @@ public interface UserPersistence
 	public int countByC_MD(long companyId, Date modifiedDate);
 
 	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultUser the default user
-	 * @return the matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	public User findByC_DU(long companyId, boolean defaultUser)
-		throws NoSuchUserException;
-
-	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultUser the default user
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	public User fetchByC_DU(long companyId, boolean defaultUser);
-
-	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultUser the default user
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	public User fetchByC_DU(
-		long companyId, boolean defaultUser, boolean useFinderCache);
-
-	/**
-	 * Removes the user where companyId = &#63; and defaultUser = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultUser the default user
-	 * @return the user that was removed
-	 */
-	public User removeByC_DU(long companyId, boolean defaultUser)
-		throws NoSuchUserException;
-
-	/**
-	 * Returns the number of users where companyId = &#63; and defaultUser = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultUser the default user
-	 * @return the number of matching users
-	 */
-	public int countByC_DU(long companyId, boolean defaultUser);
-
-	/**
 	 * Returns the user where companyId = &#63; and screenName = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
@@ -1503,6 +1453,160 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_O(long companyId, String openId);
+
+	/**
+	 * Returns all the users where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching users
+	 */
+	public java.util.List<User> findByC_T(long companyId, int type);
+
+	/**
+	 * Returns a range of all the users where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
+	 */
+	public java.util.List<User> findByC_T(
+		long companyId, int type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the users where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 */
+	public java.util.List<User> findByC_T(
+		long companyId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the users where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching users
+	 */
+	public java.util.List<User> findByC_T(
+		long companyId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	public User findByC_T_First(
+			long companyId, int type,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
+	 */
+	public User fetchByC_T_First(
+		long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	public User findByC_T_Last(
+			long companyId, int type,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
+	 */
+	public User fetchByC_T_Last(
+		long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param userId the primary key of the current user
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user
+	 * @throws NoSuchUserException if a user with the primary key could not be found
+	 */
+	public User[] findByC_T_PrevAndNext(
+			long userId, long companyId, int type,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
+	 * Removes all the users where companyId = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 */
+	public void removeByC_T(long companyId, int type);
+
+	/**
+	 * Returns the number of users where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching users
+	 */
+	public int countByC_T(long companyId, int type);
 
 	/**
 	 * Returns all the users where companyId = &#63; and status = &#63;.
@@ -1827,62 +1931,62 @@ public interface UserPersistence
 		long companyId, Date createDate, Date modifiedDate);
 
 	/**
-	 * Returns all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns all the users where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @return the matching users
 	 */
-	public java.util.List<User> findByC_DU_S(
-		long companyId, boolean defaultUser, int status);
+	public java.util.List<User> findByC_T_S(
+		long companyId, int type, int status);
 
 	/**
-	 * Returns a range of all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns a range of all the users where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @return the range of matching users
 	 */
-	public java.util.List<User> findByC_DU_S(
-		long companyId, boolean defaultUser, int status, int start, int end);
+	public java.util.List<User> findByC_T_S(
+		long companyId, int type, int status, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns an ordered range of all the users where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching users
 	 */
-	public java.util.List<User> findByC_DU_S(
-		long companyId, boolean defaultUser, int status, int start, int end,
+	public java.util.List<User> findByC_T_S(
+		long companyId, int type, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns an ordered range of all the users where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
@@ -1890,107 +1994,107 @@ public interface UserPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	public java.util.List<User> findByC_DU_S(
-		long companyId, boolean defaultUser, int status, int start, int end,
+	public java.util.List<User> findByC_T_S(
+		long companyId, int type, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns the first user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
-	public User findByC_DU_S_First(
-			long companyId, boolean defaultUser, int status,
+	public User findByC_T_S_First(
+			long companyId, int type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<User>
 				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
-	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns the first user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByC_DU_S_First(
-		long companyId, boolean defaultUser, int status,
+	public User fetchByC_T_S_First(
+		long companyId, int type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator);
 
 	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
-	public User findByC_DU_S_Last(
-			long companyId, boolean defaultUser, int status,
+	public User findByC_T_S_Last(
+			long companyId, int type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<User>
 				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByC_DU_S_Last(
-		long companyId, boolean defaultUser, int status,
+	public User fetchByC_T_S_Last(
+		long companyId, int type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator);
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param userId the primary key of the current user
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
-	public User[] findByC_DU_S_PrevAndNext(
-			long userId, long companyId, boolean defaultUser, int status,
+	public User[] findByC_T_S_PrevAndNext(
+			long userId, long companyId, int type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<User>
 				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
-	 * Removes all the users where companyId = &#63; and defaultUser = &#63; and status = &#63; from the database.
+	 * Removes all the users where companyId = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 */
-	public void removeByC_DU_S(long companyId, boolean defaultUser, int status);
+	public void removeByC_T_S(long companyId, int type, int status);
 
 	/**
-	 * Returns the number of users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 * Returns the number of users where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param defaultUser the default user
+	 * @param type the type
 	 * @param status the status
 	 * @return the number of matching users
 	 */
-	public int countByC_DU_S(long companyId, boolean defaultUser, int status);
+	public int countByC_T_S(long companyId, int type, int status);
 
 	/**
 	 * Returns the user where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.

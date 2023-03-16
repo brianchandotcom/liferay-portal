@@ -251,13 +251,6 @@ public class CompanyWrapper
 	}
 
 	@Override
-	public User getDefaultUser()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getDefaultUser();
-	}
-
-	@Override
 	public String getDefaultWebId() {
 		return model.getDefaultWebId();
 	}
@@ -279,6 +272,13 @@ public class CompanyWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getGroupId();
+	}
+
+	@Override
+	public User getGuestUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getGuestUser();
 	}
 
 	/**

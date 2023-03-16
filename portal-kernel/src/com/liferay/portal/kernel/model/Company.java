@@ -63,9 +63,6 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public CompanyInfo getCompanyInfo();
 
-	public User getDefaultUser()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public String getDefaultWebId();
 
 	public String getEmailAddress();
@@ -74,6 +71,9 @@ public interface Company extends CompanyModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getGroupId()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public User getGuestUser()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public String getKey();

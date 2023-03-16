@@ -166,7 +166,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BusinessType businessType;
 
-	@Schema
+	@Schema(deprecated = true)
 	public String getDefaultValue() {
 		return defaultValue;
 	}
@@ -190,6 +190,7 @@ public class ObjectField implements Serializable {
 		}
 	}
 
+	@Deprecated
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultValue;

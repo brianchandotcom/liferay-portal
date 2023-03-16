@@ -116,6 +116,6 @@ describe('DisplayPageItemContextualSidebar', () => {
 	it('renders feedback message when item does not have display page', () => {
 		renderContextualSidebar({hasDisplayPage: false});
 
-		expect(screen.getByRole('alert')).toBeInTheDocument();
+		expect(screen.getByText('no-display-page')).toBeInTheDocument();
 	});
 });

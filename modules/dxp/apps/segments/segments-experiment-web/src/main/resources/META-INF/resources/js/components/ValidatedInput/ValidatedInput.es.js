@@ -35,6 +35,27 @@ function ValidatedInput({
 	const [invalid, setInvalid] = useState(false);
 	const nodeRef = useRef();
 
+	const updateInvalid = (newInvalid) => {
+		setInvalid(newInvalid);
+
+		if (newInvalid !== invalid) {
+			onValidationChange(newInvalid);
+		}
+	};
+
+	const onNameInputBlur = (event) => {
+		if (_isValueValid(value)) {
+			updateInvalid(true);
+		}
+
+		onBlur(event);
+	};
+
+	const onNameInputFocus = (event) => {
+		updateInvalid(false);
+		onFocus(event);
+	};
+
 	useEffect(() => {
 		if (nodeRef.current && autofocus) {
 			nodeRef.current.focus();
@@ -57,9 +78,9 @@ function ValidatedInput({
 			<ClayInput
 				id={inputId}
 				maxLength="75"
-				onBlur={_handleNameInputBlur}
+				onBlur={onNameInputBlur}
 				onChange={onChange}
-				onFocus={_handleNameInputFocus}
+				onFocus={onNameInputFocus}
 				ref={nodeRef}
 				type="text"
 				value={value}
@@ -76,24 +97,6 @@ function ValidatedInput({
 			)}
 		</ClayForm.Group>
 	);
-
-	function _handleNameInputBlur(event) {
-		if (!_isValueValid(value)) {
-			_setInvalid(true);
-		}
-		onBlur(event);
-	}
-	function _handleNameInputFocus(event) {
-		_setInvalid(false);
-		onFocus(event);
-	}
-
-	function _setInvalid(newInvalid) {
-		setInvalid(newInvalid);
-		if (newInvalid !== invalid) {
-			onValidationChange(newInvalid);
-		}
-	}
 }
 
 ValidatedInput.propTypes = {

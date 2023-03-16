@@ -2,7 +2,7 @@ FROM liferay/jdk11-jdk8:latest
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 	\
-	apt-get install -y git jq nodejs p7zip-full \
+	apt-get install -y git nodejs p7zip-full \
 	\
 	npm install -g generator-liferay-fragments generator-liferay-theme yarn yo \
 	\

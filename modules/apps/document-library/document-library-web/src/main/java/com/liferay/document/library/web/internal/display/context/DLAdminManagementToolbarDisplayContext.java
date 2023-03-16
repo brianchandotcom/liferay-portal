@@ -693,6 +693,8 @@ public class DLAdminManagementToolbarDisplayContext
 						"browseBy", (String)null
 					).setParameter(
 						"fileEntryTypeId", (String)null
+					).setParameter(
+						"fileExtension", (String)null
 					).buildPortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "all"));

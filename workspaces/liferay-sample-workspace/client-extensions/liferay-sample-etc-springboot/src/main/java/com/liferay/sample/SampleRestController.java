@@ -45,18 +45,28 @@ public class SampleRestController {
 
 	@GetMapping("/dad/joke")
 	public ResponseEntity<String> getDadJoke(@AuthenticationPrincipal Jwt jwt) {
-		return new ResponseEntity<>(
-			WebClient.create(
-			).get(
-			).uri(
-				"https://icanhazdadjoke.com"
-			).accept(
-				MediaType.TEXT_PLAIN
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block(),
-			HttpStatus.OK);
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+		}
+
+		String dadJoke = WebClient.create(
+		).get(
+		).uri(
+			"https://icanhazdadjoke.com"
+		).accept(
+			MediaType.TEXT_PLAIN
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Dad joke: " + dadJoke);
+		}
+
+		return new ResponseEntity<>(dadJoke, HttpStatus.OK);
 	}
 
 	@PostMapping("/sample/notification/type/1")
@@ -139,7 +149,7 @@ public class SampleRestController {
 			WebClient.Builder builder = WebClient.builder();
 
 			WebClient webClient = builder.baseUrl(
-				_liferayPortalURL
+				_serverProtocol + "://" + _mainDomain
 			).defaultHeader(
 				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
 			).defaultHeader(
@@ -191,7 +201,10 @@ public class SampleRestController {
 	private static final Log _log = LogFactory.getLog(
 		SampleRestController.class);
 
-	@Value("${liferay.portal.url}")
-	private String _liferayPortalURL;
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	private String _mainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _serverProtocol;
 
 }

@@ -194,6 +194,81 @@ definition {
 			actionLabel = "Action Label");
 	}
 
+	@description = "LPS-178405 - Verify if actions works with oldValue function when trigger is On After Delete (Add an Object Entry)"
+	@priority = 4
+	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger {
+		task ("Given: Two custom objects with a text field") {
+			for (var objectNum : list "1,2") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object 178405${objectNum}",
+					objectName = "CustomObject170405${objectNum}",
+					pluralLabelName = "Custom Objects 178405${objectNum}");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Custom Text Field",
+					fieldName = "customObjectField",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject178405${objectNum}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject178405${objectNum}");
+			}
+		}
+
+		task ("And Given: The custom objects has a On Afer Delete Trigger action") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 1784051");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				fieldName = "Custom Text Field",
+				inputExpression = "oldValue('customObjectField') == 'Entry Test'",
+				inputMethod = "true",
+				inputValue = "Works!",
+				objectLabel = "Custom Object 1784052",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Delete");
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Custom Action");
+		}
+
+		task ("When an entry is created and then deleted") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject1784051",
+				value = "Entry Test");
+
+			ObjectAdmin.deleteObjectEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject1784051",
+				value = "Entry Test");
+		}
+
+		task ("Then the action will be triggered after deleting an entry.") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject178405-2");
+
+			ObjectPortlet.viewEntry(entry = "Works!");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 178405-1");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Custom Action",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-175200 - Verify if actions works with oldValue function when trigger is On After Update (Add an Object Entry) using Picklist field."
 	@priority = 5
 	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterUpdateTrigger {

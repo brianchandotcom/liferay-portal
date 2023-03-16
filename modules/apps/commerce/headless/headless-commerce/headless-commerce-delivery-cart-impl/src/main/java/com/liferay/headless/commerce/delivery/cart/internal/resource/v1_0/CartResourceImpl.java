@@ -178,13 +178,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		List<CommerceOrder> commerceOrders =
-			_commerceOrderService.getPendingCommerceOrders(
-				commerceChannel.getGroupId(), accountId, search,
-				pagination.getStartPosition(), pagination.getEndPosition());
-
 		return Page.of(
-			_toCarts(commerceOrders), pagination,
+			transform(
+				_commerceOrderService.getPendingCommerceOrders(
+					commerceChannel.getGroupId(), accountId, search,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toCart),
+			pagination,
 			_commerceOrderService.getPendingCommerceOrdersCount(
 				commerceChannel.getGroupId(), accountId, search));
 	}
@@ -265,14 +265,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId());
-
 		return _toCart(
 			_commerceOrderService.applyCouponCode(
-				cartId, couponCode.getCode(), commerceContext));
+				cartId, couponCode.getCode(),
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceAccountId())));
 	}
 
 	@Override
@@ -527,11 +526,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				cart.getOrderTypeExternalReferenceCode(),
 				contextCompany.getCompanyId());
 
-		if (commerceOrderType != null) {
-			return commerceOrderType.getCommerceOrderTypeId();
+		if (commerceOrderType == null) {
+			return 0;
 		}
 
-		return 0;
+		return commerceOrderType.getCommerceOrderTypeId();
 	}
 
 	private String _getOrderConfirmationCheckoutStepURL(
@@ -588,10 +587,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				_commerceOrderValidatorRegistry.
 					getCommerceOrderValidatorResults(null, commerceOrder);
 
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CartItem cartItem = _cartItemDTOConverter.toDTO(
 				new CartItemDTOConverterContext(
 					commerceOrder.getCommerceAccountId(),
@@ -675,18 +673,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			new DefaultDTOConverterContext(
 				commerceOrder.getCommerceOrderId(),
 				contextAcceptLanguage.getPreferredLocale()));
-	}
-
-	private List<Cart> _toCarts(List<CommerceOrder> commerceOrders)
-		throws Exception {
-
-		List<Cart> carts = new ArrayList<>();
-
-		for (CommerceOrder commerceOrder : commerceOrders) {
-			carts.add(_toCart(commerceOrder));
-		}
-
-		return carts;
 	}
 
 	private void _updateCommerceOrderAddress(

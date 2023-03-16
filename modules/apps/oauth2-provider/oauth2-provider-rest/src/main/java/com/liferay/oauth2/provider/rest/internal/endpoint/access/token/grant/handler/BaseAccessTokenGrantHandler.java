@@ -59,10 +59,7 @@ public abstract class BaseAccessTokenGrantHandler
 				"User does not have permission to create token");
 		}
 
-		AccessTokenGrantHandler accessTokenGrantHandler =
-			getAccessTokenGrantHandler();
-
-		return accessTokenGrantHandler.createAccessToken(client, params);
+		return doCreateAccessToken(client, params);
 	}
 
 	protected boolean clientsMatch(Client client1, Client client2) {
@@ -83,6 +80,9 @@ public abstract class BaseAccessTokenGrantHandler
 
 		return false;
 	}
+
+	protected abstract ServerAccessToken doCreateAccessToken(
+		Client client, MultivaluedMap<String, String> params);
 
 	protected abstract AccessTokenGrantHandler getAccessTokenGrantHandler();
 

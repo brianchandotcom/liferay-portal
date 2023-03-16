@@ -26,6 +26,8 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
+	<liferay-ui:success key="layoutPublished" message="the-utility-page-was-successfully-published" />
+
 	<liferay-ui:success key="layoutUtilityPageDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "layoutUtilityPageDeleted")) %>' />
 
 	<liferay-ui:search-container

@@ -115,9 +115,9 @@ definition {
 		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a private site") {
-			JSONGroup.addGroup(
-				groupName = "Site Name",
-				membershipType = "Private");
+			HeadlessSite.addSite(
+				membershipType = "Private",
+				siteName = "Site Name");
 		}
 
 		task ("Create a user and set its password") {

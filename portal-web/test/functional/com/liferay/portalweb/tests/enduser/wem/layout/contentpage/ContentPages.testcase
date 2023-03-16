@@ -628,12 +628,10 @@ definition {
 			}
 
 			task ("Add a new site based on site template") {
-				Site.openSitesAdmin();
-
-				Site.addSiteTemplateCP(
+				HeadlessSite.addSite(
 					siteName = "Site Name",
-					siteTemplateName = "Site Template Name",
-					siteTemplateTab = "Custom Site Templates");
+					templateName = "Site Template Name",
+					templateType = "Site Template");
 			}
 
 			task ("Delete the Button fragment of master template") {

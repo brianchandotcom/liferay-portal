@@ -80,34 +80,34 @@ definition {
 	@priority = 4
 	test AddChildChildSite {
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a child site to the site") {
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Site Name",
+				siteName = "Child Site Name");
 		}
 
 		task ("Add a child site to the child site") {
-			JSONGroup.addChildGroup(
-				grandParentGroupName = "Site Name",
-				groupName = "Child Child SiteName",
-				parentGroupName = "Child SiteName");
+			HeadlessSite.addSite(
+				grandParentSiteName = "Site Name",
+				parentSiteName = "Child Site Name",
+				siteName = "Grandchild Site Name");
 		}
 
 		task ("View the child site to the site") {
 			Site.openSitesAdmin();
 
 			Site.viewChildCP(
-				childSiteName = "Child SiteName",
+				childSiteName = "Child Site Name",
 				siteName = "Site Name");
 		}
 
 		task ("View the child site to the child site") {
 			Site.viewChildCP(
-				childSiteName = "Child Child SiteName",
-				siteName = "Child SiteName");
+				childSiteName = "Grandchild Site Name",
+				siteName = "Child Site Name");
 		}
 	}
 

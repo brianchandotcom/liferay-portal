@@ -2100,11 +2100,10 @@ definition {
 	@priority = 4
 	test ViewPrefixesForEmailAndPhoneAndNoneOptionsOnContentPage {
 		task ("Given a site created from Welcome site template") {
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
+			HeadlessSite.addSite(
 				siteName = "Site Name",
-				siteTemplateName = "Welcome");
+				templateName = "Welcome",
+				templateType = "Site Initializer");
 		}
 
 		task ("When adding a web content with email and telephone") {

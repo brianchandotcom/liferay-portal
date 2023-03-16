@@ -13,12 +13,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addBlankCP(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 

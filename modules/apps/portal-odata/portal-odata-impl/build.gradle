@@ -1,9 +1,9 @@
 dependencies {
-	compileInclude group: "org.apache.olingo", name: "odata-commons-api", version: "4.7.1"
-	compileInclude group: "org.apache.olingo", name: "odata-commons-core", version: "4.7.1"
-	compileInclude group: "org.apache.olingo", name: "odata-server-api", version: "4.7.1"
-	compileInclude group: "org.apache.olingo", name: "odata-server-core", version: "4.7.1"
-	compileInclude group: "org.apache.olingo", name: "odata-server-core-ext", version: "4.7.1"
+	compileInclude group: "org.apache.olingo", name: "odata-commons-api", version: "4.9.0"
+	compileInclude group: "org.apache.olingo", name: "odata-commons-core", version: "4.9.0"
+	compileInclude group: "org.apache.olingo", name: "odata-server-api", version: "4.9.0"
+	compileInclude group: "org.apache.olingo", name: "odata-server-core", version: "4.9.0"
+	compileInclude group: "org.apache.olingo", name: "odata-server-core-ext", version: "4.9.0"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

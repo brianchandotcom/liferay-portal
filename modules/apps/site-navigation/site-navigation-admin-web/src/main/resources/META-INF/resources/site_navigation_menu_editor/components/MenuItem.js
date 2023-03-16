@@ -231,6 +231,14 @@ export function MenuItem({
 											setIsMovementEnabled(false)
 										}
 										onKeyDown={(event) => {
+											if (
+												!Liferay.FeatureFlags[
+													'LPS-134527'
+												]
+											) {
+												return;
+											}
+
 											if (event.key === 'Enter') {
 												event.stopPropagation();
 
@@ -311,7 +319,12 @@ export function MenuItem({
 										}}
 										size="sm"
 										symbol="drag"
-										tabIndex={isTarget ? '0' : '-1'}
+										tabIndex={
+											isTarget &&
+											Liferay.FeatureFlags['LPS-134527']
+												? '0'
+												: '-1'
+										}
 									/>
 								</ClayLayout.ContentCol>
 

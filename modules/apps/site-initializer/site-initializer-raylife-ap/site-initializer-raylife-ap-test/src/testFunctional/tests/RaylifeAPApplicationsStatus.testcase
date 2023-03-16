@@ -16,7 +16,9 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = ${testSiteName});
+		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+		Raylife.createRaylifeSite(siteName = "Raylife AP");
 	}
 
 	tearDown {
@@ -32,79 +34,97 @@ definition {
 		}
 	}
 
+	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
+	@priority = 4
+	test AssertNumberInCenterGraphIsEqualNumberOfStatus {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#NumberCenterGraphEqualNumberOfStatus";
+
+		task ("Given the applications page is open") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
+
+		task ("Then Assert that the number in the center of graph is equals to the value of items in list") {
+			RaylifeAPApplications.getValueFromApplicationsPage(legendItem = "Quoted,Open,Incomplete,Underwriting,Rejected,Reviewed,Bound");
+
+			RaylifeAPApplications.assertGraphValue(number = ${number});
+		}
+	}
+
 	@description = "LPS-154592 - Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
 	@priority = 4
-	test IfStatusOpenAppearsInApplicationsStatus {
+	test AssertStatusOpenAppearsInApplicationsStatus {
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusOpenAppearsInApplicationStatus";
 
-		ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Given the applications page is open") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
-		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
 
-		var open = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Open");
+		task ("When the user fill in the forms in Raylife D2C") {
+			var open = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Open");
 
-		ApplicationsMenu.gotoSite(site = "Raylife D2C");
+			ApplicationsMenu.gotoSite(site = "Raylife D2C");
 
-		RaylifeHomePage.startFlow();
+			RaylifeHomePage.startFlow();
 
-		RaylifeContactInfo.typeAllBasicsInfoFields();
+			RaylifeContactInfo.typeAllBasicsInfoFields();
 
-		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+			Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
 
-		Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+			Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+		}
 
-		ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Then Assert if the 'open' status has change in the graph") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
-		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
-		var newValue = ${open} + 1;
+			var newValue = ${open} + 1;
 
-		AssertTextEquals(
-			key_legendItem = "Open",
-			locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-			value1 = ${newValue});
+			AssertTextEquals(
+				key_legendItem = "Open",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
+				value1 = ${newValue});
+		}
 	}
 
 	@description = "LPS-154593 - Check if when making an incomplete flow until the page Quote Comparison in Raylife d2c, the status 'Quoted' appears in the Applications status of Raylife ap"
 	@priority = 4
-	test IfStatusQuotedAppearsInApplicationsStatus {
+	test AssertStatusQuotedAppearsInApplicationsStatus {
 		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusQuotedAppearsInApplicationStatus";
 
-		ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Given the applications page is open") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
-		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
-		var quoted = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Quoted");
+			var quoted = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Quoted");
+		}
 
-		ApplicationsMenu.gotoSite(site = "Raylife D2C");
+		task ("When the user fill in the forms in Raylife D2C") {
+			ApplicationsMenu.gotoSite(site = "Raylife D2C");
 
-		RaylifeHomePage.startFlow();
+			RaylifeHomePage.startFlow();
 
-		Raylife.formsFlow();
+			Raylife.formsFlow();
+		}
 
-		ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Then the user go back to RaylifeAp and Assert the 'Quoted' status") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
-		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
-		var newValue = ${quoted} + 1;
+			var newValue = ${quoted} + 1;
 
-		AssertTextEquals(
-			key_legendItem = "Quoted",
-			locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-			value1 = ${newValue});
-	}
-
-	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
-	@priority = 4
-	test NumberCenterGraphEqualNumberOfStatus {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#NumberCenterGraphEqualNumberOfStatus";
-
-		ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
-
-		RaylifeAPApplications.verifyApplicationsStatus();
+			AssertTextEquals(
+				key_legendItem = "Quoted",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
+				value1 = ${newValue});
+		}
 	}
 
 }

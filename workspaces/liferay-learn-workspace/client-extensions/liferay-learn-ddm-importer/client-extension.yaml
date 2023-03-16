@@ -1,0 +1,17 @@
+assemble:
+    - from: .
+      include: "liferay_learn_ddm_importer_entrypoint.sh"
+      into: .
+    - from: build/libs
+      include: "*.jar"
+      into: .
+    - fromTask: shadowJar
+liferay-learn-ddm-importer:
+    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    name: Liferay Learn Web
+    scopes:
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+        - Liferay.Data.Engine.REST.everything
+        - Liferay.Headless.Admin.User.everything.read
+    type: oAuthApplicationHeadlessServer

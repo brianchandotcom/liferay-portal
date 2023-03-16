@@ -16,7 +16,6 @@ package com.liferay.segments.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -78,9 +76,7 @@ public class SegmentsEntryModelResourcePermissionWrapper
 
 			if (actionId.equals(ActionKeys.UPDATE) &&
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(
-					segmentsEntry.getSource()) &&
-				(!FeatureFlagManagerUtil.isEnabled("LPS-172194") ||
-				 Validator.isNull(segmentsEntry.getCriteria()))) {
+					segmentsEntry.getSource())) {
 
 				return false;
 			}

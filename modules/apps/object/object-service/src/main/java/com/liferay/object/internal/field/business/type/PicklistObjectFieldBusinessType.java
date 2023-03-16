@@ -64,7 +64,10 @@ public class PicklistObjectFieldBusinessType
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		return SetUtil.fromArray(ObjectFieldSettingConstants.NAME_STATE_FLOW);
+		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+			ObjectFieldSettingConstants.NAME_STATE_FLOW);
 	}
 
 	@Override

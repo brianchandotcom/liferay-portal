@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -635,6 +636,12 @@ public class DLAdminManagementToolbarDisplayContext
 		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
 	}
 
+	private String[] _getFileExtensions(
+		HttpServletRequest httpServletRequest) {
+
+		return ParamUtil.getStringValues(httpServletRequest, "fileExtension");
+	}
+
 	private String _getFileExtensionsItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
@@ -666,13 +673,14 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		long fileEntryTypeId = _getFileEntryTypeId();
+		boolean fileExtensionsIsEmpty = ArrayUtil.isEmpty(_getFileExtensions(_httpServletRequest));
 		String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation", "home");
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					navigation.equals("home") && (fileEntryTypeId == -1));
+					navigation.equals("home") && (fileEntryTypeId == -1) && fileExtensionsIsEmpty);
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -753,6 +761,7 @@ public class DLAdminManagementToolbarDisplayContext
 		).add(
 			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
+				dropdownItem.setActive(!fileExtensionsIsEmpty);
 				dropdownItem.putData("action", "openExtensionSelector");
 				dropdownItem.putData(
 					"extensionsFilterURL", _getFileExtensionsItemSelectorURL());

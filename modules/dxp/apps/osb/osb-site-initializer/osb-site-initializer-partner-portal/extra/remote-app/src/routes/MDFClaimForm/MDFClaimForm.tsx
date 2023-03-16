@@ -15,6 +15,7 @@ import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivityDTO';
+import LiferayPicklist from '../../common/interfaces/liferayPicklist';
 import MDFClaim from '../../common/interfaces/mdfClaim';
 import {Liferay} from '../../common/services/liferay';
 import useGetDocumentFolder from '../../common/services/liferay/headless-delivery/useGetDocumentFolders';
@@ -27,6 +28,7 @@ import submitForm from './utils/submitForm';
 
 const getInitialFormValues = (
 	mdfRequestId: number,
+	currency: LiferayPicklist,
 	activitiesDTO?: MDFRequestActivityDTO[],
 	totalrequestedAmount?: number
 ): MDFClaim => ({
@@ -47,12 +49,14 @@ const getInitialFormValues = (
 				);
 			})
 			.includes(true),
+		currency: activity.currency,
 		id: activity.id,
 		metrics: '',
 		name: activity.name,
 		selected: false,
 		totalCost: 0,
 	})),
+	currency,
 	mdfClaimStatus: Status.PENDING,
 	r_mdfReqToMDFClms_c_mdfRequestId: mdfRequestId,
 	totalClaimAmount: 0,
@@ -92,6 +96,7 @@ const MDFClaimForm = () => {
 		<PRMFormik
 			initialValues={getInitialFormValues(
 				Number(mdfRequestId),
+				mdfRequest.currency,
 				mdfRequest.mdfReqToActs,
 				mdfRequest.totalMDFRequestAmount
 			)}

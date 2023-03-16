@@ -17,6 +17,7 @@ export default function getDTOFromMDFClaimActivity(
 	mdfClaimId: number
 ): MDFClaimActivityDTO {
 	return {
+		currency: mdfClaimActivity.currency,
 		listQualifiedLeads: mdfClaimActivity.listQualifiedLeads,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,

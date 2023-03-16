@@ -17,6 +17,7 @@ export default interface MDFClaimActivity extends Partial<LiferayObject> {
 	activityStatus?: LiferayPicklist;
 	budgets?: MDFClaimBudget[];
 	claimed?: boolean;
+	currency?: LiferayPicklist;
 	documents?: File[];
 	listQualifiedLeads?: File;
 	metrics: string;

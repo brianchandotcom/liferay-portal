@@ -27,9 +27,9 @@ function getSiteVariables() {
 	return mdfClaimId;
 }
 
-const getIntlNumberFormat = () =>
+const getIntlNumberFormat = (currency) =>
 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-		currency: 'USD',
+		currency: currency?.key || 'USD',
 		style: 'currency',
 	});
 
@@ -46,7 +46,7 @@ const Panel = ({activity, children}) => (
 							<h6 className="text-neutral-6">MDF Claim:</h6>
 
 							<h5 className="justify-content-end text-neutral-10">
-								{getIntlNumberFormat().format(
+								{getIntlNumberFormat(activity.currency).format(
 									activity?.totalCost
 								)}
 							</h5>
@@ -178,7 +178,7 @@ const Table = ({items, title}) => (
 	</ClayTable>
 );
 
-const BudgetBreakdownTable = ({activityId}) => {
+const BudgetBreakdownTable = ({activityId, currency}) => {
 	const [budgets, setBudgets] = useState();
 
 	useEffect(() => {
@@ -217,7 +217,7 @@ const BudgetBreakdownTable = ({activityId}) => {
 				<Table
 					items={budgets.items.map((budget) => ({
 						title: budget.expenseName,
-						value: getIntlNumberFormat().format(
+						value: getIntlNumberFormat(currency).format(
 							budget.invoiceAmount
 						),
 					}))}
@@ -273,7 +273,10 @@ export default function () {
 
 			{activities?.items.map((activity, index) => (
 				<Panel activity={activity} key={index}>
-					<BudgetBreakdownTable activityId={activity.id} />
+					<BudgetBreakdownTable
+						activityId={activity.id}
+						currency={activity.currency}
+					/>
 				</Panel>
 			))}
 		</div>

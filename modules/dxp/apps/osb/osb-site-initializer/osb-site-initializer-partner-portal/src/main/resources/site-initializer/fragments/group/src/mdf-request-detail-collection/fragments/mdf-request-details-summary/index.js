@@ -38,11 +38,11 @@ const updateMDFDetailsSummary = async () => {
 		);
 		const totalCost = formatCurrency(
 			Liferay.Util.escape(data.totalCostOfExpense),
-			data.currency?.key ? Liferay.Util.escape(data.currency.key) : 'USD'
+			Liferay.Util.escape(data.currency.key)
 		);
 		const requestedCost = formatCurrency(
 			Liferay.Util.escape(data.totalMDFRequestAmount),
-			data.currency?.key ? Liferay.Util.escape(data.currency.key) : 'USD'
+			Liferay.Util.escape(data.currency.key)
 		);
 		const totalCostCurrency = data.currency.key ? data.currency.key : ' ';
 		const requestedCostCurrency = data.currency.key
@@ -76,7 +76,7 @@ const updateMDFDetailsSummary = async () => {
 
 const formatCurrency = (value, currencyKey) =>
 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-		currency: currencyKey,
+		currency: currencyKey ? currencyKey : 'USD',
 		style: 'currency',
 	}).format(value);
 

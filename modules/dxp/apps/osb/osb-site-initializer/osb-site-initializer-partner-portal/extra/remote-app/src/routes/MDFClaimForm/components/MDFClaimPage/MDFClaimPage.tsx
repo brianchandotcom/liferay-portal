@@ -168,9 +168,9 @@ const MDFClaimPage = ({
 					<ResumeCard
 						className="mb-4"
 						leftContent="Total MDF Requested Amount"
-						rightContent={getIntlNumberFormat().format(
-							values.totalrequestedAmount || 0
-						)}
+						rightContent={getIntlNumberFormat(
+							values.currency
+						).format(values.totalrequestedAmount || 0)}
 					/>
 
 					<PRMFormik.Field

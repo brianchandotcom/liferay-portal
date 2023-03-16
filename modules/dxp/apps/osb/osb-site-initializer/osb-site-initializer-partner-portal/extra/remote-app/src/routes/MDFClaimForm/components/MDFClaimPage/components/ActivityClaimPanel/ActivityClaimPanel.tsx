@@ -147,7 +147,7 @@ const ActivityClaimPanel = ({
 
 						<div className="d-flex justify-content-end">
 							<h5 className="mb-0 text-neutral-10">
-								{getIntlNumberFormat().format(
+								{getIntlNumberFormat(activity.currency).format(
 									activity.totalCost
 								)}
 							</h5>

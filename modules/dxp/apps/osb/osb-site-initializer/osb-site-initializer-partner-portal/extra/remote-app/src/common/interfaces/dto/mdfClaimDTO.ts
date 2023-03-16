@@ -17,6 +17,7 @@ export default interface MDFClaimDTO
 	extends Omit<MDFClaim, 'activities' | 'reimbursementInvoice'> {
 	amountClaimed?: number;
 	companyName?: string;
+	currency: LiferayPicklist;
 	externalReferenceCodeSF?: string;
 	mdfClaimStatus: LiferayPicklist;
 	mdfRequestExternalReferenceCodeSF?: string;

@@ -10,14 +10,18 @@
  */
 
 import {MDFClaimColumnKey} from '../../../common/enums/mdfClaimColumnKey';
+import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
-export default function getMDFClaimAmountClaimedInfo(amountClaimed?: number) {
+export default function getMDFClaimAmountClaimedInfo(
+	amountClaimed?: number,
+	currency?: LiferayPicklist
+) {
 	if (amountClaimed) {
 		return {
-			[MDFClaimColumnKey.AMOUNT_CLAIMED]: getIntlNumberFormat().format(
-				amountClaimed
-			),
+			[MDFClaimColumnKey.AMOUNT_CLAIMED]: getIntlNumberFormat(
+				currency
+			).format(amountClaimed),
 		};
 	}
 }

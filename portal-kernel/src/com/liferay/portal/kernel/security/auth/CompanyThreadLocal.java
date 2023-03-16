@@ -183,8 +183,8 @@ public class CompanyThreadLocal {
 				User defaultUser = _fetchDefaultUser(companyId);
 
 				if (defaultUser == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
+					if (_log.isDebugEnabled()) {
+						_log.debug(
 							"No default user was found for company " +
 								companyId);
 					}

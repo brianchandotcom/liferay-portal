@@ -202,8 +202,6 @@ const FrontendDataSet = ({
 		...currentViewProps
 	} = activeView;
 
-	const selectable = !!(bulkActions?.length && selectedItemsKey);
-
 	const requestData = useCallback(() => {
 		const activeFiltersOdataStrings = filters.reduce(
 			(activeFilters, filter) =>
@@ -761,7 +759,10 @@ const FrontendDataSet = ({
 				portletId,
 				searchParam,
 				selectItems,
-				selectable,
+				selectable: Boolean(
+					selectedItemsKey &&
+						(bulkActions?.length || selectionType === 'single')
+				),
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,

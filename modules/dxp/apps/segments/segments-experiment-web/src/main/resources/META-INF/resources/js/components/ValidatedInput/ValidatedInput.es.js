@@ -15,12 +15,6 @@ import {useId} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-function _isValueValid(value) {
-	const noSpacesValue = value.replace(/\s/g, '');
-
-	return !!noSpacesValue;
-}
-
 function ValidatedInput({
 	autofocus = false,
 	errorMessage,
@@ -44,7 +38,7 @@ function ValidatedInput({
 	};
 
 	const onNameInputBlur = (event) => {
-		if (_isValueValid(value)) {
+		if (!value.trim().length) {
 			updateInvalid(true);
 		}
 

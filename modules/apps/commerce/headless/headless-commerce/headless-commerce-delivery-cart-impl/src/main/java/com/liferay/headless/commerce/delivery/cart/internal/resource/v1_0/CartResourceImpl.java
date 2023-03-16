@@ -204,54 +204,50 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		Cart cart = _validateOrder(commerceOrder);
+		Cart cart = _toCart(commerceOrder);
 
-		if (cart.getValid()) {
-			try {
-				commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-					commerceOrder, contextUser.getUserId());
+		cart.setValid(true);
+		cart.setCartItems(_getValidatedCommerceOrderItems(commerceOrder, cart));
 
-				cart = _toCart(commerceOrder);
+		try {
+			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, contextUser.getUserId());
+
+			cart = _toCart(commerceOrder);
+		}
+		catch (Exception exception) {
+			if (exception.getCause() instanceof
+					CommerceOrderBillingAddressException) {
+
+				cart.setValid(false);
+				cart.setErrorMessages(new String[] {"Invalid billing address"});
 			}
-			catch (Exception exception) {
-				if (exception.getCause() instanceof
-						CommerceOrderBillingAddressException) {
 
-					cart.setValid(false);
-					cart.setErrorMessages(
-						new String[] {"Invalid billing address"});
-				}
+			if (exception.getCause() instanceof
+					CommerceOrderGuestCheckoutException) {
 
-				if (exception.getCause() instanceof
-						CommerceOrderGuestCheckoutException) {
+				cart.setValid(false);
+				cart.setErrorMessages(new String[] {"Invalid guest checkout"});
+			}
 
-					cart.setValid(false);
-					cart.setErrorMessages(
-						new String[] {"Invalid guest checkout"});
-				}
+			if (exception.getCause() instanceof
+					CommerceOrderShippingAddressException) {
 
-				if (exception.getCause() instanceof
-						CommerceOrderShippingAddressException) {
+				cart.setValid(false);
+				cart.setErrorMessages(
+					new String[] {"Invalid shipping address"});
+			}
 
-					cart.setValid(false);
-					cart.setErrorMessages(
-						new String[] {"Invalid shipping address"});
-				}
+			if (exception.getCause() instanceof
+					CommerceOrderShippingMethodException) {
 
-				if (exception.getCause() instanceof
-						CommerceOrderShippingMethodException) {
+				cart.setValid(false);
+				cart.setErrorMessages(new String[] {"Invalid shipping method"});
+			}
 
-					cart.setValid(false);
-					cart.setErrorMessages(
-						new String[] {"Invalid shipping method"});
-				}
-
-				if (exception.getCause() instanceof
-						CommerceOrderStatusException) {
-
-					cart.setValid(false);
-					cart.setErrorMessages(new String[] {"Invalid cart status"});
-				}
+			if (exception.getCause() instanceof CommerceOrderStatusException) {
+				cart.setValid(false);
+				cart.setErrorMessages(new String[] {"Invalid cart status"});
 			}
 		}
 
@@ -761,26 +757,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		// Update nested resources
 
 		_addOrUpdateNestedResources(cart, commerceOrder, commerceContext);
-	}
-
-	private Cart _validateOrder(CommerceOrder commerceOrder) throws Exception {
-		List<String> errorMessages = new ArrayList<>();
-
-		Cart cart = _toCart(commerceOrder);
-
-		cart.setValid(true);
-
-		if (!errorMessages.isEmpty()) {
-			cart.setValid(false);
-			cart.setErrorMessages(errorMessages.toArray(new String[0]));
-		}
-
-		CartItem[] validatedCartItems = _getValidatedCommerceOrderItems(
-			commerceOrder, cart);
-
-		cart.setCartItems(validatedCartItems);
-
-		return cart;
 	}
 
 	@Reference

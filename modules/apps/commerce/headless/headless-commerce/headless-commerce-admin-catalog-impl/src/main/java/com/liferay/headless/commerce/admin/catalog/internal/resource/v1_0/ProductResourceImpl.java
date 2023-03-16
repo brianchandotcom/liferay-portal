@@ -129,15 +129,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -659,19 +656,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		).build();
 	}
 
-	private String[] _getAssetTags(CPDefinition cpDefinition) {
-		List<AssetTag> assetEntryAssetTags = _assetTagService.getTags(
-			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
-
-		Stream<AssetTag> stream = assetEntryAssetTags.stream();
-
-		return stream.map(
-			AssetTag::getName
-		).toArray(
-			String[]::new
-		);
-	}
-
 	private CPDefinition _getCPDefinition(
 			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws Exception {
@@ -988,40 +972,39 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_commerceChannelRelService.deleteCommerceChannelRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-			Stream<ProductChannel> stream = Arrays.stream(productChannels);
+			for (Long commerceChannelId :
+					transformToList(
+						productChannels,
+						productChannel -> {
+							if (productChannel.getExternalReferenceCode() ==
+									null) {
 
-			List<Long> channelIds = stream.map(
-				productChannel -> {
-					if (productChannel.getExternalReferenceCode() == null) {
-						return productChannel.getChannelId();
-					}
+								return productChannel.getChannelId();
+							}
 
-					CommerceChannel commerceChannel = null;
+							CommerceChannel commerceChannel = null;
 
-					try {
-						commerceChannel =
-							_commerceChannelService.
-								fetchByExternalReferenceCode(
-									productChannel.getExternalReferenceCode(),
-									contextCompany.getCompanyId());
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
-					}
+							try {
+								commerceChannel =
+									_commerceChannelService.
+										fetchByExternalReferenceCode(
+											productChannel.
+												getExternalReferenceCode(),
+											contextCompany.getCompanyId());
+							}
+							catch (PortalException portalException) {
+								if (_log.isDebugEnabled()) {
+									_log.debug(portalException);
+								}
+							}
 
-					if (commerceChannel == null) {
-						return null;
-					}
+							if (commerceChannel == null) {
+								return null;
+							}
 
-					return commerceChannel.getCommerceChannelId();
-				}
-			).collect(
-				Collectors.toList()
-			);
+							return commerceChannel.getCommerceChannelId();
+						})) {
 
-			for (Long commerceChannelId : channelIds) {
 				if (commerceChannelId == null) {
 					continue;
 				}
@@ -1048,44 +1031,41 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-			Stream<ProductAccountGroup> productAccountGroupStream =
-				Arrays.stream(productAccountGroups);
+			for (Long accountGroupId :
+					transformToList(
+						productAccountGroups,
+						productAccountGroup -> {
+							String externalReferenceCode =
+								productAccountGroup.getExternalReferenceCode();
 
-			List<Long> accountGroupIds = productAccountGroupStream.map(
-				productAccountGroup -> {
-					if (productAccountGroup.getExternalReferenceCode() ==
-							null) {
+							if (externalReferenceCode == null) {
+								return productAccountGroup.getAccountGroupId();
+							}
 
-						return productAccountGroup.getAccountGroupId();
-					}
+							CommerceAccountGroup commerceAccountGroup = null;
 
-					CommerceAccountGroup commerceAccountGroup = null;
+							try {
+								commerceAccountGroup =
+									_commerceAccountGroupService.
+										fetchByExternalReferenceCode(
+											contextCompany.getCompanyId(),
+											productAccountGroup.
+												getExternalReferenceCode());
+							}
+							catch (PortalException portalException) {
+								if (_log.isDebugEnabled()) {
+									_log.debug(portalException);
+								}
+							}
 
-					try {
-						commerceAccountGroup =
-							_commerceAccountGroupService.
-								fetchByExternalReferenceCode(
-									contextCompany.getCompanyId(),
-									productAccountGroup.
-										getExternalReferenceCode());
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
-					}
+							if (commerceAccountGroup == null) {
+								return null;
+							}
 
-					if (commerceAccountGroup == null) {
-						return null;
-					}
+							return commerceAccountGroup.
+								getCommerceAccountGroupId();
+						})) {
 
-					return commerceAccountGroup.getCommerceAccountGroupId();
-				}
-			).collect(
-				Collectors.toList()
-			);
-
-			for (Long accountGroupId : accountGroupIds) {
 				if (accountGroupId == null) {
 					continue;
 				}
@@ -1173,7 +1153,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		String[] assetTags = product.getTags();
 
 		if (product.getTags() == null) {
-			assetTags = _getAssetTags(cpDefinition);
+			assetTags = transformToArray(
+				_assetTagService.getTags(
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId()),
+				AssetTag::getName, String.class);
 		}
 
 		serviceContext.setAssetTagNames(assetTags);

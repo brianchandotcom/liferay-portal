@@ -83,7 +83,8 @@ public class RedirectProviderImpl
 		}
 
 		List<RedirectPatternEntry> redirectPatternEntries =
-			_redirectPatternEntries.getOrDefault(groupId, Collections.emptyList());
+			_redirectPatternEntries.getOrDefault(
+				groupId, Collections.emptyList());
 
 		for (RedirectPatternEntry redirectPatternEntry :
 				redirectPatternEntries) {
@@ -105,8 +106,8 @@ public class RedirectProviderImpl
 
 	@Override
 	public List<RedirectPatternEntry> getRedirectPatternEntries(long groupId) {
-		List<RedirectPatternEntry> redirectPatternEntries = _redirectPatternEntries.get(
-			groupId);
+		List<RedirectPatternEntry> redirectPatternEntries =
+			_redirectPatternEntries.get(groupId);
 
 		if (redirectPatternEntries != null) {
 			return redirectPatternEntries;
@@ -139,16 +140,16 @@ public class RedirectProviderImpl
 			PatternUtil.parse(redirectPatternConfiguration.patternStrings()));
 	}
 
-	protected void setRedirectPatternEntries(
-		Map<Long, List<RedirectPatternEntry>> redirectPatternEntries) {
-
-		_redirectPatternEntries = redirectPatternEntries;
-	}
-
 	protected void setRedirectEntryLocalService(
 		RedirectEntryLocalService redirectEntryLocalService) {
 
 		_redirectEntryLocalService = redirectEntryLocalService;
+	}
+
+	protected void setRedirectPatternEntries(
+		Map<Long, List<RedirectPatternEntry>> redirectPatternEntries) {
+
+		_redirectPatternEntries = redirectPatternEntries;
 	}
 
 	private void _unmapPid(String pid) {
@@ -160,11 +161,12 @@ public class RedirectProviderImpl
 	}
 
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
-	private Map<Long, List<RedirectPatternEntry>> _redirectPatternEntries =
-		new ConcurrentHashMap<>();
 
 	@Reference
 	private RedirectEntryLocalService _redirectEntryLocalService;
+
+	private Map<Long, List<RedirectPatternEntry>> _redirectPatternEntries =
+		new ConcurrentHashMap<>();
 
 	private static class RedirectImpl implements Redirect {
 

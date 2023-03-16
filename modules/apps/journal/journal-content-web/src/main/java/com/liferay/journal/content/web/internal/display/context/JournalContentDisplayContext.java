@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorRet
 import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMTemplateItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
@@ -373,16 +372,10 @@ public class JournalContentDisplayContext {
 		}
 
 		try {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					article.getGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					article.getDDMStructureKey(), true);
-
 			_ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(
 				article.getGroupId(),
 				PortalUtil.getClassNameId(DDMStructure.class),
-				ddmStructure.getStructureId(), true);
+				article.getDDMStructureId(), true);
 		}
 		catch (PortalException portalException) {
 			_log.error(

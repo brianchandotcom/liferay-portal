@@ -134,7 +134,16 @@ definition {
 	macro _createRelationship {
 		Variables.assertDefined(parameterList = "${deletionType},${en_US_label},${name},${objectDefinitionId1},${objectDefinitionId2},${type}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId1}/object-relationships \
@@ -163,7 +172,17 @@ definition {
 	macro _curlObjectEntriesRelationship {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntry1},${objectEntry2},${relationshipName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
 
 		var curl = '''
@@ -348,7 +367,16 @@ definition {
 	macro _getRelationshipNameById {
 		Variables.assertDefined(parameterList = ${relationshipId});
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
@@ -601,7 +629,8 @@ definition {
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntry1 = ${objectEntry1},
 			objectEntry2 = ${objectEntry2},
-			relationshipName = ${relationshipName});
+			relationshipName = ${relationshipName},
+			virtualHost = ${virtualHost});
 
 		JSONCurlUtil.delete(${curl});
 	}
@@ -737,9 +766,12 @@ definition {
 			name = ${name},
 			objectDefinitionId1 = ${objectDefinitionId1},
 			objectDefinitionId2 = ${objectDefinitionId2},
-			type = ${type});
+			type = ${type},
+			virtualHost = ${virtualHost});
 
-		var relationshipName = ObjectDefinitionAPI._getRelationshipNameById(relationshipId = ${relationshipId});
+		var relationshipName = ObjectDefinitionAPI._getRelationshipNameById(
+			relationshipId = ${relationshipId},
+			virtualHost = ${virtualHost});
 
 		TestUtils.assertEquals(
 			actual = ${relationshipName},
@@ -775,7 +807,16 @@ definition {
 	macro getObjectDefinitionIdByName {
 		Variables.assertDefined(parameterList = ${name});
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions?filter=name%20eq%20%27${name}%27 \
@@ -843,8 +884,18 @@ definition {
 	macro getObjectEntryRelationship {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId},${relationshipName}");
 
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
-		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId}/${relationshipName} \
@@ -888,7 +939,8 @@ definition {
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntry1 = ${objectEntry1},
 			objectEntry2 = ${objectEntry2},
-			relationshipName = ${relationshipName});
+			relationshipName = ${relationshipName},
+			virtualHost = ${virtualHost});
 
 		var response = JSONCurlUtil.put(${curl});
 
@@ -898,7 +950,9 @@ definition {
 	macro setUpGlobalObjectDefinitionIdWithName {
 		Variables.assertDefined(parameterList = ${objectName});
 
-		var objectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectName});
+		var objectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(
+			name = ${objectName},
+			virtualHost = ${virtualHost});
 
 		static var staticObjectId = ${objectId};
 
@@ -908,28 +962,49 @@ definition {
 	macro setUpGlobalObjectEntryId {
 		var objectEntryId1 = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "foundations",
-			name = "Foundation First");
+			name = "Foundation First",
+			virtualHost = ${virtualHost});
 		var objectEntryId2 = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "foundations",
-			name = "Foundation Second");
+			name = "Foundation Second",
+			virtualHost = ${virtualHost});
 		var objectEntryId3 = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "secondFoundations",
-			name = "Foundation First-1");
+			name = "Foundation First-1",
+			virtualHost = ${virtualHost});
 		var objectEntryId4 = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "secondFoundations",
-			name = "Foundation Second-1");
-		static var staticObjectEntryId1 = ${objectEntryId1};
-		static var staticObjectEntryId2 = ${objectEntryId2};
-		static var staticObjectEntryId3 = ${objectEntryId3};
-		static var staticObjectEntryId4 = ${objectEntryId4};
+			name = "Foundation Second-1",
+			virtualHost = ${virtualHost});
 
-		return ${staticObjectEntryId1};
+		if (isSet(virtualHost)) {
+			static var staticObjectEntryId5 = ${objectEntryId1};
+			static var staticObjectEntryId6 = ${objectEntryId2};
+			static var staticObjectEntryId7 = ${objectEntryId3};
+			static var staticObjectEntryId8 = ${objectEntryId4};
 
-		return ${staticObjectEntryId2};
+			return ${staticObjectEntryId5};
 
-		return ${staticObjectEntryId3};
+			return ${staticObjectEntryId6};
 
-		return ${staticObjectEntryId4};
+			return ${staticObjectEntryId7};
+
+			return ${staticObjectEntryId8};
+		}
+		else {
+			static var staticObjectEntryId1 = ${objectEntryId1};
+			static var staticObjectEntryId2 = ${objectEntryId2};
+			static var staticObjectEntryId3 = ${objectEntryId3};
+			static var staticObjectEntryId4 = ${objectEntryId4};
+
+			return ${staticObjectEntryId1};
+
+			return ${staticObjectEntryId2};
+
+			return ${staticObjectEntryId3};
+
+			return ${staticObjectEntryId4};
+		}
 	}
 
 	macro setUpGlobalUniversityId {

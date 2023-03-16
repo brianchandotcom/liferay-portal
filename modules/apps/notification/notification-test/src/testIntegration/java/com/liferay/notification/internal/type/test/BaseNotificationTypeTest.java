@@ -15,6 +15,7 @@
 package com.liferay.notification.internal.type.test;
 
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
@@ -22,15 +23,43 @@ import com.liferay.notification.service.NotificationRecipientSettingLocalService
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.time.Month;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
@@ -40,7 +69,69 @@ public class BaseNotificationTypeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		user = TestPropsValues.getUser();
+		user1 = TestPropsValues.getUser();
+
+		ListType prefixListType = listTypeLocalService.getListType(
+			"dr", "com.liferay.portal.kernel.model.Contact.prefix");
+
+		ListType suffixListType = listTypeLocalService.getListType(
+			"ii", "com.liferay.portal.kernel.model.Contact.suffix");
+
+		user2 = userLocalService.addUser(
+			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
+			null, "alfa@liferay.com", user1.getLocale(), "alfa", "bravo",
+			"charlie", prefixListType.getListTypeId(),
+			suffixListType.getListTypeId(), true, Month.FEBRUARY.getValue(), 7,
+			1988, null, null, null, null, null, true, null);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user2));
+
+		PrincipalThreadLocal.setName(user2.getUserId());
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				user1.getUserId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build()));
+
+		objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				user1.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		notificationQueueEntryLocalService.deleteNotificationQueueEntries(
+			notificationQueueEntry.getCompanyId(),
+			notificationQueueEntry.getSentDate());
+
+		userNotificationEventLocalService.deleteUserNotificationEvents(
+			user1.getUserId());
+	}
+
+	protected void assertTerms(
+		List<String> expectedValues, List<String> termValues) {
+
+		for (int i = 0; i < termValues.size(); i++) {
+			Assert.assertEquals(expectedValues.get(i), termValues.get(i));
+		}
 	}
 
 	protected NotificationRecipientSetting createNotificationRecipientSetting(
@@ -63,6 +154,74 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
+	protected HashMap<String, String> getAuthorValues() throws PortalException {
+		return HashMapBuilder.put(
+			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
+		).put(
+			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
+		).put(
+			getTerm("AUTHOR_ID"), String.valueOf(user2.getUserId())
+		).put(
+			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
+		).put(
+			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
+		).put(
+			getTerm("AUTHOR_PREFIX"), getListType("PREFIX", user2)
+		).put(
+			getTerm("AUTHOR_SUFFIX"), getListType("SUFFIX", user2)
+		).build();
+	}
+
+	protected HashMap<String, String> getCurrentUserValues()
+		throws PortalException {
+
+		return HashMapBuilder.put(
+			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
+		).put(
+			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
+		).put(
+			"[%CURRENT_USER_ID%]", String.valueOf(user2.getUserId())
+		).put(
+			"[%CURRENT_USER_LAST_NAME%]", user2.getLastName()
+		).put(
+			"[%CURRENT_USER_MIDDLE_NAME%]", user2.getMiddleName()
+		).put(
+			"[%CURRENT_USER_PREFIX%]", getListType("PREFIX", user2)
+		).put(
+			"[%CURRENT_USER_SUFFIX%]", getListType("SUFFIX", user2)
+		).build();
+	}
+
+	protected String getListType(String type, User user)
+		throws PortalException {
+
+		Contact contact = user.fetchContact();
+
+		if (contact == null) {
+			return StringPool.BLANK;
+		}
+
+		long listTypeId = contact.getPrefixListTypeId();
+
+		if (type.equals("SUFFIX")) {
+			listTypeId = contact.getSuffixListTypeId();
+		}
+
+		if (listTypeId == 0) {
+			return StringPool.BLANK;
+		}
+
+		ListType listType = listTypeLocalService.getListType(listTypeId);
+
+		return listType.getName();
+	}
+
+	protected String getTerm(String objectFieldName) {
+		return StringBundler.concat(
+			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
+			StringUtil.upperCase(objectFieldName), "%]");
+	}
+
 	protected void sendNotification(
 			NotificationContext notificationContext, String type)
 		throws PortalException {
@@ -77,7 +236,23 @@ public class BaseNotificationTypeTest {
 		notificationType.sendNotification(notificationContext);
 	}
 
-	protected static User user;
+	@Inject
+	protected static ListTypeLocalService listTypeLocalService;
+
+	@DeleteAfterTestRun
+	protected static ObjectDefinition objectDefinition;
+
+	@Inject
+	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
+
+	protected static User user1;
+	protected static User user2;
+
+	@Inject
+	protected static UserLocalService userLocalService;
+
+	@DeleteAfterTestRun
+	protected NotificationQueueEntry notificationQueueEntry;
 
 	@Inject
 	protected NotificationQueueEntryLocalService
@@ -93,6 +268,13 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	protected NotificationTemplateLocalService notificationTemplateLocalService;
+
+	@Inject
+	protected ObjectEntryLocalService objectEntryLocalService;
+
+	@Inject
+	protected UserNotificationEventLocalService
+		userNotificationEventLocalService;
 
 	@Inject
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;

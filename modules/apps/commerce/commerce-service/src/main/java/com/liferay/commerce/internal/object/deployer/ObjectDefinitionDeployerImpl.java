@@ -49,7 +49,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		if (objectDefinition.isSystem() ||
+		if (objectDefinition.isUnmodifiableSystemObject() ||
 			Objects.equals(
 				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_COMPANY)) {

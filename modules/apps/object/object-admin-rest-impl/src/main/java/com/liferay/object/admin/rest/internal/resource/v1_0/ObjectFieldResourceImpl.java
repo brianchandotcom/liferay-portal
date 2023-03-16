@@ -321,7 +321,8 @@ public class ObjectFieldResourceImpl
 		throws Exception {
 
 		boolean updateable =
-			(!objectDefinition.isApproved() && !objectDefinition.isSystem()) ||
+			(!objectDefinition.isApproved() &&
+			 !objectDefinition.isUnmodifiableSystemObject()) ||
 			Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
 				objectField.getDBTableName());

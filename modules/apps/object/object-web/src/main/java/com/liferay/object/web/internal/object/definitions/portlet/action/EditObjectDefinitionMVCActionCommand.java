@@ -98,7 +98,7 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				_objectDefinitionService.getObjectDefinition(
 					objectDefinitionId);
 
-			if (objectDefinition.isSystem()) {
+			if (objectDefinition.isUnmodifiableSystemObject()) {
 				_objectDefinitionService.updateTitleObjectFieldId(
 					objectDefinitionId, titleObjectFieldId);
 

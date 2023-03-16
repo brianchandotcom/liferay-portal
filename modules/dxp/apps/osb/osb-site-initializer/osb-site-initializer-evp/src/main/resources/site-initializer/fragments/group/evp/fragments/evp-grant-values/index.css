@@ -3,8 +3,8 @@
 }
 
 .funds-row {
-	margin-bottom: 0px;
 	font-weight: bold;
+	margin-bottom: 0px;
 }
 
 .hours-row {
@@ -12,9 +12,9 @@
 }
 
 #available-funds {
+	font-weight: normal;
 	margin-bottom: 0px;
 	margin-left: 5px;
-	font-weight: normal;
 }
 
 #available-hours {

@@ -1308,7 +1308,7 @@ definition {
 	}
 
 	macro undoStagingPageVersioningPG {
-		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		ClickNoError(locator1 = "Staging#STAGING_MENU_UNDO_BUTTON");
 

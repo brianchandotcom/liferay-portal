@@ -20,6 +20,12 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageButton = document.getElementById(
 		`${namespace}openGraphImageButton`
 	);
+	const openGraphClearImageButton = document.getElementById(
+		`${namespace}openGraphClearImageButton`
+	);
+	const openGraphImageInput = document.getElementById(
+		`${namespace}openGraphImageInput`
+	);
 
 	const openGraphImageFileEntryId = document.getElementById(
 		`${namespace}openGraphImageFileEntryId`
@@ -39,7 +45,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 		`[for="${namespace}openGraphImageAlt"`
 	);
 
-	openGraphImageButton.addEventListener('click', () => {
+	const openImageSelector = () => {
 		openSelectionModal({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -53,28 +59,39 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 						value: itemValue.url,
 					});
 
-					toggleDisabled(openGraphImageAltField, false);
-					toggleDisabled(openGraphImageAltFieldDefaultLocale, false);
-					toggleDisabled(openGraphImageAltLabel, false);
+					toggleDisabled(
+						[
+							openGraphClearImageButton,
+							openGraphImageAltField,
+							openGraphImageAltFieldDefaultLocale,
+							openGraphImageAltLabel,
+						],
+						false
+					);
 				}
 			},
 			selectEventName: `${namespace}openGraphImageSelectedItem`,
 			title: Liferay.Language.get('open-graph-image'),
 			url: uploadOpenGraphImageURL,
 		});
-	});
+	};
 
-	const openGraphClearImageButton = document.getElementById(
-		`${namespace}openGraphClearImageButton`
-	);
+	openGraphImageButton.addEventListener('click', openImageSelector);
+	openGraphImageInput.addEventListener('click', openImageSelector);
 
 	openGraphClearImageButton.addEventListener('click', () => {
 		openGraphImageFileEntryId.value = '';
 		openGraphImageTitle.value = '';
 
-		toggleDisabled(openGraphImageAltField, true);
-		toggleDisabled(openGraphImageAltFieldDefaultLocale, true);
-		toggleDisabled(openGraphImageAltLabel, true);
+		toggleDisabled(
+			[
+				openGraphClearImageButton,
+				openGraphImageAltField,
+				openGraphImageAltFieldDefaultLocale,
+				openGraphImageAltLabel,
+			],
+			true
+		);
 
 		previewSeoFireChange(namespace, {
 			type: 'imgUrl',

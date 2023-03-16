@@ -103,20 +103,33 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				<c:otherwise>
 					<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-					<div class="form-group mb-2">
-						<label class="control-label"><liferay-ui:message key="image" /> <liferay-ui:icon-help message="open-graph-image-help" /></label>
-
-						<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
-
-						<aui:button-row cssClass="mt-0">
-							<aui:button aria-label='<%= LanguageUtil.format(locale, "select-x", "image") %>' name="openGraphImageButton" value="select" />
-							<aui:button aria-label='<%= LanguageUtil.format(locale, "clear-x", "image") %>' name="openGraphClearImageButton" value="clear" />
-						</aui:button-row>
-					</div>
-
 					<%
 					LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
 					%>
+
+					<div class="form-group mb-2">
+						<label class="control-label"><liferay-ui:message key="image" /> <liferay-ui:icon-help message="open-graph-image-help" /></label>
+
+						<div class="align-items-center d-flex">
+							<aui:input id="openGraphImageInput" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="no-image-is-loaded" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="flex-grow-1 mb-0 mr-2" />
+
+							<clay:button
+								aria-label='<%= LanguageUtil.format(locale, "select-x", "image") %>'
+								cssClass="mr-2"
+								displayType="secondary"
+								icon="plus"
+								id='<%= liferayPortletResponse.getNamespace() + "openGraphImageButton" %>'
+							/>
+
+							<clay:button
+								aria-label='<%= LanguageUtil.format(locale, "clear-x", "image") %>'
+								disabled="<%= (selLayoutSEOEntry != null) ? Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) : true %>"
+								displayType="secondary"
+								icon="times-circle"
+								id='<%= liferayPortletResponse.getNamespace() + "openGraphClearImageButton" %>'
+							/>
+						</div>
+					</div>
 
 					<div id="<portlet:namespace />openGraphSettings">
 						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />

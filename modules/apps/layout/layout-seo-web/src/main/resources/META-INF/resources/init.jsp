@@ -56,4 +56,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%@ include file="/init-ext.jsp" %>

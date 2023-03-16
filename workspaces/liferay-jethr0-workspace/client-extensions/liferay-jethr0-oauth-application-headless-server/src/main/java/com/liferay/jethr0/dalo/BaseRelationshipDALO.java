@@ -96,7 +96,7 @@ public class BaseRelationshipDALO {
 		return null;
 	}
 
-	protected JSONObject delete(
+	protected void delete(
 		String objectDefinitionURLPath, long objectEntryId,
 		long relatedObjectEntryId) {
 
@@ -106,7 +106,7 @@ public class BaseRelationshipDALO {
 
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
 			try {
-				String response = WebClient.create(
+				WebClient.create(
 					objectRelationshipURL
 				).delete(
 				).accept(
@@ -119,20 +119,12 @@ public class BaseRelationshipDALO {
 					String.class
 				).block();
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
-
-				JSONObject responseJSONObject = new JSONObject(response);
-
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
 							"Deleted relationship with ",
 							objectRelationshipURL));
 				}
-
-				return responseJSONObject;
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -147,8 +139,6 @@ public class BaseRelationshipDALO {
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}
 		}
-
-		return null;
 	}
 
 	protected String getObjectRelationshipName() {

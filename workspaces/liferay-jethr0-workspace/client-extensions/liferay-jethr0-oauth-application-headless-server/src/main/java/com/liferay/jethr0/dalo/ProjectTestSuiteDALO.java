@@ -36,8 +36,8 @@ public class ProjectTestSuiteDALO extends BaseRelationshipDALO {
 		return create("/o/c/projects", project.getId(), testSuite.getId());
 	}
 
-	public JSONObject deleteRelationship(Project project, TestSuite testSuite) {
-		return delete("/o/c/projects", project.getId(), testSuite.getId());
+	public void deleteRelationship(Project project, TestSuite testSuite) {
+		delete("/o/c/projects", project.getId(), testSuite.getId());
 	}
 
 	public List<Project> retrieveProjects(TestSuite testSuite) {

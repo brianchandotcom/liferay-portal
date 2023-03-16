@@ -40,11 +40,11 @@ public class ProjectPrioritizerComparatorDALO extends BaseRelationshipDALO {
 			projectComparator.getId());
 	}
 
-	public JSONObject deleteRelationship(
+	public void deleteRelationship(
 		ProjectPrioritizer projectPrioritizer,
 		ProjectComparator projectComparator) {
 
-		return delete(
+		delete(
 			"/o/c/projectprioritizers", projectPrioritizer.getId(),
 			projectComparator.getId());
 	}

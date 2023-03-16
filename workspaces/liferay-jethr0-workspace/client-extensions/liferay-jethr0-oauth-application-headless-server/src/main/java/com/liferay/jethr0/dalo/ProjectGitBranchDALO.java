@@ -36,8 +36,8 @@ public class ProjectGitBranchDALO extends BaseRelationshipDALO {
 		return create("/o/c/projects", project.getId(), gitBranch.getId());
 	}
 
-	public JSONObject deleteRelationship(Project project, GitBranch gitBranch) {
-		return delete("/o/c/projects", project.getId(), gitBranch.getId());
+	public void deleteRelationship(Project project, GitBranch gitBranch) {
+		delete("/o/c/projects", project.getId(), gitBranch.getId());
 	}
 
 	public List<GitBranch> retrieveGitBranches(Project project) {

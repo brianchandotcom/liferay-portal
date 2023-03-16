@@ -680,7 +680,7 @@ public class ObjectEntryInfoItemFormProvider
 				continue;
 			}
 
-			if (objectDefinition1.isSystem()) {
+			if (objectDefinition1.isUnmodifiableSystemObject()) {
 				continue;
 			}
 

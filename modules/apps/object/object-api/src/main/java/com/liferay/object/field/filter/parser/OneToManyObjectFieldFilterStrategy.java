@@ -102,7 +102,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		String restContextPath = null;
 
-		if (objectDefinition1.isSystem()) {
+		if (objectDefinition1.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
@@ -132,7 +132,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		JSONArray jsonArray = getJSONArray();
 
-		if (_objectDefinition1.isSystem()) {
+		if (_objectDefinition1.isUnmodifiableSystemObject()) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				selectionFDSFilterItems.add(
 					new SelectionFDSFilterItem(
@@ -178,7 +178,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		JSONArray jsonArray = getJSONArray();
 
-		if (_objectDefinition1.isSystem()) {
+		if (_objectDefinition1.isUnmodifiableSystemObject()) {
 			PersistedModelLocalService persistedModelLocalService =
 				_persistedModelLocalServiceRegistry.
 					getPersistedModelLocalService(

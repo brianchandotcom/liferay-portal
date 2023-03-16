@@ -152,7 +152,7 @@ public class RelationshipObjectFieldBusinessType
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(

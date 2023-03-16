@@ -3080,7 +3080,7 @@ public class ObjectDefinitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
-					if (system != objectDefinition.isSystem()) {
+					if (system != objectDefinition.isUnmodifiableSystemObject()) {
 						list = null;
 
 						break;
@@ -4499,7 +4499,7 @@ public class ObjectDefinitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
-					if ((system != objectDefinition.isSystem()) ||
+					if ((system != objectDefinition.isUnmodifiableSystemObject()) ||
 						(status != objectDefinition.getStatus())) {
 
 						list = null;
@@ -6467,7 +6467,7 @@ public class ObjectDefinitionPersistenceImpl
 				for (ObjectDefinition objectDefinition : list) {
 					if ((companyId != objectDefinition.getCompanyId()) ||
 						(active != objectDefinition.isActive()) ||
-						(system != objectDefinition.isSystem()) ||
+						(system != objectDefinition.isUnmodifiableSystemObject()) ||
 						(status != objectDefinition.getStatus())) {
 
 						list = null;

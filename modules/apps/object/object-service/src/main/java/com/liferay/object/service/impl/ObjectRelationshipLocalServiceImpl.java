@@ -164,7 +164,7 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		if (objectDefinition2.isSystem()) {
+		if (objectDefinition2.isUnmodifiableSystemObject()) {
 			_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 				objectRelationship.getObjectDefinitionId2(), primaryKey2,
 				HashMapBuilder.<String, Serializable>put(
@@ -993,12 +993,14 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId2);
 
-		if (objectDefinition1.isSystem() && objectDefinition2.isSystem()) {
+		if (objectDefinition1.isUnmodifiableSystemObject() &&
+			objectDefinition2.isUnmodifiableSystemObject()) {
+
 			throw new ObjectRelationshipTypeException(
 				"Relationships are not allowed between system objects");
 		}
 
-		if (objectDefinition1.isSystem() &&
+		if (objectDefinition1.isUnmodifiableSystemObject() &&
 			Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
 
 			throw new ObjectRelationshipTypeException(
@@ -1028,7 +1030,7 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectDefinition objectDefinition, long primaryKey)
 		throws PortalException {
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
@@ -1051,7 +1053,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		String restContextPath = StringPool.BLANK;
 
-		if (!objectDefinition1.isSystem()) {
+		if (!objectDefinition1.isUnmodifiableSystemObject()) {
 			restContextPath = objectDefinition1.getRESTContextPath();
 		}
 		else {

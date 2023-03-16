@@ -225,7 +225,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 		Map<String, Schema> sourceSchemas = null;
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			sourceSchemas = OpenAPIContributorUtil.getSystemObjectSchemas(
 				_bundleContext, getExternalDTOClassName(objectDefinition),
 				_openAPIResource);
@@ -239,7 +239,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		OpenAPIContributorUtil.copySchemas(
-			schemaName, sourceSchemas, objectDefinition.isSystem(), openAPI);
+			schemaName, sourceSchemas,
+			objectDefinition.isUnmodifiableSystemObject(), openAPI);
 	}
 
 	private PathItem _createObjectActionPathItem(

@@ -569,7 +569,7 @@ public class DefaultObjectEntryManagerImpl
 				relatedObjectDefinition.getCompanyId(),
 				objectRelationship.getType());
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			return _getSystemObjectRelatedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntryId,
 				objectRelationship, objectRelatedModelsProvider, pagination);
@@ -719,7 +719,7 @@ public class DefaultObjectEntryManagerImpl
 				_getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
-			if (relatedObjectDefinition.isSystem()) {
+			if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 				throw new UnsupportedOperationException(
 					"Unable to create nested object entries with system " +
 						"object definitions");

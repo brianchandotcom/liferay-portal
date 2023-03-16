@@ -306,7 +306,8 @@ public class ObjectEntryDisplayContextImpl
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition2.getScope());
 
-		if (!objectDefinition1.isSystem() && !objectDefinition2.isSystem() &&
+		if (!objectDefinition1.isUnmodifiableSystemObject() &&
+			!objectDefinition2.isUnmodifiableSystemObject() &&
 			ObjectEntryServiceUtil.hasPortletResourcePermission(
 				objectScopeProvider.getGroupId(
 					_objectRequestHelper.getRequest()),

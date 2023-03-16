@@ -165,7 +165,7 @@ public class ObjectEntryDTOConverter
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			if (FeatureFlagManagerUtil.isEnabled("LPS-172094")) {
 				SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 					_systemObjectDefinitionMetadataRegistry.

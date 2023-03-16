@@ -21,7 +21,6 @@ import hudson.Extension;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

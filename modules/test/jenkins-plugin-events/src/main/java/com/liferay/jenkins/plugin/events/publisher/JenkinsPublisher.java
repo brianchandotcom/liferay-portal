@@ -114,17 +114,6 @@ public class JenkinsPublisher {
 		}
 	}
 
-	public boolean containsEventTrigger(String eventTriggerString) {
-		for (EventTrigger eventTrigger : EventTrigger.values()) {
-			if (Objects.equals(eventTriggerString, eventTrigger.toString())) {
-				return containsEventTrigger(
-					EventTrigger.valueOf(eventTriggerString));
-			}
-		}
-
-		return false;
-	}
-
 	public boolean containsEventTrigger(EventTrigger eventTrigger) {
 		if (eventTrigger == null) {
 			return false;
@@ -132,6 +121,17 @@ public class JenkinsPublisher {
 
 		if (_eventTriggers.contains(eventTrigger)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	public boolean containsEventTrigger(String eventTriggerString) {
+		for (EventTrigger eventTrigger : EventTrigger.values()) {
+			if (Objects.equals(eventTriggerString, eventTrigger.toString())) {
+				return containsEventTrigger(
+					EventTrigger.valueOf(eventTriggerString));
+			}
 		}
 
 		return false;
@@ -206,9 +206,6 @@ public class JenkinsPublisher {
 		sb.append(base64Encoder.encodeToString(userNamePassword.getBytes()));
 
 		return sb.toString();
-	}
-
-	private void _initializeEventTypes() {
 	}
 
 	private void _publishHttp(String payload, EventTrigger eventTrigger) {
@@ -316,9 +313,9 @@ public class JenkinsPublisher {
 	}
 
 	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
-	private final String _name;
 	private final String _inboundJMSQueueName;
 	private final boolean _jmsRequest;
+	private final String _name;
 	private final String _outboundJMSQueueName;
 	private final String _url;
 	private final String _userName;

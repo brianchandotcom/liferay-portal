@@ -1,7 +1,16 @@
 definition {
 
 	macro _curlUserAccount {
-		var portalURL = JSONCompany.getPortalURL();
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		if (isSet(userAccountId)) {
 			var api = "user-accounts/${userAccountId}";
@@ -59,7 +68,7 @@ definition {
 	macro createUserAccount {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName}");
 
-		var curl = UserAccountAPI._curlUserAccount();
+		var curl = UserAccountAPI._curlUserAccount(virtualHost = ${virtualHost});
 		var body = '''"alternateName": "${alternateName}","emailAddress": "${emailAddress}","familyName": "${familyName}","givenName": "${givenName}"''';
 
 		if (isSet(fieldName) && isSet(fieldValue)) {
@@ -236,20 +245,33 @@ definition {
 			alternateName = ${alternateName1},
 			emailAddress = ${emailAddress1},
 			familyName = ${familyName1},
-			givenName = ${givenName1});
+			givenName = ${givenName1},
+			virtualHost = ${virtualHost});
 		var response2 = UserAccountAPI.createUserAccount(
 			alternateName = ${alternateName2},
 			emailAddress = ${emailAddress2},
 			familyName = ${familyName2},
-			givenName = ${givenName2});
+			givenName = ${givenName2},
+			virtualHost = ${virtualHost});
 		var userAccountId1 = JSONPathUtil.getIdValue(response = ${response1});
 		var userAccountId2 = JSONPathUtil.getIdValue(response = ${response2});
-		static var staticUserAccountId1 = ${userAccountId1};
-		static var staticUserAccountId2 = ${userAccountId2};
 
-		return ${staticUserAccountId1};
+		if (isSet(virtualHost)) {
+			static var staticUserAccountId3 = ${userAccountId1};
+			static var staticUserAccountId4 = ${userAccountId2};
 
-		return ${staticUserAccountId2};
+			return ${staticUserAccountId3};
+
+			return ${staticUserAccountId4};
+		}
+		else {
+			static var staticUserAccountId1 = ${userAccountId1};
+			static var staticUserAccountId2 = ${userAccountId2};
+
+			return ${staticUserAccountId1};
+
+			return ${staticUserAccountId2};
+		}
 	}
 
 }

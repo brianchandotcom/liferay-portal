@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -114,25 +113,16 @@ public class PortletPermissionsImporterHelper {
 				continue;
 			}
 
-			List<String> actionIds = new ArrayList<>();
-
 			List<String> resourceActionsIds = TransformUtil.transform(
 				resourceActions, ResourceAction::getActionId);
 
-			List<String> actionKeys = (List<String>)widgetPermissionsMap.get(
-				"actionKeys");
+			List<String> actionKeys = ListUtil.filter(
+				(List<String>)widgetPermissionsMap.get("actionKeys"),
+				resourceActionsIds::contains);
 
-			for (String actionKey : actionKeys) {
-				if (!resourceActionsIds.contains(actionKey)) {
-					continue;
-				}
-
-				actionIds.add(actionKey);
-			}
-
-			if (ListUtil.isNotEmpty(actionIds)) {
+			if (ListUtil.isNotEmpty(actionKeys)) {
 				roleIdsToActionIds.put(
-					role.getRoleId(), actionIds.toArray(new String[0]));
+					role.getRoleId(), actionKeys.toArray(new String[0]));
 			}
 		}
 

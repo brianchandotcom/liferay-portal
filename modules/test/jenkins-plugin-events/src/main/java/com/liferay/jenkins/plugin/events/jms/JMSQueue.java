@@ -53,13 +53,12 @@ public class JMSQueue {
 	public void subscribe(MessageListener messageListener) {
 		synchronized (_log) {
 			if (_messageConsumer != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						"[" + _queueName + "] Already subscribed to queue");
 				}
 
-				throw new RuntimeException(
-					"Unable to subscribe to " + _queueName);
+				return;
 			}
 
 			try {

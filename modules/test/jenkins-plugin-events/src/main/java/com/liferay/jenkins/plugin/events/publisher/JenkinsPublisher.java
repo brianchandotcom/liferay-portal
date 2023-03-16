@@ -105,7 +105,7 @@ public class JenkinsPublisher {
 			EventTrigger.QUEUE_ITEM_LEFT);
 
 		if ((_inboundJMSQueueName != null) && _jmsRequest) {
-			JMSConnection jmsConnection = JMSFactory.newJMSConnection(getUrl());
+			JMSConnection jmsConnection = JMSFactory.newJMSConnection(_url);
 
 			JMSQueue jmsQueue = JMSFactory.newJMSQueue(
 				jmsConnection, _inboundJMSQueueName);
@@ -158,7 +158,7 @@ public class JenkinsPublisher {
 	}
 
 	public String getUrl() {
-		return _userPassword;
+		return _url;
 	}
 
 	public String getUserName() {

@@ -177,33 +177,28 @@ public class LocalizedValueUtil {
 
 			String value = entry.getValue();
 
-			if (Validator.isNotNull(value)) {
-				try {
-					Object deserializedObject =
-						JSONFactoryUtil.looseDeserialize(value);
-
-					if (deserializedObject instanceof List) {
-						localizedValues.put(
-							languageId, JSONFactoryUtil.createJSONArray(value));
-
-						continue;
-					}
-					else if (deserializedObject instanceof Map) {
-						localizedValues.put(
-							languageId,
-							JSONFactoryUtil.createJSONObject(value));
-
-						continue;
-					}
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
+			if (Validator.isNull(value)) {
+				localizedValues.put(languageId, value);
 			}
 
-			localizedValues.put(languageId, value);
+			try {
+				Object deserializedObject = JSONFactoryUtil.looseDeserialize(
+					value);
+
+				if (deserializedObject instanceof List) {
+					localizedValues.put(
+						languageId, JSONFactoryUtil.createJSONArray(value));
+				}
+				else if (deserializedObject instanceof Map) {
+					localizedValues.put(
+						languageId, JSONFactoryUtil.createJSONObject(value));
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
 		}
 
 		return localizedValues;

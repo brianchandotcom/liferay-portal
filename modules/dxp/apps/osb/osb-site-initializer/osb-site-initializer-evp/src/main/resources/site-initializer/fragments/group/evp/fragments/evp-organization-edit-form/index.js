@@ -77,14 +77,15 @@ getEVPOrganizations().then((organizations) => {
 			const inputName = document.querySelector(`[name='${key}']`);
 
 			if (inputName) {
-				if (userRoles === ROLE.EVP_MANAGER) {
-					if (
-						inputName.name === FIELD.BANKINGINFO ||
-						inputName.name === FIELD.TAXID
-					) {
-						inputName.setAttribute('disabled', 'disabled');
-					}
+				const isEVPManager = userRoles === ROLE.EVP_MANAGER;
+				const isBankingInfoOrTaxId =
+					inputName.name === FIELD.BANKINGINFO ||
+					inputName.name === FIELD.TAXID;
+
+				if (isEVPManager && isBankingInfoOrTaxId) {
+					inputName.setAttribute('disabled', 'disabled');
 				}
+
 				inputName.value = organization[key];
 			}
 		}

@@ -18,7 +18,7 @@ import {useParams} from 'react-router-dom';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
 import ProgressBar from '~/components/ProgressBar';
-import SearchBuilder from '~/core/SearchBuilder';
+import useSearchBuilder from '~/hooks/useSearchBuilder';
 import i18n from '~/i18n';
 import {TestrayBuild, testrayBuildImpl} from '~/services/rest';
 import {BUILD_STATUS, DATA_COLORS, Statuses} from '~/util/constants';
@@ -126,6 +126,15 @@ const BuildChart: React.FC<BuildChartProps> = ({builds}) => (
 const Routine = () => {
 	const {actions, formModal} = useBuildActions();
 	const {routineId} = useParams();
+
+	const searchBuilder = useSearchBuilder({useURIEncode: false});
+
+	const routineFilter = searchBuilder
+		.eq('routineId', routineId as string)
+		.and()
+		.eq('template', false)
+		.and()
+		.build();
 
 	return (
 		<Container>
@@ -297,7 +306,7 @@ const Routine = () => {
 					testrayBuildImpl.transformDataFromList(response)
 				}
 				variables={{
-					filter: SearchBuilder.eq('routineId', routineId as string),
+					filter: routineFilter,
 				}}
 			>
 				{({items, totalCount}) =>

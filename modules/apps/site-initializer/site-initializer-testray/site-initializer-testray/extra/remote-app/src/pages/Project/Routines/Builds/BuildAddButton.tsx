@@ -16,6 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {BuildStatuses} from '~/util/statuses';
 
 import Form from '../../../../components/Form';
 import Tooltip from '../../../../components/Tooltip';
@@ -45,7 +46,7 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 		.and()
 		.eq('template', true)
 		.and()
-		.eq('active', true)
+		.eq('dueStatus', BuildStatuses.ACTIVATED)
 		.and();
 
 	const totalFilter = baseFilter.build();

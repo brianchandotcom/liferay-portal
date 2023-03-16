@@ -77,10 +77,12 @@ public class WikiPageModelResourcePermissionWrapper
 
 						// LPS-11086
 
-						if (page.isDraft() &&
-							actionId.equals(ActionKeys.DELETE) &&
-							(page.getStatusByUserId() ==
-								permissionChecker.getUserId())) {
+						if ((page.getStatusByUserId() ==
+								permissionChecker.getUserId()) &&
+							((page.isDraft() &&
+							  actionId.equals(ActionKeys.DELETE)) ||
+							 (page.isPending() &&
+							  actionId.equals(ActionKeys.VIEW)))) {
 
 							return true;
 						}

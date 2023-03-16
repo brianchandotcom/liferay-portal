@@ -2,9 +2,6 @@ assemble:
     - from: .
       include: "liferay_learn_cron_entrypoint.sh"
       into: .
-    - from: build/libs
-      include: "*.jar"
-      into: .
     - fromTask: shadowJar
 liferay-learn-cron:
     homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]

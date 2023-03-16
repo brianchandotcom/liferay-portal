@@ -2,6 +2,6 @@ assemble:
     - from: .
       include: "*.ico"
       into: static
-liferay-learn-resources:
-    name: Liferay Learn Resources
+liferay-learn-static-content:
+    name: Liferay Learn Static Content
     type: staticContent

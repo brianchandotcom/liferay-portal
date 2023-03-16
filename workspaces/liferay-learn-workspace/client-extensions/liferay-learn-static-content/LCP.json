@@ -21,7 +21,7 @@
 			"deploy": false
 		}
 	},
-	"id": "liferaylearnresources",
+	"id": "liferaylearnstaticcontent",
 	"kind": "Deployment",
 	"loadBalancer": {
 		"cdn": true,

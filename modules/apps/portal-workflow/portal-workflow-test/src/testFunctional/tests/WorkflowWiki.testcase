@@ -284,8 +284,6 @@ definition {
 
 	@priority = 4
 	test RejectFrontPageUserEdit {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

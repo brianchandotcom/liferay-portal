@@ -72,8 +72,6 @@ definition {
 	@description = "Verify that the Submit for Workflow button is not available after the Page is submitted for publication"
 	@priority = 3
 	test ButtonNotAvailableAfterSubmitForWorkflow {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
@@ -94,7 +92,6 @@ definition {
 	@description = "Verify that, after approval, the Page status is Ready for Publish"
 	@priority = 4
 	test PageIsReadyForPublishAfterApproval {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowPageRevision#PageIsReadyForPublishAfterApproval";
 
 		Navigator.gotoStagedSitePage(
@@ -217,7 +214,6 @@ definition {
 	@description = "Verify that when the Approved page is edited it's status comes to Draft"
 	@priority = 3
 	test StatusComesToDraftWhenPageIsEdited {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowPageRevision#StatusComesToDraftWhenPageIsEdited";
 
 		Navigator.gotoStagedSitePage(
@@ -278,7 +274,6 @@ definition {
 	@description = "Verify that when the Approved page is edited the button Submit for Workflow is displayed"
 	@priority = 3
 	test SubmitForWorkflowButtonIsDisplayedWhenPageIsEdited {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowPageRevision#SubmitForWorkflowButtonIsDisplayedWhenPageIsEdited";
 
 		Navigator.gotoStagedSitePage(
@@ -407,8 +402,6 @@ definition {
 	@description = "This is a use case for LPS-58754"
 	@priority = 3
 	test WithdrawWorkflowSubmissionFromRemovedUser {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

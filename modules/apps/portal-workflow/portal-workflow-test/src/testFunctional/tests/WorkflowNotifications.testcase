@@ -40,7 +40,6 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type receives the notification for review"
 	@priority = 4
 	test AccountUserReceivesNotification {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowNotifications#AccountUserReceivesNotification";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

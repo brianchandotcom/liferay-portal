@@ -873,7 +873,6 @@ definition {
 	@description = "Verify that the user can create a Template for Notification"
 	@priority = 4
 	test CanCreateNotificationTemplate {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateNotificationTemplate";
 
 		Workflow.openWorkflowListView();
@@ -1348,7 +1347,6 @@ definition {
 	@description = "Verify that the user can delete notification role types"
 	@priority = 3
 	test CanDeleteNotificationRoleTypes {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNotificationRoleTypes";
 
 		Workflow.openWorkflowListView();
@@ -3289,7 +3287,6 @@ definition {
 	@description = "Verify that the user can set the Priority for the Action"
 	@priority = 3
 	test CanSetActionsPriority {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetActionsPriority";
 
 		Workflow.openWorkflowListView();

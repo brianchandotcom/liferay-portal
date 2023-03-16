@@ -5,17 +5,6 @@
 	"name": "Build",
 	"objectFields": [
 		{
-			"DBType": "Boolean",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Active"
-			},
-			"name": "active",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
 			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,

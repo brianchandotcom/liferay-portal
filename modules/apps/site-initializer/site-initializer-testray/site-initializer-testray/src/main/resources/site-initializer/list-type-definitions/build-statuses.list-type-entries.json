@@ -1,9 +1,9 @@
 [
 	{
-		"key": "ACTIVE",
-		"name": "Active",
+		"key": "ACTIVATED",
+		"name": "Activated",
 		"name_i18n": {
-			"en-US": "Active"
+			"en-US": "Activated"
 		},
 		"type": "string"
 	},
@@ -19,7 +19,7 @@
 		"key": "DEACTIVATED",
 		"name": "Deactivated",
 		"name_i18n": {
-			"en-US": "deactivated"
+			"en-US": "Deactivated"
 		},
 		"type": "string"
 	}

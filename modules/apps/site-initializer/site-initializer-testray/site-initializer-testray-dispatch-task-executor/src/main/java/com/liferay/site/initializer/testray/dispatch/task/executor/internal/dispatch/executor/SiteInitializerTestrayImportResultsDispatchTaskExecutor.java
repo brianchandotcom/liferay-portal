@@ -501,7 +501,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			).put(
 				"dueDate", propertiesMap.get("testray.build.time")
 			).put(
-				"dueStatus", "ACTIVE"
+				"dueStatus", "ACTIVATED"
 			).put(
 				"gitHash", propertiesMap.get("git.id")
 			).put(

@@ -457,7 +457,9 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			SourceFormatterArgs sourceFormatterArgs =
 				sourceProcessor.getSourceFormatterArgs();
 
-			if (sourceFormatterArgs.isUseCiGithubAccessToken()) {
+			if (sourceFormatterArgs.isUseCiGithubAccessToken() ||
+				_isGenerateVulnerableLibrariesCacheFile()) {
+
 				_githubAccessToken = _getCiGithubAccessToken();
 			}
 			else {

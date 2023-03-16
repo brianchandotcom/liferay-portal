@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
@@ -101,6 +102,13 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormField.setDataType(ddmFormField.getDataType());
 		translatedDDMFormField.setFieldNamespace(
 			ddmFormField.getFieldNamespace());
+
+		String fieldReference = ddmFormField.getFieldReference();
+
+		if (Validator.isNotNull(fieldReference)) {
+			translatedDDMFormField.setFieldReference(fieldReference);
+		}
+
 		translatedDDMFormField.setIndexType(ddmFormField.getIndexType());
 		translatedDDMFormField.setDDMFormFieldOptions(
 			translate(ddmFormField.getDDMFormFieldOptions()));

@@ -30,6 +30,6 @@
 	"memory": 50,
 	"scale": 1,
 	"volumes": {
-		"publicHtml": "/public_html/"
+		"publicHtml": "/public_html"
 	}
 }

@@ -24,16 +24,6 @@ const columns = [
 		},
 	},
 	{
-		accessor: 'provisioned',
-		align: 'center',
-		bodyClass: 'border-0',
-		header: {
-			name: i18n.translate('provisioned'),
-			styles:
-				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-		},
-	},
-	{
 		accessor: 'quantity',
 		align: 'center',
 		bodyClass: 'border-0',

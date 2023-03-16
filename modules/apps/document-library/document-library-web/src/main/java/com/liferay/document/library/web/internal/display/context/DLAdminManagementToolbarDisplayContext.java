@@ -326,7 +326,12 @@ public class DLAdminManagementToolbarDisplayContext
 	public List<LabelItem> getFilterLabelItems() {
 		long fileEntryTypeId = _getFileEntryTypeId();
 
-		return LabelItemListBuilder.add(
+		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
+			new LabelItemListBuilder.LabelItemListWrapper();
+
+		_addFileExtensionFilterLabelItems(labelItemListWrapper);
+
+		return labelItemListWrapper.add(
 			() -> fileEntryTypeId != -1,
 			labelItem -> {
 				labelItem.putData(
@@ -384,6 +389,39 @@ public class DLAdminManagementToolbarDisplayContext
 						HtmlUtil.escape(user.getFullName())));
 			}
 		).build();
+	}
+
+	private void _addFileExtensionFilterLabelItems(LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
+		String[] fileExtensions = _getFileExtensions(_httpServletRequest);
+
+		if (ArrayUtil.isEmpty(fileExtensions)) {
+			return;
+		}
+
+		for (String fileExtension : fileExtensions) {
+			labelItemListWrapper.add(
+				labelItem -> {
+					labelItem.putData(
+						"removeLabelURL",
+						PortletURLBuilder.create(
+							PortletURLUtil.clone(
+								_currentURLObj, _liferayPortletResponse)
+						).setParameter(
+							"fileExtension",
+							ArrayUtil.remove(fileExtensions, fileExtension)
+						).buildString());
+
+					labelItem.setCloseable(true);
+
+					labelItem.setLabel(
+						String.format(
+							"%s: %s",
+							LanguageUtil.get(
+								_httpServletRequest, "extension"),
+							HtmlUtil.escape(fileExtension)));
+				}
+			);
+		}
 	}
 
 	@Override

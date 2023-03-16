@@ -55,7 +55,7 @@ const Summary: React.FC<SummaryProps> = ({dataSummary}) => {
 					{dataSummary &&
 						dataSummary.map((element, index: number) => {
 							return (
-								<>
+								<div key={index}>
 									<div className="mb-2 text-neutral-7">
 										{element.text}
 									</div>
@@ -89,7 +89,7 @@ const Summary: React.FC<SummaryProps> = ({dataSummary}) => {
 									) : (
 										<i className="mb-3">No data</i>
 									)}
-								</>
+								</div>
 							);
 						})}
 				</div>

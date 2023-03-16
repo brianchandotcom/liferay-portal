@@ -2442,7 +2442,6 @@
 
 		<!-- Other fields -->
 
-		<column name="defaultUser" type="boolean" />
 		<column name="contactId" type="long" />
 		<column json-enabled="false" name="password" type="String" />
 		<column json-enabled="false" name="passwordEncrypted" type="boolean" />
@@ -2477,6 +2476,7 @@
 		<column name="lockoutDate" type="Date" />
 		<column name="agreedToTermsOfUse" type="boolean" />
 		<column name="emailAddressVerified" type="boolean" />
+		<column name="type" type="int" />
 		<column name="status" type="int" />
 
 		<!-- Relationships -->

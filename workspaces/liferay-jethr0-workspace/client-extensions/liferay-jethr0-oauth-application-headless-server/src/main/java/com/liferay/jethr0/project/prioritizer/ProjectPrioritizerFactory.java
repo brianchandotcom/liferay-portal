@@ -30,13 +30,14 @@ public class ProjectPrioritizerFactory {
 
 		long id = jsonObject.getLong("id");
 
+		ProjectPrioritizer projectPrioritizer;
+
 		synchronized (_projectPrioritizers) {
 			if (_projectPrioritizers.containsKey(id)) {
 				return _projectPrioritizers.get(id);
 			}
 
-			ProjectPrioritizer projectPrioritizer =
-				new DefaultProjectPrioritizer(jsonObject);
+			projectPrioritizer = new DefaultProjectPrioritizer(jsonObject);
 
 			_projectPrioritizers.put(
 				projectPrioritizer.getId(), projectPrioritizer);

@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.testsuite;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,13 +28,17 @@ public class TestSuiteFactory {
 	public static TestSuite newTestSuite(JSONObject jsonObject) {
 		long id = jsonObject.getLong("id");
 
-		if (_testSuites.containsKey(id)) {
-			return _testSuites.get(id);
+		TestSuite testSuite;
+
+		synchronized (_testSuites) {
+			if (_testSuites.containsKey(id)) {
+				return _testSuites.get(id);
+			}
+
+			testSuite = new DefaultTestSuite(jsonObject);
+
+			_testSuites.put(testSuite.getId(), testSuite);
 		}
-
-		TestSuite testSuite = new DefaultTestSuite(jsonObject);
-
-		_testSuites.put(testSuite.getId(), testSuite);
 
 		return testSuite;
 	}
@@ -43,9 +48,12 @@ public class TestSuiteFactory {
 			return;
 		}
 
-		_testSuites.remove(testSuite.getId());
+		synchronized (_testSuites) {
+			_testSuites.remove(testSuite.getId());
+		}
 	}
 
-	private static final Map<Long, TestSuite> _testSuites = new HashMap<>();
+	private static final Map<Long, TestSuite> _testSuites =
+		Collections.synchronizedMap(new HashMap<>());
 
 }

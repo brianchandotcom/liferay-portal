@@ -32,6 +32,8 @@ public class ProjectComparatorFactory {
 
 		long id = jsonObject.getLong("id");
 
+		ProjectComparator projectComparator;
+
 		synchronized (_projectComparators) {
 			if (_projectComparators.containsKey(id)) {
 				return _projectComparators.get(id);
@@ -39,8 +41,6 @@ public class ProjectComparatorFactory {
 
 			ProjectComparator.Type type = ProjectComparator.Type.get(
 				jsonObject.getJSONObject("type"));
-
-			ProjectComparator projectComparator;
 
 			if (type == ProjectComparator.Type.FIFO) {
 				projectComparator = new FIFOProjectComparator(

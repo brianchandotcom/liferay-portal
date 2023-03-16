@@ -28,12 +28,14 @@ public class ProjectFactory {
 	public static Project newProject(JSONObject jsonObject) {
 		long id = jsonObject.getLong("id");
 
+		Project project;
+
 		synchronized (_projects) {
 			if (_projects.containsKey(id)) {
 				return _projects.get(id);
 			}
 
-			Project project = new DefaultProject(jsonObject);
+			project = new DefaultProject(jsonObject);
 
 			_projects.put(project.getId(), project);
 		}

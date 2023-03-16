@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.gitbranch;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,13 +28,17 @@ public class GitBranchFactory {
 	public static GitBranch newGitBranch(JSONObject jsonObject) {
 		long id = jsonObject.getLong("id");
 
-		if (_gitBranches.containsKey(id)) {
-			return _gitBranches.get(id);
+		GitBranch gitBranch;
+
+		synchronized (_gitBranches) {
+			if (_gitBranches.containsKey(id)) {
+				return _gitBranches.get(id);
+			}
+
+			gitBranch = new DefaultGitBranch(jsonObject);
+
+			_gitBranches.put(gitBranch.getId(), gitBranch);
 		}
-
-		GitBranch gitBranch = new DefaultGitBranch(jsonObject);
-
-		_gitBranches.put(gitBranch.getId(), gitBranch);
 
 		return gitBranch;
 	}
@@ -43,9 +48,12 @@ public class GitBranchFactory {
 			return;
 		}
 
-		_gitBranches.remove(gitBranch.getId());
+		synchronized (_gitBranches) {
+			_gitBranches.remove(gitBranch.getId());
+		}
 	}
 
-	private static final Map<Long, GitBranch> _gitBranches = new HashMap<>();
+	private static final Map<Long, GitBranch> _gitBranches =
+		Collections.synchronizedMap(new HashMap<>());
 
 }

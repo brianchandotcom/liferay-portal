@@ -1,0 +1,7 @@
+{
+	"build": {
+		"options": {
+			"extendClay": true
+		}
+	}
+}

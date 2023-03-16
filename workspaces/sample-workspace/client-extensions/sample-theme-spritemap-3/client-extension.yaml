@@ -1,9 +1,8 @@
 assemble:
     - from: build
-      include: "spritemap.svg"
+      include: spritemap.svg
       into: static
 sample-theme-spritemap-3:
-    extendClay: true
     name: Sample Theme Spritemap 3
     type: themeSpritemap
     url: spritemap.svg

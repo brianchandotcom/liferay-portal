@@ -1427,7 +1427,6 @@ create table User_ (
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
-	defaultUser BOOLEAN,
 	contactId LONG,
 	password_ VARCHAR(75) null,
 	passwordEncrypted BOOLEAN,
@@ -1462,6 +1461,7 @@ create table User_ (
 	lockoutDate DATE null,
 	agreedToTermsOfUse BOOLEAN,
 	emailAddressVerified BOOLEAN,
+	type_ INTEGER,
 	status INTEGER,
 	primary key (userId, ctCollectionId)
 );

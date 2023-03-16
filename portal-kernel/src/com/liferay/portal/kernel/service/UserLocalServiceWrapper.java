@@ -295,6 +295,7 @@ public class UserLocalServiceWrapper
 	 * @param birthdayDay the user's birthday day
 	 * @param birthdayYear the user's birthday year
 	 * @param jobTitle the user's job title
+	 * @param type the user's type
 	 * @param groupIds the primary keys of the user's groups
 	 * @param organizationIds the primary keys of the user's organizations
 	 * @param roleIds the primary keys of the roles this user possesses
@@ -315,7 +316,7 @@ public class UserLocalServiceWrapper
 			String firstName, String middleName, String lastName,
 			long prefixListTypeId, long suffixListTypeId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -324,7 +325,7 @@ public class UserLocalServiceWrapper
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
@@ -405,6 +406,7 @@ public class UserLocalServiceWrapper
 	 * @param birthdayDay the user's birthday day
 	 * @param birthdayYear the user's birthday year
 	 * @param jobTitle the user's job title
+	 * @param type the user's type
 	 * @param groupIds the primary keys of the user's groups
 	 * @param organizationIds the primary keys of the user's organizations
 	 * @param roleIds the primary keys of the roles this user possesses
@@ -425,7 +427,7 @@ public class UserLocalServiceWrapper
 			String firstName, String middleName, String lastName,
 			long prefixListTypeId, long suffixListTypeId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -434,7 +436,7 @@ public class UserLocalServiceWrapper
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
@@ -580,7 +582,6 @@ public class UserLocalServiceWrapper
 	 * authentication, without using the AuthPipeline. Primarily used for
 	 * authenticating users of <code>tunnel-web</code>.
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 * @param companyId the primary key of the user's company
 	 * @param realm unused
 	 * @param nonce the number used once
@@ -589,6 +590,7 @@ public class UserLocalServiceWrapper
 	 * @param response the authentication response hash
 	 * @return the user's primary key if authentication is successful;
 	 <code>0</code> otherwise
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1067,15 +1069,15 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the default user for the company.
+	 * Returns the guest user for the company.
 	 *
 	 * @param companyId the primary key of the company
-	 * @return the default user for the company, or <code>null</code> if a user
+	 * @return the guest user for the company, or <code>null</code> if a user
 	 with the company key could not be found
 	 */
 	@Override
-	public User fetchDefaultUser(long companyId) {
-		return _userLocalService.fetchDefaultUser(companyId);
+	public User fetchGuestUser(long companyId) {
+		return _userLocalService.fetchGuestUser(companyId);
 	}
 
 	@Override
@@ -1253,11 +1255,10 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the default user for the company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @return the default user for the company
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getGuestUser(long)}
 	 */
+	@Deprecated
 	@Override
 	public User getDefaultUser(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1266,11 +1267,10 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the primary key of the default user for the company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @return the primary key of the default user for the company
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getGuestUserId(long)}
 	 */
+	@Deprecated
 	@Override
 	public long getDefaultUserId(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1394,6 +1394,32 @@ public class UserLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userLocalService.getGroupUsersCount(groupId, status);
+	}
+
+	/**
+	 * Returns the guest user for the company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @return the guest user for the company
+	 */
+	@Override
+	public User getGuestUser(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.getGuestUser(companyId);
+	}
+
+	/**
+	 * Returns the primary key of the guest user for the company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @return the primary key of the guest user for the company
+	 */
+	@Override
+	public long getGuestUserId(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.getGuestUserId(companyId);
 	}
 
 	@Override
@@ -2075,12 +2101,12 @@ public class UserLocalServiceWrapper
 
 	@Override
 	public java.util.List<User> getUsers(
-		long companyId, boolean defaultUser, int status, int start, int end,
+		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<User>
 			orderByComparator) {
 
 		return _userLocalService.getUsers(
-			companyId, defaultUser, status, start, end, orderByComparator);
+			companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -2094,8 +2120,8 @@ public class UserLocalServiceWrapper
 	}
 
 	@Override
-	public int getUsersCount(long companyId, boolean defaultUser, int status) {
-		return _userLocalService.getUsersCount(companyId, defaultUser, status);
+	public int getUsersCount(long companyId, int status) {
+		return _userLocalService.getUsersCount(companyId, status);
 	}
 
 	@Override
@@ -2200,16 +2226,16 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the default user for the company.
+	 * Returns the guest user for the company.
 	 *
 	 * @param companyId the primary key of the company
-	 * @return the default user for the company
+	 * @return the guest user for the company
 	 */
 	@Override
-	public User loadGetDefaultUser(long companyId)
+	public User loadGetGuestUser(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _userLocalService.loadGetDefaultUser(companyId);
+		return _userLocalService.loadGetGuestUser(companyId);
 	}
 
 	/**

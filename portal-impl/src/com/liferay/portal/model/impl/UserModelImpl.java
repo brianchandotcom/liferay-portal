@@ -75,9 +75,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"userId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"defaultUser", Types.BOOLEAN}, {"contactId", Types.BIGINT},
-		{"password_", Types.VARCHAR}, {"passwordEncrypted", Types.BOOLEAN},
-		{"passwordReset", Types.BOOLEAN},
+		{"contactId", Types.BIGINT}, {"password_", Types.VARCHAR},
+		{"passwordEncrypted", Types.BOOLEAN}, {"passwordReset", Types.BOOLEAN},
 		{"passwordModifiedDate", Types.TIMESTAMP}, {"digest", Types.VARCHAR},
 		{"reminderQueryQuestion", Types.VARCHAR},
 		{"reminderQueryAnswer", Types.VARCHAR},
@@ -94,7 +93,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		{"lastFailedLoginDate", Types.TIMESTAMP},
 		{"failedLoginAttempts", Types.INTEGER}, {"lockout", Types.BOOLEAN},
 		{"lockoutDate", Types.TIMESTAMP}, {"agreedToTermsOfUse", Types.BOOLEAN},
-		{"emailAddressVerified", Types.BOOLEAN}, {"status", Types.INTEGER}
+		{"emailAddressVerified", Types.BOOLEAN}, {"type_", Types.INTEGER},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -109,7 +109,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("defaultUser", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("contactId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("password_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("passwordEncrypted", Types.BOOLEAN);
@@ -144,11 +143,12 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("lockoutDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("agreedToTermsOfUse", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("emailAddressVerified", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table User_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER,primary key (userId, ctCollectionId))";
+		"create table User_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,type_ INTEGER,status INTEGER,primary key (userId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table User_";
 
@@ -202,61 +202,61 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long DEFAULTUSER_COLUMN_BITMASK = 8L;
+	public static final long EMAILADDRESS_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EMAILADDRESS_COLUMN_BITMASK = 16L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 32L;
+	public static final long FACEBOOKID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FACEBOOKID_COLUMN_BITMASK = 64L;
+	public static final long GOOGLEUSERID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GOOGLEUSERID_COLUMN_BITMASK = 128L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 256L;
+	public static final long OPENID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OPENID_COLUMN_BITMASK = 512L;
+	public static final long PORTRAITID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PORTRAITID_COLUMN_BITMASK = 1024L;
+	public static final long SCREENNAME_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SCREENNAME_COLUMN_BITMASK = 2048L;
+	public static final long STATUS_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 4096L;
+	public static final long TYPE_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -454,7 +454,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			attributeGetterFunctions.put("companyId", User::getCompanyId);
 			attributeGetterFunctions.put("createDate", User::getCreateDate);
 			attributeGetterFunctions.put("modifiedDate", User::getModifiedDate);
-			attributeGetterFunctions.put("defaultUser", User::getDefaultUser);
 			attributeGetterFunctions.put("contactId", User::getContactId);
 			attributeGetterFunctions.put("password", User::getPassword);
 			attributeGetterFunctions.put(
@@ -500,6 +499,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 				"agreedToTermsOfUse", User::getAgreedToTermsOfUse);
 			attributeGetterFunctions.put(
 				"emailAddressVerified", User::getEmailAddressVerified);
+			attributeGetterFunctions.put("type", User::getType);
 			attributeGetterFunctions.put("status", User::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
@@ -535,8 +535,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 				"createDate", (BiConsumer<User, Date>)User::setCreateDate);
 			attributeSetterBiConsumers.put(
 				"modifiedDate", (BiConsumer<User, Date>)User::setModifiedDate);
-			attributeSetterBiConsumers.put(
-				"defaultUser", (BiConsumer<User, Boolean>)User::setDefaultUser);
 			attributeSetterBiConsumers.put(
 				"contactId", (BiConsumer<User, Long>)User::setContactId);
 			attributeSetterBiConsumers.put(
@@ -618,6 +616,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			attributeSetterBiConsumers.put(
 				"emailAddressVerified",
 				(BiConsumer<User, Boolean>)User::setEmailAddressVerified);
+			attributeSetterBiConsumers.put(
+				"type", (BiConsumer<User, Integer>)User::setType);
 			attributeSetterBiConsumers.put(
 				"status", (BiConsumer<User, Integer>)User::setStatus);
 
@@ -832,37 +832,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	@Deprecated
 	public Date getOriginalModifiedDate() {
 		return getColumnOriginalValue("modifiedDate");
-	}
-
-	@JSON
-	@Override
-	public boolean getDefaultUser() {
-		return _defaultUser;
-	}
-
-	@JSON
-	@Override
-	public boolean isDefaultUser() {
-		return _defaultUser;
-	}
-
-	@Override
-	public void setDefaultUser(boolean defaultUser) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_defaultUser = defaultUser;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalDefaultUser() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("defaultUser"));
 	}
 
 	@JSON
@@ -1561,6 +1530,31 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@JSON
 	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalType() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1654,7 +1648,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setCompanyId(getCompanyId());
 		userImpl.setCreateDate(getCreateDate());
 		userImpl.setModifiedDate(getModifiedDate());
-		userImpl.setDefaultUser(isDefaultUser());
 		userImpl.setContactId(getContactId());
 		userImpl.setPassword(getPassword());
 		userImpl.setPasswordEncrypted(isPasswordEncrypted());
@@ -1689,6 +1682,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setLockoutDate(getLockoutDate());
 		userImpl.setAgreedToTermsOfUse(isAgreedToTermsOfUse());
 		userImpl.setEmailAddressVerified(isEmailAddressVerified());
+		userImpl.setType(getType());
 		userImpl.setStatus(getStatus());
 
 		userImpl.resetOriginalValues();
@@ -1712,8 +1706,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setCreateDate(this.<Date>getColumnOriginalValue("createDate"));
 		userImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		userImpl.setDefaultUser(
-			this.<Boolean>getColumnOriginalValue("defaultUser"));
 		userImpl.setContactId(this.<Long>getColumnOriginalValue("contactId"));
 		userImpl.setPassword(this.<String>getColumnOriginalValue("password_"));
 		userImpl.setPasswordEncrypted(
@@ -1768,6 +1760,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			this.<Boolean>getColumnOriginalValue("agreedToTermsOfUse"));
 		userImpl.setEmailAddressVerified(
 			this.<Boolean>getColumnOriginalValue("emailAddressVerified"));
+		userImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
 		userImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
 
 		return userImpl;
@@ -1889,8 +1882,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		else {
 			userCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		userCacheModel.defaultUser = isDefaultUser();
 
 		userCacheModel.contactId = getContactId();
 
@@ -2108,6 +2099,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		userCacheModel.emailAddressVerified = isEmailAddressVerified();
 
+		userCacheModel.type = getType();
+
 		userCacheModel.status = getStatus();
 
 		return userCacheModel;
@@ -2179,7 +2172,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private boolean _defaultUser;
 	private long _contactId;
 	private String _password;
 	private boolean _passwordEncrypted;
@@ -2214,6 +2206,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private Date _lockoutDate;
 	private boolean _agreedToTermsOfUse;
 	private boolean _emailAddressVerified;
+	private int _type;
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
@@ -2255,7 +2248,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("defaultUser", _defaultUser);
 		_columnOriginalValues.put("contactId", _contactId);
 		_columnOriginalValues.put("password_", _password);
 		_columnOriginalValues.put("passwordEncrypted", _passwordEncrypted);
@@ -2293,6 +2285,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_columnOriginalValues.put("agreedToTermsOfUse", _agreedToTermsOfUse);
 		_columnOriginalValues.put(
 			"emailAddressVerified", _emailAddressVerified);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
 	}
 
@@ -2303,6 +2296,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("password_", "password");
+		attributeNames.put("type_", "type");
 		attributeNames.put("groups_", "groups");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -2335,75 +2329,75 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("defaultUser", 256L);
+		columnBitmasks.put("contactId", 256L);
 
-		columnBitmasks.put("contactId", 512L);
+		columnBitmasks.put("password_", 512L);
 
-		columnBitmasks.put("password_", 1024L);
+		columnBitmasks.put("passwordEncrypted", 1024L);
 
-		columnBitmasks.put("passwordEncrypted", 2048L);
+		columnBitmasks.put("passwordReset", 2048L);
 
-		columnBitmasks.put("passwordReset", 4096L);
+		columnBitmasks.put("passwordModifiedDate", 4096L);
 
-		columnBitmasks.put("passwordModifiedDate", 8192L);
+		columnBitmasks.put("digest", 8192L);
 
-		columnBitmasks.put("digest", 16384L);
+		columnBitmasks.put("reminderQueryQuestion", 16384L);
 
-		columnBitmasks.put("reminderQueryQuestion", 32768L);
+		columnBitmasks.put("reminderQueryAnswer", 32768L);
 
-		columnBitmasks.put("reminderQueryAnswer", 65536L);
+		columnBitmasks.put("graceLoginCount", 65536L);
 
-		columnBitmasks.put("graceLoginCount", 131072L);
+		columnBitmasks.put("screenName", 131072L);
 
-		columnBitmasks.put("screenName", 262144L);
+		columnBitmasks.put("emailAddress", 262144L);
 
-		columnBitmasks.put("emailAddress", 524288L);
+		columnBitmasks.put("facebookId", 524288L);
 
-		columnBitmasks.put("facebookId", 1048576L);
+		columnBitmasks.put("googleUserId", 1048576L);
 
-		columnBitmasks.put("googleUserId", 2097152L);
+		columnBitmasks.put("ldapServerId", 2097152L);
 
-		columnBitmasks.put("ldapServerId", 4194304L);
+		columnBitmasks.put("openId", 4194304L);
 
-		columnBitmasks.put("openId", 8388608L);
+		columnBitmasks.put("portraitId", 8388608L);
 
-		columnBitmasks.put("portraitId", 16777216L);
+		columnBitmasks.put("languageId", 16777216L);
 
-		columnBitmasks.put("languageId", 33554432L);
+		columnBitmasks.put("timeZoneId", 33554432L);
 
-		columnBitmasks.put("timeZoneId", 67108864L);
+		columnBitmasks.put("greeting", 67108864L);
 
-		columnBitmasks.put("greeting", 134217728L);
+		columnBitmasks.put("comments", 134217728L);
 
-		columnBitmasks.put("comments", 268435456L);
+		columnBitmasks.put("firstName", 268435456L);
 
-		columnBitmasks.put("firstName", 536870912L);
+		columnBitmasks.put("middleName", 536870912L);
 
-		columnBitmasks.put("middleName", 1073741824L);
+		columnBitmasks.put("lastName", 1073741824L);
 
-		columnBitmasks.put("lastName", 2147483648L);
+		columnBitmasks.put("jobTitle", 2147483648L);
 
-		columnBitmasks.put("jobTitle", 4294967296L);
+		columnBitmasks.put("loginDate", 4294967296L);
 
-		columnBitmasks.put("loginDate", 8589934592L);
+		columnBitmasks.put("loginIP", 8589934592L);
 
-		columnBitmasks.put("loginIP", 17179869184L);
+		columnBitmasks.put("lastLoginDate", 17179869184L);
 
-		columnBitmasks.put("lastLoginDate", 34359738368L);
+		columnBitmasks.put("lastLoginIP", 34359738368L);
 
-		columnBitmasks.put("lastLoginIP", 68719476736L);
+		columnBitmasks.put("lastFailedLoginDate", 68719476736L);
 
-		columnBitmasks.put("lastFailedLoginDate", 137438953472L);
+		columnBitmasks.put("failedLoginAttempts", 137438953472L);
 
-		columnBitmasks.put("failedLoginAttempts", 274877906944L);
+		columnBitmasks.put("lockout", 274877906944L);
 
-		columnBitmasks.put("lockout", 549755813888L);
+		columnBitmasks.put("lockoutDate", 549755813888L);
 
-		columnBitmasks.put("lockoutDate", 1099511627776L);
+		columnBitmasks.put("agreedToTermsOfUse", 1099511627776L);
 
-		columnBitmasks.put("agreedToTermsOfUse", 2199023255552L);
+		columnBitmasks.put("emailAddressVerified", 2199023255552L);
 
-		columnBitmasks.put("emailAddressVerified", 4398046511104L);
+		columnBitmasks.put("type_", 4398046511104L);
 
 		columnBitmasks.put("status", 8796093022208L);
 

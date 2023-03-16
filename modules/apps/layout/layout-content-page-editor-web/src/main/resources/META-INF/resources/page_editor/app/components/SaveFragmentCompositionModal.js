@@ -139,6 +139,11 @@ const SaveFragmentCompositionModal = ({itemId, onCloseModal}) => {
 								onChange={(event) =>
 									setName(event.target.value)
 								}
+								onClick={(event) => {
+									if (Liferay.Browser.isFirefox()) {
+										event.target.focus();
+									}
+								}}
 								placeholder={Liferay.Language.get('name')}
 								required
 								type="text"

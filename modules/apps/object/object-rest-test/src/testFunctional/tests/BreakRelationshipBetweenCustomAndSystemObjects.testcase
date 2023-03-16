@@ -10,12 +10,25 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstanceNoSelenium();
 
+		task ("Given a virtual Instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
 		task ("Given a foundation object") {
 			var customObjectDefinitionId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "foundation",
 				en_US_plural_label = "foundations",
 				name = "Foundation",
 				requiredStringFieldName = "name");
+			var customObjectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "foundation",
+				en_US_plural_label = "foundations",
+				name = "Foundation",
+				requiredStringFieldName = "name",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Given a secondFoundation object") {
@@ -24,32 +37,61 @@ definition {
 				en_US_plural_label = "secondFoundations",
 				name = "SecondFoundation",
 				requiredStringFieldName = "name");
+			var customObjectDefinitionId4 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "secondFoundation",
+				en_US_plural_label = "secondFoundations",
+				name = "SecondFoundation",
+				requiredStringFieldName = "name",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Given oneToMany relationship secondFoundationOfUsers created") {
-			ObjectDefinitionAPI.setUpGlobalObjectDefinitionIdWithName(objectName = "User");
+			var systemObjectDefinitionId1 = ObjectDefinitionAPI.setUpGlobalObjectDefinitionIdWithName(objectName = "User");
+			var systemObjectDefinitionId2 = ObjectDefinitionAPI.setUpGlobalObjectDefinitionIdWithName(
+				objectName = "User",
+				virtualHost = "www.able.com");
 
-			var relationshipName = ObjectDefinitionAPI.createRelationship(
+			ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "SecondFoundationOfUsers",
 				name = "secondFoundationOfUsers",
 				objectDefinitionId1 = ${customObjectDefinitionId2},
-				objectDefinitionId2 = ${staticObjectId},
+				objectDefinitionId2 = ${systemObjectDefinitionId1},
 				type = "oneToMany");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "SecondFoundationOfUsers",
+				name = "secondFoundationOfUsers",
+				objectDefinitionId1 = ${customObjectDefinitionId4},
+				objectDefinitionId2 = ${systemObjectDefinitionId2},
+				type = "oneToMany",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Given manyToMany relationship foundationsOfUsers created") {
-			var relationshipName = ObjectDefinitionAPI.createRelationship(
+			ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "FoundationsOfUsers",
 				name = "foundationsOfUsers",
 				objectDefinitionId1 = ${customObjectDefinitionId1},
-				objectDefinitionId2 = ${staticObjectId},
+				objectDefinitionId2 = ${systemObjectDefinitionId1},
 				type = "manyToMany");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "FoundationsOfUsers",
+				name = "foundationsOfUsers",
+				objectDefinitionId1 = ${customObjectDefinitionId3},
+				objectDefinitionId2 = ${systemObjectDefinitionId2},
+				type = "manyToMany",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Given object entries created") {
 			ObjectDefinitionAPI.setUpGlobalObjectEntryId();
+
+			ObjectDefinitionAPI.setUpGlobalObjectEntryId(virtualHost = "www.able.com");
 		}
 
 		task ("Given userAccount entry created") {
@@ -62,11 +104,24 @@ definition {
 				familyName2 = "userfn2",
 				givenName1 = "usergn1",
 				givenName2 = "usergn2");
+
+			UserAccountAPI.setUpGlobalUserAccountIds(
+				alternateName1 = "user1",
+				alternateName2 = "user2",
+				emailAddress1 = "user1@liferay.com",
+				emailAddress2 = "user2@liferay.com",
+				familyName1 = "userfn1",
+				familyName2 = "userfn2",
+				givenName1 = "usergn1",
+				givenName2 = "usergn2",
+				virtualHost = "www.able.com");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		HeadlessPortalInstanceAPI.cleanAllPortalInstances();
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
@@ -104,6 +159,41 @@ definition {
 				en_US_plural_label = "foundations",
 				objectId = ${staticObjectEntryId1},
 				relationshipName = "foundationsOfUsers");
+
+			ObjectDefinitionAPI.assertNoItemsInResponse(responseToParse = ${response});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanBreakManyToManyRelationshipWithSystemObjectAsParentInVirtualInstance {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakManyToManyRelationshipWithSystemObjectAsParentInVirtualInstance";
+
+		task ("Given I relate the userAccount entry with the foundation entry through the foundation PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "foundations",
+				objectEntry1 = ${staticObjectEntryId5},
+				objectEntry2 = ${staticUserAccountId3},
+				relationshipName = "foundationsOfUsers",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When using the delete request deleteFoundation{relationshipName}") {
+			ObjectDefinitionAPI.breakRelationshipBetweenEntries(
+				en_US_plural_label = "foundations",
+				objectEntry1 = ${staticObjectEntryId5},
+				objectEntry2 = ${staticUserAccountId3},
+				relationshipName = "foundationsOfUsers",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then I can see no one entry correctly related in GET request response with the relationshipName=foundationsOfUsers") {
+			var response = ObjectDefinitionAPI.getObjectEntryRelationship(
+				en_US_plural_label = "foundations",
+				objectId = ${staticObjectEntryId5},
+				relationshipName = "foundationsOfUsers",
+				virtualHost = "www.able.com");
 
 			ObjectDefinitionAPI.assertNoItemsInResponse(responseToParse = ${response});
 		}
@@ -179,6 +269,51 @@ definition {
 				relationshipName = "secondFoundationOfUsers");
 
 			ObjectDefinitionAPI.assertNoItemsInResponse(responseToParse = ${response});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanBreakOneToManyRelationshipWithCustomObjectAsParentInVirtualInstance {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakOneToManyRelationshipWithCustomObjectAsParentInVirtualInstance";
+
+		task ("Given all userAccounts are related to the secondFoundation through the secondFoundation PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "secondFoundations",
+				objectEntry1 = ${staticObjectEntryId7},
+				objectEntry2 = ${staticUserAccountId3},
+				relationshipName = "secondFoundationOfUsers",
+				virtualHost = "www.able.com");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "secondFoundations",
+				objectEntry1 = ${staticObjectEntryId7},
+				objectEntry2 = ${staticUserAccountId4},
+				relationshipName = "secondFoundationOfUsers",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When deleting one of the userAccount entries") {
+			ObjectDefinitionAPI.breakRelationshipBetweenEntries(
+				en_US_plural_label = "secondFoundations",
+				objectEntry1 = ${staticObjectEntryId7},
+				objectEntry2 = ${staticUserAccountId3},
+				relationshipName = "secondFoundationOfUsers",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then I can see only one entry correctly related in GET request response") {
+			var response = ObjectDefinitionAPI.getObjectEntryRelationship(
+				en_US_plural_label = "secondFoundations",
+				objectId = ${staticObjectEntryId7},
+				relationshipName = "secondFoundationOfUsers",
+				virtualHost = "www.able.com");
+
+			ObjectDefinitionAPI.assertResponseHasCorrectObjectEntryName(
+				expectedValue = "usergn2 userfn2",
+				objectEntryId = ${staticUserAccountId4},
+				responseToParse = ${response});
 		}
 	}
 

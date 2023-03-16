@@ -1,0 +1,44 @@
+definition {
+
+	@summary = "Helper function to add a site via Headless"
+	macro _addSite {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var data = "\"name\": \"${siteName}\"";
+
+		if (isSet(membershipType)) {
+			var data = StringUtil.add(${data}, ",\"membershipType\": \"${membershipType}\"", "");
+		}
+
+		if (isSet(parentSiteKey)) {
+			var data = StringUtil.add(${data}, ",\"parentSiteKey\": \"${parentSiteKey}\"", "");
+		}
+
+		if (isSet(templateType)) {
+			var data = StringUtil.add(${data}, ",\"templateKey\": \"${templateKey}\",\"templateType\": \"${templateType}\"", "");
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-site/v1.0/sites \
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+					${data}
+				}
+		''';
+
+		var siteId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${siteId};
+	}
+
+}

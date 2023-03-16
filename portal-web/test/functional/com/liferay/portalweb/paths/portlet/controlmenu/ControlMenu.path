@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>HEADING_DRAFT</td>
-	<td>//*[@data-qa-id='headerTitle']//h1[(text()='${key_headerTitle}')]//..//sup[contains(text(),'*')]</td>
+	<td>//*[@data-qa-id='headerTitle']//h1[normalize-space(text())='${key_headerTitle}']//following-sibling::sup[normalize-space(text())='*']</td>
 	<td></td>
 </tr>
 <tr>

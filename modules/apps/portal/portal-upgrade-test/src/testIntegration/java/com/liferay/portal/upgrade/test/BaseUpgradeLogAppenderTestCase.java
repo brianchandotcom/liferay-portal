@@ -40,10 +40,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.upgrade.util.DBUpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +87,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED",
 			_originalUpgradeLogContextEnabled);
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED",
+			_originalUpgradeReportEnabled);
 	}
 
 	@Before
@@ -103,6 +109,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"com.liferay.portal.upgrade.internal.report.UpgradeReport");
 
 		_upgradeReportLogger.addAppender(_logContextAppender);
+
+		_originalErrorMessages.clear();
+		_originalFiltered = false;
+		_originalModuleSchemaVersionsMap.clear();
+		_originalUpgradeProcessMessages.clear();
+		_originalUpgradeStatus = "Pending";
+		_originalUpgradeType = "Not calculated";
+		_originalWarningMessages.clear();
 	}
 
 	@After
@@ -511,6 +525,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
+
+		_originalUpgradeReportEnabled = ReflectionTestUtil.getFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED");
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED", true);
+
+		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_errorMessages");
+		_originalFiltered = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_filtered");
+		_originalModuleSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_moduleSchemaVersionsMap");
+		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_upgradeProcessMessages");
+		_originalUpgradeStatus = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_upgradeStatus");
+		_originalUpgradeType = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_upgradeType");
+		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_warningMessages");
 	}
 
 	protected abstract String getFilePath();
@@ -622,8 +657,17 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
+	private static Map<String, Map<String, Integer>> _originalErrorMessages;
+	private static boolean _originalFiltered;
+	private static Map<String, Object> _originalModuleSchemaVersionsMap;
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;
+	private static Map<String, ArrayList<String>>
+		_originalUpgradeProcessMessages;
+	private static boolean _originalUpgradeReportEnabled;
+	private static String _originalUpgradeStatus;
+	private static String _originalUpgradeType;
+	private static Map<String, Map<String, Integer>> _originalWarningMessages;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 	private static Logger _upgradeReportLogger;

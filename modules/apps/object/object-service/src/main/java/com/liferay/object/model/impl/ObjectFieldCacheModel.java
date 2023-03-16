@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -109,8 +109,6 @@ public class ObjectFieldCacheModel
 		sb.append(dbTableName);
 		sb.append(", dbType=");
 		sb.append(dbType);
-		sb.append(", defaultValue=");
-		sb.append(defaultValue);
 		sb.append(", indexed=");
 		sb.append(indexed);
 		sb.append(", indexedAsKeyword=");
@@ -210,13 +208,6 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setDBType(dbType);
 		}
 
-		if (defaultValue == null) {
-			objectFieldImpl.setDefaultValue("");
-		}
-		else {
-			objectFieldImpl.setDefaultValue(defaultValue);
-		}
-
 		objectFieldImpl.setIndexed(indexed);
 		objectFieldImpl.setIndexedAsKeyword(indexedAsKeyword);
 
@@ -279,7 +270,6 @@ public class ObjectFieldCacheModel
 		dbColumnName = objectInput.readUTF();
 		dbTableName = objectInput.readUTF();
 		dbType = objectInput.readUTF();
-		defaultValue = objectInput.readUTF();
 
 		indexed = objectInput.readBoolean();
 
@@ -362,13 +352,6 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(dbType);
 		}
 
-		if (defaultValue == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(defaultValue);
-		}
-
 		objectOutput.writeBoolean(indexed);
 
 		objectOutput.writeBoolean(indexedAsKeyword);
@@ -423,7 +406,6 @@ public class ObjectFieldCacheModel
 	public String dbColumnName;
 	public String dbTableName;
 	public String dbType;
-	public String defaultValue;
 	public boolean indexed;
 	public boolean indexedAsKeyword;
 	public String indexedLanguageId;

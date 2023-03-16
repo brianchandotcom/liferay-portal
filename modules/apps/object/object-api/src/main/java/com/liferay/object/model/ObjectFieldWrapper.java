@@ -58,7 +58,6 @@ public class ObjectFieldWrapper
 		attributes.put("dbColumnName", getDBColumnName());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("dbType", getDBType());
-		attributes.put("defaultValue", getDefaultValue());
 		attributes.put("indexed", isIndexed());
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
@@ -164,12 +163,6 @@ public class ObjectFieldWrapper
 
 		if (dbType != null) {
 			setDBType(dbType);
-		}
-
-		String defaultValue = (String)attributes.get("defaultValue");
-
-		if (defaultValue != null) {
-			setDefaultValue(defaultValue);
 		}
 
 		Boolean indexed = (Boolean)attributes.get("indexed");
@@ -305,16 +298,6 @@ public class ObjectFieldWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
-	}
-
-	/**
-	 * Returns the default value of this object field.
-	 *
-	 * @return the default value of this object field
-	 */
-	@Override
-	public String getDefaultValue() {
-		return model.getDefaultValue();
 	}
 
 	/**
@@ -723,16 +706,6 @@ public class ObjectFieldWrapper
 	@Override
 	public void setDBType(String dbType) {
 		model.setDBType(dbType);
-	}
-
-	/**
-	 * Sets the default value of this object field.
-	 *
-	 * @param defaultValue the default value of this object field
-	 */
-	@Override
-	public void setDefaultValue(String defaultValue) {
-		model.setDefaultValue(defaultValue);
 	}
 
 	/**

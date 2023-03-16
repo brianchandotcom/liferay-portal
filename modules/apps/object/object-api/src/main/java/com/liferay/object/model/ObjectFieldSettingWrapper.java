@@ -133,6 +133,11 @@ public class ObjectFieldSettingWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public boolean compareName(String value) {
+		return model.compareName(value);
+	}
+
 	/**
 	 * Returns the company ID of this object field setting.
 	 *

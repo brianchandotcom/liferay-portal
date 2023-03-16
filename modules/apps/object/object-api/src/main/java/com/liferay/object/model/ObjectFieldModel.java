@@ -312,21 +312,6 @@ public interface ObjectFieldModel
 	public void setDBType(String dbType);
 
 	/**
-	 * Returns the default value of this object field.
-	 *
-	 * @return the default value of this object field
-	 */
-	@AutoEscape
-	public String getDefaultValue();
-
-	/**
-	 * Sets the default value of this object field.
-	 *
-	 * @param defaultValue the default value of this object field
-	 */
-	public void setDefaultValue(String defaultValue);
-
-	/**
 	 * Returns the indexed of this object field.
 	 *
 	 * @return the indexed of this object field

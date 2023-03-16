@@ -104,7 +104,6 @@
 		<field name="DBColumnName" type="String" />
 		<field name="DBTableName" type="String" />
 		<field name="DBType" type="String" />
-		<field name="defaultValue" type="String" />
 		<field name="indexed" type="boolean" />
 		<field name="indexedAsKeyword" type="boolean" />
 		<field name="indexedLanguageId" type="String" />

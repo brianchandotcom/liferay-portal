@@ -58,6 +58,8 @@ public interface ObjectFieldSetting
 
 			};
 
+	public boolean compareName(String value);
+
 	public java.util.List<ObjectFilter> getObjectFilters();
 
 	public ObjectStateFlow getObjectStateFlow();

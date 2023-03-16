@@ -33,6 +33,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import org.xml.sax.SAXException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -43,7 +45,7 @@ public class WSDDMerger {
 	}
 
 	public static void merge(String source, String destination)
-		throws DocumentException, IOException {
+		throws DocumentException, IOException, SAXException {
 
 		// Source
 
@@ -116,8 +118,17 @@ public class WSDDMerger {
 		}
 	}
 
-	private static SAXReader _getSAXReader() {
-		return SAXReaderFactory.getSAXReader(null, false, false);
+	private static SAXReader _getSAXReader() throws SAXException {
+		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
+
+		saxReader.setFeature(
+			"http://apache.org/xml/features/disallow-doctype-decl", true);
+		saxReader.setFeature(
+			"http://xml.org/sax/features/external-general-entities", false);
+		saxReader.setFeature(
+			"http://xml.org/sax/features/external-parameter-entities", false);
+
+		return saxReader;
 	}
 
 }

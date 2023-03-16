@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADING_DRAFT</td>
+	<td>//*[@data-qa-id='headerTitle']//h1[(text()='${key_headerTitle}')]//..//sup[contains(text(),'*')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//*[@data-qa-id='controlMenu']//*[name()='svg'][contains(@class,'lexicon-icon-merge')]</td>
 	<td></td>

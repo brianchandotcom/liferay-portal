@@ -564,7 +564,7 @@ definition {
 		task ("And when a new expense is added to the activity") {
 			var budgetValue = 5000;
 
-			PRMMDFRequest.editexpenseFields(budgetList = "Sponsorship Fee-${budgetValue}");
+			PRMMDFRequest.fillExpenseFields(budgetList = "Sponsorship Fee-${budgetValue}");
 		}
 
 		task ("Then the 'Total MDF Requested Amount' value is equals to 50% of the budget value") {

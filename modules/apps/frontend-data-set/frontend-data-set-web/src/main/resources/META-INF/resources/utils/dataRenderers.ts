@@ -79,15 +79,50 @@ export async function getDataRendererByURL(
 		return addedDataRenderer.dataRenderer;
 	}
 
-	const fetchedComponent = await getJsModule(url);
+	let dataRenderer: AnyDataRenderer;
+
+	if (url.includes(' from ')) {
+		const [moduleName, symbolName] = getModuleAndSymbolNames(url);
+
+		// @ts-ignore
+		const module = await import(/* webpackIgnore: true */ moduleName);
+
+		dataRenderer = {
+			renderer: module[symbolName],
+			type: 'clientExtension',
+		};
+	}
+	else {
+		dataRenderer = {
+			Component: await getJsModule(url),
+			type: 'internal',
+		};
+	}
 
 	fetchedDataRenderers.push({
-		dataRenderer: {
-			Component: fetchedComponent,
-			type: 'internal',
-		},
+		dataRenderer,
 		url,
 	});
 
-	return fetchedComponent;
+	return dataRenderer;
+}
+
+function getModuleAndSymbolNames(url: string): [string, string] {
+	const parts = url.split(' from ');
+
+	const moduleName = parts[1].trim();
+	let symbolName = parts[0].trim();
+
+	if (
+		symbolName !== 'default' &&
+		(!symbolName.startsWith('{') || !symbolName.endsWith('}'))
+	) {
+		throw new Error(`Invalid data renderer URL: ${url}`);
+	}
+
+	if (symbolName.startsWith('{')) {
+		symbolName = symbolName.substring(1, symbolName.length - 1).trim();
+	}
+
+	return [moduleName, symbolName];
 }

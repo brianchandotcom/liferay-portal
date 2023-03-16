@@ -78,7 +78,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 		sb.append("\"/o/headless-batch-engine/v1.0/import-task/");
 		sb.append(batchEngineUnitConfiguration.getClassName());
 		sb.append("\", \"method\": \"POST\"}},");
-		sb.append("\"configuration\": {\"className\": \"");
+		sb.append("\"configuration\": {\"callbackURL\":null,\"className\": \"");
 		sb.append(batchEngineUnitConfiguration.getClassName());
 		sb.append("\",\n\"companyId\" :");
 		sb.append(batchEngineUnitConfiguration.getCompanyId());

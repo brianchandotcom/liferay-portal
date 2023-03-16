@@ -36,6 +36,7 @@ export default function propsTransformer({
 		selectFolderURL,
 		trashEnabled,
 		viewFileEntryTypeURL,
+		selectExtensionURL,
 	},
 	portletNamespace,
 	...otherProps
@@ -204,7 +205,7 @@ export default function propsTransformer({
 						`${portletNamespace}fileExtension=${selectedItem.join(
 							','
 						)}`,
-						viewFileEntryTypeURL
+						selectExtensionURL
 					);
 					navigate(url);
 				}

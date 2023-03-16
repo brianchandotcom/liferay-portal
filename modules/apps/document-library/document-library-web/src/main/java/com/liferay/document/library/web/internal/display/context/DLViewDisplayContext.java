@@ -277,6 +277,14 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
+	public String getSelectExtensionURL() throws PortletException {
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)
+		).setParameter(
+			"fileExtension", (String)null
+		).buildString();
+	}
+
 	public String getViewFileEntryURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse

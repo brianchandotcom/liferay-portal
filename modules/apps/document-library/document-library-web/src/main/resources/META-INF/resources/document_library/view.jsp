@@ -92,6 +92,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				).put(
 					"viewFileEntryTypeURL", dlViewDisplayContext.getViewFileEntryTypeURL()
 				).put(
+					"selectExtensionURL", dlViewDisplayContext.getSelectExtensionURL()
+				).put(
 					"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
 				).build()
 			%>'

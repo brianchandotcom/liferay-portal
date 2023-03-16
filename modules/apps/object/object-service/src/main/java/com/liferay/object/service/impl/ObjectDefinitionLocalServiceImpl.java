@@ -360,7 +360,8 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
-			!PortalRunMode.isTestMode() && objectDefinition.isSystem()) {
+			!PortalRunMode.isTestMode() &&
+			objectDefinition.isUnmodifiableSystemObject()) {
 
 			throw new RequiredObjectDefinitionException();
 		}
@@ -368,7 +369,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectActionLocalService.deleteObjectActions(
 			objectDefinition.getObjectDefinitionId());
 
-		if (!objectDefinition.isSystem()) {
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
 			List<ObjectEntry> objectEntries =
 				_objectEntryPersistence.findByObjectDefinitionId(
 					objectDefinition.getObjectDefinitionId());
@@ -413,7 +414,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			objectDefinition.getObjectDefinitionId());
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
 		else if (objectDefinition.isApproved()) {

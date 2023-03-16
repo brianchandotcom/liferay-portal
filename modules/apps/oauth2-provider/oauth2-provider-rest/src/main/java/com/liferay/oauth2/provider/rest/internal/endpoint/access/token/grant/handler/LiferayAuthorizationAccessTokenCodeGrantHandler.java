@@ -50,6 +50,14 @@ import org.osgi.service.component.annotations.Reference;
 public class LiferayAuthorizationAccessTokenCodeGrantHandler
 	extends BaseAccessTokenGrantHandler {
 
+	@Override
+	public List<String> getSupportedGrantTypes() {
+		AccessTokenGrantHandler accessTokenGrantHandler =
+			getAccessTokenGrantHandler();
+
+		return accessTokenGrantHandler.getSupportedGrantTypes();
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_authorizationCodeGrantHandler = new AuthorizationCodeGrantHandler();

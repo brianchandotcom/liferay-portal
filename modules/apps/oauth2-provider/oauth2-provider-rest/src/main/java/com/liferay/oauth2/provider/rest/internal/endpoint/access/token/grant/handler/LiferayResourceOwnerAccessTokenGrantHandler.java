@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -47,6 +48,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class LiferayResourceOwnerAccessTokenGrantHandler
 	extends BaseAccessTokenGrantHandler {
+
+	@Override
+	public List<String> getSupportedGrantTypes() {
+		AccessTokenGrantHandler accessTokenGrantHandler =
+			getAccessTokenGrantHandler();
+
+		return accessTokenGrantHandler.getSupportedGrantTypes();
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {

@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -40,6 +41,14 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LiferayClientCredentialsAccessTokenGrantHandler
 	extends BaseAccessTokenGrantHandler {
+
+	@Override
+	public List<String> getSupportedGrantTypes() {
+		AccessTokenGrantHandler accessTokenGrantHandler =
+			getAccessTokenGrantHandler();
+
+		return accessTokenGrantHandler.getSupportedGrantTypes();
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {

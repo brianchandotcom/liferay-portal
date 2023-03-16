@@ -45,7 +45,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -139,7 +138,11 @@ public class ProductDTOConverter
 					cpDefinition.getShortDescriptionMap());
 				skuFormatted = _getSku(
 					cpDefinition, dtoConverterContext.getLocale());
-				tags = _getTags(cpDefinition);
+				tags = TransformUtil.transformToArray(
+					_assetTagService.getTags(
+						cpDefinition.getModelClassName(),
+						cpDefinition.getCPDefinitionId()),
+					AssetTag::getName, String.class);
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
 					CommerceAccountConstants.ACCOUNT_ID_ADMIN);
 				urls = LanguageUtils.getLanguageIdMap(
@@ -181,19 +184,6 @@ public class ProductDTOConverter
 		CPInstance cpInstance = cpInstances.get(0);
 
 		return cpInstance.getSku();
-	}
-
-	private String[] _getTags(CPDefinition cpDefinition) {
-		List<AssetTag> assetEntryAssetTags = _assetTagService.getTags(
-			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
-
-		Stream<AssetTag> stream = assetEntryAssetTags.stream();
-
-		return stream.map(
-			AssetTag::getName
-		).toArray(
-			String[]::new
-		);
 	}
 
 	private Category _toCategory(AssetCategory assetCategory) {

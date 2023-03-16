@@ -22,6 +22,7 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 import DefaultRenderer from '../../data_renderers/DefaultRenderer';
 import {
+	AnyDataRenderer,
 	getDataRendererById,
 	getDataRendererByURL,
 	getInputRendererById,
@@ -112,15 +113,17 @@ function TableCell({
 		SyncDataRenderer = null;
 	}
 
-	const [DataRenderer, setDataRenderer] = useState(() => SyncDataRenderer);
+	const [dataRenderer, setDataRenderer] = useState<AnyDataRenderer | null>(
+		() => SyncDataRenderer
+	);
 
 	useEffect(() => {
-		if (!loading && view.contentRendererModuleURL && !DataRenderer) {
+		if (!loading && view.contentRendererModuleURL && !dataRenderer) {
 			setLoading(true);
 
 			getDataRendererByURL(view.contentRendererModuleURL)
-				.then((Component) => {
-					setDataRenderer(() => Component);
+				.then((dataRenderer) => {
+					setDataRenderer(() => dataRenderer);
 
 					setLoading(false);
 				})
@@ -130,7 +133,7 @@ function TableCell({
 					setLoading(false);
 				});
 		}
-	}, [view, loading, DataRenderer]);
+	}, [view, loading, dataRenderer]);
 
 	if (
 		inlineEditSettings &&
@@ -152,10 +155,21 @@ function TableCell({
 		);
 	}
 
-	return (
-		<DndTableCell columnName={String(options.fieldName)}>
-			{DataRenderer && !loading ? (
-				<DataRenderer
+	if (!dataRenderer || loading) {
+		return (
+			<DndTableCell columnName={String(options.fieldName)}>
+				<span
+					aria-hidden="true"
+					className="loading-animation loading-animation-sm"
+				/>
+			</DndTableCell>
+		);
+	}
+
+	if (dataRenderer.type === 'internal') {
+		return (
+			<DndTableCell columnName={String(options.fieldName)}>
+				<dataRenderer.Component
 					actions={actions}
 					itemData={itemData}
 					itemId={itemId}
@@ -166,14 +180,11 @@ function TableCell({
 					value={value}
 					valuePath={valuePath}
 				/>
-			) : (
-				<span
-					aria-hidden="true"
-					className="loading-animation loading-animation-sm"
-				/>
-			)}
-		</DndTableCell>
-	);
+			</DndTableCell>
+		);
+	}
+
+	return <></>;
 }
 
 export default TableCell;

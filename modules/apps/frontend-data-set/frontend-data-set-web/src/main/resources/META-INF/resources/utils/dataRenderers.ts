@@ -12,6 +12,9 @@
  * details.
  */
 
+import {FDSCellRenderer} from '@liferay/js-api/data-set';
+import React from 'react';
+
 // @ts-ignore
 
 import {dataRenderers, inputRenderers} from '../data_renderers/index';
@@ -40,23 +43,49 @@ export function getDataRendererById(id: string): any {
 	return dataRenderer;
 }
 
-export const fetchedContentRenderers: Array<{
-	component: React.ComponentClass<any>;
+export type DataRendererType = 'clientExtension' | 'internal';
+
+export interface DataRenderer {
+	type: DataRendererType;
+}
+
+export interface InternalDataRenderer extends DataRenderer {
+	Component: React.ComponentClass<any>;
+	type: 'internal';
+}
+
+export interface ClientExtensionDataRenderer extends DataRenderer {
+	renderer: FDSCellRenderer;
+	type: 'clientExtension';
+}
+
+export type AnyDataRenderer =
+	| ClientExtensionDataRenderer
+	| InternalDataRenderer;
+
+const fetchedDataRenderers: Array<{
+	dataRenderer: AnyDataRenderer;
 	url: string;
 }> = [];
 
-export async function getDataRendererByURL(url: string): Promise<any> {
-	const addedDataRenderer = fetchedContentRenderers.find(
+export async function getDataRendererByURL(
+	url: string
+): Promise<AnyDataRenderer> {
+	const addedDataRenderer = fetchedDataRenderers.find(
 		(contentRenderer) => contentRenderer.url === url
 	);
+
 	if (addedDataRenderer) {
-		return addedDataRenderer.component;
+		return addedDataRenderer.dataRenderer;
 	}
 
 	const fetchedComponent = await getJsModule(url);
 
-	fetchedContentRenderers.push({
-		component: fetchedComponent,
+	fetchedDataRenderers.push({
+		dataRenderer: {
+			Component: fetchedComponent,
+			type: 'internal',
+		},
 		url,
 	});
 

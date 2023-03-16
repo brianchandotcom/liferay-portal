@@ -522,7 +522,7 @@ definition {
 
 				PageEditor.clickBack();
 
-				ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Collection Page Name *");
+				ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Collection Page Name");
 
 				PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name*");
 			}
@@ -1021,7 +1021,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -1082,7 +1082,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Public Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Public Page Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
@@ -1103,7 +1103,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Private Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Private Page Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

@@ -130,7 +130,7 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		ControlMenu.viewHeaderDraftTitle(headerTitle = "${pageName} *");
+		ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageName});
 
 		PageEditor.viewFragmentEditableText(
 			editableText = ${collectionName},
@@ -281,7 +281,7 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		ControlMenu.viewHeaderDraftTitle(headerTitle = "${pageName} *");
+		ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageName});
 
 		PageEditor.viewFragmentEditableText(
 			editableText = ${collectionName},

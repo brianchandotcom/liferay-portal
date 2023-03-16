@@ -571,7 +571,7 @@ definition {
 
 				ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-				ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
+				ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
 
 				ContentPages.gotoPageEditor();
 

@@ -105,12 +105,12 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public void validateObjectFieldSettings(
-			long objectDefinitionId, String objectFieldName,
+			ObjectField objectField,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
-			objectDefinitionId, objectFieldName, objectFieldSettings);
+			objectField, objectFieldSettings);
 
 		Map<String, String> objectFieldSettingsValues = new HashMap<>();
 
@@ -119,6 +119,8 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 				objectFieldSetting.getName(), objectFieldSetting.getValue()));
 
 		String showCounter = objectFieldSettingsValues.get("showCounter");
+
+		String objectFieldName = objectField.getName();
 
 		if (Validator.isNull(showCounter) ||
 			StringUtil.equalsIgnoreCase(showCounter, StringPool.FALSE)) {

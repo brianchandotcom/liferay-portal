@@ -127,12 +127,12 @@ public class AttachmentObjectFieldBusinessType
 
 	@Override
 	public void validateObjectFieldSettings(
-			long objectDefinitionId, String objectFieldName,
+			ObjectField objectField,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
-			objectDefinitionId, objectFieldName, objectFieldSettings);
+			objectField, objectFieldSettings);
 
 		Map<String, String> objectFieldSettingsValuesMap = new HashMap<>();
 
@@ -142,11 +142,12 @@ public class AttachmentObjectFieldBusinessType
 		}
 
 		_validateObjectFieldSettingFileSource(
-			objectFieldSettingsValuesMap.get("fileSource"), objectFieldName,
+			objectFieldSettingsValuesMap.get("fileSource"),
+			objectField.getName(),
 			objectFieldSettingsValuesMap.get("showFilesInDocumentsAndMedia"),
 			objectFieldSettingsValuesMap.get("storageDLFolderPath"));
 		_validateObjectFieldSettingMaximumFileSize(
-			objectFieldName,
+			objectField.getName(),
 			objectFieldSettingsValuesMap.get("maximumFileSize"));
 	}
 

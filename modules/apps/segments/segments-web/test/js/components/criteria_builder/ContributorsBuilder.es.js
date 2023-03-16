@@ -12,10 +12,9 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 
 import '@testing-library/jest-dom/extend-expect';
-import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
 
 import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
@@ -178,11 +177,6 @@ const propertyGroups = [
 	},
 ];
 
-jest.mock('frontend-js-web', () => ({
-	...jest.requireActual('frontend-js-web'),
-	openSelectionModal: jest.fn(),
-}));
-
 describe('ContributorsBuilder', () => {
 	afterEach(cleanup);
 
@@ -194,7 +188,6 @@ describe('ContributorsBuilder', () => {
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
 			/>
 		);
@@ -210,150 +203,10 @@ describe('ContributorsBuilder', () => {
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
 			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot('initialRenderNotEditing');
-	});
-
-	it('renders the Scope Card', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-
-		const scopeName = 'Liferay DXP';
-
-		const editing = true;
-
-		const {getByText} = render(
-			<ContributorsBuilder
-				editing={editing}
-				emptyContributors={false}
-				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
-				propertyGroups={propertyGroups}
-				scopeName={scopeName}
-				siteItemSelectorURL="http://example.org"
-			/>
-		);
-
-		expect(getByText('scope')).toBeInTheDocument();
-		expect(getByText(scopeName)).toBeInTheDocument();
-	});
-
-	it('renders the Scope Card with select site button enabled', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-
-		const editing = true;
-
-		const {getByText} = render(
-			<ContributorsBuilder
-				editing={editing}
-				emptyContributors={false}
-				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
-				propertyGroups={propertyGroups}
-				scopeName="Liferray DXP"
-				siteItemSelectorURL="http://example.org"
-			/>
-		);
-
-		expect(getByText('select')).toBeInTheDocument();
-	});
-
-	it('renders the Scope Card without the select site button if no site selector url is provided', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-
-		const editing = true;
-
-		const {queryByText} = render(
-			<ContributorsBuilder
-				editing={editing}
-				emptyContributors={false}
-				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
-				propertyGroups={propertyGroups}
-				scopeName="Liferray DXP"
-			/>
-		);
-
-		expect(queryByText('select')).not.toBeInTheDocument();
-	});
-
-	it('renders a select site button that opens a selection modal', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-
-		const editing = true;
-
-		const {getByText} = render(
-			<ContributorsBuilder
-				editing={editing}
-				emptyContributors={false}
-				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
-				propertyGroups={propertyGroups}
-				scopeName="Liferray DXP"
-				siteItemSelectorURL="http://example.org"
-			/>
-		);
-
-		const selectButton = getByText('select');
-		fireEvent.click(selectButton);
-
-		expect(openSelectionModal).toHaveBeenCalledTimes(1);
-	});
-
-	it('renders the site readible name after selecting a site', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-		openSelectionModal.mockImplementation(({onSelect}) =>
-			onSelect({
-				groupdescriptivename: 'Site descriptive name',
-				groupid: 1,
-			})
-		);
-
-		const {getByText} = render(
-			<ContributorsBuilder
-				editing={true}
-				emptyContributors={false}
-				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
-				propertyGroups={propertyGroups}
-				scopeName="Liferray DXP"
-				siteItemSelectorURL="http://example.org"
-			/>
-		);
-
-		const selectButton = getByText('select');
-		fireEvent.click(selectButton);
-
-		expect(getByText('Site descriptive name')).toBeInTheDocument();
-	});
-
-	it('renders the site group scope label if no readible name is present', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-		openSelectionModal.mockImplementation(({onSelect}) =>
-			onSelect({
-				groupid: 1,
-				groupscopelabel: 'Group scope label',
-			})
-		);
-
-		const {getByText} = render(
-			<ContributorsBuilder
-				editing={true}
-				emptyContributors={false}
-				initialContributors={initialContributors}
-				portletNamespace="segments_portlet"
-				propertyGroups={propertyGroups}
-				scopeName="Liferray DXP"
-				siteItemSelectorURL="http://example.org"
-			/>
-		);
-
-		const selectButton = getByText('select');
-		fireEvent.click(selectButton);
-
-		expect(getByText('Group scope label')).toBeInTheDocument();
 	});
 });

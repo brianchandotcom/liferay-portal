@@ -1,6 +1,5 @@
 assemble:
     - from: assets
-      include: "**/*"
       into: static
 liferay-sample-theme-favicon:
     name: Liferay Sample Theme Favicon

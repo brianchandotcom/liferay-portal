@@ -59,6 +59,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class SAPEntryScopeDescriptorFinderRegistrator {
 
+	public boolean contains(String jaxRsApplicationName) {
+		return _jaxRsApplicationNames.contains(jaxRsApplicationName);
+	}
+
 	public List<SAPEntryScope> getRegisteredSAPEntryScopes(long companyId) {
 		SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
 			_registeredSAPEntryScopeDescriptorFinders.get(companyId);

@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.plugin.events.publisher;
 
-import com.liferay.jenkins.plugin.events.JenkinsEventsDescriptor;
 import com.liferay.jenkins.plugin.events.jms.JMSConnection;
 import com.liferay.jenkins.plugin.events.jms.JMSFactory;
 import com.liferay.jenkins.plugin.events.jms.JMSQueue;
@@ -33,8 +32,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
-import hudson.model.Describable;
-import hudson.model.Descriptor;
 import org.json.JSONObject;
 
 /**
@@ -42,27 +39,27 @@ import org.json.JSONObject;
  */
 public class JenkinsPublisher {
 
-	public JenkinsPublisher() {
-		_initializeEventTypes();
-	}
-
 	public JenkinsPublisher(JSONObject jsonObject) {
-		jmsRequest = jsonObject.has("jmsRequest");
+		_jmsRequest = jsonObject.has("jmsRequest");
 
-		if (jmsRequest) {
+		if (_jmsRequest) {
 			JSONObject jmsRequestJSONObject = jsonObject.getJSONObject(
 				"jmsRequest");
 
-			inboundJMSQueueName = jmsRequestJSONObject.optString(
+			_inboundJMSQueueName = jmsRequestJSONObject.optString(
 				"inboundJMSQueueName");
-			outboundJMSQueueName = jmsRequestJSONObject.optString(
+			_outboundJMSQueueName = jmsRequestJSONObject.optString(
 				"outboundJMSQueueName");
 		}
+		else {
+			_inboundJMSQueueName = null;
+			_outboundJMSQueueName = null;
+		}
 
-		name = jsonObject.getString("name");
-		url = jsonObject.getString("url");
-		userName = jsonObject.getString("userName");
-		userPassword = jsonObject.getString("userPassword");
+		_name = jsonObject.getString("name");
+		_url = jsonObject.getString("url");
+		_userName = jsonObject.getString("userName");
+		_userPassword = jsonObject.getString("userPassword");
 
 		_setEventTrigger(
 			jsonObject.getBoolean("buildCompleted"),
@@ -107,7 +104,14 @@ public class JenkinsPublisher {
 			jsonObject.getBoolean("queueItemLeft"),
 			EventTrigger.QUEUE_ITEM_LEFT);
 
-		_initializeEventTypes();
+		if ((_inboundJMSQueueName != null) && _jmsRequest) {
+			JMSConnection jmsConnection = JMSFactory.newJMSConnection(getUrl());
+
+			JMSQueue jmsQueue = JMSFactory.newJMSQueue(
+				jmsConnection, _inboundJMSQueueName);
+
+			jmsQueue.subscribe(new JMSMessageListener());
+		}
 	}
 
 	public boolean containsEventTrigger(String eventTriggerString) {
@@ -133,31 +137,50 @@ public class JenkinsPublisher {
 		return false;
 	}
 
+	public List<EventTrigger> getEventTriggers() {
+		return _eventTriggers;
+	}
+
+	public String getInboundJMSQueueName() {
+		return _inboundJMSQueueName;
+	}
+
+	public boolean getJmsRequest() {
+		return _jmsRequest;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getOutboundJMSQueueName() {
+		return _outboundJMSQueueName;
+	}
+
+	public String getUrl() {
+		return _userPassword;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public String getUserPassword() {
+		return _userPassword;
+	}
+
 	public void publish(String payload, EventTrigger eventTrigger) {
 		if (!_eventTriggers.contains(eventTrigger)) {
 			return;
 		}
 
-		if (jmsRequest) {
+		if (_jmsRequest) {
 			_publishJMS(payload, eventTrigger);
 
 			return;
 		}
 
 		_publishHttp(payload, eventTrigger);
-	}
-
-	public String inboundJMSQueueName;
-	public boolean jmsRequest;
-	public String name;
-	public String outboundJMSQueueName;
-	public String url;
-	public String userName;
-	public String userPassword;
-	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
-
-	public List<EventTrigger> getEventTriggers() {
-		return _eventTriggers;
 	}
 
 	public enum EventTrigger {
@@ -176,7 +199,7 @@ public class JenkinsPublisher {
 
 		sb.append("Basic ");
 
-		String userNamePassword = userName + ":" + userPassword;
+		String userNamePassword = getUserName() + ":" + getUserPassword();
 
 		Base64.Encoder base64Encoder = Base64.getEncoder();
 
@@ -186,25 +209,17 @@ public class JenkinsPublisher {
 	}
 
 	private void _initializeEventTypes() {
-		if ((inboundJMSQueueName != null) && jmsRequest) {
-			JMSConnection jmsConnection = JMSFactory.newJMSConnection(url);
-
-			JMSQueue jmsQueue = JMSFactory.newJMSQueue(
-				jmsConnection, inboundJMSQueueName);
-
-			jmsQueue.subscribe(new JMSMessageListener());
-		}
 	}
 
 	private void _publishHttp(String payload, EventTrigger eventTrigger) {
-		if (!_eventTriggers.contains(eventTrigger)) {
+		if (!containsEventTrigger(eventTrigger)) {
 			return;
 		}
 
 		HttpURLConnection httpURLConnection = null;
 
 		try {
-			URL url = new URL(this.url);
+			URL url = new URL(getUrl());
 
 			httpURLConnection = (HttpURLConnection)url.openConnection();
 
@@ -272,13 +287,15 @@ public class JenkinsPublisher {
 	}
 
 	private void _publishJMS(String payload, EventTrigger eventTrigger) {
-		if (!_eventTriggers.contains(eventTrigger) ||
+		String outboundJMSQueueName = getOutboundJMSQueueName();
+
+		if (!containsEventTrigger(eventTrigger) ||
 			(outboundJMSQueueName == null) || outboundJMSQueueName.isEmpty()) {
 
 			return;
 		}
 
-		JMSConnection jmsConnection = JMSFactory.newJMSConnection(url);
+		JMSConnection jmsConnection = JMSFactory.newJMSConnection(getUrl());
 
 		JMSQueue jmsQueue = JMSFactory.newJMSQueue(
 			jmsConnection, outboundJMSQueueName);
@@ -289,11 +306,22 @@ public class JenkinsPublisher {
 	private void _setEventTrigger(
 		boolean enableEventTrigger, EventTrigger eventTrigger) {
 
-		_eventTriggers.remove(eventTrigger);
+		List<EventTrigger> eventTriggers = getEventTriggers();
+
+		eventTriggers.remove(eventTrigger);
 
 		if (enableEventTrigger) {
-			_eventTriggers.add(eventTrigger);
+			eventTriggers.add(eventTrigger);
 		}
 	}
+
+	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
+	private final String _name;
+	private final String _inboundJMSQueueName;
+	private final boolean _jmsRequest;
+	private final String _outboundJMSQueueName;
+	private final String _url;
+	private final String _userName;
+	private final String _userPassword;
 
 }

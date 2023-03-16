@@ -126,9 +126,13 @@ public class SiteFacetPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getFacet(
 				_getAggregationName(renderRequest)));
 
-		SearchOptionalUtil.copy(
-			() -> _getFilteredGroupIdsOptional(portletSharedSearchResponse),
-			scopeSearchFacetDisplayContextBuilder::setFilteredGroupIds);
+		long[] filteredGroupIds = _getFilteredGroupIds(
+			portletSharedSearchResponse);
+
+		if (filteredGroupIds != null) {
+			scopeSearchFacetDisplayContextBuilder.setFilteredGroupIds(
+				filteredGroupIds);
+		}
 
 		SiteFacetPortletPreferences siteFacetPortletPreferences =
 			new SiteFacetPortletPreferencesImpl(
@@ -183,7 +187,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 		return portal.getPortletId(renderRequest);
 	}
 
-	private Optional<long[]> _getFilteredGroupIdsOptional(
+	private long[] _getFilteredGroupIds(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchSettings searchSettings =
@@ -191,7 +195,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 
 		SearchContext searchContext = searchSettings.getSearchContext();
 
-		return Optional.ofNullable(searchContext.getGroupIds());
+		return searchContext.getGroupIds();
 	}
 
 	private HttpServletRequest _getHttpServletRequest(

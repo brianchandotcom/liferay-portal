@@ -1,0 +1,34 @@
+definition {
+
+	macro assertGraphValue {
+		AssertElementPresent(
+			locator1 = "RaylifeAPApplications#TOTAL_STATUS",
+			value1 = ${number});
+	}
+
+	macro getApplicationLegendValue {
+		var key_legendItem = ${legendItem};
+		var getItem = selenium.getText("RaylifeAPApplications#STATUS_LEGEND");
+
+		return ${getItem};
+	}
+
+	@summary = "Get the value from the Applications page and put it in a list"
+	macro getValueFromApplicationsPage {
+		var number = 0;
+		var list = ListUtil.newList();
+
+		for (var item : list ${legendItem}) {
+			var getItem = RaylifeAPApplications.getApplicationLegendValue(legendItem = ${item});
+
+			ListUtil.add(${list}, ${getItem});
+		}
+
+		for (var lista : list ${list}) {
+			var number = ${number} + ${lista};
+		}
+
+		return ${number};
+	}
+
+}

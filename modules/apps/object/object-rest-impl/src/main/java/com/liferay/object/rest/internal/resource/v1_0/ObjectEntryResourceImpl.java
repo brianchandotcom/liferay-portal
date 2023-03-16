@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -58,6 +59,7 @@ import javax.ws.rs.core.MultivaluedMap;
 public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	public ObjectEntryResourceImpl(
+		DTOConverterRegistry dtoConverterRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
@@ -67,6 +69,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		SystemObjectDefinitionMetadataRegistry
 			systemObjectDefinitionMetadataRegistry) {
 
+		_dtoConverterRegistry = dtoConverterRegistry;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -476,8 +479,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		Long objectEntryId) {
 
 		return new DefaultDTOConverterContext(
-			contextAcceptLanguage.isAcceptAllLanguages(), null, null,
-			contextHttpServletRequest, objectEntryId,
+			contextAcceptLanguage.isAcceptAllLanguages(), null,
+			_dtoConverterRegistry, contextHttpServletRequest, objectEntryId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
 	}
@@ -576,6 +579,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		throw new NotFoundException("Missing parameter \"objectDefinitionId\"");
 	}
+
+	private final DTOConverterRegistry _dtoConverterRegistry;
 
 	@Context
 	private ObjectDefinition _objectDefinition;

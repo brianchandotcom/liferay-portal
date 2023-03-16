@@ -488,6 +488,79 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithTaxonomyCategoriesAndEmbeddedTaxonomyCategory()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(
+					taxonomyCategory1.getId(), taxonomyCategory2.getId())
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				jsonObject.getString("id"),
+				"?nestedFields=embeddedTaxonomyCategory"),
+			Http.Method.GET);
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"embeddedTaxonomyCategory",
+					JSONUtil.put(
+						"externalReferenceCode",
+						taxonomyCategory1.getExternalReferenceCode()
+					).put(
+						"id", Long.valueOf(taxonomyCategory1.getId())
+					).put(
+						"name", taxonomyCategory1.getName()
+					).put(
+						"siteId", taxonomyCategory1.getSiteId()
+					).put(
+						"vocabulary", _assetVocabulary.getName()
+					)
+				).put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory1.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory1.getName()
+				),
+				JSONUtil.put(
+					"embeddedTaxonomyCategory",
+					JSONUtil.put(
+						"externalReferenceCode",
+						taxonomyCategory2.getExternalReferenceCode()
+					).put(
+						"id", Long.valueOf(taxonomyCategory2.getId())
+					).put(
+						"name", taxonomyCategory2.getName()
+					).put(
+						"siteId", taxonomyCategory2.getSiteId()
+					).put(
+						"vocabulary", _assetVocabulary.getName()
+					)
+				).put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory2.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory2.getName()
+				)
+			).toString(),
+			jsonObject.getJSONArray(
+				"taxonomyCategoryBriefs"
+			).toString());
+	}
+
+	@Test
 	public void testGetObjectRelationshipERCFieldNameInOneToManyRelationship()
 		throws Exception {
 

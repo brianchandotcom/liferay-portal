@@ -1312,7 +1312,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			};
 		}
 
-		return AssetRendererFactoryRegistryUtil.getClassNameIds(companyId);
+		return AssetRendererFactoryRegistryUtil.getClassNameIds(
+			companyId, true);
 	}
 
 	protected long[] getTagIds(long[] groupIds, String tagName) {

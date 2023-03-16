@@ -30,11 +30,13 @@ function ValidatedInput({
 	const nodeRef = useRef();
 
 	const updateInvalid = (newInvalid) => {
-		setInvalid(newInvalid);
+		setInvalid((previousInvalid) => {
+			if (newInvalid !== previousInvalid) {
+				onValidationChange(newInvalid);
+			}
 
-		if (newInvalid !== invalid) {
-			onValidationChange(newInvalid);
-		}
+			return newInvalid;
+		});
 	};
 
 	const onNameInputBlur = (event) => {

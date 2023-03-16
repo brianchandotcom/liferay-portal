@@ -190,12 +190,17 @@ export function MenuItem({
 				data-parent-item-id={parentItemId}
 				onBlur={onBlur}
 				onClick={() => {
-					setSelectedMenuItemId(siteNavigationMenuItemId);
-					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+					if (!isMovementEnabled) {
+						setSelectedMenuItemId(siteNavigationMenuItemId);
+						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+					}
 				}}
 				onFocus={onFocus}
 				onKeyDown={(event) => {
-					if (event.key === ' ' || event.key === 'Enter') {
+					if (
+						(event.key === ' ' || event.key === 'Enter') &&
+						!isMovementEnabled
+					) {
 						setSelectedMenuItemId(siteNavigationMenuItemId);
 						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
 					}
@@ -227,6 +232,8 @@ export function MenuItem({
 										}
 										onKeyDown={(event) => {
 											if (event.key === 'Enter') {
+												event.stopPropagation();
+
 												setIsMovementEnabled(
 													(
 														previousIsMovementEnabled

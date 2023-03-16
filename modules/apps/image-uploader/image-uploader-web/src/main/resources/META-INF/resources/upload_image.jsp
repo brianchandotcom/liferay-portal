@@ -104,7 +104,11 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 								</c:if>
 
 								<div class="button-holder">
-									<label class="btn btn-secondary mt-2" for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage" tabindex="0"><liferay-ui:message key="select" /></label>
+									<label for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage">
+										<span aria-label="<%= LanguageUtil.format(request, "select-x", "image") %>" class="btn btn-secondary mt-2" role="button" tabindex="0">
+											<liferay-ui:message key="select" />
+										<span>
+									</label>
 
 									<aui:input cssClass="hide" label="" name="fileName" type="file">
 										<aui:validator name="acceptFiles">

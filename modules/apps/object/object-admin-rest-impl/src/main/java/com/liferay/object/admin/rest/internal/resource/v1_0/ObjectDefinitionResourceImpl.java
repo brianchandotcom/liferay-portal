@@ -483,21 +483,16 @@ public class ObjectDefinitionResourceImpl
 					contextUser.getUserId(), listTypeDefinitionId,
 					objectDefinitionId, objectField.getBusinessTypeAsString(),
 					null, null, objectField.getDBTypeAsString(),
-					objectField.getDefaultValue(), objectField.getIndexed(),
-					objectField.getIndexedAsKeyword(),
+					objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 					objectField.getIndexedLanguageId(),
 					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 					objectField.getName(), objectField.getRequired(),
 					GetterUtil.getBoolean(objectField.getState()),
 					objectField.getSystem(),
-					transformToList(
-						objectField.getObjectFieldSettings(),
-						objectFieldSetting ->
-							ObjectFieldSettingUtil.toObjectFieldSetting(
-								objectField.getBusinessTypeAsString(),
-								listTypeDefinitionId, objectFieldSetting,
-								_objectFieldSettingLocalService,
-								_objectFilterLocalService)));
+					ObjectFieldSettingUtil.getObjectFieldSettings(
+						listTypeDefinitionId, objectField,
+						_objectFieldSettingLocalService,
+						_objectFilterLocalService));
 
 				serviceBuilderObjectFields.removeIf(
 					serviceBuilderObjectField -> Objects.equals(

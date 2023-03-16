@@ -25,7 +25,6 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -174,12 +173,6 @@ public class ObjectFieldUtil {
 			getDBType(
 				objectField.getDBTypeAsString(),
 				objectField.getTypeAsString()));
-
-		if (Validator.isNotNull(objectField.getDefaultValue())) {
-			serviceBuilderObjectField.setDefaultValue(
-				objectField.getDefaultValue());
-		}
-
 		serviceBuilderObjectField.setIndexed(
 			GetterUtil.getBoolean(objectField.getIndexed()));
 		serviceBuilderObjectField.setIndexedAsKeyword(
@@ -190,14 +183,9 @@ public class ObjectFieldUtil {
 			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setObjectFieldSettings(
-			TransformUtil.transformToList(
-				objectField.getObjectFieldSettings(),
-				objectFieldSetting ->
-					ObjectFieldSettingUtil.toObjectFieldSetting(
-						objectField.getBusinessTypeAsString(),
-						listTypeDefinitionId, objectFieldSetting,
-						objectFieldSettingLocalService,
-						objectFilterLocalService)));
+			ObjectFieldSettingUtil.getObjectFieldSettings(
+				listTypeDefinitionId, objectField,
+				objectFieldSettingLocalService, objectFilterLocalService));
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));
 

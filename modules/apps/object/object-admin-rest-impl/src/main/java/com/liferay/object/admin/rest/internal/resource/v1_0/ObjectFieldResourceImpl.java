@@ -153,18 +153,14 @@ public class ObjectFieldResourceImpl
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
-				transformToList(
-					objectField.getObjectFieldSettings(),
-					objectFieldSetting ->
-						ObjectFieldSettingUtil.toObjectFieldSetting(
-							objectField.getBusinessTypeAsString(),
-							ObjectFieldUtil.addListTypeDefinition(
-								contextUser.getCompanyId(),
-								_listTypeDefinitionLocalService,
-								_listTypeEntryLocalService, objectField,
-								contextUser.getUserId()),
-							objectFieldSetting, _objectFieldSettingLocalService,
-							_objectFilterLocalService))));
+				ObjectFieldSettingUtil.getObjectFieldSettings(
+					ObjectFieldUtil.addListTypeDefinition(
+						contextUser.getCompanyId(),
+						_listTypeDefinitionLocalService,
+						_listTypeEntryLocalService, objectField,
+						contextUser.getUserId()),
+					objectField, _objectFieldSettingLocalService,
+					_objectFilterLocalService)));
 	}
 
 	@Override
@@ -204,9 +200,7 @@ public class ObjectFieldResourceImpl
 		return _toObjectField(
 			_objectFieldService.updateObjectField(
 				objectField.getExternalReferenceCode(), objectFieldId,
-				ObjectFieldUtil.getListTypeDefinitionId(
-					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-					objectField),
+				objectField.getListTypeDefinitionId(),
 				objectField.getBusinessTypeAsString(),
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
@@ -218,14 +212,10 @@ public class ObjectFieldResourceImpl
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
-				transformToList(
-					objectField.getObjectFieldSettings(),
-					objectFieldSetting ->
-						ObjectFieldSettingUtil.toObjectFieldSetting(
-							objectField.getBusinessTypeAsString(),
-							objectField.getListTypeDefinitionId(),
-							objectFieldSetting, _objectFieldSettingLocalService,
-							_objectFilterLocalService))));
+				ObjectFieldSettingUtil.getObjectFieldSettings(
+					objectField.getListTypeDefinitionId(), objectField,
+					_objectFieldSettingLocalService,
+					_objectFilterLocalService)));
 	}
 
 	private Page<ObjectField> _getObjectFieldsPage(

@@ -75,7 +75,8 @@ definition {
 
 	macro getSearchHeaderValues {
 		var script = '''
-			    out.println(com.liferay.portal.kernel.util.PrefsPropsUtil.getPreferences(com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId()).getMap().get("${header}")[0]);
+			    com.liferay.analytics.settings.configuration.AnalyticsConfiguration analyticsConfiguration = (com.liferay.analytics.settings.configuration.AnalyticsConfiguration)com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil.getCompanyConfiguration(com.liferay.analytics.settings.configuration.AnalyticsConfiguration.class, com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId());
+				out.println(analyticsConfiguration."${header}"());
 		    ''';
 
 		ServerAdministration.executeScript(

@@ -21,12 +21,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsPortletKeys;
-import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 
 import java.util.Optional;
 
@@ -77,14 +78,15 @@ public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 	private String _addParameter(
 		String url, PortletRequest portletRequest, String parameterName) {
 
-		Optional<String> parameterValueOptional = SearchStringUtil.maybe(
+		String parameterValue = StringUtil.trim(
 			portletRequest.getParameter(parameterName));
 
-		Optional<String> urlOptional = parameterValueOptional.map(
-			parameterValue -> HttpComponentsUtil.addParameter(
-				url, parameterName, parameterValue));
+		if (Validator.isBlank(parameterValue)) {
+			return url;
+		}
 
-		return urlOptional.orElse(url);
+		return HttpComponentsUtil.addParameter(
+			url, parameterName, parameterValue);
 	}
 
 	private String _addParameters(

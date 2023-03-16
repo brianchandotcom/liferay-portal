@@ -44,8 +44,8 @@ public class DirectoryComparator extends SimpleFileVisitor<Path> {
 		_rootDirPath1 = rootDirPath1;
 		_rootDirPath2 = rootDirPath2;
 
-		if (!Files.isDirectory(_rootDirPath1) ||
-			!Files.isDirectory(_rootDirPath2)) {
+		if (!Files.isDirectory(rootDirPath1) ||
+			!Files.isDirectory(rootDirPath2)) {
 
 			throw new IllegalArgumentException(
 				"Arguments must be existing directories");

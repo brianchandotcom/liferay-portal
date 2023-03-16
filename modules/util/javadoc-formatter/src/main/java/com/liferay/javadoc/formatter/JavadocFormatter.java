@@ -1856,7 +1856,7 @@ public class JavadocFormatter {
 	}
 
 	private SAXReader _getSAXReader() {
-		return SAXReaderFactory.getSAXReader(null, false, false);
+		return SAXReaderFactory.getSAXReader(null, false, true);
 	}
 
 	private String _getSpacesIndent(int length) {

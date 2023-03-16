@@ -166,13 +166,15 @@ public class ObjectDefinitionNotificationTermEvaluator
 				continue;
 			}
 
-			String termValue = (String)termValues.get(objectField.getName());
+			String termValue = String.valueOf(
+				termValues.get(objectField.getName()));
 
 			if (Validator.isNotNull(termValue)) {
 				return termValue;
 			}
 
-			return (String)termValues.get(objectField.getDBColumnName());
+			return String.valueOf(
+				termValues.get(objectField.getDBColumnName()));
 		}
 
 		return null;

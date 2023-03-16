@@ -9,23 +9,16 @@
  * distribution rights of the Software.
  */
 
-import {quarterIndexes} from './constants/quartersIndex';
+import {dealsChartStatus} from './constants/dealsChartStatus';
 
-export default function getChartQuarterCount(values, dateCreated) {
-	const quarter = Math.ceil((new Date(dateCreated).getMonth() + 1) / 3);
+export default function isNotOpportunity(opportunity) {
+	const stagesToSkip = [
+		dealsChartStatus.STAGE_CLOSEDLOST,
+		dealsChartStatus.STAGE_CLOSEDWON,
+		dealsChartStatus.STAGE_DISQUALIFIED,
+		dealsChartStatus.STAGE_REJECTED,
+		dealsChartStatus.STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY,
+	];
 
-	if (quarter === 1) {
-		values[quarterIndexes.QUARTER_1_INDEX]++;
-	}
-	if (quarter === 2) {
-		values[quarterIndexes.QUARTER_2_INDEX]++;
-	}
-	if (quarter === 3) {
-		values[quarterIndexes.QUARTER_3_INDEX]++;
-	}
-	if (quarter === 4) {
-		values[quarterIndexes.QUARTER_4_INDEX]++;
-	}
-
-	return values;
+	return stagesToSkip.includes(opportunity.stage);
 }

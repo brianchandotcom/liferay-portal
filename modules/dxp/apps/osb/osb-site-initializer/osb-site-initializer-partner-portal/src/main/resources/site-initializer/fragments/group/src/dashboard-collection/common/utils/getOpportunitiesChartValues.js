@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import isNotOpportunity from './getIsNotOpportunityDeals';
+
 const INITIAL_OPPORTUNITIES_CHART_VALUES = {
 	approved: [0, 0, 0, 0],
 	closedWon: [0, 0, 0, 0],
@@ -17,7 +19,6 @@ const INITIAL_OPPORTUNITIES_CHART_VALUES = {
 
 export function getOpportunitiesChartValues(
 	dealsChartStatus,
-	isNotOpportunity,
 	getChartQuarterCount,
 	opportunities
 ) {

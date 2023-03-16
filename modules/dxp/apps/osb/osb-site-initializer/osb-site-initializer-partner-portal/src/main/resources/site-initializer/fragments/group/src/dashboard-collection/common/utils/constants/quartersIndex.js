@@ -10,8 +10,8 @@
  */
 
 export const quarterIndexes = {
-	QUARTER_1_INDEX: 1,
-	QUARTER_2_INDEX: 2,
-	QUARTER_3_INDEX: 3,
-	QUARTER_4_INDEX: 4,
+	QUARTER_1_INDEX: 0,
+	QUARTER_2_INDEX: 1,
+	QUARTER_3_INDEX: 2,
+	QUARTER_4_INDEX: 3,
 };

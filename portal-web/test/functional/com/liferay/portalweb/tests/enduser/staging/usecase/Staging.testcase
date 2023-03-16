@@ -1635,7 +1635,7 @@ definition {
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-			WebContentAdmin.viewEntryTitle(entry = "Web Content Title");
+			LexiconList.viewListEntryPresent(listEntry = "Web Content Title");
 
 			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 

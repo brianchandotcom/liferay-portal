@@ -199,7 +199,7 @@ public class ObjectDefinitionsActionsDisplayContext
 			if (Objects.equals(
 					objectActionTrigger.getKey(),
 					ObjectActionTriggerConstants.KEY_STANDALONE) &&
-				objectDefinition.isSystem()) {
+				objectDefinition.isUnmodifiableSystemObject()) {
 
 				continue;
 			}

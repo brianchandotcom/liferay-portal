@@ -709,7 +709,7 @@ public class ObjectDefinitionResourceImpl
 
 		String restContextPath = StringPool.BLANK;
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionManager systemObjectDefinitionManager =
 				_systemObjectDefinitionManagerRegistry.
 					getSystemObjectDefinitionManager(
@@ -737,7 +737,7 @@ public class ObjectDefinitionResourceImpl
 				actions = HashMapBuilder.put(
 					"delete",
 					() -> {
-						if (objectDefinition.isSystem()) {
+						if (objectDefinition.isUnmodifiableSystemObject()) {
 							return null;
 						}
 
@@ -772,7 +772,7 @@ public class ObjectDefinitionResourceImpl
 				).put(
 					"update",
 					() -> {
-						if (objectDefinition.isSystem()) {
+						if (objectDefinition.isUnmodifiableSystemObject()) {
 							return null;
 						}
 

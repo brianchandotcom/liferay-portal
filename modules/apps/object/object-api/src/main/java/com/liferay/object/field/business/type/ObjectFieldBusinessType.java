@@ -85,7 +85,7 @@ public interface ObjectFieldBusinessType {
 	}
 
 	public default void validateObjectFieldSettings(
-			long objectDefinitionId, String objectFieldName,
+			ObjectField objectField,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
@@ -112,7 +112,7 @@ public interface ObjectFieldBusinessType {
 
 		if (!missingRequiredObjectFieldSettingsNames.isEmpty()) {
 			throw new ObjectFieldSettingValueException.MissingRequiredValues(
-				objectFieldName, missingRequiredObjectFieldSettingsNames);
+				objectField.getName(), missingRequiredObjectFieldSettingsNames);
 		}
 
 		Set<String> notAllowedObjectFieldSettingsNames = new HashSet<>(
@@ -125,8 +125,17 @@ public interface ObjectFieldBusinessType {
 
 		if (!notAllowedObjectFieldSettingsNames.isEmpty()) {
 			throw new ObjectFieldSettingNameException.NotAllowedNames(
-				objectFieldName, notAllowedObjectFieldSettingsNames);
+				objectField.getName(), notAllowedObjectFieldSettingsNames);
 		}
+
+		validateObjectFieldSettingsDefaultValue(
+			objectField, objectFieldSettings);
+	}
+
+	public default void validateObjectFieldSettingsDefaultValue(
+			ObjectField objectField,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws PortalException {
 	}
 
 }

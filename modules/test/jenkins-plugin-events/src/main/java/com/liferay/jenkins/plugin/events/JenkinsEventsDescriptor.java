@@ -35,8 +35,6 @@ public class JenkinsEventsDescriptor
 	public JenkinsEventsDescriptor() {
 		super(JenkinsEventsDescriptor.class);
 
-		jenkinsPublishers = new ArrayList<>();
-
 		load();
 	}
 

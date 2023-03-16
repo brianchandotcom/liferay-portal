@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.plugin.events.publisher;
 
+import com.liferay.jenkins.plugin.events.JenkinsEventsDescriptor;
 import com.liferay.jenkins.plugin.events.jms.JMSConnection;
 import com.liferay.jenkins.plugin.events.jms.JMSFactory;
 import com.liferay.jenkins.plugin.events.jms.JMSQueue;
@@ -30,7 +31,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
+import hudson.model.Describable;
+import hudson.model.Descriptor;
 import org.json.JSONObject;
 
 /**
@@ -43,17 +47,6 @@ public class JenkinsPublisher {
 	}
 
 	public JenkinsPublisher(JSONObject jsonObject) {
-		buildCompleted = jsonObject.getBoolean("buildCompleted");
-		buildStarted = jsonObject.getBoolean("buildStarted");
-		computerBusy = jsonObject.getBoolean("computerBusy");
-		computerIdle = jsonObject.getBoolean("computerIdle");
-		computerOffline = jsonObject.getBoolean("computerOffline");
-		computerOnline = jsonObject.getBoolean("computerOnline");
-		computerTemporarilyOffline = jsonObject.getBoolean(
-			"computerTemporarilyOffline");
-		computerTemporarilyOnline = jsonObject.getBoolean(
-			"computerTemporarilyOnline");
-
 		jmsRequest = jsonObject.has("jmsRequest");
 
 		if (jmsRequest) {
@@ -67,20 +60,65 @@ public class JenkinsPublisher {
 		}
 
 		name = jsonObject.getString("name");
-		queueItemEnterBlocked = jsonObject.getBoolean("queueItemEnterBlocked");
-		queueItemEnterBuildable = jsonObject.getBoolean(
-			"queueItemEnterBuildable");
-		queueItemEnterWaiting = jsonObject.getBoolean("queueItemEnterWaiting");
-		queueItemLeaveBlocked = jsonObject.getBoolean("queueItemLeaveBlocked");
-		queueItemLeaveBuildable = jsonObject.getBoolean(
-			"queueItemLeaveBuildable");
-		queueItemLeaveWaiting = jsonObject.getBoolean("queueItemLeaveWaiting");
-		queueItemLeft = jsonObject.getBoolean("queueItemLeft");
 		url = jsonObject.getString("url");
 		userName = jsonObject.getString("userName");
 		userPassword = jsonObject.getString("userPassword");
 
+		_setEventTrigger(
+			jsonObject.getBoolean("buildCompleted"),
+			EventTrigger.BUILD_COMPLETED);
+		_setEventTrigger(
+			jsonObject.getBoolean("buildStarted"), EventTrigger.BUILD_STARTED);
+		_setEventTrigger(
+			jsonObject.getBoolean("computerBusy"), EventTrigger.COMPUTER_BUSY);
+		_setEventTrigger(
+			jsonObject.getBoolean("computerIdle"), EventTrigger.COMPUTER_IDLE);
+		_setEventTrigger(
+			jsonObject.getBoolean("computerOffline"),
+			EventTrigger.COMPUTER_OFFLINE);
+		_setEventTrigger(
+			jsonObject.getBoolean("computerOnline"),
+			EventTrigger.COMPUTER_ONLINE);
+		_setEventTrigger(
+			jsonObject.getBoolean("computerTemporarilyOffline"),
+			EventTrigger.COMPUTER_TEMPORARILY_OFFLINE);
+		_setEventTrigger(
+			jsonObject.getBoolean("computerTemporarilyOnline"),
+			EventTrigger.COMPUTER_TEMPORARILY_ONLINE);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemEnterBlocked"),
+			EventTrigger.QUEUE_ITEM_ENTER_BLOCKED);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemEnterBuildable"),
+			EventTrigger.QUEUE_ITEM_ENTER_BUILDABLE);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemEnterWaiting"),
+			EventTrigger.QUEUE_ITEM_ENTER_WAITING);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemLeaveBlocked"),
+			EventTrigger.QUEUE_ITEM_LEAVE_BLOCKED);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemLeaveBuildable"),
+			EventTrigger.QUEUE_ITEM_LEAVE_BUILDABLE);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemLeaveWaiting"),
+			EventTrigger.QUEUE_ITEM_LEAVE_WAITING);
+		_setEventTrigger(
+			jsonObject.getBoolean("queueItemLeft"),
+			EventTrigger.QUEUE_ITEM_LEFT);
+
 		_initializeEventTypes();
+	}
+
+	public boolean containsEventTrigger(String eventTriggerString) {
+		for (EventTrigger eventTrigger : EventTrigger.values()) {
+			if (Objects.equals(eventTriggerString, eventTrigger.toString())) {
+				return containsEventTrigger(
+					EventTrigger.valueOf(eventTriggerString));
+			}
+		}
+
+		return false;
 	}
 
 	public boolean containsEventTrigger(EventTrigger eventTrigger) {
@@ -109,28 +147,18 @@ public class JenkinsPublisher {
 		_publishHttp(payload, eventTrigger);
 	}
 
-	public boolean buildCompleted;
-	public boolean buildStarted;
-	public boolean computerBusy;
-	public boolean computerIdle;
-	public boolean computerOffline;
-	public boolean computerOnline;
-	public boolean computerTemporarilyOffline;
-	public boolean computerTemporarilyOnline;
 	public String inboundJMSQueueName;
 	public boolean jmsRequest;
 	public String name;
 	public String outboundJMSQueueName;
-	public boolean queueItemEnterBlocked;
-	public boolean queueItemEnterBuildable;
-	public boolean queueItemEnterWaiting;
-	public boolean queueItemLeaveBlocked;
-	public boolean queueItemLeaveBuildable;
-	public boolean queueItemLeaveWaiting;
-	public boolean queueItemLeft;
 	public String url;
 	public String userName;
 	public String userPassword;
+	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
+
+	public List<EventTrigger> getEventTriggers() {
+		return _eventTriggers;
+	}
 
 	public enum EventTrigger {
 
@@ -158,68 +186,6 @@ public class JenkinsPublisher {
 	}
 
 	private void _initializeEventTypes() {
-		_eventTriggers.clear();
-
-		if (buildCompleted) {
-			_eventTriggers.add(EventTrigger.BUILD_COMPLETED);
-		}
-
-		if (buildStarted) {
-			_eventTriggers.add(EventTrigger.BUILD_STARTED);
-		}
-
-		if (computerBusy) {
-			_eventTriggers.add(EventTrigger.COMPUTER_BUSY);
-		}
-
-		if (computerIdle) {
-			_eventTriggers.add(EventTrigger.COMPUTER_IDLE);
-		}
-
-		if (computerOffline) {
-			_eventTriggers.add(EventTrigger.COMPUTER_OFFLINE);
-		}
-
-		if (computerOnline) {
-			_eventTriggers.add(EventTrigger.COMPUTER_ONLINE);
-		}
-
-		if (computerTemporarilyOffline) {
-			_eventTriggers.add(EventTrigger.COMPUTER_TEMPORARILY_OFFLINE);
-		}
-
-		if (computerTemporarilyOnline) {
-			_eventTriggers.add(EventTrigger.COMPUTER_TEMPORARILY_ONLINE);
-		}
-
-		if (queueItemEnterBlocked) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_ENTER_BLOCKED);
-		}
-
-		if (queueItemEnterBuildable) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_ENTER_BUILDABLE);
-		}
-
-		if (queueItemEnterWaiting) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_ENTER_WAITING);
-		}
-
-		if (queueItemLeaveBlocked) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEAVE_BLOCKED);
-		}
-
-		if (queueItemLeaveBuildable) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEAVE_BUILDABLE);
-		}
-
-		if (queueItemLeaveWaiting) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEAVE_WAITING);
-		}
-
-		if (queueItemLeft) {
-			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEFT);
-		}
-
 		if ((inboundJMSQueueName != null) && jmsRequest) {
 			JMSConnection jmsConnection = JMSFactory.newJMSConnection(url);
 
@@ -320,6 +286,14 @@ public class JenkinsPublisher {
 		jmsQueue.publish(payload);
 	}
 
-	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
+	private void _setEventTrigger(
+		boolean enableEventTrigger, EventTrigger eventTrigger) {
+
+		_eventTriggers.remove(eventTrigger);
+
+		if (enableEventTrigger) {
+			_eventTriggers.add(eventTrigger);
+		}
+	}
 
 }

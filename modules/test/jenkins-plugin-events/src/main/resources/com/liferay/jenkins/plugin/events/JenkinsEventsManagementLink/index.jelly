@@ -53,53 +53,53 @@
                             <f:advanced title="Event Configurations">
                                 <f:section title="Build Events">
                                     <f:entry title="BUILD_COMPLETED">
-                                        <f:checkbox checked="${jenkinsPublishers.buildCompleted}" name="buildCompleted" value="${jenkinsPublishers.buildCompleted}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('BUILD_COMPLETED')}" name="buildCompleted" />
                                     </f:entry>
                                     <f:entry title="BUILD_STARTED">
-                                        <f:checkbox checked="${jenkinsPublishers.buildStarted}" name="buildStarted" value="${jenkinsPublishers.buildStarted}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('BUILD_STARTED')}" name="buildStarted" />
                                     </f:entry>
                                 </f:section>
                                 <f:section title="Computer Events">
                                     <f:entry title="COMPUTER_BUSY">
-                                        <f:checkbox checked="${jenkinsPublishers.computerBusy}" name="computerBusy" value="${jenkinsPublishers.computerBusy}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_BUSY')}" name="computerBusy" />
                                     </f:entry>
                                     <f:entry title="COMPUTER_IDLE">
-                                        <f:checkbox checked="${jenkinsPublishers.computerIdle}" name="computerIdle" value="${jenkinsPublishers.computerIdle}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_IDLE')}" name="computerIdle" />
                                     </f:entry>
                                     <f:entry title="COMPUTER_OFFLINE">
-                                        <f:checkbox checked="${jenkinsPublishers.computerOffline}" name="computerOffline" value="${jenkinsPublishers.computerOffline}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_OFFLINE')}" name="computerOffline" />
                                     </f:entry>
                                     <f:entry title="COMPUTER_ONLINE">
-                                        <f:checkbox checked="${jenkinsPublishers.computerOnline}" name="computerOnline" value="${jenkinsPublishers.computerOnline}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_ONLINE')}" name="computerOnline" />
                                     </f:entry>
                                     <f:entry title="COMPUTER_TEMPORARILY_OFFLINE">
-                                        <f:checkbox checked="${jenkinsPublishers.computerTemporarilyOffline}" name="computerTemporarilyOffline" value="${jenkinsPublishers.computerTemporarilyOffline}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_TEMPORARILY_OFFLINE')}" name="computerTemporarilyOffline" />
                                     </f:entry>
                                     <f:entry title="COMPUTER_TEMPORARILY_ONLINE">
-                                        <f:checkbox checked="${jenkinsPublishers.computerTemporarilyOnline}" name="computerTemporarilyOnline" value="${jenkinsPublishers.computerTemporarilyOnline}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_TEMPORARILY_ONLINE')}" name="computerTemporarilyOnline" />
                                     </f:entry>
                                 </f:section>
                                 <f:section title="Queue Events">
                                     <f:entry title="QUEUE_ITEM_ENTER_BLOCKED">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemEnterBlocked}" name="queueItemEnterBlocked" value="${jenkinsPublishers.queueItemEnterBlocked}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_ENTER_BLOCKED')}" name="queueItemEnterBlocked" />
                                     </f:entry>
                                     <f:entry title="QUEUE_ITEM_ENTER_BUILDABLE">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemEnterBuildable}" name="queueItemEnterBuildable" value="${jenkinsPublishers.queueItemEnterBuildable}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_ENTER_BUILDABLE')}" name="queueItemEnterBuildable" />
                                     </f:entry>
                                     <f:entry title="QUEUE_ITEM_ENTER_WAITING">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemEnterWaiting}" name="queueItemEnterWaiting" value="${jenkinsPublishers.queueItemEnterWaiting}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_ENTER_WAITING')}" name="queueItemEnterWaiting" />
                                     </f:entry>
                                     <f:entry title="QUEUE_ITEM_LEAVE_BLOCKED">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemLeaveBlocked}" name="queueItemLeaveBlocked" value="${jenkinsPublishers.queueItemLeaveBlocked}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEAVE_BLOCKED')}" name="queueItemLeaveBlocked" />
                                     </f:entry>
                                     <f:entry title="QUEUE_ITEM_LEAVE_BUILDABLE">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemLeaveBuildable}" name="queueItemLeaveBuildable" value="${jenkinsPublishers.queueItemLeaveBuildable}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEAVE_BUILDABLE')}" name="queueItemLeaveBuildable" />
                                     </f:entry>
                                     <f:entry title="QUEUE_ITEM_LEAVE_WAITING">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemLeaveWaiting}" name="queueItemLeaveWaiting" value="${jenkinsPublishers.queueItemLeaveWaiting}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEAVE_WAITING')}" name="queueItemLeaveWaiting" />
                                     </f:entry>
                                     <f:entry title="QUEUE_ITEM_LEFT">
-                                        <f:checkbox checked="${jenkinsPublishers.queueItemLeft}" name="queueItemLeft" value="${jenkinsPublishers.queueItemLeft}" />
+                                        <f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEFT')}" name="queueItemLeft" />
                                     </f:entry>
                                 </f:section>
                             </f:advanced>

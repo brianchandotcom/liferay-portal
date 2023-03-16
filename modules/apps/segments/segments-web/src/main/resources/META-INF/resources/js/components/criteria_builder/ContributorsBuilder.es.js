@@ -17,7 +17,6 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
-import {openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -43,12 +42,9 @@ class ContributorBuilder extends React.Component {
 		onConjunctionChange: PropTypes.func,
 		onPreviewMembers: PropTypes.func,
 		onQueryChange: PropTypes.func,
-		portletNamespace: PropTypes.string.isRequired,
 		previewMembersURL: PropTypes.string,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		renderEmptyValuesErrors: PropTypes.bool,
-		scopeName: PropTypes.string,
-		siteItemSelectorURL: PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -65,7 +61,7 @@ class ContributorBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {contributors, propertyGroups, scopeName} = props;
+		const {contributors, propertyGroups} = props;
 
 		const firstContributorNotEmpty = contributors.find(
 			(contributor) => contributor.query !== ''
@@ -77,7 +73,6 @@ class ContributorBuilder extends React.Component {
 
 		this.state = {
 			editingId: propertyKey,
-			scopeName,
 		};
 	}
 

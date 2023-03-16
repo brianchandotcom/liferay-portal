@@ -252,9 +252,7 @@ class SegmentEdit extends Component {
 
 	_renderContributors = () => {
 		const {
-			groupId,
 			locale,
-			portletNamespace,
 			propertyGroups,
 			requestMembersCountURL,
 			siteItemSelectorURL,
@@ -278,7 +276,6 @@ class SegmentEdit extends Component {
 				contributors={contributors}
 				editing={editing}
 				emptyContributors={emptyContributors}
-				groupId={groupId}
 				isSegmentationDisabledAlertDismissed={
 					this.state.isSegmentationDisabledAlertDismissed
 				}
@@ -289,7 +286,6 @@ class SegmentEdit extends Component {
 				onConjunctionChange={this._handleConjunctionChange}
 				onPreviewMembers={this._handlePreviewMembers}
 				onQueryChange={this._handleQueryChange}
-				portletNamespace={portletNamespace}
 				propertyGroups={propertyGroups}
 				renderEmptyValuesErrors={queryHasEmptyValues}
 				requestMembersCountURL={requestMembersCountURL}

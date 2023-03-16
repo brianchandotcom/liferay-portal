@@ -555,6 +555,70 @@ definition {
 		}
 	}
 
+	@description = "Verify it is possible to add an Object Entry Title Field when changing the localization on Instance Settings"
+	@priority = 4
+	test CanViewTitleFieldWhenChangeLocalization {
+		task ("Given: An Account and a Custom Object with a Relationship 1toM of Account to Custom Object") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 178761",
+				objectName = "CustomObject178761",
+				pluralLabelName = "Custom Objects 178761");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "AccountEntry",
+				objectName_2 = "CustomObject178761",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("And given: The default language in the virtual instance changed") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+		}
+
+		task ("And given: A title field in the System Object is changed and the Custom Object is published") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Account");
+
+			CreateObject.selectTitleField(fieldLabel = "Type");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject178761");
+		}
+
+		task ("When: Create an entry using the title field selected") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject178761");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "business");
+
+			Button.clickSave();
+		}
+
+		task ("Then: The title field of System Object is present") {
+			Navigator.gotoBack();
+
+			ObjectPortlet.viewEntry(entry = "business");
+		}
+	}
+
 	@description = "LPS-150886 - Verify that the delete modal contains a warning message with the number of entries that will be deleted"
 	@priority = 4
 	test CanViewWarningMessageDeleteModal {

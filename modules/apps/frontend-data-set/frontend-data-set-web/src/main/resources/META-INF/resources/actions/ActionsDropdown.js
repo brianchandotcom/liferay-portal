@@ -15,8 +15,8 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
@@ -142,7 +142,7 @@ function ActionsDropdown({
 		}
 
 		return (
-			<ClayLink
+			<LinkOrButton
 				aria-label={action.label}
 				className="btn btn-secondary btn-sm"
 				href={
@@ -160,7 +160,7 @@ function ActionsDropdown({
 				title={action.label}
 			>
 				{action.icon ? <ClayIcon symbol={action.icon} /> : action.label}
-			</ClayLink>
+			</LinkOrButton>
 		);
 	}
 

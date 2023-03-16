@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
@@ -102,7 +101,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		User user = _userLocalService.getUser(
 			GetterUtil.getLong(termValues.get("creator")));
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+		if (termName.equals("[%" + prefix + "_CREATOR%]")) {
 			if (context.equals(Context.RECIPIENT)) {
 				return String.valueOf(termValues.get("creator"));
 			}
@@ -110,18 +109,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return user.getFullName(true, true);
 		}
 
-		if (user == null) {
-			return null;
-		}
-
-		String suffix = StringUtil.removeSubstring(
-			termName, "[%" + prefix + "_AUTHOR_");
-
-		if (StringUtil.equals(termName, suffix)) {
-			suffix = StringUtil.removeSubstring(termName, "[%" + prefix + "_");
-		}
-
-		return _getTermValue(context, suffix, user);
+		return _getTermValue(
+			StringUtil.removeSubstring(termName, "[%" + prefix + "_AUTHOR_"),
+			user);
 	}
 
 	private String _evaluateCurrentUser(
@@ -140,7 +130,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		}
 
 		return _getTermValue(
-			context, StringUtil.removeSubstring(termName, "[%CURRENT_USER_"),
+			StringUtil.removeSubstring(termName, "[%CURRENT_USER_"),
 			_userLocalService.getUser(
 				GetterUtil.getLong(termValues.get("currentUserId"))));
 	}
@@ -180,17 +170,10 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _getTermValue(Context context, String suffix, User user)
+	private String _getTermValue(String suffix, User user)
 		throws PortalException {
 
-		if (suffix.equals("CREATOR%]")) {
-			if (context.equals(Context.RECIPIENT)) {
-				return String.valueOf(user.getUserId());
-			}
-
-			return user.getFullName(true, true);
-		}
-		else if (suffix.equals("EMAIL_ADDRESS%]")) {
+		if (suffix.equals("EMAIL_ADDRESS%]")) {
 			return user.getEmailAddress();
 		}
 		else if (suffix.equals("FIRST_NAME%]")) {

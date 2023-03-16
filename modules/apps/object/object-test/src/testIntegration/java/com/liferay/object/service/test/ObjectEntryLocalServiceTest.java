@@ -30,6 +30,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -292,7 +293,7 @@ public class ObjectEntryLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
-			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, null, true, false, null,
+			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, true, false, null,
 			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false, false,
 			Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
@@ -300,14 +301,20 @@ public class ObjectEntryLocalServiceTest {
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, "listTypeEntryKey1", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("State"), "state", true,
-			true, Collections.emptyList());
+			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
+			LocalizedMapUtil.getLocalizedMap("State"), "state", true, true,
+			Arrays.asList(
+				_createObjectFieldSetting(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+					"listTypeEntryKey1"),
+				_createObjectFieldSetting(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE)));
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
+			ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 			LocalizedMapUtil.getLocalizedMap("Upload"), "upload", false, false,
 			Arrays.asList(
 				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
@@ -317,7 +324,7 @@ public class ObjectEntryLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
-			ObjectFieldConstants.DB_TYPE_DOUBLE, null, true, false, null,
+			ObjectFieldConstants.DB_TYPE_DOUBLE, true, false, null,
 			LocalizedMapUtil.getLocalizedMap("Weight"), "weight", false, false,
 			Collections.emptyList());
 	}
@@ -635,7 +642,7 @@ public class ObjectEntryLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_FORMULA,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap("Overweight"), "overweight", false,
 			false,
 			Arrays.asList(
@@ -1242,18 +1249,16 @@ public class ObjectEntryLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-			ObjectFieldConstants.DB_TYPE_LONG, null,
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			null,
+			ObjectFieldConstants.DB_TYPE_LONG, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"longField", false, false, Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null,
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			null,
+			ObjectFieldConstants.DB_TYPE_STRING, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"textField", true, false, Collections.emptyList());
 

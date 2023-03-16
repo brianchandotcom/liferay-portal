@@ -582,7 +582,7 @@ public class ObjectActionLocalServiceTest {
 				null, TestPropsValues.getUserId(), 0,
 				systemObjectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, null, true, true, "",
+				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false, false, Collections.emptyList());
 		ObjectField objectField2 =
@@ -590,7 +590,7 @@ public class ObjectActionLocalServiceTest {
 				null, TestPropsValues.getUserId(), 0,
 				systemObjectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, null, true, true, "",
+				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false, false, Collections.emptyList());
 

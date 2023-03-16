@@ -418,8 +418,7 @@ public class ObjectDefinitionServiceTest {
 					null, ownerUser.getUserId(), 0,
 					objectDefinition.getObjectDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, null, false, false,
-					null,
+					ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					StringUtil.randomId(), false, false,

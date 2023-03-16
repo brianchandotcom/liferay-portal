@@ -308,7 +308,7 @@ public class ObjectDefinitionLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap("Charlie"), "charlie", true, false,
 			Collections.emptyList());
 
@@ -356,7 +356,7 @@ public class ObjectDefinitionLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap("Dog"), "dog", true, false,
 			Collections.emptyList());
 
@@ -949,7 +949,7 @@ public class ObjectDefinitionLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, false,
 			Collections.emptyList());
 
@@ -1253,7 +1253,7 @@ public class ObjectDefinitionLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, false, Collections.emptyList());
 
@@ -1384,7 +1384,7 @@ public class ObjectDefinitionLocalServiceTest {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, false, Collections.emptyList());
 
@@ -1426,9 +1426,6 @@ public class ObjectDefinitionLocalServiceTest {
 			expectedObjectField.getDBTableName(), objectField.getDBTableName());
 		Assert.assertEquals(
 			expectedObjectField.getDBType(), objectField.getDBType());
-		Assert.assertEquals(
-			expectedObjectField.getDefaultValue(),
-			objectField.getDefaultValue());
 		Assert.assertEquals(
 			expectedObjectField.isIndexed(), objectField.isIndexed());
 		Assert.assertEquals(

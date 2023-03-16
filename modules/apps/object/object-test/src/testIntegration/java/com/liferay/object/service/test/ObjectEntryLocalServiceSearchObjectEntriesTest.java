@@ -567,7 +567,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, true, true, null,
+			ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 			LocalizedMapUtil.getLocalizedMap("Beta"), "beta", false, false,
 			Collections.emptyList());
 

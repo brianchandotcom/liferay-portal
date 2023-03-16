@@ -25,6 +25,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.NoSuchObjectStateException;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -98,9 +99,22 @@ public class ObjectStateFlowLocalServiceTest {
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
+			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, true, Collections.emptyList());
+			StringUtil.randomId(), true, true,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+				).value(
+					_step1ListTypeEntry.getKey()
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+				).value(
+					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+				).build()));
 
 		_objectStateFlow =
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
@@ -375,13 +389,31 @@ public class ObjectStateFlowLocalServiceTest {
 			long listTypeDefinitionId, boolean state)
 		throws Exception {
 
+		List<ObjectFieldSetting> objectFieldSettings = Collections.emptyList();
+
+		if (state) {
+			objectFieldSettings = Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+				).value(
+					_step1ListTypeEntry.getKey()
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+				).value(
+					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+				).build());
+		}
+
 		return _objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), listTypeDefinitionId,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
+			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, state, Collections.emptyList());
+			StringUtil.randomId(), true, state, objectFieldSettings);
 	}
 
 	private void _assertEquals(

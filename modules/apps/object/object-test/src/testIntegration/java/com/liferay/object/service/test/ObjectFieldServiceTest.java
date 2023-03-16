@@ -190,7 +190,7 @@ public class ObjectFieldServiceTest {
 			null, user.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, false, Collections.emptyList());
 	}
@@ -213,7 +213,7 @@ public class ObjectFieldServiceTest {
 			objectField = _objectFieldService.addCustomObjectField(
 				null, 0, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), true, false, Collections.emptyList());
 		}
@@ -270,7 +270,7 @@ public class ObjectFieldServiceTest {
 
 			objectField = _objectFieldService.updateObjectField(
 				StringPool.BLANK, objectField.getObjectFieldId(), 0, "Text",
-				"String", null, true, false,
+				ObjectFieldConstants.DB_TYPE_STRING, true, false,
 				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
 				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true, false,
 				Collections.emptyList());

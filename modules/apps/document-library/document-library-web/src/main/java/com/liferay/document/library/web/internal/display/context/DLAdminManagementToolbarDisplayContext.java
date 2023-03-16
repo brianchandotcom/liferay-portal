@@ -667,7 +667,7 @@ public class DLAdminManagementToolbarDisplayContext
 				fileExtensionItemSelectorCriterion)
 		).setParameter(
 			"checkedFileExtensions",
-			() -> ParamUtil.getStringValues(httpServletRequest, "fileExtension")
+			() -> _getFileExtensions(httpServletRequest)
 		).buildString();
 	}
 

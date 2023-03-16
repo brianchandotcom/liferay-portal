@@ -15,6 +15,8 @@
 package com.liferay.site.initializer.extender.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -74,6 +76,8 @@ public class SynchronizeSiteInitializerMVCActionCommand
 			TransactionInvokerUtil.invoke(_transactionConfig, groupCallable);
 		}
 		catch (Throwable throwable) {
+			_log.error(throwable);
+
 			throw new Exception(throwable);
 		}
 	}
@@ -142,6 +146,9 @@ public class SynchronizeSiteInitializerMVCActionCommand
 
 		return _groupService.getGroup(themeDisplay.getSiteGroupId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SynchronizeSiteInitializerMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

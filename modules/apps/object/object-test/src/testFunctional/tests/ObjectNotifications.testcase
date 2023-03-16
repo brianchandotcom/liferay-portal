@@ -383,8 +383,10 @@ definition {
 	}
 
 	@description = "LPS-161920 - Verify that it's possible to send an e-mail notification via an Action"
-	@priority = 3
-	test CanSendEmailViaAction {
+	@priority = 5
+	test CanSendEmailViaActionAdd {
+		property portal.acceptance = "true";
+
 		task ("Go to Templates and add a new Notification Template") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",

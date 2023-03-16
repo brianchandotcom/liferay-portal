@@ -12,7 +12,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
+import {useFormikContext} from 'formik';
 
+import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 
@@ -26,6 +28,12 @@ interface IProps {
 	overallCampaignName: string;
 }
 
+// const formatCurrency = (value, currencyKey) =>
+// 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+// 		currency: currencyKey,
+// 		style: 'currency',
+// 	}).format(value);
+
 const ActivityPanel = ({
 	activity,
 	children,
@@ -35,6 +43,8 @@ const ActivityPanel = ({
 	onRemove,
 	overallCampaignName,
 }: IProps) => {
+	const {values} = useFormikContext<MDFRequest>();
+
 	return (
 		<ClayPanel
 			className={classNames({
@@ -87,7 +97,7 @@ const ActivityPanel = ({
 						</div>
 
 						<h5 className="mr-4">
-							{getIntlNumberFormat().format(
+							{getIntlNumberFormat(values.currency).format(
 								activity.mdfRequestAmount
 							)}
 						</h5>

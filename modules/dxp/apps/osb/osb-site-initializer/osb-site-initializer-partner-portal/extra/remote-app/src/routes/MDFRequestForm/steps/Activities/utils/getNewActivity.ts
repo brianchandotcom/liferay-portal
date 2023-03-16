@@ -9,10 +9,13 @@
  * distribution rights of the Software.
  */
 
+import LiferayPicklist from '../../../../../common/interfaces/liferayPicklist';
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
 import {Status} from '../../../../../common/utils/constants/status';
 
-export default function getNewActivity(): MDFRequestActivity {
+export default function getNewActivity(
+	currency: LiferayPicklist
+): MDFRequestActivity {
 	return {
 		activityDescription: {
 			activityPromotion: '',
@@ -59,6 +62,7 @@ export default function getNewActivity(): MDFRequestActivity {
 		},
 		activityStatus: Status.SUBMITTED,
 		budgets: [],
+		currency,
 		endDate: undefined,
 		mdfRequestAmount: 0,
 		name: '',

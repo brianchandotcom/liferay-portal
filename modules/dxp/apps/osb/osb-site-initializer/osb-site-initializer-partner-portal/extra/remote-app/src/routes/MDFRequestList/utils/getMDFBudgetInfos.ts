@@ -10,18 +10,20 @@
  */
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
+import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
 export default function getMDFBudgetInfos(
 	totalCostOfExpense?: number,
-	totalRequested?: number
+	totalRequested?: number,
+	currency?: LiferayPicklist
 ) {
 	if (totalCostOfExpense && totalRequested) {
 		return {
-			[MDFColumnKey.TOTAL_COST]: getIntlNumberFormat().format(
+			[MDFColumnKey.TOTAL_COST]: getIntlNumberFormat(currency).format(
 				totalCostOfExpense
 			),
-			[MDFColumnKey.REQUESTED]: getIntlNumberFormat().format(
+			[MDFColumnKey.REQUESTED]: getIntlNumberFormat(currency).format(
 				totalRequested
 			),
 		};

@@ -808,7 +808,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
@@ -832,7 +832,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",

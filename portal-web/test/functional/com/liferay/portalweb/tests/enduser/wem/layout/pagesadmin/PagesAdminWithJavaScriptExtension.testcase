@@ -264,7 +264,7 @@ definition {
 				menuItem = "Edit",
 				pageName = "Content Page Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Content Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Content Page Name *");
 
 			AssertCssValue(
 				locator1 = "ControlMenu#HEADING",
@@ -473,7 +473,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
 
 			AssertCssValue(
 				locator1 = "ControlMenu#HEADING",
@@ -542,7 +542,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
 		}
 	}
 

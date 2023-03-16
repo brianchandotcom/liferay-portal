@@ -181,7 +181,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
 
 			ControlMenu.viewHeaderTitleLabel(headerTitleLabel = "Draft");
 
@@ -492,7 +492,7 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name *");
 
 			ControlMenu.viewHeaderTitleLabel(headerTitleLabel = "Draft");
 

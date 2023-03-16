@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.CustomValue;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Geo;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -39,13 +40,11 @@ import java.text.ParseException;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
@@ -61,26 +60,23 @@ public class CustomFieldsUtil {
 
 		Map<String, Serializable> attributes = expandoBridge.getAttributes();
 
-		Set<Map.Entry<String, Serializable>> entries = attributes.entrySet();
-
-		Stream<Map.Entry<String, Serializable>> entriesStream =
-			entries.stream();
-
-		return entriesStream.filter(
+		return TransformUtil.transformToArray(
+			attributes.entrySet(),
 			entry -> {
 				UnicodeProperties unicodeProperties =
 					expandoBridge.getAttributeProperties(entry.getKey());
 
-				return !GetterUtil.getBoolean(
-					unicodeProperties.getProperty(
-						ExpandoColumnConstants.PROPERTY_HIDDEN));
-			}
-		).map(
-			entry -> _toCustomField(
-				acceptAllLanguages, entry, expandoBridge, locale)
-		).toArray(
-			CustomField[]::new
-		);
+				if (GetterUtil.getBoolean(
+						unicodeProperties.getProperty(
+							ExpandoColumnConstants.PROPERTY_HIDDEN))) {
+
+					return null;
+				}
+
+				return _toCustomField(
+					acceptAllLanguages, entry, expandoBridge, locale);
+			},
+			CustomField.class);
 	}
 
 	public static Map<String, Serializable> toMap(
@@ -91,17 +87,18 @@ public class CustomFieldsUtil {
 			return Collections.emptyMap();
 		}
 
+		Map<String, Serializable> map = new HashMap<>();
+
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, className);
 
-		return Stream.of(
-			customFields
-		).collect(
-			Collectors.toMap(
-				CustomField::getName,
-				customField -> _getCustomField(
-					customField, expandoBridge, locale))
-		);
+		for (CustomField customField : customFields) {
+			map.put(
+				customField.getName(),
+				_getCustomField(customField, expandoBridge, locale));
+		}
+
+		return map;
 	}
 
 	private static Serializable _getCustomField(

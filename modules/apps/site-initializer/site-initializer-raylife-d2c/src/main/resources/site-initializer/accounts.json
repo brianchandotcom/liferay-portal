@@ -238,5 +238,15 @@
 		"externalReferenceCode": "RAYACCOUNT-048",
 		"name": "Heidi Blumer",
 		"type": "business"
+	},
+	{
+		"externalReferenceCode": "RAYACCOUNT-049",
+		"name": "Samantha Halt",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "RAYACCOUNT-050",
+		"name": "Abraham Grishelyov",
+		"type": "business"
 	}
 ]

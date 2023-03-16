@@ -1495,7 +1495,6 @@
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="defaultUser" type="boolean" />
 		<field name="contactId" type="long" />
 		<field name="password" type="String" />
 		<field name="passwordEncrypted" type="boolean" />
@@ -1549,6 +1548,7 @@
 		<field name="lockoutDate" type="Date" />
 		<field name="agreedToTermsOfUse" type="boolean" />
 		<field name="emailAddressVerified" type="boolean" />
+		<field name="type" type="int" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroup">

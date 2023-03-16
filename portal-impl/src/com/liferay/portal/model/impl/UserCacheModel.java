@@ -94,8 +94,6 @@ public class UserCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", defaultUser=");
-		sb.append(defaultUser);
 		sb.append(", contactId=");
 		sb.append(contactId);
 		sb.append(", password=");
@@ -164,6 +162,8 @@ public class UserCacheModel
 		sb.append(agreedToTermsOfUse);
 		sb.append(", emailAddressVerified=");
 		sb.append(emailAddressVerified);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -209,7 +209,6 @@ public class UserCacheModel
 			userImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		userImpl.setDefaultUser(defaultUser);
 		userImpl.setContactId(contactId);
 
 		if (password == null) {
@@ -389,6 +388,7 @@ public class UserCacheModel
 
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
+		userImpl.setType(type);
 		userImpl.setStatus(status);
 
 		userImpl.resetOriginalValues();
@@ -409,8 +409,6 @@ public class UserCacheModel
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		defaultUser = objectInput.readBoolean();
 
 		contactId = objectInput.readLong();
 		password = objectInput.readUTF();
@@ -457,6 +455,8 @@ public class UserCacheModel
 
 		emailAddressVerified = objectInput.readBoolean();
 
+		type = objectInput.readInt();
+
 		status = objectInput.readInt();
 	}
 
@@ -485,8 +485,6 @@ public class UserCacheModel
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		objectOutput.writeBoolean(defaultUser);
 
 		objectOutput.writeLong(contactId);
 
@@ -644,6 +642,8 @@ public class UserCacheModel
 
 		objectOutput.writeBoolean(emailAddressVerified);
 
+		objectOutput.writeInt(type);
+
 		objectOutput.writeInt(status);
 	}
 
@@ -655,7 +655,6 @@ public class UserCacheModel
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
-	public boolean defaultUser;
 	public long contactId;
 	public String password;
 	public boolean passwordEncrypted;
@@ -690,6 +689,7 @@ public class UserCacheModel
 	public long lockoutDate;
 	public boolean agreedToTermsOfUse;
 	public boolean emailAddressVerified;
+	public int type;
 	public int status;
 
 }

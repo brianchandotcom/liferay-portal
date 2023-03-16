@@ -14,8 +14,9 @@
 
 package com.liferay.jethr0.dalo;
 
+import com.liferay.jethr0.builds.Build;
+import com.liferay.jethr0.builds.BuildFactory;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +30,21 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectDALO extends BaseDALO {
+public class BuildDALO extends BaseDALO {
 
-	public Project createProject(
-		String name, int priority, Project.State state, Project.Type type) {
+	public Build createBuild(
+		Project project, String buildName, String jobName, Build.State state) {
 
 		JSONObject requestJSONObject = new JSONObject();
 
 		requestJSONObject.put(
-			"name", name
+			"buildName", buildName
 		).put(
-			"priority", priority
+			"jobName", jobName
+		).put(
+			"r_projectToBuilds_c_projectId", project.getId()
 		).put(
 			"state", state.getJSONObject()
-		).put(
-			"type", type.getJSONObject()
 		);
 
 		JSONObject responseJSONObject = create(requestJSONObject);
@@ -52,61 +53,52 @@ public class ProjectDALO extends BaseDALO {
 			throw new RuntimeException("No response");
 		}
 
-		return ProjectFactory.newProject(responseJSONObject);
+		return BuildFactory.newBuild(project, responseJSONObject);
 	}
 
-	public void deleteProject(Project project) {
-		if (project == null) {
+	public void deleteBuild(Build build) {
+		if (build == null) {
 			return;
 		}
 
-		delete(project.getId());
+		delete(build.getId());
 
-		ProjectFactory.removeProject(project);
+		BuildFactory.removeBuild(build);
 	}
 
-	public List<Project> retrieveProjects() {
-		List<Project> projects = new ArrayList<>();
+	public List<Build> retrieveBuilds(Project project) {
+		List<Build> builds = new ArrayList<>();
 
 		for (JSONObject jsonObject : retrieve()) {
-			Project project = ProjectFactory.newProject(jsonObject);
+			Build build = BuildFactory.newBuild(project, jsonObject);
 
-			project.addGitBranches(
-				_projectsToGitBranchesDALO.retrieveGitBranches(project));
-			project.addTestSuites(
-				_projectsToTestSuitesDALO.retrieveTestSuites(project));
+			build.addBuildParameters(
+				_buildToBuildParametersDALO.retrieveBuildParameters(build));
 
-			projects.add(project);
+			builds.add(build);
 		}
 
-		return projects;
+		return builds;
 	}
 
-	public Project updateProject(Project project) {
-		_projectToBuildsDALO.updateRelationships(project);
-		_projectsToGitBranchesDALO.updateRelationships(project);
-		_projectsToTestSuitesDALO.updateRelationships(project);
+	public Build updateBuild(Build build) {
+		_buildToBuildParametersDALO.updateRelationships(build);
 
-		JSONObject responseJSONObject = update(project.getJSONObject());
+		JSONObject responseJSONObject = update(build.getJSONObject());
 
 		if (responseJSONObject == null) {
 			throw new RuntimeException("No response");
 		}
 
-		return project;
+		return build;
 	}
 
+	@Override
 	protected String getObjectDefinitionLabel() {
-		return "Project";
+		return "Build";
 	}
 
 	@Autowired
-	private ProjectsToGitBranchesDALO _projectsToGitBranchesDALO;
-
-	@Autowired
-	private ProjectsToTestSuitesDALO _projectsToTestSuitesDALO;
-
-	@Autowired
-	private ProjectToBuildsDALO _projectToBuildsDALO;
+	private BuildToBuildParametersDALO _buildToBuildParametersDALO;
 
 }

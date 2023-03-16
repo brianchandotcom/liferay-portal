@@ -110,12 +110,14 @@ export async function fetchObjectDefinitionFields(
 ) {
 	let definitionId = objectDefinitionId;
 	let externalReferenceCode = objectDefinitionExternalReferenceCode;
+	let isSystemObject = systemObject;
 	const validFields: ObjectField[] = [];
 
 	if (values.objectActionExecutorKey === 'add-object-entry') {
 		definitionId = values?.parameters?.objectDefinitionId as number;
 		externalReferenceCode = values.parameters
 			?.objectDefinitionExternalReferenceCode as string;
+		isSystemObject = !!values?.parameters?.system;
 	}
 
 	if (externalReferenceCode) {
@@ -124,7 +126,7 @@ export async function fetchObjectDefinitionFields(
 		);
 
 		items.forEach((field) => {
-			if (isValidField(field, systemObject)) {
+			if (isValidField(field, isSystemObject)) {
 				validFields.push(field);
 			}
 		});

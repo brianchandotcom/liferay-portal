@@ -20,6 +20,7 @@ import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -62,6 +63,43 @@ public class ProjectGitBranchDALO extends BaseRelationshipDALO {
 		}
 
 		return projects;
+	}
+
+	public void updateRelationships(GitBranch gitBranch) {
+		List<Project> remoteProjects = retrieveProjects(gitBranch);
+
+		for (Project project : gitBranch.getProjects()) {
+			if (remoteProjects.contains(project)) {
+				remoteProjects.removeAll(Collections.singletonList(project));
+
+				continue;
+			}
+
+			createRelationship(project, gitBranch);
+		}
+
+		for (Project remoteProject : remoteProjects) {
+			deleteRelationship(remoteProject, gitBranch);
+		}
+	}
+
+	public void updateRelationships(Project project) {
+		List<GitBranch> remoteGitBranches = retrieveGitBranches(project);
+
+		for (GitBranch gitBranch : project.getGitBranches()) {
+			if (remoteGitBranches.contains(gitBranch)) {
+				remoteGitBranches.removeAll(
+					Collections.singletonList(gitBranch));
+
+				continue;
+			}
+
+			createRelationship(project, gitBranch);
+		}
+
+		for (GitBranch remoteGitBranch : remoteGitBranches) {
+			deleteRelationship(project, remoteGitBranch);
+		}
 	}
 
 	@Override

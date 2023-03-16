@@ -19,6 +19,7 @@ import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -64,6 +65,30 @@ public class ProjectPrioritizerComparatorDALO extends BaseRelationshipDALO {
 		}
 
 		return projectComparators;
+	}
+
+	public void updateRelationships(ProjectPrioritizer projectPrioritizer) {
+		List<ProjectComparator> remoteProjectComparators =
+			retrieveProjectComparators(projectPrioritizer);
+
+		for (ProjectComparator projectComparator :
+				projectPrioritizer.getProjectComparators()) {
+
+			if (remoteProjectComparators.contains(projectComparator)) {
+				remoteProjectComparators.removeAll(
+					Collections.singletonList(projectComparator));
+
+				continue;
+			}
+
+			createRelationship(projectPrioritizer, projectComparator);
+		}
+
+		for (ProjectComparator remoteProjectComparator :
+				remoteProjectComparators) {
+
+			deleteRelationship(projectPrioritizer, remoteProjectComparator);
+		}
 	}
 
 	@Override

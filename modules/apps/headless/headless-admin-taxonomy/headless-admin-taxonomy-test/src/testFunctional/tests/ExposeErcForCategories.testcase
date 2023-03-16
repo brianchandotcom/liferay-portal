@@ -6,7 +6,7 @@ definition {
 	property testray.main.component.name = "Echo Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given an asset library is created") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
@@ -18,14 +18,14 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanDeleteCategoryByErc {
 		property portal.acceptance = "true";
@@ -60,6 +60,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanRecieveCorrectCategoryIdByErc {
 		property portal.acceptance = "true";
@@ -89,6 +90,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanRecieveCorrectErcValueInCategory {
 		property portal.acceptance = "true";
@@ -117,6 +119,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanRecieveErrorMessageByNotExistErcInCategory {
 		property portal.acceptance = "true";
@@ -146,6 +149,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanUpdateCategoryByErc {
 		property portal.acceptance = "true";

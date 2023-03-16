@@ -6,9 +6,7 @@ definition {
 	property testray.main.component.name = "Echo Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given an asset library is created") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
@@ -18,14 +16,14 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanCreateVocabularyWithCustomErc {
 		property portal.acceptance = "true";
@@ -47,6 +45,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanCreateVocabularyWithNonExistentErc {
 		property portal.acceptance = "true";
@@ -67,6 +66,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanDeleteVocabularyByErc {
 		property portal.acceptance = "true";
@@ -92,6 +92,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanGetVocabularyByErc {
 		property portal.acceptance = "true";
@@ -120,6 +121,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 3
 	test CannotDeleteVocabularyWithNonExistentErc {
 		property portal.acceptance = "true";
@@ -145,6 +147,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 3
 	test CanReturnErrorWithGetVocabularyWithNonExistingErc {
 		property portal.acceptance = "true";
@@ -162,6 +165,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanUpdateVocabularyByErc {
 		property portal.acceptance = "true";

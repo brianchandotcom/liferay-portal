@@ -6,21 +6,20 @@ definition {
 	property testray.main.component.name = "Lima Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		TestCase.setUpPortalInstanceNoSelenium();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-
 		BlogPostingAPI.deleteAllBlogPostings();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveIdFieldValuesOnlyInResponse {
 		property portal.acceptance = "true";

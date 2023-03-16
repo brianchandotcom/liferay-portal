@@ -14,7 +14,13 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		JSONWiki.deleteWikiPageById(wikiPageId = ${staticWikiPageId});
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
 	@disable-webdriver = "true"

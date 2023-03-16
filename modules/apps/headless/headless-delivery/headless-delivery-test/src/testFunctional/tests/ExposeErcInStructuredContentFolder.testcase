@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Echo Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -17,15 +17,15 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
 	@description = "Structured Content Folder is created with custom ERC"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanCreateStructuredContentFolderWithCustomErc {
 		property portal.acceptance = "true";
@@ -45,6 +45,7 @@ definition {
 	}
 
 	@description = "Structured Content Folder is created with default ERC"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanCreateStructuredContentFolderWithDefaultErc {
 		property portal.acceptance = "true";
@@ -67,6 +68,7 @@ definition {
 	}
 
 	@description = "Structured Content Folder Is Deleted With Custom ERC"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanDeleteStructuredContentFolderByCustomErc {
 		property portal.acceptance = "true";
@@ -95,6 +97,7 @@ definition {
 	}
 
 	@description = "Structured Content Folder Is Deleted With Default ERC"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanDeleteStructuredContentFolderByErc {
 		property portal.acceptance = "true";
@@ -125,6 +128,7 @@ definition {
 	}
 
 	@description = "Can get correct details with custom erc from folders"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanGetCorrectDetailsWithCustomErcFromFolders {
 		property portal.acceptance = "true";
@@ -151,6 +155,7 @@ definition {
 	}
 
 	@description = "Can get correct details with default erc from folders"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanGetCorrectDetailsWithDefaultErcFromFolders {
 		property portal.acceptance = "true";
@@ -180,6 +185,7 @@ definition {
 	}
 
 	@description = "Existed Structured Content Folder will be updated with custom ERC"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanUpdateStructuredContentFolderByErc {
 		property portal.acceptance = "true";
@@ -210,6 +216,7 @@ definition {
 	}
 
 	@description = "Not existed Structured Content Folder will be created with custom ERC"
+	@disable-webdriver = "true"
 	@priority = 5
 	test NotExistedStructuredContentFolderWillBeCreatedWithCustomErc {
 		property portal.acceptance = "true";

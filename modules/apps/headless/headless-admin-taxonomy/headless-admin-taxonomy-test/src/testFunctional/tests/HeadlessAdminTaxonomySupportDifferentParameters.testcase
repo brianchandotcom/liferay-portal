@@ -6,23 +6,24 @@ definition {
 	property testray.main.component.name = "Echo Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstanceNoSelenium();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
 
 		TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
 			externalReferenceCode = "erc",
 			groupName = "Guest");
 
-		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveABodyWithNameOnlyInResponse {
 		property portal.acceptance = "true";
@@ -53,6 +54,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveCorrectValueOfAggregationTermsInResponse {
 		property portal.acceptance = "true";
@@ -83,6 +85,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
@@ -113,6 +116,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveNameFieldValuesOnlyInResponse {
 		property portal.acceptance = "true";
@@ -142,6 +146,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveNameFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";

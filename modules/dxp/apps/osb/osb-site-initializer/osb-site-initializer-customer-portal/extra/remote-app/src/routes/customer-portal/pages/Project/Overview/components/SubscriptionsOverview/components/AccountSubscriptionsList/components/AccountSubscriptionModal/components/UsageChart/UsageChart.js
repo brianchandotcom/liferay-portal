@@ -78,17 +78,17 @@ const UsageChart = ({data, loading}) => {
 					/>
 
 					<Bar
-						dataKey="maxConcurrentConsumption"
-						fill="#E7EFFF"
+						dataKey="maxConcurrentQuantity"
+						fill="#BBD2FF"
 						name={i18n.translate('subscriptions-purchased')}
-						stackId="maxConcurrentConsumption"
+						stackId="maxConcurrentQuantity"
 					/>
 
 					<Bar
-						dataKey="maxConcurrentQuantity"
-						fill="#BBD2FF"
+						dataKey="maxConcurrentConsumption"
+						fill="#E7EFFF"
 						name={i18n.translate('keys-provisioned')}
-						stackId="maxConcurrentQuantity"
+						stackId="maxConcurrentConsumption"
 					/>
 				</BarChart>
 			</div>

@@ -17,6 +17,7 @@ Export-Package:\
 	com.liferay.object.field.filter.parser,\
 	com.liferay.object.field.frontend.data.set.filter,\
 	com.liferay.object.field.render,\
+	com.liferay.object.field.setting.builder,\
 	com.liferay.object.field.setting.util,\
 	com.liferay.object.field.util,\
 	com.liferay.object.filter.util,\

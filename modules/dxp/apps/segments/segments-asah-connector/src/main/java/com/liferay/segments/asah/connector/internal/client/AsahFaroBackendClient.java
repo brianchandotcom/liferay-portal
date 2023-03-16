@@ -91,9 +91,6 @@ public interface AsahFaroBackendClient {
 		long companyId, String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields);
 
-	public IndividualSegment getIndividualSegment(
-		long companyId, String individualSegmentId);
-
 	/**
 	 * Returns the results of an active individual segment with members.
 	 *
@@ -135,15 +132,5 @@ public interface AsahFaroBackendClient {
 	 */
 	public void updateExperimentDXPVariants(
 		long companyId, String experimentId, DXPVariants dxpVariants);
-
-	/**
-	 * Update a {@link IndividualSegment}.
-	 *
-	 * @param  companyId the company ID
-	 * @param  individualSegment individualSegment to be updated
-	 * @review
-	 */
-	public void updateIndividualSegment(
-		long companyId, IndividualSegment individualSegment);
 
 }

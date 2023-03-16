@@ -192,28 +192,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	@Override
-	public IndividualSegment getIndividualSegment(
-		long companyId, String individualSegmentId) {
-
-		if (Validator.isNull(individualSegmentId)) {
-			throw new IllegalArgumentException("Individual segment ID is null");
-		}
-
-		try {
-			return _get(
-				companyId, new MultivaluedHashMap<>(),
-				StringUtil.replace(
-					_PATH_INDIVIDUAL_SEGMENTS_SEGMENT, "{individualSegmentId}",
-					individualSegmentId),
-				_individualSegmentJSONObjectMapper::map);
-		}
-		catch (Exception exception) {
-			throw new NestableRuntimeException(
-				_ERROR_MSG + exception.getMessage(), exception);
-		}
-	}
-
-	@Override
 	public Results<IndividualSegment> getIndividualSegmentResults(
 		long companyId, int cur, int delta, List<OrderByField> orderByFields) {
 
@@ -303,43 +281,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 					_PATH_EXPERIMENTS_DXP_VARIANTS, "{experimentId}",
 					experimentId),
 				dxpVariants);
-		}
-		catch (Exception exception) {
-			throw new NestableRuntimeException(
-				"Unable to handle JSON response: " + exception.getMessage(),
-				exception);
-		}
-	}
-
-	@Override
-	public void updateIndividualSegment(
-		long companyId, IndividualSegment individualSegment) {
-
-		if (individualSegment == null) {
-			throw new IllegalArgumentException("Individual segment is null");
-		}
-
-		if (Validator.isNull(individualSegment.getFilter())) {
-			throw new IllegalArgumentException(
-				"Individual segment filter is null");
-		}
-
-		if (Validator.isNull(individualSegment.getId())) {
-			throw new IllegalArgumentException("Individual segment ID is null");
-		}
-
-		if (Validator.isNull(individualSegment.getName())) {
-			throw new IllegalArgumentException(
-				"Individual segment name is null");
-		}
-
-		try {
-			_put(
-				companyId,
-				StringUtil.replace(
-					_PATH_INDIVIDUAL_SEGMENTS_SEGMENT, "{individualSegmentId}",
-					individualSegment.getId()),
-				individualSegment);
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -562,9 +503,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	private static final String _PATH_INDIVIDUAL_SEGMENTS_INDIVIDUALS =
 		_PATH_INDIVIDUAL_SEGMENTS + "/{id}/individuals";
-
-	private static final String _PATH_INDIVIDUAL_SEGMENTS_SEGMENT =
-		_PATH_INDIVIDUAL_SEGMENTS + "/{individualSegmentId}";
 
 	private static final String _PATH_INDIVIDUALS = "api/1.0/individuals";
 

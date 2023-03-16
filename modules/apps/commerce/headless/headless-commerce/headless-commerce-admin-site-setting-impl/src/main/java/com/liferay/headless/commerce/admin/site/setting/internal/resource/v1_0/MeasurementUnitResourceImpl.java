@@ -295,24 +295,25 @@ public class MeasurementUnitResourceImpl
 			return GetterUtil.getInteger(measurementUnitType);
 		}
 
-		if (CPMeasurementUnitConstants.typesMap.containsValue(
+		if (!CPMeasurementUnitConstants.typesMap.containsValue(
 				measurementUnitType)) {
 
-			for (Map.Entry<Integer, String> entry :
-					CPMeasurementUnitConstants.typesMap.entrySet()) {
-
-				if (StringUtil.equalsIgnoreCase(
-						measurementUnitType, entry.getValue())) {
-
-					return entry.getKey();
-				}
-			}
-
-			return -1;
+			throw new CPMeasurementUnitTypeException(
+				"Unable to find measurement unit with type " +
+					measurementUnitType);
 		}
 
-		throw new CPMeasurementUnitTypeException(
-			"Unable to find measurement unit with type " + measurementUnitType);
+		for (Map.Entry<Integer, String> entry :
+				CPMeasurementUnitConstants.typesMap.entrySet()) {
+
+			if (StringUtil.equalsIgnoreCase(
+					measurementUnitType, entry.getValue())) {
+
+				return entry.getKey();
+			}
+		}
+
+		return -1;
 	}
 
 	private MeasurementUnit _toMeasurementUnit(

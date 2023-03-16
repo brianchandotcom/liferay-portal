@@ -1,9 +1,7 @@
 definition {
 
 	macro viewHeaderDraftTitle {
-		var headerTitle = StringUtil.extractFirst(${headerTitle}, " *");
-
-		AssertElementPresent(
+		AssertVisible(
 			key_headerTitle = ${headerTitle},
 			locator1 = "ControlMenu#HEADING_DRAFT");
 	}

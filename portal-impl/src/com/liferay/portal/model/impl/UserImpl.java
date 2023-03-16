@@ -339,7 +339,7 @@ public class UserImpl extends UserBaseImpl {
 			ThemeDisplay themeDisplay, boolean privateLayout)
 		throws PortalException {
 
-		if (isDefaultUser() || (themeDisplay == null)) {
+		if (isGuestUser() || (themeDisplay == null)) {
 			return StringPool.BLANK;
 		}
 
@@ -737,7 +737,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean hasMySites() throws PortalException {
-		if (isDefaultUser()) {
+		if (isGuestUser()) {
 			return false;
 		}
 
@@ -794,7 +794,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isEmailAddressComplete() {
-		if (isDefaultUser()) {
+		if (isGuestUser()) {
 			return true;
 		}
 
@@ -810,7 +810,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isEmailAddressVerificationComplete() {
-		if (isDefaultUser() || isEmailAddressVerified()) {
+		if (isGuestUser() || isEmailAddressVerified()) {
 			return true;
 		}
 
@@ -839,6 +839,15 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public boolean isGuestUser() {
+		if (getType() == UserConstants.TYPE_GUEST) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isMale() throws PortalException {
 		return getMale();
 	}
@@ -850,7 +859,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isReminderQueryComplete() {
-		if (isDefaultUser()) {
+		if (isGuestUser()) {
 			return true;
 		}
 
@@ -868,7 +877,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isSetupComplete() {
-		if (isDefaultUser()) {
+		if (isGuestUser()) {
 			return true;
 		}
 
@@ -884,7 +893,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isTermsOfUseComplete() {
-		if (isDefaultUser() || isAgreedToTermsOfUse()) {
+		if (isGuestUser() || isAgreedToTermsOfUse()) {
 			return true;
 		}
 
@@ -917,7 +926,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public void setLanguageId(String languageId) {
-		if (isDefaultUser()) {
+		if (isGuestUser()) {
 			_locale = LocaleUtil.fromLanguageId(languageId, false);
 		}
 		else {

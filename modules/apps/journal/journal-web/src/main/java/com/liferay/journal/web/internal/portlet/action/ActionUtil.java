@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
@@ -168,18 +168,11 @@ public class ActionUtil {
 			DDMStructure ddmStructure = null;
 
 			if (ddmStructureId > 0) {
-				try {
-					ddmStructure = DDMStructureServiceUtil.getStructure(
-						ddmStructureId);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
+				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+					ddmStructureId);
 			}
 			else if (Validator.isNotNull(ddmStructureKey)) {
-				ddmStructure = DDMStructureServiceUtil.fetchStructure(
+				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 					groupId, PortalUtil.getClassNameId(JournalArticle.class),
 					ddmStructureKey, true);
 			}

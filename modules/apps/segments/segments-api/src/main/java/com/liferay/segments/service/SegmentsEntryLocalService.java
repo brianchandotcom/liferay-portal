@@ -383,9 +383,6 @@ public interface SegmentsEntryLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
-	public SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords,

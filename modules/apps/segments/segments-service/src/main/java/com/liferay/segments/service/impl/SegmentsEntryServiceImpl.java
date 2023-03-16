@@ -186,14 +186,6 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
-		throws PortalException {
-
-		return segmentsEntryLocalService.recalculateSegmentsEntry(
-			segmentsEntryId);
-	}
-
-	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords,
 			boolean includeAncestorSegmentsEntries, int start, int end,

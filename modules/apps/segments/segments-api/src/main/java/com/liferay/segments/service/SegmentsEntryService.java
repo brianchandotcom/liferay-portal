@@ -115,9 +115,6 @@ public interface SegmentsEntryService extends BaseService {
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
 		throws PortalException;
 
-	public SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords,

@@ -467,47 +467,6 @@ public class SegmentsEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.segments.model.SegmentsEntry
-			recalculateSegmentsEntry(
-				HttpPrincipal httpPrincipal, long segmentsEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SegmentsEntryServiceUtil.class, "recalculateSegmentsEntry",
-				_recalculateSegmentsEntryParameterTypes11);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.segments.model.SegmentsEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
 				HttpPrincipal httpPrincipal, long companyId, long groupId,
@@ -518,7 +477,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "searchSegmentsEntries",
-				_searchSegmentsEntriesParameterTypes12);
+				_searchSegmentsEntriesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords,
@@ -562,7 +521,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "searchSegmentsEntries",
-				_searchSegmentsEntriesParameterTypes13);
+				_searchSegmentsEntriesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, keywords, start, end, sort);
@@ -608,7 +567,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "updateSegmentsEntry",
-				_updateSegmentsEntryParameterTypes14);
+				_updateSegmentsEntryParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId, segmentsEntryKey, nameMap,
@@ -686,19 +645,17 @@ public class SegmentsEntryServiceHttp {
 		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getSegmentsEntryParameterTypes10 =
 		new Class[] {long.class};
-	private static final Class<?>[] _recalculateSegmentsEntryParameterTypes11 =
-		new Class[] {long.class};
-	private static final Class<?>[] _searchSegmentsEntriesParameterTypes12 =
+	private static final Class<?>[] _searchSegmentsEntriesParameterTypes11 =
 		new Class[] {
 			long.class, long.class, String.class, boolean.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _searchSegmentsEntriesParameterTypes13 =
+	private static final Class<?>[] _searchSegmentsEntriesParameterTypes12 =
 		new Class[] {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateSegmentsEntryParameterTypes14 =
+	private static final Class<?>[] _updateSegmentsEntryParameterTypes13 =
 		new Class[] {
 			long.class, String.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, String.class,

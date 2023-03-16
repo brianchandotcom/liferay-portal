@@ -508,14 +508,6 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsEntryLocalService.recalculateSegmentsEntry(
-			segmentsEntryId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<SegmentsEntry>
 			searchSegmentsEntries(
 				long companyId, long groupId, String keywords,

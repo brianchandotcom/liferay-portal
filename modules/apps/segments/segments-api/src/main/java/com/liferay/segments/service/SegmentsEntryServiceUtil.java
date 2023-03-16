@@ -136,12 +136,6 @@ public class SegmentsEntryServiceUtil {
 		return getService().getSegmentsEntry(segmentsEntryId);
 	}
 
-	public static SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
-		throws PortalException {
-
-		return getService().recalculateSegmentsEntry(segmentsEntryId);
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<SegmentsEntry> searchSegmentsEntries(
 				long companyId, long groupId, String keywords,

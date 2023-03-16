@@ -72,7 +72,6 @@ public class UserNotificationDTOConverter
 
 		return new UserNotification() {
 			{
-				comment = jsonObject.getString("entryTitle", null);
 				dateCreated = new Date(userNotificationEvent.getTimestamp());
 				id = userNotificationEvent.getUserNotificationEventId();
 				message = _getNotificationMessage(

@@ -341,6 +341,8 @@ public interface User extends PersistedModel, UserModel {
 	public boolean isFemale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isGuestUser();
+
 	public boolean isMale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

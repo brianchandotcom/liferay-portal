@@ -51,7 +51,6 @@ public class UserWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("defaultUser", isDefaultUser());
 		attributes.put("contactId", getContactId());
 		attributes.put("password", getPassword());
 		attributes.put("passwordEncrypted", isPasswordEncrypted());
@@ -86,6 +85,7 @@ public class UserWrapper
 		attributes.put("lockoutDate", getLockoutDate());
 		attributes.put("agreedToTermsOfUse", isAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", isEmailAddressVerified());
+		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -140,12 +140,6 @@ public class UserWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean defaultUser = (Boolean)attributes.get("defaultUser");
-
-		if (defaultUser != null) {
-			setDefaultUser(defaultUser);
 		}
 
 		Long contactId = (Long)attributes.get("contactId");
@@ -359,6 +353,12 @@ public class UserWrapper
 			setEmailAddressVerified(emailAddressVerified);
 		}
 
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -495,16 +495,6 @@ public class UserWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
-	}
-
-	/**
-	 * Returns the default user of this user.
-	 *
-	 * @return the default user of this user
-	 */
-	@Override
-	public boolean getDefaultUser() {
-		return model.getDefaultUser();
 	}
 
 	/**
@@ -1216,6 +1206,16 @@ public class UserWrapper
 		return model.getTimeZoneId();
 	}
 
+	/**
+	 * Returns the type of this user.
+	 *
+	 * @return the type of this user
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
+	}
+
 	@Override
 	public Date getUnlockDate()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1333,16 +1333,6 @@ public class UserWrapper
 		return model.isAgreedToTermsOfUse();
 	}
 
-	/**
-	 * Returns <code>true</code> if this user is default user.
-	 *
-	 * @return <code>true</code> if this user is default user; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDefaultUser() {
-		return model.isDefaultUser();
-	}
-
 	@Override
 	public boolean isEmailAddressComplete() {
 		return model.isEmailAddressComplete();
@@ -1368,6 +1358,11 @@ public class UserWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.isFemale();
+	}
+
+	@Override
+	public boolean isGuestUser() {
+		return model.isGuestUser();
 	}
 
 	/**
@@ -1495,16 +1490,6 @@ public class UserWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Sets whether this user is default user.
-	 *
-	 * @param defaultUser the default user of this user
-	 */
-	@Override
-	public void setDefaultUser(boolean defaultUser) {
-		model.setDefaultUser(defaultUser);
 	}
 
 	/**
@@ -1875,6 +1860,16 @@ public class UserWrapper
 	@Override
 	public void setTimeZoneId(String timeZoneId) {
 		model.setTimeZoneId(timeZoneId);
+	}
+
+	/**
+	 * Sets the type of this user.
+	 *
+	 * @param type the type of this user
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

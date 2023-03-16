@@ -51,9 +51,10 @@ definition {
 		}
 
 		task ("And click on 'Save as Draft'") {
-			ClickNoError(
+			AssertClickNoError(
 				key_text = "Save as Draft",
-				locator1 = "Button#ANY");
+				locator1 = "Button#ANY",
+				value1 = "Save as Draft");
 		}
 
 		task ("And the admin click on 'OK'") {

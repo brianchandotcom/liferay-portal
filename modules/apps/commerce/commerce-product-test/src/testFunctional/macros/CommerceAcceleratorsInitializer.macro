@@ -147,9 +147,9 @@ definition {
 
 		var key_portletName = ${portletName};
 
-		AssertElementPresent(
-			key_portletName = ${portletName},
-			locator1 = "Portlet#LOADED");
+		LiferayEvent.waitForPortletReady();
+
+		AssertElementPresent(locator1 = "Portlet#LOADED");
 
 		Refresh();
 	}

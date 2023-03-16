@@ -347,7 +347,6 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectDefinition.getObjectDefinitionId(),
 				aggregationServiceBuilderObjectField.getBusinessType(),
 				aggregationServiceBuilderObjectField.getDBType(),
-				aggregationServiceBuilderObjectField.getDefaultValue(),
 				aggregationServiceBuilderObjectField.isIndexed(),
 				aggregationServiceBuilderObjectField.isIndexedAsKeyword(),
 				aggregationServiceBuilderObjectField.getIndexedLanguageId(),

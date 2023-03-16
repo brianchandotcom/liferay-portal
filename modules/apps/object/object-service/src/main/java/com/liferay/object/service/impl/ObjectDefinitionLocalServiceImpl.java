@@ -284,8 +284,7 @@ public class ObjectDefinitionLocalServiceImpl
 					newObjectField.getBusinessType(),
 					newObjectField.getDBColumnName(),
 					objectDefinition.getDBTableName(),
-					newObjectField.getDBType(),
-					newObjectField.getDefaultValue(), false, false, "",
+					newObjectField.getDBType(), false, false, "",
 					newObjectField.getLabelMap(), newObjectField.getName(),
 					newObjectField.isRequired(), newObjectField.isState());
 			}
@@ -944,8 +943,7 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getBusinessType(),
 						objectField.getDBColumnName(),
 						objectDefinition.getDBTableName(),
-						objectField.getDBType(), objectField.getDefaultValue(),
-						objectField.isIndexed(),
+						objectField.getDBType(), objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
@@ -957,7 +955,7 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getListTypeDefinitionId(),
 						objectDefinition.getObjectDefinitionId(),
 						objectField.getBusinessType(), objectField.getDBType(),
-						objectField.getDefaultValue(), objectField.isIndexed(),
+						objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
@@ -987,7 +985,7 @@ public class ObjectDefinitionLocalServiceImpl
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectEntryTable.INSTANCE.userName.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "author")),
 			"creator", false, false);
@@ -996,7 +994,7 @@ public class ObjectDefinitionLocalServiceImpl
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectEntryTable.INSTANCE.createDate.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_DATE, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "create-date")),
 			"createDate", false, false);
@@ -1005,8 +1003,8 @@ public class ObjectDefinitionLocalServiceImpl
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectEntryTable.INSTANCE.externalReferenceCode.getName(),
-			dbTableName, ObjectFieldConstants.DB_TYPE_STRING, null, false,
-			false, null,
+			dbTableName, ObjectFieldConstants.DB_TYPE_STRING, false, false,
+			null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(
 					LocaleUtil.getDefault(), "external-reference-code")),
@@ -1021,8 +1019,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectFieldLocalService.addSystemObjectField(
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER, dbColumnName,
-			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, null, true, true,
-			null,
+			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, true, true, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "id")),
 			"id", false, false);
@@ -1031,7 +1028,7 @@ public class ObjectDefinitionLocalServiceImpl
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectEntryTable.INSTANCE.modifiedDate.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_DATE, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "modified-date")),
 			"modifiedDate", false, false);
@@ -1040,7 +1037,7 @@ public class ObjectDefinitionLocalServiceImpl
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectEntryTable.INSTANCE.status.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_INTEGER, null, false, false, null,
+			ObjectFieldConstants.DB_TYPE_INTEGER, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "status")),
 			"status", false, false);

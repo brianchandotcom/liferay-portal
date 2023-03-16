@@ -1528,11 +1528,21 @@ public class ObjectEntryLocalServiceImpl
 			if (Objects.equals(
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
-				!values.containsKey(objectField.getName()) &&
-				Validator.isNotNull(objectField.getDefaultValue())) {
+				!values.containsKey(objectField.getName())) {
+
+				ObjectFieldSetting objectFieldSetting =
+					_objectFieldSettingLocalService.fetchObjectFieldSetting(
+						objectField.getObjectFieldId(),
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+
+				if ((objectFieldSetting == null) ||
+					Validator.isNull(objectFieldSetting.getValue())) {
+
+					continue;
+				}
 
 				values.put(
-					objectField.getName(), objectField.getDefaultValue());
+					objectField.getName(), objectFieldSetting.getValue());
 			}
 		}
 	}

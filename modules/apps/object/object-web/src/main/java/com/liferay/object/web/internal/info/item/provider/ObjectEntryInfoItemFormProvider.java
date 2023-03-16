@@ -36,6 +36,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -234,7 +235,9 @@ public class ObjectEntryInfoItemFormProvider
 						objectField.getListTypeDefinitionId()),
 					listTypeEntry -> new MultiselectInfoFieldType.Option(
 						Objects.equals(
-							objectField.getDefaultValue(),
+							ObjectFieldSettingUtil.getDefaultValueAsString(
+								null, objectField.getObjectFieldId(),
+								_objectFieldSettingLocalService, null),
 							listTypeEntry.getKey()),
 						new FunctionInfoLocalizedValue<>(
 							listTypeEntry::getName),
@@ -637,7 +640,10 @@ public class ObjectEntryInfoItemFormProvider
 			options.add(
 				new SelectInfoFieldType.Option(
 					Objects.equals(
-						objectField.getDefaultValue(), listTypeEntry.getKey()),
+						ObjectFieldSettingUtil.getDefaultValueAsString(
+							null, objectField.getObjectFieldId(),
+							_objectFieldSettingLocalService, null),
+						listTypeEntry.getKey()),
 					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
 					listTypeEntry.getKey()));
 		}

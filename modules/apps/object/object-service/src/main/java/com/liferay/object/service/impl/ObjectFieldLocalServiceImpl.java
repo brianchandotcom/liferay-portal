@@ -725,7 +725,7 @@ public class ObjectFieldLocalServiceImpl
 				newObjectField.getBusinessType());
 
 		objectFieldBusinessType.validateObjectFieldSettings(
-			newObjectField,	objectFieldSettings);
+			newObjectField, objectFieldSettings);
 
 		for (ObjectFieldSetting oldObjectFieldSetting :
 				_objectFieldSettingPersistence.findByObjectFieldId(

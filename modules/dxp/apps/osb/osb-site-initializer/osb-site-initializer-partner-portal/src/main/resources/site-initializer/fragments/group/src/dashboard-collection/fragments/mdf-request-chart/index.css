@@ -13,3 +13,7 @@
 	border-color: #37d27e;
 	color: #fff;
 }
+
+.dashboard-mdf-request-chart {
+	min-height: 624px;
+}

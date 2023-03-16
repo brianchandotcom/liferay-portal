@@ -4,8 +4,7 @@
 }
 
 .deals-chart-card-height {
-	box-sizing: border-box;
-	height: 482px;
+	min-height: 482px;
 }
 
 .bb-chart-arcs .bb-chart-arcs-background {

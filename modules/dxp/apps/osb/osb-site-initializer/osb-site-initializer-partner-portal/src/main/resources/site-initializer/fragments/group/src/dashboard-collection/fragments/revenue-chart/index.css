@@ -259,6 +259,9 @@
 	margin-right: 2px;
 	width: 10px;
 }
+.dashboard-mdf-revenue-chart {
+	min-height: 544px;
+}
 .square-status-legend {
 	height: 15px;
 	width: 15px;

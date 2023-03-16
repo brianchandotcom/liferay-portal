@@ -469,6 +469,9 @@ public class ClientExtensionProjectConfigurator
 								if (includeJsonNode != null) {
 									copySpec.include(includeJsonNode.asText());
 								}
+								else {
+									copySpec.include("**/*");
+								}
 							}
 
 							if (intoJsonNode != null) {

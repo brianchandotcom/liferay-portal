@@ -15,14 +15,14 @@
 import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
 
+import ActionDetail from '../../../../common/components/action-detail/action-content';
+import NoActionRequired from '../../../../common/components/action-detail/action-content/no-action-required';
 import MultiSteps from '../../../../common/components/multi-steps';
 import {getApplicationByExternalReferenceCode} from '../../../../common/services';
 import {setFirstLetterUpperCase} from '../../../../common/utils';
 import {CONSTANTS} from '../../../../common/utils/constants';
 import {redirectTo} from '../../../../common/utils/liferay';
-import ActionDetail from './components/action-detail';
 import QuotedSummary from './components/quoted-summary';
-import BoundContent from './components/status-content/bound-content';
 import IncompleteContent from './components/status-content/incomplete-content';
 import UnderwritingContent from './components/status-content/reviewed-rejected-content';
 import Summary from './components/summary';
@@ -173,7 +173,7 @@ const ApplicationDetails = () => {
 								<IncompleteContent onClick={handleClick} />
 							)}
 
-							{currentStep === STEP.BOUND && <BoundContent />}
+							{currentStep === STEP.BOUND && <NoActionRequired />}
 
 							{currentStep === STEP.REVIEWED && (
 								<UnderwritingContent

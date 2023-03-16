@@ -48,8 +48,8 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField addCustomObjectField(
 			String externalReferenceCode, long userId,
 			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, String dbType, String defaultValue,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
 			boolean required, boolean state,
 			List<com.liferay.object.model.ObjectFieldSetting>
@@ -58,9 +58,9 @@ public class ObjectFieldLocalServiceUtil {
 
 		return getService().addCustomObjectField(
 			externalReferenceCode, userId, listTypeDefinitionId,
-			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			objectDefinitionId, businessType, dbType, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state,
+			objectFieldSettings);
 	}
 
 	/**
@@ -80,8 +80,8 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField addOrUpdateCustomObjectField(
 			String externalReferenceCode, long objectFieldId, long userId,
 			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, String dbType, String defaultValue,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
 			boolean required, boolean state,
 			List<com.liferay.object.model.ObjectFieldSetting>
@@ -90,37 +90,37 @@ public class ObjectFieldLocalServiceUtil {
 
 		return getService().addOrUpdateCustomObjectField(
 			externalReferenceCode, objectFieldId, userId, listTypeDefinitionId,
-			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			objectDefinitionId, businessType, dbType, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state,
+			objectFieldSettings);
 	}
 
 	public static ObjectField addOrUpdateSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required, boolean state)
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, boolean state)
 		throws PortalException {
 
 		return getService().addOrUpdateSystemObjectField(
 			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
-			dbType, defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state);
+			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+			name, required, state);
 	}
 
 	public static ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required, boolean state)
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, boolean state)
 		throws PortalException {
 
 		return getService().addSystemObjectField(
 			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
-			dbType, defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state);
+			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+			name, required, state);
 	}
 
 	/**
@@ -475,18 +475,17 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField updateCustomObjectField(
 			String externalReferenceCode, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required, boolean state,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, boolean state,
 			List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
 			externalReferenceCode, objectFieldId, listTypeDefinitionId,
-			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state,
-			objectFieldSettings);
+			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
+			labelMap, name, required, state, objectFieldSettings);
 	}
 
 	/**
@@ -507,10 +506,9 @@ public class ObjectFieldLocalServiceUtil {
 			String externalReferenceCode, long objectFieldId, long userId,
 			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbColumnName, String dbTableName,
-			String dbType, String defaultValue, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state, boolean system,
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			String name, boolean required, boolean state, boolean system,
 			List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws PortalException {
@@ -518,8 +516,8 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().updateObjectField(
 			externalReferenceCode, objectFieldId, userId, listTypeDefinitionId,
 			objectDefinitionId, businessType, dbColumnName, dbTableName, dbType,
-			defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, system, objectFieldSettings);
+			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
+			required, state, system, objectFieldSettings);
 	}
 
 	public static ObjectField updateRequired(

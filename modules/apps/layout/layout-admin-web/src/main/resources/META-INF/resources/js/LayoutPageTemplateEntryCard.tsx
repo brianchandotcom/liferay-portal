@@ -182,7 +182,7 @@ function PreviewModalContent({
 		setLayoutPageTemplateEntryList,
 	] = useState<LayoutPageTemplateEntryList | null>(null);
 
-	const iframeRef = useRef() as React.MutableRefObject<HTMLIFrameElement>;
+	const iframeRef = useRef() as React.MutableRefObject<HTMLIFrameElement | null>;
 
 	const layoutPageTemplateEntry = layoutPageTemplateEntryList
 		? layoutPageTemplateEntryList[entryIndex]
@@ -296,7 +296,11 @@ function PreviewModalContent({
 							);
 						}
 					}}
-					ref={iframeRef}
+					ref={(ref) => {
+						iframeRef.current = ref;
+
+						iframeRef.current?.setAttribute('inert', '');
+					}}
 					src={layoutPageTemplateEntry.previewLayoutURL}
 				/>
 

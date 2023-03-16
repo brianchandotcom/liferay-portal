@@ -57,7 +57,7 @@ public class JavaMethodSignature {
 			FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
 
 			if (freeMarkerTool.isPathParameter(
-					javaMethodParameter, _operation)) {
+					javaMethodParameter, operation)) {
 
 				_pathJavaMethodParameters.add(javaMethodParameter);
 			}

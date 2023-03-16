@@ -147,7 +147,7 @@ public class LangBuilder {
 
 		File propertiesFile = new File(
 			StringBundler.concat(
-				_langDirName, "/", _langFileName, ".properties"));
+				langDirName, "/", langFileName, ".properties"));
 
 		if (!propertiesFile.exists()) {
 			return;

@@ -96,7 +96,7 @@ public class UpgradeTableBuilder {
 		final AtomicBoolean tableFilesFound = new AtomicBoolean();
 
 		Files.walkFileTree(
-			Paths.get(_baseDirName),
+			Paths.get(baseDirName),
 			new SimpleFileVisitor<Path>() {
 
 				@Override

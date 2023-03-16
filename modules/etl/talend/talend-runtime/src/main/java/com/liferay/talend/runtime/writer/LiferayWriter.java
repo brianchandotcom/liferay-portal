@@ -50,14 +50,11 @@ public class LiferayWriter
 		LiferayOutputProperties liferayOutputProperties) {
 
 		_liferayWriteOperation = liferayWriteOperation;
-
 		_liferayOutputProperties = liferayOutputProperties;
 
-		_dieOnError = _liferayOutputProperties.getDieOnError();
-
-		_finalEndpointUrl = _getFinalEndpointUrl(_liferayOutputProperties);
-
-		_liferaySink = _liferayWriteOperation.getSink();
+		_dieOnError = liferayOutputProperties.getDieOnError();
+		_finalEndpointUrl = _getFinalEndpointUrl(liferayOutputProperties);
+		_liferaySink = liferayWriteOperation.getSink();
 
 		_indexedRecordJsonObjectConverter =
 			new IndexedRecordJsonObjectConverter(

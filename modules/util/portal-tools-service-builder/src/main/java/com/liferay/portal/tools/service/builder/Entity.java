@@ -187,7 +187,7 @@ public class Entity implements Comparable<Entity> {
 			sessionFactory, _SESSION_FACTORY_DEFAULT);
 		_txManager = GetterUtil.getString(txManager, _TX_MANAGER_DEFAULT);
 
-		if (_entityColumns == null) {
+		if (entityColumns == null) {
 			_databaseRegularEntityColumns = null;
 		}
 		else {
@@ -195,7 +195,7 @@ public class Entity implements Comparable<Entity> {
 				regularEntityColumns);
 		}
 
-		if (_entityFinders != null) {
+		if (entityFinders != null) {
 			Set<EntityColumn> finderEntityColumns = new HashSet<>();
 
 			for (EntityFinder entityFinder : _entityFinders) {
@@ -210,7 +210,7 @@ public class Entity implements Comparable<Entity> {
 			_finderEntityColumns = Collections.emptyList();
 		}
 
-		if ((_blobEntityColumns != null) && !_blobEntityColumns.isEmpty()) {
+		if ((blobEntityColumns != null) && !blobEntityColumns.isEmpty()) {
 			for (EntityColumn entityColumn : _blobEntityColumns) {
 				if (!entityColumn.isLazy()) {
 					cacheEnabled = false;
@@ -224,7 +224,7 @@ public class Entity implements Comparable<Entity> {
 
 		boolean containerModel = false;
 
-		if ((_entityColumns != null) && !_entityColumns.isEmpty()) {
+		if ((entityColumns != null) && !entityColumns.isEmpty()) {
 			for (EntityColumn entityColumn : _entityColumns) {
 				if (entityColumn.isContainerModel() ||
 					entityColumn.isParentContainerModel()) {

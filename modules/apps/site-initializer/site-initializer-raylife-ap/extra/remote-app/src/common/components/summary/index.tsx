@@ -16,8 +16,6 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
-import {redirectTo} from '../../utils/liferay';
-
 type SummaryProps = {
 	dataSummary: {
 		data?: string | number;
@@ -35,7 +33,7 @@ const summaryOnClickRules = (
 	elementKey: string
 ) => {
 	if (elementKey === 'entryID') {
-		return redirectTo(elementRedirectLink);
+		return window.open(elementRedirectLink);
 	}
 
 	if (elementKey === 'email') {

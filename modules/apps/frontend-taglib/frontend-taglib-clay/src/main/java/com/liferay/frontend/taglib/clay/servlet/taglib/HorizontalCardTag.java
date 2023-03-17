@@ -89,10 +89,6 @@ public class HorizontalCardTag extends BaseCardTag {
 		return title;
 	}
 
-	public Boolean getTranslated() {
-		return _translated;
-	}
-
 	public Boolean isTranslated() {
 		Boolean translated = _translated;
 		HorizontalCard horizontalCard = getHorizontalCard();

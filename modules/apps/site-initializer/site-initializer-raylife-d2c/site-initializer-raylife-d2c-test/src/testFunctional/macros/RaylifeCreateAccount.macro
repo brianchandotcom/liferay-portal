@@ -28,7 +28,9 @@ definition {
 			locator1 = "TextInput#INPUT_ID",
 			value1 = "a");
 
-		Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+		if (isSet(createAccount)) {
+			Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+		}
 	}
 
 }

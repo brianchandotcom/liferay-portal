@@ -4039,11 +4039,11 @@ definition {
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		Button.click(button = "custom");
-
 		AssertElementPresent(
 			element = "Título em português",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		Blueprints.searchAddElementsSidebar(element = "Título");
 
 		AssertElementPresent(
 			element = "Título em português",

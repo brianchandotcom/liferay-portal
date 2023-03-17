@@ -3,13 +3,7 @@ definition {
 	macro addElement {
 		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 
-		if (IsElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR")) {
-			Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR");
-		}
-
-		Type.sendKeysApplicationSearch(
-			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_BAR",
-			value1 = ${element});
+		Blueprints.searchAddElementsSidebar(element = ${element});
 
 		MouseOver(
 			element = ${element},
@@ -203,6 +197,16 @@ definition {
 		Click.waitForMenuToggleJSClick(
 			entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS");
+	}
+
+	macro searchAddElementsSidebar {
+		if (IsElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR")) {
+			Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR");
+		}
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_BAR",
+			value1 = ${element});
 	}
 
 	macro searchBlueprintsPreview {

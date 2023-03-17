@@ -27,12 +27,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_BAR</td>
-	<td>//div[contains(@class,'add-sxp-element-sidebar')]//input[contains(@placeholder,'Search')]</td>
+	<td>//div[contains(@class,'add-sxp-element-sidebar')]//nav[contains(@class,'sidebar-search')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR</td>
-	<td>//div[contains(@class,'add-sxp-element-sidebar')]//button[contains(@title,'Clear')]</td>
+	<td>//div[contains(@class,'add-sxp-element-sidebar')]//button[*[name()='svg'][contains(@class,'times-circle')]]</td>
 	<td></td>
 </tr>
 <tr>

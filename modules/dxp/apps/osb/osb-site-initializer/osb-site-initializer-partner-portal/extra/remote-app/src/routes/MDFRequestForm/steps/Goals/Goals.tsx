@@ -23,6 +23,7 @@ import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {Status} from '../../../../common/utils/constants/status';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
+import { isLiferayManager } from '../../../../common/utils/isLiferayManager';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -42,7 +43,7 @@ const Goals = ({
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
 
-	const {companiesEntries, fieldEntries, userAccountRoles} =
+	const {companiesEntries, fieldEntries, roleEntries} =
 		useDynamicFieldEntries();
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
@@ -97,26 +98,16 @@ const Goals = ({
 	}, [errors]);
 
 	const getRequestPage = () => {
-		const canEditRoles = [
-			'Channel General Manager',
-			'Channel Account Manager',
-			'Channel Regional Marketing Manager',
-			'Channel Global Marketing Manager',
-			'Channel Finance Manager',
-		];
 
-		const userAccountRolesCanEdit = userAccountRoles?.filter(
-			(userAccountRole) =>
-				canEditRoles.includes(userAccountRole.label as string)
-		).length;
-
-		if (!fieldEntries || !userAccountRoles || !companiesEntries) {
+		if (!fieldEntries || !roleEntries || !companiesEntries) {
 			return <ClayLoadingIndicator />;
 		}
 
+		const userAccountRolesCanEdit = isLiferayManager(roleEntries);
+
 		if (
 			values.id &&
-			userAccountRoles &&
+			roleEntries &&
 			!userAccountRolesCanEdit &&
 			values.mdfRequestStatus?.key !== 'draft' &&
 			values.mdfRequestStatus?.key !== 'moreInfoRequested'

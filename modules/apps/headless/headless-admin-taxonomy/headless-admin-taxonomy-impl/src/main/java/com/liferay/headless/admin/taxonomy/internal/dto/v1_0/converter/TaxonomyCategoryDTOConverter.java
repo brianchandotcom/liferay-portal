@@ -124,25 +124,6 @@ public class TaxonomyCategoryDTOConverter
 				numberOfTaxonomyCategories =
 					_assetCategoryService.getChildCategoriesCount(
 						assetCategory.getCategoryId());
-				parentTaxonomyVocabulary = new ParentTaxonomyVocabulary() {
-					{
-						id = assetCategory.getVocabularyId();
-
-						setName(
-							() -> {
-								if (assetCategory.getVocabularyId() == 0) {
-									return null;
-								}
-
-								AssetVocabulary assetVocabulary =
-									_assetVocabularyService.getVocabulary(
-										assetCategory.getVocabularyId());
-
-								return assetVocabulary.getTitle(
-									dtoConverterContext.getLocale());
-							});
-					}
-				};
 				siteId = assetCategory.getGroupId();
 				taxonomyCategoryProperties = TransformUtil.transformToArray(
 					_assetCategoryPropertyLocalService.getCategoryProperties(
@@ -161,6 +142,28 @@ public class TaxonomyCategoryDTOConverter
 						return _toParentTaxonomyCategory(
 							assetCategory.getParentCategory(),
 							dtoConverterContext);
+					});
+				setParentTaxonomyVocabulary(
+					() -> {
+						if (assetCategory.getVocabularyId() == 0) {
+							return null;
+						}
+
+						AssetVocabulary assetVocabulary =
+							_assetVocabularyService.fetchVocabulary(
+								assetCategory.getVocabularyId());
+
+						if (assetVocabulary == null) {
+							return null;
+						}
+
+						return new ParentTaxonomyVocabulary() {
+							{
+								id = assetCategory.getVocabularyId();
+								name = assetVocabulary.getTitle(
+									dtoConverterContext.getLocale());
+							}
+						};
 					});
 				setTaxonomyCategoryUsageCount(
 					() -> {

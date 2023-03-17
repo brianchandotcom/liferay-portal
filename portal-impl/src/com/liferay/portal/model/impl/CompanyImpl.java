@@ -118,11 +118,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
-	public User getDefaultUser() throws PortalException {
-		return UserLocalServiceUtil.getDefaultUser(getCompanyId());
-	}
-
-	@Override
 	public String getDefaultWebId() {
 		return PropsValues.COMPANY_DEFAULT_WEB_ID;
 	}
@@ -167,6 +162,11 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
+	public User getGuestUser() throws PortalException {
+		return UserLocalServiceUtil.getGuestUser(getCompanyId());
+	}
+
+	@Override
 	public String getKey() {
 		CompanyInfo companyInfo = getCompanyInfo();
 
@@ -188,7 +188,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public Locale getLocale() throws PortalException {
-		return getDefaultUser().getLocale();
+		return getGuestUser().getLocale();
 	}
 
 	@AutoEscape
@@ -272,7 +272,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public TimeZone getTimeZone() throws PortalException {
-		return getDefaultUser().getTimeZone();
+		return getGuestUser().getTimeZone();
 	}
 
 	@Override

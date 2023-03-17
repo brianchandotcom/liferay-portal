@@ -198,7 +198,7 @@ public class CommerceServiceTest {
 			"The order should be successfully created"
 		);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));

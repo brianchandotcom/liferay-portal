@@ -74,7 +74,7 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 			fileEntry.getCompanyId());
 
 		if (!_dlFileEntryModelResourcePermission.contains(
-				PermissionCheckerFactoryUtil.create(company.getDefaultUser()),
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()),
 				fileEntry.getPrimaryKey(), ActionKeys.VIEW)) {
 
 			return currentValue;

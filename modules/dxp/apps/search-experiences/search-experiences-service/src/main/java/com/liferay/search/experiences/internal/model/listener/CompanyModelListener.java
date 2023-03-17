@@ -81,7 +81,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 				continue;
 			}
 
-			User user = company.getDefaultUser();
+			User user = company.getGuestUser();
 
 			sxpElementLocalService.addSXPElement(
 				sxpElement.getExternalReferenceCode(), user.getUserId(),

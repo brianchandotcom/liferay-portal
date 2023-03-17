@@ -94,7 +94,8 @@ function toggleServiceRequired(service) {
 		service.querySelector('[name="totalHoursRequested"]').required = false;
 		service.querySelector('[name="startDate"]').required = false;
 		service.querySelector('[name="endDate"]').required = false;
-	} else {
+	}
+	else {
 		service.querySelector('[name="managerEmailAddress"]').required = true;
 		service.querySelector('[name="totalHoursRequested"]').required = true;
 		service.querySelector('[name="startDate"]').required = true;
@@ -105,7 +106,8 @@ function toggleServiceRequired(service) {
 function toggleGrantRequired(grant) {
 	if (grant.querySelector('[name="grantAmount"]').required) {
 		grant.querySelector('[name="grantAmount"]').required = false;
-	} else {
+	}
+	else {
 		grant.querySelector('[name="grantAmount"]').required = true;
 	}
 }
@@ -156,7 +158,8 @@ const compareGrants = async () => {
 		document.querySelector('.error-msg').innerText = 'No funds available.';
 		document.querySelector('.error-msg').style.display = 'block';
 		document.querySelector('button[type="submit"]').disabled = true;
-	} else {
+	}
+	else {
 		document.querySelector('.error-msg').style.display = 'none';
 		document.querySelector('button[type="submit"]').disabled = false;
 	}
@@ -177,7 +180,8 @@ const compareHours = async () => {
 
 		document.querySelector('.error-msg').style.display = 'block';
 		document.querySelector('button[type="submit"]').disabled = true;
-	} else {
+	}
+	else {
 		document.querySelector('.error-msg').style.display = 'none';
 		document.querySelector('button[type="submit"]').disabled = false;
 	}

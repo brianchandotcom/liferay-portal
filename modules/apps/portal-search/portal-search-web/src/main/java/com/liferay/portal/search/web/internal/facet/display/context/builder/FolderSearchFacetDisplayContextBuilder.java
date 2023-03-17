@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -35,8 +36,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -127,17 +126,17 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		Objects.requireNonNull(parameterValues);
+		_selectedFolderIds = TransformUtil.transformToList(
+			Objects.requireNonNull(parameterValues),
+			value -> {
+				long folderId = GetterUtil.getLong(value);
 
-		_selectedFolderIds = Stream.of(
-			parameterValues
-		).map(
-			GetterUtil::getLong
-		).filter(
-			folderId -> folderId > 0
-		).collect(
-			Collectors.toList()
-		);
+				if (folderId <= 0) {
+					return null;
+				}
+
+				return folderId;
+			});
 	}
 
 	protected long getDisplayStyleGroupId() {
@@ -160,12 +159,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	protected List<String> getParameterValueStrings() {
-		Stream<Long> groupIdsStream = _selectedFolderIds.stream();
-
-		Stream<String> parameterValuesStream = groupIdsStream.map(
-			String::valueOf);
-
-		return parameterValuesStream.collect(Collectors.toList());
+		return TransformUtil.transform(_selectedFolderIds, String::valueOf);
 	}
 
 	protected List<TermCollector> getTermCollectors() {
@@ -297,12 +291,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	private List<BucketDisplayContext> _getEmptyBucketDisplayContexts() {
-		Stream<Long> folderIdsStream = _selectedFolderIds.stream();
-
-		Stream<BucketDisplayContext> bucketDisplayContextsStream =
-			folderIdsStream.map(this::_getEmptyBucketDisplayContext);
-
-		return bucketDisplayContextsStream.collect(Collectors.toList());
+		return TransformUtil.transform(
+			_selectedFolderIds, this::_getEmptyBucketDisplayContext);
 	}
 
 	private Facet _facet;

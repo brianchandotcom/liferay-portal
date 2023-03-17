@@ -287,14 +287,14 @@ public class CPDefinitionsImporter {
 				BigDecimal customValue = (BigDecimal)customValueJSONObject.get(
 					"data");
 
-				expandoBridge.setAttributeDefault(
+				expandoBridge.setAttribute(
 					customFieldJSONObject.getString("name"),
 					customValue.doubleValue());
 
 				continue;
 			}
 
-			expandoBridge.setAttributeDefault(
+			expandoBridge.setAttribute(
 				customFieldJSONObject.getString("name"),
 				(Serializable)customValueJSONObject.get("data"));
 		}

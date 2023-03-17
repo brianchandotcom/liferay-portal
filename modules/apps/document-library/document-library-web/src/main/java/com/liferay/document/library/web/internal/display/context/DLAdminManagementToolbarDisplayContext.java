@@ -407,7 +407,7 @@ public class DLAdminManagementToolbarDisplayContext
 							PortletURLUtil.clone(
 								_currentURLObj, _liferayPortletResponse)
 						).setParameter(
-							"fileExtension",
+							"extension",
 							ArrayUtil.remove(fileExtensions, fileExtension)
 						).buildString());
 
@@ -677,7 +677,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private String[] _getFileExtensions(
 		HttpServletRequest httpServletRequest) {
 
-		return ParamUtil.getStringValues(httpServletRequest, "fileExtension");
+		return ParamUtil.getStringValues(httpServletRequest, "extension");
 	}
 
 	private String _getFileExtensionsItemSelectorURL() {
@@ -732,7 +732,7 @@ public class DLAdminManagementToolbarDisplayContext
 					).setParameter(
 						"fileEntryTypeId", (String)null
 					).setParameter(
-						"fileExtension", (String)null
+						"extension", (String)null
 					).buildPortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "all"));

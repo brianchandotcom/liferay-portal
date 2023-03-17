@@ -281,7 +281,7 @@ public class DLViewDisplayContext {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)
 		).setParameter(
-			"fileExtension", (String)null
+			"extension", (String)null
 		).buildString();
 	}
 

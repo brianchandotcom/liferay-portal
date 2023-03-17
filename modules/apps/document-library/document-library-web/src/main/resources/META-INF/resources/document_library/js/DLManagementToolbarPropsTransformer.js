@@ -201,12 +201,15 @@ export default function propsTransformer({
 			multiple: true,
 			onSelect(selectedItem) {
 				if (selectedItem) {
-					const url = addParams(
-						`${portletNamespace}fileExtension=${selectedItem.join(
-							','
-						)}`,
-						selectExtensionURL
-					);
+					let url = selectExtensionURL;
+
+					selectedItem.forEach((item) => {
+						url = addParams(
+							`${portletNamespace}extension=${item}`,
+							url
+						);
+					});
+
 					navigate(url);
 				}
 			},

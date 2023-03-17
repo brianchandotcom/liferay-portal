@@ -128,14 +128,21 @@ public class SuggestionsPortletDisplayContextBuilder {
 		List<String> suggestedKeywords =
 			keywordsSuggestionHolder.getSuggestedKeywords();
 
-		Stream<String> stream = suggestedKeywords.stream();
+		StringBundler sb = new StringBundler(suggestedKeywords.size() * 2);
 
-		return stream.map(
-			keyword -> _formatSuggestedKeyword(
-				keyword, keywordsSuggestionHolder.hasChanged(keyword))
-		).collect(
-			Collectors.joining(StringPool.SPACE)
-		);
+		for (String suggestedKeyword : suggestedKeywords) {
+			sb.append(
+				_formatSuggestedKeyword(
+					suggestedKeyword,
+					keywordsSuggestionHolder.hasChanged(suggestedKeyword)));
+			sb.append(StringPool.SPACE);
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private List<SuggestionDisplayContext> _buildRelatedQueriesSuggestions() {

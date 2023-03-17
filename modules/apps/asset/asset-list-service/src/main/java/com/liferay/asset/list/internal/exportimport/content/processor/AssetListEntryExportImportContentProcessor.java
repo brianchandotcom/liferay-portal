@@ -58,10 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.list.model.AssetListEntry",
-	service = {
-		AssetListEntryExportImportContentProcessor.class,
-		ExportImportContentProcessor.class
-	}
+	service = ExportImportContentProcessor.class
 )
 public class AssetListEntryExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {

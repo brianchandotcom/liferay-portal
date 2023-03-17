@@ -1450,7 +1450,6 @@ definition {
 				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
-				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Billing");
 
 			PortletEntry.save();

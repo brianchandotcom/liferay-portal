@@ -107,8 +107,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(service = ContentUtil.class)
-public class ContentUtil {
+@Component(service = ContentManager.class)
+public class ContentManager {
 
 	public Set<LayoutDisplayPageObjectProvider<?>>
 		getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
@@ -943,7 +943,7 @@ public class ContentUtil {
 			_getLayoutClassedModelPageContentsJSONArray(
 				httpServletRequest, layoutStructure, plid, hiddenItemIds,
 				segmentsExperienceId),
-			_assetListEntryUsagesUtil.getPageContentsJSONArray(
+			_assetListEntryUsagesManager.getPageContentsJSONArray(
 				hiddenItemIds, httpServletRequest, httpServletResponse,
 				layoutStructure, plid, restrictedItemIds));
 	}
@@ -1106,10 +1106,10 @@ public class ContentUtil {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ContentManager.class);
 
 	@Reference
-	private AssetListEntryUsagesUtil _assetListEntryUsagesUtil;
+	private AssetListEntryUsagesManager _assetListEntryUsagesManager;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

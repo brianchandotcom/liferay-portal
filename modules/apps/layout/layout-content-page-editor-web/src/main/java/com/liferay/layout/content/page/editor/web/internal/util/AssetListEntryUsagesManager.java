@@ -81,8 +81,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(service = AssetListEntryUsagesUtil.class)
-public class AssetListEntryUsagesUtil {
+@Component(service = AssetListEntryUsagesManager.class)
+public class AssetListEntryUsagesManager {
 
 	public JSONArray getPageContentsJSONArray(
 			List<String> hiddenItemIds, HttpServletRequest httpServletRequest,
@@ -675,7 +675,7 @@ public class AssetListEntryUsagesUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListEntryUsagesUtil.class);
+		AssetListEntryUsagesManager.class);
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;

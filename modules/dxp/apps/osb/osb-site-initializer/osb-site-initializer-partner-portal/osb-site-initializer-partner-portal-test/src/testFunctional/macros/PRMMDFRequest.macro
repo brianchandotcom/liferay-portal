@@ -392,11 +392,9 @@ definition {
 			else {
 				echo("The string '${fileContentItem}' exists on this file");
 			}
-
 		}
-	
-				FileUtil.delete("${directoryPath}/${fileName}");
-	
+
+		FileUtil.delete("${directoryPath}/${fileName}");
 	}
 
 	@summary = "Verify the fills done by the user on the Campaign Information"

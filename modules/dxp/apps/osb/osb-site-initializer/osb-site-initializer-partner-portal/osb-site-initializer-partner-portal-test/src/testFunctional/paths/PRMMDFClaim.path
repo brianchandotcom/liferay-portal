@@ -20,6 +20,11 @@
 	<td>xpath=(//tbody//th//*[contains(.,'Request-')])[${key_index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CLAIM_TYPE</td>
+	<td>//div[contains(@class,'claims-list')]//div[contains(text(),'Type: ')][contains(.,'${key_claimType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

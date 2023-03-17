@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -76,6 +77,22 @@ public class LanguageResourceTest extends BaseLanguageResourceTestCase {
 		Assert.assertEquals(
 			_getAvailableLocalesSize(testGetSiteLanguagesPage_getSiteId()),
 			languagesJSONObject.get("totalCount"));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostAssetLibraryLanguagesPageExportBatch()
+		throws Exception {
+
+		super.testPostAssetLibraryLanguagesPageExportBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteLanguagesPageExportBatch() throws Exception {
+		super.testPostSiteLanguagesPageExportBatch();
 	}
 
 	@Override

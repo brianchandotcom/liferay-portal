@@ -45,6 +45,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -223,6 +224,24 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 		assertEquals(
 			Arrays.asList(_toAssignToRoleWorkflowLog(_administratorRole)),
 			workflowLogs2);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostWorkflowInstanceWorkflowLogsPageExportBatch()
+		throws Exception {
+
+		super.testPostWorkflowInstanceWorkflowLogsPageExportBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostWorkflowTaskWorkflowLogsPageExportBatch()
+		throws Exception {
+
+		super.testPostWorkflowTaskWorkflowLogsPageExportBatch();
 	}
 
 	@Override

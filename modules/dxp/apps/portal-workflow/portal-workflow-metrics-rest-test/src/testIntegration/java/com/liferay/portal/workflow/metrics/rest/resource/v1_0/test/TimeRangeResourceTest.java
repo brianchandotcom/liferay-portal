@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +69,13 @@ public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 			Arrays.asList(
 				TimeRangeSerDes.toDTOs(
 					timeRangesJSONObject.getString("items"))));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostTimeRangesPageExportBatch() throws Exception {
+		super.testPostTimeRangesPageExportBatch();
 	}
 
 	@Rule

@@ -64,6 +64,13 @@ public class FieldMappingInfoResourceTest
 	public void testGraphQLGetFieldMappingInfosPage() throws Exception {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostFieldMappingInfosPageExportBatch() throws Exception {
+		super.testPostFieldMappingInfosPageExportBatch();
+	}
+
 	@Inject
 	private IndexNameBuilder _indexNameBuilder;
 

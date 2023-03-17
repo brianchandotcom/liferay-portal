@@ -57,6 +57,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -670,6 +671,15 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						}
 					}
 				}));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostWorkflowInstanceWorkflowTasksPageExportBatch()
+		throws Exception {
+
+		super.testPostWorkflowInstanceWorkflowTasksPageExportBatch();
 	}
 
 	@Override

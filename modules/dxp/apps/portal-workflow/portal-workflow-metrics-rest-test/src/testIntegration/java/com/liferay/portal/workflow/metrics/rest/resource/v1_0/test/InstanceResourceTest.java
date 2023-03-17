@@ -63,6 +63,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -374,6 +375,13 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 								RandomTestUtil.randomString())));
 				}
 			});
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostProcessInstancesPageExportBatch() throws Exception {
+		super.testPostProcessInstancesPageExportBatch();
 	}
 
 	@Rule

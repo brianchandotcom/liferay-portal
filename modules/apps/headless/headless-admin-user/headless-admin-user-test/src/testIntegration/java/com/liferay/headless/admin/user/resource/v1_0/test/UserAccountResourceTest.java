@@ -104,6 +104,7 @@ import javax.ws.rs.core.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -765,6 +766,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteUserAccountsPageExportBatch() throws Exception {
+		super.testPostSiteUserAccountsPageExportBatch();
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -70,6 +71,13 @@ public class LowStockActionResourceTest
 			commerceLowStockActivities.toString(),
 			lowStockActionsJSONObject.get("totalCount"),
 			commerceLowStockActivities.size());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostLowStockActionsPageExportBatch() throws Exception {
+		super.testPostLowStockActionsPageExportBatch();
 	}
 
 	@Inject

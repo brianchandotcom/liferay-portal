@@ -70,7 +70,7 @@ public class ClientExtension {
 				"homePageURL",
 				typeSettings.getOrDefault(
 					"homePageURL",
-					"https://$[conf:ext.lxc.liferay.com.mainDomain]"));
+					"$[conf:.serviceScheme]://$[conf:.serviceAddress]"));
 		}
 
 		configMap.put("typeSettings", _encode(typeSettings));

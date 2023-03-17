@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
@@ -52,8 +53,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -240,51 +239,50 @@ public class DDMHelperImpl implements DDMHelper {
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
-		Stream<DDMFormField> stream = ddmFormFields.stream();
+		StringBundler sb = new StringBundler((ddmFormFields.size() * 5) + 13);
 
-		Stream<String> inputMappingStatementStream = stream.map(
-			field -> String.format(
-				"'%s=', getValue('%s')", field.getName(), field.getName()));
+		sb.append("'locale=");
+		sb.append(LocaleUtil.toLanguageId(locale));
+		sb.append("', ';','userId=");
+		sb.append(userId);
+		sb.append("', ';','commerceAccountId=");
+		sb.append(commerceAccountId);
+		sb.append("', ';','groupId=");
+		sb.append(groupId);
+		sb.append("', ';','cpDefinitionId=");
+		sb.append(cpDefinitionId);
+		sb.append("', ';','companyId=");
+		sb.append(companyId);
+		sb.append("'");
 
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(String.format("'companyId=%s'", companyId)),
-			inputMappingStatementStream);
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			sb.append(", ';','");
+			sb.append(ddmFormField.getName());
+			sb.append("=', getValue('");
+			sb.append(ddmFormField.getName());
+			sb.append("')");
+		}
 
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(String.format("'cpDefinitionId=%s'", cpDefinitionId)),
-			inputMappingStatementStream);
-
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(String.format("'groupId=%s'", groupId)),
-			inputMappingStatementStream);
-
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(
-				String.format("'commerceAccountId=%s'", commerceAccountId)),
-			inputMappingStatementStream);
-
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(String.format("'userId=%s'", userId)),
-			inputMappingStatementStream);
-
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(
-				String.format("'locale=%s'", LocaleUtil.toLanguageId(locale))),
-			inputMappingStatementStream);
-
-		return inputMappingStatementStream.collect(
-			Collectors.joining(", ';',"));
+		return sb.toString();
 	}
 
 	private String _createDDMFormRuleOutputMapping(DDMForm ddmForm) {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
-		Stream<DDMFormField> stream = ddmFormFields.stream();
+		StringBundler sb = new StringBundler(ddmFormFields.size() * 2);
 
-		Stream<String> stringStream = stream.map(
-			field -> String.format("%s=%s", field.getName(), field.getName()));
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			sb.append(
+				String.format(
+					"%s=%s", ddmFormField.getName(), ddmFormField.getName()));
+			sb.append(StringPool.SEMICOLON);
+		}
 
-		return stringStream.collect(Collectors.joining(StringPool.SEMICOLON));
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private DDMForm _getDDMForm(

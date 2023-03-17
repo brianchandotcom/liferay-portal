@@ -241,6 +241,20 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
+	@priority = 5
+	test AdminCanNotMergeOnlyOneSubtask {
+		task ("When the user trying merging a single subtask") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1");
+		}
+
+		task ("Then the alert message is displayed") {
+			AssertElementPresent(
+				key_alertMessage = "Please select at least two subtasks to merge.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = 3
 	test AdminCanCancelMergeSubtask {

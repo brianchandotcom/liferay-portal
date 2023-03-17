@@ -6,7 +6,8 @@ liferay-sample-notification-type-1:
     resourcePath: /sample/notification/type/1
     type: notificationType
 liferay-sample-oauth-application-user-agent:
-    homePageURL: http://localhost:58081
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
     name: Liferay Sample OAuth Application User Agent
     scopes:
         - Liferay.Headless.Admin.Workflow.everything

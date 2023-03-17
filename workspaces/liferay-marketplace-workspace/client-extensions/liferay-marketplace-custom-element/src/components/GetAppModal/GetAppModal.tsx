@@ -86,6 +86,8 @@ export function GetAppModal({
 		await patchOrderByERC(cartCheckoutResponse.orderUUID, newOrderStatus);
 	}
 
+	const freeApp = Number(app.price) === 0;
+
 	return (
 		<ClayModal observer={observer}>
 			<div className="get-app-modal-header-container">
@@ -156,10 +158,16 @@ export function GetAppModal({
 								</span>
 
 								<span className="get-app-modal-body-content-right-value">
-									{Number(app.price) === 0
-										? 'Free'
-										: app.price}
+									{freeApp ? 'Free' : `$ ${app.price}`}
 								</span>
+
+								{!freeApp && (
+									<div className="get-app-modal-body-content-right-subscription-container">
+										<span className="get-app-modal-body-content-right-subscription-text">
+											Annually
+										</span>
+									</div>
+								)}
 							</div>
 						</div>
 
@@ -170,8 +178,9 @@ export function GetAppModal({
 							/>
 
 							<span className="get-app-modal-body-content-alert-message">
-								A free app does not include support, maintenance
-								or updates from the publisher.
+								{freeApp
+									? ' A free app does not include support, maintenance or updates from the publisher.'
+									: 'A subscription license includes support, maintenance and updates for the app as long as the subscription is current.'}
 							</span>
 						</div>
 					</div>

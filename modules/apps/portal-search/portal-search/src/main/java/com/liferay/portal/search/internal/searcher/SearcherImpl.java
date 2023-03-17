@@ -132,18 +132,6 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
-		_indexerRegistry = indexerRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchResponseBuilderFactory(
-		SearchResponseBuilderFactory searchResponseBuilderFactory) {
-
-		_searchResponseBuilderFactory = searchResponseBuilderFactory;
-	}
-
 	@Reference
 	protected FacetedSearcherManager facetedSearcherManager;
 
@@ -330,8 +318,12 @@ public class SearcherImpl implements Searcher {
 		return new RuntimeException(searchException);
 	}
 
+	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private SearchResponseBuilderFactory _searchResponseBuilderFactory;
+
 	private ServiceTrackerMap<String, List<SearchRequestContributor>>
 		_serviceTrackerMap;
 

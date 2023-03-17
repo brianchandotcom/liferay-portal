@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -65,8 +66,10 @@ public class SearcherImplTest {
 
 		_searcherImpl = new SearcherImpl();
 
-		_searcherImpl.setIndexerRegistry(_indexerRegistry);
-		_searcherImpl.setSearchResponseBuilderFactory(
+		ReflectionTestUtil.setFieldValue(
+			_searcherImpl, "_indexerRegistry", _indexerRegistry);
+		ReflectionTestUtil.setFieldValue(
+			_searcherImpl, "_searchResponseBuilderFactory",
 			new SearchResponseBuilderFactoryImpl());
 	}
 
@@ -114,16 +117,6 @@ public class SearcherImplTest {
 			expected, searchDocuments.size());
 	}
 
-	private void _setUpHits() {
-		Document document = new DocumentImpl();
-
-		DocumentHelper documentHelper = new DocumentHelper(document);
-
-		documentHelper.setEntryKey(_MODEL_CLASS_NAME, 1);
-
-		_hits.setDocs(new Document[] {document});
-	}
-
 	private SearchRequestImpl _createSearchRequestImpl(
 		SearchContext searchContext) {
 
@@ -133,6 +126,16 @@ public class SearcherImplTest {
 		searchRequestImpl.setModelIndexerClassNames(_MODEL_CLASS_NAME);
 
 		return searchRequestImpl;
+	}
+
+	private void _setUpHits() {
+		Document document = new DocumentImpl();
+
+		DocumentHelper documentHelper = new DocumentHelper(document);
+
+		documentHelper.setEntryKey(_MODEL_CLASS_NAME, 1);
+
+		_hits.setDocs(new Document[] {document});
 	}
 
 	private static final String _MODEL_CLASS_NAME = "modelClassName";

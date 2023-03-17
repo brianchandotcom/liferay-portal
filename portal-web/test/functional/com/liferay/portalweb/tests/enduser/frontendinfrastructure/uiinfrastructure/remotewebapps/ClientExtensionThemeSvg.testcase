@@ -76,4 +76,36 @@ definition {
 			AssertNotVisible(locator1 = "//ul[@class='control-menu-nav']//span[@id='ored____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#cog')]");
 		}
 	}
+
+	@description = "LPS-177980. Verify that new SVG spritemap file from external site is applied on the page"
+	@priority = 3
+	test CanExtendSvgFileFromExternalSite {
+		property custom.properties = "feature.flag.LPS-166479=true";
+		property portal.acceptance = "true";
+
+		task ("A created Theme svg extensions using the external URL") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			ClientExtensionGeneral.addThemeSvgSpritemap(
+				entryName = "external_url_theme",
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/spritemap-svg/spritemap-pencil-swapped-with-cog.svg");
+		}
+
+		task ("And given Go to edit the 'Look and Feel' on page / When Update with registered 'Theme Spritemap Client Extension'") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			ClientExtensionGeneral.changeSiteCurrentThemeSvgSpritemap(entryName = "external_url_theme");
+		}
+
+		task ("And When: Navigate to home page") {
+			ProductMenu.gotoHomePage();
+		}
+
+		task ("Then: new SVG spritemap is applied on the page") {
+			AssertVisible(locator1 = "//span[@title='Edit']//span[@id='uvlz____']//*[contains(@class,'pencil')]");
+
+			AssertVisible(locator1 = "//a[@data-qa-id='editLayout']//span[@id='ored____']//*[contains(@class,'cog')]");
+		}
+	}
+
 }

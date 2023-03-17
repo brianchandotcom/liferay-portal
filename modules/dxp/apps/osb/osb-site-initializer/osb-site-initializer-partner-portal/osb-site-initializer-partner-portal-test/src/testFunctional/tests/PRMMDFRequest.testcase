@@ -531,9 +531,7 @@ definition {
 		}
 
 		task ("And the Manager can change the MDF Status") {
-			PRMMDFRequest.changeMDFStatus(
-				campaignName = "Campaign Name",
-				key_statusButton = "Approve");
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 
 			PRMMDFRequest.viewMDFStatus(key_status = "Approved");
 		}
@@ -779,9 +777,7 @@ definition {
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
-			PRMMDFRequest.changeMDFStatus(
-				campaignName = "Campaign Name",
-				key_statusButton = "Approve");
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 
 		task ("Then I can see the message 'You can submit up to 2 claim(s)'") {

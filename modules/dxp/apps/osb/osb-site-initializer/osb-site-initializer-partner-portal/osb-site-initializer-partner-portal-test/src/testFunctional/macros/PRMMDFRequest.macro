@@ -29,8 +29,10 @@ definition {
 
 	@summary = "Change MDF status"
 	macro changeMDFStatus {
+		var key_statusButton = "${statusButton}";
+
 		ClickNoError(
-			buttonId = ${key_statusButton},
+			buttonId = ${statusButton},
 			locator1 = "PRMMDFRequest#STATUS_BUTTON");
 
 		Confirm.acceptAlert();

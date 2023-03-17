@@ -80,7 +80,7 @@ public abstract class BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 
 		Company company = companyLocalService.fetchCompany(companyId);
 
-		User user = company.getDefaultUser();
+		User user = company.getGuestUser();
 
 		Role role = roleLocalService.addRole(
 			user.getUserId(), null, 0, roleName, null, null, roleType, null,

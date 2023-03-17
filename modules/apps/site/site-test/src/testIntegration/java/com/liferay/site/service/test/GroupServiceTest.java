@@ -575,7 +575,7 @@ public class GroupServiceTest {
 		Company company = _companyLocalService.getCompany(
 			_group.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		String languageId = defaultUser.getLanguageId();
 
@@ -707,7 +707,7 @@ public class GroupServiceTest {
 		Company company = _companyLocalService.getCompany(
 			_group.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		String languageId = defaultUser.getLanguageId();
 

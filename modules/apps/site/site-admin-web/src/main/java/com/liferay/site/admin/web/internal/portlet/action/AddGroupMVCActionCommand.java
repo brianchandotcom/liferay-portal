@@ -386,7 +386,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 				StringUtil.merge(
 					LocaleUtil.toLanguageIds(_language.getAvailableLocales())));
 
-			User user = themeDisplay.getDefaultUser();
+			User user = themeDisplay.getGuestUser();
 
 			formTypeSettingsUnicodeProperties.setProperty(
 				"languageId", user.getLanguageId());

@@ -171,7 +171,7 @@ public class ActionUtil {
 						setProductionModeWithSafeCloseable()) {
 
 				node = WikiNodeLocalServiceUtil.addDefaultNode(
-					themeDisplay.getDefaultUserId(), serviceContext);
+					themeDisplay.getGuestUserId(), serviceContext);
 			}
 		}
 		else {
@@ -222,7 +222,7 @@ public class ActionUtil {
 				WorkflowThreadLocal.setEnabled(false);
 
 				page = WikiPageLocalServiceUtil.addPage(
-					themeDisplay.getDefaultUserId(), nodeId,
+					themeDisplay.getGuestUserId(), nodeId,
 					wikiGroupServiceConfiguration.frontPageName(), null,
 					WikiPageConstants.NEW, true, serviceContext);
 			}

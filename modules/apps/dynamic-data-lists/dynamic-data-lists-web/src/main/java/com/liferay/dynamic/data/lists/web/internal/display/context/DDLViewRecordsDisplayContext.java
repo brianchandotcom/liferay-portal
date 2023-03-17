@@ -105,7 +105,7 @@ public class DDLViewRecordsDisplayContext {
 		if (user == null) {
 			ThemeDisplay themeDisplay = _ddlRequestHelper.getThemeDisplay();
 
-			user = themeDisplay.getDefaultUser();
+			user = themeDisplay.getGuestUser();
 		}
 
 		_user = user;

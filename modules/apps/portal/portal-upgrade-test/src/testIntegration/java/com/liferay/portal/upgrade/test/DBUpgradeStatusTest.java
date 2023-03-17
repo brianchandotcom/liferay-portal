@@ -62,14 +62,14 @@ public class DBUpgradeStatusTest {
 			DBUpgradeStatus.class, "_errorMessages");
 		_originalFiltered = ReflectionTestUtil.getFieldValue(
 			DBUpgradeStatus.class, "_filtered");
-		_originalModuleSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_moduleSchemaVersionsMap");
+		_originalServletSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_servletSchemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
 			DBUpgradeStatus.class, "_upgradeProcessMessages");
-		_originalUpgradeStatus = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_upgradeStatus");
-		_originalUpgradeType = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_upgradeType");
+		_originalStatus = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_status");
+		_originalType = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
 			DBUpgradeStatus.class, "_warningMessages");
 
@@ -87,10 +87,10 @@ public class DBUpgradeStatusTest {
 	public void setUp() {
 		_originalErrorMessages.clear();
 		_originalFiltered = false;
-		_originalModuleSchemaVersionsMap.clear();
+		_originalServletSchemaVersionsMap.clear();
 		_originalUpgradeProcessMessages.clear();
-		_originalUpgradeStatus = "Pending";
-		_originalUpgradeType = "Not calculated";
+		_originalStatus = "Pending";
+		_originalType = "Not calculated";
 		_originalWarningMessages.clear();
 
 		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
@@ -106,9 +106,9 @@ public class DBUpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Failure", DBUpgradeStatus.getUpgradeStatus());
+		Assert.assertEquals("Failure", DBUpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getUpgradeType());
+		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
 	}
 
 	@Test
@@ -127,9 +127,9 @@ public class DBUpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			bundleSymbolicName, currentSchemaVersion.toString());
 
-		Assert.assertEquals("Failure", DBUpgradeStatus.getUpgradeStatus());
+		Assert.assertEquals("Failure", DBUpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getUpgradeType());
+		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
 	}
 
 	@Test
@@ -153,9 +153,9 @@ public class DBUpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Success", DBUpgradeStatus.getUpgradeStatus());
+		Assert.assertEquals("Success", DBUpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getUpgradeType());
+		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
 	}
 
 	@Test
@@ -173,9 +173,9 @@ public class DBUpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Warning", DBUpgradeStatus.getUpgradeStatus());
+		Assert.assertEquals("Warning", DBUpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getUpgradeType());
+		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
 	}
 
 	private Version _getReleaseSchemaVersion(String bundleSymbolicName) {
@@ -262,24 +262,24 @@ public class DBUpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			microBundleSymbolicName, currentMicroSchemaVersion.toString());
 
-		Assert.assertEquals("Success", DBUpgradeStatus.getUpgradeStatus());
+		Assert.assertEquals("Success", DBUpgradeStatus.getStatus());
 
 		if (!type.equals("Qualifier")) {
-			Assert.assertEquals(type, DBUpgradeStatus.getUpgradeType());
+			Assert.assertEquals(type, DBUpgradeStatus.getType());
 		}
 		else {
-			Assert.assertEquals("Micro", DBUpgradeStatus.getUpgradeType());
+			Assert.assertEquals("Micro", DBUpgradeStatus.getType());
 		}
 	}
 
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;
 	private static boolean _originalFiltered;
-	private static Map<String, Object> _originalModuleSchemaVersionsMap;
+	private static Map<String, Object> _originalServletSchemaVersionsMap;
+	private static String _originalStatus;
 	private static StopWatch _originalStopWatch;
+	private static String _originalType;
 	private static Map<String, ArrayList<String>>
 		_originalUpgradeProcessMessages;
-	private static String _originalUpgradeStatus;
-	private static String _originalUpgradeType;
 	private static Map<String, Map<String, Integer>> _originalWarningMessages;
 
 	@Inject

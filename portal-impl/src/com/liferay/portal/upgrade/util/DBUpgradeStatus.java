@@ -74,6 +74,28 @@ public class DBUpgradeStatus {
 		warningMessages.put(message, count);
 	}
 
+	public static void finish(DBUpgradeChecker dbUpgradeChecker) {
+		_setFinalSchemaVersion();
+		_setFinalStatus(dbUpgradeChecker);
+		_setType();
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.put("upgrade.type", _type);
+			ThreadContext.put("upgrade.result", _status);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Upgrade of type ", _type, " finished with ", _status,
+					" result."));
+		}
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.clearMap();
+		}
+	}
+
 	public static Map<String, Map<String, Integer>> getErrorMessages() {
 		_filterMessages();
 
@@ -81,29 +103,29 @@ public class DBUpgradeStatus {
 	}
 
 	public static String getFinalSchemaVersion(String servletContextName) {
-		ModuleSchemaVersions moduleSchemaVersions =
-			_moduleSchemaVersionsMap.get(servletContextName);
+		ServletSchemaVersions servletSchemaVersions =
+			_servletSchemaVersionsMap.get(servletContextName);
 
-		return moduleSchemaVersions.getFinalSchemaVersion();
+		return servletSchemaVersions.getFinalSchemaVersion();
 	}
 
 	public static String getInitialSchemaVersion(String servletContextName) {
-		ModuleSchemaVersions moduleSchemaVersions =
-			_moduleSchemaVersionsMap.get(servletContextName);
+		ServletSchemaVersions servletSchemaVersions =
+			_servletSchemaVersionsMap.get(servletContextName);
 
-		return moduleSchemaVersions.getInitialSchemaVersion();
+		return servletSchemaVersions.getInitialSchemaVersion();
+	}
+
+	public static String getStatus() {
+		return _status;
+	}
+
+	public static String getType() {
+		return _type;
 	}
 
 	public static Map<String, ArrayList<String>> getUpgradeProcessMessages() {
 		return _upgradeProcessMessages;
-	}
-
-	public static String getUpgradeStatus() {
-		return _upgradeStatus;
-	}
-
-	public static String getUpgradeType() {
-		return _upgradeType;
 	}
 
 	public static Map<String, Map<String, Integer>> getWarningMessages() {
@@ -113,34 +135,12 @@ public class DBUpgradeStatus {
 	}
 
 	public static void setNoUpgradesEnabled() {
-		_upgradeStatus = "Not enabled";
-		_upgradeType = "Not enabled";
+		_status = "Not enabled";
+		_type = "Not enabled";
 	}
 
-	public static void upgradeFinished(DBUpgradeChecker dbUpgradeChecker) {
-		_setFinalSchemaVersion();
-		_setFinalUpgradeStatus(dbUpgradeChecker);
-		_setTypeOfUpgrade();
-
-		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			ThreadContext.put("upgrade.type", _upgradeType);
-			ThreadContext.put("upgrade.result", _upgradeStatus);
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Upgrade of type ", _upgradeType, " finished with ",
-					_upgradeStatus, " result."));
-		}
-
-		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			ThreadContext.clearMap();
-		}
-	}
-
-	public static void upgradeStarted() {
-		_upgradeStatus = "Running";
+	public static void start() {
+		_status = "Running";
 
 		_browseReleaseTable(
 			(moduleSchemaVersions, schemaVersion) ->
@@ -148,7 +148,7 @@ public class DBUpgradeStatus {
 	}
 
 	private static void _browseReleaseTable(
-		UnsafeBiConsumer<ModuleSchemaVersions, String, Exception>
+		UnsafeBiConsumer<ServletSchemaVersions, String, Exception>
 			unsafeBiConsumer) {
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
@@ -168,13 +168,13 @@ public class DBUpgradeStatus {
 					"servletContextName");
 				String schemaVersion = resultSet.getString("schemaVersion");
 
-				ModuleSchemaVersions moduleSchemaVersions =
-					_moduleSchemaVersionsMap.get(servletContextName);
+				ServletSchemaVersions moduleSchemaVersions =
+					_servletSchemaVersionsMap.get(servletContextName);
 
 				if (moduleSchemaVersions == null) {
-					moduleSchemaVersions = new ModuleSchemaVersions(null);
+					moduleSchemaVersions = new ServletSchemaVersions(null);
 
-					_moduleSchemaVersionsMap.put(
+					_servletSchemaVersionsMap.put(
 						servletContextName, moduleSchemaVersions);
 				}
 
@@ -206,41 +206,39 @@ public class DBUpgradeStatus {
 				moduleSchemaVersions.setFinalSchemaVersion(schemaVersion));
 	}
 
-	private static void _setFinalUpgradeStatus(
-		DBUpgradeChecker dbUpgradeChecker) {
-
+	private static void _setFinalStatus(DBUpgradeChecker dbUpgradeChecker) {
 		if (dbUpgradeChecker == null) {
 			_log.error(
 				"Not possible to check upgrade successful completion. Please " +
 					"check manually.");
 
-			_upgradeStatus = "Failure";
+			_status = "Failure";
 
 			return;
 		}
 
 		if (!_errorMessages.isEmpty() || !dbUpgradeChecker.check()) {
-			_upgradeStatus = "Failure";
+			_status = "Failure";
 
 			return;
 		}
 
 		if (!_warningMessages.isEmpty()) {
-			_upgradeStatus = "Warning";
+			_status = "Warning";
 
 			return;
 		}
 
-		_upgradeStatus = "Success";
+		_status = "Success";
 	}
 
-	private static void _setTypeOfUpgrade() {
+	private static void _setType() {
 		String upgradeType = "No upgrade";
 
-		for (Map.Entry<String, ModuleSchemaVersions> servlet :
-				_moduleSchemaVersionsMap.entrySet()) {
+		for (Map.Entry<String, ServletSchemaVersions> servlet :
+				_servletSchemaVersionsMap.entrySet()) {
 
-			ModuleSchemaVersions schemaVersions = servlet.getValue();
+			ServletSchemaVersions schemaVersions = servlet.getValue();
 
 			if (schemaVersions.getInitialSchemaVersion() == null) {
 				continue;
@@ -281,7 +279,7 @@ public class DBUpgradeStatus {
 			}
 		}
 
-		_upgradeType = upgradeType;
+		_type = upgradeType;
 	}
 
 	private static final String[] _FILTERED_CLASS_NAMES = {
@@ -295,18 +293,18 @@ public class DBUpgradeStatus {
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private static boolean _filtered;
-	private static final Map<String, ModuleSchemaVersions>
-		_moduleSchemaVersionsMap = new ConcurrentHashMap<>();
+	private static final Map<String, ServletSchemaVersions>
+		_servletSchemaVersionsMap = new ConcurrentHashMap<>();
+	private static String _status = "Pending";
+	private static String _type = "Not calculated";
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
-	private static String _upgradeStatus = "Pending";
-	private static String _upgradeType = "Not calculated";
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
-	private static class ModuleSchemaVersions {
+	private static class ServletSchemaVersions {
 
-		public ModuleSchemaVersions(String initialSchemaVersion) {
+		public ServletSchemaVersions(String initialSchemaVersion) {
 			_initialSchemaVersion = initialSchemaVersion;
 		}
 

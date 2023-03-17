@@ -127,7 +127,7 @@ public class UpgradeLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		DBUpgradeStatus.upgradeStarted();
+		DBUpgradeStatus.start();
 
 		if (PropsValues.UPGRADE_REPORT_ENABLED) {
 			_upgradeReport = new UpgradeReport();
@@ -139,7 +139,7 @@ public class UpgradeLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			DBUpgradeStatus.upgradeFinished(_dbUpgradeChecker);
+			DBUpgradeStatus.finish(_dbUpgradeChecker);
 
 			if (_upgradeReport != null) {
 				_upgradeReport.generateReport(

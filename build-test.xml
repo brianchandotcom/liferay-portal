@@ -7122,7 +7122,7 @@ ${docker.start.error}</fail>
 					<equals arg1="${database.type}" arg2="db2" />
 				</and>
 				<then>
-				<sequential>
+					<sequential>
 						<property name="db2.wait.script" location="db2_wait.sh" />
 
 						<echo file="${db2.wait.script}">

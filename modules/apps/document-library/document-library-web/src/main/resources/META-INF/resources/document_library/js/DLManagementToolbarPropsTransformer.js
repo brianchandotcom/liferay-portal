@@ -32,11 +32,11 @@ export default function propsTransformer({
 		editEntryURL,
 		folderConfiguration,
 		openViewMoreFileEntryTypesURL,
+		selectExtensionURL,
 		selectFileEntryTypeURL,
 		selectFolderURL,
 		trashEnabled,
 		viewFileEntryTypeURL,
-		selectExtensionURL,
 	},
 	portletNamespace,
 	...otherProps

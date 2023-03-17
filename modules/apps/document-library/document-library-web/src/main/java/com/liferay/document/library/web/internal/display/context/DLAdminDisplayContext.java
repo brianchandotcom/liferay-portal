@@ -528,7 +528,8 @@ public class DLAdminDisplayContext {
 		long fileEntryTypeId = ParamUtil.getLong(
 			_httpServletRequest, "fileEntryTypeId", -1);
 
-		String[] fileExtensions = ParamUtil.getStringValues(_httpServletRequest, "extension");
+		String[] fileExtensions = ParamUtil.getStringValues(
+			_httpServletRequest, "extension");
 
 		String dlFileEntryTypeName = LanguageUtil.get(
 			_httpServletRequest, "basic-document");
@@ -628,7 +629,7 @@ public class DLAdminDisplayContext {
 
 		List<RepositoryEntry> results = new ArrayList<>();
 
-		if (fileEntryTypeId >= 0 || ArrayUtil.isNotEmpty(fileExtensions)) {
+		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(fileExtensions)) {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				DLFileEntryConstants.getClassName());
 

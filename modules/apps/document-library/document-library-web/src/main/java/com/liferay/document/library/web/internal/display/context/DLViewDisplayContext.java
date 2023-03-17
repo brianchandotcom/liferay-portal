@@ -200,6 +200,14 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
+	public String getSelectExtensionURL() throws PortletException {
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)
+		).setParameter(
+			"extension", (String)null
+		).buildString();
+	}
+
 	public String getSelectFileEntryTypeURL() throws WindowStateException {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
@@ -274,14 +282,6 @@ public class DLViewDisplayContext {
 			"browseBy", "file-entry-type"
 		).setParameter(
 			"fileEntryTypeId", (String)null
-		).buildString();
-	}
-
-	public String getSelectExtensionURL() throws PortletException {
-		return PortletURLBuilder.create(
-			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)
-		).setParameter(
-			"extension", (String)null
 		).buildString();
 	}
 

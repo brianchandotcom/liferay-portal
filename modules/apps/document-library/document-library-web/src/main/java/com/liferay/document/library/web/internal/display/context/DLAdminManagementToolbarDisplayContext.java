@@ -393,39 +393,6 @@ public class DLAdminManagementToolbarDisplayContext
 		return labelItemListWrapper.build();
 	}
 
-	private void _addFileExtensionFilterLabelItems(LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
-		String[] fileExtensions = _getFileExtensions(_httpServletRequest);
-
-		if (ArrayUtil.isEmpty(fileExtensions)) {
-			return;
-		}
-
-		for (String fileExtension : fileExtensions) {
-			labelItemListWrapper.add(
-				labelItem -> {
-					labelItem.putData(
-						"removeLabelURL",
-						PortletURLBuilder.create(
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse)
-						).setParameter(
-							"extension",
-							ArrayUtil.remove(fileExtensions, fileExtension)
-						).buildString());
-
-					labelItem.setCloseable(true);
-
-					labelItem.setLabel(
-						String.format(
-							"%s: %s",
-							LanguageUtil.get(
-								_httpServletRequest, "extension"),
-							HtmlUtil.escape(fileExtension)));
-				}
-			);
-		}
-	}
-
 	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
@@ -631,6 +598,39 @@ public class DLAdminManagementToolbarDisplayContext
 		return false;
 	}
 
+	private void _addFileExtensionFilterLabelItems(
+		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
+
+		String[] fileExtensions = _getFileExtensions(_httpServletRequest);
+
+		if (ArrayUtil.isEmpty(fileExtensions)) {
+			return;
+		}
+
+		for (String fileExtension : fileExtensions) {
+			labelItemListWrapper.add(
+				labelItem -> {
+					labelItem.putData(
+						"removeLabelURL",
+						PortletURLBuilder.create(
+							PortletURLUtil.clone(
+								_currentURLObj, _liferayPortletResponse)
+						).setParameter(
+							"extension",
+							ArrayUtil.remove(fileExtensions, fileExtension)
+						).buildString());
+
+					labelItem.setCloseable(true);
+
+					labelItem.setLabel(
+						String.format(
+							"%s: %s",
+							LanguageUtil.get(_httpServletRequest, "extension"),
+							HtmlUtil.escape(fileExtension)));
+				});
+		}
+	}
+
 	private PortletURL _getCurrentSortingURL() {
 		int deltaEntry = ParamUtil.getInteger(
 			_httpServletRequest, "deltaEntry");
@@ -676,9 +676,7 @@ public class DLAdminManagementToolbarDisplayContext
 		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
 	}
 
-	private String[] _getFileExtensions(
-		HttpServletRequest httpServletRequest) {
-
+	private String[] _getFileExtensions(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getStringValues(httpServletRequest, "extension");
 	}
 
@@ -713,14 +711,16 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		long fileEntryTypeId = _getFileEntryTypeId();
-		boolean fileExtensionsIsEmpty = ArrayUtil.isEmpty(_getFileExtensions(_httpServletRequest));
+		boolean fileExtensionsIsEmpty = ArrayUtil.isEmpty(
+			_getFileExtensions(_httpServletRequest));
 		String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation", "home");
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					navigation.equals("home") && (fileEntryTypeId == -1) && fileExtensionsIsEmpty);
+					navigation.equals("home") && (fileEntryTypeId == -1) &&
+					fileExtensionsIsEmpty);
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -732,9 +732,9 @@ public class DLAdminManagementToolbarDisplayContext
 					).setParameter(
 						"browseBy", (String)null
 					).setParameter(
-						"fileEntryTypeId", (String)null
-					).setParameter(
 						"extension", (String)null
+					).setParameter(
+						"fileEntryTypeId", (String)null
 					).buildPortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "all"));
@@ -803,10 +803,10 @@ public class DLAdminManagementToolbarDisplayContext
 		).add(
 			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
-				dropdownItem.setActive(!fileExtensionsIsEmpty);
 				dropdownItem.putData("action", "openExtensionSelector");
 				dropdownItem.putData(
 					"extensionsFilterURL", _getFileExtensionsItemSelectorURL());
+				dropdownItem.setActive(!fileExtensionsIsEmpty);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "extension") +
 						StringPool.TRIPLE_PERIOD);

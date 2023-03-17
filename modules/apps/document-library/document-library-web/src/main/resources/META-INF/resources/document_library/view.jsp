@@ -84,6 +84,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				).put(
 					"openViewMoreFileEntryTypesURL", dlViewDisplayContext.getViewMoreFileEntryTypesURL()
 				).put(
+					"selectExtensionURL", dlViewDisplayContext.getSelectExtensionURL()
+				).put(
 					"selectFileEntryTypeURL", dlViewDisplayContext.getSelectFileEntryTypeURL()
 				).put(
 					"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
@@ -91,8 +93,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					"trashEnabled", dlTrashHelper.isTrashEnabled(scopeGroupId, dlViewDisplayContext.getRepositoryId())
 				).put(
 					"viewFileEntryTypeURL", dlViewDisplayContext.getViewFileEntryTypeURL()
-				).put(
-					"selectExtensionURL", dlViewDisplayContext.getSelectExtensionURL()
 				).put(
 					"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
 				).build()

@@ -213,6 +213,34 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as the Administrator, should be able to assign me a subtask that has been assigned to an offline user from the context menu"
+	@priority = 5
+	test AdminCanAssignToMeSubtaskAssignedToTheOfflineUser {
+		task ("Given that the user different assign a subtask") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+
+			TestrayTestflow.userAvatarPresent(
+				label = "Subtask Details",
+				status = "userfn userln");
+		}
+
+		task ("When the user logged in assign the subtask") {
+			Button.click(button = "Assign");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("Then the user logged in should appear on the list") {
+			TestrayTestflow.userAvatarPresent(
+				label = "Subtask Details",
+				status = "Test Test");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = 3
 	test AdminCanCancelMergeSubtask {

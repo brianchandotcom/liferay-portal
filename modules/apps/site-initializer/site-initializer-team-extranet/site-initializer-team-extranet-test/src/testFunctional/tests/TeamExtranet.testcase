@@ -18,14 +18,10 @@ definition {
 		}
 
 		task ("Create a new Team Extranet Site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			TeamExtranet.addSiteTemplateCP(
+			HeadlessSite.addSite(
 				siteName = ${testSiteName},
-				siteTemplateName = "Team Extranet");
+				templateName = "Team Extranet",
+				templateType = "Site Initializer");
 		}
 	}
 

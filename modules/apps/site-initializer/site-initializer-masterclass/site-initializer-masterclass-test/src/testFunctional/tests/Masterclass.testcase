@@ -16,7 +16,10 @@ definition {
 		}
 
 		task ("Create a new Masterclass Site") {
-			Masterclass.addMasterclassSite(siteName = ${testSiteName});
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Masterclass",
+				templateType = "Site Initializer");
 		}
 	}
 

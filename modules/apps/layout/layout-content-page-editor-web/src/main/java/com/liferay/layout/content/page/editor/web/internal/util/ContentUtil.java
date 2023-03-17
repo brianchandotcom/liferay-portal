@@ -107,10 +107,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(service = {})
+@Component(service = ContentUtil.class)
 public class ContentUtil {
 
-	public static Set<LayoutDisplayPageObjectProvider<?>>
+	public Set<LayoutDisplayPageObjectProvider<?>>
 		getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink) {
 
@@ -118,14 +118,14 @@ public class ContentUtil {
 			fragmentEntryLink, new HashSet<>());
 	}
 
-	public static Set<LayoutDisplayPageObjectProvider<?>>
+	public Set<LayoutDisplayPageObjectProvider<?>>
 		getLayoutMappedLayoutDisplayPageObjectProviders(String layoutData) {
 
 		return _getLayoutMappedLayoutDisplayPageObjectProviders(
 			LayoutStructure.of(layoutData), new HashSet<>());
 	}
 
-	public static Set<LayoutDisplayPageObjectProvider<?>>
+	public Set<LayoutDisplayPageObjectProvider<?>>
 			getMappedLayoutDisplayPageObjectProviders(long groupId, long plid)
 		throws PortalException {
 
@@ -143,7 +143,7 @@ public class ContentUtil {
 		return layoutDisplayPageObjectProviders;
 	}
 
-	public static JSONArray getPageContentsJSONArray(
+	public JSONArray getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long plid,
 			List<String> restrictedItemIds, long segmentsExperienceId)
@@ -162,7 +162,7 @@ public class ContentUtil {
 			layoutStructure, restrictedItemIds);
 	}
 
-	public static JSONArray getPageContentsJSONArray(
+	public JSONArray getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long plid,
 			long segmentsExperienceId)
@@ -184,7 +184,7 @@ public class ContentUtil {
 			layoutStructure, restrictedItemIds);
 	}
 
-	public static List<String> getRestrictedItemIds(
+	public List<String> getRestrictedItemIds(
 		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
 
 		List<String> restrictedItemIds = new ArrayList<>();
@@ -278,121 +278,14 @@ public class ContentUtil {
 		return restrictedItemIds;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLURLHelper(DLURLHelper dlURLHelper) {
-		_dlURLHelper = dlURLHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentEntryLinkLocalService(
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
-
-		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfoEditURLProviderRegistry(
-		InfoEditURLProviderRegistry infoEditURLProviderRegistry) {
-
-		_infoEditURLProviderRegistry = infoEditURLProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfoItemServiceRegistry(
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		_infoItemServiceRegistry = infoItemServiceRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfoSearchClassMapperRegistry(
-		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry) {
-
-		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLanguage(Language language) {
-		_language = language;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutClassedModelUsageLocalService(
-		LayoutClassedModelUsageLocalService
-			layoutClassedModelUsageLocalService) {
-
-		_layoutClassedModelUsageLocalService =
-			layoutClassedModelUsageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutContentModelResourcePermission(
-		LayoutContentModelResourcePermission
-			layoutContentModelResourcePermission) {
-
-		_layoutContentModelResourcePermission =
-			layoutContentModelResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutDisplayPageProviderRegistry(
-		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
-
-		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutListPermissionProviderRegistry(
-		LayoutListPermissionProviderRegistry
-			layoutListPermissionProviderRegistry) {
-
-		_layoutListPermissionProviderRegistry =
-			layoutListPermissionProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutListRetrieverRegistry(
-		LayoutListRetrieverRegistry layoutListRetrieverRegistry) {
-
-		_layoutListRetrieverRegistry = layoutListRetrieverRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setListObjectReferenceFactoryRegistry(
-		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry) {
-
-		_listObjectReferenceFactoryRegistry =
-			listObjectReferenceFactoryRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletRegistry(PortletRegistry portletRegistry) {
-		_portletRegistry = portletRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceActions(ResourceActions resourceActions) {
-		_resourceActions = resourceActions;
-	}
-
-	private static String _generateUniqueLayoutClassedModelUsageKey(
+	private String _generateUniqueLayoutClassedModelUsageKey(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		return layoutClassedModelUsage.getClassNameId() + StringPool.DASH +
 			layoutClassedModelUsage.getClassPK();
 	}
 
-	private static JSONObject _getActionsJSONObject(
+	private JSONObject _getActionsJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
 			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -521,15 +414,13 @@ public class ContentUtil {
 		);
 	}
 
-	private static AssetRendererFactory<?> _getAssetRendererFactory(
-		String className) {
-
+	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(
 				_infoSearchClassMapperRegistry.getSearchClassName(className));
 	}
 
-	private static List<String> _getChildrenItemIds(
+	private List<String> _getChildrenItemIds(
 		String itemId, LayoutStructure layoutStructure) {
 
 		List<String> childrenItemIds = new ArrayList<>();
@@ -555,7 +446,7 @@ public class ContentUtil {
 		return childrenItemIds;
 	}
 
-	private static long _getFragmentEntryLinkClassNameId() {
+	private long _getFragmentEntryLinkClassNameId() {
 		if (_fragmentEntryLinkClassNameId != null) {
 			return _fragmentEntryLinkClassNameId;
 		}
@@ -566,7 +457,7 @@ public class ContentUtil {
 		return _fragmentEntryLinkClassNameId;
 	}
 
-	private static Set<LayoutDisplayPageObjectProvider<?>>
+	private Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
 
@@ -674,7 +565,7 @@ public class ContentUtil {
 		return layoutDisplayPageObjectProviders;
 	}
 
-	private static Set<LayoutDisplayPageObjectProvider<?>>
+	private Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinksMappedLayoutDisplayPageObjectProviders(
 			long groupId, long plid, Set<Long> mappedClassPKs) {
 
@@ -694,7 +585,7 @@ public class ContentUtil {
 		return layoutDisplayPageObjectProviders;
 	}
 
-	private static List<String> _getHiddenItemIds(
+	private List<String> _getHiddenItemIds(
 		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
 
 		List<String> hiddenItemIds = new ArrayList<>();
@@ -707,9 +598,7 @@ public class ContentUtil {
 		return hiddenItemIds;
 	}
 
-	private static String _getIcon(String className, long classPK)
-		throws Exception {
-
+	private String _getIcon(String className, long classPK) throws Exception {
 		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
 			className);
 
@@ -727,7 +616,7 @@ public class ContentUtil {
 		return assetRenderer.getIconCssClass();
 	}
 
-	private static JSONArray _getLayoutClassedModelPageContentsJSONArray(
+	private JSONArray _getLayoutClassedModelPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			LayoutStructure layoutStructure, long plid,
 			List<String> hiddenItemIds, long segmentsExperienceId)
@@ -845,7 +734,7 @@ public class ContentUtil {
 		return mappedContentsJSONArray;
 	}
 
-	private static LayoutDisplayPageObjectProvider<?>
+	private LayoutDisplayPageObjectProvider<?>
 		_getLayoutDisplayPageObjectProvider(
 			JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
@@ -881,7 +770,7 @@ public class ContentUtil {
 			new InfoItemReference(className, classPK));
 	}
 
-	private static Set<LayoutDisplayPageObjectProvider<?>>
+	private Set<LayoutDisplayPageObjectProvider<?>>
 		_getLayoutMappedLayoutDisplayPageObjectProviders(
 			LayoutStructure layoutStructure, Set<Long> mappedClassPKs) {
 
@@ -942,7 +831,7 @@ public class ContentUtil {
 		return layoutDisplayPageObjectProviders;
 	}
 
-	private static Set<LayoutDisplayPageObjectProvider<?>>
+	private Set<LayoutDisplayPageObjectProvider<?>>
 			_getLayoutMappedLayoutDisplayPageObjectProviders(
 				long groupId, long plid, Set<Long> mappedClassPKs)
 		throws PortalException {
@@ -953,7 +842,7 @@ public class ContentUtil {
 			mappedClassPKs);
 	}
 
-	private static Set<LayoutDisplayPageObjectProvider<?>>
+	private Set<LayoutDisplayPageObjectProvider<?>>
 		_getLocalizedLayoutDisplayPageObjectProviders(
 			JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
@@ -986,7 +875,7 @@ public class ContentUtil {
 		return layoutDisplayPageObjectProviders;
 	}
 
-	private static JSONObject _getPageContentJSONObject(
+	private JSONObject _getPageContentJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 			HttpServletRequest httpServletRequest)
@@ -1040,7 +929,7 @@ public class ContentUtil {
 		);
 	}
 
-	private static JSONArray _getPageContentsJSONArray(
+	private JSONArray _getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long plid,
 			long segmentsExperienceId, LayoutStructure layoutStructure,
@@ -1054,12 +943,12 @@ public class ContentUtil {
 			_getLayoutClassedModelPageContentsJSONArray(
 				httpServletRequest, layoutStructure, plid, hiddenItemIds,
 				segmentsExperienceId),
-			AssetListEntryUsagesUtil.getPageContentsJSONArray(
+			_assetListEntryUsagesUtil.getPageContentsJSONArray(
 				hiddenItemIds, httpServletRequest, httpServletResponse,
 				layoutStructure, plid, restrictedItemIds));
 	}
 
-	private static long _getPortletClassNameId() {
+	private long _getPortletClassNameId() {
 		if (_portletClassNameId != null) {
 			return _portletClassNameId;
 		}
@@ -1069,7 +958,7 @@ public class ContentUtil {
 		return _portletClassNameId;
 	}
 
-	private static List<String> _getRestrictedPortletIds(
+	private List<String> _getRestrictedPortletIds(
 		LayoutStructure layoutStructure, List<String> hiddenItemIds) {
 
 		if (hiddenItemIds.isEmpty()) {
@@ -1134,7 +1023,7 @@ public class ContentUtil {
 		return restrictedPortletIds;
 	}
 
-	private static JSONObject _getStatusJSONObject(
+	private JSONObject _getStatusJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage)
 		throws Exception {
 
@@ -1189,7 +1078,7 @@ public class ContentUtil {
 		);
 	}
 
-	private static String _getSubtype(
+	private String _getSubtype(
 		String className, long classTypeId, Locale locale) {
 
 		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
@@ -1219,28 +1108,64 @@ public class ContentUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
-	private static DLURLHelper _dlURLHelper;
-	private static Long _fragmentEntryLinkClassNameId;
-	private static FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private static InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
-	private static InfoItemServiceRegistry _infoItemServiceRegistry;
-	private static InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-	private static JSONFactory _jsonFactory;
-	private static Language _language;
-	private static LayoutClassedModelUsageLocalService
+	@Reference
+	private AssetListEntryUsagesUtil _assetListEntryUsagesUtil;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	private Long _fragmentEntryLinkClassNameId;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
-	private static LayoutContentModelResourcePermission
+
+	@Reference
+	private LayoutContentModelResourcePermission
 		_layoutContentModelResourcePermission;
-	private static LayoutDisplayPageProviderRegistry
+
+	@Reference
+	private LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
-	private static LayoutListPermissionProviderRegistry
+
+	@Reference
+	private LayoutListPermissionProviderRegistry
 		_layoutListPermissionProviderRegistry;
-	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
-	private static ListObjectReferenceFactoryRegistry
+
+	@Reference
+	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
+
+	@Reference
+	private ListObjectReferenceFactoryRegistry
 		_listObjectReferenceFactoryRegistry;
-	private static Portal _portal;
-	private static Long _portletClassNameId;
-	private static PortletRegistry _portletRegistry;
-	private static ResourceActions _resourceActions;
+
+	@Reference
+	private Portal _portal;
+
+	private Long _portletClassNameId;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 }

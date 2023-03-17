@@ -20,10 +20,38 @@ definition {
 			locator1 = "RaylifeAP#COMPONENT_HEADER");
 	}
 
+	macro assertTableValue {
+		AssertElementPresent(
+			key_product = ${product},
+			key_status = ${status},
+			locator1 = "RaylifeAP#APPLICATIONS_TABLE_KEBAB");
+	}
+
 	macro assertVisibleSidebar {
 		AssertVisible(
 			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
+	}
+
+	macro clickInApplicationKebabOption {
+		Click(
+			locator1 = "RaylifeAP#APPLICATIONS_TABLE_KEBAB",
+			key_product = "${product}",
+			key_status = "${status}");
+
+		Click(
+			key_option = "${option}",
+			locator1 = "RaylifeAP#KEBAB_OPTION");
+	}
+
+	macro clickOnAllAplications {
+		Button.click(button="All Applications");
+	}
+
+	macro AssertApplicationNumber {
+		var applicationvalue = selenium.getText("RaylifeAP#APPLICATIONS_NUMBER");
+
+		AssertElementNotPresent(locator1 = "${applicationvalue}");
 	}
 
 	macro clickOnSubsectionTasks {

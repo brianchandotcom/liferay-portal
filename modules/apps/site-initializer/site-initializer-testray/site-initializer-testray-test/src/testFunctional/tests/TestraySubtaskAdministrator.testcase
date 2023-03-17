@@ -30,6 +30,12 @@ definition {
 			User.firstLoginPG();
 
 			Testray.addTestraySite(siteName = ${testSiteName});
+
+			JSONUser.addUser(
+				userEmailAddress = "user@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 		}
 
 		task ("Setup for SubtaskAPI") {
@@ -150,6 +156,26 @@ definition {
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as Administrator, should not be able to edit subtask with user logged off"
+	@priority = 5
+	test AdminCanNotEditSubtaskWithUserOffline {
+		task ("Given that the user different assign a subtask") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+		}
+
+		task ("When the user different trying complete a subtask") {
+			Button.click(button = "Complete");
+		}
+
+		task ("Then the alert message is displayed") {
+			Testray.viewAlert(alertText = "You are not the assigned user.");
 		}
 	}
 

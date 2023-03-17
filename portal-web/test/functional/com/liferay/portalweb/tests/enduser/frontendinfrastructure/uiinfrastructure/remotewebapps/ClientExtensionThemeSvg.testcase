@@ -1,0 +1,79 @@
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Client Extensions";
+	property testray.main.component.name = "Client Extensions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Home");
+
+			while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
+				var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
+
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = ${layoutName});
+
+				Navigator.gotoPage(pageName = "Home");
+
+				PortalInstances.tearDownCP();
+			}
+
+			ClientExtensionGeneral.tearDown();
+		}
+	}
+
+	@description = "LPS-178000. Verify that new SVG spritemap is applied on the page"
+	@priority = 3
+	test CanExtendSvgFileFromDM {
+		property custom.properties = "feature.flag.LPS-166479=true";
+		property portal.acceptance = "true";
+
+		task ("Given Upload new SVG to document library") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentFile = "spritemap_example.svg",
+				dmDocumentTitle = "spritemap_example");
+		}
+
+		task ("And given A created Theme SVG extensions using the WebDAV URL from the doc-lib/") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			ClientExtensionGeneral.addThemeSvgSpritemap(
+				entryName = "spritemap_theme",
+				entryURL = "http://localhost:8080/webdav/guest/document_library/spritemap_example.svg");
+		}
+
+		task ("And given Go to edit the 'Look and Feel' on page / When Update with registered 'Theme Spritemap Client Extension'") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			ClientExtensionGeneral.changeSiteCurrentThemeSvgSpritemap(entryName = "spritemap_theme");
+		}
+
+		task ("And When: Navigate to home page") {
+			ProductMenu.gotoHomePage();
+		}
+
+		task ("Then: new SVG spritemap is applied on the page") {
+			AssertNotVisible(locator1 = "//ul[@class='control-menu-nav']//span[@id='uvlz____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#pencil')]");
+
+			AssertNotVisible(locator1 = "//ul[@class='control-menu-nav']//span[@id='ored____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#cog')]");
+		}
+	}
+}

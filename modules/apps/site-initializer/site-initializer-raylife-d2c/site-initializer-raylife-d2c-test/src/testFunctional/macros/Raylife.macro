@@ -87,6 +87,13 @@ definition {
 
 		Click(locator1 = "Raylife#ANY_BUTTON");
 	}
+
+	macro selectTheQuote {
+		Click(
+			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
+			title = ${quoteOption});
+	}
+
 	macro createRaylifeSite {
 		Site.openSitesAdmin();
 

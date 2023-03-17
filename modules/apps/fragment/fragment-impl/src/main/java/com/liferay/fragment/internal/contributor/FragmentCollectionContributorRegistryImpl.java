@@ -313,11 +313,16 @@ public class FragmentCollectionContributorRegistryImpl
 						fragmentEntriesSet.toArray(new String[0]));
 
 				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+					FragmentEntry fragmentEntry = fragmentEntries.get(
+						fragmentEntryLink.getRendererKey());
+
+					if (fragmentEntry == null) {
+						continue;
+					}
+
 					try {
 						_fragmentEntryLinkLocalService.updateLatestChanges(
-							fragmentEntries.get(
-								fragmentEntryLink.getRendererKey()),
-							fragmentEntryLink);
+							fragmentEntry, fragmentEntryLink);
 					}
 					catch (PortalException portalException) {
 						_log.error(portalException);

@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -2107,7 +2108,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = _defaultUsers.get(companyId);
 
 		if (user == null) {
-			user = userPersistence.fetchByC_DU(companyId, true);
+			user = userPersistence.fetchByC_T_First(
+				companyId, UserConstants.TYPE_GUEST, null);
 
 			if (user != null) {
 				_defaultUsers.put(companyId, user);
@@ -2937,13 +2939,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long companyId, boolean defaultUser, int status, int start, int end,
 		OrderByComparator<User> orderByComparator) {
 
-		return userPersistence.findByC_DU_S(
-			companyId, defaultUser, status, start, end, orderByComparator);
+		return userPersistence.findByC_S(
+			companyId, status, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getUsersCount(long companyId, boolean defaultUser, int status) {
-		return userPersistence.countByC_DU_S(companyId, defaultUser, status);
+		return userPersistence.countByC_S(companyId, status);
 	}
 
 	/**
@@ -3028,7 +3030,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User loadGetDefaultUser(long companyId) throws PortalException {
-		return userPersistence.findByC_DU(companyId, true);
+		return userPersistence.findByC_T_First(
+			companyId, UserConstants.TYPE_GUEST, null);
 	}
 
 	/**

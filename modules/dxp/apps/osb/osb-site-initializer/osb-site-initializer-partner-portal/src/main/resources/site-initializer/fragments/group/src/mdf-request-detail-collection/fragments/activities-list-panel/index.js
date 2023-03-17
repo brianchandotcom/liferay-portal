@@ -14,22 +14,24 @@ import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
-const getIntlNumberFormat = () =>
+const getIntlNumberFormat = (currency) =>
 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-		currency: 'USD',
+		currency: currency?.key || 'USD',
 		style: 'currency',
 	});
 
 const getBooleanValue = (value) => (value ? 'Yes' : 'No');
 
-const BudgetBreakdownTable = ({actToBgts}) => {
+const BudgetBreakdownTable = ({actToBgts, currency}) => {
 	return (
 		<div>
 			{!!actToBgts.length && (
 				<Table
 					items={actToBgts.map((budget) => ({
 						title: budget.expense.name,
-						value: getIntlNumberFormat().format(budget.cost),
+						value: getIntlNumberFormat(currency).format(
+							budget.cost
+						),
 					}))}
 					title="Budget Breakdown"
 				/>
@@ -423,6 +425,7 @@ export default function () {
 
 						<BudgetBreakdownTable
 							actToBgts={mdfRequestActivity.actToBgts}
+							currency={mdfRequestActivity.currency}
 						/>
 
 						<LeadListTable

@@ -38,16 +38,14 @@ const updateMDFDetailsSummary = async () => {
 		);
 		const totalCost = formatCurrency(
 			Liferay.Util.escape(data.totalCostOfExpense),
-			Liferay.Util.escape(data.currency.key)
+			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
 		const requestedCost = formatCurrency(
 			Liferay.Util.escape(data.totalMDFRequestAmount),
-			Liferay.Util.escape(data.currency.key)
+			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
-		const totalCostCurrency = data.currency.key ? data.currency.key : ' ';
-		const requestedCostCurrency = data.currency.key
-			? data.currency.key
-			: 'USD';
+		const totalCostCurrency = data.currency ? data.currency.key : ' ';
+		const requestedCostCurrency = data.currency ? data.currency.key : ' ';
 
 		fragmentElement.querySelector(
 			'#mdf-request-date-field'

@@ -20,9 +20,9 @@ const findRequestIdUrl = (paramsUrl) => {
 	return splitParamsUrl[0];
 };
 
-function getIntlNumberFormat() {
+function getIntlNumberFormat(currency) {
 	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-		currency: 'USD',
+		currency: currency?.key || 'USD',
 		style: 'currency',
 	});
 }
@@ -76,8 +76,10 @@ const Panel = ({mdfClaims}) => {
 			<div className="align-items-baseline d-flex justify-content-between">
 				<div className="align-items-baseline d-flex">
 					<p className="font-weight-bold text-neutral-9 text-paragraph-sm">
-						Claimed USD
-						{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
+						Claimed{' '}
+						{getIntlNumberFormat(mdfClaims.currency).format(
+							mdfClaims.amountClaimed
+						)}
 					</p>
 
 					<div

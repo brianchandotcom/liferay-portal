@@ -149,7 +149,7 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		_targetCompany = CompanyTestUtil.addCompany();
 
-		User targetDefaultUser = _targetCompany.getDefaultUser();
+		User targetDefaultUser = _targetCompany.getGuestUser();
 
 		initImport(companyGroup, _targetCompany.getGroup());
 

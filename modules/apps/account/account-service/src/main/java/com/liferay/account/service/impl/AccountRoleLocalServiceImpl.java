@@ -153,7 +153,7 @@ public class AccountRoleLocalServiceImpl
 			companyId, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
 
 		if (role == null) {
-			User defaultUser = company.getDefaultUser();
+			User defaultUser = company.getGuestUser();
 
 			_roleLocalService.addRole(
 				defaultUser.getUserId(), null, 0,
@@ -372,7 +372,7 @@ public class AccountRoleLocalServiceImpl
 			return;
 		}
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		addAccountRole(
 			defaultUser.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,

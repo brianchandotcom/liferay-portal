@@ -95,7 +95,7 @@ public class PortalAddressOSGiCommands {
 
 				serviceContext.setCompanyId(company.getCompanyId());
 
-				User defaultUser = company.getDefaultUser();
+				User defaultUser = company.getGuestUser();
 
 				serviceContext.setUserId(defaultUser.getUserId());
 

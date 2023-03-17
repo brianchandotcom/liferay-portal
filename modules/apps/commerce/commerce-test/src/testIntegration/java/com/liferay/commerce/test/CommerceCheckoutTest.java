@@ -176,7 +176,7 @@ public class CommerceCheckoutTest {
 			"The guest should be able to place the order"
 		);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
@@ -317,7 +317,7 @@ public class CommerceCheckoutTest {
 
 			modifiableSettings.store();
 
-			User user = _company.getDefaultUser();
+			User user = _company.getGuestUser();
 
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
@@ -378,7 +378,7 @@ public class CommerceCheckoutTest {
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
@@ -422,7 +422,7 @@ public class CommerceCheckoutTest {
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
@@ -478,7 +478,7 @@ public class CommerceCheckoutTest {
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
@@ -530,7 +530,7 @@ public class CommerceCheckoutTest {
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
@@ -573,7 +573,7 @@ public class CommerceCheckoutTest {
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
@@ -634,7 +634,7 @@ public class CommerceCheckoutTest {
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-		User user = _company.getDefaultUser();
+		User user = _company.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(

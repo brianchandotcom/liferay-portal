@@ -39,9 +39,6 @@ import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 
@@ -82,29 +79,31 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 			return null;
 		}
 
-		String id = AssetEntriesSearchFacet.class.getName();
+		for (int i = 0; i < (jsonArray.length() - 1); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-		IntStream intStream = IntStream.range(0, jsonArray.length());
+			String id = AssetEntriesSearchFacet.class.getName();
 
-		Stream<JSONObject> jsonObjectsStream = intStream.mapToObj(
-			jsonArray::getJSONObject);
+			if (!id.equals(jsonObject.getString("id"))) {
+				continue;
+			}
 
-		return jsonObjectsStream.filter(
-			jsonObject -> id.equals(jsonObject.getString("id"))
-		).map(
-			jsonObject -> jsonObject.getJSONObject("data")
-		).filter(
-			Objects::nonNull
-		).map(
-			jsonObject -> jsonObject.getJSONArray("values")
-		).filter(
-			Objects::nonNull
-		).map(
-			ArrayUtil::toStringArray
-		).findAny(
-		).orElse(
-			null
-		);
+			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+			if (dataJSONObject == null) {
+				continue;
+			}
+
+			JSONArray valuesJSONArray = dataJSONObject.getJSONArray("values");
+
+			if (valuesJSONArray == null) {
+				continue;
+			}
+
+			return ArrayUtil.toStringArray(valuesJSONArray);
+		}
+
+		return null;
 	}
 
 	public List<AssetRendererFactory<?>> getAssetRendererFactories(

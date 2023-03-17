@@ -79,9 +79,7 @@ public class HorizontalCardTag extends BaseCardTag {
 			title = horizontalCard.getTitle();
 		}
 
-		Boolean translated = isTranslated();
-
-		if (Boolean.TRUE.equals(translated)) {
+		if (isTranslated()) {
 			title = LanguageUtil.get(
 				TagResourceBundleUtil.getResourceBundle(pageContext), title);
 		}
@@ -90,14 +88,17 @@ public class HorizontalCardTag extends BaseCardTag {
 	}
 
 	public Boolean isTranslated() {
-		Boolean translated = _translated;
-		HorizontalCard horizontalCard = getHorizontalCard();
+		if (_translated == null) {
+			HorizontalCard horizontalCard = getHorizontalCard();
 
-		if ((_translated == null) && (horizontalCard != null)) {
-			translated = horizontalCard.isTranslated();
+			if (horizontalCard != null) {
+				return horizontalCard.isTranslated();
+			}
+
+			return true;
 		}
 
-		return translated;
+		return _translated;
 	}
 
 	public void setHorizontalCard(HorizontalCard horizontalCard) {

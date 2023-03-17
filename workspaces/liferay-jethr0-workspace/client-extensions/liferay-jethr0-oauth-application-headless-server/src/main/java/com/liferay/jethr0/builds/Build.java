@@ -16,6 +16,7 @@ package com.liferay.jethr0.builds;
 
 import com.liferay.jethr0.builds.parameter.BuildParameter;
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.task.Task;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,10 @@ public interface Build {
 
 	public void addBuildParameters(List<BuildParameter> buildParameters);
 
+	public void addTask(Task task);
+
+	public void addTasks(List<Task> tasks);
+
 	public String getBuildName();
 
 	public List<BuildParameter> getBuildParameters();
@@ -46,9 +51,15 @@ public interface Build {
 
 	public State getState();
 
+	public List<Task> getTasks();
+
 	public void removeBuildParameter(BuildParameter buildParameter);
 
 	public void removeBuildParameters(List<BuildParameter> buildParameters);
+
+	public void removeTask(Task task);
+
+	public void removeTasks(List<Task> tasks);
 
 	public void setJobName(String jobName);
 

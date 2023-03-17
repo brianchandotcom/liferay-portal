@@ -16,6 +16,7 @@ package com.liferay.jethr0.builds;
 
 import com.liferay.jethr0.builds.parameter.BuildParameter;
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.task.Task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,22 @@ public abstract class BaseBuild implements Build {
 			}
 
 			_buildParameters.add(buildParameter);
+		}
+	}
+
+	@Override
+	public void addTask(Task task) {
+		addTasks(Arrays.asList(task));
+	}
+
+	@Override
+	public void addTasks(List<Task> tasks) {
+		for (Task task : tasks) {
+			if (_tasks.contains(task)) {
+				continue;
+			}
+
+			_tasks.add(task);
 		}
 	}
 
@@ -90,12 +107,27 @@ public abstract class BaseBuild implements Build {
 		return _state;
 	}
 
+	@Override
+	public List<Task> getTasks() {
+		return _tasks;
+	}
+
 	public void removeBuildParameter(BuildParameter buildParameter) {
 		_buildParameters.remove(buildParameter);
 	}
 
 	public void removeBuildParameters(List<BuildParameter> buildParameters) {
 		_buildParameters.removeAll(buildParameters);
+	}
+
+	@Override
+	public void removeTask(Task task) {
+		_tasks.remove(task);
+	}
+
+	@Override
+	public void removeTasks(List<Task> tasks) {
+		_tasks.removeAll(tasks);
 	}
 
 	@Override
@@ -123,5 +155,6 @@ public abstract class BaseBuild implements Build {
 	private String _jobName;
 	private final Project _project;
 	private State _state;
+	private final List<Task> _tasks = new ArrayList<>();
 
 }

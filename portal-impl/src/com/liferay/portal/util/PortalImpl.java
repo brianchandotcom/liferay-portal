@@ -3765,7 +3765,7 @@ public class PortalImpl implements Portal {
 		User defaultUser = null;
 
 		try {
-			defaultUser = company.getDefaultUser();
+			defaultUser = company.getGuestUser();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -6180,7 +6180,7 @@ public class PortalImpl implements Portal {
 
 		Company company = getCompany(httpServletRequest);
 
-		return company.getDefaultUser();
+		return company.getGuestUser();
 	}
 
 	@Override

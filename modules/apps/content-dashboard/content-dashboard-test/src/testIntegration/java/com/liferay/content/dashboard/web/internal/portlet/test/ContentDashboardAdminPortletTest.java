@@ -1699,7 +1699,7 @@ public class ContentDashboardAdminPortletTest {
 		themeDisplay.setLocale(locale);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setUser(_company.getDefaultUser());
+		themeDisplay.setUser(_company.getGuestUser());
 
 		return themeDisplay;
 	}

@@ -152,7 +152,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		Group companyGroup = company.getGroup();
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_layoutPrototype = _addLayoutPrototype(
 			company.getCompanyId(), companyGroup.getGroupId(),
@@ -165,7 +165,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		_targetCompany = CompanyTestUtil.addCompany();
 
-		User targetDefaultUser = _targetCompany.getDefaultUser();
+		User targetDefaultUser = _targetCompany.getGuestUser();
 
 		_addLayoutPrototype(
 			_targetCompany.getCompanyId(), _targetCompany.getGroupId(),

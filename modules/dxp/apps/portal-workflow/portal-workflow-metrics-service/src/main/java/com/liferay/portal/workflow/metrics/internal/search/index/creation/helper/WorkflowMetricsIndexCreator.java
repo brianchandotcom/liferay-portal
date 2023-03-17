@@ -82,7 +82,7 @@ public class WorkflowMetricsIndexCreator {
 					return null;
 				}
 
-				User user = company.getDefaultUser();
+				User user = company.getGuestUser();
 
 				_backgroundTaskLocalService.addBackgroundTask(
 					user.getUserId(), company.getGroupId(),

@@ -47,7 +47,7 @@ public class CommerceCurrencyTestUtil {
 
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
-		User user = company.getDefaultUser();
+		User user = company.getGuestUser();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

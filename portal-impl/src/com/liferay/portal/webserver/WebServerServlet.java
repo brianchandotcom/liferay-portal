@@ -1487,7 +1487,7 @@ public class WebServerServlet extends HttpServlet {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			PortalUtil.getCompanyId(httpServletRequest));
 
-		return company.getDefaultUser();
+		return company.getGuestUser();
 	}
 
 	private static boolean _isDirectoryIndexingEnabled(Group group) {

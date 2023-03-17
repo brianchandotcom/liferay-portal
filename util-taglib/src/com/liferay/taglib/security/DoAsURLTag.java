@@ -53,7 +53,7 @@ public class DoAsURLTag extends TagSupport {
 		doAsURL = themeDisplay.getPathContext() + doAsURL;
 
 		if (doAsUserId <= 0) {
-			User defaultUser = company.getDefaultUser();
+			User defaultUser = company.getGuestUser();
 
 			doAsUserId = defaultUser.getUserId();
 		}

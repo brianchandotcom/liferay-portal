@@ -136,7 +136,7 @@ public class CommerceCatalogLocalServiceImpl
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		ServiceContext serviceContext = new ServiceContext();
 

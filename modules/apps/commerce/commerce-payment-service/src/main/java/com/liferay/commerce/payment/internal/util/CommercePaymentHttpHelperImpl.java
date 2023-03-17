@@ -66,7 +66,7 @@ public class CommercePaymentHttpHelperImpl
 
 			Company company = _portal.getCompany(httpServletRequest);
 
-			User defaultUser = company.getDefaultUser();
+			User defaultUser = company.getGuestUser();
 
 			String orderGuestToken = _getGuestToken(
 				company, commerceOrder.getCommerceOrderId());

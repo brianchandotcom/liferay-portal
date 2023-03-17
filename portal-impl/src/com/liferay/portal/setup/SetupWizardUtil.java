@@ -83,7 +83,7 @@ public class SetupWizardUtil {
 			Company company = CompanyLocalServiceUtil.getCompanyById(
 				PortalInstances.getDefaultCompanyId());
 
-			User defaultUser = company.getDefaultUser();
+			User defaultUser = company.getGuestUser();
 
 			return defaultUser.getTimeZoneId();
 		}

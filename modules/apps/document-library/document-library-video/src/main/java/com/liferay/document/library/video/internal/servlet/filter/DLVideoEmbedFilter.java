@@ -246,7 +246,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		Company company = _companyLocalService.getCompany(
 			_portal.getCompanyId(httpServletRequest));
 
-		return company.getDefaultUser();
+		return company.getGuestUser();
 	}
 
 	private FileEntry _resolveFileEntry(

@@ -60,7 +60,7 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateDefaultValues(Company company) throws Exception {
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update AccountGroupRel set userId = ?, userName = ?, " +

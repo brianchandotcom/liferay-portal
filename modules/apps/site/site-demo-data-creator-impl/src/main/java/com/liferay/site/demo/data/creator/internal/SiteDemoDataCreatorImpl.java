@@ -54,7 +54,7 @@ public class SiteDemoDataCreatorImpl implements SiteDemoDataCreator {
 	public Group create(long companyId, String name) throws PortalException {
 		Company company = _companyLocalService.fetchCompany(companyId);
 
-		User user = company.getDefaultUser();
+		User user = company.getGuestUser();
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), name

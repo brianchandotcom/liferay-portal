@@ -334,7 +334,7 @@ public class ThemeDisplay
 	 */
 	public User getDefaultUser() throws PortalException {
 		if (_defaultUser == null) {
-			_defaultUser = _company.getDefaultUser();
+			_defaultUser = _company.getGuestUser();
 		}
 
 		return _defaultUser;

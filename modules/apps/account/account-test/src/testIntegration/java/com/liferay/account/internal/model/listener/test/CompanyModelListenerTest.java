@@ -53,7 +53,7 @@ public class CompanyModelListenerTest {
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_defaultUser = _company.getDefaultUser();
+		_defaultUser = _company.getGuestUser();
 
 		_accountEntry = AccountEntryTestUtil.addAccountEntry(
 			AccountEntryArgs.withOwner(_defaultUser));

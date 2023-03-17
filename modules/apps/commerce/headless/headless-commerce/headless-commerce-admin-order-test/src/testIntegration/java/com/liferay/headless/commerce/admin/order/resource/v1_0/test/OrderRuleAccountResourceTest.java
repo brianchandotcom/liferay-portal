@@ -93,7 +93,7 @@ public class OrderRuleAccountResourceTest
 
 	@Override
 	protected OrderRuleAccount randomOrderRuleAccount() throws Exception {
-		User defaultUser = testCompany.getDefaultUser();
+		User defaultUser = testCompany.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			CommerceAccountTestUtil.addBusinessCommerceAccount(

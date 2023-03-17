@@ -76,7 +76,7 @@ public class CommercePriceListLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		User defaultUser = _company.getDefaultUser();
+		User defaultUser = _company.getGuestUser();
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), defaultUser.getUserId(), 0);

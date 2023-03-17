@@ -1,0 +1,15 @@
+{
+	"cpu": 1,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaysampleetcspringboot",
+	"kind": "Deployment",
+	"loadBalancer": {
+		"targetPort": 58081
+	},
+	"memory": 512,
+	"scale": 1
+}

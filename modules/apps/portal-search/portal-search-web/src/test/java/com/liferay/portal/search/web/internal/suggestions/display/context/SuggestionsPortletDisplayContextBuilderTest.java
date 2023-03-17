@@ -28,8 +28,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -377,13 +375,21 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 	}
 
 	private String _formatSimplifiedSuggestedKeywords(String simplifiedQuery) {
-		return Stream.of(
-			StringUtil.split(simplifiedQuery, CharPool.SPACE)
-		).map(
-			this::_formatKeyword
-		).collect(
-			Collectors.joining(StringPool.SPACE)
-		);
+		String[] simplifiedQueryParts = StringUtil.split(
+			simplifiedQuery, CharPool.SPACE);
+
+		StringBundler sb = new StringBundler(simplifiedQueryParts.length * 2);
+
+		for (String simplifiedQueryPart : simplifiedQueryParts) {
+			sb.append(_formatKeyword(simplifiedQueryPart));
+			sb.append(CharPool.SPACE);
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private void _setUpDisplayContextBuilder() {

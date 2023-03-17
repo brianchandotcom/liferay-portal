@@ -67,6 +67,12 @@ definition {
 
 		WaitForPageLoad();
 	}
+
+	@summary = "View claim type on MDF Request details page"
+	macro viewClaimType {
+		AssertElementPresent(
+			locator1 = "PRMMDFClaim#CLAIM_TYPE",
+			key_claimType = "${claimType}");
 	}
 
 	@summary = "Get the claim ID by index"

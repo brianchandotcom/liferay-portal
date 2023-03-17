@@ -211,7 +211,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -241,7 +241,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -325,7 +325,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -360,7 +360,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -394,7 +394,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -429,7 +429,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -458,7 +458,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		Criteria criteria = new Criteria();
 
@@ -556,7 +556,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -586,7 +586,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -642,7 +642,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -677,7 +677,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -711,7 +711,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
@@ -746,7 +746,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,

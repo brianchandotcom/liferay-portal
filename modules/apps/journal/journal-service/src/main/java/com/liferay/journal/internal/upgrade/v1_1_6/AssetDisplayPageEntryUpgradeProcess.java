@@ -145,7 +145,7 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 			"JournalArticle.resourcePrimKey) group by JournalArticle.groupId, ",
 			"JournalArticle.resourcePrimKey, AssetEntry.classUuid");
 
-		User user = company.getDefaultUser();
+		User user = company.getGuestUser();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(

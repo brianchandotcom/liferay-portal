@@ -82,7 +82,7 @@ public class SetupWizardSampleDataUtil {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
-		User defaultUser = company.getDefaultUser();
+		User defaultUser = company.getGuestUser();
 
 		company = updateCompany(
 			company, companyName,

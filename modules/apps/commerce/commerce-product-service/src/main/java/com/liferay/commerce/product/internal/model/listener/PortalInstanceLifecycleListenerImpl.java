@@ -94,7 +94,7 @@ public class PortalInstanceLifecycleListenerImpl
 				serviceContext.setCompanyId(company.getCompanyId());
 				serviceContext.setScopeGroupId(company.getGroupId());
 
-				User user = company.getDefaultUser();
+				User user = company.getGuestUser();
 
 				serviceContext.setUserId(user.getCompanyId());
 

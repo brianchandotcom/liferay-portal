@@ -89,7 +89,7 @@ public class AssetVocabularyUtil {
 			Company company, int visibilityType)
 		throws PortalException {
 
-		User user = company.getDefaultUser();
+		User user = company.getGuestUser();
 
 		Map<Locale, String> titleMap = new HashMap<>();
 

@@ -220,7 +220,7 @@ public class SecurityTest extends BaseClientTestCase {
 				defaultCompanyId);
 
 			createOAuth2Application(
-				defaultCompanyId, company.getDefaultUser(),
+				defaultCompanyId, company.getGuestUser(),
 				"oauthTestApplicationDefaultUser");
 		}
 

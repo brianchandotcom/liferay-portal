@@ -261,11 +261,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BLUEPRINTS_EDIT_PAGE_SIDE_NAV_LINK</td>
-	<td>//button[contains(@class,'nav-link') and contains(.,'${linkName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER</td>
 	<td>//span[contains(@class,'cm-number') and contains(.,'${key_jsonNumber}')]</td>
 	<td></td>

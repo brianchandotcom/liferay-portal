@@ -1900,6 +1900,8 @@ public class CommerceOrderLocalServiceImpl
 
 				message.setPayload(
 					JSONUtil.put(
+						"classPK", commerceOrder.getCommerceOrderId()
+					).put(
 						"commerceOrder",
 						() -> {
 							Object object = commerceOrderDTOConverter.toDTO(

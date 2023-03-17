@@ -738,6 +738,8 @@ public class CommerceShipmentLocalServiceImpl
 
 				message.setPayload(
 					JSONUtil.put(
+						"classPK", commerceShipment.getCommerceShipmentId()
+					).put(
 						"commerceShipment",
 						() -> {
 							Object object = commerceShipmentDTOConverter.toDTO(

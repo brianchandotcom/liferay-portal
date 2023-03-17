@@ -552,6 +552,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 				message.setPayload(
 					JSONUtil.put(
+						"classPK", commerceOrder.getCommerceOrderId()
+					).put(
 						"commerceOrder",
 						_getCommerceOrderJSONObject(
 							commerceOrder, commerceOrderDTOConverter)

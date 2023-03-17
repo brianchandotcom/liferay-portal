@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -185,8 +186,13 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 				externalReferenceCode = GetterUtil.getString(
 					values.get("externalReferenceCode"));
 				orderStatus = GetterUtil.getInteger(values.get("orderStatus"));
-				shippingAmount = new BigDecimal(
-					GetterUtil.getString(values.get("shippingAmount")));
+
+				String shippingAmountString = GetterUtil.getString(
+					values.get("shippingAmount"));
+
+				if (Validator.isNotNull(shippingAmountString)) {
+					shippingAmount = new BigDecimal(shippingAmountString);
+				}
 			}
 		};
 	}

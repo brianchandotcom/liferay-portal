@@ -100,6 +100,10 @@ public class DropZoneFragmentEntryLinkListener
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		if (serviceContext == null) {
+			return;
+		}
+
 		String processedHTML =
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,

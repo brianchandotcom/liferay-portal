@@ -27,6 +27,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -43,6 +44,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -292,13 +296,19 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	}
 
 	private String _addAssetPublisherPortletToLayout(
-			Layout layout, String selectionStyle, String[] assetEntryXml)
+			Layout layout, String selectionStyle, String[] assetEntryClassUuids)
 		throws Exception {
+
+		List<String> assetEntryXMLs = new ArrayList<>();
+
+		for (String assetEntryClassUuid : assetEntryClassUuids) {
+			assetEntryXMLs.add(_getAssetEntryXml(assetEntryClassUuid));
+		}
 
 		return LayoutTestUtil.addPortletToLayout(
 			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			HashMapBuilder.put(
-				"assetEntryXml", assetEntryXml
+				"assetEntryXml", assetEntryXMLs.toArray(new String[0])
 			).put(
 				"selectionStyle", new String[] {selectionStyle}
 			).build());
@@ -378,6 +388,21 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		Assert.assertEquals(
 			layoutClassedModelUsages.toString(), count,
 			layoutClassedModelUsages.size());
+	}
+
+	private String _getAssetEntryXml(String assetEntryUuid) throws Exception {
+		Document document = SAXReaderUtil.createDocument(StringPool.UTF8);
+
+		Element assetEntryElement = document.addElement("asset-entry");
+
+		assetEntryElement.addElement("asset-entry-type");
+
+		Element assetEntryUuidElement = assetEntryElement.addElement(
+			"asset-entry-uuid");
+
+		assetEntryUuidElement.addText(assetEntryUuid);
+
+		return document.formattedString(StringPool.BLANK);
 	}
 
 	private UpgradeProcess _getUpgradeProcess() {

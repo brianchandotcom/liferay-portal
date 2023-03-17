@@ -221,12 +221,12 @@ public class DDMHelperImpl implements DDMHelper {
 		DDMForm ddmForm, long groupId, long commerceAccountId,
 		long cpDefinitionId, long companyId, long userId, Locale locale) {
 
-		return String.format(
-			"call('getCPInstanceOptionsValues', concat(%s), '%s')",
+		return StringBundler.concat(
+			"call('getCPInstanceOptionsValues', concat(",
 			_createDDMFormRuleInputMapping(
 				ddmForm, groupId, commerceAccountId, cpDefinitionId, companyId,
 				userId, locale),
-			_createDDMFormRuleOutputMapping(ddmForm));
+			"), '", _createDDMFormRuleOutputMapping(ddmForm));
 	}
 
 	private String _createDDMFormRuleInputMapping(
@@ -269,12 +269,12 @@ public class DDMHelperImpl implements DDMHelper {
 	private String _createDDMFormRuleOutputMapping(DDMForm ddmForm) {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
-		StringBundler sb = new StringBundler(ddmFormFields.size() * 2);
+		StringBundler sb = new StringBundler(ddmFormFields.size() * 4);
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			sb.append(
-				String.format(
-					"%s=%s", ddmFormField.getName(), ddmFormField.getName()));
+			sb.append(ddmFormField.getName());
+			sb.append(StringPool.EQUAL);
+			sb.append(ddmFormField.getName());
 			sb.append(StringPool.SEMICOLON);
 		}
 
@@ -402,7 +402,7 @@ public class DDMHelperImpl implements DDMHelper {
 			if (arrayValueFieldType) {
 				localizedValue.addString(
 					curLocalizedValue.getDefaultLocale(),
-					String.format("[\"%s\"]", entry.getKey()));
+					"[\"" + entry.getKey() + "\"]");
 			}
 			else {
 				localizedValue.addString(

@@ -89,7 +89,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
@@ -301,11 +300,11 @@ public class StructuredContentResourceImpl
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
 
-		Optional.ofNullable(
-			structuredContent.getPriority()
-		).ifPresent(
-			serviceContext::setAssetPriority
-		);
+		Double priority = structuredContent.getPriority();
+
+		if (priority != null) {
+			serviceContext.setAssetPriority(priority);
+		}
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 

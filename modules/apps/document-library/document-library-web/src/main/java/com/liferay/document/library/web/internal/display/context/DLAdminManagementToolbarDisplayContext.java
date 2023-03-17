@@ -331,7 +331,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 		_addFileExtensionFilterLabelItems(labelItemListWrapper);
 
-		return labelItemListWrapper.add(
+		labelItemListWrapper.add(
 			() -> fileEntryTypeId != -1,
 			labelItem -> {
 				labelItem.putData(
@@ -365,8 +365,9 @@ public class DLAdminManagementToolbarDisplayContext
 						"%s: %s",
 						LanguageUtil.get(_httpServletRequest, "document-type"),
 						HtmlUtil.escape(fileEntryTypeName)));
-			}
-		).add(
+			});
+
+		labelItemListWrapper.add(
 			() -> Objects.equals(_getNavigation(), "mine"),
 			labelItem -> {
 				labelItem.putData(
@@ -387,8 +388,9 @@ public class DLAdminManagementToolbarDisplayContext
 						"%s: %s",
 						LanguageUtil.get(_httpServletRequest, "owner"),
 						HtmlUtil.escape(user.getFullName())));
-			}
-		).build();
+			});
+
+		return labelItemListWrapper.build();
 	}
 
 	private void _addFileExtensionFilterLabelItems(LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {

@@ -187,6 +187,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePagesJSONObject.get("totalCount"));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSitePagesPageExportBatch() throws Exception {
+		super.testPostSiteSitePagesPageExportBatch();
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"title"};

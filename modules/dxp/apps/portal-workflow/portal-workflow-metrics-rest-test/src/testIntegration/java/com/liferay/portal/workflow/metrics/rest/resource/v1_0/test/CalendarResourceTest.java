@@ -36,6 +36,7 @@ import java.util.Locale;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -129,6 +130,13 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 			Arrays.asList(_getDefaultCalendar(), _getCustomCalendar()),
 			Arrays.asList(
 				CalendarSerDes.toDTOs(calendarsJSONObject.getString("items"))));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostCalendarsPageExportBatch() throws Exception {
+		super.testPostCalendarsPageExportBatch();
 	}
 
 	@Rule

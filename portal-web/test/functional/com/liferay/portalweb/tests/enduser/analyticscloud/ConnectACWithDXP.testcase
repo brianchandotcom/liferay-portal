@@ -188,11 +188,9 @@ definition {
 		}
 
 		task ("Check that the connection is not made and an error message appears") {
-			ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
-
 			AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
-			Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
+			Alert.viewErrorMessage(errorMessage = "Token is not valid. Please insert a valid Analytics Cloud token.");
 		}
 	}
 

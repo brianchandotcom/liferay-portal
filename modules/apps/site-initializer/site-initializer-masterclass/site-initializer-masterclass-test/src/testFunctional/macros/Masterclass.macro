@@ -1,16 +1,5 @@
 definition {
 
-	macro addMasterclassSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addSiteTemplateCP(
-			siteName = ${siteName},
-			siteTemplateName = "Masterclass");
-	}
-
 	macro createAccount {
 		AssertClick(
 			locator1 = "Link#CREATE_ACCOUNT",

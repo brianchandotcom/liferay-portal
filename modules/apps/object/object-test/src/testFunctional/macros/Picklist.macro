@@ -137,6 +137,19 @@ definition {
 			locator1 = "Picklist#DISABLE_PICKLIST_KEY");
 	}
 
+	macro assertDownloadedPicklist {
+		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = ${downloadedFile});
+
+		echo("## downloadedFileName: ListType_*");
+
+		if (contains("ListType_*", ${downloadedFile})) {
+			echo("This is a correct file.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
 	macro assertEmptyStateMessageDisplayed {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",

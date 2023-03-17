@@ -84,7 +84,7 @@ definition {
 			Picklist.gotoPicklists();
 
 			Picklist.optionsPicklist(
-				menuItem = "Export",
+				menuItem = "Export as JSON",
 				picklistName = "Export Picklist");
 		}
 

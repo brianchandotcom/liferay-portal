@@ -60,9 +60,27 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 3
 	test CannotExceed280Characters {
+		task ("When the user goes to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO CannotExceed280Characters pending implementation JQuery enabled
+		task ("When a user types a name that is more than 280 characters") {
+			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum, est sed varius porttitor, odio tortor commodo ligula, quis auctor nulla massa ut eros. Vestibulum in eros maximus quam gravida dapibus. Proin vitae mi diam. Duis iaculis, nisi quis pharetra varius, arcu eros bibendum turpis, nec posuere nibh arcu id orci.");
+		}
 
+		task ("And choose the provider named Channel") {
+			FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+		}
+
+		task ("And clicking on the Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then Confirm that alert messages are present") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Your request failed to complete.");
+		}
 	}
 
 	@description = "LPS-178778. Confirm the error message that appears when the user tries to create a data set view without the filled name"

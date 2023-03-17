@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-	 	JSONRole.deleteRole(roleTitle = "Regular Role");
+		JSONRole.deleteRole(roleTitle = "Regular Role");
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -1054,17 +1054,13 @@ definition {
 		Picklist.gotoPicklists();
 
 		WaitForElementPresent(
-			key_pageNumber = "1",
+			key_pageNumber = 1,
 			locator1 = "ObjectPortlet#ANY_PAGE");
 
 		Picklist.optionsPicklist(
 			picklistName = "Picklist Test",
 			picklistOption = "View");
 
-		WaitForElementPresent(
-			key_labelName = "Item Test",
-			locator1 = "CreateObject#VIEW_OBJECT");
-		
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
 		Click(

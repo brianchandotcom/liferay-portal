@@ -145,9 +145,10 @@ public class EmailNotificationType extends BaseNotificationType {
 		if (notificationQueueEntry.getStatus() !=
 				NotificationQueueEntryConstants.STATUS_UNSENT) {
 
-			notificationQueueEntryLocalService.updateStatus(
-				notificationQueueEntry.getNotificationQueueEntryId(),
-				NotificationQueueEntryConstants.STATUS_UNSENT);
+			notificationQueueEntry =
+				notificationQueueEntryLocalService.updateStatus(
+					notificationQueueEntry.getNotificationQueueEntryId(),
+					NotificationQueueEntryConstants.STATUS_UNSENT);
 		}
 
 		_sendEmail(notificationQueueEntry);

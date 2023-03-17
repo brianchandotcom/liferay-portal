@@ -117,14 +117,6 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 		super.setPortlet(portlet);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.segments.simulation.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	@Override
 	protected ServletContext getServletContext() {
 		return _servletContext;
@@ -147,6 +139,9 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 	@Reference
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.segments.simulation.web)"
+	)
 	private ServletContext _servletContext;
 
 }

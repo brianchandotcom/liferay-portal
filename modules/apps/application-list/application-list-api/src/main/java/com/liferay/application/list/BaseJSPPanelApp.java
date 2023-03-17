@@ -33,11 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  * <p>
  * To implement a JSP application, this class should be extended and {@link
  * #getJspPath()} should be implemented, which returns a path for the main JSP
- * application view in the current servlet context. The servlet context should
- * also be set using {@link #setServletContext(ServletContext)}, which uses the
- * appropriate servlet context for JSP pages. If the servlet context is not set,
- * {@link #include(HttpServletRequest, HttpServletResponse)} will throw a
- * <code>NullPointerException</code>.
+ * application view in the current servlet context.
  * </p>
  *
  * <p>
@@ -65,8 +61,10 @@ public abstract class BaseJSPPanelApp extends BasePanelApp {
 			return false;
 		}
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(jspPath);
+			servletContext.getRequestDispatcher(jspPath);
 
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -80,15 +78,9 @@ public abstract class BaseJSPPanelApp extends BasePanelApp {
 		return true;
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	protected abstract ServletContext getServletContext();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPPanelApp.class);
-
-	private ServletContext _servletContext;
 
 }

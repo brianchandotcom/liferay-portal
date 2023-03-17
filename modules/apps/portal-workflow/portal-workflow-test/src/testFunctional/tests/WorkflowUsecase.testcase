@@ -800,8 +800,7 @@ definition {
 
 	@priority = 5
 	test UnpublishAndDeleteUploadedDefinition {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowUsecase#UnpublishAndDeleteUploadedDefinition";
 
 		ApplicationsMenu.gotoPortlet(

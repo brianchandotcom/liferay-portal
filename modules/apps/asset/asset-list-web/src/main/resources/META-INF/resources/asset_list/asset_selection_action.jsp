@@ -30,6 +30,9 @@ AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEn
 </portlet:actionURL>
 
 <clay:link
+	aria-label='<%= LanguageUtil.get(request, "remove") %>'
+	cssClass="lfr-portal-tooltip"
 	href="<%= deleteAssetEntrySelectionURL %>"
 	icon="times-circle"
+	title='<%= LanguageUtil.get(request, "remove") %>'
 />

@@ -62,6 +62,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= assetListEntryVariationActionDropdownItemsProvider.getActionDropdownItems() %>"
 						propsTransformer="js/AssetListEntryVariationDefaultPropsTransformer"
+						title='<%= LanguageUtil.get(request, "show-actions") %>'
 					/>
 				</clay:content-col>
 			</clay:content-row>

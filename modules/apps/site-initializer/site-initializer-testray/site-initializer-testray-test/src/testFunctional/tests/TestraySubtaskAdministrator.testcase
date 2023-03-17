@@ -303,6 +303,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that can complete a subtask after have merged it"
+	@priority = 5
+	test AdminCanCompleteSubtaskThatBeenMerged {
+		task ("Given that the user logged in assign a subtask") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("When the user merging the subtask") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+		}
+
+		task ("Then the alert message is displayed") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+		}
+
+		task ("Then the alert message is displayed") {
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "Complete");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = 3
 	test AdminCanCancelMergeSubtask {

@@ -83,6 +83,20 @@ const Goals = ({
 		(selected) => setFieldValue('additionalOption', selected)
 	);
 
+	const {
+		onSelected: onCurrencySelected,
+		options: currencyOptions,
+	} = getPicklistOptions(
+		fieldEntries[LiferayPicklistName.CURRENCIES],
+		(selected) => setFieldValue('currency', selected)
+	);
+
+	const companyCurrencies =
+		currencyOptions &&
+		currencyOptions.filter(
+			(currency) => currency.value === values.currency.key
+		);
+
 	const goalsErrors = useMemo(() => {
 		delete errors.activities;
 
@@ -160,6 +174,15 @@ const Goals = ({
 							name="country"
 							onChange={onCountrySelected}
 							options={countryOptions}
+							required
+						/>
+
+						<PRMFormik.Field
+							component={PRMForm.Select}
+							label="Currency"
+							name="currency"
+							onChange={onCurrencySelected}
+							options={companyCurrencies}
 							required
 						/>
 					</PRMForm.Group>

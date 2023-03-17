@@ -22,6 +22,10 @@ const goalsSchema = object({
 		key: string(),
 		name: string(),
 	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
+	currency: object({
+		key: string(),
+		name: string(),
+	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),

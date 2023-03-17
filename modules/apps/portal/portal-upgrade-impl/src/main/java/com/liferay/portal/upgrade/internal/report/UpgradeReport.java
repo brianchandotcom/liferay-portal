@@ -233,9 +233,9 @@ public class UpgradeReport {
 				}
 			).build()
 		).put(
-			"type", DBUpgradeStatus.getUpgradeType()
+			"type", DBUpgradeStatus.getType()
 		).put(
-			"result", DBUpgradeStatus.getUpgradeStatus()
+			"result", DBUpgradeStatus.getStatus()
 		).put(
 			"database.version",
 			() -> {

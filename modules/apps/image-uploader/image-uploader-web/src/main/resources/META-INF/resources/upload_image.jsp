@@ -88,7 +88,7 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 
 					<div class="sheet">
 						<div class="panel-group panel-group-flush">
-							<div class="h4 text-default">
+							<div class="h4 text-default" id="<portlet:namespace />sizeDescription">
 								<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
 							</div>
 
@@ -104,7 +104,7 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 
 							<div class="button-holder">
 								<label for="<portlet:namespace />fileName" id="<portlet:namespace />uploadImage">
-									<span aria-label="<%= LanguageUtil.format(request, "select-x", "image") %>" class="btn btn-secondary mt-2" role="button" tabindex="0">
+									<span aria-describedby="<portlet:namespace />sizeDescription" aria-label="<%= LanguageUtil.format(request, "select-x", "image") %>" class="btn btn-secondary mt-2" role="button" tabindex="0">
 										<liferay-ui:message key="select" />
 									<span>
 								</label>

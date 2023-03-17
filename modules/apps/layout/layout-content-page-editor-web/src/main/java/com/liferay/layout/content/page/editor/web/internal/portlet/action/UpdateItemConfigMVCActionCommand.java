@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -81,7 +81,7 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 						_jsonFactory.createJSONObject(itemConfig), itemId))
 			).put(
 				"pageContents",
-				ContentUtil.getPageContentsJSONArray(
+				_contentManager.getPageContentsJSONArray(
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
 					themeDisplay.getPlid(), segmentsExperienceId)
@@ -103,6 +103,9 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateItemConfigMVCActionCommand.class);
+
+	@Reference
+	private ContentManager _contentManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

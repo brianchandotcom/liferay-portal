@@ -46,7 +46,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
@@ -165,6 +165,7 @@ public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		ContentManager contentManager,
 		FragmentCollectionManager fragmentCollectionManager,
 		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
@@ -192,6 +193,7 @@ public class ContentPageEditorDisplayContext {
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
+		_contentManager = contentManager;
 		_fragmentCollectionManager = fragmentCollectionManager;
 		_fragmentEntryLinkManager = fragmentEntryLinkManager;
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
@@ -753,7 +755,7 @@ public class ContentPageEditorDisplayContext {
 				"masterLayout", _getMasterLayoutJSONObject()
 			).put(
 				"pageContents",
-				ContentUtil.getPageContentsJSONArray(
+				_contentManager.getPageContentsJSONArray(
 					httpServletRequest,
 					portal.getHttpServletResponse(renderResponse),
 					themeDisplay.getPlid(), _getRestrictedItemIds(),
@@ -1512,14 +1514,14 @@ public class ContentPageEditorDisplayContext {
 
 		Set<LayoutDisplayPageObjectProvider<?>>
 			layoutDisplayPageObjectProviders =
-				ContentUtil.getMappedLayoutDisplayPageObjectProviders(
+				_contentManager.getMappedLayoutDisplayPageObjectProviders(
 					getGroupId(), themeDisplay.getPlid());
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getMasterLayoutPlid() > 0) {
 			layoutDisplayPageObjectProviders.addAll(
-				ContentUtil.getMappedLayoutDisplayPageObjectProviders(
+				_contentManager.getMappedLayoutDisplayPageObjectProviders(
 					getGroupId(), layout.getMasterLayoutPlid()));
 		}
 
@@ -1726,7 +1728,7 @@ public class ContentPageEditorDisplayContext {
 			return _restrictedItemIds;
 		}
 
-		_restrictedItemIds = ContentUtil.getRestrictedItemIds(
+		_restrictedItemIds = _contentManager.getRestrictedItemIds(
 			_getLayoutStructure(), themeDisplay);
 
 		return _restrictedItemIds;
@@ -1915,6 +1917,7 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
+	private final ContentManager _contentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;
 	private Map<String, Object> _defaultConfigurations;

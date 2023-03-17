@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
-import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -65,7 +65,7 @@ public class LayoutPageTemplateStructureRelModelListener
 
 		Set<LayoutDisplayPageObjectProvider<?>>
 			layoutDisplayPageObjectProviders =
-				ContentUtil.getLayoutMappedLayoutDisplayPageObjectProviders(
+				_contentManager.getLayoutMappedLayoutDisplayPageObjectProviders(
 					layoutPageTemplateStructureRel.getData());
 
 		for (LayoutDisplayPageObjectProvider<?>
@@ -116,6 +116,9 @@ public class LayoutPageTemplateStructureRelModelListener
 
 		return _layoutPageTemplateStructureNameId;
 	}
+
+	@Reference
+	private ContentManager _contentManager;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

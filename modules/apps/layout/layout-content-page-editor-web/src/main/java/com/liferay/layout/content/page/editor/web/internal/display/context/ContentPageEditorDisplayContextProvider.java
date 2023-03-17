@@ -25,6 +25,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -91,7 +92,7 @@ public class ContentPageEditorDisplayContextProvider {
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
 				_assetListEntryLocalService,
-				_getContentPageEditorSidebarPanels(),
+				_getContentPageEditorSidebarPanels(), _contentManager,
 				_fragmentCollectionManager, _fragmentEntryLinkManager,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 				_frontendTokenDefinitionRegistry, _groupLocalService,
@@ -129,13 +130,13 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			_getContentPageEditorSidebarPanels(), _fragmentCollectionManager,
-			_fragmentEntryLinkManager, _fragmentEntryLinkLocalService,
-			_fragmentEntryLocalService, _frontendTokenDefinitionRegistry,
-			httpServletRequest, _infoItemServiceRegistry,
-			_infoSearchClassMapperRegistry, _itemSelector, _jsonFactory,
-			_language, _layoutLocalService, _layoutSetLocalService,
-			_layoutPageTemplateEntryLocalService,
+			_getContentPageEditorSidebarPanels(), _contentManager,
+			_fragmentCollectionManager, _fragmentEntryLinkManager,
+			_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
+			_frontendTokenDefinitionRegistry, httpServletRequest,
+			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
+			_itemSelector, _jsonFactory, _language, _layoutLocalService,
+			_layoutSetLocalService, _layoutPageTemplateEntryLocalService,
 			_layoutPageTemplateEntryService, _layoutPermission,
 			_pageEditorConfiguration, pageIsDisplayPage, _portal,
 			portletRequest, _portletURLFactory, renderResponse,
@@ -170,6 +171,9 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private ContentManager _contentManager;
 
 	@Reference
 	private FragmentCollectionManager _fragmentCollectionManager;

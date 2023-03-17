@@ -36,6 +36,7 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
@@ -84,6 +85,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		ContentManager contentManager,
 		FragmentCollectionManager fragmentCollectionManager,
 		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
@@ -111,15 +113,15 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		super(
-			contentPageEditorSidebarPanels, fragmentCollectionManager,
-			fragmentEntryLinkManager, fragmentEntryLinkLocalService,
-			fragmentEntryLocalService, frontendTokenDefinitionRegistry,
-			httpServletRequest, infoItemServiceRegistry,
-			infoSearchClassMapperRegistry, itemSelector, jsonFactory, language,
-			layoutLocalService, layoutPageTemplateEntryLocalService,
-			layoutPageTemplateEntryService, layoutPermission,
-			layoutSetLocalService, pageEditorConfiguration, portal,
-			portletRequest, portletURLFactory, renderResponse,
+			contentPageEditorSidebarPanels, contentManager,
+			fragmentCollectionManager, fragmentEntryLinkManager,
+			fragmentEntryLinkLocalService, fragmentEntryLocalService,
+			frontendTokenDefinitionRegistry, httpServletRequest,
+			infoItemServiceRegistry, infoSearchClassMapperRegistry,
+			itemSelector, jsonFactory, language, layoutLocalService,
+			layoutPageTemplateEntryLocalService, layoutPageTemplateEntryService,
+			layoutPermission, layoutSetLocalService, pageEditorConfiguration,
+			portal, portletRequest, portletURLFactory, renderResponse,
 			segmentsConfigurationProvider, segmentsExperienceManager,
 			segmentsExperienceLocalService, segmentsExperimentRelLocalService,
 			staging, stagingGroupHelper, styleBookEntryLocalService,

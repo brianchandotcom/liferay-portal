@@ -225,6 +225,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-173731. Verify that is possible to export a searched MDF"
+	@priority = 4
+	test CanExportSearchedMDFs {
+		task ("Given I add two different MDF's") {
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				campaignName = "Campaign Name 1");
+
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				campaignName = "Campaign Name 2");
+		}
+
+		task ("And I go to MDF Listing Page") {
+		PRMUtils.gotoPRM();
+
+		PRMHomePage.gotoQuickLinksOption(
+			buttonLink = "mdf",
+			buttonText = "MDF");
+		}
+		
+		task ("When I search for the first MDF") {
+			PRMMDFRequest.SearchMDF(key_value = "Campaign Name 1");
+		}
+
+		task ("And when I export the search results") {
+			Button.click(button = "Export MDF Report");
+		}
+
+		task ("Then I check if the exported file contains the information about the searched MDF") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Campaign Name 1",
+				fileName = "MDF Requests.csv");
+		}
+
+		task ("When I search for the second MDF") {
+			PRMMDFRequest.SearchMDF(key_value = "Campaign Name 2");
+		}
+
+		task ("And when I export the search results") {
+			Button.click(button = "Export MDF Report");
+		}
+
+		task ("Then I check if the exported file contains the information about the searched MDF") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Campaign Name 2",
+				fileName = "MDF Requests.csv");
+		}
+	}
+
 	@description = "This is a test for LPS-171637. Verify that an alert will appear when user don't fill a mandatory* field and that “Continue” button only will be clickable after fill all mandatory fields"
 	@priority = 5
 	test CannotContinueWithoutFillRequiredField {

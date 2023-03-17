@@ -61,7 +61,7 @@ definition {
 			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
 			policy = "standard");
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -93,7 +93,7 @@ definition {
 			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
 			policy = "standard");
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -143,7 +143,7 @@ definition {
 			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
 			policy = "standard");
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -179,7 +179,7 @@ definition {
 			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
 			policy = "standard");
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",

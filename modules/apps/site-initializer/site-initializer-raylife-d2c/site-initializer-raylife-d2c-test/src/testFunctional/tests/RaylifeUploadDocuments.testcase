@@ -43,7 +43,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
 
@@ -65,7 +65,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -93,7 +93,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -121,7 +121,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -150,7 +150,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -199,7 +199,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.jpg",
@@ -228,7 +228,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.jpg",
@@ -251,7 +251,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 	}
 
 	@description = "LPS-144347 - Verify if that when the upload limit is reached it displays the following notification: 4 file upload limit reached for Building Interior Photos."
@@ -268,7 +268,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 	}
 
 	@description = "LPS-144349 - Verify if when all required fields are filled in the confirm uploads button is enabled"
@@ -285,7 +285,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",
@@ -314,7 +314,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 	}
 
 	@description = "LPS-144350 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
@@ -331,7 +331,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		RaylifeCreateAccount.createAccount();
+		RaylifeCreateAccount.createAccount(createAccount = "true");
 
 		RaylifeUploadDocuments.uploadDocuments(
 			dmDocumentFileList = "Document_1.pdf",

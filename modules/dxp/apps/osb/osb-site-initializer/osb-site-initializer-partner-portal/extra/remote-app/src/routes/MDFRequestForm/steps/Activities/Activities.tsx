@@ -113,7 +113,8 @@ const Activities = ({
 					ResourceName.ACTIVITY_DXP,
 					values.activities[index].id as number
 				);
-			} catch (error: any) {
+			}
+			catch (error: any) {
 				handleError(error.message);
 
 				return;

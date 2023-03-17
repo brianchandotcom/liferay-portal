@@ -1,7 +1,7 @@
 [
 	{
-		"key": "prmtact001prmtct001",
 		"externalReferenceCode": "In-person networking event/seminar/meet-up",
+		"key": "prmtact001prmtct001",
 		"name": "In-person networking event/seminar/meet-up",
 		"name_i18n": {
 			"en-US": "In-person networking event/seminar/meet-up"
@@ -9,8 +9,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact001prmtct002",
 		"externalReferenceCode": "In-person industry conference/trade show",
+		"key": "prmtact001prmtct002",
 		"name": "In-person industry conference/trade show",
 		"name_i18n": {
 			"en-US": "In-person industry conference/trade show"
@@ -18,8 +18,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact001prmtct003",
 		"externalReferenceCode": "Webinar",
+		"key": "prmtact001prmtct003",
 		"name": "Webinar",
 		"name_i18n": {
 			"en-US": "Webinar"
@@ -27,8 +27,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact002prmtct001",
 		"externalReferenceCode": "Email Campaign",
+		"key": "prmtact002prmtct001",
 		"name": "Email Campaign",
 		"name_i18n": {
 			"en-US": "Email Campaign"
@@ -36,8 +36,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact002prmtct002",
 		"externalReferenceCode": "Digital Advertising/Banner Ad",
+		"key": "prmtact002prmtct002",
 		"name": "Digital Advertising/Banner Ad",
 		"name_i18n": {
 			"en-US": "Digital Advertising/Banner Ad"
@@ -45,8 +45,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact002prmtct003",
 		"externalReferenceCode": "PPC or Google Ads Campaign",
+		"key": "prmtact002prmtct003",
 		"name": "PPC or Google Ads Campaign (needs approval by Liferay in advance)",
 		"name_i18n": {
 			"en-US": "PPC or Google Ads Campaign (needs approval by Liferay in advance)"
@@ -54,8 +54,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact002prmtct004",
 		"externalReferenceCode": "Social Media Marketing",
+		"key": "prmtact002prmtct004",
 		"name": "Social Media Marketing",
 		"name_i18n": {
 			"en-US": "Social Media Marketing"
@@ -63,8 +63,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact002prmtct005",
 		"externalReferenceCode": "Social Media Paid Advertising",
+		"key": "prmtact002prmtct005",
 		"name": "Social Media Paid Advertising",
 		"name_i18n": {
 			"en-US": "Social Media Paid Advertising"
@@ -72,8 +72,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct001",
 		"externalReferenceCode": "Blog or Article",
+		"key": "prmtact003prmtct001",
 		"name": "Blog or Article",
 		"name_i18n": {
 			"en-US": "Blog or Article"
@@ -81,8 +81,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct002",
 		"externalReferenceCode": "Business White Paper or eBook",
+		"key": "prmtact003prmtct002",
 		"name": "Business White Paper or eBook",
 		"name_i18n": {
 			"en-US": "Business White Paper or eBook"
@@ -90,8 +90,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct003",
 		"externalReferenceCode": "Infographic",
+		"key": "prmtact003prmtct003",
 		"name": "Infographic",
 		"name_i18n": {
 			"en-US": "Infographic"
@@ -99,8 +99,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct004",
 		"externalReferenceCode": "Social Content",
+		"key": "prmtact003prmtct004",
 		"name": "Social Content",
 		"name_i18n": {
 			"en-US": "Social Content"
@@ -108,8 +108,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct005",
 		"externalReferenceCode": "Success Story Case Study",
+		"key": "prmtact003prmtct005",
 		"name": "Success Story Case Study",
 		"name_i18n": {
 			"en-US": "Success Story Case Study"
@@ -117,8 +117,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct006",
 		"externalReferenceCode": "Technical White Paper",
+		"key": "prmtact003prmtct006",
 		"name": "Technical White Paper",
 		"name_i18n": {
 			"en-US": "Technical White Paper"
@@ -126,8 +126,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct007",
 		"externalReferenceCode": "Video",
+		"key": "prmtact003prmtct007",
 		"name": "Video",
 		"name_i18n": {
 			"en-US": "Video"
@@ -135,8 +135,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact003prmtct008",
 		"externalReferenceCode": "Web content",
+		"key": "prmtact003prmtct008",
 		"name": "Web content",
 		"name_i18n": {
 			"en-US": "Web content"
@@ -144,8 +144,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct001",
 		"externalReferenceCode": "Broadcast Advertising",
+		"key": "prmtact004prmtct001",
 		"name": "Broadcast Advertising",
 		"name_i18n": {
 			"en-US": "Broadcast Advertising"
@@ -153,8 +153,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct002",
 		"externalReferenceCode": "Campaign with Industry Publication",
+		"key": "prmtact004prmtct002",
 		"name": "Campaign with Industry Publication",
 		"name_i18n": {
 			"en-US": "Campaign with Industry Publication"
@@ -162,8 +162,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct003",
 		"externalReferenceCode": "Co-branded Merchandise",
+		"key": "prmtact004prmtct003",
 		"name": "Co-branded Merchandise",
 		"name_i18n": {
 			"en-US": "Co-branded Merchandise"
@@ -171,8 +171,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct004",
 		"externalReferenceCode": "Direct Mail",
+		"key": "prmtact004prmtct004",
 		"name": "Direct Mail",
 		"name_i18n": {
 			"en-US": "Direct Mail"
@@ -180,8 +180,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct005",
 		"externalReferenceCode": "List Purchase",
+		"key": "prmtact004prmtct005",
 		"name": "List Purchase",
 		"name_i18n": {
 			"en-US": "List Purchase"
@@ -189,8 +189,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct006",
 		"externalReferenceCode": "Outbound Telemarketing Sales",
+		"key": "prmtact004prmtct006",
 		"name": "Outbound Telemarketing Sales",
 		"name_i18n": {
 			"en-US": "Outbound Telemarketing Sales"
@@ -198,8 +198,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact004prmtct007",
 		"externalReferenceCode": "Print Advertising",
+		"key": "prmtact004prmtct007",
 		"name": "Print Advertising",
 		"name_i18n": {
 			"en-US": "Print Advertising"
@@ -207,8 +207,8 @@
 		"type": "string"
 	},
 	{
-		"key": "prmtact002prmtct006prmtact003prmtct009prmtact004prmtct008",
 		"externalReferenceCode": "Other",
+		"key": "prmtact002prmtct006prmtact003prmtct009prmtact004prmtct008",
 		"name": "Other",
 		"name_i18n": {
 			"en-US": "Other"

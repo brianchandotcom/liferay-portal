@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.suggestions.display.context.builder;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -26,8 +27,6 @@ import com.liferay.portal.search.web.internal.suggestions.display.context.Sugges
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Adam Brandizzi
@@ -146,15 +145,8 @@ public class SuggestionsPortletDisplayContextBuilder {
 	}
 
 	private List<SuggestionDisplayContext> _buildRelatedQueriesSuggestions() {
-		Stream<String> stream = _relatedQueriesSuggestions.stream();
-
-		return stream.map(
-			this::_buildSuggestionDisplayContext
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			_relatedQueriesSuggestions, this::_buildSuggestionDisplayContext);
 	}
 
 	private String _buildSearchURL(

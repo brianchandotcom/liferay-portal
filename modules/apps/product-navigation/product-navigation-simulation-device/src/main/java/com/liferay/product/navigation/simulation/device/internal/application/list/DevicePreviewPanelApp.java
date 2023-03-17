@@ -83,13 +83,17 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		super.setPortlet(portlet);
 	}
 
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.device)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		_servletContext = servletContext;
+	}
+
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	private boolean _hasPreviewInDevicePermission(
@@ -105,5 +109,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 
 	@Reference
 	private Language _language;
+
+	private ServletContext _servletContext;
 
 }

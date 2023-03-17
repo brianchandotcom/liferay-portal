@@ -716,10 +716,14 @@ Modal.propTypes = {
 		PropTypes.shape({
 			displayType: PropTypes.oneOf([
 				'danger',
+				'info',
 				'link',
+				null,
 				'primary',
 				'secondary',
+				'success',
 				'unstyled',
+				'warning',
 			]),
 			formId: PropTypes.string,
 			id: PropTypes.string,

@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -496,15 +495,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				return null;
 			}
 
-			StorageType storageType = StorageType.MEMORY_CLUSTERED;
-
-			if (schedulerEntry instanceof StorageTypeAware) {
-				StorageTypeAware storageTypeAware =
-					(StorageTypeAware)schedulerEntry;
-
-				storageType = storageTypeAware.getStorageType();
-			}
-
 			String destinationName = (String)serviceReference.getProperty(
 				"destination.name");
 
@@ -517,7 +507,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 			try {
 				schedule(
-					schedulerEntry.getTrigger(), storageType,
+					schedulerEntry.getTrigger(), StorageType.MEMORY_CLUSTERED,
 					schedulerEntry.getDescription(), destinationName, null);
 
 				_messageListenerServiceRegistrations.put(
@@ -561,15 +551,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			SchedulerEntry schedulerEntry =
 				schedulerEntryMessageListener.getSchedulerEntry();
 
-			StorageType storageType = StorageType.MEMORY_CLUSTERED;
-
-			if (schedulerEntry instanceof StorageTypeAware) {
-				StorageTypeAware storageTypeAware =
-					(StorageTypeAware)schedulerEntry;
-
-				storageType = storageTypeAware.getStorageType();
-			}
-
 			ClusterableContextThreadLocal.putThreadLocalContext(
 				SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, false);
 
@@ -577,7 +558,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 			try {
 				delete(
-					trigger.getJobName(), trigger.getGroupName(), storageType);
+					trigger.getJobName(), trigger.getGroupName(),
+					StorageType.MEMORY_CLUSTERED);
 			}
 			catch (SchedulerException schedulerException) {
 				_log.error(schedulerException);

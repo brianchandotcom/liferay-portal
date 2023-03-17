@@ -296,8 +296,9 @@ public class FragmentEntryLocalServiceImpl
 			throw new RequiredFragmentEntryException();
 		}
 
-		_fragmentEntryLinkPersistence.removeByFragmentEntryId(
-			fragmentEntry.getFragmentEntryId());
+		_fragmentEntryLinkLocalService.
+			deleteFragmentEntryLinksByFragmentEntryId(
+				fragmentEntry.getFragmentEntryId(), true);
 
 		// Resources
 

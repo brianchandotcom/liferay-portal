@@ -241,6 +241,24 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
+	@priority = 5
+	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
+		task ("When the user merged a subtask with status open") {
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+		}
+
+		task ("Then can see the merged subtask") {
+			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
 	@priority = 5
 	test AdminCanNotMergeOnlyOneSubtask {

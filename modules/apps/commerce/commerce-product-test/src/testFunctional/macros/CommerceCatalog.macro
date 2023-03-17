@@ -14,6 +14,23 @@ definition {
 			productTitle = ${productTitle});
 	}
 
+	macro editCatalogEntry {
+		ClickNoError(
+			key_value = ${catalogName},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Edit");
+
+		if (isSet(catalogLanguage)) {
+			Select(
+				key_title = "Default Catalog Language",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = ${catalogLanguage});
+		}
+
+		Button.clickSave();
+	}
+
 	macro openCatalogsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},

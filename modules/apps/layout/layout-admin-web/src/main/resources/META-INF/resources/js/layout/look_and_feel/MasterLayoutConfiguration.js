@@ -12,7 +12,8 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -105,13 +106,21 @@ export default function MasterLayoutConfiguration({
 					</ClayButton>
 				</ClayButton.Group>
 			) : (
-				<ClayButton
-					displayType="secondary"
-					onClick={handleChangeMasterButtonClick}
-					size="sm"
-				>
-					{Liferay.Language.get('change-master')}
-				</ClayButton>
+				<>
+					<div className="d-flex">
+						<ClayInput
+							readOnly
+							value={masterLayout.name}
+						></ClayInput>
+
+						<ClayButtonWithIcon
+							className="ml-2"
+							displayType="secondary"
+							onClick={handleChangeMasterButtonClick}
+							symbol="plus"
+						></ClayButtonWithIcon>
+					</div>
+				</>
 			)}
 		</>
 	);

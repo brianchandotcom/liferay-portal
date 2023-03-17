@@ -39,6 +39,48 @@ definition {
 		AssertConsoleTextPresent(value1 = "Stopping the server due to incorrect use of migrated portal properties");
 	}
 
+	@description = "LPS-176626: Verify friendly URL error is not present when start portal without auto-upgrade"
+	@priority = 3
+	test VerifyLayoutFriendlyURLErrorOnlyInUpgradeProcess {
+		property data.archive.type = "data-archive-reserved-friendly-url";
+		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "6.2.10.21";
+		property test.assert.warning.exceptions = "false";
+
+		Log.viewLogFileContentPresent(logContent = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AssertConsoleTextNotPresent(value1 = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
+	}
+
+	@description = "LPS-176626: Verify friendly URL error is present during auto-upgrade"
+	@priority = 4
+	test VerifyLayoutFriendlyURLErrorUsingAutoUpgrade {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-reserved-friendly-url";
+		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "6.2.10.21";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
+
+		AssertConsoleTextPresent(value1 = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
+
+		Portlet.shutdownServer();
+
+		SQL.executeMySQLStatement(mysqlStatement = "UPDATE LayoutFriendlyURL SET friendlyURL = '/abc' WHERE friendlyURL = '/a';");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/guest/abc");
+
+		AssertElementPresent(
+			key_pageName = "Test Page",
+			locator1 = "Home#PAGE");
+	}
+
 	@description = "LRQA-78467: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when enable AutoUpgrade on startup"
 	@priority = 3
 	test VerifyPropertiesIsExecutedUsingAutoUpgrade {

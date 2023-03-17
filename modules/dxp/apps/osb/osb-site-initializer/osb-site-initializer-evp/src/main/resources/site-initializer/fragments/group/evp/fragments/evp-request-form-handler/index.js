@@ -11,7 +11,10 @@
  * distribution rights of the Software.
  */
 
-const userId = parseInt(document.getElementById('userIdContainer').textContent);
+const userId = parseInt(
+	document.getElementById('user-id-container').textContent
+);
+const userInformation = [];
 
 function main() {
 	const requestType = document.querySelector('[name="requestType"]');
@@ -111,19 +114,20 @@ function handleDocumentClick(requestType) {
 	updateValue(requestType);
 }
 
-const userInformation = [];
-
 const getUser = async () => {
-	await fetch(`/o/headless-admin-user/v1.0/user-accounts/${userId}`, {
-		headers: {
-			'content-type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'GET',
-	})
-		.then((response) => response.json())
-		// eslint-disable-next-line no-console
-		.then((data) => userInformation.push(data));
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/user-accounts/${userId}`,
+		{
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'GET',
+		}
+	);
+
+	const data = await response.json();
+	userInformation.push(data);
 };
 
 getUser();
@@ -131,15 +135,14 @@ getUser();
 const grantInput = document.querySelector('input[name="grantAmount"]');
 const hoursInput = document.querySelector('input[name="totalHoursRequested"]');
 const grantInputDiv = grantInput.parentNode;
-grantInputDiv.style.position = 'relative';
 const hoursInputDiv = hoursInput.parentNode;
-
-const p = document.createElement('p');
-p.setAttribute('style', 'display:none');
-p.setAttribute('style', 'color:#a90f0f');
-p.setAttribute('class', 'error-msg');
+const newParagraph = document.createElement('p');
 const message = document.createTextNode('Text');
-p.appendChild(message);
+grantInputDiv.style.position = 'relative';
+newParagraph.setAttribute('style', 'display:none');
+newParagraph.setAttribute('style', 'color:#a90f0f');
+newParagraph.setAttribute('class', 'error-msg');
+newParagraph.appendChild(message);
 
 const compareGrants = async () => {
 	const grantInputValue = grantInput.value;
@@ -147,8 +150,8 @@ const compareGrants = async () => {
 	await getUser();
 
 	if (grantInputValue > userInformation[0].customFields[1].customValue.data) {
-		grantInputDiv.appendChild(p);
-		p.style.position = 'absolute';
+		grantInputDiv.appendChild(newParagraph);
+		newParagraph.style.position = 'absolute';
 
 		document.querySelector('.error-msg').innerText = 'No funds available.';
 		document.querySelector('.error-msg').style.display = 'block';
@@ -167,7 +170,7 @@ const compareHours = async () => {
 	await getUser();
 
 	if (hoursInputValue > userInformation[0].customFields[0].customValue.data) {
-		hoursInputDiv.appendChild(p);
+		hoursInputDiv.appendChild(newParagraph);
 
 		document.querySelector('.error-msg').innerText =
 			'No service hours available.';

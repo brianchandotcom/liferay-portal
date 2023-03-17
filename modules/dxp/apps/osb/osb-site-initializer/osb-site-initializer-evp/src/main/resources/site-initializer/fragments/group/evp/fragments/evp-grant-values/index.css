@@ -1,5 +1,12 @@
-#userIdContainer {
-	display: none;
+#available-funds {
+	font-weight: normal;
+	margin-bottom: 0px;
+	margin-left: 5px;
+}
+
+#available-hours {
+	font-weight: normal;
+	margin-left: 5px;
 }
 
 .funds-row {
@@ -11,13 +18,6 @@
 	font-weight: bold;
 }
 
-#available-funds {
-	font-weight: normal;
-	margin-bottom: 0px;
-	margin-left: 5px;
-}
-
-#available-hours {
-	font-weight: normal;
-	margin-left: 5px;
+#user-id-container {
+	display: none;
 }

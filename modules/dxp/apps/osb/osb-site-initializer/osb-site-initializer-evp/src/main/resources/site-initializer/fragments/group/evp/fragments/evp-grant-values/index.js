@@ -13,23 +13,32 @@
  */
 
 const grantLimit = [];
+const fundsLimit = [];
+const serviceHoursLimit = [];
+const requests = [];
+const userId = parseInt(
+	document.getElementById('user-id-container').textContent
+);
+const fundsRequestsByUserId = [];
+const totalFundsRequestedById = [];
+const serviceHoursRequestsByUserId = [];
+const totalHoursRequestedByUserId = [];
+const availableFunds = [];
+const availableServiceHours = [];
 
 const getGrantLimit = async () => {
-	await fetch(`/o/c/evpgrantlimits`, {
+	const response = await fetch(`/o/c/evpgrantlimits`, {
 		headers: {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
 		method: 'GET',
-	})
-		.then((response) => response.json())
-		.then((data) => grantLimit.push(data));
+	});
+	const data = await response.json();
+	grantLimit.push(data);
 };
 
 getGrantLimit();
-
-const fundsLimit = [];
-const serviceHoursLimit = [];
 
 const getFundsLimit = async () => {
 	await getGrantLimit();
@@ -46,41 +55,32 @@ const getServiceHoursLimit = async () => {
 getFundsLimit();
 getServiceHoursLimit();
 
-const requests = [];
-const userId = parseInt(document.getElementById('userIdContainer').textContent);
-
 const getRequests = async () => {
-	await fetch(`/o/c/evprequests`, {
+	const response = await fetch(`/o/c/evprequests`, {
 		headers: {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
 		method: 'GET',
-	})
-		.then((response) => response.json())
-		.then((data) => requests.push(data));
+	});
+
+	const data = await response.json();
+	requests.push(data);
 };
 
 getRequests();
 
-const fundsRequestsByUserId = [];
-const totalFundsRequestedById = [];
-const serviceHoursRequestsByUserId = [];
-const totalHoursRequestedByUserId = [];
-
 const getFundsRequestByUserId = async () => {
 	await getRequests();
 
-	requests[0].items.map((item) => {
-		if (
-			item.creator.id == userId &&
-			item.requestStatus.key !== 'rejected'
-		) {
-			fundsRequestsByUserId.push(item.grantAmount);
-		}
+	const filteredRequests = requests[0].items.filter(
+		(item) =>
+			item.creator.id == userId && item.requestStatus.key !== 'rejected'
+	);
 
-		return null;
-	});
+	filteredRequests.map((item) =>
+		fundsRequestsByUserId.push(item.grantAmount)
+	);
 
 	totalFundsRequestedById.push(
 		fundsRequestsByUserId.reduce((total, quantity) => total + quantity)
@@ -90,16 +90,14 @@ const getFundsRequestByUserId = async () => {
 const getServiceHoursByUserId = async () => {
 	await getRequests();
 
-	requests[0].items.map((item) => {
-		if (
-			item.creator.id == userId &&
-			item.requestStatus.key !== 'rejected'
-		) {
-			serviceHoursRequestsByUserId.push(item.totalHoursRequested);
-		}
+	const filteredRequests = requests[0].items.filter(
+		(item) =>
+			item.creator.id == userId && item.requestStatus.key !== 'rejected'
+	);
 
-		return null;
-	});
+	filteredRequests.map((item) =>
+		serviceHoursRequestsByUserId.push(item.totalHoursRequested)
+	);
 
 	totalHoursRequestedByUserId.push(
 		serviceHoursRequestsByUserId.reduce(
@@ -110,9 +108,6 @@ const getServiceHoursByUserId = async () => {
 
 getFundsRequestByUserId();
 getServiceHoursByUserId();
-
-const availableFunds = [];
-const availableServiceHours = [];
 
 const getAvailableFunds = async () => {
 	await Promise.all([getFundsRequestByUserId(), getFundsLimit()]);
@@ -147,53 +142,46 @@ const getAvailableHours = async () => {
 getAvailableHours();
 
 const updateUser = async () => {
-	await Promise.all([
-		fetch(`/o/headless-admin-user/v1.0/user-accounts/${userId}`, {
-			body: JSON.stringify({
-				customFields: [
-					{
-						customValue: {
-							data: availableServiceHours[0],
-						},
-						dataType: 'Integer',
-						name: 'Service Hours Available',
-					},
-					{
-						customValue: {
-							data: availableFunds[0],
-						},
-						dataType: 'Integer',
-						name: 'Funds Available',
-					},
-				],
-			}),
+	await Promise.all([getAvailableFunds(), getAvailableHours()]);
+
+	const customFields = [
+		{
+			customValue: {
+				data: availableServiceHours[0],
+			},
+			dataType: 'Integer',
+			name: 'Service Hours Available',
+		},
+		{
+			customValue: {
+				data: availableFunds[0],
+			},
+			dataType: 'Integer',
+			name: 'Funds Available',
+		},
+	];
+
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/user-accounts/${userId}`,
+		{
+			body: JSON.stringify({customFields}),
 			headers: {
 				'content-type': 'application/json',
 				'x-csrf-token': Liferay.authToken,
 			},
 			method: 'PATCH',
-		}).then((response) => response.json()),
-	]);
+		}
+	);
+
+	const data = await response.json();
+
+	return data;
 };
 
 const updateAvailableValues = async () => {
-	await Promise.all([getAvailableHours(), getAvailableFunds()]).then(() => {
-		updateUser();
-	});
+	await Promise.all([getAvailableHours(), getAvailableFunds()]);
+
+	updateUser();
 };
 
-const getUser = async () => {
-	await Promise.all([
-		updateAvailableValues(),
-
-		fetch(`/o/headless-admin-user/v1.0/user-accounts/${userId}`, {
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		}).then((response) => response.json()),
-	]);
-};
-
-getUser();
+updateAvailableValues();

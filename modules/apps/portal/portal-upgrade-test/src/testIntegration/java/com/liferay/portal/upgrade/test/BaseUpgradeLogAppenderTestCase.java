@@ -114,8 +114,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_originalFiltered = false;
 		_originalModuleSchemaVersionsMap.clear();
 		_originalUpgradeProcessMessages.clear();
-		_originalUpgradeStatus = "Pending";
-		_originalUpgradeType = "Not calculated";
+		_originalStatus = "Pending";
+		_originalType = "Not calculated";
 		_originalWarningMessages.clear();
 	}
 
@@ -537,13 +537,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_originalFiltered = ReflectionTestUtil.getFieldValue(
 			DBUpgradeStatus.class, "_filtered");
 		_originalModuleSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_moduleSchemaVersionsMap");
+			DBUpgradeStatus.class, "_servletSchemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
 			DBUpgradeStatus.class, "_upgradeProcessMessages");
-		_originalUpgradeStatus = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_upgradeStatus");
-		_originalUpgradeType = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_upgradeType");
+		_originalStatus = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_status");
+		_originalType = ReflectionTestUtil.getFieldValue(
+			DBUpgradeStatus.class, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
 			DBUpgradeStatus.class, "_warningMessages");
 	}
@@ -660,13 +660,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;
 	private static boolean _originalFiltered;
 	private static Map<String, Object> _originalModuleSchemaVersionsMap;
+	private static String _originalStatus;
+	private static String _originalType;
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static Map<String, ArrayList<String>>
 		_originalUpgradeProcessMessages;
 	private static boolean _originalUpgradeReportEnabled;
-	private static String _originalUpgradeStatus;
-	private static String _originalUpgradeType;
 	private static Map<String, Map<String, Integer>> _originalWarningMessages;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");

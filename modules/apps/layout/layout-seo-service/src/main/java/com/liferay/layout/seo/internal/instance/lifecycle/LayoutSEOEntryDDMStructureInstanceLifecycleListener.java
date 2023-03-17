@@ -48,15 +48,15 @@ public class LayoutSEOEntryDDMStructureInstanceLifecycleListener
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			company.getCompanyId());
 
-		serviceContext.setUserId(defaultUserId);
+		serviceContext.setUserId(guestUserId);
 
 		Class<?> clazz = getClass();
 
 		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, group.getGroupId(),
+			guestUserId, group.getGroupId(),
 			_classNameLocalService.getClassNameId(LayoutSEOEntry.class),
 			clazz.getClassLoader(),
 			"com/liferay/layout/seo/internal/instance/lifecycle/dependencies" +

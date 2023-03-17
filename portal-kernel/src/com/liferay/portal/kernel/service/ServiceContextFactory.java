@@ -234,7 +234,7 @@ public class ServiceContextFactory {
 			}
 
 			if (user != null) {
-				serviceContext.setSignedIn(!user.isDefaultUser());
+				serviceContext.setSignedIn(!user.isGuestUser());
 				serviceContext.setUserId(user.getUserId());
 			}
 			else {

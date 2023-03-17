@@ -152,7 +152,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			() -> stagedActions && !user.isDefaultUser(),
+			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.setIcon("move-folder");
@@ -161,7 +161,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			() -> stagedActions && !user.isDefaultUser(),
+			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "editTags");
 
@@ -177,7 +177,7 @@ public class DLAdminManagementToolbarDisplayContext
 			}
 		).add(
 			() ->
-				stagedActions && !user.isDefaultUser() &&
+				stagedActions && !user.isGuestUser() &&
 				_hasValidAssetVocabularies(_themeDisplay.getScopeGroupId()),
 			dropdownItem -> {
 				dropdownItem.putData("action", "editCategories");
@@ -193,7 +193,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			() -> !user.isDefaultUser(),
+			() -> !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
 				dropdownItem.setIcon("trash");
@@ -202,7 +202,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			() -> stagedActions && !user.isDefaultUser(),
+			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "checkin");
 				dropdownItem.setIcon("unlock");
@@ -211,7 +211,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(false);
 			}
 		).add(
-			() -> stagedActions && !user.isDefaultUser(),
+			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "checkout");
 				dropdownItem.setIcon("lock");
@@ -221,7 +221,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(false);
 			}
 		).add(
-			() -> stagedActions && !user.isDefaultUser(),
+			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "permissions");
 				dropdownItem.setIcon("password-policies");

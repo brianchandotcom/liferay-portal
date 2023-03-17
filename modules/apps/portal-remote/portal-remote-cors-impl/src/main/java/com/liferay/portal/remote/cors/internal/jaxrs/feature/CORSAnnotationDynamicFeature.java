@@ -146,7 +146,7 @@ public class CORSAnnotationDynamicFeature implements DynamicFeature {
 
 			User user = permissionChecker.getUser();
 
-			return user.isDefaultUser();
+			return user.isGuestUser();
 		}
 
 		private final CORSSupport _corsSupport;

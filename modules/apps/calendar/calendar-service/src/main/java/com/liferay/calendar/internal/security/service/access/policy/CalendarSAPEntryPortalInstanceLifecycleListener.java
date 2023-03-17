@@ -74,7 +74,7 @@ public class CalendarSAPEntryPortalInstanceLifecycleListener
 			"service-access-policy-entry-default-calendar-title");
 
 		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId),
+			_userLocalService.getGuestUserId(companyId),
 			allowedServiceSignatures, true, true, _SAP_ENTRY_NAME, titleMap,
 			new ServiceContext());
 	}

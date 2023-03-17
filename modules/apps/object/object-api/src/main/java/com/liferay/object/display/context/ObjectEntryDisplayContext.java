@@ -62,7 +62,7 @@ public interface ObjectEntryDisplayContext {
 	public Map<String, String> getRelationshipContextParams()
 		throws PortalException;
 
-	public boolean isDefaultUser();
+	public boolean isGuestUser();
 
 	public boolean isReadOnly();
 

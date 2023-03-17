@@ -95,7 +95,7 @@ public class ContentLayoutTypeControllerTest {
 
 		layoutTypeController.includeLayoutContent(
 			_getHttpServletRequest(
-				_userLocalService.getDefaultUser(_group.getCompanyId())),
+				_userLocalService.getGuestUser(_group.getCompanyId())),
 			new MockHttpServletResponse(),
 			LayoutTestUtil.addTypeContentLayout(_group));
 	}
@@ -144,7 +144,7 @@ public class ContentLayoutTypeControllerTest {
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
 				_getHttpServletRequest(
-					_userLocalService.getDefaultUser(_group.getCompanyId())),
+					_userLocalService.getGuestUser(_group.getCompanyId())),
 				new MockHttpServletResponse(), layout));
 	}
 

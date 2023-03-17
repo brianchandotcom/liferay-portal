@@ -351,7 +351,7 @@ public class DepotPermissionCheckerWrapperTest {
 
 	@Test
 	public void testIsGroupAdminWithGuestUser() throws PortalException {
-		User user = _userLocalService.getDefaultUser(
+		User user = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
@@ -461,7 +461,7 @@ public class DepotPermissionCheckerWrapperTest {
 
 	@Test
 	public void testIsGroupMemberWithGuestUser() throws PortalException {
-		User user = _userLocalService.getDefaultUser(
+		User user = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
@@ -573,7 +573,7 @@ public class DepotPermissionCheckerWrapperTest {
 
 	@Test
 	public void testIsGroupOwnerWithGuestUser() throws PortalException {
-		User user = _userLocalService.getDefaultUser(
+		User user = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(

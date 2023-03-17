@@ -103,7 +103,7 @@ public class MicroblogsWebUtil {
 			new UserFirstNameComparator(true));
 
 		for (User user : users) {
-			if (user.isDefaultUser() || (userId == user.getUserId())) {
+			if (user.isGuestUser() || (userId == user.getUserId())) {
 				continue;
 			}
 

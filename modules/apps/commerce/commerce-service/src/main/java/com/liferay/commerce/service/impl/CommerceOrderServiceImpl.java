@@ -1044,7 +1044,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		User user = getUser();
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return _commerceAccountLocalService.getGuestCommerceAccount(
 				user.getCompanyId());
 		}

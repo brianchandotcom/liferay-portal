@@ -395,7 +395,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 
 		User user = _kaleoFormsAdminRequestHelper.getUser();
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			_searchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
 		}

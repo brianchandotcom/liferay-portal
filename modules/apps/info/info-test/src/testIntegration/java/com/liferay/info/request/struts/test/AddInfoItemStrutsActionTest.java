@@ -150,7 +150,7 @@ public class AddInfoItemStrutsActionTest {
 
 	@Test
 	public void testAddInfoItemAttachmentWithGuestRole() throws Exception {
-		_user = _userLocalService.getDefaultUser(_group.getCompanyId());
+		_user = _userLocalService.getGuestUser(_group.getCompanyId());
 
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);

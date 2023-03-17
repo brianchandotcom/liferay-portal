@@ -325,7 +325,7 @@ public class UserGroupCascadeReindexUsersTest {
 	}
 
 	private void _translate(User user) {
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			_getDocument(_indexer, user);
 		}
 	}

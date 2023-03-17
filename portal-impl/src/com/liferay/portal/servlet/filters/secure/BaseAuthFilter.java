@@ -308,7 +308,7 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 
 			initThreadLocals(user);
 
-			if (!user.isDefaultUser()) {
+			if (!user.isGuestUser()) {
 				String authType = ParamUtil.getString(
 					httpServletRequest, "authType");
 

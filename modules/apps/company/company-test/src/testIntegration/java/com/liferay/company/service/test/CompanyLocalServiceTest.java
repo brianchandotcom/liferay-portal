@@ -200,7 +200,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Organization companyOrganization =
 			OrganizationLocalServiceUtil.addOrganization(
@@ -242,7 +242,7 @@ public class CompanyLocalServiceTest {
 
 		Company company = addCompany();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(
+		long userId = UserLocalServiceUtil.getGuestUserId(
 			company.getCompanyId());
 
 		Group companyGroup = company.getGroup();
@@ -273,7 +273,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Group guestGroup = GroupLocalServiceUtil.getGroup(
 			companyId, GroupConstants.GUEST);
@@ -305,7 +305,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -348,7 +348,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -381,7 +381,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Group parentGroup = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -445,7 +445,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -477,7 +477,7 @@ public class CompanyLocalServiceTest {
 
 		Company company = addCompany();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(
+		long userId = UserLocalServiceUtil.getGuestUserId(
 			company.getCompanyId());
 
 		Group group = GroupTestUtil.addGroup(
@@ -680,7 +680,7 @@ public class CompanyLocalServiceTest {
 
 		Company company = addCompany();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(
+		long userId = UserLocalServiceUtil.getGuestUserId(
 			company.getCompanyId());
 
 		Group group = GroupTestUtil.addGroup(
@@ -843,7 +843,7 @@ public class CompanyLocalServiceTest {
 	public void testUpdateDisplay() throws Exception {
 		Company company = addCompany();
 
-		User user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
+		User user = UserLocalServiceUtil.getGuestUser(company.getCompanyId());
 
 		UserLocalServiceUtil.updateUser(user);
 
@@ -852,7 +852,7 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceUtil.updateDisplay(
 			company.getCompanyId(), languageId, "CET");
 
-		user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
+		user = UserLocalServiceUtil.getGuestUser(company.getCompanyId());
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 
@@ -866,7 +866,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = UserLocalServiceUtil.getGuestUserId(companyId);
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);

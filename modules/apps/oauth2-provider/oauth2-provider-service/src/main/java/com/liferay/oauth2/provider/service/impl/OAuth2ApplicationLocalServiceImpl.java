@@ -556,8 +556,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			serviceContext);
 
 		Folder folder = _portletFileRepository.addPortletFolder(
-			_userLocalService.getDefaultUserId(
-				oAuth2Application.getCompanyId()),
+			_userLocalService.getGuestUserId(oAuth2Application.getCompanyId()),
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "icons",
 			serviceContext);

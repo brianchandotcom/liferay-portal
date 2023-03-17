@@ -160,7 +160,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 
 		User user = getUser();
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return commerceAccountLocalService.getGuestCommerceAccount(
 				user.getCompanyId());
 		}
@@ -180,7 +180,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 
 		User user = getUser();
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return commerceAccountLocalService.getGuestCommerceAccount(
 				user.getCompanyId());
 		}

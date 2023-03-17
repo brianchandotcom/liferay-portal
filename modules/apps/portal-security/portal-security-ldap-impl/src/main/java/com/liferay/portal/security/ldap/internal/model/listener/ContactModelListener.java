@@ -73,7 +73,7 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 
 		User user = _userLocalService.fetchUser(contact.getUserId());
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return;
 		}
 

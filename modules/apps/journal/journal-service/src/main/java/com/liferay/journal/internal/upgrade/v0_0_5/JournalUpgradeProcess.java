@@ -114,7 +114,7 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 
 		Group group = _groupLocalService.getCompanyGroup(companyId);
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
 
 		Class<?> clazz = getClass();
 
@@ -127,7 +127,7 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 
 		try {
 			_defaultDDMStructureHelper.addDDMStructures(
-				defaultUserId, group.getGroupId(),
+				guestUserId, group.getGroupId(),
 				PortalUtil.getClassNameId(JournalArticle.class),
 				clazz.getClassLoader(),
 				"com/liferay/journal/internal/upgrade/v1_0_0/dependencies" +

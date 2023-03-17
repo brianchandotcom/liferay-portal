@@ -375,11 +375,11 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			return new Date(Long.MIN_VALUE);
 		}
 
-		User defaultUser = _userLocalService.getDefaultUser(
+		User guestUser = _userLocalService.getGuestUser(
 			commerceVirtualOrderItem.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			defaultUser.getTimeZone());
+			guestUser.getTimeZone());
 
 		calendar.setTimeInMillis(calendar.getTimeInMillis() + duration);
 

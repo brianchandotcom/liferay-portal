@@ -270,7 +270,7 @@
 												"must": [
 													{
 														"term": {
-															"defaultUser": false
+															"type": 1
 														}
 													}
 												]
@@ -1399,7 +1399,7 @@
 																"must": [
 																	{
 																		"term": {
-																			"defaultUser": false
+																			"type": 1
 																		}
 																	}
 																]

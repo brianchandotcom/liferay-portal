@@ -853,7 +853,7 @@ public class PortletPreferencesLocalServiceImpl
 		User user = _userPersistence.fetchByPrimaryKey(
 			PrincipalThreadLocal.getUserId());
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return layoutRevision.getLayoutRevisionId();
 		}
 

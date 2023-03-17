@@ -66,7 +66,7 @@ public class ObjectFieldServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
@@ -96,7 +96,7 @@ public class ObjectFieldServiceTest {
 	public void testAddCustomObjectField() throws Exception {
 		try {
 			_testAddCustomObjectField(
-				_objectDefinition.getObjectDefinitionId(), _defaultUser);
+				_objectDefinition.getObjectDefinitionId(), _guestUser);
 
 			Assert.fail();
 		}
@@ -105,13 +105,13 @@ public class ObjectFieldServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
 		try {
 			_testAddCustomObjectField(
-				_systemObjectDefinition.getObjectDefinitionId(), _defaultUser);
+				_systemObjectDefinition.getObjectDefinitionId(), _guestUser);
 
 			Assert.fail();
 		}
@@ -121,7 +121,7 @@ public class ObjectFieldServiceTest {
 			Assert.assertTrue(
 				message.contains(
 					StringBundler.concat(
-						"User ", _defaultUser.getUserId(),
+						"User ", _guestUser.getUserId(),
 						" must have EXTEND_SYSTEM_OBJECT_DEFINITION ",
 						"permission for")));
 		}
@@ -133,7 +133,7 @@ public class ObjectFieldServiceTest {
 	@Test
 	public void testDeleteObjectField() throws Exception {
 		try {
-			_testDeleteObjectField(_defaultUser);
+			_testDeleteObjectField(_guestUser);
 
 			Assert.fail();
 		}
@@ -142,7 +142,7 @@ public class ObjectFieldServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -152,14 +152,14 @@ public class ObjectFieldServiceTest {
 	@Test
 	public void testGetObjectField() throws Exception {
 		try {
-			_testGetObjectField(_defaultUser);
+			_testGetObjectField(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -169,7 +169,7 @@ public class ObjectFieldServiceTest {
 	@Test
 	public void testUpdateObjectField() throws Exception {
 		try {
-			_testUpdateObjectField(_defaultUser);
+			_testUpdateObjectField(_guestUser);
 
 			Assert.fail();
 		}
@@ -178,7 +178,7 @@ public class ObjectFieldServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -282,7 +282,7 @@ public class ObjectFieldServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

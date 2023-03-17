@@ -571,7 +571,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			group.getCompanyId());
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -581,7 +581,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		serviceContext.setScopeGroupId(groupId);
 
 		WikiNode node = wikiNodeLocalService.addDefaultNode(
-			defaultUserId, serviceContext);
+			guestUserId, serviceContext);
 
 		return ListUtil.fromArray(node);
 	}

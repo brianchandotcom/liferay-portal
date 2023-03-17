@@ -128,7 +128,7 @@ public class ObjectEntryModelResourcePermission
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return permissionChecker.hasPermission(
 				objectEntry.getGroupId(), _modelName,
 				objectEntry.getObjectEntryId(), actionId);

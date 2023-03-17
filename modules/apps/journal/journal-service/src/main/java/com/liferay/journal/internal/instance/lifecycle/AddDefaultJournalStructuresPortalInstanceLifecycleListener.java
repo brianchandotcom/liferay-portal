@@ -67,15 +67,15 @@ public class AddDefaultJournalStructuresPortalInstanceLifecycleListener
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			company.getCompanyId());
 
-		serviceContext.setUserId(defaultUserId);
+		serviceContext.setUserId(guestUserId);
 
 		Class<?> clazz = getClass();
 
 		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, group.getGroupId(),
+			guestUserId, group.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class),
 			clazz.getClassLoader(),
 			"com/liferay/journal/internal/upgrade/v1_0_0/dependencies" +

@@ -336,8 +336,6 @@ public class FieldDisplayContext {
 		).put(
 			"createDate", "Date"
 		).put(
-			"defaultUser", "Boolean"
-		).put(
 			"emailAddress", "String"
 		).put(
 			"emailAddressVerified", "Boolean"
@@ -373,6 +371,8 @@ public class FieldDisplayContext {
 			"status", "Integer"
 		).put(
 			"timeZoneId", "String"
+		).put(
+			"type", "Integer"
 		).put(
 			"userId", "Long"
 		).put(

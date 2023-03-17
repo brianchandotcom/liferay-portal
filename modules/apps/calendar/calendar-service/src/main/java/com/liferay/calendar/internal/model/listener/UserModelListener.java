@@ -53,7 +53,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			String name = calendarResource.getName(LocaleUtil.getSiteDefault());
 
 			if (Objects.equals(name, user.getFullName()) ||
-				(user.isDefaultUser() && name.equals(GroupConstants.GUEST))) {
+				(user.isGuestUser() && name.equals(GroupConstants.GUEST))) {
 
 				return;
 			}

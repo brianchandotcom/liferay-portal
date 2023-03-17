@@ -604,7 +604,7 @@ public class KaleoDesignerDisplayContext {
 		User user = _userLocalService.fetchUser(
 			kaleoDefinitionVersion.getUserId());
 
-		if ((user == null) || user.isDefaultUser() ||
+		if ((user == null) || user.isGuestUser() ||
 			Validator.isNull(user.getFullName())) {
 
 			return null;

@@ -94,7 +94,7 @@ public class PermissionsPortletConfigurationIcon
 
 		User user = themeDisplay.getUser();
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return false;
 		}
 

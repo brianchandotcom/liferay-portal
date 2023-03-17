@@ -132,7 +132,7 @@ public class MessageBoardMessageDTOConverter
 				setCreatorStatistics(
 					() -> {
 						if (mbMessage.isAnonymous() || (user == null) ||
-							user.isDefaultUser()) {
+							user.isGuestUser()) {
 
 							return null;
 						}

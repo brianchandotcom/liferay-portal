@@ -53,7 +53,7 @@ public class AnalyticsUsersManager {
 	public int getCompanyUsersCount(long companyId) {
 		if (!_isIndexerEnabled()) {
 			int activeUsersCount = _userLocalService.getUsersCount(
-				companyId, false, WorkflowConstants.STATUS_APPROVED);
+				companyId, WorkflowConstants.STATUS_APPROVED);
 
 			int analyticsAdministratorsCount = 0;
 

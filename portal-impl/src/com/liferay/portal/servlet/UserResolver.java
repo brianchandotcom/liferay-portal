@@ -58,7 +58,7 @@ public class UserResolver {
 			}
 
 			if (companyId != 0) {
-				user = UserLocalServiceUtil.getDefaultUser(companyId);
+				user = UserLocalServiceUtil.getGuestUser(companyId);
 			}
 		}
 

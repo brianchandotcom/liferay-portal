@@ -575,24 +575,23 @@ public class GroupServiceTest {
 		Company company = _companyLocalService.getCompany(
 			_group.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
-		String languageId = defaultUser.getLanguageId();
+		String languageId = guestUser.getLanguageId();
 
 		try {
-			defaultUser.setLanguageId(
-				_language.getLanguageId(LocaleUtil.BRAZIL));
+			guestUser.setLanguageId(_language.getLanguageId(LocaleUtil.BRAZIL));
 
-			defaultUser = _userLocalService.updateUser(defaultUser);
+			guestUser = _userLocalService.updateUser(guestUser);
 
 			Assert.assertEquals(
 				LocaleUtil.BRAZIL,
 				_portal.getSiteDefaultLocale(company.getGroupId()));
 		}
 		finally {
-			defaultUser.setLanguageId(languageId);
+			guestUser.setLanguageId(languageId);
 
-			_userLocalService.updateUser(defaultUser);
+			_userLocalService.updateUser(guestUser);
 		}
 	}
 
@@ -707,24 +706,23 @@ public class GroupServiceTest {
 		Company company = _companyLocalService.getCompany(
 			_group.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
-		String languageId = defaultUser.getLanguageId();
+		String languageId = guestUser.getLanguageId();
 
 		try {
-			defaultUser.setLanguageId(
-				_language.getLanguageId(LocaleUtil.CHINA));
+			guestUser.setLanguageId(_language.getLanguageId(LocaleUtil.CHINA));
 
-			defaultUser = _userLocalService.updateUser(defaultUser);
+			guestUser = _userLocalService.updateUser(guestUser);
 
 			Assert.assertEquals(
 				LocaleUtil.CHINA,
 				_portal.getSiteDefaultLocale(_group.getGroupId()));
 		}
 		finally {
-			defaultUser.setLanguageId(languageId);
+			guestUser.setLanguageId(languageId);
 
-			_userLocalService.updateUser(defaultUser);
+			_userLocalService.updateUser(guestUser);
 		}
 	}
 

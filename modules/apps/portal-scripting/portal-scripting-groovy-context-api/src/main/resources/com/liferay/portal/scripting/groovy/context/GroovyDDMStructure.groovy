@@ -45,7 +45,7 @@ class GroovyDDMStructure {
 		}
 
 		ddmStructure = DDMStructureLocalServiceUtil.addStructure(
-			scriptingContext.getDefaultUserId(), groovySite.group.getGroupId(),
+			scriptingContext.getGuestUserId(), groovySite.group.getGroupId(),
 			0, ClassNameLocalServiceUtil.getClassNameId(DDLRecordSet.class),
 			null, GroovyScriptingContext.getLocalizationMap(name),
 			GroovyScriptingContext.getLocalizationMap(description), xsd, "xml",

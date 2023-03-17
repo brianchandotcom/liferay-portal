@@ -277,7 +277,7 @@ public class MessageBoardAttachmentResourceTest
 	private MBMessage _addMBMessage() throws Exception {
 		return MBTestUtil.addMessage(
 			testGroup.getGroupId(),
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 

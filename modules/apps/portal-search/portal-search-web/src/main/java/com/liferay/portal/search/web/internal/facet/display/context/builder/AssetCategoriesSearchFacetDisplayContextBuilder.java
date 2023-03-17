@@ -378,7 +378,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 	private List<Tuple> _collectBuckets(Facet facet) {
 		if (facet == null) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		FacetCollector facetCollector = facet.getFacetCollector();

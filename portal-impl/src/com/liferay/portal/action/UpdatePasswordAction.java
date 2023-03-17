@@ -289,9 +289,7 @@ public class UpdatePasswordAction implements Action {
 			UserLocalServiceUtil.updatePassword(
 				userId, password1, password2, passwordReset);
 
-			String defaultAdminPassword = PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-			if (Validator.isNull(defaultAdminPassword)) {
+			if (Validator.isNull(PropsValues.DEFAULT_ADMIN_PASSWORD)) {
 				User user = UserLocalServiceUtil.getUser(userId);
 
 				user.setReminderQueryAnswer(null);

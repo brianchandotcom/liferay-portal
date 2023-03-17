@@ -91,7 +91,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addAssetEntry(
-			long assetCategoryId, long classNameId, long defaultUserId,
+			long assetCategoryId, long classNameId, long guestUserId,
 			ResultSet resultSet)
 		throws Exception {
 
@@ -108,7 +108,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		Date createDate = resultSet.getDate("createDate");
 
 		if (_userLocalService.fetchUser(userId) == null) {
-			userId = defaultUserId;
+			userId = guestUserId;
 		}
 
 		assetEntry = _assetEntryLocalService.updateEntry(
@@ -133,7 +133,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
-					long defaultUserId = _userLocalService.getDefaultUserId(
+					long guestUserId = _userLocalService.getGuestUserId(
 						companyId);
 
 					try (PreparedStatement preparedStatement =
@@ -148,7 +148,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 						while (resultSet.next()) {
 							_addAssetEntry(
-								0, classNameId, defaultUserId, resultSet);
+								0, classNameId, guestUserId, resultSet);
 						}
 					}
 				});
@@ -156,7 +156,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addJournalFeedAssetEntries(
-			long classNameId, long companyId, long defaultUserId,
+			long classNameId, long companyId, long guestUserId,
 			Map<String, Long> journalFeedTypesMap)
 		throws Exception {
 
@@ -180,7 +180,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 				}
 
 				_addAssetEntry(
-					assetCategoryId, classNameId, defaultUserId, resultSet);
+					assetCategoryId, classNameId, guestUserId, resultSet);
 			}
 		}
 	}
@@ -207,7 +207,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 						LocaleThreadLocal.setDefaultLocale(company.getLocale());
 
-						long userId = _userLocalService.getDefaultUserId(
+						long userId = _userLocalService.getGuestUserId(
 							company.getCompanyId());
 
 						ServiceContext serviceContext = new ServiceContext();

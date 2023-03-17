@@ -272,7 +272,7 @@ public abstract class ExtRepositoryModelAdapter<T>
 
 		if (user == null) {
 			try {
-				user = UserLocalServiceUtil.getDefaultUser(getCompanyId());
+				user = UserLocalServiceUtil.getGuestUser(getCompanyId());
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

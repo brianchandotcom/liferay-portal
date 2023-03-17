@@ -100,7 +100,7 @@ public class CommerceMediaServlet extends HttpServlet {
 			User user = _portal.getUser(httpServletRequest);
 
 			if (user == null) {
-				user = _userLocalService.getDefaultUser(
+				user = _userLocalService.getGuestUser(
 					_portal.getCompanyId(httpServletRequest));
 			}
 

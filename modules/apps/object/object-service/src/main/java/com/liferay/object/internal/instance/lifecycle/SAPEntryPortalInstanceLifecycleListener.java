@@ -60,7 +60,7 @@ public class SAPEntryPortalInstanceLifecycleListener
 		}
 
 		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId),
+			_userLocalService.getGuestUserId(companyId),
 			ObjectSAPConstants.ALLOWED_SERVICE_SIGNATURES, true, true,
 			ObjectSAPConstants.SAP_ENTRY_NAME,
 			ResourceBundleUtil.getLocalizationMap(

@@ -66,19 +66,19 @@ public class CommercePaymentHttpHelperImpl
 
 			Company company = _portal.getCompany(httpServletRequest);
 
-			User defaultUser = company.getGuestUser();
+			User guestUser = company.getGuestUser();
 
 			String orderGuestToken = _getGuestToken(
 				company, commerceOrder.getCommerceOrderId());
 
 			if (!guestToken.equals(orderGuestToken)) {
 				throw new PrincipalException.MustHavePermission(
-					defaultUser.getUserId(), CommerceOrder.class.getName(),
+					guestUser.getUserId(), CommerceOrder.class.getName(),
 					commerceOrder.getCommerceOrderId(), ActionKeys.VIEW);
 			}
 
 			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(defaultUser));
+				PermissionCheckerFactoryUtil.create(guestUser));
 		}
 		else {
 			PermissionThreadLocal.setPermissionChecker(

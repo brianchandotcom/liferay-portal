@@ -59,7 +59,7 @@ public class ObjectLayoutServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
@@ -79,7 +79,7 @@ public class ObjectLayoutServiceTest {
 	@Test
 	public void testAddObjectLayout() throws Exception {
 		try {
-			_testAddObjectLayout(_defaultUser);
+			_testAddObjectLayout(_guestUser);
 
 			Assert.fail();
 		}
@@ -88,7 +88,7 @@ public class ObjectLayoutServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -98,14 +98,14 @@ public class ObjectLayoutServiceTest {
 	@Test
 	public void testGetObjectLayout() throws Exception {
 		try {
-			_testGetObjectLayout(_defaultUser);
+			_testGetObjectLayout(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -115,7 +115,7 @@ public class ObjectLayoutServiceTest {
 	@Test
 	public void testUpdateObjectLayout() throws Exception {
 		try {
-			_testUpdateObjectLayout(_defaultUser);
+			_testUpdateObjectLayout(_guestUser);
 
 			Assert.fail();
 		}
@@ -124,7 +124,7 @@ public class ObjectLayoutServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -201,7 +201,7 @@ public class ObjectLayoutServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

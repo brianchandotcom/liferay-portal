@@ -562,7 +562,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 				element.attributeValue("default-user"));
 
 			if (defaultUser) {
-				ownerId = _userLocalService.getDefaultUserId(companyId);
+				ownerId = _userLocalService.getGuestUserId(companyId);
 			}
 
 			javax.portlet.PortletPreferences jxPortletPreferences =

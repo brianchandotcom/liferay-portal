@@ -75,7 +75,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 		try {
 			return createSearchLayoutPrototype(
-				companyId, userLocalService.getDefaultUserId(companyId));
+				companyId, userLocalService.getGuestUserId(companyId));
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;
@@ -138,7 +138,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	protected Layout createSearchLayoutPrototype(
-			long companyId, long defaultUserId)
+			long companyId, long guestUserId)
 		throws Exception {
 
 		for (LayoutPrototype layoutPrototype :
@@ -161,7 +161,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 		LayoutPrototype layoutPrototype =
 			layoutPrototypeLocalService.addLayoutPrototype(
-				defaultUserId, companyId, _getSearchTitleLocalizationMap(),
+				guestUserId, companyId, _getSearchTitleLocalizationMap(),
 				_getSearchDescriptionLocalizationMap(), true,
 				new ServiceContext());
 

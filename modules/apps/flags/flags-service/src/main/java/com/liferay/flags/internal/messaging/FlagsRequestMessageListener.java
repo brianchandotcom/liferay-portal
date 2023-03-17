@@ -131,7 +131,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		Locale locale = LocaleUtil.getDefault();
 
-		if (reporterUser.isDefaultUser()) {
+		if (reporterUser.isGuestUser()) {
 			reporterUserName = _language.get(locale, "anonymous");
 		}
 		else {
@@ -148,7 +148,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		User reportedUser = _userLocalService.getUserById(
 			flagsRequest.getReportedUserId());
 
-		if (reportedUser.isDefaultUser()) {
+		if (reportedUser.isGuestUser()) {
 			reportedUserName = group.getDescriptiveName();
 		}
 		else {

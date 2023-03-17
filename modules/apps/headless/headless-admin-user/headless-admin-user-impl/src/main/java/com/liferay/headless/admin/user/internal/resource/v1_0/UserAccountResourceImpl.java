@@ -591,7 +591,7 @@ public class UserAccountResourceImpl
 				userAccount.getCustomFields(),
 				contextAcceptLanguage.getPreferredLocale()));
 
-		if (contextUser.isDefaultUser()) {
+		if (contextUser.isGuestUser()) {
 			if (_captchaSettings.isCreateAccountCaptchaEnabled()) {
 				CaptchaUtil.check(contextHttpServletRequest);
 			}

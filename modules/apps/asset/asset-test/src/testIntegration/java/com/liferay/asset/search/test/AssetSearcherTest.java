@@ -382,7 +382,7 @@ public class AssetSearcherTest {
 
 	protected void setGuestUser() throws Exception {
 		UserTestUtil.setUser(
-			_userLocalService.getDefaultUser(_group.getCompanyId()));
+			_userLocalService.getGuestUser(_group.getCompanyId()));
 	}
 
 	private void _addBlogsEntry(long... assetCategoryIds) throws Exception {

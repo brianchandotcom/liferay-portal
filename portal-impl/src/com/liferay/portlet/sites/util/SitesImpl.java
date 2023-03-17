@@ -2077,7 +2077,7 @@ public class SitesImpl implements Sites {
 
 		File file = null;
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			layoutSetPrototype.getCompanyId());
 
 		long lastMergeVersion = layoutSetPrototype.getMvccVersion();

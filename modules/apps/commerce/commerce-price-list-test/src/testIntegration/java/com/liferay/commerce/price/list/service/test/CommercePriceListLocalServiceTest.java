@@ -76,10 +76,10 @@ public class CommercePriceListLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		User defaultUser = _company.getGuestUser();
+		User guestUser = _company.getGuestUser();
 
 		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), defaultUser.getUserId(), 0);
+			_company.getCompanyId(), guestUser.getUserId(), 0);
 	}
 
 	@After

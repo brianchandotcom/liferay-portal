@@ -50,7 +50,7 @@ public class DDMFormInstanceSubmissionLimitStatusUtil {
 			User user)
 		throws PortalException {
 
-		if (user.isDefaultUser() ||
+		if (user.isGuestUser() ||
 			!isLimitToOneSubmissionPerUser(ddmFormInstance)) {
 
 			return false;

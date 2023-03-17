@@ -119,7 +119,7 @@ public class PersonalApplicationURLUtil {
 				privateLayout = false;
 			}
 
-			user = UserLocalServiceUtil.getDefaultUser(
+			user = UserLocalServiceUtil.getGuestUser(
 				themeDisplay.getCompanyId());
 		}
 

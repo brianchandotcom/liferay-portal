@@ -120,7 +120,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateCalendarUserIds(
-			long groupClassNameId, long defaultUserId, long adminUserId)
+			long groupClassNameId, long guestUserId, long adminUserId)
 		throws SQLException {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -132,7 +132,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 					"CalendarResource.userId = ?"))) {
 
 			preparedStatement.setLong(1, groupClassNameId);
-			preparedStatement.setLong(2, defaultUserId);
+			preparedStatement.setLong(2, guestUserId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -145,7 +145,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeCalendarResourceUserId(
-			long groupClassNameId, long defaultUserId, long companyAdminUserId)
+			long groupClassNameId, long guestUserId, long companyAdminUserId)
 		throws SQLException {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -153,7 +153,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 					"classNameId = ?")) {
 
 			preparedStatement.setLong(1, companyAdminUserId);
-			preparedStatement.setLong(2, defaultUserId);
+			preparedStatement.setLong(2, guestUserId);
 			preparedStatement.setLong(3, groupClassNameId);
 
 			preparedStatement.execute();
@@ -166,15 +166,15 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 				company -> {
 					long classNameId = _classNameLocalService.getClassNameId(
 						Group.class);
-					long defaultUserId = _userLocalService.getDefaultUserId(
+					long guestUserId = _userLocalService.getGuestUserId(
 						company.getCompanyId());
 					long companyAdminUserId = _getCompanyAdminUserId(company);
 
 					_updateCalendarUserIds(
-						classNameId, defaultUserId, companyAdminUserId);
+						classNameId, guestUserId, companyAdminUserId);
 
 					_upgradeCalendarResourceUserId(
-						classNameId, defaultUserId, companyAdminUserId);
+						classNameId, guestUserId, companyAdminUserId);
 				});
 		}
 	}

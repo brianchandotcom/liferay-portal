@@ -451,7 +451,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 						put(
 							Context.LANGUAGE_ID,
 							_language.getLanguageId(searchContext.getLocale()));
-						put(Context.SIGNED_IN, !user.isDefaultUser());
+						put(Context.SIGNED_IN, !user.isGuestUser());
 					}
 				});
 
@@ -506,7 +506,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				_portal.isOmniadmin(user.getUserId())));
 		sxpParameters.add(
 			new BooleanSXPParameter(
-				"user.is_signed_in", true, !user.isDefaultUser()));
+				"user.is_signed_in", true, !user.isGuestUser()));
 		sxpParameters.add(
 			new StringSXPParameter("user.job_title", true, user.getJobTitle()));
 		sxpParameters.add(

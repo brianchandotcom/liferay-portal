@@ -68,7 +68,7 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 
 		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setPathMain(PortalUtil.getPathMain());
-		serviceContext.setSignedIn(!user.isDefaultUser());
+		serviceContext.setSignedIn(!user.isGuestUser());
 		serviceContext.setUserId(user.getUserId());
 
 		Map<String, Serializable> attributes = new HashMap<>();

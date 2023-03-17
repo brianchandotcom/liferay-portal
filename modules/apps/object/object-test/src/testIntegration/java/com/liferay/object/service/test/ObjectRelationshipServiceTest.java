@@ -64,7 +64,7 @@ public class ObjectRelationshipServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 
 		_objectDefinition1 =
@@ -119,7 +119,7 @@ public class ObjectRelationshipServiceTest {
 	@Test
 	public void testAddObjectRelationship() throws Exception {
 		try {
-			_testAddObjectRelationship(_defaultUser);
+			_testAddObjectRelationship(_guestUser);
 
 			Assert.fail();
 		}
@@ -128,7 +128,7 @@ public class ObjectRelationshipServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -138,7 +138,7 @@ public class ObjectRelationshipServiceTest {
 	@Test
 	public void testDeleteObjectRelationship() throws Exception {
 		try {
-			_testDeleteObjectRelationship(_defaultUser);
+			_testDeleteObjectRelationship(_guestUser);
 
 			Assert.fail();
 		}
@@ -147,7 +147,7 @@ public class ObjectRelationshipServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -157,7 +157,7 @@ public class ObjectRelationshipServiceTest {
 	@Test
 	public void testGetObjectRelationship() throws Exception {
 		try {
-			_testGetObjectRelationship(_defaultUser);
+			_testGetObjectRelationship(_guestUser);
 
 			Assert.fail();
 		}
@@ -166,7 +166,7 @@ public class ObjectRelationshipServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -176,14 +176,14 @@ public class ObjectRelationshipServiceTest {
 	@Test
 	public void testGetObjectRelationships() throws Exception {
 		try {
-			_testGetObjectRelationships(_defaultUser);
+			_testGetObjectRelationships(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -193,7 +193,7 @@ public class ObjectRelationshipServiceTest {
 	@Test
 	public void testUpdateObjectRelationship() throws Exception {
 		try {
-			_testUpdateObjectRelationship(_defaultUser);
+			_testUpdateObjectRelationship(_guestUser);
 
 			Assert.fail();
 		}
@@ -202,7 +202,7 @@ public class ObjectRelationshipServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -334,7 +334,7 @@ public class ObjectRelationshipServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;

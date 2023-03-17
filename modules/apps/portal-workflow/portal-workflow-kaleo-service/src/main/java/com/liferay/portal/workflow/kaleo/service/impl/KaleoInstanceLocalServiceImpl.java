@@ -87,7 +87,7 @@ public class KaleoInstanceLocalServiceImpl
 		User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
 		if (user == null) {
-			user = _userLocalService.getDefaultUser(
+			user = _userLocalService.getGuestUser(
 				serviceContext.getCompanyId());
 		}
 

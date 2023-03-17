@@ -93,10 +93,10 @@ public class DDLRecordSearchTest {
 	}
 
 	@Test
-	public void testBasicSearchWithDefaultUser() throws Exception {
+	public void testBasicSearchWithGuestUser() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
-		User user = UserLocalServiceUtil.getDefaultUser(companyId);
+		User user = UserLocalServiceUtil.getGuestUser(companyId);
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, user.getUserId(),
@@ -192,7 +192,7 @@ public class DDLRecordSearchTest {
 	public void testLocales() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
-		User user = UserLocalServiceUtil.getDefaultUser(companyId);
+		User user = UserLocalServiceUtil.getGuestUser(companyId);
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, user.getUserId(),

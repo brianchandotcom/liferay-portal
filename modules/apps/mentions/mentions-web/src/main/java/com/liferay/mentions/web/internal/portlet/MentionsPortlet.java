@@ -137,7 +137,7 @@ public class MentionsPortlet extends MVCPortlet {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (User user : usersSupplier.get()) {
-			if (user.isDefaultUser() ||
+			if (user.isGuestUser() ||
 				(themeDisplay.getUserId() == user.getUserId())) {
 
 				continue;

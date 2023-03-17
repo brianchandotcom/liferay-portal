@@ -36,7 +36,7 @@
 	searchActionURL="<%= ddmDisplayContext.getStructureSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getStructureSearchContainerId() %>"
 	searchFormName="fm1"
-	selectable="<%= !user.isDefaultUser() %>"
+	selectable="<%= !user.isGuestUser() %>"
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />

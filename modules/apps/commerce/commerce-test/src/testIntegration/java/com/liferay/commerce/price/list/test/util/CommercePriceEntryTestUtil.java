@@ -69,7 +69,7 @@ public class CommercePriceEntryTestUtil {
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId());
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
@@ -127,7 +127,7 @@ public class CommercePriceEntryTestUtil {
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId());
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());

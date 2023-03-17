@@ -229,7 +229,7 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
-			user.isDefaultUser(), objectDefinitionId, null,
+			user.isGuestUser(), objectDefinitionId, null,
 			objectDefinition.getPortletId(), serviceContext, userId, values);
 
 		_fillBusinessTypePicklistDefaultValue(
@@ -315,9 +315,8 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
-			user.isDefaultUser(), objectDefinition.getObjectDefinitionId(),
-			null, objectDefinition.getClassName(), serviceContext, userId,
-			values);
+			user.isGuestUser(), objectDefinition.getObjectDefinitionId(), null,
+			objectDefinition.getClassName(), serviceContext, userId, values);
 
 		insertIntoOrUpdateExtensionTable(
 			objectDefinition.getObjectDefinitionId(), primaryKey, values);
@@ -1167,7 +1166,7 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId());
 
 		_validateValues(
-			user.isDefaultUser(), objectEntry.getObjectDefinitionId(),
+			user.isGuestUser(), objectEntry.getObjectDefinitionId(),
 			objectEntry, objectDefinition.getPortletId(), serviceContext,
 			userId, values);
 
@@ -2072,7 +2071,7 @@ public class ObjectEntryLocalServiceImpl
 
 		try {
 			dlFolder = _dlFolderLocalService.addFolder(
-				null, _userLocalService.getDefaultUserId(companyId),
+				null, _userLocalService.getGuestUserId(companyId),
 				repository.getGroupId(), repository.getRepositoryId(), false,
 				repository.getDlFolderId(), String.valueOf(userId), null, false,
 				serviceContext);
@@ -2520,8 +2519,8 @@ public class ObjectEntryLocalServiceImpl
 
 			try {
 				Folder folder = _dlAppLocalService.addFolder(
-					null, _userLocalService.getDefaultUserId(companyId),
-					groupId, storageDLFolderId, name, null, serviceContext);
+					null, _userLocalService.getGuestUserId(companyId), groupId,
+					storageDLFolderId, name, null, serviceContext);
 
 				storageDLFolderId = folder.getFolderId();
 			}
@@ -3236,7 +3235,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateFileSize(
-			boolean defaultUser, long fileSize, long objectFieldId,
+			boolean guestUser, long fileSize, long objectFieldId,
 			String objectFieldName)
 		throws PortalException {
 
@@ -3247,7 +3246,7 @@ public class ObjectEntryLocalServiceImpl
 		long maximumFileSize = GetterUtil.getLong(
 			objectFieldSetting.getValue());
 
-		if (defaultUser &&
+		if (guestUser &&
 			(_objectConfiguration.maximumFileSizeForGuestUsers() <
 				maximumFileSize)) {
 
@@ -3429,21 +3428,20 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateValues(
-			boolean defaultUser, long objectDefinitionId,
-			ObjectEntry objectEntry, String portletId,
-			ServiceContext serviceContext, long userId,
+			boolean guestUser, long objectDefinitionId, ObjectEntry objectEntry,
+			String portletId, ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			_validateValues(
-				defaultUser, entry, objectDefinitionId, objectEntry, portletId,
+				guestUser, entry, objectDefinitionId, objectEntry, portletId,
 				serviceContext, userId, values);
 		}
 	}
 
 	private void _validateValues(
-			boolean defaultUser, Map.Entry<String, Serializable> entry,
+			boolean guestUser, Map.Entry<String, Serializable> entry,
 			long objectDefinitionId, ObjectEntry objectEntry, String portletId,
 			ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
@@ -3481,7 +3479,7 @@ public class ObjectEntryLocalServiceImpl
 					dlFileEntry.getExtension(), objectField.getObjectFieldId(),
 					objectField.getName());
 				_validateFileSize(
-					defaultUser, dlFileEntry.getSize(),
+					guestUser, dlFileEntry.getSize(),
 					objectField.getObjectFieldId(), objectField.getName());
 
 				_addFileEntry(

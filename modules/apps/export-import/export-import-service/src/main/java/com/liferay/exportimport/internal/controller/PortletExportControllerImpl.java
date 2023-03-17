@@ -769,7 +769,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 			serviceContext.setCompanyId(layout.getCompanyId());
 			serviceContext.setSignedIn(false);
 			serviceContext.setUserId(
-				_userLocalService.getDefaultUserId(layout.getCompanyId()));
+				_userLocalService.getGuestUserId(layout.getCompanyId()));
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}

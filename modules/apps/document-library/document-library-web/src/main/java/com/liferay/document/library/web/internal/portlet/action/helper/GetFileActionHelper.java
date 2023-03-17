@@ -242,7 +242,7 @@ public class GetFileActionHelper {
 
 		User user = permissionChecker.getUser();
 
-		if ((user != null) && !user.isDefaultUser()) {
+		if ((user != null) && !user.isGuestUser()) {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_UNAUTHORIZED, (Exception)throwable,
 				httpServletRequest, httpServletResponse);

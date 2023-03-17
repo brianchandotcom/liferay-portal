@@ -53,7 +53,7 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 			return;
 		}
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			company.getCompanyId());
 
 		String content = StringUtil.read(
@@ -62,7 +62,7 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 			"dependencies/message-boards-moderation-workflow-definition.xml");
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			company.getCompanyId(), defaultUserId,
+			company.getCompanyId(), guestUserId,
 			_localization.getXml(
 				_getTitleMap(company.getCompanyId()),
 				_language.getLanguageId(company.getLocale()), "title"),

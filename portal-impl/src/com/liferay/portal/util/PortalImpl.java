@@ -3659,7 +3659,7 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		if ((user != null) && !user.isDefaultUser()) {
+		if ((user != null) && !user.isGuestUser()) {
 			Locale userLocale = getAvailableLocale(groupId, user.getLocale());
 
 			if (LanguageUtil.isAvailableLocale(groupId, userLocale)) {
@@ -3762,10 +3762,10 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		User defaultUser = null;
+		User guestUser = null;
 
 		try {
-			defaultUser = company.getGuestUser();
+			guestUser = company.getGuestUser();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -3773,20 +3773,20 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		if (defaultUser == null) {
+		if (guestUser == null) {
 			return null;
 		}
 
-		Locale defaultUserLocale = getAvailableLocale(
-			groupId, defaultUser.getLocale());
+		Locale guestUserLocale = getAvailableLocale(
+			groupId, guestUser.getLocale());
 
-		if (LanguageUtil.isAvailableLocale(groupId, defaultUserLocale)) {
+		if (LanguageUtil.isAvailableLocale(groupId, guestUserLocale)) {
 			if (initialize) {
 				setLocale(
-					httpServletRequest, httpServletResponse, defaultUserLocale);
+					httpServletRequest, httpServletResponse, guestUserLocale);
 			}
 
-			return defaultUserLocale;
+			return guestUserLocale;
 		}
 
 		try {
@@ -5203,12 +5203,12 @@ public class PortalImpl implements Portal {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 
-		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+		User guestUser = UserLocalServiceUtil.getGuestUser(
 			group.getCompanyId());
 
 		String languageId = GetterUtil.getString(
 			typeSettingsUnicodeProperties.getProperty("languageId"),
-			defaultUser.getLanguageId());
+			guestUser.getLanguageId());
 
 		return LocaleUtil.fromLanguageId(languageId);
 	}
@@ -6052,7 +6052,7 @@ public class PortalImpl implements Portal {
 		User user = UserLocalServiceUtil.fetchUser(userId);
 
 		if (user == null) {
-			return UserLocalServiceUtil.getDefaultUserId(companyId);
+			return UserLocalServiceUtil.getGuestUserId(companyId);
 		}
 
 		if (user.getCompanyId() == companyId) {
@@ -7759,7 +7759,7 @@ public class PortalImpl implements Portal {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(realUser);
 
-		if (doAsUser.isDefaultUser() ||
+		if (doAsUser.isGuestUser() ||
 			UserPermissionUtil.contains(
 				permissionChecker, doAsUserId, doAsUser.getOrganizationIds(),
 				ActionKeys.IMPERSONATE)) {

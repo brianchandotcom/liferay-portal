@@ -621,27 +621,27 @@ definition {
 		var indexList2 = "1,2";
 		var attributesAscendingOrder1 = '''
 			agreedToTermsOfUse,birthday,classNameId,classPK,
-			comments,companyId,companyId,contactId,contactId,createDate,createDate,defaultUser,emailAddress,
+			comments,companyId,companyId,contactId,contactId,createDate,createDate,emailAddress,
 			emailAddress,emailAddressVerified,employeeNumber,employeeStatusId,externalReferenceCode,
 			facebookId,facebookSn,firstName,firstName,googleUserId,greeting,hoursOfOperation,jabberSn,jobClass,
 			jobTitle,languageId,lastName,lastName,ldapServerId,male,middleName,middleName,modifiedDate,modifiedDate,openId,
 			parentContactId,portraitId,prefixListTypeId,screenName,skypeSn,smsSn,status,suffixListTypeId,
-			timeZoneId,twitterSn,userId
+			timeZoneId,type,twitterSn,userId
 		''';
 		var attributesAscendingOrder2 = "userName,uuid";
 		var attributesDescendingOrder1 = '''
-			uuid,userName,userId,twitterSn,timeZoneId,
+			uuid,userName,userId,twitterSn,type,timeZoneId,
 			suffixListTypeId,status,smsSn,skypeSn,screenName,prefixListTypeId,portraitId,
 			parentContactId,openId,modifiedDate,modifiedDate,middleName,middleName,male,ldapServerId,
 			lastName,lastName,languageId,jobTitle,jobClass,jabberSn,hoursOfOperation,greeting,googleUserId,
 			firstName,firstName,facebookSn,facebookId,externalReferenceCode,employeeStatusId,employeeNumber,
-			emailAddressVerified,emailAddress,emailAddress,defaultUser,createDate,createDate,contactId,
+			emailAddressVerified,emailAddress,emailAddress,createDate,createDate,contactId,
 			contactId,companyId,companyId,comments,classPK,classNameId
 		''';
 		var attributesDescendingOrder2 = "birthday,agreedToTermsOfUse";
 		var attributesDataTypeAscending1 = '''
-			male,agreedToTermsOfUse,defaultUser,emailAddressVerified,
-			birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,companyId,contactId,
+			male,agreedToTermsOfUse,emailAddressVerified,
+			birthday,createDate,modifiedDate,createDate,modifiedDate,status,type,classNameId,classPK,companyId,contactId,
 			employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,companyId,contactId,facebookId,
 			ldapServerId,portraitId,timeZoneId,userId,emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
 			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
@@ -656,7 +656,7 @@ definition {
 			companyId,contactId,facebookId,ldapServerId,portraitId,timeZoneId,userId,status,birthday,createDate,
 			modifiedDate,createDate,modifiedDate,male,agreedToTermsOfUse
 		''';
-		var attributesDataTypeDescending2 = "defaultUser,emailAddressVerified";
+		var attributesDataTypeDescending2 = "agreedToTermsOfUse,emailAddressVerified";
 
 		task ("Click to configure people attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");

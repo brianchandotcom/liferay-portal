@@ -118,7 +118,7 @@ public class WikiSocialActivityHelper {
 			socialActivity.getUserId());
 
 		if (socialActivityUser == null) {
-			socialActivityUser = UserLocalServiceUtil.getDefaultUser(
+			socialActivityUser = UserLocalServiceUtil.getGuestUser(
 				socialActivity.getCompanyId());
 		}
 

@@ -77,7 +77,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 
 				User user = _themeDisplay.getUser();
 
-				if (user.isDefaultUser()) {
+				if (user.isGuestUser()) {
 					return false;
 				}
 

@@ -159,60 +159,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as Administrator, should not be able to edit subtask with user logged off"
-	@priority = 5
-	test AdminCanNotEditSubtaskWithUserOffline {
-		task ("Given that the user different assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
-
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
-		}
-
-		task ("When the user different trying complete a subtask") {
-			Button.click(button = "Complete");
-		}
-
-		task ("Then the alert message is displayed") {
-			Testray.viewAlert(alertText = "You are not the assigned user.");
-		}
-	}
-
-	@description = "Story ID: LPS-166230 | Test Summary: Verify that can reanalyze a subtask"
-	@priority = 5
-	test AdminCanReanalyzeSubtask {
-		task ("Given that the user assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
-
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-		}
-
-		task ("And the user complete the subtask") {
-			Button.click(button = "Complete");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "Complete");
-		}
-
-		task ("When the user reanalyze the subtask") {
-			Button.click(button = "Assign and Reanalyze");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-		}
-
-		task ("Then the status in analysis should appear on the list") {
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "In Analysis");
-		}
-	}
-
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as the Administrator, should be able to assign me a subtask that has been assigned to an offline user from the context menu"
 	@priority = 5
 	test AdminCanAssignToMeSubtaskAssignedToTheOfflineUser {
@@ -238,98 +184,6 @@ definition {
 			TestrayTestflow.userAvatarPresent(
 				label = "Subtask Details",
 				status = "Test Test");
-		}
-	}
-
-	@description = "Story ID: LPS-166230 | Test Summary: Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
-	@priority = 5
-	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
-		task ("When the user merged a subtask with status open") {
-			TestrayTestflow.assertStatus(
-				label = "Subtasks",
-				status = "Open");
-
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
-
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
-		}
-
-		task ("Then can see the merged subtask") {
-			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
-		}
-	}
-
-	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge subtasks with different users"
-	@priority = 5
-	test AdminCanNotMergeSubtasksWithDifferentUsers {
-		task ("Given that the user different assign a subtask") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
-		}
-
-		task ("And the user logged in assign a subtask") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-		}
-
-		task ("When the user trying merging the subtask assigned to different users") {
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
-		}
-
-		task ("Then the alert message is displayed") {
-			AssertElementPresent(
-				key_alertMessage = "Subtask Subtask_1 must be assigned to you to be used in a merge.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
-		}
-	}
-
-	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
-	@priority = 5
-	test AdminCanNotMergeOnlyOneSubtask {
-		task ("When the user trying merging a single subtask") {
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1");
-		}
-
-		task ("Then the alert message is displayed") {
-			AssertElementPresent(
-				key_alertMessage = "Please select at least two subtasks to merge.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
-		}
-	}
-
-	@description = "Story ID: LPS-166230 | Test Summary: Verify that can complete a subtask after have merged it"
-	@priority = 5
-	test AdminCanCompleteSubtaskThatBeenMerged {
-		task ("Given that the user logged in assign a subtask") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-		}
-
-		task ("When the user merging the subtask") {
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
-		}
-
-		task ("Then the alert message is displayed") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
-
-			Button.click(button = "Complete");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-		}
-
-		task ("Then the alert message is displayed") {
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "Complete");
 		}
 	}
 
@@ -498,6 +352,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that can complete a subtask after have merged it"
+	@priority = 5
+	test AdminCanCompleteSubtaskThatBeenMerged {
+		task ("Given that the user logged in assign a subtask") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("When the user merging the subtask") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+		}
+
+		task ("Then the alert message is displayed") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+		}
+
+		task ("Then the alert message is displayed") {
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "Complete");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as  an Administrator I should be able to merge an Complete subtask with a Open subtask"
 	@priority = 5
 	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
@@ -597,6 +481,104 @@ definition {
 		TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as Administrator, should not be able to edit subtask with user logged off"
+	@priority = 5
+	test AdminCanNotEditSubtaskWithUserOffline {
+		task ("Given that the user different assign a subtask") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+		}
+
+		task ("When the user different trying complete a subtask") {
+			Button.click(button = "Complete");
+		}
+
+		task ("Then the alert message is displayed") {
+			Testray.viewAlert(alertText = "You are not the assigned user.");
+		}
+	}
+
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
+	@priority = 5
+	test AdminCanNotMergeOnlyOneSubtask {
+		task ("When the user trying merging a single subtask") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1");
+		}
+
+		task ("Then the alert message is displayed") {
+			AssertElementPresent(
+				key_alertMessage = "Please select at least two subtasks to merge.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge subtasks with different users"
+	@priority = 5
+	test AdminCanNotMergeSubtasksWithDifferentUsers {
+		task ("Given that the user different assign a subtask") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+		}
+
+		task ("And the user logged in assign a subtask") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("When the user trying merging the subtask assigned to different users") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+		}
+
+		task ("Then the alert message is displayed") {
+			AssertElementPresent(
+				key_alertMessage = "Subtask Subtask_1 must be assigned to you to be used in a merge.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that can reanalyze a subtask"
+	@priority = 5
+	test AdminCanReanalyzeSubtask {
+		task ("Given that the user assign a subtask") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("And the user complete the subtask") {
+			Button.click(button = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "Complete");
+		}
+
+		task ("When the user reanalyze the subtask") {
+			Button.click(button = "Assign and Reanalyze");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("Then the status in analysis should appear on the list") {
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "In Analysis");
+		}
+	}
+
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able a subtask return to open"
 	@priority = 5
 	test AdminCanReturnToOpenSubtask {
@@ -622,6 +604,24 @@ definition {
 			TestrayTestflow.assertStatus(
 				label = "Subtask Details",
 				status = "Open");
+		}
+	}
+
+	@description = "Story ID: LPS-166230 | Test Summary: Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
+	@priority = 5
+	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
+		task ("When the user merged a subtask with status open") {
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+		}
+
+		task ("Then can see the merged subtask") {
+			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
 		}
 	}
 

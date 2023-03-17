@@ -70,7 +70,6 @@ class SegmentEdit extends Component {
 		setFieldValue: PropTypes.func,
 		setValues: PropTypes.func,
 		showInEditMode: PropTypes.bool,
-		siteItemSelectorURL: PropTypes.string,
 		source: PropTypes.string,
 		validateForm: PropTypes.func,
 		values: PropTypes.object,
@@ -180,12 +179,6 @@ class SegmentEdit extends Component {
 		}, this._debouncedFetchMembersCount);
 	};
 
-	_handleSegmentNameBlur = (event) => {
-		const {handleBlur} = this.props;
-
-		handleBlur(event);
-	};
-
 	_handleConjunctionChange = (conjunctionName) => {
 		this.setState((prevState) => {
 			const contributors = applyConjunctionChangeToContributor(
@@ -255,7 +248,6 @@ class SegmentEdit extends Component {
 			locale,
 			propertyGroups,
 			requestMembersCountURL,
-			siteItemSelectorURL,
 			values,
 		} = this.props;
 
@@ -291,7 +283,6 @@ class SegmentEdit extends Component {
 				requestMembersCountURL={requestMembersCountURL}
 				scopeName={this.props.scopeName}
 				segmentName={segmentName}
-				siteItemSelectorURL={siteItemSelectorURL}
 			/>
 		) : null;
 	};

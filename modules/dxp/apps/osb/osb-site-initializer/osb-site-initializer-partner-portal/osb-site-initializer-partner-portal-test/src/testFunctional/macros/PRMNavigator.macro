@@ -12,20 +12,8 @@ definition {
 			locator1 = "PRMNavigation#NAV_LINK");
 	}
 
-	macro viewPage {
-		for (var pageName : list ${pageList}) {
-			PRMNavigator.goToNavItem(navItem = ${pageName});
-
-			PRMNavigator.assertActiveBreadcrumb(activeItem = ${pageName});
-
-			var pageName = StringUtil.lowerCase(${pageName});
-
-			AssertLocation.assertPartialLocation(value1 = ${pageName});
-		}
-	}
-
 	macro openSitePage {
-		if(!(isSet(siteName))) {
+		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}
 
@@ -37,18 +25,29 @@ definition {
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
-		
+
 		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
 
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
-		if ((${pageName} == "MDF Requests") || ${pageName} == "MDF Claim") {
+		if ((${pageName} == "MDF Requests") || (${pageName} == "MDF Claim")) {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}/marketing/${pageNameURL}");
-		} else {
+		}
+		else {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 		}
+	}
 
+	macro viewPage {
+		for (var pageName : list ${pageList}) {
+			PRMNavigator.goToNavItem(navItem = ${pageName});
 
+			PRMNavigator.assertActiveBreadcrumb(activeItem = ${pageName});
+
+			var pageName = StringUtil.lowerCase(${pageName});
+
+			AssertLocation.assertPartialLocation(value1 = ${pageName});
+		}
 	}
 
 }

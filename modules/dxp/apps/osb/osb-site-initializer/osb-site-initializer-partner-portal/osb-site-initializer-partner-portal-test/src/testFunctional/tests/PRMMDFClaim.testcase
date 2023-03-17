@@ -62,10 +62,10 @@ definition {
 
 		task ("Add a new MDF Request") {
 			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
 				secondActivityName = "Activity Name 2",
 				secondBudgetValueList = 1000,
-				userEmailAddress = "partner@liferay.com",
-				accountEntryName = "Company Name 1");
+				userEmailAddress = "partner@liferay.com");
 		}
 	}
 
@@ -83,89 +83,6 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
 
 			Account.tearDownCP();
-		}
-	}
-
-	@description = "This is a test for LPS-175611. Verify that is possible to submit a full claim"
-	@priority = 5
-	test CanSubmitFullClaim {
-		task ("Given that the manager user is logged in and goes to MDF listing page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the manager approves the MDF") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
-		}
-
-		task ("And the partner logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("And go to the approved MDF") {
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-		}
-
-		task ("When the partner claim all MDF Activities") {
-			PRMMDFClaim.createNewClaim(
-				activityIndex = "0,1",
-				listLeads = "Document_1.xls",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.pdf");
-		}
-
-		task ("Then the Claim Type is Full") {
-			PRMMDFClaim.viewClaimType(claimType = "Full");
-		}
-	}
-
-	@description = "This is a test for LPS-173720. Verify that is possible to submit a partial claim"
-	@priority = 5
-	test CanSubmitPartialClaim {
-		task ("Given that the manager user is logged in and goes to MDF listing page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the manager approves the MDF") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
-		}
-
-		task ("And the partner logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("And go to the approved MDF") {
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-		}
-
-		task ("When the partner claim just one MDF Activity") {
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xls",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.pdf");
-		}
-
-		task ("Then the Claim Type is Partial") {
-			PRMMDFClaim.viewClaimType(claimType = "Partial");
 		}
 	}
 
@@ -276,6 +193,89 @@ definition {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "${firstID},${secondID}",
 				fileName = "MDF Claim.csv");
+		}
+	}
+
+	@description = "This is a test for LPS-175611. Verify that is possible to submit a full claim"
+	@priority = 5
+	test CanSubmitFullClaim {
+		task ("Given that the manager user is logged in and goes to MDF listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("And the manager approves the MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
+
+		task ("And the partner logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("And go to the approved MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("When the partner claim all MDF Activities") {
+			PRMMDFClaim.createNewClaim(
+				activityIndex = "0,1",
+				listLeads = "Document_1.xls",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.pdf");
+		}
+
+		task ("Then the Claim Type is Full") {
+			PRMMDFClaim.viewClaimType(claimType = "Full");
+		}
+	}
+
+	@description = "This is a test for LPS-173720. Verify that is possible to submit a partial claim"
+	@priority = 5
+	test CanSubmitPartialClaim {
+		task ("Given that the manager user is logged in and goes to MDF listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("And the manager approves the MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
+
+		task ("And the partner logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("And go to the approved MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("When the partner claim just one MDF Activity") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xls",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.pdf");
+		}
+
+		task ("Then the Claim Type is Partial") {
+			PRMMDFClaim.viewClaimType(claimType = "Partial");
 		}
 	}
 

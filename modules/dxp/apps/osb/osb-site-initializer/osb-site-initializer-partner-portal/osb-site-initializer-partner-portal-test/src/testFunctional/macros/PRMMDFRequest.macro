@@ -29,7 +29,7 @@ definition {
 
 	@summary = "Change MDF status"
 	macro changeMDFStatus {
-		var key_statusButton = "${statusButton}";
+		var key_statusButton = ${statusButton};
 
 		ClickNoError(
 			buttonId = ${statusButton},

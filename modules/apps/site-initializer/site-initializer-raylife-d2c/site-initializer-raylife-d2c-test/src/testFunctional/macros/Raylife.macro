@@ -82,6 +82,11 @@ definition {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 	}
 
+	macro clickAtButton {
+		var key_text = ${text};
+
+		Click(locator1 = "Raylife#ANY_BUTTON");
+	}
 	macro createRaylifeSite {
 		Site.openSitesAdmin();
 

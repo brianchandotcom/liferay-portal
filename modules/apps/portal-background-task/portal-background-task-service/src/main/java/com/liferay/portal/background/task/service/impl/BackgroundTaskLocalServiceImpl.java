@@ -226,6 +226,7 @@ public class BackgroundTaskLocalServiceImpl
 				message.put(
 					BackgroundTaskConstants.BACKGROUND_TASK_ID,
 					backgroundTask.getBackgroundTaskId());
+				message.put("companyId", backgroundTask.getCompanyId());
 				message.put("name", backgroundTask.getName());
 				message.put("status", status);
 				message.put(
@@ -654,6 +655,7 @@ public class BackgroundTaskLocalServiceImpl
 
 		message.put(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
+		message.put("companyId", backgroundTask.getCompanyId());
 
 		_messageBus.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}
@@ -661,6 +663,19 @@ public class BackgroundTaskLocalServiceImpl
 	@Clusterable(onMaster = true)
 	@Override
 	public void triggerBackgroundTask(long backgroundTaskId) {
+		BackgroundTask backgroundTask =
+			backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
+
+		if (backgroundTask == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No background task found for background task ID " +
+						backgroundTaskId);
+			}
+
+			return;
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Attempting to trigger background task " + backgroundTaskId);
@@ -670,6 +685,7 @@ public class BackgroundTaskLocalServiceImpl
 
 		message.put(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
+		message.put("companyId", backgroundTask.getCompanyId());
 
 		_messageBus.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}

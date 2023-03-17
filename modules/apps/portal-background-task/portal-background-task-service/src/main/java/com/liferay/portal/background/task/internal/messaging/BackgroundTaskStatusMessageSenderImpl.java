@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,6 +44,10 @@ public class BackgroundTaskStatusMessageSenderImpl
 			destinationName = DestinationNames.BACKGROUND_TASK_STATUS;
 
 			message.setDestinationName(destinationName);
+		}
+
+		if (!message.contains("companyId")) {
+			message.put("companyId", CompanyThreadLocal.getCompanyId());
 		}
 
 		_messageBus.sendMessage(destinationName, message);

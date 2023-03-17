@@ -186,6 +186,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				responseMessage.put(
 					BackgroundTaskConstants.BACKGROUND_TASK_ID,
 					backgroundTask.getBackgroundTaskId());
+				responseMessage.put("companyId", backgroundTask.getCompanyId());
 				responseMessage.put("name", backgroundTask.getName());
 				responseMessage.put("status", status);
 				responseMessage.put(

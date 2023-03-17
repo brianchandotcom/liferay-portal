@@ -30,7 +30,7 @@ public class BuildFactory {
 	public static Build newBuild(Project project, JSONObject jsonObject) {
 		long id = jsonObject.getLong("id");
 
-		Build build;
+		Build build = null;
 
 		synchronized (_builds) {
 			if (_builds.containsKey(id)) {

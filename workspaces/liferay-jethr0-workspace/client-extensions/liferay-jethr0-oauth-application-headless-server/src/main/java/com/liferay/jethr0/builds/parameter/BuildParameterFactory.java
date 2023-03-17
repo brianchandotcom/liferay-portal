@@ -32,7 +32,7 @@ public class BuildParameterFactory {
 
 		long id = jsonObject.getLong("id");
 
-		BuildParameter buildParameter;
+		BuildParameter buildParameter = null;
 
 		synchronized (_buildParameters) {
 			if (_buildParameters.containsKey(id)) {

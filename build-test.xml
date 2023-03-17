@@ -464,6 +464,8 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 	<macrodef name="docker-execute">
 		<attribute name="container" />
+		<attribute default="/bin/bash" name="shell.path" />
+
 		<text name="script" />
 
 		<sequential>
@@ -471,19 +473,13 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 			<echo file="${script.sh.file}"><![CDATA[@{script}]]></echo>
 
-			<get-operating-system-property property.name="operating.system.docker.shell.path" />
-
-			<condition else="/bin/bash" property="docker.shell.path" value="${operating.system.docker.shell.path}">
-				<isset property="operating.system.docker.shell.path" />
-			</condition>
-
 			<execute>
 				<![CDATA[
 					docker exec @{container} mkdir -p /tmp
 
 					docker cp ${script.sh.file} @{container}:/tmp/script.sh
 
-					docker exec @{container} ${docker.shell.path} /tmp/script.sh
+					docker exec @{container} @{shell.path} /tmp/script.sh
 
 					docker exec --user root @{container} rm -f /tmp/script.sh
 				]]>
@@ -6876,9 +6872,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									<then>
 										<sequential>
 											<get-app-server-property property.name="max.log.size.in.mb" />
+											<get-operating-system-property property.name="operating.system.docker.shell.path" />
 											<get-operating-system-property property.name="operating.system.host" />
 
-											<docker-execute container="${operating.system.host}">
+											<docker-execute container="${operating.system.host}" shell.path="${operating.system.docker.shell.path}">
 												chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
 
 												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line} | head -c ${app.server.max.log.size}M

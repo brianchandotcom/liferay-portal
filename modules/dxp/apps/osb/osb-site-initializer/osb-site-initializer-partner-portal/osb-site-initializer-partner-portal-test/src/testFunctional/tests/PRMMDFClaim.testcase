@@ -128,6 +128,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-173720. Verify that is possible to submit a partial claim"
+	@priority = 5
+	test CanSubmitPartialClaim {
+		task ("Given that the manager user is logged in and goes to MDF listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("And the manager approves the MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
+
+		task ("And the partner logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("And go to the approved MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("When the partner claim just one MDF Activity") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xls",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.pdf");
+		}
+
+		task ("Then the Claim Type is Partial") {
+			PRMMDFClaim.viewClaimType(claimType = "Partial");
 		}
 	}
 

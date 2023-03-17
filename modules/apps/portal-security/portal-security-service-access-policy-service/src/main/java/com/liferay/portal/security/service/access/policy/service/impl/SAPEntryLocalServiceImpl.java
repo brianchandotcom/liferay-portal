@@ -126,7 +126,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
 		Role guestRole = _roleLocalService.getRole(
 			companyId, RoleConstants.GUEST);
 
@@ -137,7 +137,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			).build();
 
 			systemDefaultSAPEntry = addSAPEntry(
-				defaultUserId,
+				guestUserId,
 				_sapConfiguration.systemDefaultSAPEntryServiceSignatures(),
 				true, true, _sapConfiguration.systemDefaultSAPEntryName(),
 				titleMap, new ServiceContext());
@@ -156,7 +156,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			).build();
 
 			systemUserPasswordSAPEntry = addSAPEntry(
-				defaultUserId,
+				guestUserId,
 				_sapConfiguration.systemUserPasswordSAPEntryServiceSignatures(),
 				false, true, _sapConfiguration.systemUserPasswordSAPEntryName(),
 				titleMap, new ServiceContext());

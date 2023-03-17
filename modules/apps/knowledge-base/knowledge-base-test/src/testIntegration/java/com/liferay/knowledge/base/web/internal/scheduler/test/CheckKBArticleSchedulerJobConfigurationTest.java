@@ -79,7 +79,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 
 			KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
 				null,
-				UserLocalServiceUtil.getDefaultUserId(_group.getCompanyId()),
+				UserLocalServiceUtil.getGuestUserId(_group.getCompanyId()),
 				PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),

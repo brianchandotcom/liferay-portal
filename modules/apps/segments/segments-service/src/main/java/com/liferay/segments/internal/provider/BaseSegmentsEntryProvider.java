@@ -232,11 +232,11 @@ public abstract class BaseSegmentsEntryProvider
 			segmentsEntry, Criteria.Type.MODEL);
 
 		if (context != null) {
-			boolean defaultUser = !GetterUtil.getBoolean(
+			boolean guestUser = !GetterUtil.getBoolean(
 				context.get(Context.SIGNED_IN), true);
 
 			if (contextConjunction.equals(Criteria.Conjunction.AND) &&
-				defaultUser && Validator.isNotNull(modelFilterString)) {
+				guestUser && Validator.isNotNull(modelFilterString)) {
 
 				return false;
 			}
@@ -267,7 +267,7 @@ public abstract class BaseSegmentsEntryProvider
 				}
 			}
 
-			if (defaultUser) {
+			if (guestUser) {
 				return matchesContext;
 			}
 		}

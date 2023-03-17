@@ -53,9 +53,9 @@ public class DoAsURLTag extends TagSupport {
 		doAsURL = themeDisplay.getPathContext() + doAsURL;
 
 		if (doAsUserId <= 0) {
-			User defaultUser = company.getGuestUser();
+			User guestUser = company.getGuestUser();
 
-			doAsUserId = defaultUser.getUserId();
+			doAsUserId = guestUser.getUserId();
 		}
 
 		String encDoAsUserId = EncryptorUtil.encrypt(

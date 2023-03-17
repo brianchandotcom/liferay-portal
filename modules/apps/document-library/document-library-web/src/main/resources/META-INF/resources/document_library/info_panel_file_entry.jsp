@@ -125,7 +125,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					>
 						<div class="component-title username">
 							<c:if test="<%= owner != null %>">
-								<a href="<%= owner.isDefaultUser() ? StringPool.BLANK : owner.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(owner.getFullName()) %></a>
+								<a href="<%= owner.isGuestUser() ? StringPool.BLANK : owner.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(owner.getFullName()) %></a>
 							</c:if>
 						</div>
 

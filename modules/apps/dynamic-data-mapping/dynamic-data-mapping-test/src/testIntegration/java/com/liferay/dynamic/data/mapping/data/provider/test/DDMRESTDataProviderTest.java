@@ -616,7 +616,7 @@ public class DDMRESTDataProviderTest {
 		User user = TestPropsValues.getUser();
 
 		if (guest) {
-			user = _userLocalService.getDefaultUser(
+			user = _userLocalService.getGuestUser(
 				TestPropsValues.getCompanyId());
 		}
 

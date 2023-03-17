@@ -128,7 +128,7 @@ public class ChangesetEntryLocalServiceImpl
 			_changesetCollectionPersistence.findByPrimaryKey(
 				changesetCollectionId);
 
-		User user = _userLocalService.getDefaultUser(
+		User user = _userLocalService.getGuestUser(
 			changesetCollection.getCompanyId());
 
 		return changesetEntryLocalService.addChangesetEntry(

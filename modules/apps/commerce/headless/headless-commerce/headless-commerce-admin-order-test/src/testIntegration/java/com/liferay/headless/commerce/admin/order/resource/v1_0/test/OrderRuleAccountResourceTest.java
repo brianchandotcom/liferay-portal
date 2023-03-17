@@ -93,11 +93,11 @@ public class OrderRuleAccountResourceTest
 
 	@Override
 	protected OrderRuleAccount randomOrderRuleAccount() throws Exception {
-		User defaultUser = testCompany.getGuestUser();
+		User guestUser = testCompany.getGuestUser();
 
 		CommerceAccount commerceAccount =
 			CommerceAccountTestUtil.addBusinessCommerceAccount(
-				defaultUser.getUserId(), RandomTestUtil.randomString(),
+				guestUser.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + "@liferay.com",
 				RandomTestUtil.randomString(), new long[] {_user.getUserId()},
 				null, _serviceContext);

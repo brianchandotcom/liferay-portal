@@ -289,7 +289,7 @@ public class CommerceDiscountTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
@@ -348,7 +348,7 @@ public class CommerceDiscountTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
@@ -380,7 +380,7 @@ public class CommerceDiscountTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
@@ -418,7 +418,7 @@ public class CommerceDiscountTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		User user = UserLocalServiceUtil.getDefaultUser(
+		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());

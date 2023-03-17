@@ -89,7 +89,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			User user = _userLocalService.fetchUser(userId);
 
 			if (user == null) {
-				userId = _userLocalService.getDefaultUserId(companyId);
+				userId = _userLocalService.getGuestUserId(companyId);
 			}
 
 			SegmentsExperience defaultSegmentsExperience =

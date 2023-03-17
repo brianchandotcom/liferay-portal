@@ -59,7 +59,7 @@ public class ObjectViewServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
@@ -79,7 +79,7 @@ public class ObjectViewServiceTest {
 	@Test
 	public void testAddObjectView() throws Exception {
 		try {
-			_testAddObjectView(_defaultUser);
+			_testAddObjectView(_guestUser);
 
 			Assert.fail();
 		}
@@ -88,7 +88,7 @@ public class ObjectViewServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -98,14 +98,14 @@ public class ObjectViewServiceTest {
 	@Test
 	public void testGetObjectView() throws Exception {
 		try {
-			_testGetObjectView(_defaultUser);
+			_testGetObjectView(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -115,7 +115,7 @@ public class ObjectViewServiceTest {
 	@Test
 	public void testUpdateObjectView() throws Exception {
 		try {
-			_testUpdateObjectView(_defaultUser);
+			_testUpdateObjectView(_guestUser);
 
 			Assert.fail();
 		}
@@ -124,7 +124,7 @@ public class ObjectViewServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -203,7 +203,7 @@ public class ObjectViewServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

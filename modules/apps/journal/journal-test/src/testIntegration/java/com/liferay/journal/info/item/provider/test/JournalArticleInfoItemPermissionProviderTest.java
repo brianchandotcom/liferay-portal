@@ -79,7 +79,7 @@ public class JournalArticleInfoItemPermissionProviderTest {
 		Assert.assertFalse(
 			infoItemPermissionProvider.hasPermission(
 				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getDefaultUser(_group.getCompanyId())),
+					UserLocalServiceUtil.getGuestUser(_group.getCompanyId())),
 				article, ActionKeys.VIEW));
 	}
 

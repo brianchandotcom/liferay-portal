@@ -38,9 +38,9 @@ public class ImportDefaultValuesUtil {
 				serviceContext.setLanguageId(
 					LocaleUtil.toLanguageId(company.getLocale()));
 
-				User defaultUser = company.getGuestUser();
+				User guestUser = company.getGuestUser();
 
-				serviceContext.setUserId(defaultUser.getUserId());
+				serviceContext.setUserId(guestUser.getUserId());
 
 				commerceCurrencyLocalService.importDefaultValues(
 					serviceContext);

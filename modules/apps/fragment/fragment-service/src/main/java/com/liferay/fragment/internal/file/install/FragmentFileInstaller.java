@@ -241,7 +241,7 @@ public class FragmentFileInstaller implements FileInstaller {
 
 		User user = _userLocalService.fetchUserById(userId);
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			Role role = _roleLocalService.getRole(
 				companyId, RoleConstants.ADMINISTRATOR);
 

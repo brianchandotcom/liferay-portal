@@ -63,7 +63,7 @@ public class FragmentRendererPortalInstanceLifecycleListener
 			return;
 		}
 
-		User user = _userLocalService.getDefaultUser(company.getCompanyId());
+		User user = _userLocalService.getGuestUser(company.getCompanyId());
 
 		_oAuth2ApplicationLocalService.addOAuth2Application(
 			company.getCompanyId(), user.getUserId(), user.getScreenName(),

@@ -977,7 +977,7 @@ public class MainServlet extends HttpServlet {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			EventsProcessorUtil.process(
 				PropsKeys.LOGIN_EVENTS_PRE, PropsValues.LOGIN_EVENTS_PRE,
 				httpServletRequest, httpServletResponse);
@@ -1004,7 +1004,7 @@ public class MainServlet extends HttpServlet {
 
 		httpSession.removeAttribute("j_remoteuser");
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			EventsProcessorUtil.process(
 				PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST,
 				httpServletRequest, httpServletResponse);

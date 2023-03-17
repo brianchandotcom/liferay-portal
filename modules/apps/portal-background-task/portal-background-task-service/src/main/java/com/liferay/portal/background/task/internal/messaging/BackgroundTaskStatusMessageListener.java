@@ -180,7 +180,7 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 
 		long[] userIds = null;
 
-		if ((user != null) && !user.isDefaultUser()) {
+		if ((user != null) && !user.isGuestUser()) {
 			userIds = new long[] {user.getUserId()};
 		}
 		else {

@@ -152,7 +152,7 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		boolean signedIn = false;
 
 		if (user != null) {
-			signedIn = !user.isDefaultUser();
+			signedIn = !user.isGuestUser();
 		}
 
 		context.put(Context.SIGNED_IN, signedIn);

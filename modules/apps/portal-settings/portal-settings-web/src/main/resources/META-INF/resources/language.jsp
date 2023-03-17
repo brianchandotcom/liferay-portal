@@ -42,9 +42,9 @@
 	<aui:select label="default-language" name="languageId">
 
 		<%
-		User defaultUser = company.getDefaultUser();
+		User guestUser = company.getGuestUser();
 
-		String languageId = ParamUtil.getString(request, "languageId", defaultUser.getLanguageId());
+		String languageId = ParamUtil.getString(request, "languageId", guestUser.getLanguageId());
 
 		Locale companyLocale = LocaleUtil.fromLanguageId(languageId);
 

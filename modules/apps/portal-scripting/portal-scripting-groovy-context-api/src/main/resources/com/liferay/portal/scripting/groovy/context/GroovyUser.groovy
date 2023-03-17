@@ -115,7 +115,7 @@ class GroovyUser {
 		}
 
 		user = UserLocalServiceUtil.addUser(
-			groovyScriptingContext.defaultUserId,
+			groovyScriptingContext.guestUserId,
 			groovyScriptingContext.companyId, false, password, password, true,
 			null, emailAddress, LocaleUtil.getDefault(), firstName, null,
 			lastName, -1, -1, true, 1, 1, 1977, jobTitle,

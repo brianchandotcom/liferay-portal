@@ -33,16 +33,6 @@ export function getInputRendererById(id: string): any {
 	return inputRenderer;
 }
 
-export function getDataRendererById(id: string): any {
-	const dataRenderer = dataRenderers[id];
-
-	if (!dataRenderer) {
-		throw new Error(`No data renderer found with id "${id}"`);
-	}
-
-	return dataRenderer;
-}
-
 export type DataRendererType = 'clientExtension' | 'internal';
 
 export interface DataRenderer {
@@ -67,6 +57,19 @@ const fetchedDataRenderers: Array<{
 	dataRenderer: AnyDataRenderer;
 	url: string;
 }> = [];
+
+export function getDataRendererById(id: string): AnyDataRenderer {
+	const dataRenderer = dataRenderers[id];
+
+	if (!dataRenderer) {
+		throw new Error(`No data renderer found with id "${id}"`);
+	}
+
+	return {
+		Component: dataRenderer,
+		type: 'internal',
+	};
+}
 
 export async function getDataRendererByURL(
 	url: string

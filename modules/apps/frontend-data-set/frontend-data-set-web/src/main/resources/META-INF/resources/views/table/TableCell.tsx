@@ -132,11 +132,17 @@ function TableCell({
 
 	const contentRenderer = view.contentRenderer;
 
-	let SyncDataRenderer = DefaultRenderer;
+	let SyncDataRenderer: AnyDataRenderer | null = {
+		Component: DefaultRenderer,
+		type: 'internal',
+	};
 
 	if (contentRenderer) {
 		if (customDataRenderers && customDataRenderers[contentRenderer]) {
-			SyncDataRenderer = customDataRenderers[contentRenderer];
+			SyncDataRenderer = {
+				Component: customDataRenderers[contentRenderer],
+				type: 'internal',
+			};
 		}
 		else {
 			SyncDataRenderer = getDataRendererById(contentRenderer);
@@ -202,10 +208,12 @@ function TableCell({
 
 	if (dataRenderer.type === 'clientExtension') {
 		return (
-			<ClientExtensionRendererComponent
-				args={{value}}
-				renderer={dataRenderer.renderer}
-			/>
+			<DndTableCell columnName={String(options.fieldName)}>
+				<ClientExtensionRendererComponent
+					args={{value}}
+					renderer={dataRenderer.renderer}
+				/>
+			</DndTableCell>
 		);
 	}
 

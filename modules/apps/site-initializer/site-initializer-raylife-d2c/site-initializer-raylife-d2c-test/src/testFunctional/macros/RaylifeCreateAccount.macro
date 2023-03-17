@@ -1,5 +1,9 @@
 definition {
 
+	macro assertTheButtonIsEnabled {
+		AssertElementPresent(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+	}
+
 	macro createAccount {
 		Click(
 			key_text = "CREATE NEW ACCOUNT",

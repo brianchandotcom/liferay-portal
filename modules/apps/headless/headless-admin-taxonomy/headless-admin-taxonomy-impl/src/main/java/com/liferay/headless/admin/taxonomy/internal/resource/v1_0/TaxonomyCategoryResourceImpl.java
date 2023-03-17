@@ -546,6 +546,7 @@ public class TaxonomyCategoryResourceImpl
 		projectionList.add(ProjectionFactoryUtil.property("groupId"));
 		projectionList.add(ProjectionFactoryUtil.property("modifiedDate"));
 		projectionList.add(ProjectionFactoryUtil.property("name"));
+		projectionList.add(ProjectionFactoryUtil.property("parentCategoryId"));
 		projectionList.add(ProjectionFactoryUtil.property("userId"));
 		projectionList.add(ProjectionFactoryUtil.property("vocabularyId"));
 

@@ -357,7 +357,9 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 <aui:script>
 	function <portlet:namespace />openAssetCategorySelector() {
 		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItem) {
+			onSelect: function (selectedItems) {
+				const [selectedItem] = Object.values(selectedItems);
+
 				document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
 					selectedItem.classPK;
 				document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =

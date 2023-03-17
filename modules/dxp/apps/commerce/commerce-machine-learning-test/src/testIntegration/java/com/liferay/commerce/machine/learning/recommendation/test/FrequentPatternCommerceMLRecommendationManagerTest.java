@@ -66,14 +66,14 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 		throws Exception {
 
 		FrequentPatternCommerceMLRecommendation
-			frequentPatternCommerceMLRecommendation =
+			randomFrequentPatternCommerceMLRecommendation =
 				_frequentPatternCommerceMLRecommendations.get(
 					RandomTestUtil.randomInt(
 						0,
 						_frequentPatternCommerceMLRecommendations.size() - 1));
 
 		List<Long> antecedentIdList = ListUtil.fromArray(
-			frequentPatternCommerceMLRecommendation.getAntecedentIds());
+			randomFrequentPatternCommerceMLRecommendation.getAntecedentIds());
 
 		Collections.shuffle(antecedentIdList);
 
@@ -86,18 +86,22 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 			expectedFrequentPatternCommerceMLRecommendations =
 				new LinkedHashMap<>();
 
-		for (FrequentPatternCommerceMLRecommendation recommendation :
-				ListUtil.sort(
-					ListUtil.filter(
-						_frequentPatternCommerceMLRecommendations,
-						recommendation ->
-							_filterFrequentPatternCommerceMLRecommendation(
-								recommendation, antecedentIds)),
-					new FrequentPatternCommerceMLRecommendationComparator(
-						antecedentIds))) {
+		for (FrequentPatternCommerceMLRecommendation
+				curFrequentPatternCommerceMLRecommendation :
+					ListUtil.sort(
+						ListUtil.filter(
+							_frequentPatternCommerceMLRecommendations,
+							frequentPatternCommerceMLRecommendation ->
+								_filterFrequentPatternCommerceMLRecommendation(
+									frequentPatternCommerceMLRecommendation,
+									antecedentIds)),
+						new FrequentPatternCommerceMLRecommendationComparator(
+							antecedentIds))) {
 
 			expectedFrequentPatternCommerceMLRecommendations.putIfAbsent(
-				recommendation.getRecommendedEntryClassPK(), recommendation);
+				curFrequentPatternCommerceMLRecommendation.
+					getRecommendedEntryClassPK(),
+				curFrequentPatternCommerceMLRecommendation);
 		}
 
 		IdempotentRetryAssert.retryAssert(

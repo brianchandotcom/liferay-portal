@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,8 +39,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -138,16 +137,17 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(List<String> parameterValues) {
-		Objects.requireNonNull(parameterValues);
+		_selectedGroupIds = TransformUtil.transform(
+			Objects.requireNonNull(parameterValues),
+			value -> {
+				long groupId = GetterUtil.getLong(value);
 
-		Stream<String> parameterValuesStream = parameterValues.stream();
+				if (groupId <= 0) {
+					return null;
+				}
 
-		Stream<Long> groupIdsStream = parameterValuesStream.map(
-			GetterUtil::getLong);
-
-		groupIdsStream = groupIdsStream.filter(groupId -> groupId > 0);
-
-		_selectedGroupIds = groupIdsStream.collect(Collectors.toList());
+				return groupId;
+			});
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
@@ -238,13 +238,9 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	protected List<BucketDisplayContext>
 		getEmptySearchResultBucketDisplayContexts() {
 
-		Stream<Long> groupIdsStream = _selectedGroupIds.stream();
-
-		Stream<BucketDisplayContext> bucketDisplayContextsStream =
-			groupIdsStream.map(
-				groupId -> buildBucketDisplayContext(groupId, 0, true));
-
-		return bucketDisplayContextsStream.collect(Collectors.toList());
+		return TransformUtil.transform(
+			_selectedGroupIds,
+			groupId -> buildBucketDisplayContext(groupId, 0, true));
 	}
 
 	protected String getFirstParameterValueString() {
@@ -256,12 +252,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	}
 
 	protected List<String> getParameterValueStrings() {
-		Stream<Long> groupIdsStream = _selectedGroupIds.stream();
-
-		Stream<String> parameterValuesStream = groupIdsStream.map(
-			String::valueOf);
-
-		return parameterValuesStream.collect(Collectors.toList());
+		return TransformUtil.transform(_selectedGroupIds, String::valueOf);
 	}
 
 	protected List<TermCollector> getTermCollectors() {

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ANY_BUTTON</td>
+	<td>//*[contains(@type, 'button') and text()='${key_text}'] | //*[contains(@type, 'button')]//*[text()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_TITLE</td>
 	<td>//div[contains(@title, '${siteTitle}')]</td>
 	<td></td>

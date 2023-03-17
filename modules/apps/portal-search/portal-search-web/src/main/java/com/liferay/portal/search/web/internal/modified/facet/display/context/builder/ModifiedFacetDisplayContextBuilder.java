@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -217,14 +216,12 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 			modifiedFacetCalendarDisplayContextBuilder =
 				new ModifiedFacetCalendarDisplayContextBuilder();
 
-		Stream<String> selectedRangesStream = _selectedRanges.stream();
-
-		selectedRangesStream.filter(
-			s -> s.startsWith(StringPool.OPEN_CURLY_BRACE)
-		).findAny(
-		).ifPresent(
-			modifiedFacetCalendarDisplayContextBuilder::setRangeString
-		);
+		for (String selectedRange : _selectedRanges) {
+			if (selectedRange.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				modifiedFacetCalendarDisplayContextBuilder.setRangeString(
+					selectedRange);
+			}
+		}
 
 		modifiedFacetCalendarDisplayContextBuilder.setFrom(_from);
 		modifiedFacetCalendarDisplayContextBuilder.setLocale(_locale);

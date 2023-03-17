@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
@@ -41,9 +41,9 @@ definition {
 		property testray.component.names = "Sites Administration,XSS";
 
 		task ("Add a site") {
-			JSONGroup.addGroup(
-				groupName = "Site Name",
-				membershipType = "Restricted");
+			HeadlessSite.addSite(
+				membershipType = "Restricted",
+				siteName = "Site Name");
 		}
 
 		task ("Add a My Sites widget to Liferay Home page and add view permission to it") {

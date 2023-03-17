@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Add a fragment collection in Global site") {
@@ -197,7 +197,7 @@ definition {
 		}
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a content page") {
@@ -481,7 +481,7 @@ definition {
 		}
 
 		task ("Add two global fragments to a content page in the second normal site") {
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
+			HeadlessSite.addSite(siteName = "Test Site Name 2");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name 2",

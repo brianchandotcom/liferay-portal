@@ -30,7 +30,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a child site") {

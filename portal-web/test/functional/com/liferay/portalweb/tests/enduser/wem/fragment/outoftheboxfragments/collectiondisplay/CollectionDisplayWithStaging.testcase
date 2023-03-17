@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Activate local live staging") {
@@ -367,7 +367,7 @@ definition {
 		}
 
 		task ("Import display page template in a new staging site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			Staging.openStagingAdmin(siteURLKey = "site-name");
 

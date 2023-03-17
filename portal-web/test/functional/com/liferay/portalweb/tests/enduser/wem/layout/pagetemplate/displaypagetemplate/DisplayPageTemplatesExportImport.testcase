@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
@@ -99,7 +99,7 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
@@ -210,7 +210,7 @@ definition {
 		}
 
 		task ("Import display page template in a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 

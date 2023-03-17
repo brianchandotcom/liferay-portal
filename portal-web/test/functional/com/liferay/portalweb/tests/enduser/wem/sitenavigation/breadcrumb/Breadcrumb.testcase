@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -365,9 +365,9 @@ definition {
 	@uitest
 	test DisableShowParentSite {
 		task ("Add a child site") {
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Test Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Child SiteName",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a parent widget page in child site") {

@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -451,9 +451,9 @@ definition {
 
 		task ("Given a web content creator has web content structure with image field on parent site") {
 			task ("Add a child site") {
-				JSONGroup.addChildGroup(
-					groupName = "Child Site Name",
-					parentGroupName = "Test Site Name");
+				HeadlessSite.addSite(
+					parentSiteName = "Test Site Name",
+					siteName = "Child Site Name");
 			}
 
 			task ("Add a widget page to child site") {

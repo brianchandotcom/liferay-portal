@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -227,7 +227,7 @@ definition {
 		}
 
 		task ("Add a custom master have the same name in a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Site Name",
@@ -366,7 +366,7 @@ definition {
 		}
 
 		task ("Import new fragment to a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
 
@@ -466,7 +466,7 @@ definition {
 		}
 
 		task ("Import content page template in a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
@@ -591,7 +591,7 @@ definition {
 		}
 
 		task ("Import Team in a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
@@ -811,7 +811,7 @@ definition {
 		}
 
 		task ("Import content page template to the new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
@@ -1058,7 +1058,7 @@ definition {
 		}
 
 		task ("Import content page template in a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 

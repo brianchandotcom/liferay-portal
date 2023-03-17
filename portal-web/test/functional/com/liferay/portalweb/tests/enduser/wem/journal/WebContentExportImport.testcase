@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -32,7 +32,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONGroup.addGroup(groupName = "Site Name 2");
+		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
@@ -111,7 +111,7 @@ definition {
 	@priority = 3
 	test CanImportExportedWCStructuresWithFieldsets {
 		task ("Given: Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("And: Add a new WC structure with fields") {
@@ -640,7 +640,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONGroup.addGroup(groupName = "Site Name 2");
+		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
@@ -782,7 +782,7 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -864,7 +864,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -878,7 +878,7 @@ definition {
 	test ImportLARWithTheSameTitle {
 		property testray.component.names = "Training";
 
-		JSONGroup.addGroup(groupName = "Site Name 1");
+		HeadlessSite.addSite(siteName = "Site Name 1");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -889,7 +889,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
-		JSONGroup.addGroup(groupName = "Site Name 2");
+		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -908,7 +908,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
 
-		JSONGroup.addGroup(groupName = "Site Name 2");
+		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
@@ -1152,7 +1152,7 @@ definition {
 		}
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Import the web content in new site") {

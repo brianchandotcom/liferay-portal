@@ -530,7 +530,7 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Add a site and a public page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -813,7 +813,7 @@ definition {
 		task ("Add a site template and a site basing on it") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			JSONGroup.addGroup(groupName = "Site1 Name");
+			HeadlessSite.addSite(siteName = "Site1 Name");
 
 			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
@@ -823,7 +823,7 @@ definition {
 		}
 
 		task ("Add another site and edit site name") {
-			JSONGroup.addGroup(groupName = "Site2 Name");
+			HeadlessSite.addSite(siteName = "Site2 Name");
 
 			Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
 
@@ -909,17 +909,21 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(
-				groupDescription = "This is the site description test",
-				groupName = "World Cup - Russia 2018");
+			HeadlessSite.addSite(siteName = "World Cup - Russia 2018");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
+
+			Click(
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			PortletEntry.inputDescription(description = "This is the site description test");
+
+			PortletEntry.save();
 		}
 
 		task ("Add tags to the new site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
-
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Site Settings");
 
 			Tag.addViaSiteCP(tagNameList = "World Cup,Russia,2018");
 		}
@@ -1109,7 +1113,7 @@ definition {
 		}
 
 		task ("Add a site and import the site lar file") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1134,7 +1138,7 @@ definition {
 	@priority = 4
 	test ViewChangesOfSiteScopeConfigurationDefinedInInstanceSettings {
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Navigate to Site Settings admin in new site") {
@@ -1191,7 +1195,7 @@ definition {
 		property portal.upstream = "true";
 
 		task ("Add a new site and a public page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -1199,9 +1203,9 @@ definition {
 		}
 
 		task ("Add a child site to the new site and a public page in it ") {
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Child SiteName",
+				siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child SiteName",

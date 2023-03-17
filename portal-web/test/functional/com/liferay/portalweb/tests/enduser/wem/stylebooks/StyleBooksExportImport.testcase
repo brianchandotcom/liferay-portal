@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
@@ -62,7 +62,7 @@ definition {
 		}
 
 		task ("Import the style book into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "new-site-name");
 

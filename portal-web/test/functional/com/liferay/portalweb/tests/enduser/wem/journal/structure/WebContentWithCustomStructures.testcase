@@ -14,7 +14,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
@@ -227,9 +227,9 @@ definition {
 		}
 
 		task ("Add a child site") {
-			JSONGroup.addChildGroup(
-				groupName = "Child Site Name",
-				parentGroupName = "Test Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Test Site Name",
+				siteName = "Child Site Name");
 		}
 
 		task ("Add a web content structure with rich text field") {

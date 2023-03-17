@@ -14,7 +14,7 @@ definition {
 
 		task ("Add two sites") {
 			for (var i : list "1,2") {
-				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
+				HeadlessSite.addSite(siteName = "Test Site Name ${i}");
 			}
 		}
 

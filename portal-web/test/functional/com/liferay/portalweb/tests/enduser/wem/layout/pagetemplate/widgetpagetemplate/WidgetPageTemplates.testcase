@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("Add a site and page basing on the created page template") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
@@ -125,7 +125,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a site designer has a page template set") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Site Name",
@@ -171,7 +171,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a page template collection") {
@@ -235,7 +235,7 @@ definition {
 	@priority = 4
 	test DeactivateAndActivateGlobalPageTemplate {
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add an active page template") {
@@ -317,7 +317,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a page template collection") {
@@ -411,7 +411,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a page template collection") {

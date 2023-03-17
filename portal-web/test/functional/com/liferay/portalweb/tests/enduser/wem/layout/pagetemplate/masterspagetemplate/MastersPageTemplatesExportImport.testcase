@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
@@ -228,7 +228,7 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
@@ -302,7 +302,7 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
@@ -423,7 +423,7 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 
@@ -599,7 +599,7 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
 

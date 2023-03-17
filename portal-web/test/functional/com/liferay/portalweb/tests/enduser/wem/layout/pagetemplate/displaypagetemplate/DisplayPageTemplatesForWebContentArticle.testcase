@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
@@ -819,7 +819,7 @@ definition {
 			var i = 1;
 
 			while (${i} != 7) {
-				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
+				HeadlessSite.addSite(siteName = "Test Site Name ${i}");
 
 				var i = ${i} + 1;
 			}
@@ -965,7 +965,7 @@ definition {
 			var i = 1;
 
 			while (${i} != 7) {
-				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
+				HeadlessSite.addSite(siteName = "Test Site Name ${i}");
 
 				var i = ${i} + 1;
 			}

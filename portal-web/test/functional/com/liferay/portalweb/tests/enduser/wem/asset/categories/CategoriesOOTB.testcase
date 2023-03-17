@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -627,7 +627,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add the second site") {
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
+			HeadlessSite.addSite(siteName = "Test Site Name 2");
 		}
 
 		task ("Add a global category") {

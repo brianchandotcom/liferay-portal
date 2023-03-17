@@ -42,7 +42,7 @@ definition {
 		}
 
 		task ("Add a site and add a page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -115,7 +115,7 @@ definition {
 	@priority = 3
 	test AddPublicVirtualHostsSiteURL {
 		task ("Add a site and a page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -144,7 +144,7 @@ definition {
 	@priority = 3
 	test AddSiteWithCommaInName {
 		task ("Add a site with comma") {
-			JSONGroup.addGroup(groupName = "Site Name,");
+			HeadlessSite.addSite(siteName = "Site Name,");
 		}
 
 		task ("View the site added") {
@@ -158,7 +158,7 @@ definition {
 	@priority = 3
 	test AddSiteWithInvalidDuplicateName {
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Try to add a site with the same name and assert could not add it") {
@@ -188,7 +188,7 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a public page and private page to the site") {
@@ -244,7 +244,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Edit site name") {
@@ -270,7 +270,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a public page and private page to the site") {
@@ -317,7 +317,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site and a public page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -349,7 +349,7 @@ definition {
 	test SearchSite {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		Site.openSitesAdmin();
 
@@ -359,7 +359,7 @@ definition {
 	@description = "Can not choose its own site as parent site."
 	@priority = 3
 	test SiteCannotBeItsOwnParent {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
@@ -372,7 +372,7 @@ definition {
 	@priority = 3
 	test SiteCannotBeItsOwnParentStaging {
 		task ("Add a site and a public page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -414,15 +414,15 @@ definition {
 
 		PortalSettings.configureContentSharingSubSitesCP(subSites = "enabledByDefault");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "AP Test Page");
 
-		JSONGroup.addChildGroup(
-			groupName = "Child SiteName",
-			parentGroupName = "Site Name");
+		HeadlessSite.addSite(
+			parentSiteName = "Site Name",
+			siteName = "Child SiteName");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child SiteName",
@@ -597,7 +597,7 @@ definition {
 		Site.openSitesAdmin();
 
 		task ("Add a site and a public page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -605,9 +605,9 @@ definition {
 		}
 
 		task ("Add a child site to the site and a public page in it") {
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Site Name",
+				siteName = "Child SiteName");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child SiteName",
@@ -616,10 +616,10 @@ definition {
 		}
 
 		task ("Add a child site to the child site and a public page in it") {
-			JSONGroup.addChildGroup(
-				grandParentGroupName = "Site Name",
-				groupName = "Child ChildSiteName",
-				parentGroupName = "Child SiteName");
+			HeadlessSite.addSite(
+				grandParentSiteName = "Site Name",
+				parentSiteName = "Child SiteName",
+				siteName = "Child ChildSiteName");
 
 			JSONLayout.addPublicLayout(
 				grandParentGroupName = "Site Name",
@@ -671,7 +671,7 @@ definition {
 	@priority = 4
 	test ViewSiteHierarchiesViaSitesDirectory {
 		task ("Add a site and a public page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -679,9 +679,9 @@ definition {
 		}
 
 		task ("Add a child site to the site and a public page in it") {
-			JSONGroup.addChildGroup(
-				groupName = "Child Site1Name",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Site Name",
+				siteName = "Child Site1Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child Site1Name",
@@ -690,10 +690,10 @@ definition {
 		}
 
 		task ("Add a child site to the child site and a public page in it") {
-			JSONGroup.addChildGroup(
-				grandParentGroupName = "Site Name",
-				groupName = "Child ChildSite1Name",
-				parentGroupName = "Child Site1Name");
+			HeadlessSite.addSite(
+				grandParentSiteName = "Site Name",
+				parentSiteName = "Child Site1Name",
+				siteName = "Child ChildSite1Name");
 
 			JSONLayout.addPublicLayout(
 				grandParentGroupName = "Site Name",
@@ -703,10 +703,10 @@ definition {
 		}
 
 		task ("Add another child site to the child site and a public page in it") {
-			JSONGroup.addChildGroup(
-				grandParentGroupName = "Site Name",
-				groupName = "Child ChildSite2Name",
-				parentGroupName = "Child Site1Name");
+			HeadlessSite.addSite(
+				grandParentSiteName = "Site Name",
+				parentSiteName = "Child Site1Name",
+				siteName = "Child ChildSite2Name");
 
 			JSONLayout.addPublicLayout(
 				grandParentGroupName = "Site Name",
@@ -716,9 +716,9 @@ definition {
 		}
 
 		task ("Add another child site to the site and a public page in it") {
-			JSONGroup.addChildGroup(
-				groupName = "Child Site2Name",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Child Site2Name",
+				siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child Site2Name",

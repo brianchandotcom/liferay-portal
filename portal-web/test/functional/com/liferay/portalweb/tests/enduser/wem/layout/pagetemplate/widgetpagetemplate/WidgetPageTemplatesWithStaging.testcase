@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site and a page via JSON") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

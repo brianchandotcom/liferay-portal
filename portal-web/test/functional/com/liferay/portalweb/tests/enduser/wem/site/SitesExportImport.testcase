@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
@@ -186,7 +186,7 @@ definition {
 		}
 
 		task ("Add another site and import the site lar") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -327,7 +327,7 @@ definition {
 		}
 
 		task ("Import the lar file to a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -404,7 +404,7 @@ definition {
 		}
 
 		task ("Add a new site based on Blank Site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Import the lar into the new site") {
@@ -496,7 +496,7 @@ definition {
 		}
 
 		task ("Import the lar file to a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -543,7 +543,7 @@ definition {
 		}
 
 		task ("Add a new site based on Blank Site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Import the lar into the new site") {

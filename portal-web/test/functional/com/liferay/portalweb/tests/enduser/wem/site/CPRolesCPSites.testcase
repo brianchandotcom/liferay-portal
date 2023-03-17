@@ -142,11 +142,11 @@ definition {
 		}
 
 		task ("Add a site and child site") {
-			JSONGroup.addGroup(groupName = "Parent Site Name");
+			HeadlessSite.addSite(siteName = "Parent Site Name");
 
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Parent Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Parent Site Name",
+				siteName = "Child SiteName");
 		}
 
 		task ("Assign user to parent site") {
@@ -254,9 +254,9 @@ definition {
 		}
 
 		task ("Add a child site and assign the user to it") {
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName1",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Site Name",
+				siteName = "Child SiteName1");
 
 			JSONGroup.assignUserToGroup(
 				groupName = "Child SiteName1",
@@ -473,7 +473,7 @@ definition {
 		}
 
 		task ("Add a site and add a public widget page in it") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

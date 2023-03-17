@@ -24,7 +24,7 @@ definition {
 		property portal.version = "6.2.10.21";
 
 		task ("Given: Add a new site") {
-			JSONGroup.addGroup(groupName = "Import Site Name");
+			HeadlessSite.addSite(siteName = "Import Site Name");
 		}
 
 		task ("When: Import lar file from dependencies") {

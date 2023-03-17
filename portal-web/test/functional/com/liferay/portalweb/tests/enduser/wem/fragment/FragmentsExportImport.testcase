@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Navigate to fragments admin") {
@@ -208,7 +208,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -283,7 +283,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -379,7 +379,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -494,7 +494,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -621,7 +621,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -756,7 +756,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -857,7 +857,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site");
+			HeadlessSite.addSite(siteName = "New Site");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site");
 
@@ -989,7 +989,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -1113,7 +1113,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "New Site Name");
+			HeadlessSite.addSite(siteName = "New Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 
@@ -1401,7 +1401,7 @@ definition {
 		}
 
 		task ("Import the fragment collection into a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
 

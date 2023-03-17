@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -674,7 +674,7 @@ definition {
 		}
 
 		task ("Create another site") {
-			JSONGroup.addGroup(groupName = "Site Name B");
+			HeadlessSite.addSite(siteName = "Site Name B");
 		}
 
 		task ("Enable Staging in created site") {

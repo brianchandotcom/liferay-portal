@@ -86,7 +86,7 @@ definition {
 
 		task ("Add six new sites") {
 			for (var n : list "1,2,3,4,5,6") {
-				JSONGroup.addGroup(groupName = "Test Site Name ${n}");
+				HeadlessSite.addSite(siteName = "Test Site Name ${n}");
 			}
 		}
 
@@ -165,7 +165,7 @@ definition {
 		}
 
 		task ("The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page.") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

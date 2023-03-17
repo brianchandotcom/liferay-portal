@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -363,9 +363,9 @@ definition {
 		}
 
 		task ("Add a child site") {
-			JSONGroup.addChildGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Test Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Test Site Name",
+				siteName = "Child SiteName");
 		}
 
 		task ("Add a web content with category from parent site") {
@@ -684,7 +684,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a new site based on Blank Site") {
-			JSONGroup.addGroup(groupName = "Site Name 2");
+			HeadlessSite.addSite(siteName = "Site Name 2");
 		}
 
 		task ("Add multiple vocabularies") {
@@ -781,7 +781,7 @@ definition {
 		}
 
 		task ("Add a new site based on Blank Site") {
-			JSONGroup.addGroup(groupName = "Import Site Name");
+			HeadlessSite.addSite(siteName = "Import Site Name");
 		}
 
 		task ("Import the lar to new site") {

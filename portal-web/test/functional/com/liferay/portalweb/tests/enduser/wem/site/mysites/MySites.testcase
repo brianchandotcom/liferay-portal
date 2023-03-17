@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Home Site");
+		HeadlessSite.addSite(siteName = "Home Site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Home Site",
@@ -37,7 +37,7 @@ definition {
 
 		task ("Add enough sites to allow pagination to occur") {
 			for (var index : list "01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23") {
-				JSONGroup.addGroup(groupName = "Site Name ${index}");
+				HeadlessSite.addSite(siteName = "Site Name ${index}");
 			}
 		}
 
@@ -68,7 +68,7 @@ definition {
 		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create an open site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Create a user and set its password") {
@@ -165,9 +165,9 @@ definition {
 		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a restricted site") {
-			JSONGroup.addGroup(
-				groupName = "Site Name",
-				membershipType = "Restricted");
+			HeadlessSite.addSite(
+				membershipType = "Restricted",
+				siteName = "Site Name");
 		}
 
 		task ("Create a user and set its password") {
@@ -255,7 +255,7 @@ definition {
 		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a generic site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Create a user and set its password") {
@@ -308,7 +308,7 @@ definition {
 		property testray.component.names = "Sites Administration";
 
 		task ("Create a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
@@ -368,7 +368,7 @@ definition {
 		}
 
 		task ("Create another new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Make user a member of new site via User Admin CP") {
@@ -413,7 +413,7 @@ definition {
 		property testray.component.names = "Sites Administration";
 
 		task ("Create a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Deactivate the new site") {
@@ -475,9 +475,11 @@ definition {
 		}
 
 		task ("Add new site with manual membership disabled") {
-			JSONGroup.addGroup(
-				allowManualMembershipManagement = "false",
-				groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "false");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
@@ -512,9 +514,11 @@ definition {
 		property testray.component.names = "Sites Administration";
 
 		task ("Add new site with manual membership disabled") {
-			JSONGroup.addGroup(
-				allowManualMembershipManagement = "false",
-				groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "false");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
@@ -546,7 +550,7 @@ definition {
 		property testray.component.names = "Sites Administration";
 
 		task ("Add a site with a public and private page") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -591,7 +595,7 @@ definition {
 		property testray.component.names = "Sites Administration,Tags";
 
 		task ("Create a new site with tags") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 

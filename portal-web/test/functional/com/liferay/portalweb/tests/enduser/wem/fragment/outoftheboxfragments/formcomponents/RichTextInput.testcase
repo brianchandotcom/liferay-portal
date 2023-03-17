@@ -13,7 +13,7 @@ definition {
 		}
 
 		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Add a company Object with a Rich Text field") {

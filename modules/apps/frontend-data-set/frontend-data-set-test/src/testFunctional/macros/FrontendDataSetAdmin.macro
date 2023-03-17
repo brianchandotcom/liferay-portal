@@ -10,4 +10,14 @@ definition {
 			value1 = ${key_provider});
 	}
 
+	macro selectProvider {
+		Click(
+			dropdownLabel = "Choose an Option",
+			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+		Click(
+			locator1 = "FrontendDataSet#SELECT_TYPE_PROVIDER",
+			value1 = ${key_type});
+	}
+
 }

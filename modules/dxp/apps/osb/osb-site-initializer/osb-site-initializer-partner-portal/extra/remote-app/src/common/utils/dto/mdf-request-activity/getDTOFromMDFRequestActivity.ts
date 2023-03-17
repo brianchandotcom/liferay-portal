@@ -20,7 +20,7 @@ export default function getDTOFromMDFRequestActivity(
 	externalReferenceCodeSF?: string,
 	mdfRequestExternalReferenceCodeSF?: string
 ): MDFRequestActivityDTO {
-	const activityDescription = {...mdfRequestActivity.activityDescription};
+	const {activityDescription, ...newMdfRequestActivity} = mdfRequestActivity;
 
 	delete activityDescription?.creator;
 	delete activityDescription?.externalReferenceCode;
@@ -30,11 +30,10 @@ export default function getDTOFromMDFRequestActivity(
 		...activityDescription,
 		activityStatus: mdfRequestActivity.activityStatus,
 		currency: mdfRequestActivity.currency,
-		...mdfRequestActivity,
+		...newMdfRequestActivity,
 		externalReferenceCodeSF,
-		leadFollowUpStrategies: activityDescription.leadFollowUpStrategies?.join(
-			', '
-		),
+		leadFollowUpStrategies:
+			activityDescription?.leadFollowUpStrategies?.join(', '),
 		mdfRequestExternalReferenceCodeSF,
 		r_accToActs_accountEntryId: company?.id,
 		r_mdfReqToActs_c_mdfRequestId: mdfRequestId,

@@ -219,6 +219,12 @@
 									},
 									{
 										"key": "canceled"
+									},
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "marketingDirectorReview"
 									}
 								]
 							},
@@ -270,6 +276,9 @@
 									},
 									{
 										"key": "moreInfoRequested"
+									},
+									{
+										"key": "pendingMarketingReview"
 									},
 									{
 										"key": "canceled"

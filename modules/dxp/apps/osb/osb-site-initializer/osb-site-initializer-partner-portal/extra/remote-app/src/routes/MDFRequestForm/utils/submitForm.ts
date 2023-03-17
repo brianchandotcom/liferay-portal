@@ -27,19 +27,46 @@ import {Status} from '../../../common/utils/constants/status';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
 
+interface AccountRole {
+	id: number;
+	name: string;
+}
+
+const findLiferayRole = (accountRoles: AccountRole[]) => {
+	const liferayRoles = [
+		'Channel General Manager',
+		'Channel Account Manager',
+		'Channel Regional Marketing Manager',
+		'Channel Global Marketing Manager',
+		'Channel Finance Manager',
+	];
+
+	return liferayRoles.filter((liferayRole) =>
+		accountRoles.reduce((result, accountRole) => {
+			if (result) {
+				return true;
+			}
+
+			return accountRole.name === liferayRole;
+		}, false)
+	).length;
+};
+
 export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
 	siteURL: string,
-	currentRequestStatus?: LiferayPicklist
+	currentRequestStatus?: LiferayPicklist,
+	accountRoles?: AccountRole[]
 ) {
 	formikHelpers.setSubmitting(true);
 
-	if (currentRequestStatus) {
+	if (currentRequestStatus && !values.id) {
 		values.mdfRequestStatus = currentRequestStatus;
 	}
 
 	if (
+		!findLiferayRole(accountRoles as AccountRole[]) &&
 		values.totalMDFRequestAmount >= 15000 &&
 		values.mdfRequestStatus !== Status.DRAFT
 	) {
@@ -53,14 +80,12 @@ export default async function submitForm(
 		values.mdfRequestStatus !== Status.DRAFT
 	) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	}
-	else if (values.id) {
+	} else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values
 		);
-	}
-	else {
+	} else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values

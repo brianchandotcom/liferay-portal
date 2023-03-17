@@ -20,6 +20,7 @@ import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {Liferay} from '../../common/services/liferay';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
+import useGetMyUserAccount from '../../common/services/liferay/user-account/useGetMyUserAccount';
 import {Status} from '../../common/utils/constants/status';
 import {getMDFRequestFromDTO} from '../../common/utils/dto/mdf-request/getMDFRequestFromDTO';
 import isObjectEmpty from '../../common/utils/isObjectEmpty';
@@ -65,6 +66,7 @@ const MDFRequestForm = () => {
 	);
 
 	const {data, isValidating} = useGetMDFRequestById(mdfRequestId);
+	const userInformation = useGetMyUserAccount();
 
 	const onCancel = () =>
 		Liferay.Util.navigate(
@@ -147,7 +149,13 @@ const MDFRequestForm = () => {
 					: initialFormValues
 			}
 			onSubmit={(values, formikHelpers) =>
-				submitForm(values, formikHelpers, siteURL, Status.PENDING)
+				submitForm(
+					values,
+					formikHelpers,
+					siteURL,
+					Status.PENDING,
+					userInformation.data?.roleBriefs
+				)
 			}
 		>
 			{StepFormComponent[step]}

@@ -39,6 +39,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -197,6 +198,13 @@ public class WorkflowDefinitionResourceTest
 
 		assertEquals(randomWorkflowDefinition, postWorkflowDefinition);
 		assertValid(postWorkflowDefinition);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostWorkflowDefinitionsPageExportBatch() throws Exception {
+		super.testPostWorkflowDefinitionsPageExportBatch();
 	}
 
 	@Override

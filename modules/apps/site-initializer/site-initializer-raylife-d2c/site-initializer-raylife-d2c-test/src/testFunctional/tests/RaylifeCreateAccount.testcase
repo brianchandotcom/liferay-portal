@@ -164,51 +164,46 @@ definition {
 		AssertElementPresent(locator1 = "Raylife#ERROR_MESSAGE");
 	}
 
-	@description = "LPS-144334 - Verify if after filling in the password and the email with all correct information, the create account button is active"
+	@description = "Story ID: LPS-135237 | Test Summary: Verify if after filling in the password and the email with all correct information, the create account button is active"
 	@priority = 5
 	test IsCreateAccountButtonActive {
 		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsAccountButtonActive";
 
-		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		task ("Given I go through all the forms Raylife basic, commercial, employees and properties") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-		RaylifeHomePage.startFlow();
+			RaylifeHomePage.startFlow();
 
-		RaylifeContactInfo.typeAllBasicsInfoFields();
+			RaylifeContactInfo.typeAllBasicsInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+			Raylife.clickAtButton(text = "Continue");
 
-		RaylifeBusiness.typeAllBusinessInfoFields();
+			RaylifeBusiness.typeAllBusinessInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+			Raylife.clickAtButton(text = "Continue");
 
-		RaylifeEmployees.typeAllEmployeesInfoFields();
+			RaylifeEmployees.typeAllEmployeesInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+			Raylife.clickAtButton(text = "Continue");
 
-		RaylifeProperty.typeAllPropertyInfoFields();
+			RaylifeProperty.typeAllPropertyInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+			Raylife.clickAtButton(text = "Continue");
+		}
+		
+		task ("And I select a quotation") {
+			Raylife.selectTheQuote(quoteOption = "standard");
+		}
 
-		Click(
-			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
-			title = "standard");
+		task ("When I fill in all the required fields") {
+			RaylifeCreateAccount.createAccount();
+		}
 
-		Type(
-			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
-			value1 = "test@liferay.com");
-
-		Type(
-			label = "password",
-			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test@123");
-
-		Type(
-			label = "rePassword",
-			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test@123");
-
-		AssertElementPresent(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+		task ("Then I should be able to assert that the Create Account button is enabled") {
+			RaylifeCreateAccount.assertTheButtonIsEnabled();
+		}
+		
 	}
 
 	@description = "LPS-144333 - Verify if the create account button is disabled"

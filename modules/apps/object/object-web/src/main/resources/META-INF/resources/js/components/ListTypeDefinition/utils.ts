@@ -16,7 +16,7 @@ export function fixLocaleKeys(name_i18n: LocalizedValue<string>) {
 	const newTranslationsObject: {[key: string]: string} = {};
 
 	for (const [key, value] of Object.entries(name_i18n)) {
-		newTranslationsObject[key.replace('-', '_')] = value;
+		newTranslationsObject[key.replace(/-/g, '_')] = value;
 	}
 
 	return newTranslationsObject;

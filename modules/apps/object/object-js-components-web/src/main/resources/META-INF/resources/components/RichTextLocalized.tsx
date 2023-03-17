@@ -33,7 +33,7 @@ const availableLocales = Object.keys(Liferay.Language.available)
 	.sort((languageId) => (languageId === defaultLanguageId ? -1 : 1))
 	.map((language) => ({
 		label: language as Liferay.Language.Locale,
-		symbol: language.replace('_', '-').toLowerCase(),
+		symbol: language.replace(/_/g, '-').toLowerCase(),
 	}));
 
 export function RichTextLocalized({
@@ -105,7 +105,7 @@ export function RichTextLocalized({
 							<span className="inline-item">
 								<ClayIcon
 									symbol={selectedLocale
-										.replace('_', '-')
+										.replace(/_/g, '-')
 										.toLowerCase()}
 								/>
 							</span>

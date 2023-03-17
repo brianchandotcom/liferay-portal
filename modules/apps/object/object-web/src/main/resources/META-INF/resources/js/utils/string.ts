@@ -40,7 +40,7 @@ export function checkIfFirstLetterIsUppercase(str: string) {
  * frontend with themeDisplay.getDefaultLanguageId()
  */
 export function normalizeLanguageId(languageId: string): string {
-	return languageId.replace('_', '-');
+	return languageId.replace(/_/g, '-');
 }
 
 /**

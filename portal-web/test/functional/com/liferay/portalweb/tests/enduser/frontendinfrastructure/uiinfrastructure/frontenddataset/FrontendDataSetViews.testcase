@@ -65,13 +65,26 @@ definition {
 
 	}
 
-	@description = "Confirm the error message that appears when the user tries to create a data set view without the filled name"
-	@ignore = "Test Stub"
+	@description = "LPS-178775. Confirm the error message that appears when the user tries to create a data set view without the filled name"
 	@priority = 3
 	test ErrorAppearsWhenNameBlank {
+		task ("When the user goes to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO ErrorAppearsWhenNameBlank pending implementation JQuery enabled
+		task ("And filling the field name with 'Test Dataset'") {
+			PortletEntry.inputName(name = "Test Dataset");
+		}
 
+		task ("And clicking on the Save button") {
+			PortletEntry.save();
+		}
+
+		task ("Then Confirm that 'This field is required' alert messages are present in the provider field") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "This field is required.");
+		}
 	}
 
 	@description = "Confirm the error message that appears when the user tries to create a Data Set without the filled provider"

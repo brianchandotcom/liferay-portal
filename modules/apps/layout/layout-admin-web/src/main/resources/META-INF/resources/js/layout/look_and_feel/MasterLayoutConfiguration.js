@@ -81,12 +81,6 @@ export default function MasterLayoutConfiguration({
 
 			<h3 className="sheet-subtitle">{Liferay.Language.get('master')}</h3>
 
-			<p>
-				<strong>{`${Liferay.Language.get('master-name')}: `}</strong>
-
-				{masterLayout.name}
-			</p>
-
 			{editMasterLayoutURL &&
 			masterLayout.plid &&
 			masterLayout.plid !== DEFAULT_MASTER_LAYOUT_PLID ? (

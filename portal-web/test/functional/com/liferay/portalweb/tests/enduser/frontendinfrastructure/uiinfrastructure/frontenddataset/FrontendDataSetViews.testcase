@@ -30,12 +30,38 @@ definition {
 	}
 
 	@description = "Confirm that the user can change the pagination on the dataset admin page"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanChangePaginationInAdminPage {
+        task("Given create 6 data sets"){
+			for (var listDataSets : list "1,2,3,4,5,6") {
+				LexiconEntry.gotoAdd();
 
-		// TODO CanChangePaginationInAdminPage pending implementation JQuery enabled
+				PortletEntry.inputName(name = "Test Dataset");
 
+				FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+
+				PortletEntry.save();
+		    }
+			task("When changing the page to 4 entries"){
+				ObjectPortlet.changePagination(itemsPerPage = "4 items");
+			}
+
+			task("Then confirm that only 4 entries are displayed "){
+				VerifyElementPresent(
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+				value1 = "Test Dataset");
+			}
+
+            task("When to switch to page 2 "){
+		        ObjectPortlet.checkAnyPage(pageNumber = 2);
+			}
+			
+			task(""){
+				VerifyElementPresent(
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+				value1 = "Test Dataset");
+			}
+		}
 	}
 
 	@description = "Confirm that the user can create a data set view"

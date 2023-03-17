@@ -204,6 +204,8 @@ public class LocalizedValueUtil {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception);
 				}
+
+				localizedValues.put(languageId, value);
 			}
 		}
 

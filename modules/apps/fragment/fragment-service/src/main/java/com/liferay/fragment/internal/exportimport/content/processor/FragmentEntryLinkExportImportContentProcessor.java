@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.fragment.model.FragmentEntryLink",
-	service = {
-		ExportImportContentProcessor.class,
-		FragmentEntryLinkExportImportContentProcessor.class
-	}
+	service = ExportImportContentProcessor.class
 )
 public class FragmentEntryLinkExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -1934,8 +1935,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Default user
 
-			User defaultUser = _userPersistence.fetchByC_DU(
-				company.getCompanyId(), true);
+			User defaultUser = _userPersistence.fetchByC_T_First(
+				company.getCompanyId(), UserConstants.TYPE_GUEST, null);
 
 			if (defaultUser != null) {
 				boolean modified = false;

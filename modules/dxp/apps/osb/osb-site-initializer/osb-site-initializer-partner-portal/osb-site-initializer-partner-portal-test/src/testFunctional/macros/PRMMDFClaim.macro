@@ -62,6 +62,11 @@ definition {
 			value1 = ${reimbursementInvoice});
 
 		Button.click(button = "Submit");
+
+		Alert.viewSuccessMessage();
+
+		WaitForPageLoad();
+	}
 	}
 
 	@summary = "Get the claim ID by index"

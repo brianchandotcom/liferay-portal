@@ -179,6 +179,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that can reanalyze a subtask"
+	@priority = 5
+	test AdminCanReanalyzeSubtask {
+		task ("Given that the user assign a subtask") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("And the user complete the subtask") {
+			Button.click(button = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "Complete");
+		}
+
+		task ("When the user reanalyze the subtask") {
+			Button.click(button = "Assign and Reanalyze");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("Then the status in analysis should appear on the list") {
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "In Analysis");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = 3
 	test AdminCanCancelMergeSubtask {

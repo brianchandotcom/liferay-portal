@@ -16,10 +16,12 @@ export default interface MDFRequestActivityDescription {
 	assetsLiferayRequired?: string;
 	audienceTarget?: string;
 	broadcastChannel?: string;
+	creator?: Date;
 	cta?: string;
 	description?: string;
 	detailsLeadFollowUp?: string;
 	expectedImpressions?: string;
+	externalReferenceCode?: string;
 	gatedLandingPage?: string;
 	goalOfContent?: string;
 	guaranteedImpressions?: string;
@@ -43,6 +45,7 @@ export default interface MDFRequestActivityDescription {
 	sourceAndSizeOfCallList?: string;
 	sourceAndSizeOfInviteeList?: string;
 	specificSites?: string;
+	status?: string;
 	targetOfLeads?: string;
 	targetOfSends?: string;
 	typeMerchandise?: string;

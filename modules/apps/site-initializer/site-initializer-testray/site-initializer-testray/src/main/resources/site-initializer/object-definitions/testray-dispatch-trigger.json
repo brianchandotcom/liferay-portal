@@ -12,7 +12,7 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": true,
+			"required": false,
 			"type": "String"
 		},
 		{
@@ -23,7 +23,7 @@
 				"en_US": "Liferay Dispatch Trigger ID"
 			},
 			"name": "dispatchTriggerId",
-			"required": true,
+			"required": false,
 			"type": "Long"
 		},
 		{
@@ -34,7 +34,7 @@
 				"en_US": "Type"
 			},
 			"name": "type",
-			"required": true,
+			"required": false,
 			"type": "String"
 		},
 		{

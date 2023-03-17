@@ -144,7 +144,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 
 		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
 
-		super.update(task.id, {
+		await super.update(task.id, {
 			...data,
 			dispatchTriggerId,
 		});

@@ -60,7 +60,7 @@ public class LayoutPageTemplateStructureRelModelListener
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+			_getLayoutPageTemplateStructureClassNameId(),
 			layoutPageTemplateStructure.getPlid());
 
 		Set<LayoutDisplayPageObjectProvider<?>>
@@ -80,8 +80,7 @@ public class LayoutPageTemplateStructureRelModelListener
 						String.valueOf(
 							layoutPageTemplateStructure.
 								getLayoutPageTemplateStructureId()),
-						_portal.getClassNameId(
-							LayoutPageTemplateStructure.class),
+						_getLayoutPageTemplateStructureClassNameId(),
 						layoutPageTemplateStructure.getPlid());
 
 			if (layoutClassedModelUsage != null) {
@@ -102,9 +101,20 @@ public class LayoutPageTemplateStructureRelModelListener
 				String.valueOf(
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId()),
-				_portal.getClassNameId(LayoutPageTemplateStructure.class),
+				_getLayoutPageTemplateStructureClassNameId(),
 				layoutPageTemplateStructure.getPlid(), serviceContext);
 		}
+	}
+
+	private long _getLayoutPageTemplateStructureClassNameId() {
+		if (_layoutPageTemplateStructureNameId != null) {
+			return _layoutPageTemplateStructureNameId;
+		}
+
+		_layoutPageTemplateStructureNameId = _portal.getClassNameId(
+			LayoutPageTemplateStructure.class.getName());
+
+		return _layoutPageTemplateStructureNameId;
 	}
 
 	@Reference
@@ -114,6 +124,8 @@ public class LayoutPageTemplateStructureRelModelListener
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	private Long _layoutPageTemplateStructureNameId;
 
 	@Reference
 	private Portal _portal;

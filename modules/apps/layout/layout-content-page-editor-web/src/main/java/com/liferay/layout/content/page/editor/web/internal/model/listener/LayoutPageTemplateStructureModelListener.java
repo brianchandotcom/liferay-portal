@@ -39,13 +39,26 @@ public class LayoutPageTemplateStructureModelListener
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+			_getLayoutPageTemplateStructureClassNameId(),
 			layoutPageTemplateStructure.getPlid());
+	}
+
+	private long _getLayoutPageTemplateStructureClassNameId() {
+		if (_layoutPageTemplateStructureNameId != null) {
+			return _layoutPageTemplateStructureNameId;
+		}
+
+		_layoutPageTemplateStructureNameId = _portal.getClassNameId(
+			LayoutPageTemplateStructure.class.getName());
+
+		return _layoutPageTemplateStructureNameId;
 	}
 
 	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	private Long _layoutPageTemplateStructureNameId;
 
 	@Reference
 	private Portal _portal;

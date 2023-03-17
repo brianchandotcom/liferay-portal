@@ -69,8 +69,7 @@ public class FragmentEntryLinkModelListener
 
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-			_portal.getClassNameId(FragmentEntryLink.class),
-			fragmentEntryLink.getPlid());
+			_getFragmentEntryLinkClassNameId(), fragmentEntryLink.getPlid());
 
 		try {
 			_deleteDDMTemplateLinks(fragmentEntryLink);
@@ -107,7 +106,7 @@ public class FragmentEntryLinkModelListener
 		throws PortalException {
 
 		_ddmTemplateLinkLocalService.deleteTemplateLink(
-			_portal.getClassNameId(FragmentEntryLink.class),
+			_getFragmentEntryLinkClassNameId(),
 			fragmentEntryLink.getFragmentEntryLinkId());
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -149,9 +148,31 @@ public class FragmentEntryLinkModelListener
 		}
 	}
 
+	private long _getDDMStructureClassNameId() {
+		if (_ddmStructureClassNameId != null) {
+			return _ddmStructureClassNameId;
+		}
+
+		_ddmStructureClassNameId = _portal.getClassNameId(
+			DDMStructure.class.getName());
+
+		return _ddmStructureClassNameId;
+	}
+
+	private long _getFragmentEntryLinkClassNameId() {
+		if (_fragmentEntryLinkClassNameId != null) {
+			return _fragmentEntryLinkClassNameId;
+		}
+
+		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
+			FragmentEntryLink.class.getName());
+
+		return _fragmentEntryLinkClassNameId;
+	}
+
 	private void _updateDDMTemplateLink(FragmentEntryLink fragmentEntryLink) {
 		_ddmTemplateLinkLocalService.deleteTemplateLink(
-			_portal.getClassNameId(FragmentEntryLink.class),
+			_getFragmentEntryLinkClassNameId(),
 			fragmentEntryLink.getFragmentEntryLinkId());
 
 		try {
@@ -216,8 +237,8 @@ public class FragmentEntryLinkModelListener
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			fragmentEntryLink.getGroupId(),
-			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
+			fragmentEntryLink.getGroupId(), _getDDMStructureClassNameId(),
+			ddmTemplateKey);
 
 		if (ddmTemplate == null) {
 			return;
@@ -237,8 +258,7 @@ public class FragmentEntryLinkModelListener
 
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-			_portal.getClassNameId(FragmentEntryLink.class),
-			fragmentEntryLink.getPlid());
+			_getFragmentEntryLinkClassNameId(), fragmentEntryLink.getPlid());
 
 		Set<LayoutDisplayPageObjectProvider<?>>
 			layoutDisplayPageObjectProviders =
@@ -257,7 +277,7 @@ public class FragmentEntryLinkModelListener
 						layoutDisplayPageObjectProvider.getClassPK(),
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId()),
-						_portal.getClassNameId(FragmentEntryLink.class),
+						_getFragmentEntryLinkClassNameId(),
 						fragmentEntryLink.getPlid());
 
 			if (layoutClassedModelUsage != null) {
@@ -276,8 +296,8 @@ public class FragmentEntryLinkModelListener
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				_portal.getClassNameId(FragmentEntryLink.class),
-				fragmentEntryLink.getPlid(), serviceContext);
+				_getFragmentEntryLinkClassNameId(), fragmentEntryLink.getPlid(),
+				serviceContext);
 		}
 	}
 
@@ -287,11 +307,15 @@ public class FragmentEntryLinkModelListener
 	@Reference
 	private CommentManager _commentManager;
 
+	private Long _ddmStructureClassNameId;
+
 	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	private Long _fragmentEntryLinkClassNameId;
 
 	@Reference
 	private FragmentEntryLinkListenerRegistry

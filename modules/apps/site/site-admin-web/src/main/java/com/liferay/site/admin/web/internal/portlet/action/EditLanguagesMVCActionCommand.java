@@ -87,7 +87,7 @@ public class EditLanguagesMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			User user = themeDisplay.getDefaultUser();
+			User user = themeDisplay.getGuestUser();
 
 			formTypeSettingsUnicodeProperties.setProperty(
 				"languageId", user.getLanguageId());

@@ -1029,6 +1029,20 @@ definition {
 					key_objectLabel = ${objectLabel},
 					locator1 = "ObjectAdmin#CHOOSE_OBJECT_LABEL");
 
+				if (isSet(fieldName)) {
+					Click(locator1 = "Button#PLUS");
+
+					SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+					Check.checkToggleSwitch(
+						checkboxName = ${fieldName},
+						locator1 = "Checkbox#ANY_CHECKBOX");
+
+					PortletEntry.save();
+
+					SelectFrame(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+				}
+
 				if (${inputMethod} == "true") {
 					Click(locator1 = "ObjectAction#INPUT_METHOD");
 

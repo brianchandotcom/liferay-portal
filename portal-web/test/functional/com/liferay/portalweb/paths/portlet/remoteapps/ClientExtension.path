@@ -100,6 +100,11 @@
 	<td>//dl[contains(@class, "list-group")]//dd[@data-qa-id="row"][contains(@data-value,'${key_text}')]//div[@data-qa-id="rowItemContent"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENABLE_SVG_CROSS_DOMAIN_SUPPORT</td>
+	<td>//div[contains(@class,'input-checkbox')]//input[contains(@id, 'enableSVG')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

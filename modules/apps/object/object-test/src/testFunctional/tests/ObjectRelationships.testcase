@@ -486,8 +486,6 @@ definition {
 		}
 
 		task ("And when the user deletes a parent entry") {
-			ObjectAdmin.gotoRelationshipsTab();
-
 			ObjectPortlet.viewEntryDetails(entry = "Entry C");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject163661");

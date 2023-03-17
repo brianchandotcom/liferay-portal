@@ -43,12 +43,26 @@ const ClaimDetails = () => {
 
 	const [isClaimSettled, setIsClaimSettled] = useState<boolean>(false);
 
+	const handleSetStepTitle = (title: string) => {
+		const claimStatus = CONSTANTS.CLAIM_STATUS[title].NAME;
+
+		const splittedUpperCaseCharacter = setFirstLetterUpperCase(claimStatus)
+			.split(/(?=[A-Z])/)
+			.join(' ');
+
+		if (claimStatus === 'approved' || claimStatus === 'repair') {
+			setFirstLetterUpperCase(claimStatus);
+		}
+
+		return splittedUpperCaseCharacter;
+	};
+
 	const steps = [
 		{
 			active: currentStep === STEP.CLAIMSUBMITTED,
 			complete: currentStep > STEP.CLAIMSUBMITTED,
 			show: true,
-			title: setFirstLetterUpperCase(
+			title: handleSetStepTitle(
 				CONSTANTS.CLAIM_STATUS['claimSubmitted'].NAME
 			),
 		},
@@ -56,7 +70,7 @@ const ClaimDetails = () => {
 			active: currentStep === STEP.ININVESTIGATION,
 			complete: currentStep > STEP.ININVESTIGATION,
 			show: true,
-			title: setFirstLetterUpperCase(
+			title: handleSetStepTitle(
 				CONSTANTS.CLAIM_STATUS['inInvestigation'].NAME
 			),
 		},
@@ -64,7 +78,7 @@ const ClaimDetails = () => {
 			active: currentStep === STEP.INESTIMATION,
 			complete: currentStep > STEP.INESTIMATION,
 			show: true,
-			title: setFirstLetterUpperCase(
+			title: handleSetStepTitle(
 				CONSTANTS.CLAIM_STATUS['inEstimation'].NAME
 			),
 		},
@@ -72,23 +86,19 @@ const ClaimDetails = () => {
 			active: currentStep === STEP.APPROVED,
 			complete: currentStep > STEP.APPROVED,
 			show: true,
-			title: setFirstLetterUpperCase(
-				CONSTANTS.CLAIM_STATUS['approved'].NAME
-			),
+			title: handleSetStepTitle(CONSTANTS.CLAIM_STATUS['approved'].NAME),
 		},
 		{
 			active: currentStep === STEP.REPAIR,
 			complete: currentStep > STEP.REPAIR,
 			show: true,
-			title: setFirstLetterUpperCase(
-				CONSTANTS.CLAIM_STATUS['repair'].NAME
-			),
+			title: handleSetStepTitle(CONSTANTS.CLAIM_STATUS['repair'].NAME),
 		},
 		{
 			active: currentStep === STEP.PEDDINGSETTLEMENT,
 			complete: currentStep > STEP.PEDDINGSETTLEMENT,
 			show: true,
-			title: setFirstLetterUpperCase(
+			title: handleSetStepTitle(
 				CONSTANTS.CLAIM_STATUS['pendingSettlement'].NAME
 			),
 		},

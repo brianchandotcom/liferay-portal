@@ -116,6 +116,7 @@ export default function MasterLayoutConfiguration({
 					</ClayForm.Group>
 
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('change-master')}
 						className="ml-2"
 						displayType="secondary"
 						onClick={handleChangeMasterButtonClick}

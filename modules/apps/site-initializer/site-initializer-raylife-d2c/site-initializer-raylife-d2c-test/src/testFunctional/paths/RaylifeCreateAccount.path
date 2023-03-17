@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CREATE_NEW_ACCOUNT</td>
+	<td>//button[contains(text(),'CREATE NEW ACCOUNT')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VALIDATION_UNCHECKED</td>
 	<td>//span[(@class='create-account__rule unchecked') and contains(., '${text}')]</td>
 	<td></td>

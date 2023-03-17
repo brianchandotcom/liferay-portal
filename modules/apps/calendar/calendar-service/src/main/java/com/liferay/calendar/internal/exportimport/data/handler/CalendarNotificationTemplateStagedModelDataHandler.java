@@ -15,13 +15,13 @@
 package com.liferay.calendar.internal.exportimport.data.handler;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
-import com.liferay.calendar.internal.exportimport.content.processor.CalendarNotificationTemplateExportImportContentProcessor;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -217,8 +217,10 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 	@Reference
 	private CalendarLocalService _calendarLocalService;
 
-	@Reference
-	private CalendarNotificationTemplateExportImportContentProcessor
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate)"
+	)
+	private ExportImportContentProcessor<String>
 		_calendarNotificationTemplateExportImportContentProcessor;
 
 	@Reference

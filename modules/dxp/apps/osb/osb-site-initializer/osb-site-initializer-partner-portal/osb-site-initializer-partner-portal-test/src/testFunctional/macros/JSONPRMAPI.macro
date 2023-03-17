@@ -183,7 +183,7 @@ definition {
 		}
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
-		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -198,12 +198,12 @@ definition {
 					"totalMDFRequestAmount":${totalMDFRequestAmount},
 					"additionalOption":{
 					},
-					"companyName":"${accountName}",
+					"companyName":"${accountEntryName}",
 					"country":{
 						"key":"global",
 						"name":"Global"
 					},
-					"emailAddress":"test@liferay.com",
+					"emailAddress":"${userEmailAddress}",
 					"liferayBusinessSalesGoals":"${goalsOptions}",
 					"mdfRequestStatus":{
 						"key":"pendingMarketingReview",
@@ -211,7 +211,7 @@ definition {
 					},
 					"overallCampaignDescription":"${campaignDescription}",
 					"overallCampaignName":"${campaignName}",
-					"r_accToMDFReqs_accountEntryId":${accountName},
+					"r_accToMDFReqs_accountEntryId":${accountId},
 					"r_usrToMDFReqs_userId":${userId},
 					"targetAudienceRoles":"${targetRolesOptions}",
 					"targetMarkets":"${targetMarketOptions}"

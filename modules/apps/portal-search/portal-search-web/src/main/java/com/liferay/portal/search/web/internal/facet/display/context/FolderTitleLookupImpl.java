@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchException;
 
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,20 +50,17 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 
 		Map<String, Field> fieldsMap = document.getFields();
 
-		Set<Map.Entry<String, Field>> fieldsMapEntrySet = fieldsMap.entrySet();
+		for (Map.Entry<String, Field> entry : fieldsMap.entrySet()) {
+			if (!_isTitleFieldEntry(entry)) {
+				continue;
+			}
 
-		Stream<Map.Entry<String, Field>> stream = fieldsMapEntrySet.stream();
+			Field field = entry.getValue();
 
-		return stream.filter(
-			this::_isTitleFieldEntry
-		).findAny(
-		).map(
-			Map.Entry::getValue
-		).map(
-			Field::getValue
-		).orElse(
-			null
-		);
+			return field.getValue();
+		}
+
+		return null;
 	}
 
 	private SearchContext _getSearchContext(long curFolderId) {

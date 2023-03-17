@@ -135,6 +135,9 @@
 			<url-pattern>/kk/c/portal/protected</url-pattern>
 			<url-pattern>/kk-KZ/c/portal/protected</url-pattern>
 			<url-pattern>/kk_KZ/c/portal/protected</url-pattern>
+			<url-pattern>/km/c/portal/protected</url-pattern>
+			<url-pattern>/km-KH/c/portal/protected</url-pattern>
+			<url-pattern>/km_KH/c/portal/protected</url-pattern>
 			<url-pattern>/ko/c/portal/protected</url-pattern>
 			<url-pattern>/ko-KR/c/portal/protected</url-pattern>
 			<url-pattern>/ko_KR/c/portal/protected</url-pattern>

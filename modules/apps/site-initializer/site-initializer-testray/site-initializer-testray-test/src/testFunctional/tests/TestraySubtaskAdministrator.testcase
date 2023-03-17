@@ -259,6 +259,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge subtasks with different users"
+	@priority = 5
+	test AdminCanNotMergeSubtasksWithDifferentUsers {
+		task ("Given that the user different assign a subtask") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+		}
+
+		task ("And the user logged in assign a subtask") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("When the user trying merging the subtask assigned to different users") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+		}
+
+		task ("Then the alert message is displayed") {
+			AssertElementPresent(
+				key_alertMessage = "Subtask Subtask_1 must be assigned to you to be used in a merge.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
 	@priority = 5
 	test AdminCanNotMergeOnlyOneSubtask {

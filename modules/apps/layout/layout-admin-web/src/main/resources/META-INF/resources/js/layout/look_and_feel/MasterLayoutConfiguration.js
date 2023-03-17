@@ -106,21 +106,16 @@ export default function MasterLayoutConfiguration({
 					</ClayButton>
 				</ClayButton.Group>
 			) : (
-				<>
-					<div className="d-flex">
-						<ClayInput
-							readOnly
-							value={masterLayout.name}
-						></ClayInput>
+				<div className="d-flex">
+					<ClayInput readOnly value={masterLayout.name} />
 
-						<ClayButtonWithIcon
-							className="ml-2"
-							displayType="secondary"
-							onClick={handleChangeMasterButtonClick}
-							symbol="plus"
-						></ClayButtonWithIcon>
-					</div>
-				</>
+					<ClayButtonWithIcon
+						className="ml-2"
+						displayType="secondary"
+						onClick={handleChangeMasterButtonClick}
+						symbol="plus"
+					/>
+				</div>
 			)}
 		</>
 	);

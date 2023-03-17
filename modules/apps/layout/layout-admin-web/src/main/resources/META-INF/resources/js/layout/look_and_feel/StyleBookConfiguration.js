@@ -60,14 +60,14 @@ export default function StyleBookConfiguration({
 			</h3>
 
 			<div className="d-flex">
-				<ClayInput readOnly value={styleBookEntry.name}></ClayInput>
+				<ClayInput readOnly value={styleBookEntry.name} />
 
 				<ClayButtonWithIcon
 					className="ml-2"
 					displayType="secondary"
 					onClick={handleChangeStyleBookClick}
 					symbol="plus"
-				></ClayButtonWithIcon>
+				/>
 			</div>
 		</>
 	);

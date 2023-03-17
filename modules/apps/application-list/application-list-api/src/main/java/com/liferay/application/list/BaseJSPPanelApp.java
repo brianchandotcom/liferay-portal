@@ -84,6 +84,8 @@ public abstract class BaseJSPPanelApp extends BasePanelApp {
 		_servletContext = servletContext;
 	}
 
+	protected abstract ServletContext getServletContext();
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPPanelApp.class);
 

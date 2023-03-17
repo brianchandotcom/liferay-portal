@@ -1121,7 +1121,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		User defaultUser = getDefaultUser(companyId);
+		User guestUser = getGuestUser(companyId);
 
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
@@ -1142,7 +1142,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setCompanyId(companyId);
-		user.setDefaultUser(false);
 		user.setContactId(counterLocalService.increment());
 
 		if (Validator.isNotNull(password1)) {
@@ -1174,12 +1173,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setLanguageId(LocaleUtil.toLanguageId(locale));
-		user.setTimeZoneId(defaultUser.getTimeZoneId());
+		user.setTimeZoneId(guestUser.getTimeZoneId());
 		user.setGreeting(greeting);
 		user.setFirstName(firstName);
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setJobTitle(jobTitle);
+		user.setType(UserConstants.TYPE_REGULAR);
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 		user.setExpandoBridgeAttributes(serviceContext);
 
@@ -1303,7 +1303,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long workflowUserId = creatorUserId;
 
 		if (workflowUserId == userId) {
-			workflowUserId = defaultUser.getUserId();
+			workflowUserId = guestUser.getUserId();
 		}
 
 		ServiceContext workflowServiceContext = new ServiceContext();
@@ -1360,7 +1360,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 						PortalCacheManagerNames.MULTI_VM,
 						portalCache.getPortalCacheName(), portalCache.isMVCC(),
 						portalCache.isSharded()),
-					_defaultUsers, _synchronizer);
+					_guestUsers, _synchronizer);
 			});
 
 		serviceLatch.openOn(
@@ -1918,7 +1918,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Group group = null;
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			group = user.getGroup();
 		}
 
@@ -2084,22 +2084,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the default user for the company.
+	 * Returns the guest user for the company.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @return the default user for the company, or <code>null</code> if a user
+	 * @return the guest user for the company, or <code>null</code> if a user
 	 * 			with the company key could not be found
 	 */
 	@Override
-	public User fetchDefaultUser(long companyId) {
-		User user = _defaultUsers.get(companyId);
+	public User fetchGuestUser(long companyId) {
+		User user = _guestUsers.get(companyId);
 
 		if (user == null) {
 			user = userPersistence.fetchByC_T_First(
 				companyId, UserConstants.TYPE_GUEST, null);
 
 			if (user != null) {
-				_defaultUsers.put(companyId, user);
+				_guestUsers.put(companyId, user);
 			}
 		}
 
@@ -2249,40 +2249,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the default user for the company.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @return the default user for the company
-	 */
-	@Override
-	@Transactional(enabled = false)
-	public User getDefaultUser(long companyId) throws PortalException {
-		User userModel = _defaultUsers.get(companyId);
-
-		if (userModel == null) {
-			userModel = userLocalService.loadGetDefaultUser(companyId);
-
-			_defaultUsers.put(companyId, userModel);
-		}
-
-		return userModel;
-	}
-
-	/**
-	 * Returns the primary key of the default user for the company.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @return the primary key of the default user for the company
-	 */
-	@Override
-	@Transactional(enabled = false)
-	public long getDefaultUserId(long companyId) throws PortalException {
-		User user = getDefaultUser(companyId);
-
-		return user.getUserId();
-	}
-
-	/**
 	 * Returns the primary keys of all the users belonging to the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -2357,6 +2323,40 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMapBuilder.<String, Object>put(
 				"usersGroups", Long.valueOf(groupId)
 			).build());
+	}
+
+	/**
+	 * Returns the guest user for the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the guest user for the company
+	 */
+	@Override
+	@Transactional(enabled = false)
+	public User getGuestUser(long companyId) throws PortalException {
+		User userModel = _guestUsers.get(companyId);
+
+		if (userModel == null) {
+			userModel = userLocalService.loadGetGuestUser(companyId);
+
+			_guestUsers.put(companyId, userModel);
+		}
+
+		return userModel;
+	}
+
+	/**
+	 * Returns the primary key of the guest user for the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the primary key of the guest user for the company
+	 */
+	@Override
+	@Transactional(enabled = false)
+	public long getGuestUserId(long companyId) throws PortalException {
+		User user = getGuestUser(companyId);
+
+		return user.getUserId();
 	}
 
 	@Override
@@ -2552,7 +2552,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				User user = userPersistence.findByPrimaryKey(
 					socialRelation.getUserId2());
 
-				if (user.isDefaultUser() ||
+				if (user.isGuestUser() ||
 					(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 					continue;
@@ -2923,7 +2923,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@Override
 	public List<User> getUsers(
-		long companyId, boolean defaultUser, int status, int start, int end,
+		long companyId, int status, int start, int end,
 		OrderByComparator<User> orderByComparator) {
 
 		return userPersistence.findByC_S(
@@ -2931,7 +2931,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getUsersCount(long companyId, boolean defaultUser, int status) {
+	public int getUsersCount(long companyId, int status) {
 		return userPersistence.countByC_S(companyId, status);
 	}
 
@@ -3010,13 +3010,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the default user for the company.
+	 * Returns the guest user for the company.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @return the default user for the company
+	 * @return the guest user for the company
 	 */
 	@Override
-	public User loadGetDefaultUser(long companyId) throws PortalException {
+	public User loadGetGuestUser(long companyId) throws PortalException {
 		return userPersistence.findByC_T_First(
 			companyId, UserConstants.TYPE_GUEST, null);
 	}
@@ -4437,7 +4437,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new PortalException("Invalid user status");
 		}
 
-		User defaultUser = getDefaultUser(companyId);
+		User guestUser = getGuestUser(companyId);
 
 		if (updateUserInformation) {
 			autoScreenName = false;
@@ -4490,7 +4490,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordReset(_isPasswordReset(companyId));
 			user.setScreenName(screenName);
 			user.setLanguageId(locale.toString());
-			user.setTimeZoneId(defaultUser.getTimeZoneId());
+			user.setTimeZoneId(guestUser.getTimeZoneId());
 			user.setGreeting(greeting);
 			user.setFirstName(firstName);
 			user.setMiddleName(middleName);
@@ -4531,7 +4531,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long workflowUserId = creatorUserId;
 
 		if (workflowUserId == user.getUserId()) {
-			workflowUserId = defaultUser.getUserId();
+			workflowUserId = guestUser.getUserId();
 		}
 
 		ServiceContext workflowServiceContext = serviceContext;
@@ -6073,7 +6073,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	protected boolean isUserAllowedToAuthenticate(User user)
 		throws PortalException {
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Authentication is disabled for the default user");
 			}
@@ -6664,7 +6664,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validateOpenId(user.getCompanyId(), userId, openId);
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			if (Validator.isNotNull(emailAddress) &&
 				!StringUtil.equalsIgnoreCase(
 					user.getEmailAddress(), emailAddress)) {
@@ -7107,8 +7107,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@BeanReference(type = ContactPersistence.class)
 	private ContactPersistence _contactPersistence;
 
-	private final Map<Long, User> _defaultUsers = new ConcurrentHashMap<>();
-
 	@BeanReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
 
@@ -7117,6 +7115,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = GroupPersistence.class)
 	private GroupPersistence _groupPersistence;
+
+	private final Map<Long, User> _guestUsers = new ConcurrentHashMap<>();
 
 	@BeanReference(type = ImageLocalService.class)
 	private ImageLocalService _imageLocalService;
@@ -7195,8 +7195,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 					UserCacheModel userCacheModel = (UserCacheModel)value;
 
-					if (userCacheModel.defaultUser) {
-						_defaultUsers.remove(userCacheModel.companyId);
+					if (userCacheModel.type == UserConstants.TYPE_GUEST) {
+						_guestUsers.remove(userCacheModel.companyId);
 					}
 				}
 

@@ -8,6 +8,12 @@ definition {
 			siteTemplateName = "Raylife AP");
 	}
 
+	macro AssertApplicationNumber {
+		var applicationvalue = selenium.getText("RaylifeAP#APPLICATIONS_NUMBER");
+
+		AssertElementNotPresent(locator1 = ${applicationvalue});
+	}
+
 	macro assertFieldRequiredMessage {
 		AssertElementPresent(
 			key_field = ${field},
@@ -35,23 +41,17 @@ definition {
 
 	macro clickInApplicationKebabOption {
 		Click(
-			locator1 = "RaylifeAP#APPLICATIONS_TABLE_KEBAB",
-			key_product = "${product}",
-			key_status = "${status}");
+			key_product = ${product},
+			key_status = ${status},
+			locator1 = "RaylifeAP#APPLICATIONS_TABLE_KEBAB");
 
 		Click(
-			key_option = "${option}",
+			key_option = ${option},
 			locator1 = "RaylifeAP#KEBAB_OPTION");
 	}
 
 	macro clickOnAllAplications {
-		Button.click(button="All Applications");
-	}
-
-	macro AssertApplicationNumber {
-		var applicationvalue = selenium.getText("RaylifeAP#APPLICATIONS_NUMBER");
-
-		AssertElementNotPresent(locator1 = "${applicationvalue}");
+		Button.click(button = "All Applications");
 	}
 
 	macro clickOnSubsectionTasks {
@@ -64,6 +64,12 @@ definition {
 		MouseOver(
 			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
+	}
+
+	macro goToRaylifeAPSiteWithRefresh {
+		ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+		Refresh();
 	}
 
 	macro mouseOverSidebar {
@@ -122,10 +128,5 @@ definition {
 
 	// Workaround for LPS-172183
 
-	macro goToRaylifeAPSiteWithRefresh {
-		ApplicationsMenu.gotoSite(site = "Raylife AP");
-
-		Refresh();
-	}
 
 }

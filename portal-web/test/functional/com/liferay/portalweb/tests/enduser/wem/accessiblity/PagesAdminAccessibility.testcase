@@ -1,8 +1,10 @@
 @component-name = "portal-wcm"
 definition {
 
+	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Page Administration";
 
 	setUp {

@@ -7,11 +7,9 @@
 	},
 	"id": "liferaysampleetcspringboot",
 	"kind": "Deployment",
+	"loadBalancer": {
+		"targetPort": 58081
+	},
 	"memory": 512,
-	"ports": [
-		{
-			"targetPort": 58081
-		}
-	],
 	"scale": 1
 }

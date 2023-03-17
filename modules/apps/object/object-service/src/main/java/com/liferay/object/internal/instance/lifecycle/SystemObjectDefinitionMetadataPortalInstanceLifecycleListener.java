@@ -38,8 +38,10 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -57,6 +60,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -92,8 +96,58 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 		_bundleContext = bundleContext;
 
+		_openingThreadLocal.set(Boolean.TRUE);
+
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, SystemObjectDefinitionMetadata.class);
+			bundleContext, SystemObjectDefinitionMetadata.class, null,
+			new EagerServiceTrackerCustomizer
+				<SystemObjectDefinitionMetadata,
+				 SystemObjectDefinitionMetadata>() {
+
+				@Override
+				public SystemObjectDefinitionMetadata addingService(
+					ServiceReference<SystemObjectDefinitionMetadata>
+						serviceReference) {
+
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata =
+							bundleContext.getService(serviceReference);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Adding service " + systemObjectDefinitionMetadata);
+					}
+
+					if (!_openingThreadLocal.get()) {
+						_companyLocalService.forEachCompanyId(
+							companyId -> _apply(
+								companyId, systemObjectDefinitionMetadata));
+					}
+
+					return systemObjectDefinitionMetadata;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<SystemObjectDefinitionMetadata>
+						serviceReference,
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<SystemObjectDefinitionMetadata>
+						serviceReference,
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_openingThreadLocal.set(Boolean.FALSE);
 	}
 
 	@Deactivate
@@ -197,7 +251,16 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionMetadataPortalInstanceLifecycleListener.class);
 
+	private static final ThreadLocal<Boolean> _openingThreadLocal =
+		new CentralizedThreadLocal<>(
+			SystemObjectDefinitionMetadataPortalInstanceLifecycleListener.class.
+				getName() + "._openingThreadLocal",
+			() -> Boolean.FALSE);
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>

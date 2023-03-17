@@ -23,7 +23,7 @@ import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {Status} from '../../../../common/utils/constants/status';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
-import { isLiferayManager } from '../../../../common/utils/isLiferayManager';
+import {isLiferayManager} from '../../../../common/utils/isLiferayManager';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -98,7 +98,6 @@ const Goals = ({
 	}, [errors]);
 
 	const getRequestPage = () => {
-
 		if (!fieldEntries || !roleEntries || !companiesEntries) {
 			return <ClayLoadingIndicator />;
 		}

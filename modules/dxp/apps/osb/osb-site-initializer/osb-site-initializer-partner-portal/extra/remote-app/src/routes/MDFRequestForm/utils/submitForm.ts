@@ -15,6 +15,7 @@ import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import mdfRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
+import Role from '../../../common/interfaces/role';
 import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
@@ -24,49 +25,26 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
 import {Status} from '../../../common/utils/constants/status';
+import {isLiferayManager} from '../../../common/utils/isLiferayManager';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
-
-interface AccountRole {
-	id: number;
-	name: string;
-}
-
-const findLiferayRole = (accountRoles: AccountRole[]) => {
-	const liferayRoles = [
-		'Channel General Manager',
-		'Channel Account Manager',
-		'Channel Regional Marketing Manager',
-		'Channel Global Marketing Manager',
-		'Channel Finance Manager',
-	];
-
-	return liferayRoles.filter((liferayRole) =>
-		accountRoles.reduce((result, accountRole) => {
-			if (result) {
-				return true;
-			}
-
-			return accountRole.name === liferayRole;
-		}, false)
-	).length;
-};
 
 export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
 	siteURL: string,
 	currentRequestStatus?: LiferayPicklist,
-	accountRoles?: AccountRole[]
+	roles?: Role[]
 ) {
 	formikHelpers.setSubmitting(true);
 
-	if (currentRequestStatus && !values.id) {
+	if (!values.id) {
 		values.mdfRequestStatus = currentRequestStatus;
 	}
 
 	if (
-		!findLiferayRole(accountRoles as AccountRole[]) &&
+		roles &&
+		!isLiferayManager(roles) &&
 		values.totalMDFRequestAmount >= 15000 &&
 		values.mdfRequestStatus !== Status.DRAFT
 	) {

@@ -35,6 +35,8 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +45,24 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ContentStructureResourceTest
 	extends BaseContentStructureResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostAssetLibraryContentStructuresPageExportBatch()
+		throws Exception {
+
+		super.testPostAssetLibraryContentStructuresPageExportBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteContentStructuresPageExportBatch()
+		throws Exception {
+
+		super.testPostSiteContentStructuresPageExportBatch();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

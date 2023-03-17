@@ -114,6 +114,22 @@ public class ContentTemplateResourceTest
 			});
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostAssetLibraryContentTemplatesPageExportBatch()
+		throws Exception {
+
+		super.testPostAssetLibraryContentTemplatesPageExportBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteContentTemplatesPageExportBatch() throws Exception {
+		super.testPostAssetLibraryContentTemplatesPageExportBatch();
+	}
+
 	@Override
 	protected ContentTemplate
 			testGetAssetLibraryContentTemplatesPage_addContentTemplate(

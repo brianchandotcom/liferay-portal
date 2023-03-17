@@ -9,6 +9,20 @@
 	padding: 0;
 }
 
+.subnav-tbar {
+	background-color: #fff !important;
+}
+
+.subnav-tbar-primary {
+	background-color: #fff;
+
+	.result-filter {
+		background-color: #0e1387;
+		border-color: #0e1387;
+		color: #fff;
+	}
+}
+
 .popover {
 	max-width: 900px !important;
 	width: 480px !important;

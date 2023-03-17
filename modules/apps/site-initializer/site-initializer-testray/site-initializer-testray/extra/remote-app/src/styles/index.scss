@@ -22,14 +22,4 @@ liferay-remote-app-testray {
 	@import 'components/table';
 	@import 'components/tablechart';
 	@import 'components/testflow_loading';
-
-	.subnav-tbar-primary {
-		background-color: white;
-
-		.result-filter {
-			background-color: $color-primary-dark;
-			border-color: $color-primary-dark;
-			color: $color-white;
-		}
-	}
 }

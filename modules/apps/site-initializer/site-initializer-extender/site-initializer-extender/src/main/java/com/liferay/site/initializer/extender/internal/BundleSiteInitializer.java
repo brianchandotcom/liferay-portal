@@ -187,6 +187,8 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -734,9 +736,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			expandoBridge.addAttribute(
-				jsonObject.getString("name"), jsonObject.getInt("dataType"),
-				jsonObject.getLong("defaultValue"));
+			Object defaultValue = jsonObject.get("defaultValue");
+
+			if (defaultValue instanceof BigDecimal) {
+				expandoBridge.addAttribute(
+					jsonObject.getString("name"), jsonObject.getInt("dataType"),
+					((BigDecimal) defaultValue).doubleValue());
+			}else {
+				expandoBridge.addAttribute(
+					jsonObject.getString("name"), jsonObject.getInt("dataType"),
+					((Serializable) defaultValue));
+			}
 
 			if (jsonObject.has("properties")) {
 				UnicodeProperties unicodeProperties = new UnicodeProperties(

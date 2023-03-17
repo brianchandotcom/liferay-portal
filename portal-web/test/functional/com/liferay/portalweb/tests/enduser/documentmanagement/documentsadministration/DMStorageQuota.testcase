@@ -31,7 +31,7 @@ definition {
 	@priority = 5
 	@refactorneeded
 	test ExceedStorageQuotaMultipleUpload {
-		property custom.properties = "data.limit.dl.storage.max.size=2048000${line.separator}dl.actions.visible=true";
+		property custom.properties = "data.limit.dl.storage.max.size=1048576${line.separator}dl.actions.visible=true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -42,6 +42,10 @@ definition {
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
+
+		DocumentFolderAPI.deleteDocumentFolderByName(
+			documentFolderName = "Provided%20by%20Liferay",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -57,7 +61,7 @@ definition {
 
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_2.txt,high_resolution_photo.jpg",
-			storageQuota = "2 MB",
+			storageQuota = "1 MB",
 			validateStorageQuota = "true");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document_2");

@@ -655,6 +655,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(cpDefinition);
 		Assert.assertEquals("Test Commerce Product", cpDefinition.getName());
 
+		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
+
+		Assert.assertEquals(
+			0.1, expandoBridge.getAttribute("Test Expando Column 1"));
+		Assert.assertEquals(
+			"Test Expando Column Value 2",
+			expandoBridge.getAttribute("Test Expando Column 2"));
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
 				cpDefinition.getCPDefinitionId());
@@ -788,9 +796,9 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
-			expandoBridge.getAttribute("Test Expando Column 1"), 0.1);
+			1.5, expandoBridge.getAttribute("Test Expando Column 1"));
 		Assert.assertEquals(
-			"Test Expando Column Value 2",
+			"Test Default Value",
 			expandoBridge.getAttribute("Test Expando Column 2"));
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 	}

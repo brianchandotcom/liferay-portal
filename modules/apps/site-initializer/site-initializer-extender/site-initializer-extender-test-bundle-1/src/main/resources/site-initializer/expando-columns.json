@@ -1,11 +1,13 @@
 [
 	{
 		"dataType": 5,
+		"defaultValue": 1.5,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 1"
 	},
 	{
 		"dataType": 15,
+		"defaultValue": "Test Default Value",
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 2"
 	},

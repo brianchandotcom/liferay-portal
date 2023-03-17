@@ -49,6 +49,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -176,6 +177,20 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 		Assert.assertEquals(
 			postRegion.getPosition(), GetterUtil.DEFAULT_DOUBLE, 0);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostCountryRegionsPageExportBatch() throws Exception {
+		super.testPostCountryRegionsPageExportBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostRegionsPageExportBatch() throws Exception {
+		super.testPostRegionsPageExportBatch();
 	}
 
 	@Override

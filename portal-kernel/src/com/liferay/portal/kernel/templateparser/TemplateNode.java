@@ -225,7 +225,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getType() {
-		return (String)get("type");
+		Object type = get("type");
+
+		if ((type == null) || (type instanceof String)) {
+			return (String)type;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getUrl() {

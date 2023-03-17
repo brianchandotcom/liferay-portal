@@ -13,7 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -60,11 +60,13 @@ export default function StyleBookConfiguration({
 			</h3>
 
 			<div className="d-flex">
-				<ClayInput
-					onClick={handleChangeStyleBookClick}
-					readOnly
-					value={styleBookEntry.name}
-				/>
+				<ClayForm.Group className="flex-grow-1 mb-0">
+					<ClayInput
+						onClick={handleChangeStyleBookClick}
+						readOnly
+						value={styleBookEntry.name}
+					/>
+				</ClayForm.Group>
 
 				<ClayButtonWithIcon
 					className="ml-2"

@@ -62,9 +62,9 @@ const Goals = ({
 			},
 			[setFieldValue]
 		),
-		values.company,
-		values.country,
-		values.currency
+		!isObjectEmpty(values.company) ? values.company : undefined,
+		!isObjectEmpty(values.country) ? values.country : undefined,
+		!isObjectEmpty(values.currency) ? values.currency : undefined
 	);
 
 	const {

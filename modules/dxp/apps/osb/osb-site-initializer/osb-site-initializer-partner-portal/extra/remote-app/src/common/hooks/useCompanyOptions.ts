@@ -37,19 +37,15 @@ export default function useCompanyOptions(
 	);
 
 	useEffect(() => {
-		if (
-			companyExtender &&
-			!isObjectEmpty(selectedAccountBrief) &&
-			selectedAccountBrief
-		) {
+		if (!isObjectEmpty(selectedAccountBrief) && selectedAccountBrief) {
 			handleSelected(
 				currentCountry && !isObjectEmpty(currentCountry)
 					? currentCountry
-					: companyExtender.country,
+					: companyExtender?.country || {},
 				selectedAccountBrief,
 				currentCurrency && !isObjectEmpty(currentCurrency)
 					? currentCurrency
-					: companyExtender.currency,
+					: companyExtender?.currency || {},
 				companyExtender?.accountExternalReferenceCodeSF
 			);
 		}

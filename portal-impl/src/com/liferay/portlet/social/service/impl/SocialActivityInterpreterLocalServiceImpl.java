@@ -128,7 +128,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (activity.getUserId() == themeDisplay.getDefaultUserId()) {
+			if (activity.getUserId() == themeDisplay.getGuestUserId()) {
 				return null;
 			}
 		}
@@ -202,7 +202,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (activitySet.getUserId() == themeDisplay.getDefaultUserId()) {
+			if (activitySet.getUserId() == themeDisplay.getGuestUserId()) {
 				return null;
 			}
 		}

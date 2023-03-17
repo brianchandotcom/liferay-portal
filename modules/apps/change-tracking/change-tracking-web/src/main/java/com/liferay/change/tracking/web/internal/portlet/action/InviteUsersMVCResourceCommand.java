@@ -163,7 +163,7 @@ public class InviteUsersMVCResourceCommand
 			Map<Locale, String> nameMap = null;
 
 			if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-				userId = themeDisplay.getDefaultUserId();
+				userId = themeDisplay.getGuestUserId();
 				className = null;
 				classPK = 0;
 				nameMap = new HashMap<>();
@@ -277,7 +277,7 @@ public class InviteUsersMVCResourceCommand
 
 		if (role == null) {
 			role = _roleLocalService.addRole(
-				themeDisplay.getDefaultUserId(), null, 0, name, null, null,
+				themeDisplay.getGuestUserId(), null, 0, name, null, null,
 				RoleConstants.TYPE_PUBLICATIONS, null, null);
 
 			for (String actionId : _getModelResourceActions(roleValue)) {

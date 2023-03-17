@@ -125,7 +125,7 @@ public class HistoryTag extends IncludeTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			User user = themeDisplay.getDefaultUser();
+			User user = themeDisplay.getGuestUser();
 
 			return user.getLanguageId();
 		}

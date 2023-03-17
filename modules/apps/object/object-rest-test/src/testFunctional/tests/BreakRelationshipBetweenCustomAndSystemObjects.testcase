@@ -18,12 +18,12 @@ definition {
 		}
 
 		task ("Given a foundation object") {
-			var customObjectDefinitionId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			var foundationObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "foundation",
 				en_US_plural_label = "foundations",
 				name = "Foundation",
 				requiredStringFieldName = "name");
-			var customObjectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			var foundationObjectDefinitionIdInVirtualInstance = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "foundation",
 				en_US_plural_label = "foundations",
 				name = "Foundation",
@@ -32,12 +32,12 @@ definition {
 		}
 
 		task ("Given a secondFoundation object") {
-			var customObjectDefinitionId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			var secondFoundationObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "secondFoundation",
 				en_US_plural_label = "secondFoundations",
 				name = "SecondFoundation",
 				requiredStringFieldName = "name");
-			var customObjectDefinitionId4 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			var secondFoundationObjectDefinitionIdInVirtualInstance = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "secondFoundation",
 				en_US_plural_label = "secondFoundations",
 				name = "SecondFoundation",
@@ -55,7 +55,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "SecondFoundationOfUsers",
 				name = "secondFoundationOfUsers",
-				objectDefinitionId1 = ${customObjectDefinitionId2},
+				objectDefinitionId1 = ${secondFoundationObjectDefinitionId},
 				objectDefinitionId2 = ${systemObjectDefinitionId1},
 				type = "oneToMany");
 
@@ -63,7 +63,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "SecondFoundationOfUsers",
 				name = "secondFoundationOfUsers",
-				objectDefinitionId1 = ${customObjectDefinitionId4},
+				objectDefinitionId1 = ${secondFoundationObjectDefinitionIdInVirtualInstance},
 				objectDefinitionId2 = ${systemObjectDefinitionId2},
 				type = "oneToMany",
 				virtualHost = "www.able.com");
@@ -74,7 +74,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "FoundationsOfUsers",
 				name = "foundationsOfUsers",
-				objectDefinitionId1 = ${customObjectDefinitionId1},
+				objectDefinitionId1 = ${foundationObjectDefinitionId},
 				objectDefinitionId2 = ${systemObjectDefinitionId1},
 				type = "manyToMany");
 
@@ -82,7 +82,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "FoundationsOfUsers",
 				name = "foundationsOfUsers",
-				objectDefinitionId1 = ${customObjectDefinitionId3},
+				objectDefinitionId1 = ${foundationObjectDefinitionIdInVirtualInstance},
 				objectDefinitionId2 = ${systemObjectDefinitionId2},
 				type = "manyToMany",
 				virtualHost = "www.able.com");

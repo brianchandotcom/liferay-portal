@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
-	service = {
-		ColorDDMFormFieldTemplateContextContributor.class,
-		DDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class ColorDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

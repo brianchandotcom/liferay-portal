@@ -45,10 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE,
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE_TIME
 	},
-	service = {
-		DateDDMFormFieldTemplateContextContributor.class,
-		DDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class DateDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

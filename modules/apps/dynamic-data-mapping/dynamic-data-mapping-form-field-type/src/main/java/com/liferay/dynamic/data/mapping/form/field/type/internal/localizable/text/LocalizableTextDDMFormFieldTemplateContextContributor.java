@@ -48,10 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.LOCALIZABLE_TEXT,
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		LocalizableTextDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class LocalizableTextDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

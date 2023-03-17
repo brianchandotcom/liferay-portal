@@ -33,10 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.PASSWORD,
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		PasswordDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class PasswordDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.OPTIONS,
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		OptionsDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class OptionsDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

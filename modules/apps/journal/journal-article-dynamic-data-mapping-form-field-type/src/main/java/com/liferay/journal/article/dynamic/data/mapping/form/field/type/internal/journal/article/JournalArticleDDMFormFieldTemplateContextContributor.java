@@ -51,10 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		JournalArticleDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class JournalArticleDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

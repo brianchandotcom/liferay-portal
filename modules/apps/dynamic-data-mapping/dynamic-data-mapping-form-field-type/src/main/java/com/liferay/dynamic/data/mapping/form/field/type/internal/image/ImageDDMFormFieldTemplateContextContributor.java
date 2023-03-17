@@ -63,10 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=image",
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		ImageDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class ImageDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

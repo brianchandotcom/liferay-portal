@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.SEPARATOR,
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		SeparatorDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class SeparatorDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

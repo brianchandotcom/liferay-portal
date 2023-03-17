@@ -44,10 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.GEOLOCATION,
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		GeolocationDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class GeolocationDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {

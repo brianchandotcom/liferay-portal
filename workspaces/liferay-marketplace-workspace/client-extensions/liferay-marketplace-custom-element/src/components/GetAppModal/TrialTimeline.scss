@@ -1,0 +1,53 @@
+.get-app-modal-trial {
+	display: flex;
+
+	&-messages {
+		margin-left: 16px;
+
+		&-item {
+			margin-bottom: 24px;
+
+			.title {
+				font-size: 16px;
+				font-weight: 600;
+
+				&.active {
+					color: #004ad7;
+				}
+			}
+
+			.description {
+				color: #54555f;
+			}
+		}
+	}
+
+	&-timeline {
+		display: flex;
+		flex-direction: column;
+		padding-top: 4px;
+
+		&-icon-selected {
+			filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg)
+				brightness(104%) contrast(97%);
+			height: 14px;
+			width: 14px;
+		}
+
+		&-dash {
+			height: 62px;
+			margin-left: 6px;
+			width: 2px;
+		}
+
+		&-icon {
+			filter: invert(75%) sepia(1%) saturate(3107%) hue-rotate(199deg)
+				brightness(82%) contrast(87%);
+			height: 8px;
+			margin-left: 3px;
+			position: relative;
+			top: -4px;
+			width: 8px;
+		}
+	}
+}

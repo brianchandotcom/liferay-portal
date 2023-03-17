@@ -1,0 +1,49 @@
+.card {
+	&-button {
+		align-items: flex-start;
+		border: 1px solid #c9c9cf;
+		border-radius: 8px;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: flex;
+		height: 76px;
+		padding: 17px 12px;
+		width: 173.33px;
+
+		&--selected {
+			background-color: #e6edfb;
+			border: 1px solid #004ad7;
+
+			.card-button-text {
+				color: #0b5fff;
+			}
+		}
+
+		&--disabled {
+			cursor: not-allowed;
+			opacity: 0.5;
+		}
+	}
+
+	&-button-description {
+		color: #54555f;
+		font-size: 13px;
+	}
+
+	&-button-icon {
+		height: 16px;
+		width: 16px;
+		filter: invert(21%) sepia(91%) saturate(3572%) hue-rotate(220deg)
+			brightness(100%) contrast(101%);
+	}
+
+	&-button-text {
+		font-size: 16px;
+		font-weight: 600;
+	}
+
+	&-button-title {
+		font-size: 16px;
+		padding-left: 8px;
+	}
+}

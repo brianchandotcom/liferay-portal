@@ -110,19 +110,34 @@
 		&-card-container {
 			border: 1px solid #e2e2e4;
 			border-radius: 0.625rem;
-			height: 12.875rem;
+			height: auto;
 			width: 100%;
 		}
 
 		&-card-header {
 			align-items: center;
-			background-color: #e2e2e4;
-			border-radius: 0.5rem 0.5rem 0 0;
+			background-color: #f7f7f8;
+			border-radius: 0.625rem 0.625rem 0 0;
 			display: flex;
 			height: 3.5rem;
 			justify-content: space-between;
 			padding: 1.25rem 1rem;
 			width: 100%;
+
+			button {
+				align-items: center;
+				background: #fff;
+				border: 1px solid #0b5fff;
+				border-radius: 6px;
+				color: #0b5fff;
+				font-size: 14px;
+				padding: 6px 12px;
+
+				&:hover {
+					background-color: #0b5fff;
+					color: #fff;
+				}
+			}
 
 			&-left-content {
 				color: #54555f;
@@ -146,6 +161,7 @@
 					}
 
 					&-icon {
+						border-radius: 50%;
 						height: 1.5rem;
 						width: 1.5rem;
 					}
@@ -166,12 +182,38 @@
 				}
 			}
 		}
+
+		&-card-new-address {
+			align-items: center;
+			background-color: #fbfcfe;
+			border: 1px solid #e7efff;
+			border-radius: 10px;
+			color: #0b5fff;
+			display: flex;
+			font-size: 13px;
+			font-weight: 600;
+			height: 48px;
+			justify-content: center;
+			text-align: center;
+			width: 100%;
+
+			svg {
+				height: 16px;
+				margin: 0;
+				padding-right: 4px;
+				width: 16px;
+			}
+
+			&:hover {
+				background-color: #e7efff;
+			}
+		}
 	}
 
 	&-button {
 		&-cancel {
 			background: none;
-			border: solid 2px #2b3a4b;
+			border: solid 1px #2b3a4b;
 			border-radius: 0.5rem;
 			color: #2b3a4b;
 			font-size: 1rem;
@@ -191,24 +233,47 @@
 
 		&-get-this-app {
 			background-color: #0053f0;
-			border: none;
+			border: 1px solid #0053f0;
 			border-radius: 0.5rem;
 			color: #fff;
 			font-size: 1rem;
 			font-weight: 600;
 			height: 2.5rem;
 			line-height: 1.5rem;
-			width: 7.375rem;
+			padding-left: 16px;
+			padding-right: 16px;
+			width: auto;
 
 			&:hover {
 				background: #fff;
-				border: 2px solid #0053f0;
 				color: #0053f0;
 			}
 
 			transition: background 0.3s;
 			transition: border 0.3s;
 			transition: color 0.3s;
+		}
+	}
+
+	&-double-input {
+		display: flex;
+		justify-content: space-between;
+
+		.form-group {
+			width: 247px;
+		}
+	}
+
+	&-footer {
+		align-items: flex-end;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		span {
+			color: #54555f;
+			font-size: 13px;
+			line-height: 16px;
 		}
 	}
 
@@ -238,5 +303,64 @@
 			font-weight: 700;
 			line-height: 2.5rem;
 		}
+	}
+
+	&-info-icon {
+		filter: invert(65%) sepia(4%) saturate(515%) hue-rotate(196deg)
+			brightness(95%) contrast(84%);
+		height: 16px;
+		margin-right: 12px;
+		vertical-align: sub;
+		width: 16px;
+	}
+
+	&-payment-methods-container {
+		display: flex;
+		gap: 16px;
+		padding-bottom: 32px;
+	}
+
+	&-section {
+		line-height: 20px;
+
+		&-card-addresses {
+			.radio-card-container {
+				margin-bottom: 17px;
+			}
+		}
+	}
+
+	&-section > .field-base-container {
+		label {
+			font-size: 18px;
+		}
+	}
+
+	&-text-divider {
+		align-items: center;
+		color: #54555f;
+		display: flex;
+		font-size: 16px;
+		margin: 40px 0;
+
+		&::before,
+		&::after {
+			background-color: #e2e2e4;
+			content: '';
+			flex-grow: 1;
+			height: 1px;
+		}
+
+		&::before {
+			margin-right: 24px;
+		}
+		&::after {
+			margin-left: 24px;
+		}
+	}
+
+	&-use-terms {
+		color: #54555f;
+		font-size: 13px;
 	}
 }

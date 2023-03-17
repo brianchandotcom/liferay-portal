@@ -8,14 +8,15 @@ import './RadioCard.scss';
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {
-	description: string;
+	description?: string;
 	disabled?: boolean;
 	icon?: string;
 	onChange: (value?: boolean) => void;
 	selected: boolean;
-	title: string;
+	small?: boolean;
+	title?: string;
 	toggle?: boolean;
-	tooltip: string;
+	tooltip?: string;
 }
 
 export function RadioCard({
@@ -24,6 +25,7 @@ export function RadioCard({
 	icon,
 	onChange,
 	selected,
+	small,
 	title,
 	toggle = false,
 	tooltip,
@@ -33,6 +35,7 @@ export function RadioCard({
 			className={classNames('radio-card-container', {
 				'radio-card-container-disabled': disabled,
 				'radio-card-container-selected': selected,
+				'radio-card-container-small': small,
 			})}
 		>
 			<div className="radio-card-main-info">
@@ -61,26 +64,42 @@ export function RadioCard({
 						</button>
 					)}
 
-					<span
-						className={classNames('radio-card-title-text', {
-							'radio-card-title-text-selected': selected,
-						})}
-					>
-						{title}
-					</span>
+					{small ? (
+						<div className="radio-card-main-info-small">
+							<div className="radio-card-main-info-small-background"></div>
 
-					<img
-						alt="Icon"
-						className={classNames('radio-card-title-icon', {
-							'radio-card-title-icon-selected': selected,
-						})}
-						src={icon}
-					/>
+							<span className="radio-card-main-info-small-text-small">
+								{title}
+							</span>
+						</div>
+					) : (
+						title && (
+							<span
+								className={classNames('radio-card-title-text', {
+									'radio-card-title-text-selected': selected,
+								})}
+							>
+								{title}
+							</span>
+						)
+					)}
+
+					{icon && (
+						<img
+							alt="Icon"
+							className={classNames('radio-card-title-icon', {
+								'radio-card-title-icon-selected': selected,
+							})}
+							src={icon}
+						/>
+					)}
 				</div>
 
-				<div className="radio-card-title-tooltip">
-					<Tooltip tooltip={tooltip} />
-				</div>
+				{tooltip && (
+					<div className="radio-card-title-tooltip">
+						<Tooltip tooltip={tooltip} />
+					</div>
+				)}
 			</div>
 
 			<span className="radio-card-description">{description}</span>

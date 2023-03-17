@@ -17,6 +17,11 @@
 			opacity: 0.5;
 		}
 
+		&-small {
+			height: auto;
+			width: 270px;
+		}
+
 		transition: background-color 0.5s;
 		transition: border 0.5s;
 	}
@@ -25,6 +30,23 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
+
+		&-small {
+			align-items: center;
+			display: flex;
+			gap: 4px;
+			justify-content: center;
+
+			&-background {
+				background-color: #fff;
+				height: 28px;
+				width: 40px;
+			}
+
+			&-text-small {
+				font-size: 13px;
+			}
+		}
 	}
 
 	&-button {
@@ -56,7 +78,6 @@
 			&-selected {
 				color: #004ad7;
 			}
-
 			transition: color 0.5s;
 		}
 

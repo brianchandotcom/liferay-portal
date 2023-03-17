@@ -21,10 +21,27 @@ type AccountGroup = {
 	name: string;
 };
 
+type BillingAddress = {
+	city?: string;
+	country?: string;
+	countryISOCode: string;
+	name?: string;
+	phoneNumber?: string;
+	region?: string;
+	street1?: string;
+	street2?: string;
+	zip?: string;
+};
+
 type Cart = {
 	accountId: number;
+	author?: string;
+	billingAddress: BillingAddress;
 	cartItems: CartItem[];
 	currencyCode: string;
+	paymentMethod: string;
+	purchaseOrderNumber?: string;
+	shippingAddress: BillingAddress;
 };
 
 type CartItem = {
@@ -57,6 +74,10 @@ type CommerceOption = {
 	name: string;
 };
 
+type PaymentMethodMode = 'PayPal';
+
+type PaymentMethodSelector = 'trial' | 'pay' | 'order';
+
 interface PlacedOrder {
 	account: string;
 	accountId: number;
@@ -74,6 +95,18 @@ interface PlacedOrderItems {
 	subscription: boolean;
 	thumbnail: string;
 	version: string;
+}
+
+interface PostalAddressResponse {
+	addressCountry: string;
+	addressLocality: string;
+	addressRegion: string;
+	addressType: string;
+	id: number;
+	name: string;
+	postalCode: string;
+	streetAddressLine1: string;
+	streetAddressLine2: string;
 }
 
 interface PostCartResponse {
@@ -126,7 +159,7 @@ type SKU = {
 	id: number;
 	price: number;
 	sku: string;
-	skuOptions: [];
+	skuOptions: {key: string; value: string}[];
 };
 
 type Specification = {

@@ -13,6 +13,7 @@ import {Liferay} from './liferay/liferay';
 interface AppRoutesProps {
 	route: string;
 }
+
 export default function AppRoutes({route}: AppRoutesProps) {
 	const [userPublisherChecker, setUserPublisherChecker] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);

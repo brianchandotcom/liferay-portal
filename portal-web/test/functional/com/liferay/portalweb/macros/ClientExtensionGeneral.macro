@@ -74,6 +74,32 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addThemeSvgSpritemap {
+		ClientExtensionGeneral.addType(type = "Add Theme SVG Spritemap");
+
+		ClientExtensionGeneral.addThemeSvgSpritemapElement(
+			entryName = ${entryName},
+			entryURL = ${entryURL});
+
+		if (${entryName} == "external_url_theme") {
+			Check.checkToggleSwitch(locator1 = "ClientExtension#ENABLE_SVG_CROSS_DOMAIN_SUPPORT");
+		}
+
+		PortletEntry.publish();
+	}
+
+	macro addThemeSvgSpritemapElement {
+		Type(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = ${entryName});
+
+		Type(
+			key_id = "ClientExtensionAdminPortlet_url",
+			locator1 = "ClientExtensionEntry#URL",
+			value1 = ${entryURL});
+	}
+
 	macro addType {
 		LexiconEntry.gotoAdd();
 
@@ -214,6 +240,41 @@ definition {
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = ${entryName});
+	}
+
+	macro changeSiteCurrentThemeSvgSpritemap {
+		WaitForPageLoad();
+
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		if (IsElementPresent(key_menuItem = "Configuration", locator1 = "MenuItem#DROPDOWN_MENU_ITEM")) {
+			DropdownMenuItem.click(menuItem = "Configuration");
+		}
+		else {
+			PagesAdmin.togglePrivacy(privacy = ${privacy});
+
+			Click(
+				key_pageName = ${privacy},
+				locator1 = "Icon#COG_PAGE");
+		}
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		Panel.expandPanel(panel = "Look and Feel");
+
+		Click(locator1 = "ClientExtension#THEME_SPRITEMAP_CLIENT_EXTENSION_INPUT");
+
+		WaitForVisible(locator1 = "IFrame#IFRAME");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(
+			key_text = ${entryName},
+			locator1 = "ClientExtension#SELECT_THEME_SPRITEMAP_CLIENT_EXTENSION");
+
+		PortletEntry.save();
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro deleteRemoteApp {

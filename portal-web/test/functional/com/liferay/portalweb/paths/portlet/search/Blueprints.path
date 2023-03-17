@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_ADD_BUTTON</td>
-	<td>//div[contains(@class,'autofit-col') and contains(.,'${element}')]/following-sibling::div/button[contains(.,'Add')]</td>
+	<td>//div[contains(@class,'autofit-col') and contains(.,'${key_element}')]/following-sibling::div/button[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME</td>
-	<td>//div[contains(@class,'element-list')]//p[contains(.,'${element}') and contains(@class, 'list-group-title')]</td>
+	<td>//div[contains(@class,'element-list')]//p[contains(.,'${key_element}') and contains(@class, 'list-group-title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT</td>
-	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${element}')]]</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${key_element}')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE</td>
-	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//input[contains(@class,"toggle-switch-check")]</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${key_elementName}')]]//input[contains(@class,"toggle-switch-check")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL</td>
-	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//label[contains(.,'${fieldName}')]</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${key_elementName}')]]//label[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON</td>
-	<td>//li[contains(@class,'fieldMappingList')]//div[contains(@class,'input-group-sm')][.//input[@value='${field}']]//button[@aria-label='Delete']</td>
+	<td>//li[contains(@class,'fieldMappingList')]//div[contains(@class,'input-group-sm')][.//input[@value='${key_field}']]//button[@aria-label='Delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_GLOBAL_ICON_OPTION</td>
-	<td>//button[contains(.,'${optionName}')][//*[name()='svg'][contains(@class,'lexicon-icon-globe')]]</td>
+	<td>//button[contains(.,'${key_optionName}')][//*[name()='svg'][contains(@class,'lexicon-icon-globe')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,32 +87,32 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN</td>
-	<td>//select[@aria-label="${dropdownName}"]</td>
+	<td>//select[@aria-label="${key_dropdownName}"]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION</td>
-	<td>//select[@aria-label="${dropdownName}"]/option[contains(.,"${option}")]</td>
+	<td>//select[@aria-label="${key_dropdownName}"]/option[contains(.,"${key_option}")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD</td>
-	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//li[contains(@class,'list-group-item')][.//label[contains(.,'${fieldLabel}')]]//input</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${key_elementName}')]]//li[contains(@class,'list-group-item')][.//label[contains(.,'${key_fieldLabel}')]]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON</td>
-	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//li[contains(@class,'list-group-item')][.//label[contains(.,'${fieldLabel}')]]//button[@title="Clear All"]</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${key_elementName}')]]//li[contains(@class,'list-group-item')][.//label[contains(.,'${key_fieldLabel}')]]//button[@title="Clear All"]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT</td>
-	<td>xpath=(//div[contains(@id,'querySXPElement')])[${index}]</td>
+	<td>xpath=(//div[contains(@id,'querySXPElement')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@id,'querySXPElement')][.//*[contains(.,'${element}')]]//*[contains(@class,'icon-ellipsis')]</td>
+	<td>//div[contains(@id,'querySXPElement')][.//*[contains(.,'${key_element}')]]//*[contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,17 +122,17 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_CELL</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][${cellPosition}]</td>
+	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${key_entryTitle}']]//div[contains(@class,'dnd-td')][${key_cellPosition}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_CHECKBOX</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//input[@type='checkbox']</td>
+	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${key_entryTitle}']]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][3]</td>
+	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${key_entryTitle}']]//div[contains(@class,'dnd-td')][3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,22 +142,22 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_ROW_NUMBER</td>
-	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-tr')][${rowNumber}]</td>
+	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-tr')][${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'table-list-title')]//*[normalize-space(text())='${entryTitle}']</td>
+	<td>//div[contains(@class,'table-list-title')]//*[normalize-space(text())='${key_entryTitle}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//*[contains(@class,'dnd-tr') and contains(.,'${entryTitle}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//*[contains(@class,'dnd-tr') and contains(.,'${key_entryTitle}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_FIELD</td>
-	<td>//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-th') and contains(.,'${fieldName}')]</td>
+	<td>//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-th') and contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -167,52 +167,52 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(.,'${fieldName}')]</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_NTH_ENTRY</td>
-	<td>xpath=(//div[contains(@class,'table-list-title')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'table-list-title')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM</td>
-	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//button[contains(.,'${assetCategory}')]</td>
+	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//button[contains(.,'${key_assetCategory}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM</td>
-	<td>//span[contains(@class,'text-truncate')][normalize-space(text())='${treeItem}']</td>
+	<td>//span[contains(@class,'text-truncate')][normalize-space(text())='${key_treeItem}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_CHECKBOX</td>
-	<td>//div[@role='treeitem' and contains(.,'${treeItem}')]//input[@type='checkbox']</td>
+	<td>//div[@role='treeitem' and contains(.,'${key_treeItem}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_SELECT</td>
-	<td>//div[contains(@class,'autofit-row')][.//span[contains(@class,'text-truncate')][normalize-space(text())='${treeItem}']]//button[contains(.,'Select')]</td>
+	<td>//div[contains(@class,'autofit-row')][.//span[contains(@class,'text-truncate')][normalize-space(text())='${key_treeItem}']]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_CLEAR_FILTER_BUTTON</td>
-	<td>//span[contains(@class,'label-dismissible') and contains(.,'${filter}')]//button[contains(@class,'close')]</td>
+	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_filter}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM</td>
-	<td>//div[contains(@class,'clause-contributors-sidebar')]//li[contains(@class,'list-group-item') and contains(.,"${contributorClass}")]</td>
+	<td>//div[contains(@class,'clause-contributors-sidebar')]//li[contains(@class,'list-group-item') and contains(.,"${key_contributorClass}")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM</td>
-	<td>xpath=(//div[contains(@class,'clause-contributors-sidebar')]//li[contains(@class,'list-group-item')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'clause-contributors-sidebar')]//li[contains(@class,'list-group-item')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE</td>
-	<td>//div[contains(@class,'clause-contributors-sidebar')]//li[contains(.,"${contributorClass}")]//input[contains(@class,"toggle-switch-check")]</td>
+	<td>//div[contains(@class,'clause-contributors-sidebar')]//li[contains(.,"${key_contributorClass}")]//input[contains(@class,"toggle-switch-check")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -242,12 +242,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_CONFIGURATION_EDITOR</td>
-	<td>//div[contains(@class,'form-group')][./label[text()='${configurationField}']]//div[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td>//div[contains(@class,'form-group')][./label[text()='${key_configurationField}']]//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR</td>
-	<td>//div[contains(@class,'form-group')][./label[text()='${configurationField}']]//div[contains(.,'Unable to apply changes due to invalid JSON')]</td>
+	<td>//div[contains(@class,'form-group')][./label[text()='${key_configurationField}']]//div[contains(.,'Unable to apply changes due to invalid JSON')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -272,12 +272,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT</td>
-	<td>//tr[contains(.,'${blueprintTitle}')]//button[contains(.,'Select')]</td>
+	<td>//tr[contains(.,'${key_blueprintTitle}')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_OPTION_WIDGET_TITLE</td>
-	<td>//tr[contains(.,'${blueprintTitle}')]/..//following-sibling::td</td>
+	<td>//tr[contains(.,'${key_blueprintTitle}')]/..//following-sibling::td</td>
 	<td></td>
 </tr>
 <tr>
@@ -297,7 +297,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_PREVIEW_RAW_RESPONSE_JSON</td>
-	<td>//span[contains(@class,'cm-string') and contains(.,'${responseString}')]</td>
+	<td>//span[contains(@class,'cm-string') and contains(.,'${key_responseString}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -307,7 +307,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_PREVIEW_RESULT_FIELD_VALUE</td>
-	<td>//div[contains(@class,'preview-results-list')]//*[contains(@class,'row')]//*[contains(.,'${fieldName}')]/following-sibling::div</td>
+	<td>//div[contains(@class,'preview-results-list')]//*[contains(@class,'row')]//*[contains(.,'${key_fieldName}')]/following-sibling::div</td>
 	<td></td>
 </tr>
 <tr>
@@ -327,7 +327,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE</td>
-	<td>//div[contains(.,'${assetTitle}')]/preceding-sibling::div//button[contains(@class,'score')]</td>
+	<td>//div[contains(.,'${key_assetTitle}')]/preceding-sibling::div//button[contains(@class,'score')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -337,12 +337,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING</td>
-	<td>//li[contains(@class,'result-list-item')][${resultRanking}]</td>
+	<td>//li[contains(@class,'result-list-item')][${key_resultRanking}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE</td>
-	<td>//li[contains(@class,'result-list-item')]//p[contains(.,'${resultTitle}')]</td>
+	<td>//li[contains(@class,'result-list-item')]//p[contains(.,'${key_resultTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -357,7 +357,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX</td>
-	<td>//div[contains(@class,'searchable-types-modal')]//tr[.//*[contains(.,'${assetType}')]]//input</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//tr[.//*[contains(.,'${key_assetType}')]]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -372,7 +372,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_REMOVE_SELECTED</td>
-	<td>//div[contains(@class,'searchable-types')]//tr[.//p[contains(@class,'table-list-title') and contains(.,'${assetType}')]]//button[@aria-label='Delete']</td>
+	<td>//div[contains(@class,'searchable-types')]//tr[.//p[contains(@class,'table-list-title') and contains(.,'${key_assetType}')]]//button[@aria-label='Delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -387,7 +387,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED</td>
-	<td>//div[contains(@class,'searchable-types')]//p[contains(@class,'table-list-title') and contains(.,'${assetType}')]</td>
+	<td>//div[contains(@class,'searchable-types')]//p[contains(@class,'table-list-title') and contains(.,'${key_assetType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -397,7 +397,7 @@
 </tr>
 <tr>
 	<td>DOC_LINK_GENERIC</td>
-	<td>//div[contains(@class,'${linkContext}')]//a[contains(.,'${linkText}')] | //div[span[contains(.,'${linkContext}')]]//a[contains(.,'${linkText}')]</td>
+	<td>//div[contains(@class,'${key_linkContext}')]//a[contains(.,'${key_linkText}')] | //div[span[contains(.,'${key_linkContext}')]]//a[contains(.,'${key_linkText}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -412,7 +412,7 @@
 </tr>
 <tr>
 	<td>ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM</td>
-	<td>//dl[contains(@class,'sidebar-dl')]//button[contains(.,'${item}')]</td>
+	<td>//dl[contains(@class,'sidebar-dl')]//button[contains(.,'${key_item}')]</td>
 	<td></td>
 </tr>
 <tr>

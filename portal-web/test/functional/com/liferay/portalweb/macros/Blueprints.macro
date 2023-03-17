@@ -6,11 +6,11 @@ definition {
 		Blueprints.searchAddElementsSidebar(element = ${element});
 
 		MouseOver(
-			element = ${element},
+			key_element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME");
 
 		Click.clickNoMouseOverNoWaitForVisible(
-			element = ${element},
+			key_element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_ADD_BUTTON");
 	}
 
@@ -28,7 +28,7 @@ definition {
 		Button.clickSelect();
 
 		Click(
-			blueprintTitle = ${blueprintTitle},
+			key_blueprintTitle = ${blueprintTitle},
 			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
 
 		SelectFrameTop();
@@ -48,13 +48,13 @@ definition {
 
 	macro configureElementDropdown {
 		Click(
-			dropdownName = ${dropdownName},
+			key_dropdownName = ${dropdownName},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN");
 
 		Click.clickNoMouseOver(
-			dropdownName = ${dropdownName},
-			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION",
-			option = ${option});
+			key_dropdownName = ${dropdownName},
+			key_option = ${option},
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION");
 	}
 
 	macro configureFederatedSearchKeyForOptionsWidget {
@@ -168,7 +168,7 @@ definition {
 
 	macro gotoEntry {
 		Click(
-			entryTitle = ${title},
+			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
@@ -195,7 +195,7 @@ definition {
 
 	macro openEntryMenu {
 		Click.waitForMenuToggleJSClick(
-			entryTitle = ${title},
+			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS");
 	}
 
@@ -251,7 +251,7 @@ definition {
 
 	macro selectAddedElementMenuItem {
 		Click(
-			element = ${element},
+			key_element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
@@ -295,28 +295,28 @@ definition {
 			var entryOrder = ${entryOrder} + 1;
 
 			AssertTextEquals.assertPartialText(
+				key_rowNumber = ${entryOrder},
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_ROW_NUMBER",
-				rowNumber = ${entryOrder},
 				value1 = ${entryTitle});
 		}
 	}
 
 	macro viewEntryDescription {
 		AssertTextEquals.assertPartialText(
-			entryTitle = ${title},
+			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
 			value1 = ${description});
 	}
 
 	macro viewEntryTitle {
 		AssertElementPresent(
-			entryTitle = ${title},
+			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro viewNoEntry {
 		AssertElementNotPresent(
-			entryTitle = ${title},
+			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 

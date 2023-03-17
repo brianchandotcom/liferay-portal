@@ -42,11 +42,11 @@ definition {
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT_BLUEPRINT");
 
 			WaitForElementPresent(
-				blueprintTitle = ${suggestionContributorBlueprint},
+				key_blueprintTitle = ${suggestionContributorBlueprint},
 				locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
 
 			Click(
-				blueprintTitle = ${suggestionContributorBlueprint},
+				key_blueprintTitle = ${suggestionContributorBlueprint},
 				locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
 
 			SelectFrameTop();

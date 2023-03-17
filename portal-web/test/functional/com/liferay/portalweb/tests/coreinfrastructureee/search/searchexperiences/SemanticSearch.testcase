@@ -180,13 +180,13 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
-		var assetTitle = "Test Web Content";
+		var key_assetTitle = "Test Web Content";
 		var assetScoreBoosted = selenium.getText("Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
 
 		echo("Search score with Semantic Search: ${assetScoreBoosted}");
 
 		Uncheck.uncheckToggleSwitch(
-			elementName = "Rescore by Text Embedding",
+			key_elementName = "Rescore by Text Embedding",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE");
 
 		Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_REFRESH_SEARCH_BUTTON");

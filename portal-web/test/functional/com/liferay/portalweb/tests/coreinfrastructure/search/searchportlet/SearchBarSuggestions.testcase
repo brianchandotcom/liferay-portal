@@ -612,7 +612,7 @@ definition {
 		Button.click(button = "Select Asset Types");
 
 		Check.checkNotVisible(
-			assetType = "Web Content Article",
+			key_assetType = "Web Content Article",
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 
 		Button.clickDone();

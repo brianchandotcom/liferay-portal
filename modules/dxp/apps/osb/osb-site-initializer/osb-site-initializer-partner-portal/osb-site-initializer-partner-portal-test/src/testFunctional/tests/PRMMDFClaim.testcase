@@ -60,36 +60,12 @@ definition {
 				userEmailAddress = "manager@liferay.com");
 		}
 
-		task ("Login with the Partner user and go to Partner Portal") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
-			PRMUtils.gotoPRM();
-		}
-
-		task ("Go to add a MDF Request") {
-			PRMNavigator.goToNavItem(navItem = "Marketing");
-
-			PRMMarketing.gotoAddNewMDF();
-
-			PRMMDFRequest.createNewRequest(
-				accountName = "Company Name 1",
-				activityDescription = "Activity Description",
-				activityName = "Activity Name 1",
-				budgetList = "Sponsorship Fee-2000,Sponsorship Fee-3000",
-				campaignDescription = "Campaign Description",
-				campaignName = "Campaign Name",
-				countryName = "Global",
-				followUpStrategy = "test",
-				goalsOptions = "Lead generation",
-				leadFollowUpList = "Other",
-				leadList = "No",
-				tactic = "Other",
-				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "test",
-				targetRolesOptions = "Administrator",
-				typeOfActivity = "Miscellaneous Marketing");
+		task ("Add a new MDF Request") {
+			JSONPRM.createMDFRequest(
+				secondActivityName = "Activity Name 2",
+				secondBudgetValueList = 1000,
+				userEmailAddress = "partner@liferay.com",
+				accountEntryName = "Company Name 1");
 		}
 	}
 

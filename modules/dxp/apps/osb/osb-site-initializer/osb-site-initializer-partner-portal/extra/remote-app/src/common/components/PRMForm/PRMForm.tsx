@@ -36,7 +36,7 @@ const PRMForm = ({
 	name,
 	title,
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => (
-	<div className="border-0 pb-3 pt-5 px-2 px-lg-6 px-md-4 sheet">
+	<div className="border-0 pb-3 pt-5 px-2 px-lg-5 px-md-4 sheet">
 		<div className={className}>
 			<div className="font-weight-bold mb-1 text-primary text-small-caps">
 				{name}

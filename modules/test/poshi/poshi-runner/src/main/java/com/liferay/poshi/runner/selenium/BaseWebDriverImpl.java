@@ -4585,7 +4585,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		new Hashtable<String, Keys>() {
 			{
 				for (Keys keys : Keys.class.getEnumConstants()) {
-					_keysMap.put(keys.name(), keys);
+					put(keys.name(), keys);
 				}
 
 				put("CTRL", Keys.CONTROL);

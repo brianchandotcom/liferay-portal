@@ -45,8 +45,9 @@ const General = ({
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		companiesEntries,
 		useCallback(
-			(country, company, accountExternalReferenceCodeSF) => {
+			(country, company, currency, accountExternalReferenceCodeSF) => {
 				setFieldValue('partnerAccount', company);
+				setFieldValue('currency', currency);
 				setFieldValue(
 					'accountExternalReferenceCodeSF',
 					accountExternalReferenceCodeSF
@@ -73,6 +74,20 @@ const General = ({
 		fieldEntries[LiferayPicklistName.COUNTRIES],
 		(selected) => setFieldValue('prospect.country', selected)
 	);
+
+	const {
+		onSelected: onCurrencySelected,
+		options: currencyOptions,
+	} = getPicklistOptions(
+		fieldEntries[LiferayPicklistName.CURRENCIES],
+		(selected) => setFieldValue('currency', selected)
+	);
+
+	const companyCurrencies =
+		currencyOptions &&
+		currencyOptions.filter(
+			(currency) => currency.value === values.currency.key
+		);
 
 	const {
 		onSelected: onIndustrySelected,
@@ -125,6 +140,15 @@ const General = ({
 						name="mdfActivityAssociated"
 						onChange={onMDFActivitySelected}
 						options={mdfActivitiesOptions}
+					/>
+
+					<PRMFormik.Field
+						component={PRMForm.Select}
+						label="Currency"
+						name="currency"
+						onChange={onCurrencySelected}
+						options={companyCurrencies}
+						required
 					/>
 				</PRMForm.Group>
 			</PRMForm.Section>

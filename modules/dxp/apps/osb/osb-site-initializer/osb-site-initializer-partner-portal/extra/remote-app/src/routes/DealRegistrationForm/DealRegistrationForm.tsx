@@ -28,6 +28,7 @@ import submitForm from './utils/submitForm';
 const initialFormValues: DealRegistration = {
 	additionalContact: {emailAddress: '', firstName: '', lastName: ''},
 	additionalInformationAboutTheOpportunity: '',
+	currency: {},
 	leadStatusDetails: Status.EXPRESSED_INTEREST.name,
 	mdfActivityAssociated: {},
 	partnerAccount: {},

@@ -27,6 +27,10 @@ const generalSchema = object({
 		500,
 		'reached max characters'
 	),
+	currency: object({
+		key: string(),
+		name: string(),
+	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	partnerAccount: object({
 		id: number(),
 		name: string(),

@@ -921,16 +921,28 @@ public class TestrayImporter {
 	public void recordTestrayCaseResults() {
 		final Job job = getJob();
 
-		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-			TestrayFactory.newTopLevelBuildTestrayCaseResult(
-				getTestrayBuild(null), getTopLevelBuild());
-
-		topLevelBuildTestrayCaseResult.recordTestrayCaseResult(job);
-
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>(
 			job.getAxisTestClassGroups());
 
 		axisTestClassGroups.addAll(job.getDependentAxisTestClassGroups());
+
+		File testBaseDir = null;
+
+		if (job instanceof QAWebsitesGitRepositoryJob) {
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				testBaseDir = axisTestClassGroup.getTestBaseDir();
+
+				if (testBaseDir != null) {
+					break;
+				}
+			}
+		}
+
+		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+			TestrayFactory.newTopLevelBuildTestrayCaseResult(
+				getTestrayBuild(testBaseDir), getTopLevelBuild());
+
+		topLevelBuildTestrayCaseResult.recordTestrayCaseResult(job);
 
 		List<Callable<Void>> callables = new ArrayList<>();
 

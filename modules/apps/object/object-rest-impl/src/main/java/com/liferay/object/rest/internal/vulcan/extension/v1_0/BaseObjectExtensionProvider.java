@@ -46,7 +46,7 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 
 		if ((objectDefinition != null) &&
 			objectDefinition.isUnmodifiableSystemObject()) {
-			
+
 			return true;
 		}
 

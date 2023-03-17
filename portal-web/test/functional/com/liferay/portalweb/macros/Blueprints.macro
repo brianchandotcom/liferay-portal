@@ -301,6 +301,13 @@ definition {
 		}
 	}
 
+	macro viewEntryDescription {
+		AssertTextEquals.assertPartialText(
+			entryTitle = ${title},
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = ${description});
+	}
+
 	macro viewEntryTitle {
 		AssertElementPresent(
 			entryTitle = ${title},

@@ -3957,47 +3957,29 @@ definition {
 
 		PortletEntry.save();
 
-		AssertTextEquals(
-			cellPosition = 2,
-			entryTitle = "Title in English",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Title in English");
+		Blueprints.viewEntryTitle(title = "Title in English");
 
-		AssertTextEquals(
-			cellPosition = 3,
-			entryTitle = "Title in English",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Description in English");
+		Blueprints.viewEntryDescription(
+			description = "Description in English",
+			title = "Title in English");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
-		AssertTextEquals(
-			cellPosition = 2,
-			entryTitle = "Título en Español",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Título en Español");
+		Blueprints.viewEntryTitle(title = "Título en Español");
 
-		AssertTextEquals(
-			cellPosition = 3,
-			entryTitle = "Título en Español",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Descripción en Español");
+		Blueprints.viewEntryDescription(
+			description = "Descripción en Español",
+			title = "Título en Español");
 
 		Blueprints.openBlueprintsAdmin(locale = "de");
 
 		Navigator.gotoNavItem(navItem = "Elemente");
 
-		AssertTextEquals(
-			cellPosition = 2,
-			entryTitle = "Titel auf Deutsch",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Titel auf Deutsch");
+		Blueprints.viewEntryTitle(title = "Titel auf Deutsch");
 
-		AssertTextEquals(
-			cellPosition = 3,
-			entryTitle = "Titel auf Deutsch",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Beschreibung auf Deutsch");
+		Blueprints.viewEntryDescription(
+			description = "Beschreibung auf Deutsch",
+			title = "Titel auf Deutsch");
 	}
 
 	test ViewElementLocalizationWithinQueryBuilder {

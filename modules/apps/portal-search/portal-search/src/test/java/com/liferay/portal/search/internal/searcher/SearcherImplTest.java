@@ -49,11 +49,7 @@ public class SearcherImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Document[] documents = new Document[1];
-
-		documents[0] = _createDocument(_MODEL_CLASS_NAME, 1);
-
-		_hits.setDocs(documents);
+		_setUpHits();
 
 		Mockito.when(
 			_indexer.search(Mockito.any())
@@ -118,14 +114,14 @@ public class SearcherImplTest {
 			expected, searchDocuments.size());
 	}
 
-	private Document _createDocument(String entryClassName, long entryClassPK) {
+	private void _setUpHits() {
 		Document document = new DocumentImpl();
 
 		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		documentHelper.setEntryKey(entryClassName, entryClassPK);
+		documentHelper.setEntryKey(_MODEL_CLASS_NAME, 1);
 
-		return document;
+		_hits.setDocs(new Document[] {document});
 	}
 
 	private SearchRequestImpl _createSearchRequestImpl(

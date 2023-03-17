@@ -777,6 +777,17 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Role> getGroupRolesAndTeamRoles(
+		long companyId, String name, String title, String description,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId, int start, int end) {
+
+		return roleFinder.findByGroupRoleAndTeamRole(
+			companyId, name, title, description, excludedNames, types,
+			excludedTeamRoleId, teamGroupId, start, end);
+	}
+
+	@Override
 	public int getGroupRolesAndTeamRolesCount(
 		long companyId, String keywords, List<String> excludedNames,
 		int[] types, long excludedTeamRoleId, long teamGroupId) {
@@ -784,6 +795,17 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return roleFinder.countByGroupRoleAndTeamRole(
 			companyId, keywords, excludedNames, types, excludedTeamRoleId,
 			teamGroupId);
+	}
+
+	@Override
+	public int getGroupRolesAndTeamRolesCount(
+		long companyId, String name, String title, String description,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId) {
+
+		return roleFinder.countByGroupRoleAndTeamRole(
+			companyId, name, title, description, excludedNames, types,
+			excludedTeamRoleId, teamGroupId);
 	}
 
 	/**

@@ -167,6 +167,16 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 			teamGroupId, start, end);
 	}
 
+	public List<Role> getGroupRolesAndTeamRoles(
+		long companyId, String name, String title, String description,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId, int start, int end) {
+
+		return roleFinder.filterFindByGroupRoleAndTeamRole(
+			companyId, name, title, description, excludedNames, types,
+			excludedTeamRoleId, teamGroupId, start, end);
+	}
+
 	@Override
 	public int getGroupRolesAndTeamRolesCount(
 		long companyId, String keywords, List<String> excludedNames,
@@ -175,6 +185,16 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		return roleFinder.filterCountByGroupRoleAndTeamRole(
 			companyId, keywords, excludedNames, types, excludedTeamRoleId,
 			teamGroupId);
+	}
+
+	public int getGroupRolesAndTeamRolesCount(
+		long companyId, String name, String title, String description,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId) {
+
+		return roleFinder.filterCountByGroupRoleAndTeamRole(
+			companyId, name, title, description, excludedNames, types,
+			excludedTeamRoleId, teamGroupId);
 	}
 
 	/**

@@ -126,8 +126,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertEquals(
 			"test@liferay.com", notificationRecipientSettingsMap.get("to"));
 
-		_testRelevantUserTermValues(getAuthorValues());
-		_testRelevantUserTermValues(getCurrentUserValues());
+		_testObjectDefinitionTermEvaluator(getObjectEntryValues());
 	}
 
 	private NotificationContext _createNotificationContext(
@@ -179,7 +178,64 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		return notificationContext;
 	}
 
-	private void _testRelevantUserTermValues(HashMap<String, String> values)
+	private void _testObjectDefinitionTermEvaluator(
+			HashMap<String, Serializable> objectEntryValues)
+		throws Exception {
+
+		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
+			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			objectEntryValues, ServiceContextTestUtil.getServiceContext());
+
+		sendNotification(
+			new NotificationContextBuilder(
+			).className(
+				objectDefinition.getClassName()
+			).classPK(
+				objectEntry.getObjectEntryId()
+			).notificationTemplate(
+				notificationTemplateLocalService.addNotificationTemplate(
+					_createNotificationContext(
+						ListUtil.fromMapKeys(objectEntryValues),
+						getTerm("AUTHOR_EMAIL_ADDRESS")))
+			).termValues(
+				HashMapBuilder.<String, Object>put(
+					"creator", user2.getUserId()
+				).put(
+					"currentUserId", user2.getUserId()
+				).putAll(
+					objectEntryValues
+				).build()
+			).userId(
+				user2.getUserId()
+			).build(),
+			NotificationConstants.TYPE_EMAIL);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		notificationQueueEntry = notificationQueueEntries.get(
+			notificationQueueEntries.size() - 1);
+
+		assertTerms(
+			ListUtil.fromMapValues(objectEntryValues),
+			ListUtil.fromString(
+				StringUtil.removeSubstring(
+					notificationQueueEntry.getSubject(), "Subject "),
+				StringPool.BLANK));
+
+		assertTerms(
+			ListUtil.fromMapValues(objectEntryValues),
+			ListUtil.fromString(
+				StringUtil.removeSubstring(
+					notificationQueueEntry.getSubject(), "Body "),
+				StringPool.BLANK));
+
+		_testRelevantUserTermValues(getAuthorValues());
+		_testRelevantUserTermValues(getCurrentUserValues());
+	}
+
+	private void _testRelevantUserTermValues(HashMap<String, Object> values)
 		throws Exception {
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
@@ -202,9 +258,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 						getTerm("AUTHOR_EMAIL_ADDRESS")))
 			).termValues(
 				HashMapBuilder.<String, Object>put(
-					"creator", String.valueOf(user2.getUserId())
+					"creator", user2.getUserId()
 				).put(
-					"currentUserId", String.valueOf(user2.getUserId())
+					"currentUserId", user2.getUserId()
 				).build()
 			).userId(
 				user2.getUserId()

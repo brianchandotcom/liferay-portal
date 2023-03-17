@@ -24,6 +24,9 @@ import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -44,9 +47,12 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
 
 import java.time.Month;
 
@@ -101,12 +107,39 @@ public class BaseNotificationTypeTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
+					new BooleanObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						objectFieldNames.get(0)
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
+					new DateObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						objectFieldNames.get(1)
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
+					new IntegerObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						objectFieldNames.get(2)
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
 					new TextObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"textObjectFieldName"
+						objectFieldNames.get(3)
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build()));
@@ -119,7 +152,6 @@ public class BaseNotificationTypeTest {
 	@After
 	public void tearDown() throws Exception {
 		notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			notificationQueueEntry.getCompanyId(),
 			notificationQueueEntry.getSentDate());
 
 		userNotificationEventLocalService.deleteUserNotificationEvents(
@@ -127,7 +159,7 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected void assertTerms(
-		List<String> expectedValues, List<String> termValues) {
+		List<Object> expectedValues, List<String> termValues) {
 
 		for (int i = 0; i < termValues.size(); i++) {
 			Assert.assertEquals(expectedValues.get(i), termValues.get(i));
@@ -154,13 +186,13 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
-	protected HashMap<String, String> getAuthorValues() throws PortalException {
-		return HashMapBuilder.put(
+	protected HashMap<String, Object> getAuthorValues() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
 			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
 		).put(
 			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
 		).put(
-			getTerm("AUTHOR_ID"), String.valueOf(user2.getUserId())
+			getTerm("AUTHOR_ID"), user2.getUserId()
 		).put(
 			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
 		).put(
@@ -172,15 +204,15 @@ public class BaseNotificationTypeTest {
 		).build();
 	}
 
-	protected HashMap<String, String> getCurrentUserValues()
+	protected HashMap<String, Object> getCurrentUserValues()
 		throws PortalException {
 
-		return HashMapBuilder.put(
+		return HashMapBuilder.<String, Object>put(
 			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
 		).put(
 			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
 		).put(
-			"[%CURRENT_USER_ID%]", String.valueOf(user2.getUserId())
+			"[%CURRENT_USER_ID%]", user2.getUserId()
 		).put(
 			"[%CURRENT_USER_LAST_NAME%]", user2.getLastName()
 		).put(
@@ -216,6 +248,18 @@ public class BaseNotificationTypeTest {
 		return listType.getName();
 	}
 
+	protected HashMap<String, Serializable> getObjectEntryValues() {
+		return HashMapBuilder.<String, Serializable>put(
+			getTerm(objectFieldNames.get(0)), RandomTestUtil.randomBoolean()
+		).put(
+			getTerm(objectFieldNames.get(1)), RandomTestUtil.nextDate()
+		).put(
+			getTerm(objectFieldNames.get(2)), RandomTestUtil.nextInt()
+		).put(
+			getTerm(objectFieldNames.get(3)), RandomTestUtil.randomString()
+		).build();
+	}
+
 	protected String getTerm(String objectFieldName) {
 		return StringBundler.concat(
 			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
@@ -245,6 +289,9 @@ public class BaseNotificationTypeTest {
 	@Inject
 	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
 
+	protected static List<String> objectFieldNames = ListUtil.fromArray(
+		"booleanObjectFieldName", "dateObjectFieldName",
+		"integerObjectFieldName", "textObjectFieldName");
 	protected static User user1;
 	protected static User user2;
 

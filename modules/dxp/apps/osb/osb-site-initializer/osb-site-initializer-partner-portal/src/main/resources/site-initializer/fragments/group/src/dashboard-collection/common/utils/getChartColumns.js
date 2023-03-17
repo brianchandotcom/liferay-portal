@@ -34,7 +34,7 @@ export default function getChartColumns(
 
 	expiredTotalActivites(mdfRequests, chartColumns);
 	setValueChart(currencyFormat(totalMDFActivitiesAmount));
-	setTitleChart(`Total MDF`);
+	setTitleChart('Total MDF');
 	setColumnsMDFChart(chartColumns);
 }
 
@@ -53,7 +53,14 @@ function expiredTotalActivites(mdfRequests, chartColumns) {
 		(acc, value) => acc + parseFloat(value.mdfRequestAmount),
 		0
 	);
-	chartColumns.push(['Expired', totalExpiredActivities]);
+
+	const numberOfExpiredActivities = expiredActivities.length;
+
+	chartColumns.push([
+		'Expired',
+		totalExpiredActivities,
+		numberOfExpiredActivities,
+	]);
 }
 
 function expiringSoonTotalActivities(mdfRequests, chartColumns) {
@@ -70,7 +77,14 @@ function expiringSoonTotalActivities(mdfRequests, chartColumns) {
 		(acc, value) => acc + parseFloat(value.mdfRequestAmount),
 		0
 	);
-	chartColumns.push(['Expiring Soon', totalExpiringSoonActivites]);
+
+	const numberOfExpiringSoonActivites = expiringSoonActivitiesDate.length;
+
+	chartColumns.push([
+		'Expiring Soon',
+		totalExpiringSoonActivites,
+		numberOfExpiringSoonActivites,
+	]);
 }
 
 function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
@@ -86,7 +100,14 @@ function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
 		(acc, value) => acc + value?.amountClaimed || 0,
 		0
 	);
-	chartColumns.push(['Claim Approved', totalClaimedApprovedRequestsAmount]);
+
+	const numberOfClaimedApprovedRequests = claimedRequests.length;
+
+	chartColumns.push([
+		'Claim Approved',
+		totalClaimedApprovedRequestsAmount,
+		numberOfClaimedApprovedRequests,
+	]);
 }
 
 function totalMDFRequestToClaims(mdfRequests, chartColumns) {
@@ -103,7 +124,14 @@ function totalMDFActivities(mdfRequests, chartColumns) {
 			prevValue + (parseFloat(currValue.totalMDFRequestAmount) || 0),
 		0
 	);
-	chartColumns.push(['Requested', totalMDFActivitiesAmount]);
+
+	const numberOfMDFActivities = mdfRequests?.items?.length;
+
+	chartColumns.push([
+		'Requested',
+		totalMDFActivitiesAmount,
+		numberOfMDFActivities,
+	]);
 
 	return totalMDFActivitiesAmount;
 }
@@ -116,5 +144,12 @@ function totalMDFApprovedRequests(mdfRequests, chartColumns) {
 		(acc, value) => acc + parseFloat(value.totalMDFRequestAmount),
 		0
 	);
-	chartColumns.push(['Approved', totalMDFApprovedRequestsAmount]);
+
+	const numberOfMDFApprovedRequests = mdfApprovedRequests.length;
+
+	chartColumns.push([
+		'Approved',
+		totalMDFApprovedRequestsAmount,
+		numberOfMDFApprovedRequests,
+	]);
 }

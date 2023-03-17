@@ -77,12 +77,30 @@ const DonutChart = ({
 								size={{height, width}}
 								tooltip={{
 									contents: (data) => {
-										const title = data[0].id;
-										const value = data[0].value;
+										const chartColumnsData = chartData.columns.find(
+											([key]) => key === data[0].id
+										);
 
-										return `<div class="bg-neutral-0 d-flex font-weight-bold rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
-											value
-										)}</div>`;
+										if (titleChart === 'Total MDF') {
+											return `<div class="bg-neutral-0 d-flex flex-column rounded-sm">
+											<span class="font-weight-light w-100 text-primary">
+											${chartColumnsData[0]}</span>
+											<span class="font-weight-light text-primary ">${
+												chartColumnsData[2]
+											} Activities</span>
+											<span class="text-weight-bold text-primary">Total $${currencyFormat(
+												chartColumnsData[1]
+											)}</span>
+											</div>`;
+										}
+
+										return `<div class="bg-neutral-0 d-flex flex-column rounded-sm">
+											<span class="font-weight-light w-100 text-primary">
+											${chartColumnsData[0]}</span>
+											<span class="text-weight-bold text-primary">Total $${currencyFormat(
+												chartColumnsData[1]
+											)}</span>
+											</div>`;
 									},
 								}}
 							/>

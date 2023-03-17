@@ -179,6 +179,8 @@ public class LocalizedValueUtil {
 
 			if (Validator.isNull(value)) {
 				localizedValues.put(languageId, value);
+
+				continue;
 			}
 
 			try {

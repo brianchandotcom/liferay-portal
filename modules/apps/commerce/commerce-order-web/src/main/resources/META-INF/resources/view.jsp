@@ -29,12 +29,18 @@ request.setAttribute("view.jsp-portletURL", commerceOrderListDisplayContext.getP
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 
 		<frontend-data-set:headless-display
+			additionalProps='<%=
+				HashMapBuilder.<String, Object>put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).build()
+			%>'
 			apiURL="/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel"
 			bulkActionDropdownItems="<%= commerceOrderListDisplayContext.getBulkActionDropdownItems() %>"
 			fdsActionDropdownItems="<%= commerceOrderListDisplayContext.getFDSActionDropdownItems() %>"
 			fdsSortItemList="<%= commerceOrderListDisplayContext.getFDSSortItemList() %>"
 			formName="fm"
 			id="<%= CommerceOrderFDSNames.ALL_ORDERS %>"
+			propsTransformer="js/deleteCommerceOrdersPropsTransformer"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="fluid"

@@ -124,11 +124,10 @@ public class CommerceOrderListDisplayContext {
 					_commerceOrderRequestHelper.getRequest(), "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				"/o/headless-commerce-admin-order/v1.0/orders/{id}", "trash",
-				"delete",
+				null, "trash", "delete",
 				LanguageUtil.get(
 					_commerceOrderRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
+				null, null, null));
 	}
 
 	public FDSSortItemList getFDSSortItemList() {

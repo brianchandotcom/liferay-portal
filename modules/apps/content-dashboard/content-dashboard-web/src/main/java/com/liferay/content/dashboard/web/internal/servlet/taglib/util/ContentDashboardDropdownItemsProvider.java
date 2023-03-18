@@ -47,10 +47,6 @@ public class ContentDashboardDropdownItemsProvider {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portal = portal;
-
-		_currentURL = String.valueOf(
-			PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse));
 	}
 
 	public List<DropdownItem> getDropdownItems(
@@ -166,7 +162,6 @@ public class ContentDashboardDropdownItemsProvider {
 		).build();
 	}
 
-	private final String _currentURL;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

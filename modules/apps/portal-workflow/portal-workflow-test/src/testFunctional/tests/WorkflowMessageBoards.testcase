@@ -59,7 +59,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test ApproveMessageBoardsThreadPG {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -244,7 +243,6 @@ definition {
 			titleMessageBoard = "Thread Message Subject");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test RejectMessageBoardsThreadPG {
 		property test.name.skip.portal.instance = "WorkflowadminPGMessageboards#RejectMessageBoardsThreadPG";

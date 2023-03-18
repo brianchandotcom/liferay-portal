@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -81,13 +80,10 @@ public class SchedulerResponseManagerTest {
 
 		destination.register(testMessageListener);
 
-		_schedulerEngineHelper.register(
-			testMessageListener,
-			new SchedulerEntryImpl(
-				_TEST_NAME,
-				_triggerFactory.createTrigger(
-					_TEST_NAME, _TEST_NAME, null, null, 60, TimeUnit.MINUTE)),
-			_TEST_DESTINATION_NAME);
+		_schedulerEngineHelper.schedule(
+			_triggerFactory.createTrigger(
+				_TEST_NAME, _TEST_NAME, null, null, 60, TimeUnit.MINUTE),
+			StorageType.MEMORY_CLUSTERED, null, _TEST_DESTINATION_NAME, null);
 
 		_company = CompanyTestUtil.addCompany();
 
@@ -109,7 +105,8 @@ public class SchedulerResponseManagerTest {
 		finally {
 			serviceRegistration.unregister();
 
-			_schedulerEngineHelper.unregister(testMessageListener);
+			_schedulerEngineHelper.delete(
+				_TEST_NAME, _TEST_NAME, StorageType.MEMORY_CLUSTERED);
 
 			CompanyLocalServiceUtil.deleteCompany(_company);
 		}

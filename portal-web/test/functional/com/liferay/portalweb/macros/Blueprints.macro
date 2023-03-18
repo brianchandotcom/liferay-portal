@@ -27,6 +27,10 @@ definition {
 
 		Button.clickSelect();
 
+		WaitForElementPresent(
+			key_blueprintTitle = ${blueprintTitle},
+			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
+
 		Click(
 			key_blueprintTitle = ${blueprintTitle},
 			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");

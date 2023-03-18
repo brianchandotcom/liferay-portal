@@ -42,7 +42,7 @@ import java.util.Set;
  */
 public class AssetVocabularyUtil {
 
-	public static AssetVocabulary addAssetVocabulary(
+	public static void addAssetVocabulary(
 			AssetVocabularyLocalService assetVocabularyLocalService,
 			Collection<Long> classNameIds, Company company,
 			String assetVocabularyName, int visibilityType)
@@ -59,9 +59,11 @@ public class AssetVocabularyUtil {
 				StringUtil.toLowerCase(assetVocabularyName));
 
 		if (assetVocabulary == null) {
-			return _addAssetVocabulary(
+			_addAssetVocabulary(
 				assetVocabularyLocalService, assetVocabularyName, classNameIds,
 				company, visibilityType);
+
+			return;
 		}
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
@@ -72,16 +74,16 @@ public class AssetVocabularyUtil {
 		if (Objects.equals(settings, assetVocabulary.getSettings()) &&
 			(visibilityType == assetVocabulary.getVisibilityType())) {
 
-			return assetVocabulary;
+			return;
 		}
 
-		return assetVocabularyLocalService.updateVocabulary(
+		assetVocabularyLocalService.updateVocabulary(
 			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
 			assetVocabulary.getDescriptionMap(),
 			assetVocabularySettingsHelper.toString(), visibilityType);
 	}
 
-	private static AssetVocabulary _addAssetVocabulary(
+	private static void _addAssetVocabulary(
 			AssetVocabularyLocalService assetVocabularyLocalService,
 			String assetVocabularyName, Collection<Long> classNameIdsCollection,
 			Company company, int visibilityType)
@@ -123,7 +125,7 @@ public class AssetVocabularyUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return assetVocabularyLocalService.addVocabulary(
+		assetVocabularyLocalService.addVocabulary(
 			null, user.getUserId(), company.getGroupId(), assetVocabularyName,
 			StringPool.BLANK, titleMap, Collections.emptyMap(),
 			assetVocabularySettingsHelper.toString(), visibilityType,

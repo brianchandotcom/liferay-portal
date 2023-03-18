@@ -1,1 +1,0 @@
-(jobTitle eq 'Developer') or (contains(jobTitle, 'Software')) or (jobTitle eq 'Recruiter') or (contains(jobTitle, 'Person'))

@@ -1,1 +1,0 @@
-Matches users whose job title is either 'Developer' or 'Recruiter'.

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Segments Demo Data Creator Implementation
-Bundle-SymbolicName: com.liferay.segments.demo.data.creator.impl
-Bundle-Version: 3.0.8
--dsannotations-options: inherit

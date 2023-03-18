@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Segments Demo Data Creator API
-Bundle-SymbolicName: com.liferay.segments.demo.data.creator.api
-Bundle-Version: 3.0.5
-Export-Package: com.liferay.segments.demo.data.creator

@@ -35,13 +35,6 @@ public class SchedulerEngineHelperUtil {
 			trigger, storageType, description, language, script);
 	}
 
-	public static void auditSchedulerJobs(
-			Message message, TriggerState triggerState)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.auditSchedulerJobs(message, triggerState);
-	}
-
 	public static void delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 

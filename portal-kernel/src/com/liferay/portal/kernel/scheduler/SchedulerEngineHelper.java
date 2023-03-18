@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.Date;
@@ -67,10 +66,6 @@ public interface SchedulerEngineHelper {
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public void register(
-		MessageListener messageListener, SchedulerEntry schedulerEntry,
-		String destinationName);
-
 	public void resume(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
@@ -89,8 +84,6 @@ public interface SchedulerEngineHelper {
 			Trigger trigger, StorageType storageType, String description,
 			String destinationName, Object payload)
 		throws SchedulerException;
-
-	public void unregister(MessageListener messageListener);
 
 	public void unschedule(
 			String jobName, String groupName, StorageType storageType)

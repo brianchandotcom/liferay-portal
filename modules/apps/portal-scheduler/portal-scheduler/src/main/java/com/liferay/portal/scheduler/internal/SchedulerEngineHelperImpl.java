@@ -335,9 +335,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		ScriptingMessageListener scriptingMessageListener =
 			new ScriptingMessageListener();
 
-		SchedulerEventMessageListenerWrapper
-			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper(
+		SchedulerJobConfigurationMessageListener
+			schedulerJobConfigurationMessageListener =
+				new SchedulerJobConfigurationMessageListener(
 					new SchedulerJobConfiguration() {
 
 						@Override
@@ -361,7 +361,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 					});
 
-		scriptingDestination.register(schedulerEventMessageListenerWrapper);
+		scriptingDestination.register(schedulerJobConfigurationMessageListener);
 
 		_schedulerJobConfigurationServiceTracker = ServiceTrackerFactory.open(
 			_bundleContext, SchedulerJobConfiguration.class,
@@ -478,7 +478,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Reference
 	private TriggerFactory _triggerFactory;
 
-	private class SchedulerEventMessageListenerWrapper
+	private class SchedulerJobConfigurationMessageListener
 		implements MessageListener {
 
 		@Override
@@ -542,7 +542,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			}
 		}
 
-		private SchedulerEventMessageListenerWrapper(
+		private SchedulerJobConfigurationMessageListener(
 			SchedulerJobConfiguration schedulerJobConfiguration) {
 
 			_schedulerJobConfiguration = schedulerJobConfiguration;
@@ -594,7 +594,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					schedulerJobConfiguration.getName(),
 					_bundleContext.registerService(
 						MessageListener.class,
-						new SchedulerEventMessageListenerWrapper(
+						new SchedulerJobConfigurationMessageListener(
 							schedulerJobConfiguration),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"destination.name",

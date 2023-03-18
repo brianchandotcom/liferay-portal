@@ -143,8 +143,8 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		int displayVersions = ParamUtil.getInteger(
 			resourceRequest, "maxDisplayVersions", 10);
 
-		VersionableContentDashboardItem versionableContentDashboardItem =
-			(VersionableContentDashboardItem)contentDashboardItem;
+		VersionableContentDashboardItem<?> versionableContentDashboardItem =
+			(VersionableContentDashboardItem<?>)contentDashboardItem;
 
 		List<ContentDashboardItemVersion> contentDashboardItemVersions =
 			versionableContentDashboardItem.getAllContentDashboardItemVersions(

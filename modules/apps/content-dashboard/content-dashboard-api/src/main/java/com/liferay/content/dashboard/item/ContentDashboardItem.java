@@ -52,7 +52,7 @@ public interface ContentDashboardItem<T> {
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types);
 
-	public ContentDashboardItemSubtype getContentDashboardItemSubtype();
+	public ContentDashboardItemSubtype<T> getContentDashboardItemSubtype();
 
 	public Date getCreateDate();
 

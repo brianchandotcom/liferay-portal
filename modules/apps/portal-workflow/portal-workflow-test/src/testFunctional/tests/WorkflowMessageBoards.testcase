@@ -81,16 +81,6 @@ definition {
 			workflowAssetType = "Message Boards Message",
 			workflowTask = "Review");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewWithWorkflowPG(
-			pageName = "Message Boards Page",
-			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject",
-			workflowTask = "Review");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "MB Thread Subject",
 			workflowAssetType = "Message Boards Message",

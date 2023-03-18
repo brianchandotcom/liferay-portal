@@ -72,8 +72,7 @@ definition {
 
 		MessageboardsThread.viewWithWorkflowPG(
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject",
-			workflowTask = "Review");
+			threadSubject = "MB Thread Subject");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -292,8 +291,7 @@ definition {
 		MessageboardsThread.viewWithWorkflowPG(
 			pageName = "Message Boards Page",
 			threadBody = "MB Thread Body",
-			threadSubject = "MB Thread Subject",
-			workflowTask = "Update");
+			threadSubject = "MB Thread Subject");
 	}
 
 	@description = "This is a test for LRQA-70152. Verify that the reply to a thread has workflow associated."

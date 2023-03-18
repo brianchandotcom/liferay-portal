@@ -2165,11 +2165,10 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = ${threadSubject});
 
-		var key_threadStatus = "Pending (${workflowTask})";
-
 		AssertTextEquals(
+			key_threadStatus = "Pending",
 			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
-			value1 = "Pending (${workflowTask})");
+			value1 = "Pending");
 
 		AssertClick(
 			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
@@ -2181,7 +2180,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1",
-			value1 = "Pending (${workflowTask})");
+			value1 = "Pending");
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",

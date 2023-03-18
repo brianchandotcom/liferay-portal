@@ -53,9 +53,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_addAssetVocabulary(
-			company, PropsValues.ASSET_VOCABULARY_DEFAULT,
-			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+		_addAssetVocabulary(company);
 
 		Set<Long> searchClassNameIds = new HashSet<>();
 
@@ -80,15 +78,13 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _addAssetVocabulary(
-			Company company, String assetVocabularyName, int visibilityType)
-		throws Exception {
-
+	private void _addAssetVocabulary(Company company) throws Exception {
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				company.getGroupId(),
 				StringUtil.toLowerCase(
-					GetterUtil.getString(assetVocabularyName)));
+					GetterUtil.getString(
+						PropsValues.ASSET_VOCABULARY_DEFAULT)));
 
 		if (assetVocabulary != null) {
 			return;
@@ -101,7 +97,9 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		for (Locale locale :
 				_language.getCompanyAvailableLocales(company.getCompanyId())) {
 
-			titleMap.put(locale, _language.get(locale, assetVocabularyName));
+			titleMap.put(
+				locale,
+				_language.get(locale, PropsValues.ASSET_VOCABULARY_DEFAULT));
 		}
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
@@ -114,9 +112,9 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 		_assetVocabularyLocalService.addVocabulary(
 			null, defaultUser.getUserId(), company.getGroupId(),
-			assetVocabularyName, StringPool.BLANK, titleMap,
+			PropsValues.ASSET_VOCABULARY_DEFAULT, StringPool.BLANK, titleMap,
 			Collections.emptyMap(), assetVocabularySettingsHelper.toString(),
-			visibilityType, serviceContext);
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC, serviceContext);
 	}
 
 	@Reference

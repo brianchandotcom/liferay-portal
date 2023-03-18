@@ -240,7 +240,9 @@ public class SegmentsExperienceSelectorDisplayContext {
 					segmentsExperience, segmentsExperiences));
 		}
 
-		return segmentsExperiencesJSONArray;
+		_segmentsExperiencesJSONArray = segmentsExperiencesJSONArray;
+
+		return _segmentsExperiencesJSONArray;
 	}
 
 	private String _getSelectedSegmentsExperienceName(

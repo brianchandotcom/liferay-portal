@@ -265,33 +265,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public void register(
-		MessageListener messageListener, SchedulerEntry schedulerEntry,
-		String destinationName) {
-
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destinationName
-			).build();
-
-		SchedulerEventMessageListenerWrapper
-			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper();
-
-		schedulerEventMessageListenerWrapper.setMessageListener(
-			messageListener);
-
-		schedulerEventMessageListenerWrapper.setSchedulerEntry(schedulerEntry);
-
-		ServiceRegistration<SchedulerEventMessageListener> serviceRegistration =
-			_bundleContext.registerService(
-				SchedulerEventMessageListener.class,
-				schedulerEventMessageListenerWrapper, properties);
-
-		_serviceRegistrations.put(messageListener, serviceRegistration);
-	}
-
-	@Override
 	public void resume(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
@@ -335,16 +308,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		message.setPayload(payload);
 
 		schedule(trigger, storageType, description, destinationName, message);
-	}
-
-	@Override
-	public void unregister(MessageListener messageListener) {
-		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(messageListener);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -431,12 +394,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			destination.destroy();
 		}
 
-		for (ServiceRegistration<SchedulerEventMessageListener>
-				serviceRegistration : _serviceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
-
 		_bundleContext = null;
 	}
 
@@ -508,9 +465,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngineHelperConfiguration;
 	private ServiceTracker<SchedulerJobConfiguration, SchedulerJobConfiguration>
 		_schedulerJobConfigurationServiceTracker;
-	private final Map
-		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
-			_serviceRegistrations = new ConcurrentHashMap<>();
 	private volatile ServiceTracker
 		<SchedulerEventMessageListener, SchedulerEventMessageListener>
 			_serviceTracker;

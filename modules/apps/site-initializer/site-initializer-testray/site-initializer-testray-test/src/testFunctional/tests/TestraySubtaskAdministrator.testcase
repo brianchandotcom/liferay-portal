@@ -127,14 +127,6 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "subtasks",
 			objectName = "Subtask_1");
 
@@ -149,6 +141,18 @@ definition {
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "routines",
 			objectName = ${routineName});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "teams",
+			objectName = ${teamName});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "factorcategories",
+			objectName = "Category 1");
 
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 

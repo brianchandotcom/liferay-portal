@@ -125,8 +125,7 @@ public class ContentDashboardDataProvider {
 			_getBuckets(
 				_getTermsAggregation(
 					assetVocabulary, assetCategoryTitlesMap.keySet(),
-					"categories"),
-				"categories"));
+					"categories")));
 	}
 
 	private AssetVocabularyMetric _getAssetVocabularyMetric(
@@ -227,8 +226,7 @@ public class ContentDashboardDataProvider {
 				_getChildNoneAssetCategoryMetricCounts(
 					(FilterAggregationResult)
 						searchResponse.getAggregationResult(
-							"childNoneCategory")),
-				"childCategories");
+							"childNoneCategory")));
 
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)searchResponse.getAggregationResult(
@@ -246,9 +244,7 @@ public class ContentDashboardDataProvider {
 			assetVocabulary.getTitle(_locale), assetCategoryMetrics);
 	}
 
-	private Collection<Bucket> _getBuckets(
-		TermsAggregation termsAggregation, String termsAggregationName) {
-
+	private Collection<Bucket> _getBuckets(TermsAggregation termsAggregation) {
 		SearchResponse searchResponse = _searcher.search(
 			_searchRequestBuilder.addAggregation(
 				termsAggregation
@@ -258,7 +254,7 @@ public class ContentDashboardDataProvider {
 
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)searchResponse.getAggregationResult(
-				termsAggregationName);
+				"categories");
 
 		return termsAggregationResult.getBuckets();
 	}
@@ -364,8 +360,7 @@ public class ContentDashboardDataProvider {
 		Set<String> childAssetCategoryMetricKeys,
 		Map<String, String> childAssetCategoryTitlesMap,
 		AssetVocabulary childAssetVocabulary,
-		Map<String, Long> childNoneAssetCategoryMetricCounts,
-		String termsAggregationName) {
+		Map<String, Long> childNoneAssetCategoryMetricCounts) {
 
 		Stream<Bucket> stream = buckets.stream();
 
@@ -373,7 +368,7 @@ public class ContentDashboardDataProvider {
 			bucket -> {
 				TermsAggregationResult termsAggregationResult =
 					(TermsAggregationResult)bucket.getChildAggregationResult(
-						termsAggregationName);
+						"childCategories");
 
 				return new AssetCategoryMetric(
 					_toAssetVocabularyMetric(

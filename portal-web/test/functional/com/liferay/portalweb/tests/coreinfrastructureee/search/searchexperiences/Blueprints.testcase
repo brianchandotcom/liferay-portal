@@ -529,6 +529,8 @@ definition {
 	}
 
 	test AssertBlueprintStillAppliedAfterRename {
+		property test.name.skip.portal.instance = "Blueprints#AssertBlueprintStillAppliedAfterRename";
+
 		JSONWebcontent.addWebContent(
 			content = "apple apple apple",
 			groupName = "Guest",

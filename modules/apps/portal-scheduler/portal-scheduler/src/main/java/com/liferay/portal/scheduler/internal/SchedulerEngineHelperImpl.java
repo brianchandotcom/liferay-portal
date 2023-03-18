@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerState;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.InetAddressUtil;
@@ -60,6 +59,7 @@ import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -456,6 +456,61 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Reference
 	private TriggerFactory _triggerFactory;
+
+	private class SchedulerEventMessageListenerWrapper
+		implements MessageListener {
+
+		@Override
+		public void receive(Message message) throws MessageListenerException {
+			if (Objects.equals(
+					DestinationNames.SCHEDULER_DISPATCH,
+					message.getString(SchedulerEngine.DESTINATION_NAME)) &&
+				(!Objects.equals(
+					_schedulerConfigurationName,
+					message.getString(SchedulerEngine.JOB_NAME)) ||
+				 !Objects.equals(
+					 _schedulerConfigurationName,
+					 message.getString(SchedulerEngine.GROUP_NAME)))) {
+
+				return;
+			}
+
+			try {
+				_messageListener.receive(message);
+			}
+			catch (Exception exception) {
+				if (exception instanceof MessageListenerException) {
+					throw (MessageListenerException)exception;
+				}
+
+				throw new MessageListenerException(exception);
+			}
+			finally {
+				try {
+					auditSchedulerJobs(message, TriggerState.NORMAL);
+				}
+				catch (Exception exception) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Unable to send audit message", exception);
+					}
+				}
+			}
+		}
+
+		public void setMessageListener(MessageListener messageListener) {
+			_messageListener = messageListener;
+		}
+
+		private SchedulerEventMessageListenerWrapper(
+			String schedulerConfigurationName) {
+
+			_schedulerConfigurationName = schedulerConfigurationName;
+		}
+
+		private MessageListener _messageListener;
+		private final String _schedulerConfigurationName;
+
+	}
 
 	private class SchedulerJobConfigurationServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

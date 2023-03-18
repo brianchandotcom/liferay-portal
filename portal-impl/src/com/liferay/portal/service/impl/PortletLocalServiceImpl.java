@@ -64,8 +64,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -1437,12 +1436,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				schedulerEntryElement.elementText(
 					"scheduler-event-listener-class"));
 
-			Trigger trigger = null;
-
 			Element triggerElement = schedulerEntryElement.element("trigger");
 
 			Element cronElement = triggerElement.element("cron");
 			Element simpleElement = triggerElement.element("simple");
+
+			TriggerConfiguration triggerConfiguration = null;
 
 			if (cronElement != null) {
 				Element propertyKeyElement = cronElement.element(
@@ -1459,8 +1458,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 						"cron-trigger-value");
 				}
 
-				trigger = TriggerFactoryUtil.createTrigger(
-					eventListenerClass, eventListenerClass, cronException);
+				triggerConfiguration =
+					TriggerConfiguration.createTriggerConfiguration(
+						cronException);
 			}
 			else if (simpleElement != null) {
 				Element propertyKeyElement = simpleElement.element(
@@ -1484,14 +1484,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 						simpleElement.elementText("time-unit"),
 						TimeUnit.SECOND.getValue()));
 
-				trigger = TriggerFactoryUtil.createTrigger(
-					eventListenerClass, eventListenerClass,
-					GetterUtil.getIntegerStrict(intervalString),
-					TimeUnit.valueOf(timeUnitString));
+				triggerConfiguration =
+					TriggerConfiguration.createTriggerConfiguration(
+						GetterUtil.getIntegerStrict(intervalString),
+						TimeUnit.valueOf(timeUnitString));
 			}
 
 			SchedulerEntryImpl schedulerEntryImpl = new SchedulerEntryImpl(
-				eventListenerClass, trigger, description);
+				eventListenerClass, triggerConfiguration, description);
 
 			portletModel.addSchedulerEntry(schedulerEntryImpl);
 		}

@@ -22,37 +22,34 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
-import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
  */
-public class SchedulerEventMessageListenerWrapper
-	implements SchedulerEventMessageListener {
+public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
-	@Override
-	public SchedulerEntry getSchedulerEntry() {
-		return _schedulerEntry;
+	public SchedulerEventMessageListenerWrapper(
+		String schedulerConfigurationName) {
+
+		_schedulerConfigurationName = schedulerConfigurationName;
 	}
 
 	@Override
 	public void receive(Message message) throws MessageListenerException {
-		String destinationName = GetterUtil.getString(
-			message.getString(SchedulerEngine.DESTINATION_NAME));
-		String jobName = message.getString(SchedulerEngine.JOB_NAME);
-		String groupName = message.getString(SchedulerEngine.GROUP_NAME);
+		if (Objects.equals(
+				DestinationNames.SCHEDULER_DISPATCH,
+				message.getString(SchedulerEngine.DESTINATION_NAME)) &&
+			(!Objects.equals(
+				_schedulerConfigurationName,
+				message.getString(SchedulerEngine.JOB_NAME)) ||
+			 !Objects.equals(
+				 _schedulerConfigurationName,
+				 message.getString(SchedulerEngine.GROUP_NAME)))) {
 
-		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			Trigger trigger = _schedulerEntry.getTrigger();
-
-			if (!jobName.equals(trigger.getJobName()) ||
-				!groupName.equals(trigger.getGroupName())) {
-
-				return;
-			}
+			return;
 		}
 
 		try {
@@ -82,14 +79,10 @@ public class SchedulerEventMessageListenerWrapper
 		_messageListener = messageListener;
 	}
 
-	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
-		_schedulerEntry = schedulerEntry;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
 
 	private MessageListener _messageListener;
-	private SchedulerEntry _schedulerEntry;
+	private final String _schedulerConfigurationName;
 
 }

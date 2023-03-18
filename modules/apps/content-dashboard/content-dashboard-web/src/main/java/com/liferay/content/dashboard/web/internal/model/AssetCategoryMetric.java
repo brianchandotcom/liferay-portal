@@ -109,7 +109,7 @@ public class AssetCategoryMetric {
 		);
 	}
 
-	private AssetVocabularyMetric _assetVocabularyMetric;
+	private final AssetVocabularyMetric _assetVocabularyMetric;
 	private final String _key;
 	private final String _name;
 	private final long _value;

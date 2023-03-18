@@ -130,7 +130,7 @@ public class AssetVocabularyMetric {
 	private static final AssetVocabularyMetric _EMPTY =
 		new AssetVocabularyMetric(StringPool.BLANK, StringPool.BLANK);
 
-	private List<AssetCategoryMetric> _assetCategoryMetrics;
+	private final List<AssetCategoryMetric> _assetCategoryMetrics;
 	private final String _key;
 	private final String _name;
 

@@ -17,7 +17,6 @@ package com.liferay.portal.scheduler.internal;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
@@ -333,12 +332,34 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			_bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.SCHEDULER_SCRIPTING);
 
+		ScriptingMessageListener scriptingMessageListener =
+			new ScriptingMessageListener();
+
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper(null);
+				new SchedulerEventMessageListenerWrapper(
+					new SchedulerJobConfiguration() {
 
-		schedulerEventMessageListenerWrapper.setMessageListener(
-			new ScriptingMessageListener());
+						@Override
+						public UnsafeConsumer<Message, Exception>
+							getJobExecutorUnsafeConsumer() {
+
+							return scriptingMessageListener::receive;
+						}
+
+						@Override
+						public UnsafeRunnable<Exception>
+							getJobExecutorUnsafeRunnable() {
+
+							return null;
+						}
+
+						@Override
+						public TriggerConfiguration getTriggerConfiguration() {
+							return null;
+						}
+
+					});
 
 		scriptingDestination.register(schedulerEventMessageListenerWrapper);
 
@@ -466,17 +487,41 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					DestinationNames.SCHEDULER_DISPATCH,
 					message.getString(SchedulerEngine.DESTINATION_NAME)) &&
 				(!Objects.equals(
-					_schedulerConfigurationName,
+					_schedulerJobConfiguration.getName(),
 					message.getString(SchedulerEngine.JOB_NAME)) ||
 				 !Objects.equals(
-					 _schedulerConfigurationName,
+					 _schedulerJobConfiguration.getName(),
 					 message.getString(SchedulerEngine.GROUP_NAME)))) {
 
 				return;
 			}
 
 			try {
-				_messageListener.receive(message);
+				UnsafeConsumer<Message, Exception> unsafeConsumer =
+					_schedulerJobConfiguration.getJobExecutorUnsafeConsumer();
+
+				if (unsafeConsumer != null) {
+					unsafeConsumer.accept(message);
+				}
+				else {
+					long companyId = message.getLong("companyId");
+
+					if (companyId == CompanyConstants.SYSTEM) {
+						UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+							_schedulerJobConfiguration.
+								getJobExecutorUnsafeRunnable();
+
+						jobExecutorUnsafeRunnable.run();
+					}
+					else {
+						UnsafeConsumer<Long, Exception>
+							companyJobExecutorUnsafeConsumer =
+								_schedulerJobConfiguration.
+									getCompanyJobExecutorUnsafeConsumer();
+
+						companyJobExecutorUnsafeConsumer.accept(companyId);
+					}
+				}
 			}
 			catch (Exception exception) {
 				if (exception instanceof MessageListenerException) {
@@ -497,18 +542,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			}
 		}
 
-		public void setMessageListener(MessageListener messageListener) {
-			_messageListener = messageListener;
-		}
-
 		private SchedulerEventMessageListenerWrapper(
-			String schedulerConfigurationName) {
+			SchedulerJobConfiguration schedulerJobConfiguration) {
 
-			_schedulerConfigurationName = schedulerConfigurationName;
+			_schedulerJobConfiguration = schedulerJobConfiguration;
 		}
 
-		private MessageListener _messageListener;
-		private final String _schedulerConfigurationName;
+		private final SchedulerJobConfiguration _schedulerJobConfiguration;
 
 	}
 
@@ -542,53 +582,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					triggerConfiguration.getTimeUnit());
 			}
 
-			SchedulerEventMessageListenerWrapper
-				schedulerEventMessageListenerWrapper =
-					new SchedulerEventMessageListenerWrapper(
-						schedulerJobConfiguration.getName());
-
-			schedulerEventMessageListenerWrapper.setMessageListener(
-				message -> {
-					UnsafeConsumer<Message, Exception> unsafeConsumer =
-						schedulerJobConfiguration.
-							getJobExecutorUnsafeConsumer();
-
-					if (unsafeConsumer != null) {
-						try {
-							unsafeConsumer.accept(message);
-
-							return;
-						}
-						catch (Exception exception) {
-							ReflectionUtil.throwException(exception);
-						}
-					}
-
-					long companyId = message.getLong("companyId");
-
-					try {
-						if (companyId == CompanyConstants.SYSTEM) {
-							UnsafeRunnable<Exception>
-								jobExecutorUnsafeRunnable =
-									schedulerJobConfiguration.
-										getJobExecutorUnsafeRunnable();
-
-							jobExecutorUnsafeRunnable.run();
-						}
-						else {
-							UnsafeConsumer<Long, Exception>
-								companyJobExecutorUnsafeConsumer =
-									schedulerJobConfiguration.
-										getCompanyJobExecutorUnsafeConsumer();
-
-							companyJobExecutorUnsafeConsumer.accept(companyId);
-						}
-					}
-					catch (Exception exception) {
-						throw new MessageListenerException(exception);
-					}
-				});
-
 			ClusterableContextThreadLocal.putThreadLocalContext(
 				SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, false);
 
@@ -601,7 +594,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					schedulerJobConfiguration.getName(),
 					_bundleContext.registerService(
 						MessageListener.class,
-						schedulerEventMessageListenerWrapper,
+						new SchedulerEventMessageListenerWrapper(
+							schedulerJobConfiguration),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"destination.name",
 							schedulerJobConfiguration.getDestinationName()

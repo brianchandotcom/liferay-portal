@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.scheduler;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
 
 /**
  * @author Tina Tian
@@ -36,6 +37,12 @@ public interface SchedulerJobConfiguration {
 
 	public default String getDestinationName() {
 		return DestinationNames.SCHEDULER_DISPATCH;
+	}
+
+	public default UnsafeConsumer<Message, Exception>
+		getJobExecutorUnsafeConsumer() {
+
+		return null;
 	}
 
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable();

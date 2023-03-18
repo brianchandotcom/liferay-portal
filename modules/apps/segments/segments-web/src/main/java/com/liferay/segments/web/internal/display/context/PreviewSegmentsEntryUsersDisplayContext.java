@@ -120,7 +120,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 
 						return segmentsEntryClassPKsLongStream.boxed(
 						).map(
-							userId -> _userLocalService.fetchUser(userId)
+							_userLocalService::fetchUser
 						).collect(
 							Collectors.toList()
 						);

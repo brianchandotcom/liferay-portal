@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,9 +72,8 @@ public class ContentDashboardSearchContextBuilder {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
-		Integer status = GetterUtil.getInteger(
-			ParamUtil.getInteger(
-				_httpServletRequest, "status", WorkflowConstants.STATUS_ANY));
+		int status = ParamUtil.getInteger(
+			_httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			searchContext.setAttribute("head", Boolean.TRUE);
@@ -158,9 +156,9 @@ public class ContentDashboardSearchContextBuilder {
 				).map(
 					jsonObject -> jsonObject.getString(Field.ENTRY_CLASS_NAME)
 				).filter(
-					entryClassName -> Validator.isNotNull(entryClassName)
+					Validator::isNotNull
 				).toArray(
-					size -> new String[size]
+					String[]::new
 				));
 		}
 

@@ -109,7 +109,7 @@ public class AssetVocabularyMetric {
 		).map(
 			name -> Collections.unmodifiableList(Arrays.asList(_name, name))
 		).orElse(
-			Collections.unmodifiableList(Collections.singletonList(_name))
+			Collections.singletonList(_name)
 		);
 	}
 

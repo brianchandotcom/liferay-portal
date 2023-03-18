@@ -42,6 +42,8 @@ definition {
 	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to add a Project"
 	@priority = 5
 	test AdminCanAddProject {
+		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanAddProject";
+
 		task ("When the user Create a Project") {
 			Testray.createProjectTestray(
 				description = "Project Description",
@@ -60,6 +62,8 @@ definition {
 	@description = "Automation ID: LPS-160536| Test Summary: Verify that as an Administrator I am able to add a Project from the dropdown"
 	@priority = 4
 	test AdminCanAddProjectFromDropdown {
+		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanAddProjectFromDropdown";
+
 		task ("When the user Create a Project from the dropdown") {
 			Testray.createProjectByDropdown(
 				description = "Project Description",
@@ -79,13 +83,17 @@ definition {
 	@priority = 5
 	test AdminCanDeleteProject {
 		task ("Given that the user Create a Project via API") {
-			Testray.createProjectTestray(
-				description = "Project Description",
-				key_name = "Project 1");
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("When the project is deleted") {
-			Testray.deleteProject(nameProject = "Project 1");
+			Testray.deleteProject(projectName = "Project 1");
 		}
 
 		task ("Then the project is not displayed anymore") {
@@ -177,7 +185,7 @@ definition {
 		}
 
 		task ("When the project is deleted") {
-			Testray.deleteProject(nameProject = "Project 1");
+			Testray.deleteProject(projectName = "Project 1");
 		}
 
 		task ("Then the project is not displayed anymore") {
@@ -271,7 +279,7 @@ definition {
 		}
 
 		task ("When the user tries to delete a project with associated constructions") {
-			Testray.deleteProject(nameProject = "Projects_1 Project");
+			Testray.deleteProject(projectName = "Projects_1 Project");
 		}
 
 		task ("Then an error message is displayed") {

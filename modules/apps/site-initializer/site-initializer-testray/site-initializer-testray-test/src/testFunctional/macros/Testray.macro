@@ -225,7 +225,7 @@ definition {
 			numberItems = 20,
 			valuePagination = 150);
 
-		TestrayContextMenu.clickContextMenuProjects(name = ${nameProject});
+		TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 	}

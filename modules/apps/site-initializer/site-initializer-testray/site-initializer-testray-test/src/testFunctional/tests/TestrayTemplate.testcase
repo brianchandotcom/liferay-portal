@@ -91,11 +91,11 @@ definition {
 			object = "teams",
 			objectName = ${teamName});
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
+
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 

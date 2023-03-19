@@ -103,6 +103,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
+			return true;
+		}
+
 		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext);
 

@@ -55,8 +55,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -118,23 +116,6 @@ public class SimulationProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		PortletURL simulationPanelURL = PortletURLBuilder.create(
-			_portletURLFactory.create(
-				httpServletRequest,
-				ProductNavigationSimulationPortletKeys.
-					PRODUCT_NAVIGATION_SIMULATION,
-				PortletRequest.RENDER_PHASE)
-		).setBackURL(
-			_portal.getCurrentCompleteURL(httpServletRequest)
-		).build();
-
-		try {
-			simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-		}
-		catch (WindowStateException windowStateException) {
-			ReflectionUtil.throwException(windowStateException);
-		}
-
 		Map<String, String> values = new HashMap<>();
 
 		IconTag iconTag = new IconTag();
@@ -152,7 +133,19 @@ public class SimulationProductNavigationControlMenuEntry
 		}
 
 		values.put("portletNamespace", _portletNamespace);
-		values.put("simulationPanelURL", simulationPanelURL.toString());
+		values.put(
+			"simulationPanelURL",
+			PortletURLBuilder.create(
+				_portletURLFactory.create(
+					httpServletRequest,
+					ProductNavigationSimulationPortletKeys.
+						PRODUCT_NAVIGATION_SIMULATION,
+					PortletRequest.RENDER_PHASE)
+			).setBackURL(
+				_portal.getCurrentCompleteURL(httpServletRequest)
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString());
 		values.put(
 			"title",
 			_html.escape(_language.get(httpServletRequest, "simulation")));

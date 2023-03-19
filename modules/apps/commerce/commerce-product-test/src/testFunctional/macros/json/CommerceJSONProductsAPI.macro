@@ -614,6 +614,31 @@ definition {
 		return ${productOptionValues};
 	}
 
+	macro _getCommerceProducts {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(prodCount)) {
+			var productsCount = ${prodCount};
+		}
+		else {
+			var productsCount = 100;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${productsCount} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceProductsCount {
 		var baseURL = ${baseURL};
 
@@ -946,6 +971,62 @@ definition {
 		return ${responseBody};
 	}
 
+	macro _patchCommerceProductRelations {
+		Variables.assertDefined(parameterList = "${baseProductName},${productRelations}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var payload = "";
+		var productsJSON = CommerceJSONProductsAPI._getCommerceProducts();
+
+		var baseProductId = CommerceJSONProductsAPI.getProductIdsByName(
+			productNames = ${baseProductName},
+			responseBody = ${productsJSON});
+
+		for (var productRelation : list ${productRelations}) {
+			var productNames = StringUtil.extractFirst(${productRelation}, ":");
+			var productType = StringUtil.extractLast(${productRelation}, ":");
+			var productNames = StringUtil.replace(${productNames}, "/", ",");
+
+			var productIds = CommerceJSONProductsAPI.getProductIdsByName(
+				productNames = ${productNames},
+				responseBody = ${productsJSON});
+
+			for (var productId : list ${productIds}) {
+				if (${payload} != "") {
+					var comma = ",";
+				}
+				else {
+					var comma = "";
+				}
+
+				var payload = '''
+						${payload}${comma}
+						{
+							"productId": ${productId},
+            				"type": "${productType}" 
+						}
+					''';
+			}
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${baseProductId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"relatedProducts": [${payload}]
+				}'
+		''';
+
+		JSONCurlUtil.patch(${curl});
+	}
+
 	macro _patchCommerceSku {
 		Variables.assertDefined(parameterList = ${productSku});
 
@@ -1117,6 +1198,31 @@ definition {
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
+	macro getProductIdsByName {
+		Variables.assertDefined(parameterList = ${productNames});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommerceJSONProductsAPI._getCommerceProducts();
+		}
+
+		var productIds = "";
+
+		for (var productName : list ${productNames}) {
+			var productId = JSONUtil.getWithJSONPath(${responseBody}, "$.items[?(@['name']['en_US'] == '${productName}')].['productId']");
+
+			if (${productIds} != "") {
+				var comma = ",";
+			}
+			else {
+				var comma = "";
+			}
+
+			var productIds = "${productIds}${comma}${productId}";
+		}
+
+		return ${productIds};
 	}
 
 }

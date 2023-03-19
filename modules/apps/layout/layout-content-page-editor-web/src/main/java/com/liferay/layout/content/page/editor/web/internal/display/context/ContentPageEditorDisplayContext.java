@@ -1729,7 +1729,7 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		_restrictedItemIds = _contentManager.getRestrictedItemIds(
-			_getLayoutStructure(), themeDisplay);
+			httpServletRequest, _getLayoutStructure(), themeDisplay);
 
 		return _restrictedItemIds;
 	}

@@ -1006,6 +1006,125 @@ definition {
 		}
 	}
 
+	@description = "Verify that Related Products are available for use with Collection Display Fragment."
+	@priority = 5
+	test CanMapRelatedProductsToCollectionDisplayFragment {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration_custom-relation.config";
+		property osgi.module.configurations = "type=\"Custom-Relation\"";
+		property portal.acceptance = "true";
+
+		task ("Given the admin establishes all the possible relations between 'ABS Sensor' and other products") {
+			CommerceJSONProductsAPI._patchCommerceProductRelations(
+				baseProductName = "ABS Sensor",
+				productRelations = "Wear Sensors:spare,Brake Pads:accessories,Brake Rotors:up-sell,Calipers:related,Hoses:Custom-Relation,Timing Belt:cross-sell");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And six Collection Display fragments are deployed on the page for each relation with the Style Display set to Generic List for all the fragments") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
+
+			var index = 1;
+
+			for (var relation : list "Spare,Accessories,Up-Sell,Related,Custom-Relation,Cross-Sell") {
+				CommerceDisplayPageTemplates.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display",
+					index = ${index});
+
+				CommerceDisplayPageTemplates.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					index = ${index},
+					infoItemRelatedListProviderName = ${relation},
+					styleDisplay = "Bordered List");
+
+				var index = ${index} + 1;
+			}
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the ABS Sensor product details page") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the buyer will see all the relations that ABS Sensor has (must be one for each fragment)") {
+			for (var productName : list "Wear Sensors,Brake Pads,Brake Rotors,Calipers,Hoses,Timing Belt") {
+				AssertElementPresent(
+					key_toPageLink = ${productName},
+					locator1 = "BridgeIssues#TO_PAGE_LINK");
+
+				task ("And once it's clicked") {
+					Click.javaScriptClick(
+						key_toPageLink = ${productName},
+						locator1 = "BridgeIssues#TO_PAGE_LINK");
+				}
+
+				task ("Then the buyer is redirected to the product page of the related product") {
+					var productNameLowerCase = CommerceUtilities.convertStringToKey(string = ${productName});
+
+					AssertLocation.assertPartialLocation(value1 = "web/minium/p/${productNameLowerCase}");
+				}
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+			}
+		}
+
+		task ("But if no relations are present (another product that this not ABS Sensor)") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+		}
+
+		task ("Then no results are present inside the fragments") {
+			for (var productName : list "Wear Sensors,Brake Pads,Brake Rotors,Calipers,Hoses,Timing Belt") {
+				AssertElementNotPresent(
+					key_toPageLink = ${productName},
+					locator1 = "BridgeIssues#TO_PAGE_LINK");
+			}
+		}
+
+		task ("Delete manually ABS Sensor to avoid problems during the tearDown (COMMERCE-11085)") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceProducts.openProductsAdmin();
+
+			var product = "ABS Sensor";
+
+			CommerceNavigator.searchEntry(entryName = ${product});
+
+			CommerceProducts.deleteProductsEntry(key_value = ${product});
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7277 Verify mapped Shipping related fields to fragments are visible in Store Fronts"
 	@priority = 5
 	test CanMapShippingFieldsToFragments {

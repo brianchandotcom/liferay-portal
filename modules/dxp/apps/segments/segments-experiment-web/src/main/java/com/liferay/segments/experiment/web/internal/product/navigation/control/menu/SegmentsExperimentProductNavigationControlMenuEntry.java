@@ -406,7 +406,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		JspWriter jspWriter = pageContext.getOut();
 
 		try {
-			StringBundler sb = new StringBundler(23);
+			StringBundler sb = new StringBundler(26);
 
 			sb.append("<div class=\"");
 
@@ -417,11 +417,10 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 					"lfr-has-segments-experiment-panel open-admin-panel ");
 			}
 
-			sb.append(
-				StringBundler.concat(
-					"cadmin d-print-none lfr-admin-panel ",
-					"lfr-product-menu-panel lfr-segments-experiment-panel ",
-					"sidenav-fixed sidenav-menu-slider sidenav-right\" id=\""));
+			sb.append("cadmin d-print-none lfr-admin-panel ");
+			sb.append("lfr-product-menu-panel lfr-segments-experiment-panel ");
+			sb.append("sidenav-fixed sidenav-menu-slider sidenav-right\" ");
+			sb.append("id=\"");
 			sb.append(_portletNamespace);
 			sb.append("segmentsExperimentPanelId\">");
 			sb.append("<div class=\"sidebar sidebar-light sidenav-menu ");

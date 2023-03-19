@@ -99,6 +99,55 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public boolean hasViewPermission(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		JSONObject jsonObject = _getFieldValueJSONObject(
+			fragmentRendererContext);
+
+		InfoItemReference infoItemReference =
+			fragmentRendererContext.getContextInfoItemReference();
+
+		if ((infoItemReference == null) &&
+			((jsonObject == null) || (jsonObject.length() == 0))) {
+
+			return true;
+		}
+
+		String className = StringPool.BLANK;
+		Object displayObject = null;
+
+		if (jsonObject != null) {
+			className = jsonObject.getString("className");
+
+			displayObject = _getDisplayObject(
+				className, jsonObject.getLong("classPK"), infoItemReference);
+		}
+		else {
+			displayObject = _getInfoItem(infoItemReference);
+		}
+
+		if (displayObject == null) {
+			return true;
+		}
+
+		Tuple tuple = _getTuple(
+			className, displayObject.getClass(), fragmentRendererContext);
+
+		InfoItemRenderer<Object> infoItemRenderer =
+			(InfoItemRenderer<Object>)tuple.getObject(0);
+
+		if ((infoItemRenderer == null) ||
+			_hasPermission(httpServletRequest, className, displayObject)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void render(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,

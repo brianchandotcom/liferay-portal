@@ -16,8 +16,6 @@ package com.liferay.product.navigation.simulation.web.internal.product.navigatio
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -277,9 +275,6 @@ public class SimulationProductNavigationControlMenuEntry
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference(target = "(panel.category.key=" + PanelCategoryKeys.HIDDEN + ")")
-	private PanelCategory _panelCategory;
 
 	@Reference
 	private Portal _portal;

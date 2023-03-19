@@ -19,7 +19,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,14 +51,10 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.service.SegmentsExperienceService;
-import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
-import com.liferay.staging.StagingGroupHelper;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.util.BodyBottomTag;
 
@@ -76,7 +70,6 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -91,7 +84,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	configurationPid = "com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration",
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
 		"product.navigation.control.menu.entry.order:Integer=500"
@@ -266,9 +258,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 	protected void activate(Map<String, Object> properties) {
 		_portletNamespace = _portal.getPortletNamespace(
 			SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
-
-		_segmentsExperimentConfiguration = ConfigurableUtil.createConfigurable(
-			SegmentsExperimentConfiguration.class, properties);
 	}
 
 	private Map<String, Object> _getData(
@@ -495,9 +484,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private Html _html;
 
 	@Reference
@@ -524,23 +510,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
-	private SegmentsExperienceService _segmentsExperienceService;
-
-	private volatile SegmentsExperimentConfiguration
-		_segmentsExperimentConfiguration;
-
-	@Reference
-	private SegmentsExperimentRelService _segmentsExperimentRelService;
-
-	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.segments.experiment.web)"
-	)
-	private ServletContext _servletContext;
-
-	@Reference
-	private StagingGroupHelper _stagingGroupHelper;
 
 }

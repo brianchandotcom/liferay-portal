@@ -127,22 +127,10 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		try {
 			bodyBottomTag.doBodyTag(
 				httpServletRequest, httpServletResponse,
-				pageContext -> {
-					try {
-						_processBodyBottomTagBody(pageContext);
-					}
-					catch (Exception exception) {
-						throw new ProcessBodyBottomTagBodyException(exception);
-					}
-				});
+				this::_processBodyBottomTagBody);
 		}
 		catch (JspException jspException) {
 			throw new IOException(jspException);
-		}
-		catch (ProcessBodyBottomTagBodyException
-					processBodyBottomTagBodyException) {
-
-			throw new IOException(processBodyBottomTagBodyException);
 		}
 
 		return true;
@@ -272,15 +260,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		HttpServletRequest httpServletRequest, String panelState) {
 
 		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
-	}
-
-	public static class ProcessBodyBottomTagBodyException
-		extends RuntimeException {
-
-		public ProcessBodyBottomTagBodyException(Throwable throwable) {
-			super(throwable);
-		}
-
 	}
 
 	@Activate
@@ -426,9 +405,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			httpServletRequest);
 	}
 
-	private void _processBodyBottomTagBody(PageContext pageContext)
-		throws IOException, JspException {
-
+	private void _processBodyBottomTagBody(PageContext pageContext) {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
@@ -501,7 +478,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			jspWriter.write("</div></div></div></div>");
 		}
 		catch (Exception exception) {
-			throw new IOException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

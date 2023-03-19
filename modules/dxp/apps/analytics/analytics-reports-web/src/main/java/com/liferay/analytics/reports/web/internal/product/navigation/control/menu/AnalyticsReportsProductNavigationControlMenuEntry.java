@@ -26,6 +26,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -112,22 +113,10 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		try {
 			bodyBottomTag.doBodyTag(
 				httpServletRequest, httpServletResponse,
-				pageContext -> {
-					try {
-						_processBodyBottomTagBody(pageContext);
-					}
-					catch (Exception exception) {
-						throw new ProcessBodyBottomTagBodyException(exception);
-					}
-				});
+				this::_processBodyBottomTagBody);
 		}
 		catch (JspException jspException) {
 			throw new IOException(jspException);
-		}
-		catch (ProcessBodyBottomTagBodyException
-					processBodyBottomTagBodyException) {
-
-			throw new IOException(processBodyBottomTagBodyException);
 		}
 
 		return true;
@@ -256,15 +245,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
 	}
 
-	public static class ProcessBodyBottomTagBodyException
-		extends RuntimeException {
-
-		public ProcessBodyBottomTagBodyException(Throwable throwable) {
-			super(throwable);
-		}
-
-	}
-
 	@Activate
 	protected void activate() {
 		_portletNamespace = _portal.getPortletNamespace(
@@ -340,9 +320,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		return infoItemReference;
 	}
 
-	private void _processBodyBottomTagBody(PageContext pageContext)
-		throws IOException, JspException {
-
+	private void _processBodyBottomTagBody(PageContext pageContext) {
 		try {
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
@@ -418,7 +396,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			jspWriter.write("</div></div></div></div>");
 		}
 		catch (Exception exception) {
-			throw new IOException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

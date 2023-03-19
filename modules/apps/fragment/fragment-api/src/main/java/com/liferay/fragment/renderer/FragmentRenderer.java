@@ -70,6 +70,13 @@ public interface FragmentRenderer {
 		return StringPool.BLANK;
 	}
 
+	public default boolean hasViewPermission(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		return true;
+	}
+
 	public default boolean isSelectable(HttpServletRequest httpServletRequest) {
 		return true;
 	}

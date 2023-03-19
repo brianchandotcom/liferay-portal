@@ -27,6 +27,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -91,7 +95,27 @@ public interface ObjectFieldBusinessType {
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		return values.get(objectField.getName());
+		if (!objectField.isLocalized()) {
+			return values.get(objectField.getName());
+		}
+
+		Map<String, String> localizedValues = (Map<String, String>)values.get(
+			objectField.getName() + ObjectFieldConstants.I18N_SUFFIX);
+
+		if (localizedValues == null) {
+			return values.get(objectField.getName());
+		}
+
+		User user = GuestOrUserUtil.getGuestOrUser();
+
+		String localizedValue = localizedValues.get(
+			LocaleUtil.toLanguageId(user.getLocale()));
+
+		if (localizedValue != null) {
+			return localizedValue;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public default boolean isVisible(ObjectDefinition objectDefinition) {

@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -82,7 +80,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -145,14 +142,13 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
-		long groupId = getGroupId(objectDefinition, scopeKey);
-
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
-				groupId, objectDefinition.getObjectDefinitionId(),
+				getGroupId(objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					groupId, dtoConverterContext.getUserId(), objectDefinition,
-					objectEntry, 0L, dtoConverterContext.getLocale()),
+					dtoConverterContext.getUserId(), objectDefinition,
+					objectEntry, dtoConverterContext.getLocale()),
 				_createServiceContext(
 					objectEntry, dtoConverterContext.getUserId()));
 
@@ -656,9 +652,7 @@ public class DefaultObjectEntryManagerImpl
 		serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 			objectEntryId,
 			_toObjectValues(
-				serviceBuilderObjectEntry.getGroupId(),
 				dtoConverterContext.getUserId(), objectDefinition, objectEntry,
-				serviceBuilderObjectEntry.getObjectEntryId(),
 				dtoConverterContext.getLocale()),
 			_createServiceContext(
 				objectEntry, dtoConverterContext.getUserId()));
@@ -694,8 +688,8 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, groupId,
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					groupId, dtoConverterContext.getUserId(), objectDefinition,
-					objectEntry, 0L, dtoConverterContext.getLocale()),
+					dtoConverterContext.getUserId(), objectDefinition,
+					objectEntry, dtoConverterContext.getLocale()),
 				serviceContext));
 	}
 
@@ -1281,8 +1275,8 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, Serializable> _toObjectValues(
-			long groupId, long userId, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, long objectEntryId, Locale locale)
+			long userId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, Locale locale)
 		throws Exception {
 
 		Map<String, Serializable> values = new HashMap<>();
@@ -1308,26 +1302,30 @@ public class DefaultObjectEntryManagerImpl
 				continue;
 			}
 
+			if (objectField.isLocalized()) {
+				String localizedObjectFieldName =
+					objectField.getName() + ObjectFieldConstants.I18N_SUFFIX;
+
+				Map<String, Object> properties = objectEntry.getProperties();
+
+				value = properties.get(localizedObjectFieldName);
+
+				if (value == null) {
+					continue;
+				}
+
+				values.put(localizedObjectFieldName, (Serializable)value);
+
+				continue;
+			}
+
 			if ((value == null) && !objectField.isRequired()) {
 				continue;
 			}
 
 			if (Objects.equals(
-					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-					objectField.getBusinessType())) {
-
-				values.put(
-					objectField.getName(),
-					SanitizerUtil.sanitize(
-						objectField.getCompanyId(), groupId,
-						objectField.getUserId(),
-						objectDefinition.getClassName(), objectEntryId,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						String.valueOf(value), null));
-			}
-			else if (Objects.equals(
-						objectField.getDBType(),
-						ObjectFieldConstants.DB_TYPE_DATE)) {
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE)) {
 
 				values.put(
 					objectField.getName(),

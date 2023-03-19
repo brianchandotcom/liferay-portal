@@ -77,4 +77,6 @@ public class ObjectFieldConstants {
 
 	public static final String DB_TYPE_STRING = "String";
 
+	public static final String I18N_SUFFIX = "_i18n";
+
 }

@@ -84,6 +84,143 @@ definition {
 		}
 	}
 
+	macro editCollectionDisplay {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		var key_fragmentName = ${fragmentName};
+		var key_index = ${index};
+
+		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+		}
+
+		if (isSet(columnNumber)) {
+			Click.clickNoWaitForVisible(
+				key_columnNumber = ${columnNumber},
+				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
+				key_position = 1,
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+		else {
+			PageEditor.clickConfigurableField(
+				fragmentName = ${fragmentName},
+				index = ${index});
+		}
+
+		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
+			SelectFrame(value1 = "relative=top");
+		}
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		if (!(isSet(deviceType)) || (${deviceType} == "Desktop")) {
+			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
+				Click(
+					key_fieldLabel = "Collection",
+					key_text = "plus",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+			else {
+				Click(
+					key_fieldLabel = "Collection",
+					key_text = "change",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			if (isSet(assetListName)) {
+				NavItem.click(navItem = "Collections");
+
+				if (isSet(depotName)) {
+					Click(
+						key_breadcrumbName = "Sites and Libraries",
+						locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+
+					Click(
+						key_groupTab = "Asset Library",
+						locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
+
+					LexiconCard.clickCardTitle(card = ${depotName});
+				}
+
+				LexiconCard.clickCardTitle(card = ${assetListName});
+
+				SelectFrameTop();
+
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Collection",
+					text = ${assetListName});
+			}
+			else if (isSet(infoListProviderName)) {
+				NavItem.click(navItem = "Collection Providers");
+
+				LexiconCard.clickCardTitle(card = ${infoListProviderName});
+
+				Refresh();
+
+				PageEditor.clickConfigurableField(
+					fragmentName = ${fragmentName},
+					index = ${index});
+
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Collection",
+					text = ${infoListProviderName});
+			}
+			else if (isSet(infoItemRelatedListProviderName)) {
+				NavItem.click(navItem = "Related Items Collection Providers");
+
+				LexiconCard.clickCardTitle(card = ${infoItemRelatedListProviderName});
+
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Collection",
+					text = ${infoItemRelatedListProviderName});
+			}
+		}
+
+		if (isSet(styleDisplay)) {
+			if ((${styleDisplay} != "Grid") && (${styleDisplay} != "Flex Row") && (${styleDisplay} != "Flex Column")) {
+				AssertElementPresent(
+					key_fieldLabel = "Style Display",
+					key_groupLabel = "Templates",
+					key_value = ${styleDisplay},
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			Select(
+				key_fieldLabel = "Style Display",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${styleDisplay});
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Style Display",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${styleDisplay});
+
+			if (isSet(listItemStyle)) {
+				Select(
+					key_fieldLabel = "List Item Style",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${listItemStyle});
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "List Item Style",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${listItemStyle});
+			}
+		}
+	}
+
 	macro editDynamicField {
 		if (!(isSet(index))) {
 			var index = 1;

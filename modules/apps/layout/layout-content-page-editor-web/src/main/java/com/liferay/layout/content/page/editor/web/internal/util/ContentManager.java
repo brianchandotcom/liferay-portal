@@ -669,7 +669,8 @@ public class ContentManager {
 	private JSONArray _getLayoutClassedModelPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			LayoutStructure layoutStructure, long plid,
-			List<String> hiddenItemIds, long segmentsExperienceId)
+			List<String> hiddenItemIds, List<String> restrictedItemIds,
+			long segmentsExperienceId)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = _jsonFactory.createJSONArray();
@@ -692,6 +693,8 @@ public class ContentManager {
 
 				continue;
 			}
+
+			boolean restricted = false;
 
 			if (layoutClassedModelUsage.getContainerType() ==
 					_getFragmentEntryLinkClassNameId()) {
@@ -725,6 +728,9 @@ public class ContentManager {
 
 					continue;
 				}
+
+				restricted = restrictedItemIds.contains(
+					layoutStructureItem.getItemId());
 			}
 
 			if ((layoutClassedModelUsage.getContainerType() ==
@@ -761,7 +767,8 @@ public class ContentManager {
 				mappedContentsJSONArray.put(
 					_getPageContentJSONObject(
 						layoutClassedModelUsage,
-						layoutDisplayPageObjectProvider, httpServletRequest));
+						layoutDisplayPageObjectProvider, httpServletRequest,
+						restricted));
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -928,7 +935,7 @@ public class ContentManager {
 	private JSONObject _getPageContentJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, boolean restricted)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -953,7 +960,7 @@ public class ContentManager {
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK())
 		).put(
-			"isRestricted", false
+			"isRestricted", restricted
 		).put(
 			"status", _getStatusJSONObject(layoutClassedModelUsage)
 		).put(
@@ -992,7 +999,7 @@ public class ContentManager {
 		return JSONUtil.concat(
 			_getLayoutClassedModelPageContentsJSONArray(
 				httpServletRequest, layoutStructure, plid, hiddenItemIds,
-				segmentsExperienceId),
+				restrictedItemIds, segmentsExperienceId),
 			_assetListEntryUsagesManager.getPageContentsJSONArray(
 				hiddenItemIds, httpServletRequest, httpServletResponse,
 				layoutStructure, plid, restrictedItemIds));

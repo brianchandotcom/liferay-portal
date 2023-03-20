@@ -582,7 +582,7 @@ public class ObjectFieldSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectFieldSettingSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectFieldSetting.class));
 				}
 			}

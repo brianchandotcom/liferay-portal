@@ -588,8 +588,7 @@ public class OrganizationSerDes {
 					organization.setChildOrganizations(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> OrganizationSerDes.toDTO(
-								String.class.cast(object)),
+							object -> OrganizationSerDes.toDTO((String)object),
 							Organization.class));
 				}
 			}
@@ -603,8 +602,7 @@ public class OrganizationSerDes {
 					organization.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -682,8 +680,7 @@ public class OrganizationSerDes {
 					organization.setOrganizationAccounts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AccountSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AccountSerDes.toDTO((String)object),
 							Account.class));
 				}
 			}
@@ -710,8 +707,7 @@ public class OrganizationSerDes {
 					organization.setServices(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ServiceSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ServiceSerDes.toDTO((String)object),
 							Service.class));
 				}
 			}
@@ -720,8 +716,7 @@ public class OrganizationSerDes {
 					organization.setUserAccounts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> UserAccountSerDes.toDTO(
-								String.class.cast(object)),
+							object -> UserAccountSerDes.toDTO((String)object),
 							UserAccount.class));
 				}
 			}

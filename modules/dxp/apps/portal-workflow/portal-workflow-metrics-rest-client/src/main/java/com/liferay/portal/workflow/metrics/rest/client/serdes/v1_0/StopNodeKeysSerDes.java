@@ -146,8 +146,7 @@ public class StopNodeKeysSerDes {
 					stopNodeKeys.setNodeKeys(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> NodeKeySerDes.toDTO(
-								String.class.cast(object)),
+							object -> NodeKeySerDes.toDTO((String)object),
 							NodeKey.class));
 				}
 			}

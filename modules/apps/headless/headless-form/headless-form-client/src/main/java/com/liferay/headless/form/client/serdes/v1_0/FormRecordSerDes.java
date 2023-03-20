@@ -307,7 +307,7 @@ public class FormRecordSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FormFieldValueSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FormFieldValue.class));
 				}
 			}

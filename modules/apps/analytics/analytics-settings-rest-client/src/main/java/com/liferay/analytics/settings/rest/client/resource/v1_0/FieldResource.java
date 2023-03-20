@@ -317,9 +317,9 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					fields, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						fields, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -496,9 +496,9 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					fields, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						fields, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -675,9 +675,9 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					fields, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						fields, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -854,9 +854,9 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					fields, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						fields, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {

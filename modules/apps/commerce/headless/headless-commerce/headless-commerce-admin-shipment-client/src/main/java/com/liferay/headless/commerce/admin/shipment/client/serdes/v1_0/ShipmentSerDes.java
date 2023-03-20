@@ -555,8 +555,7 @@ public class ShipmentSerDes {
 					shipment.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -596,8 +595,7 @@ public class ShipmentSerDes {
 					shipment.setShipmentItems(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ShipmentItemSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ShipmentItemSerDes.toDTO((String)object),
 							ShipmentItem.class));
 				}
 			}

@@ -752,8 +752,7 @@ public class PriceEntrySerDes {
 					priceEntry.setTierPrices(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> TierPriceSerDes.toDTO(
-								String.class.cast(object)),
+							object -> TierPriceSerDes.toDTO((String)object),
 							TierPrice.class));
 				}
 			}

@@ -190,17 +190,41 @@ public class Page<T> {
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "facets")) {
-				if (jsonParserFieldValue != null) {
-					page.setFacets(_getFacet(jsonParserFieldValue));
+				if (jsonParserFieldValue == null) {
+					return;
 				}
+
+				page.setFacets(
+					TransformUtil.transformToList(
+						(Object[])jsonParserFieldValue,
+						object1 -> {
+							Map<String, Object> jsonParserFieldValuesMap =
+								this.parseToMap((String)object1);
+
+							return new Facet(
+								(String)jsonParserFieldValuesMap.get(
+									"facetCriteria"),
+								TransformUtil.transformToList(
+									(Object[])jsonParserFieldValuesMap.get(
+										"facetValues"),
+									object2 -> {
+										Map<String, Object> facetValueMap =
+											this.parseToMap((String)object2);
+
+										return new Facet.FacetValue(
+											Integer.valueOf(
+												(String)facetValueMap.get(
+													"numberOfOccurrences")),
+											(String)facetValueMap.get("term"));
+									}));
+						}));
 			}
 			else if (Objects.equals(jsonParserFieldName, "items")) {
 				if (jsonParserFieldValue != null) {
 					page.setItems(
 						TransformUtil.transformToList(
 							(Object[])jsonParserFieldValue,
-							object -> _toDTOFunction.apply(
-								String.class.cast(object))));
+							object -> _toDTOFunction.apply((String)object)));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "lastPage")) {
@@ -229,38 +253,6 @@ public class Page<T> {
 		}
 
 		private final Function<String, T> _toDTOFunction;
-
-		private List<Facet> _getFacet(Object jsonParserFieldValue) {
-			List<Facet> facets = new ArrayList<>();
-
-			for (Object object1 : (Object[])jsonParserFieldValue) {
-				List<Facet.FacetValue> facetValues = new ArrayList<>();
-
-				Map<String, Object> jsonParserFieldValuesMap = this.parseToMap(
-					String.class.cast(object1));
-
-				for (Object object2 :
-						(Object[])jsonParserFieldValuesMap.get("facetValues")) {
-
-					Map<String, Object> facetValueMap = this.parseToMap(
-						(String)object2);
-
-					facetValues.add(
-						new Facet.FacetValue(
-							Integer.valueOf(
-								(String)facetValueMap.get(
-									"numberOfOccurrences")),
-							(String)facetValueMap.get("term")));
-				}
-
-				facets.add(
-					new Facet(
-						(String)jsonParserFieldValuesMap.get("facetCriteria"),
-						facetValues));
-			}
-
-			return facets;
-		}
 
 	}
 

@@ -750,9 +750,10 @@ public interface WorkflowTaskResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					workflowTaskAssignToUsers, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						workflowTaskAssignToUsers,
+						value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -1293,9 +1294,9 @@ public interface WorkflowTaskResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					changeTransitions, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						changeTransitions, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -1474,9 +1475,10 @@ public interface WorkflowTaskResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					workflowTaskAssignToMes, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						workflowTaskAssignToMes,
+						value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {

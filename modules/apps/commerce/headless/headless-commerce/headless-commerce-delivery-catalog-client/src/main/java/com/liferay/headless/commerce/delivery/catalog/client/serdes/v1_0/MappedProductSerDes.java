@@ -614,8 +614,7 @@ public class MappedProductSerDes {
 					mappedProduct.setProductOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ProductOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ProductOptionSerDes.toDTO((String)object),
 							ProductOption.class));
 				}
 			}
@@ -676,8 +675,7 @@ public class MappedProductSerDes {
 					mappedProduct.setSkuOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SkuOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SkuOptionSerDes.toDTO((String)object),
 							SkuOption.class));
 				}
 			}

@@ -236,8 +236,7 @@ public class ChannelSerDes {
 					channel.setDataSources(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DataSourceSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DataSourceSerDes.toDTO((String)object),
 							DataSource.class));
 				}
 			}

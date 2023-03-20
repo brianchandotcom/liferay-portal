@@ -176,7 +176,7 @@ public class FormPageContextSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FormFieldContextSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FormFieldContext.class));
 				}
 			}

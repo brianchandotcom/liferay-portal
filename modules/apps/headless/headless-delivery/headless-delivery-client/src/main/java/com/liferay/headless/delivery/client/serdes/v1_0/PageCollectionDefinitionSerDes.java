@@ -520,7 +520,7 @@ public class PageCollectionDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> CollectionViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							CollectionViewport.class));
 				}
 			}
@@ -558,7 +558,7 @@ public class PageCollectionDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FragmentViewport.class));
 				}
 			}

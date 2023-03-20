@@ -598,7 +598,7 @@ public class OrderRuleSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> OrderRuleAccountSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							OrderRuleAccount.class));
 				}
 			}
@@ -610,7 +610,7 @@ public class OrderRuleSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> OrderRuleAccountGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							OrderRuleAccountGroup.class));
 				}
 			}
@@ -620,7 +620,7 @@ public class OrderRuleSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> OrderRuleChannelSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							OrderRuleChannel.class));
 				}
 			}
@@ -632,7 +632,7 @@ public class OrderRuleSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> OrderRuleOrderTypeSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							OrderRuleOrderType.class));
 				}
 			}

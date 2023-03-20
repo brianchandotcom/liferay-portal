@@ -526,8 +526,7 @@ public class WarehouseSerDes {
 					warehouse.setWarehouseItems(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> WarehouseItemSerDes.toDTO(
-								String.class.cast(object)),
+							object -> WarehouseItemSerDes.toDTO((String)object),
 							WarehouseItem.class));
 				}
 			}

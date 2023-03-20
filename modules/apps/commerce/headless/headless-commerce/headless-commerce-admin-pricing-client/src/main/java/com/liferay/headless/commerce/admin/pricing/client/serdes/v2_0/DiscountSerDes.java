@@ -875,7 +875,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountAccountGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountAccountGroup.class));
 				}
 			}
@@ -885,7 +885,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountAccountSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountAccount.class));
 				}
 			}
@@ -897,7 +897,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountCategorySerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountCategory.class));
 				}
 			}
@@ -907,7 +907,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountChannelSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountChannel.class));
 				}
 			}
@@ -919,7 +919,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountOrderTypeSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountOrderType.class));
 				}
 			}
@@ -931,7 +931,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountProductGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountProductGroup.class));
 				}
 			}
@@ -941,7 +941,7 @@ public class DiscountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DiscountProductSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DiscountProduct.class));
 				}
 			}
@@ -950,8 +950,7 @@ public class DiscountSerDes {
 					discount.setDiscountRules(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DiscountRuleSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DiscountRuleSerDes.toDTO((String)object),
 							DiscountRule.class));
 				}
 			}

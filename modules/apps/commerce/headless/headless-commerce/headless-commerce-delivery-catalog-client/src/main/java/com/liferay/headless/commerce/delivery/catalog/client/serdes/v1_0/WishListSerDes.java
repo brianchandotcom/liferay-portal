@@ -198,8 +198,7 @@ public class WishListSerDes {
 					wishList.setWishListItems(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> WishListItemSerDes.toDTO(
-								String.class.cast(object)),
+							object -> WishListItemSerDes.toDTO((String)object),
 							WishListItem.class));
 				}
 			}

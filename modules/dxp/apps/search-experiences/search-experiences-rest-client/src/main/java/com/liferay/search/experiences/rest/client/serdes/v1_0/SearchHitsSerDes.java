@@ -160,8 +160,7 @@ public class SearchHitsSerDes {
 					searchHits.setHits(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> HitSerDes.toDTO(
-								String.class.cast(object)),
+							object -> HitSerDes.toDTO((String)object),
 							Hit.class));
 				}
 			}

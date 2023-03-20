@@ -161,8 +161,7 @@ public class QueryConfigurationSerDes {
 					queryConfiguration.setQueryEntries(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> QueryEntrySerDes.toDTO(
-								String.class.cast(object)),
+							object -> QueryEntrySerDes.toDTO((String)object),
 							QueryEntry.class));
 				}
 			}

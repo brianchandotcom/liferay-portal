@@ -725,8 +725,7 @@ public class DocumentSerDes {
 					document.setAdaptedImages(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AdaptedImageSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AdaptedImageSerDes.toDTO((String)object),
 							AdaptedImage.class));
 				}
 			}
@@ -763,8 +762,7 @@ public class DocumentSerDes {
 					document.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -838,7 +836,7 @@ public class DocumentSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RelatedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RelatedContent.class));
 				}
 			}
@@ -848,7 +846,7 @@ public class DocumentSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RenderedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RenderedContent.class));
 				}
 			}
@@ -872,7 +870,7 @@ public class DocumentSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategoryBrief.class));
 				}
 			}

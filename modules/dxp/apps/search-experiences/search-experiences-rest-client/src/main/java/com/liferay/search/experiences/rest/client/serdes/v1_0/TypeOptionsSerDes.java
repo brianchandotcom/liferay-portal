@@ -340,8 +340,7 @@ public class TypeOptionsSerDes {
 					typeOptions.setOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> OptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> OptionSerDes.toDTO((String)object),
 							Option.class));
 				}
 			}

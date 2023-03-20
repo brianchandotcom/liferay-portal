@@ -590,7 +590,7 @@ public class PlacedOrderItemSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PlacedOrderItemShipmentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PlacedOrderItemShipment.class));
 				}
 			}
@@ -600,7 +600,7 @@ public class PlacedOrderItemSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PlacedOrderItemSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PlacedOrderItem.class));
 				}
 			}

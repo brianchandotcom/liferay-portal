@@ -184,7 +184,7 @@ public class PageColumnDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ColumnViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ColumnViewport.class));
 				}
 			}

@@ -411,8 +411,7 @@ public class PlanSerDes {
 					plan.setMappings(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> MappingSerDes.toDTO(
-								String.class.cast(object)),
+							object -> MappingSerDes.toDTO((String)object),
 							Mapping.class));
 				}
 			}
@@ -426,8 +425,7 @@ public class PlanSerDes {
 					plan.setPolicies(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PolicySerDes.toDTO(
-								String.class.cast(object)),
+							object -> PolicySerDes.toDTO((String)object),
 							Policy.class));
 				}
 			}

@@ -761,8 +761,7 @@ public class MessageBoardMessageSerDes {
 					messageBoardMessage.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -875,7 +874,7 @@ public class MessageBoardMessageSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RelatedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RelatedContent.class));
 				}
 			}

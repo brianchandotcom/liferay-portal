@@ -154,8 +154,7 @@ public class ObjectStateFlowSerDes {
 					objectStateFlow.setObjectStates(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ObjectStateSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ObjectStateSerDes.toDTO((String)object),
 							ObjectState.class));
 				}
 			}

@@ -1215,9 +1215,9 @@ public interface DataDefinitionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					permissions, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						permissions, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {

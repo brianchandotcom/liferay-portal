@@ -198,10 +198,10 @@ public interface SuggestionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					suggestionsContributorConfigurations,
-					value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						suggestionsContributorConfigurations,
+						value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {

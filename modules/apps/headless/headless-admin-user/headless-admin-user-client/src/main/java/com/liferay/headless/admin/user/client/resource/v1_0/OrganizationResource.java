@@ -2127,9 +2127,9 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					strings, value -> "\"" + String.valueOf(value) + "\""
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						strings, value -> "\"" + String.valueOf(value) + "\"")),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -2219,9 +2219,9 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					strings, value -> "\"" + String.valueOf(value) + "\""
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						strings, value -> "\"" + String.valueOf(value) + "\"")),
 				"application/json");
 
 			if (_builder._locale != null) {

@@ -217,7 +217,7 @@ public class WidgetInstanceSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> WidgetPermissionSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							WidgetPermission.class));
 				}
 			}

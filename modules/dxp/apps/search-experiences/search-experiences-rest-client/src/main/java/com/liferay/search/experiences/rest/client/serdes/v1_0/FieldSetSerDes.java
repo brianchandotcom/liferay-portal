@@ -125,8 +125,7 @@ public class FieldSetSerDes {
 					fieldSet.setFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FieldSerDes.toDTO((String)object),
 							Field.class));
 				}
 			}

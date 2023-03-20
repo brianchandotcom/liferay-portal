@@ -207,8 +207,7 @@ public class AccountBriefSerDes {
 					accountBrief.setRoleBriefs(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> RoleBriefSerDes.toDTO(
-								String.class.cast(object)),
+							object -> RoleBriefSerDes.toDTO((String)object),
 							RoleBrief.class));
 				}
 			}

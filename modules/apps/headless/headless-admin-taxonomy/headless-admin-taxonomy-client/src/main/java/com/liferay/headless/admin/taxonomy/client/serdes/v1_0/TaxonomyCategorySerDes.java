@@ -639,7 +639,7 @@ public class TaxonomyCategorySerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryPropertySerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategoryProperty.class));
 				}
 			}

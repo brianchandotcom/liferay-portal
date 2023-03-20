@@ -405,7 +405,7 @@ public class ContentStructureSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ContentStructureFieldSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ContentStructureField.class));
 				}
 			}

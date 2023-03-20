@@ -130,8 +130,7 @@ public class UiConfigurationSerDes {
 					uiConfiguration.setFieldSets(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FieldSetSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FieldSetSerDes.toDTO((String)object),
 							FieldSet.class));
 				}
 			}

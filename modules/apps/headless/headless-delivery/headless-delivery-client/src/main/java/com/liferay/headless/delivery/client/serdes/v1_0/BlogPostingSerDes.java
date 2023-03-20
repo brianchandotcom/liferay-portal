@@ -700,8 +700,7 @@ public class BlogPostingSerDes {
 					blogPosting.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -782,7 +781,7 @@ public class BlogPostingSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RelatedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RelatedContent.class));
 				}
 			}
@@ -792,7 +791,7 @@ public class BlogPostingSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RenderedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RenderedContent.class));
 				}
 			}
@@ -810,7 +809,7 @@ public class BlogPostingSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategoryBrief.class));
 				}
 			}

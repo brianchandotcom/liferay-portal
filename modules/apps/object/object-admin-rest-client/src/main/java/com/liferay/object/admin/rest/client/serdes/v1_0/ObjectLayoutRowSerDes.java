@@ -178,7 +178,7 @@ public class ObjectLayoutRowSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectLayoutColumnSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectLayoutColumn.class));
 				}
 			}

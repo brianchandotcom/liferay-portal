@@ -340,7 +340,7 @@ public class PageFormDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> CustomCSSViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							CustomCSSViewport.class));
 				}
 			}
@@ -363,7 +363,7 @@ public class PageFormDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FragmentViewport.class));
 				}
 			}

@@ -501,7 +501,7 @@ public class AccountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> AccountAddressSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							AccountAddress.class));
 				}
 			}
@@ -510,8 +510,7 @@ public class AccountSerDes {
 					account.setAccountMembers(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AccountMemberSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AccountMemberSerDes.toDTO((String)object),
 							AccountMember.class));
 				}
 			}
@@ -523,7 +522,7 @@ public class AccountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> AccountOrganizationSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							AccountOrganization.class));
 				}
 			}

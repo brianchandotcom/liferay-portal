@@ -515,8 +515,7 @@ public class TermSerDes {
 					term.setTermOrderType(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> TermOrderTypeSerDes.toDTO(
-								String.class.cast(object)),
+							object -> TermOrderTypeSerDes.toDTO((String)object),
 							TermOrderType.class));
 				}
 			}

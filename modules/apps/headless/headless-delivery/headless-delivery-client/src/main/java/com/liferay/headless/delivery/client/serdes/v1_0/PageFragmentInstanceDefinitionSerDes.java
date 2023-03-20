@@ -450,7 +450,7 @@ public class PageFragmentInstanceDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> CustomCSSViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							CustomCSSViewport.class));
 				}
 			}
@@ -472,8 +472,7 @@ public class PageFragmentInstanceDefinitionSerDes {
 					pageFragmentInstanceDefinition.setFragmentFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FragmentFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FragmentFieldSerDes.toDTO((String)object),
 							FragmentField.class));
 				}
 			}
@@ -490,7 +489,7 @@ public class PageFragmentInstanceDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FragmentViewport.class));
 				}
 			}
@@ -512,7 +511,7 @@ public class PageFragmentInstanceDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> WidgetInstanceSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							WidgetInstance.class));
 				}
 			}

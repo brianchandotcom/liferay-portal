@@ -168,8 +168,7 @@ public class HistogramMetricSerDes {
 					histogramMetric.setHistograms(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> HistogramSerDes.toDTO(
-								String.class.cast(object)),
+							object -> HistogramSerDes.toDTO((String)object),
 							Histogram.class));
 				}
 			}

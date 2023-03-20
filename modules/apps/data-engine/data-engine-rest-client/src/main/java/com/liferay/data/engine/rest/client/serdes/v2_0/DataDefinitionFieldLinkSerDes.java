@@ -202,8 +202,7 @@ public class DataDefinitionFieldLinkSerDes {
 					dataDefinitionFieldLink.setDataLayouts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DataLayoutSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DataLayoutSerDes.toDTO((String)object),
 							DataLayout.class));
 				}
 			}
@@ -212,8 +211,7 @@ public class DataDefinitionFieldLinkSerDes {
 					dataDefinitionFieldLink.setDataListViews(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DataListViewSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DataListViewSerDes.toDTO((String)object),
 							DataListView.class));
 				}
 			}

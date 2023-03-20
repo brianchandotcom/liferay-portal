@@ -255,8 +255,7 @@ public class FieldSerDes {
 					field.setFieldMappings(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FieldMappingSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FieldMappingSerDes.toDTO((String)object),
 							FieldMapping.class));
 				}
 			}

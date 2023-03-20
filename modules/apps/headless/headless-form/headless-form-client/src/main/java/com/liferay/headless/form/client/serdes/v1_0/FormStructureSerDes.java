@@ -408,8 +408,7 @@ public class FormStructureSerDes {
 					formStructure.setFormPages(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FormPageSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FormPageSerDes.toDTO((String)object),
 							FormPage.class));
 				}
 			}

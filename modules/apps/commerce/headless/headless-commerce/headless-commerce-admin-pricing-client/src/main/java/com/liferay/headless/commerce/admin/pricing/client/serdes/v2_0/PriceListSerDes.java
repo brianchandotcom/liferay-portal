@@ -816,8 +816,7 @@ public class PriceListSerDes {
 					priceList.setPriceEntries(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PriceEntrySerDes.toDTO(
-								String.class.cast(object)),
+							object -> PriceEntrySerDes.toDTO((String)object),
 							PriceEntry.class));
 				}
 			}
@@ -829,7 +828,7 @@ public class PriceListSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceListAccountGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceListAccountGroup.class));
 				}
 			}
@@ -839,7 +838,7 @@ public class PriceListSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceListAccountSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceListAccount.class));
 				}
 			}
@@ -849,7 +848,7 @@ public class PriceListSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceListChannelSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceListChannel.class));
 				}
 			}
@@ -861,7 +860,7 @@ public class PriceListSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceListDiscountSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceListDiscount.class));
 				}
 			}
@@ -873,7 +872,7 @@ public class PriceListSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceListOrderTypeSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceListOrderType.class));
 				}
 			}
@@ -882,8 +881,7 @@ public class PriceListSerDes {
 					priceList.setPriceModifiers(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PriceModifierSerDes.toDTO(
-								String.class.cast(object)),
+							object -> PriceModifierSerDes.toDTO((String)object),
 							PriceModifier.class));
 				}
 			}

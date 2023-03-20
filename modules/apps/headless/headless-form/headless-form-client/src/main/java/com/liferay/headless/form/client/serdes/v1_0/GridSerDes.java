@@ -170,7 +170,7 @@ public class GridSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FormFieldOptionSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FormFieldOption.class));
 				}
 			}
@@ -185,7 +185,7 @@ public class GridSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FormFieldOptionSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FormFieldOption.class));
 				}
 			}

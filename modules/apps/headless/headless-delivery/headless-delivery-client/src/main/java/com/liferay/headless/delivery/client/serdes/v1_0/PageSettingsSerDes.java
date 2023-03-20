@@ -187,8 +187,7 @@ public class PageSettingsSerDes {
 					pageSettings.setCustomMetaTags(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomMetaTagSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomMetaTagSerDes.toDTO((String)object),
 							CustomMetaTag.class));
 				}
 			}

@@ -259,8 +259,7 @@ public class AccountMemberSerDes {
 					accountMember.setAccountRoles(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AccountRoleSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AccountRoleSerDes.toDTO((String)object),
 							AccountRole.class));
 				}
 			}

@@ -219,8 +219,7 @@ public class FormPageSerDes {
 					formPage.setFormFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FormFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FormFieldSerDes.toDTO((String)object),
 							FormField.class));
 				}
 			}

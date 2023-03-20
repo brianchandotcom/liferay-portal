@@ -734,8 +734,7 @@ public class SkuSerDes {
 					sku.setSkuOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SkuOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SkuOptionSerDes.toDTO((String)object),
 							SkuOption.class));
 				}
 			}

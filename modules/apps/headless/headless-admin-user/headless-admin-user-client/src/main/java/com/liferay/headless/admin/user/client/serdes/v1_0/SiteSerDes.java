@@ -463,8 +463,7 @@ public class SiteSerDes {
 					site.setSites(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SiteSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SiteSerDes.toDTO((String)object),
 							Site.class));
 				}
 			}

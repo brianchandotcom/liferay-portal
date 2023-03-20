@@ -725,8 +725,7 @@ public class ProductSerDes {
 					product.setProductOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ProductOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ProductOptionSerDes.toDTO((String)object),
 							ProductOption.class));
 				}
 			}
@@ -738,7 +737,7 @@ public class ProductSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ProductSpecificationSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ProductSpecification.class));
 				}
 			}
@@ -752,8 +751,7 @@ public class ProductSerDes {
 					product.setSkus(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SkuSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SkuSerDes.toDTO((String)object),
 							Sku.class));
 				}
 			}

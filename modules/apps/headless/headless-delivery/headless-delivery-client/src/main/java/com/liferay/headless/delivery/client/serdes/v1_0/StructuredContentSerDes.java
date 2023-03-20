@@ -907,8 +907,7 @@ public class StructuredContentSerDes {
 					structuredContent.setContentFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ContentFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ContentFieldSerDes.toDTO((String)object),
 							ContentField.class));
 				}
 			}
@@ -931,8 +930,7 @@ public class StructuredContentSerDes {
 					structuredContent.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -1025,7 +1023,7 @@ public class StructuredContentSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RelatedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RelatedContent.class));
 				}
 			}
@@ -1035,7 +1033,7 @@ public class StructuredContentSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RenderedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RenderedContent.class));
 				}
 			}
@@ -1067,7 +1065,7 @@ public class StructuredContentSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategoryBrief.class));
 				}
 			}

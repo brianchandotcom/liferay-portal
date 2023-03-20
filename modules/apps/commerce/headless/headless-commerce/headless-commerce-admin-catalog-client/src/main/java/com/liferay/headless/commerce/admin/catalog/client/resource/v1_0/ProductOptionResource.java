@@ -632,9 +632,9 @@ public interface ProductOptionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					productOptions, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						productOptions, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -822,9 +822,9 @@ public interface ProductOptionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					productOptions, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						productOptions, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {

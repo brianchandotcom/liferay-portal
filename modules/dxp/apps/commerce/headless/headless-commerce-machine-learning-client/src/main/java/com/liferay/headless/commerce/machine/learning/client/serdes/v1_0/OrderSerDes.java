@@ -514,8 +514,7 @@ public class OrderSerDes {
 					order.setOrderItems(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> OrderItemSerDes.toDTO(
-								String.class.cast(object)),
+							object -> OrderItemSerDes.toDTO((String)object),
 							OrderItem.class));
 				}
 			}

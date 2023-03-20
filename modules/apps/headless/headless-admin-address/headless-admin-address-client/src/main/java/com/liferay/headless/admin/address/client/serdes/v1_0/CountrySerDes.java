@@ -436,8 +436,7 @@ public class CountrySerDes {
 					country.setRegions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> RegionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> RegionSerDes.toDTO((String)object),
 							Region.class));
 				}
 			}

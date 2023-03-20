@@ -389,8 +389,7 @@ public class AccountSerDes {
 					account.setAccountUserAccounts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> UserAccountSerDes.toDTO(
-								String.class.cast(object)),
+							object -> UserAccountSerDes.toDTO((String)object),
 							UserAccount.class));
 				}
 			}
@@ -405,8 +404,7 @@ public class AccountSerDes {
 					account.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}

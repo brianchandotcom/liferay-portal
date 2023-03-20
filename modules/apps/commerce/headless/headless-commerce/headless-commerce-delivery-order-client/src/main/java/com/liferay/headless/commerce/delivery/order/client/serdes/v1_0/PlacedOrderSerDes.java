@@ -1034,7 +1034,7 @@ public class PlacedOrderSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PlacedOrderCommentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PlacedOrderComment.class));
 				}
 			}
@@ -1044,7 +1044,7 @@ public class PlacedOrderSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PlacedOrderItemSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PlacedOrderItem.class));
 				}
 			}

@@ -388,7 +388,7 @@ public class ProductOptionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ProductOptionValueSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ProductOptionValue.class));
 				}
 			}

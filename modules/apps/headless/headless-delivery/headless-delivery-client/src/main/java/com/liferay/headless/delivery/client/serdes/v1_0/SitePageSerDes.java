@@ -642,8 +642,7 @@ public class SitePageSerDes {
 					sitePage.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -729,7 +728,7 @@ public class SitePageSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategoryBrief.class));
 				}
 			}

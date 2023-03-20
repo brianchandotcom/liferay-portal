@@ -680,7 +680,7 @@ public class FormFieldSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FormFieldOptionSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FormFieldOption.class));
 				}
 			}

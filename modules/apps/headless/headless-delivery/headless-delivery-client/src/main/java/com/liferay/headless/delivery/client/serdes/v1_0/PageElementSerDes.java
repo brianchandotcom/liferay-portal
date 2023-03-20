@@ -179,8 +179,7 @@ public class PageElementSerDes {
 					pageElement.setPageElements(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PageElementSerDes.toDTO(
-								String.class.cast(object)),
+							object -> PageElementSerDes.toDTO((String)object),
 							PageElement.class));
 				}
 			}

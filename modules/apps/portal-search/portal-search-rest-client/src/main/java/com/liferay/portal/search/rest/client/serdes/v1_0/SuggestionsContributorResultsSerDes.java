@@ -211,8 +211,7 @@ public class SuggestionsContributorResultsSerDes {
 					suggestionsContributorResults.setSuggestions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SuggestionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SuggestionSerDes.toDTO((String)object),
 							Suggestion.class));
 				}
 			}

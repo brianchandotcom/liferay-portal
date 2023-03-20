@@ -135,7 +135,7 @@ public class DataLayoutRowSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DataLayoutColumnSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DataLayoutColumn.class));
 				}
 			}

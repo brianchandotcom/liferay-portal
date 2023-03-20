@@ -538,7 +538,7 @@ public class NavigationMenuItemSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> NavigationMenuItemSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							NavigationMenuItem.class));
 				}
 			}

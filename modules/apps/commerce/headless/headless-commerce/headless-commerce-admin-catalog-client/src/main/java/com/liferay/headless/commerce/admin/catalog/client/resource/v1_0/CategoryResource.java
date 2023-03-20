@@ -285,9 +285,9 @@ public interface CategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					categories, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						categories, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {
@@ -450,9 +450,9 @@ public interface CategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				TransformUtil.transformToList(
-					categories, value -> String.valueOf(value)
-				).toString(),
+				String.valueOf(
+					TransformUtil.transformToList(
+						categories, value -> String.valueOf(value))),
 				"application/json");
 
 			if (_builder._locale != null) {

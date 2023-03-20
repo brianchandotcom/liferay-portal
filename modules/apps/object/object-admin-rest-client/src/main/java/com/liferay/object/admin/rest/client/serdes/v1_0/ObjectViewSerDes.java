@@ -421,7 +421,7 @@ public class ObjectViewSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectViewColumnSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectViewColumn.class));
 				}
 			}
@@ -433,7 +433,7 @@ public class ObjectViewSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectViewFilterColumnSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectViewFilterColumn.class));
 				}
 			}
@@ -445,7 +445,7 @@ public class ObjectViewSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectViewSortColumnSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectViewSortColumn.class));
 				}
 			}

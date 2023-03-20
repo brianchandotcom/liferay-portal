@@ -553,8 +553,7 @@ public class SkuSerDes {
 					sku.setDDMOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DDMOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DDMOptionSerDes.toDTO((String)object),
 							DDMOption.class));
 				}
 			}
@@ -666,8 +665,7 @@ public class SkuSerDes {
 					sku.setSkuOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SkuOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SkuOptionSerDes.toDTO((String)object),
 							SkuOption.class));
 				}
 			}

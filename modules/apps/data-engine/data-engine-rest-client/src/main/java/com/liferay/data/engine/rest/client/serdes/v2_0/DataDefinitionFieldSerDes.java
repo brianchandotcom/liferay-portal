@@ -487,7 +487,7 @@ public class DataDefinitionFieldSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DataDefinitionFieldSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DataDefinitionField.class));
 				}
 			}

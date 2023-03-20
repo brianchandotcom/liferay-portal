@@ -211,7 +211,7 @@ public class ShippingMethodSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ShippingOptionSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ShippingOption.class));
 				}
 			}

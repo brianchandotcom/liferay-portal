@@ -426,7 +426,7 @@ public class DataLayoutSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DataLayoutPageSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DataLayoutPage.class));
 				}
 			}
@@ -435,8 +435,7 @@ public class DataLayoutSerDes {
 					dataLayout.setDataRules(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DataRuleSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DataRuleSerDes.toDTO((String)object),
 							DataRule.class));
 				}
 			}

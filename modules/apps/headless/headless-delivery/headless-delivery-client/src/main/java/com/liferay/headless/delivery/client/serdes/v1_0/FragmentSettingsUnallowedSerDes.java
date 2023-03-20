@@ -147,8 +147,7 @@ public class FragmentSettingsUnallowedSerDes {
 					fragmentSettingsUnallowed.setUnallowedFragments(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FragmentSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FragmentSerDes.toDTO((String)object),
 							Fragment.class));
 				}
 			}

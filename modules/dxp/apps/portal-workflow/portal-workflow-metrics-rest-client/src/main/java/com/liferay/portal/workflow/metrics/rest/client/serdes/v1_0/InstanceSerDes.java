@@ -584,8 +584,7 @@ public class InstanceSerDes {
 					instance.setAssignees(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AssigneeSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AssigneeSerDes.toDTO((String)object),
 							Assignee.class));
 				}
 			}
@@ -656,8 +655,7 @@ public class InstanceSerDes {
 					instance.setSlaResults(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SLAResultSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SLAResultSerDes.toDTO((String)object),
 							SLAResult.class));
 				}
 			}
@@ -679,8 +677,7 @@ public class InstanceSerDes {
 					instance.setTransitions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> TransitionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> TransitionSerDes.toDTO((String)object),
 							Transition.class));
 				}
 			}

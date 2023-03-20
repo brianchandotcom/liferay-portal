@@ -148,7 +148,7 @@ public class ServiceSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> HoursAvailableSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							HoursAvailable.class));
 				}
 			}

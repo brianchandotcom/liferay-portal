@@ -637,8 +637,7 @@ public class WikiPageSerDes {
 					wikiPage.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -714,7 +713,7 @@ public class WikiPageSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RelatedContentSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RelatedContent.class));
 				}
 			}
@@ -737,7 +736,7 @@ public class WikiPageSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategoryBrief.class));
 				}
 			}

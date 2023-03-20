@@ -464,8 +464,7 @@ public class WorkflowTaskSerDes {
 					workflowTask.setAssigneeRoles(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> RoleSerDes.toDTO(
-								String.class.cast(object)),
+							object -> RoleSerDes.toDTO((String)object),
 							Role.class));
 				}
 			}

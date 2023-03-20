@@ -425,8 +425,7 @@ public class ImportTaskSerDes {
 					importTask.setFailedItems(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FailedItemSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FailedItemSerDes.toDTO((String)object),
 							FailedItem.class));
 				}
 			}

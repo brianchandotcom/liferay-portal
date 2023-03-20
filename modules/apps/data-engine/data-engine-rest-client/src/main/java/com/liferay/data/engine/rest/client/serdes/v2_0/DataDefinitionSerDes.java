@@ -468,7 +468,7 @@ public class DataDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> DataDefinitionFieldSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							DataDefinitionField.class));
 				}
 			}
@@ -483,8 +483,7 @@ public class DataDefinitionSerDes {
 					dataDefinition.setDataRules(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DataRuleSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DataRuleSerDes.toDTO((String)object),
 							DataRule.class));
 				}
 			}

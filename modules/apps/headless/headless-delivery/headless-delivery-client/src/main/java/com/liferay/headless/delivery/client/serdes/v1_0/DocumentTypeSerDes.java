@@ -251,8 +251,7 @@ public class DocumentTypeSerDes {
 					documentType.setContentFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ContentFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ContentFieldSerDes.toDTO((String)object),
 							ContentField.class));
 				}
 			}

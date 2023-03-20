@@ -169,8 +169,7 @@ public class DataLayoutPageSerDes {
 					dataLayoutPage.setDataLayoutRows(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DataLayoutRowSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DataLayoutRowSerDes.toDTO((String)object),
 							DataLayoutRow.class));
 				}
 			}

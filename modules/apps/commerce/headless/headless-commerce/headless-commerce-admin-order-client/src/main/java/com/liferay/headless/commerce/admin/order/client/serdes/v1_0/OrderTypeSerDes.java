@@ -434,7 +434,7 @@ public class OrderTypeSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> OrderTypeChannelSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							OrderTypeChannel.class));
 				}
 			}

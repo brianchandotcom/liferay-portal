@@ -948,8 +948,7 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.setObjectActions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ObjectActionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ObjectActionSerDes.toDTO((String)object),
 							ObjectAction.class));
 				}
 			}
@@ -958,8 +957,7 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.setObjectFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ObjectFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ObjectFieldSerDes.toDTO((String)object),
 							ObjectField.class));
 				}
 			}
@@ -968,8 +966,7 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.setObjectLayouts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ObjectLayoutSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ObjectLayoutSerDes.toDTO((String)object),
 							ObjectLayout.class));
 				}
 			}
@@ -981,7 +978,7 @@ public class ObjectDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectRelationshipSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectRelationship.class));
 				}
 			}
@@ -993,7 +990,7 @@ public class ObjectDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectValidationRuleSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectValidationRule.class));
 				}
 			}
@@ -1002,8 +999,7 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.setObjectViews(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ObjectViewSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ObjectViewSerDes.toDTO((String)object),
 							ObjectView.class));
 				}
 			}

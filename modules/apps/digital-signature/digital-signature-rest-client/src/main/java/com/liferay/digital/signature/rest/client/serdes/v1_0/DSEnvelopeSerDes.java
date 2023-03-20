@@ -369,8 +369,7 @@ public class DSEnvelopeSerDes {
 					dsEnvelope.setDsDocument(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DSDocumentSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DSDocumentSerDes.toDTO((String)object),
 							DSDocument.class));
 				}
 			}
@@ -379,8 +378,7 @@ public class DSEnvelopeSerDes {
 					dsEnvelope.setDsRecipient(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> DSRecipientSerDes.toDTO(
-								String.class.cast(object)),
+							object -> DSRecipientSerDes.toDTO((String)object),
 							DSRecipient.class));
 				}
 			}

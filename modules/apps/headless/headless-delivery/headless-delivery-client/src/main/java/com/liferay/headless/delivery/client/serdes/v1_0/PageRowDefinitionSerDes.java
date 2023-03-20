@@ -449,7 +449,7 @@ public class PageRowDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> CustomCSSViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							CustomCSSViewport.class));
 				}
 			}
@@ -466,7 +466,7 @@ public class PageRowDefinitionSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							FragmentViewport.class));
 				}
 			}
@@ -515,8 +515,7 @@ public class PageRowDefinitionSerDes {
 					pageRowDefinition.setRowViewports(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> RowViewportSerDes.toDTO(
-								String.class.cast(object)),
+							object -> RowViewportSerDes.toDTO((String)object),
 							RowViewport.class));
 				}
 			}

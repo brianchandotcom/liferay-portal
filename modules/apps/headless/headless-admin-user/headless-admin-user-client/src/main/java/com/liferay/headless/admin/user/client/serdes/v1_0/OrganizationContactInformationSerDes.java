@@ -259,8 +259,7 @@ public class OrganizationContactInformationSerDes {
 					organizationContactInformation.setEmailAddresses(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> EmailAddressSerDes.toDTO(
-								String.class.cast(object)),
+							object -> EmailAddressSerDes.toDTO((String)object),
 							EmailAddress.class));
 				}
 			}
@@ -269,8 +268,7 @@ public class OrganizationContactInformationSerDes {
 					organizationContactInformation.setPostalAddresses(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PostalAddressSerDes.toDTO(
-								String.class.cast(object)),
+							object -> PostalAddressSerDes.toDTO((String)object),
 							PostalAddress.class));
 				}
 			}
@@ -279,8 +277,7 @@ public class OrganizationContactInformationSerDes {
 					organizationContactInformation.setTelephones(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PhoneSerDes.toDTO(
-								String.class.cast(object)),
+							object -> PhoneSerDes.toDTO((String)object),
 							Phone.class));
 				}
 			}
@@ -289,8 +286,7 @@ public class OrganizationContactInformationSerDes {
 					organizationContactInformation.setWebUrls(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> WebUrlSerDes.toDTO(
-								String.class.cast(object)),
+							object -> WebUrlSerDes.toDTO((String)object),
 							WebUrl.class));
 				}
 			}

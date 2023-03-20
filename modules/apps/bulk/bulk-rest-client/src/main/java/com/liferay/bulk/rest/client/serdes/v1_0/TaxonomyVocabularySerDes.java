@@ -236,7 +236,7 @@ public class TaxonomyVocabularySerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategorySerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							TaxonomyCategory.class));
 				}
 			}

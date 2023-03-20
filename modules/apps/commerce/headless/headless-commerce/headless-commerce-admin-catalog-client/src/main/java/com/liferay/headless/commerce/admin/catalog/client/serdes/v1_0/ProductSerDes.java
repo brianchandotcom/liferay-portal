@@ -1211,8 +1211,7 @@ public class ProductSerDes {
 					product.setAttachments(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AttachmentSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AttachmentSerDes.toDTO((String)object),
 							Attachment.class));
 				}
 			}
@@ -1233,8 +1232,7 @@ public class ProductSerDes {
 					product.setCategories(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CategorySerDes.toDTO(
-								String.class.cast(object)),
+							object -> CategorySerDes.toDTO((String)object),
 							Category.class));
 				}
 			}
@@ -1255,8 +1253,7 @@ public class ProductSerDes {
 					product.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -1313,8 +1310,7 @@ public class ProductSerDes {
 					product.setImages(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AttachmentSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AttachmentSerDes.toDTO((String)object),
 							Attachment.class));
 				}
 			}
@@ -1323,8 +1319,7 @@ public class ProductSerDes {
 					product.setLinkedProducts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> LinkedProductSerDes.toDTO(
-								String.class.cast(object)),
+							object -> LinkedProductSerDes.toDTO((String)object),
 							LinkedProduct.class));
 				}
 			}
@@ -1333,8 +1328,7 @@ public class ProductSerDes {
 					product.setMappedProducts(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> MappedProductSerDes.toDTO(
-								String.class.cast(object)),
+							object -> MappedProductSerDes.toDTO((String)object),
 							MappedProduct.class));
 				}
 			}
@@ -1378,8 +1372,7 @@ public class ProductSerDes {
 					product.setPins(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PinSerDes.toDTO(
-								String.class.cast(object)),
+							object -> PinSerDes.toDTO((String)object),
 							Pin.class));
 				}
 			}
@@ -1399,7 +1392,7 @@ public class ProductSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ProductAccountGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ProductAccountGroup.class));
 				}
 			}
@@ -1417,7 +1410,7 @@ public class ProductSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ProductChannelSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ProductChannel.class));
 				}
 			}
@@ -1441,8 +1434,7 @@ public class ProductSerDes {
 					product.setProductOptions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ProductOptionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ProductOptionSerDes.toDTO((String)object),
 							ProductOption.class));
 				}
 			}
@@ -1454,7 +1446,7 @@ public class ProductSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ProductSpecificationSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ProductSpecification.class));
 				}
 			}
@@ -1480,7 +1472,7 @@ public class ProductSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> RelatedProductSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							RelatedProduct.class));
 				}
 			}
@@ -1509,8 +1501,7 @@ public class ProductSerDes {
 					product.setSkus(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SkuSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SkuSerDes.toDTO((String)object),
 							Sku.class));
 				}
 			}

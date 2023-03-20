@@ -577,7 +577,7 @@ public class PriceModifierSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceModifierCategorySerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceModifierCategory.class));
 				}
 			}
@@ -589,7 +589,7 @@ public class PriceModifierSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceModifierProductGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceModifierProductGroup.class));
 				}
 			}
@@ -601,7 +601,7 @@ public class PriceModifierSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceModifierProductSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceModifierProduct.class));
 				}
 			}

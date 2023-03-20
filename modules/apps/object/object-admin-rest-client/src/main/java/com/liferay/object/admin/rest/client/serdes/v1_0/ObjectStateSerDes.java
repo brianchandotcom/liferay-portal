@@ -186,7 +186,7 @@ public class ObjectStateSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectStateTransitionSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectStateTransition.class));
 				}
 			}

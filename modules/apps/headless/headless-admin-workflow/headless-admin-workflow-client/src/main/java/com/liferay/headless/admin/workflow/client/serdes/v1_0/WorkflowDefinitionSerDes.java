@@ -448,8 +448,7 @@ public class WorkflowDefinitionSerDes {
 					workflowDefinition.setNodes(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> NodeSerDes.toDTO(
-								String.class.cast(object)),
+							object -> NodeSerDes.toDTO((String)object),
 							Node.class));
 				}
 			}
@@ -470,8 +469,7 @@ public class WorkflowDefinitionSerDes {
 					workflowDefinition.setTransitions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> TransitionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> TransitionSerDes.toDTO((String)object),
 							Transition.class));
 				}
 			}

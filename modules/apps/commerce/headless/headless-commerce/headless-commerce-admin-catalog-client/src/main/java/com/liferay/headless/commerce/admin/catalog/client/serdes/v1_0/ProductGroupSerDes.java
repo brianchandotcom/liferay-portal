@@ -270,7 +270,7 @@ public class ProductGroupSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ProductGroupProductSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ProductGroupProduct.class));
 				}
 			}

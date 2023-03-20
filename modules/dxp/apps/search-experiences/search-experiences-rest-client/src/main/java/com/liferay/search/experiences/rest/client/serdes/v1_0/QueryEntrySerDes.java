@@ -217,8 +217,7 @@ public class QueryEntrySerDes {
 					queryEntry.setClauses(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ClauseSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ClauseSerDes.toDTO((String)object),
 							Clause.class));
 				}
 			}
@@ -238,8 +237,7 @@ public class QueryEntrySerDes {
 					queryEntry.setPostFilterClauses(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ClauseSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ClauseSerDes.toDTO((String)object),
 							Clause.class));
 				}
 			}
@@ -248,8 +246,7 @@ public class QueryEntrySerDes {
 					queryEntry.setRescores(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> RescoreSerDes.toDTO(
-								String.class.cast(object)),
+							object -> RescoreSerDes.toDTO((String)object),
 							Rescore.class));
 				}
 			}

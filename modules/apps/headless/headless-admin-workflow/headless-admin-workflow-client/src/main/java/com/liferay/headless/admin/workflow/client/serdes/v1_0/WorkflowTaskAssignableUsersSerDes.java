@@ -156,7 +156,7 @@ public class WorkflowTaskAssignableUsersSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> WorkflowTaskAssignableUserSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							WorkflowTaskAssignableUser.class));
 				}
 			}

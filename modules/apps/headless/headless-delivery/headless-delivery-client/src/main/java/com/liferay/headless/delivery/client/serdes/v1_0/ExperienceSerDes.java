@@ -202,8 +202,7 @@ public class ExperienceSerDes {
 					experience.setSegments(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SegmentSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SegmentSerDes.toDTO((String)object),
 							Segment.class));
 				}
 			}

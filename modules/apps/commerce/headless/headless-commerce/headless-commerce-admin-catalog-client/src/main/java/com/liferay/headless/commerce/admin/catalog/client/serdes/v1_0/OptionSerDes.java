@@ -397,8 +397,7 @@ public class OptionSerDes {
 					option.setOptionValues(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> OptionValueSerDes.toDTO(
-								String.class.cast(object)),
+							object -> OptionValueSerDes.toDTO((String)object),
 							OptionValue.class));
 				}
 			}

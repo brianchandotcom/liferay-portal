@@ -207,8 +207,7 @@ public class WorkflowTaskTransitionSerDes {
 					workflowTaskTransition.setTransitions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> TransitionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> TransitionSerDes.toDTO((String)object),
 							Transition.class));
 				}
 			}

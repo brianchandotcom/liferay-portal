@@ -460,8 +460,7 @@ public class CartItemSerDes {
 					cartItem.setCartItems(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CartItemSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CartItemSerDes.toDTO((String)object),
 							CartItem.class));
 				}
 			}

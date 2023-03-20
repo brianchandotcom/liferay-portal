@@ -798,8 +798,7 @@ public class UserAccountSerDes {
 					userAccount.setAccountBriefs(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AccountBriefSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AccountBriefSerDes.toDTO((String)object),
 							AccountBrief.class));
 				}
 			}
@@ -837,8 +836,7 @@ public class UserAccountSerDes {
 					userAccount.setCustomFields(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> CustomFieldSerDes.toDTO(
-								String.class.cast(object)),
+							object -> CustomFieldSerDes.toDTO((String)object),
 							CustomField.class));
 				}
 			}
@@ -935,7 +933,7 @@ public class UserAccountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> OrganizationBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							OrganizationBrief.class));
 				}
 			}
@@ -954,8 +952,7 @@ public class UserAccountSerDes {
 					userAccount.setRoleBriefs(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> RoleBriefSerDes.toDTO(
-								String.class.cast(object)),
+							object -> RoleBriefSerDes.toDTO((String)object),
 							RoleBrief.class));
 				}
 			}
@@ -964,8 +961,7 @@ public class UserAccountSerDes {
 					userAccount.setSiteBriefs(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> SiteBriefSerDes.toDTO(
-								String.class.cast(object)),
+							object -> SiteBriefSerDes.toDTO((String)object),
 							SiteBrief.class));
 				}
 			}
@@ -984,7 +980,7 @@ public class UserAccountSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> UserGroupBriefSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							UserGroupBrief.class));
 				}
 			}

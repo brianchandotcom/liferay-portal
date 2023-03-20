@@ -326,8 +326,7 @@ public class ListTypeDefinitionSerDes {
 					listTypeDefinition.setListTypeEntries(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ListTypeEntrySerDes.toDTO(
-								String.class.cast(object)),
+							object -> ListTypeEntrySerDes.toDTO((String)object),
 							ListTypeEntry.class));
 				}
 			}

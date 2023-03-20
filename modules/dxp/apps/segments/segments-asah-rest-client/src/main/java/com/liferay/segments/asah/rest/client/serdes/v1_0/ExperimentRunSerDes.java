@@ -183,7 +183,7 @@ public class ExperimentRunSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ExperimentVariantSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ExperimentVariant.class));
 				}
 			}

@@ -245,7 +245,7 @@ public class ObjectLayoutBoxSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectLayoutRowSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectLayoutRow.class));
 				}
 			}

@@ -443,8 +443,7 @@ public class PriceListSerDes {
 					priceList.setPriceEntries(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> PriceEntrySerDes.toDTO(
-								String.class.cast(object)),
+							object -> PriceEntrySerDes.toDTO((String)object),
 							PriceEntry.class));
 				}
 			}
@@ -456,7 +455,7 @@ public class PriceListSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> PriceListAccountGroupSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							PriceListAccountGroup.class));
 				}
 			}

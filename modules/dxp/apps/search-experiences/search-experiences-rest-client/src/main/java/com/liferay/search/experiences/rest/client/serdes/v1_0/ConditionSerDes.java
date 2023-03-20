@@ -255,8 +255,7 @@ public class ConditionSerDes {
 					condition.setAllConditions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ConditionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ConditionSerDes.toDTO((String)object),
 							Condition.class));
 				}
 			}
@@ -265,8 +264,7 @@ public class ConditionSerDes {
 					condition.setAnyConditions(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> ConditionSerDes.toDTO(
-								String.class.cast(object)),
+							object -> ConditionSerDes.toDTO((String)object),
 							Condition.class));
 				}
 			}

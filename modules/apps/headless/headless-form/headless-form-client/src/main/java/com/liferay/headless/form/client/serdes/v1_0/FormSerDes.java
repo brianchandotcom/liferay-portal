@@ -490,8 +490,7 @@ public class FormSerDes {
 					form.setFormRecords(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> FormRecordSerDes.toDTO(
-								String.class.cast(object)),
+							object -> FormRecordSerDes.toDTO((String)object),
 							FormRecord.class));
 				}
 			}

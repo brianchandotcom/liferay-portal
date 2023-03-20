@@ -444,7 +444,7 @@ public class SXPBlueprintSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ElementInstanceSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ElementInstance.class));
 				}
 			}

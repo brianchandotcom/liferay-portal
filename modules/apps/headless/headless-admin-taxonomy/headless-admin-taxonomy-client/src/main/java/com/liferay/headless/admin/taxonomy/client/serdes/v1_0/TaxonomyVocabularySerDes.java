@@ -486,8 +486,7 @@ public class TaxonomyVocabularySerDes {
 					taxonomyVocabulary.setAssetTypes(
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
-							object -> AssetTypeSerDes.toDTO(
-								String.class.cast(object)),
+							object -> AssetTypeSerDes.toDTO((String)object),
 							AssetType.class));
 				}
 			}

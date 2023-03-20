@@ -364,7 +364,7 @@ public class ObjectLayoutSerDes {
 						TransformUtil.transform(
 							(Object[])jsonParserFieldValue,
 							object -> ObjectLayoutTabSerDes.toDTO(
-								String.class.cast(object)),
+								(String)object),
 							ObjectLayoutTab.class));
 				}
 			}

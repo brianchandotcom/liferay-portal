@@ -78,15 +78,16 @@ public class BaseNotificationTypeTest {
 		user1 = TestPropsValues.getUser();
 
 		ListType prefixListType = listTypeLocalService.getListType(
-			"dr", "com.liferay.portal.kernel.model.Contact.prefix");
+			"dr", Contact.class.getName() + ".prefix");
 
 		ListType suffixListType = listTypeLocalService.getListType(
-			"ii", "com.liferay.portal.kernel.model.Contact.suffix");
+			"ii", Contact.class.getName() + ".suffix");
 
 		user2 = userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
-			null, "alfa@liferay.com", user1.getLocale(), "alfa", "bravo",
-			"charlie", prefixListType.getListTypeId(),
+			null, "user2@liferay.com", user1.getLocale(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), prefixListType.getListTypeId(),
 			suffixListType.getListTypeId(), true, Month.FEBRUARY.getValue(), 7,
 			1988, null, null, null, null, null, true, null);
 

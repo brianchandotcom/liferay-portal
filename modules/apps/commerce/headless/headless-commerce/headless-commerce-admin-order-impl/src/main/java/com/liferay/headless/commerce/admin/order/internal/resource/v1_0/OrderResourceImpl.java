@@ -492,49 +492,53 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private String[] _getOrderItemExternalReferenceCodes(
 		OrderItem[] orderItems) {
 
-		Set<String> strings = new HashSet<>();
+		Set<String> orderItemExternalReferenceCodes = new HashSet<>();
 
 		for (OrderItem orderItem : orderItems) {
 			String externalReferenceCode = orderItem.getExternalReferenceCode();
 
 			if (Objects.nonNull(externalReferenceCode)) {
-				strings.add(externalReferenceCode);
+				orderItemExternalReferenceCodes.add(externalReferenceCode);
 			}
 		}
 
-		if (strings.isEmpty()) {
+		if (orderItemExternalReferenceCodes.isEmpty()) {
 			return null;
 		}
 
-		return transformToArray(strings, string -> string, String.class);
+		return transformToArray(
+			orderItemExternalReferenceCodes,
+			orderItemExternalReferenceCode -> orderItemExternalReferenceCode,
+			String.class);
 	}
 
 	private Long[] _getOrderItemIds(OrderItem[] orderItems) {
-		Set<Long> longs = new HashSet<>();
+		Set<Long> orderItemIds = new HashSet<>();
 
 		for (OrderItem orderItem : orderItems) {
 			Long id = orderItem.getId();
 
 			if (Objects.nonNull(id)) {
-				longs.add(id);
+				orderItemIds.add(id);
 			}
 		}
 
-		if (longs.isEmpty()) {
+		if (orderItemIds.isEmpty()) {
 			return new Long[] {0L};
 		}
 
-		return transformToArray(longs, id -> id, Long.class);
+		return transformToArray(
+			orderItemIds, orderItemId -> orderItemId, Long.class);
 	}
 
 	private String _getVersion(UriInfo uriInfo) {
 		List<String> matchedURIs = uriInfo.getMatchedURIs();
 
-		if (!matchedURIs.isEmpty()) {
-			return matchedURIs.get(matchedURIs.size() - 1);
+		if (matchedURIs.isEmpty()) {
+			return "";
 		}
 
-		return "";
+		return matchedURIs.get(matchedURIs.size() - 1);
 	}
 
 	private CommerceOrder _updateNestedResources(

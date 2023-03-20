@@ -325,8 +325,8 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private String _getLocation(
-		String filter, ObjectDefinition objectDefinition, Pagination pagination,
-		String search, Sort[] sorts) {
+		String filterString, ObjectDefinition objectDefinition,
+		Pagination pagination, String search, Sort[] sorts) {
 
 		if (Validator.isNotNull(search)) {
 			return HttpComponentsUtil.addParameter(
@@ -334,7 +334,7 @@ public class SalesforceObjectEntryManagerImpl
 				StringBundler.concat(
 					"FIND {", search, "} IN ALL FIELDS RETURNING ",
 					objectDefinition.getExternalReferenceCode(), "(FIELDS(ALL)",
-					filter,
+					filterString,
 					_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 					_getSalesforcePagination(pagination), ")"));
 		}
@@ -343,7 +343,7 @@ public class SalesforceObjectEntryManagerImpl
 			"query", "q",
 			StringBundler.concat(
 				"SELECT FIELDS(ALL) FROM ",
-				objectDefinition.getExternalReferenceCode(), filter,
+				objectDefinition.getExternalReferenceCode(), filterString,
 				_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 				_getSalesforcePagination(pagination)));
 	}
@@ -471,15 +471,15 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private int _getTotalCount(
-		long companyId, String filter, ObjectDefinition objectDefinition,
+		long companyId, String filterString, ObjectDefinition objectDefinition,
 		String scopeKey, String search) {
 
 		if (Validator.isNotNull(search)) {
 			JSONObject responseJSONObject = _salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				_getLocation(
-					filter, objectDefinition, Pagination.of(1, 200), search,
-					null));
+					filterString, objectDefinition, Pagination.of(1, 200),
+					search, null));
 
 			JSONArray jsonArray = responseJSONObject.getJSONArray(
 				"searchRecords");
@@ -493,7 +493,8 @@ public class SalesforceObjectEntryManagerImpl
 				"query", "q",
 				StringBundler.concat(
 					"SELECT COUNT(Id) FROM ",
-					objectDefinition.getExternalReferenceCode(), filter)));
+					objectDefinition.getExternalReferenceCode(),
+					filterString)));
 
 		JSONArray jsonArray = responseJSONObject.getJSONArray("records");
 

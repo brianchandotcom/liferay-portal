@@ -60,21 +60,6 @@ definition {
 		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#ADD_PLUS_BUTTON");
 	}
 
-	macro selectFilterCollection {
-		Click(locator1 = "Portlet#MODAL_TITLE");
-
-		Click(
-			key_fieldLabel = ${fieldLabel},
-			locator1 = "VisualizeObjectDisplayPage#SELECT_CHOOSE_AN_OPTION_FIELD");
-
-		Select(
-			key_fieldLabel = ${fieldLabel},
-			locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM_IN_FILTER_COLLECTION",
-			value1 = ${itemName});
-
-		Button.click(button = "Apply");
-	}
-
 	macro validateObjectContentType {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",

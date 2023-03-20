@@ -172,7 +172,8 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 		Matcher matcher = _objectsEqualsPattern.matcher(content);
 
 		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.end()) ||
+			if ((ToolsUtil.isInsideQuotes(content, matcher.start()) &&
+				 ToolsUtil.isInsideQuotes(content, matcher.end())) ||
 				!isJavaSource(content, matcher.start())) {
 
 				continue;

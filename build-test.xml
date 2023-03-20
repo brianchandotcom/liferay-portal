@@ -7123,7 +7123,7 @@ ${docker.start.error}</fail>
 				</and>
 				<then>
 					<sequential>
-						<property name="db2.wait.script" location="db2_wait.sh" />
+						<property location="db2_wait.sh" name="db2.wait.script" />
 
 						<echo file="${db2.wait.script}">
 							<![CDATA[
@@ -7152,7 +7152,7 @@ ${docker.start.error}</fail>
 						</echo>
 
 						<exec executable="/bin/bash">
-							<arg value="${db2.wait.script}"/>
+							<arg value="${db2.wait.script}" />
 						</exec>
 
 						<delete file="${db2.wait.script}" />

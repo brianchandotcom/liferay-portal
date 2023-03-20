@@ -77,13 +77,13 @@ public class UserModelDocumentContributor
 			document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
 			document.addKeyword(Field.SCOPE_GROUP_ID, activeTransitiveGroupIds);
 			document.addKeyword(Field.STATUS, user.getStatus());
+			document.addKeyword(Field.TYPE, user.getType());
 			document.addKeyword(Field.USER_ID, user.getUserId());
 			document.addKeyword(Field.USER_NAME, user.getFullName(), true);
 			document.addKeyword(
 				"ancestorOrganizationIds",
 				_getAncestorOrganizationIds(user.getOrganizationIds()));
 			document.addDate("birthDate", user.getBirthday());
-			document.addKeyword("defaultUser", user.isDefaultUser());
 			document.addKeyword("emailAddress", user.getEmailAddress());
 			document.addKeyword(
 				"emailAddressDomain",

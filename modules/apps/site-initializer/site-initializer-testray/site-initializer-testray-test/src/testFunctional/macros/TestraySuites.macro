@@ -277,9 +277,9 @@ definition {
 
 	macro verifySuite {
 		AssertElementPresent(
-			key_suiteDescription = ${suiteDescription},
+			key_suiteDescription = ${description},
 			key_suiteName = ${suiteName},
-			key_suiteType = ${suiteType},
+			key_suiteType = ${type},
 			locator1 = "TestraySuites#SUITE_ON_LIST");
 	}
 

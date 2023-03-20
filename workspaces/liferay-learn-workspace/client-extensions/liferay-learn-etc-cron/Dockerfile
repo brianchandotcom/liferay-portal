@@ -1,6 +1,6 @@
 FROM liferay/jdk11-jdk8:latest
 
-COPY liferay_learn_etc_cron_entrypoint.sh *.jar /usr/local/bin
+COPY liferay_learn_etc_cron_entrypoint.sh *.jar /usr/local/bin/
 
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/liferay_learn_etc_cron_entrypoint.sh"]
 

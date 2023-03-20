@@ -264,8 +264,8 @@ public class PullRequest {
 
 			String state = jsonObject.getString("state");
 
-			if (!Objects.equals("failure", state) &&
-				!Objects.equals("success", state)) {
+			if (!Objects.equals(state, "failure") &&
+				!Objects.equals(state, "success")) {
 
 				continue;
 			}
@@ -429,7 +429,7 @@ public class PullRequest {
 			String testSuiteName = matcher.group("testSuiteName");
 
 			if (testSuiteNames.contains(testSuiteName) ||
-				!Objects.equals("success", jsonObject.getString("state"))) {
+				!Objects.equals(jsonObject.getString("state"), "success")) {
 
 				continue;
 			}

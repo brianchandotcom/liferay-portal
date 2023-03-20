@@ -74,7 +74,7 @@ public class ResourceActionsDefinitionTest {
 		for (Bundle bundle : bundleContext.getBundles()) {
 			Dictionary<String, String> headers = bundle.getHeaders("");
 
-			if (Objects.equals("parent", headers.get("Eclipse-BuddyPolicy"))) {
+			if (Objects.equals(headers.get("Eclipse-BuddyPolicy"), "parent")) {
 				continue;
 			}
 

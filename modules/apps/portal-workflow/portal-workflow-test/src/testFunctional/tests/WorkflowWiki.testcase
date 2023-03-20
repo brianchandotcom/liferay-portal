@@ -425,8 +425,6 @@ definition {
 	@description = "This is a test for LRQA-69561. Verify that the Child Page status are displayed correctly on approval."
 	@priority = 2
 	test WikiChildPageStatusOnApprove {
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
@@ -479,8 +477,6 @@ definition {
 	@description = "This is a test for LRQA-69567. Verify that the a rejected Child Page is not displayed on list."
 	@priority = 4
 	test WikiChildPageStatusOnReject {
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");

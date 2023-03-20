@@ -169,11 +169,11 @@ public class DepotAdminDisplayContext {
 	private Group _getGroup(Group group) {
 		Group stagingGroup = group.getStagingGroup();
 
-		if (stagingGroup != null) {
-			return stagingGroup;
+		if (stagingGroup == null) {
+			return group;
 		}
 
-		return group;
+		return stagingGroup;
 	}
 
 	private PortletURL _getPortletURL() {

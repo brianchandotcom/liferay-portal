@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -192,7 +190,7 @@ public class SalesforceObjectEntryManagerImpl
 
 		return _getObjectEntries(
 			companyId, objectDefinition, scopeKey, dtoConverterContext,
-			pagination, null, search, sorts);
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -203,26 +201,9 @@ public class SalesforceObjectEntryManagerImpl
 			Sort[] sorts)
 		throws Exception {
 
-		String filterString = null;
-
-		if (_isPermissionEnabled(companyId, objectDefinition, scopeKey) &&
-			objectDefinition.isAccountEntryRestricted()) {
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-			filterString = StringBundler.concat(
-				objectField.getExternalReferenceCode(), " IN ('",
-				StringUtil.merge(
-					_fetchAccountExternalReferenceCodeEntries(
-						dtoConverterContext.getUserId()),
-					", '"),
-				"')");
-		}
-
 		return _getObjectEntries(
 			companyId, objectDefinition, scopeKey, dtoConverterContext,
-			pagination, filterString, search, sorts);
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -235,7 +216,7 @@ public class SalesforceObjectEntryManagerImpl
 
 		return _getObjectEntries(
 			companyId, objectDefinition, scopeKey, dtoConverterContext,
-			pagination, null, search, sorts);
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -297,10 +278,10 @@ public class SalesforceObjectEntryManagerImpl
 		return null;
 	}
 
-	private List<String> _fetchAccountExternalReferenceCodeEntries(long userId)
+	private List<String> _getAccountsExternalReferenceCodeByUserId(long userId)
 		throws Exception {
 
-		List<String> accountExternalReferenceCodeEntries = new ArrayList<>();
+		List<String> accountsExternalReferenceCode = new ArrayList<>();
 
 		for (AccountEntryUserRel accountEntryUserRel :
 				_accountEntryUserRelLocalService.
@@ -308,28 +289,43 @@ public class SalesforceObjectEntryManagerImpl
 
 			AccountEntry accountEntry = accountEntryUserRel.getAccountEntry();
 
-			accountExternalReferenceCodeEntries.add(
+			accountsExternalReferenceCode.add(
 				accountEntry.getExternalReferenceCode());
 		}
 
-		return accountExternalReferenceCodeEntries;
+		return accountsExternalReferenceCode;
 	}
 
 	private DateFormat _getDateFormat() {
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
-	private String _getFilters(String filterString) {
-		if (filterString == null) {
+	private String _getFilter(
+			long companyId, DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, String scopeKey)
+		throws Exception {
+
+		if (!_isPermissionEnabled(companyId, objectDefinition, scopeKey) ||
+			!objectDefinition.isAccountEntryRestricted()) {
+
 			return StringPool.BLANK;
 		}
 
-		return " WHERE " + filterString;
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+		return StringBundler.concat(
+			" WHERE ", objectField.getExternalReferenceCode(), " IN ('",
+			StringUtil.merge(
+				_getAccountsExternalReferenceCodeByUserId(
+					dtoConverterContext.getUserId()),
+				", '"),
+			"')");
 	}
 
 	private String _getLocation(
-		ObjectDefinition objectDefinition, Pagination pagination,
-		String filterString, String search, Sort[] sorts) {
+		String filter, ObjectDefinition objectDefinition, Pagination pagination,
+		String search, Sort[] sorts) {
 
 		if (Validator.isNotNull(search)) {
 			return HttpComponentsUtil.addParameter(
@@ -337,7 +333,7 @@ public class SalesforceObjectEntryManagerImpl
 				StringBundler.concat(
 					"FIND {", search, "} IN ALL FIELDS RETURNING ",
 					objectDefinition.getExternalReferenceCode(), "(FIELDS(ALL)",
-					_getFilters(filterString),
+					filter,
 					_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 					_getSalesforcePagination(pagination), ")"));
 		}
@@ -346,8 +342,7 @@ public class SalesforceObjectEntryManagerImpl
 			"query", "q",
 			StringBundler.concat(
 				"SELECT FIELDS(ALL) FROM ",
-				objectDefinition.getExternalReferenceCode(),
-				_getFilters(filterString),
+				objectDefinition.getExternalReferenceCode(), filter,
 				_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 				_getSalesforcePagination(pagination)));
 	}
@@ -355,13 +350,15 @@ public class SalesforceObjectEntryManagerImpl
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			DTOConverterContext dtoConverterContext, Pagination pagination,
-			String filterString, String search, Sort[] sorts)
+			String search, Sort[] sorts)
 		throws Exception {
 
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
-				objectDefinition, pagination, filterString, search, sorts));
+				_getFilter(
+					companyId, dtoConverterContext, objectDefinition, scopeKey),
+				objectDefinition, pagination, search, sorts));
 
 		if ((responseJSONObject == null) ||
 			(responseJSONObject.length() == 0)) {
@@ -378,7 +375,10 @@ public class SalesforceObjectEntryManagerImpl
 				companyId, dtoConverterContext, jsonArray, objectDefinition),
 			pagination,
 			_getTotalCount(
-				companyId, objectDefinition, scopeKey, filterString, search));
+				companyId,
+				_getFilter(
+					companyId, dtoConverterContext, objectDefinition, scopeKey),
+				objectDefinition, scopeKey, search));
 	}
 
 	private ObjectField _getObjectFieldByExternalReferenceCode(
@@ -470,15 +470,15 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private int _getTotalCount(
-		long companyId, ObjectDefinition objectDefinition, String scopeKey,
-		String filterString, String search) {
+		long companyId, String filter, ObjectDefinition objectDefinition,
+		String scopeKey, String search) {
 
 		if (Validator.isNotNull(search)) {
 			JSONObject responseJSONObject = _salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				_getLocation(
-					objectDefinition, Pagination.of(1, 200), filterString,
-					search, null));
+					filter, objectDefinition, Pagination.of(1, 200), search,
+					null));
 
 			JSONArray jsonArray = responseJSONObject.getJSONArray(
 				"searchRecords");
@@ -492,8 +492,7 @@ public class SalesforceObjectEntryManagerImpl
 				"query", "q",
 				StringBundler.concat(
 					"SELECT COUNT(Id) FROM ",
-					objectDefinition.getExternalReferenceCode(),
-					_getFilters(filterString))));
+					objectDefinition.getExternalReferenceCode(), filter)));
 
 		JSONArray jsonArray = responseJSONObject.getJSONArray("records");
 
@@ -507,11 +506,7 @@ public class SalesforceObjectEntryManagerImpl
 	private boolean _isPermissionEnabled(
 		long companyId, ObjectDefinition objectDefinition, String scopeKey) {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker != null) &&
-			_inlineSQLHelper.isEnabled(
+		if (_inlineSQLHelper.isEnabled(
 				companyId, getGroupId(objectDefinition, scopeKey))) {
 
 			return true;

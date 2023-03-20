@@ -291,6 +291,8 @@ public class PortalUpgradeProcessRegistryImpl
 				"UserGroupRole", "roleId", "LONG null"),
 			//
 			new UpgradeUsersUserGroups());
+
+		upgradeVersionTreeMap.put(new Version(26, 0, 0), new UpgradeUserType());
 	}
 
 }

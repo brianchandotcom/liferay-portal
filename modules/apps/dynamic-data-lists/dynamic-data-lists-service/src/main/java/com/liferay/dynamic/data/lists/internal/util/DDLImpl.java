@@ -91,11 +91,12 @@ public class DDLImpl implements DDL {
 			recordVersion = record.getLatestRecordVersion();
 		}
 
-		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			ddmStructure,
-			_storageEngine.getDDMFormValues(recordVersion.getDDMStorageId()));
+		for (Field field :
+				_ddmFormValuesToFieldsConverter.convert(
+					ddmStructure,
+					_storageEngine.getDDMFormValues(
+						recordVersion.getDDMStorageId()))) {
 
-		for (Field field : fields) {
 			Object[] fieldValues = _getFieldValues(field, locale);
 
 			if (fieldValues.length == 0) {
@@ -110,9 +111,7 @@ public class DDLImpl implements DDL {
 					"title",
 					StringUtil.merge(
 						TransformUtil.transformToList(
-							fieldValues,
-							fieldValue -> _getDocumentLibraryFieldValue(
-								fieldValue)),
+							fieldValues, this::_getDocumentLibraryFieldValue),
 						StringPool.COMMA_AND_SPACE));
 
 				jsonObject.put(fieldName, fieldJSONObject.toString());
@@ -174,9 +173,7 @@ public class DDLImpl implements DDL {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
+		for (DDMFormField ddmFormField : ddmStructure.getDDMFormFields(false)) {
 			jsonArray.put(
 				JSONUtil.put(
 					"dataType", ddmFormField.getDataType()
@@ -208,16 +205,9 @@ public class DDLImpl implements DDL {
 			List<DDLRecord> records, boolean latestRecordVersion, Locale locale)
 		throws Exception {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (DDLRecord record : records) {
-			JSONObject jsonObject = getRecordJSONObject(
-				record, latestRecordVersion, locale);
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
+		return JSONUtil.toJSONArray(
+			records,
+			record -> getRecordJSONObject(record, latestRecordVersion, locale));
 	}
 
 	@Override

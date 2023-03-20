@@ -1,0 +1,41 @@
+[
+	{
+		"dataType": 5,
+		"defaultValue": 1.5,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Test Expando Column 1"
+	},
+	{
+		"dataType": 15,
+		"defaultValue": "Test Default Value Update",
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Test Expando Column 2",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "Test Expando Column 3",
+		"properties": {
+			"hidden": true,
+			"indexType": 2,
+			"localizeFieldName": true,
+			"secret": true,
+			"visibleWithUpdatePermission": true,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 1,
+		"defaultValue": true,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "Test Expando Column 4"
+	}
+]

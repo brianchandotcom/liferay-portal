@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,7 +45,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -111,10 +111,8 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	protected String formatDate(
 		Date date, DateTimeFormatter dateTimeFormatter) {
 
-		LocalDateTime localDateTime = LocalDateTime.ofInstant(
-			date.toInstant(), ZoneId.systemDefault());
-
-		return dateTimeFormatter.format(localDateTime);
+		return dateTimeFormatter.format(
+			LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 	}
 
 	protected DateTimeFormatter getDateTimeFormatter() {
@@ -136,12 +134,18 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	protected Map<String, DDMFormField> getDistinctFields(long recordSetId)
 		throws Exception {
 
-		List<DDMStructureVersion> ddmStructureVersions = _getStructureVersions(
-			recordSetId);
-
 		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();
 
-		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
+		DDLRecordSetVersionService ddlRecordSetVersionService =
+			getDDLRecordSetVersionService();
+
+		for (DDMStructureVersion ddmStructureVersion :
+				TransformUtil.transform(
+					ddlRecordSetVersionService.getRecordSetVersions(
+						recordSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						null),
+					DDLRecordSetVersion::getDDMStructureVersion)) {
+
 			DDMForm ddmForm = ddmStructureVersion.getDDMForm();
 
 			ddmFormFields.putAll(ddmForm.getDDMFormFieldsMap(true));
@@ -240,10 +244,10 @@ public abstract class BaseDDLExporter implements DDLExporter {
 					ddmFormFieldValueRendererRegistry.
 						getDDMFormFieldValueRenderer(ddmFormField.getType());
 
-			String ddmFormFieldType =
-				ddmFormFieldValueRenderer.getSupportedDDMFormFieldType();
+			if (Objects.equals(
+					DDMFormFieldType.TEXT_HTML,
+					ddmFormFieldValueRenderer.getSupportedDDMFormFieldType())) {
 
-			if (Objects.equals(DDMFormFieldType.TEXT_HTML, ddmFormFieldType)) {
 				Value value = ddmFormFieldValue.getValue();
 
 				valueString = HtmlUtil.escape(value.getString(getLocale()));
@@ -258,25 +262,6 @@ public abstract class BaseDDLExporter implements DDLExporter {
 
 		return new DDMFormFieldRenderedValue(
 			ddmFormField.getName(), ddmFormField.getLabel(), valueString);
-	}
-
-	private List<DDMStructureVersion> _getStructureVersions(long recordSetId)
-		throws Exception {
-
-		DDLRecordSetVersionService ddlRecordSetVersionService =
-			getDDLRecordSetVersionService();
-
-		List<DDLRecordSetVersion> recordSetVersions =
-			ddlRecordSetVersionService.getRecordSetVersions(
-				recordSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
-
-		for (DDLRecordSetVersion recordSetVersion : recordSetVersions) {
-			ddmStructureVersions.add(recordSetVersion.getDDMStructureVersion());
-		}
-
-		return ddmStructureVersions;
 	}
 
 	private Locale _locale;

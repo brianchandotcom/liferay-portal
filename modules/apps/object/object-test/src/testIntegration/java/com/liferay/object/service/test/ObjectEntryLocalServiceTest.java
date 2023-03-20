@@ -35,6 +35,7 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -849,6 +850,43 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		Assert.assertNotNull(objectEntry);
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Error"),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"numberOfBooksWritten > externalReferenceCode");
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"birthday", "2000-12-25"
+				).put(
+					"emailAddressRequired", "bob@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"numberOfBooksWritten", "123"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
+
+			Assert.assertTrue(
+				throwable instanceof
+					ObjectValidationRuleEngineException.InvalidScript);
+
+			String message =
+				((ObjectValidationRuleEngineException.InvalidScript)throwable).
+					getMessageKey();
+
+			Assert.assertTrue(
+				message.contains("there-was-an-error-validating-your-data"));
+		}
 	}
 
 	@Test

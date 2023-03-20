@@ -26,16 +26,19 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Wiki Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Page");
 
-		PagesAdmin.addPage(pageName = "Wiki Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Wiki Page");
-
-		Portlet.addPG(portletName = "Wiki");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Page",
+			widgetName = "Wiki");
 	}
 
 	tearDown {

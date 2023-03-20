@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -152,7 +153,8 @@ public class BaseNotificationTypeTest {
 		List<Object> expectedValues, List<String> termValues) {
 
 		for (int i = 0; i < termValues.size(); i++) {
-			Assert.assertEquals(expectedValues.get(i), termValues.get(i));
+			Assert.assertEquals(
+				String.valueOf(expectedValues.get(i)), termValues.get(i));
 		}
 	}
 
@@ -251,7 +253,7 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected HashMap<String, Serializable> randomObjectEntry() {
-		return HashMapBuilder.<String, Serializable>put(
+		return LinkedHashMapBuilder.<String, Serializable>put(
 			"booleanObjectField", RandomTestUtil.randomBoolean()
 		).put(
 			"dateObjectField", RandomTestUtil.nextDate()

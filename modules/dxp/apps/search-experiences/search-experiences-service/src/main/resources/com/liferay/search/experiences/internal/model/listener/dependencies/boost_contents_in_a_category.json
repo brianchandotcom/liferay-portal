@@ -30,7 +30,7 @@
 				{
 					"fields": [
 						{
-							"label": "asset-category-ids",
+							"label": "asset-category-name-ids",
 							"name": "asset_category_ids",
 							"type": "multiselect"
 						},

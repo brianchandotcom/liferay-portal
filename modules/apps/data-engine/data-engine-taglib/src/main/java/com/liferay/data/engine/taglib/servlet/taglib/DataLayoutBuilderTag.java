@@ -18,6 +18,7 @@ import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTag
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +35,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -97,7 +97,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		setNamespacedAttribute(
 			httpServletRequest, "availableLanguageIds",
-			_getLanguageIds(availableLocales));
+			TransformUtil.transformToArray(
+				availableLocales, LanguageUtil::getLanguageId, String.class));
 		setNamespacedAttribute(
 			httpServletRequest, "availableLocales",
 			availableLocales.toArray(new Locale[0]));
@@ -145,16 +146,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 
 		return ddmStructure.getDefaultLanguageId();
-	}
-
-	private String[] _getLanguageIds(Set<Locale> locales) {
-		Stream<Locale> stream = locales.stream();
-
-		return stream.map(
-			LanguageUtil::getLanguageId
-		).toArray(
-			String[]::new
-		);
 	}
 
 	private String _getModule() {

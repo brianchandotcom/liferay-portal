@@ -1,0 +1,3 @@
+Bundle-Name: OSB Testray REST Implementation
+Bundle-SymbolicName: com.liferay.osb.testray.rest.impl
+Bundle-Version: 1.0.0

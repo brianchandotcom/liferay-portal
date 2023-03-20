@@ -1,0 +1,9 @@
+dependencies {
+	compile project(":modules:osb-testray-rest:osb-testray-rest-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+
+	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.222"
+}
+
+group = "com.liferay.osb.testray.rest"

@@ -124,7 +124,104 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		return notificationContext;
 	}
 
-	private void _testRelevantUserTermValues(
+	private void _testSendNotification(
+			long expectedUserNotificationEventsCount,
+			List<NotificationRecipientSetting> notificationRecipientSettings,
+			String recipientType)
+		throws Exception {
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 0,
+			notificationQueueEntries.size());
+
+		Map<String, Serializable> objectEntryValues = randomObjectEntry();
+
+		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
+			user1.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			objectEntryValues, ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			0,
+			userNotificationEventLocalService.getUserNotificationEventsCount(
+				user1.getUserId()));
+
+		sendNotification(
+			new NotificationContextBuilder(
+			).className(
+				objectDefinition.getClassName()
+			).classPK(
+				objectEntry.getObjectEntryId()
+			).notificationTemplate(
+				notificationTemplateLocalService.addNotificationTemplate(
+					_createNotificationContext(
+						notificationRecipientSettings, recipientType,
+						objectEntryTermNames()))
+			).termValues(
+				HashMapBuilder.<String, Object>put(
+					"creator", user1.getUserId()
+				).put(
+					"currentUserId", user1.getUserId()
+				).putAll(
+					objectEntryValues
+				).build()
+			).userId(
+				user1.getUserId()
+			).build(),
+			NotificationConstants.TYPE_USER_NOTIFICATION);
+
+		notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			expectedUserNotificationEventsCount,
+			userNotificationEventLocalService.getUserNotificationEventsCount(
+				user1.getUserId()));
+
+		userNotificationEventLocalService.deleteUserNotificationEvents(
+			user1.getUserId());
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		notificationQueueEntry = notificationQueueEntries.get(0);
+
+		assertTerms(
+			ListUtil.fromMapValues(objectEntryValues),
+			ListUtil.fromString(
+				notificationQueueEntry.getSubject(), StringPool.COMMA));
+
+		NotificationRecipient notificationRecipient =
+			notificationQueueEntry.getNotificationRecipient();
+
+		notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (NotificationRecipientSetting notificationRecipientSetting :
+				notificationRecipient.getNotificationRecipientSettings()) {
+
+			Assert.assertEquals(
+				"userFullName", notificationRecipientSetting.getName());
+			Assert.assertEquals(
+				"Test Test", notificationRecipientSetting.getValue());
+		}
+
+		_testUserTermValues(
+			notificationQueueEntries, notificationRecipientSettings,
+			recipientType, getAuthorValues());
+
+		_testUserTermValues(
+			notificationQueueEntries, notificationRecipientSettings,
+			recipientType, getCurrentUserValues());
+	}
+
+	private void _testUserTermValues(
 			List<NotificationQueueEntry> notificationQueueEntries,
 			List<NotificationRecipientSetting> notificationRecipientSettings,
 			String recipientType, HashMap<String, Object> values)
@@ -172,105 +269,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				StringUtil.removeSubstring(
 					notificationQueueEntry.getSubject(), "Subject "),
 				StringPool.BLANK));
-	}
-
-	private void _testSendNotification(
-			long expectedUserNotificationEventsCount,
-			List<NotificationRecipientSetting> notificationRecipientSettings,
-			String recipientType)
-		throws Exception {
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationQueueEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 0,
-			notificationQueueEntries.size());
-
-		Map<String, Serializable> objectEntryValues = getObjectEntryValues();
-
-		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
-			user1.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			objectEntryValues, ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			0,
-			userNotificationEventLocalService.getUserNotificationEventsCount(
-				user1.getUserId()));
-
-		sendNotification(
-			new NotificationContextBuilder(
-			).className(
-				objectDefinition.getClassName()
-			).classPK(
-				objectEntry.getObjectEntryId()
-			).notificationTemplate(
-				notificationTemplateLocalService.addNotificationTemplate(
-					_createNotificationContext(
-						notificationRecipientSettings, recipientType,
-						ListUtil.fromMapKeys(objectEntryValues)))
-			).termValues(
-				HashMapBuilder.<String, Object>put(
-					"creator", user1.getUserId()
-				).put(
-					"currentUserId", user1.getUserId()
-				).putAll(
-					objectEntryValues
-				).build()
-			).userId(
-				user1.getUserId()
-			).build(),
-			NotificationConstants.TYPE_USER_NOTIFICATION);
-
-		notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationQueueEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			expectedUserNotificationEventsCount,
-			userNotificationEventLocalService.getUserNotificationEventsCount(
-				user1.getUserId()));
-
-		userNotificationEventLocalService.deleteUserNotificationEvents(
-			user1.getUserId());
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		notificationQueueEntry = notificationQueueEntries.get(0);
-
-		assertTerms(
-			ListUtil.fromMapValues(objectEntryValues),
-			ListUtil.fromString(
-				StringUtil.removeSubstring(
-					notificationQueueEntry.getSubject(), "Subject "),
-				StringPool.BLANK));
-
-		NotificationRecipient notificationRecipient =
-			notificationQueueEntry.getNotificationRecipient();
-
-		notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationQueueEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (NotificationRecipientSetting notificationRecipientSetting :
-				notificationRecipient.getNotificationRecipientSettings()) {
-
-			Assert.assertEquals(
-				"userFullName", notificationRecipientSetting.getName());
-			Assert.assertEquals(
-				"Test Test", notificationRecipientSetting.getValue());
-		}
-
-		_testRelevantUserTermValues(
-			notificationQueueEntries, notificationRecipientSettings,
-			recipientType, getAuthorValues());
-
-		_testRelevantUserTermValues(
-			notificationQueueEntries, notificationRecipientSettings,
-			recipientType, getCurrentUserValues());
 	}
 
 }

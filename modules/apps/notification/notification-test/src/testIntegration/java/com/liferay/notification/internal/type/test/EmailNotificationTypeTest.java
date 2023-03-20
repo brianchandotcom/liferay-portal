@@ -126,7 +126,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertEquals(
 			"test@liferay.com", notificationRecipientSettingsMap.get("to"));
 
-		_testObjectDefinitionTermEvaluator(getObjectEntryValues());
+		_testObjectDefinitionTermEvaluator(randomObjectEntry());
 	}
 
 	private NotificationContext _createNotificationContext(
@@ -195,7 +195,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			).notificationTemplate(
 				notificationTemplateLocalService.addNotificationTemplate(
 					_createNotificationContext(
-						ListUtil.fromMapKeys(objectEntryValues),
+						objectEntryTermNames(),
 						getTerm("AUTHOR_EMAIL_ADDRESS")))
 			).termValues(
 				HashMapBuilder.<String, Object>put(

@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -247,22 +248,28 @@ public class BaseNotificationTypeTest {
 		return listType.getName();
 	}
 
-	protected HashMap<String, Serializable> getObjectEntryValues() {
-		return HashMapBuilder.<String, Serializable>put(
-			getTerm("booleanObjectField"), RandomTestUtil.randomBoolean()
-		).put(
-			getTerm("dateObjectField"), RandomTestUtil.nextDate()
-		).put(
-			getTerm("integerObjectField"), RandomTestUtil.nextInt()
-		).put(
-			getTerm("textObjectField"), RandomTestUtil.randomString()
-		).build();
-	}
-
 	protected String getTerm(String objectFieldName) {
 		return StringBundler.concat(
 			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
 			StringUtil.upperCase(objectFieldName), "%]");
+	}
+
+	protected List<String> objectEntryTermNames() {
+		return ListUtil.fromArray(
+			getTerm("booleanObjectField"), getTerm("dateObjectField"),
+			getTerm("integerObjectField"), getTerm("textObjectField"));
+	}
+
+	protected HashMap<String, Serializable> randomObjectEntry() {
+		return HashMapBuilder.<String, Serializable>put(
+			"booleanObjectField", RandomTestUtil.randomBoolean()
+		).put(
+			"dateObjectField", RandomTestUtil.nextDate()
+		).put(
+			"integerObjectField", RandomTestUtil.nextInt()
+		).put(
+			"textObjectField", RandomTestUtil.randomString()
+		).build();
 	}
 
 	protected void sendNotification(

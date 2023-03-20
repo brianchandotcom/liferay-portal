@@ -32,8 +32,9 @@ export default function getDTOFromMDFRequestActivity(
 		currency: mdfRequestActivity.currency,
 		...newMDFRequestActivity,
 		externalReferenceCodeSF,
-		leadFollowUpStrategies:
-			activityDescription?.leadFollowUpStrategies?.join(', '),
+		leadFollowUpStrategies: activityDescription?.leadFollowUpStrategies?.join(
+			', '
+		),
 		mdfRequestExternalReferenceCodeSF,
 		r_accToActs_accountEntryId: company?.id,
 		r_mdfReqToActs_c_mdfRequestId: mdfRequestId,

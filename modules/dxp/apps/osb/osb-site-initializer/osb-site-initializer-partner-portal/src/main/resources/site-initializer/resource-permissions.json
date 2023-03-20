@@ -34,31 +34,41 @@
 		"scope": "4"
 	},
 	{
-		"actionIds": "VIEW",
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.portal.kernel.model.Role",
 		"roleName": "Channel General Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": "VIEW",
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.portal.kernel.model.Role",
 		"roleName": "Channel Account Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": "VIEW",
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.portal.kernel.model.Role",
 		"roleName": "Channel Regional Marketing Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": "VIEW",
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.portal.kernel.model.Role",
 		"roleName": "Channel Global Marketing Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": "VIEW",
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.portal.kernel.model.Role",
 		"roleName": "Channel Finance Manager",
 		"scope": "1"

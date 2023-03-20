@@ -59,7 +59,10 @@ definition {
 			caseName = ${caseName},
 			caseTypeId = ${caseTypeId},
 			componentId = ${componentId},
-			projectId = ${projectId});
+			description = ${description},
+			priority = ${priority},
+			projectId = ${projectId},
+			steps = ${steps});
 	}
 
 	macro addCaseType {

@@ -17,8 +17,8 @@ export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
 	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
-	mdfRequestExternalReferenceCodeSF?: string,
-	externalReferenceCodeSF?: string
+	externalReferenceCodeSF?: string,
+	mdfRequestExternalReferenceCodeSF?: string
 ): MDFRequestActivityDTO {
 	const activityDescription = {...mdfRequestActivity.activityDescription};
 

@@ -14,6 +14,7 @@ import LiferayAccountBrief from '../../../common/interfaces/liferayAccountBrief'
 import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
+import updateMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/updateMDFRequestActivitiesSF';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 
 export default async function createMDFRequestActivitiesProxyAPI(
@@ -22,13 +23,28 @@ export default async function createMDFRequestActivitiesProxyAPI(
 	mdfRequestId?: number,
 	mdFRequestExternalReferenceCodeSF?: string
 ) {
-	const dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
-		ResourceName.ACTIVITY_SALESFORCE,
-		mdfRequestActivity,
-		company,
-		mdfRequestId,
-		mdFRequestExternalReferenceCodeSF
-	);
+	let dtoMDFRequestActivitySFResponse:
+		| MDFRequestActivityDTO
+		| undefined = undefined;
+
+	if (mdfRequestActivity.externalReferenceCodeSF) {
+		dtoMDFRequestActivitySFResponse = await updateMDFRequestActivitiesSF(
+			ResourceName.ACTIVITY_SALESFORCE,
+			mdfRequestActivity,
+			company,
+			mdfRequestId,
+			mdfRequestActivity.externalReferenceCodeSF
+		);
+	}
+	else {
+		dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
+			ResourceName.ACTIVITY_SALESFORCE,
+			mdfRequestActivity,
+			company,
+			mdfRequestId,
+			mdFRequestExternalReferenceCodeSF
+		);
+	}
 
 	let dtoMDFRequestResponse: MDFRequestActivityDTO | undefined = undefined;
 
@@ -39,8 +55,8 @@ export default async function createMDFRequestActivitiesProxyAPI(
 				mdfRequestActivity,
 				company,
 				mdfRequestId,
-				mdFRequestExternalReferenceCodeSF,
-				dtoMDFRequestActivitySFResponse.externalReferenceCode
+				dtoMDFRequestActivitySFResponse.externalReferenceCode,
+				mdFRequestExternalReferenceCodeSF
 			);
 		}
 		else {

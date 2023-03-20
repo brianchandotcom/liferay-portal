@@ -17,23 +17,21 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
 
-export default async function createMDFRequestActivities(
+export default async function updateMDFRequestActivitiesSF(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
 	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
-	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string
 ) {
-	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
+	return await liferayFetcher.put(
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCodeSF}`,
 		Liferay.authToken,
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,
 			company,
 			mdfRequestId,
-			externalReferenceCodeSF,
-			mdfRequestExternalReferenceCodeSF
+			externalReferenceCodeSF
 		)
 	);
 }

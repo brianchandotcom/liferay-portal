@@ -14,12 +14,24 @@ import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
+import updateMDFRequestSF from '../../../common/services/liferay/object/mdf-requests/updateMDFRequestSF';
 
 export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
-	const dtoMDFRequestSFResponse = await createMDFRequest(
-		ResourceName.MDF_REQUEST_SALESFORCE,
-		mdfRequest
-	);
+	let dtoMDFRequestSFResponse: MDFRequestDTO | undefined = undefined;
+
+	if (mdfRequest.externalReferenceCodeSF) {
+		dtoMDFRequestSFResponse = await updateMDFRequestSF(
+			ResourceName.MDF_REQUEST_SALESFORCE,
+			mdfRequest,
+			mdfRequest.externalReferenceCodeSF
+		);
+	}
+	else {
+		dtoMDFRequestSFResponse = await createMDFRequest(
+			ResourceName.MDF_REQUEST_SALESFORCE,
+			mdfRequest
+		);
+	}
 
 	let dtoMDFRequestResponse: MDFRequestDTO | undefined = undefined;
 

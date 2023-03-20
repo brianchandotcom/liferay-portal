@@ -132,7 +132,7 @@ public class AntiTimeDriftDataSourceWrapper extends DataSourceWrapper {
 					SQLException sqlException = (SQLException)throwable1;
 
 					if ((sqlException.getErrorCode() == -204) &&
-						Objects.equals("42704", sqlException.getSQLState()) &&
+						Objects.equals(sqlException.getSQLState(), "42704") &&
 						_checkTimeDrift()) {
 
 						if (_log.isDebugEnabled()) {

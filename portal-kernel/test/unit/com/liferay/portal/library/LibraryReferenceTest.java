@@ -354,7 +354,7 @@ public class LibraryReferenceTest {
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Element element = (Element)nodeList.item(i);
 
-				if (Objects.equals("module", element.getAttribute("type"))) {
+				if (Objects.equals(element.getAttribute("type"), "module")) {
 					intelliJModuleSourceModules.add(
 						element.getAttribute("module-name"));
 				}
@@ -544,10 +544,10 @@ public class LibraryReferenceTest {
 			for (int j = 0; j < childNodeList.getLength(); j++) {
 				Node childNode = childNodeList.item(j);
 
-				if (Objects.equals("file-name", childNode.getNodeName())) {
+				if (Objects.equals(childNode.getNodeName(), "file-name")) {
 					jar = childNode.getTextContent();
 				}
-				else if (Objects.equals("version", childNode.getNodeName())) {
+				else if (Objects.equals(childNode.getNodeName(), "version")) {
 					version = childNode.getTextContent();
 				}
 			}

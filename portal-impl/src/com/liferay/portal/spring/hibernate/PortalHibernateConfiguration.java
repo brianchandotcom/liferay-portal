@@ -293,7 +293,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	private File _getCacheFile(URL url) {
 		long bundleId = 0;
 
-		if (Objects.equals("bundleresource", url.getProtocol())) {
+		if (Objects.equals(url.getProtocol(), "bundleresource")) {
 			String host = url.getHost();
 
 			int index = host.indexOf(CharPool.PERIOD);

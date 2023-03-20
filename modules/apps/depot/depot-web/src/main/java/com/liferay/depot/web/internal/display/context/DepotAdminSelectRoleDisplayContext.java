@@ -62,8 +62,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -402,20 +400,16 @@ public class DepotAdminSelectRoleDisplayContext {
 			if (permissionChecker.isCompanyAdmin() ||
 				permissionChecker.isGroupOwner(_group.getGroupId())) {
 
-				Stream<Role> stream = roles.stream();
-
-				return stream.filter(
+				return ListUtil.filter(
+					roles,
 					role ->
 						!Objects.equals(
-							role.getName(),
 							DepotRolesConstants.
-								ASSET_LIBRARY_CONNECTED_SITE_MEMBER) &&
+								ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+							role.getName()) &&
 						!Objects.equals(
-							role.getName(),
-							DepotRolesConstants.ASSET_LIBRARY_MEMBER)
-				).collect(
-					Collectors.toList()
-				);
+							DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+							role.getName()));
 			}
 
 			if (!GroupPermissionUtil.contains(
@@ -424,29 +418,24 @@ public class DepotAdminSelectRoleDisplayContext {
 				return Collections.emptyList();
 			}
 
-			Stream<Role> stream = roles.stream();
-
-			return stream.filter(
+			return ListUtil.filter(
+				roles,
 				role ->
 					!Objects.equals(
-						role.getName(),
-						DepotRolesConstants.
-							ASSET_LIBRARY_CONNECTED_SITE_MEMBER) &&
+						DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+						role.getName()) &&
 					!Objects.equals(
-						role.getName(),
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER) &&
+						DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+						role.getName()) &&
 					!Objects.equals(
-						role.getName(),
-						DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) &&
+						DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+						role.getName()) &&
 					!Objects.equals(
-						role.getName(),
-						DepotRolesConstants.ASSET_LIBRARY_OWNER) &&
+						DepotRolesConstants.ASSET_LIBRARY_OWNER,
+						role.getName()) &&
 					RolePermissionUtil.contains(
 						permissionChecker, _group.getGroupId(),
-						role.getRoleId(), ActionKeys.ASSIGN_MEMBERS)
-			).collect(
-				Collectors.toList()
-			);
+						role.getRoleId(), ActionKeys.ASSIGN_MEMBERS));
 		}
 
 		private Group _getGroup(RenderRequest renderRequest)

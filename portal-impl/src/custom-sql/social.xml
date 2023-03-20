@@ -16,7 +16,7 @@
 				(name IN ([$NAME$])) AND
 				(startPeriod + ? >= ?) AND
 				(endPeriod = -1) AND
-				(User_.defaultUser != [$TRUE$]) AND
+				(User_.type_ != 0) AND
 				(User_.status = 0) AND
 				(SocialActivityCounter.active_ = [$TRUE$])
 		]]>
@@ -91,7 +91,7 @@
 				(name IN ([$NAME$])) AND
 				(startPeriod >= ?) AND
 				(endPeriod = -1) AND
-				(User_.defaultUser != [$TRUE$]) AND
+				(User_.type_ != 0) AND
 				(User_.status = 0) AND
 				(active_ = [$TRUE$])
 			GROUP BY

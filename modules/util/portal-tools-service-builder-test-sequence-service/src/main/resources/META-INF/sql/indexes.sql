@@ -1,0 +1,1 @@
+create index IX_327DAECB on SequenceEntry (uuid_[$COLUMN_LENGTH:75$], companyId);

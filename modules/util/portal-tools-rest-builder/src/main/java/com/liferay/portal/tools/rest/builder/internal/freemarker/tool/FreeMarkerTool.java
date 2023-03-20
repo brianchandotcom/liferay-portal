@@ -649,7 +649,7 @@ public class FreeMarkerTool {
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			Operation operation = javaMethodSignature.getOperation();
 
-			if (!Objects.equals("post", getHTTPMethod(operation))) {
+			if (!Objects.equals(getHTTPMethod(operation), "post")) {
 				continue;
 			}
 

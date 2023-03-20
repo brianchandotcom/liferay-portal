@@ -295,7 +295,7 @@ public class DTOOpenAPIParser {
 	}
 
 	private static boolean _isObject(Schema schema, String type) {
-		if (Objects.equals("object", type) &&
+		if (Objects.equals(type, "object") &&
 			(schema.getAdditionalPropertySchema() == null)) {
 
 			return true;

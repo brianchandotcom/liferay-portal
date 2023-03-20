@@ -2485,7 +2485,7 @@ public class ServiceBuilder {
 											entityColumn.getType());
 									}
 
-									if (Objects.equals("CLOB", sqlType)) {
+									if (Objects.equals(sqlType, "CLOB")) {
 										return "Clob";
 									}
 
@@ -5912,7 +5912,7 @@ public class ServiceBuilder {
 			});
 
 		if ((finderColumnNames.size() == 1) &&
-			Objects.equals("classNameId", finderColumnNames.get(0))) {
+			Objects.equals(finderColumnNames.get(0), "classNameId")) {
 
 			return true;
 		}
@@ -6953,7 +6953,7 @@ public class ServiceBuilder {
 
 			EntityColumn pkEntityColumn = pkEntityColumns.get(0);
 
-			if (!Objects.equals("long", pkEntityColumn.getType())) {
+			if (!Objects.equals(pkEntityColumn.getType(), "long")) {
 				throw new ServiceBuilderException(
 					"Primary key must be of type long to enable change " +
 						"tracking for " + entityName);
@@ -7409,7 +7409,7 @@ public class ServiceBuilder {
 
 		EntityColumn pkEntityColumn = pkEntityColumns.get(0);
 
-		if (!Objects.equals("long", pkEntityColumn.getType())) {
+		if (!Objects.equals(pkEntityColumn.getType(), "long")) {
 			throw new IllegalArgumentException(
 				"Must have long primary key to create versioned entity");
 		}

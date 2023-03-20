@@ -82,13 +82,13 @@ public class FragmentConfigurationField {
 	}
 
 	public String getDefaultValue() {
-		if (Objects.equals("colorPalette", _type)) {
+		if (Objects.equals(_type, "colorPalette")) {
 			return _getColorPaletteDefaultValue();
 		}
-		else if (Objects.equals("itemSelector", _type)) {
+		else if (Objects.equals(_type, "itemSelector")) {
 			return _getItemSelectorDefaultValue();
 		}
-		else if (Objects.equals("text", _type) && isLocalizable()) {
+		else if (Objects.equals(_type, "text") && isLocalizable()) {
 			return _getTextDefaultValue();
 		}
 

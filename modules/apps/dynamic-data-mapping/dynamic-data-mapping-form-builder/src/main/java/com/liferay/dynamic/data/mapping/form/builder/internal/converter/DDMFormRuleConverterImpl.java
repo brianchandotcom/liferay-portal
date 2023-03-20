@@ -154,12 +154,12 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 	}
 
 	private String _convertOperand(SPIDDMFormRuleCondition.Operand operand) {
-		if (Objects.equals("field", operand.getType())) {
+		if (Objects.equals(operand.getType(), "field")) {
 			return String.format(
 				_FUNCTION_CALL_UNARY_EXPRESSION_FORMAT, "getValue",
 				StringUtil.quote(operand.getValue()));
 		}
-		else if (Objects.equals("json", operand.getType())) {
+		else if (Objects.equals(operand.getType(), "json")) {
 			return String.format(
 				_FUNCTION_CALL_UNARY_EXPRESSION_FORMAT, "getJSONValue",
 				StringUtil.quote(operand.getValue()));
@@ -171,7 +171,7 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 			return value;
 		}
 
-		if (Objects.equals("string", operand.getType())) {
+		if (Objects.equals(operand.getType(), "string")) {
 			return StringUtil.quote(value);
 		}
 
@@ -205,7 +205,7 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 				sb.append(operand.getValue());
 			}
 			else {
-				if ((i > 0) && Objects.equals("option", operand.getType())) {
+				if ((i > 0) && Objects.equals(operand.getType(), "option")) {
 					SPIDDMFormRuleCondition.Operand previousOperand =
 						operands.get(i - 1);
 

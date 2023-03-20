@@ -138,7 +138,7 @@ public class FeatureFlagsDisplayContextFactory {
 		Comparator<FeatureFlagDisplay> comparator = Comparator.comparing(
 			FeatureFlagDisplay::getTitle);
 
-		if (Objects.equals("desc", searchContainer.getOrderByType())) {
+		if (Objects.equals(searchContainer.getOrderByType(), "desc")) {
 			comparator = comparator.reversed();
 		}
 

@@ -103,7 +103,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 		for (Filter filter : FILTERS) {
 			String currentValue = filter.getCurrentValue(httpServletRequest);
 
-			if (Objects.equals("all", currentValue)) {
+			if (Objects.equals(currentValue, "all")) {
 				continue;
 			}
 
@@ -189,7 +189,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 			String currentValue = getCurrentValue(httpServletRequest);
 
 			return featureFlag -> {
-				if (Objects.equals("all", currentValue) ||
+				if (Objects.equals(currentValue, "all") ||
 					_biPredicate.test(featureFlag, currentValue)) {
 
 					return true;

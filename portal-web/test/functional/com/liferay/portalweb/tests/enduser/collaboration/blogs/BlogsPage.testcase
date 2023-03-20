@@ -360,8 +360,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs\"");
@@ -385,7 +383,6 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1 Entry1 Content1\"");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1 Entry1 Content1\"");
-
 	}
 
 	@description = "This checks that exact title search returns an entry when it includes the entire phrase being queried."
@@ -399,8 +396,6 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 

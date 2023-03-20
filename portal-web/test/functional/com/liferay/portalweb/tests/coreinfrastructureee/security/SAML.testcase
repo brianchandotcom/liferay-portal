@@ -2949,7 +2949,6 @@ definition {
 	@priority = 5
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
-		property osgi.app.includes = "";
 		property test.name.skip.portal.instance = "SAML#HotDeploySAMLApp";
 
 		task ("Assert healthy instance started with liferay connector to SAML 2.0") {

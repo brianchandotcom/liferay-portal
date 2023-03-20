@@ -28,12 +28,6 @@ interface IProps {
 	overallCampaignName: string;
 }
 
-// const formatCurrency = (value, currencyKey) =>
-// 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-// 		currency: currencyKey,
-// 		style: 'currency',
-// 	}).format(value);
-
 const ActivityPanel = ({
 	activity,
 	children,

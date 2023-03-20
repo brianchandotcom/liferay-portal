@@ -14,26 +14,11 @@ definition {
 			var templateKey = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = ${templateName});
 		}
 		else if (${templateType} == "Site Initializer") {
-			if (${templateName} == "Welcome") {
-				var templateKey = "com.liferay.site.initializer.welcome";
-			}
-			else if (${templateName} == "Team Extranet") {
-				var templateKey = "com.liferay.site.initializer.team.extranet";
-			}
-			else if (${templateName} == "Raylife AP") {
-				var templateKey = "com.liferay.site.initializer.raylife.ap";
-			}
-			else if (${templateName} == "Raylife D2C") {
-				var templateKey = "com.liferay.site.initializer.raylife.d2c";
+			if (${templateName} == "Liferay OSB Site Initializer Customer Portal") {
+				var templateKey = "com.liferay.osb.site.initializer.customer.portal";
 			}
 			else if (${templateName} == "Masterclass") {
 				var templateKey = "com.liferay.site.initializer.masterclass";
-			}
-			else if (${templateName} == "Liferay OSB Site Initializer Customer Portal") {
-				var templateKey = "com.liferay.osb.site.initializer.customer.portal";
-			}
-			else if (${templateName} == "Testray") {
-				var templateKey = "com.liferay.site.initializer.testray";
 			}
 			else if (${templateName} == "Minium") {
 				var templateKey = "minium-initializer";
@@ -41,8 +26,23 @@ definition {
 			else if (${templateName} == "Minium Demo") {
 				var templateKey = "minium-full-initializer";
 			}
+			else if (${templateName} == "Raylife AP") {
+				var templateKey = "com.liferay.site.initializer.raylife.ap";
+			}
+			else if (${templateName} == "Raylife D2C") {
+				var templateKey = "com.liferay.site.initializer.raylife.d2c";
+			}
 			else if (${templateName} == "Speedwell") {
 				var templateKey = "speedwell-initializer";
+			}
+			else if (${templateName} == "Team Extranet") {
+				var templateKey = "com.liferay.site.initializer.team.extranet";
+			}
+			else if (${templateName} == "Testray") {
+				var templateKey = "com.liferay.site.initializer.testray";
+			}
+			else if (${templateName} == "Welcome") {
+				var templateKey = "com.liferay.site.initializer.welcome";
 			}
 		}
 

@@ -93,10 +93,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = {
-		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro", "**/*.pom",
-		"**/*.project", "**/*.properties", "**/*.svg", "**/*.testcase",
-		"**/*.toggle", "**/*.wsdl", "**/*.xml", "**/definitions/liferay-*.xsd",
-		"**/*.xml.tpl"
+		"**/*.action", "**/*.function", "**/*.jelly", "**/*.jrxml",
+		"**/*.macro", "**/*.pom", "**/*.project", "**/*.properties", "**/*.svg",
+		"**/*.testcase", "**/*.toggle", "**/*.wsdl", "**/*.xml",
+		"**/definitions/liferay-*.xsd", "**/*.xml.tpl"
 	};
 
 }

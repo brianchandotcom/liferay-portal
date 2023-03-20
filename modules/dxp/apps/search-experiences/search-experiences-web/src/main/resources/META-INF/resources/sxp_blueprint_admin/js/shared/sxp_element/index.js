@@ -179,7 +179,7 @@ function SXPElement({
 						entityJSON={entityJSON}
 						id={inputId}
 						itemType={typeOptions.itemType}
-						label={config.label}
+						label={config.labelLocalized}
 						name={inputName}
 						setFieldTouched={setFieldTouched}
 						setFieldValue={setFieldValue}
@@ -190,7 +190,7 @@ function SXPElement({
 				return (
 					<JSONInput
 						disabled={disabled}
-						label={config.label}
+						label={config.labelLocalized}
 						name={inputName}
 						nullable={typeOptions.nullable}
 						required={typeOptions.required}
@@ -205,7 +205,7 @@ function SXPElement({
 						<CategorySelectorInput
 							disabled={disabled}
 							id={inputId}
-							label={config.label}
+							label={config.labelLocalized}
 							multiple={true}
 							name={inputName}
 							setFieldTouched={setFieldTouched}
@@ -219,7 +219,7 @@ function SXPElement({
 					<MultiSelectInput
 						disabled={disabled}
 						id={inputId}
-						label={config.label}
+						label={config.labelLocalized}
 						name={inputName}
 						setFieldTouched={setFieldTouched}
 						setFieldValue={setFieldValue}
@@ -232,7 +232,7 @@ function SXPElement({
 						<CategorySelectorInput
 							disabled={disabled}
 							id={inputId}
-							label={config.label}
+							label={config.labelLocalized}
 							multiple={false}
 							name={inputName}
 							setFieldTouched={setFieldTouched}
@@ -247,7 +247,7 @@ function SXPElement({
 						configKey={config.name}
 						disabled={disabled}
 						id={inputId}
-						label={config.label}
+						label={config.labelLocalized}
 						max={typeOptions.max}
 						min={typeOptions.min}
 						name={inputName}
@@ -265,7 +265,7 @@ function SXPElement({
 						configKey={config.name}
 						disabled={disabled}
 						id={inputId}
-						label={config.label}
+						label={config.labelLocalized}
 						name={inputName}
 						nullable={typeOptions.nullable}
 						onBlur={onBlur}
@@ -283,7 +283,7 @@ function SXPElement({
 						configKey={config.name}
 						disabled={disabled}
 						id={inputId}
-						label={config.label}
+						label={config.labelLocalized}
 						name={inputName}
 						nullable={typeOptions.nullable}
 						onBlur={onBlur}
@@ -298,7 +298,7 @@ function SXPElement({
 					<SliderInput
 						disabled={disabled}
 						id={inputId}
-						label={config.label}
+						label={config.labelLocalized}
 						max={typeOptions.max}
 						min={typeOptions.min}
 						name={inputName}
@@ -315,7 +315,7 @@ function SXPElement({
 					<TextInput
 						disabled={disabled}
 						id={inputId}
-						label={config.label}
+						label={config.labelLocalized}
 						name={inputName}
 						onBlur={onBlur}
 						onChange={onChange}
@@ -482,7 +482,7 @@ function SXPElement({
 												config.name
 											)}
 										>
-											{config.label}
+											{config.labelLocalized}
 
 											{((isDefined(
 												config.typeOptions?.required
@@ -497,12 +497,14 @@ function SXPElement({
 												</span>
 											)}
 
-											{config.helpText && (
+											{config.helpTextLocalized && (
 												<ClayTooltipProvider>
 													<ClaySticker
 														displayType="unstyled"
 														size="sm"
-														title={config.helpText}
+														title={
+															config.helpTextLocalized
+														}
 													>
 														<ClayIcon
 															data-tooltip-align="top"

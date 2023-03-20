@@ -1921,7 +1921,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_getSerializableObjectValue(
 						jsonObject.get("defaultValue")));
 
-				_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
+				_setExpandoBridgeAttributeProperties(expandoBridge, jsonObject);
 
 				continue;
 			}
@@ -1930,7 +1930,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("name"), jsonObject.getInt("dataType"),
 				_getSerializableObjectValue(jsonObject.get("defaultValue")));
 
-			_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
+			_setExpandoBridgeAttributeProperties(expandoBridge, jsonObject);
 		}
 	}
 
@@ -4487,7 +4487,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _setExpandoBridgeAttributeProperties(
-		JSONObject jsonObject, ExpandoBridge expandoBridge) {
+		ExpandoBridge expandoBridge, JSONObject jsonObject) {
 
 		if (jsonObject.has("properties")) {
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);

@@ -271,7 +271,6 @@ definition {
 			key_components = ${components},
 			key_priority = ${priority},
 			key_requirements = ${requirements},
-			key_subComponents = ${subComponents},
 			locator1 = "TestraySuites#VIEW_CASE_PARAMETERS");
 	}
 

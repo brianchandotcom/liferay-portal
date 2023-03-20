@@ -278,8 +278,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	private User _getDDMFormDefaultUser(long companyId) {
 		try {
-			return _userLocalService.getUserByEmailAddress(
-				companyId, _getEmailAddress(companyId));
+			return _userLocalService.getUserByScreenName(
+				companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

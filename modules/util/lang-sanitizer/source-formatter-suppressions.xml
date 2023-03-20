@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="NonbreakingSpaceCheck" files="src/main/java/com/liferay/lang/sanitizer/util/EscapeUtil.java" />
+	</source-check>
+</suppressions>

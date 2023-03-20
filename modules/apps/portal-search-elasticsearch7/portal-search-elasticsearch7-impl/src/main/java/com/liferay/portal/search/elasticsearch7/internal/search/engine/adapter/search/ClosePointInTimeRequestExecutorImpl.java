@@ -54,7 +54,7 @@ public class ClosePointInTimeRequestExecutorImpl
 			ClosePointInTimeRequest closePointInTimeSearchRequest) {
 
 		return new org.elasticsearch.action.search.ClosePointInTimeRequest(
-			closePointInTimeSearchRequest.getPitId());
+			closePointInTimeSearchRequest.getPointInTimeId());
 	}
 
 	protected org.elasticsearch.action.search.ClosePointInTimeResponse

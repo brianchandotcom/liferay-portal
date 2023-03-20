@@ -19,16 +19,16 @@ package com.liferay.portal.search.pit;
  */
 public class PointInTime {
 
-	public PointInTime(String pitId) {
-		_pitId = pitId;
+	public PointInTime(String pointInTimeId) {
+		_pointInTimeId = pointInTimeId;
 	}
 
 	public String getKeepAlive() {
 		return _keepAlive;
 	}
 
-	public String getPitId() {
-		return _pitId;
+	public String getPointInTimeId() {
+		return _pointInTimeId;
 	}
 
 	public void setKeepAlive(String keepAlive) {
@@ -36,6 +36,6 @@ public class PointInTime {
 	}
 
 	private String _keepAlive;
-	private final String _pitId;
+	private final String _pointInTimeId;
 
 }

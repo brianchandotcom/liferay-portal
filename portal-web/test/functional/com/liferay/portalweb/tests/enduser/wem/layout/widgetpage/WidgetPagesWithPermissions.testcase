@@ -253,17 +253,11 @@ definition {
 		}
 
 		task ("Add a private site based on new site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addCP(
+			HeadlessSite.addSite(
 				membershipType = "Private",
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates",
-				siteType = "Site Template");
+				templateName = "Site Template Name",
+				templateType = "Site Template");
 		}
 
 		task ("Add a private widget page") {

@@ -126,35 +126,29 @@ definition {
 		}
 
 		task ("Add a site with private membership type") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(
+			HeadlessSite.addSite(
 				membershipType = "Private",
 				parentSiteName = "College of Agricultural Science",
-				siteName = "Moon Rocks 101",
-				siteType = "Blank");
+				siteName = "Moon Rocks 101");
 		}
 
 		task ("Select Digital Class Room site template as private page page type") {
-			Navigator.gotoBack();
+			Site.openSiteSettingsAdmin(siteURLKey = "moon-rocks-101");
 
 			Site.selectPageType(
 				selectPrivatePages = "true",
 				siteTemplate = "Digital Class Room");
 		}
 
-		Site.openSitesAdmin();
-
 		task ("Add another site with private membership type") {
-			Site.addBlankCP(
+			HeadlessSite.addSite(
 				membershipType = "Private",
 				parentSiteName = "College of Agricultural Science",
-				siteName = "Moon Rocks 202",
-				siteType = "Blank");
+				siteName = "Moon Rocks 202");
 		}
 
 		task ("Select Digital Class Room site template as private page page type and also enable Private Pages Propagation") {
-			Navigator.gotoBack();
+			Site.openSiteSettingsAdmin(siteURLKey = "moon-rocks-202");
 
 			Site.selectPageType(
 				checkPrivatePagesPropagation = "true",

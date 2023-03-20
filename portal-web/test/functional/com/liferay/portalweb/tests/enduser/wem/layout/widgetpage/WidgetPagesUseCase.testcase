@@ -208,11 +208,10 @@ definition {
 	@priority = 4
 	test EditFriendlyURLOfPageSet {
 		task ("Given a page admin has a page set with child pages") {
-			Site.openSitesAdmin();
-
-			Site.addCustomCP(
+			HeadlessSite.addSite(
 				siteName = "Site Name",
-				siteTemplateName = "Welcome");
+				templateName = "Welcome",
+				templateType = "Site Initializer");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 

@@ -231,13 +231,10 @@ definition {
 		}
 
 		task ("Add a site based on template") {
-			Site.openSitesAdmin();
-
-			Site.addCP(
+			HeadlessSite.addSite(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates",
-				siteType = "Site Template");
+				templateName = "Site Template Name",
+				templateType = "Site Template");
 		}
 
 		task ("Assign the user to site") {

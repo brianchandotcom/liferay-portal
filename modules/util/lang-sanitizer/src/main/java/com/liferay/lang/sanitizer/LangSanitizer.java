@@ -215,9 +215,8 @@ public class LangSanitizer {
 			sanitizedValue = EscapeUtil.unescape(cleanResults.getCleanHTML());
 		}
 		catch (ScanException scanException) {
-			String errorMessage = scanException.getMessage();
-
 			String errorCode = "INVALID_CHARACTER_ERR";
+			String errorMessage = scanException.getMessage();
 
 			if (errorMessage.contains(errorCode)) {
 				StringBundler sb = new StringBundler(3);
@@ -226,9 +225,7 @@ public class LangSanitizer {
 					errorMessage.substring(
 						errorMessage.indexOf(errorCode) + errorCode.length() +
 							2));
-
 				sb.append(" Please check: ");
-
 				sb.append(
 					_getMessage(
 						originalValue, EscapeUtil.escapeTag(originalValue)));

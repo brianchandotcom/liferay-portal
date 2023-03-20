@@ -15,6 +15,7 @@
 package com.liferay.users.admin.internal.search.spi.model.query.contributor;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -51,7 +52,7 @@ public class UserModelPreFilterContributor
 		ModelSearchSettings modelSearchSettings, SearchContext searchContext) {
 
 		contextBooleanFilter.addTerm(
-			"defaultUser", Boolean.TRUE.toString(),
+			Field.TYPE, String.valueOf(UserConstants.TYPE_GUEST),
 			BooleanClauseOccur.MUST_NOT);
 
 		_filterByEmailAddress(contextBooleanFilter, searchContext);

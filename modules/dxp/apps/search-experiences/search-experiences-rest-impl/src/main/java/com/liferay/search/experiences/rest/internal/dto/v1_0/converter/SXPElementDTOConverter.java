@@ -17,13 +17,19 @@ package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.Field;
+import com.liferay.search.experiences.rest.dto.v1_0.FieldSet;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.service.SXPElementLocalService;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,7 +77,8 @@ public class SXPElementDTOConverter
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpElement.getDescriptionMap());
 				elementDefinition = _toElementDefinition(
-					sxpElement.getElementDefinitionJSON());
+					sxpElement.getElementDefinitionJSON(),
+					dtoConverterContext.getLocale());
 				externalReferenceCode = sxpElement.getExternalReferenceCode();
 				id = sxpElement.getSXPElementId();
 				modifiedDate = sxpElement.getModifiedDate();
@@ -89,9 +96,37 @@ public class SXPElementDTOConverter
 		};
 	}
 
-	private ElementDefinition _toElementDefinition(String json) {
+	private ElementDefinition _toElementDefinition(String json, Locale locale) {
 		try {
-			return ElementDefinitionUtil.toElementDefinition(json);
+			ElementDefinition elementDefinition =
+				ElementDefinitionUtil.toElementDefinition(json);
+
+			UiConfiguration uiConfiguration =
+				elementDefinition.getUiConfiguration();
+
+			FieldSet[] fieldSets = uiConfiguration.getFieldSets();
+
+			if (fieldSets == null) {
+				return elementDefinition;
+			}
+
+			for (FieldSet fieldSet : fieldSets) {
+				Field[] fields = fieldSet.getFields();
+
+				for (Field field : fields) {
+					if (!Validator.isBlank(field.getHelpText())) {
+						field.setHelpTextLocalized(
+							_language.get(locale, field.getHelpText()));
+					}
+
+					if (!Validator.isBlank(field.getLabel())) {
+						field.setLabelLocalized(
+							_language.get(locale, field.getLabel()));
+					}
+				}
+			}
+
+			return elementDefinition;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

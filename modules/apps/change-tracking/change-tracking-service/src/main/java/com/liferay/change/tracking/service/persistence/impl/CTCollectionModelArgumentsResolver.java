@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.change.tracking.model.impl.CTCollectionImpl",
+		"table.name=CTCollection"
+	},
+	service = ArgumentsResolver.class
+)
 public class CTCollectionModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

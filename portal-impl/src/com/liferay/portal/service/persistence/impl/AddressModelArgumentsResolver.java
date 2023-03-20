@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.impl.AddressImpl;
 import com.liferay.portal.model.impl.AddressModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portal.model.impl.AddressImpl",
+		"table.name=Address"
+	},
+	service = ArgumentsResolver.class
+)
 public class AddressModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

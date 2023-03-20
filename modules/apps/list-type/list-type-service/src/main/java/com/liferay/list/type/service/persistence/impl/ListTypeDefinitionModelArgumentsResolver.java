@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Gabriel Albuquerque
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.list.type.model.impl.ListTypeDefinitionImpl",
+		"table.name=ListTypeDefinition"
+	},
+	service = ArgumentsResolver.class
+)
 public class ListTypeDefinitionModelArgumentsResolver
 	implements ArgumentsResolver {
 

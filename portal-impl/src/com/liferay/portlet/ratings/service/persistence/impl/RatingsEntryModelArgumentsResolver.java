@@ -17,6 +17,7 @@ package com.liferay.portlet.ratings.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryImpl;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.ratings.model.impl.RatingsEntryImpl",
+		"table.name=RatingsEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class RatingsEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

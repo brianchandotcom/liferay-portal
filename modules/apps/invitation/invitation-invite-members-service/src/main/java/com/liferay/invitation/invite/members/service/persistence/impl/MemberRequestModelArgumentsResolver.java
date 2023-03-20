@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.invitation.invite.members.model.impl.MemberRequestImpl",
+		"table.name=IM_MemberRequest"
+	},
+	service = ArgumentsResolver.class
+)
 public class MemberRequestModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

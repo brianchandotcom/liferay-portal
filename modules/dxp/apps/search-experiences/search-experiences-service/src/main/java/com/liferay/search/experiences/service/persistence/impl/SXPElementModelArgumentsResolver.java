@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.search.experiences.model.impl.SXPElementImpl",
+		"table.name=SXPElement"
+	},
+	service = ArgumentsResolver.class
+)
 public class SXPElementModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

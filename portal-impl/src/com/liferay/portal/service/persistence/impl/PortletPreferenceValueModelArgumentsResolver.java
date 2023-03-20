@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portal.model.impl.PortletPreferenceValueImpl",
+		"table.name=PortletPreferenceValue"
+	},
+	service = ArgumentsResolver.class
+)
 public class PortletPreferenceValueModelArgumentsResolver
 	implements ArgumentsResolver {
 

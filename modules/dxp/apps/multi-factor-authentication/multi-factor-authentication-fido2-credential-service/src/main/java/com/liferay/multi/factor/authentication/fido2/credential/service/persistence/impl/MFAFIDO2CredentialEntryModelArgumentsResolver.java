@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryImpl",
+		"table.name=MFAFIDO2CredentialEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class MFAFIDO2CredentialEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Matija Petanjek
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.dispatch.model.impl.DispatchTriggerImpl",
+		"table.name=DispatchTrigger"
+	},
+	service = ArgumentsResolver.class
+)
 public class DispatchTriggerModelArgumentsResolver
 	implements ArgumentsResolver {
 

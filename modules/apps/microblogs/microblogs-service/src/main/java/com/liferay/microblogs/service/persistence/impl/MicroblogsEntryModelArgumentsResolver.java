@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.microblogs.model.impl.MicroblogsEntryImpl",
+		"table.name=MicroblogsEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class MicroblogsEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

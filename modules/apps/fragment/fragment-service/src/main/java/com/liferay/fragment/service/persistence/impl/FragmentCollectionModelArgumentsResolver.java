@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.fragment.model.impl.FragmentCollectionImpl",
+		"table.name=FragmentCollection"
+	},
+	service = ArgumentsResolver.class
+)
 public class FragmentCollectionModelArgumentsResolver
 	implements ArgumentsResolver {
 

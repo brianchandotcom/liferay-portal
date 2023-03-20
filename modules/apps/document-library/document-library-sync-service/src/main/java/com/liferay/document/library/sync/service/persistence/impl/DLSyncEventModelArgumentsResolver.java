@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.document.library.sync.model.impl.DLSyncEventImpl",
+		"table.name=DLSyncEvent"
+	},
+	service = ArgumentsResolver.class
+)
 public class DLSyncEventModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

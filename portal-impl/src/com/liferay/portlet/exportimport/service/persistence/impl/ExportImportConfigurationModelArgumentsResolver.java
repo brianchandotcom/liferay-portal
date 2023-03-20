@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfigurationTable;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationImpl;
 import com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationImpl",
+		"table.name=ExportImportConfiguration"
+	},
+	service = ArgumentsResolver.class
+)
 public class ExportImportConfigurationModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.site.model.impl.SiteFriendlyURLImpl",
+		"table.name=SiteFriendlyURL"
+	},
+	service = ArgumentsResolver.class
+)
 public class SiteFriendlyURLModelArgumentsResolver
 	implements ArgumentsResolver {
 

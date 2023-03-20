@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.portal.background.task.model.impl.BackgroundTaskImpl",
+		"table.name=BackgroundTask"
+	},
+	service = ArgumentsResolver.class
+)
 public class BackgroundTaskModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

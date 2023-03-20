@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.frontend.view.state.model.impl.FVSCustomEntryImpl",
+		"table.name=FVSCustomEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class FVSCustomEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

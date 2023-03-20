@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.EagerBlobEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.EagerBlobEntryModelImpl;
@@ -29,6 +30,13 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portal.tools.service.builder.test.model.impl.EagerBlobEntryImpl",
+		"table.name=EagerBlobEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class EagerBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

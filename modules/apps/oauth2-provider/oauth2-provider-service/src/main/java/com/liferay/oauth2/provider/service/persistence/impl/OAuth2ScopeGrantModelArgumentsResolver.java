@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl",
+		"table.name=OAuth2ScopeGrant"
+	},
+	service = ArgumentsResolver.class
+)
 public class OAuth2ScopeGrantModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl",
+		"table.name=DLFileEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class DLFileEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

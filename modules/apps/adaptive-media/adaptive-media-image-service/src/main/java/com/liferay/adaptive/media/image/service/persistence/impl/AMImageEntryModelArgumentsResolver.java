@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.adaptive.media.image.model.impl.AMImageEntryImpl",
+		"table.name=AMImageEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class AMImageEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

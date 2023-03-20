@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Preston Crary
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.json.storage.model.impl.JSONStorageEntryImpl",
+		"table.name=JSONStorageEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class JSONStorageEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

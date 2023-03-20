@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl",
+		"table.name=DDMStructureLayout"
+	},
+	service = ArgumentsResolver.class
+)
 public class DDMStructureLayoutModelArgumentsResolver
 	implements ArgumentsResolver {
 

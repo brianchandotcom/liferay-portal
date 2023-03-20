@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.UserIdMapperTable;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.impl.UserIdMapperImpl;
 import com.liferay.portal.model.impl.UserIdMapperModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portal.model.impl.UserIdMapperImpl",
+		"table.name=UserIdMapper"
+	},
+	service = ArgumentsResolver.class
+)
 public class UserIdMapperModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

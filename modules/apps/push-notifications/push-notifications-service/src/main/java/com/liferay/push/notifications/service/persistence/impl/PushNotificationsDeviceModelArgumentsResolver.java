@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Farache
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.push.notifications.model.impl.PushNotificationsDeviceImpl",
+		"table.name=PushNotificationsDevice"
+	},
+	service = ArgumentsResolver.class
+)
 public class PushNotificationsDeviceModelArgumentsResolver
 	implements ArgumentsResolver {
 

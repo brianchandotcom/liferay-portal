@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Ryan Park
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.marketplace.model.impl.ModuleImpl",
+		"table.name=Marketplace_Module"
+	},
+	service = ArgumentsResolver.class
+)
 public class ModuleModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

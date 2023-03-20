@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Jamie Sammons
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.akismet.model.impl.AkismetEntryImpl",
+		"table.name=OSBCommunity_AkismetEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class AkismetEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

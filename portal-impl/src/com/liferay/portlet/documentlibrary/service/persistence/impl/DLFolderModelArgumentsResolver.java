@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl",
+		"table.name=DLFolder"
+	},
+	service = ArgumentsResolver.class
+)
 public class DLFolderModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.trash.model.impl.TrashEntryImpl",
+		"table.name=TrashEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

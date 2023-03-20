@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.portal.language.override.model.impl.PLOEntryImpl",
+		"table.name=PLOEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class PLOEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

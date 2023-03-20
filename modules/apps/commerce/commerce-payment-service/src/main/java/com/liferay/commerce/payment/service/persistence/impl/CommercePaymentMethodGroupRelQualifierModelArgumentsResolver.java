@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelQualifierImpl",
+		"table.name=CPMethodGroupRelQualifier"
+	},
+	service = ArgumentsResolver.class
+)
 public class CommercePaymentMethodGroupRelQualifierModelArgumentsResolver
 	implements ArgumentsResolver {
 

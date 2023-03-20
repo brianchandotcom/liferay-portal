@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersionTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionModelImpl;
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl",
+		"table.name=LVEntryVersion"
+	},
+	service = ArgumentsResolver.class
+)
 public class LVEntryVersionModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

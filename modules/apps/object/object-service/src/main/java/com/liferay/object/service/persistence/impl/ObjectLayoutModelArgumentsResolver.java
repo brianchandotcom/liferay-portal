@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.object.model.impl.ObjectLayoutImpl",
+		"table.name=ObjectLayout"
+	},
+	service = ArgumentsResolver.class
+)
 public class ObjectLayoutModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

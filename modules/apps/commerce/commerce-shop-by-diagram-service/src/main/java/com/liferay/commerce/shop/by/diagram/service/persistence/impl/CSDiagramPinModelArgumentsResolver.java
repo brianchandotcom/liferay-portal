@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramPinImpl",
+		"table.name=CSDiagramPin"
+	},
+	service = ArgumentsResolver.class
+)
 public class CSDiagramPinModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

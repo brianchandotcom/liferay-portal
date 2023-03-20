@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Preston Crary
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.view.count.model.impl.ViewCountEntryImpl",
+		"table.name=ViewCountEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class ViewCountEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

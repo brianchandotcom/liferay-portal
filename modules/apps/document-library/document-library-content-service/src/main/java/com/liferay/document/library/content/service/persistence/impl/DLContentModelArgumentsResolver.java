@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.document.library.content.model.impl.DLContentImpl",
+		"table.name=DLContent"
+	},
+	service = ArgumentsResolver.class
+)
 public class DLContentModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

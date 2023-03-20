@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl",
+		"table.name=SamlIdpSsoSession"
+	},
+	service = ArgumentsResolver.class
+)
 public class SamlIdpSsoSessionModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskImpl",
+		"table.name=KaleoTask"
+	},
+	service = ArgumentsResolver.class
+)
 public class KaleoTaskModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

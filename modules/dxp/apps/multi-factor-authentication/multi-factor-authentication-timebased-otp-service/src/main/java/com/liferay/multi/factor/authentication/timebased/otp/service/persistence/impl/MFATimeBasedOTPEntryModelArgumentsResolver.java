@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.multi.factor.authentication.timebased.otp.model.impl.MFATimeBasedOTPEntryImpl",
+		"table.name=MFATimeBasedOTPEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class MFATimeBasedOTPEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl",
+		"table.name=SharepointOAuth2TokenEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class SharepointOAuth2TokenEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

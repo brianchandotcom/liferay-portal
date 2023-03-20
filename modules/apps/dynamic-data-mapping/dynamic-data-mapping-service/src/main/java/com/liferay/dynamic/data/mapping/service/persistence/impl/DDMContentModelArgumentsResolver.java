@@ -33,7 +33,13 @@ import org.osgi.service.component.annotations.Component;
  * @deprecated
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl",
+		"table.name=DDMContent"
+	},
+	service = ArgumentsResolver.class
+)
 public class DDMContentModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

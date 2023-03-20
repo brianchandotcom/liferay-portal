@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectSessionImpl",
+		"table.name=OpenIdConnectSession"
+	},
+	service = ArgumentsResolver.class
+)
 public class OpenIdConnectSessionModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl",
+		"table.name=Reports_Definition"
+	},
+	service = ArgumentsResolver.class
+)
 public class DefinitionModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

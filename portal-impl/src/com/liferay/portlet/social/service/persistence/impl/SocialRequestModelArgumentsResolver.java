@@ -17,6 +17,7 @@ package com.liferay.portlet.social.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.social.model.impl.SocialRequestImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestModelImpl;
 import com.liferay.social.kernel.model.SocialRequestTable;
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.social.model.impl.SocialRequestImpl",
+		"table.name=SocialRequest"
+	},
+	service = ArgumentsResolver.class
+)
 public class SocialRequestModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

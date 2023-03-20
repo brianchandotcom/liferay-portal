@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.commerce.product.model.impl.CProductImpl",
+		"table.name=CProduct"
+	},
+	service = ArgumentsResolver.class
+)
 public class CProductModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

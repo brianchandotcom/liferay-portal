@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.spring.sample.service.persisten
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntryTable;
 import com.liferay.portal.tools.service.builder.spring.sample.model.impl.SpringEntryImpl;
 import com.liferay.portal.tools.service.builder.spring.sample.model.impl.SpringEntryModelImpl;
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portal.tools.service.builder.spring.sample.model.impl.SpringEntryImpl",
+		"table.name=SpringEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class SpringEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

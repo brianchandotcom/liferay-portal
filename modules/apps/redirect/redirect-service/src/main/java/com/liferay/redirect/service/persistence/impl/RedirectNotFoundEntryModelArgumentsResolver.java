@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.redirect.model.impl.RedirectNotFoundEntryImpl",
+		"table.name=RedirectNotFoundEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class RedirectNotFoundEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl",
+		"table.name=DDLRecordSet"
+	},
+	service = ArgumentsResolver.class
+)
 public class DDLRecordSetModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

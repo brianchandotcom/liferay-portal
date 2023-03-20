@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.asset.model.impl.AssetVocabularyImpl",
+		"table.name=AssetVocabulary"
+	},
+	service = ArgumentsResolver.class
+)
 public class AssetVocabularyModelArgumentsResolver
 	implements ArgumentsResolver {
 

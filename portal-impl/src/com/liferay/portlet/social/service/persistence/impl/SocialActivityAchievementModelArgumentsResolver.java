@@ -17,6 +17,7 @@ package com.liferay.portlet.social.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl;
 import com.liferay.social.kernel.model.SocialActivityAchievementTable;
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl",
+		"table.name=SocialActivityAchievement"
+	},
+	service = ArgumentsResolver.class
+)
 public class SocialActivityAchievementModelArgumentsResolver
 	implements ArgumentsResolver {
 

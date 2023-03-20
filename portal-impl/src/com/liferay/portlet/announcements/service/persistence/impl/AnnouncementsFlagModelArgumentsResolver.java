@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagTable;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
 
@@ -30,6 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"class.name=com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl",
+		"table.name=AnnouncementsFlag"
+	},
+	service = ArgumentsResolver.class
+)
 public class AnnouncementsFlagModelArgumentsResolver
 	implements ArgumentsResolver {
 

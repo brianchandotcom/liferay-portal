@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierImpl",
+		"table.name=CSFixedOptionQualifier"
+	},
+	service = ArgumentsResolver.class
+)
 public class CommerceShippingFixedOptionQualifierModelArgumentsResolver
 	implements ArgumentsResolver {
 

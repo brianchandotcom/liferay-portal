@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.wiki.model.impl.WikiNodeImpl",
+		"table.name=WikiNode"
+	},
+	service = ArgumentsResolver.class
+)
 public class WikiNodeModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

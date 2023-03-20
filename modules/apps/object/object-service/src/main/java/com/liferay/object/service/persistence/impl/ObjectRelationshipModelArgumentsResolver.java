@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.object.model.impl.ObjectRelationshipImpl",
+		"table.name=ObjectRelationship"
+	},
+	service = ArgumentsResolver.class
+)
 public class ObjectRelationshipModelArgumentsResolver
 	implements ArgumentsResolver {
 

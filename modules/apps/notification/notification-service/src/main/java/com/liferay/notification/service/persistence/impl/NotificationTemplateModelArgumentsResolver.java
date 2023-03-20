@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Gabriel Albuquerque
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.notification.model.impl.NotificationTemplateImpl",
+		"table.name=NotificationTemplate"
+	},
+	service = ArgumentsResolver.class
+)
 public class NotificationTemplateModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.account.model.impl.AccountGroupRelImpl",
+		"table.name=AccountGroupRel"
+	},
+	service = ArgumentsResolver.class
+)
 public class AccountGroupRelModelArgumentsResolver
 	implements ArgumentsResolver {
 

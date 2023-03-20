@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.multi.factor.authentication.email.otp.model.impl.MFAEmailOTPEntryImpl",
+		"table.name=MFAEmailOTPEntry"
+	},
+	service = ArgumentsResolver.class
+)
 public class MFAEmailOTPEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

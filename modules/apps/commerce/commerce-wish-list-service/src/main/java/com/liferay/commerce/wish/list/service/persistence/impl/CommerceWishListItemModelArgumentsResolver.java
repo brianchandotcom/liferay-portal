@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.commerce.wish.list.model.impl.CommerceWishListItemImpl",
+		"table.name=CommerceWishListItem"
+	},
+	service = ArgumentsResolver.class
+)
 public class CommerceWishListItemModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.bookmarks.model.impl.BookmarksFolderImpl",
+		"table.name=BookmarksFolder"
+	},
+	service = ArgumentsResolver.class
+)
 public class BookmarksFolderModelArgumentsResolver
 	implements ArgumentsResolver {
 

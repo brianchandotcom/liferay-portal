@@ -32,7 +32,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = ArgumentsResolver.class)
+@Component(
+	property = {
+		"class.name=com.liferay.message.boards.model.impl.MBMessageImpl",
+		"table.name=MBMessage"
+	},
+	service = ArgumentsResolver.class
+)
 public class MBMessageModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

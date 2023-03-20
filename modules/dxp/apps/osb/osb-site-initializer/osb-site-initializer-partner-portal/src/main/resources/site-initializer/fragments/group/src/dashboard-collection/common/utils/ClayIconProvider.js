@@ -9,25 +9,22 @@
  * distribution rights of the Software.
  */
 
-export const partnerLevelData = {
-	arr: {
-		arr: 150,
-	},
-	certification: 'Solution Delivery Certification',
-	headcount: {
-		marketing: 1,
-		sales: 5,
-	},
-	marketing: 'Plan & Performance',
+import {ClayIconSpriteContext} from '@clayui/icon';
+import React from 'react';
+
+import {Liferay} from '../utils/liferay';
+
+const getIconSpriteMap = () => {
+	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
+	const spritemap = `${pathThemeImages}/clay/icons.svg`;
+
+	return spritemap;
 };
 
-export const mdf = {
-	ProgressClain: {
-		approved: {qtd: 120, total: 'USD $6.500,50'},
-		pending: {qtd: 100, total: 'USD $5.500,00'},
-	},
-	ProgressMdf: {
-		approved: {qtd: 300, total: 'USD $80.000,29'},
-		pending: {qtd: 92, total: 'USD $12.993,00'},
-	},
-};
+const ClayIconProvider = ({children}) => (
+	<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+		{children}
+	</ClayIconSpriteContext.Provider>
+);
+
+export default ClayIconProvider;

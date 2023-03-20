@@ -9,25 +9,7 @@
  * distribution rights of the Software.
  */
 
-export const partnerLevelData = {
-	arr: {
-		arr: 150,
-	},
-	certification: 'Solution Delivery Certification',
-	headcount: {
-		marketing: 1,
-		sales: 5,
-	},
-	marketing: 'Plan & Performance',
-};
-
-export const mdf = {
-	ProgressClain: {
-		approved: {qtd: 120, total: 'USD $6.500,50'},
-		pending: {qtd: 100, total: 'USD $5.500,00'},
-	},
-	ProgressMdf: {
-		approved: {qtd: 300, total: 'USD $80.000,29'},
-		pending: {qtd: 92, total: 'USD $12.993,00'},
-	},
+export const ChartTypes = {
+	ARR: 'ARR',
+	NP_OR_NB: 'NP or NB',
 };

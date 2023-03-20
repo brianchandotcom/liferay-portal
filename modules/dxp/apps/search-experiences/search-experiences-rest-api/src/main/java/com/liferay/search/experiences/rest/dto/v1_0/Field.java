@@ -146,6 +146,34 @@ public class Field implements Serializable {
 	protected String helpText;
 
 	@Schema
+	public String getHelpTextLocalized() {
+		return helpTextLocalized;
+	}
+
+	public void setHelpTextLocalized(String helpTextLocalized) {
+		this.helpTextLocalized = helpTextLocalized;
+	}
+
+	@JsonIgnore
+	public void setHelpTextLocalized(
+		UnsafeSupplier<String, Exception> helpTextLocalizedUnsafeSupplier) {
+
+		try {
+			helpTextLocalized = helpTextLocalizedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String helpTextLocalized;
+
+	@Schema
 	public String getLabel() {
 		return label;
 	}
@@ -172,6 +200,34 @@ public class Field implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
+
+	@Schema
+	public String getLabelLocalized() {
+		return labelLocalized;
+	}
+
+	public void setLabelLocalized(String labelLocalized) {
+		this.labelLocalized = labelLocalized;
+	}
+
+	@JsonIgnore
+	public void setLabelLocalized(
+		UnsafeSupplier<String, Exception> labelLocalizedUnsafeSupplier) {
+
+		try {
+			labelLocalized = labelLocalizedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String labelLocalized;
 
 	@Schema
 	public String getName() {
@@ -336,6 +392,20 @@ public class Field implements Serializable {
 			sb.append("\"");
 		}
 
+		if (helpTextLocalized != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"helpTextLocalized\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(helpTextLocalized));
+
+			sb.append("\"");
+		}
+
 		if (label != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -346,6 +416,20 @@ public class Field implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(label));
+
+			sb.append("\"");
+		}
+
+		if (labelLocalized != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"labelLocalized\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(labelLocalized));
 
 			sb.append("\"");
 		}

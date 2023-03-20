@@ -97,6 +97,27 @@ public class Field implements Cloneable, Serializable {
 
 	protected String helpText;
 
+	public String getHelpTextLocalized() {
+		return helpTextLocalized;
+	}
+
+	public void setHelpTextLocalized(String helpTextLocalized) {
+		this.helpTextLocalized = helpTextLocalized;
+	}
+
+	public void setHelpTextLocalized(
+		UnsafeSupplier<String, Exception> helpTextLocalizedUnsafeSupplier) {
+
+		try {
+			helpTextLocalized = helpTextLocalizedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String helpTextLocalized;
+
 	public String getLabel() {
 		return label;
 	}
@@ -117,6 +138,27 @@ public class Field implements Cloneable, Serializable {
 	}
 
 	protected String label;
+
+	public String getLabelLocalized() {
+		return labelLocalized;
+	}
+
+	public void setLabelLocalized(String labelLocalized) {
+		this.labelLocalized = labelLocalized;
+	}
+
+	public void setLabelLocalized(
+		UnsafeSupplier<String, Exception> labelLocalizedUnsafeSupplier) {
+
+		try {
+			labelLocalized = labelLocalizedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String labelLocalized;
 
 	public String getName() {
 		return name;

@@ -312,7 +312,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 			_templateHandler = templateHandler;
 
-			Class<?> clazz = _templateHandler.getClass();
+			Class<?> clazz = templateHandler.getClass();
 
 			Bundle bundle = FrameworkUtil.getBundle(clazz);
 

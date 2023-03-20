@@ -14,7 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -73,8 +73,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionURL;
 import javax.portlet.ResourceURL;
@@ -127,20 +125,13 @@ public class ContentDashboardAdminDisplayContext {
 	}
 
 	public List<String> getAssetCategoryTitles(
-		ContentDashboardItem contentDashboardItem, long assetVocabularyId) {
-
-		List<AssetCategory> assetCategories =
-			contentDashboardItem.getAssetCategories(assetVocabularyId);
-
-		Stream<AssetCategory> stream = assetCategories.stream();
+		ContentDashboardItem<?> contentDashboardItem, long assetVocabularyId) {
 
 		Locale locale = _portal.getLocale(_liferayPortletRequest);
 
-		return stream.map(
-			assetCategory -> assetCategory.getTitle(locale)
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.toList(
+			contentDashboardItem.getAssetCategories(assetVocabularyId),
+			assetCategory -> assetCategory.getTitle(locale));
 	}
 
 	public Set<String> getAssetTagIds() {
@@ -232,51 +223,41 @@ public class ContentDashboardAdminDisplayContext {
 				contentDashboardItemSubtypeItemSelectorCriterion)
 		).setParameter(
 			"checkedContentDashboardItemSubtypesPayload",
-			() -> {
-				List<? extends ContentDashboardItemSubtype>
-					contentDashboardItemSubtypes =
-						getContentDashboardItemSubtypes();
+			() -> TransformUtil.transformToArray(
+				getContentDashboardItemSubtypes(),
+				contentDashboardItemSubtype -> {
+					InfoItemReference infoItemReference =
+						contentDashboardItemSubtype.getInfoItemReference();
 
-				Stream<? extends ContentDashboardItemSubtype> stream =
-					contentDashboardItemSubtypes.stream();
+					long classPK = infoItemReference.getClassPK();
 
-				return stream.map(
-					contentDashboardItemSubtype -> {
-						InfoItemReference infoItemReference =
-							contentDashboardItemSubtype.getInfoItemReference();
+					InfoItemIdentifier infoItemIdentifier =
+						infoItemReference.getInfoItemIdentifier();
 
-						long classPK = infoItemReference.getClassPK();
+					if (infoItemIdentifier instanceof
+							ClassNameClassPKInfoItemIdentifier) {
 
-						InfoItemIdentifier infoItemIdentifier =
-							infoItemReference.getInfoItemIdentifier();
+						ClassNameClassPKInfoItemIdentifier
+							classNameClassPKInfoItemIdentifier =
+								(ClassNameClassPKInfoItemIdentifier)
+									infoItemIdentifier;
 
-						if (infoItemIdentifier instanceof
-								ClassNameClassPKInfoItemIdentifier) {
-
-							ClassNameClassPKInfoItemIdentifier
-								classNameClassPKInfoItemIdentifier =
-									(ClassNameClassPKInfoItemIdentifier)
-										infoItemIdentifier;
-
-							classPK =
-								classNameClassPKInfoItemIdentifier.getClassPK();
-						}
-
-						Class<?> genericClass = GenericUtil.getGenericClass(
-							contentDashboardItemSubtype);
-
-						return JSONUtil.put(
-							"className", infoItemReference.getClassName()
-						).put(
-							"classPK", classPK
-						).put(
-							"entryClassName", genericClass.getName()
-						).toString();
+						classPK =
+							classNameClassPKInfoItemIdentifier.getClassPK();
 					}
-				).toArray(
-					String[]::new
-				);
-			}
+
+					Class<?> genericClass = GenericUtil.getGenericClass(
+						contentDashboardItemSubtype);
+
+					return JSONUtil.put(
+						"className", infoItemReference.getClassName()
+					).put(
+						"classPK", classPK
+					).put(
+						"entryClassName", genericClass.getName()
+					).toString();
+				},
+				String.class)
 		).buildString();
 	}
 

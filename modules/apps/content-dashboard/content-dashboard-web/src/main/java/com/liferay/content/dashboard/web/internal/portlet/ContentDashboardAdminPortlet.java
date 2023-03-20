@@ -28,13 +28,13 @@ import com.liferay.content.dashboard.web.internal.display.context.ContentDashboa
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminSharingDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
-import com.liferay.content.dashboard.web.internal.provider.AssetVocabulariesProvider;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardUtil;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
@@ -128,9 +128,21 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			contentDashboardItemSearchContainerFactory.create();
 
-		List<AssetVocabulary> assetVocabularies =
-			_assetVocabulariesProvider.getAssetVocabularies(
-				ContentDashboardUtil.getAssetVocabularyIds(renderRequest));
+		List<AssetVocabulary> assetVocabularies = TransformUtil.transformToList(
+			ContentDashboardUtil.getAssetVocabularyIds(renderRequest),
+			assetVocabularyId -> {
+				AssetVocabulary assetVocabulary =
+					_assetVocabularyLocalService.fetchAssetVocabulary(
+						assetVocabularyId);
+
+				if ((assetVocabulary == null) ||
+					(assetVocabulary.getCategoriesCount() <= 0)) {
+
+					return null;
+				}
+
+				return assetVocabulary;
+			});
 
 		ContentDashboardAdminDisplayContext
 			contentDashboardAdminDisplayContext =
@@ -186,9 +198,6 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetVocabulariesProvider _assetVocabulariesProvider;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

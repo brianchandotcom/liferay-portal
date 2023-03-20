@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,8 +62,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -331,19 +330,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 
-		List<AssetTag> assetTags = contentDashboardItem.getAssetTags();
-
-		Stream<AssetTag> stream = assetTags.stream();
-
 		Assert.assertEquals(
 			JSONUtil.putAll(
-				stream.map(
-					AssetTag::getName
-				).collect(
-					Collectors.toList()
-				).toArray(
-					new String[0]
-				)
+				ListUtil.toArray(
+					contentDashboardItem.getAssetTags(), AssetTag.NAME_ACCESSOR)
 			).toString(),
 			tagsJSONArray.toString());
 
@@ -763,15 +753,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						HttpServletRequest httpServletRequest,
 						ContentDashboardItemAction.Type... types) {
 
-					Stream<ContentDashboardItemAction> stream =
-						_contentDashboardItemActions.stream();
-
-					return stream.filter(
+					return ListUtil.filter(
+						_contentDashboardItemActions,
 						contentDashboardItemAction -> ArrayUtil.contains(
-							types, contentDashboardItemAction.getType())
-					).collect(
-						Collectors.toList()
-					);
+							types, contentDashboardItemAction.getType()));
 				}
 
 				@Override

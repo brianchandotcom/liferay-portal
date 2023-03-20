@@ -16,7 +16,6 @@ package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
@@ -35,6 +34,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -515,18 +515,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			_liferayPortletResponse.getNamespace() + "selectedAssetCategory"
 		).setParameter(
 			"selectedCategories",
-			() -> {
-				List<Long> assetCategoryIds =
-					_contentDashboardAdminDisplayContext.getAssetCategoryIds();
-
-				Stream<Long> assetCategoryIdsStream = assetCategoryIds.stream();
-
-				return assetCategoryIdsStream.map(
-					String::valueOf
-				).collect(
-					Collectors.joining(StringPool.COMMA)
-				);
-			}
+			StringUtil.merge(
+				_contentDashboardAdminDisplayContext.getAssetCategoryIds(),
+				StringPool.COMMA)
 		).setParameter(
 			"showSelectedCounter", true
 		).setParameter(
@@ -538,20 +529,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					(ThemeDisplay)_liferayPortletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				List<AssetVocabulary> assetVocabularies =
+				return StringUtil.merge(
 					_assetVocabularyLocalService.getCompanyVocabularies(
-						themeDisplay.getCompanyId());
-
-				Stream<AssetVocabulary> assetVocabularyStream =
-					assetVocabularies.stream();
-
-				return assetVocabularyStream.map(
-					AssetVocabulary::getVocabularyId
-				).map(
-					String::valueOf
-				).collect(
-					Collectors.joining(StringPool.COMMA)
-				);
+						themeDisplay.getCompanyId()),
+					assetVocabulary -> String.valueOf(
+						assetVocabulary.getVocabularyId()),
+					StringPool.COMMA);
 			}
 		).setWindowState(
 			LiferayWindowState.POP_UP
@@ -573,28 +556,16 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					(ThemeDisplay)_liferayPortletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				List<Long> groupIds = _groupLocalService.getGroupIds(
-					themeDisplay.getCompanyId(), true);
-
-				Stream<Long> groupIdsStream = groupIds.stream();
-
-				return groupIdsStream.map(
-					String::valueOf
-				).collect(
-					Collectors.joining(StringPool.COMMA)
-				);
+				return StringUtil.merge(
+					_groupLocalService.getGroupIds(
+						themeDisplay.getCompanyId(), true),
+					StringPool.COMMA);
 			}
 		).setParameter(
 			"selectedTagNames",
-			() -> {
-				Set<String> assetTagIds =
-					_contentDashboardAdminDisplayContext.getAssetTagIds();
-
-				Stream<String> assetTagIdsStream = assetTagIds.stream();
-
-				return assetTagIdsStream.collect(
-					Collectors.joining(StringPool.COMMA));
-			}
+			StringUtil.merge(
+				_contentDashboardAdminDisplayContext.getAssetTagIds(),
+				StringPool.COMMA)
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildPortletURL();

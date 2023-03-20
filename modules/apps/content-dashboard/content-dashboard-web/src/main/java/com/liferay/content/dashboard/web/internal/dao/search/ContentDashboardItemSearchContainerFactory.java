@@ -23,6 +23,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,11 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -116,24 +114,11 @@ public class ContentDashboardItemSearchContainerFactory {
 		SearchResponse searchResponse = _getSearchResponse(end, start);
 
 		searchContainer.setResultsAndTotal(
-			() -> _getContentDashboardItems(searchResponse.getDocuments71()),
+			() -> TransformUtil.transform(
+				searchResponse.getDocuments71(), this::_toContentDashboardItem),
 			searchResponse.getTotalHits());
 
 		return searchContainer;
-	}
-
-	private List<ContentDashboardItem<?>> _getContentDashboardItems(
-		List<Document> documents) {
-
-		Stream<Document> stream = documents.stream();
-
-		return stream.map(
-			this::_toContentDashboardItem
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private SearchContainer<ContentDashboardItem<?>>

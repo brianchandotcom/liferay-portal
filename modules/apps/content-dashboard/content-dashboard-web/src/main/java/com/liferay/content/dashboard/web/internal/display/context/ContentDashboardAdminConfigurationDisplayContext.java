@@ -136,7 +136,9 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		}
 
 		_assetVocabularies = _assetVocabularyLocalService.getGroupVocabularies(
-			_getGroupIds(_themeDisplay.getCompanyId()));
+			ArrayUtil.toLongArray(
+				_groupLocalService.getGroupIds(
+					_themeDisplay.getCompanyId(), true)));
 
 		return _assetVocabularies;
 	}
@@ -170,16 +172,6 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		}
 
 		return _availableAssetVocabularies;
-	}
-
-	private long[] _getGroupIds(long companyId) {
-		List<Long> groupIds = _groupLocalService.getGroupIds(companyId, true);
-
-		Stream<Long> stream = groupIds.stream();
-
-		return stream.mapToLong(
-			groupId -> groupId
-		).toArray();
 	}
 
 	private JSONObject _toJSONObject(AssetVocabulary assetVocabulary) {

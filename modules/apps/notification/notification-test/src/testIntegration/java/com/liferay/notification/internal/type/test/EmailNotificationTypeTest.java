@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
@@ -98,12 +97,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntries.get(0);
 
-		Assert.assertEquals("Body termValue", notificationQueueEntry.getBody());
+		Assert.assertEquals("termValue", notificationQueueEntry.getBody());
 		Assert.assertEquals(
 			NotificationQueueEntryConstants.STATUS_SENT,
 			notificationQueueEntry.getStatus());
-		Assert.assertEquals(
-			"Subject termValue", notificationQueueEntry.getSubject());
+		Assert.assertEquals("termValue", notificationQueueEntry.getSubject());
 
 		NotificationRecipient notificationRecipient =
 			notificationQueueEntry.getNotificationRecipient();
@@ -156,19 +154,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		NotificationTemplate notificationTemplate =
 			notificationTemplateLocalService.createNotificationTemplate(0L);
 
-		StringBuilder sb = new StringBuilder();
-
-		contentTermNames.forEach(
-			subjectTermName -> sb.append(StringPool.SPACE + subjectTermName));
-
-		notificationTemplate.setBody("Body" + sb.toString());
-
+		notificationTemplate.setBody(
+			ListUtil.toString(contentTermNames, (String)null));
 		notificationTemplate.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setRecipientType(
 			NotificationRecipientConstants.TYPE_EMAIL);
-		notificationTemplate.setSubject("Subject" + sb.toString());
+		notificationTemplate.setSubject(
+			ListUtil.toString(contentTermNames, (String)null));
 		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
 
 		notificationContext.setNotificationTemplate(notificationTemplate);
@@ -220,16 +214,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		assertTerms(
 			ListUtil.fromMapValues(objectEntryValues),
 			ListUtil.fromString(
-				StringUtil.removeSubstring(
-					notificationQueueEntry.getSubject(), "Subject "),
-				StringPool.BLANK));
+				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
 		assertTerms(
 			ListUtil.fromMapValues(objectEntryValues),
 			ListUtil.fromString(
-				StringUtil.removeSubstring(
-					notificationQueueEntry.getSubject(), "Body "),
-				StringPool.BLANK));
+				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
 		_testRelevantUserTermValues(getAuthorValues());
 		_testRelevantUserTermValues(getCurrentUserValues());
@@ -277,16 +267,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		assertTerms(
 			ListUtil.fromMapValues(values),
 			ListUtil.fromString(
-				StringUtil.removeSubstring(
-					notificationQueueEntry.getSubject(), "Subject "),
-				StringPool.BLANK));
+				notificationQueueEntry.getSubject(), StringPool.BLANK));
 
 		assertTerms(
 			ListUtil.fromMapValues(values),
 			ListUtil.fromString(
-				StringUtil.removeSubstring(
-					notificationQueueEntry.getSubject(), "Body "),
-				StringPool.BLANK));
+				notificationQueueEntry.getSubject(), StringPool.BLANK));
 	}
 
 }

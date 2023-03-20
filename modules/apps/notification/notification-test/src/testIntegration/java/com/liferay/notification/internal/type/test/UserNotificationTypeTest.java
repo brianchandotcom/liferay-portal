@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
@@ -100,15 +99,12 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		NotificationTemplate notificationTemplate =
 			notificationTemplateLocalService.createNotificationTemplate(0L);
 
-		StringBuilder sb = new StringBuilder();
-
-		termNames.forEach(termName -> sb.append(StringPool.SPACE + termName));
-
 		notificationTemplate.setEditorType(
 			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setRecipientType(recipientType);
-		notificationTemplate.setSubject("Subject" + sb.toString());
+		notificationTemplate.setSubject(
+			ListUtil.toString(termNames, (String)null));
 		notificationTemplate.setType(
 			NotificationConstants.TYPE_USER_NOTIFICATION);
 
@@ -266,9 +262,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		assertTerms(
 			ListUtil.fromMapValues(values),
 			ListUtil.fromString(
-				StringUtil.removeSubstring(
-					notificationQueueEntry.getSubject(), "Subject "),
-				StringPool.BLANK));
+				notificationQueueEntry.getSubject(), StringPool.BLANK));
 	}
 
 }

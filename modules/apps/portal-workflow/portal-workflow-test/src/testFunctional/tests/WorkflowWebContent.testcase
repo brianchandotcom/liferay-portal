@@ -103,20 +103,21 @@ definition {
 	@description = "LRQA-70845 Verify that cannot bypass workflow by duplicating article."
 	@priority = 5
 	test CannotBypassWorkflowByduplicatingArticle {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "quarantine";
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",
 			userLastName = "user1",
 			userScreenName = "user1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
 
 		User.openUsersAdmin();
 
@@ -132,22 +133,6 @@ definition {
 		User.assignSiteRoleCP(
 			siteRoleName = "Site Owner",
 			userScreenName = "user1");
-
-		UserNavigator.gotoPassword();
-
-		User.setPasswordByResetLink(
-			newPassword1 = "password",
-			newPassword2 = "password");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "password",
-			userEmailAddress = "user1@liferay.com");
-
-		User.setPasswordByResetLink(
-			newPassword1 = "test",
-			newPassword2 = "test");
 
 		Navigator.openURL();
 

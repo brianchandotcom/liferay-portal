@@ -1,10 +1,36 @@
 import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
-import {AppProps} from '../../components/DashboardTable/DashboardTable';
+import {
+	AppProps,
+	DashboardTable,
+} from '../../components/DashboardTable/DashboardTable';
+import {DashboardTableRow} from '../../components/DashboardTable/DashboardTableRow';
 import {getProducts} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
+
+const tableHeaders = [
+	{
+		iconSymbol: 'order-arrow',
+		title: 'Name',
+	},
+	{
+		title: 'Version',
+	},
+	{
+		title: 'Type',
+	},
+	{
+		title: 'Last Updated',
+	},
+	{
+		title: 'Rating',
+	},
+	{
+		title: 'Status',
+	},
+];
 
 export function PublishedAppsDashboardPage() {
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
@@ -44,6 +70,14 @@ export function PublishedAppsDashboardPage() {
 			items={apps}
 			messages={messages}
 			setDashboardNavigationItems={setDashboardNavigationItems}
-		/>
+		>
+			<DashboardTable<AppProps>
+				emptyStateMessage={messages.emptyStateMessage}
+				items={apps}
+				tableHeaders={tableHeaders}
+			>
+				{(item) => <DashboardTableRow item={item} key={item.name} />}
+			</DashboardTable>
+		</DashboardPage>
 	);
 }

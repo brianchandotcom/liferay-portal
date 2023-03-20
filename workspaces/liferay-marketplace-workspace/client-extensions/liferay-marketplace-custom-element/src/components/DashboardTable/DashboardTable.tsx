@@ -1,10 +1,11 @@
+import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 
-import swapVert from '../../assets/icons/swap-vert.svg';
-
 import './DashboardTable.scss';
+
+import React, {ReactNode} from 'react';
+
 import {DashboardEmptyTable} from './DashboardEmptyTable';
-import {DashboardTableRow} from './DashboardTableRow';
 
 export type AppProps = {
 	image: string;
@@ -18,19 +19,29 @@ export type AppProps = {
 	updatedResponsible: string;
 	version: string;
 };
-interface DashboardTableProps {
-	items: AppProps[];
+
+export type TableHeaders = {
+	iconSymbol?: string;
+	title: string;
+}[];
+
+interface DashboardTableProps<T> {
+	children: (item: T) => ReactNode;
 	emptyStateMessage: {
 		description1: string;
 		description2: string;
 		title: string;
 	};
+	items: T[];
+	tableHeaders: TableHeaders;
 }
 
-export function DashboardTable({
+export function DashboardTable<T>({
+	children,
 	emptyStateMessage,
 	items,
-}: DashboardTableProps) {
+	tableHeaders,
+}: DashboardTableProps<T>) {
 	const {description1, description2, title} = emptyStateMessage;
 
 	if (!items.length) {
@@ -46,54 +57,26 @@ export function DashboardTable({
 		return (
 			<ClayTable borderless className="dashboard-table-container">
 				<ClayTable.Head>
-					<ClayTable.Cell headingCell>
-						<div className="dashboard-table-header-name">
-							<span className="dashboard-table-header-text">
-								Name
-							</span>
+					{tableHeaders.map((tableHeader) => (
+						<ClayTable.Cell headingCell key={tableHeader.title}>
+							<div className="dashboard-table-header-name">
+								<span className="dashboard-table-header-text">
+									{tableHeader.title}
+								</span>
 
-							<img
-								alt="Swap Vert"
-								className="dashboard-table-header-name-icon"
-								src={swapVert}
-							/>
-						</div>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell>
-						<span className="dashboard-table-header-text">
-							Version
-						</span>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell>
-						<span className="dashboard-table-header-text">
-							Type
-						</span>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell>
-						<span className="dashboard-table-header-text">
-							Last Updated
-						</span>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell>
-						<span className="dashboard-table-header-text">
-							Rating
-						</span>
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell>
-						<span className="dashboard-table-header-text">
-							Status
-						</span>
-					</ClayTable.Cell>
+								{tableHeader.iconSymbol && (
+									<ClayIcon symbol={tableHeader.iconSymbol} />
+								)}
+							</div>
+						</ClayTable.Cell>
+					))}
 				</ClayTable.Head>
 
 				<ClayTable.Body>
-					{items.map((item) => (
-						<DashboardTableRow item={item} key={item.name} />
+					{items.map((item, index) => (
+						<React.Fragment key={index}>
+							{children(item)}
+						</React.Fragment>
 					))}
 				</ClayTable.Body>
 			</ClayTable>

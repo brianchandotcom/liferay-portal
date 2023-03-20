@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
@@ -231,6 +233,13 @@ public class DefaultUserFieldExpressionHandler
 
 			newUser = _userLocalService.updateEmailAddressVerified(
 				newUser.getUserId(), true);
+		}
+
+		if (PrefsPropsUtil.getBoolean(
+				currentUser.getCompanyId(),
+				PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
+
+			newUser.setScreenName(currentUser.getScreenName());
 		}
 
 		if (Objects.equals(

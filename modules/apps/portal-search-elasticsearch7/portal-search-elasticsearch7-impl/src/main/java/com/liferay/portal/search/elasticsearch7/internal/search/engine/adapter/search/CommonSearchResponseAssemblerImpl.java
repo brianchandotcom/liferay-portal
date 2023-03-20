@@ -67,6 +67,7 @@ public class CommonSearchResponseAssemblerImpl
 		_setExecutionProfile(searchResponse, baseSearchResponse);
 		_setExecutionTime(searchResponse, baseSearchResponse);
 		_setPointInTimeId(searchResponse, baseSearchResponse);
+		_setScrollId(searchResponse, baseSearchResponse);
 		_setSearchRequestString(searchSourceBuilder, baseSearchResponse);
 		setSearchResponseString(
 			searchResponse, baseSearchRequest, baseSearchResponse);
@@ -196,6 +197,14 @@ public class CommonSearchResponseAssemblerImpl
 		TimeValue tookTimeValue = searchResponse.getTook();
 
 		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
+	}
+
+	private void _setScrollId(
+		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+
+		if (searchResponse.getScrollId() != null) {
+			baseSearchResponse.setScrollId(searchResponse.getScrollId());
+		}
 	}
 
 	private void _setPointInTimeId(

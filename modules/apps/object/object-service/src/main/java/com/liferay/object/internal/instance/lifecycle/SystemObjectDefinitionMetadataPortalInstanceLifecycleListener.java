@@ -51,6 +51,7 @@ import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -93,7 +94,9 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_apply(company.getCompanyId(), systemObjectDefinitionMetadata);
 		}
 
-		_createModifiableSystemObjectDefinitions(company);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			_createModifiableSystemObjectDefinitions(company);
+		}
 	}
 
 	@Activate

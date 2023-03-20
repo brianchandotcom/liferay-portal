@@ -254,7 +254,11 @@ components:
                                                     type: array
                                                 helpText:
                                                     type: string
+                                                helpTextLocalized:
+                                                    type: string
                                                 label:
+                                                    type: string
+                                                labelLocalized:
                                                     type: string
                                                 name:
                                                     type: string

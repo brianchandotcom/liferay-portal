@@ -366,8 +366,8 @@ definition {
 	test DisableShowParentSite {
 		task ("Add a child site") {
 			HeadlessSite.addSite(
-				parentSiteName = "Child SiteName",
-				siteName = "Test Site Name");
+				parentSiteName = "Test Site Name",
+				siteName = "Child SiteName");
 		}
 
 		task ("Add a parent widget page in child site") {

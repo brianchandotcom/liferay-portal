@@ -717,8 +717,8 @@ definition {
 
 		task ("Add another child site to the site and a public page in it") {
 			HeadlessSite.addSite(
-				parentSiteName = "Child Site2Name",
-				siteName = "Site Name");
+				parentSiteName = "Site Name",
+				siteName = "Child Site2Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child Site2Name",

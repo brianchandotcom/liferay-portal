@@ -1204,8 +1204,8 @@ definition {
 
 		task ("Add a child site to the new site and a public page in it ") {
 			HeadlessSite.addSite(
-				parentSiteName = "Child SiteName",
-				siteName = "Site Name");
+				parentSiteName = "Site Name",
+				siteName = "Child SiteName");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child SiteName",

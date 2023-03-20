@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.highlight.Highlight;
-import com.liferay.portal.search.searcher.SearchTimeValue;
 import com.liferay.portal.search.sort.Sort;
 
 import java.util.ArrayList;
@@ -111,8 +110,8 @@ public class SearchSearchRequest
 		return _scrollId;
 	}
 
-	public SearchTimeValue getScrollSearchTimeValue() {
-		return _scrollSearchTimeValue;
+	public long getScrollKeepAliveMinutes() {
+		return _scrollKeepAliveMinutes;
 	}
 
 	public Object[] getSearchAfter() {
@@ -267,10 +266,8 @@ public class SearchSearchRequest
 		_scrollId = scrollId;
 	}
 
-	public void setScrollSearchTimeValue(
-		SearchTimeValue scrollSearchTimeValue) {
-
-		_scrollSearchTimeValue = scrollSearchTimeValue;
+	public void setScrollKeepAliveMinutes(long scrollKeepAliveMinutes) {
+		_scrollKeepAliveMinutes = scrollKeepAliveMinutes;
 	}
 
 	public void setSearchAfter(Object[] searchAfter) {
@@ -333,8 +330,8 @@ public class SearchSearchRequest
 	private String _preference;
 	private Boolean _scoreEnabled;
 	private String _scrollId;
-	private SearchTimeValue _scrollSearchTimeValue;
 	private Object[] _searchAfter;
+	private long _scrollKeepAliveMinutes;
 	private String[] _selectedFieldNames;
 	private Integer _size;
 	private List<Sort> _sorts = new ArrayList<>();

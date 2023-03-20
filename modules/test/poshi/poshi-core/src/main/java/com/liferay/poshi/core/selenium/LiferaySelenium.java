@@ -217,6 +217,8 @@ public interface LiferaySelenium {
 
 	public String getFirstNumberIncrement(String locator);
 
+	public String getHtmlNodeText(String locator) throws Exception;
+
 	public String getHtmlSource();
 
 	public String getJavaScriptResult(

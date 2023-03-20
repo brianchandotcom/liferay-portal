@@ -7,5 +7,6 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")
+	testIntegrationCompile project(":apps:static:portal:portal-profile-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

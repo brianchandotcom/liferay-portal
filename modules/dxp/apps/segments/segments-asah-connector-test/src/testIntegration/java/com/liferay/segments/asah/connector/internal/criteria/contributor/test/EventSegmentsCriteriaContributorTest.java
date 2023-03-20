@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.profile.PortalProfile;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.criteria.Criteria;
@@ -42,6 +44,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
+import org.osgi.util.promise.Promise;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -59,22 +64,34 @@ public class EventSegmentsCriteriaContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			EventSegmentsCriteriaContributorTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(_portalProfile.getClass());
+
+		_componentDescriptionDTO =
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				bundle, _CLASS_NAME_EVENT_SEGMENTS_CRITERIA_CONTRIBUTOR);
+
+		Promise<?> promise = _serviceComponentRuntime.enableComponent(
+			_componentDescriptionDTO);
+
+		promise.getValue();
 
 		_serviceTracker = new ServiceTracker<>(
 			bundle.getBundleContext(),
 			FrameworkUtil.createFilter(
-				"(component.name=com.liferay.segments.asah.connector." +
-					"internal.criteria.contributor." +
-						"EventSegmentsCriteriaContributor)"),
+				"(component.name=" +
+					_CLASS_NAME_EVENT_SEGMENTS_CRITERIA_CONTRIBUTOR + ")"),
 			null);
 
 		_serviceTracker.open();
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		Promise<?> promise = _serviceComponentRuntime.disableComponent(
+			_componentDescriptionDTO);
+
+		promise.getValue();
+
 		if (_serviceTracker != null) {
 			_serviceTracker.close();
 		}
@@ -179,6 +196,21 @@ public class EventSegmentsCriteriaContributorTest {
 
 		return themeDisplay;
 	}
+
+	private static final String
+		_CLASS_NAME_EVENT_SEGMENTS_CRITERIA_CONTRIBUTOR =
+			"com.liferay.segments.asah.connector.internal.criteria." +
+				"contributor.EventSegmentsCriteriaContributor";
+
+	private static ComponentDescriptionDTO _componentDescriptionDTO;
+
+	@Inject(
+		filter = "component.name=com.liferay.segments.asah.connector.internal.portal.profile.ModulePortalProfile"
+	)
+	private PortalProfile _portalProfile;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	private ServiceTracker<Object, Object> _serviceTracker;
 

@@ -69,18 +69,27 @@ export default function ({
 	);
 
 	if (isExport) {
+		const containsHeadersInput = document.querySelector(
+			`#${namespace}containsHeaders`
+		);
 		const containsHeadersCheckboxWrapper = document
 			.getElementById(`${namespace}containsHeaders`)
 			.closest('.contains-headers-wrapper');
 
 		externalTypeInput.addEventListener('change', ({target}) => {
 			if (target.value === 'CSV') {
+				containsHeadersInput.disabled = false;
+
 				containsHeadersCheckboxWrapper.classList.remove('d-none');
 			}
 			else {
+				containsHeadersInput.disabled = true;
+
 				containsHeadersCheckboxWrapper.classList.add('d-none');
 			}
 		});
+
+		externalTypeInput.dispatchEvent(new Event('change'));
 	}
 	else {
 		handleOverrideExistingRecordsCheckbox(namespace);

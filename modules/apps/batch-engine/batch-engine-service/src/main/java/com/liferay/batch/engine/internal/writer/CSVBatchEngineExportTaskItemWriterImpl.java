@@ -14,6 +14,8 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -27,7 +29,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
@@ -80,8 +81,7 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 
 	@Override
 	public void write(Collection<?> items) throws Exception {
-		DateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		DateFormat dateFormat = new ISO8601DateFormat();
 
 		for (Object item : items) {
 			for (Object[] values : _columnValuesExtractor.extractValues(item)) {

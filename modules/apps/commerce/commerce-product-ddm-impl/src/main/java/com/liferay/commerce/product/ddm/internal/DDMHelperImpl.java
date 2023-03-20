@@ -226,7 +226,7 @@ public class DDMHelperImpl implements DDMHelper {
 			_createDDMFormRuleInputMapping(
 				ddmForm, groupId, commerceAccountId, cpDefinitionId, companyId,
 				userId, locale),
-			"), '", _createDDMFormRuleOutputMapping(ddmForm));
+			"), '", _createDDMFormRuleOutputMapping(ddmForm), "')");
 	}
 
 	private String _createDDMFormRuleInputMapping(

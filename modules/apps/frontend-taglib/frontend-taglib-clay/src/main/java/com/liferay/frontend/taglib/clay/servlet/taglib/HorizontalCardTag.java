@@ -227,16 +227,14 @@ public class HorizontalCardTag extends BaseCardTag {
 		if ((href != null) && !disabled) {
 			LinkTag linkTag = new LinkTag();
 
-			if (isTranslated() != null) {
-				linkTag.setTranslated(isTranslated());
-			}
-
 			linkTag.setCssClass("text-truncate");
 			linkTag.setHref(href);
 
 			if (title != null) {
 				linkTag.setLabel(title);
 			}
+
+			linkTag.setTranslated(isTranslated());
 
 			linkTag.doTag(pageContext);
 		}

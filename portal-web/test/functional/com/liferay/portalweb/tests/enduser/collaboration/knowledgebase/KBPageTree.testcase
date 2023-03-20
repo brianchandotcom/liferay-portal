@@ -167,17 +167,23 @@ definition {
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
+		Refresh();
+
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
 		KBArticle.closePageTreePanel(section = "Folders and Articles");
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
+		Refresh();
+
 		KBArticle.openPageTreePanel(section = "Templates");
 
 		ProductMenuHelper.openProductMenu();
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		Refresh();
 
 		KBArticle.openPageTreePanel(section = "Templates");
 
@@ -185,11 +191,15 @@ definition {
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
+		Refresh();
+
 		KBArticle.openPageTreePanel(section = "Suggestions");
 
 		ProductMenuHelper.openProductMenu();
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		Refresh();
 
 		KBArticle.openPageTreePanel(section = "Suggestions");
 

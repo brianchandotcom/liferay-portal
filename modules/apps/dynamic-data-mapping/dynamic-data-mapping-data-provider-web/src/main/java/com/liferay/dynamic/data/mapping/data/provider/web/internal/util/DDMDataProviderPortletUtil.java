@@ -21,12 +21,10 @@ import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceModi
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Leonardo Barros
@@ -60,20 +58,18 @@ public class DDMDataProviderPortletUtil {
 	public static Set<String> getDDMFormFieldNamesByType(
 		DDMForm ddmForm, String type) {
 
+		Set<String> ddmFormFieldNames = new HashSet<>();
+
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Collection<DDMFormField> ddmFormFields = ddmFormFieldsMap.values();
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (Objects.equals(type, ddmFormField.getType())) {
+				ddmFormFieldNames.add(ddmFormField.getName());
+			}
+		}
 
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
-
-		return ddmFormFieldsStream.filter(
-			ddmFormField -> Objects.equals(ddmFormField.getType(), type)
-		).map(
-			DDMFormField::getName
-		).collect(
-			Collectors.toSet()
-		);
+		return ddmFormFieldNames;
 	}
 
 }

@@ -228,8 +228,8 @@ public class SearchHitImpl implements SearchHit, Serializable {
 		_score = score;
 	}
 
-	private void _setSortValues(Object[] sort) {
-		_sortValues = sort;
+	private void _setSortValues(Object[] sortValues) {
+		_sortValues = sortValues;
 	}
 
 	private void _setVersion(long version) {

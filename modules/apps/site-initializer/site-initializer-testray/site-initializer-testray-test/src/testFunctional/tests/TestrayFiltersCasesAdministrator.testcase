@@ -1,0 +1,91 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	var caseType = "Case Type 1";
+	var componentName = "Component 1";
+	var projectName = "Project 1";
+	var teamName = "Team 1";
+	var testSiteName = "Testray 2";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.addTestraySite(siteName = ${testSiteName});
+		}
+
+		task ("Given that I create all the necessary objects") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
+
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+			JSONTestray.addCases(
+                description = "Description 1",
+                steps = "Steps 1",
+				caseName = "Case 1",
+                priority = "5",
+				caseType = ${caseType},
+				componentName = ${componentName},
+				projectName = ${projectName});
+
+            JSONTestray.addCases(
+                description = "Description 2",
+                steps = "Steps 2",
+				caseName = "Case 2",
+                priority = "4",
+				caseType = ${caseType},
+				componentName = ${componentName},
+				projectName = ${projectName});  
+		}
+
+        task ("Go to the Cases page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        JSONTestrayAPI.deleteObjectViaAPI(
+			object = "teams",
+			objectName = ${teamName});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
+
+        JSONTestrayAPI.deleteProject(projectName = ${projectName});
+
+		Testray.testrayApisTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+}

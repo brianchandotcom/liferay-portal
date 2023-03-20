@@ -487,23 +487,20 @@ definition {
 
 			Navigator.gotoBack();
 
-			AssertCssValue(
-				key_text = "New Entry",
-				locator1 = "Button#ANY",
-				locator2 = "background-color",
-				value1 = "rgba(0, 255, 0, 1)");
+			Css.assertCssCustomPropertyValue(
+				attribute = "background-color",
+				element = "//a[contains(@class,'btn')][normalize-space()='New Entry']",
+				expected = "rgb(0, 255, 0)");
 
-			AssertCssValue(
-				key_text = "Subscribe",
-				locator1 = "Button#ANY",
-				locator2 = "color",
-				value1 = "rgba(255, 0, 0, 1)");
+			Css.assertCssCustomPropertyValue(
+				attribute = "color",
+				element = "//a[contains(@class,'btn')][normalize-space()='Subscribe']",
+				expected = "rgb(255, 0, 0)");
 
-			AssertCssValue(
-				key_text = "RSS",
-				locator1 = "Button#ANY",
-				locator2 = "color",
-				value1 = "rgba(0, 0, 255, 1)");
+			Css.assertCssCustomPropertyValue(
+				attribute = "color",
+				element = "//a[contains(@class,'btn')][normalize-space()='RSS']",
+				expected = "rgb(0, 0, 255)");
 		}
 
 		task ("Change to default style book via Look and Feel") {
@@ -532,23 +529,20 @@ definition {
 
 			Navigator.gotoBack();
 
-			AssertCssValue(
-				key_text = "New Entry",
-				locator1 = "Button#ANY",
-				locator2 = "background-color",
-				value1 = "rgba(11, 95, 255, 1)");
+			Css.assertCssCustomPropertyValue(
+				attribute = "background-color",
+				element = "//a[contains(@class,'btn')][normalize-space()='New Entry']",
+				expected = "rgb(11, 95, 255)");
 
-			AssertCssValue(
-				key_text = "Subscribe",
-				locator1 = "Button#ANY",
-				locator2 = "color",
-				value1 = "rgba(107, 108, 126, 1)");
+			Css.assertCssCustomPropertyValue(
+				attribute = "color",
+				element = "//a[contains(@class,'btn')][normalize-space()='Subscribe']",
+				expected = "rgb(107, 108, 126)");
 
-			AssertCssValue(
-				key_text = "RSS",
-				locator1 = "Button#ANY",
-				locator2 = "color",
-				value1 = "rgba(107, 108, 126, 1)");
+			Css.assertCssCustomPropertyValue(
+				attribute = "color",
+				element = "//a[contains(@class,'btn')][normalize-space()='RSS']",
+				expected = "rgb(107, 108, 126)");
 		}
 	}
 

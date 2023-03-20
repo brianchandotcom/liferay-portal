@@ -801,6 +801,31 @@ public class BundleSiteInitializerTest {
 			"Test Default Value",
 			expandoBridge.getAttribute("Test Expando Column 2"));
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
+
+		UnicodeProperties unicodeProperties =
+			expandoBridge.getAttributeProperties("Test Expando Column 1");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 2");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
+
+		expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.commerce.model.CommerceOrderItem");
+
+		Assert.assertNotNull(expandoBridge);
+		Assert.assertNotNull(
+			expandoBridge.getAttribute("Test Expando Column 3"));
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 3");
+
+		Assert.assertFalse(unicodeProperties.isEmpty());
+		Assert.assertFalse(
+			GetterUtil.getBoolean(unicodeProperties.getProperty("secret")));
 	}
 
 	private void _assertExpandoColumns2() {
@@ -824,6 +849,7 @@ public class BundleSiteInitializerTest {
 		unicodeProperties = expandoBridge.getAttributeProperties(
 			"Test Expando Column 2");
 
+		Assert.assertFalse(unicodeProperties.isEmpty());
 		Assert.assertEquals(
 			2,
 			GetterUtil.getInteger(unicodeProperties.getProperty("index-type")));
@@ -833,11 +859,13 @@ public class BundleSiteInitializerTest {
 			"com.liferay.commerce.model.CommerceOrderItem");
 
 		Assert.assertNotNull(expandoBridge);
-		Assert.assertNotNull(expandoBridge.getAttribute("Test Expando Column 3"));
+		Assert.assertNotNull(
+			expandoBridge.getAttribute("Test Expando Column 3"));
 
 		unicodeProperties = expandoBridge.getAttributeProperties(
 			"Test Expando Column 3");
 
+		Assert.assertFalse(unicodeProperties.isEmpty());
 		Assert.assertTrue(
 			GetterUtil.getBoolean(unicodeProperties.getProperty("secret")));
 
@@ -2233,8 +2261,8 @@ public class BundleSiteInitializerTest {
 		siteInitializer.initialize(_group.getGroupId());
 
 		_assertAccounts2();
-		_assertListTypeDefinitions2();
 		_assertExpandoColumns2();
+		_assertListTypeDefinitions2();
 	}
 
 	@Inject

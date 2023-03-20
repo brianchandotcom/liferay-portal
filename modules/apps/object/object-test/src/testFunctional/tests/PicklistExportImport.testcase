@@ -84,12 +84,12 @@ definition {
 			Picklist.gotoPicklists();
 
 			Picklist.optionsPicklist(
-				menuItem = "Export",
+				menuItem = "Export as JSON",
 				picklistName = "Export Picklist");
 		}
 
 		task ("Then Picklist is exported successfully") {
-			Picklist.assertDownloadedPicklist(downloadedFile = "ListType_*");
+			ImportExport.assertDownloadedFileName(downloadedFile = "ListType_Export*");
 		}
 	}
 

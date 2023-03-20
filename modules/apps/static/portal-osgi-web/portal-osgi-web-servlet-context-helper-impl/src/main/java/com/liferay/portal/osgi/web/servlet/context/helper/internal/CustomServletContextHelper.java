@@ -226,7 +226,7 @@ public class CustomServletContextHelper
 					String patternExtension = urlPattern.substring(2);
 
 					if (Validator.isNotNull(patternExtension) &&
-						Objects.equals("*", patternExtension)) {
+						Objects.equals(patternExtension, "*")) {
 
 						forbidden = true;
 

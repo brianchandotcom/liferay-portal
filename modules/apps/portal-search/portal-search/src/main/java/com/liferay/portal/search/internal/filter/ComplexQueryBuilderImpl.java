@@ -152,13 +152,13 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 			if (Validator.isBlank(occur) || occur.equals("filter")) {
 				booleanQuery.addFilterQueryClauses(query);
 			}
-			else if (Objects.equals("must", occur)) {
+			else if (Objects.equals(occur, "must")) {
 				booleanQuery.addMustQueryClauses(query);
 			}
-			else if (Objects.equals("must_not", occur)) {
+			else if (Objects.equals(occur, "must_not")) {
 				booleanQuery.addMustNotQueryClauses(query);
 			}
-			else if (Objects.equals("should", occur)) {
+			else if (Objects.equals(occur, "should")) {
 				booleanQuery.addShouldQueryClauses(query);
 			}
 		}

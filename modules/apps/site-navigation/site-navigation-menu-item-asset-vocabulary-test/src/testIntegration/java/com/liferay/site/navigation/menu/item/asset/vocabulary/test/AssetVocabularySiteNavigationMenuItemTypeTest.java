@@ -646,7 +646,7 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 				"type", "asset-vocabulary"
 			).put(
 				"useCustomName",
-				String.valueOf(!Objects.equals("{}", localizedNames))
+				String.valueOf(!Objects.equals(localizedNames, "{}"))
 			).put(
 				"uuid", _assetVocabulary.getUuid()
 			).buildString(),

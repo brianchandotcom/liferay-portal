@@ -86,7 +86,7 @@ public class PortalLog4jTest {
 
 		for (Appender appender : appenders.values()) {
 			if ((appender instanceof ConsoleAppender) &&
-				Objects.equals("CONSOLE", appender.getName())) {
+				Objects.equals(appender.getName(), "CONSOLE")) {
 
 				ConsoleAppender consoleAppender =
 					ConsoleAppender.createDefaultAppenderForLayout(
@@ -107,11 +107,11 @@ public class PortalLog4jTest {
 				logger.addAppender(consoleAppender);
 			}
 			else if (appender instanceof RollingFileAppender) {
-				if (Objects.equals("TEXT_FILE", appender.getName())) {
+				if (Objects.equals(appender.getName(), "TEXT_FILE")) {
 					_textLogFilePath = _initFileAppender(
 						logger, appender, _tempLogFileDirPath.toString());
 				}
-				else if (Objects.equals("XML_FILE", appender.getName())) {
+				else if (Objects.equals(appender.getName(), "XML_FILE")) {
 					_xmlLogFilePath = _initFileAppender(
 						logger, appender, _tempLogFileDirPath.toString());
 				}

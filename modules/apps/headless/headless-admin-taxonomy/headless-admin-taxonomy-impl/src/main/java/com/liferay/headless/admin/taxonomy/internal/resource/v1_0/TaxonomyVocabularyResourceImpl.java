@@ -570,7 +570,7 @@ public class TaxonomyVocabularyResourceImpl
 	private long _getClassTypePK(long classNameId, String subtype, long groupId)
 		throws Exception {
 
-		if (Objects.equals("AllAssetSubtypes", subtype) ||
+		if (Objects.equals(subtype, "AllAssetSubtypes") ||
 			(classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) ||
 			(subtype == null)) {
 

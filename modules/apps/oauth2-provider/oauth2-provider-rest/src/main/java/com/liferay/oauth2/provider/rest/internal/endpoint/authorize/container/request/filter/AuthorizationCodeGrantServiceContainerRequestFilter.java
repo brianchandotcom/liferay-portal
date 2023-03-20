@@ -296,7 +296,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		String prompt = ParamUtil.getString(_httpServletRequest, "prompt");
 
 		if (oAuth2Application.isTrustedApplication() &&
-			Objects.equals("none", prompt)) {
+			Objects.equals(prompt, "none")) {
 
 			return true;
 		}

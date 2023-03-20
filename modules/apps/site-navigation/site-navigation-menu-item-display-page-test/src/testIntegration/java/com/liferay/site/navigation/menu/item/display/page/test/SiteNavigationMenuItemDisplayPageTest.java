@@ -505,7 +505,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 					defaultLocale, AssetCategory.class.getName())
 			).put(
 				"useCustomName",
-				String.valueOf(!Objects.equals("{}", localizedNames))
+				String.valueOf(!Objects.equals(localizedNames, "{}"))
 			).buildString(),
 			_serviceContext);
 	}

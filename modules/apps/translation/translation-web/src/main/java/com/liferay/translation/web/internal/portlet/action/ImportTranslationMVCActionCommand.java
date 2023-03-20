@@ -213,8 +213,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		throws XLIFFFileException {
 
 		if (!Objects.equals(ContentTypes.APPLICATION_ZIP, contentType) &&
-			!Objects.equals("application/x-xliff+xml", contentType) &&
-			!Objects.equals("application/xliff+xml", contentType)) {
+			!Objects.equals(contentType, "application/x-xliff+xml") &&
+			!Objects.equals(contentType, "application/xliff+xml")) {
 
 			throw new XLIFFFileException.MustBeValid(
 				"Unsupported content type: " + contentType);

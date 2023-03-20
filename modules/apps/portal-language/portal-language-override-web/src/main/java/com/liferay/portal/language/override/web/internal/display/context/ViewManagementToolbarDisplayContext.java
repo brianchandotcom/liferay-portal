@@ -89,7 +89,7 @@ public class ViewManagementToolbarDisplayContext
 
 		String navigation = getNavigation();
 
-		if (Objects.equals("all", navigation)) {
+		if (Objects.equals(navigation, "all")) {
 			return labelItems;
 		}
 

@@ -137,7 +137,7 @@ public interface Operation {
 		public Response getResponse(String mediaType, int responseCode) {
 			Map<Integer, Response> responses;
 
-			if (Objects.equals("*/*", mediaType)) {
+			if (Objects.equals(mediaType, "*/*")) {
 				if (_builder._responses.containsKey(mediaType)) {
 					responses = _builder._responses.get(mediaType);
 				}

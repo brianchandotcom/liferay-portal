@@ -64,7 +64,7 @@ public class Log4jConfigUtil {
 
 			AbstractConfiguration abstractConfiguration;
 
-			if (Objects.equals("Configuration", rootElement.getName())) {
+			if (Objects.equals(rootElement.getName(), "Configuration")) {
 				if (!GetterUtil.getBoolean(
 						rootElement.attributeValue("strict"))) {
 

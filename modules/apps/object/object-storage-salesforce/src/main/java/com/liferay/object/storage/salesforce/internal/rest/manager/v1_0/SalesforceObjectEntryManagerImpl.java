@@ -380,7 +380,7 @@ public class SalesforceObjectEntryManagerImpl
 				fieldName = parts[1];
 			}
 
-			if (Objects.equals("status", fieldName)) {
+			if (Objects.equals(fieldName, "status")) {
 				continue;
 			}
 

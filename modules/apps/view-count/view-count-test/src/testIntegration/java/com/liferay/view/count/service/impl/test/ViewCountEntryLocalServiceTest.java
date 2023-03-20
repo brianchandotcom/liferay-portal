@@ -150,7 +150,7 @@ public class ViewCountEntryLocalServiceTest {
 			SessionFactory.class.getClassLoader(),
 			new Class<?>[] {SessionFactory.class},
 			(proxy, method, args) -> {
-				if (Objects.equals("openSession", method.getName())) {
+				if (Objects.equals(method.getName(), "openSession")) {
 					return _createSessionProxy(
 						countDownLatch, sessionFactory.openSession(),
 						viewCountEntries);
@@ -167,7 +167,7 @@ public class ViewCountEntryLocalServiceTest {
 		return ProxyUtil.newProxyInstance(
 			Session.class.getClassLoader(), new Class<?>[] {Session.class},
 			(proxy, method, args) -> {
-				if (Objects.equals("get", method.getName()) &&
+				if (Objects.equals(method.getName(), "get") &&
 					(countDownLatch.getCount() > 0)) {
 
 					countDownLatch.countDown();

@@ -211,7 +211,7 @@ public class FinderCacheImplTest {
 				BundleContext.class.getClassLoader(),
 				new Class<?>[] {BundleContext.class},
 				(proxy, method, args) -> {
-					if (Objects.equals("createFilter", method.getName())) {
+					if (Objects.equals(method.getName(), "createFilter")) {
 						return ProxyFactory.newDummyInstance(Filter.class);
 					}
 

@@ -157,7 +157,7 @@ public class ContentFieldUtil {
 				dtoConverterContext.getUriInfoOptional();
 
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType()) ||
-				Objects.equals("date", ddmFormField.getType())) {
+				Objects.equals(ddmFormField.getType(), "date")) {
 
 				return new ContentFieldValue() {
 					{

@@ -156,7 +156,7 @@ public class UpgradePortletPreferences
 					portletSetupTitle = StringUtil.appendParentheticalSuffix(
 						portletSetupTitle, layout.getName(locale));
 				}
-				else if (Objects.equals("company", scopeType)) {
+				else if (Objects.equals(scopeType, "company")) {
 					portletSetupTitle = StringUtil.appendParentheticalSuffix(
 						portletSetupTitle, _language.get(locale, "global"));
 				}

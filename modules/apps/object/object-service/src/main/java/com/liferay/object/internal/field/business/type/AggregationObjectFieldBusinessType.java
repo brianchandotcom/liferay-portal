@@ -133,7 +133,7 @@ public class AggregationObjectFieldBusinessType
 		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
 			String name = objectFieldSetting.getName();
 
-			if (Objects.equals("filters", name)) {
+			if (Objects.equals(name, "filters")) {
 				objectFieldSettingsValuesMap.put(
 					name, objectFieldSetting.getObjectFilters());
 

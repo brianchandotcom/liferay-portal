@@ -1306,7 +1306,7 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 
-			if (Objects.equals("documentsAndMedia", fileSource)) {
+			if (Objects.equals(fileSource, "documentsAndMedia")) {
 				return;
 			}
 

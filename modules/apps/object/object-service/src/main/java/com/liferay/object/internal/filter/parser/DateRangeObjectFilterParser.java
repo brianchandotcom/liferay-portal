@@ -43,13 +43,13 @@ public class DateRangeObjectFilterParser implements ObjectFilterParser {
 
 		String filterBy = objectFilter.getFilterBy();
 
-		if (Objects.equals("createDate", objectFilter.getFilterBy()) ||
-			Objects.equals("modifiedDate", objectFilter.getFilterBy())) {
+		if (Objects.equals(objectFilter.getFilterBy(), "createDate") ||
+			Objects.equals(objectFilter.getFilterBy(), "modifiedDate")) {
 
 			ge += "T00:00:00.000Z";
 			le += "T23:59:59.999Z";
 
-			if (Objects.equals("createDate", objectFilter.getFilterBy())) {
+			if (Objects.equals(objectFilter.getFilterBy(), "createDate")) {
 				filterBy = "dateCreated";
 			}
 			else {

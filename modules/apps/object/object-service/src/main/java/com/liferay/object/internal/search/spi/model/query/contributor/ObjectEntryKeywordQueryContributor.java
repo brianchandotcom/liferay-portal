@@ -122,7 +122,7 @@ public class ObjectEntryKeywordQueryContributor
 						String objectFieldName =
 							objectViewColumn.getObjectFieldName();
 
-						if (Objects.equals("id", objectFieldName)) {
+						if (Objects.equals(objectFieldName, "id")) {
 							addObjectEntryTitle.set(true);
 						}
 

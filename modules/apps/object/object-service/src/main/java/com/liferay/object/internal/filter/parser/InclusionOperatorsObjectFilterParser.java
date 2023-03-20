@@ -55,7 +55,7 @@ public class InclusionOperatorsObjectFilterParser
 
 		List<String> values = new ArrayList<>();
 
-		if (Objects.equals("status", objectFilter.getFilterBy())) {
+		if (Objects.equals(objectFilter.getFilterBy(), "status")) {
 			for (Object value : (Object[])map.get("in")) {
 				values.add(
 					StringBundler.concat(

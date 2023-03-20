@@ -94,11 +94,11 @@ public class JournalContentPortletConfigurationListener
 		String lfrScopeType = portletPreferences.getValue(
 			"lfrScopeType", StringPool.BLANK);
 
-		if (group.isCompany() && Objects.equals("company", lfrScopeType)) {
+		if (group.isCompany() && Objects.equals(lfrScopeType, "company")) {
 			return false;
 		}
 
-		if (group.isLayout() && Objects.equals("layout", lfrScopeType)) {
+		if (group.isLayout() && Objects.equals(lfrScopeType, "layout")) {
 			return false;
 		}
 

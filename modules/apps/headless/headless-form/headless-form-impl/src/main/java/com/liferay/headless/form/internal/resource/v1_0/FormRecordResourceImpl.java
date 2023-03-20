@@ -188,7 +188,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		DDMForm ddmForm, DDMFormValues ddmFormValues) {
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			if (!Objects.equals("document_library", ddmFormField.getType())) {
+			if (!Objects.equals(ddmFormField.getType(), "document_library")) {
 				continue;
 			}
 

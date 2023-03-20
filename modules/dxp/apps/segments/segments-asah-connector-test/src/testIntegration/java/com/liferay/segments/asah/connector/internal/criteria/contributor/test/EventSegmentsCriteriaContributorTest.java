@@ -34,9 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,8 +62,8 @@ public class EventSegmentsCriteriaContributorTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(_portalProfile.getClass());
 
 		_componentDescriptionDTO =
@@ -85,8 +85,8 @@ public class EventSegmentsCriteriaContributorTest {
 		_serviceTracker.open();
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		Promise<?> promise = _serviceComponentRuntime.disableComponent(
 			_componentDescriptionDTO);
 
@@ -207,11 +207,11 @@ public class EventSegmentsCriteriaContributorTest {
 	@Inject(
 		filter = "component.name=com.liferay.segments.asah.connector.internal.portal.profile.ModulePortalProfile"
 	)
-	private PortalProfile _portalProfile;
+	private static PortalProfile _portalProfile;
 
 	@Inject
-	private ServiceComponentRuntime _serviceComponentRuntime;
+	private static ServiceComponentRuntime _serviceComponentRuntime;
 
-	private ServiceTracker<Object, Object> _serviceTracker;
+	private static ServiceTracker<Object, Object> _serviceTracker;
 
 }

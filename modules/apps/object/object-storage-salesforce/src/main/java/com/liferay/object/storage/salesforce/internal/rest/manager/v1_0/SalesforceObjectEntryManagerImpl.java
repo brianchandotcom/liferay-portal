@@ -278,10 +278,10 @@ public class SalesforceObjectEntryManagerImpl
 		return null;
 	}
 
-	private List<String> _getAccountsExternalReferenceCodeByUserId(long userId)
+	private List<String> _getAccountEntriesExternalReferenceCode(long userId)
 		throws Exception {
 
-		List<String> accountsExternalReferenceCode = new ArrayList<>();
+		List<String> accountEntriesExternalReferenceCode = new ArrayList<>();
 
 		for (AccountEntryUserRel accountEntryUserRel :
 				_accountEntryUserRelLocalService.
@@ -289,11 +289,11 @@ public class SalesforceObjectEntryManagerImpl
 
 			AccountEntry accountEntry = accountEntryUserRel.getAccountEntry();
 
-			accountsExternalReferenceCode.add(
+			accountEntriesExternalReferenceCode.add(
 				accountEntry.getExternalReferenceCode());
 		}
 
-		return accountsExternalReferenceCode;
+		return accountEntriesExternalReferenceCode;
 	}
 
 	private DateFormat _getDateFormat() {
@@ -318,7 +318,7 @@ public class SalesforceObjectEntryManagerImpl
 		return StringBundler.concat(
 			" WHERE ", objectField.getExternalReferenceCode(), " IN ('",
 			StringUtil.merge(
-				_getAccountsExternalReferenceCodeByUserId(
+				_getAccountEntriesExternalReferenceCode(
 					dtoConverterContext.getUserId()),
 				", '"),
 			"')");

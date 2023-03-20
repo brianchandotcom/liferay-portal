@@ -95,7 +95,7 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 			new File(workspaceDir, "modules"), "form-field", name,
 			"--js-framework", "react", "--liferay-version", _liferayVersion);
 
-		if (Objects.equals("7.2.1-1", _liferayVersion)) {
+		if (Objects.equals(_liferayVersion, "7.2.1-1")) {
 			testContains(
 				gradleProjectDir, "build.gradle",
 				"compileOnly group: \"com.liferay\", name: " +

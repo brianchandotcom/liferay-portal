@@ -204,7 +204,7 @@ public interface BaseProjectTemplatesTestCase {
 			return null;
 		}
 
-		if (Objects.equals(".", dir.toString()) || !dir.isAbsolute()) {
+		if (Objects.equals(dir.toString(), ".") || !dir.isAbsolute()) {
 			try {
 				dir = dir.getCanonicalFile();
 			}

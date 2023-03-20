@@ -91,7 +91,7 @@ public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 
 		Assert.assertTrue(
 			"Missing TLD classes:\n" + sb.toString(),
-			Objects.equals("", sb.toString()));
+			Objects.equals(sb.toString(), ""));
 	}
 
 	public Map<String, Set<String>> getTLDClassPaths(

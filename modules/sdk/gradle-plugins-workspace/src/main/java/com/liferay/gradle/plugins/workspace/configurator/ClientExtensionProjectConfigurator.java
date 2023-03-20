@@ -170,14 +170,14 @@ public class ClientExtensionProjectConfigurator
 				entry -> {
 					String id = entry.getKey();
 
-					if (Objects.equals("assemble", id)) {
+					if (Objects.equals(id, "assemble")) {
 						JsonNode assembleJsonNode = entry.getValue();
 
 						_configureAssembleClientExtensionTask(
 							project, assembleClientExtensionTaskProvider,
 							assembleJsonNode);
 					}
-					else if (Objects.equals("runtime", id)) {
+					else if (Objects.equals(id, "runtime")) {
 						JsonNode runtimeJsonNode = entry.getValue();
 
 						JsonNode runtimeTypeJsonNode = runtimeJsonNode.get(

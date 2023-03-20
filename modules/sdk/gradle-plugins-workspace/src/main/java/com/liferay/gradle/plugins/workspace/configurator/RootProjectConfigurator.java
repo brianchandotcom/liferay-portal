@@ -1078,7 +1078,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						try {
 							URL srcURL = (URL)src;
 
-							if (Objects.equals("file", srcURL.getProtocol())) {
+							if (Objects.equals(srcURL.getProtocol(), "file")) {
 								URI uri = project.uri(src);
 
 								file = project.file(uri);

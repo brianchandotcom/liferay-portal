@@ -247,7 +247,7 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
-		_setExternalReferenceCode(objectEntry, values);
+		_setExternalReferenceCode(objectDefinitionId, objectEntry, values);
 
 		objectEntry.setGroupId(groupId);
 		objectEntry.setCompanyId(user.getCompanyId());
@@ -1186,7 +1186,8 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry = objectEntryPersistence.findByPrimaryKey(objectEntryId);
 
-		_setExternalReferenceCode(objectEntry, values);
+		_setExternalReferenceCode(
+			objectEntry.getObjectDefinitionId(), objectEntry, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
@@ -3036,7 +3037,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _setExternalReferenceCode(
-			ObjectEntry objectEntry, Map<String, Serializable> values)
+			long objectDefinitionId, ObjectEntry objectEntry,
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
@@ -3044,16 +3046,16 @@ public class ObjectEntryLocalServiceImpl
 				String externalReferenceCode = String.valueOf(entry.getValue());
 
 				if (Validator.isNull(externalReferenceCode)) {
-					externalReferenceCode = String.valueOf(
-						objectEntry.getObjectEntryId());
+					break;
 				}
 
 				_validateExternalReferenceCode(
 					externalReferenceCode, objectEntry.getCompanyId(),
-					objectEntry.getObjectDefinitionId(),
-					objectEntry.getObjectEntryId());
+					objectDefinitionId, objectEntry.getObjectEntryId());
 
 				objectEntry.setExternalReferenceCode(externalReferenceCode);
+
+				return;
 			}
 		}
 

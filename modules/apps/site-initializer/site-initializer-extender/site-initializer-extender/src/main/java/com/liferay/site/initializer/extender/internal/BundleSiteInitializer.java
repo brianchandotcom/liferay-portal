@@ -709,51 +709,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext, _servletContext);
 	}
 
-	private void _addOrUpdateExpandoColumns(ServiceContext serviceContext)
-		throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/expando-columns.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			ExpandoBridge expandoBridge =
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(),
-					jsonObject.getString("modelResource"));
-
-			if (expandoBridge == null) {
-				continue;
-			}
-
-			if (expandoBridge.getAttribute(jsonObject.getString("name")) !=
-					null) {
-
-				expandoBridge.setAttributeDefault(
-					jsonObject.getString("name"),
-					_getSerializableObjectValue(
-						jsonObject.get("defaultValue")));
-
-				_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
-
-				continue;
-			}
-
-			expandoBridge.addAttribute(
-				jsonObject.getString("name"), jsonObject.getInt("dataType"),
-				_getSerializableObjectValue(jsonObject.get("defaultValue")));
-
-			_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
-		}
-	}
-
 	private void _addFragmentEntries(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues, long groupId,
@@ -1932,6 +1887,51 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"/site-initializer/documents/group", serviceContext,
 				siteNavigationMenuItemSettingsBuilder)
 		).build();
+	}
+
+	private void _addOrUpdateExpandoColumns(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/expando-columns.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			ExpandoBridge expandoBridge =
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("modelResource"));
+
+			if (expandoBridge == null) {
+				continue;
+			}
+
+			if (expandoBridge.getAttribute(jsonObject.getString("name")) !=
+					null) {
+
+				expandoBridge.setAttributeDefault(
+					jsonObject.getString("name"),
+					_getSerializableObjectValue(
+						jsonObject.get("defaultValue")));
+
+				_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
+
+				continue;
+			}
+
+			expandoBridge.addAttribute(
+				jsonObject.getString("name"), jsonObject.getInt("dataType"),
+				_getSerializableObjectValue(jsonObject.get("defaultValue")));
+
+			_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
+		}
 	}
 
 	private void _addOrUpdateJournalArticles(

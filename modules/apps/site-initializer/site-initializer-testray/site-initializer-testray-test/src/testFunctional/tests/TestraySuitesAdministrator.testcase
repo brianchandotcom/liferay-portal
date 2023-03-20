@@ -8,6 +8,12 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var caseName = "Case 1";
+	var caseType = "Case Type 1";
+	var componentName = "Component 1";
+	var projectName = "Project 1";
+	var suiteName = "Suite 1";
+	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
@@ -16,293 +22,316 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
-		task ("Go to Testray, Create Project and change pagination") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+		task ("Given that a Testray project are created via API") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.deleteAllProjects();
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.tearDownCP();
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
 
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "This is a test for LPS-162816 - Verify that as an Administrator I can delete a smart suite"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify that as an Administrator I can delete a smart suite"
 	@priority = 4
 	test AdminCanDeleteSmartSuite {
-		task ("Given that the user goes to add a new component") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+		task ("Given that I add a new Testray component and requirement") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-			Testray.addNewComponent(componentName = "Components_1 Project");
+			Testray.addNewComponent(componentName = "Component 1");
 
 			TestrayManage.closeModalInOptions();
-		}
 
-		task ("And given that the user adds a new requirement") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Requirements");
 
 			TestrayRequirements.addRequirement(
-				componentId = "Components_1 Project",
-				linkTitle = "ATF_Requirements Link Title",
+				componentId = "Component 1",
+				linkTitle = "Requirement Link Title",
 				linkURL = "https://www.google.com",
-				requirementDescription = "ATF_Requirements Description",
-				requirementName = "ATF_Requirements Summary");
+				requirementDescription = "Requirement Description",
+				requirementName = "Requirement Summary");
 		}
 
-		task ("And given that the user adds a Smart Suite") {
+		task ("And I add a smart suit") {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
 				caseType = "Manual Test",
-				mainComponent = "Tags",
+				mainComponent = "Component 1",
 				priorityNumber = 3,
 				smartSuite = "true",
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
+				suiteDescription = "Suite Description",
+				suiteName = ${suiteName});
 		}
 
 		task ("When the smart suite is deleted") {
-			TestraySuites.deleteSuite(suiteName = "ATF_Suites_1 Suite");
+			TestraySuites.deleteSuite(suiteName = ${suiteName});
 		}
 
-		task ("Then the suite is not displayed anymore") {
-			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
+		task ("Then I should be able to assert that the suite is no longer shown") {
+			Testray.assertItemNotPresent(itemName = ${suiteName});
 		}
 	}
 
-	@description = "This is a test for LPS-160626 - Verify if as an Administrator I am able delete a suite"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I am able delete a suite"
 	@priority = 4
 	test AdminCanDeleteSuite {
-		task ("Given that the user goes to add a new suite") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that I add a new Testray Suite via API") {
+			JSONTestray.addSuite(suiteName = ${suiteName});
+		}
+
+		task ("And I go to the Testray Suite page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Suites");
-
-			TestraySuites.addSuite(
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
 		}
 
-		task ("When the user deletes the created suite") {
-			TestraySuites.deleteSuite(suiteName = "ATF_Suites_1 Suite");
+		task ("When I delete the newly created suite") {
+			TestraySuites.deleteSuite(suiteName = ${suiteName});
 		}
 
-		task ("Then the suite is not displayed anymore") {
-			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
+		task ("Then I should be able to assert that the Testray Suite is no longer displayed") {
+			Testray.assertItemNotPresent(itemName = ${suiteName});
 		}
 	}
 
-	@description = "This is a test for LPS-160574 - Verify if as an Administrator I am able to design Suites"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I am able to design Suites"
 	@priority = 4
 	test AdminCanDesignSuite {
-		task ("Given that the user goes to add a new component") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+		task ("Given that a Testray team, component, case type and case are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
 
-			Testray.addNewComponent(componentName = "Components_1 Project");
+			JSONTestray.addCaseType(caseType = ${caseType});
 
-			TestrayManage.closeModalInOptions();
+			JSONTestray.addCases(
+				caseName = ${caseName},
+				caseType = ${caseType},
+				componentName = ${componentName},
+				projectName = ${projectName});
 		}
 
-		task ("Given that the user goes to add a new case") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("And I go to the Testray Suite page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
 
-			TestrayCases.typeCasesField(
-				caseName = "ATF_Suites Case",
-				caseTypeId = "Manual Test",
-				componentId = "Components_1 Project",
-				description = "ATF_Suites Case Description",
-				duration = 10,
-				priority = 5,
-				steps = "ATF_Suites Case Steps");
-		}
+			Testray.goToProjectPage(projectName = ${projectName});
 
-		task ("When the user add a new suite with the created case") {
 			Testray.projectTabNavigator(navTabName = "Suites");
-
-			TestraySuites.addSuite(
-				caseName = "ATF_Suites Case",
-				suiteDescription = "Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
 		}
 
-		task ("Then the selected case is displayed on suite details") {
-			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
+		task ("When I add a Testray Suite with a Case") {
+			TestraySuites.addSuite(
+				caseName = ${caseName},
+				suiteDescription = "Suite Description",
+				suiteName = ${suiteName});
+		}
 
-			Testray.assertItemName(text = "ATF_Suites Case");
+		task ("Then I should be able to assert that the selected case is displayed in the suite details") {
+			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+
+			Testray.assertItemName(text = ${caseName});
 		}
 	}
 
-	@description = "This is a test for LPS-162815 - Verify that as an Administrator I can edit and update a smart suite"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify that as an Administrator I can edit and update a smart suite"
 	@priority = 4
 	test AdminCanEditSmartSuite {
-		task ("Given that the user goes to add a new component") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+		task ("Given that I add a new Testray component and requirement") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-			Testray.addNewComponent(componentName = "Components_1 Project");
+			Testray.addNewComponent(componentName = "Component 1");
 
 			TestrayManage.closeModalInOptions();
-		}
 
-		task ("And given that the user adds a new requirement") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Requirements");
 
 			TestrayRequirements.addRequirement(
-				componentId = "Components_1 Project",
-				linkTitle = "ATF_Requirements Link Title",
+				componentId = "Component 1",
+				linkTitle = "Requirement Link Title",
 				linkURL = "https://www.google.com",
-				requirementDescription = "ATF_Requirements Description",
-				requirementName = "ATF_Requirements Summary");
+				requirementDescription = "Requirement Description",
+				requirementName = "Requirement Summary");
 		}
 
-		task ("And given that the user adds a Smart Suite") {
+		task ("And I add a smart suit") {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				caseType = "Unit Test",
-				mainComponent = "Components_1 Project",
-				priorityNumber = 1,
-				requirementName = "ATF_Requirements Summary",
+				caseType = "Manual Test",
+				mainComponent = "Component 1",
+				priorityNumber = 3,
+				subComponent = "Component 1",
 				smartSuite = "true",
-				subComponent = "Components_1 Project",
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
-		}
-
-		task ("Then the case parameters are presented in the details of the suite") {
-			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
-
-			TestraySuites.verifyCaseParametersInSuite(
-				caseType = "Unit Test",
-				components = "Components_1 Project",
-				priority = 1,
-				requirements = "ATF_Requirements Summary",
-				subComponents = "Components_1 Project");
+				suiteDescription = "Suite Description",
+				suiteName = ${suiteName},
+				teamName = "Commerce");
 		}
 
 		task ("When the user edits the created smart suite") {
-			TestrayDropdown.selectProjectDirectory(project = "Projects_1 Project");
+			TestrayDropdown.selectProjectDirectory(project = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.editSmartSuite(
 				caseType = "Cucumber",
-				mainComponent = "Calendar",
+				mainComponent = "Component 1",
 				priorityNumber = 5,
+				requirementName = "Requirement Summary",
 				smartSuite = "true",
-				subComponent = "Wiki",
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
+				suiteDescription = "Suite Description Edited",
+				suiteName = ${suiteName},
+				teamName = "Developer Tools");
 		}
 
 		task ("Then the case parameters are presented with details edited") {
-			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
+			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
 
 			TestraySuites.verifyCaseParametersInSuite(
 				caseType = "Cucumber",
-				components = "Calendar",
+				components = "Component 1",
 				priority = 5,
-				requirements = "ATF_Requirements Summary",
-				subComponents = "Wiki");
+				requirements = "Requirement Summary");
 		}
 	}
 
-	@description = "This is a test for LPS-160627 - Verify if as an Administrator I am able to edit suites"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I am able to edit suites"
 	@priority = 4
 	test AdminCanEditSuite {
-		task ("Given that the user goes to add a new suite") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that I add a new suite") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
+				suiteDescription = "Suite Description",
+				suiteName = ${suiteName});
 		}
 
-		task ("When the user edits the created suite") {
+		task ("When I edit the newly created suite") {
 			TestraySuites.editSuite(
-				newDescription = "ATF_Suites_1 Suite Description Edited",
-				newName = "ATF_Suites_1 Suite Edited",
-				suiteName = "ATF_Suites_1 Suite");
+				newDescription = "Suite Description Edited",
+				newName = "Suite Edited",
+				suiteName = ${suiteName});
 		}
 
-		task ("then the suite should appear on the list with the new informations") {
+		task ("Then I should be able to assert the new information") {
 			TestraySuites.verifySuite(
-				suiteDescription = "ATF_Suites_1 Suite Description Edited",
-				suiteName = "ATF_Suites_1 Suite Edited",
-				suiteType = "Static");
+				description = "Suite Description Edited",
+				suiteName = "Suite Edited",
+				type = "Static");
 		}
 	}
 
-	@description = "This is a test for LPS-166559 - Verify if as an Administrator I should not be able to add a duplicate Suites"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Suites"
 	@priority = 5
 	test AdminCanNotAddDuplicateSuites {
-		task ("Given that the user goes to add a new suite duplicate") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			Testray.projectTabNavigator(navTabName = "Suites");
-
-			TestraySuites.addSuite(
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
-
-			TestraySuites.addSuite(
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
+		task ("Given that I add a new Testray Suite via API") {
+			JSONTestray.addSuite(suiteName = ${suiteName});
 		}
 
-		task ("Then the error message should appear") {
+		task ("And I go to the Testray Suite page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+		}
+
+		task ("When I try to add an existing Suite") {
+			TestraySuites.addSuite(
+				suiteDescription = "Suite Description",
+				suiteName = ${suiteName});
+		}
+
+		task ("Then I should be able to assert the error message") {
 			Alert.viewErrorMessage(errorMessage = "The Suite name already exists");
 		}
 	}
 
-	@description = "This is a test for LPS-164152 - Verify that the user can not create a suite if all the required fields are not filled in"
+	@description = "Story ID: LPS-159467 | Test Summary: Verify that the user can not create a suite if all the required fields are not filled in"
 	@priority = 3
 	test AdminCanViewRequiredField {
-		task ("Given that the user goes to add a new suite without name") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given I go to the Testray Suite page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Suites");
+		}
 
+		task ("When I try to add an untitled Testray Suite") {
 			TestraySuites.addSuite(
 				suiteDescription = "",
 				suiteName = "");
 		}
 
-		task ("Then a warning message is displayed") {
+		task ("Then I should be able to assert the error message") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");

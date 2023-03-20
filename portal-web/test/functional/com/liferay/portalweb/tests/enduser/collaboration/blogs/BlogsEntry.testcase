@@ -878,6 +878,10 @@ definition {
 
 		Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
+		takeScreenshot();
+
+		Refresh();
+
 		User._clickSignInLink();
 
 		SignIn.agreeToTermsOfUse();
@@ -987,6 +991,10 @@ definition {
 		}
 
 		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+
+		takeScreenshot();
+
+		Refresh();
 
 		User._clickSignInLink();
 

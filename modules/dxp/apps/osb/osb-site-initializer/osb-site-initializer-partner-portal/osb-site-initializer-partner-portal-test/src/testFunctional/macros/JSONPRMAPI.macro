@@ -1,236 +1,236 @@
 definition {
 
-    macro addActivity {
-        Variables.assertDefined(parameterList = ${requestId});
+	macro addActivity {
+		Variables.assertDefined(parameterList = ${requestId});
 
-        if (!(isSet(accountEntryName))) {
-            var accountEntryName = "Company Name 1";
-        }
+		if (!(isSet(accountEntryName))) {
+			var accountEntryName = "Company Name 1";
+		}
 
-        if (!(isSet(accountEntryName))) {
-            var accountEntryName = "Company Name 1";
-        }
+		if (!(isSet(accountEntryName))) {
+			var accountEntryName = "Company Name 1";
+		}
 
-        var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
-        var portalURL = JSONCompany.getPortalURL();
-        var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
+		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var portalURL = JSONCompany.getPortalURL();
+		var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
 
-        var expenseKey = StringUtil.replace(${expenseKey}, " ", "");
+		var expenseKey = StringUtil.replace(${expenseKey}, " ", "");
 
-        var curl = '''
-            ${portalURL}/o/c/activities \
-                -u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
-                    "activityPromotion":"",
-                    "ad":"",
-                    "assetsLiferayDescription":"",
-                    "assetsLiferayRequired":"",
-                    "audienceTarget":"",
-                    "broadcastChannel":"",
-                    "cta":"",
-                    "description":"",
-                    "detailsLeadFollowUp":"",
-                    "expectedImpressions":"",
-                    "gatedLandingPage":"",
-                    "goalOfContent":"",
-                    "guaranteedImpressions":"",
-                    "hiringOutsideWriterOrAgency":"",
-                    "howLiferayBrandUsed":"",
-                    "keywordsForPPCCampaigns":"",
-                    "landingPageCopy":"",
-                    "leadFollowUpStrategies":"",
-                    "leadGenerated":"false",
-                    "liferayBranding":"",
-                    "liferayParticipationRequirements":"",
-                    "location":"",
-                    "manySeries":"",
-                    "marketingActivity":"${activityDescription}",
-                    "nurtureDripCampaign":"",
-                    "overallMessageContentCTA":"",
-                    "primaryThemeOrMessage":"",
-                    "publication":"",
-                    "quantity":"",
-                    "resourcesNecessaryFromLiferay":"",
-                    "sourceAndSizeOfCallList":"",
-                    "sourceAndSizeOfInviteeList":"",
-                    "specificSites":"",
-                    "targetOfLeads":"",
-                    "targetOfSends":"",
-                    "typeMerchandise":"",
-                    "usingCIABAssets":"",
-                    "venueName":"",
-                    "webinarHostPlatform":"",
-                    "webinarTopic":"",
-                    "weeksAiring":"",
-                    "activityStatus":{
-                        "key":"submitted",
-                        "name":"Submitted"
-                    },
-                    "currency":{
-                        "key":"USD",
-                        "name":"US Dollar"
-                    },
-                    "activityDescription":{
-                        "activityPromotion":"",
-                        "ad":"",
-                        "assetsLiferayDescription":"",
-                        "assetsLiferayRequired":"",
-                        "audienceTarget":"",
-                        "broadcastChannel":"",
-                        "cta":"",
-                        "description":"",
-                        "detailsLeadFollowUp":"",
-                        "expectedImpressions":"",
-                        "gatedLandingPage":"",
-                        "goalOfContent":"",
-                        "guaranteedImpressions":"",
-                        "hiringOutsideWriterOrAgency":"",
-                        "howLiferayBrandUsed":"",
-                        "keywordsForPPCCampaigns":"",
-                        "landingPageCopy":"",
-                        "leadFollowUpStrategies":[
-                        ],
-                        "leadGenerated":"false",
-                        "liferayBranding":"",
-                        "liferayParticipationRequirements":"",
-                        "location":"",
-                        "manySeries":"",
-                        "marketingActivity":"${activityDescription}",
-                        "nurtureDripCampaign":"",
-                        "overallMessageContentCTA":"",
-                        "primaryThemeOrMessage":"",
-                        "publication":"",
-                        "quantity":"",
-                        "resourcesNecessaryFromLiferay":"",
-                        "sourceAndSizeOfCallList":"",
-                        "sourceAndSizeOfInviteeList":"",
-                        "specificSites":"",
-                        "targetOfLeads":"",
-                        "targetOfSends":"",
-                        "typeMerchandise":"",
-                        "usingCIABAssets":"",
-                        "venueName":"",
-                        "webinarHostPlatform":"",
-                        "webinarTopic":"",
-                        "weeksAiring":""
-                    },
-                    "budgets":[
-                        {
-                            "cost":${budgetValue},
-                            "expense":{
-                                "key":"${expenseKey}",
-                                "name":"${expenseOption}"
-                            }
-                        }
-                    ],
-                    "endDate":"${endDate}",
-                    "mdfRequestAmount":${totalMDFRequestAmount},
-                    "name":"${activityName}",
-                    "startDate":"${startDate}",
-                    "tactic":{
-                        "key":"prmtact002prmtct006prmtact003prmtct009prmtact004prmtct008",
-                        "name":"Other"
-                    },
-                    "totalCostOfExpense":${budgetValue},
-                    "typeActivity":{
-                        "key":"prmtact004",
-                        "name":"Miscellaneous Marketing"
-                    },
-                    "r_accToActs_accountEntryId":${accountName},
-                    "r_mdfReqToActs_c_mdfRequestId":${requestId}
-                }'
-        ''';
+		var curl = '''
+			${portalURL}/o/c/activities \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"activityPromotion":"",
+					"ad":"",
+					"assetsLiferayDescription":"",
+					"assetsLiferayRequired":"",
+					"audienceTarget":"",
+					"broadcastChannel":"",
+					"cta":"",
+					"description":"",
+					"detailsLeadFollowUp":"",
+					"expectedImpressions":"",
+					"gatedLandingPage":"",
+					"goalOfContent":"",
+					"guaranteedImpressions":"",
+					"hiringOutsideWriterOrAgency":"",
+					"howLiferayBrandUsed":"",
+					"keywordsForPPCCampaigns":"",
+					"landingPageCopy":"",
+					"leadFollowUpStrategies":"",
+					"leadGenerated":"false",
+					"liferayBranding":"",
+					"liferayParticipationRequirements":"",
+					"location":"",
+					"manySeries":"",
+					"marketingActivity":"${activityDescription}",
+					"nurtureDripCampaign":"",
+					"overallMessageContentCTA":"",
+					"primaryThemeOrMessage":"",
+					"publication":"",
+					"quantity":"",
+					"resourcesNecessaryFromLiferay":"",
+					"sourceAndSizeOfCallList":"",
+					"sourceAndSizeOfInviteeList":"",
+					"specificSites":"",
+					"targetOfLeads":"",
+					"targetOfSends":"",
+					"typeMerchandise":"",
+					"usingCIABAssets":"",
+					"venueName":"",
+					"webinarHostPlatform":"",
+					"webinarTopic":"",
+					"weeksAiring":"",
+					"activityStatus":{
+						"key":"submitted",
+						"name":"Submitted"
+					},
+					"currency":{
+						"key":"USD",
+						"name":"US Dollar"
+					},
+					"activityDescription":{
+						"activityPromotion":"",
+						"ad":"",
+						"assetsLiferayDescription":"",
+						"assetsLiferayRequired":"",
+						"audienceTarget":"",
+						"broadcastChannel":"",
+						"cta":"",
+						"description":"",
+						"detailsLeadFollowUp":"",
+						"expectedImpressions":"",
+						"gatedLandingPage":"",
+						"goalOfContent":"",
+						"guaranteedImpressions":"",
+						"hiringOutsideWriterOrAgency":"",
+						"howLiferayBrandUsed":"",
+						"keywordsForPPCCampaigns":"",
+						"landingPageCopy":"",
+						"leadFollowUpStrategies":[
+						],
+						"leadGenerated":"false",
+						"liferayBranding":"",
+						"liferayParticipationRequirements":"",
+						"location":"",
+						"manySeries":"",
+						"marketingActivity":"${activityDescription}",
+						"nurtureDripCampaign":"",
+						"overallMessageContentCTA":"",
+						"primaryThemeOrMessage":"",
+						"publication":"",
+						"quantity":"",
+						"resourcesNecessaryFromLiferay":"",
+						"sourceAndSizeOfCallList":"",
+						"sourceAndSizeOfInviteeList":"",
+						"specificSites":"",
+						"targetOfLeads":"",
+						"targetOfSends":"",
+						"typeMerchandise":"",
+						"usingCIABAssets":"",
+						"venueName":"",
+						"webinarHostPlatform":"",
+						"webinarTopic":"",
+						"weeksAiring":""
+					},
+					"budgets":[
+						{
+							"cost":${budgetValue},
+							"expense":{
+								"key":"${expenseKey}",
+								"name":"${expenseOption}"
+							}
+						}
+					],
+					"endDate":"${endDate}",
+					"mdfRequestAmount":${totalMDFRequestAmount},
+					"name":"${activityName}",
+					"startDate":"${startDate}",
+					"tactic":{
+						"key":"prmtact002prmtct006prmtact003prmtct009prmtact004prmtct008",
+						"name":"Other"
+					},
+					"totalCostOfExpense":${budgetValue},
+					"typeActivity":{
+						"key":"prmtact004",
+						"name":"Miscellaneous Marketing"
+					},
+					"r_accToActs_accountEntryId":${accountName},
+					"r_mdfReqToActs_c_mdfRequestId":${requestId}
+				}'
+		''';
 
-        var response = JSONCurlUtil.post(${curl}, "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-        echo(${response});
+		echo(${response});
 
-        return ${response};
-    }
+		return ${response};
+	}
 
-    macro addBudget {
-        Variables.assertDefined(parameterList = ${activityId});
+	macro addBudget {
+		Variables.assertDefined(parameterList = ${activityId});
 
-        var portalURL = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
-        var curl = '''
-            ${portalURL}/o/c/budgets \
-                -u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
-                    "cost":${budgetValue},
-                    "expense":{
-                        "key":"contentCreation",
-                        "name":"Content Creation"
-                    },
-                    "r_actToBgts_c_activityId":${activityId}
-                }'
-        ''';
+		var curl = '''
+			${portalURL}/o/c/budgets \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"cost":${budgetValue},
+					"expense":{
+						"key":"contentCreation",
+						"name":"Content Creation"
+					},
+					"r_actToBgts_c_activityId":${activityId}
+				}'
+		''';
 
-        var response = JSONCurlUtil.post(${curl});
+		var response = JSONCurlUtil.post(${curl});
 
-        echo(${response});
-    }
+		echo(${response});
+	}
 
-    macro addMDF {
-        Variables.assertDefined(parameterList = ${campaignName});
+	macro addMDF {
+		Variables.assertDefined(parameterList = ${campaignName});
 
-        if (!(isSet(userEmailAddress))) {
-            var userEmailAddress = "test@liferay.com";
-        }
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
 
-        if (!(isSet(accountEntryName))) {
-            var accountEntryName = "Company Name 1";
-        }
+		if (!(isSet(accountEntryName))) {
+			var accountEntryName = "Company Name 1";
+		}
 
-        var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
-        var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
-        var portalURL = JSONCompany.getPortalURL();
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
+		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var portalURL = JSONCompany.getPortalURL();
 
-        var curl = '''
-            ${portalURL}/o/c/mdfrequests \
-                -u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
-                    "maxDateActivity":"${endDate}",
-                    "minDateActivity":"${startDate}",
-                    "totalCostOfExpense":${totalCostOfExpense},
-                    "totalMDFRequestAmount":${totalMDFRequestAmount},
-                    "additionalOption":{
-                    },
-                    "companyName":"${accountEntryName}",
-                    "country":{
-                        "key":"global",
-                        "name":"Global"
-                    },
-                    "currency":{
-                        "key":"USD",
-                        "name":"US Dollar"
-                    },
-                    "emailAddress":"${userEmailAddress}",
-                    "liferayBusinessSalesGoals":"${goalsOptions}",
-                    "mdfRequestStatus":{
-                        "key":"pendingMarketingReview",
-                        "name":"PendingMarketingReview"
-                    },
-                    "overallCampaignDescription":"${campaignDescription}",
-                    "overallCampaignName":"${campaignName}",
-                    "r_accToMDFReqs_accountEntryId":${accountId},
-                    "r_usrToMDFReqs_userId":${userId},
-                    "targetAudienceRoles":"${targetRolesOptions}",
-                    "targetMarkets":"${targetMarketOptions}"
-                }'
-        ''';
+		var curl = '''
+			${portalURL}/o/c/mdfrequests \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"maxDateActivity":"${endDate}",
+					"minDateActivity":"${startDate}",
+					"totalCostOfExpense":${totalCostOfExpense},
+					"totalMDFRequestAmount":${totalMDFRequestAmount},
+					"additionalOption":{
+					},
+					"companyName":"${accountEntryName}",
+					"country":{
+						"key":"global",
+						"name":"Global"
+					},
+					"currency":{
+						"key":"USD",
+						"name":"US Dollar"
+					},
+					"emailAddress":"${userEmailAddress}",
+					"liferayBusinessSalesGoals":"${goalsOptions}",
+					"mdfRequestStatus":{
+						"key":"pendingMarketingReview",
+						"name":"PendingMarketingReview"
+					},
+					"overallCampaignDescription":"${campaignDescription}",
+					"overallCampaignName":"${campaignName}",
+					"r_accToMDFReqs_accountEntryId":${accountId},
+					"r_usrToMDFReqs_userId":${userId},
+					"targetAudienceRoles":"${targetRolesOptions}",
+					"targetMarkets":"${targetMarketOptions}"
+				}'
+		''';
 
-        var response = JSONCurlUtil.post(${curl}, "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-        echo(${response});
+		echo(${response});
 
-        return ${response};
-    }
+		return ${response};
+	}
 
 }

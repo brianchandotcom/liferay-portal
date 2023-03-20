@@ -18,10 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
+import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
@@ -56,8 +58,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -68,6 +72,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -88,34 +93,25 @@ public class ObjectViewLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.addListTypeDefinition(
-				null, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, "Countries"),
-				Collections.singletonList(
-					ListTypeEntryUtil.createListTypeEntry(
-						StringUtil.randomId(),
-						Collections.singletonMap(LocaleUtil.US, "Brazil"))));
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-167253", "true"
+			).build());
 
-		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, "country");
+		_objectDefinition = _addCustomObjectDefinition();
+	}
 
-		objectField.setListTypeDefinitionId(
-			listTypeDefinition.getListTypeDefinitionId());
-
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService,
-			Arrays.asList(
-				objectField,
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "name")));
+	@After
+	public void tearDown() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-167253", "false"
+			).build());
 	}
 
 	@Test
 	public void testAddObjectView() throws Exception {
-		ObjectView objectView = _objectViewLocalService.addObjectView(
+		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -196,6 +192,34 @@ public class ObjectViewLocalServiceTest {
 			Collections.emptyList(),
 			Arrays.asList(_createObjectViewFilterColumn(null, null, "name")),
 			Collections.emptyList());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Test", null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		_assertFailureAddOrUpdateObjectView(
+			true, ObjectDefinitionModifiableException.class,
+			"A modifiable object definition is required", null, null,
+			Collections.emptyList(), null);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = _addCustomObjectDefinition();
+
 		_assertFailureAddOrUpdateObjectView(
 			false, ObjectViewSortColumnException.class,
 			"There is no object view column with the name: zulu", null,
@@ -214,9 +238,26 @@ public class ObjectViewLocalServiceTest {
 
 		_testAddObjectViewRelationshipFilterColumn();
 
-		_objectViewLocalService.deleteObjectView(objectView.getObjectViewId());
+		_assertObjectView(_addObjectView());
 
-		objectView = _addObjectView();
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		ObjectView objectView = _addObjectView();
 
 		_assertObjectView(objectView);
 
@@ -357,6 +398,32 @@ public class ObjectViewLocalServiceTest {
 		_deleteObjectFields();
 
 		_objectViewLocalService.deleteObjectView(objectView.getObjectViewId());
+	}
+
+	private ObjectDefinition _addCustomObjectDefinition() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, "Countries"),
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(
+						StringUtil.randomId(),
+						Collections.singletonMap(LocaleUtil.US, "Brazil"))));
+
+		ObjectField objectField = ObjectFieldUtil.createObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.DB_TYPE_STRING, "country");
+
+		objectField.setListTypeDefinitionId(
+			listTypeDefinition.getListTypeDefinitionId());
+
+		return ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				objectField,
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "name")));
 	}
 
 	private String _addObjectField(

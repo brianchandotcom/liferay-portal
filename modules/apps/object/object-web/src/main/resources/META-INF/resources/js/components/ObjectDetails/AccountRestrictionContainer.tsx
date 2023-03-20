@@ -27,8 +27,6 @@ interface AccountRestrictionContainerProps {
 	values: Partial<ObjectDefinition>;
 }
 
-const STORAGE_TYPE_DEFAULT = 'default';
-
 export function AccountRestrictionContainer({
 	errors,
 	isApproved,
@@ -51,7 +49,7 @@ export function AccountRestrictionContainer({
 	useEffect(() => {
 		const accountRelationshipFieldsResponse = objectFields.filter(
 			(field) => {
-				if (values.storageType !== STORAGE_TYPE_DEFAULT) {
+				if (values.storageType !== 'default') {
 					return (
 						field.businessType === 'Text' ||
 						field.businessType === 'Integer' ||

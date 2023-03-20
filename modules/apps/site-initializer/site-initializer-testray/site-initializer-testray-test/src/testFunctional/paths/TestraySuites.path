@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>SUITE_ON_LIST</td>
-	<td>//tbody//tr[contains(@class,'table-row')]//td[text()='${key_suiteName}']//parent::tr//td[text()='${key_suiteDescription}']//parent::tr//td[text()='${key_suiteType}']</td>
+	<td>//div[contains(@class, 'table-responsive')]/descendant::tr//td[text()='${key_suiteName}']/parent::tr//td[text()='${key_suiteDescription}']/parent::tr//td[text()='${key_suiteType}']</td>
 	<td></td>
 </tr>
 <tr>

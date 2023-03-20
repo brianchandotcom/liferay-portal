@@ -19,14 +19,12 @@ import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeE
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupService;
-import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,22 +45,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
 		"mvc.command.name=/account_admin/edit_account_group"
 	},
-	service = AopService.class
+	service = MVCActionCommand.class
 )
 public class EditAccountGroupMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

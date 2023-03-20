@@ -15,20 +15,18 @@
 package com.liferay.address.web.internal.portlet.action;
 
 import com.liferay.address.web.internal.constants.AddressPortletKeys;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,22 +51,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AddressPortletKeys.COUNTRIES_MANAGEMENT_ADMIN,
 		"mvc.command.name=/address/edit_region"
 	},
-	service = AopService.class
+	service = MVCActionCommand.class
 )
 public class EditRegionMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

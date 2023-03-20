@@ -19,15 +19,13 @@ import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -50,14 +48,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
 		"mvc.command.name=/fragment/edit_fragment_entry"
 	},
-	service = AopService.class
+	service = MVCActionCommand.class
 )
 public class EditFragmentEntryMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

@@ -29,10 +29,10 @@ import javax.portlet.ResourceResponse;
  * @author Igor Beslic
  */
 public abstract class BaseTransactionalMVCResourceCommand
-	implements MVCResourceCommand {
+	extends BaseMVCResourceCommand {
 
 	@Override
-	public boolean serveResource(
+	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
@@ -48,7 +48,7 @@ public abstract class BaseTransactionalMVCResourceCommand
 
 			};
 
-			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			TransactionInvokerUtil.invoke(_transactionConfig, callable);
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof PortletException) {

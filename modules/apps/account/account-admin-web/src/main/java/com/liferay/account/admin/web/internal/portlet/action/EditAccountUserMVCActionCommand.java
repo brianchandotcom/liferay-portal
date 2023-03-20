@@ -18,24 +18,21 @@ import com.liferay.account.admin.web.internal.security.permission.resource.Accou
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,22 +46,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
 		"mvc.command.name=/account_admin/edit_account_user"
 	},
-	service = AopService.class
+	service = MVCActionCommand.class
 )
 public class EditAccountUserMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

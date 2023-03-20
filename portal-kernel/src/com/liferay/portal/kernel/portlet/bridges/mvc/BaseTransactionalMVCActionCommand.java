@@ -29,10 +29,10 @@ import javax.portlet.PortletException;
  * @author Bruno Basto
  */
 public abstract class BaseTransactionalMVCActionCommand
-	implements MVCActionCommand {
+	extends BaseMVCActionCommand {
 
 	@Override
-	public boolean processAction(
+	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
@@ -48,7 +48,7 @@ public abstract class BaseTransactionalMVCActionCommand
 
 			};
 
-			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			TransactionInvokerUtil.invoke(_transactionConfig, callable);
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof PortletException) {

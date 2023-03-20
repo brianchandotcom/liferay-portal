@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -37,7 +36,7 @@ import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -47,8 +46,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -62,7 +59,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -79,24 +75,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 		"mvc.command.name=/change_tracking/invite_users"
 	},
-	service = AopService.class
+	service = MVCResourceCommand.class
 )
 public class InviteUsersMVCResourceCommand
-	extends BaseMVCResourceCommand implements AopService, MVCResourceCommand {
+	extends BaseTransactionalMVCResourceCommand {
 
 	@Override
-	@Transactional(
-		propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class
-	)
-	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		return super.serveResource(resourceRequest, resourceResponse);
-	}
-
-	@Override
-	protected void doServeResource(
+	protected void doTransactionalCommand(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 

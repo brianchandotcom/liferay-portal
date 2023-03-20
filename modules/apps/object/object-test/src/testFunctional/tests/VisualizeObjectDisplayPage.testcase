@@ -153,9 +153,18 @@ definition {
 			fieldLabel = "Collection",
 			menuItem = "Filter Collection");
 
-		VisualizeObjectDisplayPage.selectFilterCollection(
-			fieldLabel = "Field Picklist",
-			itemName = "Item Test 1");
+		Click(locator1 = "ObjectAdmin#VIEW_SHEET_ON_DEFINE_PERMISSIONS");
+
+		Click(
+			key_fieldLabel = "Field Picklist",
+			locator1 = "VisualizeObjectDisplayPage#SELECT_CHOOSE_AN_OPTION_FIELD");
+
+		Select(
+			key_fieldLabel = "Field Picklist",
+			locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM_IN_FILTER_COLLECTION",
+			value1 = "Item Test 1");
+
+		Click(locator1 = "Button#SAVE");
 
 		PageEditor.publish();
 

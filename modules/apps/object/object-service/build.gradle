@@ -30,6 +30,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-content-page-editor-api")
 	compileOnly project(":apps:list-type:list-type-api")
 	compileOnly project(":apps:notification:notification-api")
+	compileOnly project(":apps:object:object-admin-rest-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:object:object-rest-api")

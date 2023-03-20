@@ -1,0 +1,90 @@
+{
+	"accountEntryRestricted": false,
+	"externalReferenceCode": "BOOKMARK_SYSTEM_OBJECT_DEFINITION",
+	"label": {
+		"en_US": "Bookmark"
+	},
+	"modifiable": true,
+	"name": "Bookmark",
+	"objectFields": [
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"defaultValue": "",
+			"externalReferenceCode": "BOOKMARK_OBJECT_FIELD_DESCRIPTION",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Description"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "description",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "BOOKMARK_OBJECT_FIELD_NAME",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Name"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "name",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "BOOKMARK_OBJECT_FIELD_URL",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "URL"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "uRL",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Bookmarks"
+	},
+	"scope": "site",
+	"system": true,
+	"titleObjectFieldName": "name"
+}

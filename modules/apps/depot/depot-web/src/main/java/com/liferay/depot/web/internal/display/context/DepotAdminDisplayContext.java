@@ -23,6 +23,7 @@ import com.liferay.depot.web.internal.search.DepotEntrySearch;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -36,8 +37,6 @@ import com.liferay.portlet.usersadmin.search.GroupSearch;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -153,20 +152,15 @@ public class DepotAdminDisplayContext {
 		GroupSearch groupSearch = _depotAdminGroupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, _getPortletURL());
 
-		List<Group> searchResults = groupSearch.getResults();
-
-		Stream<Group> stream = searchResults.stream();
-
 		_depotEntrySearch.setResultsAndTotal(
-			() -> stream.map(
-				this::_getGroup
-			).map(
-				Group::getGroupId
-			).map(
-				_depotEntryLocalService::fetchGroupDepotEntry
-			).collect(
-				Collectors.toList()
-			),
+			() -> TransformUtil.transform(
+				groupSearch.getResults(),
+				searchResult -> {
+					Group group = _getGroup(searchResult);
+
+					return _depotEntryLocalService.fetchGroupDepotEntry(
+						group.getGroupId());
+				}),
 			groupSearch.getTotal());
 
 		return _depotEntrySearch;

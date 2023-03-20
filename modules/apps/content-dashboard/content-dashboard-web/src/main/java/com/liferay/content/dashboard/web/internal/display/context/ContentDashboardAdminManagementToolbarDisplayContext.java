@@ -876,23 +876,21 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				valueUnsafeSupplier)
 		throws PortletException {
 
-		return String.valueOf(
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-			).setParameter(
-				name, valueUnsafeSupplier
-			).buildString());
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+		).setParameter(
+			name, valueUnsafeSupplier
+		).buildString();
 	}
 
 	private String _getRemoveLabelURL(String name, String value)
 		throws PortletException {
 
-		return String.valueOf(
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-			).setParameter(
-				name, value
-			).buildString());
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+		).setParameter(
+			name, value
+		).buildString();
 	}
 
 	private String _getScopeLabel(long scopeId) {

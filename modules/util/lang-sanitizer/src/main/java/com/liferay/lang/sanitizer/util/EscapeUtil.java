@@ -93,6 +93,7 @@ public class EscapeUtil {
 				put("&hellip;", "…");
 				put("&laquo;", "«");
 				put("&lt;", "<");
+				put("&nbsp;", " ");
 				put("&quot;", "\"");
 				put("&raquo;", "»");
 				put("&reg;", "®");

@@ -445,7 +445,9 @@ definition {
 
 		Navigator.gotoBack();
 
-		WikiPage.addChildPageViaEllipsis(wikiChildPageTitle = "Child Page Title");
+		WikiPage.addChildPageViaEllipsis(
+			wikiChildPageTitle = "Child Page Title",
+			wikiPageTitle = "FrontPage");
 
 		PortletEntry.submitForWorkflow();
 
@@ -497,7 +499,9 @@ definition {
 
 		Navigator.gotoBack();
 
-		WikiPage.addChildPageViaEllipsis(wikiChildPageTitle = "Child Page Title");
+		WikiPage.addChildPageViaEllipsis(
+			wikiChildPageTitle = "Child Page Title",
+			wikiPageTitle = "FrontPage");
 
 		PortletEntry.submitForWorkflow();
 

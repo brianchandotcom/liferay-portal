@@ -129,7 +129,9 @@ definition {
 	macro addChildPageViaEllipsis {
 		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
+		LexiconEntry.openEntryMenu(rowEntry = ${wikiPageTitle});
+
+		MenuItem.click(menuItem = "Add Child Page");
 
 		PortletEntry.inputTitle(title = ${key_wikiChildPageTitle});
 	}

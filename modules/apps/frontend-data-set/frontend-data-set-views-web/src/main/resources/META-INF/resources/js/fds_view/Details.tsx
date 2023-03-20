@@ -108,11 +108,11 @@ const Details = ({
 					<ClayInput
 						defaultValue={fdsView.label}
 						id={`${namespace}fdsViewLabelInput`}
-						onBlur={() => {
+						onBlur={() =>
 							setLabelValidationError(
 								!fdsViewLabelRef.current?.value
-							);
-						}}
+							)
+						}
 						ref={fdsViewLabelRef}
 						type="text"
 					/>
@@ -150,9 +150,7 @@ const Details = ({
 
 					<ClayButton
 						displayType="secondary"
-						onClick={() => {
-							navigate(fdsViewsURL);
-						}}
+						onClick={() => navigate(fdsViewsURL)}
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

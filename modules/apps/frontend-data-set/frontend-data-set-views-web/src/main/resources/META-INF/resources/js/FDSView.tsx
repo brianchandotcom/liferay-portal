@@ -41,39 +41,37 @@ const FDSView = ({
 	fdsViewsURL,
 	namespace,
 }: IFDSViewProps) => {
-	const [activeIndex, setActiveIndex] = useState<number>(0);
+	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<TFDSView>();
-	const [loading, setLoading] = useState<boolean>(true);
-
-	const getFDSView = async () => {
-		const response = await fetch(`${fdsViewsAPIURL}/${fdsViewId}`, {
-			headers: {
-				Accept: 'application/json',
-			},
-		});
-
-		const responseJSON = await response.json();
-
-		if (responseJSON?.id) {
-			setFDSView(responseJSON);
-
-			setLoading(false);
-		}
-		else {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
-		}
-	};
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		getFDSView();
+		const getFDSView = async () => {
+			const response = await fetch(`${fdsViewsAPIURL}/${fdsViewId}`, {
+				headers: {
+					Accept: 'application/json',
+				},
+			});
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+			const responseJSON = await response.json();
+
+			if (responseJSON?.id) {
+				setFDSView(responseJSON);
+
+				setLoading(false);
+			}
+			else {
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-failed-to-complete'
+					),
+					type: 'danger',
+				});
+			}
+		};
+
+		getFDSView();
+	}, [fdsViewId, fdsViewsAPIURL]);
 
 	const Content = NAVIGATION_BAR_ITEMS[activeIndex].Component;
 
@@ -87,11 +85,7 @@ const FDSView = ({
 						active={index === activeIndex}
 						key={index}
 					>
-						<ClayButton
-							onClick={() => {
-								setActiveIndex(index);
-							}}
-						>
+						<ClayButton onClick={() => setActiveIndex(index)}>
 							{item.label}
 						</ClayButton>
 					</ClayNavigationBar.Item>

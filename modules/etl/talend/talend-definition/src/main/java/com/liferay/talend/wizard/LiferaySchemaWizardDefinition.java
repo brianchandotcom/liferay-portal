@@ -42,7 +42,7 @@ public class LiferaySchemaWizardDefinition
 		ComponentProperties componentProperties, String location) {
 
 		if (componentProperties != null) {
-			if (!Objects.equals("connection", componentProperties.getName())) {
+			if (!Objects.equals(componentProperties.getName(), "connection")) {
 				if (_logger.isDebugEnabled()) {
 					_logger.debug(
 						"Adjust component properties name to `connection`");

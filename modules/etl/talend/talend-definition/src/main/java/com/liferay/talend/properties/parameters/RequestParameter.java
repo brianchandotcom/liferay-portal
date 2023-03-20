@@ -30,10 +30,10 @@ public class RequestParameter {
 	}
 
 	public void apply(UriBuilder uriBuilder) {
-		if (Objects.equals("query", _location)) {
+		if (Objects.equals(_location, "query")) {
 			uriBuilder.queryParam(getName(), getValue());
 		}
-		else if (Objects.equals("path", _location)) {
+		else if (Objects.equals(_location, "path")) {
 			uriBuilder.resolveTemplate(getName(), getValue());
 		}
 	}
@@ -55,7 +55,7 @@ public class RequestParameter {
 	}
 
 	public boolean isPathLocation() {
-		if (Objects.equals("path", _location)) {
+		if (Objects.equals(_location, "path")) {
 			return true;
 		}
 

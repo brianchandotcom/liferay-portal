@@ -30,6 +30,158 @@ export type TFDSView = {
 	label: string;
 };
 
+interface IAddFDSViewModalContentProps {
+	closeModal: Function;
+	fdsEntryId: string;
+	fdsViewsAPIURL: string;
+	loadData: Function;
+	namespace: string;
+}
+
+const AddFDSViewModalContent = ({
+	closeModal,
+	fdsEntryId,
+	fdsViewsAPIURL,
+	loadData,
+	namespace,
+}: IAddFDSViewModalContentProps) => {
+	const [labelValidationError, setLabelValidationError] = useState(false);
+
+	const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);
+	const fdsViewLabelRef = useRef<HTMLInputElement>(null);
+
+	const addFDSView = async () => {
+		const body = {
+			description: fdsViewDescriptionRef.current?.value,
+			label: fdsViewLabelRef.current?.value,
+			r_fdsEntryFDSViewRelationship_c_fdsEntryId: fdsEntryId,
+			symbol: 'catalog',
+		};
+
+		const response = await fetch(fdsViewsAPIURL, {
+			body: JSON.stringify(body),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		});
+
+		const fdsView = await response.json();
+
+		if (fdsView?.id) {
+			closeModal();
+
+			Liferay.Util.openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
+
+			loadData();
+		}
+		else {
+			Liferay.Util.openToast({
+				message: Liferay.Language.get(
+					'your-request-failed-to-complete'
+				),
+				type: 'danger',
+			});
+		}
+	};
+
+	const validate = () => {
+		if (!fdsViewLabelRef.current?.value) {
+			setLabelValidationError(true);
+
+			return false;
+		}
+
+		return true;
+	};
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('new-dataset-view')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<ClayForm.Group
+					className={classNames({
+						'has-error': labelValidationError,
+					})}
+				>
+					<label htmlFor={`${namespace}fdsViewLabelInput`}>
+						{Liferay.Language.get('name')}
+
+						<RequiredMark />
+					</label>
+
+					<ClayInput
+						id={`${namespace}fdsViewLabelInput`}
+						onBlur={() => {
+							setLabelValidationError(
+								!fdsViewLabelRef.current?.value
+							);
+						}}
+						ref={fdsViewLabelRef}
+						type="text"
+					/>
+
+					{labelValidationError && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get('this-field-is-required')}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor={`${namespace}fdsViewDesctiptionInput`}>
+						{Liferay.Language.get('description')}
+					</label>
+
+					<ClayInput
+						id={`${namespace}fdsViewDesctiptionInput`}
+						ref={fdsViewDescriptionRef}
+						type="text"
+					/>
+				</ClayForm.Group>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							onClick={() => {
+								const success = validate();
+
+								if (success) {
+									addFDSView();
+								}
+							}}
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+};
+
 interface IFDSViewsProps {
 	fdsEntriesAPIURL: string;
 	fdsEntryId: string;
@@ -47,154 +199,6 @@ const FDSViews = ({
 	fdsViewsAPIURL,
 	namespace,
 }: IFDSViewsProps) => {
-	interface IAddFDSViewModalContentProps {
-		closeModal: Function;
-		loadData: Function;
-	}
-
-	const AddFDSViewModalContent = ({
-		closeModal,
-		loadData,
-	}: IAddFDSViewModalContentProps) => {
-		const [labelValidationError, setLabelValidationError] = useState(false);
-
-		const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);
-		const fdsViewLabelRef = useRef<HTMLInputElement>(null);
-
-		const addFDSView = async () => {
-			const body = {
-				description: fdsViewDescriptionRef.current?.value,
-				label: fdsViewLabelRef.current?.value,
-				r_fdsEntryFDSViewRelationship_c_fdsEntryId: fdsEntryId,
-				symbol: 'catalog',
-			};
-
-			const response = await fetch(fdsViewsAPIURL, {
-				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
-			});
-
-			const fdsView = await response.json();
-
-			if (fdsView?.id) {
-				closeModal();
-
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
-
-				loadData();
-			}
-			else {
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'your-request-failed-to-complete'
-					),
-					type: 'danger',
-				});
-			}
-		};
-
-		const validate = () => {
-			if (!fdsViewLabelRef.current?.value) {
-				setLabelValidationError(true);
-
-				return false;
-			}
-
-			return true;
-		};
-
-		return (
-			<>
-				<ClayModal.Header>
-					{Liferay.Language.get('new-dataset-view')}
-				</ClayModal.Header>
-
-				<ClayModal.Body>
-					<ClayForm.Group
-						className={classNames({
-							'has-error': labelValidationError,
-						})}
-					>
-						<label htmlFor={`${namespace}fdsViewLabelInput`}>
-							{Liferay.Language.get('name')}
-
-							<RequiredMark />
-						</label>
-
-						<ClayInput
-							id={`${namespace}fdsViewLabelInput`}
-							onBlur={() => {
-								setLabelValidationError(
-									!fdsViewLabelRef.current?.value
-								);
-							}}
-							ref={fdsViewLabelRef}
-							type="text"
-						/>
-
-						{labelValidationError && (
-							<ClayForm.FeedbackGroup>
-								<ClayForm.FeedbackItem>
-									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-									{Liferay.Language.get(
-										'this-field-is-required'
-									)}
-								</ClayForm.FeedbackItem>
-							</ClayForm.FeedbackGroup>
-						)}
-					</ClayForm.Group>
-
-					<ClayForm.Group>
-						<label htmlFor={`${namespace}fdsViewDesctiptionInput`}>
-							{Liferay.Language.get('description')}
-						</label>
-
-						<ClayInput
-							id={`${namespace}fdsViewDesctiptionInput`}
-							ref={fdsViewDescriptionRef}
-							type="text"
-						/>
-					</ClayForm.Group>
-				</ClayModal.Body>
-
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								onClick={() => {
-									const success = validate();
-
-									if (success) {
-										addFDSView();
-									}
-								}}
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-
-							<ClayButton
-								displayType="secondary"
-								onClick={() => closeModal()}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</>
-		);
-	};
-
 	const onViewClick = ({itemData}: {itemData: TFDSView}) => {
 		const url = new URL(fdsViewURL);
 
@@ -219,7 +223,10 @@ const FDSViews = ({
 						}) => (
 							<AddFDSViewModalContent
 								closeModal={closeModal}
+								fdsEntryId={fdsEntryId}
+								fdsViewsAPIURL={fdsViewsAPIURL}
 								loadData={loadData}
+								namespace={namespace}
 							/>
 						),
 					});

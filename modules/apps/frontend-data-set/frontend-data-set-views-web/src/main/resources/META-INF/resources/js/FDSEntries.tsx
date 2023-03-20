@@ -33,7 +33,20 @@ const FUZZY_OPTIONS = {
 	pre: '<strong>',
 };
 
-type HeadlessResource = {
+type TFDSEntry = {
+	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<TFDSView>;
+	actions: {
+		delete: {
+			href: string;
+			method: string;
+		};
+	};
+	entityClassName: string;
+	id: string;
+	label: string;
+};
+
+type THeadlessResource = {
 	bundleLabel: string;
 	entityClassName: string;
 	name: string;
@@ -41,7 +54,7 @@ type HeadlessResource = {
 };
 
 interface IHeadlessResourceItemProps {
-	headlessResource: HeadlessResource;
+	headlessResource: THeadlessResource;
 	query: string;
 }
 
@@ -90,8 +103,40 @@ const HeadlessResourceItem = ({
 	);
 };
 
+interface IProviderRendererProps {
+	headlessResourcesMap: Map<String, THeadlessResource>;
+	itemData: TFDSEntry;
+}
+
+const ProviderRenderer: React.FC<IProviderRendererProps> = ({
+	headlessResourcesMap,
+	itemData,
+}: IProviderRendererProps) => {
+	const headlessResource = headlessResourcesMap.get(itemData.entityClassName);
+
+	return (
+		<>
+			{`${headlessResource?.name} (${headlessResource?.bundleLabel} ${headlessResource?.version})`}
+		</>
+	);
+};
+
+const ViewsCountRenderer = ({itemData}: {itemData: TFDSEntry}) => {
+	const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
+
+	return (
+		<span
+			className={classNames('count', {
+				'count-zero': !count,
+			})}
+		>
+			{count}
+		</span>
+	);
+};
+
 interface IDropdownMenuProps {
-	headlessResources: Array<HeadlessResource>;
+	headlessResources: Array<THeadlessResource>;
 	setHeadlessResourceValidationError: Function;
 	setSelectedHeadlessResource: Function;
 }
@@ -102,7 +147,7 @@ const DropdownMenu = ({
 	setSelectedHeadlessResource,
 }: IDropdownMenuProps) => {
 	const [headlessResources, setHeadlessResources] = useState<
-		Array<HeadlessResource>
+		Array<THeadlessResource>
 	>(initialHeadlessResources || []);
 	const [query, setQuery] = useState('');
 
@@ -114,7 +159,7 @@ const DropdownMenu = ({
 		setHeadlessResources(
 			query
 				? initialHeadlessResources.filter(
-						({bundleLabel, name}: HeadlessResource) => {
+						({bundleLabel, name}: THeadlessResource) => {
 							return (
 								bundleLabel.match(regexp) || name.match(regexp)
 							);
@@ -133,7 +178,7 @@ const DropdownMenu = ({
 			/>
 
 			<ClayDropDown.ItemList items={headlessResources} role="listbox">
-				{(item: HeadlessResource) => (
+				{(item: THeadlessResource) => (
 					<ClayDropDown.Item
 						key={item.entityClassName}
 						onClick={() => {
@@ -154,10 +199,220 @@ const DropdownMenu = ({
 	);
 };
 
+interface IAddFDSEntryModalContentProps {
+	closeModal: Function;
+	fdsEntriesAPIURL: string;
+	headlessResources: Array<THeadlessResource>;
+	loadData: Function;
+	namespace: string;
+}
+
+const AddFDSEntryModalContent = ({
+	closeModal,
+	fdsEntriesAPIURL,
+	headlessResources,
+	loadData,
+	namespace,
+}: IAddFDSEntryModalContentProps) => {
+	const [selectedHeadlessResource, setSelectedHeadlessResource] = useState<
+		THeadlessResource
+	>();
+	const [labelValidationError, setLabelValidationError] = useState(false);
+	const [
+		headlessResourceValidationError,
+		setHeadlessResourceValidationError,
+	] = useState(false);
+
+	const fdsEntryLabelRef = useRef<HTMLInputElement>(null);
+
+	const addFDSEntry = async () => {
+		const body = {
+			entityClassName: selectedHeadlessResource?.entityClassName,
+			label: fdsEntryLabelRef.current?.value,
+		};
+
+		const response = await fetch(fdsEntriesAPIURL, {
+			body: JSON.stringify(body),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		});
+
+		const fdsEntry = await response.json();
+
+		if (fdsEntry?.id) {
+			closeModal();
+
+			Liferay.Util.openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
+
+			loadData();
+		}
+		else {
+			Liferay.Util.openToast({
+				message: Liferay.Language.get(
+					'your-request-failed-to-complete'
+				),
+				type: 'danger',
+			});
+		}
+	};
+
+	const validate = () => {
+		if (!fdsEntryLabelRef.current?.value) {
+			setLabelValidationError(true);
+		}
+
+		if (!selectedHeadlessResource) {
+			setHeadlessResourceValidationError(true);
+		}
+
+		if (!fdsEntryLabelRef.current?.value || !selectedHeadlessResource) {
+			return false;
+		}
+
+		return true;
+	};
+
+	const Dropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'headless-resources-dropdown-menu',
+			}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}fdsHeadlessResourcesLabel`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}fdsHeadlessResourcesSelect`}
+				>
+					{selectedHeadlessResource ? (
+						<HeadlessResourceItem
+							headlessResource={selectedHeadlessResource}
+							query=""
+						/>
+					) : (
+						Liferay.Language.get('choose-an-option')
+					)}
+				</ClayButton>
+			}
+		>
+			<DropdownMenu
+				headlessResources={headlessResources}
+				setHeadlessResourceValidationError={
+					setHeadlessResourceValidationError
+				}
+				setSelectedHeadlessResource={setSelectedHeadlessResource}
+			/>
+		</ClayDropDown>
+	);
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('new-dataset')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<ClayForm.Group
+					className={classNames({
+						'has-error': labelValidationError,
+					})}
+				>
+					<label htmlFor={`${namespace}fdsEntryLabelInput`}>
+						{Liferay.Language.get('name')}
+
+						<RequiredMark />
+					</label>
+
+					<ClayInput
+						id={`${namespace}fdsEntryLabelInput`}
+						onBlur={() => {
+							setLabelValidationError(
+								!fdsEntryLabelRef.current?.value
+							);
+						}}
+						ref={fdsEntryLabelRef}
+						type="text"
+					/>
+
+					{labelValidationError && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get('this-field-is-required')}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
+				</ClayForm.Group>
+
+				<ClayForm.Group
+					className={classNames({
+						'has-error': headlessResourceValidationError,
+					})}
+				>
+					<label
+						htmlFor={`${namespace}fdsHeadlessResourcesSelect`}
+						id={`${namespace}fdsHeadlessResourcesLabel`}
+					>
+						{Liferay.Language.get('provider')}
+
+						<RequiredMark />
+					</label>
+
+					<Dropdown />
+
+					{headlessResourceValidationError && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get('this-field-is-required')}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
+				</ClayForm.Group>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							onClick={() => {
+								const success = validate();
+
+								if (success) {
+									addFDSEntry();
+								}
+							}}
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+};
+
 interface IFDSEntriesProps {
 	fdsEntriesAPIURL: string;
 	fdsViewsURL: string;
-	headlessResources: Array<HeadlessResource>;
+	headlessResources: Array<THeadlessResource>;
 	namespace: string;
 }
 
@@ -167,7 +422,7 @@ const FDSEntries = ({
 	headlessResources,
 	namespace,
 }: IFDSEntriesProps) => {
-	const headlessResourcesMapRef = useRef<Map<string, HeadlessResource>>(
+	const headlessResourcesMapRef = useRef<Map<string, THeadlessResource>>(
 		new Map(
 			headlessResources.map((headlessResource) => [
 				headlessResource.entityClassName,
@@ -175,250 +430,6 @@ const FDSEntries = ({
 			])
 		)
 	);
-
-	type TFDSEntry = {
-		[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<TFDSView>;
-		actions: {
-			delete: {
-				href: string;
-				method: string;
-			};
-		};
-		entityClassName: string;
-		id: string;
-		label: string;
-	};
-
-	const ProviderRenderer = ({itemData}: {itemData: TFDSEntry}) => {
-		const headlessResource = headlessResourcesMapRef.current.get(
-			itemData.entityClassName
-		);
-
-		return `${headlessResource?.name} (${headlessResource?.bundleLabel} ${headlessResource?.version})`;
-	};
-
-	const ViewsCountRenderer = ({itemData}: {itemData: TFDSEntry}) => {
-		const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
-
-		return (
-			<span
-				className={classNames('count', {
-					'count-zero': !count,
-				})}
-			>
-				{count}
-			</span>
-		);
-	};
-
-	interface IAddFDSEntryModalContentProps {
-		closeModal: Function;
-		loadData: Function;
-	}
-
-	const AddFDSEntryModalContent = ({
-		closeModal,
-		loadData,
-	}: IAddFDSEntryModalContentProps) => {
-		const [
-			selectedHeadlessResource,
-			setSelectedHeadlessResource,
-		] = useState<HeadlessResource>();
-		const [labelValidationError, setLabelValidationError] = useState(false);
-		const [
-			headlessResourceValidationError,
-			setHeadlessResourceValidationError,
-		] = useState(false);
-
-		const fdsEntryLabelRef = useRef<HTMLInputElement>(null);
-
-		const addFDSEntry = async () => {
-			const body = {
-				entityClassName: selectedHeadlessResource?.entityClassName,
-				label: fdsEntryLabelRef.current?.value,
-			};
-
-			const response = await fetch(fdsEntriesAPIURL, {
-				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
-			});
-
-			const fdsEntry = await response.json();
-
-			if (fdsEntry?.id) {
-				closeModal();
-
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
-
-				loadData();
-			}
-			else {
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'your-request-failed-to-complete'
-					),
-					type: 'danger',
-				});
-			}
-		};
-
-		const validate = () => {
-			if (!fdsEntryLabelRef.current?.value) {
-				setLabelValidationError(true);
-			}
-
-			if (!selectedHeadlessResource) {
-				setHeadlessResourceValidationError(true);
-			}
-
-			if (!fdsEntryLabelRef.current?.value || !selectedHeadlessResource) {
-				return false;
-			}
-
-			return true;
-		};
-
-		const Dropdown = () => (
-			<ClayDropDown
-				menuElementAttrs={{
-					className: 'headless-resources-dropdown-menu',
-				}}
-				trigger={
-					<ClayButton
-						aria-labelledby={`${namespace}fdsHeadlessResourcesLabel`}
-						className="form-control form-control-select form-control-select-secondary"
-						displayType="secondary"
-						id={`${namespace}fdsHeadlessResourcesSelect`}
-					>
-						{selectedHeadlessResource ? (
-							<HeadlessResourceItem
-								headlessResource={selectedHeadlessResource}
-								query=""
-							/>
-						) : (
-							Liferay.Language.get('choose-an-option')
-						)}
-					</ClayButton>
-				}
-			>
-				<DropdownMenu
-					headlessResources={headlessResources}
-					setHeadlessResourceValidationError={
-						setHeadlessResourceValidationError
-					}
-					setSelectedHeadlessResource={setSelectedHeadlessResource}
-				/>
-			</ClayDropDown>
-		);
-
-		return (
-			<>
-				<ClayModal.Header>
-					{Liferay.Language.get('new-dataset')}
-				</ClayModal.Header>
-
-				<ClayModal.Body>
-					<ClayForm.Group
-						className={classNames({
-							'has-error': labelValidationError,
-						})}
-					>
-						<label htmlFor={`${namespace}fdsEntryLabelInput`}>
-							{Liferay.Language.get('name')}
-
-							<RequiredMark />
-						</label>
-
-						<ClayInput
-							id={`${namespace}fdsEntryLabelInput`}
-							onBlur={() => {
-								setLabelValidationError(
-									!fdsEntryLabelRef.current?.value
-								);
-							}}
-							ref={fdsEntryLabelRef}
-							type="text"
-						/>
-
-						{labelValidationError && (
-							<ClayForm.FeedbackGroup>
-								<ClayForm.FeedbackItem>
-									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-									{Liferay.Language.get(
-										'this-field-is-required'
-									)}
-								</ClayForm.FeedbackItem>
-							</ClayForm.FeedbackGroup>
-						)}
-					</ClayForm.Group>
-
-					<ClayForm.Group
-						className={classNames({
-							'has-error': headlessResourceValidationError,
-						})}
-					>
-						<label
-							htmlFor={`${namespace}fdsHeadlessResourcesSelect`}
-							id={`${namespace}fdsHeadlessResourcesLabel`}
-						>
-							{Liferay.Language.get('provider')}
-
-							<RequiredMark />
-						</label>
-
-						<Dropdown />
-
-						{headlessResourceValidationError && (
-							<ClayForm.FeedbackGroup>
-								<ClayForm.FeedbackItem>
-									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-									{Liferay.Language.get(
-										'this-field-is-required'
-									)}
-								</ClayForm.FeedbackItem>
-							</ClayForm.FeedbackGroup>
-						)}
-					</ClayForm.Group>
-				</ClayModal.Body>
-
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								onClick={() => {
-									const success = validate();
-
-									if (success) {
-										addFDSEntry();
-									}
-								}}
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-
-							<ClayButton
-								displayType="secondary"
-								onClick={() => closeModal()}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</>
-		);
-	};
 
 	const creationMenu = {
 		primaryItems: [
@@ -433,7 +444,10 @@ const FDSEntries = ({
 						}) => (
 							<AddFDSEntryModalContent
 								closeModal={closeModal}
+								fdsEntriesAPIURL={fdsEntriesAPIURL}
+								headlessResources={headlessResources}
 								loadData={loadData}
+								namespace={namespace}
 							/>
 						),
 					});
@@ -537,7 +551,14 @@ const FDSEntries = ({
 				apiURL={`${fdsEntriesAPIURL}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
 				customDataRenderers={{
-					provider: ProviderRenderer,
+					provider: ({itemData}: {itemData: TFDSEntry}) => (
+						<ProviderRenderer
+							headlessResourcesMap={
+								headlessResourcesMapRef.current
+							}
+							itemData={itemData}
+						/>
+					),
 					viewsCount: ViewsCountRenderer,
 				}}
 				id={`${namespace}FDSEntries`}

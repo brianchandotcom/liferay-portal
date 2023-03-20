@@ -20,6 +20,9 @@ definition {
 			else if (${templateName} == "Team Extranet") {
 				var templateKey = "com.liferay.site.initializer.team.extranet";
 			}
+			else if (${templateName} == "Raylife AP") {
+				var templateKey = "com.liferay.site.initializer.raylife.ap";
+			}
 			else if (${templateName} == "Raylife D2C") {
 				var templateKey = "com.liferay.site.initializer.raylife.d2c";
 			}
@@ -28,6 +31,9 @@ definition {
 			}
 			else if (${templateName} == "Liferay OSB Site Initializer Customer Portal") {
 				var templateKey = "com.liferay.osb.site.initializer.customer.portal";
+			}
+			else if (${templateName} == "Testray") {
+				var templateKey = "com.liferay.site.initializer.testray";
 			}
 			else if (${templateName} == "Minium") {
 				var templateKey = "minium-initializer";

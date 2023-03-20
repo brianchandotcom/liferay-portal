@@ -157,55 +157,61 @@ definition {
 	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."
 	@priority = 5
 	test PageTreeIsCollapsedAfterOpeningProductMenu {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		task ("Check that opening and closing the Folders and Articles section works as expected") {
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.openPageTreePanel(section = "Folders and Articles");
+			KBArticle.openPageTreePanel(section = "Folders and Articles");
 
-		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
+			AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
 
-		ProductMenuHelper.openProductMenu();
+			ProductMenuHelper.openProductMenu();
 
-		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+			AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
-		Refresh();
+			Refresh();
 
-		KBArticle.openPageTreePanel(section = "Folders and Articles");
+			KBArticle.openPageTreePanel(section = "Folders and Articles");
 
-		KBArticle.closePageTreePanel(section = "Folders and Articles");
+			KBArticle.closePageTreePanel(section = "Folders and Articles");
 
-		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+			AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
-		Refresh();
+			Refresh();
+		}
 
-		KBArticle.openPageTreePanel(section = "Templates");
+		task ("Check that opening and closing the Templates section works as expected") {
+			KBArticle.openPageTreePanel(section = "Templates");
 
-		ProductMenuHelper.openProductMenu();
+			ProductMenuHelper.openProductMenu();
 
-		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+			AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
-		Refresh();
+			Refresh();
 
-		KBArticle.openPageTreePanel(section = "Templates");
+			KBArticle.openPageTreePanel(section = "Templates");
 
-		KBArticle.closePageTreePanel(section = "Templates");
+			KBArticle.closePageTreePanel(section = "Templates");
 
-		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+			AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
-		Refresh();
+			Refresh();
+		}
 
-		KBArticle.openPageTreePanel(section = "Suggestions");
+		task ("Check that opening and closing the Suggestions section works as expected") {
+			KBArticle.openPageTreePanel(section = "Suggestions");
 
-		ProductMenuHelper.openProductMenu();
+			ProductMenuHelper.openProductMenu();
 
-		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+			AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
-		Refresh();
+			Refresh();
 
-		KBArticle.openPageTreePanel(section = "Suggestions");
+			KBArticle.openPageTreePanel(section = "Suggestions");
 
-		KBArticle.closePageTreePanel(section = "Suggestions");
+			KBArticle.closePageTreePanel(section = "Suggestions");
 
-		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+			AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+		}
 	}
 
 }

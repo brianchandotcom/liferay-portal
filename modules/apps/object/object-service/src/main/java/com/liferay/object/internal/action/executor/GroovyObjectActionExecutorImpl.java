@@ -50,7 +50,7 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 				payloadJSONObject.getLong("objectDefinitionId"));
 
 		Map<String, Object> inputObjects =
-			ObjectEntryVariablesUtil.getActionVariables(
+			ObjectEntryVariablesUtil.getVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry);
 

@@ -20,16 +20,13 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,73 +45,6 @@ import java.util.Set;
  * @author Carolina Barbosa
  */
 public class ObjectEntryVariablesUtil {
-
-	public static Map<String, Object> getActionVariables(
-		DTOConverterRegistry dtoConverterRegistry,
-		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
-		SystemObjectDefinitionMetadataRegistry
-			systemObjectDefinitionMetadataRegistry) {
-
-		Map<String, Object> currentVariables = _getVariables(
-			dtoConverterRegistry, objectDefinition, false, payloadJSONObject,
-			systemObjectDefinitionMetadataRegistry);
-
-		return HashMapBuilder.<String, Object>put(
-			"baseModel", currentVariables
-		).put(
-			"originalBaseModel",
-			() -> {
-				String suffix = _getSuffix(
-					objectDefinition, systemObjectDefinitionMetadataRegistry);
-
-				if (payloadJSONObject.has("original" + suffix)) {
-					return _getVariables(
-						dtoConverterRegistry, objectDefinition, true,
-						payloadJSONObject,
-						systemObjectDefinitionMetadataRegistry);
-				}
-
-				return _getDefaultVariables(
-					objectDefinition,
-					Collections.unmodifiableSet(currentVariables.keySet()));
-			}
-		).build();
-	}
-
-	public static Map<String, Object> getValidationRuleVariables(
-			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
-			ObjectDefinition objectDefinition,
-			ObjectEntryLocalService objectEntryLocalService,
-			JSONObject payloadJSONObject,
-			SystemObjectDefinitionMetadataRegistry
-				systemObjectDefinitionMetadataRegistry)
-		throws PortalException {
-
-		Map<String, Object> currentVariables = _getVariables(
-			dtoConverterRegistry, objectDefinition, false, payloadJSONObject,
-			systemObjectDefinitionMetadataRegistry);
-
-		return HashMapBuilder.<String, Object>put(
-			"baseModel", currentVariables
-		).put(
-			"originalBaseModel",
-			() -> {
-				String suffix = _getSuffix(
-					objectDefinition, systemObjectDefinitionMetadataRegistry);
-
-				if (payloadJSONObject.has("original" + suffix)) {
-					return _getVariables(
-						dtoConverterRegistry, objectDefinition, true,
-						payloadJSONObject,
-						systemObjectDefinitionMetadataRegistry);
-				}
-
-				return _getDefaultVariables(
-					objectDefinition,
-					Collections.unmodifiableSet(currentVariables.keySet()));
-			}
-		).build();
-	}
 
 	public static Map<String, Object> getValues(
 			DDMExpressionFactory ddmExpressionFactory,
@@ -157,6 +87,38 @@ public class ObjectEntryVariablesUtil {
 		}
 
 		return values;
+	}
+
+	public static Map<String, Object> getVariables(
+		DTOConverterRegistry dtoConverterRegistry,
+		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
+
+		Map<String, Object> currentVariables = _getVariables(
+			dtoConverterRegistry, objectDefinition, false, payloadJSONObject,
+			systemObjectDefinitionMetadataRegistry);
+
+		return HashMapBuilder.<String, Object>put(
+			"baseModel", currentVariables
+		).put(
+			"originalBaseModel",
+			() -> {
+				String suffix = _getSuffix(
+					objectDefinition, systemObjectDefinitionMetadataRegistry);
+
+				if (payloadJSONObject.has("original" + suffix)) {
+					return _getVariables(
+						dtoConverterRegistry, objectDefinition, true,
+						payloadJSONObject,
+						systemObjectDefinitionMetadataRegistry);
+				}
+
+				return _getDefaultVariables(
+					objectDefinition,
+					Collections.unmodifiableSet(currentVariables.keySet()));
+			}
+		).build();
 	}
 
 	private static String _getContentType(

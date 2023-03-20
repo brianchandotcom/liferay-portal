@@ -71,7 +71,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 					_userLocalService.getUser(userId),
 					_getValues(
 						objectDefinition, parametersUnicodeProperties,
-						ObjectEntryVariablesUtil.getActionVariables(
+						ObjectEntryVariablesUtil.getVariables(
 							_dtoConverterRegistry, objectDefinition,
 							payloadJSONObject,
 							_systemObjectDefinitionMetadataRegistry)));

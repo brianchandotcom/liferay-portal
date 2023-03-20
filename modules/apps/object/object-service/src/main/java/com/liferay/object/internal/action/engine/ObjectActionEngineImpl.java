@@ -77,7 +77,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 			_executeObjectAction(
 				objectAction, objectDefinition, payloadJSONObject, userId,
-				ObjectEntryVariablesUtil.getActionVariables(
+				ObjectEntryVariablesUtil.getVariables(
 					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 					_systemObjectDefinitionMetadataRegistry));
 		}
@@ -122,7 +122,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			_updatePayloadJSONObject(objectDefinition, payloadJSONObject, user);
 
 			Map<String, Object> variables =
-				ObjectEntryVariablesUtil.getActionVariables(
+				ObjectEntryVariablesUtil.getVariables(
 					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 					_systemObjectDefinitionMetadataRegistry);
 

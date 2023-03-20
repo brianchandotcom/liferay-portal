@@ -78,7 +78,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			targetObjectDefinition, _userLocalService.getUser(userId),
 			ObjectEntryVariablesUtil.getValues(
 				_ddmExpressionFactory, parametersUnicodeProperties,
-				ObjectEntryVariablesUtil.getActionVariables(
+				ObjectEntryVariablesUtil.getVariables(
 					_dtoConverterRegistry, sourceObjectDefinition,
 					payloadJSONObject,
 					_systemObjectDefinitionMetadataRegistry)));

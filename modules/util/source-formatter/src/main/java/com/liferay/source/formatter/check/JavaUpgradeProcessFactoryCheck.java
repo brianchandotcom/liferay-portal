@@ -58,7 +58,7 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		return _sortAlterColumnCalls(javaTerm.getContent());
+		return _sortMethodCallsByColumnName(javaTerm.getContent());
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private String _sortAlterColumnCalls(String content) {
+	private String _sortMethodCallsByColumnName(String content) {
 		Matcher matcher1 = _methodCallsPattern.matcher(content);
 
 		while (matcher1.find()) {

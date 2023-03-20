@@ -221,11 +221,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
-		_testRelevantUserTermValues(getAuthorValues());
-		_testRelevantUserTermValues(getCurrentUserValues());
+		_testUserTermValues(getAuthorValues());
+		_testUserTermValues(getCurrentUserValues());
 	}
 
-	private void _testRelevantUserTermValues(HashMap<String, Object> values)
+	private void _testUserTermValues(HashMap<String, Object> values)
 		throws Exception {
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(

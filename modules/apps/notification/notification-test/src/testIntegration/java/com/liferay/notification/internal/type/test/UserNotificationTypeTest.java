@@ -37,6 +37,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -225,10 +226,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", StringPool.BLANK
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 
 		sendNotification(
 			new NotificationContextBuilder(

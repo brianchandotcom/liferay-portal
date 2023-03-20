@@ -305,7 +305,8 @@ public class SalesforceObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		if (!_isPermissionEnabled(companyId, objectDefinition, scopeKey) ||
+		if (!_inlineSQLHelper.isEnabled(
+				companyId, getGroupId(objectDefinition, scopeKey)) ||
 			!objectDefinition.isAccountEntryRestricted()) {
 
 			return StringPool.BLANK;
@@ -501,18 +502,6 @@ public class SalesforceObjectEntryManagerImpl
 		).getInt(
 			"expr0"
 		);
-	}
-
-	private boolean _isPermissionEnabled(
-		long companyId, ObjectDefinition objectDefinition, String scopeKey) {
-
-		if (_inlineSQLHelper.isEnabled(
-				companyId, getGroupId(objectDefinition, scopeKey))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private JSONObject _toJSONObject(

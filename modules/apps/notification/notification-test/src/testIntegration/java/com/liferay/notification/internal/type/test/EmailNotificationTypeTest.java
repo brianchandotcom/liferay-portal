@@ -230,10 +230,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", StringPool.BLANK
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 
 		sendNotification(
 			new NotificationContextBuilder(

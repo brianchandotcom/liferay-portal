@@ -9,10 +9,18 @@ definition {
 			label = "basics.businessInformation.lastName",
 			value = "LastName");
 
-		RaylifeContactInfo.typeBasicsInfoFields(
+		if (isSet(email)) {
+            RaylifeContactInfo.typeBasicsInfoFields(
+            label = "basics.businessInformation.business.email",
+            value = "test2@liferay.com");
+        }
+
+		else {
+			RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.business.email",
 			value = "test@liferay.com");
-
+		}
+		
 		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.business.phone",
 			value = "(000) 000-0000");

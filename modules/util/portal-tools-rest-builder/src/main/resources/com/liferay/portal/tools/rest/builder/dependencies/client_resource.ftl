@@ -228,16 +228,16 @@ public interface ${schemaName}Resource {
 							<#list bodyJavaMethodParameters as javaMethodParameter>
 								<#if javaMethodParameter?is_last>
 									<#if javaMethodParameter.parameterType?starts_with("[L")>
-										TransformUtil.transformToList(
-										${javaMethodParameter.parameterName},
-
-										value ->
-										<#if javaMethodParameter.parameterType?contains("String")>
-											"\"" + String.valueOf(value) + "\""
-										<#else>
-											String.valueOf(value)
-										</#if>
-										).toString()
+										String.valueOf(
+											TransformUtil.transformToList(
+												${javaMethodParameter.parameterName},
+												value ->
+													<#if javaMethodParameter.parameterType?contains("String")>
+														"\"" + String.valueOf(value) + "\""
+													<#else>
+														String.valueOf(value)
+													</#if>
+													))
 									<#else>
 										${javaMethodParameter.parameterName}.toString()
 									</#if>

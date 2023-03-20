@@ -2562,13 +2562,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#list>
 
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz) throws Exception {
-		return TransformUtil.transform(ReflectionUtil.getDeclaredFields(clazz),
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
 			field -> {
 				if (field.isSynthetic()) {
 					return null;
 				}
+
 				return field;
-			}, java.lang.reflect.Field.class );
+			},
+			java.lang.reflect.Field.class );
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields() throws Exception {
@@ -2596,9 +2599,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 				if(!Objects.equals(entityField.getType(), type) ||
 				   ArrayUtil.contains(
 					   getIgnoredEntityFieldNames(), entityField.getName())){
+
 					return null;
 				}
-					return entityField;
+
+				return entityField;
 			});
 	}
 

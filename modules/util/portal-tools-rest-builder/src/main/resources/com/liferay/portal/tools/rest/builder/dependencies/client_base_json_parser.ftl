@@ -192,18 +192,19 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	protected Date[] toDates(Object[] objects) {
-		return TransformUtil.transform(objects,
-			object -> toDate((String)object), Date.class);
+		return TransformUtil.transform(
+			objects, object -> toDate((String)object), Date.class);
 	}
 
 	protected Integer[] toIntegers(Object[] objects) {
-		return TransformUtil.transform(objects,
-			object -> Integer.valueOf(object.toString()), Integer.class);
+		return TransformUtil.transform(
+			objects, object -> Integer.valueOf(object.toString()),
+			Integer.class);
 	}
 
 	protected Long[] toLongs(Object[] objects) {
-		return TransformUtil.transform(objects,
-			object -> Long.valueOf(object.toString()), Long.class);
+		return TransformUtil.transform(
+			objects, object -> Long.valueOf(object.toString()), Long.class);
 	}
 
 	protected String toString(Date date) {
@@ -211,8 +212,7 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	protected String[] toStrings(Object[] objects) {
-		return TransformUtil.transform(objects,
-			String.class::cast, String.class);
+		return TransformUtil.transform(objects, String.class::cast, String.class);
 	}
 
 	private void _assertLastChar(char c) {

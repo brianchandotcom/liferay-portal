@@ -294,8 +294,8 @@ public class ${schemaName}SerDes {
 						<#elseif propertyType?ends_with("[]") && (allExternalSchemas?keys?seq_contains(propertyType?remove_ending("[]")) || allSchemas?keys?seq_contains(propertyType?remove_ending("[]")))>
 							TransformUtil.transform(
 								(Object[])jsonParserFieldValue,
-								object -> ${propertyType?remove_ending("[]")}SerDes.toDTO(String.class.cast(object)),
-									${propertyType?remove_ending("[]")}.class)
+								object -> ${propertyType?remove_ending("[]")}SerDes.toDTO((String)object),
+								${propertyType?remove_ending("[]")}.class)
 						<#elseif enumSchemas?keys?seq_contains(properties[propertyName])>
 							${schemaName}.${propertyType}.create((String)jsonParserFieldValue)
 						<#else>

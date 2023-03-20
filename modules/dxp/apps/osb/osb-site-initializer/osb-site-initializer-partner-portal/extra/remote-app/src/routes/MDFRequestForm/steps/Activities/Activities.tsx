@@ -19,6 +19,7 @@ import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import deleteMDFRequestActivities from '../../../../common/services/liferay/object/activity/deleteMDFRequestActivities';
+import deleteMDFRequestActivitiesSF from '../../../../common/services/liferay/object/activity/deleteMDFRequestActivitiesSF';
 import {ResourceName} from '../../../../common/services/liferay/object/enum/resourceName';
 import {Status} from '../../../../common/utils/constants/status';
 import handleError from '../../../../common/utils/handleError';
@@ -27,6 +28,7 @@ import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Form from './components/Form';
 import Listing from './components/Listing';
+import useGetSummaryActivities from './hooks/useGetSummaryActivities';
 
 interface IProps {
 	arrayHelpers: ArrayHelpers;
@@ -35,7 +37,6 @@ interface IProps {
 
 const Activities = ({
 	arrayHelpers,
-	isEdit,
 	onCancel,
 	onContinue,
 	onPrevious,
@@ -79,6 +80,26 @@ const Activities = ({
 
 	const onAdd = () => setCurrentActivityIndex(values.activities.length);
 
+	const {
+		maxDateActivity,
+		minDateActivity,
+		totalCostOfExpense,
+		totalMDFRequestAmount,
+	} = useGetSummaryActivities(values.activities);
+
+	useEffect(() => {
+		setFieldValue('maxDateActivity', maxDateActivity);
+		setFieldValue('minDateActivity', minDateActivity);
+		setFieldValue('totalCostOfExpense', totalCostOfExpense);
+		setFieldValue('totalMDFRequestAmount', totalMDFRequestAmount);
+	}, [
+		maxDateActivity,
+		minDateActivity,
+		setFieldValue,
+		totalCostOfExpense,
+		totalMDFRequestAmount,
+	]);
+
 	const onEdit = (index: number) => {
 		arrayHelpers.push(values.activities[index]);
 
@@ -107,8 +128,16 @@ const Activities = ({
 	};
 
 	const onRemove = async (index: number) => {
-		if (isEdit) {
+		if (values.activities[index].id) {
 			try {
+				if (values.activities[index].externalReferenceCodeSF) {
+					await deleteMDFRequestActivitiesSF(
+						ResourceName.ACTIVITY_SALESFORCE,
+						values.activities[index]
+							.externalReferenceCodeSF as string
+					);
+				}
+
 				await deleteMDFRequestActivities(
 					ResourceName.ACTIVITY_DXP,
 					values.activities[index].id as number

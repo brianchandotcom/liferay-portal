@@ -39,11 +39,15 @@ const initialFormValues: MDFRequest = {
 	country: {},
 	currency: {},
 	liferayBusinessSalesGoals: [],
+	maxDateActivity: '',
 	mdfRequestStatus: Status.DRAFT,
+	minDateActivity: '',
 	overallCampaignDescription: '',
 	overallCampaignName: '',
 	targetAudienceRoles: [],
 	targetMarkets: [],
+	totalCostOfExpense: 0,
+	totalMDFRequestAmount: 0,
 };
 
 type StepComponent = {
@@ -102,7 +106,6 @@ const MDFRequestForm = () => {
 		[StepType.ACTIVITIES]: (
 			<PRMFormik.Array
 				component={Activities}
-				isEdit={mdfRequestId !== undefined}
 				name="activities"
 				onCancel={onCancel}
 				onContinue={onContinue}

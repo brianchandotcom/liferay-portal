@@ -1,0 +1,122 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "9e12c0d0-5855-35d0-cef9-ed9794b05dcb",
+	"label": {
+		"en_US": "Bookmark"
+	},
+	"modifiable": true,
+	"name": "Bookmark",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"defaultValue": "",
+			"externalReferenceCode": "2541827d-4a56-9257-a4ad-2c10e19a576d",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Description"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "description",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "f526a2c1-1228-1c1b-e5a8-06266d5ef9c9",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Name"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "name",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "07709975-c74c-a535-1056-a6ce840b9e9c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "URL"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "uRL",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "site_administration.content",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Bookmarks"
+	},
+	"portlet": true,
+	"restContextPath": "/o/c/bookmarks",
+	"scope": "site",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": true,
+	"titleObjectFieldName": "name"
+}

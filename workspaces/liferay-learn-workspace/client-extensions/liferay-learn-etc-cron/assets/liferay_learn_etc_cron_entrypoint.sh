@@ -177,7 +177,7 @@ if [ -z "$LIFERAY_LEARN_ETC_CRON_LIFERAY_URL" ] ; then
 	LIFERAY_LEARN_ETC_CRON_LIFERAY_URL=https://$(cat /etc/liferay/lxc/dxp-metadata/com.liferay.lxc.dxp.mainDomain)
 fi
 
-java -Xmx2048m -jar /home/liferay/liferay-learn-etc-cron-all.jar
+java -Xmx2048m -jar /usr/local/bin/liferay-learn-etc-cron-all.jar
 
 IMPORT_RC=$?
 

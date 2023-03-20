@@ -103,7 +103,7 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 
 	private static Sort _getSort(String orderByCol, String orderByType) {
 		return SortFactoryUtil.create(
-			orderByCol, Objects.equals("desc", orderByType));
+			orderByCol, Objects.equals(orderByType, "desc"));
 	}
 
 }

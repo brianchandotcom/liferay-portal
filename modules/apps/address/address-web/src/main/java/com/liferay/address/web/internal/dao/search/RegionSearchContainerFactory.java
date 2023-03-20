@@ -137,7 +137,7 @@ public class RegionSearchContainerFactory {
 
 		boolean columnAscending = Objects.equals(orderByType, "asc");
 
-		if (Objects.equals("priority", orderByCol)) {
+		if (Objects.equals(orderByCol, "priority")) {
 			return OrderByComparatorFactoryUtil.create(
 				"Region", "position", columnAscending, "name", true);
 		}

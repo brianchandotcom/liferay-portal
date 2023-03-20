@@ -1029,7 +1029,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		}
 
 		for (String portletName : portletNames) {
-			if (Objects.equals("*", portletName)) {
+			if (Objects.equals(portletName, "*")) {
 				continue;
 			}
 

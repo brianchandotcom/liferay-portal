@@ -184,8 +184,8 @@ public class UpgradePortletPreferences
 			return false;
 		}
 
-		if (Objects.equals("date", ddmFormField.getType()) ||
-			Objects.equals("ddm-date", ddmFormField.getType())) {
+		if (Objects.equals(ddmFormField.getType(), "date") ||
+			Objects.equals(ddmFormField.getType(), "ddm-date")) {
 
 			return true;
 		}

@@ -134,7 +134,7 @@ public class CountrySearchContainerFactory {
 
 		boolean columnAscending = Objects.equals(orderByType, "asc");
 
-		if (Objects.equals("priority", orderByCol)) {
+		if (Objects.equals(orderByCol, "priority")) {
 			return OrderByComparatorFactoryUtil.create(
 				"Country", "position", columnAscending, "name", true);
 		}

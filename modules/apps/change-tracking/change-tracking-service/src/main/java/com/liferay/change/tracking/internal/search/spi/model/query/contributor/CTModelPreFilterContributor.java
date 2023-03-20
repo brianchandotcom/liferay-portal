@@ -72,7 +72,7 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 			searchContext.getAttribute(
 				"com.liferay.change.tracking.filter.ctCollectionId"));
 
-		if (Objects.equals("ALL", ctCollectionIdString)) {
+		if (Objects.equals(ctCollectionIdString, "ALL")) {
 			return;
 		}
 

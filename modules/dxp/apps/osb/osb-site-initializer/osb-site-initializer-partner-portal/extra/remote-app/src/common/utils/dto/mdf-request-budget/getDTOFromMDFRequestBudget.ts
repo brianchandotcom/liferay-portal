@@ -16,8 +16,14 @@ export default function getDTOFromMDFRequestBudget(
 	budget: MDFRequestBudget,
 	activityId: number
 ): MDFRequestBudgetDTO {
+	const MDFRequestBudget = {...budget};
+
+	delete MDFRequestBudget?.creator;
+	delete MDFRequestBudget?.externalReferenceCode;
+	delete MDFRequestBudget?.status;
+
 	return {
-		...budget,
+		...MDFRequestBudget,
 		r_actToBgts_c_activityId: activityId,
 	};
 }

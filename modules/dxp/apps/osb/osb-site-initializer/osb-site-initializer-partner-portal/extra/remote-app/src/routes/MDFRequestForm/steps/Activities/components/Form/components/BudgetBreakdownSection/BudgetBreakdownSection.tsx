@@ -19,8 +19,11 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import ResumeCard from '../../../../../../../../common/components/ResumeCard';
 import LiferayPicklist from '../../../../../../../../common/interfaces/liferayPicklist';
 import MDFRequestBudget from '../../../../../../../../common/interfaces/mdfRequestBudget';
+import deleteMDFRequestActivityBudgets from '../../../../../../../../common/services/liferay/object/budgets/deleteMDFRequestActivityBudgets';
+import {ResourceName} from '../../../../../../../../common/services/liferay/object/enum/resourceName';
 import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
 import getPicklistOptions from '../../../../../../../../common/utils/getPicklistOptions';
+import handleError from '../../../../../../../../common/utils/handleError';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
 import getNewBudget from './utils/getNewBudget';
 
@@ -75,6 +78,24 @@ const BudgetBreakdownSection = ({
 		)
 	);
 
+	const onRemove = async (index: number) => {
+		if (budgets[index].id) {
+			try {
+				await deleteMDFRequestActivityBudgets(
+					ResourceName.BUDGET,
+					budgets[index].id as number
+				);
+			}
+			catch (error: any) {
+				handleError(error.message);
+
+				return;
+			}
+		}
+
+		arrayHelpers.remove(index);
+	};
+
 	return (
 		<PRMForm.Section
 			subtitle="Add all the expenses that best match with your Activity to add your Total  MDF Requested Amount"
@@ -112,7 +133,7 @@ const BudgetBreakdownSection = ({
 						<ClayButtonWithIcon
 							className="mt-2"
 							displayType="secondary"
-							onClick={() => arrayHelpers.remove(index)}
+							onClick={() => onRemove(index)}
 							small
 							symbol="hr"
 						/>

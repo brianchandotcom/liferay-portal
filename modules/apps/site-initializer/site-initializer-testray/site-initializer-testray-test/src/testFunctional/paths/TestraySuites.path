@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>SMART_SUITE_ARROW</td>
-	<td>//label[contains(.,'${key_parameterType}')]//ancestor::div[contains(@class,'listbox')]//button[contains(@aria-label,'to ${key_arrowDirection}')]</td>
+	<td>//label[contains(.,'${key_caseParameters}')]//ancestor::div[contains(@class,'listbox')]//button[contains(@aria-label,'to ${key_arrowDirection}')]</td>
 	<td></td>
 </tr>
 </tbody>

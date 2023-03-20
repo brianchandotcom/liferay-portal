@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Tools Service Builder Test Sequence API
+Bundle-SymbolicName: com.liferay.portal.tools.service.builder.test.sequence.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.service.builder.test.sequence.exception,\
+	com.liferay.portal.tools.service.builder.test.sequence.model,\
+	com.liferay.portal.tools.service.builder.test.sequence.service,\
+	com.liferay.portal.tools.service.builder.test.sequence.service.persistence

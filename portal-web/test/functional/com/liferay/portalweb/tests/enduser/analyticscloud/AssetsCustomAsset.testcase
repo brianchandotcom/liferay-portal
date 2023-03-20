@@ -29,7 +29,7 @@ definition {
 		task ("Add a Web Content Display to page and display a web content") {
 			ACUtils.createWCAndAddToPage(
 				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="analytics-portal" data-analytics-asset-category="AC" data-analytics-asset-title="Custom Asset Analytics Cloud"> \
-				%0A<a href="/poll-instructions.pdf" data-analytics-asset-action="download">Download the Poll Instructions </a> \
+				%0A<a href="www.liferay.com" data-analytics-asset-action="download">Download the Poll Instructions </a> \
 				%0A<h1> What'\''s your favorite portal? </h1>%0A<form action="/submit.php"> \
 				%0A<div>%0A<input type="radio" id="ac" name="portal" value="AC" checked>%0A<label for="ac">AC</label>%0A</div> \
 				%0A<div>%0A<input type="radio" id="dxp" name="portal" value="DXP">%0A<label for="dxp">DXP</label>%0A</div> \

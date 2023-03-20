@@ -72,9 +72,11 @@ definition {
 	}
 
 	macro viewCardDataIsPresent {
-		AssertElementPresent(
-			key_cardName = ${cardName},
-			locator1 = "ACCards#CHART_DATA_PRESENT");
+		var key_cardName = ${cardName};
+
+		WaitForElementPresent(locator1 = "ACCards#CHART_DATA_PRESENT");
+
+		AssertElementPresent(locator1 = "ACCards#CHART_DATA_PRESENT");
 	}
 
 	macro viewCards {

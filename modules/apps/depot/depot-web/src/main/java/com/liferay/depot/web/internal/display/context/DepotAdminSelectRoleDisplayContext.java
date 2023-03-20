@@ -56,7 +56,6 @@ import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.roles.admin.kernel.util.RolesAdminUtil;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -207,19 +206,7 @@ public class DepotAdminSelectRoleDisplayContext {
 			}
 
 			if (!groupSearchTerms.hasSearchTerms()) {
-				List<Group> groups = ListUtil.copy(_user.getGroups());
-
-				Iterator<Group> iterator = groups.iterator();
-
-				while (iterator.hasNext()) {
-					Group group = iterator.next();
-
-					if (!group.isDepot()) {
-						iterator.remove();
-					}
-				}
-
-				return groups;
+				return ListUtil.filter(_user.getGroups(), Group::isDepot);
 			}
 
 			return GroupLocalServiceUtil.search(
@@ -350,13 +337,12 @@ public class DepotAdminSelectRoleDisplayContext {
 				return false;
 			}
 
-			List<UserGroupRole> userGroupRoles =
-				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-					_user.getUserId());
+			for (UserGroupRole userGroupRole :
+					UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+						_user.getUserId())) {
 
-			for (UserGroupRole userGroupRole : userGroupRoles) {
 				if ((_group.getGroupId() == userGroupRole.getGroupId()) &&
-					(userGroupRole.getRoleId() == role.getRoleId())) {
+					(role.getRoleId() == userGroupRole.getRoleId())) {
 
 					return true;
 				}
@@ -443,11 +429,11 @@ public class DepotAdminSelectRoleDisplayContext {
 
 			long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
-			if (groupId > 0) {
-				return GroupServiceUtil.getGroup(groupId);
+			if (groupId <= 0) {
+				return null;
 			}
 
-			return null;
+			return GroupServiceUtil.getGroup(groupId);
 		}
 
 		private final Group _group;

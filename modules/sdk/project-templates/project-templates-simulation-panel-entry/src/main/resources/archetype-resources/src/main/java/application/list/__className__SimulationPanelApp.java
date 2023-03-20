@@ -71,12 +71,13 @@ public class ${className}SimulationPanelApp extends BaseJSPPanelApp {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=${artifactId})",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=${artifactId})"
+	)
+	private ServletContext _servletContext;
 
 }

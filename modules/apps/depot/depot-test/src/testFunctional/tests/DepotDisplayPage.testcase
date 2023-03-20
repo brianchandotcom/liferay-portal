@@ -230,7 +230,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addField(
+		var textNumber = DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text",
 			textNumber = "true");
@@ -307,21 +307,33 @@ definition {
 
 		Button.clickSave();
 
+		var mappedFieldValue = StringUtil.add("Title is Text: ${", "${textNumber}:Text", "");
+
+		var mappedFieldValue = StringUtil.add(${mappedFieldValue}, "}", "");
+
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Title is Text: ${Text:Text}");
+			mappedFieldValue = ${mappedFieldValue});
+
+		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text", "");
+
+		var mappedFieldValue = StringUtil.add(${mappedFieldValue}, "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Description is Text: ${Text:Text}");
+			mappedFieldValue = ${mappedFieldValue});
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",
 			mappedFieldValue = "WC Structure Name: Small Image");
 
+		var mappedFieldValue = StringUtil.add("Image Alt is Text: ${", "${textNumber}:Text", "");
+
+		var mappedFieldValue = StringUtil.add(${mappedFieldValue}, "}", "");
+
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
-			mappedFieldValue = "Image Alt is Text: ${Text:Text}",
+			mappedFieldValue = ${mappedFieldValue},
 			textType = "TextArea");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -366,7 +378,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addField(
+		var textNumber = DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text",
 			textNumber = "true");
@@ -422,13 +434,21 @@ definition {
 
 		Button.clickSave();
 
+		var mappedFieldValue = StringUtil.add("HTML Title is Text: ${", "${textNumber}:Text", "");
+
+		var mappedFieldValue = StringUtil.add(${mappedFieldValue}, "}", "");
+
 		OpenGraph.viewMappedField(
 			mappedField = "title",
-			mappedFieldValue = "HTML Title is Text: ${Text:Text}");
+			mappedFieldValue = ${mappedFieldValue});
+
+		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text", "");
+
+		var mappedFieldValue = StringUtil.add(${mappedFieldValue}, "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "description",
-			mappedFieldValue = "Description is Text: ${Text:Text}",
+			mappedFieldValue = ${mappedFieldValue},
 			textType = "TextArea");
 	}
 

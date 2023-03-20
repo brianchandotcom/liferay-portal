@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>TEXT_INPUT_2</td>
-	<td>//div[@class="ddm-field"][2]//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input[@type='text'])[2]</td>
 	<td></td>
 </tr>
 <tr>

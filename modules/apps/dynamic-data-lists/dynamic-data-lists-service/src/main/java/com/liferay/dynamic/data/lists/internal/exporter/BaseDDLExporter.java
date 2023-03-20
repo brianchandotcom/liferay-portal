@@ -158,7 +158,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		Map<String, DDMFormFieldRenderedValue> values = new HashMap<>();
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap();
+			ddmFormValues.getDDMFormFieldValuesMap(false);
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (!ddmFormFieldValuesMap.containsKey(ddmFormField.getName())) {

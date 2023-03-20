@@ -58,6 +58,12 @@ definition {
 		CreateObject.assertObjectLabel(labelName = "Raylife Sales Goal");
 	}
 
+	macro clickAtButton {
+		var key_text = ${text};
+
+		Click(locator1 = "Raylife#ANY_BUTTON");
+	}
+
 	macro commerceApisTearDowm {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 
@@ -80,18 +86,6 @@ definition {
 		CommerceJSONWarehousesAndInventoriesAPI._deleteAllWarehouseItems();
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
-	}
-
-	macro clickAtButton {
-		var key_text = ${text};
-
-		Click(locator1 = "Raylife#ANY_BUTTON");
-	}
-
-	macro selectTheQuote {
-		Click(
-			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
-			title = ${quoteOption});
 	}
 
 	macro createRaylifeSite {
@@ -137,6 +131,12 @@ definition {
 		Click(
 			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
 			policy = "standard");
+	}
+
+	macro selectTheQuote {
+		Click(
+			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
+			title = ${quoteOption});
 	}
 
 	macro tearDownCP {

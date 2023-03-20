@@ -191,7 +191,7 @@ definition {
 
 			Raylife.clickAtButton(text = "Continue");
 		}
-		
+
 		task ("And I select a quotation") {
 			Raylife.selectTheQuote(quoteOption = "standard");
 		}
@@ -203,7 +203,6 @@ definition {
 		task ("Then I should be able to assert that the Create Account button is enabled") {
 			RaylifeCreateAccount.assertTheButtonIsEnabled();
 		}
-		
 	}
 
 	@description = "LPS-144333 - Verify if the create account button is disabled"

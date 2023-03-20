@@ -260,7 +260,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 		@Override
 		public String getValue(String namespace, String key) {
-			if (Objects.equals("hide-panel", key)) {
+			if (Objects.equals(key, "hide-panel")) {
 				return String.valueOf(Boolean.TRUE);
 			}
 

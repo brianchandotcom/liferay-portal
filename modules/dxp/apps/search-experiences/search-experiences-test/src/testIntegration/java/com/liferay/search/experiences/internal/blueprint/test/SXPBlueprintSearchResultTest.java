@@ -2233,7 +2233,7 @@ public class SXPBlueprintSearchResultTest {
 		DocumentsAssert.assertValues(
 			message, searchResponse.getDocuments(), "title_en_US", expected);
 
-		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
+		if (!Objects.equals(_sxpBlueprint.getElementInstancesJSON(), "{}")) {
 			searchResponse = _getSearchResponsePreview(
 				searchRequestBuilderConsumer);
 
@@ -2258,7 +2258,7 @@ public class SXPBlueprintSearchResultTest {
 			searchResponse.getRequestString(), searchResponse.getDocuments(),
 			"title_en_US", expected);
 
-		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
+		if (!Objects.equals(_sxpBlueprint.getElementInstancesJSON(), "{}")) {
 			searchResponse = _getSearchResponsePreview(
 				searchRequestBuilderConsumer);
 

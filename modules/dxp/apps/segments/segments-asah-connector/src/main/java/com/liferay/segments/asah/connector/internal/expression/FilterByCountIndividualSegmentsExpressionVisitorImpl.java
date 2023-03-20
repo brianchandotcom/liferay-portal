@@ -89,7 +89,7 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 
 		Object value = leftParseTree.accept(this);
 
-		if (Objects.equals("activityKey", value)) {
+		if (Objects.equals(value, "activityKey")) {
 			ParseTree rightParseTree = equalsExpressionContext.getChild(2);
 
 			String eventString = (String)rightParseTree.accept(this);
@@ -103,7 +103,7 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 
 			return new FilterByCount.Event(parts[1], parts[2]);
 		}
-		else if (Objects.equals("day", value)) {
+		else if (Objects.equals(value, "day")) {
 			return _getFilterByCountDay(
 				leftParseTree, equalsExpressionContext.getChild(1),
 				equalsExpressionContext.getChild(2));
@@ -135,7 +135,7 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 						" params"));
 			}
 
-			if (!Objects.equals("day", parameters[0])) {
+			if (!Objects.equals(parameters[0], "day")) {
 				throw new UnsupportedOperationException(
 					"Unsupported function between with first param " +
 						parameters[0]);
@@ -383,7 +383,7 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 
 		Object value = leftParseTree.accept(this);
 
-		if (!Objects.equals("day", value)) {
+		if (!Objects.equals(value, "day")) {
 			throw new UnsupportedOperationException(
 				"Unsupported operation with value " + value);
 		}

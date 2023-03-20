@@ -224,7 +224,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 		return (Http)ProxyUtil.newProxyInstance(
 			Http.class.getClassLoader(), new Class<?>[] {Http.class},
 			(proxy, method, args) -> {
-				if (!Objects.equals("URLtoString", method.getName()) ||
+				if (!Objects.equals(method.getName(), "URLtoString") ||
 					(args.length != 1) || !(args[0] instanceof String)) {
 
 					return method.invoke(_http, args);

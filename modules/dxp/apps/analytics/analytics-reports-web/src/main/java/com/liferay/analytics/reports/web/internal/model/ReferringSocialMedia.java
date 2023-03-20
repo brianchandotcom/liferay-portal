@@ -48,7 +48,7 @@ public class ReferringSocialMedia {
 	public JSONObject toJSONObject(ResourceBundle resourceBundle) {
 		String title = StringUtil.upperCaseFirstLetter(_name);
 
-		if (Objects.equals("other", _name)) {
+		if (Objects.equals(_name, "other")) {
 			title = ResourceBundleUtil.getString(resourceBundle, _name);
 		}
 

@@ -58,7 +58,10 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		return _sortMethodCallsByColumnName(javaTerm.getContent());
+		String javaTermContent = _sortMethodCallsByColumnName(
+			javaTerm.getContent());
+
+		return _sortMethodCallsByTableName(javaTermContent);
 	}
 
 	@Override
@@ -105,6 +108,22 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 		}
 
 		return _serviceXMLElements;
+	}
+
+	private int _getTableIndex(Element serviceXMLElement, String tableName) {
+		int i = 0;
+
+		for (Element entityElement :
+				(List<Element>)serviceXMLElement.elements("entity")) {
+
+			if (tableName.equals(entityElement.attributeValue("name"))) {
+				return i;
+			}
+
+			i++;
+		}
+
+		return -1;
 	}
 
 	private void _populateServiceXMLElements(String dirName, int maxDepth)
@@ -233,6 +252,75 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 				}
 
 				previousColumnName = columnName;
+				previousMatch = match;
+				previousMethodName = methodName;
+				previousTableName = tableName;
+			}
+		}
+
+		return content;
+	}
+
+	private String _sortMethodCallsByTableName(String content) {
+		Matcher matcher1 = _methodCallsPattern.matcher(content);
+
+		while (matcher1.find()) {
+			String methodCallsCodeBlock = matcher1.group();
+
+			String previousMatch = null;
+			String previousMethodName = null;
+			String previousTableName = null;
+
+			Matcher matcher2 = _methodCallPattern.matcher(methodCallsCodeBlock);
+
+			while (matcher2.find()) {
+				String match = matcher2.group();
+
+				String methodName = matcher2.group(1);
+
+				if (!methodName.equals("alterColumnName") &&
+					!methodName.equals("alterColumnType")) {
+
+					continue;
+				}
+
+				List<String> parameterList = JavaSourceUtil.getParameterList(
+					methodCallsCodeBlock.substring(matcher2.start()));
+
+				String tableName = StringUtil.unquote(parameterList.get(0));
+
+				if (!methodName.equals(previousMethodName) ||
+					tableName.equals(previousTableName)) {
+
+					previousMatch = match;
+					previousMethodName = methodName;
+					previousTableName = tableName;
+
+					continue;
+				}
+
+				List<Element> serviceXMLElements = _getServiceXMLElements();
+
+				for (Element serviceXMLElement : serviceXMLElements) {
+					int index1 = _getTableIndex(
+						serviceXMLElement, previousTableName);
+					int index2 = _getTableIndex(serviceXMLElement, tableName);
+
+					if ((index2 != -1) && (index1 > index2)) {
+						int x = matcher2.start();
+
+						int y = content.lastIndexOf(previousMatch, x);
+
+						content = StringUtil.replaceFirst(
+							content, match, previousMatch,
+							matcher1.start() + x);
+
+						return StringUtil.replaceFirst(
+							content, previousMatch, match,
+							matcher1.start() + y);
+					}
+				}
+
 				previousMatch = match;
 				previousMethodName = methodName;
 				previousTableName = tableName;

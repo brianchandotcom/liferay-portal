@@ -2,7 +2,7 @@ FROM liferay/jdk11-jdk8:latest
 
 COPY liferay_learn_etc_cron_entrypoint.sh *.jar /usr/local/bin
 
-ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/liferay_learn_cron_entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/liferay_learn_etc_cron_entrypoint.sh"]
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x && \
 	apt-get install --yes git nodejs p7zip-full && \

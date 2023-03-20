@@ -147,4 +147,15 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro goToDigitalSignatureSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(
+			key_itemName = "Digital Signature",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+	}
+
 }

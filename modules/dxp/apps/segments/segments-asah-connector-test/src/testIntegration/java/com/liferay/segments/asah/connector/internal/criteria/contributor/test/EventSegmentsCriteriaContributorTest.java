@@ -92,9 +92,7 @@ public class EventSegmentsCriteriaContributorTest {
 
 		promise.getValue();
 
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
+		_serviceTracker.close();
 	}
 
 	@Test

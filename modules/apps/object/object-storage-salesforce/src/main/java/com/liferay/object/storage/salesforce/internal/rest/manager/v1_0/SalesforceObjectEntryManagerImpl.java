@@ -296,11 +296,7 @@ public class SalesforceObjectEntryManagerImpl
 		return accountEntriesExternalReferenceCode;
 	}
 
-	private DateFormat _getDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	}
-
-	private String _getFilter(
+	private String _getAccountRestrictionFilterString(
 			long companyId, DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
@@ -322,6 +318,10 @@ public class SalesforceObjectEntryManagerImpl
 					dtoConverterContext.getUserId()),
 				", '"),
 			"')");
+	}
+
+	private DateFormat _getDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
 	private String _getLocation(
@@ -357,7 +357,7 @@ public class SalesforceObjectEntryManagerImpl
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
-				_getFilter(
+				_getAccountRestrictionFilterString(
 					companyId, dtoConverterContext, objectDefinition, scopeKey),
 				objectDefinition, pagination, search, sorts));
 
@@ -377,7 +377,7 @@ public class SalesforceObjectEntryManagerImpl
 			pagination,
 			_getTotalCount(
 				companyId,
-				_getFilter(
+				_getAccountRestrictionFilterString(
 					companyId, dtoConverterContext, objectDefinition, scopeKey),
 				objectDefinition, scopeKey, search));
 	}

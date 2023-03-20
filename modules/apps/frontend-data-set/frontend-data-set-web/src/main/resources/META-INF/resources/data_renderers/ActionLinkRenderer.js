@@ -35,7 +35,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	}
 
 	let currentAction = options?.actionId
-		? actions.find((action) => action.id === options.actionId)
+		? actions.find((action) => action.data?.id === options.actionId)
 		: actions[0];
 
 	if (!currentAction) {

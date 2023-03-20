@@ -212,8 +212,8 @@ definition {
 				caseType = "Manual Test",
 				mainComponent = "Component 1",
 				priorityNumber = 3,
-				subComponent = "Component 1",
 				smartSuite = "true",
+				subComponent = "Component 1",
 				suiteDescription = "Suite Description",
 				suiteName = ${suiteName},
 				teamName = "Commerce");

@@ -15,7 +15,6 @@
 package com.liferay.depot.web.internal.search.bar.portlet.shared.search;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,18 +57,16 @@ public class DepotSearchBarPortletSharedSearchContributor
 		}
 
 		for (long groupId : groupIds) {
-			List<DepotEntryGroupRel> depotEntryGroupRels =
-				_depotEntryGroupRelLocalService.
-					getSearchableDepotEntryGroupRels(
-						groupId, 0,
-						_depotEntryGroupRelLocalService.
-							getSearchableDepotEntryGroupRelsCount(groupId));
-
 			searchContext.setGroupIds(
 				ArrayUtil.append(
 					searchContext.getGroupIds(),
 					TransformUtil.transformToLongArray(
-						depotEntryGroupRels,
+						_depotEntryGroupRelLocalService.
+							getSearchableDepotEntryGroupRels(
+								groupId, 0,
+								_depotEntryGroupRelLocalService.
+									getSearchableDepotEntryGroupRelsCount(
+										groupId)),
 						depotEntryGroupRel -> {
 							DepotEntry depotEntry =
 								_depotEntryLocalService.fetchDepotEntry(

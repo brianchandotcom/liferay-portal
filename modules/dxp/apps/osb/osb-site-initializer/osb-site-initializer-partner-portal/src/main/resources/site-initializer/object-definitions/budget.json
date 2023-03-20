@@ -5,8 +5,8 @@
 	"name": "Budget",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -14,7 +14,7 @@
 			},
 			"name": "cost",
 			"required": false,
-			"type": "String"
+			"type": "BigDecimal"
 		},
 		{
 			"DBType": "String",

@@ -47,8 +47,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
 
 import javax.portlet.WindowStateException;
 
@@ -74,32 +72,25 @@ public class DepotAdminRolesDisplayContext {
 	}
 
 	public String getAssetLibraryLabel() {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_themeDisplay.getLocale(), getClass());
-
-		return ResourceBundleUtil.getString(resourceBundle, "asset-library");
+		return ResourceBundleUtil.getString(
+			ResourceBundleUtil.getBundle(_themeDisplay.getLocale(), getClass()),
+			"asset-library");
 	}
 
 	public String getDepotRoleSyncEntitiesEventName() {
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			DepotPortletKeys.DEPOT_ADMIN);
-
-		return portletNamespace + "syncDepotRoles";
+		return PortalUtil.getPortletNamespace(DepotPortletKeys.DEPOT_ADMIN) +
+			"syncDepotRoles";
 	}
 
 	public String getLabel() {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_themeDisplay.getLocale(), getClass());
-
 		return ResourceBundleUtil.getString(
-			resourceBundle, "asset-library-roles");
+			ResourceBundleUtil.getBundle(_themeDisplay.getLocale(), getClass()),
+			"asset-library-roles");
 	}
 
 	public String getSelectDepotRolesEventName() {
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			DepotPortletKeys.DEPOT_ADMIN);
-
-		return portletNamespace + "selectDepotRole";
+		return PortalUtil.getPortletNamespace(DepotPortletKeys.DEPOT_ADMIN) +
+			"selectDepotRole";
 	}
 
 	public String getSelectDepotRolesURL() throws WindowStateException {
@@ -113,15 +104,13 @@ public class DepotAdminRolesDisplayContext {
 			"/depot/select_depot_role"
 		).setParameter(
 			"p_u_i_d",
-			Optional.ofNullable(
-				_user
-			).map(
-				User::getUserId
-			).map(
-				String::valueOf
-			).orElse(
-				"0"
-			)
+			() -> {
+				if (_user == null) {
+					return "0";
+				}
+
+				return String.valueOf(_user.getUserId());
+			}
 		).setParameter(
 			"step", "1"
 		).setWindowState(

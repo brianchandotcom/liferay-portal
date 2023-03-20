@@ -2482,9 +2482,14 @@ public class ObjectEntryLocalServiceImpl
 
 				ddmExpression.setVariables(columns);
 
-				Expression<?> expression = ddmExpression.getDSLExpression();
+				try {
+					Expression<?> expression = ddmExpression.getDSLExpression();
 
-				selectExpressions.add(expression.as(objectField.getName()));
+					selectExpressions.add(expression.as(objectField.getName()));
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 			}
 		}
 

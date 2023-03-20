@@ -22,8 +22,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 public class BooleanObjectFieldBuilder extends ObjectFieldBuilder {
 
 	public BooleanObjectFieldBuilder() {
-		objectField.setBusinessType(
-			ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN);
+		objectField.setBusinessType(ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN);
 		objectField.setDBType(ObjectFieldConstants.DB_TYPE_BOOLEAN);
 	}
 

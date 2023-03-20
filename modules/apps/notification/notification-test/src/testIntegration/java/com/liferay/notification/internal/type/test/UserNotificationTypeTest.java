@@ -27,11 +27,13 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
@@ -42,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -58,6 +61,15 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		notificationQueueEntryLocalService.deleteNotificationQueueEntries(
+			notificationQueueEntry.getSentDate());
+
+		_userNotificationEventLocalService.deleteUserNotificationEvents(
+			user1.getUserId());
+	}
 
 	@Test
 	public void testSendNotificationRecipientTypeRole() throws Exception {
@@ -143,7 +155,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		Assert.assertEquals(
 			0,
-			userNotificationEventLocalService.getUserNotificationEventsCount(
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
 				user1.getUserId()));
 
 		sendNotification(
@@ -176,10 +188,10 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		Assert.assertEquals(
 			expectedUserNotificationEventsCount,
-			userNotificationEventLocalService.getUserNotificationEventsCount(
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
 				user1.getUserId()));
 
-		userNotificationEventLocalService.deleteUserNotificationEvents(
+		_userNotificationEventLocalService.deleteUserNotificationEvents(
 			user1.getUserId());
 
 		Assert.assertEquals(
@@ -262,5 +274,9 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.BLANK));
 	}
+
+	@Inject
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

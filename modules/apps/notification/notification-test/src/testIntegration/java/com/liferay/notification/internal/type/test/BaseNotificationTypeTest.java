@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -63,7 +62,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -148,15 +146,6 @@ public class BaseNotificationTypeTest {
 		objectDefinition =
 			objectDefinitionLocalService.publishCustomObjectDefinition(
 				user1.getUserId(), objectDefinition.getObjectDefinitionId());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			notificationQueueEntry.getSentDate());
-
-		userNotificationEventLocalService.deleteUserNotificationEvents(
-			user1.getUserId());
 	}
 
 	protected void assertTerms(
@@ -322,10 +311,6 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	protected ObjectEntryLocalService objectEntryLocalService;
-
-	@Inject
-	protected UserNotificationEventLocalService
-		userNotificationEventLocalService;
 
 	@Inject
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;

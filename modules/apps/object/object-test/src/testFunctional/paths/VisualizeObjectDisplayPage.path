@@ -67,9 +67,9 @@
 	</tr>
 	<tr>
 		<td>SELECT_ITEM_IN_FILTER_COLLECTION</td>
-		<td>//label[contains(.,'${key_fieldLabel}')]/../select[contains(.,'${itemName}')]</td>
+		<td>//label[contains(.,'${key_fieldLabel}')]/../select[contains(@class, 'form-control')]</td>
 		<td></td>
-</tr>
+	</tr>
 </tbody>
 </table>
 </body>

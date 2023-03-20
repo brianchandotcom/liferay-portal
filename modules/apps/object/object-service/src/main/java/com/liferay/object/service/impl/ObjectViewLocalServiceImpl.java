@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnObjectFieldNameException;
@@ -74,6 +75,12 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			throw new NoSuchObjectDefinitionException(
+				"Object views require a custom object definition or " +
+					"modifiable system object definition");
+		}
 
 		if (defaultObjectView) {
 			_validateDefaultObjectView(0, objectDefinitionId);

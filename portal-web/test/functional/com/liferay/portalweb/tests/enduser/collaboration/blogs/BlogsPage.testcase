@@ -362,24 +362,30 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		for (var searchTerm : list "\"Blogs\",\"Blogs Entry Content\"") {
-			Navigator.gotoPage(pageName = "Search Page");
+		Navigator.gotoPage(pageName = "Search Page");
 
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs\"");
 
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Entry Title",
-				searchAssetType = "Blogs Entry",
-				searchTerm = ${searchTerm});
-		}
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "\"Blogs\"");
 
-		for (var searchTerm : list "\"Blogs1\",\"Blogs1 Entry1 Content1\"") {
-			Navigator.gotoPage(pageName = "Search Page");
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Content\"");
 
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "\"Blogs Entry Content\"");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = ${searchTerm});
-		}
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1\"");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1\"");
+
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1 Entry1 Content1\"");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1 Entry1 Content1\"");
+
 	}
 
 	@description = "This checks that exact title search returns an entry when it includes the entire phrase being queried."
@@ -396,24 +402,29 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		for (var searchTerm : list "\"Blogs\",\"Blogs Entry Title\"") {
-			Navigator.gotoPage(pageName = "Search Page");
+		Navigator.gotoPage(pageName = "Search Page");
 
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs\"");
 
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Blogs Entry Title",
-				searchAssetType = "Blogs Entry",
-				searchTerm = ${searchTerm});
-		}
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "\"Blogs\"");
 
-		for (var searchTerm : list "\"Blogs1\",\"Blogs Entry Title1\"") {
-			Navigator.gotoPage(pageName = "Search Page");
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Title\"");
 
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "\"Blogs Entry Title\"");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = ${searchTerm});
-		}
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1\"");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1\"");
+
+		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Title1\"");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs Entry Title1\"");
 	}
 
 	@description = "This checks that a blog comment can be subscribed to."

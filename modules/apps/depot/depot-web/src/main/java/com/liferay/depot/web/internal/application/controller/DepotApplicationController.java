@@ -25,10 +25,9 @@ import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -62,39 +61,30 @@ public class DepotApplicationController {
 			return false;
 		}
 
-		Collection<DepotApplication> depotApplications =
-			_serviceTrackerMap.values();
+		for (DepotApplication depotApplication : _serviceTrackerMap.values()) {
+			List<String> classNames = depotApplication.getClassNames();
 
-		Stream<DepotApplication> stream = depotApplications.stream();
-
-		Optional<DepotApplication> depotApplicationOptional = stream.filter(
-			depotApplication -> depotApplication.getClassNames(
-			).contains(
-				className
-			)
-		).findAny();
-
-		return depotApplicationOptional.map(
-			depotApplication -> {
-				if (!depotApplication.isCustomizable()) {
-					return true;
-				}
-
-				DepotAppCustomization depotApplicationCustomization =
-					_depotAppCustomizationLocalService.
-						fetchDepotAppCustomization(
-							depotEntry.getDepotEntryId(),
-							depotApplication.getPortletId());
-
-				if (depotApplicationCustomization == null) {
-					return true;
-				}
-
-				return depotApplicationCustomization.isEnabled();
+			if (!classNames.contains(className)) {
+				continue;
 			}
-		).orElse(
-			false
-		);
+
+			if (!depotApplication.isCustomizable()) {
+				return true;
+			}
+
+			DepotAppCustomization depotApplicationCustomization =
+				_depotAppCustomizationLocalService.fetchDepotAppCustomization(
+					depotEntry.getDepotEntryId(),
+					depotApplication.getPortletId());
+
+			if (depotApplicationCustomization == null) {
+				return true;
+			}
+
+			return depotApplicationCustomization.isEnabled();
+		}
+
+		return false;
 	}
 
 	public boolean isEnabled(String portletId) {

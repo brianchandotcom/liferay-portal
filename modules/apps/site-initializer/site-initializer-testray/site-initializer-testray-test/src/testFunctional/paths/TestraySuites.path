@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>SMART_SUITE_PARAMETER_TYPE</td>
-	<td>//div[contains(@class,'listbox')]//label[contains(.,'${key_parameterType}')]/..//div//select//option</td>
+	<td>//div[contains(@class,'listbox')]//label[contains(.,'${key_caseParameters}')]/parent::div//select//option[contains(text(), '${key_availableType}')]</td>
 	<td></td>
 </tr>
 <tr>

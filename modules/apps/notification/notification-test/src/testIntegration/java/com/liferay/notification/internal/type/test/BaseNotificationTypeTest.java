@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -112,7 +111,7 @@ public class BaseNotificationTypeTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						objectFieldNames.get(0)
+						"booleanObjectField"
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build(),
@@ -121,7 +120,7 @@ public class BaseNotificationTypeTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						objectFieldNames.get(1)
+						"dateObjectField"
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build(),
@@ -130,7 +129,7 @@ public class BaseNotificationTypeTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						objectFieldNames.get(2)
+						"integerObjectField"
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build(),
@@ -139,7 +138,7 @@ public class BaseNotificationTypeTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						objectFieldNames.get(3)
+						"textObjectField"
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build()));
@@ -250,13 +249,13 @@ public class BaseNotificationTypeTest {
 
 	protected HashMap<String, Serializable> getObjectEntryValues() {
 		return HashMapBuilder.<String, Serializable>put(
-			getTerm(objectFieldNames.get(0)), RandomTestUtil.randomBoolean()
+			getTerm("booleanObjectField"), RandomTestUtil.randomBoolean()
 		).put(
-			getTerm(objectFieldNames.get(1)), RandomTestUtil.nextDate()
+			getTerm("dateObjectField"), RandomTestUtil.nextDate()
 		).put(
-			getTerm(objectFieldNames.get(2)), RandomTestUtil.nextInt()
+			getTerm("integerObjectField"), RandomTestUtil.nextInt()
 		).put(
-			getTerm(objectFieldNames.get(3)), RandomTestUtil.randomString()
+			getTerm("textObjectField"), RandomTestUtil.randomString()
 		).build();
 	}
 
@@ -289,9 +288,6 @@ public class BaseNotificationTypeTest {
 	@Inject
 	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
 
-	protected static List<String> objectFieldNames = ListUtil.fromArray(
-		"booleanObjectFieldName", "dateObjectFieldName",
-		"integerObjectFieldName", "textObjectFieldName");
 	protected static User user1;
 	protected static User user2;
 

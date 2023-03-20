@@ -12,7 +12,7 @@ definition {
 				parentSiteName = ${parentSiteName});
 		}
 
-		if (isSet(templateKey)) {
+		if (isSet(templateName)) {
 			var templateKey = HeadlessSiteSetter.setTemplateKey(
 				templateName = ${templateName},
 				templateType = ${templateType});

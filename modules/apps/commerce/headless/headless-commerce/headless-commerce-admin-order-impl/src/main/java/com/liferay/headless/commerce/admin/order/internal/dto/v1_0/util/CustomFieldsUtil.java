@@ -88,10 +88,13 @@ public class CustomFieldsUtil {
 
 		Map<String, Serializable> map = new HashMap<>();
 
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			companyId, className);
+
 		for (CustomField customField : customFields) {
 			map.put(
 				customField.getName(),
-				_getValue(customField, locale, className, companyId));
+				_getValue(customField, locale, expandoBridge));
 		}
 
 		return map;
@@ -109,11 +112,7 @@ public class CustomFieldsUtil {
 	}
 
 	private static Serializable _getValue(
-		CustomField customField, Locale locale, String className,
-		long companyId) {
-
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			companyId, className);
+		CustomField customField, Locale locale, ExpandoBridge expandoBridge) {
 
 		int attributeType = expandoBridge.getAttributeType(
 			customField.getName());

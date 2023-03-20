@@ -44,7 +44,7 @@
 									"locale": "${context.language_id}"
 								}
 							],
-							"label": "Fields",
+							"label": "fields",
 							"name": "fields",
 							"type": "fieldMappingList",
 							"typeOptions": {
@@ -52,7 +52,7 @@
 							}
 						},
 						{
-							"label": "Operator",
+							"label": "operator",
 							"name": "operator",
 							"type": "select",
 							"typeOptions": {
@@ -70,7 +70,7 @@
 						},
 						{
 							"defaultValue": 1,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

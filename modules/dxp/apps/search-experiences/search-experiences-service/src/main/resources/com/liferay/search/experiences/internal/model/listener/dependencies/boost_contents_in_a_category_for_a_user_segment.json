@@ -38,18 +38,18 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category ID",
+							"label": "asset-category-id",
 							"name": "asset_category_id",
 							"type": "number"
 						},
 						{
-							"label": "User Segment IDs",
+							"label": "user-segment-ids",
 							"name": "user_segment_ids",
 							"type": "multiselect"
 						},
 						{
 							"defaultValue": 20,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

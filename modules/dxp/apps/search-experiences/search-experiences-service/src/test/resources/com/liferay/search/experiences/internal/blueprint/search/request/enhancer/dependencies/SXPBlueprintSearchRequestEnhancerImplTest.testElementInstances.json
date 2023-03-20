@@ -56,7 +56,7 @@
 								"fields": [
 									{
 										"defaultValue": "must",
-										"label": "Occur",
+										"label": "occur",
 										"name": "occur",
 										"type": "select",
 										"typeOptions": {
@@ -83,7 +83,7 @@
 									{
 										"defaultValue": {
 										},
-										"label": "Query",
+										"label": "query",
 										"name": "query",
 										"type": "json"
 									}
@@ -136,13 +136,13 @@
 							{
 								"fields": [
 									{
-										"label": "Asset Type",
+										"label": "asset-type",
 										"name": "entry_class_name",
 										"type": "searchableType"
 									},
 									{
 										"defaultValue": 10,
-										"label": "Boost",
+										"label": "boost",
 										"name": "boost",
 										"type": "number",
 										"typeOptions": {
@@ -183,12 +183,12 @@
 							{
 								"fields": [
 									{
-										"label": "Field",
+										"label": "field",
 										"name": "field_desc",
 										"type": "fieldMapping"
 									},
 									{
-										"label": "Field",
+										"label": "field",
 										"name": "field_asc",
 										"type": "fieldMapping"
 									}
@@ -236,7 +236,7 @@
 							{
 								"fields": [
 									{
-										"label": "Field",
+										"label": "field",
 										"name": "fields",
 										"type": "fieldMappingList"
 									}

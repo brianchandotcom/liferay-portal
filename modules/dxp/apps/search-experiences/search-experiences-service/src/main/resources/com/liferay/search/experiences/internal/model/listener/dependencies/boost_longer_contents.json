@@ -37,7 +37,7 @@
 					"fields": [
 						{
 							"defaultValue": 30,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {
@@ -46,7 +46,7 @@
 						},
 						{
 							"defaultValue": 1.5,
-							"label": "Factor",
+							"label": "factor",
 							"name": "factor",
 							"type": "number",
 							"typeOptions": {
@@ -55,7 +55,7 @@
 						},
 						{
 							"defaultValue": "ln",
-							"label": "Modifier",
+							"label": "modifier",
 							"name": "modifier",
 							"type": "select",
 							"typeOptions": {

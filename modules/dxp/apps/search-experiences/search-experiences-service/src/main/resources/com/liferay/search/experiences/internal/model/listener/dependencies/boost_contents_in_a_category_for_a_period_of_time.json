@@ -40,12 +40,12 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category ID",
+							"label": "asset-category-id",
 							"name": "asset_category_id",
 							"type": "number"
 						},
 						{
-							"label": "Date: From",
+							"label": "date-from",
 							"name": "start_date",
 							"type": "date",
 							"typeOptions": {
@@ -53,7 +53,7 @@
 							}
 						},
 						{
-							"label": "Date: To",
+							"label": "date-to",
 							"name": "end_date",
 							"type": "date",
 							"typeOptions": {
@@ -62,7 +62,7 @@
 						},
 						{
 							"defaultValue": 10,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

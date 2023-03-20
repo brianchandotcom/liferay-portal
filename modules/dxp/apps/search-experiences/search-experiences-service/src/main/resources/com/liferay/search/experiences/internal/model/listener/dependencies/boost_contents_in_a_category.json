@@ -30,13 +30,13 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category IDs",
+							"label": "asset-category-ids",
 							"name": "asset_category_ids",
 							"type": "multiselect"
 						},
 						{
 							"defaultValue": 10,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

@@ -34,12 +34,12 @@
 				{
 					"fields": [
 						{
-							"label": "Create Date: From",
+							"label": "create-date-from",
 							"name": "start_date",
 							"type": "date"
 						},
 						{
-							"label": "Create Date: To",
+							"label": "create-date-to",
 							"name": "end_date",
 							"type": "date"
 						}

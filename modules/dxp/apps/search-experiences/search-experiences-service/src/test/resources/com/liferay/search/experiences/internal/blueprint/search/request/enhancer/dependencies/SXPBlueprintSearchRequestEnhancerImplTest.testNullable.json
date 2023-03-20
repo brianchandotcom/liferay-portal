@@ -56,7 +56,7 @@
 									},
 									{
 										"defaultValue": "0",
-										"label": "Minimum Should Match",
+										"label": "min-should-match",
 										"name": "minimum_should_match",
 										"type": "text",
 										"typeOptions": {
@@ -65,8 +65,8 @@
 									},
 									{
 										"defaultValue": "",
-										"helpText": "Only use slop with the following match types: phrase, phrase prefix.",
-										"label": "Slop",
+										"helpText": "slop-field-help",
+										"label": "slop",
 										"name": "slop",
 										"type": "number",
 										"typeOptions": {

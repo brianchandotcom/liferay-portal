@@ -45,7 +45,7 @@
 									"locale": "${context.language_id}"
 								}
 							],
-							"label": "Field",
+							"label": "field",
 							"name": "fields",
 							"type": "fieldMappingList",
 							"typeOptions": {
@@ -54,7 +54,7 @@
 						},
 						{
 							"defaultValue": "best_fields",
-							"label": "Match Type",
+							"label": "match-type",
 							"name": "type",
 							"type": "select",
 							"typeOptions": {
@@ -88,7 +88,7 @@
 						},
 						{
 							"defaultValue": 10,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {
@@ -96,8 +96,8 @@
 							}
 						},
 						{
-							"helpText": "If this is set, the search terms entered in the search bar will be replaced by this value.",
-							"label": "Text to Match",
+							"helpText": "text-to-match-field-help",
+							"label": "text-to-match",
 							"name": "keywords",
 							"type": "keywords",
 							"typeOptions": {

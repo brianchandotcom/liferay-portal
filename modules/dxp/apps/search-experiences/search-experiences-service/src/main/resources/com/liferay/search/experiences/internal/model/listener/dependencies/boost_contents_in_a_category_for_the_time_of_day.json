@@ -38,12 +38,12 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category ID",
+							"label": "asset-category-id",
 							"name": "asset_category_id",
 							"type": "number"
 						},
 						{
-							"label": "Time of Day",
+							"label": "time-of-day",
 							"name": "time_of_day",
 							"type": "select",
 							"typeOptions": {
@@ -69,7 +69,7 @@
 						},
 						{
 							"defaultValue": 20,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

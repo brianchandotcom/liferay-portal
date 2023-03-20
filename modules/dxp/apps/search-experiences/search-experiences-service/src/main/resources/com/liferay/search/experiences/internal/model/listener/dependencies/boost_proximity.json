@@ -46,14 +46,14 @@
 									"locale": ""
 								}
 							],
-							"helpText": "A geopoint field",
-							"label": "Field",
+							"helpText": "boost-proximity-field-help",
+							"label": "field",
 							"name": "field",
 							"type": "fieldMapping"
 						},
 						{
 							"defaultValue": 0.3,
-							"label": "Decay",
+							"label": "decay",
 							"name": "decay",
 							"type": "slider",
 							"typeOptions": {
@@ -64,7 +64,7 @@
 						},
 						{
 							"defaultValue": 100,
-							"label": "Scale",
+							"label": "scale",
 							"name": "scale",
 							"type": "number",
 							"typeOptions": {
@@ -75,7 +75,7 @@
 						},
 						{
 							"defaultValue": 2,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

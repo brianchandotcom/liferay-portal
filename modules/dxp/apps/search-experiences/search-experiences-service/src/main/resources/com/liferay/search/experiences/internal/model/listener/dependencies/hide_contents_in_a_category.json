@@ -37,7 +37,7 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category ID",
+							"label": "asset-category-id",
 							"name": "asset_category_id",
 							"type": "number"
 						}

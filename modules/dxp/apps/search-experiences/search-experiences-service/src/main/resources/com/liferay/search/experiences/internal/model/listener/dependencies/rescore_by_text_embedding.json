@@ -61,7 +61,7 @@
 					"fields": [
 						{
 							"defaultValue": 10,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {
@@ -70,8 +70,8 @@
 						},
 						{
 							"defaultValue": "cosineSimilarity",
-							"helpText": "Specify the vector function for measuring similarity between the text embeddings of the search keywords and target documents. Check the model's documentation for suitability.",
-							"label": "Vector Field Function",
+							"helpText": "vector-field-function-field-help",
+							"label": "vector-field-function",
 							"name": "vector_field_function",
 							"type": "select",
 							"typeOptions": {
@@ -90,8 +90,8 @@
 						},
 						{
 							"defaultValue": 1,
-							"helpText": "Set the minimum score for a result to be rescored.",
-							"label": "Min Score",
+							"helpText": "min-score-field-help",
+							"label": "min-score",
 							"name": "min_score",
 							"type": "number",
 							"typeOptions": {
@@ -100,8 +100,8 @@
 						},
 						{
 							"defaultValue": 0.01,
-							"helpText": "Set the weight of the original query to determine its importance in the final score calculation",
-							"label": "Query Weight",
+							"helpText": "query-weight-field-help",
+							"label": "query-weight",
 							"name": "query_weight",
 							"type": "slider",
 							"typeOptions": {
@@ -111,8 +111,8 @@
 						},
 						{
 							"defaultValue": 10,
-							"helpText": "Set the weight of the rescore query to determine its importance in the final score calculation.",
-							"label": "Rescore Query Weight",
+							"helpText": "rescore-query-weight-field-help",
+							"label": "rescore-query-weight",
 							"name": "rescore_query_weight",
 							"type": "slider",
 							"typeOptions": {
@@ -122,8 +122,8 @@
 						},
 						{
 							"defaultValue": "avg",
-							"helpText": "Choose how the original and rescore query scores are combined when calculating the final score.",
-							"label": "Score Mode",
+							"helpText": "score-mode-field-help",
+							"label": "score-mode",
 							"name": "score_mode",
 							"type": "select",
 							"typeOptions": {
@@ -154,8 +154,8 @@
 						},
 						{
 							"defaultValue": 50,
-							"helpText": "Set the number of top results from the original query to rescore.",
-							"label": "Rescorer Window Size",
+							"helpText": "rescore-window-size-field-help",
+							"label": "rescore-window-size",
 							"name": "window_size",
 							"type": "number",
 							"typeOptions": {

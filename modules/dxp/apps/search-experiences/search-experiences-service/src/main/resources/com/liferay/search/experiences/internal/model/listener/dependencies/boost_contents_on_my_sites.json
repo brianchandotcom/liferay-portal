@@ -31,7 +31,7 @@
 					"fields": [
 						{
 							"defaultValue": 10,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

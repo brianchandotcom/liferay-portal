@@ -37,8 +37,8 @@
 				{
 					"fields": [
 						{
-							"helpText": "Add asset tag value",
-							"label": "Asset Tag",
+							"helpText": "asset-tag-field-help",
+							"label": "asset-tag",
 							"name": "asset_tag",
 							"type": "text"
 						}

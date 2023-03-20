@@ -37,12 +37,12 @@
 				{
 					"fields": [
 						{
-							"label": "Field",
+							"label": "field",
 							"name": "field",
 							"type": "fieldMapping"
 						},
 						{
-							"label": "Value",
+							"label": "value",
 							"name": "value",
 							"type": "text"
 						}

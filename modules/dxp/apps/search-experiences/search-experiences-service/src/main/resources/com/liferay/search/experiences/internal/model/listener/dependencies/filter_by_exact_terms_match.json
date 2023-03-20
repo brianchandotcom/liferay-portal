@@ -29,7 +29,7 @@
 				{
 					"fields": [
 						{
-							"label": "Field",
+							"label": "field",
 							"name": "field",
 							"type": "fieldMapping"
 						},

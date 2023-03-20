@@ -65,7 +65,7 @@
 								"fields": [
 									{
 										"defaultValue": 0.5,
-										"label": "Decay",
+										"label": "decay",
 										"name": "decay",
 										"type": "slider",
 										"typeOptions": {
@@ -76,7 +76,7 @@
 									},
 									{
 										"defaultValue": 0,
-										"label": "Offset",
+										"label": "offset",
 										"name": "offset",
 										"type": "number",
 										"typeOptions": {
@@ -87,7 +87,7 @@
 									},
 									{
 										"defaultValue": 10,
-										"label": "Scale",
+										"label": "scale",
 										"name": "scale",
 										"type": "number",
 										"typeOptions": {
@@ -98,7 +98,7 @@
 									},
 									{
 										"defaultValue": 2,
-										"label": "Boost",
+										"label": "boost",
 										"name": "boost",
 										"type": "number",
 										"typeOptions": {

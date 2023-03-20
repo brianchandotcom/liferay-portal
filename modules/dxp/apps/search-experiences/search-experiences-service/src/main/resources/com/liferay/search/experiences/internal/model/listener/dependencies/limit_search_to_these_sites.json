@@ -29,7 +29,7 @@
 				{
 					"fields": [
 						{
-							"label": "Group IDs",
+							"label": "group-ids",
 							"name": "scope_group_ids",
 							"type": "multiselect"
 						}

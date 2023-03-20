@@ -38,13 +38,13 @@
 				{
 					"fields": [
 						{
-							"label": "Asset Category ID",
+							"label": "asset-category-id",
 							"name": "asset_category_id",
 							"type": "number"
 						},
 						{
 							"defaultValue": 20,
-							"label": "Boost",
+							"label": "boost",
 							"name": "boost",
 							"type": "number",
 							"typeOptions": {

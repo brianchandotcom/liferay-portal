@@ -118,7 +118,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -731,45 +730,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getCompanyId(),
 					jsonObject.getString("modelResource"));
 
-			if ((expandoBridge == null) ||
-				(expandoBridge.getAttribute(jsonObject.getString("name")) !=
-					null)) {
+			if (expandoBridge == null) {
+				continue;
+			}
+
+			if (expandoBridge.getAttribute(jsonObject.getString("name")) !=
+					null) {
+
+				expandoBridge.setAttributeDefault(
+					jsonObject.getString("name"),
+					_getSerializableObjectValue(
+						jsonObject.get("defaultValue")));
+
+				_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
 
 				continue;
 			}
 
-			if (jsonObject.get("defaultValue") instanceof BigDecimal) {
-				BigDecimal defaultValue = (BigDecimal)jsonObject.get(
-					"defaultValue");
+			expandoBridge.addAttribute(
+				jsonObject.getString("name"), jsonObject.getInt("dataType"),
+				_getSerializableObjectValue(jsonObject.get("defaultValue")));
 
-				expandoBridge.addAttribute(
-					jsonObject.getString("name"), jsonObject.getInt("dataType"),
-					defaultValue.doubleValue());
-			}
-			else {
-				expandoBridge.addAttribute(
-					jsonObject.getString("name"), jsonObject.getInt("dataType"),
-					(Serializable)jsonObject.get("defaultValue"));
-			}
-
-			if (jsonObject.has("properties")) {
-				UnicodeProperties unicodeProperties = new UnicodeProperties(
-					true);
-
-				JSONObject propertiesJSONObject = jsonObject.getJSONObject(
-					"properties");
-
-				Map<String, Object> map = propertiesJSONObject.toMap();
-
-				for (Map.Entry<String, Object> entry : map.entrySet()) {
-					unicodeProperties.setProperty(
-						TextFormatter.format(entry.getKey(), TextFormatter.K),
-						String.valueOf(entry.getValue()));
-				}
-
-				expandoBridge.setAttributeProperties(
-					jsonObject.getString("name"), unicodeProperties);
-			}
+			_setExpandoBridgeAttributeProperties(jsonObject, expandoBridge);
 		}
 	}
 
@@ -4352,6 +4334,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return map;
 	}
 
+	private Serializable _getSerializableObjectValue(Object object) {
+		if (object instanceof BigDecimal) {
+			BigDecimal bigDecimal = (BigDecimal)object;
+
+			return bigDecimal.doubleValue();
+		}
+
+		return (Serializable)object;
+	}
+
 	private String _getThemeId(
 		long companyId, String defaultThemeId, String themeName) {
 
@@ -4492,6 +4484,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 					setDefaultLayoutUtilityPageEntry(
 						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 			}
+		}
+	}
+
+	private void _setExpandoBridgeAttributeProperties(
+		JSONObject jsonObject, ExpandoBridge expandoBridge) {
+
+		if (jsonObject.has("properties")) {
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+				"properties");
+
+			Map<String, Object> map = propertiesJSONObject.toMap();
+
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				unicodeProperties.setProperty(
+					TextFormatter.format(entry.getKey(), TextFormatter.K),
+					String.valueOf(entry.getValue()));
+			}
+
+			expandoBridge.setAttributeProperties(
+				jsonObject.getString("name"), unicodeProperties);
 		}
 	}
 

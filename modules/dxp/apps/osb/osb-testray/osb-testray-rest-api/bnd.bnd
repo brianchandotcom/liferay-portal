@@ -1,0 +1,6 @@
+Bundle-Name: OSB Testray REST API
+Bundle-SymbolicName: com.liferay.osb.testray.rest.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.testray.rest.dto.v1_0,\
+	com.liferay.osb.testray.rest.resource.v1_0

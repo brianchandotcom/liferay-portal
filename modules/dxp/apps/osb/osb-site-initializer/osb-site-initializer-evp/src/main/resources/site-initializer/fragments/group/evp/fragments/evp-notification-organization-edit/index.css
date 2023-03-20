@@ -1,0 +1,8 @@
+.alert-success{
+	box-shadow:0 0.5rem 2rem -0.25rem rgba(0, 0, 0, 0.3);
+	bottom: 70px;
+	width: 21rem;
+  left: 20px;
+  position: fixed;
+  z-index: 5000;
+}

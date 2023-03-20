@@ -862,6 +862,23 @@
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "evp-notification-organization-edit",
+								"siteKey": "EVP"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"marginBottom": "8"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
 					}
 				],
 				"type": "Section"

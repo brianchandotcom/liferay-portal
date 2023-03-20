@@ -18,77 +18,85 @@ definition {
 
 			if (isSet(teamName)) {
 				Click(
-					key_parameterType = "Available Teams",
+					key_availableType = ${teamName},
+					key_caseParameters = "Available Teams",
 					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
 					value1 = ${teamName});
 
 				Click(
 					key_arrowDirection = "Right",
-					key_parameterType = "Available Teams",
+					key_caseParameters = "Available Teams",
 					locator1 = "TestraySuites#SMART_SUITE_ARROW");
 			}
 
 			if (isSet(caseType)) {
 				Click(
-					key_parameterType = "Available Case Types",
+					key_availableType = ${caseType},
+					key_caseParameters = "Available Case Types",
 					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
 					value1 = ${caseType});
 
 				Click(
 					key_arrowDirection = "Right",
-					key_parameterType = "Available Case Types",
+					key_caseParameters = "Available Case Types",
 					locator1 = "TestraySuites#SMART_SUITE_ARROW");
 			}
 
 			if (isSet(mainComponent)) {
 				Click(
-					key_parameterType = "Available Main Components",
+					key_availableType = ${mainComponent},
+					key_caseParameters = "Available Main Components",
 					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
 					value1 = ${mainComponent});
 
 				Click(
 					key_arrowDirection = "Right",
-					key_parameterType = "Available Main Components",
+					key_caseParameters = "Available Main Components",
 					locator1 = "TestraySuites#SMART_SUITE_ARROW");
 			}
 
 			if (isSet(subComponent)) {
 				Click(
-					key_parameterType = "Available Sub Components",
+					key_availableType = ${subComponent},
+					key_caseParameters = "Available Sub Components",
 					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
 					value1 = ${subComponent});
 
 				Click(
 					key_arrowDirection = "Right",
-					key_parameterType = "Available Sub Components",
+					key_caseParameters = "Available Sub Components",
 					locator1 = "TestraySuites#SMART_SUITE_ARROW");
 			}
 
 			if (isSet(priorityNumber)) {
 				Click(
-					key_parameterType = "Available Priorities",
+					key_availableType = ${priorityNumber},
+					key_caseParameters = "Available Priorities",
 					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
 					value1 = ${priorityNumber});
 
 				Click(
 					key_arrowDirection = "Right",
-					key_parameterType = "Available Priorities",
+					key_caseParameters = "Available Priorities",
 					locator1 = "TestraySuites#SMART_SUITE_ARROW");
 			}
 
 			if (isSet(requirementName)) {
 				Click(
-					key_parameterType = "Available Requirements",
+					key_availableType = ${requirementName},
+					key_caseParameters = "Available Requirements",
 					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
 					value1 = ${requirementName});
 
 				Click(
 					key_arrowDirection = "Right",
-					key_parameterType = "Available Requirements",
+					key_caseParameters = "Available Requirements",
 					locator1 = "TestraySuites#SMART_SUITE_ARROW");
 			}
 
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		if (isSet(caseName)) {
@@ -101,9 +109,9 @@ definition {
 				locator1 = "TestraySuites#CASE_CHECKBOX");
 
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
-		}
 
-		Testray.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
+		}
 
 		Button.clickSave();
 	}

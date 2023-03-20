@@ -76,15 +76,17 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 						</clay:col>
 					</clay:row>
 
-					<div class="contains-headers-wrapper d-none">
-						<clay:checkbox
-							checked="<%= true %>"
-							disabled="<%= true %>"
-							id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-							label="include-headers"
-							name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-						/>
-					</div>
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-173135") %>'>
+						<div class="contains-headers-wrapper d-none">
+							<clay:checkbox
+								checked="<%= true %>"
+								disabled="<%= true %>"
+								id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+								label="include-headers"
+								name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+							/>
+						</div>
+					</c:if>
 				</liferay-frontend:edit-form-body>
 			</div>
 		</div>

@@ -39,7 +39,7 @@ public abstract class BaseObjectEntryManager {
 				objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			if (Objects.equals("site", objectDefinition.getScope())) {
+			if (Objects.equals(objectDefinition.getScope(), "site")) {
 				return GetterUtil.getLong(
 					GroupUtil.getGroupId(
 						objectDefinition.getCompanyId(), scopeKey,

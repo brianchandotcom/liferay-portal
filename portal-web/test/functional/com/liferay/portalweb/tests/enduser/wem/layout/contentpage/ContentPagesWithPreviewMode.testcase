@@ -59,10 +59,7 @@ definition {
 		}
 
 		task ("Then the guest should see not found") {
-			ContentPages.viewFragmentText(
-				fragmentName = "heading",
-				id = "element-text",
-				text = 404);
+			Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
 		}
 	}
 

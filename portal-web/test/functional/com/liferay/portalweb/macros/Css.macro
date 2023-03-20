@@ -1,5 +1,15 @@
 definition {
 
+	macro assertCssCustomPropertyValue {
+		var actual = Css.getCssValue(
+			attribute = ${attribute},
+			element = ${element});
+
+		TestUtils.assertEquals(
+			actual = ${actual},
+			expected = ${expected});
+	}
+
 	macro assertCssValueIsGreaterThan {
 		var actual = Css.getCssValue(
 			attribute = ${attribute},

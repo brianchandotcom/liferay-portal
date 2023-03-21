@@ -161,10 +161,6 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private ResourceURLsBag _rebuild() {
-		if (_bundleContext == null) {
-			return null;
-		}
-
 		Collection<String> cssResourceURLs = new ArrayList<>();
 		Collection<String> jsResourceURLs = new ArrayList<>();
 

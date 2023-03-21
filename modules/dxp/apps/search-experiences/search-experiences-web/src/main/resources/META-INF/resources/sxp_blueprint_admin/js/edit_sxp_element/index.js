@@ -19,6 +19,7 @@ import fetchData from '../utils/fetch/fetch_data';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
 import transformLocale from '../utils/language/transform_locale';
+import deleteLocalizedProperties from '../utils/sxp_element/delete_localized_properties';
 import {openInitialSuccessToast} from '../utils/toasts';
 import EditSXPElementForm from './EditSXPElementForm';
 
@@ -74,7 +75,9 @@ const transformToSXPElementExportFormat = (
 ) => {
 	return {
 		description_i18n: getDescriptionI18n(sxpElementResponse, defaultLocale),
-		elementDefinition: sxpElementResponse.elementDefinition,
+		elementDefinition: deleteLocalizedProperties(
+			sxpElementResponse.elementDefinition
+		),
 		title_i18n: getTitleI18n(sxpElementResponse),
 		type: sxpElementResponse.type,
 	};

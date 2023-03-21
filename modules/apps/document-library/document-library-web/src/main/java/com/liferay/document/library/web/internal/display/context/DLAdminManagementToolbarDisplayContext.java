@@ -616,8 +616,7 @@ public class DLAdminManagementToolbarDisplayContext
 							PortletURLUtil.clone(
 								_currentURLObj, _liferayPortletResponse)
 						).setParameter(
-							"extension",
-							ArrayUtil.remove(extensions, extension)
+							"extension", ArrayUtil.remove(extensions, extension)
 						).buildString());
 
 					labelItem.setCloseable(true);
@@ -672,10 +671,6 @@ public class DLAdminManagementToolbarDisplayContext
 		return dlPortletInstanceSettings.getDisplayViews();
 	}
 
-	private long _getFileEntryTypeId() {
-		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
-	}
-
 	private String[] _getExtensions(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getStringValues(httpServletRequest, "extension");
 	}
@@ -704,9 +699,12 @@ public class DLAdminManagementToolbarDisplayContext
 				portletResponse.getNamespace() + "selectedFileExtension",
 				fileExtensionItemSelectorCriterion)
 		).setParameter(
-			"checkedFileExtensions",
-			() -> _getExtensions(httpServletRequest)
+			"checkedFileExtensions", () -> _getExtensions(httpServletRequest)
 		).buildString();
+	}
+
+	private long _getFileEntryTypeId() {
+		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

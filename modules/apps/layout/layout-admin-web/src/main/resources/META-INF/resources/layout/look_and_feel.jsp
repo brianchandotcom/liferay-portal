@@ -186,6 +186,8 @@ else {
 			<liferay-ui:message key="this-css-is-loaded-after-the-theme" />
 		</p>
 	</div>
+
+	<liferay-util:include page="/layout/javascript.jsp" servletContext="<%= application %>" />
 </clay:sheet-section>
 
 <aui:script sandbox="<%= true %>">

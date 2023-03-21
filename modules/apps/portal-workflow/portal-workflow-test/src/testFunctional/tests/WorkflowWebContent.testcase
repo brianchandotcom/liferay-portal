@@ -104,7 +104,6 @@ definition {
 	@priority = 5
 	test CannotBypassWorkflowByduplicatingArticle {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 

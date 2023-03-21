@@ -33,6 +33,9 @@ const getContactInfo = async () => {
 			const data = await response.json();
 			const firstName = data?.r_usrToMDFReqs_user?.givenName;
 			const infoEmail = data?.r_usrToMDFReqs_user?.emailAddress;
+			const telephone =
+				data?.r_usrToMDFReqs_user?.userAccountContactInformation
+					.telephones[0].phoneNumber;
 
 			fragmentElement.querySelector(
 				'#firstName'
@@ -41,6 +44,10 @@ const getContactInfo = async () => {
 			fragmentElement.querySelector(
 				'#infoEmail'
 			).innerHTML = `${Liferay.Util.escape(infoEmail)}`;
+
+			fragmentElement.querySelector(
+				'#telephone'
+			).innerHTML = `${Liferay.Util.escape(telephone)}`;
 
 			return;
 		}

@@ -88,4 +88,28 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
+
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by priority"
+	@priority = 5
+	test AdminCanFilterCaseByPriority {
+		task ("When the user filter a case by priority") {
+			TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority",
+                value1 = "4");
+
+            Button.click(button = "Apply");
+		}
+
+        task ("Then can see the filters apply in the list by priority") {
+            TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 2",
+				casePriority = 4);
+
+		    Testray.assertItemNotPresent(key_name = "Case 1");
+        }
+	}
 }

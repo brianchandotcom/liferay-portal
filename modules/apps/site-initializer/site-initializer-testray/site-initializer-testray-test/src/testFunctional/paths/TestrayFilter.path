@@ -30,6 +30,11 @@
 	<td>//div[@class='popover-body']//input[@type='checkbox']//following::span[contains(text(),'${key_column}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CLEAR_FILTER</td>
+	<td>//div[@class='popover-body']//button[contains(text(),'Clear')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

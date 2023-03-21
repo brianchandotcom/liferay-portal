@@ -1347,8 +1347,8 @@ definition {
 
 		WorkflowMetrics.validateDueDateBySLA(
 			daysLeft = 0,
-			hoursLeft = 00,
-			minutesLeft = 00);
+			hoursLeft = 0,
+			minutesLeft = 0);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1374,7 +1374,7 @@ definition {
 
 		WorkflowMetrics.validateDueDateBySLA(
 			daysLeft = 0,
-			hoursLeft = 00,
+			hoursLeft = 0,
 			minutesLeft = 58);
 	}
 

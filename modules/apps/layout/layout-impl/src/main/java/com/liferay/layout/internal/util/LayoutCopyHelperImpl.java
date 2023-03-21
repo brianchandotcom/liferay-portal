@@ -85,8 +85,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -309,18 +307,17 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						sourceLayout.getGroupId(), sourceLayout.getPlid());
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksBySegmentsExperienceId(
-					sourceLayout.getGroupId(), segmentsExperiencesIds,
-					sourceLayout.getPlid());
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
 
-		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						sourceLayout.getGroupId(), segmentsExperiencesIds,
+						sourceLayout.getPlid())) {
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
-			Collectors.toMap(
-				FragmentEntryLink::getFragmentEntryLinkId,
-				fragmentEntryLink -> fragmentEntryLink));
+			fragmentEntryLinksMap.put(
+				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
+		}
 
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
@@ -386,18 +383,17 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			return;
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksBySegmentsExperienceId(
-					sourceLayout.getGroupId(), sourceSegmentsExperienceId,
-					sourceLayout.getPlid());
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
 
-		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						sourceLayout.getGroupId(), sourceSegmentsExperienceId,
+						sourceLayout.getPlid())) {
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
-			Collectors.toMap(
-				FragmentEntryLink::getFragmentEntryLinkId,
-				fragmentEntryLink -> fragmentEntryLink));
+			fragmentEntryLinksMap.put(
+				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
+		}
 
 		LayoutStructure layoutStructure = LayoutStructure.of(data);
 

@@ -32,7 +32,6 @@ import BooleanInput from '../inputs/BooleanInput.es';
 import CollectionInput from '../inputs/CollectionInput.es';
 import DateTimeInput from '../inputs/DateTimeInput';
 import DecimalInput from '../inputs/DecimalInput.es';
-import EventInput from '../inputs/EventInput';
 import IntegerInput from '../inputs/IntegerInput';
 import SelectEntityInput from '../inputs/SelectEntityInput.es';
 import StringInput from '../inputs/StringInput.es';
@@ -210,7 +209,6 @@ class CriteriaRowEditable extends Component {
 			connectDragSource,
 			criterion,
 			error,
-			renderEmptyValuesErrors,
 			selectedOperator,
 			selectedProperty,
 		} = this.props;
@@ -227,26 +225,13 @@ class CriteriaRowEditable extends Component {
 					</div>
 				)}
 
-				{selectedProperty.type === PROPERTY_TYPES.EVENT ? (
-					<EventInput
-						criterion={criterion}
-						error={error}
-						onChange={this._handleTypedInputChange}
-						onInputChange={this._handleInputChange}
-						propertyLabel={propertyLabel}
-						renderEmptyValueErrors={renderEmptyValuesErrors}
-						selectedProperty={selectedProperty}
-						value={value}
-					/>
-				) : (
-					this._renderEditableProperty({
-						error,
-						propertyLabel,
-						selectedOperator,
-						selectedProperty,
-						value,
-					})
-				)}
+				{this._renderEditableProperty({
+					error,
+					propertyLabel,
+					selectedOperator,
+					selectedProperty,
+					value,
+				})}
 
 				{error ? (
 					<ClayButton

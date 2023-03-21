@@ -170,6 +170,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10680. Only one minicart item should be created after adding a SKU using both quick add-to-cart and the normal add-to-cart"
+	@priority = 3
+	test AssertQuantityInMiniCartItemCanBeOverlappedUsingNormalAndQuickAdd {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with an account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("When adding the SKU 'MIN93016A' from the 'Brake Fluid' product details to the cart with quantity 1") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			Click(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Package Quantity:12",
+				productName = "Brake Fluid",
+				productSku = "MIN93016A");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertTextEquals(
+				key_cartItemSku = "MIN93016A",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = 1);
+		}
+
+		task ("And adding the same SKU from the quick add-to-cart search bar with quantity 1") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93016A");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "MIN93016A");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the SKU in the cart is updated to quantity 2") {
+			AssertTextEquals(
+				key_cartItemSku = "MIN93016A",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = 2);
+		}
+	}
+
 	@description = "COMMERCE-6345. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
 	@priority = 5
 	test AssertQuantityInMiniCartItemCanBeSelectedUpToAMaximumQuantitySet {

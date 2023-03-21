@@ -190,4 +190,23 @@ definition {
             Testray.assertItemNotPresent(key_name = "Case 2");
         }
 	}
+
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
+	@priority = 5
+	test AdminCanFilterForNonexistantCase {
+		task ("When the user filters a case by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+                key_fieldLabel = "Case Name",
+                locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                value1 = "Case 3");
+
+            Button.click(button = "Apply");
+		}
+
+        task ("Then can not see the case in the list") {
+		    Testray.assertItemNotPresent(key_name = "Case 3");
+        }
+	}
 }

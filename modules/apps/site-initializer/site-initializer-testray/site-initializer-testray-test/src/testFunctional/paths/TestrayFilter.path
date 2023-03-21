@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>MULTI_SELECT_BY_LABEL</td>
-	<td>//label[normalize-space()='key_label']/..//div[contains(@class,'testray-multi-select__value-container')]</td>
+	<td>//label[normalize-space()='${key_label}']/..//div[contains(@class,'testray-multi-select__value-container')]</td>
 	<td></td>
 </tr>
 <tr>

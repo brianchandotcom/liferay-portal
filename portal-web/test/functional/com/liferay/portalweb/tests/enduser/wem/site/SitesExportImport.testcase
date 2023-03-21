@@ -188,6 +188,10 @@ definition {
 		task ("Add another site and import the site lar") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = "404 Error");
+
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
 				siteName = "Site Name");
@@ -329,6 +333,10 @@ definition {
 		task ("Import the lar file to a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = "404 Error");
+
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
 				siteName = "Site Name");
@@ -405,6 +413,10 @@ definition {
 
 		task ("Add a new site based on Blank Site") {
 			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = "404 Error");
 		}
 
 		task ("Import the lar into the new site") {
@@ -498,6 +510,10 @@ definition {
 		task ("Import the lar file to a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = "404 Error");
+
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
 				siteName = "Site Name");
@@ -544,6 +560,10 @@ definition {
 
 		task ("Add a new site based on Blank Site") {
 			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = "404 Error");
 		}
 
 		task ("Import the lar into the new site") {
@@ -609,6 +629,10 @@ definition {
 		}
 
 		task ("Import the new site into the default site") {
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Guest",
+				layoutUtilityPageName = "404 Error");
+
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
 				siteName = "Guest");

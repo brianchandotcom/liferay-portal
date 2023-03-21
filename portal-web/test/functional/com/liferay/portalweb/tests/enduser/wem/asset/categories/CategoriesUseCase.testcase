@@ -782,6 +782,10 @@ definition {
 
 		task ("Add a new site based on Blank Site") {
 			HeadlessSite.addSite(siteName = "Import Site Name");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Import Site Name",
+				layoutUtilityPageName = "404 Error");
 		}
 
 		task ("Import the lar to new site") {

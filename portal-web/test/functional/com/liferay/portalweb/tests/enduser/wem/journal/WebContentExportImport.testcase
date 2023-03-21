@@ -218,13 +218,13 @@ definition {
 				portlet = "Virtual Instances");
 
 			PortalInstances.addCP(
-				mailDomain = "www.able.com",
+				mailDomain = "liferay.com",
 				virtualHost = "www.able.com",
 				webId = "www.able.com");
 
 			User.firstLoginPG(
 				password = "test",
-				userEmailAddress = "test@www.able.com",
+				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
@@ -235,6 +235,12 @@ definition {
 				portlet = "Sites");
 
 			Site.addBlankCP(siteName = "Site Name");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = "404 Error",
+				portalInstanceName = "www.able.com",
+				portalURL = "http://www.able.com:8080");
 
 			LAR.importSiteCP(
 				baseURL = "http://www.able.com:8080",

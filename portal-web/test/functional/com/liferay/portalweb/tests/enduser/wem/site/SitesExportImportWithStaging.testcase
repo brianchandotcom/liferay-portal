@@ -202,6 +202,11 @@ definition {
 		}
 
 		task ("Import the first site's lar into the staging site for the second site") {
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Test Site Name 2 (Staging)",
+				layoutUtilityPageName = "404 Error",
+				site = "false");
+
 			LAR.openImportAdmin(siteName = "test-site-name-2-staging");
 
 			LexiconEntry.gotoAdd();

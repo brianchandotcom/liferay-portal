@@ -183,7 +183,16 @@ public class SkuResourceImpl
 
 	@Override
 	public Sku patchSku(Long id, Sku sku) throws Exception {
-		_updateSKU(_cpInstanceService.getCPInstance(id), sku);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(id);
+
+		String skuExternalReferenceCode = sku.getExternalReferenceCode();
+
+		if (Validator.isNotNull(skuExternalReferenceCode)) {
+			cpInstance = _cpInstanceService.updateExternalReferenceCode(
+				skuExternalReferenceCode, cpInstance.getCPInstanceId());
+		}
+
+		_updateSKU(cpInstance, sku);
 
 		return _toSku(id);
 	}
@@ -235,6 +244,27 @@ public class SkuResourceImpl
 		}
 
 		return _addOrUpdateSKU(cpDefinition, sku);
+	}
+
+	@Override
+	public Sku
+			putSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode(
+				String externalReferenceCode, String newExternalReferenceCode)
+		throws Exception {
+
+		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpInstance == null) {
+			throw new NoSuchCPInstanceException(
+				"Unable to find SKU with external reference code " +
+					externalReferenceCode);
+		}
+
+		_cpInstanceService.updateExternalReferenceCode(
+			newExternalReferenceCode, cpInstance.getCPInstanceId());
+
+		return _toSku(cpInstance.getCPInstanceId());
 	}
 
 	private Sku _addOrUpdateSKU(CPDefinition cpDefinition, Sku sku)

@@ -14,6 +14,8 @@
 
 package com.liferay.jethr0.jenkins.master;
 
+import com.liferay.jethr0.builds.Build;
+
 import org.json.JSONObject;
 
 /**
@@ -32,6 +34,8 @@ public interface JenkinsMaster {
 	public int getSlaveCount();
 
 	public int getSlaveRAM();
+
+	public boolean isCompatible(Build build);
 
 	public void setGoodBattery(boolean goodBattery);
 

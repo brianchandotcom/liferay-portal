@@ -17,6 +17,7 @@ package com.liferay.jethr0.builds;
 import com.liferay.jethr0.builds.parameter.BuildParameter;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -107,6 +109,40 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int getMaxSlaveCount() {
+		BuildParameter buildParameter = getBuildParameter("MAX_SLAVE_COUNT");
+
+		if (buildParameter == null) {
+			return _DEFAULT_MAX_SLAVE_COUNT;
+		}
+
+		String value = buildParameter.getValue();
+
+		if ((value == null) || !value.matches("\\d+")) {
+			return _DEFAULT_MAX_SLAVE_COUNT;
+		}
+
+		return Integer.valueOf(value);
+	}
+
+	@Override
+	public int getMinSlaveRAM() {
+		BuildParameter buildParameter = getBuildParameter("MIN_SLAVE_RAM");
+
+		if (buildParameter == null) {
+			return _DEFAULT_MIN_SLAVE_RAM;
+		}
+
+		String value = buildParameter.getValue();
+
+		if ((value == null) || !value.matches("\\d+")) {
+			return _DEFAULT_MIN_SLAVE_RAM;
+		}
+
+		return Integer.valueOf(value);
+	}
+
+	@Override
 	public Project getProject() {
 		return _project;
 	}
@@ -144,6 +180,27 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean requiresGoodBattery() {
+		BuildParameter buildParameter = getBuildParameter(
+			"REQUIRES_GOOD_BATTERY");
+
+		if (buildParameter == null) {
+			return false;
+		}
+
+		String requiresGoodBattery = buildParameter.getValue();
+
+		if ((requiresGoodBattery == null) ||
+			!Objects.equals(
+				StringUtil.toLowerCase(requiresGoodBattery), "true")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void setJobName(String jobName) {
 		_jobName = jobName;
 	}
@@ -161,6 +218,10 @@ public abstract class BaseBuild implements Build {
 		_jobName = jsonObject.getString("jobName");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
+
+	private static final int _DEFAULT_MAX_SLAVE_COUNT = 2;
+
+	private static final int _DEFAULT_MIN_SLAVE_RAM = 12;
 
 	private final String _buildName;
 	private final Map<String, BuildParameter> _buildParameters =

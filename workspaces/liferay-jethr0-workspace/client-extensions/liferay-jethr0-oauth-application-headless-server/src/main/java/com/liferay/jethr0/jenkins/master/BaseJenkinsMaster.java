@@ -15,7 +15,6 @@
 package com.liferay.jethr0.jenkins.master;
 
 import com.liferay.jethr0.builds.Build;
-import com.liferay.jethr0.builds.parameter.BuildParameter;
 
 import org.json.JSONObject;
 
@@ -69,6 +68,17 @@ public abstract class BaseJenkinsMaster implements JenkinsMaster {
 	}
 
 	@Override
+	public boolean isCompatible(Build build) {
+		if (!_hasCompatibleBattery(build) || !_hasCompatibleSlaveCount(build) ||
+			!_hasCompatibleSlaveRAM(build)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void setGoodBattery(boolean goodBattery) {
 		_goodBattery = goodBattery;
 	}
@@ -100,6 +110,30 @@ public abstract class BaseJenkinsMaster implements JenkinsMaster {
 		_name = jsonObject.getString("name");
 		_slaveCount = jsonObject.getInt("slaveCount");
 		_slaveRAM = jsonObject.getInt("slaveRAM");
+	}
+
+	private boolean _hasCompatibleBattery(Build build) {
+		if (!build.requiresGoodBattery() || getGoodBattery()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasCompatibleSlaveCount(Build build) {
+		if (getSlaveCount() <= build.getMaxSlaveCount()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasCompatibleSlaveRAM(Build build) {
+		if (getSlaveRAM() >= build.getMinSlaveRAM()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _goodBattery;

@@ -39,6 +39,26 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.commerce.model.CommerceOrder</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+			</site-member-defaults>
+			<guest-defaults>
+			</guest-defaults>
+			<guest-unsupported>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.commerce.model.CommerceOrderType</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet</portlet-name>

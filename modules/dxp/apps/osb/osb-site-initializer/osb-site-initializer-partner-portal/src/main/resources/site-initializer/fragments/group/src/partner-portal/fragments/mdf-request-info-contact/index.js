@@ -29,25 +29,25 @@ const getContactInfo = async () => {
 				},
 			}
 		);
+
 		if (response.ok) {
 			const data = await response.json();
 			const firstName = data?.r_usrToMDFReqs_user?.givenName;
+			const lastName = data?.r_usrToMDFReqs_user?.alternateName;
 			const infoEmail = data?.r_usrToMDFReqs_user?.emailAddress;
-			const telephone =
-				data?.r_usrToMDFReqs_user?.userAccountContactInformation
-					.telephones[0].phoneNumber;
+			const telephones = data?.r_usrToMDFReqs_user?.userAccountContactInformation.telephones
+				.map(({phoneNumber}) => phoneNumber)
+				.join(', ');
 
-			fragmentElement.querySelector(
-				'#firstName'
-			).innerHTML = `${Liferay.Util.escape(firstName)}`;
+			fragmentElement.querySelector('#firstName').textContent = firstName;
 
-			fragmentElement.querySelector(
-				'#infoEmail'
-			).innerHTML = `${Liferay.Util.escape(infoEmail)}`;
+			fragmentElement.querySelector('#lastName').textContent = lastName;
+
+			fragmentElement.querySelector('#infoEmail').textContent = infoEmail;
 
 			fragmentElement.querySelector(
 				'#telephone'
-			).innerHTML = `${Liferay.Util.escape(telephone)}`;
+			).textContent = telephones;
 
 			return;
 		}

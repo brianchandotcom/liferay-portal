@@ -49,19 +49,15 @@ class ClientExtensionRendererComponent extends React.Component<
 		this.ref = React.createRef();
 	}
 
+	componentDidMount() {
+		if (!this.ref.current) {
+			return;
+		}
+
+		this.ref.current.appendChild(this.props.renderer(this.props.args));
+	}
+
 	render() {
-
-		// By the time render is invoked for the first time the ref is not yet
-		// populated, so we need to defer the rendering
-
-		setTimeout(() => {
-			if (this.ref.current) {
-				this.ref.current.appendChild(
-					this.props.renderer(this.props.args)
-				);
-			}
-		}, 0);
-
 		return <div ref={this.ref}></div>;
 	}
 }

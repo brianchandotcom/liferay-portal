@@ -112,4 +112,28 @@ definition {
 		    Testray.assertItemNotPresent(key_name = "Case 1");
         }
 	}
+
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case name"
+	@priority = 5
+	test AdminCanFilterCaseByCaseName {
+		task ("When the user filter a case by name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+                key_fieldLabel = "Case Name",
+                locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                value1 = "Case 1");
+
+            Button.click(button = "Apply");
+		}
+
+        task ("Then can see the filters apply in the list by name") {
+            TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 5);
+
+		    Testray.assertItemNotPresent(key_name = "Case 2");
+        }
+	}
 }

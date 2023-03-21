@@ -759,5 +759,41 @@ definition {
 			key_statusButton = "Approve",
 			locator1 = "PRMMDFRequest#STATUS_BUTTON");
 	}
+	@summary = "Verify that is possible edit MDF activity "
+	macro editMDFActivity {
+		Click(locator1 = "PRMMDFRequest#EDIT_ACTIVITY_BUTTON");
 
+		if (!(isSet(activitiyIndex))) {
+		var activityIndex = 1;
+		}
+
+		Type(
+			key_fieldName = "activities[${activityIndex}].name",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = ${newActivityName});
+
+		Button.click(button = "Continue");
+
+		Button.click(button = "Continue");
+
+		Button.click(button = "Submit");
+
+	}
+	@summary = "Verify that is possible edit some MDF informations "
+	macro editMDFinformations{
+		
+		Button.clickEdit();
+
+		PRMMDFRequest.fillGoalsPage(
+			accountName = ${accountName},
+			additionalOptions = ${additionalOptions},
+			campaignDescription = ${campaignDescription},
+			campaignName = ${campaignName},
+			countryName = ${countryName},
+			goalsOptions = ${goalsOptions},
+			targetMarketOptions = ${targetMarketOptions},
+			targetRolesOptions = ${targetRolesOptions});
+
+		Button.click(button = "Continue");
+	}
 }

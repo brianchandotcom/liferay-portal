@@ -974,7 +974,6 @@ definition {
 			PRMMDFRequest.assertClaimMessage(claimMessage = "You can submit up to 2 claim(s).");
 		}
 	}
-
 	@description = "This is a test for LPS-174284. Verify that If just one claim was made, so the message 'You can submit up to 1 claim' appears"
 	@priority = 5
 	test VerifyMessageWhenOneClaimWasMade {
@@ -1023,6 +1022,44 @@ definition {
 
 		task ("Then I can see the message") {
 			PRMMDFRequest.assertClaimMessage(claimMessage = "You can submit up to 1 claim(s).");
+		}
+	}
+	@description = "This is a test for LPS-178087. Verify that it is possible to edit a created MDF"
+	@priority = 5
+	test CanEditMDF {
+		task ("Given I go to add a new MDF Request") {
+		    JSONPRM.createMDFRequest();
+		}
+
+		task ("When the manager go to see the submitted MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the manager user can edit the MDF Request") {
+
+			PRMMDFRequest.editMDFinformations(
+				campaignName = "Campaign Name Edited", 
+				campaignDescription="Campaign Description Edited");
+
+			PRMMDFRequest.editMDFActivity(
+				newActivityName="Activity Name Edited");
+		}
+		
+		task ("And the user can verify that some informations were edited") {
+			
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name Edited");
+
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName="Activity Name Edited",
+				activityName="Activity Name Edited");
+
+			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
 		}
 	}
 

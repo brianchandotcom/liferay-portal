@@ -229,7 +229,7 @@ else {
 </aui:script>
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasStyleBooks() %>">
-	<aui:script>
+	<aui:script sandbox="<%= true %>">
 		const regularInheritLookAndFeel = document.getElementById(
 			'<portlet:namespace />regularInheritLookAndFeel'
 		);

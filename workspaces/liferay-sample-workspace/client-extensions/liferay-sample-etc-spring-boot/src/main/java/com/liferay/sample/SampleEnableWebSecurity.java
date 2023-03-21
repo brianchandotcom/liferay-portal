@@ -14,6 +14,8 @@
 
 package com.liferay.sample;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
@@ -87,7 +89,9 @@ public class SampleEnableWebSecurity {
 		defaultJWTProcessor.setJWSKeySelector(
 			JWSAlgorithmFamilyJWSKeySelector.fromJWKSetURL(
 				new URL(
-					_serverProtocol + "://" + _mainDomain + "/o/oauth2/jwks")));
+					StringBundler.concat(
+						_lxcDXPServerProtocol, "://", _lxcDXPMainDomain,
+						"/o/oauth2/jwks"))));
 		defaultJWTProcessor.setJWSTypeVerifier(
 			new DefaultJOSEObjectTypeVerifier<>(new JOSEObjectType("at+jwt")));
 
@@ -133,7 +137,7 @@ public class SampleEnableWebSecurity {
 	private List<String> _getAllowedOrigins() {
 		List<String> allowedOrigins = new ArrayList<>();
 
-		for (String dxpDomain : _dxpDomains.split("\\s*[,\n]\\s*")) {
+		for (String dxpDomain : _lxcDXPDomains.split("\\s*[,\n]\\s*")) {
 			allowedOrigins.add("http://" + dxpDomain);
 			allowedOrigins.add("https://" + dxpDomain);
 		}
@@ -145,8 +149,9 @@ public class SampleEnableWebSecurity {
 		while (true) {
 			try {
 				return WebClient.create(
-					_serverProtocol + "://" + _mainDomain +
-						"/o/oauth2/application"
+					StringBundler.concat(
+						_lxcDXPServerProtocol, "://", _lxcDXPMainDomain,
+						"/o/oauth2/application")
 				).get(
 				).uri(
 					uriBuilder -> uriBuilder.queryParam(
@@ -173,17 +178,17 @@ public class SampleEnableWebSecurity {
 	private static final Log _log = LogFactory.getLog(
 		SampleEnableWebSecurity.class);
 
-	@Value("${com.liferay.lxc.dxp.domains}")
-	private String _dxpDomains;
-
 	@Value("${liferay.oauth.application.external.reference.code}")
 	private String _liferayOAuthApplicationExternalReferenceCode;
 
+	@Value("${com.liferay.lxc.dxp.domains}")
+	private String _lxcDXPDomains;
+
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _mainDomain;
+	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _serverProtocol;
+	private String _lxcDXPServerProtocol;
 
 	private static class ApplicationInfo {
 

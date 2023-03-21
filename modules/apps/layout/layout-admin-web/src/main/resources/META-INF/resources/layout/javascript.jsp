@@ -33,15 +33,23 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="paste-javascript-code-that-is-executed-at-the-bottom-of-the-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" />
-
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
-<clay:sheet-section>
+<div class="mb-5">
 	<react:component
 		module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
 		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
 	/>
-</clay:sheet-section>
+</div>
+
+<div>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="custom-javascript" /></h3>
+
+	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="mb-0" />
+
+	<p class="text-secondary">
+		<liferay-ui:message key="this-javascript-code-is-executed-at-the-bottom-of-the-page" />
+	</p>
+</div>

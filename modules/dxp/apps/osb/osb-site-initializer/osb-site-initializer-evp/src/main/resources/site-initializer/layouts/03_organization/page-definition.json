@@ -867,7 +867,7 @@
 						"definition": {
 							"fragment": {
 								"key": "evp-notification-organization-edit",
-								"siteKey": "EVP"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 							},

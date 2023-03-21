@@ -48,8 +48,8 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		Click.javaScriptClick(
-			key_picklistOption = ${dropdownItem},
-			locator1 = "TestrayDropdown#PICKLIST_KEBAB_MENU_OPTION");
+			key_templateName = ${templateName},
+			locator1 = "TestrayDropdown#TEMPLATE_DROPDOWN");
 	}
 
 	macro viewTemplateDetails {

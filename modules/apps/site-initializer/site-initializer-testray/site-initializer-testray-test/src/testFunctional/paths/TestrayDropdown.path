@@ -36,13 +36,18 @@
 	<td></td>
 </tr>
 	<tr>
-		<td>PICKLIST_KEBAB_MENU_OPTION</td>
-		<td>//button/div/span[contains(text(),'${key_picklistOption}')]</td>
-		<td></td>
+	<td>PICKLIST_KEBAB_MENU_OPTION</td>
+	<td>//button/div/span[contains(text(),'${key_picklistOption}')]</td>
+	<td></td>
 	</tr>
 <tr>
 	<td>PROJECT_NAME_BREADCRUMBS</td>
 	<td>//p[contains(text(),'${key_projectName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_DROPDOWN</td>
+	<td>//div[contains(@class, 'dropdown')]//li[contains(text(),'${key_templateName}')]</td>
 	<td></td>
 </tr>
 </tbody>

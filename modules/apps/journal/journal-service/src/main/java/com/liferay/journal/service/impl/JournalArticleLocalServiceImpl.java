@@ -7148,6 +7148,9 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByDisplayDate(Date displayDate)
 		throws PortalException {
 
+		Date nextExpirationDate = new Date(
+			displayDate.getTime() + getArticleCheckInterval());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
@@ -7165,6 +7168,12 @@ public class JournalArticleLocalServiceImpl
 					"displayDate");
 
 				dynamicQuery.add(displayDateProperty.lt(displayDate));
+
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.or(
+						RestrictionsFactoryUtil.isNull("expirationDate"),
+						RestrictionsFactoryUtil.ge(
+							"expirationDate", nextExpirationDate)));
 
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 

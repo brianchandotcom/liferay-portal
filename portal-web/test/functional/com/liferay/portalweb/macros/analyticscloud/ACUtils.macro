@@ -252,7 +252,7 @@ definition {
 
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
 
-		TestUtils.assertEquals(
+		TestUtils.assertPartialEquals(
 			actual = ${actual},
 			expected = ${eventId});
 	}

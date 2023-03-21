@@ -9,3 +9,4 @@ clientDir: "../headless-site-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+testDir: "../headless-site-test/src/testIntegration/java"

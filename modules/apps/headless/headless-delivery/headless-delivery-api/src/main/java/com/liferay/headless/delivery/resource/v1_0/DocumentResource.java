@@ -103,6 +103,10 @@ public interface DocumentResource {
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
+	public Page<Document> getAssetLibraryDocumentsRatedByMePage(
+			Long assetLibraryId, Pagination pagination)
+		throws Exception;
+
 	public Page<Document> getDocumentFolderDocumentsPage(
 			Long documentFolderId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -204,6 +208,10 @@ public interface DocumentResource {
 			putSiteDocumentPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Page<Document> getSiteDocumentsRatedByMePage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

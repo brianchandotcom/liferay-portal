@@ -927,6 +927,141 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryDocumentsRatedByMePage() throws Exception {
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsRatedByMePage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryDocumentsRatedByMePage_getIrrelevantAssetLibraryId();
+
+		Page<Document> page =
+			documentResource.getAssetLibraryDocumentsRatedByMePage(
+				assetLibraryId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantAssetLibraryId != null) {
+			Document irrelevantDocument =
+				testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+					irrelevantAssetLibraryId, randomIrrelevantDocument());
+
+			page = documentResource.getAssetLibraryDocumentsRatedByMePage(
+				irrelevantAssetLibraryId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantDocument),
+				(List<Document>)page.getItems());
+			assertValid(
+				page,
+				testGetAssetLibraryDocumentsRatedByMePage_getExpectedActions(
+					irrelevantAssetLibraryId));
+		}
+
+		Document document1 =
+			testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, randomDocument());
+
+		Document document2 =
+			testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, randomDocument());
+
+		page = documentResource.getAssetLibraryDocumentsRatedByMePage(
+			assetLibraryId, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2),
+			(List<Document>)page.getItems());
+		assertValid(
+			page,
+			testGetAssetLibraryDocumentsRatedByMePage_getExpectedActions(
+				assetLibraryId));
+
+		documentResource.deleteDocument(document1.getId());
+
+		documentResource.deleteDocument(document2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAssetLibraryDocumentsRatedByMePage_getExpectedActions(
+				Long assetLibraryId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsRatedByMePageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsRatedByMePage_getAssetLibraryId();
+
+		Document document1 =
+			testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, randomDocument());
+
+		Document document2 =
+			testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, randomDocument());
+
+		Document document3 =
+			testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, randomDocument());
+
+		Page<Document> page1 =
+			documentResource.getAssetLibraryDocumentsRatedByMePage(
+				assetLibraryId, Pagination.of(1, 2));
+
+		List<Document> documents1 = (List<Document>)page1.getItems();
+
+		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+
+		Page<Document> page2 =
+			documentResource.getAssetLibraryDocumentsRatedByMePage(
+				assetLibraryId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Document> documents2 = (List<Document>)page2.getItems();
+
+		Assert.assertEquals(documents2.toString(), 1, documents2.size());
+
+		Page<Document> page3 =
+			documentResource.getAssetLibraryDocumentsRatedByMePage(
+				assetLibraryId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2, document3),
+			(List<Document>)page3.getItems());
+	}
+
+	protected Document testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+			Long assetLibraryId, Document document)
+		throws Exception {
+
+		return documentResource.postAssetLibraryDocument(
+			assetLibraryId, document, getMultipartFiles());
+	}
+
+	protected Long testGetAssetLibraryDocumentsRatedByMePage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Long
+			testGetAssetLibraryDocumentsRatedByMePage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetDocumentFolderDocumentsPage() throws Exception {
 		Long documentFolderId =
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
@@ -2289,6 +2424,126 @@ public abstract class BaseDocumentResourceTestCase {
 
 		return documentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testGetSiteDocumentsRatedByMePage() throws Exception {
+		Long siteId = testGetSiteDocumentsRatedByMePage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDocumentsRatedByMePage_getIrrelevantSiteId();
+
+		Page<Document> page = documentResource.getSiteDocumentsRatedByMePage(
+			siteId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantSiteId != null) {
+			Document irrelevantDocument =
+				testGetSiteDocumentsRatedByMePage_addDocument(
+					irrelevantSiteId, randomIrrelevantDocument());
+
+			page = documentResource.getSiteDocumentsRatedByMePage(
+				irrelevantSiteId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantDocument),
+				(List<Document>)page.getItems());
+			assertValid(
+				page,
+				testGetSiteDocumentsRatedByMePage_getExpectedActions(
+					irrelevantSiteId));
+		}
+
+		Document document1 = testGetSiteDocumentsRatedByMePage_addDocument(
+			siteId, randomDocument());
+
+		Document document2 = testGetSiteDocumentsRatedByMePage_addDocument(
+			siteId, randomDocument());
+
+		page = documentResource.getSiteDocumentsRatedByMePage(
+			siteId, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2),
+			(List<Document>)page.getItems());
+		assertValid(
+			page, testGetSiteDocumentsRatedByMePage_getExpectedActions(siteId));
+
+		documentResource.deleteDocument(document1.getId());
+
+		documentResource.deleteDocument(document2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSiteDocumentsRatedByMePage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSiteDocumentsRatedByMePageWithPagination()
+		throws Exception {
+
+		Long siteId = testGetSiteDocumentsRatedByMePage_getSiteId();
+
+		Document document1 = testGetSiteDocumentsRatedByMePage_addDocument(
+			siteId, randomDocument());
+
+		Document document2 = testGetSiteDocumentsRatedByMePage_addDocument(
+			siteId, randomDocument());
+
+		Document document3 = testGetSiteDocumentsRatedByMePage_addDocument(
+			siteId, randomDocument());
+
+		Page<Document> page1 = documentResource.getSiteDocumentsRatedByMePage(
+			siteId, Pagination.of(1, 2));
+
+		List<Document> documents1 = (List<Document>)page1.getItems();
+
+		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+
+		Page<Document> page2 = documentResource.getSiteDocumentsRatedByMePage(
+			siteId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Document> documents2 = (List<Document>)page2.getItems();
+
+		Assert.assertEquals(documents2.toString(), 1, documents2.size());
+
+		Page<Document> page3 = documentResource.getSiteDocumentsRatedByMePage(
+			siteId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(document1, document2, document3),
+			(List<Document>)page3.getItems());
+	}
+
+	protected Document testGetSiteDocumentsRatedByMePage_addDocument(
+			Long siteId, Document document)
+		throws Exception {
+
+		return documentResource.postSiteDocument(
+			siteId, document, getMultipartFiles());
+	}
+
+	protected Long testGetSiteDocumentsRatedByMePage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetSiteDocumentsRatedByMePage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
 	}
 
 	@Rule

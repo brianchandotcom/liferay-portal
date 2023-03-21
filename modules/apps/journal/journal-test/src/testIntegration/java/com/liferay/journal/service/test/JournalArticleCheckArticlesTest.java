@@ -93,7 +93,7 @@ public class JournalArticleExpirationTest {
 
 	@Test
 	public void testSetFutureExpirationDate() throws Exception {
-		JournalArticle article = addArticle(_group.getGroupId(), true);
+		JournalArticle article = addArticle(_group.getGroupId(), true, false);
 
 		Date modifiedDate = article.getModifiedDate();
 
@@ -116,7 +116,8 @@ public class JournalArticleExpirationTest {
 		Assert.assertTrue(modifiedDate.before(article.getModifiedDate()));
 	}
 
-	protected JournalArticle addArticle(long groupId, boolean approved)
+	protected JournalArticle addArticle(
+			long groupId, boolean publish, boolean scheduled)
 		throws Exception {
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
@@ -138,12 +139,18 @@ public class JournalArticleExpirationTest {
 
 		Calendar displayDateCalendar = new GregorianCalendar();
 
-		displayDateCalendar.setTime(new Date());
+		long time = System.currentTimeMillis();
+
+		if (scheduled) {
+			time = time + Time.HOUR;
+		}
+
+		displayDateCalendar.setTime(new Date(time));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		if (approved) {
+		if (publish) {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 		else {
@@ -193,7 +200,8 @@ public class JournalArticleExpirationTest {
 
 		// Add expiring, approved Article
 
-		JournalArticle article = addArticle(_group.getGroupId(), approved);
+		JournalArticle article = addArticle(
+			_group.getGroupId(), approved, false);
 
 		// Add a version of the article, changing expire date
 

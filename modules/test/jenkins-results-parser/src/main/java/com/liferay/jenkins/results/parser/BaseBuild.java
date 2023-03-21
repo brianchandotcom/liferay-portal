@@ -2118,8 +2118,17 @@ public abstract class BaseBuild implements Build {
 						setBuildNumber(runningBuildJSONObject.getInt("number"));
 					}
 					else {
-						JSONObject queueItemJSONObject =
-							getQueueItemJSONObject();
+						JSONObject queueItemJSONObject = null;
+
+						try {
+							queueItemJSONObject = getQueueItemJSONObject();
+						}
+						catch (IOException ioException) {
+							ioException.printStackTrace();
+
+							throw new RuntimeException(
+								"Unable to get queue item JSON", ioException);
+						}
 
 						if (queueItemJSONObject != null) {
 							setStatus("queued");

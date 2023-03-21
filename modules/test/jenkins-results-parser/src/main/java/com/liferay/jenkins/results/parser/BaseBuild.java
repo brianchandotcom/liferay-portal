@@ -2146,7 +2146,7 @@ public abstract class BaseBuild implements Build {
 							}
 							catch (IOException ioException) {
 								throw new RuntimeException(
-									"Invocation failure " + invocationURL,
+									"Unable to invoke build " + invocationURL,
 									ioException);
 							}
 

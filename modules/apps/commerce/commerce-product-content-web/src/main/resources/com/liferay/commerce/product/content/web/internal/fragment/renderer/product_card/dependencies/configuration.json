@@ -1,0 +1,80 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "show-add-to-cart-button",
+					"name": "showAddToCartButton",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-add-to-wish-list-button",
+					"name": "showAddToWishListButton",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-availability-label",
+					"name": "showAvailabilityLabel",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-compare-checkbox",
+					"name": "showCompareCheckbox",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-image",
+					"name": "showImage",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-name",
+					"name": "showName",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-price",
+					"name": "showPrice",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-sku",
+					"name": "showSku",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

@@ -7,6 +7,7 @@ liferay-jethr0-oauth-application-headless-server:
         - C_BuildRun.everything
         - C_Environment.everything
         - C_GitBranch.everything
+        - C_JenkinsMaster.everything
         - C_Project.everything
         - C_ProjectComparator.everything
         - C_ProjectPrioritizer.everything

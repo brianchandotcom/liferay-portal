@@ -356,6 +356,64 @@
 			}
 		},
 		{
+			"externalReferenceCode": "JenkinsMaster",
+			"label": {
+				"en_US": "Jenkins Master"
+			},
+			"name": "JenkinsMaster",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Good Clock"
+					},
+					"name": "goodClock",
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Slaves Per Node"
+					},
+					"name": "slavesPerNode",
+					"required": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Slave RAM"
+					},
+					"name": "slaveRAM",
+					"required": true,
+					"type": "Integer"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Jenkins Masters"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
 			"externalReferenceCode": "ProjectComparator",
 			"label": {
 				"en_US": "Project Comparator"

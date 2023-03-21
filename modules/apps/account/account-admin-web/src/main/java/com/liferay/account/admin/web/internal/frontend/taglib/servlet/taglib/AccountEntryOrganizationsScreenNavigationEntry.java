@@ -15,8 +15,13 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
 
@@ -24,15 +29,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
- * @author Alessio Antonio Rendina
+ * @author Joao Victor Alves
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=30",
-	service = ScreenNavigationCategory.class
+	property = "screen.navigation.entry.order:Integer=10",
+	service = ScreenNavigationEntry.class
 )
-public class AccountEntryOrganizationsScreenNavigationCategory
-	implements ScreenNavigationCategory {
+public class AccountEntryOrganizationsScreenNavigationEntry
+	extends BaseAccountEntryScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -40,17 +44,29 @@ public class AccountEntryOrganizationsScreenNavigationCategory
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return language.get(locale, "organizations");
+	public String getJspPath() {
+		return "/account_entries_admin/account_entry" +
+			"/view_account_organizations.jsp";
 	}
 
 	@Override
-	public String getScreenNavigationKey() {
-		return AccountScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
+	public String getLabel(Locale locale) {
+		return _language.get(locale, "organizations");
+	}
+
+	@Override
+	public boolean isVisible(User user, AccountEntry accountEntry) {
+		if (accountEntry.isNew()) {
+			return false;
+		}
+
+		return AccountEntryPermission.contains(
+			PermissionCheckerFactoryUtil.create(user),
+			accountEntry.getAccountEntryId(),
+			AccountActionKeys.VIEW_ORGANIZATIONS);
 	}
 
 	@Reference
-	protected Language language;
+	private Language _language;
 
 }

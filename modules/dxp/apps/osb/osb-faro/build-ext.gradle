@@ -88,25 +88,25 @@ configure(project(":dxp:apps:osb:osb-faro:osb-faro-dependencies")) {
 	}
 }
 
-configure(subprojects.findAll {!it.childProjects}) {
-	task moveToDocker(type: Exec)
+// configure(subprojects.findAll {!it.childProjects}) {
+// 	task moveToDocker(type: Exec)
 
-	deploy {
-		doFirst {
-			delete file(liferay.deployDir)
-		}
+// 	deploy {
+// 		doFirst {
+// 			delete file(liferay.deployDir)
+// 		}
 
-		finalizedBy moveToDocker
+// 		finalizedBy moveToDocker
 
-		liferay {
-			deployDir = new File("${rootDir}/build/deploy")
-		}
-	}
+// 		liferay {
+// 			deployDir = new File("${rootDir}/build/deploy")
+// 		}
+// 	}
 
-	moveToDocker {
-		commandLine "docker", "cp", "-a", liferay.deployDir, dockerContainerId + ":/opt/liferay"
-	}
-}
+// 	moveToDocker {
+// 		commandLine "docker", "cp", "-a", liferay.deployDir, dockerContainerId + ":/opt/liferay"
+// 	}
+// }
 
 createDocker {
 	dependsOn buildAppDockerImage, removeDocker

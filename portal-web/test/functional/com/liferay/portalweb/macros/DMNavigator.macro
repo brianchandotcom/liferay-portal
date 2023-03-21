@@ -522,9 +522,16 @@ definition {
 	}
 
 	macro openToFolderInAdmin {
+		if (isSet(parentFolderName)) {
+			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+				groupName = ${groupName},
+				name = ${parentFolderName});
+		}
+
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},
-			name = ${dmFolderName});
+			name = ${dmFolderName},
+			parentFolderId = ${parentFolderId});
 
 		if (${displayStyle} == "card") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_folder&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}&_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_Rag8ovutcFBP_displayStyle=icon");

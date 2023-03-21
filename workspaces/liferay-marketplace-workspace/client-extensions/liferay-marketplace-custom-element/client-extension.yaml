@@ -1,5 +1,5 @@
 assemble:
-    - from: build
+    - from: build/vite
       into: static
 liferay-marketplace-custom-element:
     cssURLs:
@@ -7,7 +7,7 @@ liferay-marketplace-custom-element:
     friendlyURLMapping: liferay-marketplace-custom-element
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
-    name: Publisher Dashboard
+    name: Liferay Marketplace Custom Element
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

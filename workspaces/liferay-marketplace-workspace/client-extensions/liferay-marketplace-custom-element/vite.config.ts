@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig({
 	build: {
-		outDir: 'build/static/',
+		outDir: 'build/vite',
 		rollupOptions: {
 			output: {
 				assetFileNames:

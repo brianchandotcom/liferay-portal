@@ -577,7 +577,7 @@ public class WikiListPagesDisplayContext {
 				1);
 		}
 		else if (navigation.equals("history")) {
-			if (_canViewPendingStatus(themeDisplay, page)) {
+			if (_hasViewPendingStatusPermission(page)) {
 				searchContainer.setResultsAndTotal(
 					() -> WikiPageLocalServiceUtil.getPages(
 						page.getNodeId(), page.getTitle(), QueryUtil.ALL_POS,
@@ -616,24 +616,25 @@ public class WikiListPagesDisplayContext {
 		}
 	}
 
-	private boolean _canViewPendingStatus(
-			ThemeDisplay themeDisplay, WikiPage page)
+	private boolean _hasViewPendingStatusPermission(WikiPage wikiPage)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+			_wikiRequestHelper.getPermissionChecker();
 
 		if (permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+				_wikiRequestHelper.getCompanyId(),
+				_wikiRequestHelper.getScopeGroupId())) {
 
 			return true;
 		}
 
-		WikiPage lastPage = WikiPageLocalServiceUtil.getPage(
-			page.getResourcePrimKey(), false);
+		WikiPage lastWikiPage = WikiPageLocalServiceUtil.getPage(
+			wikiPage.getResourcePrimKey(), false);
 
-		if ((page.getVersion() >= lastPage.getVersion()) ||
-			(themeDisplay.getUserId() == lastPage.getStatusByUserId())) {
+		if ((wikiPage.getVersion() >= lastWikiPage.getVersion()) ||
+			(permissionChecker.getUserId() ==
+			 	lastWikiPage.getStatusByUserId())) {
 
 			return true;
 		}

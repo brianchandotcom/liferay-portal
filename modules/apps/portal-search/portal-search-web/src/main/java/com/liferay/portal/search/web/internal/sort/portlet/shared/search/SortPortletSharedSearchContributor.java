@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.sort.portlet.shared.search;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,7 +40,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -67,10 +67,22 @@ public class SortPortletSharedSearchContributor
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getSearchRequestBuilder();
 
-		Stream<Sort> stream = _buildSorts(
-			portletSharedSearchSettings, sortPortletPreferences);
+		ThemeDisplay themeDisplay =
+			portletSharedSearchSettings.getThemeDisplay();
 
-		searchRequestBuilder.sorts(stream.toArray(Sort[]::new));
+		searchRequestBuilder.sorts(
+			TransformUtil.transformToArray(
+				_getFieldValues(
+					sortPortletPreferences.getParameterName(),
+					portletSharedSearchSettings),
+				fieldValue -> {
+					if (fieldValue.isEmpty()) {
+						return null;
+					}
+
+					return _buildSort(fieldValue, themeDisplay.getLocale());
+				},
+				Sort.class));
 	}
 
 	@Reference
@@ -112,26 +124,6 @@ public class SortPortletSharedSearchContributor
 		).sortOrder(
 			sortOrder
 		).build();
-	}
-
-	private Stream<Sort> _buildSorts(
-		PortletSharedSearchSettings portletSharedSearchSettings,
-		SortPortletPreferences sortPortletPreferences) {
-
-		List<String> fieldValues = _getFieldValues(
-			sortPortletPreferences.getParameterName(),
-			portletSharedSearchSettings);
-
-		ThemeDisplay themeDisplay =
-			portletSharedSearchSettings.getThemeDisplay();
-
-		Stream<String> stream = fieldValues.stream();
-
-		return stream.filter(
-			fieldValue -> !fieldValue.isEmpty()
-		).map(
-			fieldValue -> _buildSort(fieldValue, themeDisplay.getLocale())
-		);
 	}
 
 	private List<String> _getFieldValues(

@@ -35,10 +35,10 @@ definition {
 		task ("Given create 6 data sets") {
 			for (var listDataSets : list "1,2,3,4,5,6") {
 				FrontendDataSetAdmin.canCreateDataSets(
-					name = "Test Dataset",
-					key_type = "Channel");
+					key_type = "Channel",
+					name = "Test Dataset");
 			}
-		}	
+		}
 
 		task ("When changing the page to 4 entries") {
 			ObjectPortlet.changePagination(itemsPerPage = "4 items");
@@ -59,7 +59,6 @@ definition {
 				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 				value1 = "Test Dataset");
 		}
-		
 	}
 
 	@description = "Confirm that the user can create a data set view"

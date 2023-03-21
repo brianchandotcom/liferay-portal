@@ -19,8 +19,6 @@ import com.liferay.info.item.InfoItemFormVariation;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Jorge Ferrer
@@ -30,18 +28,17 @@ public interface InfoItemFormVariationsProvider<T> {
 	public default InfoItemFormVariation getInfoItemFormVariation(
 		long groupId, String formVariationKey) {
 
-		Collection<InfoItemFormVariation> infoItemFormVariations =
-			getInfoItemFormVariations(groupId);
+		for (InfoItemFormVariation infoItemFormVariation :
+				getInfoItemFormVariations(groupId)) {
 
-		Stream<InfoItemFormVariation> stream = infoItemFormVariations.stream();
+			if (Objects.equals(
+					formVariationKey, infoItemFormVariation.getKey())) {
 
-		Optional<InfoItemFormVariation> infoItemFormVariationOptional =
-			stream.filter(
-				infoItemFormVariation -> Objects.equals(
-					formVariationKey, infoItemFormVariation.getKey())
-			).findFirst();
+				return infoItemFormVariation;
+			}
+		}
 
-		return infoItemFormVariationOptional.orElse(null);
+		return null;
 	}
 
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(

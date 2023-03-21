@@ -243,6 +243,16 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addObjectMultiPicklistFieldEntryViaUI {
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTIONS_MULTIPICKLIST");
+
+		for (var picklistOption : list ${picklistOptionList}) {
+			MenuItem.clickNoError(menuItem = ${picklistOption});
+		}
+	}
+
 	macro addObjectPicklistFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 

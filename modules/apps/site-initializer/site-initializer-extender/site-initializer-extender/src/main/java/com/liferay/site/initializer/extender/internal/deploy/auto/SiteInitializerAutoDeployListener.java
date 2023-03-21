@@ -181,18 +181,22 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(userId);
 
-		String groupName = typeSettingsUnicodeProperties.getProperty(
-			"siteName");
+		String siteName = typeSettingsUnicodeProperties.getProperty("siteName");
 
-		Group group = _groupLocalService.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), groupName
-			).build(),
-			null, GroupConstants.TYPE_SITE_PRIVATE, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(groupName),
-			true, true, serviceContext);
+		Group group = _groupLocalService.fetchGroup(companyId, siteName);
+
+		if (group == null) {
+			group = _groupLocalService.addGroup(
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), siteName
+				).build(),
+				null, GroupConstants.TYPE_SITE_PRIVATE, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				StringPool.SLASH +
+					FriendlyURLNormalizerUtil.normalize(siteName),
+				true, true, serviceContext);
+		}
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 

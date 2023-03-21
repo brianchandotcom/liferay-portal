@@ -1085,6 +1085,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7821. The information under options should be supported by localization"
+	@priority = 3
+	test CanLocalizeOptionsInformation {
+		property portal.acceptance = "false";
+
+		task ("Given the default language is changed") {
+			PortalSettings.openToConfigInInstanceSettings(portletKey = "language");
+
+			PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "English (United States),English (United Kingdom)");
+
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United Kingdom)");
+		}
+
+		task ("And the Master catalog language is changed to the new default") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			CommerceCatalog.editCatalogEntry(
+				catalogLanguage = "English (United Kingdom)",
+				catalogName = "Master");
+		}
+
+		task ("And an option with an option value is added") {
+			CommerceNavigator.goToProductOptionsAdminViaURL();
+
+			CPCommerceCatalog.newOptionsEntry(
+				optionDescription = "Option Description",
+				optionFieldType = "Select from List",
+				optionName = "Term");
+		}
+
+		task ("When editing the value") {
+			CPCommerceCatalog.addOptionValues(optionValuesList = "1 Year:1");
+		}
+
+		task ("Then assert the edited title is applied with no errors") {
+			ClickNoError(
+				key_value = "1 Year",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Edit");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SIDE_PANEL_IFRAME_TITLE",
+				value1 = "Edit 1 Year");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9830. CanViewOptionOnTheOptionFacetWidget"
 	@priority = 5
 	test CanViewOptionOnTheOptionFacetWidget {

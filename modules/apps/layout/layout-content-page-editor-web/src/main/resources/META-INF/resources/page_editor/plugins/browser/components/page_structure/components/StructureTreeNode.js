@@ -455,7 +455,7 @@ function StructureTreeNodeContent({
 
 			{!editingName && (
 				<div
-					className={classNames({
+					className={classNames('flex-shrink-0', {
 						'page-editor__page-structure__tree-node__buttons--hidden':
 							node.hidden || node.hiddenAncestor,
 					})}
@@ -525,7 +525,12 @@ const NameLabel = React.forwardRef(
 				)}
 				ref={ref}
 			>
-				{icon && <ClayIcon className="mt-0" symbol={icon || ''} />}
+				{icon && (
+					<ClayIcon
+						className="flex-shrink-0 mt-0"
+						symbol={icon || ''}
+					/>
+				)}
 
 				{editingName ? (
 					<input
@@ -556,7 +561,9 @@ const NameLabel = React.forwardRef(
 						value={name}
 					/>
 				) : (
-					name || defaultName || Liferay.Language.get('element')
+					<span className="text-truncate">
+						{name || defaultName || Liferay.Language.get('element')}
+					</span>
 				)}
 
 				{!editingName && nameInfo && (

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.importer.helper;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -43,8 +44,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,13 +116,8 @@ public class PortletPermissionsImporterHelper {
 
 			List<String> actionIds = new ArrayList<>();
 
-			Stream<ResourceAction> stream = resourceActions.stream();
-
-			List<String> resourceActionsIds = stream.map(
-				ResourceAction::getActionId
-			).collect(
-				Collectors.toList()
-			);
+			List<String> resourceActionsIds = TransformUtil.transform(
+				resourceActions, ResourceAction::getActionId);
 
 			List<String> actionKeys = (List<String>)widgetPermissionsMap.get(
 				"actionKeys");

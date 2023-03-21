@@ -92,6 +92,30 @@ public class JournalArticleExpirationTest {
 	}
 
 	@Test
+	public void testExpireScheduledJournalArticleDisplayDateAndExpirationDateWithinTheSameInterval()
+		throws Exception {
+
+		long now = System.currentTimeMillis();
+
+		Date displayDate = new Date(now - Time.HOUR);
+		Date expirationDate = new Date(now - (Time.HOUR * 2));
+
+		_checkArticles(
+			displayDate, expirationDate, WorkflowConstants.STATUS_EXPIRED);
+	}
+
+	@Test
+	public void testExpireScheduledJournalArticleEqualsDisplayDateAndExpirationDate()
+		throws Exception {
+
+		long now = System.currentTimeMillis();
+
+		Date date = new Date(now - Time.HOUR);
+
+		_checkArticles(date, date, WorkflowConstants.STATUS_EXPIRED);
+	}
+
+	@Test
 	public void testSetFutureExpirationDate() throws Exception {
 		JournalArticle article = addArticle(_group.getGroupId(), true, false);
 
@@ -270,6 +294,38 @@ public class JournalArticleExpirationTest {
 		}
 
 		return article;
+	}
+
+	private void _checkArticles(
+			Date displayDate, Date expirationDate, int status)
+		throws Exception {
+
+		JournalArticle journalArticle = addArticle(
+			_group.getGroupId(), expirationDate == null, true, true);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, journalArticle.getStatus());
+
+		journalArticle.setDisplayDate(displayDate);
+		journalArticle.setExpirationDate(expirationDate);
+
+		journalArticle = JournalArticleLocalServiceUtil.updateJournalArticle(
+			journalArticle);
+
+		Assert.assertEquals(expirationDate, journalArticle.getExpirationDate());
+
+		Assert.assertEquals(displayDate, journalArticle.getDisplayDate());
+
+		JournalArticleLocalServiceUtil.checkArticles();
+
+		journalArticle = JournalArticleLocalServiceUtil.getArticle(
+			journalArticle.getId());
+
+		Assert.assertEquals(status, journalArticle.getStatus());
+
+		Assert.assertEquals(displayDate, journalArticle.getDisplayDate());
+
+		Assert.assertEquals(expirationDate, journalArticle.getExpirationDate());
 	}
 
 	private static final int _MODE_DEFAULT = 0;

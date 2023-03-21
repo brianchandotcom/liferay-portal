@@ -80,7 +80,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		Date displayDate = new Date(now - Time.HOUR);
 		Date expirationDate = new Date(now + (Time.YEAR * 2));
 
-		_checkArticles(
+		_assertCheckArticles(
 			displayDate, expirationDate, WorkflowConstants.STATUS_APPROVED);
 	}
 
@@ -92,7 +92,8 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 		Date displayDate = new Date(now - Time.HOUR);
 
-		_checkArticles(displayDate, null, WorkflowConstants.STATUS_APPROVED);
+		_assertCheckArticles(
+			displayDate, null, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test
@@ -124,7 +125,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		Date displayDate = new Date(now - Time.HOUR);
 		Date expirationDate = new Date(now - (Time.HOUR * 2));
 
-		_checkArticles(
+		_assertCheckArticles(
 			displayDate, expirationDate, WorkflowConstants.STATUS_EXPIRED);
 	}
 
@@ -136,7 +137,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 		Date date = new Date(now - Time.HOUR);
 
-		_checkArticles(date, date, WorkflowConstants.STATUS_EXPIRED);
+		_assertCheckArticles(date, date, WorkflowConstants.STATUS_EXPIRED);
 	}
 
 	@Test
@@ -322,7 +323,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		return article;
 	}
 
-	private void _checkArticles(
+	private void _assertCheckArticles(
 			Date displayDate, Date expirationDate, int status)
 		throws Exception {
 
@@ -338,9 +339,9 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		journalArticle = _journalArticleLocalService.updateJournalArticle(
 			journalArticle);
 
-		Assert.assertEquals(expirationDate, journalArticle.getExpirationDate());
-
 		Assert.assertEquals(displayDate, journalArticle.getDisplayDate());
+
+		Assert.assertEquals(expirationDate, journalArticle.getExpirationDate());
 
 		_journalArticleLocalService.checkArticles();
 

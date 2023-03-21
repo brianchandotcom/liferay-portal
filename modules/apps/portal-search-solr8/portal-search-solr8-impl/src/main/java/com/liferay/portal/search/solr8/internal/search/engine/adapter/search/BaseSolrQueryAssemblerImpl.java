@@ -125,7 +125,16 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	}
 
 	protected Map<String, JSONObject> getFacetParameters(Facet facet) {
-		return _processFacet(facet);
+		Class<?> clazz = facet.getClass();
+
+		FacetProcessor<SolrQuery> facetProcessor =
+			_serviceTrackerMap.getService(clazz.getName());
+
+		if (facetProcessor == null) {
+			facetProcessor = _defaultFacetProcessor;
+		}
+
+		return facetProcessor.processFacet(facet);
 	}
 
 	protected String getFacetString(Map<String, JSONObject> jsonObjects) {
@@ -296,19 +305,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		if (!ArrayUtil.isEmpty(facetPostFilterQueries)) {
 			Collections.addAll(filterQueries, facetPostFilterQueries);
 		}
-	}
-
-	private Map<String, JSONObject> _processFacet(Facet facet) {
-		Class<?> clazz = facet.getClass();
-
-		FacetProcessor<SolrQuery> facetProcessor =
-			_serviceTrackerMap.getService(clazz.getName());
-
-		if (facetProcessor == null) {
-			facetProcessor = _defaultFacetProcessor;
-		}
-
-		return facetProcessor.processFacet(facet);
 	}
 
 	private final FacetProcessor<SolrQuery> _defaultFacetProcessor =

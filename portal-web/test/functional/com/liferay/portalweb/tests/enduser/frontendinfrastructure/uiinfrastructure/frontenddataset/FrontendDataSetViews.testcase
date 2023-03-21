@@ -36,7 +36,7 @@ definition {
 			FrontendDataSetAdmin.canCreateDataSets(
 				key_type = "Channel",
 				name = "Test Dataset");
-			
+
 			FrontendDataSetAdmin.canCreateDataSets(
 				key_type = "Account",
 				name = "Test Dataset2");
@@ -55,7 +55,7 @@ definition {
 
 			FrontendDataSetAdmin.canCreateDataSets(
 				key_type = "Form",
-				name = "Test Dataset6");					
+				name = "Test Dataset6");
 		}
 
 		task ("When changing the page to 4 entries") {

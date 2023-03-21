@@ -1,0 +1,248 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-153324=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		task ("Given a foundation object") {
+			var foundationObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "foundation",
+				en_US_plural_label = "foundations",
+				name = "Foundation",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given a secondFoundation object") {
+			var secondFoundationObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "secondFoundation",
+				en_US_plural_label = "secondFoundations",
+				name = "SecondFoundation",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given oneToMany relationship userSecondFoundations created") {
+			ObjectDefinitionAPI.setUpGlobalObjectDefinitionIdWithName(objectName = "User");
+
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UserSecondFoundations",
+				name = "userSecondFoundations",
+				objectDefinitionId1 = ${staticObjectId},
+				objectDefinitionId2 = ${secondFoundationObjectDefinitionId},
+				type = "oneToMany");
+		}
+
+		task ("Given manyToMany relationship usersFoundations created") {
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UsersFoundations",
+				name = "usersFoundations",
+				objectDefinitionId1 = ${staticObjectId},
+				objectDefinitionId2 = ${foundationObjectDefinitionId},
+				type = "manyToMany");
+		}
+
+		task ("Given object entries created") {
+			ObjectDefinitionAPI.setUpGlobalObjectEntryId();
+		}
+
+		task ("Given userAccount entry created") {
+			UserAccountAPI.setUpGlobalUserAccountIds(
+				alternateName1 = "user1",
+				alternateName2 = "user2",
+				emailAddress1 = "user1@liferay.com",
+				emailAddress2 = "user2@liferay.com",
+				familyName1 = "userfn1",
+				familyName2 = "userfn2",
+				givenName1 = "usergn1",
+				givenName2 = "usergn2");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		for (var objectLabel : list "foundation,secondFoundation") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.activeCustomObject(objectLabel = ${objectLabel});
+		}
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsers();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CannotGetManyToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetManyToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated";
+
+		task ("And Given foundation entries related with userAccount through putUserAccountUsersFoundations") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = ${staticObjectEntryId1},
+				relationshipName = "usersFoundations",
+				userAccountId = ${staticUserAccountId1});
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = ${staticObjectEntryId2},
+				relationshipName = "usersFoundations",
+				userAccountId = ${staticUserAccountId2});
+		}
+
+		task ("When I deactivate the custom object") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.inactiveCustomObject(objectLabel = "foundation");
+		}
+
+		task ("Then I receive 404 from the get request getUserAccount${relationshipName}Page") {
+			var response = UserAccountAPI.getRelationshipByUserAccountId(
+				relationshipName = "usersFoundations",
+				userAccountId = ${staticUserAccountId1});
+
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = ${response});
+		}
+
+		task ("And Then the endpoint getUserAccount${relationshipName}Page is not visible in the OpenAPI") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getUserAccountUsersFoundationsPage",
+				service = "UserAccount",
+				value1 = "getUserAccountUsersFoundationsPage");
+		}
+	}
+
+	@priority = 3
+	test CannotGetManyToManyRelationshipDetailsWhenCustomObjectIsDeactivated {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetManyToManyRelationshipDetailsWhenCustomObjectIsDeactivated";
+
+		task ("When I deactivate the custom object") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.inactiveCustomObject(objectLabel = "foundation");
+		}
+
+		task ("Then I receive 404 from the get request getUserAccount${relationshipName}Page") {
+			var response = UserAccountAPI.getRelationshipByUserAccountId(
+				relationshipName = "usersFoundations",
+				userAccountId = ${staticUserAccountId1});
+
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = ${response});
+		}
+
+		task ("And Then the endpoint getUserAccount${relationshipName}Page is not visible in the OpenAPI") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getUserAccountUsersFoundationsPage",
+				service = "UserAccount",
+				value1 = "getUserAccountUsersFoundationsPage");
+		}
+	}
+
+	@priority = 4
+	test CannotGetOneToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetOneToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated";
+
+		task ("And Given secondFoundation entries related with userAccount through putUserAccountUserSecondFoundations") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = ${staticObjectEntryId3},
+				relationshipName = "userSecondFoundations",
+				userAccountId = ${staticUserAccountId2});
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = ${staticObjectEntryId4},
+				relationshipName = "userSecondFoundations",
+				userAccountId = ${staticUserAccountId2});
+		}
+
+		task ("When I deactivate the custom object") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.inactiveCustomObject(objectLabel = "secondFoundation");
+		}
+
+		task ("Then I receive 404 from the get request getUserAccount${relationshipName}Page") {
+			var response = UserAccountAPI.getRelationshipByUserAccountId(
+				relationshipName = "userSecondFoundations",
+				userAccountId = ${staticUserAccountId2});
+
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = ${response});
+		}
+
+		task ("And Then the endpoint getUserAccount${relationshipName}Page is not visible in the OpenAPI") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getUserAccountUserSecondFoundationsPage",
+				service = "UserAccount",
+				value1 = "getUserAccountUserSecondFoundationsPage");
+		}
+	}
+
+	@priority = 3
+	test CannotGetOneToManyRelationshipDetailsWhenCustomObjectIsDeactivated {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetOneToManyRelationshipDetailsWhenCustomObjectIsDeactivated";
+
+		task ("When I deactivate the custom object") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.inactiveCustomObject(objectLabel = "secondFoundation");
+		}
+
+		task ("Then I receive 404 from the get request getUserAccount${relationshipName}Page") {
+			var response = UserAccountAPI.getRelationshipByUserAccountId(
+				relationshipName = "userSecondFoundations",
+				userAccountId = ${staticUserAccountId2});
+
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = ${response});
+		}
+
+		task ("And Then the endpoint getUserAccount${relationshipName}Page is not visible in the OpenAPI") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getUserAccountUserSecondFoundationsPage",
+				service = "UserAccount",
+				value1 = "getUserAccountUserSecondFoundationsPage");
+		}
+	}
+
+}

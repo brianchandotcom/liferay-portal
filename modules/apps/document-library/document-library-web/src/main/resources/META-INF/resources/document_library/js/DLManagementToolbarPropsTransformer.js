@@ -201,14 +201,14 @@ export default function propsTransformer({
 			multiple: true,
 			onSelect(selectedItem) {
 				if (selectedItem) {
-					let url = selectExtensionURL;
-
-					selectedItem.forEach((item) => {
-						url = addParams(
-							`${portletNamespace}extension=${item}`,
-							url
-						);
-					});
+					const url = selectedItem.reduce(
+						(acc, item) =>
+							addParams(
+								`${portletNamespace}extension=${item}`,
+								acc
+							),
+						selectExtensionURL
+					);
 
 					navigate(url);
 				}

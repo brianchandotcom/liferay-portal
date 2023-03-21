@@ -78,8 +78,11 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 		{
 			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
 			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(in = ParameterIn.QUERY, name = "fields"),
+			@Parameter(in = ParameterIn.QUERY, name = "nestedFields"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "restrictFields")
 		}
 	)
 	@Path("/{currentObjectEntryId}/{objectRelationshipName}")

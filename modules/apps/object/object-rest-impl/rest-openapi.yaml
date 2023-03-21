@@ -102,9 +102,21 @@ paths:
                           type: string
                       type: array
                 - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: query
                   name: filter
                   schema:
@@ -213,6 +225,18 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -328,6 +352,18 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -451,6 +487,18 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -547,6 +595,18 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
                   name: roleNames
                   schema:
                       type: string
@@ -590,9 +650,21 @@ paths:
                           type: string
                       type: array
                 - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: query
                   name: filter
                   schema:

@@ -21,6 +21,7 @@
 <%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
 page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
 page import="com.liferay.client.extension.type.CustomElementCET" %><%@
+page import="com.liferay.client.extension.type.FDSCellRendererCET" %><%@
 page import="com.liferay.client.extension.type.GlobalCSSCET" %><%@
 page import="com.liferay.client.extension.type.GlobalJSCET" %><%@
 page import="com.liferay.client.extension.type.IFrameCET" %><%@

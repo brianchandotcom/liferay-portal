@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
@@ -24,14 +24,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Albert Lee
+ * @author Joao Victor Alves
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=10",
-	service = ScreenNavigationCategory.class
+	property = "screen.navigation.entry.order:Integer=10",
+	service = ScreenNavigationEntry.class
 )
-public class AccountEntryDetailsScreenNavigationCategory
-	implements ScreenNavigationCategory {
+public class AccountEntryDetailsScreenNavigationEntry
+	extends BaseAccountEntryScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,17 +39,16 @@ public class AccountEntryDetailsScreenNavigationCategory
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return language.get(locale, "details");
+	public String getJspPath() {
+		return "/account_entries_admin/account_entry/details.jsp";
 	}
 
 	@Override
-	public String getScreenNavigationKey() {
-		return AccountScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
+	public String getLabel(Locale locale) {
+		return _language.get(locale, "details");
 	}
 
 	@Reference
-	protected Language language;
+	private Language _language;
 
 }

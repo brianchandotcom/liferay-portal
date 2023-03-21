@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,6 +40,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -104,11 +108,23 @@ public class DropZoneFragmentEntryLinkListener
 			return;
 		}
 
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+		HttpServletResponse httpServletResponse = serviceContext.getResponse();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((httpServletRequest == null) && (themeDisplay != null)) {
+			httpServletRequest = themeDisplay.getRequest();
+		}
+
+		if ((httpServletResponse == null) && (themeDisplay != null)) {
+			httpServletResponse = themeDisplay.getResponse();
+		}
+
 		String processedHTML =
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				new DefaultFragmentEntryProcessorContext(
-					serviceContext.getRequest(), serviceContext.getResponse(),
+					httpServletRequest, httpServletResponse,
 					FragmentEntryLinkConstants.EDIT,
 					serviceContext.getLocale()));
 

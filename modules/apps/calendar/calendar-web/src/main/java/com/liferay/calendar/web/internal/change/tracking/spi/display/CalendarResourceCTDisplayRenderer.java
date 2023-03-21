@@ -96,6 +96,11 @@ public class CalendarResourceCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isHideable(CalendarResource calendarResource) {
+		return true;
+	}
+
+	@Override
 	protected void buildDisplay(
 		DisplayBuilder<CalendarResource> displayBuilder) {
 

@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -233,7 +234,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 
 		File dataFile = bundleContext.getDataFile("registry.data");
 
-		if (dataFile.exists()) {
+		if (dataFile.exists() && !StartupHelperUtil.isDBNew()) {
 			try {
 				Deserializer deserializer = new Deserializer(
 					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));

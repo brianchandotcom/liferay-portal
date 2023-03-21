@@ -41,33 +41,6 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 <aui:input name="devices" type="hidden" value="regular" />
 
-<clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="favicon" /></h3>
-
-	<div>
-		<react:component
-			module="js/layout/look_and_feel/Favicon"
-			props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
-		/>
-	</div>
-</clay:sheet-section>
-
-<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
-	<clay:sheet-section>
-		<react:component
-			module="js/layout/look_and_feel/MasterLayoutConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
-		/>
-	</clay:sheet-section>
-</c:if>
-
-<clay:sheet-section>
-	<react:component
-		module="js/layout/look_and_feel/StyleBookConfiguration"
-		props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
-	/>
-</clay:sheet-section>
-
 <liferay-util:buffer
 	var="rootNodeNameLink"
 >
@@ -96,10 +69,10 @@ else {
 %>
 
 <clay:sheet-section
-	cssClass='<%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>'
+	cssClass='<%= (selLayout.getMasterLayoutPlid() <= 0) ? "mb-5" : "hide mb-5" %>'
 	id='<%= liferayPortletResponse.getNamespace() + "themeContainer" %>'
 >
-	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
+	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="theme" /></h3>
 
 	<clay:radio
 		checked="<%= selLayout.isInheritLookAndFeel() %>"
@@ -130,6 +103,33 @@ else {
 	<div class="lfr-inherit-theme-options <%= !selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
+</clay:sheet-section>
+
+<clay:sheet-section>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="favicon" /></h3>
+
+	<div>
+		<react:component
+			module="js/layout/look_and_feel/Favicon"
+			props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
+		/>
+	</div>
+</clay:sheet-section>
+
+<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
+	<clay:sheet-section>
+		<react:component
+			module="js/layout/look_and_feel/MasterLayoutConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
+		/>
+	</clay:sheet-section>
+</c:if>
+
+<clay:sheet-section>
+	<react:component
+		module="js/layout/look_and_feel/StyleBookConfiguration"
+		props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
+	/>
 </clay:sheet-section>
 
 <div class="mt-5">

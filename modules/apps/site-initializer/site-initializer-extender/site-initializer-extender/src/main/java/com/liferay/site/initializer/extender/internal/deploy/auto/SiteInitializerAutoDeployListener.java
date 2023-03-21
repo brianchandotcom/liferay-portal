@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal.deploy.auto;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
@@ -261,14 +262,15 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					continue;
 				}
 
-				String typeSettings = "";
+				StringBundler sb = new StringBundler();
 
 				for (int i = 0; i < jsonArray.length(); i++) {
-					typeSettings += jsonArray.getString(i) + "\n";
+					sb.append(jsonArray.getString(i));
+					sb.append("\n");
 				}
 
 				return UnicodePropertiesBuilder.fastLoad(
-					typeSettings
+					sb.toString()
 				).build();
 			}
 		}

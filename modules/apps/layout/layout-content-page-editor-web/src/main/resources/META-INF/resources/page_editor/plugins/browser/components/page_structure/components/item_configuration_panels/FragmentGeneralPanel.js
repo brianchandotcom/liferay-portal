@@ -12,12 +12,14 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -75,6 +77,19 @@ export function FragmentGeneralPanel({item}) {
 		},
 		[dispatch, fragmentEntryLink, languageId]
 	);
+
+	if (
+		Liferay.FeatureFlags['LPS-169923'] &&
+		config.restrictedItemIds.has(item.itemId)
+	) {
+		return (
+			<ClayAlert displayType="secondary" role={null}>
+				{Liferay.Language.get(
+					'this-content-cannot-be-displayed-due-to-permission-restrictions'
+				)}
+			</ClayAlert>
+		);
+	}
 
 	return (
 		<>

@@ -20,6 +20,7 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragment
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../app/config/index';
 import selectCanUpdateCSSAdvancedOptions from '../../../../../app/selectors/selectCanUpdateCSSAdvancedOptions';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
@@ -313,6 +314,15 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
+
+		if (
+			Liferay.FeatureFlags['LPS-169923'] &&
+			config.restrictedItemIds.has(activeItem.itemId)
+		) {
+			panelsIds = {
+				[PANEL_IDS.fragmentGeneral]: true,
+			};
+		}
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.row) {
 		panelsIds = {

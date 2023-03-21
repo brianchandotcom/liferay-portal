@@ -119,10 +119,12 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
 		User.openUsersAdmin();
 
 		User.editUserSiteCP(
-			siteName = "Liferay",
+			siteName = ${siteName},
 			userScreenName = "user1");
 
 		ApplicationsMenu.gotoPortlet(

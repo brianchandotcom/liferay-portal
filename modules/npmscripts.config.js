@@ -866,7 +866,6 @@ module.exports = {
 			'base64-js',
 			'browser-tabs-lock',
 			'ckeditor4-react',
-			'clay-charts-react',
 			'clipboard',
 			'codemirror',
 			'core-js',

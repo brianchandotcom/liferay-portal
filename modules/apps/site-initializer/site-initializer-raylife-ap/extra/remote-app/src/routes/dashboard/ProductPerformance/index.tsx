@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 
-import 'clay-charts-react/lib/css/main.css';
+import '@clayui/charts/lib/css/main.css';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';

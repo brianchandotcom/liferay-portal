@@ -1,24 +1,24 @@
 .dropdown .dropdown-content {
+	background-color: #fff;
+	border-radius: 0.25rem;
+	bottom: 20px;
+	box-shadow: 0 1px 5px -1px rgb(0 0 0 / 30%);
 	display: none;
 	left: 50px;
-	bottom: 20px;
-	position: absolute;
-	background-color: #fff;
 	min-width: 240px;
-	border-radius: 0.25rem;
-	box-shadow: 0 1px 5px -1px rgb(0 0 0 / 30%);
+	position: absolute;
 }
 
 .dropdown .dropdown-content span {
-	font-weight: bold;
 	color: #6b6c7e;
+	font-weight: bold;
 }
 
 .dropdown .dropdown-content a {
-	text-decoration: none;
+	color: #6b6c7e;
 	display: block;
 	font-weight: 500;
-	color: #6b6c7e;
+	text-decoration: none;
 }
 
 .dropdown .dropdown-content a:hover {

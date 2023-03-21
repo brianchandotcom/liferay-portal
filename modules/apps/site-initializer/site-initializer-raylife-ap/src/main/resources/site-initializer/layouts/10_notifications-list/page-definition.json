@@ -21,14 +21,21 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "layout", "siteKey": "AP1"},
-							"fragmentConfig": {"layoutName": "Notifications"},
-							"fragmentFields": [],
+							"fragment": {
+								"key": "layout",
+								"siteKey": "AP1"
+							},
+							"fragmentConfig": {
+								"layoutName": "Notifications"
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -36,8 +43,10 @@
 												"key": "avatar-dropdown-menu",
 												"siteKey": "AP1"
 											},
-											"fragmentConfig": {},
-											"fragmentFields": [],
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -45,9 +54,14 @@
 								],
 								"type": "FragmentDropZone"
 							},
-							{"definition": {}, "type": "FragmentDropZone"},
 							{
-								"definition": {},
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -61,7 +75,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Control Panel"
@@ -77,9 +92,14 @@
 								],
 								"type": "FragmentDropZone"
 							},
-							{"definition": {}, "type": "FragmentDropZone"},
 							{
-								"definition": {},
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -108,8 +128,10 @@
 														"key": "notifications",
 														"siteKey": "AP1"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"

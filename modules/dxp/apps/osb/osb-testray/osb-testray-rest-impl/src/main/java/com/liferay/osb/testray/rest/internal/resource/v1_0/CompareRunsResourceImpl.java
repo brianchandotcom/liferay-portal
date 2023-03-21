@@ -14,6 +14,7 @@
 
 package com.liferay.osb.testray.rest.internal.resource.v1_0;
 
+import com.liferay.osb.testray.rest.dto.v1_0.CompareRuns;
 import com.liferay.osb.testray.rest.resource.v1_0.CompareRunsResource;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,4 +28,21 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = CompareRunsResource.class
 )
 public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
+
+	@Override
+	public CompareRuns getCompareRuns(Long idTestrayRunA, Long idTestrayRunB)
+		throws Exception {
+
+		return new CompareRuns() {
+			{
+				failedAfailedB = 5L;
+				failedApassedB = 1L;
+				idRunA = idTestrayRunA;
+				idRunB = idTestrayRunB;
+				passedAfailedB = 10L;
+				passedApassedB = 100L;
+			}
+		};
+	}
+
 }

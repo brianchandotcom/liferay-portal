@@ -328,6 +328,55 @@ definition {
 		}
 	}
 
+	@description = "Verify it is possible to update Custom Object when changing the localization on Instance Settings"
+	@priority = 4
+	test CanUpdateCustomObjectWhenChangeLocalization {
+		task ("Given: An object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 179102",
+				objectName = "CustomObject179102",
+				pluralLabelName = "Custom Objects 179102");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject179102");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject179102");
+		}
+
+		task ("And given: The default language in the virtual instance changed") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+		}
+
+		task ("When: The label on the custom object is edited") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 179102");
+
+			CreateObject.editLabel(labelName = "Objeto Personalizado 179102");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Then: The label is updated successfully") {
+			CreateObject.assertObjectLabel(labelName = "Objeto Personalizado 179102");
+		}
+	}
+
 	@description = "LPS-135406 - Verify it is possible to update the label of relationship field of custom object from a native object"
 	@priority = 4
 	test CanUpdateRelationshipFieldLabelFromNativeObject {

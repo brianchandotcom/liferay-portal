@@ -79,7 +79,9 @@ export default function MasterLayoutConfiguration({
 				value={masterLayout.plid}
 			/>
 
-			<h3 className="sheet-subtitle">{Liferay.Language.get('master')}</h3>
+			<label htmlFor={`${portletNamespace}masterLayout`}>
+				{Liferay.Language.get('master')}
+			</label>
 
 			{editMasterLayoutURL &&
 			masterLayout.plid &&
@@ -87,6 +89,7 @@ export default function MasterLayoutConfiguration({
 				<div className="d-flex">
 					<ClayForm.Group className="flex-grow-1 mb-0">
 						<ClayInput
+							id={`${portletNamespace}masterLayout`}
 							onClick={handleChangeMasterButtonClick}
 							readOnly
 							value={masterLayout.name}
@@ -115,6 +118,7 @@ export default function MasterLayoutConfiguration({
 				<div className="d-flex">
 					<ClayForm.Group className="flex-grow-1 mb-0">
 						<ClayInput
+							id={`${portletNamespace}masterLayout`}
 							onClick={handleChangeMasterButtonClick}
 							readOnly
 							value={masterLayout.name}

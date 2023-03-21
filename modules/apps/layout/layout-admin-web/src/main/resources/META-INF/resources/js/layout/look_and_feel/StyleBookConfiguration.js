@@ -55,13 +55,14 @@ export default function StyleBookConfiguration({
 				value={styleBookEntry.styleBookEntryId}
 			/>
 
-			<h3 className="sheet-subtitle">
+			<label htmlFor={`${portletNamespace}styleBookEntry`}>
 				{Liferay.Language.get('style-book')}
-			</h3>
+			</label>
 
 			<div className="d-flex">
 				<ClayForm.Group className="flex-grow-1 mb-0">
 					<ClayInput
+						id={`${portletNamespace}styleBookEntry`}
 						onClick={handleChangeStyleBookClick}
 						readOnly
 						value={styleBookEntry.name}

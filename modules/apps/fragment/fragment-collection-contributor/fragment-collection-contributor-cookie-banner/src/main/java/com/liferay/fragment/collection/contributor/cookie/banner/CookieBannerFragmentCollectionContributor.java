@@ -16,6 +16,11 @@ package com.liferay.fragment.collection.contributor.cookie.banner;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -35,6 +40,24 @@ public class CookieBannerFragmentCollectionContributor
 	@Override
 	public String getFragmentCollectionKey() {
 		return "COOKIE_BANNER";
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165346")) {
+			return super.getFragmentEntries();
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(int type) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165346")) {
+			return super.getFragmentEntries();
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override

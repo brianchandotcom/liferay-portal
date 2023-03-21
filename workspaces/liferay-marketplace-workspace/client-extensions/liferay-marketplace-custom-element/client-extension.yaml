@@ -1,6 +1,6 @@
 assemble:
-    - from: build
-      into: static
+    from: build/vite
+    into: static
 liferay-marketplace-custom-element:
     cssURLs:
         - .*.css

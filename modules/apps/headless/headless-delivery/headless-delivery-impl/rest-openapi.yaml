@@ -6117,6 +6117,40 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Document"]
+    "/asset-libraries/{assetLibraryId}/documents/rated-by-me":
+        get:
+            description:
+                Retrieves the documents rated by the user.
+            operationId: getAssetLibraryDocumentsRatedByMePage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
+            tags: ["Document"]
     "/asset-libraries/{assetLibraryId}/languages":
         get:
             # @review
@@ -12182,6 +12216,40 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["Document"]
+    "/sites/{siteId}/documents/rated-by-me":
+        get:
+            description:
+                Retrieves the documents rated by the user.
+            operationId: getSiteDocumentsRatedByMePage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
             tags: ["Document"]
     "/sites/{siteId}/knowledge-base-articles":
         get:

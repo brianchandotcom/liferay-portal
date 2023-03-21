@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>FIELD_REMOVE</td>
-	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}]//button[contains(@class,'ddm-form-field-repeatable-delete-button')] | //div[@class='form-builder-layout']//div[@class='ddm-field'][${key_index}]//button[@title='Remove']</td>
+	<td>//div[contains(@class, 'lfr-forms__form-view-field-repeatable-dnd') and contains(.,'${key_fieldName}')][${key_index}][not(contains(@class,'container'))]//button[contains(@class,'ddm-form-field-repeatable-delete-button')] | //div[@class='form-builder-layout']//div[@class='ddm-field']//button[@title='Remove']</td>
 	<td></td>
 </tr>
 <tr>

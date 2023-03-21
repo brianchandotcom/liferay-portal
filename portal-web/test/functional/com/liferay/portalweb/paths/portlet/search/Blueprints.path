@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_DESCRIPTION</td>
+	<td>//div[contains(@class,'element-list')]//div[./p[contains(.,'${key_element}')]]//p[contains(@class, 'list-group-subtext')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME</td>
 	<td>//div[contains(@class,'element-list')]//p[contains(.,'${key_element}') and contains(@class, 'list-group-title')]</td>
 	<td></td>

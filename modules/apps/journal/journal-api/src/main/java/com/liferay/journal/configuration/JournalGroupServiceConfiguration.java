@@ -215,4 +215,21 @@ public interface JournalGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap emailArticleMovedFromTrashBody();
 
+	@Meta.AD(
+		deflt = "true", name = "email-article-expired-enabled", required = false
+	)
+	public boolean emailArticleExpiredEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_expired_subject.tmpl}",
+		name = "email-article-expired-subject", required = false
+	)
+	public LocalizedValuesMap emailArticleExpiredSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_expired_body.tmpl}",
+		name = "email-article-expired-body", required = false
+	)
+	public LocalizedValuesMap emailArticleExpiredBody();
+
 }

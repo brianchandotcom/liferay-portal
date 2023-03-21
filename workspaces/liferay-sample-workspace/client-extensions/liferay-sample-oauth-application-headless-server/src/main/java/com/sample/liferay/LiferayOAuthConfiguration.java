@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.sample;
+package com.sample.liferay;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -64,42 +67,18 @@ public class LiferayOAuthConfiguration {
 	}
 
 	@Bean
-	public ClientRegistrationRepository clientRegistrationRepository(
-		ClientRegistration clientRegistration) {
-
-		return new InMemoryClientRegistrationRepository(clientRegistration);
-	}
-
-	@Bean
-	public ClientRegistrationRepository clientRegistrationRepository(
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.token.uri}"
-		)
-		String tokenUri,
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.id}"
-		)
-		String clientId,
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.secret}"
-		)
-		String clientSecret,
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.scopes}"
-		)
-		String scope) {
-
+	public ClientRegistrationRepository clientRegistrationRepository() {
 		return new InMemoryClientRegistrationRepository(
 			ClientRegistration.withRegistrationId(
 				"dxp"
 			).tokenUri(
-				_serverProtocol + "://" + _mainDomain + tokenUri
+				_serverProtocol + "://" + _mainDomain + _tokenUri
 			).clientId(
-				clientId
+				_getClientId()
 			).clientSecret(
-				clientSecret
+				_clientSecret
 			).scope(
-				scope.split("\\s*\n\\s*")
+				_serverScopes.split("\\s*\n\\s*")
 			).authorizationGrantType(
 				AuthorizationGrantType.CLIENT_CREDENTIALS
 			).clientAuthenticationMethod(
@@ -108,34 +87,24 @@ public class LiferayOAuthConfiguration {
 	}
 
 	@Bean
-	public ReactiveClientRegistrationRepository clientRegistrations(
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.token.uri}"
-		)
-		String tokenUri,
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.id}"
-		)
-		String clientId,
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.secret}"
-		)
-		String clientSecret,
-		@Value(
-			"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.scopes}"
-		)
-		String serverScopes) {
+	public ClientRegistrationRepository clientRegistrationRepository(
+		ClientRegistration clientRegistration) {
 
+		return new InMemoryClientRegistrationRepository(clientRegistration);
+	}
+
+	@Bean
+	public ReactiveClientRegistrationRepository clientRegistrations() {
 		ClientRegistration registration = ClientRegistration.withRegistrationId(
 			"dxp"
 		).tokenUri(
-			_serverProtocol + "://" + _mainDomain + tokenUri
+			_serverProtocol + "://" + _mainDomain + _tokenUri
 		).clientId(
-			clientId
+			_getClientId()
 		).clientSecret(
-			clientSecret
+			_clientSecret
 		).scope(
-			serverScopes.split("\\s*\n\\s*")
+			_serverScopes.split("\\s*\n\\s*")
 		).authorizationGrantType(
 			AuthorizationGrantType.CLIENT_CREDENTIALS
 		).clientAuthenticationMethod(
@@ -175,6 +144,52 @@ public class LiferayOAuthConfiguration {
 		).build();
 	}
 
+	private String _getClientId() {
+		while (true) {
+			try {
+				return WebClient.create(
+					_serverProtocol + "://" + _mainDomain +
+						"/o/oauth2/application"
+				).get(
+				).uri(
+					uriBuilder -> uriBuilder.queryParam(
+						"externalReferenceCode",
+						_liferayOAuthApplicationExternalReferenceCode
+					).build()
+				).retrieve(
+				).bodyToMono(
+					ApplicationInfo.class
+				).block(
+				).client_id;
+			}
+			catch (Throwable throwable) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get client ID: " + throwable.getMessage());
+				}
+
+				try {
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException interruptedException) {
+					if (_log.isErrorEnabled()) {
+						_log.error(
+							"Thread.sleep interupted: " +
+								interruptedException.getMessage());
+					}
+				}
+			}
+		}
+	}
+
+	private static final Log _log = LogFactory.getLog(
+		LiferayOAuthConfiguration.class);
+
+	@Value(
+		"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.secret}"
+	)
+	private String _clientSecret;
+
 	@Value("${com.liferay.lxc.dxp.domains}")
 	private String _dxpDomains;
 
@@ -186,5 +201,21 @@ public class LiferayOAuthConfiguration {
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _serverProtocol;
+
+	@Value(
+		"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.scopes}"
+	)
+	private String _serverScopes;
+
+	@Value(
+		"${${liferay.oauth.application.external.reference.code}.oauth2.token.uri}"
+	)
+	private String _tokenUri;
+
+	private static class ApplicationInfo {
+
+		public String client_id;
+
+	}
 
 }

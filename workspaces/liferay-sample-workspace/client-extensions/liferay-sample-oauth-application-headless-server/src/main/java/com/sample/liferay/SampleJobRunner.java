@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample;
+package com.sample.liferay;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Site;
 import com.liferay.headless.admin.user.client.resource.v1_0.SiteResource;
@@ -61,11 +61,32 @@ public class SampleJobRunner implements CommandLineRunner {
 		System.out.println("Scopes: " + oAuth2AccessToken.getScopes());
 		System.out.println("Token: " + oAuth2AccessToken.getTokenValue());
 
+		String host = _mainDomain;
+
+		if (host.contains(":")) {
+			host = host.substring(0, host.indexOf(":"));
+		}
+
+		int serverPort = 443;
+
+		String[] mainDomainParts = _mainDomain.split(":");
+
+		if (mainDomainParts.length > 1) {
+			try {
+				serverPort = Integer.parseInt(mainDomainParts[1]);
+			}
+			catch (NumberFormatException numberFormatException) {
+				_log.error(
+					"Unable to parse server port from " + _mainDomain,
+					numberFormatException);
+			}
+		}
+
 		SiteResource siteResource = SiteResource.builder(
 		).header(
 			"Authorization", "Bearer " + oAuth2AccessToken.getTokenValue()
 		).endpoint(
-			_mainDomain, 443, "https"
+			host, serverPort, _serverProtocol
 		).build();
 
 		Site site = siteResource.getSiteByFriendlyUrlPath("guest");
@@ -77,7 +98,7 @@ public class SampleJobRunner implements CommandLineRunner {
 			).header(
 				"Authorization", "Bearer " + oAuth2AccessToken.getTokenValue()
 			).endpoint(
-				_mainDomain, 443, "https"
+				host, serverPort, _serverProtocol
 			).build();
 
 		Page<MessageBoardThread> messageBoardThreadPage =
@@ -156,27 +177,10 @@ public class SampleJobRunner implements CommandLineRunner {
 	private AuthorizedClientServiceOAuth2AuthorizedClientManager
 		_authorizedClientServiceOAuth2AuthorizedClientManager;
 
-	@Value(
-		"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.id}"
-	)
-	private String _clientId;
-
-	@Value(
-		"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.client.secret}"
-	)
-	private String _clientSecret;
-
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _mainDomain;
 
-	@Value(
-		"${${liferay.oauth.application.external.reference.code}.oauth2.headless.server.scopes}"
-	)
-	private String _serverScope;
-
-	@Value(
-		"${${liferay.oauth.application.external.reference.code}.oauth2.token.uri}"
-	)
-	private String _tokenUri;
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _serverProtocol;
 
 }

@@ -136,6 +136,10 @@ definition {
 
 		Navigator.openURL();
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "user1 user1");
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",

@@ -183,7 +183,16 @@ public class SkuResourceImpl
 
 	@Override
 	public Sku patchSku(Long id, Sku sku) throws Exception {
-		_updateSKU(_cpInstanceService.getCPInstance(id), sku);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(id);
+
+		String externalReferenceCode = sku.getExternalReferenceCode();
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			cpInstance = _cpInstanceService.updateExternalReferenceCode(
+				cpInstance.getCPInstanceId(), externalReferenceCode);
+		}
+
+		_updateSKU(cpInstance, sku);
 
 		return _toSku(id);
 	}

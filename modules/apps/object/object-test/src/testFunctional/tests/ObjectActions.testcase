@@ -671,6 +671,10 @@ definition {
 				objectLabel = "Account",
 				thenAction = "Notification",
 				whenAction = "On After Update");
+
+			WaitForElementPresent(
+				key_actionLabel = "Notification action when account is updated",
+				locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 		}
 
 		task ("When: An account is added and then edited") {

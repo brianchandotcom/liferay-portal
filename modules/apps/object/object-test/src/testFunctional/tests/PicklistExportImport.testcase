@@ -34,9 +34,45 @@ definition {
 	@description = "LPS-167536 - It's possible to add an object entry with a multi select picklist field of a picklist previously imported"
 	@priority = 4
 	test CanAddEntryWithMultiSelectPicklistImported {
+		task ("Given: A picklist imported and an object created") {
+			Picklist.gotoPicklists();
 
-		// TODO pending implementation
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist1");
 
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175680",
+				objectName = "CustomObject175680",
+				pluralLabelName = "Custom Objects 175680");
+		}
+
+		task ("When: User adds a multiselect picklist field and adds an object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175680");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist1",
+				fieldType = "Multiselect Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175680");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175680");
+
+			ObjectAdmin.addObjectMultiPicklistFieldEntryViaUI(picklistOptionList = "Picklist Item 1, Picklist Item 2");
+
+			PortletEntry.save();
+		}
+
+		task ("Then: The object entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175680");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
 	}
 
 	@description = "LPS-167536 - It's possible to add an object entry with a picklist and a object previously imported"

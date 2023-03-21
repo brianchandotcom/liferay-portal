@@ -142,9 +142,9 @@ definition {
 	}
 
 	macro createBuild {
-		Click(locator1 = "Button#PLUS");
-
 		if (isSet(dropdownItem)) {
+			Click(locator1 = "Button#PLUS");
+
 			Click.javaScriptClick(
 				key_picklistOption = ${dropdownItem},
 				locator1 = "TestrayDropdown#PICKLIST_KEBAB_MENU_OPTION");

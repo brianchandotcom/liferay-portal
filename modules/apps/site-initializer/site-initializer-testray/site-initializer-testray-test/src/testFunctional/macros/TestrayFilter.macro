@@ -4,10 +4,24 @@ definition {
 		Click(locator1 = "TestrayFilter#FILTER_ICON");
 	}
 
+    macro clickColumn {
+		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
+	}
+
     macro multiSelect {
 		Click(
             locator1 = "TestrayFilter#MULTI_SELECT_BY_LABEL",
             key_label = ${label});
 	}
+
+    macro selectColumns {
+        for (var column : list ${listColumn}) {
+            Click(
+                key_column = ${column},
+                locator1 = "TestrayFilter#COLUMNS_OPTIONS");
+        }
+
+        Button.click(button = "Apply");
+    }
 
 }

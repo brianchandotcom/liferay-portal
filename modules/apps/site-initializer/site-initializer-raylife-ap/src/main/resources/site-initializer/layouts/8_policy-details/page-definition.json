@@ -27,14 +27,54 @@
 							"fragmentConfig": {
 								"layoutName": "Details"
 							},
-							"fragmentFields": [
-							],
+							"fragmentFields": [],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {
-								},
+								"definition": {},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "avatar-dropdown-menu",
+														"siteKey": "RayLife Ap"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
@@ -51,8 +91,7 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {
-								},
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
@@ -104,8 +143,7 @@
 											"fragmentConfig": {
 												"parameterName": "externalReferenceCode"
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"indexed": true
 										},
 										"type": "Fragment"

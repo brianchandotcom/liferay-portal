@@ -29,19 +29,57 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "Raylife AP 5"
+								"siteKey": "AP-SITE NOVO"
 							},
-							"fragmentConfig": {
-								"layoutName": "Policies"
-							},
-							"fragmentFields": [
-							],
+							"fragmentConfig": {"layoutName": "Policies"},
+							"fragmentFields": [],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {
-								},
+								"definition": {},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "avatar-dropdown-menu",
+														"siteKey": "AP-SITE NOVO"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
@@ -49,7 +87,7 @@
 												"widgetConfig": {
 													"properties": "route=notification-sidebar"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
 											}
 										},
 										"type": "Widget"
@@ -58,8 +96,7 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {
-								},
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
@@ -70,6 +107,17 @@
 												"headingLevel": "h3"
 											},
 											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Policies"
+															}
+														}
+													}
+												}
 											],
 											"indexed": true
 										},
@@ -78,14 +126,9 @@
 								],
 								"type": "FragmentDropZone"
 							},
+							{"definition": {}, "type": "FragmentDropZone"},
 							{
-								"definition": {
-								},
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
@@ -138,8 +181,7 @@
 														},
 														{
 															"id": "portraitMobile",
-															"rowViewportDefinition": {
-															}
+															"rowViewportDefinition": {}
 														},
 														{
 															"id": "tablet",
@@ -161,8 +203,7 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {
-																	},
+																	"columnViewportDefinition": {},
 																	"id": "portraitMobile"
 																},
 																{
@@ -199,13 +240,11 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {
-																			}
+																			"rowViewportDefinition": {}
 																		},
 																		{
 																			"id": "tablet",
-																			"rowViewportDefinition": {
-																			}
+																			"rowViewportDefinition": {}
 																		}
 																	],
 																	"verticalAlignment": "top"
@@ -221,13 +260,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -238,31 +275,28 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "Raylife AP 5"
+																						"siteKey": "AP-SITE NOVO"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
 																					},
-																					"fragmentFields": [
-																					],
+																					"fragmentFields": [],
 																					"indexed": true
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {
-																						},
+																						"definition": {},
 																						"pageElements": [
 																							{
 																								"definition": {
 																									"fragment": {
 																										"key": "policies-total-active",
-																										"siteKey": "Raylife AP 5"
+																										"siteKey": "AP-SITE NOVO"
 																									},
 																									"fragmentConfig": {
 																										"textColor": ""
 																									},
-																									"fragmentFields": [
-																									],
+																									"fragmentFields": [],
 																									"fragmentViewports": [
 																										{
 																											"fragmentViewportStyle": {
@@ -294,13 +328,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -311,31 +343,28 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "Raylife AP 5"
+																						"siteKey": "AP-SITE NOVO"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
 																					},
-																					"fragmentFields": [
-																					],
+																					"fragmentFields": [],
 																					"indexed": true
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {
-																						},
+																						"definition": {},
 																						"pageElements": [
 																							{
 																								"definition": {
 																									"fragment": {
 																										"key": "policies-expiring",
-																										"siteKey": "Raylife AP 5"
+																										"siteKey": "AP-SITE NOVO"
 																									},
 																									"fragmentConfig": {
 																										"textColor": ""
 																									},
-																									"fragmentFields": [
-																									],
+																									"fragmentFields": [],
 																									"indexed": true
 																								},
 																								"type": "Fragment"
@@ -365,8 +394,7 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {
-																	},
+																	"columnViewportDefinition": {},
 																	"id": "portraitMobile"
 																},
 																{
@@ -383,31 +411,28 @@
 																"definition": {
 																	"fragment": {
 																		"key": "section",
-																		"siteKey": "Raylife AP 5"
+																		"siteKey": "AP-SITE NOVO"
 																	},
 																	"fragmentConfig": {
 																		"sectionId": "primary"
 																	},
-																	"fragmentFields": [
-																	],
+																	"fragmentFields": [],
 																	"indexed": true
 																},
 																"pageElements": [
 																	{
-																		"definition": {
-																		},
+																		"definition": {},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"fragment": {
 																						"key": "policies-total-premium-due",
-																						"siteKey": "Raylife AP 5"
+																						"siteKey": "AP-SITE NOVO"
 																					},
 																					"fragmentConfig": {
 																						"textColor": ""
 																					},
-																					"fragmentFields": [
-																					],
+																					"fragmentFields": [],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -455,19 +480,17 @@
 														"definition": {
 															"fragment": {
 																"key": "section",
-																"siteKey": "Raylife AP 5"
+																"siteKey": "AP-SITE NOVO"
 															},
 															"fragmentConfig": {
 																"sectionId": "primary"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"pageElements": [
 															{
-																"definition": {
-																},
+																"definition": {},
 																"pageElements": [
 																	{
 																		"definition": {
@@ -475,7 +498,7 @@
 																				"widgetConfig": {
 																					"properties": "route=policies-table"
 																				},
-																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																				"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
 																			}
 																		},
 																		"type": "Widget"

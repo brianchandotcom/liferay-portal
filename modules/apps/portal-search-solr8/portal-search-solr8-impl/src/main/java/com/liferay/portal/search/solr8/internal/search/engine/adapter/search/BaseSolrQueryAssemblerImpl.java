@@ -16,20 +16,23 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.solr8.internal.AggregationFilteringFacetProcessorContext;
 import com.liferay.portal.search.solr8.internal.FacetProcessorContext;
-import com.liferay.portal.search.solr8.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.facet.FacetUtil;
 import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
@@ -40,6 +43,7 @@ import com.liferay.portal.search.stats.StatsRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +53,9 @@ import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Bryan Engler
@@ -105,7 +112,7 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	}
 
 	protected Map<String, JSONObject> getFacetParameters(Facet facet) {
-		return _facetProcessor.processFacet(facet);
+		return _processFacet(facet);
 	}
 
 	protected String getFacetString(Map<String, JSONObject> jsonObjects) {
@@ -153,6 +160,20 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		if (baseSearchRequest.isExplain()) {
 			solrQuery.setShowDebugInfo(true);
 		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, target = "(class.name=*)"
+	)
+	protected void setFacetProcessor(
+		FacetProcessor<SolrQuery> facetProcessor,
+		Map<String, Object> properties) {
+
+		String className = MapUtil.getString(properties, "class.name");
+
+		_facetProcessors.put(className, facetProcessor);
 	}
 
 	protected void setFacets(
@@ -250,6 +271,15 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		return _filterTranslator.translate(booleanFilter);
 	}
 
+	protected void unsetFacetProcessor(
+		FacetProcessor<SolrQuery> facetProcessor,
+		Map<String, Object> properties) {
+
+		String className = MapUtil.getString(properties, "class.name");
+
+		_facetProcessors.remove(className);
+	}
+
 	private void _add(
 		Collection<String> filterQueries, BooleanQuery booleanQuery) {
 
@@ -278,11 +308,85 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		}
 	}
 
-	@Reference(service = CompositeFacetProcessor.class)
-	private FacetProcessor<SolrQuery> _facetProcessor;
+	private Map<String, JSONObject> _processFacet(Facet facet) {
+		Class<?> clazz = facet.getClass();
+
+		FacetProcessor<SolrQuery> facetProcessor = _facetProcessors.get(
+			clazz.getName());
+
+		if (facetProcessor == null) {
+			facetProcessor = _defaultFacetProcessor;
+		}
+
+		return facetProcessor.processFacet(facet);
+	}
+
+	private final FacetProcessor<SolrQuery> _defaultFacetProcessor =
+		new FacetProcessor<SolrQuery>() {
+
+			@Override
+			public Map<String, JSONObject> processFacet(Facet facet) {
+				return LinkedHashMapBuilder.<String, JSONObject>put(
+					FacetUtil.getAggregationName(facet),
+					_getFacetParametersJSONObject(facet)
+				).build();
+			}
+
+			private JSONObject _getFacetParametersJSONObject(Facet facet) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+				jsonObject.put(
+					"field", facet.getFieldName()
+				).put(
+					"type", "terms"
+				);
+
+				FacetConfiguration facetConfiguration =
+					facet.getFacetConfiguration();
+
+				JSONObject dataJSONObject = facetConfiguration.getData();
+
+				int minCount = dataJSONObject.getInt("frequencyThreshold");
+
+				if (minCount > 0) {
+					jsonObject.put("mincount", minCount);
+				}
+
+				int limit = dataJSONObject.getInt("maxTerms");
+
+				if (limit > 0) {
+					jsonObject.put("limit", limit);
+				}
+
+				String sortParam = "count";
+				String sortValue = "desc";
+
+				String order = facetConfiguration.getOrder();
+
+				if (order.equals("OrderValueAsc")) {
+					sortParam = "index";
+					sortValue = "asc";
+				}
+
+				JSONObject sortJSONObject = _jsonFactory.createJSONObject();
+
+				sortJSONObject.put(sortParam, sortValue);
+
+				jsonObject.put("sort", sortJSONObject);
+
+				return jsonObject;
+			}
+
+		};
+
+	private final Map<String, FacetProcessor<SolrQuery>> _facetProcessors =
+		new HashMap<>();
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private FilterTranslator<String> _filterTranslator;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private QueryTranslator<String> _queryTranslator;

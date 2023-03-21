@@ -36,6 +36,7 @@ import com.liferay.exportimport.lar.ThemeExporter;
 import com.liferay.exportimport.lar.ThemeImporter;
 import com.liferay.layout.internal.exportimport.staged.model.repository.StagedLayoutSetStagedModelRepository;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -86,8 +87,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -342,13 +341,9 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
-		Stream<Element> layoutElementsStream = layoutElements.stream();
-
-		List<String> sourceLayoutUuids = layoutElementsStream.map(
-			layoutElement -> layoutElement.attributeValue("uuid")
-		).collect(
-			Collectors.toList()
-		);
+		List<String> sourceLayoutUuids = TransformUtil.transform(
+			layoutElements,
+			layoutElement -> layoutElement.attributeValue("uuid"));
 
 		if (_log.isDebugEnabled() && !sourceLayoutUuids.isEmpty()) {
 			_log.debug("Delete missing layouts");
@@ -1061,22 +1056,18 @@ public class StagedLayoutSetStagedModelDataHandler
 			Map<String, ThemeSetting> themeSettings =
 				importedTheme.getConfigurableSettings();
 
-			Set<Map.Entry<String, ThemeSetting>> themeSettingsEntries =
-				themeSettings.entrySet();
+			Map<String, String> defaultsMap = new HashMap<>();
 
-			Stream<Map.Entry<String, ThemeSetting>> themeSettingsEntriesStream =
-				themeSettingsEntries.stream();
+			for (Map.Entry<String, ThemeSetting> entry :
+					themeSettings.entrySet()) {
 
-			Map<String, String> defaultsMap =
-				themeSettingsEntriesStream.collect(
-					Collectors.toMap(
-						entry -> ThemeSettingImpl.namespaceProperty(
-							"regular", entry.getKey()),
-						entry -> {
-							ThemeSetting themeSetting = entry.getValue();
+				ThemeSetting themeSetting = entry.getValue();
 
-							return themeSetting.getValue();
-						}));
+				defaultsMap.put(
+					ThemeSettingImpl.namespaceProperty(
+						"regular", entry.getKey()),
+					themeSetting.getValue());
+			}
 
 			defaultsMap.put(Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
 			defaultsMap.put("javascript", null);

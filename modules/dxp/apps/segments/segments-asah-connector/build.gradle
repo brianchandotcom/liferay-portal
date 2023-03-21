@@ -1,22 +1,7 @@
-import com.liferay.gradle.util.FileUtil
-
-import org.apache.tools.ant.filters.FixCrLfFilter
-
-apply plugin: "antlr"
-
-String parserDirName = "com/liferay/segments/asah/connector/internal/expression/parser"
-List<String> startParameterTaskNames = gradle.startParameter.taskNames
-
 dependencies {
-	annotationProcessor group: "org.antlr", name: "antlr4-annotations", version: "4.3"
-
-	antlr group: "org.antlr", name: "antlr4", version: "4.3"
-
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-base", version: "2.9.7"
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.7"
 	compileInclude group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: "2.9.7"
-	compileInclude group: "org.abego.treelayout", name: "org.abego.treelayout.core", version: "1.0.1"
-	compileInclude group: "org.antlr", name: "antlr4-runtime", version: "4.3"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
@@ -28,8 +13,6 @@ dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	compileOnly group: "org.antlr", name: "antlr4", version: "4.3"
-	compileOnly group: "org.antlr", name: "antlr4-annotations", version: "4.3"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.4.10"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-extension-providers", version: "3.4.10"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
@@ -52,61 +35,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-}
-
-generateGrammarSource {
-	setActions([])
-
-	File grammarFile = file("src/main/antlr/${parserDirName}/IndividualSegmentsExpression.g4")
-
-	dependsOn cleanGenerateGrammarSource
-
-	doFirst {
-		delete fileTree("src/main/java/" + parserDirName) {
-			exclude "**/source_formatter.ignore"
-		}
-
-		delete fileTree("src/main/resources/" + parserDirName) {
-			exclude "**/source_formatter.ignore"
-		}
-
-		javaexec {
-			args "-o", FileUtil.relativize(generateGrammarSource.outputDirectory, grammarFile.parentFile)
-			args grammarFile.name
-			args "-visitor"
-
-			classpath = generateGrammarSource.antlrClasspath
-			main = "org.antlr.v4.Tool"
-			maxHeapSize = generateGrammarSource.maxHeapSize
-			workingDir = grammarFile.parentFile
-		}
-	}
-
-	doLast {
-		copy {
-			filter(FixCrLfFilter, javafiles: true, tab: FixCrLfFilter.AddAsisRemove.newInstance("add"))
-
-			from outputDirectory
-			include "**/*.java"
-			into "src/main/java/" + parserDirName
-		}
-
-		copy {
-			from outputDirectory
-			exclude "**/*.java"
-			into "src/main/resources/" + parserDirName
-		}
-	}
-
-	ext {
-		autoClean = false
-	}
-
-	enabled = startParameterTaskNames.contains("generateGrammarSource")
-	maxHeapSize = "1512m"
-	outputDirectory = new File(temporaryDir, "generated")
-}
-
-liferayOSGi {
-	expandCompileInclude = true
 }

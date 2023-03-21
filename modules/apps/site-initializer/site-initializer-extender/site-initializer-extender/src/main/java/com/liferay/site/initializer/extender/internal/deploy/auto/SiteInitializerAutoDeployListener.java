@@ -120,7 +120,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 			if ((typeSettingsUnicodeProperties != null) &&
 				Validator.isNotNull(
-					typeSettingsUnicodeProperties.getProperty("siteName"))) {
+					typeSettingsUnicodeProperties.getProperty("groupKey"))) {
 
 				return true;
 			}
@@ -181,20 +181,20 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(userId);
 
-		String siteName = typeSettingsUnicodeProperties.getProperty("siteName");
+		String groupKey = typeSettingsUnicodeProperties.getProperty("groupKey");
 
-		Group group = _groupLocalService.fetchGroup(companyId, siteName);
+		Group group = _groupLocalService.fetchGroup(companyId, groupKey);
 
 		if (group == null) {
 			group = _groupLocalService.addGroup(
 				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
 				HashMapBuilder.put(
-					LocaleUtil.getDefault(), siteName
+					LocaleUtil.getDefault(), groupKey
 				).build(),
 				null, GroupConstants.TYPE_SITE_PRIVATE, true,
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 				StringPool.SLASH +
-					FriendlyURLNormalizerUtil.normalize(siteName),
+					FriendlyURLNormalizerUtil.normalize(groupKey),
 				true, true, serviceContext);
 		}
 

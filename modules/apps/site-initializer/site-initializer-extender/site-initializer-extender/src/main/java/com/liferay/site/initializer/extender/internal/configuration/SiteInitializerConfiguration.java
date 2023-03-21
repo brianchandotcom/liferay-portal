@@ -26,6 +26,6 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface SiteInitializerConfiguration {
 
 	@Meta.AD
-	public String siteName();
+	public String groupKey();
 
 }

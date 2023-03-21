@@ -245,19 +245,17 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 				continue;
 			}
 
-			JSONObject clientExtensionJSONObject =
-				_jsonFactory.createJSONObject(
-					StringUtil.read(zipFile.getInputStream(zipEntry)));
+			JSONObject jsonObject1 = _jsonFactory.createJSONObject(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
 
-			if (clientExtensionJSONObject == null) {
+			if (jsonObject1 == null) {
 				return null;
 			}
 
-			for (String key : clientExtensionJSONObject.keySet()) {
-				JSONObject jsonObject = clientExtensionJSONObject.getJSONObject(
-					key);
+			for (String key : jsonObject1.keySet()) {
+				JSONObject jsonObject2 = jsonObject1.getJSONObject(key);
 
-				JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
+				JSONArray typeSettingsJSONArray = jsonObject2.getJSONArray(
 					"typeSettings");
 
 				if (typeSettingsJSONArray == null) {

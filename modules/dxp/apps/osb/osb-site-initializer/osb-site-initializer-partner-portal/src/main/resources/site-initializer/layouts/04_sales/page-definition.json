@@ -3,7 +3,10 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0", "textAlign": ""},
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"textAlign": ""
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -13,7 +16,9 @@
 							"id": "landscapeMobile"
 						},
 						{
-							"fragmentViewportStyle": {"hidden": false},
+							"fragmentViewportStyle": {
+								"hidden": false
+							},
 							"id": "portraitMobile"
 						},
 						{
@@ -52,7 +57,8 @@
 								{
 									"id": "first-banner-primary-button-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Watch a Video Tour",
@@ -75,7 +81,8 @@
 								{
 									"id": "second-banner-primary-button-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Watch a Video Tour",
@@ -98,7 +105,8 @@
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Welcome to Partner Sales",
@@ -121,7 +129,8 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
@@ -144,7 +153,8 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Partner Sales",
@@ -169,7 +179,8 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -183,7 +194,8 @@
 												{
 													"id": "first-banner-primary-button-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Watch a Video Tour",
@@ -212,7 +224,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -220,8 +233,8 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
-												"buttonType": "outline-primary",
-												"buttonSize": "nm"
+												"buttonSize": "nm",
+												"buttonType": "outline-primary"
 											},
 											"fragmentFields": [
 												{
@@ -280,7 +293,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -310,7 +324,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -322,7 +337,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -333,7 +349,8 @@
 												"iconLink": "",
 												"iconName": "video"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -342,7 +359,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -350,8 +368,8 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
-												"buttonType": "primary",
-												"buttonSize": "nm"
+												"buttonSize": "nm",
+												"buttonType": "primary"
 											},
 											"fragmentFields": [
 												{
@@ -425,7 +443,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "DIALECT-dialect-text"},
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
 									"fragmentConfig": {
 										"textType": "h4",
 										"truncateText": false
@@ -434,7 +454,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Resources",
@@ -493,7 +514,8 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
@@ -515,7 +537,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -612,7 +635,8 @@
 																		"iconLink": "",
 																		"iconName": "document-pdf"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"textAlign": "",
 																		"textColor": "colorNeutral7"
@@ -634,7 +658,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PDF",
@@ -681,7 +706,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Referral Program Guide",
@@ -727,7 +753,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -823,7 +850,8 @@
 																		"iconLink": "",
 																		"iconName": "document-pdf"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"textAlign": "",
 																		"textColor": "colorNeutral7"
@@ -845,7 +873,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PDF",
@@ -892,7 +921,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Reseller Program Guide",
@@ -938,7 +968,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1034,7 +1065,8 @@
 																		"iconLink": "",
 																		"iconName": "document-pdf"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"textAlign": "",
 																		"textColor": "colorNeutral7"
@@ -1056,7 +1088,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PDF",
@@ -1103,7 +1136,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Rules of Engagement Guide",
@@ -1154,7 +1188,9 @@
 							},
 							"fragmentViewports": [
 								{
-									"fragmentViewportStyle": {"hidden": false},
+									"fragmentViewportStyle": {
+										"hidden": false
+									},
 									"id": "portraitMobile"
 								},
 								{
@@ -1187,7 +1223,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "DIALECT-dialect-text"},
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
 									"fragmentConfig": {
 										"textType": "h4",
 										"truncateText": false
@@ -1196,7 +1234,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Quick Links",
@@ -1280,7 +1319,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1377,7 +1417,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1399,7 +1440,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1473,7 +1515,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1532,7 +1575,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1592,7 +1636,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "QSP Tools &amp; Revenue Dashboard",
@@ -1659,7 +1704,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP actual and goal.",
@@ -1816,7 +1862,8 @@
 																								"iconLink": "https://www.liferay.com/pt/home",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "linkColor"
@@ -1853,7 +1900,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1944,7 +1992,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1966,7 +2015,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2040,7 +2090,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -2099,7 +2150,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2154,7 +2206,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Deal Registration",
@@ -2216,7 +2269,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
@@ -2377,7 +2431,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "linkColor"
@@ -2414,7 +2469,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -2513,7 +2569,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -2535,7 +2592,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2609,7 +2667,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -2668,7 +2727,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2728,7 +2788,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Partner Level Qualification Form",
@@ -2795,7 +2856,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
@@ -2952,7 +3014,8 @@
 																								"iconLink": "https://www.liferay.com/pt/home",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "colorBrandPrimary"
@@ -2989,7 +3052,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -3089,7 +3153,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -3111,7 +3176,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -3185,7 +3251,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -3244,7 +3311,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -3304,7 +3372,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Renewals",
@@ -3366,7 +3435,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
@@ -3533,7 +3603,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "colorBrandPrimary"
@@ -3570,7 +3641,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -3659,7 +3731,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -3681,7 +3754,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -3755,11 +3829,13 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
-																					"fragmentStyle": {},
+																					"fragmentStyle": {
+																					},
 																					"fragmentViewports": [
 																						{
 																							"fragmentViewportStyle": {
@@ -3809,7 +3885,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -3869,7 +3946,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Rebate Form",
@@ -3933,7 +4011,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Fill out your rebate payment form to get proper reimbursement.",
@@ -4084,7 +4163,8 @@
 																								"iconLink": "https://www.liferay.com/pt/home",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "linkColor"
@@ -4121,7 +4201,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -4164,7 +4245,8 @@
 															"id": "portraitMobile"
 														},
 														{
-															"fragmentViewportStyle": {},
+															"fragmentViewportStyle": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -4209,7 +4291,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -4231,7 +4314,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -4305,7 +4389,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -4364,7 +4449,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -4424,7 +4510,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Sales Operations",
@@ -4483,7 +4570,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
@@ -4638,7 +4726,8 @@
 																								"iconLink": "https://www.liferay.com/pt/home",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "colorBrandPrimary"

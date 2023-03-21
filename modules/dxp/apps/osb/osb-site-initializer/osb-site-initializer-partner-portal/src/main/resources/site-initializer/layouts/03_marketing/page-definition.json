@@ -3,7 +3,10 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0", "textAlign": ""},
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"textAlign": ""
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -13,7 +16,9 @@
 							"id": "landscapeMobile"
 						},
 						{
-							"fragmentViewportStyle": {"hidden": false},
+							"fragmentViewportStyle": {
+								"hidden": false
+							},
 							"id": "portraitMobile"
 						},
 						{
@@ -52,7 +57,8 @@
 								{
 									"id": "first-banner-primary-button-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Watch a Video Tour",
@@ -75,7 +81,8 @@
 								{
 									"id": "second-banner-primary-button-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Watch a Video Tour",
@@ -98,7 +105,8 @@
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Welcome to Partner Marketing",
@@ -121,7 +129,8 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "We have designed our Partner Marketing programs to help you put your ideas into action, and drive more demand for your unique services and Liferay DXP.<br />\n<br />\nPartner Marketing is about communicating with you effectively and efficiently, so you have the information you need to drive your Liferay business and about enabling you to go to market with co-branded demand generation activities to fill your pipeline.",
@@ -144,7 +153,8 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Partner Marketing",
@@ -169,7 +179,8 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -183,7 +194,8 @@
 												{
 													"id": "first-banner-primary-button-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Watch a Video Tour",
@@ -215,7 +227,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -223,8 +236,8 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
-												"buttonType": "outline-primary",
-												"buttonSize": "nm"
+												"buttonSize": "nm",
+												"buttonType": "outline-primary"
 											},
 											"fragmentFields": [
 												{
@@ -282,7 +295,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -312,7 +326,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -323,9 +338,14 @@
 								],
 								"type": "FragmentDropZone"
 							},
-							{"definition": {}, "type": "FragmentDropZone"},
 							{
-								"definition": {},
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -335,7 +355,8 @@
 											"fragmentConfig": {
 												"iconName": "video"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -344,7 +365,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -352,8 +374,8 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
-												"buttonType": "primary",
-												"buttonSize": "nm"
+												"buttonSize": "nm",
+												"buttonType": "primary"
 											},
 											"fragmentFields": [
 												{
@@ -419,7 +441,9 @@
 							},
 							"fragmentViewports": [
 								{
-									"fragmentViewportStyle": {"hidden": false},
+									"fragmentViewportStyle": {
+										"hidden": false
+									},
 									"id": "portraitMobile"
 								},
 								{
@@ -452,7 +476,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "DIALECT-dialect-text"},
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
 									"fragmentConfig": {
 										"textType": "h4",
 										"truncateText": false
@@ -461,7 +487,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Quick Links",
@@ -545,7 +572,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -639,7 +667,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -661,7 +690,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -730,7 +760,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -789,7 +820,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -849,7 +881,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Marketing Development Funds (MDF)",
@@ -916,7 +949,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Apply online for MDF toward your marketing activities to grow your business and attract new customers.",
@@ -1100,7 +1134,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "colorBrandPrimary"
@@ -1137,7 +1172,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1236,7 +1272,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1258,7 +1295,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1327,7 +1365,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1386,7 +1425,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1446,7 +1486,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Marketing Resources",
@@ -1513,7 +1554,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Explore all of the marketing tools and assets you need as available digital resources.",
@@ -1670,7 +1712,8 @@
 																								"iconLink": "https://www.liferay.com/",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "linkColor"
@@ -1707,7 +1750,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1806,7 +1850,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1828,7 +1873,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1902,7 +1948,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1961,7 +2008,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2021,7 +2069,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Partner Program Resources",
@@ -2088,7 +2137,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Maximize your Liferay partnership with resources for co-branding, MDF activities, marketing training, and publications",
@@ -2245,7 +2295,8 @@
 																								"iconLink": "https://www.liferay.com/",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "colorBrandPrimary"
@@ -2282,7 +2333,8 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -2381,7 +2433,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -2403,7 +2456,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2477,7 +2531,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -2536,7 +2591,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2596,7 +2652,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Events",
@@ -2663,7 +2720,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Be in the loop on dedicated events for partner enablement and all Liferay events that partners can participate in.",
@@ -2807,7 +2865,8 @@
 																								"iconLink": "https://www.liferay.com/",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"textAlign": "",
 																								"textColor": "colorActionPrimaryDefault"

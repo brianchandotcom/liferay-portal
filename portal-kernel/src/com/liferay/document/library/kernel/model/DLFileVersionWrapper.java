@@ -629,6 +629,11 @@ public class DLFileVersionWrapper
 		return model.getStatusDate();
 	}
 
+	@Override
+	public String getStoreFileName() {
+		return model.getStoreFileName();
+	}
+
 	/**
 	 * Returns the store uuid of this document library file version.
 	 *

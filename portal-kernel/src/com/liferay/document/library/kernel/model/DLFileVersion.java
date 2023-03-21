@@ -87,6 +87,8 @@ public interface DLFileVersion
 
 	public String getIcon();
 
+	public String getStoreFileName();
+
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			extraSettingsUnicodeProperties);

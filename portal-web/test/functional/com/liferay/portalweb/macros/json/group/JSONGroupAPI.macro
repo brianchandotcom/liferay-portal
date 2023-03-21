@@ -252,12 +252,16 @@ definition {
 			var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
 		}
 		else {
-			var companyId = JSONCompany.getCompanyId(portalURL = ${portalURL});
+			var companyId = JSONCompany.getCompanyId(
+				portalInstanceName = ${portalInstanceName},
+				portalURL = ${portalURL});
 		}
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(
 			grandParentGroupName = ${grandParentGroupName},
-			parentGroupName = ${parentGroupName});
+			parentGroupName = ${parentGroupName},
+			portalInstanceName = ${portalInstanceName},
+			portalURL = ${portalURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
@@ -399,9 +403,17 @@ definition {
 	macro _getParentGroupIdByName {
 		Variables.assertDefined(parameterList = ${groupName});
 
-		var companyId = JSONCompany.getCompanyId();
-		var grandParentGroupId = JSONGroupSetter.setGrandParentGroupId(grandParentGroupName = ${grandParentGroupName});
-		var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var companyId = JSONCompany.getCompanyId(
+			portalInstanceName = ${portalInstanceName},
+			portalURL = ${portalURL});
+		var grandParentGroupId = JSONGroupSetter.setGrandParentGroupId(
+			grandParentGroupName = ${grandParentGroupName},
+			portalInstanceName = ${portalInstanceName},
+			portalURL = ${portalURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${grandParentGroupId}/site/true \

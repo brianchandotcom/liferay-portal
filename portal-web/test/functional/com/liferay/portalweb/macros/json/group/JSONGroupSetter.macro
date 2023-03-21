@@ -50,6 +50,7 @@ definition {
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
 			parentGroupName = ${parentGroupName},
+			portalInstanceName = ${portalInstanceName},
 			portalURL = ${portalURL},
 			site = ${site});
 
@@ -83,7 +84,9 @@ definition {
 		if (isSet(parentGroupName)) {
 			var parentGroupId = JSONGroupAPI._getParentGroupIdByName(
 				grandParentGroupName = ${grandParentGroupName},
-				groupName = ${parentGroupName});
+				groupName = ${parentGroupName},
+				portalInstanceName = ${portalInstanceName},
+				portalURL = ${portalURL});
 		}
 		else {
 			var parentGroupId = 0;

@@ -617,7 +617,8 @@ public class WikiListPagesDisplayContext {
 	}
 
 	private boolean _canViewPendingStatus(
-		ThemeDisplay themeDisplay, WikiPage page) {
+			ThemeDisplay themeDisplay, WikiPage page)
+		throws PortalException {
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -628,20 +629,10 @@ public class WikiListPagesDisplayContext {
 			return true;
 		}
 
-		WikiPage lastPage = null;
+		WikiPage lastPage = WikiPageLocalServiceUtil.getPage(
+			page.getResourcePrimKey(), false);
 
-		try {
-			lastPage = WikiPageLocalServiceUtil.getPage(
-				page.getResourcePrimKey(), false);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		if ((lastPage == null) ||
-			(page.getVersion() >= lastPage.getVersion()) ||
+		if ((page.getVersion() >= lastPage.getVersion()) ||
 			(themeDisplay.getUserId() == lastPage.getStatusByUserId())) {
 
 			return true;

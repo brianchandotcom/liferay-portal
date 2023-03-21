@@ -36,4 +36,10 @@ public class CommerceMediaConstants {
 	public static final String URL_SEPARATOR_VIRTUAL_ORDER_ITEM =
 		"/virtual-order-item/";
 
+	public static final String URL_SEPARATOR_VIRTUAL_PRODUCT =
+		"/virtual-product/";
+
+	public static final String URL_SEPARATOR_VIRTUAL_PRODUCT_SAMPLE =
+		"/virtual-product-sample/";
+
 }

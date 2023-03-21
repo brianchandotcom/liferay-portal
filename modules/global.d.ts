@@ -1,4 +1,5 @@
 /* eslint-disable */
+/// <reference path="apps/commerce/commerce-frontend-js/src/main/resources/META-INF/resources/liferay.d.ts" />
 /// <reference path="apps/frontend-js/frontend-js-collapse-support-web/src/main/resources/META-INF/resources/liferay.d.ts" />
 /// <reference path="apps/frontend-js/frontend-js-dropdown-support-web/src/main/resources/META-INF/resources/liferay.d.ts" />
 /// <reference path="apps/frontend-js/frontend-js-tabs-support-web/src/main/resources/META-INF/resources/liferay.d.ts" />

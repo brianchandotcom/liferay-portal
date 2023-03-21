@@ -1919,17 +1919,31 @@ public class BundleSiteInitializer implements SiteInitializer {
 				expandoBridge.setAttributeDefault(
 					jsonObject.getString("name"),
 					_getValue(jsonObject.get("defaultValue")));
-
-				_setExpandoBridgeAttributeProperties(expandoBridge, jsonObject);
-
-				continue;
+			}
+			else {
+				expandoBridge.addAttribute(
+					jsonObject.getString("name"), jsonObject.getInt("dataType"),
+					_getValue(jsonObject.get("defaultValue")));
 			}
 
-			expandoBridge.addAttribute(
-				jsonObject.getString("name"), jsonObject.getInt("dataType"),
-				_getValue(jsonObject.get("defaultValue")));
+			if (jsonObject.has("properties")) {
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					true);
 
-			_setExpandoBridgeAttributeProperties(expandoBridge, jsonObject);
+				JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+					"properties");
+
+				Map<String, Object> map = propertiesJSONObject.toMap();
+
+				for (Map.Entry<String, Object> entry : map.entrySet()) {
+					unicodeProperties.setProperty(
+						TextFormatter.format(entry.getKey(), TextFormatter.K),
+						String.valueOf(entry.getValue()));
+				}
+
+				expandoBridge.setAttributeProperties(
+					jsonObject.getString("name"), unicodeProperties);
+			}
 		}
 	}
 
@@ -4482,28 +4496,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					setDefaultLayoutUtilityPageEntry(
 						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 			}
-		}
-	}
-
-	private void _setExpandoBridgeAttributeProperties(
-		ExpandoBridge expandoBridge, JSONObject jsonObject) {
-
-		if (jsonObject.has("properties")) {
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
-				"properties");
-
-			Map<String, Object> map = propertiesJSONObject.toMap();
-
-			for (Map.Entry<String, Object> entry : map.entrySet()) {
-				unicodeProperties.setProperty(
-					TextFormatter.format(entry.getKey(), TextFormatter.K),
-					String.valueOf(entry.getValue()));
-			}
-
-			expandoBridge.setAttributeProperties(
-				jsonObject.getString("name"), unicodeProperties);
 		}
 	}
 

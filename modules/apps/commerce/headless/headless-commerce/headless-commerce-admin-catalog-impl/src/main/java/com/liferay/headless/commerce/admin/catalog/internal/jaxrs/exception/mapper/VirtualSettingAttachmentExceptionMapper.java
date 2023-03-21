@@ -14,39 +14,36 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
-import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
- * @author Zoltán Takács
+ * @author Stefano Motta
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionProductTypeNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.VirtualSettingAttachmentExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-@Provider
-public class DefinitionProductTypeNameExceptionMapper
-	extends BaseExceptionMapper<CPDefinitionProductTypeNameException> {
+public class VirtualSettingAttachmentExceptionMapper
+	extends BaseExceptionMapper<CPDefinitionVirtualSettingException> {
 
 	@Override
-	public String getErrorDescription() {
-		return "Invalid product type name";
-	}
+	protected Problem getProblem(
+		CPDefinitionVirtualSettingException
+			cpDefinitionVirtualSettingException) {
 
-	@Override
-	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+		return new Problem(
+			Response.Status.BAD_REQUEST, "Invalid product virtual settings.");
 	}
 
 }

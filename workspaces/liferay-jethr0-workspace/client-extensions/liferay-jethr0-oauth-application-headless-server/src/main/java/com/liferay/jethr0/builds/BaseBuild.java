@@ -80,6 +80,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public List<Build> getChildBuilds() {
+		return _childBuilds;
+	}
+
+	@Override
 	public long getId() {
 		return _id;
 	}
@@ -142,6 +147,10 @@ public abstract class BaseBuild implements Build {
 		return Integer.valueOf(value);
 	}
 
+	public List<Build> getParentBuilds() {
+		return _parentBuilds;
+	}
+
 	@Override
 	public Project getProject() {
 		return _project;
@@ -155,6 +164,28 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public List<Task> getTasks() {
 		return _tasks;
+	}
+
+	@Override
+	public boolean isChildBuild(Build parentBuild) {
+		for (Build build : _getAllParentBuilds()) {
+			if (build == parentBuild) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isParentBuild(Build childBuild) {
+		for (Build build : _getAllChildBuilds()) {
+			if (build == childBuild) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -219,6 +250,26 @@ public abstract class BaseBuild implements Build {
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
+	private List<Build> _getAllChildBuilds() {
+		List<Build> childBuilds = new ArrayList<>(_childBuilds);
+
+		for (Build childBuild : _childBuilds) {
+			childBuilds.addAll(childBuild.getChildBuilds());
+		}
+
+		return childBuilds;
+	}
+
+	private List<Build> _getAllParentBuilds() {
+		List<Build> parentBuilds = new ArrayList<>(_parentBuilds);
+
+		for (Build parentBuild : _parentBuilds) {
+			parentBuilds.addAll(parentBuild.getParentBuilds());
+		}
+
+		return parentBuilds;
+	}
+
 	private static final int _DEFAULT_MAX_SLAVE_COUNT = 2;
 
 	private static final int _DEFAULT_MIN_SLAVE_RAM = 12;
@@ -226,8 +277,10 @@ public abstract class BaseBuild implements Build {
 	private final String _buildName;
 	private final Map<String, BuildParameter> _buildParameters =
 		new HashMap<>();
+	private final List<Build> _childBuilds = new ArrayList<>();
 	private final long _id;
 	private String _jobName;
+	private final List<Build> _parentBuilds = new ArrayList<>();
 	private final Project _project;
 	private State _state;
 	private final List<Task> _tasks = new ArrayList<>();

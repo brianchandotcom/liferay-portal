@@ -43,6 +43,8 @@ public interface Build {
 
 	public List<BuildParameter> getBuildParameters();
 
+	public List<Build> getChildBuilds();
+
 	public long getId();
 
 	public String getJobName();
@@ -53,11 +55,17 @@ public interface Build {
 
 	public int getMinSlaveRAM();
 
+	public List<Build> getParentBuilds();
+
 	public Project getProject();
 
 	public State getState();
 
 	public List<Task> getTasks();
+
+	public boolean isChildBuild(Build parentBuild);
+
+	public boolean isParentBuild(Build build);
 
 	public void removeBuildParameter(BuildParameter buildParameter);
 

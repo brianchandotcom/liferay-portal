@@ -8,4 +8,27 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcRenderCommandName=%2Fknowledge_base%2Fview_kb_templates");
 	}
 
+	macro viewEntryInTableView {
+		var tableEntry = ${kbEntryTitle};
+		var list1 = ListUtil.newListFromString(${tableColumnNames});
+		var list2 = ListUtil.newListFromString(${tableColumnContents});
+		var size = ListUtil.size(${list1});
+		var i = 0;
+
+		while (${i} != ${size}) {
+			var tableColumnName = ListUtil.get(${list1}, ${i});
+			var tableColumnContent = ListUtil.get(${list2}, ${i});
+
+			AssertTextEquals.assertPartialText(
+				key_columnName = ${tableColumnName},
+				key_tableEntry = ${tableEntry},
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = ${tableColumnContent});
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf(${i});
+		}
+	}
+
 }

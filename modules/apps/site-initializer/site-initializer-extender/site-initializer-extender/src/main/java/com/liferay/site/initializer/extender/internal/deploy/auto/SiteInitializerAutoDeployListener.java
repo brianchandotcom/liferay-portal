@@ -255,17 +255,16 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			for (String key : jsonObject1.keySet()) {
 				JSONObject jsonObject2 = jsonObject1.getJSONObject(key);
 
-				JSONArray typeSettingsJSONArray = jsonObject2.getJSONArray(
-					"typeSettings");
+				JSONArray jsonArray = jsonObject2.getJSONArray("typeSettings");
 
-				if (typeSettingsJSONArray == null) {
+				if (jsonArray == null) {
 					continue;
 				}
 
 				String typeSettings = "";
 
-				for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
-					typeSettings += typeSettingsJSONArray.getString(i) + "\n";
+				for (int i = 0; i < jsonArray.length(); i++) {
+					typeSettings += jsonArray.getString(i) + "\n";
 				}
 
 				return UnicodePropertiesBuilder.fastLoad(

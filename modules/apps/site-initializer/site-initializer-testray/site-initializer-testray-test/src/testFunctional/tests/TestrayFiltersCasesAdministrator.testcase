@@ -136,4 +136,35 @@ definition {
 		    Testray.assertItemNotPresent(key_name = "Case 2");
         }
 	}
+
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by description"
+	@priority = 4
+	test AdminCanFilterCaseByDescription {
+		task ("Given the user selects the description column") {
+            TestrayFilter.clickColumn();
+
+            TestrayFilter.selectColumns(listColumn = "Description");
+        }
+
+        task ("When the user filter a case by description") {
+            TestrayFilter.clickFilter();
+
+			Type(
+                locator1 = "TestrayCases#FIELD_DESCRIPTION",
+                value1 = "Description 1");
+
+            Button.click(button = "Apply");
+		}
+
+        task ("Then can see the filters apply in the list by description") {
+            TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 5);
+
+            Testray.assertItemName(key_name = "Description 1");
+
+		    Testray.assertItemNotPresent(key_name = "Description 2");
+        }
+	}
 }

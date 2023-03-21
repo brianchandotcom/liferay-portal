@@ -209,4 +209,37 @@ definition {
 		    Testray.assertItemNotPresent(key_name = "Case 3");
         }
 	}
+
+    @description = "Story ID: LPS-176898 | Test Summary: Verify that can clean the filter results"
+	@priority = 3
+	test CanClearFilterResults {
+		task ("When the user filters a case by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+                key_fieldLabel = "Case Name",
+                locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                value1 = "Test");
+
+            Button.click(button = "Apply");
+		}
+
+        task ("And can not see the cases in the list") {
+		    Testray.assertItemNotPresent(key_name = "Case 1");
+
+            Testray.assertItemNotPresent(key_name = "Case 2");
+        }
+
+        task ("When the user clear the filters") {
+            TestrayFilter.clickFilter();
+
+            Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+		}
+
+        task ("Then can see the cases in the list again") {
+		    Testray.assertItemName(key_name = "Case 1");
+
+            Testray.assertItemName(key_name = "Case 2");
+        }
+	}
 }

@@ -25,9 +25,11 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -352,7 +354,9 @@ public class CommerceMediaServlet extends HttpServlet {
 				return;
 			}
 			catch (PortalException portalException) {
-				_log.error(portalException);
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
 
 				if (portalException instanceof PrincipalException) {
 					_sendError(
@@ -367,7 +371,27 @@ public class CommerceMediaServlet extends HttpServlet {
 				_sendError(
 					httpServletResponse,
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					"An unexpected rror occurred");
+					"An unexpected error occurred");
+
+				return;
+			}
+		}
+
+		if (pathArray.length >= 6) {
+			if (CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT.contains(
+					pathArray[2])) {
+
+				_sendVirtualProductMediaBytes(
+					httpServletRequest, httpServletResponse, false, pathArray);
+
+				return;
+			}
+			else if (CommerceMediaConstants.
+						URL_SEPARATOR_VIRTUAL_PRODUCT_SAMPLE.contains(
+							pathArray[2])) {
+
+				_sendVirtualProductMediaBytes(
+					httpServletRequest, httpServletResponse, true, pathArray);
 
 				return;
 			}
@@ -433,6 +457,112 @@ public class CommerceMediaServlet extends HttpServlet {
 		}
 	}
 
+	private void _sendVirtualProductMediaBytes(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean sample,
+			String[] pathArray)
+		throws IOException {
+
+		long commerceAccountId = GetterUtil.getLongStrict(pathArray[1]);
+		long cpDefinitionId = GetterUtil.getLongStrict(pathArray[3]);
+		long fileEntryId = GetterUtil.getLongStrict(pathArray[5]);
+
+		try {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
+
+			if (cpDefinition == null) {
+				_sendError(
+					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+					"The product " + cpDefinitionId + " does not exist");
+
+				return;
+			}
+
+			if (commerceAccountId ==
+					CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
+
+				_commerceCatalogModelResourcePermission.check(
+					PermissionThreadLocal.getPermissionChecker(),
+					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
+			}
+			else {
+				if (sample) {
+					_commerceProductViewPermission.check(
+						PermissionThreadLocal.getPermissionChecker(),
+						commerceAccountId, cpDefinition.getCPDefinitionId());
+				}
+				else {
+					_sendError(
+						httpServletResponse,
+						HttpServletResponse.SC_UNAUTHORIZED,
+						"You do not have permission to access the requested " +
+							"resource");
+
+					return;
+				}
+			}
+
+			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+				_cpDefinitionVirtualSettingLocalService.
+					fetchCPDefinitionVirtualSetting(
+						CPDefinition.class.getName(), cpDefinitionId);
+
+			if (cpDefinitionVirtualSetting == null) {
+				_sendError(
+					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+					"The product " + cpDefinitionId + " is not virtual");
+
+				return;
+			}
+
+			FileEntry fileEntry = null;
+
+			if (sample) {
+				fileEntry = cpDefinitionVirtualSetting.getSampleFileEntry();
+			}
+			else {
+				fileEntry = cpDefinitionVirtualSetting.getFileEntry();
+			}
+
+			if ((fileEntry == null) ||
+				(fileEntry.getFileEntryId() != fileEntryId)) {
+
+				_sendError(
+					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+					"The file entry " + fileEntryId + " does not exist");
+
+				return;
+			}
+
+			ServletResponseUtil.sendFile(
+				httpServletRequest, httpServletResponse,
+				fileEntry.getFileName(),
+				_file.getBytes(fileEntry.getContentStream()),
+				fileEntry.getMimeType(),
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			if (portalException instanceof PrincipalException) {
+				_sendError(
+					httpServletResponse, HttpServletResponse.SC_UNAUTHORIZED,
+					"You do not have permission to access the requested " +
+						"resource");
+
+				return;
+			}
+
+			_sendError(
+				httpServletResponse,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				"An unexpected error occurred");
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMediaServlet.class);
 
@@ -467,6 +597,10 @@ public class CommerceMediaServlet extends HttpServlet {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionVirtualSettingLocalService
+		_cpDefinitionVirtualSettingLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

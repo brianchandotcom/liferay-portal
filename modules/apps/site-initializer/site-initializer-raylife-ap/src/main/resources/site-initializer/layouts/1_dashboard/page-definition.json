@@ -3,10 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"borderWidth": "0",
-						"textAlign": ""
-					},
+					"fragmentStyle": {"borderWidth": "0", "textAlign": ""},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -25,24 +22,20 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "layout",
-								"siteKey": "Raylife AP"
-							},
-							"fragmentConfig": {
-								"layoutName": "Dashboard"
-							},
-							"fragmentFields": [
-							],
+							"fragment": {"key": "layout", "siteKey": "AP1"},
+							"fragmentConfig": {"layoutName": "Dashboard"},
+							"fragmentFields": [],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {
-								},
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0"
+											},
 											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
@@ -61,14 +54,15 @@
 										"pageElements": [
 											{
 												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"properties": "route=notification-sidebar"
-														},
-														"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
-													}
+													"fragment": {
+														"key": "avatar-dropdown-menu",
+														"siteKey": "AP1"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [],
+													"indexed": true
 												},
-												"type": "Widget"
+												"type": "Fragment"
 											}
 										],
 										"type": "Section"
@@ -77,19 +71,33 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {
-								},
+								"definition": {},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route=notification-sidebar"
+												},
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
 											"fragment": {
 												"key": "dashboard-title",
-												"siteKey": "Raylife AP"
+												"siteKey": "AP1"
 											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-											],
+											"fragmentConfig": {},
+											"fragmentFields": [],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -97,14 +105,9 @@
 								],
 								"type": "FragmentDropZone"
 							},
+							{"definition": {}, "type": "FragmentDropZone"},
 							{
-								"definition": {
-								},
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
+								"definition": {},
 								"pageElements": [
 									{
 										"definition": {
@@ -179,13 +182,11 @@
 															"rowViewports": [
 																{
 																	"id": "landscapeMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "tablet",
@@ -201,13 +202,11 @@
 																"definition": {
 																	"columnViewports": [
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -240,18 +239,15 @@
 																			"rowViewports": [
 																				{
 																					"id": "landscapeMobile",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				}
 																			],
 																			"verticalAlignment": "top"
@@ -261,18 +257,15 @@
 																				"definition": {
 																					"columnViewports": [
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -305,31 +298,28 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "section",
-																										"siteKey": "Raylife AP"
+																										"siteKey": "AP1"
 																									},
 																									"fragmentConfig": {
 																										"sectionId": "primary"
 																									},
-																									"fragmentFields": [
-																									],
+																									"fragmentFields": [],
 																									"indexed": true
 																								},
 																								"pageElements": [
 																									{
-																										"definition": {
-																										},
+																										"definition": {},
 																										"pageElements": [
 																											{
 																												"definition": {
 																													"fragment": {
 																														"key": "dashboard-tasks",
-																														"siteKey": "Raylife AP"
+																														"siteKey": "AP1"
 																													},
 																													"fragmentConfig": {
 																														"textColor": ""
 																													},
-																													"fragmentFields": [
-																													],
+																													"fragmentFields": [],
 																													"indexed": true
 																												},
 																												"type": "Fragment"
@@ -350,18 +340,15 @@
 																				"definition": {
 																					"columnViewports": [
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -374,7 +361,7 @@
 																								"widgetConfig": {
 																									"properties": "route=whats-new-modal"
 																								},
-																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
 																							}
 																						},
 																						"type": "Widget"
@@ -383,13 +370,12 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "section",
-																								"siteKey": "Raylife AP"
+																								"siteKey": "AP1"
 																							},
 																							"fragmentConfig": {
 																								"sectionId": "primary"
 																							},
-																							"fragmentFields": [
-																							],
+																							"fragmentFields": [],
 																							"fragmentStyle": {
 																								"marginTop": "4",
 																								"textAlign": ""
@@ -398,20 +384,18 @@
 																						},
 																						"pageElements": [
 																							{
-																								"definition": {
-																								},
+																								"definition": {},
 																								"pageElements": [
 																									{
 																										"definition": {
 																											"fragment": {
 																												"key": "dashboard-whats-new",
-																												"siteKey": "Raylife AP"
+																												"siteKey": "AP1"
 																											},
 																											"fragmentConfig": {
 																												"textColor": ""
 																											},
-																											"fragmentFields": [
-																											],
+																											"fragmentFields": [],
 																											"indexed": true
 																										},
 																										"type": "Fragment"
@@ -435,13 +419,11 @@
 																"definition": {
 																	"columnViewports": [
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -474,13 +456,11 @@
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				}
 																			],
 																			"verticalAlignment": "top"
@@ -496,13 +476,11 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -513,31 +491,28 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "section",
-																								"siteKey": "Raylife AP"
+																								"siteKey": "AP1"
 																							},
 																							"fragmentConfig": {
 																								"sectionId": "primary"
 																							},
-																							"fragmentFields": [
-																							],
+																							"fragmentFields": [],
 																							"indexed": true
 																						},
 																						"pageElements": [
 																							{
-																								"definition": {
-																								},
+																								"definition": {},
 																								"pageElements": [
 																									{
 																										"definition": {
 																											"fragment": {
 																												"key": "dashboard-sales",
-																												"siteKey": "Raylife AP"
+																												"siteKey": "AP1"
 																											},
 																											"fragmentConfig": {
 																												"textColor": ""
 																											},
-																											"fragmentFields": [
-																											],
+																											"fragmentFields": [],
 																											"indexed": true
 																										},
 																										"type": "Fragment"
@@ -561,13 +536,11 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -578,31 +551,28 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "section",
-																								"siteKey": "Raylife AP"
+																								"siteKey": "AP1"
 																							},
 																							"fragmentConfig": {
 																								"sectionId": "primary"
 																							},
-																							"fragmentFields": [
-																							],
+																							"fragmentFields": [],
 																							"indexed": true
 																						},
 																						"pageElements": [
 																							{
-																								"definition": {
-																								},
+																								"definition": {},
 																								"pageElements": [
 																									{
 																										"definition": {
 																											"fragment": {
 																												"key": "dashboard-commission",
-																												"siteKey": "Raylife AP"
+																												"siteKey": "AP1"
 																											},
 																											"fragmentConfig": {
 																												"textColor": ""
 																											},
-																											"fragmentFields": [
-																											],
+																											"fragmentFields": [],
 																											"indexed": true
 																										},
 																										"type": "Fragment"
@@ -647,19 +617,17 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "Raylife AP"
+																						"siteKey": "AP1"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
 																					},
-																					"fragmentFields": [
-																					],
+																					"fragmentFields": [],
 																					"indexed": true
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {
-																						},
+																						"definition": {},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -667,7 +635,7 @@
 																										"widgetConfig": {
 																											"properties": "route=product-performance"
 																										},
-																										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																										"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
 																									}
 																								},
 																								"type": "Widget"
@@ -684,9 +652,8 @@
 																	{
 																		"definition": {
 																			"widgetInstance": {
-																				"widgetConfig": {
-																				},
-																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																				"widgetConfig": {},
+																				"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
 																			}
 																		},
 																		"type": "Widget"
@@ -744,13 +711,11 @@
 															"rowViewports": [
 																{
 																	"id": "landscapeMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "tablet",
@@ -766,13 +731,11 @@
 																"definition": {
 																	"columnViewports": [
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -789,13 +752,12 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "section",
-																				"siteKey": "Raylife AP"
+																				"siteKey": "AP1"
 																			},
 																			"fragmentConfig": {
 																				"sectionId": "primary"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
@@ -808,8 +770,7 @@
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {
-																				},
+																				"definition": {},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -817,7 +778,7 @@
 																								"widgetConfig": {
 																									"properties": "route=recent-applications"
 																								},
-																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
 																							}
 																						},
 																						"type": "Widget"
@@ -835,13 +796,11 @@
 																"definition": {
 																	"columnViewports": [
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -858,31 +817,28 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "section",
-																				"siteKey": "Raylife AP"
+																				"siteKey": "AP1"
 																			},
 																			"fragmentConfig": {
 																				"sectionId": "primary"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"indexed": true
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {
-																				},
+																				"definition": {},
 																				"pageElements": [
 																					{
 																						"definition": {
 																							"fragment": {
 																								"key": "dashboard-active-claims",
-																								"siteKey": "Raylife AP"
+																								"siteKey": "AP1"
 																							},
 																							"fragmentConfig": {
 																								"textColor": ""
 																							},
-																							"fragmentFields": [
-																							],
+																							"fragmentFields": [],
 																							"indexed": true
 																						},
 																						"type": "Fragment"

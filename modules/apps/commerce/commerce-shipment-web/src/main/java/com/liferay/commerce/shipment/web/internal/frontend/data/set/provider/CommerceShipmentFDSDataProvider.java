@@ -186,8 +186,12 @@ public class CommerceShipmentFDSDataProvider
 					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
-			return ListUtil.toLongArray(
+			long[] accountEntriesIdsArray = ListUtil.toLongArray(
 				accountEntries, AccountEntryModel::getAccountEntryId);
+
+			if (accountEntriesIdsArray.length != 0) {
+				return accountEntriesIdsArray;
+			}
 		}
 
 		return null;

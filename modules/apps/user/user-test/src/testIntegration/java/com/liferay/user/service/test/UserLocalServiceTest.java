@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -655,14 +656,24 @@ public class UserLocalServiceTest {
 
 		Date oldPasswordModifiedDate = user.getPasswordModifiedDate();
 
-		_userLocalService.updatePassword(
-			user.getUserId(), password, password, false, true);
+		try {
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					user.getGroupId(), user.getUserId()));
 
-		user = _userLocalService.getUser(user.getUserId());
+			_userLocalService.updatePassword(
+				user.getUserId(), password, password, false, true);
 
-		Date passwordModifiedDate = user.getPasswordModifiedDate();
+			user = _userLocalService.getUser(user.getUserId());
 
-		Assert.assertTrue(passwordModifiedDate.after(oldPasswordModifiedDate));
+			Date passwordModifiedDate = user.getPasswordModifiedDate();
+
+			Assert.assertTrue(
+				passwordModifiedDate.after(oldPasswordModifiedDate));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test

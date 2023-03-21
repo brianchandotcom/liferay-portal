@@ -15,7 +15,6 @@
 package com.liferay.portal.webdav.methods;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
@@ -81,11 +80,11 @@ public class LockMethodImpl implements Method {
 				FileUtil.getBytes(httpServletRequest.getInputStream()));
 
 			if (Validator.isNotNull(xml)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Request XML\n" + Dom4jUtil.toString(xml));
-				}
-
 				Document document = SAXReaderUtil.read(xml);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Request XML\n" + document.formattedString());
+				}
 
 				Element rootElement = document.getRootElement();
 

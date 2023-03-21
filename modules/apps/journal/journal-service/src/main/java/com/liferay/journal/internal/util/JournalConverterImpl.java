@@ -29,7 +29,6 @@ import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -104,9 +103,7 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		try {
-			String content = XMLUtil.stripInvalidChars(document.asXML());
-
-			return Dom4jUtil.toString(content);
+			return XMLUtil.stripInvalidChars(document.formattedString());
 		}
 		catch (Exception exception) {
 			throw new ArticleContentException(

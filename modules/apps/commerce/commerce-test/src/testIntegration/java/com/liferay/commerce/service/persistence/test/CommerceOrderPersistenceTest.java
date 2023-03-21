@@ -741,6 +741,12 @@ public class CommerceOrderPersistenceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<CommerceOrder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceOrder", "mvccVersion", true, "uuid", true,

@@ -80,6 +80,49 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "Verify that is possible edit MDF activity "
+	macro editMDFActivity {
+		Click(locator1 = "PRMMDFRequest#EDIT_ACTIVITY_BUTTON");
+
+		if (!(isSet(activitiyIndex))) {
+			var activityIndex = 1;
+		}
+
+		Type(
+			key_fieldName = "activities[${activityIndex}].name",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = ${newActivityName});
+
+		Click.clickAtNotVisible(
+			key_buttonText = ${leadList},
+			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
+			locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+
+		Button.click(button = "Continue");
+
+		Button.click(button = "Continue");
+
+		Button.click(button = "Submit");
+	}
+
+	@summary = "Verify that is possible edit some MDF informations "
+	macro editMDFinformations {
+		Click(locator1="PRMMDFRequest#EDIT_MDF_BUTTON");
+
+		PRMMDFRequest.fillGoalsPage(
+			accountName = ${accountName},
+			additionalOptions = ${additionalOptions},
+			campaignDescription = ${campaignDescription},
+			campaignName = ${campaignName},
+			countryName = ${countryName},
+			goalsOptions = ${goalsOptions},
+			targetMarketOptions = ${targetMarketOptions},
+			targetRolesOptions = ${targetRolesOptions});
+
+		Button.click(button = "Continue");
+	}
+
 	@summary = "Edit total MDF amount field"
 	macro editTotalMDFValue {
 		if (!(isSet(activitiyIndex))) {
@@ -587,123 +630,90 @@ definition {
 	@summary = "Verify the fills done by the user on the Campaign Information"
 	macro viewMDFActivityDetails {
 		Click(
-			key_textButton = "Activity Name 1",
+			key_textButton = ${activityName},
 			locator1 = "PRMMDFRequest#TEXT_BUTTON");
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Activity name",
-			key_nameValue = ${activityName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(activityName)) {
+			AssertElementPresent(
+				key_fieldName = "Activity name",
+				key_nameValue = ${activityName},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		AssertElementPresent(
-			key_fieldName = "Activity name",
-			key_nameValue = ${activityName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(typeOfActivity)) {
+			AssertElementPresent(
+				key_fieldName = "Type of Activity",
+				key_nameValue = ${typeOfActivity},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Type of Activity",
-			key_nameValue = ${typeOfActivity},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(tactic)) {
+			AssertElementPresent(
+				key_fieldName = "Tactic",
+				key_nameValue = ${tactic},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		AssertElementPresent(
-			key_fieldName = "Type of Activity",
-			key_nameValue = ${typeOfActivity},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(activityDescription)) {
+			AssertElementPresent(
+				key_fieldName = "Marketing activity",
+				key_nameValue = ${activityDescription},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Tactic",
-			key_nameValue = ${tactic},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(startDate)) {
+			AssertTextEquals.assertPartialText(
+				key_fieldName = "Start Date",
+				key_nameValue = ${startDate},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD",
+				value1 = ${startDate});
+		}
 
-		AssertElementPresent(
-			key_fieldName = "Tactic",
-			key_nameValue = ${tactic},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(endDate)) {
+			AssertTextEquals.assertPartialText(
+				key_fieldName = "End Date",
+				key_nameValue = ${endDate},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD",
+				value1 = ${endDate});
+		}
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Marketing activity",
-			key_nameValue = ${activityDescription},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(expense) && isSet(budget)) {
+			AssertElementPresent(
+				key_fieldName = ${expense},
+				key_nameValue = ${budget},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		AssertElementPresent(
-			key_fieldName = "Marketing activity",
-			key_nameValue = ${activityDescription},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		ScrollWebElementIntoView(
-			key_fieldName = "Start Date",
-			key_nameValue = ${startDate},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertTextEquals.assertPartialText(
-			key_fieldName = "Start Date",
-			key_nameValue = ${startDate},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD",
-			value1 = ${startDate});
-
-		ScrollWebElementIntoView(
-			key_fieldName = "End Date",
-			key_nameValue = ${endDate},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertTextEquals.assertPartialText(
-			key_fieldName = "End Date",
-			key_nameValue = ${endDate},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD",
-			value1 = ${endDate});
-
-		ScrollWebElementIntoView(
-			key_fieldName = ${expenseOption},
-			key_nameValue = ${bugdetValue},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = ${expenseOption},
-			key_nameValue = ${bugdetValue},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		ScrollWebElementIntoView(
-			key_fieldName = "Is a lead list an outcome of this activity?",
-			key_nameValue = ${leadList},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = "Is a lead list an outcome of this activity?",
-			key_nameValue = ${leadList},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(leadList)) {
+			AssertElementPresent(
+				key_fieldName = "Is a lead list an outcome of this activity?",
+				key_nameValue = ${leadList},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 	}
 
 	@summary = "Verify the activity fills made by the user after submited"
 	macro viewMDFCompanyDetails {
-		ScrollWebElementIntoView(
-			key_fieldName = "Company Name",
-			key_nameValue = ${accountName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(accountName)) {
+			AssertElementPresent(
+				key_fieldName = "Company Name",
+				key_nameValue = ${accountName},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		AssertElementPresent(
-			key_fieldName = "Company Name",
-			key_nameValue = ${accountName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(countryName)) {
+			AssertElementPresent(
+				key_fieldName = "Region",
+				key_nameValue = ${countryName},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Region",
-			key_nameValue = ${countryName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = "Region",
-			key_nameValue = ${countryName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		ScrollWebElementIntoView(
-			key_fieldName = "Name of the overall campaign",
-			key_nameValue = ${campaignName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = "Name of the overall campaign",
-			key_nameValue = ${campaignName},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(ampaignName)) {
+			AssertElementPresent(
+				key_fieldName = "Name of the overall campaign",
+				key_nameValue = ${campaignName},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
 		ScrollWebElementIntoView(
 			key_fieldName = "Short description of the overall campaign",
@@ -715,35 +725,26 @@ definition {
 			key_nameValue = "Campaign Description",
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Liferay business/sales goals",
-			key_nameValue = ${goalsOptions},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(goalsOptions)) {
+			AssertElementPresent(
+				key_fieldName = "Liferay business/sales goals",
+				key_nameValue = ${goalsOptions},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		AssertElementPresent(
-			key_fieldName = "Liferay business/sales goals",
-			key_nameValue = ${goalsOptions},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(targetMarketOptions)) {
+			AssertElementPresent(
+				key_fieldName = "Target Market(s)",
+				key_nameValue = ${targetMarketOptions},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 
-		ScrollWebElementIntoView(
-			key_fieldName = "Target Market(s)",
-			key_nameValue = ${targetMarketOptions},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = "Target Market(s)",
-			key_nameValue = ${targetMarketOptions},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		ScrollWebElementIntoView(
-			key_fieldName = "Target Audience/Role",
-			key_nameValue = ${targetRolesOptions},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = "Target Audience/Role",
-			key_nameValue = ${targetRolesOptions},
-			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		if (isSet(targetRolesOptions)) {
+			AssertElementPresent(
+				key_fieldName = "Target Audience/Role",
+				key_nameValue = ${targetRolesOptions},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
 	}
 
 	@summary = "View MDF actual Status on MDF Request detail page "
@@ -759,41 +760,5 @@ definition {
 			key_statusButton = "Approve",
 			locator1 = "PRMMDFRequest#STATUS_BUTTON");
 	}
-	@summary = "Verify that is possible edit MDF activity "
-	macro editMDFActivity {
-		Click(locator1 = "PRMMDFRequest#EDIT_ACTIVITY_BUTTON");
 
-		if (!(isSet(activitiyIndex))) {
-		var activityIndex = 1;
-		}
-
-		Type(
-			key_fieldName = "activities[${activityIndex}].name",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = ${newActivityName});
-
-		Button.click(button = "Continue");
-
-		Button.click(button = "Continue");
-
-		Button.click(button = "Submit");
-
-	}
-	@summary = "Verify that is possible edit some MDF informations "
-	macro editMDFinformations{
-		
-		Button.clickEdit();
-
-		PRMMDFRequest.fillGoalsPage(
-			accountName = ${accountName},
-			additionalOptions = ${additionalOptions},
-			campaignDescription = ${campaignDescription},
-			campaignName = ${campaignName},
-			countryName = ${countryName},
-			goalsOptions = ${goalsOptions},
-			targetMarketOptions = ${targetMarketOptions},
-			targetRolesOptions = ${targetRolesOptions});
-
-		Button.click(button = "Continue");
-	}
 }

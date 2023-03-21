@@ -295,11 +295,11 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext.getLayoutSetPrototypeUuid(),
 					portletDataContext.getCompanyId());
 
-		List<Layout> layoutSetLayouts = _layoutLocalService.getLayouts(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
+		for (Layout layout :
+				_layoutLocalService.getLayouts(
+					portletDataContext.getGroupId(),
+					portletDataContext.isPrivateLayout())) {
 
-		for (Layout layout : layoutSetLayouts) {
 			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
 				continue;
 			}
@@ -337,10 +337,6 @@ public class StagedLayoutSetStagedModelDataHandler
 			return;
 		}
 
-		List<Layout> previousLayouts = _layoutLocalService.getLayouts(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
-
 		List<String> sourceLayoutUuids = TransformUtil.transform(
 			layoutElements,
 			layoutElement -> layoutElement.attributeValue("uuid"));
@@ -355,7 +351,11 @@ public class StagedLayoutSetStagedModelDataHandler
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		for (Layout layout : previousLayouts) {
+		for (Layout layout :
+				_layoutLocalService.getLayouts(
+					portletDataContext.getGroupId(),
+					portletDataContext.isPrivateLayout())) {
+
 			if (!sourceLayoutUuids.contains(layout.getUuid()) &&
 				!layoutPlids.containsValue(layout.getPlid())) {
 
@@ -401,13 +401,11 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
 
-		List<ClientExtensionEntryRel> clientExtensionEntryRels =
-			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId());
-
 		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				clientExtensionEntryRels) {
+				_clientExtensionEntryRelLocalService.
+					getClientExtensionEntryRels(
+						_portal.getClassNameId(LayoutSet.class),
+						layoutSet.getLayoutSetId())) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedLayoutSet, clientExtensionEntryRel,
@@ -483,11 +481,10 @@ public class StagedLayoutSetStagedModelDataHandler
 				group.getGroupId(), portletDataContext.isPrivateLayout());
 		}
 
-		List<StagedModel> stagedModels =
-			_stagedLayoutSetStagedModelRepository.fetchChildrenStagedModels(
-				portletDataContext, stagedLayoutSet);
+		for (StagedModel stagedModel :
+				_stagedLayoutSetStagedModelRepository.fetchChildrenStagedModels(
+					portletDataContext, stagedLayoutSet)) {
 
-		for (StagedModel stagedModel : stagedModels) {
 			Layout layout = (Layout)stagedModel;
 
 			if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
@@ -674,10 +671,9 @@ public class StagedLayoutSetStagedModelDataHandler
 	private boolean _hasSkippedSiblingLayout(
 		Element layoutElement, Map<Long, List<String>> siblingActionsMap) {
 
-		long parentLayoutId = GetterUtil.getLong(
-			layoutElement.attributeValue("layout-parent-layout-id"));
-
-		List<String> actions = siblingActionsMap.get(parentLayoutId);
+		List<String> actions = siblingActionsMap.get(
+			GetterUtil.getLong(
+				layoutElement.attributeValue("layout-parent-layout-id")));
 
 		if (actions.contains(Constants.SKIP)) {
 			return true;

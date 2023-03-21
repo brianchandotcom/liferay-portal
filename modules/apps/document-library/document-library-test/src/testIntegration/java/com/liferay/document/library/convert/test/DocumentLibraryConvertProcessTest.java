@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -250,20 +252,25 @@ public class DocumentLibraryConvertProcessTest {
 	}
 
 	protected MBMessage addMBMessageAttachment() throws Exception {
-		List<ObjectValuePair<String, InputStream>> objectValuePairs =
-			MBTestUtil.getInputStreamOVPs(
-				"OSX_Test.docx", getClass(), StringPool.BLANK);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.xmlbeans.impl.common.SAXHelper",
+				LoggerTestUtil.WARN)) {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			List<ObjectValuePair<String, InputStream>> objectValuePairs =
+				MBTestUtil.getInputStreamOVPs(
+					"OSX_Test.docx", getClass(), StringPool.BLANK);
 
-		User user = TestPropsValues.getUser();
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		return _mbMessageLocalService.addMessage(
-			user.getUserId(), user.getFullName(), _group.getGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject", "Body",
-			MBMessageConstants.DEFAULT_FORMAT, objectValuePairs, false, 0,
-			false, serviceContext);
+			User user = TestPropsValues.getUser();
+
+			return _mbMessageLocalService.addMessage(
+				user.getUserId(), user.getFullName(), _group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject",
+				"Body", MBMessageConstants.DEFAULT_FORMAT, objectValuePairs,
+				false, 0, false, serviceContext);
+		}
 	}
 
 	protected DLFileEntry getDLFileEntry(Object object) throws Exception {

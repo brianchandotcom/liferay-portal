@@ -5,7 +5,8 @@ configurations.all {
 }
 
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "release.dxp.api"
-	testIntegrationCompile project(":modules:osb-testray-rest:osb-testray-rest-api")
-	testIntegrationCompile project(":modules:osb-testray-rest:osb-testray-rest-client")
+	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":dxp:apps:osb:osb-testray:osb-testray-rest-api")
+	testIntegrationCompile project(":dxp:apps:osb:osb-testray:osb-testray-rest-client")
 }

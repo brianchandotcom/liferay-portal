@@ -1,9 +1,16 @@
 dependencies {
-	compile project(":modules:osb-testray-rest:osb-testray-rest-api")
-
-	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
-
-	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.222"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
+	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:portal-odata:portal-odata-api")
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":dxp:apps:osb:osb-testray:osb-testray-rest-api")
 }
-
-group = "com.liferay.osb.testray.rest"

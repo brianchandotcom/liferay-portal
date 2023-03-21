@@ -100,6 +100,11 @@
 	<td>//div[contains(@class,'total-mdf-request-amount')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EDIT_ACTIVITY_BUTTON</td>
+	<td>//button[contains(@class,'btn-monospaced')]/*[name()='svg'][contains(@class,'icon-pencil')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -15,36 +15,22 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
-import com.liferay.account.admin.web.internal.util.AllowEditAccountRoleThreadLocal;
-import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
- * @author Alessio Antonio Rendina
+ * @author Joao Victor Alves
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=60",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=60",
+	service = ScreenNavigationCategory.class
 )
 public class AccountEntryRolesScreenNavigationCategory
-	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
@@ -53,38 +39,17 @@ public class AccountEntryRolesScreenNavigationCategory
 	}
 
 	@Override
-	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_ROLES;
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/account_entries_admin/account_entry/view_account_roles.jsp";
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "roles");
+		return language.get(locale, "roles");
 	}
 
 	@Override
-	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry.isNew() ||
-			!AllowEditAccountRoleThreadLocal.isAllowEditAccountRole() ||
-			Objects.equals(
-				accountEntry.getType(),
-				AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
-
-			return false;
-		}
-
-		return AccountEntryPermission.contains(
-			PermissionCheckerFactoryUtil.create(user),
-			accountEntry.getAccountEntryId(),
-			AccountActionKeys.VIEW_ACCOUNT_ROLES);
+	public String getScreenNavigationKey() {
+		return AccountScreenNavigationEntryConstants.
+			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
 	}
 
 	@Reference
-	private Language _language;
+	protected Language language;
 
 }

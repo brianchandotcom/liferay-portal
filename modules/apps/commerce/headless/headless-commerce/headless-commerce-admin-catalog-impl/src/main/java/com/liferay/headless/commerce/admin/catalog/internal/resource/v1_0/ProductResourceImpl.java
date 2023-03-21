@@ -24,6 +24,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -48,6 +49,8 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
@@ -70,6 +73,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfi
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -89,6 +93,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductTax
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.RelatedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.VirtualSettingsUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -1115,6 +1120,25 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			}
 		}
 
+		// Virtual
+
+		if (cpType != null) {
+			ProductVirtualSettings productVirtualSettings =
+				product.getVirtualSettings();
+
+			if (productVirtualSettings != null) {
+				if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
+					VirtualSettingsUtil.addOrUpdateVirtualSettings(
+						cpDefinition, productVirtualSettings,
+						_cpDefinitionVirtualSettingService,
+						_uniqueFileNameProvider, serviceContext);
+				}
+				else {
+					throw new CPDefinitionProductTypeNameException();
+				}
+			}
+		}
+
 		return cpDefinition;
 	}
 
@@ -1326,6 +1350,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	@Reference
 	private CPDefinitionSpecificationOptionValueService
 		_cpDefinitionSpecificationOptionValueService;
+
+	@Reference
+	private CPDefinitionVirtualSettingService
+		_cpDefinitionVirtualSettingService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

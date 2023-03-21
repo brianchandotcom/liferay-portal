@@ -1,0 +1,13 @@
+definition {
+
+	macro clickFilter {
+		Click(locator1 = "TestrayFilter#FILTER_ICON");
+	}
+
+    macro multiSelect {
+		Click(
+            locator1 = "TestrayFilter#MULTI_SELECT_BY_LABEL",
+            key_label = ${label});
+	}
+
+}

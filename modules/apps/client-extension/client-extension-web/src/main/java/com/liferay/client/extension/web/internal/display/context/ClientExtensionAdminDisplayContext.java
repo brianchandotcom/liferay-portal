@@ -20,9 +20,10 @@ import com.liferay.client.extension.web.internal.display.context.util.CETLabelUt
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Objects;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -47,9 +48,10 @@ public class ClientExtensionAdminDisplayContext {
 		CreationMenu creationMenu = new CreationMenu();
 
 		for (String type : _cetFactory.getTypes()) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-166479") &&
-				Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)) {
+			String featureFlag = _typeFeatureFlagMap.get(type);
+
+			if ((featureFlag != null) &&
+				!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
 
 				continue;
 			}
@@ -83,6 +85,13 @@ public class ClientExtensionAdminDisplayContext {
 	private String _getRedirect() {
 		return PortalUtil.getCurrentURL(_getHttpServletRequest());
 	}
+
+	private static final Map<String, String> _typeFeatureFlagMap =
+		HashMapBuilder.put(
+			ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
+		).put(
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
+		).build();
 
 	private final CETFactory _cetFactory;
 	private final RenderRequest _renderRequest;

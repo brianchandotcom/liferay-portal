@@ -211,12 +211,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ArgumentsResolver.class,
 				new ObjectDefinitionTableArgumentsResolver(
 					objectDefinition.getDBTableName()),
-				null),
+				HashMapDictionaryBuilder.put(
+					"class.name", objectDefinition.getDBTableName()
+				).put(
+					"table.name", objectDefinition.getDBTableName()
+				).build()),
 			_bundleContext.registerService(
 				ArgumentsResolver.class,
 				new ObjectDefinitionTableArgumentsResolver(
 					objectDefinition.getExtensionDBTableName()),
-				null),
+				HashMapDictionaryBuilder.put(
+					"class.name", objectDefinition.getExtensionDBTableName()
+				).put(
+					"table.name", objectDefinition.getExtensionDBTableName()
+				).build()),
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
 				new ObjectEntryKeywordQueryContributor(

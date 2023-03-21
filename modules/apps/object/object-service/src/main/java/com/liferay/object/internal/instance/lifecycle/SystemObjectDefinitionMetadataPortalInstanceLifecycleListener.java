@@ -185,7 +185,11 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				ArgumentsResolver.class,
 				new ObjectDefinitionTableArgumentsResolver(
 					objectDefinition.getExtensionDBTableName()),
-				null);
+				HashMapDictionaryBuilder.put(
+					"class.name", objectDefinition.getExtensionDBTableName()
+				).put(
+					"table.name", objectDefinition.getExtensionDBTableName()
+				).build());
 			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new SystemObjectEntryItemSelectorView(

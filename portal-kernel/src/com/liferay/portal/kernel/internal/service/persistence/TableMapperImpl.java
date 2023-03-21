@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -95,7 +96,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		_serviceRegistration = bundleContext.registerService(
 			ArgumentsResolver.class, new TableMapperArgumentResolver(tableName),
-			null);
+			HashMapDictionaryBuilder.put(
+				"class.name", tableName
+			).put(
+				"table.name", tableName
+			).build());
 
 		init(tableName, companyColumnName, leftColumnName, rightColumnName);
 	}

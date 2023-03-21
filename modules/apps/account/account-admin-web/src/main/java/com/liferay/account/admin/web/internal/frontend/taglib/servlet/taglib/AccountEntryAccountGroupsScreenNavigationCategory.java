@@ -15,15 +15,8 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
-import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
 
@@ -35,14 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=35",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=35",
+	service = ScreenNavigationCategory.class
 )
 public class AccountEntryAccountGroupsScreenNavigationCategory
-	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
@@ -52,40 +41,17 @@ public class AccountEntryAccountGroupsScreenNavigationCategory
 	}
 
 	@Override
-	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_ACCOUNT_GROUPS;
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/account_entries_admin/account_entry/account_groups.jsp";
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "account-groups");
+		return language.get(locale, "account-groups");
 	}
 
 	@Override
-	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry.isNew()) {
-			return false;
-		}
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		if (AccountEntryPermission.contains(
-				permissionChecker, accountEntry.getAccountEntryId(),
-				AccountActionKeys.VIEW_ACCOUNT_GROUPS)) {
-
-			return true;
-		}
-
-		return false;
+	public String getScreenNavigationKey() {
+		return AccountScreenNavigationEntryConstants.
+			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
 	}
 
 	@Reference
-	private Language _language;
+	protected Language language;
 
 }

@@ -14,43 +14,46 @@
 
 package com.liferay.server.admin.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants;
 
-import java.util.Locale;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Albert Lee
+ * @author Joao Victor Alves
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=20",
-	service = ScreenNavigationCategory.class
+	property = "screen.navigation.entry.order:Integer=10",
+	service = ScreenNavigationEntry.class
 )
-public class ServerPortalPropertiesScreenNavigationCategory
-	implements ScreenNavigationCategory {
+public class ServerPortalPropertiesScreenNavigationEntry
+	extends ServerPortalPropertiesScreenNavigationCategory
+	implements ScreenNavigationEntry<Object> {
 
 	@Override
-	public String getCategoryKey() {
-		return ServerAdminNavigationEntryConstants.
-			CATEGORY_KEY_PORTAL_PROPERTIES;
+	public String getEntryKey() {
+		return ServerAdminNavigationEntryConstants.ENTRY_KEY_PORTAL_PROPERTIES;
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return language.get(locale, "portal-properties");
-	}
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
-	@Override
-	public String getScreenNavigationKey() {
-		return ServerAdminNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_PROPERTIES;
+		_jspRenderer.renderJSP(
+			httpServletRequest, httpServletResponse,
+			"/view_portal_properties.jsp");
 	}
 
 	@Reference
-	protected Language language;
+	private JSPRenderer _jspRenderer;
 
 }

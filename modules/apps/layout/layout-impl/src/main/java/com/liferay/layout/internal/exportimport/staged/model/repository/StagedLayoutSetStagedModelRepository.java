@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,18 +93,16 @@ public class StagedLayoutSetStagedModelRepository
 
 		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			stagedLayoutSet.getGroupId(), layoutSet.isPrivateLayout());
+		return TransformUtil.transform(
+			_layoutLocalService.getLayouts(
+				stagedLayoutSet.getGroupId(), layoutSet.isPrivateLayout()),
+			layout -> {
+				if (_exportImportHelper.isLayoutRevisionInReview(layout)) {
+					return null;
+				}
 
-		Stream<Layout> layoutsStream = layouts.stream();
-
-		return layoutsStream.filter(
-			layout -> !_exportImportHelper.isLayoutRevisionInReview(layout)
-		).map(
-			layout -> (StagedModel)layout
-		).collect(
-			Collectors.toList()
-		);
+				return (StagedModel)layout;
+			});
 	}
 
 	public StagedLayoutSet fetchExistingLayoutSet(
@@ -171,15 +167,10 @@ public class StagedLayoutSetStagedModelRepository
 
 		dynamicQuery.add(privateLayoutProperty.eq(privateLayout));
 
-		List<LayoutSet> layoutSets = dynamicQuery.list();
-
-		Stream<LayoutSet> layoutSetsStream = layoutSets.stream();
-
-		Stream<StagedLayoutSet> stagedLayoutSetsStream = layoutSetsStream.map(
+		return TransformUtil.transform(
+			(List<LayoutSet>)dynamicQuery.list(),
 			layoutSet -> ModelAdapterUtil.adapt(
 				layoutSet, LayoutSet.class, StagedLayoutSet.class));
-
-		return stagedLayoutSetsStream.collect(Collectors.toList());
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class DocumentLibraryFileRankServiceUpgradeProcess
 			new String[] {
 				"com.liferay.document.library.file.rank.model.DLFileRank"
 			},
-			new String[] {"DL_DLFileRank"});
+			new String[] {"DLFileRanka"});
 	}
 
 }

@@ -24,7 +24,7 @@ public class HTMLPreviewServiceUpgradeProcess extends BaseUpgradeProcess {
 		removeServiceData(
 			"Preview", new String[] {"com.liferay.html.preview.service"},
 			new String[] {"com.liferay.html.preview.model.HtmlPreviewEntry"},
-			new String[] {"Preview_HtmlPreviewEntry"});
+			new String[] {"HtmlPreviewEntry"});
 	}
 
 }

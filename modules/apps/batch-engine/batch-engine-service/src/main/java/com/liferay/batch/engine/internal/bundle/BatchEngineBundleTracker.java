@@ -46,7 +46,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class BatchEngineBundleTracker {
 
 	public boolean isBatchEngineTechnical(String zipEntryName) {

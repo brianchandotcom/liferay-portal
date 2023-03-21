@@ -132,8 +132,6 @@ definition {
 	@description = "LRQA-72024 - Verify that the user can hide Events from a specific Calendar"
 	@priority = 3
 	test CanHideEvents {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title1");

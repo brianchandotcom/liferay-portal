@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login.admin.install;
+package com.liferay.portal.security.auto.login.internal.setup.admin;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro Saugar
  */
 @Component(immediate = true, service = AutoLogin.class)
-public class AdminPasswordAutoLogin extends BaseAutoLogin {
+public class SetupAdminAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doHandleException(
@@ -99,7 +99,7 @@ public class AdminPasswordAutoLogin extends BaseAutoLogin {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AdminPasswordAutoLogin.class);
+		SetupAdminAutoLogin.class);
 
 	@Reference
 	private Portal _portal;

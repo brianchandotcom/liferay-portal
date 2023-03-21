@@ -188,44 +188,52 @@ public class LockMethodImpl implements Method {
 	}
 
 	protected String getResponseXML(Lock lock, long depth) throws Exception {
-		StringBundler sb = new StringBundler(21);
+		Document document = SAXReaderUtil.createDocument();
+
+		Element propElement = document.addElement("D:prop", "DAV:");
+
+		Element lockDiscoveryElement = propElement.addElement(
+			"D:lockdiscovery");
+
+		Element activeLockElement = lockDiscoveryElement.addElement(
+			"D:activelock");
+
+		Element lockTypeElement = activeLockElement.addElement("D:locktype");
+
+		lockTypeElement.addElement("D:write");
+
+		Element lockScopeElement = activeLockElement.addElement("D:lockscope");
+
+		lockScopeElement.addElement("D:exclusive");
+
+		if (depth < 0) {
+			Element depthElement = activeLockElement.addElement("D:depth");
+
+			depthElement.addText("Infinity");
+		}
+
+		Element ownerElement = activeLockElement.addElement("D:owner");
+
+		ownerElement.addText(lock.getOwner());
+
+		Element timeoutElement = activeLockElement.addElement("D:timeout");
 
 		long timeoutSecs = lock.getExpirationTime() / Time.SECOND;
 
-		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
-		sb.append("<D:prop xmlns:D=\"DAV:\">");
-		sb.append("<D:lockdiscovery>");
-		sb.append("<D:activelock>");
-		sb.append("<D:locktype><D:write/></D:locktype>");
-		sb.append("<D:lockscope><D:exclusive/></D:lockscope>");
-
-		if (depth < 0) {
-			sb.append("<D:depth>Infinity</D:depth>");
-		}
-
-		sb.append("<D:owner>");
-		sb.append(lock.getOwner());
-		sb.append("</D:owner>");
-		sb.append("<D:timeout>");
-
 		if (timeoutSecs > 0) {
-			sb.append("Second-");
-			sb.append(timeoutSecs);
+			timeoutElement.addText("Second-" + timeoutSecs);
 		}
 		else {
-			sb.append("Infinite");
+			timeoutElement.addText("Infinite");
 		}
 
-		sb.append("</D:timeout>");
-		sb.append("<D:locktoken><D:href>");
-		sb.append(WebDAVUtil.TOKEN_PREFIX);
-		sb.append(lock.getUuid());
-		sb.append("</D:href></D:locktoken>");
-		sb.append("</D:activelock>");
-		sb.append("</D:lockdiscovery>");
-		sb.append("</D:prop>");
+		Element lockTokenElement = activeLockElement.addElement("D:locktoken");
 
-		return Dom4jUtil.toString(sb.toString());
+		Element hrefElement = lockTokenElement.addElement("D:href");
+
+		hrefElement.addText(WebDAVUtil.TOKEN_PREFIX + lock.getUuid());
+
+		return document.formattedString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LockMethodImpl.class);

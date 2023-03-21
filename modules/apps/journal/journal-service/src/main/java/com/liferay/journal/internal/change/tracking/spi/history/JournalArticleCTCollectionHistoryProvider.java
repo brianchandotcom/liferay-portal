@@ -81,7 +81,7 @@ public class JournalArticleCTCollectionHistoryProvider
 				)
 			).orderBy(
 				CTCollectionTable.INSTANCE.status.descending(),
-				CTCollectionTable.INSTANCE.statusDate.ascending()
+				CTCollectionTable.INSTANCE.statusDate.descending()
 			));
 	}
 

@@ -7,6 +7,10 @@ html#{$cadmin-selector} .cadmin {
 		font-size: 12px;
 		text-align: center;
 
+		.dropdown {
+			display: inline-block;
+		}
+
 		.change-tracking-indicator-button {
 			align-items: center;
 			background-color: $cadmin-dark-l1;
@@ -41,6 +45,25 @@ html#{$cadmin-selector} .cadmin {
 			.lexicon-icon-caret-bottom {
 				font-size: 13px;
 				margin-left: 5px;
+				margin-top: 0;
+			}
+		}
+
+		.change-tracking-timeline-button {
+			align-items: center;
+			background-color: $cadmin-dark-l1;
+			border: none;
+			color: $cadmin-white;
+			display: inline-flex;
+			font-weight: 600;
+			justify-content: center;
+			margin: 2px 2px 1px;
+			padding: 1px;
+			text-decoration: none;
+			vertical-align: middle;
+
+			.change-tracking-timeline-icon {
+				margin-right: 0;
 				margin-top: 0;
 			}
 		}

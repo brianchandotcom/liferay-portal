@@ -680,7 +680,7 @@ public class CTCollectionLocalServiceImpl
 				)
 			).orderBy(
 				CTCollectionTable.INSTANCE.status.descending(),
-				CTCollectionTable.INSTANCE.statusDate.ascending()
+				CTCollectionTable.INSTANCE.statusDate.descending()
 			));
 	}
 

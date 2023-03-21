@@ -14,10 +14,11 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -30,6 +31,8 @@ import {
 	openConfirmModal,
 } from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
+
+import PublicationTimeline from './PublicationTimeline';
 
 const PublicationsSearchContainer = ({
 	ascending,
@@ -719,6 +722,9 @@ export default function ChangeTrackingIndicator({
 	reviewDropdownItem,
 	saveDisplayPreferenceURL,
 	spritemap,
+	timelineIconClass,
+	timelineIconName,
+	timelineItems,
 	title,
 }) {
 	const COLUMN_MODIFIED_DATE = 'modifiedDate';
@@ -1075,25 +1081,70 @@ export default function ChangeTrackingIndicator({
 		);
 	};
 
+	const renderTimeline = (timelineItems) => {
+		if (timelineItems) {
+			return (
+				<ClayDropDown
+					alignmentPosition={Align.BottomCenter}
+					trigger={
+						<ClayButton
+							aria-controls="publication-timeline-dropdown"
+							className="change-tracking-timeline-button"
+						>
+							<ClayIcon
+								className={timelineIconClass}
+								symbol={timelineIconName}
+							/>
+						</ClayButton>
+					}
+				>
+					<PublicationTimeline timelineItems={timelineItems} />
+				</ClayDropDown>
+			);
+		}
+	};
+
 	return (
 		<>
 			{renderModal()}
 
-			<ClayDropDownWithItems
-				alignmentPosition={Align.BottomCenter}
-				items={dropdownItems}
-				trigger={
-					<button className="change-tracking-indicator-button">
-						<ClayIcon className={iconClass} symbol={iconName} />
+			<ClayLayout.ContentRow style={{justifyContent: 'center'}}>
+				<ClayLayout.ContentCol>
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomCenter}
+						items={dropdownItems}
+						trigger={
+							<button className="change-tracking-indicator-button">
+								<ClayIcon
+									className={iconClass}
+									symbol={iconName}
+								/>
 
-						<span className="change-tracking-indicator-title">
-							{title}
-						</span>
+								<span className="change-tracking-indicator-title">
+									{title}
+								</span>
 
-						<ClayIcon symbol="caret-bottom" />
-					</button>
-				}
-			/>
+								<ClayIcon symbol="caret-bottom" />
+							</button>
+						}
+					/>
+				</ClayLayout.ContentCol>
+
+				<ClayLayout.ContentCol style={{marginLeft: '50px'}}>
+					<div
+						className="c-inner"
+						style={{
+							margin: '2px 2px 1px',
+							padding: '1px',
+							width: '22px',
+						}}
+						tabIndex="-1"
+						title="Timeline"
+					>
+						{renderTimeline(timelineItems)}
+					</div>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 		</>
 	);
 }

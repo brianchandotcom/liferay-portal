@@ -257,6 +257,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166567 - Verify if As an administrator can use a new template in a build"
+	@priority = 3
+	test CanUseTemplateInBuild {
+		task ("Given a new template") {
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = 12345,
+				routine = "Routine 1");
+		}
+
+		task ("When an administrator accesses the template") {
+			TestrayTemplate.assertTemplateName(templateName = "Build_Template");
+
+			TestrayTemplate.goToBuildTemplate(templateName = "Build_Template");
+		}
+
+		task ("Then the new template can be used in a build") {
+			TestrayBuild.createBuild(
+				addVersion = "1.4",
+				caseName = "Case 1",
+				description = "Build 1 Project Description",
+				fieldName = "Build 1 Project",
+				gitHash = 12345,
+				productVersion = "1.4",
+				routine = "Routine 1");
+
+			Testray.assertItemName(text = "Build 1 Project");
+		}
+	}
+
 	@description = "Story ID: LPS-162435 | Test Summary: Verify that can see the activated templates in the filter"
 	@ignore = "Test Stub"
 	@priority = 5

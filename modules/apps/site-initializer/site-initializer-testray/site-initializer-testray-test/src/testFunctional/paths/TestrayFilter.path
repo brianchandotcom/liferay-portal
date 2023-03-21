@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>TestrayFilter</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestrayFilter</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>FILTER_ICON</td>
+	<td>//button[contains(@class,'filter-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTI_SELECT_BY_LABEL</td>
+	<td>//label[normalize-space()='key_label']/..//div[contains(@class,'testray-multi-select__value-container')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

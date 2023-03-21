@@ -147,7 +147,9 @@ public class DLExportImportPortletPreferencesProcessor
 		if (!_exportImportHelper.isExportPortletData(portletDataContext) ||
 			(selectedRepositoryId != portletDataContext.getGroupId())) {
 
-			if (ExportImportThreadLocal.isStagingInProcess()) {
+			if (ExportImportThreadLocal.isStagingInProcess() &&
+				(selectedRepositoryId > 0)) {
+
 				_saveStagingPreferencesMapping(
 					selectedRepositoryId, null, portletDataContext);
 			}

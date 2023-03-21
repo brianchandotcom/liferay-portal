@@ -344,7 +344,7 @@
 </tr>
 <tr>
 	<td>REPEATABLE_HELP_TEXT</td>
-	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//span</td>
+	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@id,'fieldHelp')]</td>
 	<td></td>
 </tr>
 <tr>

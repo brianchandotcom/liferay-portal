@@ -600,6 +600,11 @@
 		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']/../..//label[contains(@class,'toggle-switch simple-toggle-switch')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ENTRY_CHOOSE_OPTIONS_MULTIPICKLIST</td>
+		<td>//div[contains(text(),'Choose Options')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

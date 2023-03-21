@@ -146,7 +146,6 @@
 					{
 						"definition": {
 							"cssClasses": [
-								"position-fixed",
 								"w-100",
 								"bg-white"
 							],

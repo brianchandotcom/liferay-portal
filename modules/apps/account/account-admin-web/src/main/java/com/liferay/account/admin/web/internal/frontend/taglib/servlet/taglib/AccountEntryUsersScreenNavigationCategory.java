@@ -15,18 +15,10 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
-import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,14 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=20",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=20",
+	service = ScreenNavigationCategory.class
 )
 public class AccountEntryUsersScreenNavigationCategory
-	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
@@ -52,36 +40,17 @@ public class AccountEntryUsersScreenNavigationCategory
 	}
 
 	@Override
-	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_USERS;
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/account_entries_admin/account_entry/view_account_users.jsp";
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "users");
+		return language.get(locale, "users");
 	}
 
 	@Override
-	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry.isNew() ||
-			!Objects.equals(
-				accountEntry.getType(),
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
-
-			return false;
-		}
-
-		return AccountEntryPermission.contains(
-			PermissionCheckerFactoryUtil.create(user),
-			accountEntry.getAccountEntryId(), AccountActionKeys.VIEW_USERS);
+	public String getScreenNavigationKey() {
+		return AccountScreenNavigationEntryConstants.
+			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
 	}
 
 	@Reference
-	private Language _language;
+	protected Language language;
 
 }

@@ -107,7 +107,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			Map<String, String> descriptionMap = sxpElement.getTitle_i18n();
+			Map<String, String> descriptionMap =
+				sxpElement.getDescription_i18n();
 
 			sxpElementJSONObject.put(
 				"description",

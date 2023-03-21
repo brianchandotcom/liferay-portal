@@ -104,14 +104,7 @@ public class JenkinsPublisher {
 			jsonObject.getBoolean("queueItemLeft"),
 			EventTrigger.QUEUE_ITEM_LEFT);
 
-		if ((_inboundJMSQueueName != null) && _jmsRequest) {
-			JMSConnection jmsConnection = JMSFactory.newJMSConnection(_url);
-
-			JMSQueue jmsQueue = JMSFactory.newJMSQueue(
-				jmsConnection, _inboundJMSQueueName);
-
-			jmsQueue.subscribe(new JMSMessageListener());
-		}
+		subscribe();
 	}
 
 	public boolean containsEventTrigger(EventTrigger eventTrigger) {
@@ -180,7 +173,20 @@ public class JenkinsPublisher {
 			return;
 		}
 
-		_publishHttp(payload, eventTrigger);
+		_publishHttp("body=" + payload, eventTrigger);
+	}
+
+	public void subscribe() {
+		if ((_inboundJMSQueueName == null) || !_jmsRequest) {
+			return;
+		}
+
+		JMSConnection jmsConnection = JMSFactory.newJMSConnection(_url);
+
+		JMSQueue jmsQueue = JMSFactory.newJMSQueue(
+			jmsConnection, _inboundJMSQueueName);
+
+		jmsQueue.subscribe(new JMSMessageListener());
 	}
 
 	public enum EventTrigger {

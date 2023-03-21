@@ -15,12 +15,14 @@
 package com.liferay.jenkins.plugin.events;
 
 import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
 
 import hudson.Extension;
 
 import hudson.model.Describable;
 import hudson.model.Descriptor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +36,15 @@ public class JenkinsEventsDescriptor
 	public JenkinsEventsDescriptor() {
 		super(JenkinsEventsDescriptor.class);
 
+		jenkinsPublishers = new ArrayList<>();
+
 		load();
+
+		for (JenkinsPublisher jenkinsPublisher : jenkinsPublishers) {
+			jenkinsPublisher.subscribe();
+		}
+
+		JenkinsPublisherUtil.setJenkinsEventsDescriptor(this);
 	}
 
 	@Override

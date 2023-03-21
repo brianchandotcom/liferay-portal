@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
  * @author Zsolt Oláh
  */
 @RunWith(Arquillian.class)
-public class JournalArticleExpirationTest {
+public class JournalArticleLocalServiceCheckArticlesTest {
 
 	@ClassRule
 	@Rule

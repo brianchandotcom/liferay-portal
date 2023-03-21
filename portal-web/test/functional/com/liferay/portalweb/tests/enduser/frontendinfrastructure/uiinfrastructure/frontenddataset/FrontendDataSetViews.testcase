@@ -33,11 +33,29 @@ definition {
 	@priority = 4
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
-			for (var listDataSets : list "1,2,3,4,5,6") {
-				FrontendDataSetAdmin.canCreateDataSets(
-					key_type = "Channel",
-					name = "Test Dataset");
-			}
+			FrontendDataSetAdmin.canCreateDataSets(
+				key_type = "Channel",
+				name = "Test Dataset");
+			
+			FrontendDataSetAdmin.canCreateDataSets(
+				key_type = "Account",
+				name = "Test Dataset2");
+
+			FrontendDataSetAdmin.canCreateDataSets(
+				key_type = "Cart",
+				name = "Test Dataset3");
+
+			FrontendDataSetAdmin.canCreateDataSets(
+				key_type = "DataLayout",
+				name = "Test Dataset4");
+
+			FrontendDataSetAdmin.canCreateDataSets(
+				key_type = "Diagram",
+				name = "Test Dataset5");
+
+			FrontendDataSetAdmin.canCreateDataSets(
+				key_type = "Form",
+				name = "Test Dataset6");					
 		}
 
 		task ("When changing the page to 4 entries") {

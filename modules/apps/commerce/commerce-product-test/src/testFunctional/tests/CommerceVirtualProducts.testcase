@@ -15,6 +15,156 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-11063 | As a buyer I want to be able to download virtual products when the activation status is pending"
+	@priority = 4
+	test CanDownloadVirtualProductWhenActivationStatusPending {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Money Order is enbaled") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And a virtual product is created with a price") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				gtin = "GTIN1",
+				manufacturerPartNumber = "MPN1",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 10,
+				priceListName = "Minium Base Price List",
+				productSKU = "VIRTUALSKU");
+		}
+
+		task ("And the admin selects a file for the virtual product along with the activation status") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Virtual");
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+			SelectFrameTop();
+
+			SelectFrame(
+				key_frameTitle = "Select File",
+				locator1 = "CommerceEntry#ANY_IFRAME");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Commerce_White.jpg");
+
+			Click(
+				key_filterOption = "Add",
+				locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+			CommerceProducts.updateProductVirtualActivationStatus(
+				key_contentType = "Base Information",
+				key_fieldLabel = "Activation Status",
+				status = "Pending");
+		}
+
+		task ("And the admin deploys 'product downloads' widget inside the Minium Pending Orders page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Product Downloads");
+		}
+
+		task ("When the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And completes a checkout adding the virtual product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "Virtual Product",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Virtual Product",
+				productQuantity = 1,
+				productUnitPrice = 10);
+		}
+
+		task ("And the admin logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And the admin changes the order status to 'completed'") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			CommercePaymentStatus.editPaymentStatus(statusValue = "Completed");
+		}
+
+		task ("And the buyer user logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product along with the download button are present inside the widget") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			AssertElementPresent(locator1 = "Link#DOWNLOAD");
+		}
+	}
+
 	@description = "COMMERCE-10709 | As a buyer I want to be able to download virtual products when the order status matches the activation status"
 	@ignore = "true"
 	@priority = 4

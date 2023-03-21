@@ -55,7 +55,7 @@ export default function ThemeCSSReplacementSelector({
 				<label
 					htmlFor={`${portletNamespace}themeCSSReplacementExtension`}
 				>
-					{Liferay.Language.get('client-extension')}
+					{Liferay.Language.get('theme-css')}
 				</label>
 
 				<ClayInput.Group className="w-50" small>

@@ -1,0 +1,23 @@
+definition {
+
+	@summary = "Delete an utility page by groupName and layoutUtilityPageName"
+	macro deleteLayoutUtilityPage {
+		Variables.assertDefined(parameterList = "${groupName},${layoutUtilityPageName}");
+
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = ${groupName},
+			portalInstanceName = ${portalInstanceName},
+			portalURL = ${portalURL},
+			site = ${site});
+
+		var layoutUtilityPageEntryId = JSONLayoututilitypageAPI._getLayoutUtilityPageEntryId(
+			groupId = ${groupId},
+			layoutUtilityPageName = ${layoutUtilityPageName},
+			portalURL = ${portalURL});
+
+		JSONLayoututilitypageAPI._deleteLayoutUtilityPage(
+			layoutUtilityPageEntryId = ${layoutUtilityPageEntryId},
+			portalURL = ${portalURL});
+	}
+
+}

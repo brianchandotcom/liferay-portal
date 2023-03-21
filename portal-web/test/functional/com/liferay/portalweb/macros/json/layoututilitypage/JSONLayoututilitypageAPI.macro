@@ -1,0 +1,43 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to delete an utility page"
+	macro _deleteLayoutUtilityPage {
+		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/delete-layout-utility-page-entry \
+				-u test@liferay.com:test \
+				-d layoutUtilityPageEntryId=${layoutUtilityPageEntryId}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	@summary = "Get the layoutUtilityPageEntryId from an utility page by using groupId and layoutUtilityPageName"
+	macro _getLayoutUtilityPageEntryId {
+		Variables.assertDefined(parameterList = "${groupId},${layoutUtilityPageName}");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/get-layout-utility-page-entries \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var layoutUtilityPageEntryId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${layoutUtilityPageName}')]['layoutUtilityPageEntryId']");
+
+		if (${layoutUtilityPageEntryId} == "") {
+			fail("FAIL. Cannot find utility page.");
+		}
+
+		return ${layoutUtilityPageEntryId};
+	}
+
+}

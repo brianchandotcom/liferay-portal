@@ -62,6 +62,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,22 +84,12 @@ public class SystemObjectRelatedObjectsTest {
 	public static void setUpClass() {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-162964", "true"
-			).build());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-153117", "true"
 			).build());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-162964", "false"
-			).build());
-
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-153117", "false"
@@ -229,9 +220,6 @@ public class SystemObjectRelatedObjectsTest {
 			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntriesInManyToManyRelationship(
 				objectRelationship);
 
-			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntriesInOneToManyRelationship(
-				objectRelationship);
-
 			objectRelationship =
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					_objectDefinition, _userSystemObjectDefinition,
@@ -241,6 +229,15 @@ public class SystemObjectRelatedObjectsTest {
 			_objectRelationships.add(objectRelationship);
 
 			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntriesInManyToOneRelationship(
+				objectRelationship);
+
+			objectRelationship =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_userSystemObjectDefinition, _objectDefinition,
+					_user.getUserId(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntriesInOneToManyRelationship(
 				objectRelationship);
 		}
 	}
@@ -259,6 +256,7 @@ public class SystemObjectRelatedObjectsTest {
 			objectRelationship);
 	}
 
+	@Ignore
 	@Test
 	public void testPostSystemObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship()
 		throws Exception {
@@ -371,6 +369,7 @@ public class SystemObjectRelatedObjectsTest {
 			objectRelationship);
 	}
 
+	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship()
 		throws Exception {

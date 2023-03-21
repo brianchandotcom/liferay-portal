@@ -72,6 +72,30 @@ public class JournalArticleExpirationTest {
 	}
 
 	@Test
+	public void testApproveScheduledJournalArticleWithFutureExpirationDate()
+		throws Exception {
+
+		long now = System.currentTimeMillis();
+
+		Date displayDate = new Date(now - Time.HOUR);
+		Date expirationDate = new Date(now + (Time.YEAR * 2));
+
+		_checkArticles(
+			displayDate, expirationDate, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Test
+	public void testApproveScheduledJournalArticleWithNeverExpires()
+		throws Exception {
+
+		long now = System.currentTimeMillis();
+
+		Date displayDate = new Date(now - Time.HOUR);
+
+		_checkArticles(displayDate, null, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Test
 	public void testExpireApprovedArticle() throws Exception {
 		testExpireArticle(true, _MODE_DEFAULT);
 	}
@@ -117,7 +141,8 @@ public class JournalArticleExpirationTest {
 
 	@Test
 	public void testSetFutureExpirationDate() throws Exception {
-		JournalArticle article = addArticle(_group.getGroupId(), true, false);
+		JournalArticle article = addArticle(
+			_group.getGroupId(), false, true, false);
 
 		Date modifiedDate = article.getModifiedDate();
 
@@ -141,7 +166,8 @@ public class JournalArticleExpirationTest {
 	}
 
 	protected JournalArticle addArticle(
-			long groupId, boolean publish, boolean scheduled)
+			long groupId, boolean neverExpires, boolean publish,
+			boolean scheduled)
 		throws Exception {
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
@@ -200,8 +226,8 @@ public class JournalArticleExpirationTest {
 			expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
 			expirationDateCalendar.get(Calendar.YEAR),
 			expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
-			expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0, 0,
-			true, true, false, null, null, null, null, serviceContext);
+			expirationDateCalendar.get(Calendar.MINUTE), neverExpires, 0, 0, 0,
+			0, 0, true, true, false, null, null, null, null, serviceContext);
 	}
 
 	protected Calendar getExpirationCalendar(long timeUnit, int timeValue)
@@ -225,7 +251,7 @@ public class JournalArticleExpirationTest {
 		// Add expiring, approved Article
 
 		JournalArticle article = addArticle(
-			_group.getGroupId(), approved, false);
+			_group.getGroupId(), false, approved, false);
 
 		// Add a version of the article, changing expire date
 

@@ -7092,10 +7092,15 @@ public class JournalArticleLocalServiceImpl
 
 				dynamicQuery.add(expirationDateProperty.le(nextExpirationDate));
 
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
 				dynamicQuery.add(
-					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
+					RestrictionsFactoryUtil.or(
+						RestrictionsFactoryUtil.eq(
+							"status", WorkflowConstants.STATUS_APPROVED),
+						RestrictionsFactoryUtil.and(
+							RestrictionsFactoryUtil.eq(
+								"status", WorkflowConstants.STATUS_SCHEDULED),
+							RestrictionsFactoryUtil.le(
+								"displayDate", expirationDate))));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(

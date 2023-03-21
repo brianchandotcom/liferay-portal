@@ -129,6 +129,12 @@ export function getApplicationsById(id: number) {
 	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
 }
 
+export function getExternalReferenceCodeById(id: number) {
+	return axios.get(
+		`${DeliveryAPI}/?filter=id eq '${id}'&fields=externalReferenceCode`
+	);
+}
+
 export function updateRaylifeApplication(
 	externalReferenceCode: string,
 	status: string

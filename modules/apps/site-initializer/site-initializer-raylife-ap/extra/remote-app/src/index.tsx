@@ -17,6 +17,7 @@ import ReactDOM from 'react-dom';
 import ClayIconProvider from './common/context/ClayIconProvider';
 
 import './common/styles/index.scss';
+import NotificationSidebar from './common/components/notification-sidebar/index';
 import {GoogleMapsService} from './common/services/google-maps/google-maps';
 import NewApplicationAutoContextProvider from './routes/applications/context/NewApplicationAutoContextProvider';
 import ApplicationDetails from './routes/applications/pages/ApplicationDetails';
@@ -27,7 +28,6 @@ import Claims from './routes/claims/pages/Claims';
 import ClaimDetails from './routes/claims/pages/ClaimsDetails';
 import ClaimsTable from './routes/claims/pages/ClaimsTable';
 import ProductPerformance from './routes/dashboard/ProductPerformance';
-import NotificationSidebar from './routes/dashboard/notification-sidebar/index';
 import RecentApplications from './routes/dashboard/pages/RecentApplications';
 import WhatsNewModal from './routes/dashboard/pages/SettingsModals';
 import Policies from './routes/policies/pages/Policies';

@@ -18,7 +18,7 @@ const headlessAPI = 'o/headless-user-notification/v1.0';
 
 export function getUserNotification(pageSize: number, page: number) {
 	return axios.get(
-		`${headlessAPI}/my-user-notifications/?&pageSize=${pageSize}&page=${page}`
+		`${headlessAPI}/my-user-notifications/?&pageSize=${pageSize}&page=${page}&sort=dateCreated:desc`
 	);
 }
 export function putUserNotificationRead(userNotificationId: number) {

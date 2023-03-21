@@ -37,7 +37,7 @@ function SegmentsExperimentsModal({
 	const [busy, setBusy] = useState(false);
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputGoal, setInputGoal] = useState(
-		(goal && goal.value) || (goals[0] && goals[0].value)
+		goal?.value || goals?.[0]?.value
 	);
 	const [inputName, setInputName] = useState(name);
 	const [invalidForm, setInvalidForm] = useState(false);

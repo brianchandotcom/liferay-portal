@@ -100,12 +100,12 @@ public class LayoutSetCTDisplayRenderer
 				layoutSet.isPrivateLayout(), locale);
 		}
 
-		return _language.get(locale, "pages");
+		return _language.get(locale, "page-set");
 	}
 
 	@Override
 	public String getTypeName(Locale locale) {
-		return _language.get(locale, "pages");
+		return _language.get(locale, "page-set");
 	}
 
 	@Reference

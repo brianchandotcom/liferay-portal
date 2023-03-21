@@ -381,7 +381,9 @@ export default function ChangeTrackingCollectionEditView({
 
 						<ClayButton
 							displayType="secondary"
-							onClick={() => {
+							onClick={(event) => {
+								event.preventDefault();
+
 								resetForm();
 								navigate(redirect);
 							}}

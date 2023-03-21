@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClaySelectWithOption} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {openSelectionModal, openToast} from 'frontend-js-web';
@@ -343,9 +344,10 @@ function AddExtensionButton({
 				<ClayButton
 					className="mb-3"
 					displayType="secondary"
-					small
 					type="button"
 				>
+					<ClayIcon className="mr-2" symbol="plus" />
+
 					{Liferay.Language.get('add-javascript-client-extensions')}
 				</ClayButton>
 			}

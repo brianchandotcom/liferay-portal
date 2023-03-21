@@ -176,9 +176,23 @@ else {
 			</div>
 		</div>
 	</c:if>
+
+	<div class="mb-5">
+		<h3 class="sheet-subtitle"><liferay-ui:message key="custom-css" /></h3>
+
+		<aui:input disabled="<%= selLayout.isInheritLookAndFeel() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="mb-0" />
+
+		<p class="text-secondary">
+			<liferay-ui:message key="this-css-is-loaded-after-the-theme" />
+		</p>
+	</div>
 </clay:sheet-section>
 
 <aui:script sandbox="<%= true %>">
+	const regularCss = document.getElementById('<portlet:namespace />regularCss');
+	const regularCssLabel = document.querySelector(
+		'[for="<portlet:namespace />regularCss"]'
+	);
 	const regularInheritLookAndFeel = document.getElementById(
 		'<portlet:namespace />regularInheritLookAndFeel'
 	);
@@ -198,6 +212,8 @@ else {
 
 		inheritThemeOptions.classList.toggle('hide');
 		themeOptions.classList.toggle('hide');
+
+		Liferay.Util.toggleDisabled([regularCss, regularCssLabel], true);
 	});
 
 	regularUniqueLookAndFeel.addEventListener('change', (event) => {
@@ -206,6 +222,8 @@ else {
 
 		inheritThemeOptions.classList.toggle('hide');
 		themeOptions.classList.toggle('hide');
+
+		Liferay.Util.toggleDisabled([regularCss, regularCssLabel], false);
 	});
 </aui:script>
 

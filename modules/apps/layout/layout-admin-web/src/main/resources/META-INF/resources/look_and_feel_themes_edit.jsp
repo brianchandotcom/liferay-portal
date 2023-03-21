@@ -16,15 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-%>
-
 <p class="h4 mb-3 mt-4"><liferay-ui:message key="current-theme" /></p>
 
 <div id="<portlet:namespace />currentThemeContainer">
 	<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
 </div>
-
-<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>" />

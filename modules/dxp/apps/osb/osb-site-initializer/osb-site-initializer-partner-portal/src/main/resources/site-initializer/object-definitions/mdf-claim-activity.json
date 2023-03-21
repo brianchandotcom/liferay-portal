@@ -64,6 +64,40 @@
 			"name": "currency",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "List of Qualified Leads"
+			},
+			"name": "listOfQualifiedLeads",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "csv, xlsx, xls"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaimActivity"
+				}
+			],
+			"required": false,
+			"type": "Long"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

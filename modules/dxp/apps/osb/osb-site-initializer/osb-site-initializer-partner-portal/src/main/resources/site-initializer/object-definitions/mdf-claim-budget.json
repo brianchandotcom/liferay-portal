@@ -38,6 +38,40 @@
 			"name": "selected",
 			"required": false,
 			"type": "Boolean"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Invoice"
+			},
+			"name": "invoice",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, pdf, png, tiff, doc, docx"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaimBudget"
+				}
+			],
+			"required": false,
+			"type": "Long"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

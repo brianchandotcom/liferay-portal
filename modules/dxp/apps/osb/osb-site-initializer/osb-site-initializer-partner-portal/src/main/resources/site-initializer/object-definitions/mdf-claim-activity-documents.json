@@ -1,0 +1,47 @@
+{
+	"label": {
+		"en_US": "MDF Claim Activity Document"
+	},
+	"name": "MDFClaimActivityDocument",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "All Contents"
+			},
+			"name": "allContents",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "doc, docx.jpeg, jpg, pdf, tif, tiff"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaimActivityAllContents"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "MDF Claim Activities Documents"
+	},
+	"scope": "company"
+}

@@ -2136,13 +2136,18 @@ public abstract class BaseBuild implements Build {
 								return;
 							}
 
+							String invocationURL =
+								JenkinsResultsParserUtil.getLocalURL(
+									getInvocationURL());
+
 							try {
 								JenkinsResultsParserUtil.toString(
-									JenkinsResultsParserUtil.getLocalURL(
-										getInvocationURL()));
+									invocationURL);
 							}
 							catch (IOException ioException) {
-								throw new RuntimeException(ioException);
+								throw new RuntimeException(
+									"Invocation failure " + invocationURL,
+									ioException);
 							}
 
 							setStatus("starting");

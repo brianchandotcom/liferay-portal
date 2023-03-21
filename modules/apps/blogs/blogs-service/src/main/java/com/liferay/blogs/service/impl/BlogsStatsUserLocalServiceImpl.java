@@ -146,7 +146,8 @@ public class BlogsStatsUserLocalServiceImpl
 					BlogsEntryTable.INSTANCE.entryId)
 			)
 		).groupBy(
-			_groupIdAlias, _userIdAlias, _companyIdAlias
+			BlogsEntryTable.INSTANCE.groupId, BlogsEntryTable.INSTANCE.userId,
+			BlogsEntryTable.INSTANCE.companyId
 		).as(
 			"innerTable"
 		);

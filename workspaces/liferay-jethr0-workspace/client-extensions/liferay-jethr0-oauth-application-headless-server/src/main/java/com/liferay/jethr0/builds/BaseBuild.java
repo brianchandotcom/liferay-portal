@@ -20,7 +20,10 @@ import com.liferay.jethr0.task.Task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -29,17 +32,17 @@ import org.json.JSONObject;
  */
 public abstract class BaseBuild implements Build {
 
+	@Override
 	public void addBuildParameter(BuildParameter buildParameter) {
 		addBuildParameters(Arrays.asList(buildParameter));
 	}
 
+	@Override
 	public void addBuildParameters(List<BuildParameter> buildParameters) {
-		for (BuildParameter buildParameter : buildParameters) {
-			if (_buildParameters.contains(buildParameter)) {
-				continue;
-			}
+		buildParameters.removeAll(Collections.singleton(null));
 
-			_buildParameters.add(buildParameter);
+		for (BuildParameter buildParameter : buildParameters) {
+			_buildParameters.put(buildParameter.getName(), buildParameter);
 		}
 	}
 
@@ -64,8 +67,14 @@ public abstract class BaseBuild implements Build {
 		return _buildName;
 	}
 
+	@Override
+	public BuildParameter getBuildParameter(String name) {
+		return _buildParameters.get(name);
+	}
+
+	@Override
 	public List<BuildParameter> getBuildParameters() {
-		return _buildParameters;
+		return new ArrayList<>(_buildParameters.values());
 	}
 
 	@Override
@@ -112,12 +121,16 @@ public abstract class BaseBuild implements Build {
 		return _tasks;
 	}
 
+	@Override
 	public void removeBuildParameter(BuildParameter buildParameter) {
-		_buildParameters.remove(buildParameter);
+		_buildParameters.remove(buildParameter.getName());
 	}
 
+	@Override
 	public void removeBuildParameters(List<BuildParameter> buildParameters) {
-		_buildParameters.removeAll(buildParameters);
+		for (BuildParameter buildParameter : buildParameters) {
+			removeBuildParameter(buildParameter);
+		}
 	}
 
 	@Override
@@ -150,7 +163,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private final String _buildName;
-	private final List<BuildParameter> _buildParameters = new ArrayList<>();
+	private final Map<String, BuildParameter> _buildParameters =
+		new HashMap<>();
 	private final long _id;
 	private String _jobName;
 	private final Project _project;

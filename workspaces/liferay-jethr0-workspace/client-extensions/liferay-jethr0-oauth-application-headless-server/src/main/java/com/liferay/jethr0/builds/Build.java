@@ -39,6 +39,8 @@ public interface Build {
 
 	public String getBuildName();
 
+	public BuildParameter getBuildParameter(String name);
+
 	public List<BuildParameter> getBuildParameters();
 
 	public long getId();

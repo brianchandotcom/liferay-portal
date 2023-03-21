@@ -47,17 +47,17 @@ definition {
 				ObjectPortlet.changePagination(itemsPerPage = "4 items");
 			}
 
-			task ("Then confirm that only 4 entries are displayed ") {
+			task ("Then confirm that only 4 entries are displayed") {
 				VerifyElementPresent(
 					locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 					value1 = "Test Dataset");
 			}
 
-			task ("When to switch to page 2 ") {
+			task ("When to switch to page 2") {
 				ObjectPortlet.checkAnyPage(pageNumber = 2);
 			}
 
-			task ("") {
+			task ("Then 2 entries are displayed") {
 				VerifyElementPresent(
 					locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 					value1 = "Test Dataset");

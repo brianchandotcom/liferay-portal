@@ -16,21 +16,11 @@ package com.liferay.commerce.address.web.internal.frontend.taglib.servlet.taglib
 
 import com.liferay.commerce.address.web.internal.constants.CommerceCountryScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,23 +29,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=30",
-		"screen.navigation.entry.order:Integer=30"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=30",
+	service = ScreenNavigationCategory.class
 )
 public class CommerceCountryChannelsScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry<Country> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceCountryScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_COUNTRY_CHANNELS;
-	}
-
-	@Override
-	public String getEntryKey() {
 		return CommerceCountryScreenNavigationConstants.
 			CATEGORY_KEY_COMMERCE_COUNTRY_CHANNELS;
 	}
@@ -65,7 +46,7 @@ public class CommerceCountryChannelsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "channels");
+		return language.get(resourceBundle, "channels");
 	}
 
 	@Override
@@ -74,35 +55,7 @@ public class CommerceCountryChannelsScreenNavigationCategory
 			SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL;
 	}
 
-	@Override
-	public boolean isVisible(User user, Country country) {
-		if (country == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		_jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
-			"/commerce_country/channels.jsp");
-	}
-
 	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.address.web)"
-	)
-	private ServletContext _servletContext;
+	protected Language language;
 
 }

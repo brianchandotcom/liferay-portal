@@ -1,5 +1,6 @@
 assemble:
     - from: build
+      include: "static/**/*"
       into: static
 liferay-sample-custom-element-2:
     cssURLs:

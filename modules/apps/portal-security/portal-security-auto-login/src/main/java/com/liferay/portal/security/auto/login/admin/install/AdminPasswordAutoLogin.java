@@ -15,7 +15,6 @@
 package com.liferay.portal.security.auto.login.admin.install;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -66,31 +65,29 @@ public class AdminPasswordAutoLogin extends BaseAutoLogin {
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT +
 				company.getMx();
 
-		try {
-			User user = _userLocalService.getUserByEmailAddress(
-				company.getCompanyId(), emailAdressAdminUser);
+		User user = _userLocalService.fetchUserByEmailAddress(
+			company.getCompanyId(), emailAdressAdminUser);
 
-			String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-			String reminderQueryAnswer = user.getReminderQueryAnswer();
-
-			if (user.isPasswordReset() && Validator.isNull(password1) &&
-				reminderQueryAnswer.equals(WorkflowConstants.LABEL_PENDING) &&
-				Validator.isNull(user.getReminderQueryQuestion()) &&
-				Validator.isNull(user.getLastFailedLoginDate()) &&
-				Validator.isNull(user.getLockoutDate())) {
-
-				String[] credentials = new String[3];
-
-				credentials[0] = String.valueOf(user.getUserId());
-				credentials[1] = user.getPassword();
-				credentials[2] = Boolean.TRUE.toString();
-
-				return credentials;
-			}
+		if (user == null) {
+			return null;
 		}
-		catch (PortalException portalException) {
-			_log.debug(portalException);
+
+		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
+		String reminderQueryAnswer = user.getReminderQueryAnswer();
+
+		if (user.isPasswordReset() && Validator.isNull(password1) &&
+			reminderQueryAnswer.equals(WorkflowConstants.LABEL_PENDING) &&
+			Validator.isNull(user.getReminderQueryQuestion()) &&
+			Validator.isNull(user.getLastFailedLoginDate()) &&
+			Validator.isNull(user.getLockoutDate())) {
+
+			String[] credentials = new String[3];
+
+			credentials[0] = String.valueOf(user.getUserId());
+			credentials[1] = user.getPassword();
+			credentials[2] = Boolean.TRUE.toString();
+
+			return credentials;
 		}
 
 		return null;

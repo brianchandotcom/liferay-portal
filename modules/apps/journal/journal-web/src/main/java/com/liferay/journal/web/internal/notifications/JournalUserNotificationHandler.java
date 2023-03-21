@@ -78,6 +78,14 @@ public class JournalUserNotificationHandler
 				userFullName);
 		}
 		else if (notificationType ==
+					UserNotificationDefinition.
+						NOTIFICATION_TYPE_EXPIRED_ENTRY) {
+
+			title = _language.format(
+				serviceContext.getLocale(), "x-expired-a-web-content-article",
+				userFullName);
+		}
+		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			title = _language.format(

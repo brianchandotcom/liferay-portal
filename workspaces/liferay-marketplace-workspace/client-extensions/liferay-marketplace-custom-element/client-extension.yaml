@@ -1,6 +1,3 @@
-assemble:
-    - from: build
-      into: static
 liferay-marketplace-custom-element:
     cssURLs:
         - .*.css

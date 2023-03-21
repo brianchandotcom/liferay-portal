@@ -48,6 +48,16 @@ definition {
 			var userPassword = "test";
 		}
 
+		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
+		var globalGroupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Global",
+			site = "true");
+
+		var basicWebContentStructureId = JSONDDMstructure._getStructureId(
+			classNameId = ${classNameId},
+			groupId = ${globalGroupId},
+			structureName = "Basic Web Content");
+
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
 				-u ${userEmailAddress}:${userPassword} \
@@ -57,7 +67,7 @@ definition {
 				-d titleMap=${titleMap} \
 				-d descriptionMap=${descriptionMap} \
 				-d content=${contentXml} \
-				-d ddmStructureKey=BASIC-WEB-CONTENT \
+				-d ddmStructureId=${basicWebContentStructureId} \
 				-d ddmTemplateKey=BASIC-WEB-CONTENT \
 				-d serviceContext=${serviceContext}
 		''';

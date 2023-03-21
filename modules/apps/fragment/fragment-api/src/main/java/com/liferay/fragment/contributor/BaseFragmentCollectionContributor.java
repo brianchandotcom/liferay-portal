@@ -50,7 +50,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -152,13 +151,16 @@ public abstract class BaseFragmentCollectionContributor
 	public ResourceBundleLoader getResourceBundleLoader() {
 		ServletContext servletContext = getServletContext();
 
-		return Optional.ofNullable(
+		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByServletContextName(
-					servletContext.getServletContextName())
-		).orElse(
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader()
-		);
+					servletContext.getServletContextName());
+
+		if (resourceBundleLoader != null) {
+			return resourceBundleLoader;
+		}
+
+		return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 	}
 
 	public abstract ServletContext getServletContext();

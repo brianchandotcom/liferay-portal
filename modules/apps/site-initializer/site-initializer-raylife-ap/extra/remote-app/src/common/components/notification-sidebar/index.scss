@@ -1,19 +1,19 @@
 .notification-container {
 	.bubble-unread {
-		position: relative;
+		align-items: center;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		position: relative;
 	}
 	.bubble-unread::before {
-		content: '';
-		position: absolute;
-		width: 0.5rem;
-		height: 0.5rem;
 		background-color: #ec0d6b;
 		border-radius: 50%;
+		content: '';
+		height: 0.5rem;
+		position: absolute;
 		right: 1rem;
 		transform: translate(-50%, -50%);
+		width: 0.5rem;
 	}
 	.dotted-line:after {
 		background-image: linear-gradient(

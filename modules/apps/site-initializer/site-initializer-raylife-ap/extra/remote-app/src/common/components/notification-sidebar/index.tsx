@@ -77,7 +77,8 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Error getting notifications:', error);
 			throw error;
 		}
@@ -93,7 +94,8 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return data;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(
 				`Error fetching external reference code for ID ${id}: ${error}`
 			);
@@ -118,7 +120,8 @@ const NotificationSidebar: React.FC = () => {
 					const route = creatRoute(externalReferenceCodeUpdated);
 
 					return {...post, link: route};
-				} else {
+				}
+				else {
 					const genericRoute = '#!';
 
 					return {...post, link: genericRoute};
@@ -148,7 +151,7 @@ const NotificationSidebar: React.FC = () => {
 	return (
 		<div className="notification-container">
 			{!arrayOfLinks.length && (
-				<p className="align-items-center d-flex justify-content-center pt-8">
+				<p className="align-items-center d-flex justify-content-center pt-8 vh-100">
 					No notifications
 				</p>
 			)}

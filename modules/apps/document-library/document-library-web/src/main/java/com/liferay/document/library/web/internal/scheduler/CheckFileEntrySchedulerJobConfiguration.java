@@ -16,11 +16,13 @@ package com.liferay.document.library.web.internal.scheduler;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Map;
 
@@ -39,9 +41,18 @@ public class CheckFileEntrySchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
+	public UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
+		return companyId -> _dlFileEntryLocalService.checkFileEntries(
+			companyId, _dlConfiguration.checkInterval());
+	}
+
+	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> _dlFileEntryLocalService.checkFileEntries(
-			_dlConfiguration.checkInterval());
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> _dlFileEntryLocalService.checkFileEntries(
+				companyId, _dlConfiguration.checkInterval()));
 	}
 
 	@Override
@@ -55,6 +66,9 @@ public class CheckFileEntrySchedulerJobConfiguration
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private volatile DLConfiguration _dlConfiguration;
 

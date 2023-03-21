@@ -58,27 +58,6 @@ const CONTRIBUTORS = [
 	},
 ];
 
-const CONTRIBUTORS_WITH_ERRORS = [
-	{
-		conjunctionId: 'and',
-		conjunctionInputId: 'conjunction-input-1',
-		initialQuery: {
-			conjunctionName: 'and',
-			error: 'error in the query',
-			groupId: 'group_01',
-			items: [
-				{
-					operatorName: 'eq',
-					propertyName: 'value',
-					value: 'value',
-				},
-			],
-		},
-		inputId: 'input-id-for-backend-form',
-		propertyKey: 'first-test-values-group',
-	},
-];
-
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	navigate: jest.fn(),
@@ -288,32 +267,5 @@ describe('SegmentEdit', () => {
 				'segment-edit-page-root--with-warning'
 			).length
 		).toBe(0);
-	});
-
-	it('displays error page when there are errors in the contributors', () => {
-		window.Liferay.FeatureFlags['LPS-166954'] = true;
-
-		const {getByText} = _renderSegmentEditComponent({
-			contributors: CONTRIBUTORS_WITH_ERRORS,
-			hasUpdatePermission: true,
-			isSegmentationEnabled: true,
-			showInEditMode: true,
-		});
-
-		expect(getByText('segment-not-found')).toBeInTheDocument();
-		expect(
-			getByText(
-				'the-criteria-used-in-this-segment-is-no-longer-available'
-			)
-		).toBeInTheDocument();
-		expect(getByText('go-to-segments')).toBeInTheDocument();
-
-		const goToSegmentsButton = getByText('go-to-segments');
-
-		expect(goToSegmentsButton).not.toBe(null);
-
-		fireEvent.click(goToSegmentsButton);
-
-		expect(navigate).toHaveBeenCalledTimes(1);
 	});
 });

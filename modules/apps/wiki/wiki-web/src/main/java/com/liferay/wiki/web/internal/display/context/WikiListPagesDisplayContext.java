@@ -616,32 +616,6 @@ public class WikiListPagesDisplayContext {
 		}
 	}
 
-	private boolean _hasViewPendingStatusPermission(WikiPage wikiPage)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			_wikiRequestHelper.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				_wikiRequestHelper.getCompanyId(),
-				_wikiRequestHelper.getScopeGroupId())) {
-
-			return true;
-		}
-
-		WikiPage lastWikiPage = WikiPageLocalServiceUtil.getPage(
-			wikiPage.getResourcePrimKey(), false);
-
-		if ((wikiPage.getVersion() >= lastWikiPage.getVersion()) ||
-			(permissionChecker.getUserId() ==
-			 	lastWikiPage.getStatusByUserId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _hasSubscribePermission(WikiPage wikiPage)
 		throws PortalException {
 
@@ -667,6 +641,32 @@ public class WikiListPagesDisplayContext {
 		}
 
 		return true;
+	}
+
+	private boolean _hasViewPendingStatusPermission(WikiPage wikiPage)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			_wikiRequestHelper.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				_wikiRequestHelper.getCompanyId(),
+				_wikiRequestHelper.getScopeGroupId())) {
+
+			return true;
+		}
+
+		WikiPage lastWikiPage = WikiPageLocalServiceUtil.getPage(
+			wikiPage.getResourcePrimKey(), false);
+
+		if ((wikiPage.getVersion() >= lastWikiPage.getVersion()) ||
+			(permissionChecker.getUserId() ==
+				lastWikiPage.getStatusByUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isCopyPasteEnabled(WikiPage wikiPage)

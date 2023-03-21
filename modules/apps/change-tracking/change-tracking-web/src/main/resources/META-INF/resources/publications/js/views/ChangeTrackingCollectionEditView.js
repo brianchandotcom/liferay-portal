@@ -366,14 +366,15 @@ export default function ChangeTrackingCollectionEditView({
 						<ClayButton
 							disabled={
 								saveButtonDisabled ||
-								nameField.length > nameFieldMaxLength ||
-								nameField.length < 1 ||
-								descriptionField.length >
-									descriptionFieldMaxLength
+								(nameField &&
+									(nameField.length > nameFieldMaxLength ||
+										nameField.length < 1)) ||
+								(descriptionField &&
+									descriptionField.length >
+										descriptionFieldMaxLength)
 							}
 							displayType="primary"
 							id="saveButton"
-							onClick={() => handleSubmit()}
 							type="submit"
 						>
 							{saveButtonLabel}

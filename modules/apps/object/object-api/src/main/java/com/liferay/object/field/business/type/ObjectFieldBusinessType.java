@@ -63,7 +63,9 @@ public interface ObjectFieldBusinessType {
 
 	public PropertyDefinition.PropertyType getPropertyType();
 
-	public default Set<String> getRequiredObjectFieldSettingsNames() {
+	public default Set<String> getRequiredObjectFieldSettingsNames(
+		ObjectField objectField) {
+
 		return Collections.emptySet();
 	}
 
@@ -99,7 +101,7 @@ public interface ObjectFieldBusinessType {
 		}
 
 		for (String requiredObjectFieldSettingName :
-				getRequiredObjectFieldSettingsNames()) {
+				getRequiredObjectFieldSettingsNames(objectField)) {
 
 			if (Validator.isNull(
 					objectFieldSettingsValuesMap.get(
@@ -121,7 +123,7 @@ public interface ObjectFieldBusinessType {
 		notAllowedObjectFieldSettingsNames.removeAll(
 			getAllowedObjectFieldSettingsNames());
 		notAllowedObjectFieldSettingsNames.removeAll(
-			getRequiredObjectFieldSettingsNames());
+			getRequiredObjectFieldSettingsNames(objectField));
 
 		if (!notAllowedObjectFieldSettingsNames.isEmpty()) {
 			throw new ObjectFieldSettingNameException.NotAllowedNames(

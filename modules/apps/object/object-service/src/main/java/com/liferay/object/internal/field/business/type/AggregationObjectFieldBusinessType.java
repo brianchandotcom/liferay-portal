@@ -117,7 +117,9 @@ public class AggregationObjectFieldBusinessType
 	}
 
 	@Override
-	public Set<String> getRequiredObjectFieldSettingsNames() {
+	public Set<String> getRequiredObjectFieldSettingsNames(
+		ObjectField objectField) {
+
 		return SetUtil.fromArray(
 			"function", "objectFieldName", "objectRelationshipName");
 	}
@@ -148,7 +150,7 @@ public class AggregationObjectFieldBusinessType
 			objectFieldSettingsValuesMap.get("function"));
 
 		Set<String> requiredObjectFieldSettingsNames =
-			getRequiredObjectFieldSettingsNames();
+			getRequiredObjectFieldSettingsNames(objectField);
 
 		String objectFieldName = objectField.getName();
 

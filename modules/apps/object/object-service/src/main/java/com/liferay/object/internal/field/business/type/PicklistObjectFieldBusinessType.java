@@ -127,6 +127,19 @@ public class PicklistObjectFieldBusinessType
 	}
 
 	@Override
+	public Set<String> getRequiredObjectFieldSettingsNames(
+		ObjectField objectField) {
+
+		if (!objectField.isState()) {
+			return Collections.emptySet();
+		}
+
+		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
+	}
+
+	@Override
 	public void predefineObjectFieldSettings(
 			ObjectField newObjectField, ObjectField oldObjectField,
 			List<ObjectFieldSetting> objectFieldSettings)

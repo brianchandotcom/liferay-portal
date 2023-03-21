@@ -105,7 +105,9 @@ public class FormulaObjectFieldBusinessType implements ObjectFieldBusinessType {
 	}
 
 	@Override
-	public Set<String> getRequiredObjectFieldSettingsNames() {
+	public Set<String> getRequiredObjectFieldSettingsNames(
+		ObjectField objectField) {
+
 		return SetUtil.fromArray("output");
 	}
 

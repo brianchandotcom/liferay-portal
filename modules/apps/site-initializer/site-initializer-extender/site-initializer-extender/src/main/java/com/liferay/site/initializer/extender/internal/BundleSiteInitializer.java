@@ -1918,8 +1918,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				expandoBridge.setAttributeDefault(
 					jsonObject.getString("name"),
-					_getSerializableObjectValue(
-						jsonObject.get("defaultValue")));
+					_getValue(jsonObject.get("defaultValue")));
 
 				_setExpandoBridgeAttributeProperties(expandoBridge, jsonObject);
 
@@ -1928,7 +1927,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			expandoBridge.addAttribute(
 				jsonObject.getString("name"), jsonObject.getInt("dataType"),
-				_getSerializableObjectValue(jsonObject.get("defaultValue")));
+				_getValue(jsonObject.get("defaultValue")));
 
 			_setExpandoBridgeAttributeProperties(expandoBridge, jsonObject);
 		}
@@ -4333,16 +4332,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return map;
 	}
 
-	private Serializable _getSerializableObjectValue(Object object) {
-		if (object instanceof BigDecimal) {
-			BigDecimal bigDecimal = (BigDecimal)object;
-
-			return bigDecimal.doubleValue();
-		}
-
-		return (Serializable)object;
-	}
-
 	private String _getThemeId(
 		long companyId, String defaultThemeId, String themeName) {
 
@@ -4357,6 +4346,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return defaultThemeId;
+	}
+
+	private Serializable _getValue(Object object) {
+		if (object instanceof BigDecimal) {
+			BigDecimal bigDecimal = (BigDecimal)object;
+
+			return bigDecimal.doubleValue();
+		}
+
+		return (Serializable)object;
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)

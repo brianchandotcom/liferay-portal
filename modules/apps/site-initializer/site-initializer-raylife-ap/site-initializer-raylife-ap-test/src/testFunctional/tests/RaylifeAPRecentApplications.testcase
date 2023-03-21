@@ -1,0 +1,269 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-d2c";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+		Raylife.createRaylifeSite(siteName = "Raylife AP");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Automtion ID: LPS-157719 | Test Summary: Check that the 'All Applications' button redirects to the 'Applications' page"
+	@priority = 4
+	test AllApplicationsRedirectedToApplicationsPage {
+		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#AllApplicationsRedirectedToApplicationsPage";
+
+		task ("Given Site RaylifeAP is open") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+		}
+
+		task ("When the user click in the All Applications button") {
+			RaylifeAP.clickOnAllAplications();
+		}
+
+		task ("Then assert that he was redirected to the application page") {
+			RaylifeAP.assertPageHeader(key_header = "Applications");
+		}
+	}
+
+	@description = "Story ID: LPS-157719| Test Summary: Check if I can delete a recent application on the Kebab button"
+	@priority = 4
+	test AssertCanDeleteRecentApplications {
+		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#CanDeleteRecentApplications";
+
+		task ("Given I go to Site RaylifeAP") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+		}
+
+		task ("Then I click on kebab menu and in the delete option and state that the entry has been deleted") {
+			RaylifeAP.clickInApplicationKebabOption(
+				option = "Delete",
+				product = "",
+				status = "Incomplete");
+
+			RaylifeAP.AssertApplicationNumber();
+		}
+	}
+
+	@description = "Story ID: LPS-157719| Test Summary: Verify that when continuing the same flow in Raylife D2C, the status changes from Incompletet to Quoted"
+	@priority = 5
+	test AssertChangeFromIncompletetToBound {
+		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#ChangeFromIncompletetToBound";
+
+		task ("Given a user navigates to RaylifeD2C and starts a new flow") {
+			RaylifePaymentMethod.enablePayPalPayment();
+
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+
+			RaylifeHomePage.startFlow();
+
+			RaylifeContactInfo.typeAllBasicsInfoFields();
+
+			Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+			Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+			Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+		}
+
+		task ("When they return to RaylifeAP and check The status of Application") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAP.assertTableValue(
+				product = "Business Owners Policy",
+				status = "Incomplete");
+		}
+
+		task ("when they go to RaylifeD2C and complete the flow") {
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Quote Retrieves");
+
+			Refresh();
+
+			RaylifeRetrieveEmail.openLastIdCreated();
+		}
+
+		task ("When they navigate to the site and confirm the entry in the table") {
+			Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+			RaylifeIndustry.typeIndustry();
+
+			Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+			Raylife.formsFlow();
+
+			RaylifeCreateAccount.createAccount(createAccount = "true");
+
+			RaylifeUploadDocuments.uploadDocuments(
+				dmDocumentFileList = "Document_1.pdf",
+				title = "Business");
+
+			RaylifeUploadDocuments.uploadDocuments(
+				dmDocumentFileList = "Document_1.jpg",
+				title = "Build");
+
+			Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+			Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+			Click(
+				locator1 = "RaylifePaymentMethod#BILLING_OPTIONS",
+				value = "Pay in full");
+
+			Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+			Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+
+			AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+		}
+
+		task ("Then go to RaylifeAP and assert the status of application") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAP.assertTableValue(
+				product = "Business Owners Policy",
+				status = "Bound");
+		}
+	}
+
+	@description = "Story ID: LPS-157719| Test Summary: Verify that when continuing the same flow in Raylife D2C, the status changes from Open to Quoted"
+	@priority = 5
+	test AssertChangeFromOpenToQuoted {
+		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#ChangeFromOpenToQuoted";
+
+		task ("Given a user navigates to RaylifeD2C and starts a new flow") {
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+
+			RaylifeHomePage.startFlow();
+
+			RaylifeContactInfo.typeAllBasicsInfoFields();
+
+			Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+			Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+		}
+
+		task ("When they return to RaylifeAP and check The status of Application") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAP.assertTableValue(
+				product = "Business Owners Policy",
+				status = "Open");
+		}
+
+		task ("when they go to RaylifeD2C and complete the flow") {
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Quote Retrieves");
+
+			Refresh();
+
+			RaylifeRetrieveEmail.openLastIdCreated();
+		}
+
+		task ("When they navigate to the site and confirm the entry in the table") {
+			Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+			RaylifeIndustry.typeIndustry();
+
+			Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+			Raylife.formsFlow();
+		}
+
+		task ("Then go to RaylifeAP and assert the status of application") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAP.assertTableValue(
+				product = "Business Owners Policy",
+				status = "Quoted");
+		}
+	}
+
+	@description = "Story ID: LPS-157719 | Test Summary: Check if when a user make a complete flow in Raylife d2c, the status 'Bound' is add in Recent Applications"
+	@priority = 4
+	test AssertifStatusdBoundIsAddInRecentApplications {
+		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#AssertifStatusdBoundIsAddInRecentApplications";
+
+		task ("Given the PayPalPayment method is enable and the user go to raylife D2C") {
+			RaylifePaymentMethod.enablePayPalPayment();
+
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+		}
+
+		task ("And pass throught all the flow on Raylife D2C") {
+			RaylifeHomePage.startFlow();
+
+			Raylife.formsFlow();
+		}
+
+		task ("And create a new account") {
+			RaylifeCreateAccount.createAccount(createAccount = "true");
+
+			RaylifeUploadDocuments.uploadDocuments(
+				dmDocumentFileList = "Document_1.pdf",
+				title = "Business");
+
+			RaylifeUploadDocuments.uploadDocuments(
+				dmDocumentFileList = "Document_1.jpg",
+				title = "Build");
+
+			Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+		}
+
+		task ("when submit the payment") {
+			Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+			Click(
+				locator1 = "RaylifePaymentMethod#BILLING_OPTIONS",
+				value = "Pay in full");
+
+			Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+			Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+
+			AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+		}
+
+		task ("Then go to RaylifeAP and assert if the status bound is add on recent applications") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAP.assertTableValue(
+				product = "Business Owners Policy",
+				status = "Bound");
+		}
+	}
+
+}

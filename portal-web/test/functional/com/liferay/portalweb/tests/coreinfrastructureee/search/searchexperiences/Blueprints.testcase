@@ -337,7 +337,7 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
-	test ApplyBlueprintWithDefaultElement {
+	test ApplyBlueprintWithOOTBElement {
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -2572,7 +2572,7 @@ definition {
 			value1 = "apple apple apple");
 	}
 
-	test SearchWithCopiedDefaultElement {
+	test SearchWithCopiedOOTBElement {
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
@@ -3825,46 +3825,6 @@ definition {
 		AssertTextPresent(value1 = "apple");
 	}
 
-	test ViewDefaultElement {
-		Blueprints.openBlueprintsAdmin();
-
-		Navigator.gotoNavItem(navItem = "Elements");
-
-		Search.searchCP(searchTerm = "Boost All Keywords Match");
-
-		Blueprints.openEntryMenu(title = "Boost All Keywords Match");
-
-		AssertElementPresent(
-			key_menuItem = "Export",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		AssertElementNotPresent(
-			key_menuItem = "Delete",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		Blueprints.gotoEntryMenuItem(
-			menuItem = "View",
-			title = "Boost All Keywords Match");
-
-		AssertElementPresent(locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_READ_ONLY_INDICATOR");
-
-		AssertElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
-
-		AssertElementNotPresent(
-			key_text = "Cancel",
-			locator1 = "Button#ANY");
-
-		Click(
-			key_text = "Close",
-			locator1 = "Link#ANY");
-
-		AssertTextEquals(
-			locator1 = "ControlMenu#HEADING",
-			value1 = "Blueprints");
-	}
-
 	test ViewElementJSONViaBlueprintsQueryBuilder {
 		Blueprints.openBlueprintsAdmin();
 
@@ -4339,6 +4299,46 @@ definition {
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
 		SelectWindow(locator1 = "Using a Search Blueprint on a Search Page - Liferay Learn");
+	}
+
+	test ViewOOTBElement {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Search.searchCP(searchTerm = "Boost All Keywords Match");
+
+		Blueprints.openEntryMenu(title = "Boost All Keywords Match");
+
+		AssertElementPresent(
+			key_menuItem = "Export",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertElementNotPresent(
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		Blueprints.gotoEntryMenuItem(
+			menuItem = "View",
+			title = "Boost All Keywords Match");
+
+		AssertElementPresent(locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_READ_ONLY_INDICATOR");
+
+		AssertElementNotPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY");
+
+		AssertElementNotPresent(
+			key_text = "Cancel",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_text = "Close",
+			locator1 = "Link#ANY");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Blueprints");
 	}
 
 	@description = "This is a use case for LPS-147329."

@@ -240,6 +240,7 @@ export function MenuItem({
 											}
 
 											if (event.key === 'Enter') {
+												event.preventDefault();
 												event.stopPropagation();
 
 												setIsMovementEnabled(

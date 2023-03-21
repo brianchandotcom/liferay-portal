@@ -36,6 +36,7 @@
 .ray-sidebar-container .footer-bar .avatar-container,
 .ray-sidebar-container .middle-bar .menu-item-name {
 	overflow: hidden;
+	padding-left: 5px;
 }
 
 .ray-sidebar-container .middle-bar div {
@@ -138,6 +139,8 @@
 	cursor: pointer;
 }
 
+.layout-container #Account .header-content .search-icon,
+.layout-container #Notifications .header-content .search-icon,
 .layout-container #Details .header-content .search-icon {
 	display: none !important;
 }
@@ -167,7 +170,7 @@
 	font-weight: 700;
 }
 
-@media screen and (max-width: 1625px) {
+@media creen and (max-width: 1625px) {
 	.layout-container
 		.raylife-agent-portal-content:not(#Applications
 			.raylife-agent-portal-content, #Details

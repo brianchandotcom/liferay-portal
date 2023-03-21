@@ -1,36 +1,72 @@
 <div class="bg-brand-primary-lighten-6 d-flex layout-container">
-<div class="bg-brand-primary-darken-5 d-lg-flex d-none flex-column justify-content-between ray-sidebar-container sticky-top">
+	<div
+		class="bg-brand-primary-darken-5 d-lg-flex d-none flex-column justify-content-between ray-sidebar-container ray-sticky-top sticky-top"
+	>
 		<div class="d-flex flex-row pt-3 top-bar">
-		<img alt="logo" class="logo-icon" src="[resources:raylife_logo_icon.svg]" />
+			<img
+				alt="logo"
+				class="logo-icon"
+				src="[resources:raylife_logo_icon.svg]"
+			/>
 
-		<img alt="logo name" class="logo-name" src="[resources:raylife_logo_name.svg]" />
+			<img
+				alt="logo name"
+				class="logo-name"
+				src="[resources:raylife_logo_name.svg]"
+			/>
 		</div>
 
 		<div class="d-flex flex-column middle-bar text-nowrap">
-			<div class="align-items-center d-flex dashboard-menu mb-5" id="${configuration.layoutName}">
-			<span class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm">
+			<div
+				class="align-items-center d-flex dashboard-menu mb-5"
+				id="${configuration.layoutName}"
+			>
+				<span
+					class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm"
+				>
 					Dashboard
 				</span>
 			</div>
 
-			<div class="align-items-center applications-menu d-flex mb-5" id="${configuration.layoutName}">
-			<span class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm">
+			<div
+				class="align-items-center applications-menu d-flex mb-5"
+				id="${configuration.layoutName}"
+			>
+				<span
+					class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm"
+				>
 					Applications
 				</span>
 			</div>
 
-			<div class="align-items-center d-flex mb-5 policies-menu" id="${configuration.layoutName}">
-			<span class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm">
+			<div
+				class="align-items-center d-flex mb-5 policies-menu"
+				id="${configuration.layoutName}"
+			>
+				<span
+					class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm"
+				>
 					Policies
 				</span>
 			</div>
 
-			<div class="align-items-center claims-menu d-flex mb-5" id="${configuration.layoutName}">
-			<span class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm">Claims</span>
+			<div
+				class="align-items-center claims-menu d-flex mb-5"
+				id="${configuration.layoutName}"
+			>
+				<span
+					class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm"
+					>Claims</span
+				>
 			</div>
 
-			<div class="align-items-center d-flex reports-menu" id="${configuration.layoutName}">
-			<span class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm">
+			<div
+				class="align-items-center d-flex reports-menu"
+				id="${configuration.layoutName}"
+			>
+				<span
+					class="menu-item-name ml-2 text-neutral-5 text-paragraph-sm"
+				>
 					Reports
 				</span>
 			</div>
@@ -42,23 +78,36 @@
 				(restClient.get("/headless-user-notification/v1.0/my-user-notifications").totalCount)!/]
 
 				<span class="badge badge-danger panel-notifications-count">
-				<span class="badge-item badge-item-expand">${requestEntries}</span>
+					<span class="badge-item badge-item-expand"
+						>${requestEntries}</span
+					>
 				</span>
 
-			<img alt="notification" class="notification-icon" src="[resources:notification_icon.svg]" />
+				<img
+					alt="notification"
+					class="notification-icon"
+					src="[resources:notification_icon.svg]"
+				/>
 			</div>
 
 			<div class="align-items-center avatar-container d-flex flex-row">
-			<img alt="avatar" class="avatar-icon" src="[resources:avatar_icon.svg]" />
+				<div class="mb-1">
+					<lfr-drop-zone> </lfr-drop-zone>
+				</div>
 
-			<p class="flex-shrink-0 mb-0 ml-2 text-neutral-0 text-paragraph-sm">
-					Scott Producer
+				<p
+					class="flex-shrink-0 mb-0 ml-1 text-neutral-0 text-paragraph-sm user-name"
+				>
+					<span class="user-name-span"></span>
 				</p>
 			</div>
 		</div>
 	</div>
 
-	<div class="bg-white d-flex flex-column loaded notification-panel notification-sidebar sticky-top" id="panel-sidebar">
+	<div
+		class="bg-white d-flex flex-column loaded notification-panel notification-sidebar sticky-top"
+		id="panel-sidebar"
+	>
 		<div class="sidebar-header">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
@@ -67,8 +116,13 @@
 							Notifications
 						</span>
 
-					<svg class="lexicon-icon lexicon-icon-cog text-neutral-5" role="presentation">
-						<use xlink:href="http://localhost:8080/o/dialect-theme/images/clay/icons.svg#cog" />
+						<svg
+							class="lexicon-icon lexicon-icon-cog text-neutral-5"
+							role="presentation"
+						>
+							<use
+								xlink:href="http://localhost:8080/o/dialect-theme/images/clay/icons.svg#cog"
+							/>
 						</svg>
 					</h4>
 				</div>
@@ -79,10 +133,13 @@
 			<lfr-drop-zone></lfr-drop-zone>
 		</div>
 	</div>
-
 	<div class="d-flex flex-column w-100" id="${configuration.layoutName}">
-		<div class="bg-neutral-0 d-flex justify-content-center page-header-container sticky-top w-100">
-			<div class="align-items-center d-flex header-content justify-content-between px-3 py-3 w-100">
+		<div
+			class="bg-neutral-0 d-flex justify-content-center page-header-container sticky-top w-100"
+		>
+			<div
+				class="align-items-center d-flex header-content justify-content-between px-3 py-3 w-100"
+			>
 				<div class="left-content">
 					<lfr-drop-zone></lfr-drop-zone>
 				</div>
@@ -92,7 +149,11 @@
 				</div>
 				[/#if]
 				<div class="d-flex flex-row right-content">
-				<img alt="search" class="search-icon" src="[resources:search_icon.svg]" />
+					<img
+						alt="search"
+						class="search-icon"
+						src="[resources:search_icon.svg]"
+					/>
 
 					<div class="h-25">
 						<lfr-drop-zone></lfr-drop-zone>

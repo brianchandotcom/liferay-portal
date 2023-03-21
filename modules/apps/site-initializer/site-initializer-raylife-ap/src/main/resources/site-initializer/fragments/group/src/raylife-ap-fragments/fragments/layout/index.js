@@ -24,6 +24,9 @@ const btnNotification = fragmentElement.querySelector(
 );
 const notificationIcon = document.getElementById('panel-sidebar');
 
+const userName = Liferay.ThemeDisplay.getUserName();
+document.querySelector('.user-name-span').innerHTML = userName;
+
 const redirectUrl = (routeName) => {
 	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 	const urlPaths = pathname.split('/').filter(Boolean);

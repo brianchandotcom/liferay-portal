@@ -14,39 +14,34 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
-import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+
+import java.net.MalformedURLException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
- * @author Zoltán Takács
+ * @author Stefano Motta
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionProductTypeNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.VirtualSettingUrlExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-@Provider
-public class DefinitionProductTypeNameExceptionMapper
-	extends BaseExceptionMapper<CPDefinitionProductTypeNameException> {
+public class VirtualSettingUrlExceptionMapper
+	extends BaseExceptionMapper<MalformedURLException> {
 
 	@Override
-	public String getErrorDescription() {
-		return "Invalid product type name";
-	}
-
-	@Override
-	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+	protected Problem getProblem(MalformedURLException malformedURLException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST, malformedURLException.getMessage());
 	}
 
 }

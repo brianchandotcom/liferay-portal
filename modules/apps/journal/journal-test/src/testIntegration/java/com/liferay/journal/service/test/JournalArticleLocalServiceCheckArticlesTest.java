@@ -22,13 +22,12 @@ import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Calendar;
@@ -149,18 +149,18 @@ public class JournalArticleExpirationTest {
 		JournalArticle updatedArticle = updateArticle(
 			article, _MODE_POSTPONE_EXPIRIRATION);
 
-		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+		article = _journalArticleLocalService.getArticle(article.getId());
 
 		Assert.assertEquals(modifiedDate, article.getModifiedDate());
 
 		updatedArticle.setExpirationDate(
 			new Date(System.currentTimeMillis() - (Time.HOUR * 2)));
 
-		JournalArticleLocalServiceUtil.updateJournalArticle(updatedArticle);
+		_journalArticleLocalService.updateJournalArticle(updatedArticle);
 
-		JournalArticleLocalServiceUtil.checkArticles();
+		_journalArticleLocalService.checkArticles();
 
-		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+		article = _journalArticleLocalService.getArticle(article.getId());
 
 		Assert.assertTrue(modifiedDate.before(article.getModifiedDate()));
 	}
@@ -210,7 +210,7 @@ public class JournalArticleExpirationTest {
 
 		Calendar expirationDateCalendar = getExpirationCalendar(Time.HOUR, 1);
 
-		return JournalArticleLocalServiceUtil.addArticle(
+		return _journalArticleLocalService.addArticle(
 			null, TestPropsValues.getUserId(), groupId,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
@@ -238,7 +238,7 @@ public class JournalArticleExpirationTest {
 		calendar.setTime(
 			new Date(System.currentTimeMillis() + (timeUnit * timeValue)));
 
-		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
+		User user = TestPropsValues.getUser();
 
 		calendar.setTimeZone(user.getTimeZone());
 
@@ -264,11 +264,11 @@ public class JournalArticleExpirationTest {
 		article.setExpirationDate(
 			new Date(expirationDate.getTime() - (Time.HOUR * 2)));
 
-		JournalArticleLocalServiceUtil.updateJournalArticle(article);
+		_journalArticleLocalService.updateJournalArticle(article);
 
-		JournalArticleLocalServiceUtil.checkArticles();
+		_journalArticleLocalService.checkArticles();
 
-		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+		article = _journalArticleLocalService.getArticle(article.getId());
 
 		if (approved) {
 			if (mode == _MODE_POSTPONE_EXPIRIRATION) {
@@ -299,7 +299,7 @@ public class JournalArticleExpirationTest {
 
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-			return JournalArticleLocalServiceUtil.updateArticle(
+			return _journalArticleLocalService.updateArticle(
 				TestPropsValues.getUserId(), article.getGroupId(),
 				article.getFolderId(), article.getArticleId(),
 				article.getVersion(), article.getTitleMap(),
@@ -335,16 +335,16 @@ public class JournalArticleExpirationTest {
 		journalArticle.setDisplayDate(displayDate);
 		journalArticle.setExpirationDate(expirationDate);
 
-		journalArticle = JournalArticleLocalServiceUtil.updateJournalArticle(
+		journalArticle = _journalArticleLocalService.updateJournalArticle(
 			journalArticle);
 
 		Assert.assertEquals(expirationDate, journalArticle.getExpirationDate());
 
 		Assert.assertEquals(displayDate, journalArticle.getDisplayDate());
 
-		JournalArticleLocalServiceUtil.checkArticles();
+		_journalArticleLocalService.checkArticles();
 
-		journalArticle = JournalArticleLocalServiceUtil.getArticle(
+		journalArticle = _journalArticleLocalService.getArticle(
 			journalArticle.getId());
 
 		Assert.assertEquals(status, journalArticle.getStatus());
@@ -360,5 +360,8 @@ public class JournalArticleExpirationTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

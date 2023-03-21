@@ -95,6 +95,34 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 	}
 
 	@Override
+	public String getDownloadVirtualProductSampleURL(
+			long commerceAccountId, long cpDefinitionId, long fileEntryId)
+		throws PortalException {
+
+		return StringBundler.concat(
+			_portal.getPathModule(), StringPool.SLASH,
+			CommerceMediaConstants.SERVLET_PATH, "/accounts/",
+			commerceAccountId,
+			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT_SAMPLE,
+			cpDefinitionId, CommerceMediaConstants.URL_SEPARATOR_FILE,
+			fileEntryId);
+	}
+
+	@Override
+	public String getDownloadVirtualProductURL(
+			long commerceAccountId, long cpDefinitionId, long fileEntryId)
+		throws PortalException {
+
+		return StringBundler.concat(
+			_portal.getPathModule(), StringPool.SLASH,
+			CommerceMediaConstants.SERVLET_PATH, "/accounts/",
+			commerceAccountId,
+			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT,
+			cpDefinitionId, CommerceMediaConstants.URL_SEPARATOR_FILE,
+			fileEntryId);
+	}
+
+	@Override
 	public String getThumbnailURL(
 			long commerceAccountId, long cpAttachmentFileEntryId)
 		throws PortalException {

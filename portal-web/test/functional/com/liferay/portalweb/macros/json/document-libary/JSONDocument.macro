@@ -535,9 +535,17 @@ definition {
 			portalURL = ${portalURL},
 			site = ${site});
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/subscribe-folder \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:${userPassword} \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \
 		''';

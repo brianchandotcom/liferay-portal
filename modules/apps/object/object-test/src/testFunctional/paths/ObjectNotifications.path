@@ -45,6 +45,11 @@
 		<td>//*[@class='lexicon-icon lexicon-icon-times-small']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_NOTIFICATION_ENTRIES</td>
+		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entryLabel}')]/ancestor::div//*[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entryStatus}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

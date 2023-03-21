@@ -62,17 +62,17 @@ dependencies {
 	compile (group: "org.springframework.security", name: "spring-security-web", version: "5.5.1") {force = true}
 #end
 #if (${viewType.equals("thymeleaf")})
-	compile(group: "org.thymeleaf", name: "thymeleaf", version: "3.0.11.RELEASE") {
+	compile(group: "org.thymeleaf", name: "thymeleaf", version: "3.0.15.RELEASE") {
 		exclude group: "ognl", module: "ognl"
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end
 #if (${viewType.equals("thymeleaf")} && ${framework.equals("portletmvc4spring")})
-	compile(group: "org.thymeleaf", name: "thymeleaf-spring5", version: "3.0.11.RELEASE") {
+	compile(group: "org.thymeleaf", name: "thymeleaf-spring5", version: "3.0.15.RELEASE") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #elseif (${viewType.equals("thymeleaf")} && ${framework.equals("springportletmvc")})
-	compile(group: "org.thymeleaf", name: "thymeleaf-spring4", version: "3.0.11.RELEASE") {
+	compile(group: "org.thymeleaf", name: "thymeleaf-spring4", version: "3.0.15.RELEASE") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end

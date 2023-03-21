@@ -33,13 +33,11 @@ import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 import com.liferay.portal.search.spi.settings.IndexSettingsContributor;
-import com.liferay.portal.search.spi.settings.IndexSettingsHelper;
 
 import java.io.IOException;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
@@ -147,10 +145,7 @@ public class CompanyIndexFactory
 						IndexSettingsContributor indexSettingsContributor =
 							bundleContext.getService(serviceReference);
 
-						_processContributions(
-							(indexName, liferayDocumentTypeFactory) ->
-								indexSettingsContributor.contribute(
-									indexName, liferayDocumentTypeFactory));
+						_processContributions(indexSettingsContributor);
 
 						return indexSettingsContributor;
 					}
@@ -356,13 +351,10 @@ public class CompanyIndexFactory
 	}
 
 	private void _loadIndexSettingsContributors(Settings.Builder builder) {
-		IndexSettingsHelper indexSettingsHelper =
-			(setting, value) -> builder.put(setting, value);
-
-		for (IndexSettingsContributor indexSettingsContributor1 :
+		for (IndexSettingsContributor indexSettingsContributor :
 				_indexSettingsContributorServiceTrackerList) {
 
-			indexSettingsContributor1.populate(indexSettingsHelper);
+			indexSettingsContributor.populate(builder::put);
 		}
 	}
 
@@ -390,7 +382,7 @@ public class CompanyIndexFactory
 	}
 
 	private void _processContributions(
-		BiConsumer<String, LiferayDocumentTypeFactory> biConsumer) {
+		IndexSettingsContributor indexSettingsContributor) {
 
 		if (Validator.isNotNull(
 				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
@@ -419,7 +411,7 @@ public class CompanyIndexFactory
 				restHighLevelClient.indices(), _jsonFactory);
 
 		for (Long companyId : _companyIds) {
-			biConsumer.accept(
+			indexSettingsContributor.contribute(
 				getIndexName(companyId), liferayDocumentTypeFactory);
 		}
 	}

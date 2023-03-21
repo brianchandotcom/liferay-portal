@@ -66,12 +66,25 @@ definition {
 	}
 
 	@description = "LPS-178778. Confirm the error message that appears when the user tries to create a data set view without the filled name"
-	@ignore = "Test Stub"
 	@priority = 3
 	test ErrorAppearsWhenNameBlank {
+		task ("When the user goes to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO ErrorAppearsWhenNameBlank pending implementation JQuery enabled
+		task ("And choose the Provider called channel") {
+			FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+		}
 
+		task ("And clicking on the Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then Confirm that 'This field is required' alert messages are present in the provider field") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "This field is required.");
+		}
 	}
 
 	@description = "LPS-178775. Confirm the error message that appears when the user tries to create a Data Set without the filled provider"

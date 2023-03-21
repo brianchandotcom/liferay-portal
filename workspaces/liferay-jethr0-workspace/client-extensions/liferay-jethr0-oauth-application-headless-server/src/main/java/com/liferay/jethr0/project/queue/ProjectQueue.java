@@ -35,7 +35,7 @@ public class ProjectQueue {
 
 		_projects.add(project);
 
-		_sort();
+		sort();
 	}
 
 	public void addProjects(List<Project> projects) {
@@ -51,7 +51,7 @@ public class ProjectQueue {
 
 		_projects.addAll(projects);
 
-		_sort();
+		sort();
 	}
 
 	public ProjectPrioritizer getProjectPrioritizer() {
@@ -65,10 +65,10 @@ public class ProjectQueue {
 	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
 		_projectPrioritizer = projectPrioritizer;
 
-		_sort();
+		sort();
 	}
 
-	private void _sort() {
+	public void sort() {
 		if (_projectPrioritizer == null) {
 			return;
 		}

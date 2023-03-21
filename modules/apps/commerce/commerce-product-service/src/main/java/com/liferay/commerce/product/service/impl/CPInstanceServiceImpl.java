@@ -399,6 +399,21 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public CPInstance updateExternalReferenceCode(
+			long cpInstanceId, String externalReferenceCode)
+		throws PortalException {
+
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_checkCommerceCatalogByCPDefinitionId(
+			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
+
+		return cpInstanceLocalService.updateExternalReferenceCode(
+			cpInstanceId, externalReferenceCode);
+	}
+
+	@Override
 	public CPInstance updatePricingInfo(
 			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
 			BigDecimal cost, ServiceContext serviceContext)

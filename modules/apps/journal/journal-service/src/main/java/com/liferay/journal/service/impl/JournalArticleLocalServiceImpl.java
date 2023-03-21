@@ -8040,6 +8040,10 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_USER_NAME$]", article.getUserName());
 		subscriptionSender.setEntryTitle(article.getTitle(user.getLocale()));
 
+		if (emailType.equals("review") && (serviceContext.getUserId() == 0)) {
+			subscriptionSender.setSendToCurrentUser(true);
+		}
+
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();

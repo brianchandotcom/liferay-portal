@@ -245,7 +245,7 @@ const AddFDSEntryModalContent = ({
 		if (fdsEntry?.id) {
 			closeModal();
 
-			Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'your-request-completed-successfully'
 				),
@@ -255,7 +255,7 @@ const AddFDSEntryModalContent = ({
 			loadData();
 		}
 		else {
-			Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'your-request-failed-to-complete'
 				),

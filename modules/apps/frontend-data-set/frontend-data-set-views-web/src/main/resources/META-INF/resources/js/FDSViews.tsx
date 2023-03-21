@@ -17,7 +17,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, navigate, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
@@ -72,7 +72,7 @@ const AddFDSViewModalContent = ({
 		if (fdsView?.id) {
 			closeModal();
 
-			Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'your-request-completed-successfully'
 				),
@@ -82,7 +82,7 @@ const AddFDSViewModalContent = ({
 			loadData();
 		}
 		else {
-			Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'your-request-failed-to-complete'
 				),

@@ -7908,6 +7908,10 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setNotificationType(_getNotificationType(action));
 		subscriptionSender.setReplyToAddress(fromAddress);
 
+		if (action.equals("expired") && (serviceContext.getUserId() == 0)) {
+			subscriptionSender.setSendToCurrentUser(true);
+		}
+
 		subscriptionSender.flushNotificationsAsync();
 	}
 

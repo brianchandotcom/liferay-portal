@@ -167,4 +167,27 @@ definition {
 		    Testray.assertItemNotPresent(key_name = "Description 2");
         }
 	}
+
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by steps"
+	@priority = 4
+	test AdminCanFilterCaseBySteps {
+        task ("When the user filter a case by steps") {
+            TestrayFilter.clickFilter();
+
+			Type(
+                locator1 = "TestrayCases#FIELD_STEPS",
+                value1 = "Steps 1");
+
+            Button.click(button = "Apply");
+		}
+
+        task ("Then can see the filters apply in the list by steps") {
+            TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 5);
+
+            Testray.assertItemNotPresent(key_name = "Case 2");
+        }
+	}
 }

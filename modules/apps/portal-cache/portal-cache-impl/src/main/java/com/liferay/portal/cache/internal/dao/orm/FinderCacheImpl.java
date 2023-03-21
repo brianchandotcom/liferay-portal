@@ -14,7 +14,8 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
@@ -66,9 +67,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -109,7 +108,7 @@ public class FinderCacheImpl
 
 	@Override
 	public void clearDSLQueryCache(String tableName) {
-		String modelImplClassName = _modelImplClassNames.get(tableName);
+		String modelImplClassName = _modelImplClassNames.getService(tableName);
 
 		if (modelImplClassName != null) {
 			_clearDSLQueryCache(modelImplClassName);
@@ -334,7 +333,7 @@ public class FinderCacheImpl
 				for (int i = 0; i < tableNames.length; i++) {
 					String tableName = tableNames[i];
 
-					String modelImplClassName = _modelImplClassNames.get(
+					String modelImplClassName = _modelImplClassNames.getService(
 						tableName);
 
 					if (modelImplClassName == null) {
@@ -379,7 +378,7 @@ public class FinderCacheImpl
 	}
 
 	public void removeByEntityCache(String className, BaseModel<?> baseModel) {
-		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
+		ArgumentsResolver argumentsResolver = _argumentsResolvers.getService(
 			className);
 
 		if (argumentsResolver == null) {
@@ -447,7 +446,7 @@ public class FinderCacheImpl
 			return;
 		}
 
-		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
+		ArgumentsResolver argumentsResolver = _argumentsResolvers.getService(
 			className);
 
 		if (argumentsResolver == null) {
@@ -490,8 +489,6 @@ public class FinderCacheImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_dbPartitionEnabled = GetterUtil.getBoolean(
 			_props.get("database.partition.enabled"));
 
@@ -522,14 +519,34 @@ public class FinderCacheImpl
 
 		portalCacheManager.registerPortalCacheManagerListener(this);
 
-		_argumentsResolverServiceTracker = ServiceTrackerFactory.open(
-			bundleContext, ArgumentsResolver.class,
-			new ArgumentsResolverServiceTrackerCustomizer());
-	}
+		_argumentsResolvers = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ArgumentsResolver.class, "class.name");
 
-	@Deactivate
-	protected void deactivate() {
-		_argumentsResolverServiceTracker.close();
+		_modelImplClassNames = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ArgumentsResolver.class, "table.name",
+			new ServiceTrackerCustomizer<ArgumentsResolver, String>() {
+
+				@Override
+				public String addingService(
+					ServiceReference<ArgumentsResolver> serviceReference) {
+
+					return GetterUtil.getString(
+						serviceReference.getProperty("class.name"), null);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ArgumentsResolver> serviceReference,
+					String className) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ArgumentsResolver> serviceReference,
+					String className) {
+				}
+
+			});
 	}
 
 	private void _clearCache(String cacheName) {
@@ -634,8 +651,8 @@ public class FinderCacheImpl
 					0, className.length() - 6);
 			}
 
-			ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
-				modleImplClassName);
+			ArgumentsResolver argumentsResolver =
+				_argumentsResolvers.getService(modleImplClassName);
 
 			if ((argumentsResolver != null) &&
 				!Objects.equals(
@@ -714,12 +731,8 @@ public class FinderCacheImpl
 	private static final MethodKey _clearDSLQueryCacheMethodKey = new MethodKey(
 		FinderCacheUtil.class, "clearDSLQueryCache", String.class);
 
-	private final Map<String, ArgumentsResolver> _argumentsResolvers =
-		new ConcurrentHashMap<>();
-	private ServiceTracker<ArgumentsResolver, ArgumentsResolver>
-		_argumentsResolverServiceTracker;
+	private ServiceTrackerMap<String, ArgumentsResolver> _argumentsResolvers;
 	private volatile CacheKeyGenerator _baseModelCacheKeyGenerator;
-	private BundleContext _bundleContext;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
 
 	@Reference
@@ -731,8 +744,7 @@ public class FinderCacheImpl
 	private final Map<String, Map<String, FinderPath>> _finderPathsMap =
 		new ConcurrentHashMap<>();
 	private ThreadLocal<LRUMap<LocalCacheKey, Serializable>> _localCache;
-	private final Map<String, String> _modelImplClassNames =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, String> _modelImplClassNames;
 
 	@Reference
 	private MultiVMPool _multiVMPool;
@@ -773,46 +785,6 @@ public class FinderCacheImpl
 
 		private final Serializable _cacheKey;
 		private final String _className;
-
-	}
-
-	private class ArgumentsResolverServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ArgumentsResolver, ArgumentsResolver> {
-
-		@Override
-		public ArgumentsResolver addingService(
-			ServiceReference<ArgumentsResolver> serviceReference) {
-
-			ArgumentsResolver argumentsResolver = _bundleContext.getService(
-				serviceReference);
-
-			String className = argumentsResolver.getClassName();
-			String tableName = argumentsResolver.getTableName();
-
-			_argumentsResolvers.put(className, argumentsResolver);
-
-			_modelImplClassNames.put(tableName, className);
-
-			return argumentsResolver;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ArgumentsResolver> serviceReference,
-			ArgumentsResolver argumentsResolver) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ArgumentsResolver> serviceReference,
-			ArgumentsResolver argumentsResolver) {
-
-			_argumentsResolvers.remove(argumentsResolver.getClassName());
-			_modelImplClassNames.remove(argumentsResolver.getTableName());
-
-			_bundleContext.ungetService(serviceReference);
-		}
 
 	}
 

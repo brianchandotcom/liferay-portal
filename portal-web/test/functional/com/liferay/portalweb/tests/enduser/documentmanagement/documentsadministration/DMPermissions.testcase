@@ -369,6 +369,86 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Delete");
 	}
 
+	@description = "This is a test for LPS-155227. It checks that a user can not receive notifications without the subscribe permission of the folder."
+	@priority = 2
+	test CannotReceiveNotificationsWithoutFolderSubscriptionPermissions {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 2,
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "Parent Folder Description",
+			dmFolderName = "Parent Folder Name",
+			groupName = "Site Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "SubFolder Description",
+			dmFolderName = "SubFolder Name",
+			groupName = "Site Name",
+			parentFolderName = "Parent Folder Name");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Parent Folder Name",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "SubFolder Name");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Site Member");
+
+		JSONDocument.subscribeToFolder(
+			dmFolderName = "Parent Folder Name",
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "SubFolder Name",
+			groupName = "Site Name",
+			parentFolderName = "Parent Folder Name",
+			siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Image Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNoNotifications(activePanel = "Notifications");
+	}
+
 	@description = "This is a use case for LPS-43104."
 	@priority = 5
 	@refactordone

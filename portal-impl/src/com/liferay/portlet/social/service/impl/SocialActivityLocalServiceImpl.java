@@ -714,10 +714,10 @@ public class SocialActivityLocalServiceImpl
 	public List<SocialActivity> getApprovedActivities(
 		long classPK, double version) {
 
-		String strVersion = String.valueOf(version);
+		String versionString = String.valueOf(version);
 
 		if (Math.floor(version) == version) {
-			strVersion = String.valueOf((int)version);
+			versionString = String.valueOf((int)version);
 		}
 
 		return dslQuery(
@@ -739,7 +739,7 @@ public class SocialActivityLocalServiceImpl
 						}
 					).or(
 						SocialActivityTable.INSTANCE.extraData.notLike(
-							"%version\":" + strVersion + ",%")
+							"%version\":" + versionString + ",%")
 					).withParentheses()
 				)
 			));

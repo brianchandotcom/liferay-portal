@@ -217,25 +217,21 @@ function TableCell({
 		);
 	}
 
-	if (dataRenderer.type === 'internal') {
-		return (
-			<DndTableCell columnName={String(options.fieldName)}>
-				<dataRenderer.Component
-					actions={actions}
-					itemData={itemData}
-					itemId={itemId}
-					loadData={loadData}
-					openSidePanel={openSidePanel}
-					options={options}
-					rootPropertyName={rootPropertyName}
-					value={value}
-					valuePath={valuePath}
-				/>
-			</DndTableCell>
-		);
-	}
-
-	return <></>;
+	return (
+		<DndTableCell columnName={String(options.fieldName)}>
+			<dataRenderer.Component
+				actions={actions}
+				itemData={itemData}
+				itemId={itemId}
+				loadData={loadData}
+				openSidePanel={openSidePanel}
+				options={options}
+				rootPropertyName={rootPropertyName}
+				value={value}
+				valuePath={valuePath}
+			/>
+		</DndTableCell>
+	);
 }
 
 export default TableCell;

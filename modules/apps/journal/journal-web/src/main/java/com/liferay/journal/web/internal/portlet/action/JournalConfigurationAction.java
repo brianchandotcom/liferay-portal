@@ -161,6 +161,7 @@ public class JournalConfigurationAction
 		validateEmail(actionRequest, "emailArticleApprovalDenied");
 		validateEmail(actionRequest, "emailArticleApprovalGranted");
 		validateEmail(actionRequest, "emailArticleApprovalRequested");
+		validateEmail(actionRequest, "emailArticleExpired");
 		validateEmail(actionRequest, "emailArticleReview");
 		validateEmail(actionRequest, "emailArticleUpdated");
 		validateEmailFrom(actionRequest);

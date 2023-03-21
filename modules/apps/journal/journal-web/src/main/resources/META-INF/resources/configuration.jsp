@@ -38,7 +38,7 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
-	String tabs1Names = "email-from,web-content-added-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
+	String tabs1Names = "email-from,web-content-added-email,web-content-expired-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
 
 	if (JournalUtil.hasWorkflowDefinitionsLinks(themeDisplay)) {
 		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email");
@@ -60,6 +60,8 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 			<liferay-ui:error key="emailArticleApprovalGrantedSubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailArticleApprovalRequestedBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailArticleApprovalRequestedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="emailArticleExpiredBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailArticleExpiredSubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailArticleReviewBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailArticleReviewSubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailArticleUpdatedBody" message="please-enter-a-valid-body" />
@@ -84,6 +86,16 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleAddedEnabled() %>"
 					emailParam="emailArticleAdded"
 					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleAddedSubject() %>"
+				/>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleExpiredBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleExpiredEnabled() %>"
+					emailParam="emailArticleExpired"
+					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleExpiredSubject() %>"
 				/>
 			</liferay-ui:section>
 

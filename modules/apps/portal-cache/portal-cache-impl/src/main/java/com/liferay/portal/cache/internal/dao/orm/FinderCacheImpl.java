@@ -634,8 +634,31 @@ public class FinderCacheImpl
 					0, className.length() - 6);
 			}
 
-			sharded = GetterUtil.getBoolean(
-				_modelImplClassSharded.get(modleImplClassName));
+			ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
+				modleImplClassName);
+
+			if ((argumentsResolver != null) &&
+				!Objects.equals(
+					argumentsResolver.getClassName(),
+					argumentsResolver.getTableName())) {
+
+				Class<?> clazz = argumentsResolver.getClass();
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
+				try {
+					Class<?> modelImplClass = classLoader.loadClass(
+						argumentsResolver.getClassName());
+
+					sharded = ShardedModel.class.isAssignableFrom(
+						modelImplClass);
+				}
+				catch (ClassNotFoundException classNotFoundException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(classNotFoundException);
+					}
+				}
+			}
 		}
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
@@ -710,8 +733,6 @@ public class FinderCacheImpl
 	private ThreadLocal<LRUMap<LocalCacheKey, Serializable>> _localCache;
 	private final Map<String, String> _modelImplClassNames =
 		new ConcurrentHashMap<>();
-	private final Map<String, Boolean> _modelImplClassSharded =
-		new ConcurrentHashMap<>();
 
 	@Reference
 	private MultiVMPool _multiVMPool;
@@ -772,26 +793,6 @@ public class FinderCacheImpl
 			_argumentsResolvers.put(className, argumentsResolver);
 
 			_modelImplClassNames.put(tableName, className);
-
-			if (!Objects.equals(className, tableName)) {
-				Class<?> clazz = argumentsResolver.getClass();
-
-				ClassLoader classLoader = clazz.getClassLoader();
-
-				try {
-					Class<?> modelImplClass = classLoader.loadClass(
-						argumentsResolver.getClassName());
-
-					_modelImplClassSharded.put(
-						argumentsResolver.getClassName(),
-						ShardedModel.class.isAssignableFrom(modelImplClass));
-				}
-				catch (ClassNotFoundException classNotFoundException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(classNotFoundException);
-					}
-				}
-			}
 
 			return argumentsResolver;
 		}

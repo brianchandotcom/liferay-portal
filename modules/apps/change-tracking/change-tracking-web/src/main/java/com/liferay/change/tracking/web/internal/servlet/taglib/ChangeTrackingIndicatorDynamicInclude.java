@@ -14,10 +14,13 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
+import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -32,6 +35,7 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTP
 import com.liferay.change.tracking.web.internal.timeline.CTCollectionHistoryProviderRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -203,6 +207,74 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"com.liferay.product.navigation.taglib#/page.jsp#pre");
+	}
+
+	private void _getConflictIconData(
+			long classNameId, long classPK, CTCollection currentCTCollection,
+			Map<String, Object> data, boolean possibleConflict,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (currentCTCollection != null) {
+			List<CTEntry> ctEntries = _ctEntryLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					CTEntryTable.INSTANCE
+				).from(
+					CTEntryTable.INSTANCE
+				).where(
+					CTEntryTable.INSTANCE.ctCollectionId.eq(
+						currentCTCollection.getCtCollectionId()
+					).and(
+						CTEntryTable.INSTANCE.modelClassNameId.eq(
+							classNameId
+						).and(
+							CTEntryTable.INSTANCE.modelClassPK.eq(classPK)
+						)
+					)
+				));
+
+			Map<Long, List<ConflictInfo>> conflictInfoMap =
+				_ctCollectionLocalService.checkConflicts(
+					currentCTCollection.getCompanyId(), ctEntries,
+					currentCTCollection.getCtCollectionId(),
+					currentCTCollection.getName(),
+					CTConstants.CT_COLLECTION_ID_PRODUCTION,
+					_language.get(themeDisplay.getLocale(), "production"));
+
+			if (conflictInfoMap.isEmpty()) {
+				if (possibleConflict) {
+					data.put(
+						"conflictIconClass",
+						"change-tracking-conflict-icon-warning");
+					data.put(
+						"conflictIconLabel",
+						_language.get(
+							themeDisplay.getLocale(),
+							"possible-modification-conflict"));
+					data.put("conflictIconName", "warning-full");
+				}
+				else {
+					data.put(
+						"conflictIconClass", "change-tracking-conflict-icon");
+					data.put(
+						"conflictIconLabel",
+						_language.get(
+							themeDisplay.getLocale(),
+							"no-modification-conflict"));
+					data.put("conflictIconName", "check");
+				}
+			}
+			else {
+				data.put(
+					"conflictIconClass",
+					"change-tracking-conflict-icon-danger");
+				data.put(
+					"conflictIconLabel",
+					_language.get(
+						themeDisplay.getLocale(), "modification-conflict"));
+				data.put("conflictIconName", "warning-full");
+			}
+		}
 	}
 
 	private String _getDeleteHref(
@@ -528,12 +600,25 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				ctCollectionHistoryProvider.getCTCollections(
 					classNameId, classPK);
 
+			boolean possibleConflict = false;
+
 			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			Format format = _fastDateFormatFactory.getDate(
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 			for (CTCollection ctCollection : ctCollections) {
+				if ((currentCTCollection != null) &&
+					((ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_PENDING) ||
+					 ((ctCollection.getStatus() ==
+						 WorkflowConstants.STATUS_DRAFT) &&
+					  (ctCollection.getCtCollectionId() !=
+						  currentCTCollection.getCtCollectionId())))) {
+
+					possibleConflict = true;
+				}
+
 				jsonArray.put(
 					JSONUtil.put(
 						"date",
@@ -563,6 +648,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						_getStatusMessage(ctCollection, httpServletRequest)
 					));
 			}
+
+			_getConflictIconData(
+				classNameId, classPK, currentCTCollection, data,
+				possibleConflict, themeDisplay);
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
@@ -661,6 +750,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

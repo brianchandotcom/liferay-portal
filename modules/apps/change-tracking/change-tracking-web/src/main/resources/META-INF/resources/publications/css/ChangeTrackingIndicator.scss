@@ -11,6 +11,24 @@ html#{$cadmin-selector} .cadmin {
 			display: inline-block;
 		}
 
+		.change-tracking-conflict-icon-danger {
+			color: #b95000;
+			margin-right: 0;
+			margin-top: 0;
+		}
+
+		.change-tracking-conflict-icon-warning {
+			color: #ffb68d;
+			margin-right: 0;
+			margin-top: 0;
+		}
+
+		.change-tracking-conflict-icon {
+			color: $cadmin-white;
+			margin-right: 0;
+			margin-top: 0;
+		}
+
 		.change-tracking-indicator-button {
 			align-items: center;
 			background-color: $cadmin-dark-l1;

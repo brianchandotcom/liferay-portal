@@ -712,6 +712,9 @@ const PublicationsSearchContainer = ({
 
 export default function ChangeTrackingIndicator({
 	checkoutDropdownItem,
+	conflictIconClass,
+	conflictIconLabel,
+	conflictIconName,
 	createDropdownItem,
 	getSelectPublicationsURL,
 	iconClass,
@@ -1081,6 +1084,18 @@ export default function ChangeTrackingIndicator({
 		);
 	};
 
+	const renderConflictIcon = (conflictIconClass, conflictIconName) => {
+		if (conflictIconClass && conflictIconName) {
+			return (
+				<ClayIcon
+					className={conflictIconClass}
+					style={{fontSize: 'medium'}}
+					symbol={conflictIconName}
+				/>
+			);
+		}
+	};
+
 	const renderTimeline = (timelineItems) => {
 		if (timelineItems) {
 			return (
@@ -1109,6 +1124,24 @@ export default function ChangeTrackingIndicator({
 			{renderModal()}
 
 			<ClayLayout.ContentRow style={{justifyContent: 'center'}}>
+				<ClayLayout.ContentCol style={{marginRight: '50px'}}>
+					<div
+						className="c-inner"
+						style={{
+							margin: '2px 2px 1px',
+							padding: '1px',
+							width: '22px',
+						}}
+						tabIndex="-1"
+						title={conflictIconLabel}
+					>
+						{renderConflictIcon(
+							conflictIconClass,
+							conflictIconName
+						)}
+					</div>
+				</ClayLayout.ContentCol>
+
 				<ClayLayout.ContentCol>
 					<ClayDropDownWithItems
 						alignmentPosition={Align.BottomCenter}

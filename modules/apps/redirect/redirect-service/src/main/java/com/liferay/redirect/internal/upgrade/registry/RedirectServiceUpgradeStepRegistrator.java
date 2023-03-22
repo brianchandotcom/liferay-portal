@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.redirect.internal.upgrade.v3_0_2.RedirectEntrySourceURLUpgradeProcess;
+import com.liferay.redirect.internal.upgrade.v3_0_3.RedirectPatternConfigurationUpgradeProcess;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,7 +59,15 @@ public class RedirectServiceUpgradeStepRegistrator
 			new com.liferay.redirect.internal.upgrade.v3_0_1.
 				RedirectURLConfigurationUpgradeProcess(
 					_prefsPropsToConfigurationUpgradeHelper));
+
+		registry.register(
+			"3.0.3", "3.0.4",
+			new RedirectPatternConfigurationUpgradeProcess(
+				_configurationAdmin));
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper

@@ -41,8 +41,9 @@ const PatternField = ({
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 
 	return (
-		<ClayLayout.Row className="redirect-pattern-row">
-			<ClayLayout.Col md="6">
+		<div className="redirect-pattern-group">
+		<ClayLayout.Row>
+			<ClayLayout.Col md="12">
 				<label htmlFor="pattern">
 					{Liferay.Language.get('pattern-field-label')}
 
@@ -61,8 +62,10 @@ const PatternField = ({
 					type="text"
 				/>
 			</ClayLayout.Col>
+		</ClayLayout.Row>
 
-			<ClayLayout.Col className={error ? 'has-error' : ''} md="6">
+		<ClayLayout.Row className="mt-4">
+			<ClayLayout.Col className={error ? 'has-error' : ''} md="8">
 				<label htmlFor="destinationURL">
 					{Liferay.Language.get('destination-url')}
 
@@ -137,7 +140,12 @@ const PatternField = ({
 					</ClayForm.FeedbackGroup>
 				)}
 			</ClayLayout.Col>
+
+			<ClayLayout.Col md="4">
+				<span>TODO</span>
+			</ClayLayout.Col>
 		</ClayLayout.Row>
+		</div>
 	);
 };
 

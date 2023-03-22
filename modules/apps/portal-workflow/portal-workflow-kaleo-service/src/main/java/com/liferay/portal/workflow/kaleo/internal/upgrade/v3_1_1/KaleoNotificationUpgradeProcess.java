@@ -51,7 +51,7 @@ public class KaleoNotificationUpgradeProcess extends UpgradeProcess {
 				String[] notificationTypes = TransformUtil.transform(
 					StringUtil.split(resultSet.getString("notificationTypes")),
 					notificationType -> {
-						if (Objects.equals("im", notificationType) ||
+						if (Objects.equals(notificationType, "im") ||
 							Objects.equals(
 								notificationType, "private-message")) {
 

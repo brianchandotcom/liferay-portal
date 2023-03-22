@@ -24,13 +24,11 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ListTypeConstants;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -41,6 +39,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1175,10 +1174,11 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 			false, serviceContext);
 	}
 
-	private String _encodeName(ExpandoColumn expandoColumn) throws Exception {
-		return ReflectionTestUtil.invoke(
-			_modelListener, "_encodeName", new Class<?>[] {ExpandoColumn.class},
-			expandoColumn);
+	private String _encodeName(ExpandoColumn expandoColumn) {
+		return StringBundler.concat(
+			StringPool.UNDERLINE, expandoColumn.getColumnId(),
+			StringPool.UNDERLINE,
+			Normalizer.normalizeIdentifier(expandoColumn.getName()));
 	}
 
 	private ODataRetriever<Organization> _getODataRetriever() {
@@ -1194,11 +1194,6 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
-
-	@Inject(
-		filter = "component.name=com.liferay.segments.internal.model.listener.OrganizationExpandoColumnModelListener"
-	)
-	private ModelListener<ExpandoColumn> _modelListener;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

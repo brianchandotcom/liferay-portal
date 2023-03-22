@@ -35,12 +35,14 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -83,7 +85,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		JournalArticle draftJournalArticle2 = _addDraftVersionJournalArticle(
 			approvedJournalArticle2, wrongClassTypeId);
 
-		_runUpgrade();
+		_getRunUpgradeLogEntries(LoggerTestUtil.OFF);
 
 		_assertClassTypeId(
 			approvedJournalArticle1, approvedJournalArticle2,
@@ -103,7 +105,18 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		JournalArticle draftJournalArticle = _addDraftVersionJournalArticle(
 			approvedJournalArticle, ddmStructure.getStructureId());
 
-		_runUpgrade();
+		List<LogEntry> logEntries = _getRunUpgradeLogEntries(
+			LoggerTestUtil.DEBUG);
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(LoggerTestUtil.DEBUG, logEntry.getPriority());
+
+		Assert.assertEquals(
+			"No asset entries with the wrong classTypeId have been found",
+			logEntry.getMessage());
 
 		_assertClassTypeId(approvedJournalArticle, draftJournalArticle);
 	}
@@ -212,6 +225,22 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		}
 	}
 
+	private List<LogEntry> _getRunUpgradeLogEntries(String logPriority)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, logPriority)) {
+
+			UpgradeProcess upgradeProcess = _getUpgradeProcess();
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			return logCapture.getLogEntries();
+		}
+	}
+
 	private UpgradeProcess _getUpgradeProcess() {
 		UpgradeProcess[] upgradeProcesses = new UpgradeProcess[1];
 
@@ -229,18 +258,6 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 			});
 
 		return upgradeProcesses[0];
-	}
-
-	private void _runUpgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			UpgradeProcess upgradeProcess = _getUpgradeProcess();
-
-			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
-		}
 	}
 
 	private static final String _CLASS_NAME =

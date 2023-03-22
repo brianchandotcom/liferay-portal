@@ -4,6 +4,20 @@ definition {
 		Uncheck(locator1 = "CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX");
 	}
 
+	macro editNumberOfDaysDisplayedOnAgenda {
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.gotoDisplaySettings();
+
+		Select(
+			locator1 = "CalendarConfiguration#DAYS_DISPLAYED_MAX",
+			value1 = ${maxNumberOfDays});
+
+		CalendarConfiguration.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro editNumberOfEventsDisplayed {
 		CalendarConfiguration.gotoDisplaySettings();
 

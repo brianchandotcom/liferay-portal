@@ -16,9 +16,13 @@ import {axios} from './liferay/api';
 
 const headlessAPI = 'o/headless-user-notification/v1.0';
 
-export function getUserNotification(pageSize: number, page: number) {
+export function getUserNotification(
+	pageSize: number,
+	page: number,
+	order: string
+) {
 	return axios.get(
-		`${headlessAPI}/my-user-notifications/?&pageSize=${pageSize}&page=${page}&sort=dateCreated:desc`
+		`${headlessAPI}/my-user-notifications/?&pageSize=${pageSize}&page=${page}&sort=dateCreated:${order}`
 	);
 }
 export function putUserNotificationRead(userNotificationId: number) {

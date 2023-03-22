@@ -125,14 +125,14 @@ export function getApplicationByExternalReferenceCode(
 	);
 }
 
-export function getApplicationsById(id: number) {
-	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
-}
+export function getApplicationsById(id: number, fields?: string) {
+	if (fields) {
+		return axios.get(
+			`${DeliveryAPI}/?filter=id eq '${id}'&fields=${fields}`
+		);
+	}
 
-export function getExternalReferenceCodeById(id: number) {
-	return axios.get(
-		`${DeliveryAPI}/?filter=id eq '${id}'&fields=externalReferenceCode`
-	);
+	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
 }
 
 export function updateRaylifeApplication(

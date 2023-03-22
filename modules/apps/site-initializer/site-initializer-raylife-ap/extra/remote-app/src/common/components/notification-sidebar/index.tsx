@@ -18,32 +18,32 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
 import './index.scss';
-import {getExternalReferenceCodeById} from '../../services/Application';
+import {getApplicationsById} from '../../services/Application';
 import {
 	getUserNotification,
 	putUserNotificationRead,
 } from '../../services/notification';
+import {getLiferaySiteName} from '../../utils/liferay';
 import {PostType} from './postTypes';
 
-const initialPagination = {page: 1, pageSize: 2, totalCount: 0};
+const initialPagination = {order: 'desc', page: 1, pageSize: 2, totalCount: 0};
 
 const NotificationSidebar: React.FC = () => {
 	const [posts, setPosts] = useState<any[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(
 		initialPagination.totalCount
 	);
-	const [arrayOfLinks, setArrayOfLinks] = useState<any[]>([]);
+	const [postsWithLinks, setArrayOfLinks] = useState<PostType[]>([]);
 	const [page, setPage] = useState<number>(initialPagination.page);
 	const hasMorePostsToLoad = posts.length < totalCount;
 
 	const notificationCategory = {
 		Application: 'Application ',
-		Claim: 'Claim',
-		Policy: 'Policy',
 	};
 
 	const creatRoute = (externalReferenceCode: string, entity: string) => {
-		const link = `${entity}?externalReferenceCode=${externalReferenceCode}`;
+		const currentSiteName = getLiferaySiteName();
+		const link = `${currentSiteName}/${entity}?externalReferenceCode=${externalReferenceCode}`;
 
 		return link;
 	};
@@ -64,7 +64,8 @@ const NotificationSidebar: React.FC = () => {
 		try {
 			const response = await getUserNotification(
 				initialPagination.pageSize,
-				page
+				page,
+				initialPagination.order
 			);
 			const notifications = response?.data;
 
@@ -77,8 +78,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Error getting notifications:', error);
 			throw error;
 		}
@@ -86,7 +86,10 @@ const NotificationSidebar: React.FC = () => {
 
 	async function getExternalReferenceCode(id: number) {
 		try {
-			const response = await getExternalReferenceCodeById(id);
+			const response = await getApplicationsById(
+				id,
+				'externalReferenceCode'
+			);
 			const data = response?.data?.items?.[0]?.externalReferenceCode;
 
 			if (!data) {
@@ -94,8 +97,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return data;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(
 				`Error fetching external reference code for ID ${id}: ${error}`
 			);
@@ -123,14 +125,14 @@ const NotificationSidebar: React.FC = () => {
 					);
 
 					return {...post, link: route};
-				}
-				else {
+				} else {
 					const genericRoute = '#!';
 
 					return {...post, link: genericRoute};
 				}
 			})
 		);
+
 		const sortedLinks = newLinks;
 		setArrayOfLinks(sortedLinks);
 	};
@@ -147,21 +149,20 @@ const NotificationSidebar: React.FC = () => {
 
 	useEffect(() => {
 		generateLinks();
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [posts]);
 
 	return (
 		<div className="notification-container">
-			{!arrayOfLinks.length && (
+			{!postsWithLinks && (
 				<p className="align-items-center d-flex justify-content-center pt-8 vh-100">
 					No notifications
 				</p>
 			)}
 
-			{!!arrayOfLinks.length && (
+			{!!postsWithLinks && (
 				<div className="vh-100">
-					{arrayOfLinks.map((item: PostType, _index: number) => (
+					{postsWithLinks.map((item: PostType, _index: number) => (
 						<div
 							className={classNames({
 								'post-container-unread bubble-unread': !item.read,

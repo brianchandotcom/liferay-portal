@@ -190,48 +190,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task"
-	@ignore = "true"
-	@priority = 5
-	test AdminCanDeleteTask {
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userName = "Test Test");
-
-			Alert.viewSuccessMessage();
-
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
-
-			TestrayTestflow.goToTask(taskName = "Task_1");
-
-			Button.click(button = "Complete");
-		}
-
-		task ("When the user delete the task") {
-			Button.click(button = "Delete");
-
-			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this item?");
-		}
-
-		task ("Then the task is not displayed anymore") {
-			Testray.assertItemNotPresent(key_name = "Task_1");
-		}
-	}
-
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {

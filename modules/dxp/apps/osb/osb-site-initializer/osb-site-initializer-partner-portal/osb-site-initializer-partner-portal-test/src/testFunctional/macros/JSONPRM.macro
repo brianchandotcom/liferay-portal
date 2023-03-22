@@ -1,5 +1,24 @@
 definition {
 
+	macro addCurrency {
+		if (!(isSet(currency))) {
+			var currency = "USD";
+		}
+
+		if (!(isSet(country))) {
+			var country = "global";
+		}
+
+		if (!(isSet(accountEntryName))) {
+			var accountEntryName = "Company Name 1";
+		}
+
+		JSONPRMAPI.addCurrency(
+			currency = ${currency},
+			country = ${country},
+			accountEntryName = ${accountEntryName});
+	}
+
 	macro createMDFRequest {
 		var totalCostOfExpense = 0;
 

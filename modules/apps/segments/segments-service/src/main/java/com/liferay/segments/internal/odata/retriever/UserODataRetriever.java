@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.odata.search.ODataSearchAdapter;
@@ -49,8 +50,10 @@ public class UserODataRetriever implements ODataRetriever<User> {
 			int end)
 		throws PortalException {
 
+		FilterParser filterParser = _filterParserProvider.provide(_entityModel);
+
 		Hits hits = _oDataSearchAdapter.search(
-			companyId, _filterParser, filterString, User.class.getName(),
+			companyId, filterParser, filterString, User.class.getName(),
 			_entityModel, locale, start, end);
 
 		return _getUsers(hits);
@@ -61,8 +64,10 @@ public class UserODataRetriever implements ODataRetriever<User> {
 			long companyId, String filterString, Locale locale)
 		throws PortalException {
 
+		FilterParser filterParser = _filterParserProvider.provide(_entityModel);
+
 		return _oDataSearchAdapter.searchCount(
-			companyId, _filterParser, filterString, User.class.getName(),
+			companyId, filterParser, filterString, User.class.getName(),
 			_entityModel, locale);
 	}
 
@@ -87,8 +92,8 @@ public class UserODataRetriever implements ODataRetriever<User> {
 	@Reference(target = "(entity.model.name=" + UserEntityModel.NAME + ")")
 	private EntityModel _entityModel;
 
-	@Reference(target = "(entity.model.name=" + UserEntityModel.NAME + ")")
-	private FilterParser _filterParser;
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private ODataSearchAdapter _oDataSearchAdapter;

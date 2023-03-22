@@ -72,6 +72,7 @@ const PatternField = ({
 			)}
 
 			<ClayButton
+				aria-label={Liferay.Language.get('add')}
 				className="redirect-field-repeatable-add-button"
 				onClick={() => handleAddClick(index)}
 				size="sm"

@@ -27,10 +27,7 @@ import createUrlByERC from '../../utils/createUrlByERC';
 import {PostType} from './postTypes';
 
 const initialPagination = {
-	order: 'desc',
 	page: 1,
-	pageSize: 2,
-	sortBy: 'dateCreated',
 	totalCount: 0,
 };
 
@@ -43,6 +40,12 @@ const NotificationSidebar: React.FC = () => {
 	const [page, setPage] = useState<number>(initialPagination.page);
 	const hasMorePostsToLoad = posts.length < totalCount;
 
+	const parameters = {
+		order: 'desc',
+		page,
+		pageSize: 7,
+		sortBy: 'dateCreated',
+	};
 	const notificationCategory = 'Application ';
 
 	const markAsRead = (post: PostType) => {
@@ -59,12 +62,7 @@ const NotificationSidebar: React.FC = () => {
 
 	async function getNotifications() {
 		try {
-			const response = await getUserNotification(
-				initialPagination.pageSize,
-				page,
-				initialPagination.order,
-				initialPagination.sortBy
-			);
+			const response = await getUserNotification(parameters);
 			const notifications = response?.data;
 
 			if (notifications) {

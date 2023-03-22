@@ -14,6 +14,7 @@ import {useFormikContext} from 'formik';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import {TypeActivityKey} from '../../../../../../../../common/enums/TypeActivityKey';
 import {LiferayPicklistName} from '../../../../../../../../common/enums/liferayPicklistName';
 import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import getBooleanEntries from '../../../../../../../../common/utils/getBooleanEntries';
@@ -60,7 +61,7 @@ const LeadListSection = ({
 
 	return (
 		<PRMForm.Section title="Lead List">
-			{!selectedTypeActivity && (
+			{selectedTypeActivity !== TypeActivityKey.EVENT && (
 				<PRMFormik.Field
 					component={PRMForm.RadioGroup}
 					items={getBooleanEntries()}

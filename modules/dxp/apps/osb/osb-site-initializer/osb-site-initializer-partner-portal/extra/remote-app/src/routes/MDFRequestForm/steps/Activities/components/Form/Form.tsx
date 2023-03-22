@@ -58,7 +58,9 @@ const Form = ({
 			`activities[${currentActivityIndex}].activityDescription`,
 			getNewActivity(currency).activityDescription
 		);
+	};
 
+	useEffect(() => {
 		const displaySection =
 			currentActivity?.typeActivity?.key === TypeActivityKey.EVENT
 				? 'true'
@@ -68,7 +70,7 @@ const Form = ({
 			`activities[${currentActivityIndex}].activityDescription.leadGenerated`,
 			displaySection
 		);
-	};
+	}, [currentActivity.tactic, currentActivity?.typeActivity?.key]);
 
 	const {
 		onTypeActivitySelected,

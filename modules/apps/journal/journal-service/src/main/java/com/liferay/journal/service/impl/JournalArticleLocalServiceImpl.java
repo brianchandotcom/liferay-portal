@@ -7126,7 +7126,11 @@ public class JournalArticleLocalServiceImpl
 						currentArticle.setStatus(
 							WorkflowConstants.STATUS_EXPIRED);
 
-						journalArticlePersistence.update(currentArticle);
+						currentArticle = journalArticlePersistence.update(
+							currentArticle);
+
+						notifySubscribers(
+							0, currentArticle, "expired", new ServiceContext());
 					}
 				}
 
@@ -7134,6 +7138,8 @@ public class JournalArticleLocalServiceImpl
 
 				article = journalArticleLocalService.updateJournalArticle(
 					article);
+
+				notifySubscribers(0, article, "expired", new ServiceContext());
 
 				updatePreviousApprovedArticle(article);
 

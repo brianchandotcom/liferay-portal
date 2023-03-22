@@ -187,9 +187,13 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		AssertElementPresent(
-			key_text = "Create",
-			locator1 = "Button#ANY_DISABLED");
+		Type(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "");
+
+		Button.click(button = "Create");
+
+		Alert.viewRequiredField();
 	}
 
 	@priority = 5

@@ -14,7 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useFormik} from 'formik';
 import {fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {LearnMessageWithoutContext} from '../../../sxp_blueprint_admin/js/shared/LearnMessage';
 import sub from '../../../sxp_blueprint_admin/js/utils/language/sub';
@@ -203,9 +203,16 @@ export default function ({
 	namespace = '',
 	redirectURL,
 }) {
-	const resolvedInitialTextEmbeddingProviderConfigurationJSONs = resolveInitialTextEmbeddingProviderConfigurationJSONs(
-		initialTextEmbeddingProviderConfigurationJSONs,
-		availableTextEmbeddingProviders
+	const resolvedInitialTextEmbeddingProviderConfigurationJSONs = useMemo(
+		() =>
+			resolveInitialTextEmbeddingProviderConfigurationJSONs(
+				initialTextEmbeddingProviderConfigurationJSONs,
+				availableTextEmbeddingProviders
+			),
+		[
+			initialTextEmbeddingProviderConfigurationJSONs,
+			availableTextEmbeddingProviders,
+		]
 	);
 
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);

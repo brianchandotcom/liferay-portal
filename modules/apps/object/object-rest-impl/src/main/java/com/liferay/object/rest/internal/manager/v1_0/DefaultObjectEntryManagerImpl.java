@@ -719,36 +719,56 @@ public class DefaultObjectEntryManagerImpl
 				_getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
-			if (relatedObjectDefinition.isSystem()) {
-				throw new UnsupportedOperationException(
-					"Unable to create nested object entries with system " +
-						"object definitions");
-			}
-
-			ObjectEntryManager objectEntryManager =
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					relatedObjectDefinition.getStorageType());
-
 			ObjectRelationshipElementsParser objectRelationshipElementsParser =
 				_objectRelationshipElementsParserRegistry.
 					getObjectRelationshipElementsParser(
 						relatedObjectDefinition.getClassName(),
 						objectRelationship.getType());
 
-			List<ObjectEntry> nestedObjectEntries =
-				objectRelationshipElementsParser.parse(
-					objectRelationship, properties.get(entry.getKey()));
+			if (relatedObjectDefinition.isSystem()) {
+				SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+					_systemObjectDefinitionMetadataRegistry.
+						getSystemObjectDefinitionMetadata(
+							relatedObjectDefinition.getName());
 
-			for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
-				nestedObjectEntry = objectEntryManager.addOrUpdateObjectEntry(
-					objectDefinition.getCompanyId(), dtoConverterContext,
-					nestedObjectEntry.getExternalReferenceCode(),
-					relatedObjectDefinition, nestedObjectEntry,
-					relatedObjectDefinition.getScope());
+				List<Map<String, Object>> nestedObjectEntries =
+					objectRelationshipElementsParser.parse(
+						objectRelationship, properties.get(entry.getKey()));
 
-				_relateNestedObjectEntry(
-					objectDefinition, objectRelationship, primaryKey,
-					nestedObjectEntry.getId());
+				for (Map<String, Object> nestedObjectEntry :
+						nestedObjectEntries) {
+
+					_relateNestedObjectEntry(
+						objectDefinition, objectRelationship, primaryKey,
+						systemObjectDefinitionMetadata.upsertBaseModel(
+							String.valueOf(
+								nestedObjectEntry.get("externalReferenceCode")),
+							relatedObjectDefinition.getCompanyId(),
+							dtoConverterContext.getUser(), nestedObjectEntry));
+				}
+			}
+			else {
+				ObjectEntryManager objectEntryManager =
+					_objectEntryManagerRegistry.getObjectEntryManager(
+						relatedObjectDefinition.getStorageType());
+
+				List<ObjectEntry> nestedObjectEntries =
+					objectRelationshipElementsParser.parse(
+						objectRelationship, properties.get(entry.getKey()));
+
+				for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
+					nestedObjectEntry =
+						objectEntryManager.addOrUpdateObjectEntry(
+							objectDefinition.getCompanyId(),
+							dtoConverterContext,
+							nestedObjectEntry.getExternalReferenceCode(),
+							relatedObjectDefinition, nestedObjectEntry,
+							relatedObjectDefinition.getScope());
+
+					_relateNestedObjectEntry(
+						objectDefinition, objectRelationship, primaryKey,
+						nestedObjectEntry.getId());
+				}
 			}
 		}
 	}

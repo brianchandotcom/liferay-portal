@@ -290,6 +290,14 @@
 	<td>//li[contains(@class,'list-group-item')]//dt[contains(.,'${key_specification}')]/..//dd[contains(.,'${key_value}')]</td>
 	<td></td>
 </tr>
+
+<!--FRAGMENTS-->
+
+<tr>
+	<td>FS_DYNAMIC_FIELD</td>
+	<td>xpath=(//div[@class='dynamic-field'])[${key_index}]//${key_element}[@class='node-${key_node}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

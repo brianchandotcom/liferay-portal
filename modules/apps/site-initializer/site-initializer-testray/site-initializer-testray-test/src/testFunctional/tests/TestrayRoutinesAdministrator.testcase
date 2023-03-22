@@ -106,7 +106,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteRoutine {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanDeleteRoutine";
-		
+
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},

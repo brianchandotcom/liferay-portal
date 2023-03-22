@@ -183,7 +183,17 @@ public class ObjectFieldUtil {
 		serviceBuilderObjectField.setLabelMap(
 			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-146755") &&
+			(Objects.equals(
+				ObjectField.BusinessType.LONG_TEXT,
+				objectField.getBusinessType()) ||
+			 Objects.equals(
+				 ObjectField.BusinessType.RICH_TEXT,
+				 objectField.getBusinessType()) ||
+			 Objects.equals(
+				 ObjectField.BusinessType.TEXT,
+				 objectField.getBusinessType()))) {
+
 			serviceBuilderObjectField.setLocalized(
 				GetterUtil.getBoolean(
 					objectField.getLocalized(), enableLocalization));

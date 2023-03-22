@@ -147,6 +147,24 @@ public class ObjectFieldResourceImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
 
+		boolean localized = false;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-146755") &&
+			(Objects.equals(
+				ObjectField.BusinessType.LONG_TEXT,
+				objectField.getBusinessType()) ||
+			 Objects.equals(
+				 ObjectField.BusinessType.RICH_TEXT,
+				 objectField.getBusinessType()) ||
+			 Objects.equals(
+				 ObjectField.BusinessType.TEXT,
+				 objectField.getBusinessType()))) {
+
+			localized = GetterUtil.getBoolean(
+				objectField.getLocalized(),
+				objectDefinition.isEnableLocalization());
+		}
+
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
@@ -161,10 +179,7 @@ public class ObjectFieldResourceImpl
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-				GetterUtil.getBoolean(
-					objectField.getLocalized(),
-					objectDefinition.isEnableLocalization()),
-				objectField.getName(), objectField.getRequired(),
+				localized, objectField.getName(), objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
 				ObjectFieldSettingUtil.toObjectFieldSettings(
 					ObjectFieldUtil.addListTypeDefinition(

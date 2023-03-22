@@ -23,6 +23,7 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -42,8 +44,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -85,7 +90,13 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		JournalArticle draftJournalArticle2 = _addDraftVersionJournalArticle(
 			approvedJournalArticle2, wrongClassTypeId);
 
-		_getRunUpgradeLogEntries(LoggerTestUtil.OFF);
+		List<LogEntry> logEntries = _getRunUpgradeLogEntries(
+			LoggerTestUtil.WARN);
+
+		_assertWrongClassTypeIdLogEntries(
+			logEntries, ddmStructure.getStructureId(), wrongClassTypeId,
+			approvedJournalArticle2.getResourcePrimKey(),
+			draftJournalArticle2.getId());
 
 		_assertClassTypeId(
 			approvedJournalArticle1, approvedJournalArticle2,
@@ -222,6 +233,56 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 			Assert.assertEquals(
 				journalArticle.getDDMStructureId(),
 				assetEntry.getClassTypeId());
+		}
+	}
+
+	private void _assertWrongClassTypeIdLogEntries(
+		List<LogEntry> logEntries, long expectedClassTypeId,
+		long wrongClassTypeId, long... classPKs) {
+
+		Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+
+		LogEntry logEntry1 = logEntries.get(0);
+
+		Assert.assertEquals(LoggerTestUtil.WARN, logEntry1.getPriority());
+
+		Assert.assertEquals(
+			"Asset entries with the wrong classTypeId [" + wrongClassTypeId +
+				"] have been found",
+			logEntry1.getMessage());
+
+		LogEntry logEntry2 = logEntries.get(1);
+
+		Assert.assertEquals(LoggerTestUtil.WARN, logEntry2.getPriority());
+
+		String message = logEntry2.getMessage();
+
+		Assert.assertTrue(
+			message.startsWith(
+				expectedClassTypeId +
+					" has been set as classTypeId for the entryIds"));
+
+		List<Long> expectedEntryIds = new ArrayList<>();
+
+		for (long classPK : classPKs) {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				JournalArticle.class.getName(), classPK);
+
+			Assert.assertNotNull(assetEntry);
+
+			expectedEntryIds.add(assetEntry.getEntryId());
+		}
+
+		List<String> entryIds = StringUtil.split(
+			StringUtils.substringBetween(
+				message, StringPool.OPEN_BRACKET, StringPool.CLOSE_BRACKET));
+
+		Assert.assertEquals(
+			entryIds.toString(), expectedEntryIds.size(), entryIds.size());
+
+		for (String entryId : entryIds) {
+			Assert.assertTrue(
+				expectedEntryIds.contains(GetterUtil.getLong(entryId)));
 		}
 	}
 

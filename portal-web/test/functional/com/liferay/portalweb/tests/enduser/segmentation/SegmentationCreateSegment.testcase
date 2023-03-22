@@ -110,7 +110,6 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130275: Validate if it's posible to create a segment based on Organization > Date modified criteria"
-	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationDateModified {
@@ -1245,7 +1244,6 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130284: Validate if it's posible to create a segment based on User > Date modified criteria"
-	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentByUserDateModified {

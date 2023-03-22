@@ -1,0 +1,8 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-oauth-application-headless-server:
+    name: Liferay Sample OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Delivery.everything
+    type: oAuthApplicationHeadlessServer

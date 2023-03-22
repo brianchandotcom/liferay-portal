@@ -16,7 +16,8 @@ import MDFClaim from '../../../interfaces/mdfClaim';
 export function getDTOFromMDFClaim(
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
-	externalReferenceCodeSF?: string
+	externalReferenceCodeSF?: string,
+	reimbursementInvoiceDocumentId?: number
 ): MDFClaimDTO {
 	return {
 		amountClaimed: mdfClaim.totalClaimAmount,
@@ -32,5 +33,6 @@ export function getDTOFromMDFClaim(
 			mdfRequest.r_accToMDFReqs_accountEntry?.id,
 		r_mdfReqToMDFClms_c_mdfRequestId:
 			mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId,
+		reimbursementInvoice: reimbursementInvoiceDocumentId,
 	};
 }

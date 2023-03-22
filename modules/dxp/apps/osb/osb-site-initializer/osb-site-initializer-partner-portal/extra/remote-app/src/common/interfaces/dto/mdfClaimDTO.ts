@@ -26,4 +26,5 @@ export default interface MDFClaimDTO
 	paymentReceived?: number;
 	r_accToMDFClms_accountEntry?: AccountEntry;
 	r_accToMDFClms_accountEntryId?: number;
+	reimbursementInvoice?: number;
 }

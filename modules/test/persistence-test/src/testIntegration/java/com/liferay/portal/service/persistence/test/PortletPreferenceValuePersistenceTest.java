@@ -201,6 +201,15 @@ public class PortletPreferenceValuePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_N_SV() throws Exception {
+		_persistence.countByC_N_SV(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByC_N_SV(0L, "null", "null");
+
+		_persistence.countByC_N_SV(0L, (String)null, (String)null);
+	}
+
+	@Test
 	public void testCountByP_I_N() throws Exception {
 		_persistence.countByP_I_N(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(), "");

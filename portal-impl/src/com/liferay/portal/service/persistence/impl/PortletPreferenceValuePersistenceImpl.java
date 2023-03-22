@@ -1231,6 +1231,683 @@ public class PortletPreferenceValuePersistenceImpl
 	private static final String _FINDER_COLUMN_P_N_NAME_3 =
 		"(portletPreferenceValue.name IS NULL OR portletPreferenceValue.name = '')";
 
+	private FinderPath _finderPathWithPaginationFindByC_N_SV;
+	private FinderPath _finderPathWithoutPaginationFindByC_N_SV;
+	private FinderPath _finderPathCountByC_N_SV;
+
+	/**
+	 * Returns all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @return the matching portlet preference values
+	 */
+	@Override
+	public List<PortletPreferenceValue> findByC_N_SV(
+		long companyId, String name, String smallValue) {
+
+		return findByC_N_SV(
+			companyId, name, smallValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param start the lower bound of the range of portlet preference values
+	 * @param end the upper bound of the range of portlet preference values (not inclusive)
+	 * @return the range of matching portlet preference values
+	 */
+	@Override
+	public List<PortletPreferenceValue> findByC_N_SV(
+		long companyId, String name, String smallValue, int start, int end) {
+
+		return findByC_N_SV(companyId, name, smallValue, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param start the lower bound of the range of portlet preference values
+	 * @param end the upper bound of the range of portlet preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portlet preference values
+	 */
+	@Override
+	public List<PortletPreferenceValue> findByC_N_SV(
+		long companyId, String name, String smallValue, int start, int end,
+		OrderByComparator<PortletPreferenceValue> orderByComparator) {
+
+		return findByC_N_SV(
+			companyId, name, smallValue, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param start the lower bound of the range of portlet preference values
+	 * @param end the upper bound of the range of portlet preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching portlet preference values
+	 */
+	@Override
+	public List<PortletPreferenceValue> findByC_N_SV(
+		long companyId, String name, String smallValue, int start, int end,
+		OrderByComparator<PortletPreferenceValue> orderByComparator,
+		boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+		smallValue = Objects.toString(smallValue, "");
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			PortletPreferenceValue.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_SV;
+				finderArgs = new Object[] {companyId, name, smallValue};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByC_N_SV;
+			finderArgs = new Object[] {
+				companyId, name, smallValue, start, end, orderByComparator
+			};
+		}
+
+		List<PortletPreferenceValue> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<PortletPreferenceValue>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (PortletPreferenceValue portletPreferenceValue : list) {
+					if ((companyId != portletPreferenceValue.getCompanyId()) ||
+						!name.equals(portletPreferenceValue.getName()) ||
+						!smallValue.equals(
+							portletPreferenceValue.getSmallValue())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_SV_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_SV_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_SV_NAME_2);
+			}
+
+			boolean bindSmallValue = false;
+
+			if (smallValue.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_SV_SMALLVALUE_3);
+			}
+			else {
+				bindSmallValue = true;
+
+				sb.append(_FINDER_COLUMN_C_N_SV_SMALLVALUE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PortletPreferenceValueModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindSmallValue) {
+					queryPos.add(smallValue);
+				}
+
+				list = (List<PortletPreferenceValue>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preference value
+	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
+	 */
+	@Override
+	public PortletPreferenceValue findByC_N_SV_First(
+			long companyId, String name, String smallValue,
+			OrderByComparator<PortletPreferenceValue> orderByComparator)
+		throws NoSuchPortletPreferenceValueException {
+
+		PortletPreferenceValue portletPreferenceValue = fetchByC_N_SV_First(
+			companyId, name, smallValue, orderByComparator);
+
+		if (portletPreferenceValue != null) {
+			return portletPreferenceValue;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", name=");
+		sb.append(name);
+
+		sb.append(", smallValue=");
+		sb.append(smallValue);
+
+		sb.append("}");
+
+		throw new NoSuchPortletPreferenceValueException(sb.toString());
+	}
+
+	/**
+	 * Returns the first portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
+	 */
+	@Override
+	public PortletPreferenceValue fetchByC_N_SV_First(
+		long companyId, String name, String smallValue,
+		OrderByComparator<PortletPreferenceValue> orderByComparator) {
+
+		List<PortletPreferenceValue> list = findByC_N_SV(
+			companyId, name, smallValue, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preference value
+	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
+	 */
+	@Override
+	public PortletPreferenceValue findByC_N_SV_Last(
+			long companyId, String name, String smallValue,
+			OrderByComparator<PortletPreferenceValue> orderByComparator)
+		throws NoSuchPortletPreferenceValueException {
+
+		PortletPreferenceValue portletPreferenceValue = fetchByC_N_SV_Last(
+			companyId, name, smallValue, orderByComparator);
+
+		if (portletPreferenceValue != null) {
+			return portletPreferenceValue;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", name=");
+		sb.append(name);
+
+		sb.append(", smallValue=");
+		sb.append(smallValue);
+
+		sb.append("}");
+
+		throw new NoSuchPortletPreferenceValueException(sb.toString());
+	}
+
+	/**
+	 * Returns the last portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
+	 */
+	@Override
+	public PortletPreferenceValue fetchByC_N_SV_Last(
+		long companyId, String name, String smallValue,
+		OrderByComparator<PortletPreferenceValue> orderByComparator) {
+
+		int count = countByC_N_SV(companyId, name, smallValue);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<PortletPreferenceValue> list = findByC_N_SV(
+			companyId, name, smallValue, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the portlet preference values before and after the current portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param portletPreferenceValueId the primary key of the current portlet preference value
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next portlet preference value
+	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
+	 */
+	@Override
+	public PortletPreferenceValue[] findByC_N_SV_PrevAndNext(
+			long portletPreferenceValueId, long companyId, String name,
+			String smallValue,
+			OrderByComparator<PortletPreferenceValue> orderByComparator)
+		throws NoSuchPortletPreferenceValueException {
+
+		name = Objects.toString(name, "");
+		smallValue = Objects.toString(smallValue, "");
+
+		PortletPreferenceValue portletPreferenceValue = findByPrimaryKey(
+			portletPreferenceValueId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PortletPreferenceValue[] array = new PortletPreferenceValueImpl[3];
+
+			array[0] = getByC_N_SV_PrevAndNext(
+				session, portletPreferenceValue, companyId, name, smallValue,
+				orderByComparator, true);
+
+			array[1] = portletPreferenceValue;
+
+			array[2] = getByC_N_SV_PrevAndNext(
+				session, portletPreferenceValue, companyId, name, smallValue,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PortletPreferenceValue getByC_N_SV_PrevAndNext(
+		Session session, PortletPreferenceValue portletPreferenceValue,
+		long companyId, String name, String smallValue,
+		OrderByComparator<PortletPreferenceValue> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_N_SV_COMPANYID_2);
+
+		boolean bindName = false;
+
+		if (name.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_N_SV_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			sb.append(_FINDER_COLUMN_C_N_SV_NAME_2);
+		}
+
+		boolean bindSmallValue = false;
+
+		if (smallValue.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_N_SV_SMALLVALUE_3);
+		}
+		else {
+			bindSmallValue = true;
+
+			sb.append(_FINDER_COLUMN_C_N_SV_SMALLVALUE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(PortletPreferenceValueModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (bindName) {
+			queryPos.add(name);
+		}
+
+		if (bindSmallValue) {
+			queryPos.add(smallValue);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						portletPreferenceValue)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<PortletPreferenceValue> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 */
+	@Override
+	public void removeByC_N_SV(long companyId, String name, String smallValue) {
+		for (PortletPreferenceValue portletPreferenceValue :
+				findByC_N_SV(
+					companyId, name, smallValue, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(portletPreferenceValue);
+		}
+	}
+
+	/**
+	 * Returns the number of portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param smallValue the small value
+	 * @return the number of matching portlet preference values
+	 */
+	@Override
+	public int countByC_N_SV(long companyId, String name, String smallValue) {
+		name = Objects.toString(name, "");
+		smallValue = Objects.toString(smallValue, "");
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			PortletPreferenceValue.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_N_SV;
+
+			finderArgs = new Object[] {companyId, name, smallValue};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_SV_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_SV_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_SV_NAME_2);
+			}
+
+			boolean bindSmallValue = false;
+
+			if (smallValue.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_SV_SMALLVALUE_3);
+			}
+			else {
+				bindSmallValue = true;
+
+				sb.append(_FINDER_COLUMN_C_N_SV_SMALLVALUE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindSmallValue) {
+					queryPos.add(smallValue);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_N_SV_COMPANYID_2 =
+		"portletPreferenceValue.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_N_SV_NAME_2 =
+		"portletPreferenceValue.name = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_N_SV_NAME_3 =
+		"(portletPreferenceValue.name IS NULL OR portletPreferenceValue.name = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_N_SV_SMALLVALUE_2 =
+		"portletPreferenceValue.smallValue = ?";
+
+	private static final String _FINDER_COLUMN_C_N_SV_SMALLVALUE_3 =
+		"(portletPreferenceValue.smallValue IS NULL OR portletPreferenceValue.smallValue = '')";
+
 	private FinderPath _finderPathFetchByP_I_N;
 	private FinderPath _finderPathCountByP_I_N;
 
@@ -3063,6 +3740,31 @@ public class PortletPreferenceValuePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"portletPreferencesId", "name"}, false);
+
+		_finderPathWithPaginationFindByC_N_SV = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_SV",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "name", "smallValue"}, true);
+
+		_finderPathWithoutPaginationFindByC_N_SV = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_SV",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			new String[] {"companyId", "name", "smallValue"}, true);
+
+		_finderPathCountByC_N_SV = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_SV",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			new String[] {"companyId", "name", "smallValue"}, false);
 
 		_finderPathFetchByP_I_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_N",

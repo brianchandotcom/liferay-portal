@@ -267,6 +267,10 @@ public interface PortletPreferenceValueLocalService
 	public int getPortletPreferenceValuesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPortletPreferenceValuesCount(
+		long companyId, String name, String smallValue);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(
 		PortletPreferences portletPreferences);
 

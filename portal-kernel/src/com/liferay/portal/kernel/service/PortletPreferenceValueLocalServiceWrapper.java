@@ -330,6 +330,14 @@ public class PortletPreferenceValueLocalServiceWrapper
 	}
 
 	@Override
+	public int getPortletPreferenceValuesCount(
+		long companyId, String name, String smallValue) {
+
+		return _portletPreferenceValueLocalService.
+			getPortletPreferenceValuesCount(companyId, name, smallValue);
+	}
+
+	@Override
 	public javax.portlet.PortletPreferences getPreferences(
 		com.liferay.portal.kernel.model.PortletPreferences portletPreferences) {
 

@@ -33,6 +33,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -56,6 +56,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -723,8 +725,7 @@ public class ObjectEntryResourceTest {
 			objectEntryJSONObject.toString(),
 			StringBundler.concat(
 				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
-				String.valueOf(TestPropsValues.getGroupId()),
-				"/by-external-reference-code/",
+				TestPropsValues.getGroupId(), "/by-external-reference-code/",
 				_siteScopedObjectEntry1.getExternalReferenceCode()),
 			Http.Method.PATCH);
 
@@ -937,7 +938,7 @@ public class ObjectEntryResourceTest {
 			_objectEntry2.getExternalReferenceCode(),
 			jsonObject.getString("externalReferenceCode"));
 		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_2, jsonObject.getString(_OBJECT_FIELD_NAME_2));
+			_OBJECT_FIELD_VALUE_2, jsonObject.getInt(_OBJECT_FIELD_NAME_2));
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -953,7 +954,7 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getExternalReferenceCode(),
 			jsonObject.getString("externalReferenceCode"));
 		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_1, jsonObject.getString(_OBJECT_FIELD_NAME_1));
+			_OBJECT_FIELD_VALUE_1, jsonObject.getInt(_OBJECT_FIELD_NAME_1));
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -1000,7 +1001,7 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			newObjectEntryJSONObject.toString(),
-			com.liferay.petra.string.StringBundler.concat(
+			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				_objectEntry1.getPrimaryKey()),
 			Http.Method.PUT);
@@ -1015,7 +1016,7 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			com.liferay.petra.string.StringBundler.concat(
+			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				_objectEntry1.getPrimaryKey(), "?nestedFields=",
 				_objectRelationship.getName()),
@@ -1068,7 +1069,7 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			newObjectEntryJSONObject.toString(),
-			com.liferay.petra.string.StringBundler.concat(
+			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
 				objectEntryId),
 			Http.Method.PUT);
@@ -1131,7 +1132,7 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			newObjectEntryJSONObject.toString(),
-			com.liferay.petra.string.StringBundler.concat(
+			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				_objectEntry1.getPrimaryKey()),
 			Http.Method.PUT);
@@ -1146,7 +1147,7 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			com.liferay.petra.string.StringBundler.concat(
+			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				_objectEntry1.getPrimaryKey(), "?nestedFields=",
 				_objectRelationship.getName()),
@@ -1297,7 +1298,8 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
-			String expectedObjectFieldName, String expectedObjectFieldValue,
+			String expectedObjectFieldName,
+			Serializable expectedObjectFieldValue,
 			FilterOperator filterOperator, ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long relatedObjectEntryId)
 		throws Exception {
@@ -1305,8 +1307,7 @@ public class ObjectEntryResourceTest {
 		String endpoint = StringBundler.concat(
 			objectDefinition.getRESTContextPath(), "?filter=",
 			objectRelationship.getName(), "/id%20", filterOperator.getValue(),
-			"%20'", String.valueOf(relatedObjectEntryId),
-			StringPool.APOSTROPHE);
+			"%20'", relatedObjectEntryId, StringPool.APOSTROPHE);
 
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
@@ -1353,23 +1354,28 @@ public class ObjectEntryResourceTest {
 
 	private void
 			_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-				String expectedObjectFieldName, String expectedObjectFieldValue,
+				String expectedObjectFieldName,
+				Serializable expectedObjectFieldValue,
 				FilterOperator filterOperator,
 				ObjectDefinition objectDefinition,
 				ObjectRelationship objectRelationship,
-				String relatedObjectFieldName, String relatedObjectFieldValue)
+				String relatedObjectFieldName,
+				Serializable relatedObjectFieldValue)
 		throws Exception {
 
 		String endpoint = objectDefinition.getRESTContextPath() + "?filter=";
 
 		if (filterOperator == FilterOperator.CONTAINS) {
+			String relatedObjectFieldString = String.valueOf(
+				relatedObjectFieldValue);
+
 			endpoint = endpoint.concat(
 				StringBundler.concat(
 					filterOperator.getValue(), StringPool.OPEN_PARENTHESIS,
 					objectRelationship.getName(), StringPool.SLASH,
 					relatedObjectFieldName, StringPool.COMMA,
 					StringPool.APOSTROPHE,
-					relatedObjectFieldValue.substring(1, 2),
+					relatedObjectFieldString.substring(1, 2),
 					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
 		}
 		else if (filterOperator == FilterOperator.EQ) {
@@ -1393,13 +1399,16 @@ public class ObjectEntryResourceTest {
 					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
 		}
 		else if (filterOperator == FilterOperator.STARTS_WITH) {
+			String relatedObjectFieldString = String.valueOf(
+				relatedObjectFieldValue);
+
 			endpoint = endpoint.concat(
 				StringBundler.concat(
 					filterOperator.getValue(), StringPool.OPEN_PARENTHESIS,
 					objectRelationship.getName(), StringPool.SLASH,
 					relatedObjectFieldName, StringPool.COMMA,
 					StringPool.APOSTROPHE,
-					relatedObjectFieldValue.substring(0, 1),
+					relatedObjectFieldString.substring(0, 1),
 					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
 		}
 		else {
@@ -1414,7 +1423,7 @@ public class ObjectEntryResourceTest {
 	private void
 			_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 				String endpoint, String expectedObjectFieldName,
-				String expectedObjectFieldValue)
+				Serializable expectedObjectFieldValue)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
@@ -1428,7 +1437,7 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(
 			expectedObjectFieldValue,
-			itemJSONObject.getString(expectedObjectFieldName));
+			itemJSONObject.getInt(expectedObjectFieldName));
 	}
 
 	private void _testGetNestedFieldDetailsInOneToManyRelationships(
@@ -1445,15 +1454,14 @@ public class ObjectEntryResourceTest {
 		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_2,
-			itemJSONObject.getString(_OBJECT_FIELD_NAME_2));
+			_OBJECT_FIELD_VALUE_2, itemJSONObject.getInt(_OBJECT_FIELD_NAME_2));
 
 		JSONObject relatedObjectJSONObject = itemJSONObject.getJSONObject(
 			expectedFieldName);
 
 		Assert.assertEquals(
 			_OBJECT_FIELD_VALUE_1,
-			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
+			relatedObjectJSONObject.getInt(_OBJECT_FIELD_NAME_1));
 	}
 
 	private void
@@ -1549,11 +1557,9 @@ public class ObjectEntryResourceTest {
 	private static final String _OBJECT_FIELD_NAME_2 =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_VALUE_1 =
-		RandomTestUtil.randomString();
+	private static final int _OBJECT_FIELD_VALUE_1 = RandomTestUtil.randomInt();
 
-	private static final String _OBJECT_FIELD_VALUE_2 =
-		RandomTestUtil.randomString();
+	private static final int _OBJECT_FIELD_VALUE_2 = RandomTestUtil.randomInt();
 
 	private static AssetVocabulary _assetVocabulary;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;

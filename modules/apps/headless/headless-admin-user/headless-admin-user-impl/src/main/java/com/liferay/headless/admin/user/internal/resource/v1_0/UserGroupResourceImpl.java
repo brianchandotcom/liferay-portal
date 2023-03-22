@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
-import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserGroupResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserGroupEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
@@ -264,8 +265,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	private ModelResourcePermission<com.liferay.portal.kernel.model.UserGroup>
 		_userGroupModelResourcePermission;
 
-	@Reference
-	private UserGroupResourceDTOConverter _userGroupResourceDTOConverter;
+	@Reference(target = DTOConverterConstants.USER_GROUP_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<com.liferay.portal.kernel.model.UserGroup, UserGroup>
+		_userGroupResourceDTOConverter;
 
 	@Reference
 	private UserGroupService _userGroupService;

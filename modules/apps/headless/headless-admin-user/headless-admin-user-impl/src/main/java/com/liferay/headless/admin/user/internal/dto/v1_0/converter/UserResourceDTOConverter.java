@@ -35,6 +35,7 @@ import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
@@ -406,8 +407,10 @@ public class UserResourceDTOConverter
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
 
-	@Reference
-	private UserGroupResourceDTOConverter _userGroupResourceDTOConverter;
+	@Reference(target = DTOConverterConstants.USER_GROUP_RESOURCE_DTO_CONVERTER)
+	private DTOConverter
+		<UserGroup, com.liferay.headless.admin.user.dto.v1_0.UserGroup>
+			_userGroupResourceDTOConverter;
 
 	@Reference
 	private UserLocalService _userLocalService;

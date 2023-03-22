@@ -15,9 +15,11 @@ definition {
 
 	@summary = "Assert claim message"
 	macro assertClaimMessage {
+		var key_claimMessage = ${claimMessage};
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "PRMMDFRequest#CLAIM_MESSAGE",
-			value1 = ${key_claimMessage});
+			value1 = ${claimMessage});
 	}
 
 	@summary = "Cannot view Manager Status Button on MDF Request detail page"

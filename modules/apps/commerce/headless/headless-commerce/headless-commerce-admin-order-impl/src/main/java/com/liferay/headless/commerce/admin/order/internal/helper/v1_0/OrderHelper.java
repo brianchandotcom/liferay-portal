@@ -18,7 +18,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.User;
@@ -60,29 +59,25 @@ public class OrderHelper {
 			CommerceOrder.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			new UnsafeConsumer() {
+			object -> {
+				SearchContext searchContext = (SearchContext)object;
 
-				public void accept(Object object) throws Exception {
-					SearchContext searchContext = (SearchContext)object;
+				searchContext.setAttribute(
+					"useSearchResultPermissionFilter",
+					useSearchResultPermissionFilter);
+				searchContext.setCompanyId(companyId);
 
-					searchContext.setAttribute(
-						"useSearchResultPermissionFilter",
-						useSearchResultPermissionFilter);
-					searchContext.setCompanyId(companyId);
+				long[] commerceChannelGroupIds =
+					TransformUtil.transformToLongArray(
+						_commerceChannelLocalService.getCommerceChannels(
+							companyId),
+						CommerceChannel::getGroupId);
 
-					long[] commerceChannelGroupIds =
-						TransformUtil.transformToLongArray(
-							_commerceChannelLocalService.getCommerceChannels(
-								companyId),
-							CommerceChannel::getGroupId);
+				if ((commerceChannelGroupIds != null) &&
+					(commerceChannelGroupIds.length > 0)) {
 
-					if ((commerceChannelGroupIds != null) &&
-						(commerceChannelGroupIds.length > 0)) {
-
-						searchContext.setGroupIds(commerceChannelGroupIds);
-					}
+					searchContext.setGroupIds(commerceChannelGroupIds);
 				}
-
 			},
 			sorts, transformUnsafeFunction);
 	}

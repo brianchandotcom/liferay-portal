@@ -1,10 +1,4 @@
 .notification-container {
-	.bubble-unread {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		position: relative;
-	}
 	.bubble-unread::before {
 		background-color: #ec0d6b;
 		border-radius: 50%;

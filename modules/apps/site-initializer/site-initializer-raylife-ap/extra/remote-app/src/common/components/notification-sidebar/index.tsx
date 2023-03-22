@@ -29,7 +29,7 @@ import {PostType} from './postTypes';
 const initialPagination = {order: 'desc', page: 1, pageSize: 2, totalCount: 0};
 
 const NotificationSidebar: React.FC = () => {
-	const [posts, setPosts] = useState<any[]>([]);
+	const [posts, setPosts] = useState<PostType[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(
 		initialPagination.totalCount
 	);
@@ -54,7 +54,7 @@ const NotificationSidebar: React.FC = () => {
 		}
 	};
 
-	const extractNumber = (message: string) => {
+	const extractNumber = (message: string | undefined) => {
 		const number = message?.match(/\d/g);
 
 		return Number(number?.join(''));
@@ -78,8 +78,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Error getting notifications:', error);
 			throw error;
 		}
@@ -98,8 +97,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return data;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(
 				`Error fetching external reference code for ID ${id}: ${error}`
 			);
@@ -111,11 +109,11 @@ const NotificationSidebar: React.FC = () => {
 		const newLinks = await Promise.all(
 			posts.map(async (post) => {
 				const postId = extractNumber(post.message);
-
 				const isMatchingApplication = post.message?.includes(
 					notificationCategory.Application + postId
 				);
 
+				const genericRoute = '#!';
 				if (isMatchingApplication) {
 					const referenceCode = extractNumber(post.message);
 					const externalReferenceCodeUpdated = await getExternalReferenceCode(
@@ -128,11 +126,8 @@ const NotificationSidebar: React.FC = () => {
 
 					return {...post, link: route};
 				}
-				else {
-					const genericRoute = '#!';
 
-					return {...post, link: genericRoute};
-				}
+				return {...post, link: genericRoute};
 			})
 		);
 
@@ -168,7 +163,7 @@ const NotificationSidebar: React.FC = () => {
 					{postsWithLinks.map((item: PostType, _index: number) => (
 						<div
 							className={classNames({
-								'post-container-unread bubble-unread': !item.read,
+								'post-container-unread align-items-center d-flex justify-content-center position-relative bubble-unread': !item.read,
 							})}
 							key={item.id}
 							onClick={() => {

@@ -25,7 +25,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
 		task ("Setup for template") {
@@ -133,7 +133,7 @@ definition {
 	@description = "Story ID: LPS-162439 | Test Summary: Verify if that can Activate Disabled Template"
 	@priority = 5
 	test CanActivateDisabledTemplate {
-		task ("Given that the user adds a Template with status active") {
+		task ("Given that the user adds a Template with status Activated") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
@@ -145,10 +145,10 @@ definition {
 
 			TestrayTemplate.viewTemplateDetails(
 				templateName = "Build_Template",
-				templateStatus = "Active");
+				templateStatus = "Activated");
 		}
 
-		task ("When the user changed the status of deactivate for Active") {
+		task ("When the user changed the status of Deactivated for Activated") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
@@ -159,15 +159,15 @@ definition {
 				templateName = "Build_Template",
 				templateStatus = "Deactive");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Deactive");
+			TestrayContextMenu.clickContextMenuProjects(name = "Deactivated");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Active");
 
 			Refresh();
 		}
 
-		task ("Then the Active status should appear in the list") {
-			Testray.assertItemName(text = "Active");
+		task ("Then the Activated status should appear in the list") {
+			Testray.assertItemName(text = "Activated");
 		}
 	}
 
@@ -183,19 +183,19 @@ definition {
 				routineName = ${routineName});
 		}
 
-		task ("Then the status active should appear") {
+		task ("Then the status Activated should appear") {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
 			TestrayTemplate.viewTemplateDetails(
 				templateName = "Build_Template",
-				templateStatus = "Active");
+				templateStatus = "Activated");
 		}
 	}
 
 	@description = "Story ID: LPS-162439 | Test Summary: Verify if can delete an deactived template"
 	@priority = 4
 	test CanDeleteDeactiveTemplate {
-		task ("Given that the user adds a Template with status deactive") {
+		task ("Given that the user adds a Template with status Deactivated") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
@@ -207,7 +207,7 @@ definition {
 
 			TestrayTemplate.viewTemplateDetails(
 				templateName = "Build_Template",
-				templateStatus = "Active");
+				templateStatus = "Activated");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template");
 
@@ -217,17 +217,17 @@ definition {
 
 			TestrayTemplate.viewTemplateDetails(
 				templateName = "Build_Template",
-				templateStatus = "Deactive");
+				templateStatus = "Deactivated");
 		}
 
-		task ("When the template with deactive status is deleted") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Deactive");
+		task ("When the template with Deactivated status is deleted") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Deactivated");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 		}
 
-		task ("Then the template with deactive status should not appear in the list") {
-			Testray.assertItemNotPresent(text = "Deactive");
+		task ("Then the template with Deactivated status should not appear in the list") {
+			Testray.assertItemNotPresent(text = "Deactivated");
 		}
 	}
 

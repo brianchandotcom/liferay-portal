@@ -28,7 +28,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
 		task ("Setup for TaskAPI") {

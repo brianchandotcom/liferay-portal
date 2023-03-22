@@ -16,9 +16,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
 		task ("Go to Testray") {
@@ -31,7 +29,7 @@ definition {
 
 		Testray.tearDownCP();
 
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -39,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162987 - Verify if as an Administrador can change his Role"
-	@ignore = "Test Stub"
+	@ignore = "true"
 	@priority = 5
 	test CanChangeRole {
 
@@ -137,15 +135,6 @@ definition {
 				fieldLabel = "Screen Name",
 				warningMessage = "This field is required.");
 		}
-	}
-
-	@description = "This is a test for LPS-166562 - Verify if can't see the Testray users in the Testray user permission"
-	@ignore = "Test Stub"
-	@priority = 4
-	test PermissionTestrayUserCanNotViewUsersList {
-
-		// TODO LPS-166562 PermissionTestrayUserCanNotViewUsersList pending implementation
-
 	}
 
 }

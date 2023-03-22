@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>VERIFY_VALUES_RUN</td>
-	<td>//tr[contains(@class, 'table-row') and contains(., '${key_title}')]</td>
+	<td>//tr[contains(@class, 'table__row') and contains(., '${key_title}')]</td>
 	<td></td>
 </tr>
 </tbody>

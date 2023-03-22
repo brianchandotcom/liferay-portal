@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>CASE_DETAIL</td>
-	<td>//tbody//tr[contains(@class,'table-row')]//td[contains(.,'${key_casePriority}')]//parent::tr//td[text()='${key_caseName}']//parent::tr//td[text()='${key_caseComponent}']</td>
+	<td>//tbody//tr[contains(@class,'table__row')]//td[contains(.,'${key_casePriority}')]//parent::tr//td[text()='${key_caseName}']//parent::tr//td[text()='${key_caseComponent}']</td>
 	<td></td>
 </tr>
 <tr>

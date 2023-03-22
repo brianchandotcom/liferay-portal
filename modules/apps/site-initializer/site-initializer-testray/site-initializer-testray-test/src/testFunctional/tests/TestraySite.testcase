@@ -19,9 +19,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.tearDownCP();
-
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

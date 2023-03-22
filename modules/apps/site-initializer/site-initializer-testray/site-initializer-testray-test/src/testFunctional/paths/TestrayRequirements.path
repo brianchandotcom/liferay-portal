@@ -17,12 +17,12 @@
 </tr>
 <tr>
 	<td>REQUIREMENT_CASE_DETAIL</td>
-	<td>//tbody//tr[contains(@class,'table-row')]//td[text()='${key_requirementPriority}']//parent::tr//td[text()='${key_requirementComponent}']//parent::tr//td[text()='${key_requirementCaseName}']</td>
+	<td>//tr[contains(@class,'table__row')]//td[text()='${key_requirementPriority}']//parent::tr//td[text()='${key_requirementComponent}']//parent::tr//td[text()='${key_requirementCaseName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REQUIREMENT_DETAIL</td>
-	<td>//tbody//tr[contains(@class,'table-row')]//td//a[contains(.,'${key_linkTitle}')]//ancestor::tr//td[text()='${key_requirementTeam}']//parent::tr//td[text()='${key_requirementComponent}']//parent::tr//td[text()='${key_requirementSummary}']</td>
+	<td>//tr[contains(@class,'table__row')]//td//a[contains(.,'${key_linkTitle}')]//ancestor::tr//td[text()='${key_requirementTeam}']//parent::tr//td[text()='${key_requirementComponent}']//parent::tr//td[text()='${key_requirementSummary}']</td>
 	<td></td>
 </tr>
 </tbody>

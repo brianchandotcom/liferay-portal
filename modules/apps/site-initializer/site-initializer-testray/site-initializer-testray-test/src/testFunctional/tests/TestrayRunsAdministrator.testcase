@@ -16,9 +16,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
 		task ("Go to Categories on Manage Sidebar and Add two Category") {

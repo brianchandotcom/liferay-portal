@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>TESTFLOW_SIDEBAR</td>
-	<td>//div[contains(@class, 'testray-sidebar')]//span[normalize-space()='TestFlow']</td>
+	<td>//div[contains(@class, 'tr-sidebar')]//span[normalize-space()='TestFlow']</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>HEADER_BREADCRUMB_DIRECTION</td>
-	<td>//p[contains(@class, 'header-title') and contains(@title, '${key_breadcrumbName}')]</td>
+	<td>//p[contains(@class, 'tr-header') and contains(@title, '${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TAB_TITLE</td>
-	<td>//div[contains(@class, 'testray-page')]//section[contains(@class, 'testray-content') and contains(., '${key_pageTabTitle}')]</td>
+	<td>//div[contains(@class, 'container-fluid') and contains(., '${key_pageTabTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>PROMOTE_BUILD</td>
-	<td>//tbody//tr[contains(@class,'table-row')]//td//span[contains(@title,'promoted')]</td>
+	<td>//span[contains(@title,'promoted')]</td>
 	<td></td>
 </tr>
 <tr>

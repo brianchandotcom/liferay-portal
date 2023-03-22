@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>USER_SIDEBAR</td>
-	<td>//div[contains(@class,'testray-sidebar-footer')]//span[contains(@class,'sticker-overlay')]</td>
+	<td>//div[contains(@class,'tr-avatar')]//span[contains(@class,'sticker-overlay')]</td>
 	<td></td>
 </tr>
 </tbody>

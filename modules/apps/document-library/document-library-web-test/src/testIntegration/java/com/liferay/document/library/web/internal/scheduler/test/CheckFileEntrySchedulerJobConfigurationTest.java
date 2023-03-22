@@ -80,7 +80,7 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		_dlFileEntryLocalService.checkFileEntries(1);
+		_dlFileEntryLocalService.checkFileEntries(_group.getCompanyId(), 1);
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			fileEntry.getFileEntryId());

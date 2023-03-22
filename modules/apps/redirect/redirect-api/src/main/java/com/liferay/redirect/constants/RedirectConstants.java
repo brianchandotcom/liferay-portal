@@ -21,4 +21,10 @@ public class RedirectConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.redirect";
 
+	public static final String USER_AGENT_ALL = "all";
+
+	public static final String USER_AGENT_BOT = "bot";
+
+	public static final String USER_AGENT_HUMAN = "human";
+
 }

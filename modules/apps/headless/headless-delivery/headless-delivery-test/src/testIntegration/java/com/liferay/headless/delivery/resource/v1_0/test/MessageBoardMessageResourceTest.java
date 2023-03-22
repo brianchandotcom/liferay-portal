@@ -62,7 +62,7 @@ public class MessageBoardMessageResourceTest
 
 		super.testGetMessageBoardMessageMessageBoardMessagesPage();
 
-		// Message board messages in a tree hiearchy
+		// Message board messages in a tree hierarchy
 
 		Long parentMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId();

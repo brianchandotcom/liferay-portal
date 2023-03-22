@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -88,6 +90,9 @@ public class SegmentsPanelAppTest {
 		}
 
 		Assert.assertNotNull(_panelApp);
+
+		ReflectionTestUtil.setFieldValue(
+			_panelApp, "_portletLocalService", _portletLocalService);
 	}
 
 	@After
@@ -156,6 +161,10 @@ public class SegmentsPanelAppTest {
 	private GroupLocalService _groupLocalService;
 
 	private PanelApp _panelApp;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
 	private ServiceReference<PanelApp> _serviceReference;
 
 	@Inject

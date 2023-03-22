@@ -20,7 +20,8 @@ const currencyFormat = (value, currencyData = 'USD') => {
 	if (value >= 1000000000) {
 		formatedValue = parseFloat(value / 1000000000).toFixed(2);
 		valueSufix = 'b';
-	} else if (value >= 1000000) {
+	}
+	else if (value >= 1000000) {
 		formatedValue = parseFloat(value / 1000000).toFixed(2);
 		valueSufix = 'm';
 	}

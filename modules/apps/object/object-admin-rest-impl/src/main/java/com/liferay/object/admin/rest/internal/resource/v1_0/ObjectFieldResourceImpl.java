@@ -216,6 +216,16 @@ public class ObjectFieldResourceImpl
 					_objectFilterLocalService)));
 	}
 
+	@Override
+	protected void preparePatch(
+		ObjectField objectField, ObjectField existingObjectField) {
+
+		if (objectField.getObjectFieldSettings() != null) {
+			existingObjectField.setObjectFieldSettings(
+				objectField.getObjectFieldSettings());
+		}
+	}
+
 	private Page<ObjectField> _getObjectFieldsPage(
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			String search, Filter filter, Pagination pagination, Sort[] sorts)

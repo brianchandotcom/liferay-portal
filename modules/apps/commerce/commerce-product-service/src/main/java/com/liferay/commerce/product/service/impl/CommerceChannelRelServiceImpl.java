@@ -113,8 +113,7 @@ public class CommerceChannelRelServiceImpl
 			getPermissionChecker(), commerceChannelRel.getCommerceChannelId(),
 			ActionKeys.VIEW);
 
-		return commerceChannelRelLocalService.getCommerceChannelRel(
-			commerceChannelRelId);
+		return commerceChannelRel;
 	}
 
 	@Override
@@ -138,9 +137,6 @@ public class CommerceChannelRelServiceImpl
 		if (className.equals(CPDefinition.class.getName())) {
 			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), classPK, ActionKeys.VIEW);
-
-			return commerceChannelRelFinder.findByC_C(
-				className, classPK, name, start, end);
 		}
 
 		return commerceChannelRelFinder.findByC_C(
@@ -174,9 +170,6 @@ public class CommerceChannelRelServiceImpl
 		if (className.equals(CPDefinition.class.getName())) {
 			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), classPK, ActionKeys.VIEW);
-
-			return commerceChannelRelFinder.countByC_C(
-				className, classPK, name);
 		}
 
 		return commerceChannelRelFinder.countByC_C(

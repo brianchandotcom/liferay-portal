@@ -15,7 +15,9 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.headless.delivery.client.dto.v1_0.Creator;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.File;
 
@@ -181,6 +184,20 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	}
 
 	@Override
+	protected Document testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+			Long assetLibraryId, Document document)
+		throws Exception {
+
+		Document addedDocument =
+			super.testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, document);
+
+		_addDocumentRatingsEntry(addedDocument);
+
+		return addedDocument;
+	}
+
+	@Override
 	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
 		throws Exception {
 
@@ -195,6 +212,20 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			RandomTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
+	}
+
+	@Override
+	protected Document testGetSiteDocumentsRatedByMePage_addDocument(
+			Long siteId, Document document)
+		throws Exception {
+
+		Document addedDocument =
+			super.testGetSiteDocumentsRatedByMePage_addDocument(
+				siteId, document);
+
+		_addDocumentRatingsEntry(addedDocument);
+
+		return addedDocument;
 	}
 
 	@Override
@@ -227,6 +258,14 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		return testDepotEntry.getDepotEntryId();
 	}
 
+	private void _addDocumentRatingsEntry(Document document) throws Exception {
+		Creator creator = document.getCreator();
+
+		_ratingsEntryLocalService.updateEntry(
+			creator.getId(), DLFileEntry.class.getName(), document.getId(), 1.0,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+	}
+
 	private String _read(String url) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -245,5 +284,8 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

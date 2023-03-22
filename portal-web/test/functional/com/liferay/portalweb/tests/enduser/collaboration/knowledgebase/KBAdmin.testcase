@@ -214,6 +214,80 @@ definition {
 			kbChildArticleTitle = "Knowledge Base Article Title Child");
 	}
 
+	@description = "This test ensures that users can view article in the table view."
+	@priority = 5
+	test CanViewArticleInTableView {
+		property custom.properties = "feature.flag.LPS-169675=true";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		KBAdmin.viewEntryInTableView(
+			kbEntryTitle = "Knowledge Base Article Title",
+			tableColumnContents = "Knowledge Base Article Title,--,0,0,Seconds Ago,Approved",
+			tableColumnNames = "title,num-of-kb-folders,num-of-kb-articles,views,modified-date,status");
+
+		LexiconTable.clickTableEntryTitle(tableEntry = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Child Knowledge Base Article Content",
+			kbChildArticleTitle = "Child Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBAdmin.viewEntryInTableView(
+			kbEntryTitle = "Knowledge Base Article Title",
+			tableColumnContents = "Knowledge Base Article Title,--,1,1,Seconds Ago,Approved",
+			tableColumnNames = "title,num-of-kb-folders,num-of-kb-articles,views,modified-date,status");
+	}
+
+	@description = "This test ensures that users can view folder in the table view."
+	@priority = 5
+	test CanViewFolderInTableView {
+		property custom.properties = "feature.flag.LPS-169675=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		KBAdmin.viewEntryInTableView(
+			kbEntryTitle = "KB Folder",
+			tableColumnContents = "KB Folder,,0,0,--,Seconds Ago,",
+			tableColumnNames = "title,status,num-of-kb-folders,num-of-kb-articles,views,modified-date");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Subfolder Description",
+			kbFolderName = "KB Subfolder",
+			parentFolderName = "KB Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBAdmin.viewEntryInTableView(
+			kbEntryTitle = "KB Folder",
+			tableColumnContents = "KB Folder,,1,1,--,Seconds Ago, ",
+			tableColumnNames = "title,status,num-of-kb-folders,num-of-kb-articles,views,modified-date");
+	}
+
 	@description = "This test covers LPS-171314. It ensures that the expiration label is displayed when the Notification Date is reached."
 	@priority = 4
 	test ExpirationNotificationShowsWhenNotificationDateIsReached {

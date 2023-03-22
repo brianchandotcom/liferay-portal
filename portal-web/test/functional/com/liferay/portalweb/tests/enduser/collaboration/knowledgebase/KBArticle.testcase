@@ -315,6 +315,50 @@ definition {
 			featureFlag = "true");
 	}
 
+	@description = "This test ensures that users can delete article in the table view."
+	@priority = 5
+	test CanDeleteArticleInTableView {
+		property custom.properties = "feature.flag.LPS-169675=true";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconTable.delete(tableEntry = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@description = "This test ensures that users can edit article in the table view."
+	@priority = 5
+	test CanEditArticleInTableView {
+		property custom.properties = "feature.flag.LPS-169675=true";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		KBArticle.editCP(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Title Edit");
+	}
+
 	@description = "This test ensures that a user can edit the kb entry permissions from the navigation pane."
 	@priority = 5
 	test CanEditArticlePermissionsFromNavigationPane {

@@ -110,6 +110,7 @@ public abstract class PortalAcceptanceTestSuiteJob
 			matcher.group("majorVersion"), ".", matcher.group("minorVersion"));
 
 		sb.append(basePortalVersion);
+
 		sb.append(".");
 
 		String releaseProfile = matcher.group("releaseProfile");

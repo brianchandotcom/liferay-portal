@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -10,6 +13,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -31,10 +35,112 @@
 								"channelRegionalMarketingManager": true,
 								"user": false
 							},
-							"fragmentFields": [
-							],
+							"fragmentFields": [],
 							"indexed": true
 						},
+						"pageElements": [
+							{
+								"definition": {},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "DIALECT-dialect-tabs"
+											},
+											"fragmentConfig": {
+												"iconAlignment": "none",
+												"iconName": "check-circle",
+												"numberOfTabs": 2,
+												"tabActiveBarPosition": "bottom",
+												"tabDirection": "horizontal",
+												"tabStyle": "underline"
+											},
+											"fragmentFields": [
+												{
+													"id": "title1",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/marketing/mdf-requests"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "MDF Request"
+															}
+														}
+													}
+												},
+												{
+													"id": "title2",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/marketing/mdf-claim"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "MDF Claim"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentDropZoneId": "1"
+												},
+												"type": "FragmentDropZone"
+											},
+											{
+												"definition": {
+													"fragmentDropZoneId": "2"
+												},
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
 						"type": "Fragment"
 					},
 					{

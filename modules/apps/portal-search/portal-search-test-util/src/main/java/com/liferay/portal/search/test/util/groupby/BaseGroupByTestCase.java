@@ -500,37 +500,37 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	}
 
 	protected void assertGroups(
-		Map<String, String> expectedCountsMap, Hits hits,
+		Map<String, String> expectedCounts, Hits hits,
 		IndexingTestHelper indexingTestHelper) {
 
-		Map<String, String> actualCountsMap = new HashMap<>();
+		Map<String, String> actualCounts = new HashMap<>();
 
 		Map<String, Hits> hitsMap = hits.getGroupedHits();
 
 		for (Map.Entry<String, Hits> entry : hitsMap.entrySet()) {
-			actualCountsMap.put(
+			actualCounts.put(
 				entry.getKey(), getCountPairString(entry.getValue()));
 		}
 
 		AssertUtils.assertEquals(
-			indexingTestHelper.getRequestString(), expectedCountsMap,
-			actualCountsMap);
+			indexingTestHelper.getRequestString(), expectedCounts,
+			actualCounts);
 	}
 
 	protected void assertGroupsOrdered(
-		List<String> expectedCountsList, Map<String, Hits> hitsMap,
+		List<String> expectedCounts, Map<String, Hits> hitsMap,
 		IndexingTestHelper indexingTestHelper) {
 
-		List<String> actualCountsList = new ArrayList<>();
+		List<String> actualCounts = new ArrayList<>();
 
 		for (Map.Entry<String, Hits> entry : hitsMap.entrySet()) {
-			actualCountsList.add(
+			actualCounts.add(
 				getCountPairString(entry.getKey(), entry.getValue()));
 		}
 
 		AssertUtils.assertEquals(
-			indexingTestHelper.getRequestString(), expectedCountsList,
-			actualCountsList);
+			indexingTestHelper.getRequestString(), expectedCounts,
+			actualCounts);
 	}
 
 	protected void assertGroupsSorted(
@@ -571,12 +571,12 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	}
 
 	protected void assertMultipleGroupsOrdered(
-		Map<String, List<String>> expectedCountsMap,
+		Map<String, List<String>> expectedCounts,
 		List<GroupByResponse> groupByResponses,
 		IndexingTestHelper indexingTestHelper) {
 
 		for (GroupByResponse groupByResponse : groupByResponses) {
-			List<String> expectedCountsList = expectedCountsMap.get(
+			List<String> expectedCountsList = expectedCounts.get(
 				groupByResponse.getField());
 
 			assertGroupsOrdered(

@@ -128,10 +128,10 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 							searchHit -> {
 								Document document = searchHit.getDocument();
 
-								Map<String, Field> fields =
+								Map<String, Field> fieldsMap =
 									document.getFields();
 
-								Field field = fields.get(fieldName);
+								Field field = fieldsMap.get(fieldName);
 
 								return (String)field.getValue();
 							})));

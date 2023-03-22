@@ -242,4 +242,30 @@ definition {
             Testray.assertItemName(key_name = "Case 2");
         }
 	}
+
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@priority = 5
+	test AdminCanFilterOptionsToFilter {
+		task ("When the user search filter called priority") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.searchFilter(value = "Priority");
+		}
+
+        task ("Then can see the label called priority") {
+            AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority");
+        }
+
+        task ("When change the filter search to case name") {
+            TestrayFilter.searchFilter(value = "Case Name");
+        }
+
+        task ("Then can not see the label called priority anymore") {
+		    AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority");
+        }
+	}
 }

@@ -12,6 +12,7 @@
 import {currencyFormat} from '.';
 
 export default function getRevenueChartColumns(
+	revenueCurrency,
 	revenueData,
 	setTitleChart,
 	setValueChart,

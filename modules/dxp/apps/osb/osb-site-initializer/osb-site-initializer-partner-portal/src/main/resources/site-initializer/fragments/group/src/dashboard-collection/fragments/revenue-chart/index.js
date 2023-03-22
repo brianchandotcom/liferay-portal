@@ -21,6 +21,7 @@ export default function () {
 	const [valueChart, setValueChart] = useState('');
 	const [columnsRevenueChart, setColumnsRevenueChart] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [currencyData, setCurrencyData] = useState('');
 
 	const getRevenueData = async () => {
 		setLoading(true);
@@ -35,7 +36,12 @@ export default function () {
 		if (response.ok) {
 			const revenueData = await response.json();
 
+			const revenueCurrency = revenueData?.items[0]?.currency.key;
+
+			setCurrencyData(revenueCurrency);
+
 			getRevenueChartColumns(
+				revenueCurrency,
 				revenueData,
 				setTitleChart,
 				setValueChart,
@@ -64,7 +70,8 @@ export default function () {
 	return (
 		<Container className="dashboard-mdf-revenue-chart" title="Revenue">
 			<DonutChart
-				chartData={chartData}
+				chartDataColumns={chartData}
+				dataCurrency={currencyData}
 				isLoading={loading}
 				titleChart={titleChart}
 				valueChart={valueChart}

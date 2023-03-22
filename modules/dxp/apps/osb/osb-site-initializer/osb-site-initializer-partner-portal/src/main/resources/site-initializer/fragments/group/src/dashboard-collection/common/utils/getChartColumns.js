@@ -12,6 +12,7 @@
 import {currencyFormat} from '.';
 
 export default function getChartColumns(
+	mdfCurrency,
 	mdfRequests,
 	setColumnsMDFChart,
 	setTitleChart,
@@ -33,7 +34,7 @@ export default function getChartColumns(
 	expiringSoonTotalActivities(mdfRequests, chartColumns);
 
 	expiredTotalActivites(mdfRequests, chartColumns);
-	setValueChart(currencyFormat(totalMDFActivitiesAmount));
+	setValueChart(currencyFormat(totalMDFActivitiesAmount, mdfCurrency));
 	setTitleChart('Total MDF');
 	setColumnsMDFChart(chartColumns);
 }

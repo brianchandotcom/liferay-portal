@@ -22,6 +22,7 @@ export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
 	const [titleChart, setTitleChart] = useState('');
 	const [valueChart, setValueChart] = useState('');
+	const [currencyData, setCurrencyData] = useState('');
 
 	const [loading, setLoading] = useState(false);
 
@@ -41,7 +42,11 @@ export default function () {
 		if (response.ok) {
 			const mdfRequests = await response.json();
 
+			const mdfCurrency = mdfRequests?.items[0]?.currency?.key;
+			setCurrencyData(mdfCurrency);
+
 			getChartColumns(
+				mdfCurrency,
 				mdfRequests,
 				setColumnsMDFChart,
 				setTitleChart,
@@ -101,7 +106,8 @@ export default function () {
 			title="Market Development Funds"
 		>
 			<DonutChart
-				chartData={chartData}
+				chartDataColumns={chartData}
+				dataCurrency={currencyData}
 				isLoading={loading}
 				titleChart={titleChart}
 				valueChart={valueChart}

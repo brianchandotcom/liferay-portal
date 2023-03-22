@@ -56,6 +56,10 @@ definition {
 				userEmailAddress = "partner@liferay.com");
 		}
 
+		task ("Add a currency to the created account") {
+			JSONPRM.addCurrency();
+		}
+
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "partner@liferay.com",

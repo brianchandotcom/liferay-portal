@@ -60,6 +60,10 @@ definition {
 				userEmailAddress = "manager@liferay.com");
 		}
 
+		task ("Add a currency to the created account") {
+			JSONPRM.addCurrency();
+		}
+
 		task ("Add a new MDF Request") {
 			JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",

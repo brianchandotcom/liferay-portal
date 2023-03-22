@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>FILTER_ICON</td>
-	<td>//button[contains(@class,'filter-button')]</td>
+	<td>//button[contains(@class,'management-toolbar-buttons')]/..//*[name()='svg'][contains(@class,'inline-item-before')]</td>
 	<td></td>
 </tr>
 <tr>

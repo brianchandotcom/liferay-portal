@@ -150,6 +150,8 @@ definition {
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
+			WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
 			Button.clickSave();
 
 			Alert.viewSuccessMessage();
@@ -158,7 +160,7 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationDateModified Test");
 
-			var currentDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",

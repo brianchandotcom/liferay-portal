@@ -131,21 +131,6 @@ public class DisplayPageActionDropdownItemsProvider {
 						() -> hasUpdatePermission,
 						_getRenameDisplayPageActionUnsafeConsumer()
 					).add(
-						() -> {
-							int count =
-								AssetDisplayPageEntryServiceUtil.
-									getAssetDisplayPageEntriesCount(
-										_layoutPageTemplateEntry.
-											getClassNameId(),
-										_layoutPageTemplateEntry.
-											getClassTypeId(),
-										_layoutPageTemplateEntry.
-											getLayoutPageTemplateEntryId(),
-										_layoutPageTemplateEntry.
-											isDefaultTemplate());
-
-							return count > 0;
-						},
 						_getViewUsagesDisplayPageActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -521,6 +506,16 @@ public class DisplayPageActionDropdownItemsProvider {
 		_getViewUsagesDisplayPageActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			int count =
+				AssetDisplayPageEntryServiceUtil.
+					getAssetDisplayPageEntriesCount(
+						_layoutPageTemplateEntry.getClassNameId(),
+						_layoutPageTemplateEntry.getClassTypeId(),
+						_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						_layoutPageTemplateEntry.isDefaultTemplate());
+
+			dropdownItem.setDisabled(count == 0);
+
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/layout_page_template_admin/view_asset_display_page_usages",

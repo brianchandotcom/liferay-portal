@@ -27,7 +27,6 @@ import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
-import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
@@ -966,8 +965,8 @@ public class OrganizationResourceImpl
 	@Reference
 	private RoleResource _roleResource;
 
-	@Reference
-	private UserResourceDTOConverter _userResourceDTOConverter;
+	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<User, UserAccount> _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

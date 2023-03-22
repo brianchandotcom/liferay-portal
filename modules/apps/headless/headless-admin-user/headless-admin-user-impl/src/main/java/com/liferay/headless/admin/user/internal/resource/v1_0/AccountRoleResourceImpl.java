@@ -19,8 +19,9 @@ import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
-import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountRoleEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.petra.lang.SafeCloseable;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -303,7 +305,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
-	private UserResourceDTOConverter _userResourceDTOConverter;
+	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<User, UserAccount> _userResourceDTOConverter;
 
 }

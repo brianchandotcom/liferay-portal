@@ -170,15 +170,13 @@ const Form = ({
 					]
 				}
 
-				{currentActivity.typeActivity.key !== TypeActivityKey.EVENT && (
-					<LeadListSection
-						currentActivityIndex={currentActivityIndex}
-						fieldEntries={fieldEntries}
-						selectedTypeActivity={String(
-							currentActivity.typeActivity?.key
-						)}
-					/>
-				)}
+				<LeadListSection
+					currentActivityIndex={currentActivityIndex}
+					fieldEntries={fieldEntries}
+					selectedTypeActivity={String(
+						currentActivity.typeActivity?.key
+					)}
+				/>
 
 				<PRMForm.Group>
 					<PRMFormik.Field

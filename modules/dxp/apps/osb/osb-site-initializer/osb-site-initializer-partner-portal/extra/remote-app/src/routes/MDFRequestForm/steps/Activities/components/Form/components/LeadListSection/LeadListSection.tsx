@@ -25,7 +25,11 @@ interface IProps {
 	selectedTypeActivity?: string;
 }
 
-const LeadListSection = ({currentActivityIndex, fieldEntries}: IProps) => {
+const LeadListSection = ({
+	currentActivityIndex,
+	fieldEntries,
+	selectedTypeActivity,
+}: IProps) => {
 	const {setFieldValue, values} = useFormikContext<MDFRequest>();
 
 	const onLeadListOutcomeSelected = (
@@ -56,15 +60,17 @@ const LeadListSection = ({currentActivityIndex, fieldEntries}: IProps) => {
 
 	return (
 		<PRMForm.Section title="Lead List">
-			<PRMFormik.Field
-				component={PRMForm.RadioGroup}
-				items={getBooleanEntries()}
-				label="Is a lead list an outcome of this activity?"
-				name={`activities[${currentActivityIndex}].activityDescription.leadGenerated`}
-				onChange={onLeadListOutcomeSelected}
-				required
-				small
-			/>
+			{!selectedTypeActivity && (
+				<PRMFormik.Field
+					component={PRMForm.RadioGroup}
+					items={getBooleanEntries()}
+					label="Is a lead list an outcome of this activity?"
+					name={`activities[${currentActivityIndex}].activityDescription.leadGenerated`}
+					onChange={onLeadListOutcomeSelected}
+					required
+					small
+				/>
+			)}
 
 			{values.activities[currentActivityIndex].activityDescription
 				?.leadGenerated === 'true' && (

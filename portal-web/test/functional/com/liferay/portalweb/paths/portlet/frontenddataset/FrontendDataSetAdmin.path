@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>FrontendDataSetAdmin</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FrontendDataSetAdmin</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ITEMS_PER_PAGE_SELECT</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_CELL</td>
+	<td>//div[contains(@class,'dnd-table')]//div[normalize-space(text())='${key_itemName}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

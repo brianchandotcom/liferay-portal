@@ -83,6 +83,7 @@ export default function VariantForm({
 					label={Liferay.Language.get('name')}
 					onChange={(event) => setInputName(event.target.value)}
 					onValidationChange={setInvalidForm}
+					required
 					value={inputName}
 				/>
 			</ClayModal.Body>

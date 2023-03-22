@@ -86,6 +86,7 @@ function SegmentsExperimentsModal({
 					label={Liferay.Language.get('test-name')}
 					onChange={(event) => setInputName(event.target.value)}
 					onValidationChange={setInvalidForm}
+					required
 					value={inputName}
 				/>
 
@@ -122,6 +123,7 @@ function SegmentsExperimentsModal({
 								onChange={(event) =>
 									setInputGoal(event.target.value)
 								}
+								required
 							>
 								{goals.map((goal) => (
 									<ClaySelect.Option

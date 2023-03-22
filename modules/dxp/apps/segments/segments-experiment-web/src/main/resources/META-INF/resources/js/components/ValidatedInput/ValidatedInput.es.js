@@ -23,6 +23,7 @@ function ValidatedInput({
 	onChange = () => {},
 	onFocus = () => {},
 	onValidationChange = () => {},
+	required = false,
 	value = '',
 }) {
 	const inputId = useId();
@@ -78,6 +79,7 @@ function ValidatedInput({
 				onChange={onChange}
 				onFocus={onNameInputFocus}
 				ref={nodeRef}
+				required={required}
 				type="text"
 				value={value}
 			/>

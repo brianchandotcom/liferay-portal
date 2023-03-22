@@ -78,6 +78,7 @@ import com.liferay.site.service.SiteFriendlyURLLocalService;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -427,6 +428,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				actualURL = HttpComponentsUtil.setParameter(
 					actualURL, "doAsUserId", encDoAsUserId);
+
+				params = new HashMap<>(params);
+
+				params.remove("doAsUserId");
 			}
 			catch (EncryptorException encryptorException) {
 				if (_log.isDebugEnabled()) {

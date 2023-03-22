@@ -285,6 +285,89 @@ definition {
 		PortletEntry.save();
 	}
 
+	@description = "This is a use case for LPS-173824."
+	test ViewSystemSettingUnsuccessfulConnectionWarning {
+		property custom.properties = "feature.flag.LPS-122920=true";
+		property test.name.skip.portal.instance = "SemanticSearch#ViewSystemSettingUnsuccessfulConnectionWarning";
+		property txtai.enabled = "true";
+
+		task ("Assert the warning doesn't appear when connection is successful and changes persist when configuration is saved") {
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			Type(
+				key_fieldLabel = "Max Character Count",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = 501);
+
+			SystemSettings.saveConfiguration();
+
+			AssertElementNotPresent(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Navigator.openURL();
+
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			SystemSettings.viewNumberInputText(
+				fieldLabel = "Max Character Count",
+				fieldValue = 501);
+		}
+
+		task ("Assert the warning appears when connection is unsuccessful, but the changes are still saved when clicking the Continue button") {
+			Select(
+				ariaLabel = "Embedding Vector Dimensions",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = 384);
+
+			Button.clickSave();
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+
+			Navigator.openURL();
+
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			AssertElementPresent(
+				key_fieldLabel = "Embedding Vector Dimensions",
+				key_value = 384,
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+
+		task ("Assert changes remain on the page when warning is closed") {
+			Select(
+				ariaLabel = "Embedding Vector Dimensions",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = 512);
+
+			Button.clickSave();
+
+			Click(
+				key_text = "Close",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			AssertElementPresent(
+				key_fieldLabel = "Embedding Vector Dimensions",
+				key_value = 512,
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+
+		task ("Assert changes are not saved when warning is closed") {
+			Navigator.openURL();
+
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			AssertElementPresent(
+				key_fieldLabel = "Embedding Vector Dimensions",
+				key_value = 384,
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+	}
+
 	test ViewTxtaiSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-163688=true";
 

@@ -369,11 +369,9 @@ public class DLFileEntryLocalServiceImpl
 
 		Date date = new Date();
 
-		if (_companyPreviousCheckDate.get(companyId) == null) {
-			_companyPreviousCheckDate.put(
-				companyId,
-				new Date(date.getTime() - (checkInterval * Time.MINUTE)));
-		}
+		_companyPreviousCheckDate.computeIfAbsent(
+			companyId,
+			key -> new Date(date.getTime() - (checkInterval * Time.MINUTE)));
 
 		_checkFileEntriesByExpirationDate(companyId, date);
 

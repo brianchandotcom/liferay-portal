@@ -137,10 +137,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			<%
 			String tabs1Names = "properties,usages";
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-161038")) {
-				tabs1Names += ",timeline";
-			}
-
 			if ((article == null) || (journalEditArticleDisplayContext.getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 				tabs1Names = "properties";
 			}
@@ -167,15 +163,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							classPK="<%= article.getResourcePrimKey() %>"
 						/>
 					</liferay-ui:section>
-
-					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-161038") %>'>
-						<liferay-ui:section>
-							<liferay-change-tracking:timeline
-								className="<%= JournalArticle.class.getName() %>"
-								classPK="<%= article.getPrimaryKey() %>"
-							/>
-						</liferay-ui:section>
-					</c:if>
 				</c:if>
 			</liferay-ui:tabs>
 		</div>

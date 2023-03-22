@@ -26,15 +26,9 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageInput = document.getElementById(
 		`${namespace}openGraphImageInput`
 	);
-
 	const openGraphImageFileEntryId = document.getElementById(
 		`${namespace}openGraphImageFileEntryId`
 	);
-
-	const openGraphImageTitle = document.getElementById(
-		`${namespace}openGraphImageTitle`
-	);
-
 	const openGraphImageAltField = document.getElementById(
 		`${namespace}openGraphImageAlt`
 	);
@@ -52,7 +46,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 					const itemValue = JSON.parse(selectedItem.value);
 
 					openGraphImageFileEntryId.value = itemValue.fileEntryId;
-					openGraphImageTitle.value = itemValue.title;
+					openGraphImageInput.value = itemValue.title;
 
 					previewSeoFireChange(namespace, {
 						type: 'imgUrl',
@@ -81,7 +75,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 
 	openGraphClearImageButton.addEventListener('click', () => {
 		openGraphImageFileEntryId.value = '';
-		openGraphImageTitle.value = '';
+		openGraphImageInput.value = '';
 
 		toggleDisabled(
 			[

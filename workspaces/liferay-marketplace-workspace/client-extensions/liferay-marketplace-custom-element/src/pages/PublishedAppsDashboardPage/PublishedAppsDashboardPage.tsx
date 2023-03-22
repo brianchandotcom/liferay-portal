@@ -5,7 +5,8 @@ import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
-import {DashboardTableRow} from '../../components/DashboardTable/DashboardTableRow';
+import {PublishedAppsDashboardTableRow} from
+'../../components/DashboardTable/PublishedAppsDashboardTableRow';
 import {getProductSpecifications, getProducts} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
@@ -158,7 +159,6 @@ export function PublishedAppsDashboardPage() {
 			accountTitle="Acme Co"
 			buttonMessage="+ New App"
 			dashboardNavigationItems={dashboardNavigationItems}
-			items={apps}
 			messages={messages}
 			setDashboardNavigationItems={setDashboardNavigationItems}
 		>
@@ -167,7 +167,12 @@ export function PublishedAppsDashboardPage() {
 				items={apps}
 				tableHeaders={tableHeaders}
 			>
-				{(item) => <DashboardTableRow item={item} key={item.name} />}
+				{(item) => (
+					<PublishedAppsDashboardTableRow
+						item={item}
+						key={item.name}
+					/>
+				)}
 			</DashboardTable>
 		</DashboardPage>
 	);

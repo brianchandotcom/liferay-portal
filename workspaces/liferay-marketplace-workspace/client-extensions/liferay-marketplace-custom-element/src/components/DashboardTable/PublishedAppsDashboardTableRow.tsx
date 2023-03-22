@@ -4,13 +4,15 @@ import classNames from 'classnames';
 import circleFill from '../../assets/icons/circle_fill.svg';
 import {AppProps} from './DashboardTable';
 
-import './DashboardTableRow.scss';
+import './PublishedAppsDashboardTableRow.scss';
 
-interface DashboardTableRowProps {
+interface PublishedAppsDashboardTableRowProps {
 	item: AppProps;
 }
 
-export function DashboardTableRow({item}: DashboardTableRowProps) {
+export function PublishedAppsDashboardTableRow({
+	item,
+}: PublishedAppsDashboardTableRowProps) {
 	const {
 		image,
 		name,

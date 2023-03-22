@@ -23,7 +23,6 @@ type DashBoardPageProps = {
 	buttonMessage: string;
 	children: ReactNode;
 	dashboardNavigationItems: DashboardListItems[];
-	items: AppProps[];
 	messages: {
 		description: string;
 		emptyStateMessage: {

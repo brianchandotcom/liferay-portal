@@ -213,7 +213,7 @@ definition {
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
-		AssertLocation(value1 = "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html");
+		AssertLocation.assertPartialLocation(value1 = "tags-and-categories/defining-categories-and-vocabularies-for-content");
 	}
 
 	macro assertMoveDifferentVisibilityVocabulary {

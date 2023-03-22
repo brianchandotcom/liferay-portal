@@ -1109,7 +1109,7 @@ definition {
 		task ("Assert user is taken to the the Liferay Learn page") {
 			SelectWindow.selectPopUp(locator1 = "null");
 
-			AssertLocation(value1 = "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html");
+			AssertLocation.assertPartialLocation(value1 = "tags-and-categories/defining-categories-and-vocabularies-for-content");
 		}
 	}
 

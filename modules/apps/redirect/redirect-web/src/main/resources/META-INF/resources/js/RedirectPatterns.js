@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
@@ -27,6 +27,21 @@ const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+
 
 const urlAllowRelative = (url) => REGEX_URL_ALLOW_RELATIVE.test(url);
 
+const USER_AGENT_OPTIONS = [
+	{
+		label: Liferay.Language.get('all'),
+		value: 'all',
+	},
+	{
+		label: Liferay.Language.get('bot'),
+		value: 'bot',
+	},
+	{
+		label: Liferay.Language.get('human'),
+		value: 'human',
+	},
+];
+
 const PatternField = ({
 	destinationURL: initialDestinationUrl,
 	error,
@@ -37,6 +52,7 @@ const PatternField = ({
 	pattern = '',
 	portletNamespace,
 	strings,
+	userAgent,
 }) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 
@@ -144,7 +160,24 @@ const PatternField = ({
 				</ClayLayout.Col>
 
 				<ClayLayout.Col md="4">
-					<span>TODO</span>
+					<label htmlFor="userAgent">
+						{Liferay.Language.get('user-agent')}
+					</label>
+
+					<ClaySelect
+						aria-label={Liferay.Language.get('select-user-agent')}
+						id="userAgent"
+						name={`${portletNamespace}userAgent_${index}`}
+						value={userAgent}
+					>
+						{USER_AGENT_OPTIONS.map((item) => (
+							<ClaySelect.Option
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+					</ClaySelect>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</div>
@@ -224,6 +257,7 @@ const RedirectPattern = ({
 							pattern={item.pattern}
 							portletNamespace={portletNamespace}
 							strings={strings}
+							userAgent={item.userAgent}
 						/>
 					))}
 				</div>
@@ -247,6 +281,7 @@ RedirectPattern.propTypes = {
 		PropTypes.shape({
 			destinationURL: PropTypes.string,
 			pattern: PropTypes.string,
+			userAgent: PropTypes.string,
 		})
 	),
 	portletNamespace: PropTypes.string.isRequired,

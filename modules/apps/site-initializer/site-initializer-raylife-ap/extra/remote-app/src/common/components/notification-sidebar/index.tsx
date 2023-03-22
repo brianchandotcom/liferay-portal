@@ -23,30 +23,27 @@ import {
 	getUserNotification,
 	putUserNotificationRead,
 } from '../../services/notification';
-import {getLiferaySiteName} from '../../utils/liferay';
+import createUrlByERC from '../../utils/createUrlByERC';
 import {PostType} from './postTypes';
 
-const initialPagination = {order: 'desc', page: 1, pageSize: 2, totalCount: 0};
+const initialPagination = {
+	order: 'desc',
+	page: 1,
+	pageSize: 2,
+	sortBy: 'dateCreated',
+	totalCount: 0,
+};
 
 const NotificationSidebar: React.FC = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(
 		initialPagination.totalCount
 	);
-	const [postsWithLinks, setArrayOfLinks] = useState<PostType[]>([]);
+	const [postsWithLinks, setPostsWithLinks] = useState<PostType[]>([]);
 	const [page, setPage] = useState<number>(initialPagination.page);
 	const hasMorePostsToLoad = posts.length < totalCount;
 
-	const notificationCategory = {
-		Application: 'Application ',
-	};
-
-	const creatRoute = (externalReferenceCode: string, entity: string) => {
-		const currentSiteName = getLiferaySiteName();
-		const link = `${currentSiteName}/${entity}?externalReferenceCode=${externalReferenceCode}`;
-
-		return link;
-	};
+	const notificationCategory = 'Application ';
 
 	const markAsRead = (post: PostType) => {
 		if (!post.read) {
@@ -54,7 +51,7 @@ const NotificationSidebar: React.FC = () => {
 		}
 	};
 
-	const extractNumber = (message: string | undefined) => {
+	const extractNumber = (message: string) => {
 		const number = message?.match(/\d/g);
 
 		return Number(number?.join(''));
@@ -65,7 +62,8 @@ const NotificationSidebar: React.FC = () => {
 			const response = await getUserNotification(
 				initialPagination.pageSize,
 				page,
-				initialPagination.order
+				initialPagination.order,
+				initialPagination.sortBy
 			);
 			const notifications = response?.data;
 
@@ -78,8 +76,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Error getting notifications:', error);
 			throw error;
 		}
@@ -98,8 +95,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return data;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(
 				`Error fetching external reference code for ID ${id}: ${error}`
 			);
@@ -110,18 +106,18 @@ const NotificationSidebar: React.FC = () => {
 	const generateLinks = async () => {
 		const newLinks = await Promise.all(
 			posts.map(async (post) => {
-				const postId = extractNumber(post.message);
+				const postId = extractNumber(post.message as string);
 				const isMatchingApplication = post.message?.includes(
-					notificationCategory.Application + postId
+					notificationCategory + postId
 				);
-
 				const genericRoute = '#!';
+
 				if (isMatchingApplication) {
-					const referenceCode = extractNumber(post.message);
+					const referenceCode = extractNumber(post.message as string);
 					const externalReferenceCodeUpdated = await getExternalReferenceCode(
 						referenceCode
 					);
-					const route = creatRoute(
+					const route = createUrlByERC(
 						externalReferenceCodeUpdated,
 						'app-details'
 					);
@@ -133,8 +129,7 @@ const NotificationSidebar: React.FC = () => {
 			})
 		);
 
-		const sortedLinks = newLinks;
-		setArrayOfLinks(sortedLinks);
+		setPostsWithLinks(newLinks);
 	};
 
 	const loadMore = () => {
@@ -162,12 +157,12 @@ const NotificationSidebar: React.FC = () => {
 
 			{!!postsWithLinks && (
 				<div className="vh-100">
-					{postsWithLinks.map((item: PostType, _index: number) => (
+					{postsWithLinks.map((item: PostType, index: number) => (
 						<div
 							className={classNames({
 								'post-container-unread align-items-center d-flex justify-content-center position-relative bubble-unread': !item.read,
 							})}
-							key={item.id}
+							key={index}
 							onClick={() => {
 								markAsRead(item);
 							}}

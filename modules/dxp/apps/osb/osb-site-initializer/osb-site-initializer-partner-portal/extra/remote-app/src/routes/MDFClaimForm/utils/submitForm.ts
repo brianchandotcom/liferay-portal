@@ -85,7 +85,7 @@ export default async function submitForm(
 		await Promise.all(
 			values.activities
 				.filter((activity) => activity.selected)
-				?.map(async (activity) => {
+				.map(async (activity) => {
 					const dtoMDFClaimActivity = await createMDFClaimActivity(
 						activity,
 						dtoMDFClaim?.id
@@ -104,7 +104,7 @@ export default async function submitForm(
 							);
 
 							if (dtoListQualifiedLeads.id) {
-								await updateMDFClaimActivity(
+								updateMDFClaimActivity(
 									activity,
 									dtoMDFClaim.id,
 									dtoListQualifiedLeads.id,
@@ -118,7 +118,7 @@ export default async function submitForm(
 						activity.allContents?.length &&
 						dtoMDFClaimActivity.id
 					) {
-						Promise.all(
+						await Promise.all(
 							activity.allContents.map(
 								async (allContentDocument) => {
 									const allContentDocumentRenamed = renameFileKeepingExtention(
@@ -133,7 +133,7 @@ export default async function submitForm(
 										);
 
 										if (dtoAllContentDocument.id) {
-											await createMDFClaimActivityDocument(
+											createMDFClaimActivityDocument(
 												dtoAllContentDocument.id,
 												dtoMDFClaimActivity.id
 											);
@@ -148,7 +148,7 @@ export default async function submitForm(
 						await Promise.all(
 							activity.budgets
 								.filter((budget) => budget.selected)
-								?.map(async (budget) => {
+								.map(async (budget) => {
 									const dtoMDFClaimBudget = await createMDFClaimActivityBudget(
 										budget,
 										dtoMDFClaimActivity.id
@@ -170,7 +170,7 @@ export default async function submitForm(
 											);
 
 											if (dtoBudgetInvoice.id) {
-												await updateMDFClaimActivityBudget(
+												updateMDFClaimActivityBudget(
 													budget,
 													dtoMDFClaimActivity.id,
 													dtoBudgetInvoice.id,

@@ -30,14 +30,13 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
+import com.liferay.change.tracking.web.internal.timeline.CTCollectionHistoryDataProvider;
 import com.liferay.change.tracking.web.internal.timeline.CTCollectionHistoryProviderRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -49,12 +48,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -76,7 +70,6 @@ import java.io.Writer;
 import java.text.Format;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -277,32 +270,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
-	private String _getDeleteHref(
-		HttpServletRequest httpServletRequest, String redirect,
-		long ctCollectionId, ThemeDisplay themeDisplay) {
-
-		return StringBundler.concat(
-			"javascript:Liferay.Util.openConfirmModal({message: '",
-			_language.get(
-				httpServletRequest,
-				"are-you-sure-you-want-to-delete-this-publication"),
-			"', onConfirm: (isConfirmed) => {if (isConfirmed) {",
-			"submitForm(document.hrefFm, '",
-			PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					httpServletRequest, themeDisplay.getScopeGroup(),
-					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.ACTION_PHASE)
-			).setActionName(
-				"/change_tracking/delete_ct_collection"
-			).setRedirect(
-				redirect
-			).setParameter(
-				"ctCollectionId", ctCollectionId
-			).buildString(),
-			"');} else {self.focus();}}});");
-	}
-
 	private Map<String, Object> _getReactData(
 			HttpServletRequest httpServletRequest, CTCollection ctCollection,
 			CTPreferences ctPreferences, boolean sandboxOnlyEnabled,
@@ -500,75 +467,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		return data;
 	}
 
-	private String _getStatusMessage(
-		CTCollection ctCollection, HttpServletRequest httpServletRequest) {
-
-		if (ctCollection == null) {
-			return StringPool.BLANK;
-		}
-
-		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			Date statusDate = ctCollection.getStatusDate();
-
-			return _language.format(
-				httpServletRequest, "published-x-ago-by-x",
-				new String[] {
-					_language.getTimeDescription(
-						httpServletRequest,
-						System.currentTimeMillis() - statusDate.getTime(),
-						true),
-					_html.escape(ctCollection.getUserName())
-				});
-		}
-		else if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			Date modifiedDate = ctCollection.getModifiedDate();
-
-			return _language.format(
-				httpServletRequest, "modified-x-ago-by-x",
-				new String[] {
-					_language.getTimeDescription(
-						httpServletRequest,
-						System.currentTimeMillis() - modifiedDate.getTime(),
-						true),
-					_html.escape(ctCollection.getUserName())
-				});
-		}
-		else if (ctCollection.getStatus() ==
-					WorkflowConstants.STATUS_SCHEDULED) {
-
-			try {
-				SchedulerResponse schedulerResponse =
-					SchedulerEngineHelperUtil.getScheduledJob(
-						String.valueOf(ctCollection.getCtCollectionId()),
-						"liferay/ct_collection_scheduled_publish",
-						StorageType.PERSISTED);
-
-				if (schedulerResponse == null) {
-					return null;
-				}
-
-				Date scheduledDate = SchedulerEngineHelperUtil.getStartTime(
-					schedulerResponse);
-
-				return _language.format(
-					httpServletRequest, "schedule-to-publish-in-x-by-x",
-					new String[] {
-						_language.getTimeDescription(
-							httpServletRequest,
-							scheduledDate.getTime() -
-								System.currentTimeMillis(),
-							true),
-						_html.escape(ctCollection.getUserName())
-					});
-			}
-			catch (SchedulerException schedulerException) {
-				_log.error(schedulerException);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private void _getTimelineData(
 			CTCollection currentCTCollection, Map<String, Object> data,
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
@@ -619,6 +517,11 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					possibleConflict = true;
 				}
 
+				CTCollectionHistoryDataProvider
+					ctCollectionHistoryDataProvider =
+						new CTCollectionHistoryDataProvider(
+							ctCollection, httpServletRequest);
+
 				jsonArray.put(
 					JSONUtil.put(
 						"date",
@@ -635,8 +538,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"description", ctCollection.getDescription()
 					).put(
 						"dropdownMenu",
-						_getTimelineDropdownMenuData(
-							ctCollection, httpServletRequest, themeDisplay)
+						ctCollectionHistoryDataProvider.
+							getTimelineDropdownMenuData(themeDisplay)
 					).put(
 						"id", ctCollection.getCtCollectionId()
 					).put(
@@ -645,7 +548,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"status", ctCollection.getStatus()
 					).put(
 						"statusMessage",
-						_getStatusMessage(ctCollection, httpServletRequest)
+						ctCollectionHistoryDataProvider.getStatusMessage()
 					));
 			}
 
@@ -664,82 +567,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				"timelineType",
 				ctDisplayRenderer.getTypeName(themeDisplay.getLocale()));
 		}
-	}
-
-	private Map<String, Object> _getTimelineDropdownMenuData(
-			CTCollection ctCollection, HttpServletRequest httpServletRequest,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Map<String, Object> data = new HashMap<>();
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
-			CTCollectionPermission.contains(
-				permissionChecker, ctCollection, ActionKeys.UPDATE)) {
-
-			data.put(
-				"editURL",
-				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, themeDisplay.getScopeGroup(),
-						CTPortletKeys.PUBLICATIONS, 0, 0,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/change_tracking/edit_ct_collection"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", ctCollection.getCtCollectionId()
-				).buildString());
-
-			data.put(
-				"revertURL",
-				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, themeDisplay.getScopeGroup(),
-						CTPortletKeys.PUBLICATIONS, 0, 0,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/change_tracking/undo_ct_collection"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", ctCollection.getCtCollectionId()
-				).setParameter(
-					"revert", Boolean.TRUE
-				).buildString());
-		}
-
-		data.put(
-			"reviewURL",
-			PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					httpServletRequest, themeDisplay.getScopeGroup(),
-					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/change_tracking/view_changes"
-			).setRedirect(
-				themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionId", ctCollection.getCtCollectionId()
-			).buildString());
-
-		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
-			CTCollectionPermission.contains(
-				permissionChecker, ctCollection, ActionKeys.DELETE)) {
-
-			data.put(
-				"deleteURL",
-				_getDeleteHref(
-					httpServletRequest, themeDisplay.getURLCurrent(),
-					ctCollection.getCtCollectionId(), themeDisplay));
-		}
-
-		return data;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

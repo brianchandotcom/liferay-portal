@@ -9,22 +9,24 @@
  * distribution rights of the Software.
  */
 
-import MDFClaimActivityDTO from '../../../interfaces/dto/mdfClaimActivityDTO';
-import MDFClaimActivity from '../../../interfaces/mdfClaimActivity';
+import {Liferay} from '../..';
+import MDFClaimActivity from '../../../../interfaces/mdfClaimActivity';
+import getDTOFromMDFClaimActivity from '../../../../utils/dto/mdf-claim-activity/getDTOFromMDFClaimActivity';
+import {LiferayAPIs} from '../../common/enums/apis';
+import liferayFetcher from '../../common/utils/fetcher';
 
-export default function getDTOFromMDFClaimActivity(
+export default async function createMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
 	mdfClaimId?: number,
 	listQualifiedLeadsDocumentId?: number
-): MDFClaimActivityDTO {
-	return {
-		currency: mdfClaimActivity.currency,
-		listOfQualifiedLeads: listQualifiedLeadsDocumentId,
-		metrics: mdfClaimActivity.metrics,
-		name: mdfClaimActivity.name,
-		r_actToMDFClmActs_c_activityId: mdfClaimActivity.id,
-		r_mdfClmToMDFClmActs_c_mdfClaimId: mdfClaimId,
-		selected: mdfClaimActivity.selected,
-		totalCost: mdfClaimActivity.totalCost,
-	};
+) {
+	return await liferayFetcher.post(
+		`/o/${LiferayAPIs.OBJECT}/mdfclaimactivities`,
+		Liferay.authToken,
+		getDTOFromMDFClaimActivity(
+			mdfClaimActivity,
+			mdfClaimId,
+			listQualifiedLeadsDocumentId
+		)
+	);
 }

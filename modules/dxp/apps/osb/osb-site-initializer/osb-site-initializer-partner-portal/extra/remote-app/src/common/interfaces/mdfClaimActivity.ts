@@ -15,10 +15,10 @@ import MDFClaimBudget from './mdfClaimBudget';
 
 export default interface MDFClaimActivity extends Partial<LiferayObject> {
 	activityStatus?: LiferayPicklist;
+	allContents?: File[];
 	budgets?: MDFClaimBudget[];
 	claimed?: boolean;
 	currency?: LiferayPicklist;
-	documents?: File[];
 	listQualifiedLeads?: File;
 	metrics: string;
 	name: string;

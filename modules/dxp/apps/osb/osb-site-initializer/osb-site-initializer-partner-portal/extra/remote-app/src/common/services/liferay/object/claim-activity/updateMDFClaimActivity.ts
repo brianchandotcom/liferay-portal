@@ -15,17 +15,19 @@ import getDTOFromMDFClaimActivity from '../../../../utils/dto/mdf-claim-activity
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default async function createMDFClaimActivities(
-	mdfClaimId: number,
-	mdfClaimActivities: MDFClaimActivity[]
+export default async function updateMDFClaimActivity(
+	mdfClaimActivity: MDFClaimActivity,
+	mdfClaimId?: number,
+	listQualifiedLeadsDocumentId?: number,
+	mdfClaimActivityId?: number
 ) {
-	return await Promise.all(
-		mdfClaimActivities.map((activity) => {
-			return liferayFetcher.post(
-				`/o/${LiferayAPIs.OBJECT}/mdfclaimactivities`,
-				Liferay.authToken,
-				getDTOFromMDFClaimActivity(activity, mdfClaimId)
-			);
-		})
+	return await liferayFetcher.put(
+		`/o/${LiferayAPIs.OBJECT}/mdfclaimactivities/${mdfClaimActivityId}`,
+		Liferay.authToken,
+		getDTOFromMDFClaimActivity(
+			mdfClaimActivity,
+			mdfClaimId,
+			listQualifiedLeadsDocumentId
+		)
 	);
 }

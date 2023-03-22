@@ -32,4 +32,8 @@
 
 	border: 1px solid $secondary-l3;
 	border-radius: 4px;
+
+	.destination-url-input {
+		text-overflow: ellipsis;
+	}
 }

@@ -268,10 +268,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryLocalService.getOneToManyObjectEntries(
 				groupId, objectRelationshipId, primaryKey, related, start, end);
 
-		for (ObjectEntry objectEntry : objectEntries) {
-			objectEntryService.checkModelResourcePermission(
-				objectEntry.getObjectDefinitionId(),
-				objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+		if (!ObjectEntryThreadLocalUtil.isSkipObjectEntryResourcePermission()) {
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntryService.checkModelResourcePermission(
+					objectEntry.getObjectDefinitionId(),
+					objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+			}
 		}
 
 		return objectEntries;

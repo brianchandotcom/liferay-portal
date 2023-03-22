@@ -14,10 +14,10 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function BusyButton(props) {
-	const {busy, ...rest} = props;
+function LoadingButton(props) {
+	const {loading, ...rest} = props;
 
-	return busy ? (
+	return loading ? (
 		<ClayButton {...rest}>
 			<ClayLoadingIndicator className="d-inline-block m-0" size="sm" />
 
@@ -28,8 +28,8 @@ function BusyButton(props) {
 	);
 }
 
-BusyButton.propTypes = {
-	busy: PropTypes.bool,
+LoadingButton.propTypes = {
+	loading: PropTypes.bool,
 };
 
-export default BusyButton;
+export default LoadingButton;

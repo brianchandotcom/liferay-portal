@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {SegmentsExperimentGoal} from '../types.es';
-import BusyButton from './BusyButton/BusyButton.es';
+import LoadingButton from './LoadingButton/LoadingButton.es';
 import ValidatedInput from './ValidatedInput/ValidatedInput.es';
 
 function SegmentsExperimentsModal({
@@ -34,7 +34,7 @@ function SegmentsExperimentsModal({
 	segmentsExperimentId,
 	title,
 }) {
-	const [busy, setBusy] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputGoal, setInputGoal] = useState(
 		goal?.value || goals?.[0]?.value
@@ -46,10 +46,10 @@ function SegmentsExperimentsModal({
 	const onSubmit = (event) => {
 		event.preventDefault();
 
-		if (!invalidForm && !busy) {
+		if (!invalidForm && !loading) {
 			const goalTarget = (inputGoal === 'click' && goal?.target) || '';
 
-			setBusy(true);
+			setLoading(true);
 
 			onSave({
 				description: inputDescription,
@@ -60,7 +60,7 @@ function SegmentsExperimentsModal({
 				segmentsExperimentId,
 			}).finally(() => {
 				if (isMounted()) {
-					setBusy(false);
+					setLoading(false);
 				}
 			});
 		}
@@ -149,14 +149,14 @@ function SegmentsExperimentsModal({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<BusyButton
-							busy={busy}
-							disabled={invalidForm || busy}
+						<LoadingButton
+							disabled={invalidForm || loading}
 							displayType="primary"
+							loading={loading}
 							type="submit"
 						>
 							{Liferay.Language.get('save')}
-						</BusyButton>
+						</LoadingButton>
 					</ClayButton.Group>
 				}
 			/>

@@ -14,7 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React, {useEffect, useRef, useState} from 'react';
 
-import BusyButton from '../../BusyButton/BusyButton.es';
+import LoadingButton from '../../LoadingButton/LoadingButton.es';
 import ValidatedInput from '../../ValidatedInput/ValidatedInput.es';
 
 export default function VariantForm({
@@ -28,25 +28,25 @@ export default function VariantForm({
 	const [inputName, setInputName] = useState(name);
 	const [error, setError] = useState(false);
 	const [invalidForm, setInvalidForm] = useState(false);
-	const [busy, setBusy] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const mountedRef = useRef();
 
 	const onSubmit = (event) => {
 		event.preventDefault();
 
 		if (!invalidForm) {
-			setBusy(true);
+			setLoading(true);
 
 			onSave({name: inputName, variantId})
 				.then(() => {
 					if (mountedRef.current) {
-						setBusy(false);
+						setLoading(false);
 						onClose();
 					}
 				})
 				.catch(() => {
 					if (mountedRef.current) {
-						setBusy(false);
+						setLoading(false);
 						setError(true);
 					}
 				});
@@ -95,15 +95,15 @@ export default function VariantForm({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<BusyButton
-							busy={busy}
-							disabled={busy || invalidForm}
+						<LoadingButton
+							disabled={loading || invalidForm}
 							displayType="primary"
+							loading={loading}
 							onClick={onSubmit}
 							type="submit"
 						>
 							{Liferay.Language.get('save')}
-						</BusyButton>
+						</LoadingButton>
 					</ClayButton.Group>
 				}
 			/>

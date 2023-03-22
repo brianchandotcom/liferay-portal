@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalWorkspaceJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
 import java.util.AbstractMap;
@@ -132,6 +134,14 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		sb.append(JenkinsResultsParserUtil.join(" ", axisGroupNames));
 		sb.append("\n");
 
+		String workspacePortalVersion = _getWorkspacePortalVersion();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(workspacePortalVersion)) {
+			sb.append("TEST_PORTAL_BUNDLE_VERSION=");
+			sb.append(workspacePortalVersion);
+			sb.append("\n");
+		}
+
 		return sb.toString();
 	}
 
@@ -169,6 +179,24 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		}
 
 		return new AbstractMap.SimpleEntry<>(key, value);
+	}
+
+	private String _getWorkspacePortalVersion() {
+		String batchName = getBatchName();
+
+		if (!batchName.startsWith("functional-workspace-")) {
+			return null;
+		}
+
+		Job job = getJob();
+
+		if (!(job instanceof PortalWorkspaceJob)) {
+			return null;
+		}
+
+		PortalWorkspaceJob portalWorkspaceJob = (PortalWorkspaceJob)job;
+
+		return portalWorkspaceJob.getWorkspacePortalVersion();
 	}
 
 	private final BatchTestClassGroup _batchTestClassGroup;

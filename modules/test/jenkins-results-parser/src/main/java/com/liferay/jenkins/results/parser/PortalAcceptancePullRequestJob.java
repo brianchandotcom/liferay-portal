@@ -26,7 +26,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class PortalAcceptancePullRequestJob
-	extends PortalAcceptanceTestSuiteJob {
+	extends PortalAcceptanceTestSuiteJob implements PortalWorkspaceJob {
 
 	public boolean isCentralMergePullRequest() {
 		if (_centralMergePullRequest != null) {

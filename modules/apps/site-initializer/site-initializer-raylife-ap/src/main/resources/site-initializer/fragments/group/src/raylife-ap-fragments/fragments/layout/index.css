@@ -113,8 +113,8 @@
 }
 
 .ray-sidebar-container .footer-bar .notification-container {
-	height: 24px;
-	width: 24px;
+	height: 50px;
+	width: 50px;
 }
 
 .ray-sidebar-container .footer-bar .indicator-icon {
@@ -210,4 +210,22 @@
 	overflow-x: none;
 	overflow-y: auto;
 	width: 0px;
+}
+
+.panel-notifications-count {
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	margin-bottom: -1px;
+	height: 19px;
+}
+
+.badge-danger {
+	background-color: #ec0d6b;
+	color: #fff;
+}
+
+.badge {
+	display: inline-flex;
+	margin-left: 15px;
 }

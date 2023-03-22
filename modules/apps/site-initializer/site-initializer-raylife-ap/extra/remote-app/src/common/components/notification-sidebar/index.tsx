@@ -42,8 +42,8 @@ const NotificationSidebar: React.FC = () => {
 		Policy: 'Policy',
 	};
 
-	const creatRoute = (externalReferenceCode: string) => {
-		const link = `ap/app-details?externalReferenceCode=${externalReferenceCode}`;
+	const creatRoute = (externalReferenceCode: string, entity: string) => {
+		const link = `${entity}?externalReferenceCode=${externalReferenceCode}`;
 
 		return link;
 	};
@@ -77,8 +77,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Error getting notifications:', error);
 			throw error;
 		}
@@ -94,8 +93,7 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return data;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(
 				`Error fetching external reference code for ID ${id}: ${error}`
 			);
@@ -117,11 +115,13 @@ const NotificationSidebar: React.FC = () => {
 					const externalReferenceCodeUpdated = await getExternalReferenceCode(
 						referenceCode
 					);
-					const route = creatRoute(externalReferenceCodeUpdated);
+					const route = creatRoute(
+						externalReferenceCodeUpdated,
+						'app-details'
+					);
 
 					return {...post, link: route};
-				}
-				else {
+				} else {
 					const genericRoute = '#!';
 
 					return {...post, link: genericRoute};

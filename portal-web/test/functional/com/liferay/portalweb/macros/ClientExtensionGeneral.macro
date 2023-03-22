@@ -272,9 +272,9 @@ definition {
 			key_text = ${entryName},
 			locator1 = "ClientExtension#SELECT_THEME_SPRITEMAP_CLIENT_EXTENSION");
 
-		PortletEntry.save();
-
 		SelectFrame(value1 = "relative=top");
+
+		PortletEntry.save();
 	}
 
 	macro deleteRemoteApp {

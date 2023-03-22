@@ -36,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -77,18 +77,19 @@ public class BaseNotificationTypeTest {
 		user1 = TestPropsValues.getUser();
 
 		ListType prefixListType = listTypeLocalService.getListType(
-			"dr", Contact.class.getName() + ".prefix");
+			"dr", ListTypeConstants.CONTACT_PREFIX);
 
 		ListType suffixListType = listTypeLocalService.getListType(
-			"ii", Contact.class.getName() + ".suffix");
+			"ii", ListTypeConstants.CONTACT_SUFFIX);
 
 		user2 = userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
-			null, "user2@liferay.com", user1.getLocale(),
+			null, RandomTestUtil.randomString() + "@liferay.com",
+			user1.getLocale(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), prefixListType.getListTypeId(),
-			suffixListType.getListTypeId(), true, Month.FEBRUARY.getValue(), 7,
-			1988, null, null, null, null, null, true, null);
+			prefixListType.getListTypeId(), suffixListType.getListTypeId(),
+			true, Month.FEBRUARY.getValue(), 7, 1988, null, null, null, null,
+			null, true, null);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user2));
@@ -178,7 +179,9 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
-	protected HashMap<String, Object> getAuthorValues() throws PortalException {
+	protected HashMap<String, Object> getAuthorTermValues()
+		throws PortalException {
+
 		return HashMapBuilder.<String, Object>put(
 			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
 		).put(
@@ -196,7 +199,7 @@ public class BaseNotificationTypeTest {
 		).build();
 	}
 
-	protected HashMap<String, Object> getCurrentUserValues()
+	protected HashMap<String, Object> getCurrentUserTermValues()
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
@@ -247,12 +250,12 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected List<String> objectEntryTermNames() {
-		return ListUtil.fromArray(
+		return Arrays.asList(
 			getTerm("booleanObjectField"), getTerm("dateObjectField"),
 			getTerm("integerObjectField"), getTerm("textObjectField"));
 	}
 
-	protected HashMap<String, Serializable> randomObjectEntry() {
+	protected HashMap<String, Serializable> randomObjectEntryValues() {
 		return LinkedHashMapBuilder.<String, Serializable>put(
 			"booleanObjectField", RandomTestUtil.randomBoolean()
 		).put(

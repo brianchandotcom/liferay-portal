@@ -147,7 +147,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.toString(), 0,
 			notificationQueueEntries.size());
 
-		Map<String, Serializable> objectEntryValues = randomObjectEntry();
+		Map<String, Serializable> objectEntryValues = randomObjectEntryValues();
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user1.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
@@ -223,11 +223,11 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		_testUserTermValues(
 			notificationQueueEntries, notificationRecipientSettings,
-			recipientType, getAuthorValues());
+			recipientType, getAuthorTermValues());
 
 		_testUserTermValues(
 			notificationQueueEntries, notificationRecipientSettings,
-			recipientType, getCurrentUserValues());
+			recipientType, getCurrentUserTermValues());
 	}
 
 	private void _testUserTermValues(

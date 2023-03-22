@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -179,80 +180,26 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
-	protected HashMap<String, Object> getAuthorTermValues()
-		throws PortalException {
-
-		return HashMapBuilder.<String, Object>put(
-			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
-		).put(
-			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
-		).put(
-			getTerm("AUTHOR_ID"), user2.getUserId()
-		).put(
-			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
-		).put(
-			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
-		).put(
-			getTerm("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
-		).put(
-			getTerm("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
-		).build();
+	protected List<String> getAllTermNames() throws PortalException {
+		return ListUtil.concat(
+			Arrays.asList(
+				getTerm("booleanObjectField"), getTerm("dateObjectField"),
+				getTerm("integerObjectField"), getTerm("textObjectField")),
+			ListUtil.fromMapKeys(_getAuthorTermValues()),
+			ListUtil.fromMapKeys(_getCurrentUserTermValues()));
 	}
 
-	protected HashMap<String, Object> getCurrentUserTermValues()
-		throws PortalException {
-
-		return HashMapBuilder.<String, Object>put(
-			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
-		).put(
-			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
-		).put(
-			"[%CURRENT_USER_ID%]", user2.getUserId()
-		).put(
-			"[%CURRENT_USER_LAST_NAME%]", user2.getLastName()
-		).put(
-			"[%CURRENT_USER_MIDDLE_NAME%]", user2.getMiddleName()
-		).put(
-			"[%CURRENT_USER_PREFIX%]", _getListType("PREFIX", user2)
-		).put(
-			"[%CURRENT_USER_SUFFIX%]", _getListType("SUFFIX", user2)
-		).build();
-	}
-
-	private String _getListType(String type, User user)
-		throws PortalException {
-
-		Contact contact = user.fetchContact();
-
-		if (contact == null) {
-			return StringPool.BLANK;
-		}
-
-		long listTypeId = contact.getPrefixListTypeId();
-
-		if (type.equals("SUFFIX")) {
-			listTypeId = contact.getSuffixListTypeId();
-		}
-
-		if (listTypeId == 0) {
-			return StringPool.BLANK;
-		}
-
-		ListType listType = listTypeLocalService.getListType(listTypeId);
-
-		return listType.getName();
+	protected List<Object> getAllTermValues() throws PortalException {
+		return ListUtil.concat(
+			ListUtil.fromMapValues(randomObjectEntryValues()),
+			ListUtil.fromMapValues(_getAuthorTermValues()),
+			ListUtil.fromMapValues(_getCurrentUserTermValues()));
 	}
 
 	protected String getTerm(String objectFieldName) {
 		return StringBundler.concat(
 			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
 			StringUtil.upperCase(objectFieldName), "%]");
-	}
-
-	protected List<String> objectEntryTermNames() {
-		return Arrays.asList(
-			getTerm("booleanObjectField"), getTerm("dateObjectField"),
-			getTerm("integerObjectField"), getTerm("textObjectField"));
 	}
 
 	protected HashMap<String, Serializable> randomObjectEntryValues() {
@@ -316,6 +263,68 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	protected ObjectEntryLocalService objectEntryLocalService;
+
+	private HashMap<String, Object> _getAuthorTermValues()
+		throws PortalException {
+
+		return HashMapBuilder.<String, Object>put(
+			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
+		).put(
+			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
+		).put(
+			getTerm("AUTHOR_ID"), user2.getUserId()
+		).put(
+			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
+		).put(
+			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
+		).put(
+			getTerm("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
+		).put(
+			getTerm("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
+		).build();
+	}
+
+	private HashMap<String, Object> _getCurrentUserTermValues()
+		throws PortalException {
+
+		return HashMapBuilder.<String, Object>put(
+			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
+		).put(
+			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
+		).put(
+			"[%CURRENT_USER_ID%]", user2.getUserId()
+		).put(
+			"[%CURRENT_USER_LAST_NAME%]", user2.getLastName()
+		).put(
+			"[%CURRENT_USER_MIDDLE_NAME%]", user2.getMiddleName()
+		).put(
+			"[%CURRENT_USER_PREFIX%]", _getListType("PREFIX", user2)
+		).put(
+			"[%CURRENT_USER_SUFFIX%]", _getListType("SUFFIX", user2)
+		).build();
+	}
+
+	private String _getListType(String type, User user) throws PortalException {
+		Contact contact = user.fetchContact();
+
+		if (contact == null) {
+			return StringPool.BLANK;
+		}
+
+		long listTypeId = contact.getPrefixListTypeId();
+
+		if (type.equals("SUFFIX")) {
+			listTypeId = contact.getSuffixListTypeId();
+		}
+
+		if (listTypeId == 0) {
+			return StringPool.BLANK;
+		}
+
+		ListType listType = listTypeLocalService.getListType(listTypeId);
+
+		return listType.getName();
+	}
 
 	@Inject
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;

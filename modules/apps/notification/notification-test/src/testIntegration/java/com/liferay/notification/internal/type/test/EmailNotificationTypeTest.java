@@ -36,11 +36,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -124,7 +121,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertEquals(
 			"test@liferay.com", notificationRecipientSettingsMap.get("to"));
 
-		_testObjectDefinitionTermEvaluator(randomObjectEntryValues());
+		_testObjectDefinitionTermEvaluator();
 	}
 
 	private NotificationContext _createNotificationContext(
@@ -172,13 +169,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		return notificationContext;
 	}
 
-	private void _testObjectDefinitionTermEvaluator(
-			HashMap<String, Serializable> objectEntryValues)
-		throws Exception {
-
+	private void _testObjectDefinitionTermEvaluator() throws Exception {
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			objectEntryValues, ServiceContextTestUtil.getServiceContext());
+			randomObjectEntryValues(),
+			ServiceContextTestUtil.getServiceContext());
 
 		sendNotification(
 			new NotificationContextBuilder(
@@ -189,15 +184,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			).notificationTemplate(
 				notificationTemplateLocalService.addNotificationTemplate(
 					_createNotificationContext(
-						objectEntryTermNames(),
-						getTerm("AUTHOR_EMAIL_ADDRESS")))
+						getAllTermNames(), getTerm("AUTHOR_EMAIL_ADDRESS")))
 			).termValues(
 				HashMapBuilder.<String, Object>put(
 					"creator", user2.getUserId()
 				).put(
 					"currentUserId", user2.getUserId()
 				).putAll(
-					objectEntryValues
+					randomObjectEntryValues()
 				).build()
 			).userId(
 				user2.getUserId()
@@ -212,64 +206,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.size() - 1);
 
 		assertTerms(
-			ListUtil.fromMapValues(objectEntryValues),
+			getAllTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
 		assertTerms(
-			ListUtil.fromMapValues(objectEntryValues),
+			getAllTermValues(),
 			ListUtil.fromString(
-				notificationQueueEntry.getSubject(), StringPool.COMMA));
-
-		_testUserTermValues(getAuthorTermValues());
-		_testUserTermValues(getCurrentUserTermValues());
-	}
-
-	private void _testUserTermValues(HashMap<String, Object> values)
-		throws Exception {
-
-		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
-			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
-
-		sendNotification(
-			new NotificationContextBuilder(
-			).className(
-				objectDefinition.getClassName()
-			).classPK(
-				objectEntry.getObjectEntryId()
-			).notificationTemplate(
-				notificationTemplateLocalService.addNotificationTemplate(
-					_createNotificationContext(
-						ListUtil.fromMapKeys(values),
-						getTerm("AUTHOR_EMAIL_ADDRESS")))
-			).termValues(
-				HashMapBuilder.<String, Object>put(
-					"creator", user2.getUserId()
-				).put(
-					"currentUserId", user2.getUserId()
-				).build()
-			).userId(
-				user2.getUserId()
-			).build(),
-			NotificationConstants.TYPE_EMAIL);
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationQueueEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		notificationQueueEntry = notificationQueueEntries.get(
-			notificationQueueEntries.size() - 1);
-
-		assertTerms(
-			ListUtil.fromMapValues(values),
-			ListUtil.fromString(
-				notificationQueueEntry.getSubject(), StringPool.BLANK));
-
-		assertTerms(
-			ListUtil.fromMapValues(values),
-			ListUtil.fromString(
-				notificationQueueEntry.getSubject(), StringPool.BLANK));
+				notificationQueueEntry.getBody(), StringPool.COMMA));
 	}
 
 }

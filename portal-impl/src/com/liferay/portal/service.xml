@@ -1744,6 +1744,11 @@
 			<finder-column name="portletPreferencesId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="C_N_SV" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="smallValue" />
+		</finder>
 		<finder name="P_I_N" return-type="PortletPreferenceValue" unique="true">
 			<finder-column name="portletPreferencesId" />
 			<finder-column name="index" />

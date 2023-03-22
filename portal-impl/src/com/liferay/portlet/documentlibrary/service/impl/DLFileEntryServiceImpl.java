@@ -17,12 +17,14 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,10 +37,12 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -47,6 +51,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
+import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -281,6 +286,44 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public List<DLFileEntry> getFileEntries(
+			long groupId, double scoreGTE, int start, int end)
+		throws PortalException {
+
+		return dlFileEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				DLFileEntryTable.INSTANCE
+			).from(
+				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				RatingsEntryTable.INSTANCE,
+				RatingsEntryTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						DLFileEntry.class.getName())
+				).and(
+					RatingsEntryTable.INSTANCE.classPK.eq(
+						DLFileEntryTable.INSTANCE.fileEntryId)
+				)
+			).where(
+				DLFileEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					RatingsEntryTable.INSTANCE.userId.eq(getUserId())
+				).and(
+					RatingsEntryTable.INSTANCE.score.gte(scoreGTE)
+				).and(
+					InlineSQLHelperUtil.getPermissionWherePredicate(
+						DLFileEntry.class,
+						DLFileEntryTable.INSTANCE.fileEntryId)
+				)
+			).orderBy(
+				RatingsEntryTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, int status, int start, int end,
 			OrderByComparator<DLFileEntry> orderByComparator)
 		throws PortalException {
@@ -367,6 +410,39 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryFinder.filterFindByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes, queryDefinition);
+	}
+
+	@Override
+	public int getFileEntriesCount(long groupId, double scoreGTE)
+		throws PortalException {
+
+		return dlFileEntryPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				DLFileEntryTable.INSTANCE.fileEntryId
+			).from(
+				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				RatingsEntryTable.INSTANCE,
+				RatingsEntryTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						DLFileEntry.class.getName())
+				).and(
+					RatingsEntryTable.INSTANCE.classPK.eq(
+						DLFileEntryTable.INSTANCE.fileEntryId)
+				)
+			).where(
+				DLFileEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					RatingsEntryTable.INSTANCE.userId.eq(getUserId())
+				).and(
+					RatingsEntryTable.INSTANCE.score.gte(scoreGTE)
+				).and(
+					InlineSQLHelperUtil.getPermissionWherePredicate(
+						DLFileEntry.class,
+						DLFileEntryTable.INSTANCE.fileEntryId)
+				)
+			));
 	}
 
 	@Override
@@ -805,6 +881,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				DLFileEntryServiceImpl.class, "_folderModelResourcePermission",
 				Folder.class);
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
 
 	@BeanReference(type = DLFileVersionLocalService.class)
 	private DLFileVersionLocalService _dlFileVersionLocalService;

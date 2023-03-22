@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 		"application.name=Liferay.Headless.Admin.User",
 		"dto.class.name=com.liferay.account.model.AccountEntry", "version=v1.0"
 	},
-	service = {AccountResourceDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class AccountResourceDTOConverter
 	implements DTOConverter<AccountEntry, Account> {

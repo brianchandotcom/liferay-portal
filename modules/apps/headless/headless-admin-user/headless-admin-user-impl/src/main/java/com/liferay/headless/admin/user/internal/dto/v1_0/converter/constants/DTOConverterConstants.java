@@ -19,6 +19,10 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants;
  */
 public class DTOConverterConstants {
 
+	public static final String ACCOUNT_RESOURCE_DTO_CONVERTER =
+		"(component.name=com.liferay.headless.admin.user.internal.dto.v1_0." +
+			"converter.AccountResourceDTOConverter)";
+
 	public static final String ORGANIZATION_RESOURCE_DTO_CONVERTER =
 		"(component.name=com.liferay.headless.admin.user.internal.dto.v1_0." +
 			"converter.OrganizationResourceDTOConverter)";

@@ -14,33 +14,13 @@
 
 package com.liferay.commerce.term.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.term.entry.type.CommerceTermEntryTypeRegistry;
-import com.liferay.commerce.term.model.CommerceTermEntry;
-import com.liferay.commerce.term.service.CommerceTermEntryRelService;
-import com.liferay.commerce.term.service.CommerceTermEntryService;
-import com.liferay.commerce.term.web.internal.display.context.CommerceTermEntryQualifiersDisplayContext;
 import com.liferay.commerce.term.web.internal.entry.constants.CommerceTermEntryScreenNavigationEntryConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,24 +29,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=20",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=20",
+	service = ScreenNavigationCategory.class
 )
 public class CommerceTermEntryQualifiersScreenNavigationCategory
-	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceTermEntry> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceTermEntryScreenNavigationEntryConstants.
-			CATEGORY_KEY_QUALIFIERS;
-	}
-
-	@Override
-	public String getEntryKey() {
 		return CommerceTermEntryScreenNavigationEntryConstants.
 			CATEGORY_KEY_QUALIFIERS;
 	}
@@ -76,7 +46,7 @@ public class CommerceTermEntryQualifiersScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "eligibility");
+		return language.get(resourceBundle, "eligibility");
 	}
 
 	@Override
@@ -85,76 +55,7 @@ public class CommerceTermEntryQualifiersScreenNavigationCategory
 			SCREEN_NAVIGATION_KEY_COMMERCE_TERM_ENTRY_GENERAL;
 	}
 
-	@Override
-	public boolean isVisible(User user, CommerceTermEntry commerceTermEntry) {
-		if (commerceTermEntry == null) {
-			return false;
-		}
-
-		boolean hasPermission = false;
-
-		try {
-			hasPermission = _commerceTermEntryModelResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				commerceTermEntry.getCommerceTermEntryId(), ActionKeys.UPDATE);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return hasPermission;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		CommerceTermEntryQualifiersDisplayContext
-			commerceTermEntryQualifiersDisplayContext =
-				new CommerceTermEntryQualifiersDisplayContext(
-					_commerceTermEntryModelResourcePermission,
-					_commerceTermEntryRelService, _commerceTermEntryService,
-					_commerceTermEntryTypeRegistry, httpServletRequest,
-					_portal);
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceTermEntryQualifiersDisplayContext);
-
-		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse,
-			"/commerce_term_entry/qualifiers.jsp");
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceTermEntryQualifiersScreenNavigationCategory.class);
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.term.model.CommerceTermEntry)"
-	)
-	private ModelResourcePermission<CommerceTermEntry>
-		_commerceTermEntryModelResourcePermission;
-
 	@Reference
-	private CommerceTermEntryRelService _commerceTermEntryRelService;
-
-	@Reference
-	private CommerceTermEntryService _commerceTermEntryService;
-
-	@Reference
-	private CommerceTermEntryTypeRegistry _commerceTermEntryTypeRegistry;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
+	protected Language language;
 
 }

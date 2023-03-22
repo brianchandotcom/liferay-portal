@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Payment Date",
+	"name": "EVP Payment Date",
 	"type": "component"
 }

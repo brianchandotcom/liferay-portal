@@ -35,12 +35,14 @@
 								"channelRegionalMarketingManager": true,
 								"user": false
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {

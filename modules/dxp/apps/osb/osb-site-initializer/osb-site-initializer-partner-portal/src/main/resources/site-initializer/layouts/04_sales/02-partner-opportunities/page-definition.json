@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -22,14 +24,16 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "DIALECT-dialect-tabs"},
+							"fragment": {
+								"key": "DIALECT-dialect-tabs"
+							},
 							"fragmentConfig": {
 								"iconAlignment": "none",
 								"iconName": "check-circle",
+								"numberOfTabs": 2,
 								"tabActiveBarPosition": "bottom",
-								"tabStyle": "underline",
 								"tabDirection": "horizontal",
-								"numberOfTabs": 2
+								"tabStyle": "underline"
 							},
 							"fragmentFields": [
 								{
@@ -99,11 +103,15 @@
 						},
 						"pageElements": [
 							{
-								"definition": {"fragmentDropZoneId": "1"},
+								"definition": {
+									"fragmentDropZoneId": "1"
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {"fragmentDropZoneId": "2"},
+								"definition": {
+									"fragmentDropZoneId": "2"
+								},
 								"type": "FragmentDropZone"
 							}
 						],

@@ -3,6 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {"borderWidth": "0"},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -10,6 +11,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -20,15 +22,91 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "change-deals-listing-pages"
-							},
+							"fragment": {"key": "DIALECT-dialect-tabs"},
 							"fragmentConfig": {
+								"iconAlignment": "none",
+								"iconName": "check-circle",
+								"tabActiveBarPosition": "bottom",
+								"tabStyle": "underline",
+								"tabDirection": "horizontal",
+								"numberOfTabs": 2
 							},
 							"fragmentFields": [
+								{
+									"id": "title1",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/sales/deal-registrations"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																}
+															]
+														}
+													}
+												}
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Partner Deal Registration"
+											}
+										}
+									}
+								},
+								{
+									"id": "title2",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/sales/partner-opportunities"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																}
+															]
+														}
+													}
+												}
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Partner Opportunities"
+											}
+										}
+									}
+								}
 							],
 							"indexed": true
 						},
+						"pageElements": [
+							{
+								"definition": {"fragmentDropZoneId": "1"},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {"fragmentDropZoneId": "2"},
+								"type": "FragmentDropZone"
+							}
+						],
 						"type": "Fragment"
 					},
 					{

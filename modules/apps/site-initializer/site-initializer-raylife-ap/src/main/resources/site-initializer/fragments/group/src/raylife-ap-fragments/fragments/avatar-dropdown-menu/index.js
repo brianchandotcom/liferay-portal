@@ -20,12 +20,8 @@ const height = avatarElement.offsetHeight;
 const dropdown = document.querySelector('.dropdown.applications-menu-wrapper');
 dropdown.onclick = () => dropdown.classList.toggle('show');
 
-// const dropdownItems = document.querySelector('.dropdown-items');
-
 const userId = Liferay.ThemeDisplay.getUserName();
 document.querySelector('.user-name').innerHTML = userId;
-
-// console.log('user', userId);
 
 const dropdownContent = document.querySelector('.dropdown-content');
 dropdownContent.style.left = `${left + 10}px`;
@@ -39,15 +35,6 @@ const redirectUrl = (routeName) => {
 		.join('/')}`;
 	window.location.href = `${origin}${siteName}/${routeName}`;
 };
-
-// console.log(Liferay.ThemeDisplay);
-
-// const redirectUrlWithoutAp = (portletId) => {
-// 	const token = Liferay.authToken;
-// 	const routeconfig = '&p_p_lifecycle=0&p_p_auth=';
-
-// 	window.location.href = `${portletId}${routeconfig}${token}`;
-// };
 
 const btnDashboard = document.getElementById('dropdown-item-dashboard');
 const btnMyaccount = document.getElementById('dropdown-item-myaccount');

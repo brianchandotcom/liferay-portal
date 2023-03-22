@@ -200,7 +200,6 @@ definition {
 	}
 
 	@description = "LPS-128383 Given the Google PageSpeed settings tab in the Virtual Instance Scope section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab won't be visible in the "" SITE SCOPE"" section"
-	@ignore = "true"
 	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope";

@@ -24,9 +24,6 @@ const tableHeaders = [
 		title: 'Last Updated',
 	},
 	{
-		title: 'Rating',
-	},
-	{
 		title: 'Status',
 	},
 ];

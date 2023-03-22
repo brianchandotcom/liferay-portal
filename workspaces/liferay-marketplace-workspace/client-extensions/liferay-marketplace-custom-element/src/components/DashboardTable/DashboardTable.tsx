@@ -10,7 +10,6 @@ import {DashboardEmptyTable} from './DashboardEmptyTable';
 export type AppProps = {
 	image: string;
 	name: string;
-	rating: string;
 	selected: boolean;
 	status: string;
 	type: string;

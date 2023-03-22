@@ -97,27 +97,4 @@
 			line-height: 1rem;
 		}
 	}
-
-	&-rating {
-		&-container {
-			align-items: center;
-			display: flex;
-			gap: 1rem;
-		}
-
-		&-text {
-			color: #282934;
-			font-family: 'Source Sans Pro', sans-serif;
-			font-size: 1rem;
-			font-weight: 400;
-			line-height: 1.5rem;
-		}
-
-		&-star {
-			height: 1rem;
-			width: 1rem;
-			filter: invert(94%) sepia(47%) saturate(5926%) hue-rotate(316deg)
-				brightness(98%) contrast(107%);
-		}
-	}
 }

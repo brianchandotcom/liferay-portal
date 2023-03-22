@@ -57,7 +57,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPElements();
 	}
 
-	private Map<String, SXPElement> _createSXPElements() {
+	private Map<String, SXPElement> _getSXPElements() {
+		if (_sxpElements != null) {
+			return _sxpElements;
+		}
+
 		Bundle bundle = FrameworkUtil.getBundle(CompanyModelListener.class);
 
 		Package pkg = CompanyModelListener.class.getPackage();
@@ -65,7 +69,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		String path = StringUtil.replace(
 			pkg.getName(), CharPool.PERIOD, CharPool.SLASH);
 
-		Map<String, SXPElement> sxpElements = new HashMap<>();
+		_sxpElements = new HashMap<>();
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			path.concat("/dependencies"), "*.json", false);
@@ -77,7 +81,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				SXPElement sxpElement = SXPElementUtil.toSXPElement(
 					StreamUtil.toString(url.openStream()));
 
-				sxpElements.put(
+				_sxpElements.put(
 					sxpElement.getExternalReferenceCode(), sxpElement);
 			}
 		}
@@ -85,7 +89,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			_log.error(ioException);
 		}
 
-		return sxpElements;
+		return _sxpElements;
 	}
 
 	private String _upgradeElementInstancesJSON(String elementInstancesJSON)
@@ -100,7 +104,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			JSONObject sxpElementJSONObject = jsonObject1.getJSONObject(
 				"sxpElement");
 
-			SXPElement sxpElement = _sxpElements.get(
+			SXPElement sxpElement = _getSXPElements().get(
 				sxpElementJSONObject.getString("externalReferenceCode"));
 
 			if (sxpElement == null) {
@@ -183,7 +187,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						continue;
 					}
 
-					SXPElement sxpElement = _sxpElements.get(
+					SXPElement sxpElement = _getSXPElements().get(
 						resultSet.getString("externalReferenceCode"));
 
 					if (sxpElement == null) {
@@ -217,6 +221,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintUpgradeProcess.class);
 
-	private final Map<String, SXPElement> _sxpElements = _createSXPElements();
+	private Map<String, SXPElement> _sxpElements;
 
 }

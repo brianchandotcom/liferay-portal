@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_PAYMENT_EDIT_BUTTON</td>
+	<td>//h4[contains(.,'${key_table}')]//a[contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_PAYMENT_METHOD_NAME</td>
 	<td>//span[contains(@class,'payment-name')]</td>
 	<td></td>

@@ -237,6 +237,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildPortletURL());
+			dropdownItem.setIcon("list-ul");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};

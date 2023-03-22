@@ -37,6 +37,7 @@ import getItemPath from '../utils/getItemPath';
 import getOrder from '../utils/getOrder';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
 import useKeyboardNavigation from '../utils/useKeyboardNavigation';
+import {AddItemDropDown} from './AddItemDropdown';
 import DeletionModal from './DeletionModal';
 
 export function MenuItem({
@@ -364,6 +365,72 @@ export function MenuItem({
 										)}
 									</div>
 								</ClayLayout.ContentCol>
+
+								<AddItemDropDown
+									className="position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown top-button"
+									trigger={
+										<ClayButtonWithIcon
+											aria-label={sub(
+												Liferay.Language.get(
+													'add-item-before-x'
+												),
+												`${title} (${type})`
+											)}
+											className="site_navigation_menu_editor_MenuItem-add-button"
+											displayType="primary"
+											onClick={(event) => {
+												event.preventDefault();
+												event.stopPropagation();
+											}}
+											size="xs"
+											symbol="plus"
+											tabIndex={
+												isTarget &&
+												Liferay.FeatureFlags[
+													'LPS-134527'
+												]
+													? '0'
+													: '-1'
+											}
+											title={Liferay.Language.get(
+												'add-item'
+											)}
+										/>
+									}
+								/>
+
+								<AddItemDropDown
+									className="bottom-button position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown"
+									trigger={
+										<ClayButtonWithIcon
+											aria-label={sub(
+												Liferay.Language.get(
+													'add-item-after-x'
+												),
+												`${title} (${type})`
+											)}
+											className="site_navigation_menu_editor_MenuItem-add-button"
+											displayType="primary"
+											onClick={(event) => {
+												event.preventDefault();
+												event.stopPropagation();
+											}}
+											size="xs"
+											symbol="plus"
+											tabIndex={
+												isTarget &&
+												Liferay.FeatureFlags[
+													'LPS-134527'
+												]
+													? '0'
+													: '-1'
+											}
+											title={Liferay.Language.get(
+												'add-item'
+											)}
+										/>
+									}
+								/>
 
 								<ClayLayout.ContentCol gutters>
 									<ClayButtonWithIcon

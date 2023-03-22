@@ -91,7 +91,7 @@ function getNamespacedInfoItems(
 	return Liferay.Util.ns(portletNamespace, infoItems);
 }
 
-export function AddItemDropDown({trigger}) {
+export function AddItemDropDown({className, trigger}) {
 	const [active, setActive] = useState(false);
 	const {addSiteNavigationMenuItemOptions, portletNamespace} = useConstants();
 
@@ -103,6 +103,7 @@ export function AddItemDropDown({trigger}) {
 		<>
 			<ClayDropDown
 				active={active}
+				className={className}
 				onActiveChange={setActive}
 				trigger={trigger}
 			>

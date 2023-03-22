@@ -35,6 +35,7 @@ import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.HtmlUtil;
+import com.liferay.poshi.runner.util.URLUtil;
 import com.liferay.poshi.runner.var.type.DefaultTable;
 import com.liferay.poshi.runner.var.type.Table;
 
@@ -2130,6 +2131,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void open(String url) {
 		String targetURL = url.trim();
+
+		try {
+			targetURL = URLUtil.encodeUTF8(targetURL);
+		}
+		catch (Exception exception) {
+		}
 
 		if (targetURL.startsWith("/")) {
 			targetURL = PropsValues.PORTAL_URL + targetURL;

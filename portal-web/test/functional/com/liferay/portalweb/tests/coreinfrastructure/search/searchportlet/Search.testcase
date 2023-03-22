@@ -2112,6 +2112,78 @@ definition {
 			value1 = "Nombre");
 	}
 
+	@priority = 3
+	test MasterPageTemplateSearchBarConfigurationIsPropagated {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name");
+
+		JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+			groupName = "Guest",
+			masterPageTemplateEntryName = "Custom Master Page Template");
+
+		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "guest");
+
+		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Master Page Template");
+
+		PageEditor.addWidget(
+			dropTarget = "Header",
+			portletName = "Search Bar",
+			scope = "Master");
+
+		SearchPortlets.configureSearchBarWidget(destinationPage = "search");
+
+		MastersPageTemplates.publishMaster();
+
+		ContentPages.addPage(
+			masterLayoutName = "Master Page Template",
+			pageName = "Test Content Page Name");
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		SearchPortlets.searchWidget(
+			clickMagnifyingGlassIcon = "true",
+			searchTerm = "test");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document",
+			searchTerm = "test");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if (!(contains(${currentURL}, "/search"))) {
+			fail("URL should contain /search");
+		}
+
+		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "guest");
+
+		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Master Page Template");
+
+		SearchPortlets.configureSearchBarWidget(destinationPage = "Test Page Name");
+
+		MastersPageTemplates.propagateChange();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		SearchPortlets.searchWidget(
+			clickMagnifyingGlassIcon = "true",
+			searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if (!(contains(${currentURL}, "/test-page-name"))) {
+			fail("URL should contain /test-page-name");
+		}
+	}
+
 	@description = "This is a use case for LPS-115435."
 	@priority = 3
 	test ModifyPaginationConfigurationProperties {

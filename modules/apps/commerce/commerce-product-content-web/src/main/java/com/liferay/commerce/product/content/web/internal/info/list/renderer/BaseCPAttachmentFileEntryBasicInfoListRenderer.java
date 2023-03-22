@@ -59,13 +59,12 @@ public abstract class BaseCPAttachmentFileEntryBasicInfoListRenderer
 
 	@Override
 	public void render(
-		List<CPAttachmentFileEntry> cpDefinitionSpecificationOptionValues,
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries,
 		InfoListRendererContext infoListRendererContext) {
 
 		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
 
-		infoListBasicListTag.setInfoListObjects(
-			cpDefinitionSpecificationOptionValues);
+		infoListBasicListTag.setInfoListObjects(cpAttachmentFileEntries);
 
 		String listItemRendererKey =
 			infoListRendererContext.getListItemRendererKey();

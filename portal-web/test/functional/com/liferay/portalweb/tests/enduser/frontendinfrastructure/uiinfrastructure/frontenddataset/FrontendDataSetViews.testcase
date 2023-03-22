@@ -34,28 +34,28 @@ definition {
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
 			FrontendDataSetAdmin.createDataSet(
-				key_type = "Channel",
-				key_name = "Test Dataset 1");
+				key_name = "Test Dataset 1",
+				key_type = "Channel");
 
 			FrontendDataSetAdmin.createDataSet(
-				key_type = "Account",
-				key_name = "Test Dataset 2");
+				key_name = "Test Dataset 2",
+				key_type = "Account");
 
 			FrontendDataSetAdmin.createDataSet(
-				key_type = "Cart",
-				key_name = "Test Dataset 3");
+				key_name = "Test Dataset 3",
+				key_type = "Cart");
 
 			FrontendDataSetAdmin.createDataSet(
-				key_type = "DataLayout",
-				key_name = "Test Dataset 4");
+				key_name = "Test Dataset 4",
+				key_type = "DataLayout");
 
 			FrontendDataSetAdmin.createDataSet(
-				key_type = "Diagram",
-				key_name = "Test Dataset 5");
+				key_name = "Test Dataset 5",
+				key_type = "Diagram");
 
 			FrontendDataSetAdmin.createDataSet(
-				key_type = "Form",
-				key_name = "Test Dataset 6");
+				key_name = "Test Dataset 6",
+				key_type = "Form");
 		}
 
 		task ("When changing the page to 4 entries") {
@@ -64,10 +64,11 @@ definition {
 
 		task ("Then confirm that only 4 entries are displayed") {
 			for (var num : list "1,2,3,4") {
-			AssertElementPresent(
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL",
-				key_itemName = "Test Dataset ${num}");
-		}
+				AssertElementPresent(
+					key_itemName = "Test Dataset ${num}",
+					locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+			}
+
 			Pagination.viewResults(results = "Showing 1 to 4 of 6");
 		}
 
@@ -77,11 +78,12 @@ definition {
 
 		task ("Then 2 entries are displayed") {
 			for (var num : list "5,6") {
-			AssertElementPresent(
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL",
-				key_itemName = "Test Dataset ${num}");
-		}
-		Pagination.viewResults(results = "Showing 5 to 6 of 6");
+				AssertElementPresent(
+					key_itemName = "Test Dataset ${num}",
+					locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+			}
+
+			Pagination.viewResults(results = "Showing 5 to 6 of 6");
 		}
 	}
 

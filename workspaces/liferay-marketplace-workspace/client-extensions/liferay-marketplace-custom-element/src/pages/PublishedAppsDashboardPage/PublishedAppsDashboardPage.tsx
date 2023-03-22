@@ -7,6 +7,8 @@ import {getProducts, getProductSpecifications} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
+declare let Liferay: {authToken: string, ThemeDisplay: any};
+
 const tableHeaders = [
 	{
 		iconSymbol: 'order-arrow',
@@ -46,7 +48,17 @@ export function PublishedAppsDashboardPage() {
 	};
 
 	const formatDate = (date: string) => {
-		let formattedDate = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', day: 'numeric'}).format(new Date(date));
+		const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
+
+		const dateOptions: any = {
+			day: 'numeric',
+			month: 'short',
+			year: 'numeric'
+		};
+
+		const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
+			new Date(date)
+		);
 
 		return formattedDate;
 	}

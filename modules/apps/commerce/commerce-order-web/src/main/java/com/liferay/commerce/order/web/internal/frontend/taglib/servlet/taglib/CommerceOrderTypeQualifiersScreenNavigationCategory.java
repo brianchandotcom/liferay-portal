@@ -14,32 +14,13 @@
 
 package com.liferay.commerce.order.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderTypeScreenNavigationConstants;
-import com.liferay.commerce.order.web.internal.display.context.CommerceOrderTypeQualifiersDisplayContext;
-import com.liferay.commerce.service.CommerceOrderTypeRelService;
-import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,24 +29,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=20",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=20",
+	service = ScreenNavigationCategory.class
 )
 public class CommerceOrderTypeQualifiersScreenNavigationCategory
-	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceOrderType> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceOrderTypeScreenNavigationConstants.
-			CATEGORY_KEY_QUALIFIERS;
-	}
-
-	@Override
-	public String getEntryKey() {
 		return CommerceOrderTypeScreenNavigationConstants.
 			CATEGORY_KEY_QUALIFIERS;
 	}
@@ -75,7 +46,7 @@ public class CommerceOrderTypeQualifiersScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "eligibility");
+		return language.get(resourceBundle, "eligibility");
 	}
 
 	@Override
@@ -84,73 +55,7 @@ public class CommerceOrderTypeQualifiersScreenNavigationCategory
 			SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_TYPE_GENERAL;
 	}
 
-	@Override
-	public boolean isVisible(User user, CommerceOrderType commerceOrderType) {
-		if (commerceOrderType == null) {
-			return false;
-		}
-
-		boolean hasPermission = false;
-
-		try {
-			hasPermission = _commerceOrderTypeModelResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				commerceOrderType.getCommerceOrderTypeId(), ActionKeys.UPDATE);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return hasPermission;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		CommerceOrderTypeQualifiersDisplayContext
-			commerceOrderTypeQualifiersDisplayContext =
-				new CommerceOrderTypeQualifiersDisplayContext(
-					httpServletRequest,
-					_commerceOrderTypeModelResourcePermission,
-					_commerceOrderTypeService, _commerceOrderTypeRelService,
-					_portal);
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceOrderTypeQualifiersDisplayContext);
-
-		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse,
-			"/commerce_order_type/qualifiers.jsp");
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderTypeQualifiersScreenNavigationCategory.class);
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceOrderType)"
-	)
-	private ModelResourcePermission<CommerceOrderType>
-		_commerceOrderTypeModelResourcePermission;
-
 	@Reference
-	private CommerceOrderTypeRelService _commerceOrderTypeRelService;
-
-	@Reference
-	private CommerceOrderTypeService _commerceOrderTypeService;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
+	protected Language language;
 
 }

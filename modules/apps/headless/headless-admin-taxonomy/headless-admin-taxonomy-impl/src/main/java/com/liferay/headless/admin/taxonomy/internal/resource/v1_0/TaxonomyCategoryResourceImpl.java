@@ -257,12 +257,16 @@ public class TaxonomyCategoryResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				booleanFilter.add(
-					new TermFilter(
-						Field.ASSET_PARENT_CATEGORY_ID,
-						String.valueOf(
-							AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)),
-					BooleanClauseOccur.MUST);
+				if (!GetterUtil.getBoolean(flatten)) {
+					booleanFilter.add(
+						new TermFilter(
+							Field.ASSET_PARENT_CATEGORY_ID,
+							String.valueOf(
+								AssetCategoryConstants.
+									DEFAULT_PARENT_CATEGORY_ID)),
+						BooleanClauseOccur.MUST);
+				}
+
 				booleanFilter.add(
 					new TermFilter(
 						Field.ASSET_VOCABULARY_ID,

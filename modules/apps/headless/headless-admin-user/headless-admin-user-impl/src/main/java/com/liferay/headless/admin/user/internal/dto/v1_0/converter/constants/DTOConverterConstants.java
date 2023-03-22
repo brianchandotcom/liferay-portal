@@ -27,4 +27,8 @@ public class DTOConverterConstants {
 		"(component.name=com.liferay.headless.admin.user.internal.dto.v1_0." +
 			"converter.UserGroupResourceDTOConverter)";
 
+	public static final String USER_RESOURCE_DTO_CONVERTER =
+		"(component.name=com.liferay.headless.admin.user.internal.dto.v1_0." +
+			"converter.UserResourceDTOConverter)";
+
 }

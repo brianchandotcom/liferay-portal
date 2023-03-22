@@ -74,7 +74,8 @@ public class TaxonomyCategoryBriefUtil {
 
 			DTOConverter<?, ?> dtoConverter =
 				dtoConverterRegistry.getDTOConverter(
-					AssetCategory.class.getName());
+					"Liferay.Headless.Admin.Taxonomy",
+					AssetCategory.class.getName(), "v1.0");
 
 			if (dtoConverter == null) {
 				return null;

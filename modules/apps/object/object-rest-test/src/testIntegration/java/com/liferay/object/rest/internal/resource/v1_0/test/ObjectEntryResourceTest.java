@@ -58,6 +58,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import javax.ws.rs.NotSupportedException;
 
@@ -516,18 +517,7 @@ public class ObjectEntryResourceTest {
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"embeddedTaxonomyCategory",
-					JSONUtil.put(
-						"externalReferenceCode",
-						taxonomyCategory1.getExternalReferenceCode()
-					).put(
-						"id", Long.valueOf(taxonomyCategory1.getId())
-					).put(
-						"name", taxonomyCategory1.getName()
-					).put(
-						"siteId", taxonomyCategory1.getSiteId()
-					).put(
-						"vocabulary", _assetVocabulary.getName()
-					)
+					_toEmbeddedTaxonomyCategoryJSONObject(taxonomyCategory1)
 				).put(
 					"taxonomyCategoryId",
 					Long.valueOf(taxonomyCategory1.getId())
@@ -536,18 +526,7 @@ public class ObjectEntryResourceTest {
 				),
 				JSONUtil.put(
 					"embeddedTaxonomyCategory",
-					JSONUtil.put(
-						"externalReferenceCode",
-						taxonomyCategory2.getExternalReferenceCode()
-					).put(
-						"id", Long.valueOf(taxonomyCategory2.getId())
-					).put(
-						"name", taxonomyCategory2.getName()
-					).put(
-						"siteId", taxonomyCategory2.getSiteId()
-					).put(
-						"vocabulary", _assetVocabulary.getName()
-					)
+					_toEmbeddedTaxonomyCategoryJSONObject(taxonomyCategory2)
 				).put(
 					"taxonomyCategoryId",
 					Long.valueOf(taxonomyCategory2.getId())
@@ -1540,6 +1519,18 @@ public class ObjectEntryResourceTest {
 			Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+	}
+
+	private JSONObject _toEmbeddedTaxonomyCategoryJSONObject(
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		TaxonomyCategory embeddedTaxonomyCategory = taxonomyCategory.clone();
+
+		embeddedTaxonomyCategory.setActions(new HashMap<>());
+
+		return JSONFactoryUtil.createJSONObject(
+			embeddedTaxonomyCategory.toString());
 	}
 
 	private static final String _ERC_VALUE_1 = RandomTestUtil.randomString();

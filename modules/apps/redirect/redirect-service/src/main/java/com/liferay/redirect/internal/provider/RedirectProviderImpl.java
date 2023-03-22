@@ -17,6 +17,9 @@ package com.liferay.redirect.internal.provider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
 import com.liferay.redirect.internal.util.PatternUtil;
 import com.liferay.redirect.model.RedirectEntry;
@@ -29,6 +32,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,7 +66,7 @@ public class RedirectProviderImpl
 
 	@Override
 	public Redirect getRedirect(
-		long groupId, String friendlyURL, String fullURL) {
+		long groupId, String friendlyURL, String fullURL, String userAgent) {
 
 		if (friendlyURL.contains("/control_panel/manage")) {
 			return null;

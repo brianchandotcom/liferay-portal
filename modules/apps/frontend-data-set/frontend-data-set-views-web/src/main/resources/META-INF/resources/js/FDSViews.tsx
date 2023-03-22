@@ -121,11 +121,11 @@ const AddFDSViewModalContent = ({
 
 					<ClayInput
 						id={`${namespace}fdsViewLabelInput`}
-						onBlur={() => {
+						onBlur={() =>
 							setLabelValidationError(
 								!fdsViewLabelRef.current?.value
-							);
-						}}
+							)
+						}
 						ref={fdsViewLabelRef}
 						type="text"
 					/>

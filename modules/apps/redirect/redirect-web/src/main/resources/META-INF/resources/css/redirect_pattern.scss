@@ -1,39 +1,39 @@
 @import 'atlas-variables';
 
-.redirect-field-repeatable-delete-button,
-.redirect-field-repeatable-add-button {
-	border-radius: 10px;
-	height: 18px;
-	padding: 2px;
-	position: absolute;
-	top: -24px;
-	width: 18px;
-
-	.lexicon-icon {
-		height: 10px;
-		margin-bottom: 7px;
-		margin-top: 0;
-		width: 10px;
-	}
-}
-
-.redirect-field-repeatable-delete-button {
-	right: 22px;
-}
-
-.redirect-field-repeatable-add-button {
-	right: 0;
-}
-
 .redirect-pattern-group {
 	margin-top: 3rem;
-	position: relative;
 	padding: 1.5rem;
+	position: relative;
 
 	border: 1px solid $secondary-l3;
 	border-radius: 4px;
 
 	.destination-url-input {
 		text-overflow: ellipsis;
+	}
+
+	.redirect-field-repeatable-delete-button,
+	.redirect-field-repeatable-add-button {
+		border-radius: 10px;
+		height: 18px;
+		padding: 2px;
+		position: absolute;
+		top: -24px;
+		width: 18px;
+
+		.lexicon-icon {
+			height: 10px;
+			margin-bottom: 7px;
+			margin-top: 0;
+			width: 10px;
+		}
+	}
+
+	.redirect-field-repeatable-delete-button {
+		right: 22px;
+	}
+
+	.redirect-field-repeatable-add-button {
+		right: 0;
 	}
 }

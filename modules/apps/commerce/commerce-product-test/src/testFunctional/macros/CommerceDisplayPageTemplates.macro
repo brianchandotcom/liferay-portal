@@ -84,6 +84,46 @@ definition {
 		}
 	}
 
+	macro editDynamicField {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		PageEditor.clickConfigurableField(
+			fragmentName = ${fragmentName},
+			index = ${index});
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		if (isSet(field)) {
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${field});
+		}
+
+		if (isSet(labelElementType)) {
+			Select(
+				key_fieldLabel = "Label Element Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${labelElementType});
+		}
+
+		if (isSet(valueElementType)) {
+			Select(
+				key_fieldLabel = "Value Element Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${valueElementType});
+		}
+
+		if (isSet(label)) {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = ${label});
+		}
+	}
+
 	@summary = "Map a fragment to a field in a Display Page Template"
 	macro mapEditableTextToField {
 		if (${index} == 1) {
@@ -148,6 +188,86 @@ definition {
 		}
 
 		PageEditor.publish();
+	}
+
+	macro viewDynamicFieldContent {
+		Variables.assertDefined(parameterList = ${fieldValue});
+
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		if (!(isSet(labelElementType))) {
+			var labelElementType = "span";
+		}
+
+		if (!(isSet(valueElementType))) {
+			var valueElementType = "span";
+		}
+
+		if (isSet(fieldLabel)) {
+			AssertTextEquals(
+				key_element = ${labelElementType},
+				key_index = ${index},
+				key_node = "label",
+				locator1 = "CommerceFrontStore#FS_DYNAMIC_FIELD",
+				value1 = "${fieldLabel}:");
+		}
+
+		AssertTextEquals(
+			key_element = ${valueElementType},
+			key_index = ${index},
+			key_node = "value",
+			locator1 = "CommerceFrontStore#FS_DYNAMIC_FIELD",
+			value1 = ${fieldValue});
+	}
+
+	macro viewDynamicFields {
+		Variables.assertDefined(parameterList = ${valuesList});
+
+		if (!(isSet(elementsList))) {
+			var elementsList = "";
+			var isElementsListEmpty = "true";
+		}
+		else {
+			var elementsList = ListUtil.newListFromString(${elementsList});
+			var isElementsListEmpty = "false";
+		}
+
+		var count = 0;
+		var valuesList = ListUtil.newListFromString(${valuesList});
+
+		var size = ListUtil.size(${valuesList});
+
+		var isLessThanSize = MathUtil.isLessThan(${count}, ${size});
+
+		while ((${isLessThanSize} == "true")) {
+			var index = ${count} + 1;
+			var values = ListUtil.get(${valuesList}, ${count});
+
+			var label = StringUtil.extractFirst(${values}, ":");
+			var value = StringUtil.extractLast(${values}, ":");
+
+			if (${isElementsListEmpty} == "false") {
+				var elements = ListUtil.get(${elementsList}, ${count});
+
+				var labelElementType = StringUtil.extractFirst(${elements}, ":");
+				var valueElementType = StringUtil.extractLast(${elements}, ":");
+			}
+
+			CommerceDisplayPageTemplates.viewDynamicFieldContent(
+				fieldLabel = ${label},
+				fieldValue = ${value},
+				index = ${index},
+				labelElementType = ${labelElementType},
+				valueElementType = ${valueElementType});
+
+			var count = ${count} + 1;
+
+			var count = StringUtil.valueOf(${count});
+
+			var isLessThanSize = MathUtil.isLessThan(${count}, ${size});
+		}
 	}
 
 	macro viewFragmentText {

@@ -26,6 +26,8 @@ public class ObjectActionKeys {
 	public static final String EXTEND_SYSTEM_OBJECT_DEFINITION =
 		"EXTEND_SYSTEM_OBJECT_DEFINITION";
 
+	public static final String OBJECT_ENTRY_HISTORY = "OBJECT_ENTRY_HISTORY";
+
 	public static final String PUBLISH_OBJECT_DEFINITION =
 		"PUBLISH_OBJECT_DEFINITION";
 

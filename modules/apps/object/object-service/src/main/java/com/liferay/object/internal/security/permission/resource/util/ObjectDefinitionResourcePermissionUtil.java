@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.security.permission.resource.util;
 
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -94,14 +95,22 @@ public class ObjectDefinitionResourcePermissionUtil {
 	private static String _getPermissionsSupports(
 		ObjectDefinition objectDefinition) {
 
-		if (!objectDefinition.isEnableComments()) {
-			return StringPool.BLANK;
+		String permissionsSupports = StringPool.BLANK;
+
+		if (objectDefinition.isEnableComments()) {
+			permissionsSupports = StringBundler.concat(
+				"<action-key>ADD_DISCUSSION</action-key>",
+				"<action-key>DELETE_DISCUSSION</action-key>",
+				"<action-key>UPDATE_DISCUSSION</action-key>");
 		}
 
-		return StringBundler.concat(
-			"<action-key>ADD_DISCUSSION</action-key>",
-			"<action-key>DELETE_DISCUSSION</action-key>",
-			"<action-key>UPDATE_DISCUSSION</action-key>");
+		if (objectDefinition.isEnableObjectEntryHistory()) {
+			permissionsSupports = StringBundler.concat(
+				permissionsSupports, "<action-key>",
+				ObjectActionKeys.OBJECT_ENTRY_HISTORY, "</action-key>");
+		}
+
+		return permissionsSupports;
 	}
 
 }

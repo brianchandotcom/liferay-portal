@@ -23,14 +23,7 @@
 
 [#list userRoles as userRoles]
 	[#if approvedRoles?seq_contains(userRoles.name)]
-		<ul class="nav nav-tabs nav-underline" role="tablist">
-			<li class="nav-item">
-			<a aria-controls="fields" class="nav-link" data-toggle="tab" href="#" id="mdf-request" role="tab">MDF Request</a>
-			</li>
-			<li class="nav-item">
-			<a aria-controls="settings" class="nav-link" data-toggle="tab" href="#" id="mdf-claim" role="tab">MDF Claim</a>
-			</li>
-		</ul>
+		<lfr-drop-zone></lfr-drop-zone>
 		[#break]
 	[/#if]
 [/#list]

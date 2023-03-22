@@ -142,6 +142,15 @@ export default function LayoutPageTemplateEntryCard({
 								borderless
 								displayType="secondary"
 								onClick={onPreviewClick}
+								onKeyDown={(event) => {
+									if (
+										event.key === 'Enter' ||
+										event.key === 'Space'
+									) {
+										event.stopPropagation();
+										onPreviewOpenChange(true);
+									}
+								}}
 								size="sm"
 								symbol="view"
 								title={Liferay.Language.get(

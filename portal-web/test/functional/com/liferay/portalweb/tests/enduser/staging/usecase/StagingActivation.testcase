@@ -28,6 +28,8 @@ definition {
 	@description = "Check the publication summary that is published via local staging."
 	@priority = 4
 	test CheckPublicationSummaryLocal {
+		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryLocal";
+
 		task ("Given: Add a new page on site and enable local staging") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -109,6 +111,7 @@ definition {
 	@priority = 4
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "StagingActivation#DeleteRecycleBinOnStagingActivation";
 
 		task ("Given: Add a web content entry") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");

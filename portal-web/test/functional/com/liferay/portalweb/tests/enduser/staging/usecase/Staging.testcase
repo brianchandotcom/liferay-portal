@@ -2044,6 +2044,7 @@ definition {
 	@priority = 5
 	test StagingOnlyApprovedPublishToLive {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Staging#StagingOnlyApprovedPublishToLive";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -2567,6 +2568,8 @@ definition {
 	@description = "This is a use case for LPS-89116."
 	@priority = 3
 	test ValidateFriendlyURLWithSpecialCharacters {
+		property test.name.skip.portal.instance = "Staging#ValidateFriendlyURLWithSpecialCharacters";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -2792,6 +2795,8 @@ definition {
 
 	@priority = 4
 	test ViewPageOrderWithStaging {
+		property test.name.skip.portal.instance = "Staging#ViewPageOrderWithStaging";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Test Page 1");
@@ -2948,6 +2953,8 @@ definition {
 	@description = "This is a use case for LPS-82355."
 	@priority = 5
 	test ViewPublishDocumentTypeWithConfiguredAssetType {
+		property test.name.skip.portal.instance = "Staging#ViewPublishDocumentTypeWithConfiguredAssetType";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page",
@@ -3132,6 +3139,8 @@ definition {
 	@description = "This is a use case for LPS-77935."
 	@priority = 4
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
+		property test.name.skip.portal.instance = "Staging#ViewSimplePublicationAfterDeleteDocumentInGlobal";
+
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(

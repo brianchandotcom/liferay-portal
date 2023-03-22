@@ -293,6 +293,8 @@ definition {
 	@description = "This is a use case for LPS-71786"
 	@priority = 3
 	test AssertDeletedAssetLinkRemovedFromLiveSite {
+		property test.name.skip.portal.instance = "StagingUsecase#AssertDeletedAssetLinkRemovedFromLiveSite";
+
 		task ("Given: User add a Blog portlet to the Staging site and 2 documents") {
 			JSONLayout.addWidgetToPublicLayout(
 				column = 1,

@@ -370,7 +370,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155227. It checks that a user can not receive notifications without the subscribe permission of the folder."
-	@priority = 2
+	@priority = 4
 	test CannotReceiveNotificationsWithoutFolderSubscriptionPermissions {
 		JSONGroup.addGroup(groupName = "Site Name");
 

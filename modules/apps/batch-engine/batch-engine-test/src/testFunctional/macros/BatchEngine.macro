@@ -32,49 +32,6 @@ definition {
 		return ${destinationFilePath};
 	}
 
-	macro waitUntilBlogsVisibleInUI {
-		ProductMenu.gotoPortlet(
-					category = "Content & Data",
-					panel = "Site Administration",
-					portlet = "Blogs");
-
-					while ((IsVisible(locator1 = "Message#EMPTY_INFO", value1 = "No entries were found.")) && (maxIterations = "5")) {
-						Refresh();
-
-						WaitForSPARefresh();
-				}
-	}
-
-	macro waitUntilObjectPresentInUI {
-		ObjectPortlet.assertIsDisplayedOnControlPanel(itemMenu = "Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		while ((IsElementNotPresent(locator1 = "CreateObject#OBJECT_NAME", key_labelName = ${labelName})) && (maxIterations = "5")) {
-						Refresh();
-
-						WaitForSPARefresh();
-					}
-
-		CreateObject.assertCustomObject(labelName = "User");
-	}
-
-	macro waitUntilWebContentPresentInUI {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
-
-		while ((IsElementNotPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL_GENERIC")) && (maxIterations = "5")) {
-						Refresh();
-
-						WaitForSPARefresh();
-					}
-	}
-
 	macro moveFileToDeployFolder {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName}");
 
@@ -104,6 +61,49 @@ definition {
 		return ${staticSiteId};
 
 		return ${staticUserId};
+	}
+
+	macro waitUntilBlogsVisibleInUI {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		while ((IsVisible(locator1 = "Message#EMPTY_INFO", value1 = "No entries were found.")) && (maxIterations = "5")) {
+			Refresh();
+
+			WaitForSPARefresh();
+		}
+	}
+
+	macro waitUntilObjectPresentInUI {
+		ObjectPortlet.assertIsDisplayedOnControlPanel(itemMenu = "Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		while ((IsElementNotPresent(key_labelName = ${labelName}, locator1 = "CreateObject#OBJECT_NAME")) && (maxIterations = "5")) {
+			Refresh();
+
+			WaitForSPARefresh();
+		}
+
+		CreateObject.assertCustomObject(labelName = "User");
+	}
+
+	macro waitUntilWebContentPresentInUI {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
+		while ((IsElementNotPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL_GENERIC")) && (maxIterations = "5")) {
+			Refresh();
+
+			WaitForSPARefresh();
+		}
 	}
 
 }

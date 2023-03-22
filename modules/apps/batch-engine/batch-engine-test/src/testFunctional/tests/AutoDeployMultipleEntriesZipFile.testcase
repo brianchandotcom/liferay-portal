@@ -95,7 +95,7 @@ definition {
 
 		task ("Then all elements included in the file are imported") {
 			BatchEngine.waitUntilBlogsVisibleInUI();
-			
+
 			var response = BlogPostingAPI.getBlogPostings();
 
 			var blogTotalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
@@ -189,6 +189,7 @@ definition {
 
 		task ("Then all structured contents are imported") {
 			BatchEngine.waitUntilWebContentPresentInUI();
+
 			var response = HeadlessWebcontentAPI.filterStructuredContent(filtervalue = "priority%20eq%200.0");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(

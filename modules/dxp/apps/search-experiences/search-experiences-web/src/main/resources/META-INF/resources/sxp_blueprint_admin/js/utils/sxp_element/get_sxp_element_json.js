@@ -24,7 +24,7 @@ import replaceTemplateVariable from './replace_template_variable';
  * @return {object}
  */
 export default function getSXPElementJSON(sxpElement, uiConfigurationValues) {
-	const {description_i18n, elementDefinition, title_i18n} = sxpElement;
+	const {description_i18n, elementDefinition = {}, title_i18n} = sxpElement;
 
 	const {category, configuration, icon} = elementDefinition;
 

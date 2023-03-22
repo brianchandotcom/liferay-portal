@@ -33,9 +33,9 @@ export default function deleteLocalizedProperties(elementDefinition) {
 
 		// Iterate through all `fields`.
 
-		elementDefinitionDeepCopy.uiConfiguration.fieldSets.forEach(
+		elementDefinitionDeepCopy.uiConfiguration?.fieldSets?.forEach(
 			(fieldSet) => {
-				fieldSet.fields.forEach((field) => {
+				fieldSet?.fields?.forEach((field) => {
 
 					// Find property names that end with `Localized`.
 

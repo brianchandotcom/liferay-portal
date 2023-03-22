@@ -43,6 +43,7 @@ import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
+import isDefined from '../utils/functions/is_defined';
 import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
@@ -113,6 +114,13 @@ const validateConfigKeys = (
 	configurationJSONObject,
 	uiConfigurationJSONObject
 ) => {
+
+	// Skip validation if `configurationJSONObject` is undefined.
+
+	if (!isDefined(configurationJSONObject)) {
+		return;
+	}
+
 	const regex = new RegExp(`\\$\\{${CONFIG_PREFIX}.([\\w\\d_]+)\\}`, 'g');
 
 	const elementKeys = [

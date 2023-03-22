@@ -32,7 +32,7 @@ public class ObjectEntryTestUtil {
 
 	public static ObjectEntry addObjectEntry(
 			ObjectDefinition objectDefinition, String objectFieldName,
-			String objectFieldValue)
+			Serializable objectFieldValue)
 		throws Exception {
 
 		long groupId = 0;

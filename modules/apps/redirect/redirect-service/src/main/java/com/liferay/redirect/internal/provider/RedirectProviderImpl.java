@@ -86,6 +86,8 @@ public class RedirectProviderImpl
 				redirectEntry.getDestinationURL(), redirectEntry.isPermanent());
 		}
 
+		userAgent = StringUtil.toLowerCase(userAgent);
+
 		List<RedirectPatternEntry> redirectPatternEntries =
 			_redirectPatternEntries.getOrDefault(
 				groupId, Collections.emptyList());
@@ -93,15 +95,17 @@ public class RedirectProviderImpl
 		for (RedirectPatternEntry redirectPatternEntry :
 				redirectPatternEntries) {
 
-			Pattern pattern = redirectPatternEntry.getPattern();
+			if (_isUserAgentMatch(redirectPatternEntry, userAgent)) {
+				Pattern pattern = redirectPatternEntry.getPattern();
 
-			Matcher matcher = pattern.matcher(friendlyURL);
+				Matcher matcher = pattern.matcher(friendlyURL);
 
-			if (matcher.matches()) {
-				return new RedirectImpl(
-					matcher.replaceFirst(
-						redirectPatternEntry.getDestinationURL()),
-					false);
+				if (matcher.matches()) {
+					return new RedirectImpl(
+						matcher.replaceFirst(
+							redirectPatternEntry.getDestinationURL()),
+						false);
+				}
 			}
 		}
 
@@ -154,6 +158,43 @@ public class RedirectProviderImpl
 		Map<Long, List<RedirectPatternEntry>> redirectPatternEntries) {
 
 		_redirectPatternEntries = redirectPatternEntries;
+	}
+
+	private boolean _isCrawlerUserAgent(String userAgent) {
+		return false;
+	}
+
+	private boolean _isUserAgentMatch(
+		RedirectPatternEntry redirectPatternEntry, String userAgent) {
+
+		if (Validator.isNull(redirectPatternEntry.getUserAgent()) ||
+			Validator.isNull(userAgent) ||
+			Objects.equals(
+				RedirectConstants.USER_AGENT_ALL,
+				redirectPatternEntry.getUserAgent())) {
+
+			return true;
+		}
+
+		boolean crawlerUserAgent = _isCrawlerUserAgent(userAgent);
+
+		if (crawlerUserAgent &&
+			Objects.equals(
+				RedirectConstants.USER_AGENT_BOT,
+				redirectPatternEntry.getUserAgent())) {
+
+			return true;
+		}
+
+		if (!crawlerUserAgent &&
+			Objects.equals(
+				RedirectConstants.USER_AGENT_HUMAN,
+				redirectPatternEntry.getUserAgent())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _unmapPid(String pid) {

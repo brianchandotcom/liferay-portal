@@ -65,86 +65,88 @@ const PatternField = ({
 				<ClayIcon symbol="plus" />
 			</ClayButton>
 
-		<ClayLayout.Row>
-			<ClayLayout.Col md="12">
-				<label htmlFor="pattern">
-					{Liferay.Language.get('pattern-field-label')}
+			<ClayLayout.Row>
+				<ClayLayout.Col md="12">
+					<label htmlFor="pattern">
+						{Liferay.Language.get('pattern-field-label')}
 
-					<span
-						className="inline-item-after"
-						title={Liferay.Language.get('pattern-help-message')}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
+						<span
+							className="inline-item-after"
+							title={Liferay.Language.get('pattern-help-message')}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</label>
 
-				<ClayInput
-					defaultValue={pattern}
-					id="pattern"
-					name={`${portletNamespace}pattern_${index}`}
-					type="text"
-				/>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
+					<ClayInput
+						defaultValue={pattern}
+						id="pattern"
+						name={`${portletNamespace}pattern_${index}`}
+						type="text"
+					/>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
 
-		<ClayLayout.Row className="mt-4">
-			<ClayLayout.Col className={error ? 'has-error' : ''} md="8">
-				<label htmlFor="destinationURL">
-					{Liferay.Language.get('destination-url')}
+			<ClayLayout.Row className="mt-4">
+				<ClayLayout.Col className={error ? 'has-error' : ''} md="8">
+					<label htmlFor="destinationURL">
+						{Liferay.Language.get('destination-url')}
 
-					<span
-						className="inline-item-after"
-						title={Liferay.Language.get(
-							'destination-url-help-message'
-						)}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
-
-				<ClayInput
-					id="destinationURL"
-					name={`${portletNamespace}destinationURL_${index}`}
-					onBlur={({currentTarget}) => {
-						const error = Boolean(
-							destinationUrl &&
-								!urlAllowRelative(currentTarget.value)
-						);
-
-						handlePatternError(error, index);
-					}}
-					onChange={({currentTarget}) =>
-						setDestinationUrl(currentTarget.value)
-					}
-					type="text"
-					value={destinationUrl}
-				/>
-
-				{error && (
-					<ClayForm.FeedbackGroup>
-						<ClayForm.FeedbackItem>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-							{Liferay.Language.get('please-enter-a-valid-url')}
-						</ClayForm.FeedbackItem>
-
-						<small>
-							{sub(
-								Liferay.Language.get(
-									'destination-url-error-help-message'
-								),
-								strings.absoluteURL,
-								strings.relativeURL
+						<span
+							className="inline-item-after"
+							title={Liferay.Language.get(
+								'destination-url-help-message'
 							)}
-						</small>
-					</ClayForm.FeedbackGroup>
-				)}
-			</ClayLayout.Col>
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</label>
 
-			<ClayLayout.Col md="4">
-				<span>TODO</span>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
+					<ClayInput
+						id="destinationURL"
+						name={`${portletNamespace}destinationURL_${index}`}
+						onBlur={({currentTarget}) => {
+							const error = Boolean(
+								destinationUrl &&
+									!urlAllowRelative(currentTarget.value)
+							);
+
+							handlePatternError(error, index);
+						}}
+						onChange={({currentTarget}) =>
+							setDestinationUrl(currentTarget.value)
+						}
+						type="text"
+						value={destinationUrl}
+					/>
+
+					{error && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get(
+									'please-enter-a-valid-url'
+								)}
+							</ClayForm.FeedbackItem>
+
+							<small>
+								{sub(
+									Liferay.Language.get(
+										'destination-url-error-help-message'
+									),
+									strings.absoluteURL,
+									strings.relativeURL
+								)}
+							</small>
+						</ClayForm.FeedbackGroup>
+					)}
+				</ClayLayout.Col>
+
+				<ClayLayout.Col md="4">
+					<span>TODO</span>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
 		</div>
 	);
 };

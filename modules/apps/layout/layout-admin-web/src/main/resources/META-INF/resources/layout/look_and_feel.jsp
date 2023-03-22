@@ -105,6 +105,8 @@ else {
 	</div>
 </clay:sheet-section>
 
+<hr class="mb-5 separator" />
+
 <clay:sheet-section
 	cssClass="mb-5"
 >
@@ -135,6 +137,8 @@ else {
 		</div>
 	</div>
 </clay:sheet-section>
+
+<hr class="mb-5 separator" />
 
 <clay:sheet-section
 	cssClass="mb-5"

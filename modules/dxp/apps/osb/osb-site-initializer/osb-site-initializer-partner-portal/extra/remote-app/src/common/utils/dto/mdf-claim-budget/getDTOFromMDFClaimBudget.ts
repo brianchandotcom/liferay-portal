@@ -13,15 +13,16 @@ import MDFClaimBudgetDTO from '../../../interfaces/dto/mdfClaimBudgetDTO';
 import MDFClaimBudget from '../../../interfaces/mdfClaimBudget';
 
 export default function getDTOFromMDFClaimBudget(
-	budget: MDFClaimBudget,
-	activityId: number
+	mdfClaimBudget: MDFClaimBudget,
+	mdfClaimActivityId?: number,
+	budgetInvoiceId?: number
 ): MDFClaimBudgetDTO {
 	return {
-		expenseName: budget.expenseName,
-		invoice: budget.invoice,
-		invoiceAmount: budget.invoiceAmount,
-		r_bgtToMDFClmBgts_c_budgetId: budget.id,
-		r_mdfClmActToMDFClmBgts_c_mdfClaimActivityId: activityId,
-		selected: budget.selected,
+		expenseName: mdfClaimBudget.expenseName,
+		invoice: budgetInvoiceId,
+		invoiceAmount: mdfClaimBudget.invoiceAmount,
+		r_bgtToMDFClmBgts_c_budgetId: mdfClaimBudget.id,
+		r_mdfClmActToMDFClmBgts_c_mdfClaimActivityId: mdfClaimActivityId,
+		selected: mdfClaimBudget.selected,
 	};
 }

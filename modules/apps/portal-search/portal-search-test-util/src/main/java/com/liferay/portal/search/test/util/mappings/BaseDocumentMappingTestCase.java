@@ -61,31 +61,32 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 		String screenName = document.get("screenName");
 
 		Assert.assertEquals(
-			Double.valueOf(document.get(FIELD_DOUBLE)), doubles.get(screenName),
+			Double.valueOf(document.get(FIELD_DOUBLE)),
+			doublesMap.get(screenName), 0);
+
+		Assert.assertEquals(
+			Long.valueOf(document.get(FIELD_LONG)), longsMap.get(screenName),
 			0);
 
 		Assert.assertEquals(
-			Long.valueOf(document.get(FIELD_LONG)), longs.get(screenName), 0);
-
-		Assert.assertEquals(
-			Float.valueOf(document.get(FIELD_FLOAT)), floats.get(screenName),
+			Float.valueOf(document.get(FIELD_FLOAT)), floatsMap.get(screenName),
 			0);
 
 		Assert.assertEquals(
 			Integer.valueOf(document.get(FIELD_INTEGER)),
-			integers.get(screenName), 0);
+			integersMap.get(screenName), 0);
 
 		Assert.assertArrayEquals(
-			getDoubleArray(document), doubleArrays.get(screenName));
+			getDoubleArray(document), doubleArraysMap.get(screenName));
 
 		Assert.assertArrayEquals(
-			getLongArray(document), longArrays.get(screenName));
+			getLongArray(document), longArraysMap.get(screenName));
 
 		Assert.assertArrayEquals(
-			getFloatArray(document), floatArrays.get(screenName));
+			getFloatArray(document), floatArraysMap.get(screenName));
 
 		Assert.assertArrayEquals(
-			getIntegerArray(document), integerArrays.get(screenName));
+			getIntegerArray(document), integerArraysMap.get(screenName));
 	}
 
 	protected void assertMappings(String keywords) {

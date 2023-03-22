@@ -116,10 +116,10 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 	}
 
 	protected List<String> getFragments(String fieldName, SearchHit searchHit) {
-		Map<String, HighlightField> highlightFields =
+		Map<String, HighlightField> highlightFieldsMap =
 			searchHit.getHighlightFieldsMap();
 
-		HighlightField highlightField = highlightFields.get(fieldName);
+		HighlightField highlightField = highlightFieldsMap.get(fieldName);
 
 		return highlightField.getFragments();
 	}

@@ -86,10 +86,10 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		String screenName, Double[] doubleArray, Float[] floatArray,
 		Integer[] integerArray, Long[] longArray) {
 
-		doubleArrays.put(screenName, doubleArray);
-		floatArrays.put(screenName, floatArray);
-		integerArrays.put(screenName, integerArray);
-		longArrays.put(screenName, longArray);
+		doubleArraysMap.put(screenName, doubleArray);
+		floatArraysMap.put(screenName, floatArray);
+		integerArraysMap.put(screenName, integerArray);
+		longArraysMap.put(screenName, longArray);
 	}
 
 	protected static void populateNumbers() {
@@ -108,10 +108,10 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		String screenName, Double numberDouble, Float floatNumber,
 		Integer numberInteger, Long longNumber) {
 
-		doubles.put(screenName, numberDouble);
-		floats.put(screenName, floatNumber);
-		integers.put(screenName, numberInteger);
-		longs.put(screenName, longNumber);
+		doublesMap.put(screenName, numberDouble);
+		floatsMap.put(screenName, floatNumber);
+		integersMap.put(screenName, numberInteger);
+		longsMap.put(screenName, longNumber);
 	}
 
 	protected void populate(Document document, String screenName) {
@@ -120,15 +120,16 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		document.addKeyword("lastName", "Smith");
 		document.addText("screenName", screenName);
 
-		document.addNumber(FIELD_DOUBLE, doubles.get(screenName));
-		document.addNumber(FIELD_FLOAT, floats.get(screenName));
-		document.addNumber(FIELD_INTEGER, integers.get(screenName));
-		document.addNumber(FIELD_LONG, longs.get(screenName));
+		document.addNumber(FIELD_DOUBLE, doublesMap.get(screenName));
+		document.addNumber(FIELD_FLOAT, floatsMap.get(screenName));
+		document.addNumber(FIELD_INTEGER, integersMap.get(screenName));
+		document.addNumber(FIELD_LONG, longsMap.get(screenName));
 
-		document.addNumber(FIELD_DOUBLE_ARRAY, doubleArrays.get(screenName));
-		document.addNumber(FIELD_FLOAT_ARRAY, floatArrays.get(screenName));
-		document.addNumber(FIELD_INTEGER_ARRAY, integerArrays.get(screenName));
-		document.addNumber(FIELD_LONG_ARRAY, longArrays.get(screenName));
+		document.addNumber(FIELD_DOUBLE_ARRAY, doubleArraysMap.get(screenName));
+		document.addNumber(FIELD_FLOAT_ARRAY, floatArraysMap.get(screenName));
+		document.addNumber(
+			FIELD_INTEGER_ARRAY, integerArraysMap.get(screenName));
+		document.addNumber(FIELD_LONG_ARRAY, longArraysMap.get(screenName));
 	}
 
 	protected void populate(
@@ -141,28 +142,28 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		document.addText("screenName", screenName);
 
 		if (Objects.equals(field, FIELD_DOUBLE)) {
-			document.addNumber(field, doubles.get(screenName));
+			document.addNumber(field, doublesMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_FLOAT)) {
-			document.addNumber(field, floats.get(screenName));
+			document.addNumber(field, floatsMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_INTEGER)) {
-			document.addNumber(field, integers.get(screenName));
+			document.addNumber(field, integersMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_LONG)) {
-			document.addNumber(field, longs.get(screenName));
+			document.addNumber(field, longsMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_DOUBLE_ARRAY)) {
-			document.addNumber(field, doubleArrays.get(screenName));
+			document.addNumber(field, doubleArraysMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_FLOAT_ARRAY)) {
-			document.addNumber(field, floatArrays.get(screenName));
+			document.addNumber(field, floatArraysMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_INTEGER_ARRAY)) {
-			document.addNumber(field, integerArrays.get(screenName));
+			document.addNumber(field, integerArraysMap.get(screenName));
 		}
 		else if (Objects.equals(field, FIELD_LONG_ARRAY)) {
-			document.addNumber(field, longArrays.get(screenName));
+			document.addNumber(field, longArraysMap.get(screenName));
 		}
 	}
 
@@ -187,14 +188,16 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		"sixthuser"
 	};
 
-	protected static final Map<String, Double[]> doubleArrays = new HashMap<>();
-	protected static final Map<String, Double> doubles = new HashMap<>();
-	protected static final Map<String, Float[]> floatArrays = new HashMap<>();
-	protected static final Map<String, Float> floats = new HashMap<>();
-	protected static final Map<String, Integer[]> integerArrays =
+	protected static final Map<String, Double[]> doubleArraysMap =
 		new HashMap<>();
-	protected static final Map<String, Integer> integers = new HashMap<>();
-	protected static final Map<String, Long[]> longArrays = new HashMap<>();
-	protected static final Map<String, Long> longs = new HashMap<>();
+	protected static final Map<String, Double> doublesMap = new HashMap<>();
+	protected static final Map<String, Float[]> floatArraysMap =
+		new HashMap<>();
+	protected static final Map<String, Float> floatsMap = new HashMap<>();
+	protected static final Map<String, Integer[]> integerArraysMap =
+		new HashMap<>();
+	protected static final Map<String, Integer> integersMap = new HashMap<>();
+	protected static final Map<String, Long[]> longArraysMap = new HashMap<>();
+	protected static final Map<String, Long> longsMap = new HashMap<>();
 
 }

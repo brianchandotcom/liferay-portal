@@ -4341,6 +4341,87 @@ definition {
 		SelectWindow(locator1 = "Using a Search Blueprint on a Search Page - Liferay Learn");
 	}
 
+	@description = "This is a use case for LPS-147329."
+	test ViewOOTBElementsLocalization {
+		task ("Assert the title and description of an OOTB Element within the Blueprint query builder add element sidebar are not using language keys") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.createBlueprint(title = "Test Blueprint");
+
+			Blueprints.addElement(element = "Limit Search to PDF files");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_element = "Limit Search to PDF files",
+				locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_DESCRIPTION",
+				value1 = "limit-search-to-pdf-files-description");
+		}
+
+		task ("Assert the title and description of an OOTB Element instance within the Blueprint query builder are not using language keys") {
+			AssertElementNotPresent(
+				key_element = "limit-search-to-pdf-files",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+			AssertElementNotPresent(
+				key_element = "limit-search-to-pdf-files-description.",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+			PortletEntry.save();
+		}
+
+		task ("Assert the title and description of an OOTB Element JSON Configuration are using language keys") {
+			Navigator.gotoNavItem(navItem = "Elements");
+
+			Blueprints.gotoElement(element = "Limit Search to PDF files");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+				value1 = "limit-search-to-pdf-files");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+				value1 = "limit-search-to-pdf-files-description");
+		}
+
+		Navigator.gotoBack();
+
+		task ("Assert the title and description of an OOTB Element on the Elements admin page is translated when using Hungarian locale") {
+			Navigator.ensureLocaleURL(locale = "hu");
+
+			Blueprints.viewEntryTitle(title = "A keresés korlátozása PDF-fájlokra");
+
+			Blueprints.viewEntryDescription(
+				description = "A keresés korlátozása a mimeType mezőben meghatározott PDF-fájlokra.",
+				title = "A keresés korlátozása PDF-fájlokra");
+		}
+
+		task ("Assert the title and description of an OOTB Element within the Blueprint query builder add element sidebar is translated when using Hungarian locale") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.gotoBlueprint(title = "Test Blueprint");
+
+			Blueprints.searchAddElementsSidebar(element = "keresés");
+
+			AssertElementPresent(
+				key_element = "A keresés korlátozása PDF-fájlokra",
+				locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME");
+
+			AssertTextEquals.assertPartialText(
+				key_element = "A keresés korlátozása PDF-fájlokra",
+				locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_DESCRIPTION",
+				value1 = "A keresés korlátozása a mimeType mezőben meghatározott PDF-fájlokra");
+		}
+
+		task ("Assert the title and description of an added OOTB Element instance within the Blueprint query builder is translated when using Hungarian locale") {
+			AssertElementPresent(
+				key_element = "A keresés korlátozása PDF-fájlokra",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+			AssertElementPresent(
+				key_element = "A keresés korlátozása a mimeType mezőben meghatározott PDF-fájlokra.",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+		}
+	}
+
 	test ViewQueryBuilderAssetCategoryMultiselectField {
 		JSONCategory.addVocabulary(
 			groupName = "Guest",

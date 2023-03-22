@@ -452,10 +452,15 @@ definition {
 
 		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/knowledge-base-articles/${resourcePrimKey}/knowledge-base-attachments \
 				-H accept: application/json \
 				-H Content-Type: multipart/form-data \
+				-F knowledgeBaseAttachment={"externalReferenceCode": "${externalReferenceCode}"} \
 				-u test@liferay.com:test \
 				-F file=@${filePath}
 		''';

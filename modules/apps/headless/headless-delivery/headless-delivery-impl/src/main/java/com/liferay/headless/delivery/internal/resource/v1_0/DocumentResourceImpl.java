@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -83,6 +84,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -100,6 +102,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -205,6 +208,14 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			_createDocumentsPageBooleanQueryUnsafeConsumer(
 				assetLibraryId, flatten),
 			search, aggregation, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<Document> getAssetLibraryDocumentsRatedByMePage(
+			Long assetLibraryId, Pagination pagination)
+		throws Exception {
+
+		return _getGroupDocumentsRatedByMePage(assetLibraryId, pagination);
 	}
 
 	@Override
@@ -335,6 +346,14 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			).build(),
 			_createDocumentsPageBooleanQueryUnsafeConsumer(siteId, flatten),
 			search, aggregation, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<Document> getSiteDocumentsRatedByMePage(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		return _getGroupDocumentsRatedByMePage(siteId, pagination);
 	}
 
 	@Override
@@ -761,6 +780,18 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
+	private Page<Document> _getGroupDocumentsRatedByMePage(
+			long groupId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			_toDocuments(
+				_dlFileEntryService.getFileEntries(
+					groupId, 0.1, pagination.getStartPosition(),
+					pagination.getEndPosition())),
+			pagination, _dlFileEntryService.getFileEntriesCount(groupId, 0.1));
+	}
+
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
@@ -884,6 +915,18 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				contextUser));
 	}
 
+	private List<Document> _toDocuments(List<DLFileEntry> dlFileEntries)
+		throws Exception {
+
+		List<Document> documents = new ArrayList<>();
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			documents.add(_toDocument(new LiferayFileEntry(dlFileEntry)));
+		}
+
+		return documents;
+	}
+
 	private Document _updateDocument(
 			FileEntry fileEntry, MultipartBody multipartBody)
 		throws Exception {
@@ -962,6 +1005,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFileEntryService _dlFileEntryService;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

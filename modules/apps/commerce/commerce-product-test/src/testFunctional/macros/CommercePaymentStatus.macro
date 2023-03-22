@@ -8,8 +8,9 @@ definition {
 
 	macro editPaymentStatus {
 		Click(
-			key_index = "Edit",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			key_table = "Payment Status",
+			key_title = "Edit",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_EDIT_BUTTON");
 
 		SelectFrameTop();
 

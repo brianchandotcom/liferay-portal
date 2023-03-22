@@ -767,6 +767,27 @@ definition {
 		Button.clickPublish();
 	}
 
+	macro updateProductVirtualActivationStatus {
+		SelectFrameTop();
+
+		WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
+
+		if (IsElementPresent(key_contentType = ${key_contentType}, locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
+			Click(
+				key_contentType = ${key_contentType},
+				locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+		}
+
+		Select(
+			key_fieldLabel = ${key_fieldLabel},
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${status});
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro updateProductVirtualConfiguration {
 		if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(

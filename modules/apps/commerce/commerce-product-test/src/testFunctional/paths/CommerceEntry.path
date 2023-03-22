@@ -721,6 +721,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_DELETE_BUTTON</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/*[contains(.,'Delete')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr'][contains(.,'${key_entryName}')]//*[contains(text(),'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_EDIT_BUTTON</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/a[contains(.,'Edit')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr'][contains(.,'${key_entryName}')]//a[contains(text(),'Edit')]</td>
 	<td></td>

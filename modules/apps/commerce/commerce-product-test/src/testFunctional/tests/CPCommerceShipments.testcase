@@ -2518,8 +2518,9 @@ definition {
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		Click(
-			key_index = "Delete",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			key_entryName = "MIN55861",
+			key_table = "Products",
+			locator1 = "CommerceEntry#TABLE_ENTRY_DELETE_BUTTON");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 

@@ -148,6 +148,10 @@ public class RedirectProviderImpl
 			PatternUtil.parse(redirectPatternConfiguration.patternStrings()));
 	}
 
+	protected void setCrawlerUserAgents(String[] crawlerUserAgents) {
+		_crawlerUserAgents = crawlerUserAgents;
+	}
+
 	protected void setRedirectEntryLocalService(
 		RedirectEntryLocalService redirectEntryLocalService) {
 
@@ -161,7 +165,11 @@ public class RedirectProviderImpl
 	}
 
 	private String[] _getCrawlerUserAgents() {
-		return new String[0];
+		if (_crawlerUserAgents == null) {
+			return new String[0];
+		}
+
+		return _crawlerUserAgents;
 	}
 
 	private boolean _isCrawlerUserAgent(String userAgent) {
@@ -219,6 +227,7 @@ public class RedirectProviderImpl
 		}
 	}
 
+	private String[] _crawlerUserAgents;
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
 
 	@Reference

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
@@ -202,6 +203,106 @@ public class RedirectProviderImplTest {
 	}
 
 	@Test
+	public void testSimplePatternDoesntMatchUserAgentBot() {
+		_redirectProviderImpl.setCrawlerUserAgents(_CRAWLER_USER_AGENTS);
+
+		try {
+			_setupRedirectPatternEntries(
+				Collections.singletonList(
+					new RedirectPatternEntry(
+						Pattern.compile("^abc"), "xyz",
+						RedirectConstants.USER_AGENT_BOT)));
+
+			RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+				"abc", "another");
+
+			Assert.assertNull(redirect);
+
+			_verifyMockInvocations();
+		}
+		finally {
+			_redirectProviderImpl.setCrawlerUserAgents(null);
+		}
+	}
+
+	@Test
+	public void testSimplePatternDoesntMatchUserAgentHuman() {
+		_redirectProviderImpl.setCrawlerUserAgents(_CRAWLER_USER_AGENTS);
+
+		try {
+			_setupRedirectPatternEntries(
+				Collections.singletonList(
+					new RedirectPatternEntry(
+						Pattern.compile("^abc"), "xyz",
+						RedirectConstants.USER_AGENT_HUMAN)));
+
+			RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+				"abc", "bot");
+
+			Assert.assertNull(redirect);
+
+			_verifyMockInvocations();
+		}
+		finally {
+			_redirectProviderImpl.setCrawlerUserAgents(null);
+		}
+	}
+
+	@Test
+	public void testSimplePatternMatchesNoUserAgent() {
+		_setupRedirectPatternEntries(
+			Collections.singletonList(
+				new RedirectPatternEntry(
+					Pattern.compile("^abc"), "xyz", StringPool.BLANK)));
+
+		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+			"abc", "CrawlerBot");
+
+		Assert.assertEquals("xyz", redirect.getDestinationURL());
+
+		_verifyMockInvocations();
+	}
+
+	@Test
+	public void testSimplePatternMatchesNoUserAgentOnRedirect() {
+		_setupRedirectPatternEntries(
+			Collections.singletonList(
+				new RedirectPatternEntry(
+					Pattern.compile("^abc"), "xyz",
+					RedirectConstants.USER_AGENT_BOT)));
+
+		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+			"abc", StringPool.BLANK);
+
+		Assert.assertEquals("xyz", redirect.getDestinationURL());
+
+		_verifyMockInvocations();
+	}
+
+	@Test
+	public void testSimplePatternMatchesUserAgentBot() {
+		_redirectProviderImpl.setCrawlerUserAgents(_CRAWLER_USER_AGENTS);
+
+		try {
+			_setupRedirectPatternEntries(
+				Collections.singletonList(
+					new RedirectPatternEntry(
+						Pattern.compile("^abc"), "xyz",
+						RedirectConstants.USER_AGENT_BOT)));
+
+			RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+				"abc", "CrawlerBot");
+
+			Assert.assertEquals("xyz", redirect.getDestinationURL());
+
+			_verifyMockInvocations();
+		}
+		finally {
+			_redirectProviderImpl.setCrawlerUserAgents(null);
+		}
+	}
+
+	@Test
 	public void testSimplePatternSingleMatch() {
 		_setupRedirectPatternEntries(
 			Collections.singletonList(
@@ -210,6 +311,38 @@ public class RedirectProviderImplTest {
 
 		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
 			"abc", StringPool.BLANK);
+
+		Assert.assertEquals("xyz", redirect.getDestinationURL());
+
+		_verifyMockInvocations();
+	}
+
+	@Test
+	public void testSimplePatternSingleMatchesUserAgentAll() {
+		_setupRedirectPatternEntries(
+			Collections.singletonList(
+				new RedirectPatternEntry(
+					Pattern.compile("^abc"), "xyz",
+					RedirectConstants.USER_AGENT_ALL)));
+
+		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+			"abc", "CrawlerBot");
+
+		Assert.assertEquals("xyz", redirect.getDestinationURL());
+
+		_verifyMockInvocations();
+	}
+
+	@Test
+	public void testSimplePatternSingleMatchesUserAgentHuman() {
+		_setupRedirectPatternEntries(
+			Collections.singletonList(
+				new RedirectPatternEntry(
+					Pattern.compile("^abc"), "xyz",
+					RedirectConstants.USER_AGENT_HUMAN)));
+
+		RedirectProvider.Redirect redirect = _getRedirectProviderRedirect(
+			"abc", "human");
 
 		Assert.assertEquals("xyz", redirect.getDestinationURL());
 
@@ -258,6 +391,8 @@ public class RedirectProviderImplTest {
 			Mockito.eq(_GROUP_ID), Mockito.anyString(), Mockito.eq(true)
 		);
 	}
+
+	private static final String[] _CRAWLER_USER_AGENTS = {"bot", "crawlerbot"};
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 

@@ -1,5 +1,31 @@
 components:
     schemas:
+        AuditEvent:
+            properties:
+                auditFieldChanges:
+                    items:
+                        $ref: "#/components/schemas/AuditFieldChange"
+                    readOnly: true
+                    type: array
+                creator:
+                    allOf:
+                        - $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                eventType:
+                    readOnly: true
+                    type: string
+        AuditFieldChange:
+            properties:
+                name:
+                    type: string
+                newValue:
+                    type: object
+                oldValue:
+                    type: object
         FileEntry:
             properties:
                 id:
@@ -38,6 +64,14 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                auditEvents:
+                    description:
+                        Optional field with the audit events associated with this object entry, can be embedded with
+                        nestedFields
+                    items:
+                        $ref: "#/components/schemas/AuditEvent"
+                    readOnly: true
+                    type: array
                 creator:
                     allOf:
                         - $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"

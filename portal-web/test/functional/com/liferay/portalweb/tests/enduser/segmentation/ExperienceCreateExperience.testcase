@@ -4447,7 +4447,6 @@ definition {
 	}
 
 	@description = "Validate the interaction with how the user interacts with the Experiences Dropdown, when no segments available and the user has no permissions"
-	@ignore = "true"
 	@priority = 3
 	test ExperienceDropdownWithNoSegmentsUserWithNoPermisisons {
 		task ("Create a Role") {

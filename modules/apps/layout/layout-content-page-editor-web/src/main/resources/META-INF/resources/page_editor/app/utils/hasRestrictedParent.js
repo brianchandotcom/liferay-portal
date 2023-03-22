@@ -17,14 +17,12 @@ import {config} from '../config/index';
 import {formIsRestricted} from './formIsRestricted';
 
 export function hasRestrictedParent(item, layoutData) {
-	const restrictedItemIds = new Set(config.restrictedItemIds);
-
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
 		return formIsRestricted(item);
 	}
 
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-		return restrictedItemIds.has(item.itemId);
+		return config.restrictedItemIds.has(item.itemId);
 	}
 
 	const parent = layoutData?.items?.[item.parentId];

@@ -378,7 +378,6 @@ function visit(
 	}
 ) {
 	const children = [];
-	const restrictedItemIds = new Set(config.restrictedItemIds);
 
 	const itemInMasterLayout =
 		masterLayoutData &&
@@ -495,7 +494,7 @@ function visit(
 				(item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 					(!item.config.collection ||
 						(Liferay.FeatureFlags['LPS-169923'] &&
-							restrictedItemIds.has(item.itemId)))) ||
+							config.restrictedItemIds.has(item.itemId)))) ||
 				(item.type === LAYOUT_DATA_ITEM_TYPES.form &&
 					(!formIsMapped(item) ||
 						(Liferay.FeatureFlags['LPS-169923'] &&

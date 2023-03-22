@@ -201,7 +201,6 @@ function StructureTreeNodeContent({
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const nodeRef = useRef();
-	const restrictedItemIds = new Set(config.restrictedItemIds);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -444,7 +443,7 @@ function StructureTreeNodeContent({
 					((node.type === LAYOUT_DATA_ITEM_TYPES.form &&
 						formIsRestricted(item)) ||
 						(node.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-							restrictedItemIds.has(item.itemId)))
+							config.restrictedItemIds.has(item.itemId)))
 				}
 				showUnavailableWarning={
 					Liferay.FeatureFlags['LPS-169923'] &&

@@ -82,7 +82,6 @@ export function CollectionGeneralPanel({item}) {
 		listStyle === LIST_STYLES.flexColumn ||
 		listStyle === LIST_STYLES.flexRow;
 
-	const restrictedItemIds = new Set(config.restrictedItemIds);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -242,7 +241,7 @@ export function CollectionGeneralPanel({item}) {
 
 	if (
 		Liferay.FeatureFlags['LPS-169923'] &&
-		restrictedItemIds.has(item.itemId)
+		config.restrictedItemIds.has(item.itemId)
 	) {
 		return (
 			<ClayAlert displayType="secondary" role={null}>

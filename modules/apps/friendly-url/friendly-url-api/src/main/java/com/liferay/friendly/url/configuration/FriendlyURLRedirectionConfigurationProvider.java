@@ -12,13 +12,19 @@
  * details.
  */
 
-package com.liferay.friendly.url.configuration.helper;
+package com.liferay.friendly.url.configuration;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Mijarra
  */
-public interface FriendlyURLRedirectionConfigurationHelper {
+@ProviderType
+public interface FriendlyURLRedirectionConfigurationProvider {
 
-	public String getRedirectionType(long companyId);
+	public FriendlyURLRedirectionConfiguration getCompanyConfiguration(
+		long companyId);
+
+	public FriendlyURLRedirectionConfiguration getSystemConfiguration();
 
 }

@@ -239,6 +239,14 @@ public class TaxonomyCategoryResourceTest
 			assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 	}
 
+	private TaxonomyCategory _addTaxonomyCategoryWithParentTaxonomyCategory(
+			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+			parentTaxonomyCategoryId, taxonomyCategory);
+	}
+
 	private TaxonomyVocabulary _randomTaxonomyVocabulary() {
 		return new TaxonomyVocabulary() {
 			{

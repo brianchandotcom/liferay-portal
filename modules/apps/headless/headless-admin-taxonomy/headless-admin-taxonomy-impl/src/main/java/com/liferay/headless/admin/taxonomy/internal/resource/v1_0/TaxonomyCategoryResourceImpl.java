@@ -217,8 +217,9 @@ public class TaxonomyCategoryResourceImpl
 
 	@Override
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, String search, Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Long taxonomyVocabularyId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(

@@ -138,13 +138,14 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, String search, List<String> aggregations,
-			String filterString, Pagination pagination, String sortString)
+			Long taxonomyVocabularyId, Boolean flatten, String search,
+			List<String> aggregations, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getTaxonomyVocabularyTaxonomyCategoriesPageHttpResponse(
-				Long taxonomyVocabularyId, String search,
+				Long taxonomyVocabularyId, Boolean flatten, String search,
 				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
@@ -1234,15 +1235,15 @@ public interface TaxonomyCategoryResource {
 
 		public Page<TaxonomyCategory>
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					Long taxonomyVocabularyId, String search,
+					Long taxonomyVocabularyId, Boolean flatten, String search,
 					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getTaxonomyVocabularyTaxonomyCategoriesPageHttpResponse(
-					taxonomyVocabularyId, search, aggregations, filterString,
-					pagination, sortString);
+					taxonomyVocabularyId, flatten, search, aggregations,
+					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1283,7 +1284,7 @@ public interface TaxonomyCategoryResource {
 
 		public HttpInvoker.HttpResponse
 				getTaxonomyVocabularyTaxonomyCategoriesPageHttpResponse(
-					Long taxonomyVocabularyId, String search,
+					Long taxonomyVocabularyId, Boolean flatten, String search,
 					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
@@ -1308,6 +1309,10 @@ public interface TaxonomyCategoryResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

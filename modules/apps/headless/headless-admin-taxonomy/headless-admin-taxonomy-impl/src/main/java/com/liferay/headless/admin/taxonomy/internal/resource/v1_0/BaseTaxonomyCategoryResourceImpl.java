@@ -731,6 +731,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "flatten"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -771,6 +775,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("taxonomyVocabularyId")
 			Long taxonomyVocabularyId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("flatten")
+			Boolean flatten,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,

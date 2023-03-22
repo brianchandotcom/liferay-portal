@@ -309,13 +309,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyVocabularyTaxonomyCategories(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___, taxonomyVocabularyId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyVocabularyTaxonomyCategories(aggregation: ___, filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, sorts: ___, taxonomyVocabularyId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted."
 	)
 	public TaxonomyCategoryPage taxonomyVocabularyTaxonomyCategories(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
 			@GraphQLName("filter") String filterString,
@@ -330,7 +331,7 @@ public class Query {
 			taxonomyCategoryResource -> new TaxonomyCategoryPage(
 				taxonomyCategoryResource.
 					getTaxonomyVocabularyTaxonomyCategoriesPage(
-						taxonomyVocabularyId, search,
+						taxonomyVocabularyId, flatten, search,
 						_aggregationBiFunction.apply(
 							taxonomyCategoryResource, aggregations),
 						_filterBiFunction.apply(
@@ -618,6 +619,7 @@ public class Query {
 			description = "Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted."
 		)
 		public TaxonomyCategoryPage taxonomyCategories(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("aggregation") List<String> aggregations,
 				@GraphQLName("filter") String filterString,
@@ -632,7 +634,7 @@ public class Query {
 				taxonomyCategoryResource -> new TaxonomyCategoryPage(
 					taxonomyCategoryResource.
 						getTaxonomyVocabularyTaxonomyCategoriesPage(
-							_taxonomyVocabulary.getId(), search,
+							_taxonomyVocabulary.getId(), flatten, search,
 							_aggregationBiFunction.apply(
 								taxonomyCategoryResource, aggregations),
 							_filterBiFunction.apply(

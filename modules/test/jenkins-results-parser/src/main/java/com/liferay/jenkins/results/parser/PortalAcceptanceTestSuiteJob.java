@@ -94,11 +94,12 @@ public abstract class PortalAcceptanceTestSuiteJob
 					portalGitWorkingDirectory.getWorkingDirectory(),
 					"workspaces/liferay-sample-workspace/gradle.properties"));
 
-		String liferayWorkspaceProduct = JenkinsResultsParserUtil.getProperty(
-			workspaceGradleProperties, "liferay.workspace.product");
+		String liferayWorkspaceProductName =
+			JenkinsResultsParserUtil.getProperty(
+				workspaceGradleProperties, "liferay.workspace.product.name");
 
 		Matcher matcher = _liferayWorkspaceProductPattern.matcher(
-			liferayWorkspaceProduct);
+			liferayWorkspaceProductName);
 
 		if (!matcher.find()) {
 			return null;

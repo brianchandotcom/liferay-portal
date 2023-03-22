@@ -42,6 +42,29 @@ const PatternField = ({
 
 	return (
 		<div className="redirect-pattern-group">
+			{index > 0 && (
+				<ClayButton
+					aria-label={Liferay.Language.get('remove')}
+					className="redirect-field-repeatable-delete-button"
+					onClick={() => handleRemoveClick(index)}
+					size="sm"
+					title={Liferay.Language.get('remove')}
+					type="button"
+				>
+					<ClayIcon symbol="hr" />
+				</ClayButton>
+			)}
+
+			<ClayButton
+				className="redirect-field-repeatable-add-button"
+				onClick={() => handleAddClick(index)}
+				size="sm"
+				title={Liferay.Language.get('add')}
+				type="button"
+			>
+				<ClayIcon symbol="plus" />
+			</ClayButton>
+
 		<ClayLayout.Row>
 			<ClayLayout.Col md="12">
 				<label htmlFor="pattern">
@@ -96,29 +119,6 @@ const PatternField = ({
 					type="text"
 					value={destinationUrl}
 				/>
-
-				{index > 0 && (
-					<ClayButton
-						aria-label={Liferay.Language.get('remove')}
-						className="redirect-field-repeatable-delete-button"
-						onClick={() => handleRemoveClick(index)}
-						size="sm"
-						title={Liferay.Language.get('remove')}
-						type="button"
-					>
-						<ClayIcon symbol="hr" />
-					</ClayButton>
-				)}
-
-				<ClayButton
-					className="redirect-field-repeatable-add-button"
-					onClick={() => handleAddClick(index)}
-					size="sm"
-					title={Liferay.Language.get('add')}
-					type="button"
-				>
-					<ClayIcon symbol="plus" />
-				</ClayButton>
 
 				{error && (
 					<ClayForm.FeedbackGroup>

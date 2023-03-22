@@ -1,12 +1,13 @@
 @import 'atlas-variables';
 
+
 .redirect-field-repeatable-delete-button,
 .redirect-field-repeatable-add-button {
 	border-radius: 10px;
 	height: 18px;
 	padding: 2px;
 	position: absolute;
-	top: 0;
+	top: -24px;
 	width: 18px;
 
 	.lexicon-icon {
@@ -18,13 +19,18 @@
 }
 
 .redirect-field-repeatable-delete-button {
-	right: 38px;
+	right: 22px;
 }
 
 .redirect-field-repeatable-add-button {
-	right: 16px;
+	right: 0;
 }
 
-.redirect-pattern-row {
-	margin-top: 2rem;
+.redirect-pattern-group {
+	margin-top: 3rem;
+	position: relative;
+	padding: 1.5rem;
+
+	border: 1px solid $secondary-l3;
+	border-radius: 4px;
 }

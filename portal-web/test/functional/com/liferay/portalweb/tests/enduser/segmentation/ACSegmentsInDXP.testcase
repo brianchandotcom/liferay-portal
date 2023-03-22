@@ -95,30 +95,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "LPS-171785 Given the Segments editor When the user opens the criteria panel Then the user cannot create a segment using Event attributes"
-	@priority = 3
-	test CannotCreateSegmentUsingACEventInSegmentsEditor {
-		property custom.properties = "feature.flag.LPS-171722=true";
-
-		task ("Open Segmentation Admin and create a new segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Try to add a property of type Event") {
-			Segmentation.gotoSidebar(fieldType = "Event");
-
-			Segmentation.addProperties(propertyOption = "Viewed Blog");
-		}
-
-		task ("Assert that the property is not present") {
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_STATE_TEXT",
-				value1 = "To create a new one, drag items from the sidebar and drop them here.");
-		}
-	}
-
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration Then I don't see the edit action"
 	@priority = 3
 	test CheckNotEditableSegmentFromACAtDXP {

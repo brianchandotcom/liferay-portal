@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>CLAIM_MESSAGE</td>
-	<td>//div[contains(@class,'claims-list')]//h6[contains(.,'${key_claimMessage}')]</td>
+	<td>//div[contains(@class,'claims-list')]//h6[contains(normalize-space(),'${key_claimMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

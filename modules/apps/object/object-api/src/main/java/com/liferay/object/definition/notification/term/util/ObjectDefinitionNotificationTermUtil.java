@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class ObjectDefinitionNotificationTermUtil {
 
 	public static String getObjectFieldTermName(
-		String objectDefinitionShortName, String objectFieldName) {
+		String partial, String objectFieldName) {
 
 		return StringBundler.concat(
-			"[%",
-			StringUtil.toUpperCase(
-				objectDefinitionShortName + "_" + objectFieldName),
+			"[%", StringUtil.toUpperCase(partial + "_" + objectFieldName),
 			"%]");
 	}
 

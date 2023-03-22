@@ -12,12 +12,12 @@
 				"en-US": "Raylife"
 			},
 			"to": {
-				"en-US": "[%RETRIEVEEMAIL%]"
+				"en-US": "[%QUOTERETRIEVE_RETRIEVEEMAIL%]"
 			}
 		}
 	],
 	"subject": {
-		"en_US": "Continue your Raylife [%PRODUCTNAME%] quote"
+		"en_US": "Continue your Raylife [%QUOTERETRIEVE_PRODUCTNAME%] quote"
 	},
 	"type": "email"
 }

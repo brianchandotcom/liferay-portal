@@ -45,8 +45,10 @@ export default function Favicon({
 								itemValue.cetExternalReferenceCode;
 						}
 						else {
-							nextValues.faviconFileEntryId = itemValue.fileEntryId;
-							nextValues.themeFaviconCETExternalReferenceCode = '';
+							nextValues.faviconFileEntryId =
+								itemValue.fileEntryId;
+							nextValues.themeFaviconCETExternalReferenceCode =
+								'';
 						}
 
 						if (itemValue.url) {

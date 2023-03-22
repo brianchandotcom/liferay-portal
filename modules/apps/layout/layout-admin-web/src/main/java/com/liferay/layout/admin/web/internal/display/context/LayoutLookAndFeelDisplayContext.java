@@ -502,36 +502,6 @@ public class LayoutLookAndFeelDisplayContext {
 		);
 	}
 
-	private String _getClearFaviconButtonTitle() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		if (hasEditableMasterLayout() &&
-			(selLayout.getMasterLayoutPlid() > 0)) {
-
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				selLayout.getMasterLayoutPlid());
-
-			if (masterLayout != null) {
-				ClientExtensionEntryRel clientExtensionEntryRel =
-					ClientExtensionEntryRelLocalServiceUtil.
-						fetchClientExtensionEntryRel(
-							PortalUtil.getClassNameId(Layout.class),
-							selLayout.getPlid(),
-							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-				if ((masterLayout.getFaviconFileEntryId() > 0) ||
-					(clientExtensionEntryRel != null)) {
-
-					return LanguageUtil.get(
-						_httpServletRequest, "favicon-from-master");
-				}
-			}
-		}
-
-		return FaviconUtil.getFaviconTitle(
-			selLayout.getLayoutSet(), _themeDisplay.getLocale());
-	}
-
 	private JSONArray _getClientExtensionEntryRelsJSONArray(
 		String className, long classPK, String type) {
 

@@ -36,6 +36,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.FaviconUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -511,14 +512,61 @@ public class LayoutsAdminDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public Map<String, Object> getFaviconButtonProps() {
+		return HashMapBuilder.<String, Object>put(
+			"clearButtonEnabled", isClearFaviconButtonEnabled()
+		).put(
+			"defaultTitle", _getDefaultFaviconTitle()
+		).put(
+			"faviconFileEntryId",
+			() -> {
+				Layout selLayout = getSelLayout();
+
+				if (selLayout != null) {
+					return selLayout.getFaviconFileEntryId();
+				}
+
+				LayoutSet selLayoutSet = getSelLayoutSet();
+
+				return selLayoutSet.getFaviconFileEntryId();
+			}
+		).put(
+			"imgURL", getFaviconURL()
+		).put(
+			"themeFaviconCETExternalReferenceCode",
+			getThemeFaviconCETExternalReferenceCode()
+		).put(
+			"title", HtmlUtil.escape(getFaviconTitle())
+		).put(
+			"url", getFileEntryItemSelectorURL()
+		).build();
+	}
+
 	public String getFaviconTitle() {
+		if (getSelLayout() != null) {
+			return FaviconUtil.getFaviconTitle(
+				_cetManager, getSelLayout(), themeDisplay.getLocale());
+		}
+
 		return FaviconUtil.getFaviconTitle(
 			getSelLayoutSet(), themeDisplay.getLocale());
 	}
 
 	public String getFaviconURL() {
-		String faviconURL = FaviconUtil.getFaviconURL(
-			_cetManager, getSelLayoutSet());
+		String faviconURL = StringPool.BLANK;
+
+		if (getSelLayout() != null) {
+			faviconURL = FaviconUtil.getFaviconURL(_cetManager, getSelLayout());
+		}
+
+		if (Validator.isNotNull(faviconURL)) {
+			return faviconURL;
+		}
+
+		if (getSelLayoutSet() != null) {
+			faviconURL = FaviconUtil.getFaviconURL(
+				_cetManager, getSelLayoutSet());
+		}
 
 		if (Validator.isNotNull(faviconURL)) {
 			return faviconURL;
@@ -1313,6 +1361,21 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getThemeFaviconCETExternalReferenceCode() {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout != null) {
+			ClientExtensionEntryRel clientExtensionEntryRel =
+				ClientExtensionEntryRelLocalServiceUtil.
+					fetchClientExtensionEntryRel(
+						PortalUtil.getClassNameId(Layout.class),
+						selLayout.getPlid(),
+						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+			if (clientExtensionEntryRel != null) {
+				return clientExtensionEntryRel.getCETExternalReferenceCode();
+			}
+		}
+
 		LayoutSet setLayoutSet = getSelLayoutSet();
 
 		ClientExtensionEntryRel clientExtensionEntryRel =
@@ -1448,6 +1511,38 @@ public class LayoutsAdminDisplayContext {
 		return virtualHostname;
 	}
 
+	public boolean hasEditableMasterLayout() {
+		if (_hasEditableMasterLayout != null) {
+			return _hasEditableMasterLayout;
+		}
+
+		boolean hasEditableMasterLayout = false;
+
+		Layout selLayout = getSelLayout();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
+		}
+
+		if ((layoutPageTemplateEntry == null) ||
+			!Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			hasEditableMasterLayout = true;
+		}
+
+		_hasEditableMasterLayout = hasEditableMasterLayout;
+
+		return _hasEditableMasterLayout;
+	}
+
 	public boolean hasLayouts() {
 		if (_hasLayouts != null) {
 			return _hasLayouts;
@@ -1482,6 +1577,27 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isClearFaviconButtonEnabled() {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout != null) {
+			if (selLayout.getFaviconFileEntryId() > 0) {
+				return true;
+			}
+
+			ClientExtensionEntryRel clientExtensionEntryRel =
+				ClientExtensionEntryRelLocalServiceUtil.
+					fetchClientExtensionEntryRel(
+						PortalUtil.getClassNameId(Layout.class),
+						selLayout.getPlid(),
+						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+			if (clientExtensionEntryRel != null) {
+				return true;
+			}
+
+			return false;
+		}
+
 		LayoutSet selLayoutSet = getSelLayoutSet();
 
 		if (selLayoutSet.getFaviconFileEntryId() > 0) {
@@ -2041,6 +2157,42 @@ public class LayoutsAdminDisplayContext {
 		return breadcrumbEntry;
 	}
 
+	private String _getDefaultFaviconTitle() {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout != null) {
+			if (hasEditableMasterLayout() &&
+				(selLayout.getMasterLayoutPlid() > 0)) {
+
+				Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+					selLayout.getMasterLayoutPlid());
+
+				if (masterLayout != null) {
+					ClientExtensionEntryRel clientExtensionEntryRel =
+						ClientExtensionEntryRelLocalServiceUtil.
+							fetchClientExtensionEntryRel(
+								PortalUtil.getClassNameId(Layout.class),
+								selLayout.getPlid(),
+								ClientExtensionEntryConstants.
+									TYPE_THEME_FAVICON);
+
+					if ((masterLayout.getFaviconFileEntryId() > 0) ||
+						(clientExtensionEntryRel != null)) {
+
+						return LanguageUtil.get(
+							httpServletRequest, "favicon-from-master");
+					}
+				}
+			}
+			else {
+				return FaviconUtil.getFaviconTitle(
+					getSelLayoutSet(), themeDisplay.getLocale());
+			}
+		}
+
+		return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
+	}
+
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
 		String layoutFullURL = HttpComponentsUtil.setParameter(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
@@ -2275,6 +2427,7 @@ public class LayoutsAdminDisplayContext {
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
+	private Boolean _hasEditableMasterLayout;
 	private Boolean _hasLayouts;
 	private final ItemSelector _itemSelector;
 	private String _keywords;

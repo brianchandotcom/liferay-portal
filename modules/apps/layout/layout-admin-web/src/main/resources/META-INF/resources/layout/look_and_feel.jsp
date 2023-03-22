@@ -40,44 +40,16 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 %>
 
 <aui:input name="devices" type="hidden" value="regular" />
-<aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayout.getFaviconFileEntryId() %>" />
-<aui:input name="themeFaviconCETExternalReferenceCode" type="hidden" value="<%= layoutLookAndFeelDisplayContext.getThemeFaviconCETExternalReferenceCode() %>" />
 
 <clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="favicon" /></h3>
 
-	<img alt="<%= HtmlUtil.escape(layoutLookAndFeelDisplayContext.getFaviconTitle()) %>" class="mb-2" height="16" id="<portlet:namespace />faviconImage" src="<%= layoutLookAndFeelDisplayContext.getFaviconURL() %>" width="16" />
-
-	<p>
-		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconTitle"><%= layoutLookAndFeelDisplayContext.getFaviconTitle() %></span>
-	</p>
-
-	<clay:content-row>
-		<clay:content-col
-			cssClass="mr-4"
-		>
-			<clay:button
-				additionalProps="<%= layoutLookAndFeelDisplayContext.getChangeFaviconButtonAdditionalProps() %>"
-				displayType="secondary"
-				id='<%= liferayPortletResponse.getNamespace() + "changeFaviconButton" %>'
-				label="change-favicon"
-				propsTransformer="js/layout/ChangeFaviconButtonPropsTransformer"
-				small="<%= true %>"
-			/>
-		</clay:content-col>
-
-		<clay:content-col>
-			<clay:button
-				additionalProps="<%= layoutLookAndFeelDisplayContext.getClearFaviconButtonAdditionalProps() %>"
-				disabled="<%= !layoutLookAndFeelDisplayContext.isClearFaviconButtonEnabled() %>"
-				displayType="secondary"
-				id='<%= liferayPortletResponse.getNamespace() + "clearFaviconButton" %>'
-				label="clear"
-				propsTransformer="js/layout/ClearFaviconButtonPropsTransformer"
-				small="<%= true %>"
-			/>
-		</clay:content-col>
-	</clay:content-row>
+	<div>
+		<react:component
+			module="js/layout/look_and_feel/Favicon"
+			props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
+		/>
+	</div>
 </clay:sheet-section>
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">

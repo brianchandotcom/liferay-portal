@@ -111,8 +111,7 @@ public class SearcherImplTest {
 
 		List<Document> searchDocuments = searchResponse.getDocuments71();
 
-		Assert.assertEquals(
-			expected, searchDocuments.size());
+		Assert.assertEquals(expected, searchDocuments.size());
 	}
 
 	private SearchRequestImpl _createSearchRequestImpl(

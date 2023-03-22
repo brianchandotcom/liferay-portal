@@ -1,0 +1,264 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.journal.internal.upgrade.v5_1_1.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import java.util.Objects;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Lourdes Fernández Besada
+ */
+@RunWith(Arquillian.class)
+public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testUpgradeProcess() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		JournalArticle approvedJournalArticle1 = _addApprovedJournalArticle(
+			ddmStructure, ddmStructure.getStructureId());
+
+		JournalArticle draftJournalArticle1 = _addDraftVersionJournalArticle(
+			approvedJournalArticle1, ddmStructure.getStructureId());
+
+		long wrongClassTypeId = RandomTestUtil.randomLong();
+
+		JournalArticle approvedJournalArticle2 = _addApprovedJournalArticle(
+			ddmStructure, wrongClassTypeId);
+
+		JournalArticle draftJournalArticle2 = _addDraftVersionJournalArticle(
+			approvedJournalArticle2, wrongClassTypeId);
+
+		_runUpgrade();
+
+		_assertClassTypeId(
+			approvedJournalArticle1, approvedJournalArticle2,
+			draftJournalArticle1, draftJournalArticle2);
+	}
+
+	@Test
+	public void testUpgradeProcessNoChanges() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		JournalArticle approvedJournalArticle = _addApprovedJournalArticle(
+			ddmStructure, ddmStructure.getStructureId());
+
+		JournalArticle draftJournalArticle = _addDraftVersionJournalArticle(
+			approvedJournalArticle, ddmStructure.getStructureId());
+
+		_runUpgrade();
+
+		_assertClassTypeId(approvedJournalArticle, draftJournalArticle);
+	}
+
+	private JournalArticle _addApprovedJournalArticle(
+			DDMStructure ddmStructure, long assetEntryClassTypeId)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(), 0,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+				DDMStructureTestUtil.getSampleStructuredContent(),
+				ddmStructure.getStructureKey(), StringPool.BLANK);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		Assert.assertNotNull(assetEntry);
+
+		Assert.assertTrue(assetEntry.isVisible());
+
+		Assert.assertEquals(
+			journalArticle.getDDMStructureId(), assetEntry.getClassTypeId());
+
+		if (assetEntryClassTypeId != assetEntry.getClassTypeId()) {
+			assetEntry.setClassTypeId(assetEntryClassTypeId);
+
+			assetEntry = _assetEntryLocalService.updateAssetEntry(assetEntry);
+
+			Assert.assertEquals(
+				assetEntryClassTypeId, assetEntry.getClassTypeId());
+		}
+
+		return journalArticle;
+	}
+
+	private JournalArticle _addDraftVersionJournalArticle(
+			JournalArticle approvedJournalArticle, long assetEntryClassTypeId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		JournalArticle draftJournalArticle = JournalTestUtil.updateArticle(
+			approvedJournalArticle, RandomTestUtil.randomString(),
+			approvedJournalArticle.getContent(), false, false, serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, draftJournalArticle.getStatus());
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), draftJournalArticle.getId());
+
+		Assert.assertNotNull(assetEntry);
+
+		Assert.assertFalse(assetEntry.isVisible());
+
+		Assert.assertEquals(
+			approvedJournalArticle.getDDMStructureId(),
+			assetEntry.getClassTypeId());
+
+		if (assetEntryClassTypeId != assetEntry.getClassTypeId()) {
+			assetEntry.setClassTypeId(assetEntryClassTypeId);
+
+			assetEntry = _assetEntryLocalService.updateAssetEntry(assetEntry);
+
+			Assert.assertEquals(
+				assetEntryClassTypeId, assetEntry.getClassTypeId());
+		}
+
+		return draftJournalArticle;
+	}
+
+	private void _assertClassTypeId(JournalArticle... journalArticles) {
+		for (JournalArticle journalArticle : journalArticles) {
+			AssetEntry assetEntry;
+
+			if (journalArticle.isDraft() &&
+				(journalArticle.getVersion() !=
+					JournalArticleConstants.VERSION_DEFAULT)) {
+
+				assetEntry = _assetEntryLocalService.fetchEntry(
+					JournalArticle.class.getName(), journalArticle.getId());
+			}
+			else {
+				assetEntry = _assetEntryLocalService.fetchEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+			}
+
+			Assert.assertNotNull(assetEntry);
+
+			Assert.assertEquals(
+				journalArticle.isApproved(), assetEntry.isVisible());
+
+			Assert.assertEquals(
+				journalArticle.getDDMStructureId(),
+				assetEntry.getClassTypeId());
+		}
+	}
+
+	private UpgradeProcess _getUpgradeProcess() {
+		UpgradeProcess[] upgradeProcesses = new UpgradeProcess[1];
+
+		_upgradeStepRegistrator.register(
+			(fromSchemaVersionString, toSchemaVersionString, upgradeSteps) -> {
+				for (UpgradeStep upgradeStep : upgradeSteps) {
+					Class<? extends UpgradeStep> clazz = upgradeStep.getClass();
+
+					if (Objects.equals(clazz.getName(), _CLASS_NAME)) {
+						upgradeProcesses[0] = (UpgradeProcess)upgradeStep;
+
+						break;
+					}
+				}
+			});
+
+		return upgradeProcesses[0];
+	}
+
+	private void _runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = _getUpgradeProcess();
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+		}
+	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.journal.internal.upgrade.v5_1_1." +
+			"JournalArticleAssetEntryClassTypeIdUpgradeProcess";
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+}

@@ -24,6 +24,8 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.client.pagination.Page;
+import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,6 +33,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +58,16 @@ public class TaxonomyCategoryResourceTest
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
+	}
+
+	@Override
+	@Test
+	public void testGetTaxonomyVocabularyTaxonomyCategoriesPage()
+		throws Exception {
+
+		super.testGetTaxonomyVocabularyTaxonomyCategoriesPage();
+
+		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten();
 	}
 
 	@Override
@@ -267,6 +282,62 @@ public class TaxonomyCategoryResourceTest
 				siteId = testGroup.getGroupId();
 			}
 		};
+	}
+
+	private void _testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten()
+		throws Exception {
+
+		AssetVocabulary irrelevantAssetVocabulary = _addAssetVocabulary();
+
+		TaxonomyCategory taxonomyCategory1 =
+			_addTaxonomyCategoryWithParentAssetVocabulary(_assetVocabulary);
+
+		TaxonomyCategory taxonomyCategory2 =
+			_addTaxonomyCategoryWithParentTaxonomyCategory(
+				taxonomyCategory1.getId(), randomTaxonomyCategory());
+
+		TaxonomyCategory irrelevantTaxonomyCategory =
+			_addTaxonomyCategoryWithParentAssetVocabulary(
+				irrelevantAssetVocabulary);
+
+		Boolean flatten = false;
+
+		Page<TaxonomyCategory> page =
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					_assetVocabulary.getVocabularyId(), flatten, null, null,
+					null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(taxonomyCategory1),
+			(List<TaxonomyCategory>)page.getItems());
+		assertValid(page);
+
+		flatten = true;
+
+		page =
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					_assetVocabulary.getVocabularyId(), flatten, null, null,
+					null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
+			(List<TaxonomyCategory>)page.getItems());
+		assertValid(page);
+
+		taxonomyCategoryResource.deleteTaxonomyCategory(
+			irrelevantTaxonomyCategory.getId());
+
+		taxonomyCategoryResource.deleteTaxonomyCategory(
+			taxonomyCategory2.getId());
+
+		taxonomyCategoryResource.deleteTaxonomyCategory(
+			taxonomyCategory1.getId());
 	}
 
 	private void _testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(

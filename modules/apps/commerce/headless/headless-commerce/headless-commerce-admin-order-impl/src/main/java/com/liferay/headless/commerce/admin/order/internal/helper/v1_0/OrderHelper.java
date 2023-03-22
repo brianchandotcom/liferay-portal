@@ -20,6 +20,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -33,10 +34,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -72,7 +71,10 @@ public class OrderHelper {
 					searchContext.setCompanyId(companyId);
 
 					long[] commerceChannelGroupIds =
-						_getCommerceChannelGroupIds(companyId);
+						TransformUtil.transformToLongArray(
+							_commerceChannelLocalService.getCommerceChannels(
+								companyId),
+							CommerceChannel::getGroupId);
 
 					if ((commerceChannelGroupIds != null) &&
 						(commerceChannelGroupIds.length > 0)) {
@@ -100,19 +102,6 @@ public class OrderHelper {
 			new DefaultDTOConverterContext(
 				acceptAllLanguages, actions, _dtoConverterRegistry,
 				commerceOrderId, locale, contextUriInfo, contextUser));
-	}
-
-	private long[] _getCommerceChannelGroupIds(long companyId)
-		throws Exception {
-
-		List<CommerceChannel> commerceChannels =
-			_commerceChannelLocalService.getCommerceChannels(companyId);
-
-		Stream<CommerceChannel> stream = commerceChannels.stream();
-
-		return stream.mapToLong(
-			CommerceChannel::getGroupId
-		).toArray();
 	}
 
 	@Reference

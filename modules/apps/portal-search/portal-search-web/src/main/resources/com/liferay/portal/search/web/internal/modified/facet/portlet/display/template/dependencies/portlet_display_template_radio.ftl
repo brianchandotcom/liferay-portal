@@ -12,6 +12,14 @@
 		persistState=true
 		title="last-modified"
 	>
+		<#if !modifiedFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+
 		<ul class="list-unstyled modified">
 			<#if entries?has_content>
 				<#list entries as entry>
@@ -118,13 +126,5 @@
 				/>
 			</div>
 		</ul>
-
-		<#if !modifiedFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled facet-clear-btn"
-				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
-		</#if>
 	</@>
 </@>

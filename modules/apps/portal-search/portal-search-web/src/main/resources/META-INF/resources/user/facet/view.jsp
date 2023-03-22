@@ -80,6 +80,10 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 						persistState="<%= true %>"
 						title="user"
 					>
+						<c:if test="<%= !userSearchFacetDisplayContext.isNothingSelected() %>">
+							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+						</c:if>
+
 						<aui:fieldset>
 							<ul class="list-unstyled">
 
@@ -125,10 +129,6 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 
 							</ul>
 						</aui:fieldset>
-
-						<c:if test="<%= !userSearchFacetDisplayContext.isNothingSelected() %>">
-							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
-						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 			</liferay-ddm:template-renderer>

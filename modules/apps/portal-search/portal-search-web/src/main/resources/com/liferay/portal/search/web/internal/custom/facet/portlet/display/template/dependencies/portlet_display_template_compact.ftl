@@ -12,6 +12,14 @@
 		persistState=true
 		title="${customFacetDisplayContext.getDisplayCaption()}"
 	>
+		<#if !customFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+
 		<ul class="list-unstyled">
 			<#if entries?has_content>
 				<#list entries as entry>
@@ -35,13 +43,5 @@
 				</#list>
 			</#if>
 		</ul>
-
-		<#if !customFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled facet-clear-btn"
-				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
-		</#if>
 	</@>
 </@>

@@ -12,6 +12,14 @@
 		persistState=true
 		title="tag"
 	>
+		<#if !assetTagsSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+
 		<ul class="list-unstyled tag-cloud">
 			<#if entries?has_content>
 				<#list entries as entry>
@@ -28,13 +36,5 @@
 				</#list>
 			</#if>
 		</ul>
-
-		<#if !assetTagsSearchFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled facet-clear-btn"
-				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
-		</#if>
 	</@>
 </@>

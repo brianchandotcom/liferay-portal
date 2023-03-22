@@ -86,6 +86,10 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 					persistState="<%= true %>"
 					title="last-modified"
 				>
+					<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
+						<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+					</c:if>
+
 					<ul class="list-unstyled modified">
 
 						<%
@@ -165,10 +169,6 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 							<aui:button cssClass="modified-facet-custom-range-filter-button" disabled="<%= modifiedFacetCalendarDisplayContext.isRangeBackwards() %>" name="searchCustomRangeButton" value="search" />
 						</li>
 					</ul>
-
-					<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
-						<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
-					</c:if>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 		</liferay-ddm:template-renderer>

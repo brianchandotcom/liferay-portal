@@ -130,6 +130,14 @@
 		persistState=true
 		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}"
 	>
+		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+
 		<#if vocabularyNames?has_content>
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 				<#list vocabularyNames as vocabularyName>
@@ -142,14 +150,6 @@
 					/>
 				</#list>
 			</ul>
-		</#if>
-
-		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled facet-clear-btn"
-				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
 		</#if>
 	</@>
 </@>

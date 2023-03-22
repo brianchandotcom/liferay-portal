@@ -80,6 +80,10 @@ TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = as
 						persistState="<%= true %>"
 						title="type"
 					>
+						<c:if test="<%= !assetEntriesSearchFacetDisplayContext.isNothingSelected() %>">
+							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+						</c:if>
+
 						<aui:fieldset>
 							<ul class="asset-type list-unstyled">
 
@@ -124,10 +128,6 @@ TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = as
 
 							</ul>
 						</aui:fieldset>
-
-						<c:if test="<%= !assetEntriesSearchFacetDisplayContext.isNothingSelected() %>">
-							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
-						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 			</liferay-ddm:template-renderer>

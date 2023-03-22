@@ -84,12 +84,11 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 
 					entryIds.add(entryId);
 				},
-				"Unable to set asset entry classTypeId");
+				"Unable to set asset entry class type ID");
 
 			if (_log.isDebugEnabled() && updatedClassTypeIdsMap.isEmpty()) {
 				_log.debug(
-					"No asset entries with the wrong classTypeId have been " +
-						"found");
+					"No asset entries with the wrong class type ID were found");
 			}
 
 			if (_log.isWarnEnabled() && !updatedClassTypeIdsMap.isEmpty()) {
@@ -100,8 +99,8 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 					long classTypeId = classTypeIdMapEntry.getKey();
 
 					_log.warn(
-						"Asset entries with the wrong classTypeId [" +
-							classTypeId + "] have been found");
+						"Asset entries with the wrong class type ID " +
+							classTypeId + " were found");
 
 					Map<Long, List<Long>> ddmStructureIdAssetEntryIdsMap =
 						classTypeIdMapEntry.getValue();
@@ -118,7 +117,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 						_log.warn(
 							StringBundler.concat(
 								ddmStructureId,
-								" has been set as classTypeId for the ",
+								" has been set as class type ID for the ",
 								"entryIds ", entryIds.toString()));
 					}
 				}

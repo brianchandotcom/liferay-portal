@@ -126,7 +126,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		Assert.assertEquals(LoggerTestUtil.DEBUG, logEntry.getPriority());
 
 		Assert.assertEquals(
-			"No asset entries with the wrong classTypeId have been found",
+			"No asset entries with the wrong class type ID were found",
 			logEntry.getMessage());
 
 		_assertClassTypeId(approvedJournalArticle, draftJournalArticle);
@@ -247,8 +247,8 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		Assert.assertEquals(LoggerTestUtil.WARN, logEntry1.getPriority());
 
 		Assert.assertEquals(
-			"Asset entries with the wrong classTypeId [" + wrongClassTypeId +
-				"] have been found",
+			"Asset entries with the wrong class type ID " + wrongClassTypeId +
+				" were found",
 			logEntry1.getMessage());
 
 		LogEntry logEntry2 = logEntries.get(1);
@@ -260,7 +260,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		Assert.assertTrue(
 			message.startsWith(
 				expectedClassTypeId +
-					" has been set as classTypeId for the entryIds"));
+					" has been set as class type ID for the entryIds"));
 
 		List<Long> expectedEntryIds = new ArrayList<>();
 

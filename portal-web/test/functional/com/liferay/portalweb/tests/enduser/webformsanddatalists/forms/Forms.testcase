@@ -1520,16 +1520,16 @@ definition {
 		FormFields.viewTextField(
 			fieldHelpText = "Configure how long a lock is held before releasing due to suspected deadlock.",
 			fieldLabel = "Lock Timeout Milliseconds",
-			fieldName = "ds.lock.timeout.milliseconds");
+			fieldName = "Lock Timeout Milliseconds");
 
 		Refresh();
 
-		FormFields.editTextWithBackspace(fieldName = "ds.lock.timeout.milliseconds");
+		FormFields.editTextWithBackspace(fieldName = "Lock Timeout Milliseconds");
 
 		Button.clickSave();
 
 		FormFields.viewFieldValidationErrorMessage(
-			fieldName = "ds.lock.timeout.milliseconds",
+			fieldName = "Lock Timeout Milliseconds",
 			fieldValidationErrorMessage = "This field is required.");
 
 		SystemSettings.exitEditConfiguration();

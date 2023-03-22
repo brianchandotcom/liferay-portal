@@ -251,7 +251,7 @@ export async function getPickList(pickListId: number): Promise<PickList> {
 
 export async function getPickListItems(pickListId: number) {
 	return await getList<PickListItem>(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}/list-type-entries`
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}/list-type-entries?pageSize=-1`
 	);
 }
 

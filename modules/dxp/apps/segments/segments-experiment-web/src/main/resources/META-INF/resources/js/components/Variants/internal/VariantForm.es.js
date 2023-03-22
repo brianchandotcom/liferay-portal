@@ -62,30 +62,29 @@ export default function VariantForm({
 	});
 
 	return (
-		<>
+		<form onSubmit={onSubmit}>
 			<ClayModal.Header>{title}</ClayModal.Header>
-			<ClayModal.Body>
-				<form onSubmit={onSubmit}>
-					{error && errorMessage && (
-						<ClayAlert
-							displayType="danger"
-							title={Liferay.Language.get('error')}
-						>
-							{errorMessage}
-						</ClayAlert>
-					)}
 
-					<ValidatedInput
-						autofocus
-						errorMessage={Liferay.Language.get(
-							'variant-name-is-required'
-						)}
-						label={Liferay.Language.get('name')}
-						onChange={(event) => setInputName(event.target.value)}
-						onValidationChange={setInvalidForm}
-						value={inputName}
-					/>
-				</form>
+			<ClayModal.Body>
+				{error && errorMessage && (
+					<ClayAlert
+						displayType="danger"
+						title={Liferay.Language.get('error')}
+					>
+						{errorMessage}
+					</ClayAlert>
+				)}
+
+				<ValidatedInput
+					autofocus
+					errorMessage={Liferay.Language.get(
+						'variant-name-is-required'
+					)}
+					label={Liferay.Language.get('name')}
+					onChange={(event) => setInputName(event.target.value)}
+					onValidationChange={setInvalidForm}
+					value={inputName}
+				/>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -100,12 +99,13 @@ export default function VariantForm({
 							disabled={busy || invalidForm}
 							displayType="primary"
 							onClick={onSubmit}
+							type="submit"
 						>
 							{Liferay.Language.get('save')}
 						</BusyButton>
 					</ClayButton.Group>
 				}
 			/>
-		</>
+		</form>
 	);
 }

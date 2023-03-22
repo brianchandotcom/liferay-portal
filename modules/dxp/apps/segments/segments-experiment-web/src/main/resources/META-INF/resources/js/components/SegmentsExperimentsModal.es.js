@@ -43,11 +43,9 @@ function SegmentsExperimentsModal({
 	const [invalidForm, setInvalidForm] = useState(false);
 	const isMounted = useIsMounted();
 
-	/**
-	 * Triggers `onSave` prop
-	 * Resets `goalTarget` if goal is not 'click'
-	 */
-	const saveForm = () => {
+	const onSubmit = (event) => {
+		event.preventDefault();
+
 		if (!invalidForm && !busy) {
 			const goalTarget = (inputGoal === 'click' && goal?.target) || '';
 
@@ -68,83 +66,76 @@ function SegmentsExperimentsModal({
 		}
 	};
 
-	const onSubmit = (event) => {
-		event.preventDefault();
-		saveForm();
-	};
-
 	return (
-		<>
+		<form onSubmit={onSubmit}>
 			<ClayModal.Header>{title}</ClayModal.Header>
+
 			<ClayModal.Body>
-				<form onSubmit={onSubmit}>
-					{error && (
-						<ClayAlert
-							displayType="danger"
-							title={Liferay.Language.get('error')}
-						>
-							{error}
-						</ClayAlert>
-					)}
+				{error && (
+					<ClayAlert
+						displayType="danger"
+						title={Liferay.Language.get('error')}
+					>
+						{error}
+					</ClayAlert>
+				)}
 
-					<ValidatedInput
-						autofocus
-						errorMessage={Liferay.Language.get(
-							'test-name-is-required'
+				<ValidatedInput
+					autofocus
+					errorMessage={Liferay.Language.get('test-name-is-required')}
+					label={Liferay.Language.get('test-name')}
+					onChange={(event) => setInputName(event.target.value)}
+					onValidationChange={setInvalidForm}
+					value={inputName}
+				/>
+
+				<div className="form-group">
+					<label>{Liferay.Language.get('description')}</label>
+
+					<textarea
+						className="form-control"
+						maxLength="4000"
+						onChange={(event) =>
+							setInputDescription(event.target.value)
+						}
+						placeholder={Liferay.Language.get(
+							'description-placeholder'
 						)}
-						label={Liferay.Language.get('test-name')}
-						onChange={(event) => setInputName(event.target.value)}
-						onValidationChange={setInvalidForm}
-						value={inputName}
+						value={inputDescription}
 					/>
+				</div>
 
+				{Boolean(goals.length) && (
 					<div className="form-group">
-						<label>{Liferay.Language.get('description')}</label>
+						<label className="w100">
+							{Liferay.Language.get('select-goal')}
 
-						<textarea
-							className="form-control"
-							maxLength="4000"
-							onChange={(event) =>
-								setInputDescription(event.target.value)
-							}
-							placeholder={Liferay.Language.get(
-								'description-placeholder'
-							)}
-							value={inputDescription}
-						/>
+							<ClayIcon
+								className="lexicon-icon-sm ml-1 reference-mark text-warning"
+								style={{verticalAlign: 'super'}}
+								symbol="asterisk"
+							/>
+
+							<ClaySelect
+								className="mt-1"
+								defaultValue={inputGoal}
+								onChange={(event) =>
+									setInputGoal(event.target.value)
+								}
+							>
+								{goals.map((goal) => (
+									<ClaySelect.Option
+										key={goal.value}
+										label={goal.label}
+										value={goal.value}
+									/>
+								))}
+							</ClaySelect>
+						</label>
 					</div>
-
-					{Boolean(goals.length) && (
-						<div className="form-group">
-							<label className="w100">
-								{Liferay.Language.get('select-goal')}
-
-								<ClayIcon
-									className="lexicon-icon-sm ml-1 reference-mark text-warning"
-									style={{verticalAlign: 'super'}}
-									symbol="asterisk"
-								/>
-
-								<ClaySelect
-									className="mt-1"
-									defaultValue={inputGoal}
-									onChange={(event) =>
-										setInputGoal(event.target.value)
-									}
-								>
-									{goals.map((goal) => (
-										<ClaySelect.Option
-											key={goal.value}
-											label={goal.label}
-											value={goal.value}
-										/>
-									))}
-								</ClaySelect>
-							</label>
-						</div>
-					)}
-				</form>
+				)}
 			</ClayModal.Body>
+
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
@@ -160,14 +151,14 @@ function SegmentsExperimentsModal({
 							busy={busy}
 							disabled={invalidForm || busy}
 							displayType="primary"
-							onClick={saveForm}
+							type="submit"
 						>
 							{Liferay.Language.get('save')}
 						</BusyButton>
 					</ClayButton.Group>
 				}
 			/>
-		</>
+		</form>
 	);
 }
 

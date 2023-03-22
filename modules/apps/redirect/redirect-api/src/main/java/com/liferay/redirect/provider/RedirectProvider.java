@@ -24,7 +24,7 @@ import java.util.List;
 public interface RedirectProvider {
 
 	public Redirect getRedirect(
-		long groupId, String friendlyURL, String fullURL);
+		long groupId, String friendlyURL, String fullURL, String userAgent);
 
 	public List<RedirectPatternEntry> getRedirectPatternEntries(long groupId);
 

@@ -1,7 +1,7 @@
 {
-	"externalReferenceCode": "OBJECT-EVP-REQUEST-STATUS",
-	"name": "RequestStatus",
+	"externalReferenceCode": "EVP-REQUEST-STATUS-PICKLIST",
+	"name": "EVPRequestStatus",
 	"name_i18n": {
-		"en-US": "Request: Request Status"
+		"en-US": "EVP Request: Request Status"
 	}
 }

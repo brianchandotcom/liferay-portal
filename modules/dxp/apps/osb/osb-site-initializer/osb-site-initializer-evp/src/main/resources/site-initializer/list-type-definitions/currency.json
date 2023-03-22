@@ -1,6 +1,7 @@
 {
-	"name": "Currency",
+	"externalReferenceCode": "EVP-CURRENCY-PICKLIST",
+	"name": "EVPCurrency",
 	"name_i18n": {
-		"en-US": "Currency"
+		"en-US": "EVP Currency"
 	}
 }

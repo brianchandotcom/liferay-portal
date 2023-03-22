@@ -1,6 +1,7 @@
 {
-	"name": "RequestType",
+	"externalReferenceCode": "EVP-REQUEST-TYPE-PICKLIST",
+	"name": "EVPRequestType",
 	"name_i18n": {
-		"en-US": "Request: Request Type"
+		"en-US": "EVP Request: Request Type"
 	}
 }

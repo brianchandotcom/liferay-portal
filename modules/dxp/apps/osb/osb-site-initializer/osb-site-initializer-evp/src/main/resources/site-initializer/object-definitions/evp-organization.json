@@ -373,9 +373,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Organization Status"
+				"en_US": "EVP Organization Status"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Organization: Organization Status$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Organization: Organization Status$]",
 			"name": "organizationStatus",
 			"required": false,
 			"type": "String"

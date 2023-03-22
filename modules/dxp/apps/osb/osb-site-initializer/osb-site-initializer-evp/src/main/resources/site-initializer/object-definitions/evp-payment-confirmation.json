@@ -12,7 +12,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Payment Date"
+				"en_US": "EVP Payment Date"
 			},
 			"name": "paymentDate",
 			"required": true,

@@ -1,6 +1,7 @@
 {
-	"name": "LiferayBranch",
+	"externalReferenceCode": "EVP-REQUEST-LIFERAY-BRANCH-PICKLIST",
+	"name": "EVPLiferayBranch",
 	"name_i18n": {
-		"en-US": "Request: Liferay Branch"
+		"en-US": "EVP Request: Liferay Branch"
 	}
 }

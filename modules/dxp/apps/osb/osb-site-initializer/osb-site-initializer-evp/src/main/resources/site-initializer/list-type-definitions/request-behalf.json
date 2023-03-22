@@ -1,6 +1,7 @@
 {
-	"name": "RequestBehalf",
+	"externalReferenceCode": "EVP-REQUEST-BEHALF-PICKLIST",
+	"name": "EVPRequestBehalf",
 	"name_i18n": {
-		"en-US": "Request: Request Behalf"
+		"en-US": "EVP Request: Request Behalf"
 	}
 }

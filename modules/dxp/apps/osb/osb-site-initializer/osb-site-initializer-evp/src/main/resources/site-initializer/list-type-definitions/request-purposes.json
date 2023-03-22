@@ -1,6 +1,7 @@
 {
-	"name": "RequestPurposes",
+	"externalReferenceCode": "EVP-REQUEST-PURPOSES-PICKLIST",
+	"name": "EVP RequestPurposes",
 	"name_i18n": {
-		"en-US": "Request: Request Purposes"
+		"en-US": "EVP Request: Request Purposes"
 	}
 }

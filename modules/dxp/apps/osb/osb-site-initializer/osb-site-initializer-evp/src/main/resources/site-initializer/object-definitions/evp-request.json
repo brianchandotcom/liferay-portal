@@ -82,9 +82,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Request type"
+				"en_US": "EVP Request type"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Type$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Request Type$]",
 			"name": "requestType",
 			"required": false,
 			"type": "String"
@@ -95,9 +95,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Request Purposes"
+				"en_US": "EVP Request Purposes"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Purposes$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Request Purposes$]",
 			"name": "requestPurposes",
 			"required": false,
 			"type": "String"
@@ -108,9 +108,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Request Behalf"
+				"en_US": "EVP Request Behalf"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Behalf$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Request Behalf$]",
 			"name": "requestBehalf",
 			"required": false,
 			"type": "String"
@@ -175,9 +175,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Grant Request Type"
+				"en_US": "EVP Grant Request Type"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Grant Request Type$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Grant Request Type$]",
 			"name": "grantRequestType",
 			"required": false,
 			"type": "String"
@@ -224,9 +224,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Request Status"
+				"en_US": "EVP Request Status"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Status$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Request Status$]",
 			"name": "requestStatus",
 			"required": true,
 			"state": true,
@@ -238,9 +238,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Liferay Branch"
+				"en_US": "EVP Liferay Branch"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Liferay Branch$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Liferay Branch$]",
 			"name": "liferayBranch",
 			"required": false,
 			"type": "String"

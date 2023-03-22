@@ -1,5 +1,5 @@
-/* eslint-disable @liferay/portal/no-global-fetch */
 /* eslint-disable eqeqeq */
+/* eslint-disable @liferay/portal/no-global-fetch */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -21,7 +21,6 @@ const evpRequestId = findRequestIdUrl(currentPath.at(-1));
 const text = document.querySelector('.txt');
 
 const paymentData = [];
-const paymentDataFromRequest = [];
 
 const getPaymentData = async () => {
 	await fetch(`/o/c/evppaymentconfirmations`, {
@@ -38,24 +37,18 @@ const getPaymentData = async () => {
 const getPaymentDataFromRequest = async () => {
 	await getPaymentData();
 
-	paymentData[0]?.items.map((item) => {
-		if (item?.r_requestId_c_evpRequestId == evpRequestId) {
-			paymentDataFromRequest.push(item);
-		}
-
-		return null;
+	const requestFiltered = paymentData[0]?.items.filter((item) => {
+		return item?.r_requestId_c_evpRequestId == evpRequestId;
 	});
+
+	if (requestFiltered[0]?.paymentDate) {
+		const date = requestFiltered[0]?.paymentDate;
+		const year = date.slice(0, 4);
+		const month = date.slice(5, 7);
+		const day = date.slice(8, 10);
+
+		text.innerHTML = Liferay.Util.escape(month + '/' + day + '/' + year);
+	}
 };
 
-const getPaymentDate = async () => {
-	await getPaymentDataFromRequest();
-
-	const date = paymentDataFromRequest[0].paymentDate;
-	const year = date.slice(0, 4);
-	const month = date.slice(5, 7);
-	const day = date.slice(8, 10);
-
-	text.innerHTML = Liferay.Util.escape(month + '/' + day + '/' + year);
-};
-
-getPaymentDate();
+getPaymentDataFromRequest();

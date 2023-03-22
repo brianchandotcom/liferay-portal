@@ -12,9 +12,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Currency"
+				"en_US": "EVP Currency"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currency$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Currency$]",
 			"name": "currency",
 			"objectFieldSettings": [
 			],

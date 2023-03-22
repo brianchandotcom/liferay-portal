@@ -172,10 +172,14 @@ const GenerateReport = () => {
 	};
 
 	const loadPickLists = async () => {
-		const statusList = await getPicklistByName('Request: Request Status');
+		const statusList = await getPicklistByName(
+			'EVP Request: Request Status'
+		);
 		setStatuses(statusList);
 
-		const branchList = await getPicklistByName('Request: Liferay Branch');
+		const branchList = await getPicklistByName(
+			'EVP Request: Liferay Branch'
+		);
 		setBranches(branchList);
 	};
 

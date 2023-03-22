@@ -9,9 +9,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Request Status"
+				"en_US": "EVP Request Status"
 			},
-			"listTypeDefinitionExternalReferenceCode": "OBJECT-EVP-REQUEST-STATUS",
+			"listTypeDefinitionExternalReferenceCode": "EVP-REQUEST-STATUS-PICKLIST",
 			"name": "requestStatus",
 			"objectFieldSettings": [
 				{

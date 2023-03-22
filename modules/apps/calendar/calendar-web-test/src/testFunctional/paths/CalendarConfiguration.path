@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DAYS_DISPLAYED_MAX</td>
+	<td>//select[contains(@id,'maxDaysDisplayed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

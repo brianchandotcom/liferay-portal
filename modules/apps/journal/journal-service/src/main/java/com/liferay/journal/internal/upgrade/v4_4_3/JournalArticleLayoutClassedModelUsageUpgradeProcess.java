@@ -18,6 +18,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -120,7 +121,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"LayoutClassedModelUsage.containerType = 0 and ",
 			"LayoutClassedModelUsage.plid = 0 )");
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			SafeCloseable safeCloseable = addTemporaryIndex(
+				"AssetEntry", false, "classUuid", "classNameId", "visible")) {
+
 			processConcurrently(
 				SQLTransformer.transform(sql),
 				StringBundler.concat(

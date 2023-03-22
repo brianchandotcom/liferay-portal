@@ -17,7 +17,8 @@ import React, {useCallback, useMemo} from 'react';
 import {currencyFormat} from '../../utils';
 
 const DonutChart = ({
-	chartData,
+	chartDataColumns,
+	dataCurrency,
 	hasLegend = false,
 	height = 400,
 	isLoading,
@@ -37,13 +38,13 @@ const DonutChart = ({
 	}, []);
 
 	const hasChartData = useMemo(
-		() => chartData.columns.filter((column) => column[1]).length,
-		[chartData.columns]
+		() => chartDataColumns.columns.filter((column) => column[1]).length,
+		[chartDataColumns.columns]
 	);
 
 	const legendItems = legendTransformData(
-		chartData.columns,
-		chartData.colors
+		chartDataColumns.columns,
+		chartDataColumns.colors
 	);
 
 	const buildChart = () => {
@@ -73,7 +74,7 @@ const DonutChart = ({
 					<div className="d-flex flex-column flex-sm-row justify-content-start">
 						<>
 							<ClayChart
-								data={chartData}
+								data={chartDataColumns}
 								donut={{
 									label: {show: showLabel},
 									title: ' ',
@@ -83,7 +84,7 @@ const DonutChart = ({
 								size={{height, width}}
 								tooltip={{
 									contents: (data) => {
-										const chartColumnsData = chartData.columns.find(
+										const chartColumnsData = chartDataColumns.columns.find(
 											([key]) => key === data[0].id
 										);
 
@@ -94,8 +95,9 @@ const DonutChart = ({
 											<span class="font-weight-light text-primary ">${
 												chartColumnsData[2]
 											} Activities</span>
-											<span class="text-weight-bold text-primary">Total $${currencyFormat(
-												chartColumnsData[1]
+											<span class="text-weight-bold text-primary">Total ${currencyFormat(
+												chartColumnsData[1],
+												dataCurrency
 											)}</span>
 											</div>`;
 										}
@@ -103,8 +105,9 @@ const DonutChart = ({
 										return `<div class="bg-neutral-0 d-flex flex-column rounded-sm">
 											<span class="font-weight-light w-100 text-primary">
 											${chartColumnsData[0]}</span>
-											<span class="text-weight-bold text-primary">Total $${currencyFormat(
-												chartColumnsData[1]
+											<span class="text-weight-bold text-primary">Total ${currencyFormat(
+												chartColumnsData[1],
+												dataCurrency
 											)}</span>
 											</div>`;
 									},
@@ -134,8 +137,9 @@ const DonutChart = ({
 															</div>
 
 															<div className="font-weight-semi-bold">
-																{`$${currencyFormat(
-																	item.value
+																{`${currencyFormat(
+																	item.value,
+																	dataCurrency
 																)}`}
 															</div>
 														</div>

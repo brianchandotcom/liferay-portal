@@ -31,6 +31,28 @@ export default function VariantForm({
 	const [busy, setBusy] = useState(false);
 	const mountedRef = useRef();
 
+	const onSubmit = (event) => {
+		event.preventDefault();
+
+		if (!invalidForm) {
+			setBusy(true);
+
+			onSave({name: inputName, variantId})
+				.then(() => {
+					if (mountedRef.current) {
+						setBusy(false);
+						onClose();
+					}
+				})
+				.catch(() => {
+					if (mountedRef.current) {
+						setBusy(false);
+						setError(true);
+					}
+				});
+		}
+	};
+
 	useEffect(() => {
 		mountedRef.current = true;
 
@@ -43,7 +65,7 @@ export default function VariantForm({
 		<>
 			<ClayModal.Header>{title}</ClayModal.Header>
 			<ClayModal.Body>
-				<form onSubmit={_handleSave}>
+				<form onSubmit={onSubmit}>
 					{error && errorMessage && (
 						<ClayAlert
 							displayType="danger"
@@ -77,7 +99,7 @@ export default function VariantForm({
 							busy={busy}
 							disabled={busy || invalidForm}
 							displayType="primary"
-							onClick={_handleSave}
+							onClick={onSubmit}
 						>
 							{Liferay.Language.get('save')}
 						</BusyButton>
@@ -86,25 +108,4 @@ export default function VariantForm({
 			/>
 		</>
 	);
-
-	function _handleSave(event) {
-		event.preventDefault();
-
-		if (!invalidForm) {
-			setBusy(true);
-			onSave({name: inputName, variantId})
-				.then(() => {
-					if (mountedRef.current) {
-						setBusy(false);
-						onClose();
-					}
-				})
-				.catch(() => {
-					if (mountedRef.current) {
-						setBusy(false);
-						setError(true);
-					}
-				});
-		}
-	}
 }

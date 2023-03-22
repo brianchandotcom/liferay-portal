@@ -43,11 +43,41 @@ function SegmentsExperimentsModal({
 	const [invalidForm, setInvalidForm] = useState(false);
 	const isMounted = useIsMounted();
 
+	/**
+	 * Triggers `onSave` prop
+	 * Resets `goalTarget` if goal is not 'click'
+	 */
+	const saveForm = () => {
+		if (!invalidForm && !busy) {
+			const goalTarget = (inputGoal === 'click' && goal?.target) || '';
+
+			setBusy(true);
+
+			onSave({
+				description: inputDescription,
+				goal: inputGoal,
+				goalTarget,
+				name: inputName,
+				segmentsExperienceId,
+				segmentsExperimentId,
+			}).finally(() => {
+				if (isMounted()) {
+					setBusy(false);
+				}
+			});
+		}
+	};
+
+	const onSubmit = (event) => {
+		event.preventDefault();
+		saveForm();
+	};
+
 	return (
 		<>
 			<ClayModal.Header>{title}</ClayModal.Header>
 			<ClayModal.Body>
-				<form onSubmit={_handleFormSubmit}>
+				<form onSubmit={onSubmit}>
 					{error && (
 						<ClayAlert
 							displayType="danger"
@@ -63,8 +93,8 @@ function SegmentsExperimentsModal({
 							'test-name-is-required'
 						)}
 						label={Liferay.Language.get('test-name')}
-						onChange={_handleNameChange}
-						onValidationChange={_handleInputNameValidation}
+						onChange={(event) => setInputName(event.target.value)}
+						onValidationChange={setInvalidForm}
 						value={inputName}
 					/>
 
@@ -74,7 +104,9 @@ function SegmentsExperimentsModal({
 						<textarea
 							className="form-control"
 							maxLength="4000"
-							onChange={_handleDescriptionChange}
+							onChange={(event) =>
+								setInputDescription(event.target.value)
+							}
 							placeholder={Liferay.Language.get(
 								'description-placeholder'
 							)}
@@ -96,7 +128,9 @@ function SegmentsExperimentsModal({
 								<ClaySelect
 									className="mt-1"
 									defaultValue={inputGoal}
-									onChange={_handleGoalChange}
+									onChange={(event) =>
+										setInputGoal(event.target.value)
+									}
 								>
 									{goals.map((goal) => (
 										<ClaySelect.Option
@@ -126,7 +160,7 @@ function SegmentsExperimentsModal({
 							busy={busy}
 							disabled={invalidForm || busy}
 							displayType="primary"
-							onClick={_handleSave}
+							onClick={saveForm}
 						>
 							{Liferay.Language.get('save')}
 						</BusyButton>
@@ -135,59 +169,6 @@ function SegmentsExperimentsModal({
 			/>
 		</>
 	);
-
-	function _handleGoalChange(event) {
-		setInputGoal(event.target.value);
-	}
-
-	function _handleNameChange(event) {
-		setInputName(event.target.value);
-	}
-
-	function _handleDescriptionChange(event) {
-		setInputDescription(event.target.value);
-	}
-
-	function _handleInputNameValidation(error) {
-		setInvalidForm(error);
-	}
-
-	/**
-	 * Triggers `onSave` prop
-	 *
-	 * Resets `goalTarget` if goal is not 'click'
-	 */
-	function _handleSave() {
-		if (!invalidForm && !busy) {
-			const goalTarget =
-				inputGoal === 'click'
-					? goal && goal.target
-						? goal.target
-						: ''
-					: '';
-
-			setBusy(true);
-
-			onSave({
-				description: inputDescription,
-				goal: inputGoal,
-				goalTarget,
-				name: inputName,
-				segmentsExperienceId,
-				segmentsExperimentId,
-			}).finally(() => {
-				if (isMounted()) {
-					setBusy(false);
-				}
-			});
-		}
-	}
-
-	function _handleFormSubmit(event) {
-		event.preventDefault();
-
-		_handleSave();
-	}
 }
 
 SegmentsExperimentsModal.propTypes = {

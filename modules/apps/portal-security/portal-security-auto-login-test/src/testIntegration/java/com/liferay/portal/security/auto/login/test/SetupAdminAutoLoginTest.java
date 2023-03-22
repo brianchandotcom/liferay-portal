@@ -102,6 +102,9 @@ public class SetupAdminAutoLoginTest {
 
 	@Test
 	public void testChangeUserConditionSetAdminPassword() throws Exception {
+		Assert.assertEquals(
+			_user.getReminderQueryAnswer(), WorkflowConstants.LABEL_PENDING);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			_prepareHttpServletRequest();
 
@@ -111,8 +114,6 @@ public class SetupAdminAutoLoginTest {
 		User setPasswordUser = UserLocalServiceUtil.getUserByEmailAddress(
 			_company.getCompanyId(), _emailAdressAdminUser);
 
-		Assert.assertEquals(
-			_user.getReminderQueryAnswer(), WorkflowConstants.LABEL_PENDING);
 		Assert.assertEquals("", setPasswordUser.getReminderQueryAnswer());
 	}
 
@@ -165,7 +166,7 @@ public class SetupAdminAutoLoginTest {
 	private static String _emailAdressAdminUser;
 	private static User _user;
 
-	@Inject(filter = "component.name=*.AdminPasswordAutoLogin")
+	@Inject(filter = "component.name=*.SetupAdminAutoLogin")
 	private AutoLogin _adminPasswordAutoLogin;
 
 	private final Action _updatePasswordAction = new UpdatePasswordAction();

@@ -330,6 +330,41 @@ public class TaxonomyCategoryResourceTest
 			(List<TaxonomyCategory>)page.getItems());
 		assertValid(page);
 
+		List<TaxonomyCategory> taxonomyCategories =
+			(List<TaxonomyCategory>)page.getItems();
+
+		TaxonomyCategory getTaxonomyCategory1 = taxonomyCategories.get(0);
+		TaxonomyCategory getTaxonomyCategory2 = taxonomyCategories.get(1);
+
+		ParentTaxonomyCategory parentTaxonomyCategory1 =
+			getTaxonomyCategory1.getParentTaxonomyCategory();
+		ParentTaxonomyCategory parentTaxonomyCategory2 =
+			getTaxonomyCategory2.getParentTaxonomyCategory();
+
+		Assert.assertTrue(
+			((parentTaxonomyCategory1 == null) &&
+			 (parentTaxonomyCategory2 != null)) ||
+			((parentTaxonomyCategory1 != null) &&
+			 (parentTaxonomyCategory2 == null)));
+
+		if (parentTaxonomyCategory1 != null) {
+			Assert.assertEquals(
+				getTaxonomyCategory2.getId(),
+				String.valueOf(parentTaxonomyCategory1.getId()));
+			Assert.assertEquals(
+				getTaxonomyCategory2.getName(),
+				String.valueOf(parentTaxonomyCategory1.getName()));
+		}
+
+		if (parentTaxonomyCategory2 != null) {
+			Assert.assertEquals(
+				getTaxonomyCategory1.getId(),
+				String.valueOf(parentTaxonomyCategory2.getId()));
+			Assert.assertEquals(
+				getTaxonomyCategory1.getName(),
+				String.valueOf(parentTaxonomyCategory2.getName()));
+		}
+
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			irrelevantTaxonomyCategory.getId());
 

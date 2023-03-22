@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
-import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
 import com.liferay.portal.kernel.model.Contact;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,8 +72,12 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 		return WebUrlUtil.toWebUrl(_websiteService.getWebsite(webUrlId));
 	}
 
-	@Reference
-	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
+	@Reference(
+		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER
+	)
+	private DTOConverter
+		<Organization, com.liferay.headless.admin.user.dto.v1_0.Organization>
+			_organizationResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

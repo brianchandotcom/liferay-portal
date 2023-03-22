@@ -198,6 +198,36 @@ definition {
 					}'
 			''';
 		}
+
+		if (${fieldBusinessType} == "Formula") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"DBType": "${fieldType}",
+						"businessType": "${fieldBusinessType}",
+						"indexed": ${indexed},
+						"indexedAsKeyword": ${indexedAsKeyword},
+						"label": {
+							"en_US": "${fieldLabelName}"
+						},
+						"listTypeDefinitionId": ${picklistId},
+						"name": "${fieldName}",
+						"objectFieldSettings": [
+							{
+								"name": "output",
+								"value": "${outputOption}"
+							},
+							{
+								"name": "script",
+								"value": "${formulaScript}"
+							}
+						],
+						"required": ${isRequired}
+					}'
+			''';
+		}
 		else {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \

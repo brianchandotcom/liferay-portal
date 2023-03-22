@@ -193,9 +193,9 @@ public class BaseNotificationTypeTest {
 		).put(
 			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
 		).put(
-			getTerm("AUTHOR_PREFIX"), getListType("PREFIX", user2)
+			getTerm("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
 		).put(
-			getTerm("AUTHOR_SUFFIX"), getListType("SUFFIX", user2)
+			getTerm("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
 		).build();
 	}
 
@@ -213,13 +213,13 @@ public class BaseNotificationTypeTest {
 		).put(
 			"[%CURRENT_USER_MIDDLE_NAME%]", user2.getMiddleName()
 		).put(
-			"[%CURRENT_USER_PREFIX%]", getListType("PREFIX", user2)
+			"[%CURRENT_USER_PREFIX%]", _getListType("PREFIX", user2)
 		).put(
-			"[%CURRENT_USER_SUFFIX%]", getListType("SUFFIX", user2)
+			"[%CURRENT_USER_SUFFIX%]", _getListType("SUFFIX", user2)
 		).build();
 	}
 
-	protected String getListType(String type, User user)
+	private String _getListType(String type, User user)
 		throws PortalException {
 
 		Contact contact = user.fetchContact();

@@ -3,7 +3,7 @@ assemble:
       into: static
 liferay-sample-custom-element-2:
     cssURLs:
-        - static/css/main.*.css
+        - css/main.*.css
     friendlyURLMapping: liferay-sample-custom-element-2
     htmlElementName: liferay-sample-custom-element-2
     instanceable: false
@@ -11,5 +11,5 @@ liferay-sample-custom-element-2:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - static/js/main.*.js
+        - js/main.*.js
     useESM: true

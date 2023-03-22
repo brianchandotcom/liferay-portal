@@ -42,6 +42,7 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 	const disableButtonA = !(compareRuns?.runId || compareRuns?.runA);
 	const disableButtonB = !(compareRuns?.runId || compareRuns?.runB);
 	const validateCompareButtons = !(compareRuns?.runA && compareRuns?.runB);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (compareRuns?.runA || compareRuns?.runB) {
@@ -90,8 +91,6 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 		return () =>
 			document.removeEventListener('mousedown', handleClickOutside);
 	}, [setVisible, triggedRef]);
-
-	const navigate = useNavigate();
 
 	return (
 		<div
@@ -168,7 +167,11 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 							<ClayButton
 								disabled={validateCompareButtons}
 								displayType="primary"
-								onClick={() => navigate('/compare-runs/teams')}
+								onClick={() =>
+									navigate(
+										`/compare-runs/${compareRuns.runA}/${compareRuns.runB}/teams`
+									)
+								}
 							>
 								{i18n.sub('compare-x', 'runs')}
 							</ClayButton>

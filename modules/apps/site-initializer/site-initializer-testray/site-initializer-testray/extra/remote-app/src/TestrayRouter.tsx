@@ -319,7 +319,10 @@ const TestrayRoute = () => (
 						</Route>
 					</Route>
 
-					<Route element={<CompareRunsOutlet />} path="compare-runs">
+					<Route
+						element={<CompareRunsOutlet />}
+						path="compare-runs/:runA/:runB"
+					>
 						<Route element={<CompareRunsRedirect />} index />
 
 						<Route

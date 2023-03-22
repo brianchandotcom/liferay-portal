@@ -19,7 +19,7 @@ interface IProps {
 
 const PanelBody = ({children, expanded}: IProps) => (
 	<CSSTransition
-		className={classNames('panel-collapse', {
+		className={classNames('panel-collapse border-top', {
 			collapse: !expanded,
 		})}
 		classNames={{

@@ -56,7 +56,7 @@ const InputFile = ({
 		>
 			<div>
 				<Button
-					className={classNames({
+					className={classNames('bg-neutral-0', {
 						'border-danger': meta.touched && meta.error,
 						'border-success': meta.touched && !meta.error,
 					})}

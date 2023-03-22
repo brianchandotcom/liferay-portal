@@ -175,6 +175,38 @@ definition {
 		echo(${response});
 	}
 
+	macro addCurrency {
+		Variables.assertDefined(parameterList = ${currency});
+
+		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/companyextenders \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"accountExternalReferenceCodeSF":"",
+					"claimPercent":"",
+					"country":{
+						"key":"${country}"
+					},
+					"currency":{
+						"key":"${currency}"
+					},
+					"partnerLevel":{
+						"key":""
+					},
+					"r_accToCoExts_accountEntryId":"${accountId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		echo(${response});
+	}
+
 	macro addMDF {
 		Variables.assertDefined(parameterList = ${campaignName});
 
@@ -231,38 +263,6 @@ definition {
 		echo(${response});
 
 		return ${response};
-	}
-
-	macro addCurrency {
-		Variables.assertDefined(parameterList = ${currency});
-
-		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/companyextenders \
-				-u test@liferay.com:test \
-				-H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-				-d '{
-					"accountExternalReferenceCodeSF":"",
-					"claimPercent":"",
-					"country":{
-						"key":"${country}"
-					},
-					"currency":{
-						"key":"${currency}"
-					},
-					"partnerLevel":{
-						"key":""
-					},
-					"r_accToCoExts_accountEntryId":"${accountId}"
-					}'
-		''';
-
-		var response = JSONCurlUtil.post(${curl});
-
-		echo(${response});
 	}
 
 }

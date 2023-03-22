@@ -14,9 +14,9 @@ definition {
 		}
 
 		JSONPRMAPI.addCurrency(
-			currency = ${currency},
+			accountEntryName = ${accountEntryName},
 			country = ${country},
-			accountEntryName = ${accountEntryName});
+			currency = ${currency});
 	}
 
 	macro createMDFRequest {

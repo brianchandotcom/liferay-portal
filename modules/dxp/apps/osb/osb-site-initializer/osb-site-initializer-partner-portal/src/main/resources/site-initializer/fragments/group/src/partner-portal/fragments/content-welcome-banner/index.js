@@ -13,8 +13,9 @@
 const predissmissBanner = fragmentElement.querySelector('.pre-dismiss');
 const posDissmissBanner = fragmentElement.querySelector('.pos-dismiss');
 const dissmissButtonBanner = fragmentElement.querySelector('.on-click-button');
+const isBannerClosed = sessionStorage.getItem(fragmentEntryLinkNamespace);
 
-fragmentElement.querySelector('.dismiss-button').onclick = () => {
+const toggleBanner = () => {
 	predissmissBanner.classList.toggle('d-lg-flex');
 	predissmissBanner.classList.toggle('d-none');
 
@@ -24,3 +25,24 @@ fragmentElement.querySelector('.dismiss-button').onclick = () => {
 	dissmissButtonBanner.classList.toggle('d-none');
 	dissmissButtonBanner.classList.toggle('d-flex');
 };
+
+fragmentElement.querySelector('.dismiss-button').onclick = () => {
+	toggleBanner();
+	sessionStorage.setItem(fragmentEntryLinkNamespace, true);
+};
+
+if (!isBannerClosed) {
+	toggleBanner();
+}
+
+const videoButtons = fragmentElement.querySelectorAll('.video-tour-button');
+
+if (layoutMode !== 'edit') {
+	for (const videoButton of videoButtons) {
+		videoButton.onclick = () =>
+			Liferay.Util.openModal({
+				bodyHTML: `<iframe width="100%" height="500" src=${configuration.videoButtonLink} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+				size: 'lg',
+			});
+	}
+}

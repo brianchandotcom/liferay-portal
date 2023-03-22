@@ -1,0 +1,117 @@
+.dashboard-table-row {
+	&-name {
+		&-container {
+			align-items: center;
+			display: flex;
+			gap: 1.5rem;
+			width: 240px;
+		}
+
+		&-logo {
+			border-radius: 0.25rem;
+			height: 2.25rem;
+			width: 2.25rem;
+		}
+
+		&-text {
+			color: #282934;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			line-height: 1.5rem;
+		}
+
+		&-version {
+			font-size: 13px;
+		}
+	}
+
+	&-text {
+		color: #282934;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5rem;
+	}
+
+	&-type {
+		align-items: center;
+		background-color: #e6ebf5;
+		border-radius: 5px;
+		color: #1c3667;
+		display: flex;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 11px;
+		font-weight: 400px;
+		height: 24px;
+		justify-content: center;
+		line-height: 16px;
+		width: 75px;
+	}
+
+	&-purchased {
+		&-container {
+			align-items: center;
+			display: flex;
+			flex-direction: row;
+			gap: 0.25rem;
+		}
+
+		&-date {
+			color: #54555f;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.813rem;
+			font-weight: 400;
+			line-height: 1rem;
+		}
+	}
+
+	&-provisioning {
+		&-container {
+			align-items: center;
+			display: flex;
+			gap: 0.5rem;
+		}
+
+		&-icon {
+			height: 0.5rem;
+			width: 0.5rem;
+
+			&-completed {
+				color: #4aab3b;
+			}
+
+			&-processing {
+				color: #2e5aac;
+			}
+
+			&-pending {
+				color: #b95000;
+			}
+		}
+
+		&-text {
+			color: #6c6c75;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.813rem;
+			font-weight: 600;
+			line-height: 1rem;
+		}
+	}
+
+	&-order-id {
+		&-container {
+			align-items: center;
+			display: flex;
+			gap: 1rem;
+		}
+
+		&-text {
+			color: #282934;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1rem;
+			font-weight: 400;
+			line-height: 1.5rem;
+		}
+	}
+}

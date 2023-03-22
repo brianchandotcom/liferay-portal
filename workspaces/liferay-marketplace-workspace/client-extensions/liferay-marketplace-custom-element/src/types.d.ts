@@ -28,6 +28,23 @@ type Channel = {
 	type: string;
 };
 
+interface PlacedOrder {
+	account: string;
+	accountId: number;
+	author: string;
+	createDate: string;
+	id: number;
+	orderStatusInfo: {code: number; label: string; label_i18n: string};
+	placedOrderItems: PlacedOrderItems[];
+}
+
+interface PlacedOrderItems {
+	id: number;
+	name: string;
+	subscription: boolean;
+	thumbnail: string;
+}
+
 interface PostCartResponse {
 	account: string;
 	accountId: number;

@@ -572,6 +572,266 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByLogicalOperatorsObjectEntriesByRelatesObjectEntriesFields()
+		throws Exception {
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s le '%s' and %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_2,
+					_OBJECT_FIELD_VALUE_2, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s le '%s' or %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_2,
+					_OBJECT_FIELD_VALUE_2, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"not (%s/%s ge '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 + 1)),
+			_objectDefinition1);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/id le '%s' and %s/id gt '%s'",
+					_objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId(),
+					_objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId() - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/id le '%s' or %s/id gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_VALUE_2,
+					_objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId() - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"not (%s/id ge '%s')", _objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId() + 1)),
+			_objectDefinition1);
+
+		// Other side of the relationship
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/%s le '%s' and %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_1,
+					_OBJECT_FIELD_VALUE_1, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/%s le '%s' or %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_1,
+					_OBJECT_FIELD_VALUE_1, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"not (%s/%s ge '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 + 1)),
+			_objectDefinition2);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/id le '%s' and %s/id gt '%s'",
+					_objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId(),
+					_objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/id le '%s' or %s/id gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_VALUE_1,
+					_objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"not (%s/id ge '%s')", _objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId() + 1)),
+			_objectDefinition2);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship);
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s le '%s' and %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_2,
+					_OBJECT_FIELD_VALUE_2, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s le '%s' or %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_2,
+					_OBJECT_FIELD_VALUE_2, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"not (%s/%s ge '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 + 1)),
+			_objectDefinition1);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/id le '%s' and %s/id gt '%s'",
+					_objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId(),
+					_objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId() - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/id le '%s' or %s/id gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_VALUE_2,
+					_objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId() - 1)),
+			_objectDefinition1);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"not (%s/id ge '%s')", _objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId() + 1)),
+			_objectDefinition1);
+
+		// Other side of the relationship
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/%s le '%s' and %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_1,
+					_OBJECT_FIELD_VALUE_1, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/%s le '%s' or %s/%s gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_NAME_1,
+					_OBJECT_FIELD_VALUE_1, _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"not (%s/%s ge '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 + 1)),
+			_objectDefinition2);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/id le '%s' and %s/id gt '%s'",
+					_objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId(),
+					_objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/id le '%s' or %s/id gt '%s'",
+					_objectRelationship.getName(), _OBJECT_FIELD_VALUE_1,
+					_objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition2);
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"not (%s/id ge '%s')", _objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId() + 1)),
+			_objectDefinition2);
+	}
+
+	@Test
 	public void testFilterByStringOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 

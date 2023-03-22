@@ -109,7 +109,7 @@ const ActivityClaimPanel = ({
 						</p>
 
 						<h5 className="text-neutral-10">
-							{activity.name} ({activity.id}) oi
+							{activity.name} ({activity.id})
 						</h5>
 
 						<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">

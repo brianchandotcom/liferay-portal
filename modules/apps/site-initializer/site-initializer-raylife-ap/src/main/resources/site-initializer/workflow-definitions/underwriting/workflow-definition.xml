@@ -264,7 +264,6 @@ WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"
 					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
 				</template>
 				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<assignees />
@@ -285,6 +284,21 @@ WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"
 					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>
+			</notification>
+			<notification>
+				<name>Email Notification</name>
+				<description>
+					<![CDATA[Application Review Requested]]>
+				</description>
+				<template>
+					<![CDATA[Application ${entryClassPK} has been quoted but requires your review. Please proceed to your dashboard to review and then approve or reject this quote.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<recipients receptionType="to">
+					<assignees />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
 		<assignments>

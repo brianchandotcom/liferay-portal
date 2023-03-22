@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,13 +50,25 @@ public class UpgradeProcessUtil {
 			return languageId;
 		}
 
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select languageId from User_ where companyId = ? and type_ " +
-					"= ?")) {
+		try (Connection connection = DataAccess.getConnection()) {
+			String query = "select languageId from User_ where companyId = ?";
 
-			preparedStatement.setLong(1, companyId);
-			preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
+			DBInspector dbInspector = new DBInspector(connection);
+			PreparedStatement preparedStatement;
+
+			if (dbInspector.hasColumn("User_", "defaultUser")) {
+				preparedStatement = connection.prepareStatement(
+					query + " and defaultUser = ?");
+
+				preparedStatement.setLong(1, companyId);
+				preparedStatement.setBoolean(2, Boolean.TRUE);
+			}
+			else {
+				preparedStatement = connection.prepareStatement(
+					query + " and type_ = " + UserConstants.TYPE_GUEST);
+
+				preparedStatement.setLong(1, companyId);
+			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -68,6 +81,13 @@ public class UpgradeProcessUtil {
 
 				return LocaleUtil.toLanguageId(LocaleUtil.US);
 			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return LocaleUtil.toLanguageId(LocaleUtil.US);
 		}
 	}
 

@@ -62,7 +62,19 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Partner Deal Registration"
+												"ar_SA": "Partner Deal Registration",
+												"ca_ES": "Partner Deal Registration",
+												"de_DE": "Partner Deal Registration",
+												"en_US": "Partner Deal Registration",
+												"es_ES": "Partner Deal Registration",
+												"fi_FI": "Partner Deal Registration",
+												"fr_FR": "Partner Deal Registration",
+												"hu_HU": "Partner Deal Registration",
+												"ja_JP": "Partner Deal Registration",
+												"nl_NL": "Partner Deal Registration",
+												"pt_BR": "Partner Deal Registration",
+												"sv_SE": "Partner Deal Registration",
+												"zh_CN": "Partner Deal Registration"
 											}
 										}
 									}
@@ -93,7 +105,19 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Partner Opportunities"
+												"ar_SA": "Partner Opportunities",
+												"ca_ES": "Partner Opportunities",
+												"de_DE": "Partner Opportunities",
+												"en_US": "Partner Opportunities",
+												"es_ES": "Partner Opportunities",
+												"fi_FI": "Partner Opportunities",
+												"fr_FR": "Partner Opportunities",
+												"hu_HU": "Partner Opportunities",
+												"ja_JP": "Partner Opportunities",
+												"nl_NL": "Partner Opportunities",
+												"pt_BR": "Partner Opportunities",
+												"sv_SE": "Partner Opportunities",
+												"zh_CN": "Partner Opportunities"
 											}
 										}
 									}

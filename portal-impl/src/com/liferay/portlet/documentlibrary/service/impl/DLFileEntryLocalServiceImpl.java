@@ -170,6 +170,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -368,16 +369,17 @@ public class DLFileEntryLocalServiceImpl
 
 		Date date = new Date();
 
-		if (_previousCheckDate == null) {
-			_previousCheckDate = new Date(
-				date.getTime() - (checkInterval * Time.MINUTE));
+		if (_companyPreviousCheckDate.get(companyId) == null) {
+			_companyPreviousCheckDate.put(
+				companyId,
+				new Date(date.getTime() - (checkInterval * Time.MINUTE)));
 		}
 
 		_checkFileEntriesByExpirationDate(companyId, date);
 
 		_checkFileEntriesByReviewDate(companyId, date);
 
-		_previousCheckDate = date;
+		_companyPreviousCheckDate.put(companyId, date);
 	}
 
 	@Override
@@ -2176,11 +2178,12 @@ public class DLFileEntryLocalServiceImpl
 			_log.debug(
 				StringBundler.concat(
 					"Sending review notification for file entries with review ",
-					"date between ", _previousCheckDate, " and ", reviewDate));
+					"date between ", _companyPreviousCheckDate.get(companyId),
+					" and ", reviewDate));
 		}
 
 		List<DLFileEntry> fileEntries = _getFileEntriesByReviewDate(
-			companyId, reviewDate, _previousCheckDate);
+			companyId, reviewDate, _companyPreviousCheckDate.get(companyId));
 
 		for (DLFileEntry fileEntry : fileEntries) {
 			if (fileEntry.isInTrash()) {
@@ -3598,6 +3601,9 @@ public class DLFileEntryLocalServiceImpl
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
 
+	private final Map<Long, Date> _companyPreviousCheckDate =
+		new ConcurrentHashMap<>();
+
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
@@ -3633,8 +3639,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@BeanReference(type = OrganizationLocalService.class)
 	private OrganizationLocalService _organizationLocalService;
-
-	private Date _previousCheckDate;
 
 	@BeanReference(type = RatingsStatsLocalService.class)
 	private RatingsStatsLocalService _ratingsStatsLocalService;

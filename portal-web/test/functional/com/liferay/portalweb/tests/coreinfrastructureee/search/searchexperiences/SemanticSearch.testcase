@@ -285,6 +285,213 @@ definition {
 		PortletEntry.save();
 	}
 
+	@description = "This is a use case for LPS-170345 and LPS-172161."
+	test ViewSystemAndInstanceSettingsSaveUI {
+		property custom.properties = "feature.flag.LPS-122920=true";
+		property test.name.skip.portal.instance = "SemanticSearch#ViewSystemAndInstanceSettingsSaveUI";
+
+		task ("Within System Settings, fill out required fields for Hugging Face Inference API and save") {
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			Check.checkNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			PortletEntry.inputText(
+				fieldLabel = "Access Token",
+				text = "System Settings Token");
+
+			PortletEntry.inputText(
+				fieldLabel = "Model",
+				text = "facebook");
+
+			Click(
+				key_itemName = "facebook/bart-base",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+			Button.clickSave();
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert txtai field is not present after saving") {
+			AssertElementNotPresent(
+				key_fieldLabel = "Host Address",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+		}
+
+		task ("Assert form fields retain the values added earlier") {
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "System Settings Token");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "facebook/bart-base");
+		}
+
+		task ("Refresh the page and assert form fields retain the values added earlier") {
+			Refresh();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "System Settings Token");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "facebook/bart-base");
+		}
+
+		task ("Assert field values are reset when the form is reset to default") {
+			SystemSettings.resetConfiguration();
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Host Address",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			AssertElementPresent(
+				key_fieldLabel = "Text Embedding Provider",
+				key_value = "Hugging Face Inference API",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "");
+		}
+
+		task ("Within Instance Settings, fill out required fields for Hugging Face Inference API and save") {
+			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			PortletEntry.inputText(
+				fieldLabel = "Access Token",
+				text = "Instance Settings Token");
+
+			PortletEntry.inputText(
+				fieldLabel = "Model",
+				text = "albert");
+
+			Click(
+				key_itemName = "albert-base-v1",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+			Button.clickSave();
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert txtai field is not present after saving") {
+			AssertElementNotPresent(
+				key_fieldLabel = "Host Address",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+		}
+
+		task ("Assert form fields retain the values added earlier") {
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "Instance Settings Token");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "albert-base-v1");
+		}
+
+		task ("Refresh the page and assert form fields retain the values added earlier") {
+			Refresh();
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "Instance Settings Token");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "albert-base-v1");
+		}
+
+		task ("Back in System Settings, fill out required fields for Hugging Face Inference API and save") {
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			Check.checkNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			PortletEntry.inputText(
+				fieldLabel = "Access Token",
+				text = "System Settings Token");
+
+			PortletEntry.inputText(
+				fieldLabel = "Model",
+				text = "facebook");
+
+			Click(
+				key_itemName = "facebook/bart-base",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+			Button.clickSave();
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Back in Instance Settings, assert field values remain unchanged after changes were made to System Settings") {
+			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "Instance Settings Token");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "albert-base-v1");
+		}
+
+		task ("Assert Instance Settings field values use the System Settings values when resetting to default") {
+			SystemSettings.resetConfiguration();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Access Token",
+				fieldValue = "System Settings Token");
+
+			SystemSettings.viewInputText(
+				fieldLabel = "Model",
+				fieldValue = "facebook/bart-base");
+		}
+	}
+
 	@description = "This is a use case for LPS-173824."
 	test ViewSystemSettingUnsuccessfulConnectionWarning {
 		property custom.properties = "feature.flag.LPS-122920=true";

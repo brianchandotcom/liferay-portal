@@ -14,9 +14,13 @@
 
 import {openModal, sub} from 'frontend-js-web';
 
-export default function openDeleteTemplateModal({multiple = false, onDelete}) {
+export default function openDeleteTemplateModal({
+	message,
+	multiple = false,
+	onDelete,
+}) {
 	openModal({
-		bodyHTML: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
+		bodyHTML: message,
 		buttons: [
 			{
 				autoFocus: true,

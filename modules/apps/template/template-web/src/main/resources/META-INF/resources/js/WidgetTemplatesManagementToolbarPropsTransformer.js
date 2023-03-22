@@ -17,6 +17,9 @@ import openDeleteTemplateModal from './modal/openDeleteTemplateModal';
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedDDMTemplates = () => {
 		openDeleteTemplateModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
 			multiple: true,
 			onDelete: () => {
 				const form = document.getElementById(`${portletNamespace}fm`);

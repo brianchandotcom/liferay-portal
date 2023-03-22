@@ -22,6 +22,9 @@ export default function propsTransformer({
 }) {
 	const deleteSelectedTemplateEntries = () => {
 		openDeleteTemplateModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
 			multiple: true,
 			onDelete: () => {
 				const form = document.getElementById(`${portletNamespace}fm`);

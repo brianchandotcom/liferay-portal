@@ -19,6 +19,9 @@ import openDeleteTemplateModal from './modal/openDeleteTemplateModal';
 const ACTIONS = {
 	deleteDDMTemplate({deleteDDMTemplateURL}) {
 		openDeleteTemplateModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
 			onDelete: () => {
 				submitForm(document.hrefFm, deleteDDMTemplateURL);
 			},

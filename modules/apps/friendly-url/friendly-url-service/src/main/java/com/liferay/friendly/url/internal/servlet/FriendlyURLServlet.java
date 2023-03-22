@@ -14,7 +14,8 @@
 
 package com.liferay.friendly.url.internal.servlet;
 
-import com.liferay.friendly.url.configuration.helper.FriendlyURLRedirectionConfigurationHelper;
+import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration;
+import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfigurationProvider;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -682,10 +683,6 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected FriendlyURLNormalizer friendlyURLNormalizer;
 
 	@Reference
-	protected FriendlyURLRedirectionConfigurationHelper
-		friendlyURLRedirectionConfigurationHelper;
-
-	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -768,6 +765,15 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return alternativeSiteFriendlyURL;
+	}
+
+	private String _getFriendlyURLRedirectionType(long companyId) {
+		FriendlyURLRedirectionConfiguration
+			friendlyURLRedirectionConfiguration =
+				_friendlyURLRedirectionConfigurationProvider.
+					getCompanyConfiguration(companyId);
+
+		return friendlyURLRedirectionConfiguration.redirectionType();
 	}
 
 	private Group _getGroup(String path, String friendlyURL, long companyId)
@@ -913,9 +919,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private boolean _isPermanentRedirect(long companyId) {
 		if (Objects.equals(
-				friendlyURLRedirectionConfigurationHelper.getRedirectionType(
-					companyId),
-				"permanent")) {
+				_getFriendlyURLRedirectionType(companyId), "permanent")) {
 
 			return true;
 		}
@@ -1007,6 +1011,11 @@ public class FriendlyURLServlet extends HttpServlet {
 		FriendlyURLServlet.class);
 
 	private String _friendlyURLPathPrefix;
+
+	@Reference
+	private FriendlyURLRedirectionConfigurationProvider
+		_friendlyURLRedirectionConfigurationProvider;
+
 	private int _pathInfoOffset;
 	private boolean _private;
 	private boolean _user;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.configuration;
+package com.liferay.friendly.url.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "friendly-url-redirection-configuration-description",
-	id = "com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration",
+	id = "com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration",
 	localization = "content/Language",
 	name = "friendly-url-redirection-configuration-name"
 )

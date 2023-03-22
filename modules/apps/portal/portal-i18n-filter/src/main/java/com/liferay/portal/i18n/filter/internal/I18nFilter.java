@@ -14,7 +14,8 @@
 
 package com.liferay.portal.i18n.filter.internal;
 
-import com.liferay.friendly.url.configuration.helper.FriendlyURLRedirectionConfigurationHelper;
+import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration;
+import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfigurationProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -404,11 +405,18 @@ public class I18nFilter extends BasePortalFilter {
 		}
 	}
 
+	private String _getFriendlyURLRedirectionType(long companyId) {
+		FriendlyURLRedirectionConfiguration
+			friendlyURLRedirectionConfiguration =
+				_friendlyURLRedirectionConfigurationProvider.
+					getCompanyConfiguration(companyId);
+
+		return friendlyURLRedirectionConfiguration.redirectionType();
+	}
+
 	private boolean _isPermanentRedirect(long companyId) {
 		if (Objects.equals(
-				_friendlyURLRedirectionConfigurationHelper.getRedirectionType(
-					companyId),
-				"permanent")) {
+				_getFriendlyURLRedirectionType(companyId), "permanent")) {
 
 			return true;
 		}
@@ -419,8 +427,8 @@ public class I18nFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(I18nFilter.class);
 
 	@Reference
-	private FriendlyURLRedirectionConfigurationHelper
-		_friendlyURLRedirectionConfigurationHelper;
+	private FriendlyURLRedirectionConfigurationProvider
+		_friendlyURLRedirectionConfigurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

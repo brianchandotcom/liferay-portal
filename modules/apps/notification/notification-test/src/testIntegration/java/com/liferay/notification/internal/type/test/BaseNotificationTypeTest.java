@@ -151,11 +151,11 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected void assertTerms(
-		List<Object> expectedValues, List<String> termValues) {
+		List<Object> expectedTermValues, List<String> termValues) {
 
 		for (int i = 0; i < termValues.size(); i++) {
 			Assert.assertEquals(
-				String.valueOf(expectedValues.get(i)), termValues.get(i));
+				String.valueOf(expectedTermValues.get(i)), termValues.get(i));
 		}
 	}
 

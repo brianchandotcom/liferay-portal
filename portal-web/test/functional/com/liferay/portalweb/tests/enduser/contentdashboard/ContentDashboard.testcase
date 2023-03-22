@@ -1476,7 +1476,7 @@ definition {
 
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
-				tableEntry = "Blogs Entry Content");
+				tableEntry = "Blogs Entry Title");
 		}
 
 		task ("Check if the share button is not present at info panel") {

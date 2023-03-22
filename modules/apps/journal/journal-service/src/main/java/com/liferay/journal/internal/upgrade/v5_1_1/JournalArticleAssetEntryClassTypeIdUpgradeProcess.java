@@ -16,9 +16,16 @@ package com.liferay.journal.internal.upgrade.v5_1_1;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Lourdes Fernández Besada
@@ -37,13 +44,17 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
 
+		Map<Long, Map<Long, List<Long>>> updatedClassTypeIdsMap =
+			new ConcurrentHashMap<>();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				StringBundler.concat(
 					"select distinct AssetEntry.entryId, ",
-					"JournalArticle.DDMStructureId from AssetEntry, ",
-					"JournalArticle where AssetEntry.classNameId = ",
-					classNameId, " and AssetEntry.classPK in ",
+					"AssetEntry.classTypeId, JournalArticle.DDMStructureId ",
+					"from AssetEntry, JournalArticle where ",
+					"AssetEntry.classNameId = ", classNameId,
+					" and AssetEntry.classPK in ",
 					"(JournalArticle.resourcePrimKey, JournalArticle.id_) and ",
 					" AssetEntry.classTypeId != JournalArticle.DDMStructureId"),
 				"update AssetEntry set classTypeId = ? where entryId = ?",
@@ -54,17 +65,69 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 				(values, preparedStatement) -> {
 					Long entryId = (Long)values[0];
 
-					Long ddmStructureId = (Long)values[1];
+					Long classTypeId = (Long)values[1];
+
+					Long ddmStructureId = (Long)values[2];
 
 					preparedStatement.setLong(1, ddmStructureId);
 
 					preparedStatement.setLong(2, entryId);
 
 					preparedStatement.addBatch();
+
+					Map<Long, List<Long>> ddmStructureIdsMap =
+						updatedClassTypeIdsMap.computeIfAbsent(
+							classTypeId, key -> new ConcurrentHashMap<>());
+
+					List<Long> entryIds = ddmStructureIdsMap.computeIfAbsent(
+						ddmStructureId, key -> new ArrayList<>());
+
+					entryIds.add(entryId);
 				},
 				"Unable to set asset entry classTypeId");
+
+			if (_log.isDebugEnabled() && updatedClassTypeIdsMap.isEmpty()) {
+				_log.debug(
+					"No asset entries with the wrong classTypeId have been " +
+						"found");
+			}
+
+			if (_log.isWarnEnabled() && !updatedClassTypeIdsMap.isEmpty()) {
+				for (Map.Entry<Long, Map<Long, List<Long>>>
+						classTypeIdMapEntry :
+							updatedClassTypeIdsMap.entrySet()) {
+
+					long classTypeId = classTypeIdMapEntry.getKey();
+
+					_log.warn(
+						"Asset entries with the wrong classTypeId [" +
+							classTypeId + "] have been found");
+
+					Map<Long, List<Long>> ddmStructureIdAssetEntryIdsMap =
+						classTypeIdMapEntry.getValue();
+
+					for (Map.Entry<Long, List<Long>>
+							ddmStructureIdAssetEntryIdsEntry :
+								ddmStructureIdAssetEntryIdsMap.entrySet()) {
+
+						long ddmStructureId =
+							ddmStructureIdAssetEntryIdsEntry.getKey();
+						List<Long> entryIds =
+							ddmStructureIdAssetEntryIdsEntry.getValue();
+
+						_log.warn(
+							StringBundler.concat(
+								ddmStructureId,
+								" has been set as classTypeId for the ",
+								"entryIds ", entryIds.toString()));
+					}
+				}
+			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleAssetEntryClassTypeIdUpgradeProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
 

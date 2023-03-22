@@ -1,10 +1,10 @@
-<div class="d-flex justify-content-end on-click-button">
+<div class="d-none justify-content-end on-click-button">
 	<button class="btn-unstyled dismiss-button mb-n5 mr-4 text-paragraph-sm">
 		Dismiss [@clay["icon"] symbol="times"/]
 	</button>
 </div>
 
-<div class="align-items-center bg-neutral-1 d-lg-flex p-4 pre-dismiss rounded-xl">
+<div class="align-items-center bg-neutral-1 d-none p-4 pre-dismiss rounded-xl">
 	<div class="col">
 		<h1 data-lfr-editable-id="first-welcome-banner-title" data-lfr-editable-type="rich-text">
 			This is editable text!
@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<div class="align-items-center d-none justify-content-between p-4 pos-dismiss">
+<div class="align-items-center d-lg-flex justify-content-between p-4 pos-dismiss">
 	<div class="col">
 		<h1 data-lfr-editable-id="second-welcome-banner-title" data-lfr-editable-type="rich-text">
 			This is editable text!
@@ -34,7 +34,12 @@
 	</div>
 
 	<div class="col d-sm-flex justify-content-lg-end my-4">
-		<lfr-drop-zone></lfr-drop-zone>
+		<button class="border-brand-primary btn btn-secondary d-flex mb-2 mr-3 text-brand-primary video-tour-button">
+			<lfr-drop-zone></lfr-drop-zone>
+			<div class="ml-1" data-lfr-editable-id="second-banner-primary-button-text" data-lfr-editable-type="rich-text">
+				This is editable text!
+			</div>
+		</button>
 
 		<lfr-drop-zone></lfr-drop-zone>
 	</div>

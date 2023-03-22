@@ -69,11 +69,11 @@ public class DDLImpl implements DDL {
 			DDLRecord record, boolean latestRecordVersion, Locale locale)
 		throws Exception {
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		DDLRecordSet recordSet = record.getRecordSet();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (String fieldName : ddmStructure.getFieldNames()) {
 			jsonObject.put(fieldName, StringPool.BLANK);

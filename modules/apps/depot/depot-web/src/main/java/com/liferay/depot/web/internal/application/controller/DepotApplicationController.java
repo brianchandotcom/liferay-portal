@@ -72,16 +72,16 @@ public class DepotApplicationController {
 				return true;
 			}
 
-			DepotAppCustomization depotApplicationCustomization =
+			DepotAppCustomization depotAppCustomization =
 				_depotAppCustomizationLocalService.fetchDepotAppCustomization(
 					depotEntry.getDepotEntryId(),
 					depotApplication.getPortletId());
 
-			if (depotApplicationCustomization == null) {
+			if (depotAppCustomization == null) {
 				return true;
 			}
 
-			return depotApplicationCustomization.isEnabled();
+			return depotAppCustomization.isEnabled();
 		}
 
 		return false;

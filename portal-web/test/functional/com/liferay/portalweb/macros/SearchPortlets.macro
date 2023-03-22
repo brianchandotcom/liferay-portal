@@ -254,6 +254,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		if (isSet(destinationPage)) {
+			if (contains(${destinationPage}, " ")) {
+				var destinationPage = StringUtil.replace(${destinationPage}, " ", "-");
+			}
+
+			var destinationPage = StringUtil.toLowerCase(${destinationPage});
+
+			Type(
+				locator1 = "SearchConfiguration#DESTINATION_PAGE",
+				value1 = ${destinationPage});
+		}
+
 		if (isSet(keywordsParameterName)) {
 			Type(
 				locator1 = "SearchConfiguration#KEYWORDS_PARAMETER_NAME",

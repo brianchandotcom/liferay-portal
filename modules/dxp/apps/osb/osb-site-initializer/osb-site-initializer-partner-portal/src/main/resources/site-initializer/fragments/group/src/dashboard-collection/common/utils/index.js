@@ -13,27 +13,28 @@ const naNToZero = (value) => (Number.isNaN(value) ? 0 : value);
 
 const percentFormat = (newValue, odlValue) => (newValue / odlValue) * 100;
 
-const currencyFormat = (value) => {
+const currencyFormat = (value, currencyData = 'USD') => {
 	let formatedValue = value;
 	let valueSufix = '';
 
 	if (value >= 1000000000) {
 		formatedValue = parseFloat(value / 1000000000).toFixed(2);
 		valueSufix = 'b';
-	}
-	else if (value >= 1000000) {
+	} else if (value >= 1000000) {
 		formatedValue = parseFloat(value / 1000000).toFixed(2);
 		valueSufix = 'm';
 	}
 
-	return (
-		formatedValue.toLocaleString(
-			Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-				currency: 'USD',
-				style: 'currency',
-			})
-		) + valueSufix
-	);
+	const formatCurrencies = (currencyData) => {
+		return Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+			currency: currencyData,
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 0,
+			style: 'currency',
+		});
+	};
+
+	return formatCurrencies(currencyData).format(formatedValue) + valueSufix;
 };
 
 export {naNToZero, percentFormat, currencyFormat};

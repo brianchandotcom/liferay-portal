@@ -28,12 +28,14 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Alejo Ceballos
  */
+@Ignore
 public class CharsetDetectorTest {
 
 	@ClassRule

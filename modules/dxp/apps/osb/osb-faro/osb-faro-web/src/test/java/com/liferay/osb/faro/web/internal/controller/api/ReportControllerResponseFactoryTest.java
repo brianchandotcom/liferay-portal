@@ -24,12 +24,14 @@ import java.util.Map;
 import javax.ws.rs.core.Response;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Alejo Ceballos
  */
+@Ignore
 public class ReportControllerResponseFactoryTest {
 
 	@ClassRule

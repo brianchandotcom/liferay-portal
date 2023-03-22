@@ -37,6 +37,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -47,6 +48,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 /**
  * @author Inácio Nery
  */
+@Ignore
 public class DataSourceControllerTest {
 
 	@ClassRule

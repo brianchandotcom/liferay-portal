@@ -64,17 +64,13 @@ import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 
 import java.sql.Timestamp;
 
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -576,35 +572,37 @@ public class TaxonomyCategoryResourceImpl
 		List<AssetCategoryProperty> assetCategoryProperties,
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
-		Stream<TaxonomyCategoryProperty> stream = Arrays.stream(
-			Optional.ofNullable(
-				taxonomyCategoryProperties
-			).orElse(
-				new TaxonomyCategoryProperty[0]
-			));
+		Map<String, String> categoryProperties = new HashMap<>();
 
-		Map<String, String> map = stream.collect(
-			Collectors.toMap(
-				TaxonomyCategoryProperty::getKey,
-				TaxonomyCategoryProperty::getValue));
+		if (taxonomyCategoryProperties != null) {
+			for (TaxonomyCategoryProperty taxonomyCategoryProperty :
+					taxonomyCategoryProperties) {
+
+				categoryProperties.put(
+					taxonomyCategoryProperty.getKey(),
+					taxonomyCategoryProperty.getValue());
+			}
+		}
 
 		for (AssetCategoryProperty assetCategoryProperty :
 				assetCategoryProperties) {
 
-			map.putIfAbsent(
+			categoryProperties.put(
 				assetCategoryProperty.getKey(),
 				assetCategoryProperty.getValue());
 		}
 
-		Set<Map.Entry<String, String>> entries = map.entrySet();
+		String[] strings = new String[categoryProperties.size()];
 
-		Stream<Map.Entry<String, String>> entriesStream = entries.stream();
+		int index = 0;
 
-		return entriesStream.map(
-			entry -> entry.getKey() + ":" + entry.getValue()
-		).toArray(
-			String[]::new
-		);
+		for (Map.Entry<String, String> entry : categoryProperties.entrySet()) {
+			strings[index] = entry.getKey() + ":" + entry.getValue();
+
+			index++;
+		}
+
+		return strings;
 	}
 
 	private AssetCategory _toAssetCategory(Object[] assetCategory) {

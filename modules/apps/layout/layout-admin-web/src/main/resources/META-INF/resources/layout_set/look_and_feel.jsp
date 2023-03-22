@@ -33,6 +33,12 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 <liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 
+<aui:input label="custom-css" name="regularCss" type="textarea" value="<%= selLayoutSet.getCss() %>" wrapperCssClass="mb-0 mt-4" />
+
+<p class="text-secondary">
+	<liferay-ui:message key="this-css-is-loaded-after-the-theme" />
+</p>
+
 <div class="mt-5">
 	<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
 </div>

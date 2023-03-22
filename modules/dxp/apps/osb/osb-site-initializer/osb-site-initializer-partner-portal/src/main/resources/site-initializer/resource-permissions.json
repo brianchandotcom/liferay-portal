@@ -98,6 +98,14 @@
 	},
 	{
 		"actionIds": [
+			"ADD_SUBFOLDER"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CompanyExtender$]",

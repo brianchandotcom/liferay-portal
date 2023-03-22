@@ -164,6 +164,8 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildString());
+			dropdownItem.putData(
+				"usagesCount", String.valueOf(_getUsagesCount()));
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
@@ -212,18 +214,19 @@ public class DDMTemplateActionDropdownItemsProvider {
 		};
 	}
 
+	private int _getUsagesCount() {
+		return PortletPreferenceValueLocalServiceUtil.
+			getPortletPreferenceValuesCount(
+				_ddmTemplate.getCompanyId(), "displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					HtmlUtil.escape(_ddmTemplate.getTemplateKey()));
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getViewDDMTemplateUsagesActionUnsafeConsumer() {
 
-		int usagesCount =
-			PortletPreferenceValueLocalServiceUtil.
-				getPortletPreferenceValuesCount(
-					_ddmTemplate.getCompanyId(), "displayStyle",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						HtmlUtil.escape(_ddmTemplate.getTemplateKey()));
-
 		return dropdownItem -> {
-			dropdownItem.setDisabled(usagesCount == 0);
+			dropdownItem.setDisabled(_getUsagesCount() == 0);
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse

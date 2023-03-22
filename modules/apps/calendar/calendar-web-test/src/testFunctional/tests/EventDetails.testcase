@@ -300,6 +300,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
+		CalendarConfiguration.editNumberOfDaysDisplayedOnAgenda(maxNumberOfDays = 2);
+
 		CalendarNavigator.gotoMonthViaSmallCalendar(dateMonth = "February 2016");
 
 		CalendarNavigator.gotoSpecificBusyDayViaSmallCalendar(dateNumber = 2);

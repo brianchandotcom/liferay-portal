@@ -76,7 +76,8 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Error getting notifications:', error);
 			throw error;
 		}
@@ -95,7 +96,8 @@ const NotificationSidebar: React.FC = () => {
 			}
 
 			return data;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(
 				`Error fetching external reference code for ID ${id}: ${error}`
 			);

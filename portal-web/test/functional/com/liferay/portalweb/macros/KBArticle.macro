@@ -208,10 +208,16 @@ definition {
 			if (isSet(extendedMinutes)) {
 				if (isSet(getExpirationDateByPortal)) {
 					var expirationDateHour = selenium.getAttribute("//input[contains(@id,'expirationDateHour')]@value");
-					var expirationDateAmpm = selenium.getAttribute("//input[contains(@id,'expirationDateAmPm')]@value");
-					var expirationDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
-					var expirationDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
+					var expirationDateAmpmValue = selenium.getAttribute("//input[contains(@id,'expirationDateAmPm')]@value");
 					var expirationDateMinute = selenium.getAttribute("//input[contains(@id,'expirationDateMinute')]@value");
+
+					if (${expirationDateAmpmValue} == 0) {
+						var expirationDateAmpm = "AM";
+					}
+
+					if (${expirationDateAmpmValue} == 1) {
+						var expirationDateAmpm = "PM";
+					}
 
 					var expirationDateMinuteFuture = ${expirationDateMinute} + ${extendedMinutes};
 

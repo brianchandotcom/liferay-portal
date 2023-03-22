@@ -572,6 +572,110 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByListOperatorsObjectEntriesByRelatesObjectEntriesFields()
+		throws Exception {
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s in ('%s', '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+					RandomTestUtil.randomInt())),
+			_objectDefinition1);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/id in ('%s', '%s')", _objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId(),
+					RandomTestUtil.randomInt())),
+			_objectDefinition1);
+
+		// Other side of the relationship
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/%s in ('%s', '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+					RandomTestUtil.randomInt())),
+			_objectDefinition2);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/id in ('%s', '%s')", _objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId(),
+					RandomTestUtil.randomInt())),
+			_objectDefinition2);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship);
+
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s in ('%s', '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+					RandomTestUtil.randomInt())),
+			_objectDefinition1);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/id in ('%s', '%s')", _objectRelationship.getName(),
+					_objectEntry2.getObjectEntryId(),
+					RandomTestUtil.randomInt())),
+			_objectDefinition1);
+
+		// Other side of the relationship
+		// Custom field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/%s in ('%s', '%s')", _objectRelationship.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+					RandomTestUtil.randomInt())),
+			_objectDefinition2);
+
+		// System field
+
+		_assertFilter(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/id in ('%s', '%s')", _objectRelationship.getName(),
+					_objectEntry1.getObjectEntryId(),
+					RandomTestUtil.randomInt())),
+			_objectDefinition2);
+	}
+
+	@Test
 	public void testFilterByLogicalOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 

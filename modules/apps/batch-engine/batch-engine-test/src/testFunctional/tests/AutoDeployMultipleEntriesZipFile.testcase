@@ -22,9 +22,7 @@ definition {
 		else {
 			BlogPostingAPI.deleteAllBlogPostings();
 
-			ObjectAdmin.deleteObjectViaAPI(objectName = "TestObject");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Coupon");
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
 			WebContent.tearDownCP();
 
@@ -43,7 +41,7 @@ definition {
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", 20121, ${staticSiteId});
 
-			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+			var archivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
 				fileNameWithExtension = "blogPosting.zip",
 				sourceFilePath = ${filePath});
 		}
@@ -51,10 +49,12 @@ definition {
 		task ("When I add it to deploy folder") {
 			BatchEngine.moveFileToDeployFolder(
 				fileName = "blogPosting.zip",
-				sourceFilePath = ${arhivedFilePath});
+				sourceFilePath = ${archivedFilePath});
 		}
 
 		task ("Then all blog postings are imported") {
+			BatchEngine.waitUntilBlogsVisibleInUI();
+
 			var response = BlogPostingAPI.getBlogPostings();
 
 			var blogTotalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
@@ -82,7 +82,7 @@ definition {
 
 			FileUtil.replaceStringInFile("${filePath}/object/objectDefinition/batch-engine.json", 20097, ${staticCompanyId});
 
-			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+			var archivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
 				fileNameWithExtension = "multipleElementsParis.zip",
 				sourceFilePath = ${filePath});
 		}
@@ -90,10 +90,12 @@ definition {
 		task ("When I add it to deploy folder") {
 			BatchEngine.moveFileToDeployFolder(
 				fileName = "multipleElementsParis.zip",
-				sourceFilePath = ${arhivedFilePath});
+				sourceFilePath = ${archivedFilePath});
 		}
 
 		task ("Then all elements included in the file are imported") {
+			BatchEngine.waitUntilBlogsVisibleInUI();
+			
 			var response = BlogPostingAPI.getBlogPostings();
 
 			var blogTotalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
@@ -119,7 +121,7 @@ definition {
 
 			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", 20097, ${staticCompanyId});
 
-			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+			var archivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
 				fileNameWithExtension = "objectDefinition.zip",
 				sourceFilePath = ${filePath});
 		}
@@ -127,10 +129,12 @@ definition {
 		task ("When I add it to deploy folder") {
 			BatchEngine.moveFileToDeployFolder(
 				fileName = "objectDefinition.zip",
-				sourceFilePath = ${arhivedFilePath});
+				sourceFilePath = ${archivedFilePath});
 		}
 
 		task ("Then all object definitions are imported") {
+			BatchEngine.waitUntilObjectPresentInUI(labelName = "TestObject");
+
 			var objectStatus1 = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "TestObject");
 			var objectStatus2 = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "Coupon");
 
@@ -172,7 +176,7 @@ definition {
 
 			FileUtil.replaceStringInFile("${filePath}/export.json", 43787, ${ddmStructureId});
 
-			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+			var archivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
 				fileNameWithExtension = "structuredContent.zip",
 				sourceFilePath = ${filePath});
 		}
@@ -180,10 +184,11 @@ definition {
 		task ("When I add it to deploy folder") {
 			BatchEngine.moveFileToDeployFolder(
 				fileName = "structuredContent.zip",
-				sourceFilePath = ${arhivedFilePath});
+				sourceFilePath = ${archivedFilePath});
 		}
 
 		task ("Then all structured contents are imported") {
+			BatchEngine.waitUntilWebContentPresentInUI();
 			var response = HeadlessWebcontentAPI.filterStructuredContent(filtervalue = "priority%20eq%200.0");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(

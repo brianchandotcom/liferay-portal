@@ -38,25 +38,25 @@ definition {
 				teamName = ${teamName});
 
 			JSONTestray.addCases(
-                description = "Description 1",
-                steps = "Steps 1",
 				caseName = "Case 1",
-                priority = "5",
 				caseType = ${caseType},
 				componentName = ${componentName},
-				projectName = ${projectName});
+				description = "Description 1",
+				priority = 5,
+				projectName = ${projectName},
+				steps = "Steps 1");
 
-            JSONTestray.addCases(
-                description = "Description 2",
-                steps = "Steps 2",
+			JSONTestray.addCases(
 				caseName = "Case 2",
-                priority = "4",
 				caseType = ${caseType},
 				componentName = ${componentName},
-				projectName = ${projectName});  
+				description = "Description 2",
+				priority = 4,
+				projectName = ${projectName},
+				steps = "Steps 2");
 		}
 
-        task ("Go to the Cases page") {
+		task ("Go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -72,7 +72,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "teams",
 			objectName = ${teamName});
 
@@ -80,7 +80,7 @@ definition {
 			object = "casetypes",
 			objectName = ${caseType});
 
-        JSONTestrayAPI.deleteProject(projectName = ${projectName});
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 
@@ -89,7 +89,62 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by priority"
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case name"
+	@priority = 5
+	test AdminCanFilterCaseByCaseName {
+		task ("When the user filter a case by name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the filters apply in the list by name") {
+			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 5);
+
+			Testray.assertItemNotPresent(key_name = "Case 2");
+		}
+	}
+
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by description"
+	@priority = 4
+	test AdminCanFilterCaseByDescription {
+		task ("Given the user selects the description column") {
+			TestrayFilter.clickColumn();
+
+			TestrayFilter.selectColumns(listColumn = "Description");
+		}
+
+		task ("When the user filter a case by description") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				locator1 = "TestrayCases#FIELD_DESCRIPTION",
+				value1 = "Description 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the filters apply in the list by description") {
+			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 5);
+
+			Testray.assertItemName(key_name = "Description 1");
+
+			Testray.assertItemNotPresent(key_name = "Description 2");
+		}
+	}
+
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by priority"
 	@priority = 5
 	test AdminCanFilterCaseByPriority {
 		task ("When the user filter a case by priority") {
@@ -98,152 +153,64 @@ definition {
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
 				selectFieldLabel = "Priority",
-                value1 = "4");
+				value1 = 4);
 
-            Button.click(button = "Apply");
+			Button.click(button = "Apply");
 		}
 
-        task ("Then can see the filters apply in the list by priority") {
-            TestrayCases.verifyCase(
+		task ("Then can see the filters apply in the list by priority") {
+			TestrayCases.verifyCase(
 				caseComponent = "Component 1",
 				caseName = "Case 2",
 				casePriority = 4);
 
-		    Testray.assertItemNotPresent(key_name = "Case 1");
-        }
+			Testray.assertItemNotPresent(key_name = "Case 1");
+		}
 	}
 
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case name"
-	@priority = 5
-	test AdminCanFilterCaseByCaseName {
-		task ("When the user filter a case by name") {
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by steps"
+	@priority = 4
+	test AdminCanFilterCaseBySteps {
+		task ("When the user filter a case by steps") {
 			TestrayFilter.clickFilter();
 
 			Type(
-                key_fieldLabel = "Case Name",
-                locator1 = "TextInput#GENERIC_TEXT_INPUT",
-                value1 = "Case 1");
+				locator1 = "TestrayCases#FIELD_STEPS",
+				value1 = "Steps 1");
 
-            Button.click(button = "Apply");
+			Button.click(button = "Apply");
 		}
 
-        task ("Then can see the filters apply in the list by name") {
-            TestrayCases.verifyCase(
+		task ("Then can see the filters apply in the list by steps") {
+			TestrayCases.verifyCase(
 				caseComponent = "Component 1",
 				caseName = "Case 1",
 				casePriority = 5);
 
-		    Testray.assertItemNotPresent(key_name = "Case 2");
-        }
-	}
-
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by description"
-	@priority = 4
-	test AdminCanFilterCaseByDescription {
-		task ("Given the user selects the description column") {
-            TestrayFilter.clickColumn();
-
-            TestrayFilter.selectColumns(listColumn = "Description");
-        }
-
-        task ("When the user filter a case by description") {
-            TestrayFilter.clickFilter();
-
-			Type(
-                locator1 = "TestrayCases#FIELD_DESCRIPTION",
-                value1 = "Description 1");
-
-            Button.click(button = "Apply");
+			Testray.assertItemNotPresent(key_name = "Case 2");
 		}
-
-        task ("Then can see the filters apply in the list by description") {
-            TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
-
-            Testray.assertItemName(key_name = "Description 1");
-
-		    Testray.assertItemNotPresent(key_name = "Description 2");
-        }
 	}
 
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by steps"
-	@priority = 4
-	test AdminCanFilterCaseBySteps {
-        task ("When the user filter a case by steps") {
-            TestrayFilter.clickFilter();
-
-			Type(
-                locator1 = "TestrayCases#FIELD_STEPS",
-                value1 = "Steps 1");
-
-            Button.click(button = "Apply");
-		}
-
-        task ("Then can see the filters apply in the list by steps") {
-            TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
-
-            Testray.assertItemNotPresent(key_name = "Case 2");
-        }
-	}
-
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
 	@priority = 5
 	test AdminCanFilterForNonexistantCase {
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
 
 			Type(
-                key_fieldLabel = "Case Name",
-                locator1 = "TextInput#GENERIC_TEXT_INPUT",
-                value1 = "Case 3");
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 3");
 
-            Button.click(button = "Apply");
+			Button.click(button = "Apply");
 		}
 
-        task ("Then can not see the case in the list") {
-		    Testray.assertItemNotPresent(key_name = "Case 3");
-        }
+		task ("Then can not see the case in the list") {
+			Testray.assertItemNotPresent(key_name = "Case 3");
+		}
 	}
 
-    @description = "Story ID: LPS-176898 | Test Summary: Verify that can clean the filter results"
-	@priority = 3
-	test CanClearFilterResults {
-		task ("When the user filters a case by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-                key_fieldLabel = "Case Name",
-                locator1 = "TextInput#GENERIC_TEXT_INPUT",
-                value1 = "Test");
-
-            Button.click(button = "Apply");
-		}
-
-        task ("And can not see the cases in the list") {
-		    Testray.assertItemNotPresent(key_name = "Case 1");
-
-            Testray.assertItemNotPresent(key_name = "Case 2");
-        }
-
-        task ("When the user clear the filters") {
-            TestrayFilter.clickFilter();
-
-            Click(locator1 = "TestrayFilter#CLEAR_FILTER");
-		}
-
-        task ("Then can see the cases in the list again") {
-		    Testray.assertItemName(key_name = "Case 1");
-
-            Testray.assertItemName(key_name = "Case 2");
-        }
-	}
-
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 5
 	test AdminCanFilterOptionsToFilter {
 		task ("When the user search filter called priority") {
@@ -252,20 +219,54 @@ definition {
 			TestrayFilter.searchFilter(value = "Priority");
 		}
 
-        task ("Then can see the label called priority") {
-            AssertElementPresent(
+		task ("Then can see the label called priority") {
+			AssertElementPresent(
 				locator1 = "Select#SELECT_FIELD_LABEL",
 				selectFieldLabel = "Priority");
-        }
+		}
 
-        task ("When change the filter search to case name") {
-            TestrayFilter.searchFilter(value = "Case Name");
-        }
+		task ("When change the filter search to case name") {
+			TestrayFilter.searchFilter(value = "Case Name");
+		}
 
-        task ("Then can not see the label called priority anymore") {
-		    AssertElementNotPresent(
+		task ("Then can not see the label called priority anymore") {
+			AssertElementNotPresent(
 				locator1 = "Select#SELECT_FIELD_LABEL",
 				selectFieldLabel = "Priority");
-        }
+		}
 	}
+
+	@description = "Story ID: LPS-176898 | Test Summary: Verify that can clean the filter results"
+	@priority = 3
+	test CanClearFilterResults {
+		task ("When the user filters a case by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Test");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("And can not see the cases in the list") {
+			Testray.assertItemNotPresent(key_name = "Case 1");
+
+			Testray.assertItemNotPresent(key_name = "Case 2");
+		}
+
+		task ("When the user clear the filters") {
+			TestrayFilter.clickFilter();
+
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+		}
+
+		task ("Then can see the cases in the list again") {
+			Testray.assertItemName(key_name = "Case 1");
+
+			Testray.assertItemName(key_name = "Case 2");
+		}
+	}
+
 }

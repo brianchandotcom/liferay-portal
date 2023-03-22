@@ -1,33 +1,33 @@
 definition {
 
+	macro clickColumn {
+		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
+	}
+
 	macro clickFilter {
 		Click(locator1 = "TestrayFilter#FILTER_ICON");
 	}
 
-    macro clickColumn {
-		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
-	}
-
-    macro multiSelect {
+	macro multiSelect {
 		Click(
-            locator1 = "TestrayFilter#MULTI_SELECT_BY_LABEL",
-            key_label = ${label});
+			key_label = ${label},
+			locator1 = "TestrayFilter#MULTI_SELECT_BY_LABEL");
 	}
 
-    macro searchFilter {
+	macro searchFilter {
 		Type(
-            locator1 = "TestrayFilter#SEARCH_FILTERS",
-            value1 = ${value});
+			locator1 = "TestrayFilter#SEARCH_FILTERS",
+			value1 = ${value});
 	}
 
-    macro selectColumns {
-        for (var column : list ${listColumn}) {
-            Click(
-                key_column = ${column},
-                locator1 = "TestrayFilter#COLUMNS_OPTIONS");
-        }
+	macro selectColumns {
+		for (var column : list ${listColumn}) {
+			Click(
+				key_column = ${column},
+				locator1 = "TestrayFilter#COLUMNS_OPTIONS");
+		}
 
-        Button.click(button = "Apply");
-    }
+		Button.click(button = "Apply");
+	}
 
 }

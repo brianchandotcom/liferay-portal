@@ -33,49 +33,55 @@ definition {
 	@priority = 4
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
-			FrontendDataSetAdmin.canCreateDataSets(
+			FrontendDataSetAdmin.createDataSet(
 				key_type = "Channel",
-				name = "Test Dataset");
+				key_name = "Test Dataset 1");
 
-			FrontendDataSetAdmin.canCreateDataSets(
+			FrontendDataSetAdmin.createDataSet(
 				key_type = "Account",
-				name = "Test Dataset2");
+				key_name = "Test Dataset 2");
 
-			FrontendDataSetAdmin.canCreateDataSets(
+			FrontendDataSetAdmin.createDataSet(
 				key_type = "Cart",
-				name = "Test Dataset3");
+				key_name = "Test Dataset 3");
 
-			FrontendDataSetAdmin.canCreateDataSets(
+			FrontendDataSetAdmin.createDataSet(
 				key_type = "DataLayout",
-				name = "Test Dataset4");
+				key_name = "Test Dataset 4");
 
-			FrontendDataSetAdmin.canCreateDataSets(
+			FrontendDataSetAdmin.createDataSet(
 				key_type = "Diagram",
-				name = "Test Dataset5");
+				key_name = "Test Dataset 5");
 
-			FrontendDataSetAdmin.canCreateDataSets(
+			FrontendDataSetAdmin.createDataSet(
 				key_type = "Form",
-				name = "Test Dataset6");
+				key_name = "Test Dataset 6");
 		}
 
 		task ("When changing the page to 4 entries") {
-			ObjectPortlet.changePagination(itemsPerPage = "4 items");
+			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 items");
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			VerifyElementPresent(
-				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-				value1 = "Test Dataset");
+			for (var num : list "1,2,3,4") {
+			AssertElementPresent(
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL",
+				key_itemName = "Test Dataset ${num}");
+		}
+			Pagination.viewResults(results = "Showing 1 to 4 of 6");
 		}
 
 		task ("When to switch to page 2") {
-			ObjectPortlet.checkAnyPage(pageNumber = 2);
+			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 
 		task ("Then 2 entries are displayed") {
-			VerifyElementPresent(
-				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-				value1 = "Test Dataset");
+			for (var num : list "5,6") {
+			AssertElementPresent(
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL",
+				key_itemName = "Test Dataset ${num}");
+		}
+		Pagination.viewResults(results = "Showing 5 to 6 of 6");
 		}
 	}
 

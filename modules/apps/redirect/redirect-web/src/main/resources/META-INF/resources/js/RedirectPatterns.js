@@ -119,6 +119,7 @@ const PatternField = ({
 					</label>
 
 					<ClayInput
+						className="destination-url-input"
 						id="destinationURL"
 						name={`${portletNamespace}destinationURL_${index}`}
 						onBlur={({currentTarget}) => {

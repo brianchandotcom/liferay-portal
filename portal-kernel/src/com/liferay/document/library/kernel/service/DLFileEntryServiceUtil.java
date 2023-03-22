@@ -171,6 +171,13 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static List<DLFileEntry> getFileEntries(
+			long groupId, double scoreGTE, int start, int end)
+		throws PortalException {
+
+		return getService().getFileEntries(groupId, scoreGTE, start, end);
+	}
+
+	public static List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, int status, int start, int end,
 			OrderByComparator<DLFileEntry> orderByComparator)
 		throws PortalException {
@@ -215,6 +222,12 @@ public class DLFileEntryServiceUtil {
 
 		return getService().getFileEntries(
 			groupId, folderId, mimeTypes, start, end, orderByComparator);
+	}
+
+	public static int getFileEntriesCount(long groupId, double scoreGTE)
+		throws PortalException {
+
+		return getService().getFileEntriesCount(groupId, scoreGTE);
 	}
 
 	public static int getFileEntriesCount(long groupId, long folderId) {

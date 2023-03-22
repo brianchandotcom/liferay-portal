@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -136,25 +137,37 @@ public class CompanyThreadLocal {
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select userId, languageId, timeZoneId from User_ " +
-							"where companyId = ? and type_ = ?")) {
+			String query =
+				"select userId, languageId, timeZoneId from User_ where " +
+					"companyId = ?";
+
+			DBInspector dbInspector = new DBInspector(connection);
+			PreparedStatement preparedStatement;
+
+			if (dbInspector.hasColumn("User_", "defaultUser")) {
+				preparedStatement = connection.prepareStatement(
+					query + " and defaultUser = ?");
 
 				preparedStatement.setLong(1, companyId);
-				preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
+				preparedStatement.setBoolean(2, Boolean.TRUE);
+			}
+			else {
+				preparedStatement = connection.prepareStatement(
+					query + " and type_ = " + UserConstants.TYPE_GUEST);
 
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (!resultSet.next()) {
-						return null;
-					}
+				preparedStatement.setLong(1, companyId);
+			}
 
-					guestUser = UserLocalServiceUtil.createUser(
-						resultSet.getLong("userId"));
-
-					guestUser.setLanguageId(resultSet.getString("languageId"));
-					guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return null;
 				}
+
+				guestUser = UserLocalServiceUtil.createUser(
+					resultSet.getLong("userId"));
+
+				guestUser.setLanguageId(resultSet.getString("languageId"));
+				guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
 			}
 		}
 

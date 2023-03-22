@@ -12,28 +12,18 @@
  * details.
  */
 
-import {FormError} from '@liferay/object-js-components-web';
-import React from 'react';
-interface ContentContainerProps {
+/// <reference types="react" />
+
+interface DefinitionOfTermsProps {
 	baseResourceURL: string;
-	editorConfig: object;
-	errors: FormError<NotificationTemplate>;
 	objectDefinitions: ObjectDefinition[];
-	selectedLocale: Locale;
-	setSelectedLocale: React.Dispatch<
-		React.SetStateAction<Liferay.Language.Locale>
-	>;
-	setValues: (values: Partial<NotificationTemplate>) => void;
-	values: NotificationTemplate;
 }
-export default function ContentContainer({
+export interface Item {
+	termLabel: string;
+	termName: string;
+}
+export declare function DefinitionOfTerms({
 	baseResourceURL,
-	editorConfig,
-	errors,
 	objectDefinitions,
-	selectedLocale,
-	setSelectedLocale,
-	setValues,
-	values,
-}: ContentContainerProps): JSX.Element;
+}: DefinitionOfTermsProps): JSX.Element;
 export {};

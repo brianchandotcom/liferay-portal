@@ -29,6 +29,7 @@ import {defaultLanguageId} from '../util/constants';
 import './EditNotificationTemplate.scss';
 import {BasicInfoContainer} from './BasicInfoContainer/BasicInfoContainer';
 import ContentContainer from './ContentContainer/ContentContainer';
+import DefinitionOfTermsContainer from './DefinitionOfTermsContainer/DefinitionOfTermsContainer';
 import {SettingsContainer} from './SettingsContainer/SettingsContainer';
 
 const HEADERS = new Headers({
@@ -71,6 +72,10 @@ export default function EditNotificationTemplate({
 	notificationTemplateId = Number(notificationTemplateId);
 
 	const [isSubmitted, setIsSubmitted] = useState(false);
+
+	const [objectDefinitions, setObjectDefinitions] = useState<
+		ObjectDefinition[]
+	>([]);
 
 	const [selectedLocale, setSelectedLocale] = useState<Locale>(
 		Liferay.ThemeDisplay.getDefaultLanguageId
@@ -241,6 +246,9 @@ export default function EditNotificationTemplate({
 					Liferay.Language.get('untitled-notification-template')
 				);
 			}
+			const objectDefinitionsItems = await API.getObjectDefinitions();
+
+			setObjectDefinitions(objectDefinitionsItems);
 		};
 
 		makeFetch();
@@ -310,11 +318,19 @@ export default function EditNotificationTemplate({
 						baseResourceURL={baseResourceURL}
 						editorConfig={editorConfig}
 						errors={errors}
+						objectDefinitions={objectDefinitions}
 						selectedLocale={selectedLocale}
 						setSelectedLocale={setSelectedLocale}
 						setValues={setValues}
 						values={values}
 					/>
+
+					{Liferay.FeatureFlags['LPS-165849'] && (
+						<DefinitionOfTermsContainer
+							baseResourceURL={baseResourceURL}
+							objectDefinitions={objectDefinitions}
+						/>
+					)}
 				</div>
 			</div>
 		</ClayForm>

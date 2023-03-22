@@ -14,14 +14,13 @@
 
 import {Text} from '@clayui/core';
 import {
-	API,
 	Card,
 	FormError,
 	InputLocalized,
 	RichTextLocalized,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import {Attachments} from './Attachments';
 import {DefinitionOfTerms} from './DefinitionOfTerms';
@@ -47,6 +46,7 @@ interface ContentContainerProps {
 	baseResourceURL: string;
 	editorConfig: object;
 	errors: FormError<NotificationTemplate>;
+	objectDefinitions: ObjectDefinition[];
 	selectedLocale: Locale;
 	setSelectedLocale: React.Dispatch<
 		React.SetStateAction<Liferay.Language.Locale>
@@ -59,25 +59,12 @@ export default function ContentContainer({
 	baseResourceURL,
 	editorConfig,
 	errors,
+	objectDefinitions,
 	selectedLocale,
 	setSelectedLocale,
 	setValues,
 	values,
 }: ContentContainerProps) {
-	const [objectDefinitions, setObjectDefinitions] = useState<
-		ObjectDefinition[]
-	>([]);
-
-	useEffect(() => {
-		const makeFetch = async () => {
-			const objectDefinitionsItems = await API.getObjectDefinitions();
-
-			setObjectDefinitions(objectDefinitionsItems);
-		};
-
-		makeFetch();
-	}, []);
-
 	return (
 		<Card title={Liferay.Language.get('content')}>
 			<Text as="span" color="secondary">
@@ -162,13 +149,17 @@ export default function ContentContainer({
 				</>
 			)}
 
-			<DefinitionOfTerms
-				baseResourceURL={baseResourceURL}
-				objectDefinitions={objectDefinitions}
-			/>
+			{!Liferay.FeatureFlags['LPS-165849'] && (
+				<>
+					<DefinitionOfTerms
+						baseResourceURL={baseResourceURL}
+						objectDefinitions={objectDefinitions}
+					/>
 
-			{Liferay.FeatureFlags['LPS-171625'] && (
-				<GeneralTerms baseResourceURL={baseResourceURL} />
+					{Liferay.FeatureFlags['LPS-171625'] && (
+						<GeneralTerms baseResourceURL={baseResourceURL} />
+					)}
+				</>
 			)}
 
 			{values.type === 'email' && (

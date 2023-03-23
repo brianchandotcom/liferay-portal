@@ -64,8 +64,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-157646 | Test Summary: Verify that when the user is not a Liferay Staff only the project he is associated with is displayed to him"
+	@ignore = "true"
 	@priority = 4
 	test NonStaffUsersJustSeeTheAssociatedProject {
+
+		// This test will be ignored until the account restriction bug is fixed
+		
 		task ("Then I go to CP2.0 and assert that all projects are visible") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

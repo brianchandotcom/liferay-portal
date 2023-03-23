@@ -126,9 +126,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getJSModule(String identifier) {
-		Map<String, JSModule> jsModules = _jsModulesCache.jsModules;
-
-		return jsModules.get(identifier);
+		return _jsModules.get(identifier);
 	}
 
 	/**
@@ -139,9 +137,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSPackage getJSPackage(String identifier) {
-		Map<String, JSPackage> jsPackages = _jsModulesCache.jsPackages;
-
-		return jsPackages.get(identifier);
+		return _jsPackages.get(identifier);
 	}
 
 	/**
@@ -151,9 +147,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSPackage> getJSPackages() {
-		Map<String, JSPackage> jsPackages = _jsModulesCache.jsPackages;
-
-		return jsPackages.values();
+		return _jsPackages.values();
 	}
 
 	/**
@@ -164,10 +158,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getResolvedJSModule(String identifier) {
-		Map<String, JSModule> resolvedJSModules =
-			_jsModulesCache.resolvedJSModules;
-
-		return resolvedJSModules.get(identifier);
+		return _resolvedJSModules.get(identifier);
 	}
 
 	/**
@@ -177,18 +168,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSModule> getResolvedJSModules() {
-		Map<String, JSModule> resolvedJSModules =
-			_jsModulesCache.resolvedJSModules;
-
-		return resolvedJSModules.values();
+		return _resolvedJSModules.values();
 	}
 
 	@Override
 	public JSPackage getResolvedJSPackage(String identifier) {
-		Map<String, JSPackage> resolvedJSPackages =
-			_jsModulesCache.resolvedJSPackages;
-
-		return resolvedJSPackages.get(identifier);
+		return _resolvedJSPackages.get(identifier);
 	}
 
 	/**
@@ -199,17 +184,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSPackage> getResolvedJSPackages() {
-		Map<String, JSPackage> resolvedJSPackages =
-			_jsModulesCache.resolvedJSPackages;
-
-		return resolvedJSPackages.values();
+		return _resolvedJSPackages.values();
 	}
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		Map<String, String> exactMatchMap = _jsModulesCache.exactMatchMap;
-
-		String mappedModuleName = exactMatchMap.get(moduleName);
+		String mappedModuleName = _exactMatchMap.get(moduleName);
 
 		if (Validator.isNotNull(mappedModuleName)) {
 			return mapModuleName(mappedModuleName);
@@ -272,11 +252,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		Range range = Range.from(versionConstraints, true);
 
-		for (JSPackageVersion jsPackageVersion :
-				_jsModulesCache.jsPackageVersions) {
-
-			JSPackage innerJSPackage = jsPackageVersion.jsPackage;
-			Version version = jsPackageVersion.version;
+		for (JSPackageVersion jsPackageVersion : _jsPackageVersions) {
+			JSPackage innerJSPackage = jsPackageVersion._jsPackage;
+			Version version = jsPackageVersion._version;
 
 			if (packageName.equals(innerJSPackage.getName()) &&
 				range.test(version)) {
@@ -546,9 +524,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		jsPackageVersions.sort(comparator.reversed());
 
-		_jsModulesCache = new JSModulesCache(
-			exactMatchMap, jsModules, jsPackages, jsPackageVersions,
-			resolvedJSModules, resolvedJSPackages);
+		_jsModules = jsModules;
+		_jsPackages = jsPackages;
+		_jsPackageVersions = jsPackageVersions;
+		_resolvedJSModules = resolvedJSModules;
+		_resolvedJSPackages = resolvedJSPackages;
+		_exactMatchMap = exactMatchMap;
 
 		if (npmRegistryUpdatesListeners != null) {
 			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
@@ -575,6 +556,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private BundleTracker<JSBundle> _bundleTracker;
 	private final Map<String, JSPackage> _dependencyJSPackages =
 		new ConcurrentHashMap<>();
+	private Map<String, String> _exactMatchMap;
 	private final Map<String, String> _globalAliases = new HashMap<>();
 	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
 		_javaScriptAwarePortalWebResources;
@@ -582,17 +564,38 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
 
-	private volatile JSModulesCache _jsModulesCache = new JSModulesCache();
+	private Map<String, JSModule> _jsModules = new HashMap<>();
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	private Map<String, JSPackage> _jsPackages = new HashMap<>();
+	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
 	private ServiceTrackerList<NPMRegistryUpdatesListener>
 		_npmRegistryUpdatesListeners;
 	private final Map<String, String> _partialMatchMap =
 		new ConcurrentHashMap<>();
+	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
+	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
+
+	private static class JSPackageVersion {
+
+		public Version getVersion() {
+			return _version;
+		}
+
+		private JSPackageVersion(JSPackage jsPackage) {
+			_jsPackage = jsPackage;
+
+			_version = Version.from(jsPackage.getVersion(), true);
+		}
+
+		private final JSPackage _jsPackage;
+		private final Version _version;
+
+	}
 
 	private class NPMRegistryBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<JSBundle> {

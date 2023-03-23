@@ -18,6 +18,16 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro deleteDataSet {
+		Click(
+			key_entry = ${entry},
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		AssertElementPresent(locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+	}
+
 	macro searchProvider {
 		Click(
 			dropdownLabel = "Choose an Option",
@@ -36,12 +46,6 @@ definition {
 		Click(
 			locator1 = "FrontendDataSet#SELECT_TYPE_PROVIDER",
 			value1 = ${key_type});
-	}
-
-	macro changePagination {
-		Click(locator1 = "FrontendDataSetAdmin#ITEMS_PER_PAGE_SELECT");
-
-		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
 }

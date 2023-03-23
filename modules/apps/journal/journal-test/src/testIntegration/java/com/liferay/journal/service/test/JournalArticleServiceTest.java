@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -668,39 +667,6 @@ public class JournalArticleServiceTest {
 	}
 
 	@Test
-	public void testSearchArticlesByKeyword() throws Exception {
-		List<JournalArticle> expectedArticles = createArticlesWithKeyword(2);
-
-		int count = countArticlesByKeyword(
-			_keyword, WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(2, count);
-
-		List<JournalArticle> articles = searchArticlesByKeyword(
-			_keyword, WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(expectedArticles, articles);
-	}
-
-	@Test
-	public void testSearchArticlesByKeywordAndStatus() throws Exception {
-		List<JournalArticle> initialArticles = createArticlesWithKeyword(2);
-
-		updateArticleStatus(
-			initialArticles.get(0), WorkflowConstants.STATUS_DRAFT);
-
-		int count = countArticlesByKeyword(
-			_keyword, WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(2, count);
-
-		List<JournalArticle> articles = searchArticlesByKeyword(
-			_keyword, WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(initialArticles, articles);
-	}
-
-	@Test
 	public void testUpdateArticle() throws Exception {
 		_article.setDisplayDate(new Date());
 
@@ -758,33 +724,6 @@ public class JournalArticleServiceTest {
 		return articles;
 	}
 
-	protected int countArticlesByKeyword(String keyword, int status)
-		throws Exception {
-
-		return JournalArticleLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, null, null,
-			null, keyword, "", "", null, null, null, status, true);
-	}
-
-	protected List<JournalArticle> createArticlesWithKeyword(int count)
-		throws Exception {
-
-		_keyword = RandomTestUtil.randomString();
-
-		List<JournalArticle> articles = searchArticlesByKeyword(
-			_keyword, WorkflowConstants.STATUS_ANY);
-
-		if (articles.isEmpty()) {
-			return addArticles(count, _keyword);
-		}
-
-		createArticlesWithKeyword(count);
-
-		return null;
-	}
-
 	protected JournalArticle fetchLatestArticle(int status) throws Exception {
 		return JournalArticleLocalServiceUtil.fetchLatestArticle(
 			_group.getGroupId(), _article.getArticleId(), status);
@@ -807,18 +746,6 @@ public class JournalArticleServiceTest {
 			"com/liferay/journal/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
-	}
-
-	protected List<JournalArticle> searchArticlesByKeyword(
-			String keyword, int status)
-		throws Exception {
-
-		return JournalArticleLocalServiceUtil.search(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, null, null,
-			null, keyword, "", "", null, null, null, status, false,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	protected void testAddArticleRequiredFields(
@@ -909,7 +836,6 @@ public class JournalArticleServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private String _keyword;
 	private JournalArticle _latestArticle;
 	private String _originalPortalPreferencesXML;
 

@@ -43,13 +43,13 @@ import com.liferay.portal.search.searcher.Searcher;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author David Arques
@@ -94,14 +94,15 @@ public class ContentDashboardDataProvider {
 	private Map<String, String> _getAssetCategoryTitlesMap(
 		AssetVocabulary assetVocabulary, Locale locale) {
 
-		List<AssetCategory> categories = assetVocabulary.getCategories();
+		Map<String, String> assetCategoryTitlesMap = new HashMap<>();
 
-		Stream<AssetCategory> stream = categories.stream();
+		for (AssetCategory assetCategory : assetVocabulary.getCategories()) {
+			assetCategoryTitlesMap.put(
+				String.valueOf(assetCategory.getCategoryId()),
+				assetCategory.getTitle(locale));
+		}
 
-		return stream.collect(
-			Collectors.toMap(
-				entry -> String.valueOf(entry.getCategoryId()),
-				entry -> entry.getTitle(locale)));
+		return assetCategoryTitlesMap;
 	}
 
 	private String _getAssetVocabularyField(AssetVocabulary assetVocabulary) {
@@ -213,16 +214,17 @@ public class ContentDashboardDataProvider {
 				assetCategoryTitlesMap, assetVocabulary, buckets);
 		}
 
-		Stream<AssetCategoryMetric> stream = childAssetCategoryMetrics.stream();
+		Set<String> keys = new HashSet<>();
+
+		for (AssetCategoryMetric assetCategoryMetric :
+				childAssetCategoryMetrics) {
+
+			keys.add(assetCategoryMetric.getKey());
+		}
 
 		List<AssetCategoryMetric> assetCategoryMetrics =
 			_toAssetCategoryMetrics(
-				assetCategoryTitlesMap, buckets,
-				stream.map(
-					AssetCategoryMetric::getKey
-				).collect(
-					Collectors.toSet()
-				),
+				assetCategoryTitlesMap, buckets, keys,
 				childAssetCategoryTitlesMap, childAssetVocabulary,
 				_getChildNoneAssetCategoryMetricCounts(
 					(FilterAggregationResult)
@@ -272,12 +274,13 @@ public class ContentDashboardDataProvider {
 				filterAggregationResult.getChildAggregationResult(
 					"childCategories");
 
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+		Map<String, Long> bucketDocCounts = new HashMap<>();
 
-		Stream<Bucket> stream = buckets.stream();
+		for (Bucket bucket : termsAggregationResult.getBuckets()) {
+			bucketDocCounts.put(bucket.getKey(), bucket.getDocCount());
+		}
 
-		return stream.collect(
-			Collectors.toMap(Bucket::getKey, Bucket::getDocCount));
+		return bucketDocCounts;
 	}
 
 	private BooleanQuery _getFilterBooleanQuery(

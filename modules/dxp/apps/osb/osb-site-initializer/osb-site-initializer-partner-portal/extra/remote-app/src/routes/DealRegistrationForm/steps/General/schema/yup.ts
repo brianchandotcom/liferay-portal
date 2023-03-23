@@ -13,7 +13,7 @@ import {array, number, object, string} from 'yup';
 
 import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
-const phoneZipRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneZipRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{2,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const generalSchema = object({
 	additionalContact: object({

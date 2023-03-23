@@ -1,15 +1,19 @@
 @component-name = "portal-headless"
 definition {
 
-	property custom.properties = "include-and-override=portal-liferay-online.properties";
+	property custom.properties = "include-and-override=portal-liferay-online.properties${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Headless";
 
 	setUp {
+		TestCase.setUpPortalInstance();
+
 		User.firstLoginUI();
 
 		task ("Given an OAuth application with headless scopes is created on default instance") {
+			OAuth2.openOAuth2Admin();
+
 			OAuth2ForObject.addOAuth2Application();
 
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
@@ -26,11 +30,19 @@ definition {
 		}
 
 		task ("And Given an OAuth application with headless scopes is created on www.able.com") {
-			OAuth2ForObject.addOAuth2Application(baseURL = "http://www.able.com:8080");
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+
+			OAuth2ForObject.addOAuth2Application();
 
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
 				baseURL = "http://www.able.com:8080",
-				resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything");
+				resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
+				resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
 		}
 
 		task ("And Given objectDefinition Test with site scope and new field name is created and published in default instance") {
@@ -55,6 +67,8 @@ definition {
 	}
 
 	tearDown {
+		OAuth2.openOAuth2Admin();
+
 		var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
 			resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
 			resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
@@ -65,6 +79,20 @@ definition {
 
 		OAuth2.deleteApplication(applicationName = "OAuth Application");
 
+		OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+
+		var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+			baseURL = "http://www.able.com:8080",
+			resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
+			resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
+
+		ObjectAdmin.deleteObjectViaAPI(
+			objectName = "Test",
+			token = ${virtualInstanceToken},
+			virtualHost = "www.able.com");
+
+		OAuth2.deleteApplication(applicationName = "OAuth Application");
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
@@ -72,11 +100,10 @@ definition {
 		}
 	}
 
-	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateObjectEntryByScopeKey {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanCreateObjectEntryByScopeKey";
 
 		task ("When I use postScopeScopeKey and scopeKey to create an object entry in default instance") {
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
@@ -103,16 +130,16 @@ definition {
 		}
 	}
 
-	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateObjectEntryInVirtualInstance {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanCreateObjectEntryInVirtualInstance";
 
 		task ("When I use postTest to create an object entry in www.able.com instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
 				baseURL = "http://www.able.com:8080",
-				resourceCheckList = "C_Test.everything");
+				resourceCheckList = "C_Test.everything",
+				resourcePanels = "C_Test");
 
 			ObjectDefinitionAPI.createObjectEntryWithField(
 				en_US_plural_label = "tests",
@@ -136,11 +163,10 @@ definition {
 		}
 	}
 
-	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
-	@ignore = "true"
 	@priority = 4
 	test CanIncludeObjectFieldInAPIExplorer {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanIncludeObjectFieldInAPIExplorer";
 
 		task ("Given navigate to www.able.com:8080/o/c/tests") {
 			APIExplorer.navigateToOpenAPI(

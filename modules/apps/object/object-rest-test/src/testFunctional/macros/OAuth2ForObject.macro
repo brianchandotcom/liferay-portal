@@ -1,15 +1,6 @@
 definition {
 
 	macro addOAuth2Application {
-		if (isSet(baseURL)) {
-			SignIn.signInSpecificURL(url = ${baseURL});
-		}
-		else {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		OAuth2.openOAuth2Admin(baseURL = ${baseURL});
-
 		OAuth2.addApplication(
 			applicationName = "OAuth Application",
 			checkboxUncheckList = "Authorization Code");

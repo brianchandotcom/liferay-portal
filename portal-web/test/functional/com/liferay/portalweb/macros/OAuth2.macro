@@ -361,8 +361,8 @@ definition {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 
-			if (isSet(resourcePanels) && (${resourcePanels} != "")) {
-				for (var resourcePanel : list ${resourcePanels}) {
+			for (var resourcePanel : list ${resourcePanels}) {
+				if (IsElementPresent(key_panel = ${resourcePanel}, locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED")) {
 					OAuth2.expandResourcePanel(resourcePanel = ${resourcePanel});
 				}
 			}

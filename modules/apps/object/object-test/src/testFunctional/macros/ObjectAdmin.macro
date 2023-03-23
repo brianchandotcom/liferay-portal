@@ -836,7 +836,8 @@ definition {
 			objectName = ${objectName},
 			token = ${token},
 			userEmailAddress = ${userEmailAddress},
-			userPassword = ${userPassword});
+			userPassword = ${userPassword},
+			virtualHost = ${virtualHost});
 	}
 
 	macro deleteRelationshipViaUI {

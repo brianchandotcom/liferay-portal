@@ -27,6 +27,7 @@ export function createApp({
 			active: true,
 			catalogId,
 			categories: appCategories,
+			configuration: {allowBackOrder: true, maxOrderQuantity: 1},
 			description: {en_US: appDescription},
 			name: {en_US: appName},
 			productStatus: 2,

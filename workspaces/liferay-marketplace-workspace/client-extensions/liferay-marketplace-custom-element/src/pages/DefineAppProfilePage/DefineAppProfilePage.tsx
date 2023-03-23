@@ -238,7 +238,7 @@ export function DefineAppProfilePage({
 			</div>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={!appName || !appDescription}
+				disableContinueButton={!appCategories || !appDescription || !appName  || !appTags}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					let product;

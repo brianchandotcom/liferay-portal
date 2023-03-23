@@ -14,16 +14,10 @@
 
 import ClayTabs from '@clayui/tabs';
 import {useEffect, useMemo} from 'react';
-import {Outlet, useNavigate, useParams} from 'react-router-dom';
+import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {useFetch} from '~/hooks/useFetch';
 import useSearchBuilder from '~/hooks/useSearchBuilder';
-import {
-	APIResponse,
-	TestrayComponent,
-	TestrayRun,
-	TestrayTeam,
-	testrayRunImpl,
-} from '~/services/rest';
+import {APIResponse, TestrayRun, testrayRunImpl} from '~/services/rest';
 
 import CompareRunDetails from '.';
 import Container from '../../components/Layout/Container';
@@ -31,79 +25,12 @@ import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 import useCompareRuns from './useCompareRuns';
 
-export type ApiResponse = {
-	components: TestrayComponent;
-	dueStatuses: string[];
-	teams: TestrayTeam;
-	values: number[][];
-};
-
-const COMPARE_RUNS_ROOT_PATH = '/compare-runs';
-
-const apiResponse: ApiResponse[] = [
-	{
-		components: {
-			dateCreated: '',
-			dateModified: '',
-			externalReferenceCode: '',
-			id: 0,
-			name: 'Solutions',
-			originationKey: '',
-			r_teamToComponents_c_teamId: 0,
-			status: '',
-			teamId: 0,
-		},
-		dueStatuses: ['PASSED', 'FAILED', 'BLOCKED', 'TEST FIX', 'DNR'],
-		teams: {
-			dateCreated: '',
-			dateModified: '',
-			externalReferenceCode: '',
-			id: 0,
-			name: 'Solutions',
-		},
-		values: [
-			[1, 0, 0, 4, 5],
-			[1, 2, 3, 4, 5],
-			[1, 2, 3, 4, 5],
-			[1, 2, 3, 4, 5],
-			[1, 2, 3, 4, 5],
-		],
-	},
-	{
-		components: {
-			dateCreated: '',
-			dateModified: '',
-			externalReferenceCode: '',
-			id: 0,
-			name: 'Global Service',
-			originationKey: '',
-			r_teamToComponents_c_teamId: 0,
-			status: '',
-			teamId: 0,
-		},
-		dueStatuses: ['PASSED', 'FAILED', 'BLOCKED', 'TEST FIX', 'DNR'],
-		teams: {
-			dateCreated: '',
-			dateModified: '',
-			externalReferenceCode: '',
-			id: 0,
-			name: 'Global Service',
-		},
-		values: [
-			[1, 0, 0, 4, 5],
-			[1, 2, 3, 4, 5],
-			[1, 2, 3, 4, 5],
-			[1, 2, 3, 4, 5],
-			[1, 2, 3, 4, 5],
-		],
-	},
-];
-
 const CompareRunsOutlet = () => {
 	const navigate = useNavigate();
 	const {setDropdownIcon, setHeading, setTabs} = useHeader();
-	const {comparableTabs, currentTab} = useCompareRuns();
 	const {runA, runB} = useParams();
+	const {pathname} = useLocation();
+	const compareRuns = useCompareRuns('details');
 
 	const caseResultFilter = useSearchBuilder({useURIEncode: false});
 
@@ -129,6 +56,7 @@ const CompareRunsOutlet = () => {
 
 	useEffect(() => {
 		const title = runs[0]?.build?.project?.name;
+
 		if (title) {
 			setTimeout(() => {
 				setHeading([
@@ -145,7 +73,7 @@ const CompareRunsOutlet = () => {
 
 	return (
 		<>
-			<CompareRunDetails matrixData={apiResponse?.[0]} runs={runs} />
+			<CompareRunDetails matrixData={compareRuns[0].values} runs={runs} />
 
 			<Container className="mt-3">
 				<ClayTabs className="header-container-tabs">
@@ -166,22 +94,20 @@ const CompareRunsOutlet = () => {
 							title: i18n.translate('cases'),
 						},
 					].map((tab, index) => (
-							<ClayTabs.Item
-								active={tab.active}
-								innerProps={{
-									'aria-controls': `tabpanel-${index}`,
-								}}
-								key={index}
-								onClick={() => navigate(tab.path)}
-							>
-								{tab.title}
-							</ClayTabs.Item>
-						))}
+						<ClayTabs.Item
+							active={tab.active}
+							innerProps={{
+								'aria-controls': `tabpanel-${index}`,
+							}}
+							key={index}
+							onClick={() => navigate(tab.path)}
+						>
+							{tab.title}
+						</ClayTabs.Item>
+					))}
 				</ClayTabs>
 
-				<h5 className="mt-5">{currentTab?.title}</h5>
-
-				<Outlet context={{COMPARE_RUNS_ROOT_PATH, apiResponse}} />
+				<Outlet context={{runs}} />
 			</Container>
 		</>
 	);

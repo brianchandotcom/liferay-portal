@@ -23,6 +23,7 @@ type TransformData<T = any> = (data: T) => T;
 
 export type APIParametersOptions = {
 	aggregationTerms?: string;
+	customParams?: {[key: string]: unknown};
 	fields?: string;
 	filter?: string;
 	nestedFields?: string;
@@ -102,6 +103,15 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		};
 
 		const searchParams = new URLSearchParams(getBaseSearchParams(baseURL));
+
+		if (parameters.customParams) {
+			parameters = {
+				...parameters,
+				...parameters.customParams,
+			};
+
+			delete parameters.customParams;
+		}
 
 		for (const key in parameters) {
 			const value = (parameters as any)[key] as

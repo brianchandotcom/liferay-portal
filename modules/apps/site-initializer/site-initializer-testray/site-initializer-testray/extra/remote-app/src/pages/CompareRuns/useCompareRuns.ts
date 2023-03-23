@@ -1,4 +1,5 @@
 /**
+import { useFetch } from '../../hooks/useFetch';
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -12,53 +13,73 @@
  * details.
  */
 
-import {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import {useFetch} from '~/hooks/useFetch';
+import {TestrayComponent, TestrayTeam} from '~/services/rest';
 
-import {HeaderTabs} from '../../context/HeaderContext';
-import i18n from '../../i18n';
+export type CompareRunsResponse = {
+	component?: TestrayComponent;
+	team?: TestrayTeam;
+	values: number[][];
+};
 
-const COMPARE_RUNS_ROOT_PATH = '/compare-runs';
+const component = {
+	dateCreated: '',
+	dateModified: '',
+	externalReferenceCode: '',
+	id: 0,
+	name: 'Liferay',
+	originationKey: '',
+	r_teamToComponents_c_teamId: 0,
+	status: '',
+	teamId: 0,
+};
 
-const useCompareRuns = () => {
-	const [comparableTabs, setComparableTabs] = useState<HeaderTabs[]>();
-	const [currentTab, setCurrentTab] = useState<HeaderTabs>();
-	const {pathname} = useLocation();
-	const navigate = useNavigate();
+const team = {
+	dateCreated: '',
+	dateModified: '',
+	externalReferenceCode: '',
+	id: 0,
+	name: 'Solutions',
+};
 
-	useEffect(() => {
-		setTimeout(() => {
-			setComparableTabs([
-				{
-					active: pathname === `${COMPARE_RUNS_ROOT_PATH}/teams`,
-					path: 'teams',
-					title: i18n.translate('teams'),
-				},
-				{
-					active: pathname === `${COMPARE_RUNS_ROOT_PATH}/components`,
-					path: 'components',
-					title: i18n.translate('components'),
-				},
-				{
-					active: pathname === `${COMPARE_RUNS_ROOT_PATH}/details`,
-					path: 'details',
-					title: i18n.translate('details'),
-				},
-			]);
-		});
-	}, [navigate, pathname]);
+const values = [
+	[1, 0, 0, 4, 5],
+	[1, 2, 3, 4, 5],
+	[1, 2, 3, 4, 5],
+	[1, 2, 3, 4, 5],
+	[1, 2, 3, 4, 5],
+];
 
-	useEffect(() => {
-		if (comparableTabs) {
-			const currentTab = comparableTabs.find((tab) => tab.active);
+const useCompareRuns = (
+	type: 'components' | 'details' | 'teams',
+	{componentId, teamId}: {componentId?: string; teamId?: string} = {}
+) => {
+	const {runA, runB} = useParams();
 
-			if (currentTab) {
-				setCurrentTab(currentTab);
-			}
+	const operator = type === 'details' ? '' : type;
+
+	const {data} = useFetch<CompareRunsResponse>(
+		`/o/c/compare-runs/${runA}/${runB}/${operator}`,
+		{
+			params: {customParams: {componentId, teamId}},
+			swrConfig: {shouldFetch: false},
 		}
-	}, [comparableTabs]);
+	);
 
-	return {comparableTabs, currentTab, setComparableTabs};
+	if (typeof data === 'object') {
+		return [data];
+	}
+
+	return (
+		data ?? [
+			{
+				values,
+				...(type === 'components' && {component}),
+				...(type === 'teams' && {team}),
+			},
+		]
+	);
 };
 
 export default useCompareRuns;

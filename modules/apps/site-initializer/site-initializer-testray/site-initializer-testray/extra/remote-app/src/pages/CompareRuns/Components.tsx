@@ -12,33 +12,27 @@
  * details.
  */
 
-import {useOutletContext} from 'react-router-dom';
+import ClayLayout from '@clayui/layout';
 
 import TableChart from '../../components/TableChart';
 import i18n from '../../i18n';
-import {ApiResponse} from './CompareRunsOutlet';
-
-type ComponentsOutlet = {
-	apiResponse: ApiResponse[];
-};
+import useCompareRuns from './useCompareRuns';
 
 const CompareRunsComponents = () => {
 	document.title = i18n.sub('compare-x', 'cases');
 
-	const {apiResponse} = useOutletContext<ComponentsOutlet>();
+	const components = useCompareRuns('components');
 
 	return (
 		<div className="d-flex flex-wrap mt-5">
-			{apiResponse.map(({components, values}, index) => {
-				return (
-					<div className="col-6 col-lg-6 col-md-12 mb-3" key={index}>
-						<TableChart
-							matrixData={values}
-							title={components.name}
-						/>
-					</div>
-				);
-			})}
+			{components.map(({component, values}, index) => (
+				<ClayLayout.Col className="mb-3" key={index} lg={6} md={12}>
+					<TableChart
+						matrixData={values}
+						title={component?.name as string}
+					/>
+				</ClayLayout.Col>
+			))}
 		</div>
 	);
 };

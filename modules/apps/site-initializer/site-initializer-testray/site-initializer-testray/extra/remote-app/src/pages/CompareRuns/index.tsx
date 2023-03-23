@@ -19,10 +19,9 @@ import QATable from '../../components/Table/QATable';
 import TableChart from '../../components/TableChart';
 import i18n from '../../i18n';
 import {TestrayRun} from '../../services/rest';
-import {ApiResponse} from './CompareRunsOutlet';
 
 type CompareRunsDetailsProps = {
-	matrixData: ApiResponse;
+	matrixData: number[][];
 	runs: TestrayRun[];
 };
 
@@ -59,7 +58,9 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
 			{
 				title: i18n.translate('project-name'),
 				value: (
-					<Link to={`/project/${project?.id}`}>{project?.name}</Link>
+					<Link to={`/project/${project?.id}/routines`}>
+						{project?.name}
+					</Link>
 				),
 			},
 			{
@@ -94,7 +95,7 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
 
 				<div className="col-4 col-lg-4 col-md-12 pb-5">
 					<TableChart
-						matrixData={matrixData.values}
+						matrixData={matrixData}
 						title={i18n.translate('number-of-case-results')}
 					/>
 				</div>

@@ -119,6 +119,13 @@ public class DLFolderServiceUtil {
 	}
 
 	public static List<DLFolder> getFolders(
+			long groupId, double scoreGTE, int start, int end)
+		throws PortalException {
+
+		return getService().getFolders(groupId, scoreGTE, start, end);
+	}
+
+	public static List<DLFolder> getFolders(
 			long groupId, long parentFolderId, boolean includeMountfolders,
 			int status, int start, int end,
 			OrderByComparator<DLFolder> orderByComparator)
@@ -234,6 +241,12 @@ public class DLFolderServiceUtil {
 		return getService().getFoldersAndFileEntriesAndFileShortcutsCount(
 			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
 			status);
+	}
+
+	public static int getFoldersCount(long groupId, double scoreGTE)
+		throws PortalException {
+
+		return getService().getFoldersCount(groupId, scoreGTE);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId)

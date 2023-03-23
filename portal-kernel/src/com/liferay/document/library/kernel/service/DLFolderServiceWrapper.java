@@ -128,6 +128,14 @@ public class DLFolderServiceWrapper
 
 	@Override
 	public java.util.List<DLFolder> getFolders(
+			long groupId, double scoreGTE, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFolderService.getFolders(groupId, scoreGTE, start, end);
+	}
+
+	@Override
+	public java.util.List<DLFolder> getFolders(
 			long groupId, long parentFolderId, boolean includeMountfolders,
 			int status, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
@@ -259,6 +267,13 @@ public class DLFolderServiceWrapper
 		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
 			groupId, folderId, mimeTypes, fileEntryTypeId, includeMountFolders,
 			status);
+	}
+
+	@Override
+	public int getFoldersCount(long groupId, double scoreGTE)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFolderService.getFoldersCount(groupId, scoreGTE);
 	}
 
 	@Override

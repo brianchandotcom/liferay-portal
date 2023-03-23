@@ -749,7 +749,7 @@ definition {
 	macro viewActivationStatusCardChange {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-			title = ${subtitle});
+			key_text = ${subtitle});
 
 		AssertElementPresent(
 			key_status = ${status},
@@ -759,7 +759,7 @@ definition {
 	macro viewActivationStatusCardValue {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-			title = ${subtitle});
+			key_text = ${subtitle});
 
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_LOGO",

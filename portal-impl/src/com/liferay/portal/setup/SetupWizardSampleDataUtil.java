@@ -181,6 +181,9 @@ public class SetupWizardSampleDataUtil {
 			int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 			int birthdayYear = birthdayCal.get(Calendar.YEAR);
 
+			UserLocalServiceUtil.updateEmailAddress(
+				adminUser.getUserId(), null, emailAddress, emailAddress);
+
 			adminUser = UserLocalServiceUtil.updateUser(
 				adminUser.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, adminUser.getReminderQueryQuestion(),

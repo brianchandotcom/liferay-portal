@@ -551,15 +551,8 @@ public class ObjectEntryLocalServiceImpl
 			).and(
 				predicate
 			).and(
-				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
-						return null;
-					}
-
-					return _inlineSQLHelper.getPermissionWherePredicate(
-						dynamicObjectDefinitionTable.getName(),
-						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
-				}
+				_getPermissionWherePredicate(
+					dynamicObjectDefinitionTable, groupId)
 			)
 		).groupBy(
 			table.getColumn(objectField.getDBColumnName())

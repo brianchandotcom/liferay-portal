@@ -37,10 +37,8 @@ public class NavItemClassNameIdUtil {
 		_navItemClassNameId = _portal.getClassNameId(NavItem.class);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	protected ModuleServiceLifecycle moduleServiceLifecycle;
 
 	private static long _navItemClassNameId;
 

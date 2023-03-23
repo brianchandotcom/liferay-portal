@@ -42,6 +42,9 @@ public interface SystemObjectDefinitionMetadata {
 	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
 		throws PortalException;
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException;
@@ -137,6 +140,11 @@ public interface SystemObjectDefinitionMetadata {
 
 	public void updateBaseModel(
 			long primaryKey, User user, Map<String, Object> values)
+		throws Exception;
+
+	public long upsertBaseModel(
+			String externalReferenceCode, long companyId, User user,
+			Map<String, Object> values)
 		throws Exception;
 
 }

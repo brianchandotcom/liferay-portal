@@ -625,29 +625,17 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 
-jdbc.counter.driverClassName=${database.driver}
-jdbc.counter.url=${database.url}
-jdbc.counter.username=${database.username}
-jdbc.counter.password=${database.password}
-
 // HikariCP
 
 jdbc.default.connectionTimeout=600000
 jdbc.default.maximumPoolSize=20
-jdbc.default.minimumIdle=0
-
-jdbc.counter.maximumPoolSize=5
-jdbc.counter.minimumIdle=0
-
-counter.jdbc.prefix=jdbc.counter.]]></echo>
+jdbc.default.minimumIdle=0]]></echo>
 
 			<if>
 				<equals arg1="${database.type}" arg2="oracle" />
 				<then>
 					<echo append="true" file="@{properties.file}"><![CDATA[
-jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0
-
-jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
+jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
 				</then>
 			</if>
 
@@ -3111,10 +3099,6 @@ jdbc.read.jndi.name=jdbc/LiferayReadPool</echo>
 					</then>
 				</elseif>
 			</if>
-
-			<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
-
-counter.jdbc.prefix=jdbc.write.</echo>
 		</sequential>
 	</macrodef>
 
@@ -11211,9 +11195,6 @@ login.secure.forgot.password=false</echo>
 					jdbc.default.connectionTimeout=600000
 					jdbc.default.maximumPoolSize=20
 					jdbc.default.minimumIdle=0
-
-					jdbc.counter.maximumPoolSize=5
-					jdbc.counter.minimumIdle=0
 
 					initial.system.check.enabled=true</echo>
 			</then>

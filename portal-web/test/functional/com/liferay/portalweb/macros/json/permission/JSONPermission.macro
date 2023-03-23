@@ -3,7 +3,9 @@ definition {
 	macro addPermission {
 		Variables.assertDefined(parameterList = "${actionId},${name},${roleTitle}");
 
-		var groupId = JSONPermissionSetter.setGroupId(groupName = ${groupName});
+		var groupId = JSONPermissionSetter.setGroupId(
+			groupName = ${groupName},
+			noSelenium = "true");
 		var roleType = JSONPermissionSetter.setRoleType(roleType = ${roleType});
 
 		var primKey = JSONPermissionSetter.setPrimKey(roleType = ${roleType});

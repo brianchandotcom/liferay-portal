@@ -119,7 +119,7 @@ definition {
 	macro _getRoleIdByName {
 		Variables.assertDefined(parameterList = ${name});
 
-		var companyId = JSONCompany.getCompanyId();
+		var companyId = JSONCompany.getCompanyIdNoSelenium();
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

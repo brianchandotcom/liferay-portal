@@ -5,7 +5,7 @@ definition {
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
 		var portalURL = JSONCompany.getPortalURL();
-		var headerAndType = '''
+		var headers = '''
  			-u test@liferay.com:test \
 			-H Content-Type: application/json \
 		''';
@@ -15,7 +15,7 @@ definition {
 			var api = StringUtil.add(${curl}, "?roleNames=${roleNames}", "");
 		}
 
-		var curl = StringUtil.add(${api}, " \ ${headerAndType}", "");
+		var curl = StringUtil.add(${api}, " \ ${headers}", "");
 
 		return ${curl};
 	}

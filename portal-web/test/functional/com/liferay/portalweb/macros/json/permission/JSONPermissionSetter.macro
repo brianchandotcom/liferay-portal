@@ -11,6 +11,7 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
+			noSelenium = ${noSelenium},
 			site = ${site});
 
 		return ${groupId};
@@ -20,7 +21,7 @@ definition {
 		JSONPermissionValidator.validateRoleType(roleType = ${roleType});
 
 		if (${roleType} == "regular") {
-			var primKey = JSONCompany.getCompanyId();
+			var primKey = JSONCompany.getCompanyIdNoSelenium();
 		}
 		else if ((${roleType} == "site") || (${roleType} == "organization") || (${roleType} == "asset library") || (${roleType} == "account")) {
 			var primKey = 0;

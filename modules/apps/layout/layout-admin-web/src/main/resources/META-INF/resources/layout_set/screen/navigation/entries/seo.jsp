@@ -27,8 +27,6 @@ long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
 boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
-
 if (selGroup.isLayoutSetPrototype()) {
 	privateLayout = true;
 }
@@ -51,7 +49,8 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= themeDisplay.getURLCurrent() %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />

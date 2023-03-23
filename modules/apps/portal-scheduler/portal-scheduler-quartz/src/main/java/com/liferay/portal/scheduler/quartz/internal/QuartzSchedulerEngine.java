@@ -467,6 +467,15 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	@Activate
 	protected void activate() {
+		_descriptionMaxLength = GetterUtil.getInteger(
+			_props.get(PropsKeys.SCHEDULER_DESCRIPTION_MAX_LENGTH), 120);
+
+		_groupNameMaxLength = GetterUtil.getInteger(
+			_props.get(PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH), 80);
+
+		_jobNameMaxLength = GetterUtil.getInteger(
+			_props.get(PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH), 80);
+
 		_schedulerEngineEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.SCHEDULER_ENABLED));
 
@@ -674,20 +683,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-
-		_descriptionMaxLength = GetterUtil.getInteger(
-			_props.get(PropsKeys.SCHEDULER_DESCRIPTION_MAX_LENGTH), 120);
-
-		_groupNameMaxLength = GetterUtil.getInteger(
-			_props.get(PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH), 80);
-
-		_jobNameMaxLength = GetterUtil.getInteger(
-			_props.get(PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH), 80);
-	}
-
 	protected void unschedule(Scheduler scheduler, JobKey jobKey)
 		throws Exception {
 
@@ -890,6 +885,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private MessageBus _messageBus;
 
 	private Scheduler _persistedScheduler;
+
+	@Reference
 	private Props _props;
 
 	@Reference(

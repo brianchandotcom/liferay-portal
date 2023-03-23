@@ -483,7 +483,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		jsPackageVersions.sort(comparator.reversed());
 
 		_npmRegistryStateSnapshotImpl = new NPMRegistryStateSnapshotImpl(
-			exactMatchMap, globalAliases, jsModules, jsPackages,
+			globalAliases, exactMatchMap, jsModules, jsPackages,
 			jsPackageVersions, partialMatchMap, resolvedJSModules,
 			resolvedJSPackages);
 	}

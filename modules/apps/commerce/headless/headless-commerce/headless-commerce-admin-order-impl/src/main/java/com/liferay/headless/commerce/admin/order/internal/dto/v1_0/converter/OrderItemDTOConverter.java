@@ -172,7 +172,9 @@ public class OrderItemDTOConverter
 							return new String[] {url};
 						}
 						catch (PortalException portalException) {
-							_log.error(portalException);
+							if (_log.isDebugEnabled()) {
+								_log.debug(portalException);
+							}
 
 							return null;
 						}

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Alejandro Tardín
@@ -29,11 +28,13 @@ public class ContentDashboardGroupUtil {
 
 	public static String getGroupName(Group group, Locale locale) {
 		try {
-			return Optional.ofNullable(
-				group.getDescriptiveName(locale)
-			).orElseGet(
-				() -> group.getName(locale)
-			);
+			String descriptiveName = group.getDescriptiveName(locale);
+
+			if (descriptiveName == null) {
+				return group.getName(locale);
+			}
+
+			return descriptiveName;
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

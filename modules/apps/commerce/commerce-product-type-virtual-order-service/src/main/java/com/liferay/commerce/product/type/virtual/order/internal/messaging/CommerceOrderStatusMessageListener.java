@@ -71,7 +71,7 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 			CommerceVirtualOrderItem commerceVirtualOrderItem =
 				_commerceVirtualOrderItemLocalService.
 					fetchCommerceVirtualOrderItemByCommerceOrderItemId(
-						commerceOrderItem.getCommerceOrderItemId());
+						commerceOrderItem.getCommerceOrderItemId(), false);
 
 			if ((commerceVirtualOrderItem != null) &&
 				(orderStatus ==

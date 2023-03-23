@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
@@ -65,7 +66,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.portlet.ResourceRequest;
@@ -136,6 +136,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		ContentDashboardItem<?> contentDashboardItem, Locale locale,
 		WorkbookBuilder workbookBuilder) {
 
+		String subtypeLabel = StringPool.BLANK;
+
+		ContentDashboardItemSubtype<?> contentDashboardItemSubtype =
+			contentDashboardItem.getContentDashboardItemSubtype();
+
+		if (contentDashboardItemSubtype != null) {
+			subtypeLabel = contentDashboardItemSubtype.getLabel(locale);
+		}
+
 		workbookBuilder.cell(
 			String.valueOf(contentDashboardItem.getId())
 		).cell(
@@ -145,14 +154,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		).cell(
 			contentDashboardItem.getTypeLabel(locale)
 		).cell(
-			Optional.ofNullable(
-				contentDashboardItem.getContentDashboardItemSubtype()
-			).map(
-				contentDashboardItemSubtype ->
-					contentDashboardItemSubtype.getLabel(locale)
-			).orElse(
-				StringPool.BLANK
-			)
+			subtypeLabel
 		).cell(
 			contentDashboardItem.getScopeName(locale)
 		).cell(

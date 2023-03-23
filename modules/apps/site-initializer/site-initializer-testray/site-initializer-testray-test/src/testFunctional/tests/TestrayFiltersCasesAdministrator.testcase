@@ -289,4 +289,33 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case type"
+	@priority = 5
+	test AdminCanFilterCaseByCaseType {
+		task ("When the user filter a case by case type") {
+			TestrayFilter.clickColumn();
+
+			TestrayFilter.selectColumns(listColumn = "Case Type");
+
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+                header = "Case Type",
+                label = "Case Type",
+                listMultiSelect = "Case Type 1,Batch");
+
+            TestrayFilter.assertMultiSelect(
+                label = "Case Type",
+                listMultiSelect = "Case Type 1,Batch");
+
+            Button.click(button = "Apply");
+        }
+
+        task ("Then can see the case type selected") {
+            Testray.assertItemName(key_name = "Case Type 1");
+
+            Testray.assertItemNotPresent(key_name = "Batch");
+        }
+	}
+
 }

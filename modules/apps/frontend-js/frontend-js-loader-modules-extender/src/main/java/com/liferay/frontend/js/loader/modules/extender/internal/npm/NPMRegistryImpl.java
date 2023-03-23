@@ -33,6 +33,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -59,7 +60,6 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
@@ -100,7 +100,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdate npmRegistryUpdate) {
-		_refreshJSModuleCaches(null, null, _getNPMRegistryUpdatesListeners());
+		_refreshJSModuleCaches(null, _getNPMRegistryUpdatesListeners());
 	}
 
 	@Override
@@ -236,9 +236,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			}
 		}
 
-		Map<String, String> partialMatchMap = _jsModulesCache._partialMatchMap;
-
-		for (Map.Entry<String, String> entry : partialMatchMap.entrySet()) {
+		for (Map.Entry<String, String> entry : _partialMatchMap.entrySet()) {
 			String resolvedId = entry.getKey();
 
 			if (resolvedId.equals(moduleName) ||
@@ -326,26 +324,20 @@ public class NPMRegistryImpl implements NPMRegistry {
 			_bundleContext, Bundle.ACTIVE,
 			new NPMRegistryBundleTrackerCustomizer());
 
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext,
-			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.contextpath=*))",
-			new NPMRegistryServiceTrackerCustomizer());
+		_activationThreadLocal.set(Boolean.TRUE);
+
+		_bundleTracker.open();
+
+		_activationThreadLocal.set(Boolean.FALSE);
+
+		_refreshJSModuleCaches(_bundleTracker.getTracked(), null);
 
 		Details details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
 
 		_applyVersioning = details.applyVersioning();
 
-		_activationThreadLocal.set(Boolean.TRUE);
-
-		_bundleTracker.open();
-
-		_serviceTracker.open();
-
-		_activationThreadLocal.set(Boolean.FALSE);
-
-		_refreshJSModuleCaches(null, null, null);
+		_serviceTracker = _openServiceTracker();
 
 		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
@@ -374,7 +366,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_serviceTracker.close();
 
-			_serviceTracker.open();
+			_serviceTracker = _openServiceTracker();
 		}
 	}
 
@@ -425,6 +417,62 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
+	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
+		_openServiceTracker() {
+
+		return ServiceTrackerFactory.open(
+			_bundleContext,
+			"(&(objectClass=" + ServletContext.class.getName() +
+				")(osgi.web.contextpath=*))",
+			new ServiceTrackerCustomizer
+				<ServletContext, JSConfigGeneratorPackage>() {
+
+				@Override
+				public JSConfigGeneratorPackage addingService(
+					ServiceReference<ServletContext> serviceReference) {
+
+					Bundle bundle = serviceReference.getBundle();
+
+					URL url = bundle.getEntry(Details.CONFIG_JSON);
+
+					if (url == null) {
+						return null;
+					}
+
+					JSConfigGeneratorPackage jsConfigGeneratorPackage =
+						new JSConfigGeneratorPackage(
+							_applyVersioning, serviceReference.getBundle(),
+							(String)serviceReference.getProperty(
+								"osgi.web.contextpath"));
+
+					String jsConfigGeneratorPackageResolvedId =
+						jsConfigGeneratorPackage.getName() + StringPool.AT +
+							jsConfigGeneratorPackage.getVersion();
+
+					_partialMatchMap.put(
+						jsConfigGeneratorPackage.getName(),
+						jsConfigGeneratorPackageResolvedId);
+
+					return jsConfigGeneratorPackage;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					JSConfigGeneratorPackage jsConfigGeneratorPackage) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					JSConfigGeneratorPackage jsConfigGeneratorPackage) {
+
+					_partialMatchMap.remove(jsConfigGeneratorPackage.getName());
+				}
+
+			});
+	}
+
 	private void _processLegacyBridges(
 		Bundle bundle, Map<String, String> globalAliases) {
 
@@ -454,7 +502,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private void _refreshJSModuleCaches(
 		Map<Bundle, JSBundle> jsBundlesMap,
-		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages,
 		ServiceTrackerList<NPMRegistryUpdatesListener>
 			npmRegistryUpdatesListeners) {
 
@@ -462,34 +509,13 @@ public class NPMRegistryImpl implements NPMRegistry {
 			jsBundlesMap = _bundleTracker.getTracked();
 		}
 
-		if (jsConfigGeneratorPackages == null) {
-			SortedMap
-				<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
-					tracked = _serviceTracker.getTracked();
-
-			jsConfigGeneratorPackages = tracked.values();
-		}
-
 		Map<String, String> globalAliases = new HashMap<>();
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
 		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
-		Map<String, String> partialMatchMap = new HashMap<>();
 		Map<String, JSModule> resolvedJSModules = new HashMap<>();
 		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
 		Map<String, String> exactMatchMap = new HashMap<>();
-
-		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
-				jsConfigGeneratorPackages) {
-
-			String jsConfigGeneratorPackageResolvedId =
-				jsConfigGeneratorPackage.getName() + StringPool.AT +
-					jsConfigGeneratorPackage.getVersion();
-
-			partialMatchMap.put(
-				jsConfigGeneratorPackage.getName(),
-				jsConfigGeneratorPackageResolvedId);
-		}
 
 		for (Bundle bundle : jsBundlesMap.keySet()) {
 			_processLegacyBridges(bundle, globalAliases);
@@ -535,8 +561,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_jsModulesCache = new JSModulesCache(
 			globalAliases, exactMatchMap, jsModules, jsPackages,
-			jsPackageVersions, partialMatchMap, resolvedJSModules,
-			resolvedJSPackages);
+			jsPackageVersions, resolvedJSModules, resolvedJSPackages);
 
 		if (npmRegistryUpdatesListeners != null) {
 			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
@@ -570,13 +595,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private volatile JSModulesCache _jsModulesCache = new JSModulesCache(
 		Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(),
 		Collections.emptyMap(), Collections.emptyList(), Collections.emptyMap(),
-		Collections.emptyMap(), Collections.emptyMap());
+		Collections.emptyMap());
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	private ServiceTrackerList<NPMRegistryUpdatesListener>
 		_npmRegistryUpdatesListeners;
+	private final Map<String, String> _partialMatchMap =
+		new ConcurrentHashMap<>();
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
 
@@ -598,7 +625,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Map<String, String> globalAliases, Map<String, JSModule> jsModules,
 			Map<String, JSPackage> jsPackages,
 			List<JSPackageVersion> jsPackageVersions,
-			Map<String, String> partialMatchMap,
 			Map<String, JSModule> resolvedJSModules,
 			Map<String, JSPackage> resolvedJSPackages) {
 
@@ -607,7 +633,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 			_jsModules = jsModules;
 			_jsPackages = jsPackages;
 			_jsPackageVersions = jsPackageVersions;
-			_partialMatchMap = partialMatchMap;
 			_resolvedJSModules = resolvedJSModules;
 			_resolvedJSPackages = resolvedJSPackages;
 		}
@@ -619,7 +644,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		private final Map<String, JSModule> _jsModules;
 		private final Map<String, JSPackage> _jsPackages;
 		private final List<JSPackageVersion> _jsPackageVersions;
-		private final Map<String, String> _partialMatchMap;
 		private volatile String _resolutionStateDigest;
 		private final Map<String, JSModule> _resolvedJSModules;
 		private final Map<String, JSPackage> _resolvedJSPackages;
@@ -661,7 +685,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 					).put(
 						bundle, jsBundle
 					).build(),
-					null, _getNPMRegistryUpdatesListeners());
+					_getNPMRegistryUpdatesListeners());
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
@@ -685,64 +709,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshJSModuleCaches(
-					null, null, _getNPMRegistryUpdatesListeners());
+				_refreshJSModuleCaches(null, _getNPMRegistryUpdatesListeners());
 			}
-		}
-
-	}
-
-	private class NPMRegistryServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ServletContext, JSConfigGeneratorPackage> {
-
-		@Override
-		public JSConfigGeneratorPackage addingService(
-			ServiceReference<ServletContext> serviceReference) {
-
-			Bundle bundle = serviceReference.getBundle();
-
-			URL url = bundle.getEntry(Details.CONFIG_JSON);
-
-			if (url == null) {
-				return null;
-			}
-
-			JSConfigGeneratorPackage jsConfigGeneratorPackage =
-				new JSConfigGeneratorPackage(
-					_applyVersioning, serviceReference.getBundle(),
-					(String)serviceReference.getProperty(
-						"osgi.web.contextpath"));
-
-			SortedMap
-				<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
-					tracked = _serviceTracker.getTracked();
-
-			ArrayList<JSConfigGeneratorPackage> jsConfigGeneratorPackages =
-				new ArrayList<>(tracked.values());
-
-			jsConfigGeneratorPackages.add(jsConfigGeneratorPackage);
-
-			_refreshJSModuleCaches(
-				null, jsConfigGeneratorPackages,
-				_getNPMRegistryUpdatesListeners());
-
-			return jsConfigGeneratorPackage;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ServletContext> serviceReference,
-			JSConfigGeneratorPackage jsConfigGeneratorPackage) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ServletContext> serviceReference,
-			JSConfigGeneratorPackage jsConfigGeneratorPackage) {
-
-			_refreshJSModuleCaches(
-				null, null, _getNPMRegistryUpdatesListeners());
 		}
 
 	}

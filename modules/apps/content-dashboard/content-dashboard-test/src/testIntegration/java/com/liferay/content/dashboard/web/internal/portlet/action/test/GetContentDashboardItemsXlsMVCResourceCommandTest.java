@@ -46,7 +46,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -110,18 +113,29 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
 			ByteArrayOutputStream byteArrayOutputStream = _serveResource(
 				FileEntry.class.getName(), _group.getGroupId());
 
-			_assertWorkbooks(
-				new HSSFWorkbook(
-					classLoader.getResourceAsStream(
-						"com/liferay/content/dashboard/web/internal/portlet" +
-							"/action/test/dependencies/expected.xls")),
+			List<String> expectedWorkbookHeadersList = new ArrayList<>();
+
+			Collections.addAll(
+				expectedWorkbookHeadersList, "ID", "Title", "Author", "Type",
+				"Subtype", "Site or Asset Library", "Status", "Categories",
+				"Tags", "Modified Date", "Description", "Extension",
+				"File Name", "Size", "Display Date", "Creation Date",
+				"Languages Translated Into");
+
+			List<String> expectedWorkbookValuesList = new ArrayList<>();
+
+			Collections.addAll(
+				expectedWorkbookValuesList,
+				String.valueOf(fileEntry.getFileEntryId()), "fileName.pdf",
+				"Test Test", "Document", "Basic Document (Vectorial)",
+				"Test Site", "Approved", "", "", "2021-10-22T11:37:32", "",
+				"pdf", "fileName.pdf", "0 B", "", "2021-09-01T15:16:15", "");
+
+			_assertWorkbook(
+				expectedWorkbookHeadersList, expectedWorkbookValuesList,
 				new HSSFWorkbook(
 					new ByteArrayInputStream(
 						byteArrayOutputStream.toByteArray())));
@@ -133,48 +147,35 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		}
 	}
 
-	private void _assertWorkbooks(
-		Workbook expectedWorkbook, Workbook actualWorkbook) {
+	private void _assertWorkbook(
+		List<String> expectedWorkbookHeadersList,
+		List<String> expectedWorkbookValuesList, Workbook actualWorkbook) {
 
-		Assert.assertEquals(
-			expectedWorkbook.getNumberOfSheets(),
-			actualWorkbook.getNumberOfSheets());
+		Assert.assertEquals(1, actualWorkbook.getNumberOfSheets());
 
-		Sheet expectedWorkbookSheet = expectedWorkbook.getSheetAt(0);
 		Sheet actualWorkbookSheet = actualWorkbook.getSheetAt(0);
 
-		Assert.assertEquals(
-			expectedWorkbookSheet.getLastRowNum(),
-			actualWorkbookSheet.getLastRowNum());
+		Assert.assertEquals(1, actualWorkbookSheet.getLastRowNum());
+		_assertWorkbookRow(
+			expectedWorkbookHeadersList, actualWorkbookSheet.getRow(0));
+		_assertWorkbookRow(
+			expectedWorkbookValuesList, actualWorkbookSheet.getRow(1));
+	}
 
-		Row firstWorkbookRow = expectedWorkbookSheet.getRow(0);
+	private void _assertWorkbookRow(
+		List<String> expectedRowValuesList, Row workbookRow) {
 
-		for (int i = 0; i <= expectedWorkbookSheet.getLastRowNum(); i++) {
-			Row expectedWorkbookRow = expectedWorkbookSheet.getRow(i);
-			Row actualWorkbookRow = actualWorkbookSheet.getRow(i);
+		for (short i = 0; i < workbookRow.getLastCellNum(); i++) {
+			String actualWorkbookCellValue = StringPool.BLANK;
+			Cell actualWorkbookCell = workbookRow.getCell(i);
 
-			for (short j = 0; j < firstWorkbookRow.getLastCellNum(); j++) {
-				String expectedWorkbookCellValue = StringPool.BLANK;
-
-				Cell expectedWorkbookCell = expectedWorkbookRow.getCell(j);
-
-				if (expectedWorkbookCell != null) {
-					expectedWorkbookCellValue =
-						expectedWorkbookCell.getStringCellValue();
-				}
-
-				String actualWorkbookCellValue = StringPool.BLANK;
-
-				Cell actualWorkbookCell = actualWorkbookRow.getCell(j);
-
-				if (actualWorkbookCell != null) {
-					actualWorkbookCellValue =
-						actualWorkbookCell.getStringCellValue();
-				}
-
-				Assert.assertEquals(
-					expectedWorkbookCellValue, actualWorkbookCellValue);
+			if (actualWorkbookCell != null) {
+				actualWorkbookCellValue =
+					actualWorkbookCell.getStringCellValue();
 			}
+
+			Assert.assertEquals(
+				expectedRowValuesList.get(i), actualWorkbookCellValue);
 		}
 	}
 

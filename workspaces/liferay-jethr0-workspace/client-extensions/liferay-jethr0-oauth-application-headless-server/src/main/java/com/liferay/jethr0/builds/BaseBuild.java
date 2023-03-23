@@ -168,24 +168,16 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isChildBuild(Build parentBuild) {
-		for (Build build : _getAllParentBuilds()) {
-			if (build == parentBuild) {
-				return true;
-			}
-		}
+		List<Build> parentBuilds = _getAllParentBuilds();
 
-		return false;
+		return parentBuilds.contains(parentBuild);
 	}
 
 	@Override
 	public boolean isParentBuild(Build childBuild) {
-		for (Build build : _getAllChildBuilds()) {
-			if (build == childBuild) {
-				return true;
-			}
-		}
+		List<Build> childBuilds = _getAllChildBuilds();
 
-		return false;
+		return childBuilds.contains(childBuild);
 	}
 
 	@Override

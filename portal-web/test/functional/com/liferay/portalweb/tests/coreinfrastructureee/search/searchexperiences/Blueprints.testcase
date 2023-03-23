@@ -2482,7 +2482,7 @@ definition {
 
 		Type(
 			key_elementName = "Boost Contents in a Category for User Segments",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = ${categoryId});
 
@@ -4440,7 +4440,7 @@ definition {
 
 		Type(
 			key_elementName = "Boost Contents in a Category",
-			key_fieldLabel = "Asset Category IDs",
+			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category");
 
@@ -4465,7 +4465,7 @@ definition {
 
 		Click.clickNoMouseOver(
 			key_elementName = "Boost Contents in a Category",
-			key_fieldLabel = "Asset Category IDs",
+			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
 
 		AssertTextNotEquals.assertNotPartialText(
@@ -4485,7 +4485,7 @@ definition {
 
 		Type(
 			key_elementName = "Boost Contents in a Category",
-			key_fieldLabel = "Asset Category IDs",
+			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test");
 
@@ -4510,12 +4510,12 @@ definition {
 
 		Click.clickNoMouseOver(
 			key_elementName = "Boost Contents in a Category",
-			key_fieldLabel = "Asset Category IDs",
+			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
 
 		Type(
 			key_elementName = "Boost Contents in a Category",
-			key_fieldLabel = "Asset Category IDs",
+			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = ${categoryId});
 
@@ -4530,7 +4530,7 @@ definition {
 
 		Click.clickNoMouseOver(
 			key_elementName = "Boost Contents in a Category",
-			key_fieldLabel = "Asset Category IDs",
+			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
 
 		Button.clickSelect();
@@ -4588,7 +4588,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category");
 
@@ -4598,7 +4598,7 @@ definition {
 
 		AssertValue(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category (ID: ${categoryId})");
 
@@ -4614,7 +4614,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "");
 
@@ -4622,7 +4622,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test");
 
@@ -4632,7 +4632,7 @@ definition {
 
 		AssertValue(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category (ID: ${categoryId})");
 
@@ -4648,7 +4648,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "");
 
@@ -4671,7 +4671,7 @@ definition {
 
 		AssertValue(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category (ID: ${categoryId})");
 
@@ -4691,7 +4691,7 @@ definition {
 
 		Type(
 			key_elementName = "Hide Contents in a Category for Guest Users",
-			key_fieldLabel = "Asset Category ID",
+			key_fieldLabel = "Asset Category Name (ID)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "Test Category");
 

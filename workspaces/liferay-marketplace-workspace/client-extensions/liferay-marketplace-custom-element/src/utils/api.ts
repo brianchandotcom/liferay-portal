@@ -201,18 +201,6 @@ export async function getAccount() {
 	return response.json();
 }
 
-export async function getUserAccounts() {
-	const response = await fetch(
-		'/o/headless-admin-user/v1.0/user-accounts',
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return response.json();
-}
-
 export async function getCatalogs() {
 	const response = await fetch(
 		'/o/headless-commerce-admin-catalog/v1.0/catalogs',
@@ -358,6 +346,18 @@ export async function getProductSubscriptionConfiguration({
 	return await response.json();
 }
 
+export async function getSKUById(skuId: number) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
 export async function getSpecifications() {
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/specifications`,
@@ -368,6 +368,18 @@ export async function getSpecifications() {
 	);
 
 	return await response.json();
+}
+
+export async function getUserAccounts() {
+	const response = await fetch(
+		'/o/headless-admin-user/v1.0/user-accounts',
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return response.json();
 }
 
 export async function getVocabularies() {
@@ -410,6 +422,19 @@ export async function patchOrderByERC(erc: string, body: any) {
 	);
 
 	return response;
+}
+
+export async function patchSKUById(skuId: number, body: any) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}`,
+		{
+			body: JSON.stringify(body),
+			headers,
+			method: 'PATCH',
+		}
+	);
+
+	return await response.json();
 }
 
 export async function postCartByChannelId({

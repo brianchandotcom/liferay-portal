@@ -83,7 +83,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 					if (enableLayoutButton) {
 						enableLayoutButton.addEventListener('click', (event) => {
 							<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getScreenNavigationPortletURL()) %>" />
+								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
 								<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 							</portlet:actionURL>
 
@@ -98,7 +98,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 					if (deleteLayoutButton) {
 						deleteLayoutButton.addEventListener('click', (event) => {
 							<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getScreenNavigationPortletURL()) %>" />
+								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
 								<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
 								<portlet:param name="layoutSetBranchId" value="0" />
 							</portlet:actionURL>
@@ -116,7 +116,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 		</portlet:actionURL>
 
 		<aui:form action='<%= HttpComponentsUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' enctype="multipart/form-data" method="post" name="editLayoutFm" onSubmit="event.preventDefault();">
-			<aui:input name="redirect" type="hidden" value="<%= String.valueOf(layoutsAdminDisplayContext.getScreenNavigationPortletURL()) %>" />
+			<aui:input name="redirect" type="hidden" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />

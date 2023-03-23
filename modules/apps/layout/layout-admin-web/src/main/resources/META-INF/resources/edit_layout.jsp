@@ -53,5 +53,5 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 	key="<%= LayoutScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_LAYOUT %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"
-	portletURL="<%= layoutsAdminDisplayContext.getScreenNavigationPortletURL() %>"
+	portletURL="<%= layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL() %>"
 />

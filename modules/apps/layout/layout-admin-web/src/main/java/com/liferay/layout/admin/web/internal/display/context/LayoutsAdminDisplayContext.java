@@ -654,6 +654,20 @@ public class LayoutsAdminDisplayContext {
 		return _layoutId;
 	}
 
+	public PortletURL getLayoutScreenNavigationPortletURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout"
+		).setBackURL(
+			getBackURL()
+		).setPortletResource(
+			ParamUtil.getString(httpServletRequest, "portletResource")
+		).setParameter(
+			"selPlid", getSelPlid()
+		).buildPortletURL();
+	}
+
 	public SearchContainer<Layout> getLayoutsSearchContainer()
 		throws PortalException {
 
@@ -1002,20 +1016,6 @@ public class LayoutsAdminDisplayContext {
 
 		return liveGroup.getLayoutRootNodeName(
 			privateLayout, themeDisplay.getLocale());
-	}
-
-	public PortletURL getScreenNavigationPortletURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setMVCRenderCommandName(
-			"/layout_admin/edit_layout"
-		).setBackURL(
-			getBackURL()
-		).setPortletResource(
-			ParamUtil.getString(httpServletRequest, "portletResource")
-		).setParameter(
-			"selPlid", getSelPlid()
-		).buildPortletURL();
 	}
 
 	public String getSelectFaviconEventName() {

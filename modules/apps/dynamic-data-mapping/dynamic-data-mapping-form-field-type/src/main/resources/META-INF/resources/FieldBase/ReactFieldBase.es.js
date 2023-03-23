@@ -183,6 +183,7 @@ export function FieldBase({
 	nestedFields,
 	onClick,
 	overMaximumRepetitionsLimit,
+	parentInstanceId,
 	readOnly,
 	repeatable,
 	required,
@@ -267,10 +268,14 @@ export function FieldBase({
 		const visitor = new PagesVisitor(pages);
 
 		const newFieldName = fieldName ?? fieldReference;
+		const newParentInstanceId = parentInstanceId;
 
 		visitor.mapFields(
 			(field) => {
-				if (newFieldName === field.fieldName) {
+				if (
+					newFieldName === field.fieldName &&
+					newParentInstanceId === field.parentInstanceId
+				) {
 					repetitionsCounter++;
 				}
 			},

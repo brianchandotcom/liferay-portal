@@ -464,7 +464,7 @@ definition {
 	macro viewIdentityProviderConfigurations {
 		AssertValue(
 			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE_INPUT",
-			value1 = "${sessionMaximum}");
+			value1 = ${sessionMaximum});
 
 		AssertNotChecked(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
 	}
@@ -496,7 +496,7 @@ definition {
 	macro viewServiceProviderConfigurations {
 		AssertValue(
 			locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_CLOCK_SKEW_INPUT",
-			value1 = "${clockSkew}");
+			value1 = ${clockSkew});
 
 		AssertChecked(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX");
 	}

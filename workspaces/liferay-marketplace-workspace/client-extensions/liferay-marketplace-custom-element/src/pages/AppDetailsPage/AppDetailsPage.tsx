@@ -1,3 +1,5 @@
+import {useEffect} from 'react';
+
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayNavigationBar from '@clayui/navigation-bar';
@@ -15,6 +17,8 @@ import {useState} from 'react';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import {TYPES} from '../../manage-app-state/actionTypes';
+import {useAppContext} from '../../manage-app-state/AppManageState';
 
 interface AppDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
@@ -29,6 +33,20 @@ export function AppDetailsPage({
 }: AppDetailsPageProps) {
 	const [navigationBarActive, setNavigationBarActive] =
 		useState('App Details');
+
+	const [_, dispatch] = useAppContext();
+
+	useEffect(() => {
+		dispatch({
+			payload: {
+				value: {
+					appERC: selectedApp.externalReferenceCode,
+					appProductId: selectedApp.productId,
+				},
+			},
+			type: TYPES.SUBMIT_APP_PROFILE,
+		});
+	}, []);
 
 	return (
 		<div className="app-details-page-container">
@@ -152,40 +170,6 @@ export function AppDetailsPage({
 							}
 						>
 							<span>App Details</span>
-						</ClayButton>
-					</ClayNavigationBar.Item>
-
-					<ClayNavigationBar.Item
-						active={navigationBarActive === 'Comments'}
-					>
-						<ClayButton
-							onClick={() => setNavigationBarActive('Comments')}
-						>
-							<span>Comments (3)</span>
-						</ClayButton>
-					</ClayNavigationBar.Item>
-
-					<ClayNavigationBar.Item
-						active={navigationBarActive === 'Activity history'}
-					>
-						<ClayButton
-							onClick={() =>
-								setNavigationBarActive('Activity history')
-							}
-						>
-							<span>Activity history</span>
-						</ClayButton>
-					</ClayNavigationBar.Item>
-
-					<ClayNavigationBar.Item
-						active={navigationBarActive === 'App versions'}
-					>
-						<ClayButton
-							onClick={() =>
-								setNavigationBarActive('App versions')
-							}
-						>
-							<span>App versions</span>
 						</ClayButton>
 					</ClayNavigationBar.Item>
 				</ClayNavigationBar>

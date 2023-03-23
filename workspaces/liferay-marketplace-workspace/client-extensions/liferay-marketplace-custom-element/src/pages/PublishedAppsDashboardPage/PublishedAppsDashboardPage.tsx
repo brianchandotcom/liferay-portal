@@ -129,8 +129,10 @@ export function PublishedAppsDashboardPage() {
 			const newAppList = appList.items.map(
 				(product: any, index: number) => {
 					return {
+						externalReferenceCode: product.externalReferenceCode,
 						lastUpdatedBy: product.lastUpdatedBy,
 						name: product.name.en_US,
+						productId: product.productId,
 						status: product.workflowStatusInfo.label.replace(
 							/(^\w|\s\w)/g,
 							(m: string) => m.toUpperCase()

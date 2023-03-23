@@ -15,14 +15,12 @@
 package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeTable;
-import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalizationTable;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.model.impl.JournalArticleImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
-import com.liferay.journal.service.persistence.JournalArticleUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -41,11 +39,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -89,9 +84,6 @@ public class JournalArticleFinderImpl
 	public static final String COUNT_BY_G_F_C_S =
 		JournalArticleFinder.class.getName() + ".countByG_F_C_S";
 
-	public static final String FIND_BY_EXPIRATION_DATE =
-		JournalArticleFinder.class.getName() + ".findByExpirationDate";
-
 	public static final String FIND_BY_NO_ASSETS =
 		JournalArticleFinder.class.getName() + ".findByNoAssets";
 
@@ -104,9 +96,6 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_R_D =
 		JournalArticleFinder.class.getName() + ".findByR_D";
 
-	public static final String FIND_BY_G_F =
-		JournalArticleFinder.class.getName() + ".findByG_F";
-
 	public static final String FIND_BY_G_ST =
 		JournalArticleFinder.class.getName() + ".findByG_ST";
 
@@ -116,9 +105,6 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_G_F_L =
 		JournalArticleFinder.class.getName() + ".findByG_F_L";
 
-	public static final String FIND_BY_G_C_S =
-		JournalArticleFinder.class.getName() + ".findByG_C_S";
-
 	public static final String FIND_BY_G_U_F_C =
 		JournalArticleFinder.class.getName() + ".findByG_U_F_C";
 
@@ -127,44 +113,6 @@ public class JournalArticleFinderImpl
 
 	public static final String FIND_BY_G_F_C_S_L =
 		JournalArticleFinder.class.getName() + ".findByG_F_C_S_L";
-
-	@Override
-	public int countByKeywords(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String keywords, Double version, String ddmStructureKey,
-		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, int status) {
-
-		String[] articleIds = null;
-		String[] titles = null;
-		String[] descriptions = null;
-		String[] contents = null;
-		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
-		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			articleIds = _customSQL.keywords(keywords, false);
-			titles = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-
-			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = _customSQL.keywords(keywords, false);
-			}
-		}
-		else {
-			andOperator = true;
-		}
-
-		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return doCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition, false);
-	}
 
 	@Override
 	public int countByG_F(
@@ -257,44 +205,6 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public int filterCountByKeywords(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String keywords, Double version, String ddmStructureKey,
-		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, int status) {
-
-		String[] articleIds = null;
-		String[] titles = null;
-		String[] descriptions = null;
-		String[] contents = null;
-		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
-		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			articleIds = _customSQL.keywords(keywords, false);
-			titles = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-
-			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = _customSQL.keywords(keywords, false);
-			}
-		}
-		else {
-			andOperator = true;
-		}
-
-		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return doCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition, true);
-	}
-
-	@Override
 	public int filterCountByG_F(
 		long groupId, List<Long> folderIds,
 		QueryDefinition<JournalArticle> queryDefinition) {
@@ -334,24 +244,6 @@ public class JournalArticleFinderImpl
 	public int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
-		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, Date reviewDate,
-		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
-
-		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
-		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-
-		return filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleId, version,
-			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
-	}
-
-	@Override
-	public int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
@@ -385,53 +277,6 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public List<JournalArticle> filterFindByKeywords(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String keywords, Double version, String ddmStructureKey,
-		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, int status, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		String[] articleIds = null;
-		String[] titles = null;
-		String[] descriptions = null;
-		String[] contents = null;
-		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
-		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			articleIds = _customSQL.keywords(keywords, false);
-			titles = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-
-			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = _customSQL.keywords(keywords, false);
-			}
-		}
-		else {
-			andOperator = true;
-		}
-
-		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			status, start, end, orderByComparator);
-
-		return doFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByG_ST(
-		long groupId, int status,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_ST(groupId, status, queryDefinition, true);
-	}
-
-	@Override
 	public List<JournalArticle> filterFindByG_ST_L(
 		long groupId, int status, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition) {
@@ -445,34 +290,6 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_F_L(groupId, folderIds, locale, queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByG_C_S(
-		long groupId, long classNameId, String ddmStructureKey,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_C_S(
-			groupId, classNameId, new String[] {ddmStructureKey},
-			queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByG_C_S(
-		long groupId, long classNameId, String[] ddmStructureKeys,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_C_S(
-			groupId, classNameId, ddmStructureKeys, queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByG_F_C(
-		long groupId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_F_C(
-			groupId, folderIds, classNameId, queryDefinition, true);
 	}
 
 	@Override
@@ -493,35 +310,6 @@ public class JournalArticleFinderImpl
 		return doFindByG_C_S_L(
 			groupId, folderIds, classNameId, new String[] {ddmStructureKey},
 			locale, queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByG_F_C_S_L(
-		long groupId, List<Long> folderIds, long classNameId,
-		String[] ddmStructureKeys, Locale locale,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_C_S_L(
-			groupId, folderIds, classNameId, ddmStructureKeys, locale,
-			queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String articleId, Double version, String title, String description,
-		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, Date reviewDate,
-		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
-
-		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
-		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-
-		return filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleId, version,
-			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
 	}
 
 	@Override
@@ -558,82 +346,6 @@ public class JournalArticleFinderImpl
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
 			queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> findByExpirationDate(
-		long classNameId, Date expirationDateLT,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		Timestamp expirationDateLT_TS = CalendarUtil.getTimestamp(
-			expirationDateLT);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(
-				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity(
-				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classNameId);
-			queryPos.add(queryDefinition.getStatus());
-			queryPos.add(expirationDateLT_TS);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<JournalArticle> findByKeywords(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String keywords, Double version, String ddmStructureKey,
-		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, int status, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		String[] articleIds = null;
-		String[] titles = null;
-		String[] descriptions = null;
-		String[] contents = null;
-		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
-		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			articleIds = _customSQL.keywords(keywords, false);
-			titles = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-
-			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = _customSQL.keywords(keywords, false);
-			}
-		}
-		else {
-			andOperator = true;
-		}
-
-		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
-			status, start, end, orderByComparator);
-
-		return findByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
 	}
 
 	@Override
@@ -768,47 +480,12 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public List<JournalArticle> findByG_ST(
-		long groupId, int status,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_ST(groupId, status, queryDefinition, false);
-	}
-
-	@Override
-	public List<JournalArticle> findByG_ST_L(
-		long groupId, int status, Locale locale,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_ST_L(groupId, status, locale, queryDefinition, false);
-	}
-
-	@Override
 	public List<JournalArticle> findByG_F_L(
 		long groupId, List<Long> folderIds, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_F_L(
 			groupId, folderIds, locale, queryDefinition, false);
-	}
-
-	@Override
-	public List<JournalArticle> findByG_C_S(
-		long groupId, long classNameId, String ddmStructureKey,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_C_S(
-			groupId, classNameId, new String[] {ddmStructureKey},
-			queryDefinition, false);
-	}
-
-	@Override
-	public List<JournalArticle> findByG_C_S(
-		long groupId, long classNameId, String[] ddmStructureKeys,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_C_S(
-			groupId, classNameId, ddmStructureKeys, queryDefinition, false);
 	}
 
 	@Override
@@ -856,26 +533,6 @@ public class JournalArticleFinderImpl
 		String[] contents = _customSQL.keywords(content, false);
 		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
 		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
-
-		return findByC_G_F_C_A_V_T_D_C_S_T_D_R(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
-	}
-
-	@Override
-	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String articleId, Double version, String title, String description,
-		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, Date reviewDate,
-		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
-
-		String[] articleIds = _customSQL.keywords(articleId, false);
-		String[] titles = _customSQL.keywords(title);
-		String[] descriptions = _customSQL.keywords(description, false);
-		String[] contents = _customSQL.keywords(content, false);
 
 		return findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -1372,76 +1029,6 @@ public class JournalArticleFinderImpl
 		}
 	}
 
-	protected List<JournalArticle> doFindByG_C_S(
-		long groupId, long classNameId, String[] ddmStructureKeys,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(
-				getClass(), FIND_BY_G_C_S, queryDefinition, "JournalArticle");
-
-			sql = replaceStatusJoin(sql, groupId, queryDefinition);
-
-			OrderByComparator<JournalArticle> orderByComparator =
-				queryDefinition.getOrderByComparator();
-
-			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
-
-			if (groupId <= 0) {
-				sql = StringUtil.removeSubstring(
-					sql, "(JournalArticle.groupId = ?) AND");
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$DDM_STRUCTURE_KEY$]",
-				getDDMStructureKeys(
-					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalArticle.class.getName(),
-					"JournalArticle.resourcePrimKey", groupId);
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity(
-				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (_isOrderByTitle(orderByComparator)) {
-				queryPos.add(1);
-			}
-			else {
-				queryPos.add(0);
-			}
-
-			if (groupId > 0) {
-				queryPos.add(groupId);
-			}
-
-			queryPos.add(classNameId);
-			queryPos.add(ddmStructureKeys);
-			queryPos.add(queryDefinition.getStatus());
-
-			return (List<JournalArticle>)QueryUtil.list(
-				sqlQuery, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected List<JournalArticle> doFindByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition,
@@ -1788,46 +1375,6 @@ public class JournalArticleFinderImpl
 		return sb.toString();
 	}
 
-	protected JournalArticle getLatestArticle(
-		long groupId, String articleId, int status) {
-
-		List<JournalArticle> articles = null;
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			articles = JournalArticleUtil.findByG_A(groupId, articleId, 0, 1);
-		}
-		else {
-			articles = JournalArticleUtil.findByG_A_ST(
-				groupId, articleId, status, 0, 1);
-		}
-
-		if (articles.isEmpty()) {
-			return null;
-		}
-
-		return articles.get(0);
-	}
-
-	protected boolean isdatabaseContentKeywordSearchEnabled(long companyId) {
-		JournalServiceConfiguration journalServiceConfiguration = null;
-
-		try {
-			journalServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class, companyId);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		if (journalServiceConfiguration == null) {
-			return false;
-		}
-
-		return journalServiceConfiguration.
-			databaseContentKeywordSearchEnabled();
-	}
-
 	protected boolean isNullArray(Object[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return true;
@@ -2162,9 +1709,6 @@ public class JournalArticleFinderImpl
 
 	private static final String _TITLE_FIELD =
 		"JournalArticleLocalization.title";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleFinderImpl.class);
 
 	@Reference
 	private CustomSQL _customSQL;

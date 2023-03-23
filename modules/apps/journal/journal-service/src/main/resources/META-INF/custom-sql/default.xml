@@ -78,18 +78,6 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
-		<![CDATA[
-			SELECT
-				{JournalArticle.*}
-			FROM
-				JournalArticle
-			WHERE
-				(classNameId = ?) AND
-				([$STATUS$]) AND
-				(expirationDate <= ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
@@ -145,40 +133,6 @@
 				(indexable = [$TRUE$])
 			ORDER BY
 				version DESC
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_F">
-		<![CDATA[
-			SELECT
-				JournalArticle.*
-			FROM
-				JournalArticle
-			LEFT JOIN
-				JournalArticle tempJournalArticle ON
-					[$STATUS_JOIN$] AND
-					(JournalArticle.groupId = tempJournalArticle.groupId) AND
-					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
-			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
-					FROM
-						JournalArticleLocalization
-					WHERE
-						1 = ?
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
-				) JournalArticleLocalization ON
-					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
-			WHERE
-				(JournalArticle.groupId = ?) AND
-				([$STATUS$]) AND
-				[$FOLDER_ID$] AND
-				(tempJournalArticle.id_ IS NULL)
-			ORDER BY
-				JournalArticle.id_ ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_ST">
@@ -245,41 +199,6 @@
 				(JournalArticle.groupId = ?) AND
 				([$STATUS$]) AND
 				[$FOLDER_ID$] AND
-				(tempJournalArticle.id_ IS NULL)
-			ORDER BY
-				JournalArticle.id_ ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_C_S">
-		<![CDATA[
-			SELECT
-				JournalArticle.*
-			FROM
-				JournalArticle
-			LEFT JOIN
-				JournalArticle tempJournalArticle ON
-					[$STATUS_JOIN$] AND
-					(JournalArticle.groupId = tempJournalArticle.groupId) AND
-					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
-			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
-					FROM
-						JournalArticleLocalization
-					WHERE
-						1 = ?
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
-				) JournalArticleLocalization ON
-					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
-			WHERE
-				(JournalArticle.groupId = ?) AND
-				(JournalArticle.classNameId = ?) AND
-				([$DDM_STRUCTURE_KEY$]) AND
-				([$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
 				JournalArticle.id_ ASC

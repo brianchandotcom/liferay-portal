@@ -224,13 +224,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		_deleteLayoutClassedModelUsages(
 			sourceLayoutLayoutClassedModelUsages, targetLayout);
 
+		List<LayoutClassedModelUsage> targetLayoutLayoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(targetLayout.getPlid());
+
 		for (LayoutClassedModelUsage sourceLayoutLayoutClassedModelUsage :
 				sourceLayoutLayoutClassedModelUsages) {
 
 			if (_hasLayoutClassedModelUsage(
-					_layoutClassedModelUsageLocalService.
-						getLayoutClassedModelUsagesByPlid(
-							targetLayout.getPlid()),
+					targetLayoutLayoutClassedModelUsages,
 					sourceLayoutLayoutClassedModelUsage)) {
 
 				continue;
@@ -301,7 +303,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						sourceLayout.getGroupId(), sourceLayout.getPlid());
 		}
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinks = new HashMap<>();
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
 
 		for (FragmentEntryLink fragmentEntryLink :
 				_fragmentEntryLinkLocalService.
@@ -309,7 +311,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						sourceLayout.getGroupId(), segmentsExperiencesIds,
 						sourceLayout.getPlid())) {
 
-			fragmentEntryLinks.put(
+			fragmentEntryLinksMap.put(
 				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
 		}
 
@@ -350,7 +352,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			}
 
 			JSONObject dataJSONObject = _processDataJSONObject(
-				LayoutStructure.of(data), targetLayout, fragmentEntryLinks,
+				LayoutStructure.of(data), targetLayout, fragmentEntryLinksMap,
 				entry.getValue());
 
 			_layoutPageTemplateStructureLocalService.

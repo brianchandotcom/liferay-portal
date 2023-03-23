@@ -105,6 +105,8 @@ export type TestrayBuild = {
 };
 
 export type TestrayCase = {
+	caseResults?: TestrayCaseResult[];
+	caseToCaseResult?: TestrayCaseResult[];
 	caseType?: TestrayCaseType;
 	component?: TestrayComponent;
 	dateCreated: string;
@@ -144,12 +146,15 @@ export type TestrayCaseResult = {
 	mbMessageId: number;
 	mbThreadId: number;
 	r_buildToCaseResult_c_build?: TestrayBuild;
+	r_buildToCaseResult_c_buildId?: number;
 	r_caseToCaseResult_c_case?: TestrayCase;
 	r_caseToCaseResult_c_caseId?: number;
 	r_componentToCaseResult_c_component?: TestrayComponent;
 	r_runToCaseResult_c_run?: TestrayRun;
+	r_runToCaseResult_c_runId?: number;
 	r_userToCaseResults_user?: UserAccount;
 	run?: TestrayRun;
+	runId?: number;
 	startDate: string;
 	user?: UserAccount;
 	warnings: number;

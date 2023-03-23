@@ -252,6 +252,12 @@ $sidebar-divider-color: #8b8db2;
 		color: $color-white;
 	}
 
+	&.didnotrun {
+		background-color: $dnr-color;
+		border-color: $dnr-color;
+		color: $color-white;
+	}
+
 	&.failed {
 		background-color: $failedColor;
 		border-color: $failedColor;

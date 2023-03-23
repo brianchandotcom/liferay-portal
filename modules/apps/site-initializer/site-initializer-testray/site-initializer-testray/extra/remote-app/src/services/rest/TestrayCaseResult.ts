@@ -105,6 +105,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 							build: caseResult?.r_runToCaseResult_c_run?.build,
 					  }
 					: undefined,
+				runId: caseResult?.r_runToCaseResult_c_runId,
 				user: caseResult?.r_userToCaseResults_user,
 			}),
 			uri: 'caseresults',
@@ -193,8 +194,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}

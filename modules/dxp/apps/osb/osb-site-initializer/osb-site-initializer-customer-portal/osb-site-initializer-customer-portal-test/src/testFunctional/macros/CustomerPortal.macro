@@ -803,21 +803,21 @@ definition {
 	macro viewCardValue {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#PROJECT_LOGO",
-			logo = "dxp_icon");
+			logo = ${logo});
 
 		AssertElementPresent(
-			cardName = "Non-Production",
+			cardName = ${cardName},
 			locator1 = "CustomerPortalSite#CARD_NAME");
 
 		AssertElementPresent(
-			key_index = 2,
+			key_index = ${position},
 			locator1 = "CustomerPortalSite#CARD_INSTANCE",
-			title = 1);
+			title = ${instanceSize});
 
 		AssertElementPresent(
-			date = "03/31/2021 - 03/30/2022",
+			key_date = ${date},
 			locator1 = "CustomerPortalSite#CARD_DATE",
-			status = "Active");
+			key_status = ${status});
 	}
 
 	macro viewConfirmationModal {

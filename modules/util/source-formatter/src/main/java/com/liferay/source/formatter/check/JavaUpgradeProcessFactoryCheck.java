@@ -210,9 +210,9 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 					continue;
 				}
 
-				if (tableName.equals(previousTableName)) {
-					List<Element> serviceXMLElements = _getServiceXMLElements();
+				List<Element> serviceXMLElements = _getServiceXMLElements();
 
+				if (tableName.equals(previousTableName)) {
 					for (Element serviceXMLElement : serviceXMLElements) {
 						int index1 = -1;
 						int index2 = -1;
@@ -248,8 +248,6 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 					}
 				}
 				else {
-					List<Element> serviceXMLElements = _getServiceXMLElements();
-
 					for (Element serviceXMLElement : serviceXMLElements) {
 						int index1 = _getTableIndex(
 							serviceXMLElement, previousTableName);

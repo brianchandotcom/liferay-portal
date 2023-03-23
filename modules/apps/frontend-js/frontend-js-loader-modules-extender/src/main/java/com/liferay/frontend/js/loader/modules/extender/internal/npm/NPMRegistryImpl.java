@@ -97,7 +97,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdateImpl npmRegistryUpdateImpl) {
-		_refreshNPMRegistryStateSnapshot(
+		_refreshJSModuleCaches(
 			null, null, npmRegistryUpdateImpl,
 			_getNPMRegistryUpdatesListeners());
 	}
@@ -263,7 +263,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_activationThreadLocal.set(Boolean.FALSE);
 
-		_refreshNPMRegistryStateSnapshot(null, null, null, null);
+		_refreshJSModuleCaches(null, null, null, null);
 
 		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
@@ -370,7 +370,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private void _refreshNPMRegistryStateSnapshot(
+	private void _refreshJSModuleCaches(
 		Map<Bundle, JSBundle> jsBundlesMap,
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages,
 		NPMRegistryUpdateImpl npmRegistryUpdateImpl,
@@ -556,7 +556,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			}
 
 			if (!_activationThreadLocal.get()) {
-				_refreshNPMRegistryStateSnapshot(
+				_refreshJSModuleCaches(
 					HashMapBuilder.create(
 						_bundleTracker.getTracked()
 					).put(
@@ -586,7 +586,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshNPMRegistryStateSnapshot(
+				_refreshJSModuleCaches(
 					null, null, null, _getNPMRegistryUpdatesListeners());
 			}
 		}
@@ -624,7 +624,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			jsConfigGeneratorPackages.add(jsConfigGeneratorPackage);
 
-			_refreshNPMRegistryStateSnapshot(
+			_refreshJSModuleCaches(
 				null, jsConfigGeneratorPackages, null,
 				_getNPMRegistryUpdatesListeners());
 
@@ -642,7 +642,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			ServiceReference<ServletContext> serviceReference,
 			JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 
-			_refreshNPMRegistryStateSnapshot(
+			_refreshJSModuleCaches(
 				null, null, null, _getNPMRegistryUpdatesListeners());
 		}
 

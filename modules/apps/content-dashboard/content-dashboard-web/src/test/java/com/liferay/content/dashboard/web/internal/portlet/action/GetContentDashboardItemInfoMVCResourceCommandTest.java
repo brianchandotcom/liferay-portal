@@ -61,7 +61,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -659,22 +658,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		}
 
 		public ContentDashboardItem build() {
-			String userName = Optional.ofNullable(
-				_user
-			).map(
-				user -> user.getFirstName()
-			).orElseGet(
-				RandomTestUtil::randomString
-			);
-
-			long userId = Optional.ofNullable(
-				_user
-			).map(
-				user -> user.getUserId()
-			).orElseGet(
-				RandomTestUtil::randomLong
-			);
-
 			AssetCategory assetCategory1 = Mockito.mock(AssetCategory.class);
 
 			Mockito.when(
@@ -722,6 +705,17 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			).thenReturn(
 				RandomTestUtil.randomString()
 			);
+
+			String userName = RandomTestUtil.randomString();
+			long userId = RandomTestUtil.randomLong();
+
+			if (_user != null) {
+				userName = _user.getFirstName();
+				userId = _user.getUserId();
+			}
+
+			String finalUserName = userName;
+			long finalUserId = userId;
 
 			return new ContentDashboardItem() {
 
@@ -853,12 +847,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 				@Override
 				public long getUserId() {
-					return userId;
+					return finalUserId;
 				}
 
 				@Override
 				public String getUserName() {
-					return userName;
+					return finalUserName;
 				}
 
 				@Override

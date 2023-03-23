@@ -572,13 +572,13 @@ public class TaxonomyCategoryResourceImpl
 		List<AssetCategoryProperty> assetCategoryProperties,
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
-		Map<String, String> categoryProperties = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		if (taxonomyCategoryProperties != null) {
 			for (TaxonomyCategoryProperty taxonomyCategoryProperty :
 					taxonomyCategoryProperties) {
 
-				categoryProperties.put(
+				map.put(
 					taxonomyCategoryProperty.getKey(),
 					taxonomyCategoryProperty.getValue());
 			}
@@ -587,16 +587,16 @@ public class TaxonomyCategoryResourceImpl
 		for (AssetCategoryProperty assetCategoryProperty :
 				assetCategoryProperties) {
 
-			categoryProperties.put(
+			map.put(
 				assetCategoryProperty.getKey(),
 				assetCategoryProperty.getValue());
 		}
 
-		String[] strings = new String[categoryProperties.size()];
+		String[] strings = new String[map.size()];
 
 		int index = 0;
 
-		for (Map.Entry<String, String> entry : categoryProperties.entrySet()) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			strings[index] = entry.getKey() + ":" + entry.getValue();
 
 			index++;

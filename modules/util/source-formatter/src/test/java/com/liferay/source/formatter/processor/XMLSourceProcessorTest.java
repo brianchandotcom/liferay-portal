@@ -48,4 +48,9 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IncorrectXMLStyling.testxml");
 	}
 
+	@Test
+	public void testSortTagAttributes() throws Exception {
+		test("SortTagAttributes.testjelly");
+	}
+
 }

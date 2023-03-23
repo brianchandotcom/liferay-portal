@@ -21,13 +21,13 @@ public interface NPMRegistryStateSnapshot {
 
 	public String getDigest();
 
-	public JSModule getResolvedJSModule(String identifier);
-
-	public JSPackage getResolvedJSPackage(String identifier);
-
 	public String mapModuleName(String moduleName);
 
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency);
+
+	public JSModule getResolvedJSModule(String identifier);
+
+	public JSPackage getResolvedJSPackage(String identifier);
 
 }

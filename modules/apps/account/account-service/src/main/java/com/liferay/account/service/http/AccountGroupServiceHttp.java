@@ -52,7 +52,8 @@ public class AccountGroupServiceHttp {
 
 	public static com.liferay.account.model.AccountGroup addAccountGroup(
 			HttpPrincipal httpPrincipal, long userId, String description,
-			String name)
+			String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -61,7 +62,7 @@ public class AccountGroupServiceHttp {
 				_addAccountGroupParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, description, name);
+				methodKey, userId, description, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -214,7 +215,8 @@ public class AccountGroupServiceHttp {
 
 	public static com.liferay.account.model.AccountGroup updateAccountGroup(
 			HttpPrincipal httpPrincipal, long accountGroupId,
-			String description, String name)
+			String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -223,7 +225,7 @@ public class AccountGroupServiceHttp {
 				_updateAccountGroupParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountGroupId, description, name);
+				methodKey, accountGroupId, description, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -299,7 +301,10 @@ public class AccountGroupServiceHttp {
 		AccountGroupServiceHttp.class);
 
 	private static final Class<?>[] _addAccountGroupParameterTypes0 =
-		new Class[] {long.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 	private static final Class<?>[] _deleteAccountGroupParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteAccountGroupsParameterTypes2 =
@@ -310,7 +315,10 @@ public class AccountGroupServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _updateAccountGroupParameterTypes4 =
-		new Class[] {long.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes5 = new Class[] {
 			long.class, String.class

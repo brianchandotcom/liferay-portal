@@ -56,6 +56,28 @@ definition {
 
 	}
 
+	@description = "LPS-179521. Confirm that the dataset can be delete"
+	@priority = 5
+	test CanDeleteDataSet {
+		task ("When the user goes to add Datasets") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Channel");
+		}
+
+		task ("And the user deletes a dataset") {
+			FrontendDataSetAdmin.deleteDataSet(entry = "Test Dataset");
+
+			Button.clickDelete();
+		}
+
+		task ("Then The dataset is not present in the data set Admin page") {
+			AssertElementPresent(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "Confirm the error message that appears when the user tries to create a dataset view with more than 280 characters in the name field"
 	@priority = 3
 	test CannotExceed280Characters {

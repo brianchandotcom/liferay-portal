@@ -265,7 +265,7 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Object, Long> getAggregationCounts(
-			long objectDefinitionId, String aggregationTerm,
+			long groupId, long objectDefinitionId, String aggregationTerm,
 			Predicate predicate, int start, int end)
 		throws PortalException;
 

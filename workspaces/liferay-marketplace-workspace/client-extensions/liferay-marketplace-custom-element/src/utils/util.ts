@@ -1,7 +1,7 @@
 import {
 	createProductSpecification,
-	createSpecification,
 	getCatalogs,
+	getSpecifications,
 	updateProductSpecification,
 } from './api';
 
@@ -19,16 +19,17 @@ async function submitSpecification(
 	title: string,
 	value: string
 ): Promise<number> {
-	const dataSpecification = await createSpecification({
-		body: {
-			key,
-			title: {en_US: title},
-		},
-	});
+	const specifications = await getSpecifications();
+
+	const specification = specifications.items.map(
+		({specificationKey}: {specificationKey: string}) =>
+			specificationKey === key
+	);
+
 	if (productSpecificationId) {
 		updateProductSpecification({
 			body: {
-				specificationKey: dataSpecification.key,
+				specificationKey: key,
 				value: {en_US: value},
 			},
 			id: productSpecificationId,
@@ -41,8 +42,8 @@ async function submitSpecification(
 			appId,
 			body: {
 				productId,
-				specificationId: dataSpecification.id,
-				specificationKey: dataSpecification.key,
+				specificationId: specification.id,
+				specificationKey: key,
 				value: {en_US: value},
 			},
 		});

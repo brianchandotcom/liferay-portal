@@ -266,10 +266,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		String cacheKey = StringBundler.concat(
 			packageName, StringPool.UNDERLINE, versionConstraints);
 
-		ConcurrentHashMap<String, JSPackage> cachedDependencyJSPackages =
-			_jsModulesCache._cachedDependencyJSPackages;
-
-		JSPackage jsPackage = cachedDependencyJSPackages.get(cacheKey);
+		JSPackage jsPackage = _dependencyJSPackages.get(cacheKey);
 
 		if (jsPackage != null) {
 			if (jsPackage == _NULL_JS_PACKAGE) {
@@ -297,10 +294,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		if (jsPackage == null) {
-			cachedDependencyJSPackages.put(cacheKey, _NULL_JS_PACKAGE);
+			_dependencyJSPackages.put(cacheKey, _NULL_JS_PACKAGE);
 		}
 		else {
-			cachedDependencyJSPackages.put(cacheKey, jsPackage);
+			_dependencyJSPackages.put(cacheKey, jsPackage);
 		}
 
 		return jsPackage;
@@ -508,6 +505,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			jsBundles = tracked.values();
 		}
 
+		_dependencyJSPackages.clear();
+
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
 		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
@@ -580,6 +579,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private volatile Boolean _applyVersioning;
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
+	private final Map<String, JSPackage> _dependencyJSPackages =
+		new ConcurrentHashMap<>();
 	private final Map<String, String> _globalAliases = new HashMap<>();
 	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
 		_javaScriptAwarePortalWebResources;
@@ -630,8 +631,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 			_resolvedJSPackages = resolvedJSPackages;
 		}
 
-		private final ConcurrentHashMap<String, JSPackage>
-			_cachedDependencyJSPackages = new ConcurrentHashMap<>();
 		private final Map<String, String> _exactMatchMap;
 		private final Map<String, JSModule> _jsModules;
 		private final Map<String, JSPackage> _jsPackages;

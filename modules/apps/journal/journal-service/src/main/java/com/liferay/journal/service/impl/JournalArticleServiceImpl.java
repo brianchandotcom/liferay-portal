@@ -1580,7 +1580,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	@Override
 	public int getLatestArticlesCount(long groupId, int status) {
-		return journalArticleFinder.countByG_ST(
+		return journalArticleFinder.filterCountByG_ST(
 			groupId, status, new QueryDefinition<>(status));
 	}
 

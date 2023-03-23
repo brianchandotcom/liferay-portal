@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>MODAL_TEXT</td>
-	<td>//*[contains(@class, 'modal-content')]//*[text()='${key_text}']</td>
+	<td>//*[contains(@class, 'container-view')]//*[contains(@class, 'text-secondary') and contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

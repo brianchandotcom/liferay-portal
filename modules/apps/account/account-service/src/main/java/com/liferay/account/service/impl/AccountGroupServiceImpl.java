@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -44,14 +45,15 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup addAccountGroup(
-			long userId, String description, String name)
+			long userId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portalPermission.check(
 			getPermissionChecker(), AccountActionKeys.ADD_ACCOUNT_GROUP);
 
 		return accountGroupLocalService.addAccountGroup(
-			userId, description, name);
+			userId, description, name, serviceContext);
 	}
 
 	@Override
@@ -91,14 +93,15 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, String description, String name)
+			long accountGroupId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_accountGroupModelResourcePermission.check(
 			getPermissionChecker(), accountGroupId, ActionKeys.UPDATE);
 
 		return accountGroupLocalService.updateAccountGroup(
-			accountGroupId, description, name);
+			accountGroupId, description, name, serviceContext);
 	}
 
 	@Override

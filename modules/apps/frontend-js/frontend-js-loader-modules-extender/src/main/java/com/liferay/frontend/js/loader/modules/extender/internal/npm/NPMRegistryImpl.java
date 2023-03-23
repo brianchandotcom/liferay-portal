@@ -209,7 +209,44 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		return _jsModulesCache.mapModuleName(moduleName);
+		Map<String, String> exactMatchMap = _jsModulesCache.getExactMatchMap();
+
+		String mappedModuleName = exactMatchMap.get(moduleName);
+
+		if (Validator.isNotNull(mappedModuleName)) {
+			return mapModuleName(mappedModuleName);
+		}
+
+		Map<String, String> globalAliases = _jsModulesCache.getGlobalAliases();
+
+		for (Map.Entry<String, String> entry : globalAliases.entrySet()) {
+			String resolvedId = entry.getKey();
+
+			if (resolvedId.equals(moduleName) ||
+				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
+
+				return mapModuleName(
+					entry.getValue() +
+						moduleName.substring(resolvedId.length()));
+			}
+		}
+
+		Map<String, String> partialMatchMap =
+			_jsModulesCache.getPartialMatchMap();
+
+		for (Map.Entry<String, String> entry : partialMatchMap.entrySet()) {
+			String resolvedId = entry.getKey();
+
+			if (resolvedId.equals(moduleName) ||
+				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
+
+				return mapModuleName(
+					entry.getValue() +
+						moduleName.substring(resolvedId.length()));
+			}
+		}
+
+		return moduleName;
 	}
 
 	/**

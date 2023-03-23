@@ -26,7 +26,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.UnsupportedEncodingException;
 
@@ -64,6 +63,10 @@ public class JSModulesCache {
 		_resolvedJSPackages = resolvedJSPackages;
 	}
 
+	public Map<String, String> getExactMatchMap() {
+		return _exactMatchMap;
+	}
+
 	public Map<String, String> getGlobalAliases() {
 		return _globalAliases;
 	}
@@ -74,6 +77,10 @@ public class JSModulesCache {
 
 	public Map<String, JSPackage> getJSPackages() {
 		return _jsPackages;
+	}
+
+	public Map<String, String> getPartialMatchMap() {
+		return _partialMatchMap;
 	}
 
 	public String getResolutionStateDigest() {
@@ -90,40 +97,6 @@ public class JSModulesCache {
 
 	public Map<String, JSPackage> getResolvedJSPackages() {
 		return _resolvedJSPackages;
-	}
-
-	public String mapModuleName(String moduleName) {
-		String mappedModuleName = _exactMatchMap.get(moduleName);
-
-		if (Validator.isNotNull(mappedModuleName)) {
-			return mapModuleName(mappedModuleName);
-		}
-
-		for (Map.Entry<String, String> entry : _globalAliases.entrySet()) {
-			String resolvedId = entry.getKey();
-
-			if (resolvedId.equals(moduleName) ||
-				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
-
-				return mapModuleName(
-					entry.getValue() +
-						moduleName.substring(resolvedId.length()));
-			}
-		}
-
-		for (Map.Entry<String, String> entry : _partialMatchMap.entrySet()) {
-			String resolvedId = entry.getKey();
-
-			if (resolvedId.equals(moduleName) ||
-				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
-
-				return mapModuleName(
-					entry.getValue() +
-						moduleName.substring(resolvedId.length()));
-			}
-		}
-
-		return moduleName;
 	}
 
 	public JSPackage resolveJSPackageDependency(

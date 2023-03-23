@@ -177,11 +177,21 @@ public class NotificationQueueEntryResourceImpl
 				sentDate = serviceBuilderNotificationQueueEntry.getSentDate();
 				status = serviceBuilderNotificationQueueEntry.getStatus();
 				subject = serviceBuilderNotificationQueueEntry.getSubject();
-				triggerBy = notificationHandler.getTriggerBy(
-					contextAcceptLanguage.getPreferredLocale());
 				type = serviceBuilderNotificationQueueEntry.getType();
 				typeLabel = _language.get(
 					_getLocale(), notificationType.getTypeLanguageKey());
+
+				setTriggerBy(
+					() -> {
+						if (notificationHandler != null) {
+							return notificationHandler.getTriggerBy(
+								contextAcceptLanguage.getPreferredLocale());
+						}
+
+						return _language.get(
+							contextAcceptLanguage.getPreferredLocale(),
+							"missing-object-definition");
+					});
 			}
 		};
 	}

@@ -215,7 +215,7 @@ public class NotificationQueueEntryCacheModel
 
 		priority = objectInput.readDouble();
 		sentDate = objectInput.readLong();
-		subject = objectInput.readUTF();
+		subject = (String)objectInput.readObject();
 		type = objectInput.readUTF();
 
 		status = objectInput.readInt();
@@ -258,10 +258,10 @@ public class NotificationQueueEntryCacheModel
 		objectOutput.writeLong(sentDate);
 
 		if (subject == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(subject);
+			objectOutput.writeObject(subject);
 		}
 
 		if (type == null) {

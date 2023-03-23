@@ -274,8 +274,8 @@ public class NotificationQueueEntryPersistenceTest {
 			"notificationQueueEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"notificationTemplateId", true, "classNameId", true, "classPK",
-			true, "priority", true, "sentDate", true, "subject", true, "type",
-			true, "status", true);
+			true, "priority", true, "sentDate", true, "type", true, "status",
+			true);
 	}
 
 	@Test

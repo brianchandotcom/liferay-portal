@@ -73,9 +73,8 @@ public class NotificationQueueEntryTable
 	public final Column<NotificationQueueEntryTable, Date> sentDate =
 		createColumn(
 			"sentDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> subject =
-		createColumn(
-			"subject", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationQueueEntryTable, Clob> subject =
+		createColumn("subject", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Integer> status =

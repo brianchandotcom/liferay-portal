@@ -36,11 +36,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -152,11 +149,10 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			_userNotificationEventLocalService.getUserNotificationEventsCount(
 				user1.getUserId()));
 
-		Map<String, Serializable> objectEntryValues = randomObjectEntryValues();
-
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user1.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			objectEntryValues, ServiceContextTestUtil.getServiceContext());
+			randomObjectEntryValues(),
+			ServiceContextTestUtil.getServiceContext());
 
 		sendNotification(
 			new NotificationContextBuilder(
@@ -175,7 +171,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				).put(
 					"currentUserId", user1.getUserId()
 				).putAll(
-					objectEntryValues
+					randomObjectEntryValues()
 				).build()
 			).userId(
 				user1.getUserId()

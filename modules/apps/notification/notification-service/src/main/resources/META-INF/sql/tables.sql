@@ -28,7 +28,7 @@ create table NotificationQueueEntry (
 	classPK LONG,
 	priority DOUBLE,
 	sentDate DATE null,
-	subject VARCHAR(75) null,
+	subject TEXT null,
 	type_ VARCHAR(75) null,
 	status INTEGER
 );

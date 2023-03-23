@@ -81,7 +81,7 @@ public class NotificationQueueEntryModelImpl
 		{"notificationTemplateId", Types.BIGINT}, {"body", Types.CLOB},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"priority", Types.DOUBLE}, {"sentDate", Types.TIMESTAMP},
-		{"subject", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"subject", Types.CLOB}, {"type_", Types.VARCHAR},
 		{"status", Types.INTEGER}
 	};
 
@@ -102,13 +102,13 @@ public class NotificationQueueEntryModelImpl
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("sentDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subject", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,body TEXT null,classNameId LONG,classPK LONG,priority DOUBLE,sentDate DATE null,subject VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
+		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,body TEXT null,classNameId LONG,classPK LONG,priority DOUBLE,sentDate DATE null,subject TEXT null,type_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationQueueEntry";

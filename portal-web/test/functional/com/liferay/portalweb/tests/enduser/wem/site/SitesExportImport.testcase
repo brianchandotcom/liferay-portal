@@ -631,7 +631,7 @@ definition {
 		task ("Import the new site into the default site") {
 			JSONLayoututilitypage.deleteLayoutUtilityPage(
 				groupName = "Guest",
-				layoutUtilityPageName = "404 Error");
+				layoutUtilityPageName = 404);
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},

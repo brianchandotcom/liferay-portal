@@ -30,6 +30,8 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRel
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.UnsupportedOperationExceptionMapper;
 import com.liferay.object.rest.internal.manager.v1_0.ObjectEntry1toMObjectRelationshipElementsParserImpl;
 import com.liferay.object.rest.internal.manager.v1_0.ObjectEntryMtoMObjectRelationshipElementsParserImpl;
+import com.liferay.object.rest.internal.manager.v1_0.SystemObjectEntry1toMObjectRelationshipElementsParserImpl;
+import com.liferay.object.rest.internal.manager.v1_0.SystemObjectEntryMtoMObjectRelationshipElementsParserImpl;
 import com.liferay.object.rest.internal.openapi.v1_0.ObjectEntryOpenAPIResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
@@ -116,6 +118,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_initSystemObjectDefinition(
+				objectDefinition,
 				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
 						objectDefinition.getName()));
@@ -180,6 +183,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
+		String restContextPath;
+		boolean unregisterApplication;
+
 		if (objectDefinition.isSystem()) {
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 				_systemObjectDefinitionMetadataRegistry.
@@ -193,13 +199,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 				systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
-			_disposeComponentInstances(
-				jaxRsApplicationDescriptor.getRESTContextPath());
+			restContextPath = jaxRsApplicationDescriptor.getRESTContextPath();
 
-			return;
+			unregisterApplication = false;
 		}
-
-		String restContextPath = objectDefinition.getRESTContextPath();
+		else {
+			restContextPath = objectDefinition.getRESTContextPath();
+			unregisterApplication = true;
+		}
 
 		Map<Long, ObjectDefinition> objectDefinitions =
 			_objectDefinitionsMap.get(restContextPath);
@@ -211,8 +218,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_objectDefinitionsMap.remove(restContextPath);
 			}
 		}
-
-		boolean unregisterApplication = true;
 
 		List<String> companyIds = _restContextPathCompanyIds.get(
 			restContextPath);
@@ -254,11 +259,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			}
 		}
 
+		_disposeComponentInstances(restContextPath);
+
 		if (!unregisterApplication) {
 			return;
 		}
-
-		_disposeComponentInstances(restContextPath);
 
 		ServiceRegistration<?> serviceRegistration1 =
 			_applicationServiceRegistrations.remove(restContextPath);
@@ -665,6 +670,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private void _initSystemObjectDefinition(
+		ObjectDefinition objectDefinition,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
 
 		if (systemObjectDefinitionMetadata == null) {
@@ -691,6 +697,34 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.resource", "true"
 					).build())));
+
+		_scopedServiceRegistrationsMap.compute(
+			jaxRsApplicationDescriptor.getRESTContextPath(),
+			(key1, serviceRegistrationsMap) -> {
+				if (serviceRegistrationsMap == null) {
+					serviceRegistrationsMap = new HashMap<>();
+				}
+
+				serviceRegistrationsMap.computeIfAbsent(
+					objectDefinition.getCompanyId(),
+					key2 -> Arrays.asList(
+						_bundleContext.registerService(
+							ObjectRelationshipElementsParser.class,
+							new SystemObjectEntry1toMObjectRelationshipElementsParserImpl(
+								objectDefinition),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"companyId", objectDefinition.getCompanyId()
+							).build()),
+						_bundleContext.registerService(
+							ObjectRelationshipElementsParser.class,
+							new SystemObjectEntryMtoMObjectRelationshipElementsParserImpl(
+								objectDefinition),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"companyId", objectDefinition.getCompanyId()
+							).build())));
+
+				return serviceRegistrationsMap;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

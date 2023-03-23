@@ -102,12 +102,14 @@ String unsubscribeActionName = StringPool.BLANK;
 						/>
 					</c:when>
 					<c:otherwise>
-						<clay:icon
-							aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
-							cssClass="align-items-center d-flex icon-monospaced lfr-portal-tooltip"
-							symbol="bell-off"
-							title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
-						/>
+						<span class="align-items-center lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>">
+							<clay:icon
+								aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
+								cssClass="icon-monospaced mt-0"
+								symbol="bell-off"
+								title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
+							/>
+						</span>
 					</c:otherwise>
 				</c:choose>
 			</c:when>

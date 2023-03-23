@@ -97,19 +97,6 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Reference(unbind = "-")
-	protected void setKaleoDefinitionVersionLocalService(
-		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
-
-		_kaleoDefinitionVersionLocalService =
-			kaleoDefinitionVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
 
@@ -171,8 +158,10 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	@Reference
 	private ActionExecutorManager _actionExecutorManager;
 
+	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
 	private KaleoDesignerDisplayContext _kaleoDesignerDisplayContext;
 
 	@Reference(

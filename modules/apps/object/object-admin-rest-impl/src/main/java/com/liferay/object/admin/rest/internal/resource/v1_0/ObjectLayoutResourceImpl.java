@@ -21,6 +21,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
+import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -227,7 +228,8 @@ public class ObjectLayoutResourceImpl
 	}
 
 	private com.liferay.object.model.ObjectLayoutBox _toObjectLayoutBox(
-		long objectDefinitionId, ObjectLayoutBox objectLayoutBox) {
+			long objectDefinitionId, ObjectLayoutBox objectLayoutBox)
+		throws PortalException {
 
 		com.liferay.object.model.ObjectLayoutBox serviceBuilderObjectLayoutBox =
 			_objectLayoutBoxPersistence.create(0L);
@@ -250,7 +252,8 @@ public class ObjectLayoutResourceImpl
 	}
 
 	private com.liferay.object.model.ObjectLayoutColumn _toObjectLayoutColumn(
-		long objectDefinitionId, ObjectLayoutColumn objectLayoutColumn) {
+			long objectDefinitionId, ObjectLayoutColumn objectLayoutColumn)
+		throws PortalException {
 
 		com.liferay.object.model.ObjectLayoutColumn
 			serviceBuilderObjectLayoutColumn =
@@ -258,6 +261,12 @@ public class ObjectLayoutResourceImpl
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectDefinitionId, objectLayoutColumn.getObjectFieldName());
+
+		if (objectField == null) {
+			throw new NoSuchObjectFieldException(
+				"There is no object field with the name: " +
+					objectLayoutColumn.getObjectFieldName());
+		}
 
 		serviceBuilderObjectLayoutColumn.setObjectFieldId(
 			objectField.getObjectFieldId());
@@ -271,7 +280,8 @@ public class ObjectLayoutResourceImpl
 	}
 
 	private com.liferay.object.model.ObjectLayoutRow _toObjectLayoutRow(
-		long objectDefinitionId, ObjectLayoutRow objectLayoutRow) {
+			long objectDefinitionId, ObjectLayoutRow objectLayoutRow)
+		throws PortalException {
 
 		com.liferay.object.model.ObjectLayoutRow serviceBuilderObjectLayoutRow =
 			_objectLayoutRowPersistence.create(0L);
@@ -288,7 +298,8 @@ public class ObjectLayoutResourceImpl
 	}
 
 	private com.liferay.object.model.ObjectLayoutTab _toObjectLayoutTab(
-		long objectDefinitionId, ObjectLayoutTab objectLayoutTab) {
+			long objectDefinitionId, ObjectLayoutTab objectLayoutTab)
+		throws PortalException {
 
 		com.liferay.object.model.ObjectLayoutTab serviceBuilderObjectLayoutTab =
 			_objectLayoutTabPersistence.create(0L);

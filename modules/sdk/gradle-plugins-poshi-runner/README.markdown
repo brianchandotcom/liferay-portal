@@ -34,6 +34,7 @@ Property Name | Type | Default Value | Description
 `openCVVersion` | `String` | `2.4.9-0.9` | The version of OpenCV to use (Sikuli dependency).
 `poshiPropertiesFile` | `File` | `poshi.properties` | The properties file that will override and update test configurations.
 `testNames` | Set<String> | | The test names to be passed along to Poshi. The plugin will set `test.name` to `testNames` in system properties.
+`testRunType` | `String` | `sequential` | The mode in which to run tests, `parallel` or `sequential`.
 `version` | `String` | `1.0.311` | The version of [`com.liferay.poshi.runner`](https://github.com/liferay/liferay-portal/tree/master/modules/test/poshi/poshi-runner) to use.
 
 The properties of type `File` support any type that can be resolved by

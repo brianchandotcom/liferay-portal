@@ -154,31 +154,6 @@ public class JSModulesCache {
 			_update(messageDigest, jsPackage);
 		}
 
-		// Hash the partial match map because may alter the resolutions
-
-		ArrayList<Map.Entry<String, String>> entries = new ArrayList<>(
-			_partialMatchMap.entrySet());
-
-		Collections.sort(
-			entries,
-			(entry1, entry2) -> {
-				String key1 = entry1.getKey();
-				String key2 = entry2.getKey();
-
-				if (!Objects.equals(key1, key2)) {
-					return key1.compareTo(key2);
-				}
-
-				String value = entry1.getValue();
-
-				return value.compareTo(entry2.getValue());
-			});
-
-		for (Map.Entry<String, String> entry : entries) {
-			_update(messageDigest, entry.getKey());
-			_update(messageDigest, entry.getValue());
-		}
-
 		// Hash the list of applied patches because Liferay Support's patches
 		// break the immutability convention of packages
 

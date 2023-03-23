@@ -91,22 +91,22 @@ export function ProvideAppBuildPage({
 			/>
 
 			<Section
-				label="LXC SaaS Compatible?"
+				label="Cloud Compatible?"
 				required
 				tooltip="More Info"
 				tooltipText="MoreInfo"
 			>
-				<div className="provide-app-build-page-saas-compatible-container">
+				<div className="provide-app-build-page-cloud-compatible-container">
 					<RadioCard
 						description="Lorem ipsum dolor sit amet consectetur."
 						icon={taskCheckedIcon}
 						onChange={() => {
 							dispatch({
-								payload: {id: appType.id, value: 'saas'},
+								payload: {id: appType.id, value: 'cloud'},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
-						selected={appType.value === 'saas'}
+						selected={appType.value === 'cloud'}
 						title="Yes"
 						tooltip="More Info"
 					/>

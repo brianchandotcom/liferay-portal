@@ -93,8 +93,8 @@ export function PublishedAppsDashboardPage() {
 			if (specification.specificationKey === 'type') {
 				productType = specification.value.en_US;
 
-				if (productType === 'saas') {
-					productType = 'SaaS';
+				if (productType === 'cloud') {
+					productType = 'Cloud';
 				}
 				else if (productType === 'osgi') {
 					productType = 'OSGI';

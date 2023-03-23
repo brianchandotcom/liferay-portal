@@ -232,7 +232,7 @@ public class ObjectEntryLocalServiceImpl
 			user.isDefaultUser(), objectDefinitionId, null,
 			objectDefinition.getPortletId(), serviceContext, userId, values);
 
-		_fillBusinessTypePicklistDefaultValue(
+		_fillDefaultValue(
 			_objectFieldLocalService.getObjectFields(objectDefinitionId),
 			values);
 
@@ -1514,28 +1514,18 @@ public class ObjectEntryLocalServiceImpl
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
 	}
 
-	private void _fillBusinessTypePicklistDefaultValue(
+	private void _fillDefaultValue(
 		List<ObjectField> objectFields, Map<String, Serializable> values) {
 
 		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
-				!values.containsKey(objectField.getName())) {
+			if (!values.containsKey(objectField.getName())) {
+				String value = ObjectFieldSettingUtil.getDefaultValueAsString(
+					_ddmExpressionFactory, objectField.getObjectFieldId(),
+					_objectFieldSettingLocalService, (Map)values);
 
-				ObjectFieldSetting objectFieldSetting =
-					_objectFieldSettingLocalService.fetchObjectFieldSetting(
-						objectField.getObjectFieldId(),
-						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
-
-				if ((objectFieldSetting == null) ||
-					Validator.isNull(objectFieldSetting.getValue())) {
-
-					continue;
+				if (value != null) {
+					values.put(objectField.getName(), value);
 				}
-
-				values.put(
-					objectField.getName(), objectFieldSetting.getValue());
 			}
 		}
 	}

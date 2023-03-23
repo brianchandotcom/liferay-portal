@@ -89,7 +89,7 @@ public class CommerceAccountGroupLocalServiceImpl
 		_validate(companyId, 0, name, externalReferenceCode);
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
-			serviceContext.getUserId(), null, name);
+			serviceContext.getUserId(), null, name, serviceContext);
 
 		accountGroup.setExternalReferenceCode(externalReferenceCode);
 		accountGroup.setDefaultAccountGroup(system);

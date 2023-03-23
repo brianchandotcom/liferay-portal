@@ -45,7 +45,11 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 
 		return fdsTableSchemaBuilder.add(
 			"id", "id",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setActionId("sampleEditMessage");
+				fdsTableSchemaField.setContentRenderer("actionLink");
+				fdsTableSchemaField.setSortable(true);
+			}
 		).add(
 			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

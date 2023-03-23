@@ -1,7 +1,6 @@
 @component-name = "portal-headless"
 definition {
 
-	property custom.properties = "feature.flag.LPS-83384=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Headless";

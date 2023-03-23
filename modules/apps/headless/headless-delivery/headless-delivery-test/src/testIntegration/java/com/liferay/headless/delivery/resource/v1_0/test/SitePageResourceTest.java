@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -52,6 +53,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
 
+import java.net.URLEncoder;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -76,6 +79,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertNotNull(sitePage);
 		Assert.assertEquals(
 			layout.getName(LocaleUtil.getDefault()), sitePage.getTitle());
+
+		// Invalid friendly url
+
+		_testGetSiteSitePageInvalidFriendlyURL();
 	}
 
 	@Override
@@ -313,6 +320,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	private void _testGetSiteSitePageInvalidFriendlyURL() throws Exception {
+		try {
+			sitePageResource.getSiteSitePage(
+				testGroup.getGroupId(), URLEncoder.encode("aaa/bbb"));
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+		}
 	}
 
 	@Inject

@@ -285,7 +285,7 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
-	macro clearActivationStatus {
+	macro clearStatus {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -293,10 +293,14 @@ definition {
 
 		var key_status = ${status};
 
-		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			CustomerPortal.viewCPObjectCustomInfo(position = ${position});
+		Search.searchCP(searchTerm = ${key_status});
 
-			Refresh();
+		if (IsElementPresent(locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON", key_accountName = ${key_status})) {
+			Click(
+				key_accountName = ${key_status},
+				locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON");
+
+			MenuItem.click(menuItem = "View");
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "activationStatus",

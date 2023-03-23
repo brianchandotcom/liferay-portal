@@ -5,8 +5,7 @@ import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
-import {PublishedAppsDashboardTableRow} from
-'../../components/DashboardTable/PublishedAppsDashboardTableRow';
+import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/PublishedAppsDashboardTableRow';
 import {getProductSpecifications, getProducts} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';

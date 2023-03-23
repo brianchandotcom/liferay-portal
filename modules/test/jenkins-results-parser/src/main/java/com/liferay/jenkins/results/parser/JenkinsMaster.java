@@ -162,6 +162,31 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return new ArrayList<>(_buildURLs);
 	}
 
+	private List<DefaultBuild> _defaultBuilds = new ArrayList<>();
+
+	public List<DefaultBuild> getDefaultBuilds() {
+		List<String> buildURLs = getBuildURLs();
+
+		List<DefaultBuild> oldDefaultBuilds = new ArrayList<>();
+
+		for (DefaultBuild defaultBuild : _defaultBuilds) {
+			if (!buildURLs.contains(defaultBuild.getBuildURL())) {
+				oldDefaultBuilds.add(defaultBuild);
+			}
+			else {
+				buildURLs.remove(defaultBuild.getBuildURL());
+			}
+		}
+
+		_defaultBuilds.removeAll(oldDefaultBuilds);
+
+		for (String buildURL : buildURLs) {
+			_defaultBuilds.add(BuildFactory.newDefaultBuild(buildURL));
+		}
+
+		return _defaultBuilds;
+	}
+
 	public int getIdleJenkinsSlavesCount() {
 		int idleSlavesCount = 0;
 

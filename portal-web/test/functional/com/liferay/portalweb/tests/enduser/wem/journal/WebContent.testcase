@@ -1830,7 +1830,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 		}
 
@@ -1858,7 +1858,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 		}
 
@@ -1886,7 +1886,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 		}
 
@@ -2010,7 +2010,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 		}
 
@@ -2052,7 +2052,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 		}
 
@@ -2139,7 +2139,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 		}
 
@@ -2213,7 +2213,7 @@ definition {
 			Alert.closeMessage(messageType = "WARNING");
 		}
 
-		task ("When go to view the web content ") {
+		task ("When go to view the web content") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 3");
 		}
 

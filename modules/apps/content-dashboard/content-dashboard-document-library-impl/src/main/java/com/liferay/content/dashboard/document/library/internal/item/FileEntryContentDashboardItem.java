@@ -331,6 +331,11 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public long getId() {
+		return _fileEntry.getFileEntryId();
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			FileEntry.class.getName(), _fileEntry.getFileEntryId());

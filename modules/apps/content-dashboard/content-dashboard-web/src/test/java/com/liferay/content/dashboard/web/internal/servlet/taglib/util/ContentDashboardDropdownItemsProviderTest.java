@@ -271,6 +271,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public long getId() {
+				return 123456;
+			}
+
+			@Override
 			public InfoItemReference getInfoItemReference() {
 				return new InfoItemReference(
 					RandomTestUtil.randomString(), RandomTestUtil.randomLong());

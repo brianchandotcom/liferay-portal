@@ -243,6 +243,11 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
+	public long getId() {
+		return _blogsEntry.getEntryId();
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			BlogsEntry.class.getName(), _blogsEntry.getEntryId());

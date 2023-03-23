@@ -800,6 +800,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
+				public long getId() {
+					return 123456;
+				}
+
+				@Override
 				public InfoItemReference getInfoItemReference() {
 					return new InfoItemReference(_className, _classPK);
 				}

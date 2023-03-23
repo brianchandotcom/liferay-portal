@@ -330,6 +330,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public long getId() {
+		return _journalArticle.getResourcePrimKey();
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			JournalArticle.class.getName(),

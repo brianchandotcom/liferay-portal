@@ -341,6 +341,11 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 		}
 
 		@Override
+		public long getId() {
+			return 123456;
+		}
+
+		@Override
 		public InfoItemReference getInfoItemReference() {
 			return null;
 		}

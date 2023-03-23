@@ -2,9 +2,10 @@ import {Header} from '../../components/Header/Header';
 import {Input} from '../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
+import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {saveSpecification} from '../../utils/util';
+import {addSkuExpandoValue, createAppSKU, getProductSKU} from '../../utils/api';
 
 import './ProvideVersionDetailsPage.scss';
 
@@ -39,14 +40,14 @@ export function ProvideVersionDetailsPage({
 					label="Version"
 					onChange={({target}) =>
 						dispatch({
-							payload: {id: appVersion?.id, value: target.value},
+							payload: {value: target.value},
 							type: TYPES.UPDATE_APP_VERSION,
 						})
 					}
 					placeholder="0.0.0"
 					required
 					tooltip="version"
-					value={appVersion?.value}
+					value={appVersion}
 				/>
 
 				<Input
@@ -55,14 +56,14 @@ export function ProvideVersionDetailsPage({
 					localized
 					onChange={({target}) =>
 						dispatch({
-							payload: {id: appNotes?.id, value: target.value},
+							payload: {value: target.value},
 							type: TYPES.UPDATE_APP_NOTES,
 						})
 					}
 					placeholder="Enter app description"
 					required
 					tooltip="notes"
-					value={appNotes?.value}
+					value={appNotes}
 				/>
 			</Section>
 
@@ -70,58 +71,45 @@ export function ProvideVersionDetailsPage({
 				disableContinueButton={!appVersion || !appNotes}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
-					const versionSpecificationId = await saveSpecification(
-						appId,
-						appProductId,
-						appVersion?.id,
-						'version',
-						'Version',
-						appVersion?.value
+					const skuResponse = await getProductSKU({appProductId});
+
+					const versionSku = skuResponse.items.find(
+						({sku}) => sku === appVersion
 					);
 
-					if (versionSpecificationId !== -1) {
-						dispatch({
-							payload: {
-								id: versionSpecificationId,
-								value: appVersion.value,
-							},
-							type: TYPES.UPDATE_APP_VERSION,
-						});
+					let id;
+
+					if (versionSku) {
+						id = versionSku.id;
 					}
 					else {
+						const response = await createAppSKU({
+							appProductId,
+							body: {
+								sku: `${appProductId}v${appVersion.replace(
+									/[^a-zA-Z0-9 ]/g,
+									''
+								)}`,
+							},
+						});
+
+						id = response.id;
+
 						dispatch({
 							payload: {
-								id: appVersion?.id,
-								value: appVersion.value,
+								value: response.id,
 							},
-							type: TYPES.UPDATE_APP_VERSION,
+							type: TYPES.UPDATE_SKU_ID,
 						});
 					}
 
-					const noteSpecificationId = await saveSpecification(
-						appId,
-						appProductId,
-						appNotes?.id,
-						'notes',
-						'Notes',
-						appNotes?.value
-					);
+					addSkuExpandoValue({
+						companyId: parseInt(getCompanyId()),
+						notesValue: appNotes,
+						skuId: id,
+						versionValue: appVersion,
+					});
 
-					if (noteSpecificationId !== -1) {
-						dispatch({
-							payload: {
-								id: noteSpecificationId,
-								value: appNotes.value,
-							},
-							type: TYPES.UPDATE_APP_NOTES,
-						});
-					}
-					else {
-						dispatch({
-							payload: {id: appNotes?.id, value: appNotes.value},
-							type: TYPES.UPDATE_APP_NOTES,
-						});
-					}
 					onClickContinue();
 				}}
 			/>

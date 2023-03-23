@@ -1,5 +1,4 @@
-declare let Liferay: {ThemeDisplay: any; authToken: string};
-
+declare let Liferay: {Service: any; ThemeDisplay: any; authToken: string};
 const headers = {
 	'Content-Type': 'application/json',
 	'X-CSRF-Token': Liferay.authToken,
@@ -11,6 +10,35 @@ type Categories = {
 	name: string;
 	vocabulary: string;
 };
+
+export async function addSkuExpandoValue({
+	companyId,
+	notesValue,
+	skuId,
+	versionValue,
+}: {
+	companyId: number;
+	notesValue: string;
+	skuId: number;
+	versionValue: string;
+}) {
+	await Liferay.Service(
+		'/expandovalue/add-values',
+		{
+			companyId,
+			className: 'com.liferay.commerce.product.model.CPInstance',
+			tableName: 'CUSTOM_FIELDS',
+			classPK: skuId,
+			attributeValues: {
+				'version': versionValue,
+				'version description': notesValue,
+			},
+		},
+		(obj: any) => {
+			console.log(obj);
+		}
+	);
+}
 
 export function createApp({
 	appCategories,
@@ -62,6 +90,26 @@ export function updateApp({
 }
 
 export async function createAppLicensePrice({
+	appProductId,
+	body,
+}: {
+	appProductId: number;
+	body: Object;
+}) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/skus
+	  `,
+		{
+			body: JSON.stringify(body),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function createAppSKU({
 	appProductId,
 	body,
 }: {
@@ -328,6 +376,18 @@ export async function getProductSubscriptionConfiguration({
 }) {
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}/subscriptionConfiguration`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function getSpecifications() {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/specifications`,
 		{
 			headers,
 			method: 'GET',

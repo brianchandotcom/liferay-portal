@@ -16,8 +16,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MULTI_SELECT_BY_LABEL</td>
+	<td>CLICK_MULTI_SELECT</td>
 	<td>//label[normalize-space()='${key_label}']/..//div[contains(@class,'testray-multi-select__value-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTI_SELECT_OPTION</td>
+	<td>//label[normalize-space()='${key_label}']//following::div[contains(@class,'testray-multi-select')]//following::div[text()='${key_option}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_MULTI_SELECT</td>
+	<td>//div[contains(@class,'testray-multi-select')]//div[text()='${key_option}']</td>
 	<td></td>
 </tr>
 <tr>

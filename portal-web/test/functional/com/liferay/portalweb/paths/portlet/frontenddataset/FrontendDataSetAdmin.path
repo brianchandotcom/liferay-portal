@@ -20,6 +20,11 @@
 	<td>//div[contains(@class,'dnd-table')]//div[normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DELETE_DATA_SET_MODAL_BODY</td>
+	<td>//div[@class='liferay-modal-body'][contains(text(),'Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -68,6 +68,14 @@ public class AccountEntrySystemObjectDefinitionMetadata
 			(AccountEntry)baseModel);
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _accountEntryLocalService.
+			fetchAccountEntryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

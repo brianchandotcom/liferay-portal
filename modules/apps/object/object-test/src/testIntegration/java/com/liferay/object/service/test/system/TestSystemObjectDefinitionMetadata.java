@@ -58,6 +58,12 @@ public class TestSystemObjectDefinitionMetadata
 		return null;
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return null;
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
@@ -135,6 +141,13 @@ public class TestSystemObjectDefinitionMetadata
 	public void updateBaseModel(
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
+	}
+
+	public long upsertBaseModel(
+		String externalReferenceCode, long companyId, User user,
+		Map<String, Object> values) {
+
+		return 0;
 	}
 
 	private final Class<?> _modelClass;

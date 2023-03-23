@@ -13,26 +13,85 @@
  */
 
 import classNames from 'classnames';
-
-type DataProps = {
-	redirectTo?: string;
-	value?: number;
-};
+import {Link} from 'react-router-dom';
+import {translate} from '~/i18n';
 
 type TableChartProps = {
-	colors: string[][];
-	columns: string[][];
-	data: DataProps[][];
+	matrixData: number[][];
 	title: string;
 };
 
-const TableChart: React.FC<TableChartProps> = ({
-	colors,
-	columns,
-	data,
-	title,
-}) => {
-	const [horizontalColumns, verticalColumns] = columns;
+const COLORS = {
+	BLOCKED: 'blocked',
+	DNR: 'dnr',
+	FAILED: 'failed',
+	PASSED: 'passed',
+	TEST_FIX: 'test-fix',
+};
+
+const COLUMNS = {
+	BLOCKED: translate('blocked'),
+	DNR: translate('dnr'),
+	FAILED: translate('failed'),
+	PASSED: translate('passed'),
+	TEST_FIX: translate('test-fix'),
+};
+
+const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
+	const columns = {
+		horizontalColumns: [
+			`B ${COLUMNS.PASSED}`,
+			`B ${COLUMNS.FAILED}`,
+			`B ${COLUMNS.BLOCKED}`,
+			`B ${COLUMNS.TEST_FIX}`,
+			`B ${COLUMNS.DNR}`,
+		],
+		verticalColumns: [
+			`A ${COLUMNS.PASSED}`,
+			`A ${COLUMNS.FAILED}`,
+			`A ${COLUMNS.BLOCKED}`,
+			`A ${COLUMNS.TEST_FIX}`,
+			`A ${COLUMNS.DNR}`,
+		],
+	};
+
+	const colors = [
+		[
+			COLORS.PASSED,
+			COLORS.FAILED,
+			COLORS.BLOCKED,
+			COLORS.TEST_FIX,
+			COLORS.PASSED,
+		],
+		[
+			COLORS.FAILED,
+			COLORS.FAILED,
+			COLORS.FAILED,
+			COLORS.FAILED,
+			COLORS.FAILED,
+		],
+		[
+			COLORS.BLOCKED,
+			COLORS.FAILED,
+			COLORS.BLOCKED,
+			COLORS.BLOCKED,
+			COLORS.BLOCKED,
+		],
+		[
+			COLORS.TEST_FIX,
+			COLORS.FAILED,
+			COLORS.BLOCKED,
+			COLORS.TEST_FIX,
+			COLORS.TEST_FIX,
+		],
+		[
+			COLORS.PASSED,
+			COLORS.FAILED,
+			COLORS.BLOCKED,
+			COLORS.TEST_FIX,
+			COLORS.DNR,
+		],
+	];
 
 	return (
 		<table className="table table-borderless table-sm tr-table-chart">
@@ -48,9 +107,9 @@ const TableChart: React.FC<TableChartProps> = ({
 				<tr>
 					<th></th>
 
-					{horizontalColumns.map((horizontalColumn) => (
+					{columns.horizontalColumns.map((horizontalColumn) => (
 						<td
-							className="text-neutral-7 text-paragraph-xs"
+							className="text-paragraph-xs tr-table-chart__column-title"
 							key={horizontalColumn}
 						>
 							{horizontalColumn}
@@ -58,41 +117,45 @@ const TableChart: React.FC<TableChartProps> = ({
 					))}
 				</tr>
 
-				{verticalColumns.map((verticalColumn, verticalColumnIndex) => (
-					<tr key={verticalColumn}>
-						<td className="text-neutral-7 text-paragraph-xs">
-							{verticalColumn}
-						</td>
+				{columns.verticalColumns.map(
+					(verticalColumn, verticalColumnIndex) => (
+						<tr key={verticalColumn}>
+							<td className="text-paragraph-xs tr-table-chart__column-title">
+								{verticalColumn}
+							</td>
 
-						{horizontalColumns.map((_, horizontalColumnIndex) => {
-							const dataType =
-								data[verticalColumnIndex][
-									horizontalColumnIndex
-								];
-
-							return (
-								<td
-									className={classNames(
-										'border py-2 tr-table-chart__data-area text-right',
-										colors[verticalColumnIndex][
+							{columns.horizontalColumns.map(
+								(_, horizontalColumnIndex) => {
+									const dataType =
+										matrixData[verticalColumnIndex][
 											horizontalColumnIndex
-										]
-									)}
-									key={`${verticalColumnIndex}-${horizontalColumnIndex}`}
-								>
-									{dataType?.value && (
-										<a
-											className="text-neutral-10"
-											href={dataType?.redirectTo}
+										];
+
+									return (
+										<td
+											className={classNames(
+												'border py-2 tr-table-chart__data-area text-center',
+												colors[verticalColumnIndex][
+													horizontalColumnIndex
+												]
+											)}
+											key={`${verticalColumnIndex}-${horizontalColumnIndex}`}
 										>
-											{dataType.value}
-										</a>
-									)}
-								</td>
-							);
-						})}
-					</tr>
-				))}
+											{dataType > 0 && (
+												<Link
+													className="font-weight-bold"
+													to=""
+												>
+													{dataType}
+												</Link>
+											)}
+										</td>
+									);
+								}
+							)}
+						</tr>
+					)
+				)}
 			</tbody>
 		</table>
 	);

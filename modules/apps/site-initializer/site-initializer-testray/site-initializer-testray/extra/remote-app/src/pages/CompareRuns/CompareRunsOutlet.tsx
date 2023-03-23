@@ -13,33 +13,80 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import {useEffect, useState} from 'react';
-import {Outlet, useNavigate} from 'react-router-dom';
+import {useEffect, useMemo} from 'react';
+import {Outlet, useNavigate, useParams} from 'react-router-dom';
+import {useFetch} from '~/hooks/useFetch';
+import useSearchBuilder from '~/hooks/useSearchBuilder';
+import {TestrayComponent, TestrayTeam, testrayRunImpl} from '~/services/rest';
 
 import CompareRunDetails from '.';
 import Container from '../../components/Layout/Container';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import fetcher from '../../services/fetcher';
-import {TestrayRun} from '../../services/rest';
 import useCompareRuns from './useCompareRuns';
 
+export type ApiResponse = {
+	components: TestrayComponent;
+	dueStatuses: string[];
+	team: TestrayTeam;
+	values: number[][];
+};
+
 const COMPARE_RUNS_ROOT_PATH = '/compare-runs';
+
+const apiData: ApiResponse = {
+	components: {
+		dateCreated: '',
+		dateModified: '',
+		externalReferenceCode: '',
+		id: 0,
+		name: 'Solutions',
+		originationKey: '',
+		r_teamToComponents_c_teamId: 0,
+		status: '',
+		teamId: 0,
+	},
+	dueStatuses: ['PASSED', 'FAILED', 'BLOCKED', 'TEST FIX', 'DNR'],
+	team: {
+		dateCreated: '',
+		dateModified: '',
+		externalReferenceCode: '',
+		id: 0,
+		name: 'Solutions',
+	},
+	values: [
+		[1, 0, 0, 4, 5],
+		[1, 2, 3, 4, 5],
+		[1, 2, 3, 4, 5],
+		[1, 2, 3, 4, 5],
+		[1, 2, 3, 4, 5],
+	],
+};
 
 const CompareRunsOutlet: React.FC = () => {
 	const navigate = useNavigate();
 	const {setDropdownIcon, setHeading, setTabs} = useHeader();
 	const {comparableTabs, currentTab} = useCompareRuns();
+	const {runA, runB} = useParams();
 
-	const [runs, setRuns] = useState<TestrayRun[]>([]);
+	const caseResultFilter = useSearchBuilder({useURIEncode: false});
 
-	const searchParams = new URLSearchParams(window.location.search);
-	const runA = searchParams.get('runA');
-	const runB = searchParams.get('runB');
+	const filter = caseResultFilter
+		.in('id', [String(runA), String(runB)])
+		.build();
+
+	const {data} = useFetch(testrayRunImpl.resource, {
+		params: {
+			filter,
+		},
+		transformData: (response) =>
+			testrayRunImpl.transformDataFromList(response),
+	});
+
+	const runs = useMemo(() => data?.items, [data?.items]);
 
 	useEffect(() => {
-		const title = runs[0]?.build?.project?.name;
-
+		const title = runs[0].build?.project?.name;
 		if (title) {
 			setTimeout(() => {
 				setHeading([
@@ -66,24 +113,9 @@ const CompareRunsOutlet: React.FC = () => {
 		setTabs([]);
 	}, [runs, setHeading, setTabs]);
 
-	useEffect(() => {
-		if (runA && runB) {
-			Promise.allSettled([
-				fetcher(`/runs/${runA}`),
-				fetcher(`/runs/${runB}`),
-			])
-				.then((runs) =>
-					runs.map((run) =>
-						run.status === 'fulfilled' ? run.value : run.reason
-					)
-				)
-				.then(setRuns);
-		}
-	}, [runA, runB]);
-
 	return (
 		<>
-			<CompareRunDetails runs={runs} />
+			<CompareRunDetails matrixData={apiData} runs={runs} />
 
 			<Container className="mt-3">
 				<ClayTabs className="header-container-tabs">

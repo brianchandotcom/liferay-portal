@@ -40,7 +40,7 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 				number,
 				r_buildToRuns_c_buildId,
 			}),
-			nestedFields: 'build.routine',
+			nestedFields: 'build.routine,build.projectToBuilds',
 			transformData: (run) => {
 				const environmentValues = run.name.split('|');
 
@@ -56,7 +56,17 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 					...run,
 					applicationServer,
 					browser,
-					build: run?.r_buildToRuns_c_build,
+					build: run?.r_buildToRuns_c_build
+						? {
+								...run.r_buildToRuns_c_build,
+								project:
+									run.r_buildToRuns_c_build
+										.r_projectToBuilds_c_project,
+								routine:
+									run.r_buildToRuns_c_build
+										.r_routineToBuilds_c_routine,
+						  }
+						: undefined,
 					database,
 					javaJDK,
 					operatingSystem,

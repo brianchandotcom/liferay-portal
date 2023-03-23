@@ -154,6 +154,7 @@ export default {
 	'description-type': 'Description type',
 	'deselect-items': 'Deselect Items.',
 	'details': 'Details',
+	'dnr': 'DNR',
 	'edit': 'Edit',
 	'edit-build': 'Edit Build',
 	'edit-case': 'Edit Case',

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.test;
+package com.liferay.layout.set.prototype.internal.helper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Vendel Toreki
  */
 @RunWith(Arquillian.class)
-public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
+public class LayoutSetPrototypeHelperTest {
 
 	@ClassRule
 	@Rule

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.frontend.internal.order;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.frontend.internal.account.model.Order;
 import com.liferay.commerce.frontend.internal.account.model.OrderList;
 import com.liferay.commerce.model.CommerceOrder;
@@ -47,8 +46,7 @@ public class CommerceOrderResource {
 
 	public OrderList getOrderList(
 			long groupId, String keywords, int page, int pageSize,
-			HttpServletRequest httpServletRequest,
-			CommerceAccount commerceAccount)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);

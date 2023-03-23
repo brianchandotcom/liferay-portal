@@ -117,15 +117,8 @@ public class CommerceSearchResource {
 				searchItemModels.addAll(
 					_searchAccounts(queryString, themeDisplay));
 
-				CommerceAccount commerceAccount =
-					_commerceAccountHelper.getCurrentCommerceAccount(
-						_commerceChannelLocalService.
-							getCommerceChannelGroupIdBySiteGroupId(
-								themeDisplay.getScopeGroupId()),
-						httpServletRequest);
-
 				searchItemModels.addAll(
-					_searchOrders(queryString, themeDisplay, commerceAccount));
+					_searchOrders(queryString, themeDisplay));
 			}
 
 			String url = _commerceSearchUtil.getSearchFriendlyURL(themeDisplay);
@@ -269,15 +262,14 @@ public class CommerceSearchResource {
 	}
 
 	private List<SearchItemModel> _searchOrders(
-			String queryString, ThemeDisplay themeDisplay,
-			CommerceAccount commerceAccount)
+			String queryString, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<SearchItemModel> searchItemModels = new ArrayList<>();
 
 		OrderList orderList = _commerceOrderResource.getOrderList(
 			themeDisplay.getScopeGroupId(), queryString, 1, 5,
-			themeDisplay.getRequest(), commerceAccount);
+			themeDisplay.getRequest());
 
 		if (orderList.getCount() > 0) {
 			searchItemModels.add(

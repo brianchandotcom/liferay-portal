@@ -28,10 +28,12 @@ const PartnerIcon = ({level}) => {
 	if (level === PartnershipLevels.SILVER) {
 		return <SilverPartnerIcon />;
 	}
-	else if (level === PartnershipLevels.GOLD) {
+
+	if (level === PartnershipLevels.GOLD) {
 		return <GoldPartnerIcon />;
 	}
-	else if (level === PartnershipLevels.PLATINUM) {
+
+	if (level === PartnershipLevels.PLATINUM) {
 		return <PlatinumPartnerIcon />;
 	}
 
@@ -60,9 +62,7 @@ const CheckBoxItem = ({children, completed, text, title}) => {
 					'col-3': children,
 				})}
 			>
-				<ClayIconProvider>
-					<CheckIcon />
-				</ClayIconProvider>
+				<CheckIcon />
 
 				<span
 					className={classNames(
@@ -87,7 +87,7 @@ const CheckBoxItem = ({children, completed, text, title}) => {
 const levelProperties = {
 	Gold: {
 		arr: {
-			arr: 125,
+			arr: 125000,
 			npOrNb: 2,
 		},
 		headcount: {
@@ -97,7 +97,7 @@ const levelProperties = {
 	},
 	Platinum: {
 		arr: {
-			arr: 250,
+			arr: 250000,
 		},
 		headcount: {
 			marketing: 1,
@@ -115,7 +115,7 @@ const levelProperties = {
 export default function () {
 	const [data] = useState(partnerLevelData);
 	const [completed, setCompleted] = useState({});
-	const level = PartnershipLevels.PLATINUM;
+	const level = PartnershipLevels.GOLD;
 
 	useEffect(() => {
 		const checkedItems = {};
@@ -155,34 +155,34 @@ export default function () {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const getHeadcount = () => {
-		return `${levelProperties[level].headcount.marketing} Marketing / ${levelProperties[level].headcount.sales} Sales`;
-	};
+	const getHeadcount = `${data.headcount.marketing} Marketing / ${data.headcount.sales} Sales`;
 
 	return (
-		<Container title="Partnership Level">
-			<h3 className="d-flex mb-5">
-				<PartnerIcon level={level} />
+		<ClayIconProvider>
+			<Container title="Partnership Level">
+				<h3 className="d-flex mb-5">
+					<PartnerIcon level={level} />
 
-				<span
-					className={classNames('ml-2', {
-						'text-brand-secondary-darken-2':
-							level === PartnershipLevels.GOLD,
-						'text-info': level === PartnershipLevels.AUTHORIZED,
-						'text-neutral-7': level === PartnershipLevels.SILVER,
-						'text-neutral-10': level === PartnershipLevels.PLATINUM,
-					})}
-				>
-					{level}
-				</span>
+					<span
+						className={classNames('ml-2 mr-1', {
+							'text-brand-secondary-darken-2':
+								level === PartnershipLevels.GOLD,
+							'text-info': level === PartnershipLevels.AUTHORIZED,
+							'text-neutral-7':
+								level === PartnershipLevels.SILVER,
+							'text-neutral-10':
+								level === PartnershipLevels.PLATINUM,
+						})}
+					>
+						{level}
+					</span>
 
-				<span className="font-weight-lighter">&nbsp;Partner</span>
-			</h3>
+					<span className="font-weight-lighter">Partner</span>
+				</h3>
 
-			{level !== PartnershipLevels.AUTHORIZED && (
-				<>
-					{level !== PartnershipLevels.SILVER && (
-						<>
+				{level !== PartnershipLevels.AUTHORIZED && (
+					<div>
+						{level !== PartnershipLevels.SILVER && (
 							<CheckBoxItem completed={completed.arr} title="ARR">
 								<LevelProgressBar
 									currentValue={data.arr.arr}
@@ -207,29 +207,29 @@ export default function () {
 									</>
 								)}
 							</CheckBoxItem>
-						</>
-					)}
+						)}
 
-					<CheckBoxItem
-						completed={completed.headcount}
-						text={getHeadcount()}
-						title="Headcount"
-					/>
-
-					{level !== PartnershipLevels.SILVER && (
 						<CheckBoxItem
-							completed={completed.marketing}
-							text={data.marketing}
-							title="Marketing"
+							completed={completed.headcount}
+							text={getHeadcount}
+							title="Headcount"
 						/>
-					)}
 
-					<CheckBoxItem
-						completed={completed.certification}
-						title={data.certification}
-					/>
-				</>
-			)}
-		</Container>
+						{level !== PartnershipLevels.SILVER && (
+							<CheckBoxItem
+								completed={completed.marketing}
+								text={data.marketing}
+								title="Marketing"
+							/>
+						)}
+
+						<CheckBoxItem
+							completed={completed.certification}
+							title={data.certification}
+						/>
+					</div>
+				)}
+			</Container>
+		</ClayIconProvider>
 	);
 }

@@ -14,28 +14,22 @@ import React from 'react';
 
 import {ChartTypes} from '../../enums/chartTypes';
 import {naNToZero} from '../../utils';
+import formatCurrency from '../../utils/formatCurrency';
 
 const Legend = ({currentValue, total, type}) => {
-	const leftToTotal = Math.floor(total - currentValue);
+	const leftToTotal =
+		currentValue >= total ? 0 : Math.floor(total - currentValue);
 
 	const formatLeftToTotal = () => {
 		if (leftToTotal) {
 			if (type === ChartTypes.ARR) {
-				return `$${leftToTotal}k more`;
+				return `${formatCurrency(leftToTotal)} more`;
 			}
 
 			return `${leftToTotal} more project`;
 		}
 
 		return '';
-	};
-
-	const formatValue = (value) => {
-		if (type === ChartTypes.ARR) {
-			return `$${value}K`;
-		}
-
-		return value;
 	};
 
 	return (
@@ -60,13 +54,19 @@ const Legend = ({currentValue, total, type}) => {
 
 			<div>
 				<span className="font-weight-bold mr-1 text-paragraph">
-					{formatValue(currentValue)}
+					{type === ChartTypes.ARR
+						? formatCurrency(currentValue)
+						: currentValue}
 				</span>
 
 				<span className="font-weight-bold text-neutral-5">
 					<span className="mr-1">/</span>
 
-					<span>{formatValue(total)}</span>
+					<span>
+						{type === ChartTypes.ARR
+							? formatCurrency(total)
+							: total}
+					</span>
 				</span>
 			</div>
 		</div>

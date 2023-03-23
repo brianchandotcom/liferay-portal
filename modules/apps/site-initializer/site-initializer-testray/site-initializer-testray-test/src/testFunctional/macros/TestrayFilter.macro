@@ -8,10 +8,29 @@ definition {
 		Click(locator1 = "TestrayFilter#FILTER_ICON");
 	}
 
-	macro multiSelect {
+	macro clickMultiSelect {
 		Click(
-			key_label = ${label},
-			locator1 = "TestrayFilter#MULTI_SELECT_BY_LABEL");
+			key_label = ${header},
+			locator1 = "TestrayFilter#CLICK_MULTI_SELECT");
+	}
+
+    macro multiSelect {
+        TestrayFilter.clickMultiSelect(header = ${header});
+
+        for (var option : list ${listMultiSelect}) {
+            Click(
+                key_label = ${label},
+                locator1 = "TestrayFilter#MULTI_SELECT_OPTION",
+                key_option = ${option});
+        }
+	}
+
+    macro assertMultiSelect {
+        for (var option : list ${listMultiSelect}) {
+            AssertElementPresent(
+                locator1 = "TestrayFilter#VIEW_MULTI_SELECT",
+                key_option = ${option});
+        }
 	}
 
 	macro searchFilter {

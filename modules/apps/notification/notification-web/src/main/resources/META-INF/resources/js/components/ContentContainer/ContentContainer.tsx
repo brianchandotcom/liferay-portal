@@ -22,10 +22,10 @@ import {
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
+import {DefinitionOfTerms} from '../DefinitionOfTermsContainer/DefinitionOfTerms';
+import {GeneralTerms} from '../DefinitionOfTermsContainer/GeneralTerms';
 import {Attachments} from './Attachments';
-import {DefinitionOfTerms} from './DefinitionOfTerms';
 import {FreeMarkerTemplateEditor} from './FreeMarkerTemplateEditor';
-import {GeneralTerms} from './GeneralTerms';
 
 const EDITOR_TYPES = [
 	{

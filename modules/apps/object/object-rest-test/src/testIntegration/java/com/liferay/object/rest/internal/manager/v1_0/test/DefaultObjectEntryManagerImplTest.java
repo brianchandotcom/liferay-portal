@@ -114,6 +114,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -997,7 +999,7 @@ public class DefaultObjectEntryManagerImplTest {
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", RandomTestUtil.randomString()
+						"textObjectFieldName", "Able"
 					).build();
 				}
 			},
@@ -1256,6 +1258,65 @@ public class DefaultObjectEntryManagerImplTest {
 				"sort", "textObjectFieldName:desc"
 			).build(),
 			childObjectEntry2, childObjectEntry1);
+
+		// Aggregation facets with non-admin users
+
+		_objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", "Able"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_user = _addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			role.getRoleId(), ActionKeys.VIEW);
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
+
+		Aggregation aggregation = new Aggregation() {
+			{
+				setAggregationTerms(
+					HashMapBuilder.put(
+						"textObjectFieldName", "Able"
+					).build());
+			}
+		};
+
+		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
+			_companyId, _objectDefinition1, null, aggregation,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user),
+			null,
+			_filterPredicateFactory.create(
+				null, _objectDefinition1.getObjectDefinitionId()),
+			null, null);
+
+		List<Facet> facets = page.getFacets();
+
+		Assert.assertFalse(ListUtil.isEmpty(facets));
+
+		Facet facet = facets.get(0);
+
+		List<Facet.FacetValue> facetValues = ListUtil.filter(
+			facet.getFacetValues(),
+			facetValue -> Objects.equals(facetValue.getTerm(), "Able"));
+
+		Assert.assertFalse(ListUtil.isEmpty(facetValues));
+
+		Facet.FacetValue facetValue = facetValues.get(0);
+
+		Assert.assertEquals(facetValue.getNumberOfOccurrences(), (Integer)2);
 	}
 
 	@Test

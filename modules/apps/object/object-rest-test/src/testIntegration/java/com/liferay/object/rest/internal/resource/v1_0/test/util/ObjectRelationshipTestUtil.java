@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,11 +47,15 @@ public class ObjectRelationshipTestUtil {
 			ObjectRelationship objectRelationship, long userId)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAssetTagNames(null);
+
 		ObjectRelationshipLocalServiceUtil.
 			addObjectRelationshipMappingTableValues(
 				userId, objectRelationship.getObjectRelationshipId(),
-				objectEntryId1, objectEntryId2,
-				ServiceContextTestUtil.getServiceContext());
+				objectEntryId1, objectEntryId2, serviceContext);
 	}
 
 }

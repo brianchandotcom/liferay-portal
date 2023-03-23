@@ -58,10 +58,7 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		String javaTermContent = _sortMethodCallsByColumnName(
-			javaTerm.getContent());
-
-		return _sortMethodCallsByTableName(javaTermContent);
+		return _sortMethodCalls(javaTerm.getContent());
 	}
 
 	@Override
@@ -174,7 +171,7 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private String _sortMethodCallsByColumnName(String content) {
+	private String _sortMethodCalls(String content) {
 		Matcher matcher1 = _methodCallsPattern.matcher(content);
 
 		while (matcher1.find()) {
@@ -204,9 +201,7 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 				String columnName = StringUtil.unquote(parameterList.get(1));
 				String tableName = StringUtil.unquote(parameterList.get(0));
 
-				if (!methodName.equals(previousMethodName) ||
-					!tableName.equals(previousTableName)) {
-
+				if (!methodName.equals(previousMethodName)) {
 					previousColumnName = columnName;
 					previousMatch = match;
 					previousMethodName = methodName;
@@ -215,112 +210,69 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 					continue;
 				}
 
-				List<Element> serviceXMLElements = _getServiceXMLElements();
+				if (tableName.equals(previousTableName)) {
+					List<Element> serviceXMLElements = _getServiceXMLElements();
 
-				for (Element serviceXMLElement : serviceXMLElements) {
-					int index1 = -1;
-					int index2 = -1;
+					for (Element serviceXMLElement : serviceXMLElements) {
+						int index1 = -1;
+						int index2 = -1;
 
-					for (Element entityElement :
-							(List<Element>)serviceXMLElement.elements(
-								"entity")) {
+						for (Element entityElement :
+								(List<Element>)serviceXMLElement.elements(
+									"entity")) {
 
-						if (!tableName.equals(
-								entityElement.attributeValue("name"))) {
+							if (!tableName.equals(
+									entityElement.attributeValue("name"))) {
 
-							continue;
+								continue;
+							}
+
+							index1 = _getColumnIndex(
+								entityElement, previousColumnName);
+							index2 = _getColumnIndex(entityElement, columnName);
 						}
 
-						index1 = _getColumnIndex(
-							entityElement, previousColumnName);
-						index2 = _getColumnIndex(entityElement, columnName);
+						if ((index2 != -1) && (index1 > index2)) {
+							int x = matcher2.start();
+
+							int y = content.lastIndexOf(previousMatch, x);
+
+							content = StringUtil.replaceFirst(
+								content, match, previousMatch,
+								matcher1.start() + x);
+
+							return StringUtil.replaceFirst(
+								content, previousMatch, match,
+								matcher1.start() + y);
+						}
 					}
+				}
+				else {
+					List<Element> serviceXMLElements = _getServiceXMLElements();
 
-					if ((index2 != -1) && (index1 > index2)) {
-						int x = matcher2.start();
+					for (Element serviceXMLElement : serviceXMLElements) {
+						int index1 = _getTableIndex(
+							serviceXMLElement, previousTableName);
+						int index2 = _getTableIndex(
+							serviceXMLElement, tableName);
 
-						int y = content.lastIndexOf(previousMatch, x);
+						if ((index2 != -1) && (index1 > index2)) {
+							int x = matcher2.start();
 
-						content = StringUtil.replaceFirst(
-							content, match, previousMatch,
-							matcher1.start() + x);
+							int y = content.lastIndexOf(previousMatch, x);
 
-						return StringUtil.replaceFirst(
-							content, previousMatch, match,
-							matcher1.start() + y);
+							content = StringUtil.replaceFirst(
+								content, match, previousMatch,
+								matcher1.start() + x);
+
+							return StringUtil.replaceFirst(
+								content, previousMatch, match,
+								matcher1.start() + y);
+						}
 					}
 				}
 
 				previousColumnName = columnName;
-				previousMatch = match;
-				previousMethodName = methodName;
-				previousTableName = tableName;
-			}
-		}
-
-		return content;
-	}
-
-	private String _sortMethodCallsByTableName(String content) {
-		Matcher matcher1 = _methodCallsPattern.matcher(content);
-
-		while (matcher1.find()) {
-			String methodCallsCodeBlock = matcher1.group();
-
-			String previousMatch = null;
-			String previousMethodName = null;
-			String previousTableName = null;
-
-			Matcher matcher2 = _methodCallPattern.matcher(methodCallsCodeBlock);
-
-			while (matcher2.find()) {
-				String match = matcher2.group();
-
-				String methodName = matcher2.group(1);
-
-				if (!methodName.equals("alterColumnName") &&
-					!methodName.equals("alterColumnType")) {
-
-					continue;
-				}
-
-				List<String> parameterList = JavaSourceUtil.getParameterList(
-					methodCallsCodeBlock.substring(matcher2.start()));
-
-				String tableName = StringUtil.unquote(parameterList.get(0));
-
-				if (!methodName.equals(previousMethodName) ||
-					tableName.equals(previousTableName)) {
-
-					previousMatch = match;
-					previousMethodName = methodName;
-					previousTableName = tableName;
-
-					continue;
-				}
-
-				List<Element> serviceXMLElements = _getServiceXMLElements();
-
-				for (Element serviceXMLElement : serviceXMLElements) {
-					int index1 = _getTableIndex(
-						serviceXMLElement, previousTableName);
-					int index2 = _getTableIndex(serviceXMLElement, tableName);
-
-					if ((index2 != -1) && (index1 > index2)) {
-						int x = matcher2.start();
-
-						int y = content.lastIndexOf(previousMatch, x);
-
-						content = StringUtil.replaceFirst(
-							content, match, previousMatch,
-							matcher1.start() + x);
-
-						return StringUtil.replaceFirst(
-							content, previousMatch, match,
-							matcher1.start() + y);
-					}
-				}
-
 				previousMatch = match;
 				previousMethodName = methodName;
 				previousTableName = tableName;

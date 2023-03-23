@@ -40,6 +40,11 @@
 	<td>//input[@id='search-filter']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MESSAGE_NO_RESULTS</td>
+	<td>//p[contains(.,'There are no matching results.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

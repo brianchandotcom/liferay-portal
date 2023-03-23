@@ -575,6 +575,8 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
+		_validateLocalized(
+			businessType, localized, oldObjectField.getObjectDefinition());
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(

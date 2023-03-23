@@ -63,11 +63,16 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -75,6 +80,11 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -100,6 +110,7 @@ import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -514,6 +525,32 @@ public class DLAdminDisplayContext {
 		}
 	}
 
+	private BooleanClause<Query>[] _getBooleanClauses(
+		long fileEntryTypeId, String[] extensions) {
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (fileEntryTypeId >= 0) {
+			booleanFilter.addTerm(
+				"fileEntryTypeId", String.valueOf(fileEntryTypeId),
+				BooleanClauseOccur.MUST);
+		}
+
+		if (ArrayUtil.isNotEmpty(extensions)) {
+			booleanFilter.add(
+				_getExtensionsFilter(extensions), BooleanClauseOccur.MUST);
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQuery, BooleanClauseOccur.MUST.getName())
+		};
+	}
+
 	private SearchContainer<RepositoryEntry> _getDLSearchContainer()
 		throws PortalException {
 
@@ -631,36 +668,14 @@ public class DLAdminDisplayContext {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				DLFileEntryConstants.getClassName());
 
-			SearchContext searchContext = SearchContextFactory.getInstance(
-				_httpServletRequest);
-
-			searchContext.setAttribute("paginationType", "none");
-			searchContext.setEnd(dlSearchContainer.getEnd());
+			SearchContext searchContext = _getSearchContext(dlSearchContainer);
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				searchContext.setFolderIds(new long[] {folderId});
 			}
 
-			int type = Sort.STRING_TYPE;
-			String fieldName = getOrderByCol();
-
-			if (Objects.equals(getOrderByCol(), "creationDate")) {
-				fieldName = Field.CREATE_DATE;
-				type = Sort.LONG_TYPE;
-			}
-			else if (Objects.equals(getOrderByCol(), "modifiedDate")) {
-				fieldName = Field.MODIFIED_DATE;
-				type = Sort.LONG_TYPE;
-			}
-			else if (Objects.equals(getOrderByCol(), "size")) {
-				type = Sort.LONG_TYPE;
-			}
-
-			searchContext.setSorts(
-				new Sort(
-					fieldName, type,
-					!StringUtil.equalsIgnoreCase(getOrderByType(), "asc")));
-			searchContext.setStart(dlSearchContainer.getStart());
+			searchContext.setBooleanClauses(
+				_getBooleanClauses(fileEntryTypeId, extensions));
 
 			Hits hits = indexer.search(searchContext);
 
@@ -799,6 +814,20 @@ public class DLAdminDisplayContext {
 		return dlSearchContainer;
 	}
 
+	private Filter _getExtensionsFilter(String[] extensions) {
+		if (ArrayUtil.isEmpty(extensions)) {
+			return null;
+		}
+
+		TermsFilter termsFilter = new TermsFilter("extension");
+
+		for (String extension : extensions) {
+			termsFilter.addValue(extension);
+		}
+
+		return termsFilter;
+	}
+
 	private Hits _getHits(SearchContainer<RepositoryEntry> searchContainer)
 		throws PortalException {
 
@@ -874,6 +903,42 @@ public class DLAdminDisplayContext {
 				_dlRequestHelper.getPortletId(), StringPool.BLANK);
 
 		return _portletPreferences;
+	}
+
+	private SearchContext _getSearchContext(
+		SearchContainer<RepositoryEntry> searchContainer) {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			new long[0], new String[0], new HashMap<>(),
+			_themeDisplay.getCompanyId(), null, _themeDisplay.getLayout(),
+			_themeDisplay.getLocale(), _themeDisplay.getScopeGroupId(),
+			_themeDisplay.getTimeZone(), _themeDisplay.getUserId());
+
+		searchContext.setAttribute("paginationType", "none");
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setStart(searchContainer.getStart());
+
+		int type = Sort.STRING_TYPE;
+		String fieldName = getOrderByCol();
+
+		if (Objects.equals(getOrderByCol(), "creationDate")) {
+			fieldName = Field.CREATE_DATE;
+			type = Sort.LONG_TYPE;
+		}
+		else if (Objects.equals(getOrderByCol(), "modifiedDate")) {
+			fieldName = Field.MODIFIED_DATE;
+			type = Sort.LONG_TYPE;
+		}
+		else if (Objects.equals(getOrderByCol(), "size")) {
+			type = Sort.LONG_TYPE;
+		}
+
+		searchContext.setSorts(
+			SortFactoryUtil.create(
+				fieldName, type,
+				!StringUtil.equalsIgnoreCase(getOrderByType(), "asc")));
+
+		return searchContext;
 	}
 
 	private List<RepositoryEntry> _getSearchResults(Hits hits)

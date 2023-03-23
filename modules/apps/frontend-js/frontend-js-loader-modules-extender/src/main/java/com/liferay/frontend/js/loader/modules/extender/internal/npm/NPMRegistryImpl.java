@@ -26,7 +26,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -155,13 +154,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	@Override
-	public NPMRegistryStateSnapshot getNPMRegistryStateSnapshot() {
-		return _jsModulesCache;
-	}
-
-	@Override
 	public String getResolutionStateDigest() {
-		return _jsModulesCache.getDigest();
+		return _jsModulesCache.getResolutionStateDigest();
 	}
 
 	/**

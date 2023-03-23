@@ -87,12 +87,6 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			return null;
 		}
 
-		FlatJSBundle flatJSBundle = new FlatJSBundle(bundle);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Processing NPM bundle: " + flatJSBundle);
-		}
-
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF/resources", "package.json", true);
 
@@ -102,30 +96,32 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			return null;
 		}
 
-		URL manifestJSONURL = bundle.getEntry(
-			"META-INF/resources/manifest.json");
+		return new FlatJSBundle(
+			bundle,
+			flatJSBundle -> {
+				URL manifestJSONURL = bundle.getEntry(
+					"META-INF/resources/manifest.json");
 
-		Map<URL, JSONObject> jsonObjects = _loadJSONObjects(
-			bundle, enumeration, manifestJSONURL);
+				Map<URL, JSONObject> jsonObjects = _loadJSONObjects(
+					bundle, enumeration, manifestJSONURL);
 
-		JSONObject packagesJSONObject = _removeByURL(
-			jsonObjects, manifestJSONURL);
+				JSONObject packagesJSONObject = _removeByURL(
+					jsonObjects, manifestJSONURL);
 
-		Manifest manifest = new Manifest(packagesJSONObject);
+				Manifest manifest = new Manifest(packagesJSONObject);
 
-		JSONObject packageJSONObject = _removeByURL(jsonObjects, url);
+				JSONObject packageJSONObject = _removeByURL(jsonObjects, url);
 
-		Map<URL, Collection<String>> moduleDependenciesMap =
-			_loadModuleDependenciesMap(bundle);
+				Map<URL, Collection<String>> moduleDependenciesMap =
+					_loadModuleDependenciesMap(bundle);
 
-		_processPackage(
-			flatJSBundle, manifest, packageJSONObject, jsonObjects,
-			moduleDependenciesMap, "/META-INF/resources", true);
+				_processPackage(
+					flatJSBundle, manifest, packageJSONObject, jsonObjects,
+					moduleDependenciesMap, "/META-INF/resources", true);
 
-		_processNodePackages(
-			flatJSBundle, manifest, jsonObjects, moduleDependenciesMap);
-
-		return flatJSBundle;
+				_processNodePackages(
+					flatJSBundle, manifest, jsonObjects, moduleDependenciesMap);
+			});
 	}
 
 	@Activate

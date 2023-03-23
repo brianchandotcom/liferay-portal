@@ -31,6 +31,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnaps
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -50,13 +51,13 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.function.Supplier;
 
 import javax.servlet.ServletContext;
 
@@ -97,12 +98,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdateImpl npmRegistryUpdateImpl) {
-		_refreshNPMRegistryStateSnapshot(null, null, npmRegistryUpdateImpl);
+		_setNPMRegistryStateSnapshotImplSupplier(
+			() -> _createNPMRegistryStateSnapshot(
+				null, null, npmRegistryUpdateImpl));
 	}
 
 	@Override
 	public Map<String, String> getGlobalAliases() {
-		return _npmRegistryStateSnapshotImpl.getGlobalAliases();
+		return _getNPMRegistryStateSnapshotImpl().getGlobalAliases();
 	}
 
 	/**
@@ -126,7 +129,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public JSModule getJSModule(String identifier) {
 		Map<String, JSModule> jsModules =
-			_npmRegistryStateSnapshotImpl.getJSModules();
+			_getNPMRegistryStateSnapshotImpl().getJSModules();
 
 		return jsModules.get(identifier);
 	}
@@ -140,7 +143,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public JSPackage getJSPackage(String identifier) {
 		Map<String, JSPackage> jsPackages =
-			_npmRegistryStateSnapshotImpl.getJSPackages();
+			_getNPMRegistryStateSnapshotImpl().getJSPackages();
 
 		return jsPackages.get(identifier);
 	}
@@ -153,14 +156,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSPackage> getJSPackages() {
 		Map<String, JSPackage> jsPackages =
-			_npmRegistryStateSnapshotImpl.getJSPackages();
+			_getNPMRegistryStateSnapshotImpl().getJSPackages();
 
 		return jsPackages.values();
 	}
 
 	@Override
 	public NPMRegistryStateSnapshot getNPMRegistryStateSnapshot() {
-		return _npmRegistryStateSnapshotImpl;
+		return _getNPMRegistryStateSnapshotImpl();
 	}
 
 	/**
@@ -171,7 +174,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getResolvedJSModule(String identifier) {
-		return _npmRegistryStateSnapshotImpl.getResolvedJSModule(identifier);
+		return _getNPMRegistryStateSnapshotImpl().getResolvedJSModule(
+			identifier);
 	}
 
 	/**
@@ -182,14 +186,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSModule> getResolvedJSModules() {
 		Map<String, JSModule> resolvedJSModules =
-			_npmRegistryStateSnapshotImpl.getResolvedJSModules();
+			_getNPMRegistryStateSnapshotImpl().getResolvedJSModules();
 
 		return resolvedJSModules.values();
 	}
 
 	@Override
 	public JSPackage getResolvedJSPackage(String identifier) {
-		return _npmRegistryStateSnapshotImpl.getResolvedJSPackage(identifier);
+		return _getNPMRegistryStateSnapshotImpl().getResolvedJSPackage(
+			identifier);
 	}
 
 	/**
@@ -201,14 +206,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSPackage> getResolvedJSPackages() {
 		Map<String, JSPackage> resolvedJSPackages =
-			_npmRegistryStateSnapshotImpl.getResolvedJSPackages();
+			_getNPMRegistryStateSnapshotImpl().getResolvedJSPackages();
 
 		return resolvedJSPackages.values();
 	}
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		return _npmRegistryStateSnapshotImpl.mapModuleName(moduleName);
+		return _getNPMRegistryStateSnapshotImpl().mapModuleName(moduleName);
 	}
 
 	/**
@@ -223,7 +228,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 
-		return _npmRegistryStateSnapshotImpl.resolveJSPackageDependency(
+		return _getNPMRegistryStateSnapshotImpl().resolveJSPackageDependency(
 			jsPackageDependency);
 	}
 
@@ -263,7 +268,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_activationThreadLocal.set(Boolean.FALSE);
 
-		_refreshNPMRegistryStateSnapshot(null, null, null);
+		_setNPMRegistryStateSnapshotImplSupplier(
+			() -> _createNPMRegistryStateSnapshot(null, null, null));
 
 		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
@@ -292,70 +298,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private JSONObject _getPackageJSONObject(Bundle bundle) {
-		try {
-			URL url = bundle.getEntry("package.json");
-
-			if (url == null) {
-				return null;
-			}
-
-			String content;
-
-			try {
-				content = StringUtil.read(url.openStream());
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-
-				return null;
-			}
-
-			if (content == null) {
-				return null;
-			}
-
-			return _jsonFactory.createJSONObject(content);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return null;
-		}
-	}
-
-	private void _processLegacyBridges(
-		Bundle bundle, Map<String, String> globalAliases) {
-
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		String jsSubmodulesBridge = GetterUtil.getString(
-			headers.get("Liferay-JS-Submodules-Bridge"));
-
-		if (Validator.isNotNull(jsSubmodulesBridge)) {
-			String[] bridges = jsSubmodulesBridge.split(",");
-
-			JSONObject packageJSONObject = _getPackageJSONObject(bundle);
-
-			for (String bridge : bridges) {
-				bridge = bridge.trim();
-
-				globalAliases.put(
-					bridge,
-					StringBundler.concat(
-						packageJSONObject.getString("name"), StringPool.AT,
-						packageJSONObject.getString("version"), "/bridge/",
-						bridge));
-			}
-		}
-	}
-
-	private void _refreshNPMRegistryStateSnapshot(
+	private NPMRegistryStateSnapshotImpl _createNPMRegistryStateSnapshot(
 		Map<Bundle, JSBundle> jsBundlesMap,
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages,
 		NPMRegistryUpdateImpl npmRegistryUpdateImpl) {
@@ -481,10 +424,87 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		jsPackageVersions.sort(comparator.reversed());
 
-		_npmRegistryStateSnapshotImpl = new NPMRegistryStateSnapshotImpl(
+		return new NPMRegistryStateSnapshotImpl(
 			exactMatches, globalAliases, jsModules, jsPackages,
 			jsPackageVersions, partialMatches, resolvedJSModules,
 			resolvedJSPackages);
+	}
+
+	private NPMRegistryStateSnapshotImpl _getNPMRegistryStateSnapshotImpl() {
+		return _npmRegistryStateSnapshotImplDCLSingleton.getSingleton(
+			_npmRegistryStateSnapshotImplSupplier);
+	}
+
+	private JSONObject _getPackageJSONObject(Bundle bundle) {
+		try {
+			URL url = bundle.getEntry("package.json");
+
+			if (url == null) {
+				return null;
+			}
+
+			String content;
+
+			try {
+				content = StringUtil.read(url.openStream());
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
+
+				return null;
+			}
+
+			if (content == null) {
+				return null;
+			}
+
+			return _jsonFactory.createJSONObject(content);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
+	}
+
+	private void _processLegacyBridges(
+		Bundle bundle, Map<String, String> globalAliases) {
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String jsSubmodulesBridge = GetterUtil.getString(
+			headers.get("Liferay-JS-Submodules-Bridge"));
+
+		if (Validator.isNotNull(jsSubmodulesBridge)) {
+			String[] bridges = jsSubmodulesBridge.split(",");
+
+			JSONObject packageJSONObject = _getPackageJSONObject(bundle);
+
+			for (String bridge : bridges) {
+				bridge = bridge.trim();
+
+				globalAliases.put(
+					bridge,
+					StringBundler.concat(
+						packageJSONObject.getString("name"), StringPool.AT,
+						packageJSONObject.getString("version"), "/bridge/",
+						bridge));
+			}
+		}
+	}
+
+	private void _setNPMRegistryStateSnapshotImplSupplier(
+		Supplier<NPMRegistryStateSnapshotImpl>
+			npmRegistryStateSnapshotImplSupplier) {
+
+		_npmRegistryStateSnapshotImplSupplier =
+			npmRegistryStateSnapshotImplSupplier;
+		_npmRegistryStateSnapshotImplDCLSingleton.destroy(null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -507,12 +527,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private volatile NPMRegistryStateSnapshotImpl
-		_npmRegistryStateSnapshotImpl = new NPMRegistryStateSnapshotImpl(
-			Collections.emptyMap(), Collections.emptyMap(),
-			Collections.emptyMap(), Collections.emptyMap(),
-			Collections.emptyList(), Collections.emptyMap(),
-			Collections.emptyMap(), Collections.emptyMap());
+	private final DCLSingleton<NPMRegistryStateSnapshotImpl>
+		_npmRegistryStateSnapshotImplDCLSingleton = new DCLSingleton<>();
+	private volatile Supplier<NPMRegistryStateSnapshotImpl>
+		_npmRegistryStateSnapshotImplSupplier =
+			() -> _createNPMRegistryStateSnapshot(null, null, null);
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
 
@@ -528,13 +547,16 @@ public class NPMRegistryImpl implements NPMRegistry {
 			}
 
 			if (!_activationThreadLocal.get()) {
-				_refreshNPMRegistryStateSnapshot(
-					HashMapBuilder.create(
-						_bundleTracker.getTracked()
-					).put(
-						bundle, jsBundle
-					).build(),
-					null, null);
+				_npmRegistryStateSnapshotImplSupplier =
+					() -> _createNPMRegistryStateSnapshot(
+						HashMapBuilder.create(
+							_bundleTracker.getTracked()
+						).put(
+							bundle, jsBundle
+						).build(),
+						null, null);
+
+				_npmRegistryStateSnapshotImplDCLSingleton.destroy(null);
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
@@ -558,7 +580,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshNPMRegistryStateSnapshot(null, null, null);
+				_setNPMRegistryStateSnapshotImplSupplier(
+					() -> _createNPMRegistryStateSnapshot(null, null, null));
 			}
 		}
 
@@ -595,8 +618,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			jsConfigGeneratorPackages.add(jsConfigGeneratorPackage);
 
-			_refreshNPMRegistryStateSnapshot(
-				null, jsConfigGeneratorPackages, null);
+			_setNPMRegistryStateSnapshotImplSupplier(
+				() -> _createNPMRegistryStateSnapshot(
+					null, jsConfigGeneratorPackages, null));
 
 			return jsConfigGeneratorPackage;
 		}
@@ -612,7 +636,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			ServiceReference<ServletContext> serviceReference,
 			JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 
-			_refreshNPMRegistryStateSnapshot(null, null, null);
+			_setNPMRegistryStateSnapshotImplSupplier(
+				() -> _createNPMRegistryStateSnapshot(null, null, null));
 		}
 
 	}

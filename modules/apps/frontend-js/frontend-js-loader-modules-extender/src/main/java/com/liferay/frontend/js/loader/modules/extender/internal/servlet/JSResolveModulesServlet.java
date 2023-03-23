@@ -109,7 +109,7 @@ public class JSResolveModulesServlet
 		// See https://ashton.codes/set-cache-control-max-age-1-year
 
 		httpServletResponse.addHeader(
-			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
+			HttpHeaders.CACHE_CONTROL, "public, max-age=31536000, immutable");
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 

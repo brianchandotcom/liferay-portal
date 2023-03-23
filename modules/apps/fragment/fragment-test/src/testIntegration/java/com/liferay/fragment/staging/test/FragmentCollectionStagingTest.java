@@ -34,11 +34,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Map;
 
@@ -69,14 +68,10 @@ public class FragmentCollectionStagingTest {
 		_liveGroup = GroupTestUtil.addGroup();
 	}
 
+	@FeatureFlags("LPS-158675")
 	@Test
 	public void testFragmentResourcesWithFoldersCopiedWhenLocalStagingActivated()
 		throws Exception {
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158675", "true"
-			).build());
 
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_liveGroup.getGroupId());
@@ -121,11 +116,6 @@ public class FragmentCollectionStagingTest {
 		Assert.assertTrue(resourcesMap.containsKey("Image1"));
 		Assert.assertTrue(resourcesMap.containsKey("Folder1/Image2"));
 		Assert.assertTrue(resourcesMap.containsKey("Folder1/Folder2/Image3"));
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158675", "false"
-			).build());
 	}
 
 	@Test

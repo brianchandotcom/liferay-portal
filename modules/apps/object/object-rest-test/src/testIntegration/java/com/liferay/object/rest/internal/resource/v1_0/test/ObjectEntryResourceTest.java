@@ -49,13 +49,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -65,7 +64,6 @@ import java.util.HashMap;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -77,6 +75,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Luis Miguel Barcos
  */
+@FeatureFlags({"LPS-153117", "LPS-154672", "LPS-164801", "LPS-176651"})
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -89,23 +88,6 @@ public class ObjectEntryResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-153117", "true"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-154672", "true"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164801", "true"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-176651", "true"
-			).build());
-
 		TaxonomyCategoryResource.Builder builder =
 			TaxonomyCategoryResource.builder();
 
@@ -120,26 +102,6 @@ public class ObjectEntryResourceTest {
 				TestPropsValues.getCompanyId()),
 			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-153117", "false"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-154672", "false"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164801", "false"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-176651", "false"
-			).build());
 	}
 
 	@Before

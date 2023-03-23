@@ -47,14 +47,13 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
 
@@ -218,13 +217,9 @@ public class FragmentsImporterTest {
 		Assert.assertFalse(fragmentEntries.isEmpty());
 	}
 
+	@FeatureFlags("LPS-158675")
 	@Test
 	public void testImportFragmentsWithFolderResources() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158675", "true"
-			).build());
-
 		File fileWithFolderResources = _generateZipFileWithFolderResources();
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -265,11 +260,6 @@ public class FragmentsImporterTest {
 		Assert.assertEquals("image2.png", fileEntry.getTitle());
 
 		FileUtil.delete(fileWithFolderResources);
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158675", "false"
-			).build());
 	}
 
 	@Test

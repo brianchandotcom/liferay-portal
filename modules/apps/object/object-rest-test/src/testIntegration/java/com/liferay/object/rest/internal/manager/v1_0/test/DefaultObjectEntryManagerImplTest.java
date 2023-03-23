@@ -108,12 +108,11 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -156,6 +155,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
+@FeatureFlags("LPS-164801")
 @RunWith(Arquillian.class)
 public class DefaultObjectEntryManagerImplTest {
 
@@ -186,11 +186,6 @@ public class DefaultObjectEntryManagerImplTest {
 			PermissionCheckerFactoryUtil.create(_adminUser));
 
 		PrincipalThreadLocal.setName(_adminUser.getUserId());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164801", "true"
-			).build());
 	}
 
 	@Before

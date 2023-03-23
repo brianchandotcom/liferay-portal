@@ -34,11 +34,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -60,6 +59,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Guilherme Camacho
  */
+@FeatureFlags("LPS-135430")
 @RunWith(Arquillian.class)
 public class SalesforceObjectEntryManagerImplTest {
 
@@ -111,11 +111,6 @@ public class SalesforceObjectEntryManagerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-135430", "true"
-			).build());
-
 		_user = TestPropsValues.getUser();
 
 		_objectDefinition =
@@ -156,11 +151,6 @@ public class SalesforceObjectEntryManagerImplTest {
 
 	@After
 	public void tearDown() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-135430", "false"
-			).build());
-
 		if (_objectDefinition != null) {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinition.getObjectDefinitionId());

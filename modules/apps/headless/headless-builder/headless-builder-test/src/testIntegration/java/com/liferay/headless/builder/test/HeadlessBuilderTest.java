@@ -35,10 +35,9 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
@@ -107,6 +106,7 @@ public class HeadlessBuilderTest {
 		_infoItemObjectProviderServiceRegistration.unregister();
 	}
 
+	@FeatureFlags("LPS-171047")
 	@Test
 	public void testHeadlessBuilderApplication() throws Exception {
 		_withHeadlessBuilderApplication(
@@ -127,6 +127,7 @@ public class HeadlessBuilderTest {
 			});
 	}
 
+	@FeatureFlags("LPS-171047")
 	@Test
 	public void testHeadlessBuilderApplicationOnADifferentCompany()
 		throws Exception {
@@ -162,21 +163,19 @@ public class HeadlessBuilderTest {
 		Assert.assertEquals(404, httpURLConnection.getResponseCode());
 	}
 
+	@FeatureFlags("LPS-171047")
 	@Test
 	public void testMissingHeadlessBuilderApplication() throws Exception {
-		_withFeatureFlagEnabled(
-			() -> {
-				JSONObject jsonObject = _invoke(
-					"headless-builder/v1.0/test-entries/1234", Http.Method.GET);
+		JSONObject jsonObject = _invoke(
+			"headless-builder/v1.0/test-entries/1234", Http.Method.GET);
 
-				JSONAssert.assertEquals(
-					JSONUtil.put(
-						"status", "NOT_FOUND"
-					).put(
-						"title", "Operation not found"
-					).toString(),
-					jsonObject.toString(), true);
-			});
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "NOT_FOUND"
+			).put(
+				"title", "Operation not found"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	private HttpURLConnection _createHttpURLConnection(
@@ -237,47 +236,23 @@ public class HeadlessBuilderTest {
 		}
 	}
 
-	private void _withFeatureFlagEnabled(
-			UnsafeRunnable<Exception> unsafeRunnable)
+	private void _withHeadlessBuilderApplication(
+			long companyId, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-171047", "true"
-			).build());
+		HeadlessBuilderApplication headlessBuilderApplication =
+			_headlessBuilderApplicationFactory.getHeadlessBuilderApplication(
+				companyId, _readOpenAPIYAML("/rest-openapi.yaml"));
+
+		HeadlessBuilderApplication.Handle handle =
+			headlessBuilderApplication.deploy();
 
 		try {
 			unsafeRunnable.run();
 		}
 		finally {
-			PropsUtil.addProperties(
-				UnicodePropertiesBuilder.setProperty(
-					"feature.flag.LPS-171047", "false"
-				).build());
+			handle.undeploy();
 		}
-	}
-
-	private void _withHeadlessBuilderApplication(
-			long companyId, UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		_withFeatureFlagEnabled(
-			() -> {
-				HeadlessBuilderApplication headlessBuilderApplication =
-					_headlessBuilderApplicationFactory.
-						getHeadlessBuilderApplication(
-							companyId, _readOpenAPIYAML("/rest-openapi.yaml"));
-
-				HeadlessBuilderApplication.Handle handle =
-					headlessBuilderApplication.deploy();
-
-				try {
-					unsafeRunnable.run();
-				}
-				finally {
-					handle.undeploy();
-				}
-			});
 	}
 
 	@Inject

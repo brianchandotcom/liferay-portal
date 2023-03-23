@@ -33,7 +33,6 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObject
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
-import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -1215,15 +1214,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (count == 0) {
 			throw new RequiredObjectFieldException();
-		}
-
-		count = _objectFieldPersistence.countByODI_L(
-			objectDefinition.getObjectDefinitionId(), true);
-
-		if (!objectDefinition.isEnableLocalization() && (count > 0)) {
-			throw new ObjectDefinitionEnableLocalizationException(
-				"To have localized fields the object definition must be " +
-					"localized");
 		}
 
 		objectDefinition.setActive(true);

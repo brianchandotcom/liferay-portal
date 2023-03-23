@@ -26,6 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
+	description = "semantic-search-configuration-description",
 	id = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	localization = "content/Language",
 	name = "semantic-search-configuration-name"

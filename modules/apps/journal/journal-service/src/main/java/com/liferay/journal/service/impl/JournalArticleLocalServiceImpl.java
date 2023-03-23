@@ -598,7 +598,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the {@link #addArticle(String, long,
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
-	 *         String, String, String, String, int, int, int, int, int, int,
+	 *         String, long, String, String, int, int, int, int, int, int,
 	 *         int, int, int, int, boolean, int, int, int, int, int, boolean,
 	 *         boolean, boolean, String, File, Map, String, ServiceContext)}
 	 *         description.
@@ -4572,7 +4572,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the {@link #addArticle(String, long,
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
-	 *         String, String, String, String, int, int, int, int, int, int,
+	 *         String, long, String, String, int, int, int, int, int, int,
 	 *         int, int, int, int, boolean, int, int, int, int, int, boolean,
 	 *         boolean, boolean, String, File, Map, String, ServiceContext)}
 	 *         description.
@@ -4940,7 +4940,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the {@link #addArticle(String, long,
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
-	 *         String, String, String, String, int, int, int, int, int, int,
+	 *         String, long, String, String, int, int, int, int, int, int,
 	 *         int, int, int, int, boolean, int, int, int, int, int, boolean,
 	 *         boolean, boolean, String, File, Map, String, ServiceContext)}
 	 *         description.
@@ -5081,7 +5081,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the {@link #addArticle(String, long,
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
-	 *         String, String, String, String, int, int, int, int, int, int,
+	 *         String, long, String, String, int, int, int, int, int, int,
 	 *         int, int, int, int, boolean, int, int, int, int, int, boolean,
 	 *         boolean, boolean, String, File, Map, String, ServiceContext)}
 	 *         description.
@@ -5210,7 +5210,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the {@link #addArticle(String, long,
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
-	 *         String, String, String, String, int, int, int, int, int, int,
+	 *         String, long, String, String, int, int, int, int, int, int,
 	 *         int, int, int, int, boolean, int, int, int, int, int, boolean,
 	 *         boolean, boolean, String, File, Map, String, ServiceContext)}
 	 *         description.
@@ -5406,7 +5406,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  content the HTML content wrapped in XML. For more information,
 	 *         see the content example in the {@link #addArticle(String, long,
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
-	 *         String, String, String, String, int, int, int, int, int, int,
+	 *         String, long, String, String, int, int, int, int, int, int,
 	 *         int, int, int, int, boolean, int, int, int, int, int, boolean,
 	 *         boolean, boolean, String, File, Map, String, ServiceContext)}
 	 *         description.

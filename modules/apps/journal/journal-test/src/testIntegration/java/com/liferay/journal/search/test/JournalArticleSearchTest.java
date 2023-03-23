@@ -34,11 +34,11 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
@@ -56,6 +56,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -563,9 +565,37 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	protected Hits searchGroupEntries(long groupId, long creatorUserId)
 		throws Exception {
 
-		return JournalArticleServiceUtil.search(
-			groupId, creatorUserId, WorkflowConstants.STATUS_APPROVED,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		try {
+			Indexer<JournalArticle> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAttribute(
+				Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+
+			searchContext.setAttribute("paginationType", "none");
+
+			if (creatorUserId > 0) {
+				searchContext.setAttribute(
+					Field.USER_ID, String.valueOf(creatorUserId));
+			}
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			searchContext.setCompanyId(group.getCompanyId());
+
+			searchContext.setEnd(QueryUtil.ALL_POS);
+			searchContext.setGroupIds(new long[] {groupId});
+			searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
+			searchContext.setStart(QueryUtil.ALL_POS);
+			searchContext.setUserId(GuestOrUserUtil.getUserId());
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
 	}
 
 	@Override
@@ -683,6 +713,10 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	private DDMIndexer _ddmIndexer;
 
 	private DDMStructure _ddmStructure;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private JournalServiceConfiguration _journalServiceConfiguration;
 	private String _originalPortalPreferencesXML;
 

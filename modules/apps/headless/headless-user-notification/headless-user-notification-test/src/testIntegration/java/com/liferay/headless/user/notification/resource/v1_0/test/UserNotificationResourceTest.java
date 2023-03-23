@@ -23,13 +23,10 @@ import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Date;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -47,22 +44,6 @@ public class UserNotificationResourceTest
 
 		_irrelevantUser = UserTestUtil.addGroupAdminUser(irrelevantGroup);
 		_testUser = UserTestUtil.addGroupAdminUser(testGroup);
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-83384", "true"
-			).build());
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-83384", "false"
-			).build());
 	}
 
 	@Override

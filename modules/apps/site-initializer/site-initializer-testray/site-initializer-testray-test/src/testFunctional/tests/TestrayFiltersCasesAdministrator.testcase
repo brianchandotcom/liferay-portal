@@ -20,10 +20,10 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
-		task ("Given that I create all the necessary objects") {
+		task ("create all objects: projects, teams, components, cases") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -113,6 +113,58 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case type"
+	@priority = 5
+	test AdminCanFilterCaseByCaseType {
+		task ("When the user filter a case by case type") {
+			TestrayFilter.clickColumn();
+
+			TestrayFilter.selectColumns(listColumn = "Case Type");
+
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Case Type",
+				label = "Case Type",
+				listMultiSelect = "Case Type 1,Batch");
+
+			TestrayFilter.assertMultiSelect(
+				label = "Case Type",
+				listMultiSelect = "Case Type 1,Batch");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the case type selected") {
+			Testray.assertItemName(key_name = "Case Type 1");
+
+			Testray.assertItemNotPresent(key_name = "Batch");
+		}
+	}
+
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by component"
+	@priority = 5
+	test AdminCanFilterCaseByComponent {
+		task ("When the user filter a case by component") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Component",
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			TestrayFilter.assertMultiSelect(
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the component selected") {
+			Testray.assertItemName(key_name = "Component 1");
+		}
+	}
+
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by description"
 	@priority = 4
 	test AdminCanFilterCaseByDescription {
@@ -186,6 +238,94 @@ definition {
 				caseComponent = "Component 1",
 				caseName = "Case 1",
 				casePriority = 5);
+
+			Testray.assertItemNotPresent(key_name = "Case 2");
+		}
+	}
+
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by team"
+	@priority = 5
+	test AdminCanFilterCaseByTeam {
+		task ("When the user filter a case by team") {
+			TestrayFilter.clickColumn();
+
+			TestrayFilter.selectColumns(listColumn = "Team");
+
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			TestrayFilter.assertMultiSelect(
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the team selected") {
+			Testray.assertItemName(key_name = "Team 1");
+		}
+	}
+
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter case using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterCasesWithMultipleOptions {
+		task ("Given that the user selects the columns") {
+			TestrayFilter.clickColumn();
+
+			TestrayFilter.selectColumns(listColumn = "Case Type,Team,Description");
+
+			TestrayFilter.clickFilter();
+		}
+
+		task ("When the user filter a case by multiple options") {
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			TestrayFilter.multiSelect(
+				header = "Component",
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			TestrayFilter.multiSelect(
+				header = "Case Type",
+				label = "Case Type",
+				listMultiSelect = "Case Type 1");
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 1");
+
+			Type(
+				locator1 = "TestrayCases#FIELD_DESCRIPTION",
+				value1 = "Description 1");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority",
+				value1 = 5);
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the multiple options in the table") {
+			Testray.assertItemName(key_name = "Component 1");
+
+			Testray.assertItemName(key_name = "Case 1");
+
+			Testray.assertItemName(key_name = "Team 1");
+
+			Testray.assertItemName(key_name = "Case Type 1");
+
+			Testray.assertItemName(key_name = "Description 1");
+
+			Testray.assertItemName(key_name = 5);
 
 			Testray.assertItemNotPresent(key_name = "Case 2");
 		}
@@ -287,146 +427,6 @@ definition {
 
 			AssertElementNotPresent(locator1 = "TestrayFilter#MESSAGE_NO_RESULTS");
 		}
-	}
-
-	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by team"
-	@priority = 5
-	test AdminCanFilterCaseByTeam {
-		task ("When the user filter a case by team") {
-			TestrayFilter.clickColumn();
-
-			TestrayFilter.selectColumns(listColumn = "Team");
-
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-                header = "Team",
-                label = "Team",
-                listMultiSelect = "Team 1");
-
-            TestrayFilter.assertMultiSelect(
-                label = "Team",
-                listMultiSelect = "Team 1");
-
-            Button.click(button = "Apply");
-        }
-
-        task ("Then can see the team selected") {
-            Testray.assertItemName(key_name = "Team 1");
-        }
-	}
-
-	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter case using multiple filtering options"
-	@priority = 5
-	test AdminCanFilterCasesWithMultipleOptions {
-		task ("Given that the user selects the columns") {
-			TestrayFilter.clickColumn();
-
-			TestrayFilter.selectColumns(listColumn = "Case Type,Team,Description");
-
-			TestrayFilter.clickFilter();
-		}
-
-		task ("When the user filter a case by multiple options") {
-			TestrayFilter.multiSelect(
-                header = "Team",
-                label = "Team",
-                listMultiSelect = "Team 1");
-
-			TestrayFilter.multiSelect(
-                header = "Component",
-                label = "Component",
-                listMultiSelect = "Component 1");
-
-			TestrayFilter.multiSelect(
-                header = "Case Type",
-                label = "Case Type",
-                listMultiSelect = "Case Type 1");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Type(
-				locator1 = "TestrayCases#FIELD_DESCRIPTION",
-				value1 = "Description 1");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Priority",
-				value1 = 5);
-
-            Button.click(button = "Apply");
-        }
-
-        task ("Then can see the multiple options in the table") {
-            Testray.assertItemName(key_name = "Component 1");
-
-			Testray.assertItemName(key_name = "Case 1");
-
-			Testray.assertItemName(key_name = "Team 1");
-
-			Testray.assertItemName(key_name = "Case Type 1");
-
-			Testray.assertItemName(key_name = "Description 1");
-
-			Testray.assertItemName(key_name = "5");
-
-			Testray.assertItemNotPresent(key_name = "Case 2");
-        }
-	}
-
-    @description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case type"
-	@priority = 5
-	test AdminCanFilterCaseByCaseType {
-		task ("When the user filter a case by case type") {
-			TestrayFilter.clickColumn();
-
-			TestrayFilter.selectColumns(listColumn = "Case Type");
-
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-                header = "Case Type",
-                label = "Case Type",
-                listMultiSelect = "Case Type 1,Batch");
-
-            TestrayFilter.assertMultiSelect(
-                label = "Case Type",
-                listMultiSelect = "Case Type 1,Batch");
-
-            Button.click(button = "Apply");
-        }
-
-        task ("Then can see the case type selected") {
-            Testray.assertItemName(key_name = "Case Type 1");
-
-            Testray.assertItemNotPresent(key_name = "Batch");
-        }
-	}
-
-	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by component"
-	@priority = 5
-	test AdminCanFilterCaseByComponent {
-		task ("When the user filter a case by component") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-                header = "Component",
-                label = "Component",
-                listMultiSelect = "Component 1");
-
-            TestrayFilter.assertMultiSelect(
-                label = "Component",
-                listMultiSelect = "Component 1");
-
-            Button.click(button = "Apply");
-        }
-
-        task ("Then can see the component selected") {
-            Testray.assertItemName(key_name = "Component 1");
-        }
 	}
 
 }

@@ -1,5 +1,13 @@
 definition {
 
+	macro assertMultiSelect {
+		for (var option : list ${listMultiSelect}) {
+			AssertElementPresent(
+				key_option = ${option},
+				locator1 = "TestrayFilter#VIEW_MULTI_SELECT");
+		}
+	}
+
 	macro clickColumn {
 		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
 	}
@@ -14,23 +22,15 @@ definition {
 			locator1 = "TestrayFilter#CLICK_MULTI_SELECT");
 	}
 
-    macro multiSelect {
-        TestrayFilter.clickMultiSelect(header = ${header});
+	macro multiSelect {
+		TestrayFilter.clickMultiSelect(header = ${header});
 
-        for (var option : list ${listMultiSelect}) {
-            Click(
-                key_label = ${label},
-                locator1 = "TestrayFilter#MULTI_SELECT_OPTION",
-                key_option = ${option});
-        }
-	}
-
-    macro assertMultiSelect {
-        for (var option : list ${listMultiSelect}) {
-            AssertElementPresent(
-                locator1 = "TestrayFilter#VIEW_MULTI_SELECT",
-                key_option = ${option});
-        }
+		for (var option : list ${listMultiSelect}) {
+			Click(
+				key_label = ${label},
+				key_option = ${option},
+				locator1 = "TestrayFilter#MULTI_SELECT_OPTION");
+		}
 	}
 
 	macro searchFilter {

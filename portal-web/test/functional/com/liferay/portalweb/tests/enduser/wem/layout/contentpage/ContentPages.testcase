@@ -635,9 +635,15 @@ definition {
 			}
 
 			task ("Delete the Button fragment of master template") {
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Home",
-					siteName = "Site Name");
+				Site.openSitesAdmin();
+
+				LexiconTable.clickEllipsisItem(
+					item = "Go to Pages",
+					tableEntry = "Site Name");
+
+				SelectWindow.selectPopUp(locator1 = "null");
+
+				ContentPages.gotoPageEditor();
 
 				PageEditor.gotoTab(tabName = "Page Design Options");
 

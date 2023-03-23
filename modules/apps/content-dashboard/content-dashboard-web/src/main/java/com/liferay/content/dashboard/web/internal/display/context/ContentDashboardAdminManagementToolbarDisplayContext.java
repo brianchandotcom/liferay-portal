@@ -32,6 +32,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -59,10 +61,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -203,29 +202,29 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						"removeLabelURL",
 						_getRemoveLabelURL(
 							"assetCategoryId",
-							() -> {
-								Stream<Long> stream = assetCategoryIds.stream();
+							() -> TransformUtil.transformToArray(
+								assetCategoryIds,
+								curAssetCategoryId -> {
+									if (curAssetCategoryId == assetCategoryId) {
+										return null;
+									}
 
-								return stream.filter(
-									id -> id != assetCategoryId
-								).map(
-									String::valueOf
-								).toArray(
-									String[]::new
-								);
-							}));
+									return String.valueOf(curAssetCategoryId);
+								},
+								String.class)));
 					labelItem.setCloseable(true);
-					labelItem.setLabel(
-						_getLabel(
-							"category",
-							Optional.ofNullable(
-								_assetCategoryLocalService.fetchAssetCategory(
-									assetCategoryId)
-							).map(
-								assetCategory -> assetCategory.getTitle(_locale)
-							).orElse(
-								StringPool.BLANK
-							)));
+
+					String title = StringPool.BLANK;
+
+					AssetCategory assetCategory =
+						_assetCategoryLocalService.fetchAssetCategory(
+							assetCategoryId);
+
+					if (assetCategory != null) {
+						title = assetCategory.getTitle(_locale);
+					}
+
+					labelItem.setLabel(_getLabel("category", title));
 				});
 		}
 
@@ -276,30 +275,30 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						"removeLabelURL",
 						_getRemoveLabelURL(
 							"authorIds",
-							() -> {
-								Stream<Long> stream = authorIds.stream();
+							() -> TransformUtil.transformToArray(
+								authorIds,
+								curAuthorId -> {
+									if (curAuthorId == authorId) {
+										return null;
+									}
 
-								return stream.filter(
-									id -> id != authorId
-								).map(
-									String::valueOf
-								).toArray(
-									String[]::new
-								);
-							}));
+									return String.valueOf(curAuthorId);
+								},
+								String.class)));
 					labelItem.setCloseable(true);
+
+					String fullName = StringPool.BLANK;
+
+					User user = _userLocalService.fetchUser(authorId);
+
+					if (user != null) {
+						fullName = user.getFullName();
+					}
+
 					labelItem.setLabel(
 						_getLabel(
 							"author",
-							_language.get(
-								httpServletRequest,
-								Optional.ofNullable(
-									_userLocalService.fetchUser(authorId)
-								).map(
-									User::getFullName
-								).orElse(
-									StringPool.BLANK
-								))));
+							_language.get(httpServletRequest, fullName)));
 				});
 		}
 
@@ -326,15 +325,18 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						"removeLabelURL",
 						_getRemoveLabelURL(
 							"assetTagId",
-							() -> {
-								Stream<String> stream = assetTagIds.stream();
+							() -> TransformUtil.transformToArray(
+								assetTagIds,
+								curAssetTagId -> {
+									if (Objects.equals(
+											curAssetTagId, assetTagId)) {
 
-								return stream.filter(
-									id -> !Objects.equals(id, assetTagId)
-								).toArray(
-									String[]::new
-								);
-							}));
+										return null;
+									}
+
+									return curAssetTagId;
+								},
+								String.class)));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(_getLabel("tag", assetTagId));
 				});
@@ -365,40 +367,28 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			_contentDashboardAdminDisplayContext.getAssetCategoryIds();
 
 		if (ListUtil.isNotEmpty(assetCategoryIds)) {
-			Stream<Long> stream = assetCategoryIds.stream();
-
 			portletURL.setParameter(
 				"assetCategoryId",
-				stream.map(
-					String::valueOf
-				).toArray(
-					String[]::new
-				));
+				TransformUtil.transformToArray(
+					assetCategoryIds, String::valueOf, String.class));
 		}
 
 		Set<String> assetTagIds =
 			_contentDashboardAdminDisplayContext.getAssetTagIds();
 
 		if (SetUtil.isNotEmpty(assetTagIds)) {
-			Stream<String> stream = assetTagIds.stream();
-
 			portletURL.setParameter(
-				"assetTagId", stream.toArray(String[]::new));
+				"assetTagId", assetTagIds.toArray(new String[0]));
 		}
 
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
 
 		if (ListUtil.isNotEmpty(authorIds)) {
-			Stream<Long> stream = authorIds.stream();
-
 			portletURL.setParameter(
 				"authorIds",
-				stream.map(
-					String::valueOf
-				).toArray(
-					String[]::new
-				));
+				TransformUtil.transformToArray(
+					authorIds, String::valueOf, String.class));
 		}
 
 		List<? extends ContentDashboardItemSubtype>
@@ -407,17 +397,13 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					getContentDashboardItemSubtypes();
 
 		if (ListUtil.isNotEmpty(contentDashboardItemSubtypes)) {
-			Stream<? extends ContentDashboardItemSubtype> stream =
-				contentDashboardItemSubtypes.stream();
-
 			portletURL.setParameter(
 				"contentDashboardItemSubtypePayload",
-				stream.map(
+				TransformUtil.transformToArray(
+					contentDashboardItemSubtypes,
 					contentDashboardItemSubtype ->
-						contentDashboardItemSubtype.toJSONString(_locale)
-				).toArray(
-					String[]::new
-				));
+						contentDashboardItemSubtype.toJSONString(_locale),
+					String.class));
 		}
 
 		portletURL.setParameter("orderByCol", getOrderByCol());
@@ -476,18 +462,19 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 								_getRemoveLabelURL(
 									contentDashboardItemFilter.
 										getParameterName(),
-									() -> {
-										Stream<String> stream =
-											parameterValues.stream();
+									() -> TransformUtil.transformToArray(
+										parameterValues,
+										curParameterValue -> {
+											if (Objects.equals(
+													curParameterValue,
+													parameterValue)) {
 
-										return stream.filter(
-											curFileExtension -> !Objects.equals(
-												curFileExtension,
-												parameterValue)
-										).toArray(
-											String[]::new
-										);
-									}));
+												return null;
+											}
+
+											return curParameterValue;
+										},
+										String.class)));
 							labelItem.setCloseable(true);
 							labelItem.setLabel(
 								_getLabel(
@@ -574,20 +561,17 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private List<DropdownItem>
 		_getContentDashboardItemFilterProviderDropdownItems() {
 
-		List<ContentDashboardItemFilterProvider>
-			contentDashboardItemFilterProviders =
-				_contentDashboardItemFilterProviderRegistry.
-					getContentDashboardItemFilterProviders();
+		return TransformUtil.transform(
+			_contentDashboardItemFilterProviderRegistry.
+				getContentDashboardItemFilterProviders(),
+			contentDashboardItemFilterProvider -> {
+				ContentDashboardItemFilter contentDashboardItemFilter = null;
 
-		Stream<ContentDashboardItemFilterProvider> stream =
-			contentDashboardItemFilterProviders.stream();
-
-		return stream.map(
-			ContentDashboardItemFilterProvider -> {
 				try {
-					return ContentDashboardItemFilterProvider.
-						getContentDashboardItemFilter(
-							_liferayPortletRequest.getHttpServletRequest());
+					contentDashboardItemFilter =
+						contentDashboardItemFilterProvider.
+							getContentDashboardItemFilter(
+								_liferayPortletRequest.getHttpServletRequest());
 				}
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
@@ -595,16 +579,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					_log.error(contentDashboardItemActionException);
 				}
 
-				return null;
-			}
-		).filter(
-			Objects::nonNull
-		).map(
-			contentDashboardItemFilter ->
-				contentDashboardItemFilter.getDropdownItem()
-		).collect(
-			Collectors.toList()
-		);
+				if (contentDashboardItemFilter == null) {
+					return null;
+				}
+
+				return contentDashboardItemFilter.getDropdownItem();
+			});
 	}
 
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {
@@ -812,33 +792,29 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			ContentDashboardItemSubtype<?> contentDashboardItemSubtype)
 		throws PortletException {
 
-		try (Stream<? extends ContentDashboardItemSubtype> stream =
-				contentDashboardItemSubtypes.stream()) {
+		InfoItemReference infoItemReference =
+			contentDashboardItemSubtype.getInfoItemReference();
 
-			InfoItemReference infoItemReference =
-				contentDashboardItemSubtype.getInfoItemReference();
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+		).setParameter(
+			"contentDashboardItemSubtypePayload",
+			() -> TransformUtil.transformToArray(
+				contentDashboardItemSubtypes,
+				curContentDashboardItemSubtype -> {
+					InfoItemReference curInfoItemReference =
+						curContentDashboardItemSubtype.getInfoItemReference();
 
-			return PortletURLBuilder.create(
-				PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-			).setParameter(
-				"contentDashboardItemSubtypePayload",
-				() -> stream.filter(
-					curContentDashboardItemSubtype -> {
-						InfoItemReference curInfoItemReference =
-							curContentDashboardItemSubtype.
-								getInfoItemReference();
+					if (Objects.equals(
+							curInfoItemReference, infoItemReference)) {
 
-						return !Objects.equals(
-							curInfoItemReference, infoItemReference);
+						return null;
 					}
-				).map(
-					curContentDashboardItemSubtype ->
-						curContentDashboardItemSubtype.toJSONString(_locale)
-				).toArray(
-					String[]::new
-				)
-			).buildString();
-		}
+
+					return curContentDashboardItemSubtype.toJSONString(_locale);
+				},
+				String.class)
+		).buildString();
 	}
 
 	private String _getRemoveLabelURL(
@@ -865,13 +841,15 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	}
 
 	private String _getScopeLabel(long scopeId) {
-		return Optional.ofNullable(
-			_groupLocalService.fetchGroup(scopeId)
-		).map(
-			group -> ContentDashboardGroupUtil.getGroupName(group, _locale)
-		).orElse(
-			StringPool.BLANK
-		);
+		String scopeLabel = StringPool.BLANK;
+
+		Group group = _groupLocalService.fetchGroup(scopeId);
+
+		if (group != null) {
+			scopeLabel = ContentDashboardGroupUtil.getGroupName(group, _locale);
+		}
+
+		return scopeLabel;
 	}
 
 	private List<Integer> _getStatuses() {

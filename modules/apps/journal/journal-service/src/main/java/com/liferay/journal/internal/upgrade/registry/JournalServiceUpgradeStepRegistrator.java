@@ -320,11 +320,11 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"4.1.0", "4.2.0",
 			UpgradeProcessFactory.alterColumnType(
-				"JournalFeed", "DDMRendererTemplateKey", "VARCHAR(75) null"),
-			UpgradeProcessFactory.alterColumnType(
 				"JournalFeed", "DDMStructureKey", "VARCHAR(75) null"),
 			UpgradeProcessFactory.alterColumnType(
-				"JournalFeed", "DDMTemplateKey", "VARCHAR(75) null"));
+				"JournalFeed", "DDMTemplateKey", "VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"JournalFeed", "DDMRendererTemplateKey", "VARCHAR(75) null"));
 
 		registry.register(
 			"4.2.0", "4.3.0",

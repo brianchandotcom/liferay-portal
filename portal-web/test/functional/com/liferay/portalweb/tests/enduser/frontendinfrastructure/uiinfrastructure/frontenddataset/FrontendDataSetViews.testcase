@@ -198,4 +198,30 @@ definition {
 		}
 	}
 
+	@description = "LPS-179527. Confirm that the data set was not deleted after clicking clicks on the 'X' button in the modal"
+	@priority = 5
+	test NotDeleteDatasetAfterCloseButton {
+		task ("When The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Channel");
+		}
+
+		task ("And When the user deletes a dataset") {
+			FrontendDataSetAdmin.deleteDataSet(entry = "Test Dataset");
+		}
+
+		task ("And When the user clicks on the 'X' button in the modal") {
+			Click(
+				key_modalTitle = "Delete Dataset",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then The dataset is present in the data set Admin page") {
+			AssertElementPresent(
+				key_itemName = "Test Dataset",
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
+	}
+
 }

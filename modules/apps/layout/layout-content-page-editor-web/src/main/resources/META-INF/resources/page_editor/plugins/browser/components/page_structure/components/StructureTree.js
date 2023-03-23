@@ -13,6 +13,8 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
 import {Treeview} from 'frontend-js-components-web';
 import React, {useCallback, useMemo, useState} from 'react';
 
@@ -174,11 +176,38 @@ export default function PageStructureSidebar() {
 			)}
 
 			<DragAndDropContextProvider>
-				<Treeview
-					NodeComponent={StructureTreeNode}
-					nodes={nodes}
-					selectedNodeIds={[activeItemId]}
-				/>
+				<>
+					<Treeview
+						NodeComponent={StructureTreeNode}
+						nodes={nodes}
+						selectedNodeIds={[activeItemId]}
+					/>
+					<ClayTreeView
+						defaultItems={nodes}
+						displayType="light"
+						expanderIcons={{
+							close: <ClayIcon symbol="hr" />,
+							open: <ClayIcon symbol="plus" />,
+						}}
+						showExpanderOnHover={false}
+					>
+						{(item) => (
+							<ClayTreeView.Item>
+								<ClayTreeView.ItemStack>
+									<StructureTreeNode node={item} />
+								</ClayTreeView.ItemStack>
+
+								<ClayTreeView.Group items={item.children}>
+									{(item) => (
+										<ClayTreeView.Item>
+											<StructureTreeNode node={item} />
+										</ClayTreeView.Item>
+									)}
+								</ClayTreeView.Group>
+							</ClayTreeView.Item>
+						)}
+					</ClayTreeView>
+				</>
 			</DragAndDropContextProvider>
 		</div>
 	);

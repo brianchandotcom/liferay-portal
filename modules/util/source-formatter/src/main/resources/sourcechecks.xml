@@ -814,7 +814,7 @@
 		</check>
 		<check name="JavaUpgradeProcessFactoryCheck">
 			<category name="Styling" />
-			<description name="Sorts method calls for each table." />
+			<description name="Sorts and groups method calls." />
 		</check>
 		<check name="JavaUpgradeVersionCheck">
 			<category name="Bug Prevention" />

@@ -345,6 +345,7 @@ export default {
 	'start-test': 'Start Test',
 	'static': 'Static',
 	'status': 'Status',
+	'status-in-x': 'Status In {0}',
 	'steps': 'Steps',
 	'steps-type': 'Steps type',
 	'subcomponents': 'SubComponents',

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
@@ -37,18 +35,18 @@ public abstract class BaseTransactionalMVCActionCommand
 		throws PortletException {
 
 		try {
-			Callable<Boolean> callable = new Callable<Boolean>() {
+			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
-				public Boolean call() throws Exception {
+				public Void call() throws Exception {
 					doTransactionalCommand(actionRequest, actionResponse);
 
-					return SessionErrors.isEmpty(actionRequest);
+					return null;
 				}
 
 			};
 
-			TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			TransactionInvokerUtil.invoke(getTransactionConfig(), callable);
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof PortletException) {
@@ -63,12 +61,15 @@ public abstract class BaseTransactionalMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
+	protected TransactionConfig getTransactionConfig() {
+		return _transactionConfig;
+	}
+
 	private static final TransactionConfig _transactionConfig;
 
 	static {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
-		builder.setPropagation(Propagation.REQUIRES_NEW);
 		builder.setRollbackForClasses(Exception.class);
 
 		_transactionConfig = builder.build();

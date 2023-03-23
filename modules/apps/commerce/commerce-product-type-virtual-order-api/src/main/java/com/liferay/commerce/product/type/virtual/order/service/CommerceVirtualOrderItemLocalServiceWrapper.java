@@ -304,6 +304,17 @@ public class CommerceVirtualOrderItemLocalServiceWrapper
 				commerceOrderItemId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.type.virtual.order.model.
+		CommerceVirtualOrderItem
+			fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+				long commerceOrderItemId, boolean useFinderCache) {
+
+		return _commerceVirtualOrderItemLocalService.
+			fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+				commerceOrderItemId, useFinderCache);
+	}
+
 	/**
 	 * Returns the commerce virtual order item matching the UUID and group.
 	 *

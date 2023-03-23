@@ -229,6 +229,11 @@ public interface CommerceVirtualOrderItemLocalService
 		fetchCommerceVirtualOrderItemByCommerceOrderItemId(
 			long commerceOrderItemId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceVirtualOrderItem
+		fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+			long commerceOrderItemId, boolean useFinderCache);
+
 	/**
 	 * Returns the commerce virtual order item matching the UUID and group.
 	 *

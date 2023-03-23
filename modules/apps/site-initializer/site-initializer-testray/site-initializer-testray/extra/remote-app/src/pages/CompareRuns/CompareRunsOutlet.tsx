@@ -149,8 +149,23 @@ const CompareRunsOutlet = () => {
 
 			<Container className="mt-3">
 				<ClayTabs className="header-container-tabs">
-					{comparableTabs &&
-						comparableTabs.map((tab, index) => (
+					{[
+						{
+							active: pathname.endsWith('/teams'),
+							path: 'teams',
+							title: i18n.translate('teams'),
+						},
+						{
+							active: pathname.endsWith('/components'),
+							path: 'components',
+							title: i18n.translate('components'),
+						},
+						{
+							active: pathname.endsWith('/cases'),
+							path: 'cases',
+							title: i18n.translate('cases'),
+						},
+					].map((tab, index) => (
 							<ClayTabs.Item
 								active={tab.active}
 								innerProps={{

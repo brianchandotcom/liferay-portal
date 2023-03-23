@@ -270,17 +270,6 @@ public class ExpandoUserFieldExpressionHandler
 			properties.get("processing.index"));
 	}
 
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPServerConfigurationProvider(
-		ConfigurationProvider<LDAPServerConfiguration>
-			ldapServerConfigurationProvider) {
-
-		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
-	}
-
 	private static <V> ValueConsumer<String[]> _getValueConsumer(
 		Function<String[], V> function, ValueConsumer<V> valueConsumer) {
 
@@ -644,6 +633,9 @@ public class ExpandoUserFieldExpressionHandler
 	@Reference
 	private LDAPFilterValidator _ldapFilterValidator;
 
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)"
+	)
 	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
 

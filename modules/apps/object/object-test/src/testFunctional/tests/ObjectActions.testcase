@@ -232,7 +232,7 @@ definition {
 			ObjectAdmin.goToFieldsTab();
 
 			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "customPicklistField",
+				fieldLabel = "Custom Picklist Field",
 				fieldPicklist = "Status",
 				fieldType = "Picklist");
 
@@ -240,15 +240,10 @@ definition {
 		}
 
 		task ("And given: An action with oldValue function is created") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175200");
-
 			ObjectAdmin.goToActionsTab();
 
 			ObjectAdmin.addObjectActionViaUI(
 				actionLabel = "Custom Action",
-				actionName = "CustomAction",
 				active = "true",
 				fieldName = "Custom Text Field",
 				inputExpression = "oldValue('customPicklistField') == 'open'",
@@ -270,8 +265,10 @@ definition {
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
 			ObjectAdmin.changePicklistFieldEntry(
-				entrySelected = "",
+				entrySelected = "Choose an Option",
 				newPicklistOption = "Open");
+
+			PortletEntry.save();
 		}
 
 		task ("And when: The picklist value is edited") {
@@ -282,6 +279,8 @@ definition {
 			ObjectAdmin.changePicklistFieldEntry(
 				entrySelected = "Open",
 				newPicklistOption = "In Progress");
+
+			PortletEntry.save();
 		}
 
 		task ("Then: The action runs with oldValue function") {

@@ -17,18 +17,24 @@ import React from 'react';
 
 import DefaultPageHeader from './components/DefaultPageHeader';
 
-const FormView: React.FC<IProps> = ({description, title, ...otherProps}) => {
+const FormView: React.FC<IProps> = ({
+	description,
+	portletNamespace,
+	title,
+	...otherProps
+}) => {
 	return (
 		<>
 			{title && (
 				<DefaultPageHeader
 					description={description}
 					hideBackButton
+					portletNamespace={portletNamespace}
 					title={title}
 				/>
 			)}
 
-			<DataEngineFormView {...{...otherProps, title}} />
+			<DataEngineFormView {...{...otherProps, portletNamespace, title}} />
 		</>
 	);
 };
@@ -37,5 +43,6 @@ export default FormView;
 
 interface IProps {
 	description?: string;
+	portletNamespace?: string;
 	title?: string;
 }

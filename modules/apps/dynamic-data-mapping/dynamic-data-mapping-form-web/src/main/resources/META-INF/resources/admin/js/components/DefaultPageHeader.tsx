@@ -23,6 +23,7 @@ const DefaultPageHeader: React.FC<IProps> = ({
 	description,
 	hideBackButton,
 	onClickBack,
+	portletNamespace,
 	title,
 }) => {
 	return (
@@ -43,7 +44,10 @@ const DefaultPageHeader: React.FC<IProps> = ({
 					{Liferay.Language.get('back')}
 				</ClayButton>
 			)}
-			<div className="lfr-ddm__default-page-header">
+			<div
+				className="lfr-ddm__default-page-header"
+				id={`${portletNamespace}header`}
+			>
 				<h1 className="lfr-ddm__default-page-header-title">{title}</h1>
 
 				{description && (
@@ -64,5 +68,6 @@ interface IProps {
 	description?: string;
 	hideBackButton?: boolean;
 	onClickBack?: MouseEventHandler<HTMLButtonElement>;
+	portletNamespace?: string;
 	title: string;
 }

@@ -20,5 +20,6 @@ interface IProps {
 	description?: string;
 	hideBackButton?: boolean;
 	onClickBack?: MouseEventHandler<HTMLButtonElement>;
+	portletNamespace?: string;
 	title: string;
 }

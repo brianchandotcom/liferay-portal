@@ -17,5 +17,6 @@ declare const FormView: React.FC<IProps>;
 export default FormView;
 interface IProps {
 	description?: string;
+	portletNamespace?: string;
 	title?: string;
 }

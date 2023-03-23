@@ -250,13 +250,9 @@ public class StructuredContentResourceImpl
 
 		return Page.of(
 			transform(
-				_journalArticleService.search(
-					journalArticle.getCompanyId(), journalArticle.getGroupId(),
-					Collections.singletonList(journalArticle.getFolderId()),
-					journalArticle.getClassNameId(),
-					journalArticle.getArticleId(), null, null, null, null,
-					(String)null, null, null, null, null,
-					WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
+				_journalArticleService.getArticlesByArticleId(
+					journalArticle.getGroupId(), journalArticle.getArticleId(),
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null),
 				this::_toExtensionStructuredContent));
 	}

@@ -1,0 +1,7 @@
+apply from: "./base.build.gradle"
+
+ext.expectedExcludedProjects = [
+	":modules:bar:bar-api",
+	":modules:bar:bar-service",
+]
+gradle.liferayWorkspace.dirExcludesGlobs = ["modules/bar/**"]

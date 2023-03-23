@@ -1,0 +1,17 @@
+task runGradleTest
+
+ext.expectedExcludedProjects = []
+gradle.liferayWorkspace.dirExcludesGlobs = []
+
+runGradleTest {
+	doLast {
+		allprojects {
+			println "Checking project ${path}"
+			assert tasks.any {
+				it.enabled
+			} != expectedExcludedProjects.any {
+				it.equals path
+			}
+		}
+	}
+}

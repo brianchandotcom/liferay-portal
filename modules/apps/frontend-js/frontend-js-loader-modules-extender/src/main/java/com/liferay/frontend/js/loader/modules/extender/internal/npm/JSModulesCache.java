@@ -202,7 +202,7 @@ public class JSModulesCache {
 				String packageName2 = jsPackageDependency2.getPackageName();
 
 				if (!Objects.equals(packageName1, packageName2)) {
-					return packageName1.compareTo(packageName2);
+					packageName1.compareTo(packageName2);
 				}
 
 				String versionConstraints =

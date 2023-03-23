@@ -350,6 +350,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"CPDisplayLayout",
 				"layoutPageTemplateEntryUuid VARCHAR(75) null"));
 
+		registry.register(
+			"4.1.0", "5.0.0",
+			new com.liferay.commerce.product.internal.upgrade.v5_0_0.
+				CPTaxCategoryUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

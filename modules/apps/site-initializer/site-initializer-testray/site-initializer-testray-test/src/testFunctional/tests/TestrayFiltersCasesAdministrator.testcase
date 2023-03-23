@@ -318,4 +318,27 @@ definition {
         }
 	}
 
+	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by component"
+	@priority = 5
+	test AdminCanFilterCaseByComponent {
+		task ("When the user filter a case by component") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+                header = "Component",
+                label = "Component",
+                listMultiSelect = "Component 1");
+
+            TestrayFilter.assertMultiSelect(
+                label = "Component",
+                listMultiSelect = "Component 1");
+
+            Button.click(button = "Apply");
+        }
+
+        task ("Then can see the component selected") {
+            Testray.assertItemName(key_name = "Component 1");
+        }
+	}
+
 }

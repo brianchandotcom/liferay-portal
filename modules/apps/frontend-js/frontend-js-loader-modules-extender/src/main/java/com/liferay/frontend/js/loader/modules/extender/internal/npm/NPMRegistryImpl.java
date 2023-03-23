@@ -157,11 +157,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		return jsPackages.values();
 	}
 
-	@Override
-	public String getResolutionStateDigest() {
-		return _jsModulesCache.getResolutionStateDigest();
-	}
-
 	/**
 	 * Returns the resolved module with the ID.
 	 *
@@ -605,17 +600,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private static class JSModulesCache {
 
-		public String getResolutionStateDigest() {
-			if (_resolutionStateDigest == null) {
-				_resolutionStateDigest =
-					NPMRegistryResolutionStateDigestUtil.digest(
-						_resolvedJSModules.values(),
-						_resolvedJSPackages.values());
-			}
-
-			return _resolutionStateDigest;
-		}
-
 		private JSModulesCache(
 			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,
 			Map<String, JSPackage> jsPackages,
@@ -635,7 +619,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		private final Map<String, JSModule> _jsModules;
 		private final Map<String, JSPackage> _jsPackages;
 		private final List<JSPackageVersion> _jsPackageVersions;
-		private volatile String _resolutionStateDigest;
 		private final Map<String, JSModule> _resolvedJSModules;
 		private final Map<String, JSPackage> _resolvedJSPackages;
 

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
@@ -338,12 +339,12 @@ public class CommerceSearchResource {
 
 		long commerceAccountId = 0;
 
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
+		AccountEntry accountEntry =
+			_commerceAccountHelper.getCurrentAccountEntry(
 				commerceChannel.getGroupId(), themeDisplay.getRequest());
 
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
+		if (accountEntry != null) {
+			commerceAccountId = accountEntry.getAccountEntryId();
 
 			attributes.put(
 				"commerceAccountGroupIds",

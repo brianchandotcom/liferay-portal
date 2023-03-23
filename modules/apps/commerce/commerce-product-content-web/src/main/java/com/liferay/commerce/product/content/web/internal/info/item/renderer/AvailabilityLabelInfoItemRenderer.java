@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
@@ -157,16 +157,16 @@ public class AvailabilityLabelInfoItemRenderer
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
+		AccountEntry accountEntry =
+			_commerceAccountHelper.getCurrentAccountEntry(
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				httpServletRequest);
 
 		long commerceAccountId = 0;
 
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
+		if (accountEntry != null) {
+			commerceAccountId = accountEntry.getAccountEntryId();
 		}
 
 		return commerceAccountId;

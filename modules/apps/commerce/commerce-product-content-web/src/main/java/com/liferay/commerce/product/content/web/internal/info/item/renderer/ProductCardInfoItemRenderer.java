@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
@@ -76,7 +76,7 @@ public class ProductCardInfoItemRenderer
 			httpServletRequest.setAttribute(
 				CPWebKeys.CP_CATALOG_ENTRY,
 				_cpDefinitionHelper.getCPCatalogEntry(
-					_getCommerceAccountId(groupId, httpServletRequest), groupId,
+					_getAccountEntryId(groupId, httpServletRequest), groupId,
 					cpDefinition.getCPDefinitionId(),
 					_portal.getLocale(httpServletRequest)));
 
@@ -117,23 +117,23 @@ public class ProductCardInfoItemRenderer
 		}
 	}
 
-	private long _getCommerceAccountId(
+	private long _getAccountEntryId(
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
+		AccountEntry accountEntry =
+			_commerceAccountHelper.getCurrentAccountEntry(
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				httpServletRequest);
 
-		long commerceAccountId = 0;
+		long accountEntryId = 0;
 
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
+		if (accountEntry != null) {
+			accountEntryId = accountEntry.getAccountEntryId();
 		}
 
-		return commerceAccountId;
+		return accountEntryId;
 	}
 
 	@Reference

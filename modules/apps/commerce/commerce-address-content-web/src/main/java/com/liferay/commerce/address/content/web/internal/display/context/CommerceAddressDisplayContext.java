@@ -15,7 +15,6 @@
 package com.liferay.commerce.address.content.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.address.content.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.commerce.address.content.web.internal.portlet.configuration.CommerceAddressContentPortletInstanceConfiguration;
@@ -83,6 +82,11 @@ public class CommerceAddressDisplayContext {
 				CommerceAddressContentPortletInstanceConfiguration.class);
 	}
 
+	public AccountEntry getAccountEntry() throws PortalException {
+		return _commerceAccountHelper.getCurrentAccountEntry(
+			_cpRequestHelper.getCommerceChannelGroupId(), _httpServletRequest);
+	}
+
 	public String getAddCommerceAddressURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -97,11 +101,6 @@ public class CommerceAddressDisplayContext {
 				return themeDisplay.getURLCurrent();
 			}
 		).buildString();
-	}
-
-	public CommerceAccount getCommerceAccount() throws PortalException {
-		return _commerceAccountHelper.getCurrentCommerceAccount(
-			_cpRequestHelper.getCommerceChannelGroupId(), _httpServletRequest);
 	}
 
 	public CommerceAddress getCommerceAddress() throws PortalException {
@@ -268,12 +267,12 @@ public class CommerceAddressDisplayContext {
 				"create-date", "desc"));
 		_searchContainer.setOrderByType("desc");
 
-		CommerceAccount commerceAccount = getCommerceAccount();
+		AccountEntry accountEntry = getAccountEntry();
 
 		_searchContainer.setResultsAndTotal(
 			_commerceAddressService.searchCommerceAddresses(
-				commerceAccount.getCompanyId(), AccountEntry.class.getName(),
-				commerceAccount.getCommerceAccountId(), null,
+				accountEntry.getCompanyId(), AccountEntry.class.getName(),
+				accountEntry.getAccountEntryId(), null,
 				_searchContainer.getStart(), _searchContainer.getEnd(), null));
 
 		return _searchContainer;

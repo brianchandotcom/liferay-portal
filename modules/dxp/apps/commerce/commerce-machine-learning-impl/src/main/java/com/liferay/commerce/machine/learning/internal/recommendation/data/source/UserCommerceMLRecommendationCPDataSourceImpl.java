@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.machine.learning.internal.recommendation.data.source;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendationManager;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -70,10 +70,13 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 			HttpServletRequest httpServletRequest, int start, int end)
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			commerceAccountHelper.getCurrentCommerceAccount(httpServletRequest);
+		long groupId = portal.getScopeGroupId(httpServletRequest);
 
-		if (commerceAccount == null) {
+		AccountEntry accountEntry =
+			commerceAccountHelper.getCurrentAccountEntry(
+				groupId, httpServletRequest);
+
+		if (accountEntry == null) {
 			return new CPDataSourceResult(Collections.emptyList(), 0);
 		}
 
@@ -95,13 +98,11 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 			_userCommerceMLRecommendationManager.
 				getUserCommerceMLRecommendations(
 					portal.getCompanyId(httpServletRequest),
-					commerceAccount.getCommerceAccountId(), categoryIds);
+					accountEntry.getAccountEntryId(), categoryIds);
 
 		if (userCommerceMLRecommendations.isEmpty()) {
 			return new CPDataSourceResult(Collections.emptyList(), 0);
 		}
-
-		long groupId = portal.getScopeGroupId(httpServletRequest);
 
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
@@ -124,7 +125,7 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 			try {
 				CPCatalogEntry recommendedCPCatalogEntry =
 					cpDefinitionHelper.getCPCatalogEntry(
-						commerceAccount.getCommerceAccountId(), groupId,
+						accountEntry.getAccountEntryId(), groupId,
 						recommendedEntryClassPK,
 						portal.getLocale(httpServletRequest));
 

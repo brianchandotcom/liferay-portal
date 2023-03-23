@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.content.search.web.internal.portlet.shared.search;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -159,16 +159,16 @@ public class CPOptionFacetsPortletSharedSearchContributor
 					CPField.COMMERCE_CHANNEL_GROUP_ID, commerceChannelGroupId);
 				searchContext.setAttribute("secure", Boolean.TRUE);
 
-				CommerceAccount commerceAccount =
-					_commerceAccountHelper.getCurrentCommerceAccount(
+				AccountEntry accountEntry =
+					_commerceAccountHelper.getCurrentAccountEntry(
 						commerceChannelGroupId, themeDisplay.getRequest());
 
 				long[] commerceAccountGroupIds = null;
 
-				if (commerceAccount != null) {
+				if (accountEntry != null) {
 					commerceAccountGroupIds =
 						_commerceAccountHelper.getCommerceAccountGroupIds(
-							commerceAccount.getCommerceAccountId());
+							accountEntry.getAccountEntryId());
 				}
 
 				searchContext.setAttribute(
@@ -227,16 +227,16 @@ public class CPOptionFacetsPortletSharedSearchContributor
 			searchContext.setAttribute(
 				"commerceChannelGroupId", commerceChannel.getGroupId());
 
-			CommerceAccount commerceAccount =
-				_commerceAccountHelper.getCurrentCommerceAccount(
+			AccountEntry accountEntry =
+				_commerceAccountHelper.getCurrentAccountEntry(
 					commerceChannel.getGroupId(),
 					_portal.getHttpServletRequest(renderRequest));
 
-			if (commerceAccount != null) {
+			if (accountEntry != null) {
 				searchContext.setAttribute(
 					"commerceAccountGroupIds",
 					_commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId()));
+						accountEntry.getAccountEntryId()));
 			}
 		}
 

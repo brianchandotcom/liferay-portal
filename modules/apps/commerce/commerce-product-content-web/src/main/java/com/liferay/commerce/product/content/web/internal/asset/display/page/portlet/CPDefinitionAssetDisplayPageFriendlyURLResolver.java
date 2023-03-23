@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.asset.display.page.portlet;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.asset.display.page.configuration.AssetDisplayPageConfiguration;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
@@ -24,7 +25,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
@@ -395,14 +395,14 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 		long commerceAccountId = CommerceAccountConstants.ACCOUNT_ID_GUEST;
 
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
+		AccountEntry accountEntry =
+			_commerceAccountHelper.getCurrentAccountEntry(
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				httpServletRequest);
 
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
+		if (accountEntry != null) {
+			commerceAccountId = accountEntry.getAccountEntryId();
 		}
 
 		return commerceAccountId;

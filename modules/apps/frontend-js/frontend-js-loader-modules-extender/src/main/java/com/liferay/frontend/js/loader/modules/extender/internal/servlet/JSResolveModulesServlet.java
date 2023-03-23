@@ -153,14 +153,14 @@ public class JSResolveModulesServlet
 			).build();
 
 			// Send a redirect so that the AMD loader knows that it must update
-			// its resolve path to the new URL
+			// its resolvePath to the new URL.
 
 			httpServletResponse.sendRedirect(url);
 
 			return;
 		}
 
-		// See https://ashton.codes/set-cache-control-max-age-1-year
+		// See https://ashton.codes/set-cache-control-max-age-1-year/
 
 		httpServletResponse.addHeader(
 			HttpHeaders.CACHE_CONTROL, "public, max-age=31536000, immutable");

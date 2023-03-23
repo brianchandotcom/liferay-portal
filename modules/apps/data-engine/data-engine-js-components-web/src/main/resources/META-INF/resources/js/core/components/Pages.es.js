@@ -67,6 +67,7 @@ const Pages = React.forwardRef(
 				className={classNames({sheet: view === 'fieldSets'})}
 				ref={containerElementRef}
 				role="group"
+				tabIndex={0}
 			>
 				<input
 					key={portletNamespace + 'persistDefaultValues'}

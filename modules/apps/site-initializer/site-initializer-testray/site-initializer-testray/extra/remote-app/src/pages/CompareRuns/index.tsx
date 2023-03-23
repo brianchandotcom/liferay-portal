@@ -17,33 +17,44 @@ import {Link} from 'react-router-dom';
 import Container from '../../components/Layout/Container';
 import QATable from '../../components/Table/QATable';
 import TableChart from '../../components/TableChart';
-import useTableChartData from '../../hooks/data/useTableChartData';
 import i18n from '../../i18n';
 import {TestrayRun} from '../../services/rest';
+import {ApiResponse} from './CompareRunsOutlet';
 
-const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
-	const {colors, columns, data} = useTableChartData();
+type CompareRunsDetailsProps = {
+	matrixData: ApiResponse;
+	runs: TestrayRun[];
+};
 
+const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
+	matrixData,
+	runs = [],
+}) => {
 	document.title = i18n.sub('compare-x', 'cases');
 
 	const [runA, runB] = runs;
 
 	const getRun = (
 		run: TestrayRun,
+		runTitle: string,
 		{divider}: {divider?: boolean} = {divider: false}
 	) => {
 		if (!run) {
 			return [];
 		}
 
-		const {...build} = run;
-
 		const project = run.build?.project;
 
 		return [
 			{
-				title: `${i18n.translate('run')} A`,
-				value: <Link to="">{run.id}</Link>,
+				title: `${i18n.translate('run')} ${runTitle}`,
+				value: (
+					<Link
+						to={`/project/${project?.id}/routines/${run?.build?.routine?.id}/build/${run?.build?.id}/runs`}
+					>
+						{run.id}
+					</Link>
+				),
 			},
 			{
 				title: i18n.translate('project-name'),
@@ -54,8 +65,10 @@ const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 			{
 				title: i18n.translate('build'),
 				value: (
-					<Link to={`/project/${project?.id}/build/${build.id}`}>
-						{build.name}
+					<Link
+						to={`/project/${project?.id}/routines/${run?.build?.routine?.id}/build/${run?.build?.id}`}
+					>
+						{run?.build?.name}
 					</Link>
 				),
 			},
@@ -73,17 +86,15 @@ const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 				<div className="col-8 col-lg-8 col-md-12">
 					<QATable
 						items={[
-							...getRun(runA, {divider: true}),
-							...getRun(runB),
+							...getRun(runA, 'A', {divider: true}),
+							...getRun(runB, 'B'),
 						]}
 					/>
 				</div>
 
 				<div className="col-4 col-lg-4 col-md-12 pb-5">
 					<TableChart
-						colors={colors}
-						columns={columns}
-						data={data}
+						matrixData={matrixData.values}
 						title="Number of Case Results"
 					/>
 				</div>

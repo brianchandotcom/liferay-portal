@@ -436,13 +436,13 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "review");
+			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowDefinitionTask = "approve",
-			workflowTask = "review");
+			workflowDefinitionTask = "Approve",
+			workflowTask = "Review");
 
 		Navigator.openURL();
 

@@ -161,7 +161,7 @@ definition {
 	}
 
 	macro deleteSpecificObjectEntry {
-		var key_status = ${email};
+		var key_status = ${entry};
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -169,7 +169,7 @@ definition {
 			portlet = ${portlet});
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			ObjectPortlet.deleteEntry(entry = ${email});
+			ObjectPortlet.deleteEntry(entry = ${entry});
 		}
 	}
 

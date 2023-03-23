@@ -108,11 +108,11 @@ definition {
 				status = "Active");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "ERC-001",
+				entry = "ERC-001",
 				portlet = "DXP Cloud Environments");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Admins DXP Cloud");
 		}
 	}
@@ -193,11 +193,11 @@ definition {
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "ERC-001",
+				entry = "ERC-001",
 				portlet = "DXP Cloud Environments");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Admins DXP Cloud");
 		}
 	}

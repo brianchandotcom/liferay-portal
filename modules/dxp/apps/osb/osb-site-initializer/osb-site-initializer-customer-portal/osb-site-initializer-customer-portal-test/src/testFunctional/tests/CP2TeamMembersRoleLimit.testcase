@@ -193,7 +193,7 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test01@project.com",
+				entry = "test01@project.com",
 				portlet = "Team Members Invitation");
 		}
 	}

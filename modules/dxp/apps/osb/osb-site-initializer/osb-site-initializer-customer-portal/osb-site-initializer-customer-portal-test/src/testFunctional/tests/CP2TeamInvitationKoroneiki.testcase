@@ -33,7 +33,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		CP2Utils.deleteSpecificObjectEntry(
-			email = "test01@liferay.com",
+			entry = "test01@liferay.com",
 			portlet = "Team Members Invitation");
 
 		CustomerPortal.customerPortalTearDown();

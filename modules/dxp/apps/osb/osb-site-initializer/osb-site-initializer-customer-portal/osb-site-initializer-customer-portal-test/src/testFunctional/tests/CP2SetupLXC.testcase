@@ -176,7 +176,7 @@ definition {
 			CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Liferay Experience Cloud Environments");
 
 			CP2Utils.deleteActivationStatus(

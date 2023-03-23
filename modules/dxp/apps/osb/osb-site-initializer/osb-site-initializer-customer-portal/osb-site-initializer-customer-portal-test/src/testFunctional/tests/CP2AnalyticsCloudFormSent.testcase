@@ -110,16 +110,14 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2Utils.clearCloudEntries(
-				position = 3,
-				status = "In-Progress");
+			CustomerPortal.clearStatus(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Analytics Cloud Workspaces");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}
@@ -194,16 +192,14 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2Utils.clearCloudEntries(
-				position = 3,
-				status = "In-Progress");
+			CustomerPortal.clearStatus(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Analytics Cloud Workspaces");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				email = "test@liferay.com",
+				entry = "test@liferay.com",
 				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}

@@ -206,9 +206,7 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2Utils.clearCloudEntries(
-				position = 3,
-				status = "In-Progress");
+			CustomerPortal.clearStatus(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				entry = "test@liferay.com",

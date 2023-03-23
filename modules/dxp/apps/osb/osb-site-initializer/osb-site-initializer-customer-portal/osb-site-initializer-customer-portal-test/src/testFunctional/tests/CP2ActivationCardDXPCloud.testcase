@@ -103,9 +103,7 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2Utils.clearCloudEntries(
-				position = 1,
-				status = "Active");
+			CustomerPortal.clearStatus(status = "Active");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				entry = "ERC-001",
@@ -188,9 +186,7 @@ definition {
 		//}
 
 		task ("Delete the entries and objects created") {
-			CP2Utils.clearCloudEntries(
-				position = 1,
-				status = "In-Progress");
+			CustomerPortal.clearStatus(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				entry = "ERC-001",

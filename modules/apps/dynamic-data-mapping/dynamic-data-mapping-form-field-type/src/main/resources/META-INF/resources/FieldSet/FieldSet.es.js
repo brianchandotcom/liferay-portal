@@ -101,6 +101,7 @@ const FieldSet = ({
 		<FieldBase
 			{...otherProps}
 			itemPath={itemPath}
+			label={label}
 			name={name}
 			readOnly={readOnly}
 			repeatable={collapsible ? false : repeatable}

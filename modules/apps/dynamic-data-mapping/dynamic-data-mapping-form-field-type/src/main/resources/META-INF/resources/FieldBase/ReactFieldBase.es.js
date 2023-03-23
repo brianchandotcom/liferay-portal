@@ -251,7 +251,12 @@ export function FieldBase({
 	const readFieldDetails = !showFor || type === 'select';
 	const hasFieldDetails = accessible && fieldDetails && readFieldDetails;
 
-	const accessibleProps = {
+	const accessiblePropsGroup = {
+		...(!renderLabel && {'aria-labelledby': fieldDetailsId, 'tabIndex': 0}),
+		...(type === 'fieldset' && {role: 'group'}),
+	};
+
+	const accessiblePropsFields = {
 		...(hasFieldDetails && {'aria-labelledby': fieldDetailsId}),
 		...(showFor && {htmlFor: id ?? name}),
 		...(readFieldDetails && {tabIndex: 0}),
@@ -283,7 +288,7 @@ export function FieldBase({
 
 	return (
 		<ClayForm.Group
-			aria-labelledby={!renderLabel ? fieldDetailsId : null}
+			{...accessiblePropsGroup}
 			className={classNames({
 				'has-error': hasError,
 				'has-warning': warningMessage && !hasError,
@@ -293,7 +298,6 @@ export function FieldBase({
 			data-field-reference={fieldReference}
 			onClick={onClick}
 			style={style}
-			tabIndex={!renderLabel ? 0 : undefined}
 		>
 			{repeatable && (
 				<div className="lfr-ddm-form-field-repeatable-toolbar">
@@ -351,7 +355,7 @@ export function FieldBase({
 					{showLegend ? (
 						<fieldset>
 							<legend
-								{...accessibleProps}
+								{...accessiblePropsFields}
 								className="lfr-ddm-legend"
 							>
 								{showLabel && label}
@@ -371,7 +375,7 @@ export function FieldBase({
 					) : (
 						<>
 							<label
-								{...accessibleProps}
+								{...accessiblePropsFields}
 								className={classNames({
 									'ddm-empty': !showLabel && !required,
 									'ddm-label': showLabel || required,

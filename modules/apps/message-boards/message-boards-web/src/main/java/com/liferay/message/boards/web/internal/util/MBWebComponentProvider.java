@@ -35,13 +35,6 @@ public class MBWebComponentProvider {
 		return _mbDisplayContextProvider;
 	}
 
-	@Reference(unbind = "-")
-	public void setMBDisplayContextProvider(
-		MBDisplayContextProvider mbDisplayContextProvider) {
-
-		_mbDisplayContextProvider = mbDisplayContextProvider;
-	}
-
 	@Activate
 	protected void activate() {
 		_mbWebComponentProvider = this;
@@ -54,6 +47,7 @@ public class MBWebComponentProvider {
 
 	private static MBWebComponentProvider _mbWebComponentProvider;
 
+	@Reference
 	private MBDisplayContextProvider _mbDisplayContextProvider;
 
 }

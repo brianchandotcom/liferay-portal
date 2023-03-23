@@ -1882,7 +1882,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         return (not inclusive)
 	 * @return the matching web content articles
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public Hits search(
 			long groupId, long creatorUserId, int status, int start, int end)
@@ -1948,7 +1950,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         articles
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -2025,7 +2029,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         articles
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -2109,7 +2115,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         articles
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -2168,7 +2176,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         information see {@link WorkflowConstants} for constants starting
 	 *         with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -2227,7 +2237,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         or just one field must match. Group, folder IDs, class name ID,
 	 *         and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -2290,7 +2302,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         or just one field must match.  Group, folder IDs, class name ID,
 	 *         and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,

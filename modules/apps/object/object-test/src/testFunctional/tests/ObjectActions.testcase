@@ -1371,6 +1371,104 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify it's possible to update an object entry with the trigger On Payment Status Update"
+	@priority = 4
+	test CanCreateActionUpdateAnObjectEntryWithOnPaymentStatusUpdate {
+		task ("Given: An action in the Commerce Order object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+		}
+
+		task ("And given: The user selects the trigger OnPaymentStatusUpdate using the action Update an Object Entry") {
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				fieldName = "Order Status",
+				inputMethod = "true",
+				inputValue = 10,
+				thenAction = "Update an Object Entry",
+				whenAction = "On Payment Status Update");
+		}
+
+		task ("And given: An account, minium site and an order is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name Test",
+				accountEntryType = "Business");
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("When: The user changes payment status and the action changes order status to processing") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			ClickNoError(
+				key_orderStatus = "Pending",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+			CommerceEntry.clickNoError(menuItem = "View");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			Click(
+				key_index = "Edit",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Select(
+				key_fieldLabel = "Payment Status",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Authorized");
+
+			Button.click(button = "Submit");
+
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				key_value = "Processing",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then: The action is triggered") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Custom Action",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-172234 - Verify it's possible to create a groovy script action with the trigger On Order Status Update"
 	@priority = 3
 	test CanCreateActionUsingGroovyScripWithOnOrderStatusUpdate {

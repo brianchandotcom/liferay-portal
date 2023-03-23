@@ -63,6 +63,8 @@ public interface ContentDashboardItem<T> {
 
 	public String getDescription(Locale locale);
 
+	public long getId();
+
 	public InfoItemReference getInfoItemReference();
 
 	public List<ContentDashboardItemVersion>

@@ -96,10 +96,6 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		return "/designer/view_workflow_definitions.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected KaleoDefinitionVersionLocalService
-		kaleoDefinitionVersionLocalService;
-
 	private void _setKaleoDefinitionVersionRenderRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {

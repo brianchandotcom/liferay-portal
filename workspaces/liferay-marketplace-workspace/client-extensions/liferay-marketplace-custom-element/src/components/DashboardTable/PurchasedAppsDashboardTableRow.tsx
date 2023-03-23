@@ -128,9 +128,8 @@ export function PurchasedAppsDashboardTableRow({
 					<DropDown.ItemList>
 						<DropDown.Item
 							onClick={() => {
-
-								// access condole logic stuff...
-
+								window.location.href =
+									'https://console.liferay.cloud/*';
 							}}
 						>
 							Access Console

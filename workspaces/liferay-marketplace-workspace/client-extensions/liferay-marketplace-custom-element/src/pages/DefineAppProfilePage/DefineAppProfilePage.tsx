@@ -1,7 +1,6 @@
-import {useEffect, useState} from 'react';
-
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
+import {useEffect, useState} from 'react';
 
 import {UploadedFile} from '../../components/FileList/FileList';
 import {Header} from '../../components/Header/Header';
@@ -12,7 +11,7 @@ import {Section} from '../../components/Section/Section';
 import {UploadLogo} from '../../components/UploadLogo/UploadLogo';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createApp, createImage, getVocabularies, getCategories, updateApp} from '../../utils/api';
+import {createApp, createImage, getCategories, getVocabularies, updateApp} from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
@@ -21,42 +20,6 @@ interface DefineAppProfilePageProps {
 	onClickBack: () => void;
 	onClickContinue: () => void;
 }
-
-const CategoriesItems = [
-	{
-		checked: false,
-		label: 'Experience Management',
-		value: 'Experience Management',
-	},
-	{
-		checked: false,
-		label: 'Collaboration and Knowledge Sharing',
-		value: 'Collaboration and Knowledge Sharing',
-	},
-];
-
-const TagsItems = [
-	{
-		checked: false,
-		label: 'Analytics',
-		value: 'Analytics',
-	},
-	{
-		checked: false,
-		label: 'Database',
-		value: 'Database',
-	},
-	{
-		checked: false,
-		label: 'Data Visualization',
-		value: 'Data Visualization',
-	},
-	{
-		checked: false,
-		label: 'Performance Management',
-		value: 'Performance Management',
-	},
-];
 
 export function DefineAppProfilePage({
 	onClickBack,

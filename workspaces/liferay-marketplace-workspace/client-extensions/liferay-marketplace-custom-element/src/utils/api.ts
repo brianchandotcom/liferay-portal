@@ -1,4 +1,4 @@
-declare let Liferay: {authToken: string, ThemeDisplay: any};
+declare let Liferay: {ThemeDisplay: any, authToken: string};
 const headers = {
 	'Content-Type': 'application/json',
 	'X-CSRF-Token': Liferay.authToken,

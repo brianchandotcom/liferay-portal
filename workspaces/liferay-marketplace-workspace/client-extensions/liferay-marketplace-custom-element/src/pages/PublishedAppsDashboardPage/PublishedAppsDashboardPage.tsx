@@ -3,11 +3,11 @@ import {useEffect, useState} from 'react';
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {AppProps, DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {DashboardTableRow} from '../../components/DashboardTable/DashboardTableRow';
-import {getProducts, getProductSpecifications} from '../../utils/api';
+import {getProductSpecifications, getProducts} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
-declare let Liferay: {authToken: string, ThemeDisplay: any};
+declare let Liferay: {ThemeDisplay: any, authToken: string};
 
 const tableHeaders = [
 	{
@@ -61,7 +61,7 @@ export function PublishedAppsDashboardPage() {
 	}
 
 	function getAppListProductSpecifications(productIds : number[]) {
-		let appListProductSpecifications : any[] = [];
+		const appListProductSpecifications : any[] = [];
 
 		productIds.forEach((productId) =>  {
 			appListProductSpecifications.push(getProductSpecifications({appProductId: productId}));
@@ -81,14 +81,14 @@ export function PublishedAppsDashboardPage() {
 	}
 
 	function getProductTypeFromSpecifications(specifications: any) {
-		var productType = 'no type';
+		let productType = 'no type';
 
 		specifications.items.forEach((specification: any) => {
 			if (specification.specificationKey === "type") {
 				productType = specification.value.en_US;
 
-				if (productType === "saas") productType = "SaaS"
-				else if (productType === "osgi") productType = "OSGI"
+				if (productType === "saas") {productType = "SaaS"}
+				else if (productType === "osgi") {productType = "OSGI"}
 			}
 		})
 
@@ -96,7 +96,7 @@ export function PublishedAppsDashboardPage() {
 	}
 
 	function getProductVersionFromSpecifications(specifications: any) {
-		var productVersion = '0';
+		let productVersion = '0';
 
 		specifications.items.forEach((specification: any) => {
 			if (specification.specificationKey === "version") {
@@ -122,8 +122,8 @@ export function PublishedAppsDashboardPage() {
 					status: product.workflowStatusInfo.label.replace(/(^\w|\s\w)/g, (m: string) => m.toUpperCase()),
 					thumbnail: product.thumbnail,
 					type: getProductTypeFromSpecifications(appListProductSpecifications[index]),
-					version: getProductVersionFromSpecifications(appListProductSpecifications[index]),
-					updatedDate: formatDate(product.modifiedDate)
+					updatedDate: formatDate(product.modifiedDate),
+					version: getProductVersionFromSpecifications(appListProductSpecifications[index])
 				}
 			})
 

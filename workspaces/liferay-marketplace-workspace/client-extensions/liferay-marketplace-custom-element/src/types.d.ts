@@ -8,8 +8,8 @@ type CartItem = {
 	price: {
 		currency: string;
 		discount: number;
-		price: number;
 		finalPrice: number;
+		price: number;
 	};
 	productId: number;
 	quantity: number;

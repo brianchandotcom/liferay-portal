@@ -1,14 +1,10 @@
 import ClayTable from '@clayui/table';
-
-import circleFill from '../../assets/icons/circle_fill.svg';
-
-import './DashboardTableRow.scss';
-
 import classNames from 'classnames';
 
-import starEmpty from '../../assets/icons/star-empty.svg';
-import starFill from '../../assets/icons/star-fill.svg';
+import circleFill from '../../assets/icons/circle_fill.svg';
 import {AppProps} from './DashboardTable';
+
+import './DashboardTableRow.scss';
 
 interface DashboardTableRowProps {
 	item: AppProps;

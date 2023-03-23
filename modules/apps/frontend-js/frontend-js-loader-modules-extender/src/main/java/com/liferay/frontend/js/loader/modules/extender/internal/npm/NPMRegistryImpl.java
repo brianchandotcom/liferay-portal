@@ -53,7 +53,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -301,61 +300,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public NPMRegistryUpdate update() {
 		return new NPMRegistryUpdateImpl(this);
-	}
-
-	public static class JSModulesCache {
-
-		public JSModulesCache() {
-			exactMatchMap = Collections.emptyMap();
-			jsModules = Collections.emptyMap();
-			jsPackages = Collections.emptyMap();
-			jsPackageVersions = Collections.emptyList();
-			resolvedJSModules = Collections.emptyMap();
-			resolvedJSPackages = Collections.emptyMap();
-		}
-
-		public JSModulesCache(
-			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,
-			Map<String, JSPackage> jsPackages,
-			List<JSPackageVersion> jsPackageVersions,
-			Map<String, JSModule> resolvedJSModules,
-			Map<String, JSPackage> resolvedJSPackages) {
-
-			this.exactMatchMap = Collections.unmodifiableMap(exactMatchMap);
-			this.jsModules = Collections.unmodifiableMap(jsModules);
-			this.jsPackages = Collections.unmodifiableMap(jsPackages);
-			this.jsPackageVersions = Collections.unmodifiableList(
-				jsPackageVersions);
-			this.resolvedJSModules = Collections.unmodifiableMap(
-				resolvedJSModules);
-			this.resolvedJSPackages = Collections.unmodifiableMap(
-				resolvedJSPackages);
-		}
-
-		public final Map<String, String> exactMatchMap;
-		public final Map<String, JSModule> jsModules;
-		public final Map<String, JSPackage> jsPackages;
-		public final List<JSPackageVersion> jsPackageVersions;
-		public final Map<String, JSModule> resolvedJSModules;
-		public final Map<String, JSPackage> resolvedJSPackages;
-
-	}
-
-	public class JSPackageVersion {
-
-		public JSPackageVersion(JSPackage jsPackage) {
-			this.jsPackage = jsPackage;
-
-			version = Version.from(jsPackage.getVersion(), true);
-		}
-
-		public Version getVersion() {
-			return version;
-		}
-
-		public final JSPackage jsPackage;
-		public final Version version;
-
 	}
 
 	@Activate

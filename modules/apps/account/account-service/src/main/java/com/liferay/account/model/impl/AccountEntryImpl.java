@@ -14,6 +14,7 @@
 
 package com.liferay.account.model.impl;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.model.AccountEntryUserRel;
@@ -111,6 +112,39 @@ public class AccountEntryImpl extends AccountEntryBaseImpl {
 	@Override
 	public String[] getDomainsArray() {
 		return StringUtil.split(getDomains());
+	}
+
+	@Override
+	public boolean isBusinessAccount() {
+		if (StringUtil.equals(
+				getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isGuestAccount() {
+		if (StringUtil.equals(
+				getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isPersonalAccount() {
+		if (StringUtil.equals(
+				getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Group _getAccountEntryGroup() {

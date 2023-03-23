@@ -38,13 +38,9 @@ public class NPMResolverProvider {
 		_npmResolverProvider = this;
 	}
 
-	@Reference(unbind = "-")
-	protected void setNPMResolver(NPMResolver npmResolver) {
-		_npmResolver = npmResolver;
-	}
-
 	private static NPMResolverProvider _npmResolverProvider;
 
+	@Reference
 	private NPMResolver _npmResolver;
 
 }

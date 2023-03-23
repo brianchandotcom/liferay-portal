@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -58,14 +59,12 @@ import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -140,35 +139,36 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		_getCheckedContentDashboardItemSubtypesInfoItemReferences(
 			ServletRequest servletRequest) {
 
-		return Stream.of(
-			Optional.ofNullable(
-				servletRequest.getParameterValues(
-					"checkedContentDashboardItemSubtypesPayload")
-			).orElseGet(
-				() -> new String[0]
-			)
-		).map(
-			jsonObjectString -> {
-				try {
-					return _jsonFactory.createJSONObject(jsonObjectString);
-				}
-				catch (JSONException jsonException) {
-					_log.error(jsonException);
+		String[] parameterValues = servletRequest.getParameterValues(
+			"checkedContentDashboardItemSubtypesPayload");
 
-					return null;
-				}
+		if (ArrayUtil.isEmpty(parameterValues)) {
+			return Collections.emptySet();
+		}
+
+		Set<InfoItemReference> infoItemReferences = new HashSet<>();
+
+		for (String parameterValue : parameterValues) {
+			JSONObject jsonObject = null;
+
+			try {
+				jsonObject = _jsonFactory.createJSONObject(parameterValue);
 			}
-		).filter(
-			Objects::nonNull
-		).map(
-			jsonObject -> new InfoItemReference(
-				jsonObject.getString("className"),
-				new ClassNameClassPKInfoItemIdentifier(
-					jsonObject.getString("entryClassName"),
-					jsonObject.getLong("classPK")))
-		).collect(
-			Collectors.toSet()
-		);
+			catch (JSONException jsonException) {
+				_log.error(jsonException);
+
+				continue;
+			}
+
+			infoItemReferences.add(
+				new InfoItemReference(
+					jsonObject.getString("className"),
+					new ClassNameClassPKInfoItemIdentifier(
+						jsonObject.getString("entryClassName"),
+						jsonObject.getLong("classPK"))));
+		}
+
+		return infoItemReferences;
 	}
 
 	private JSONArray _getContentDashboardItemTypesJSONArray(
@@ -216,15 +216,22 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	}
 
 	private String _getIcon(String className) {
-		return Optional.ofNullable(
-			_infoSearchClassMapperRegistry.getSearchClassName(className)
-		).map(
-			AssetRendererFactoryRegistryUtil::getAssetRendererFactoryByClassName
-		).map(
-			AssetRendererFactory::getIconCssClass
-		).orElseGet(
-			null
-		);
+		String searchClassName =
+			_infoSearchClassMapperRegistry.getSearchClassName(className);
+
+		if (searchClassName == null) {
+			return null;
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				searchClassName);
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		return assetRendererFactory.getIconCssClass();
 	}
 
 	private String _getInfoItemFormVariationLabel(

@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.search.similar.results.web.internal.constants.SimilarResultsPortletKeys;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Tan
@@ -37,15 +35,6 @@ public class SimilarResultsPortletConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/similar/results/configuration.jsp";
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.search.similar.results.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 }

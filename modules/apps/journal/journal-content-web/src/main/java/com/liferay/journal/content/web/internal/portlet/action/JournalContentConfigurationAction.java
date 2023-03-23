@@ -53,7 +53,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -141,15 +140,6 @@ public class JournalContentConfigurationAction
 		_addDDMTemplateLinks(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private void _addDDMTemplateLinks(ActionRequest actionRequest)

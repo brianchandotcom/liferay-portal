@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -37,14 +35,6 @@ public class WikiConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/wiki/configuration.jsp";
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 }

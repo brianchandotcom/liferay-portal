@@ -29,7 +29,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -91,15 +90,6 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			actionRequest, "searchConfiguration", jsonObject.toString());
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.search.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Reference

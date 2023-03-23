@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletConfig;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -99,15 +98,6 @@ public class OpenCommerceOrderContentConfigurationAction
 		}
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.order.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

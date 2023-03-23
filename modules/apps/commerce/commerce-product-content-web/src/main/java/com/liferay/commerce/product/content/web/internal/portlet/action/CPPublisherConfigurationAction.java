@@ -62,7 +62,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -187,15 +186,6 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
 		}
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private void _addSelection(

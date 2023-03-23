@@ -28,7 +28,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,15 +70,6 @@ public class CPPriceRangeFacetsConfigurationAction
 		}
 
 		return "/price_range_facets/configuration.jsp";
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.search.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private String _getPaginationStartParameterName(

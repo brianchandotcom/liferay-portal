@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,15 +62,6 @@ public class ArticleConfigurationAction extends DefaultConfigurationAction {
 				_portal));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Reference

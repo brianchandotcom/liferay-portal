@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -70,15 +69,6 @@ public class CPSearchResultsConfigurationAction
 		}
 
 		return "/search_results/configuration.jsp";
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.search.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

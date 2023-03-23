@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,15 +62,6 @@ public class DLConfigurationAction
 			ItemSelector.class.getName(), _itemSelector);
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override

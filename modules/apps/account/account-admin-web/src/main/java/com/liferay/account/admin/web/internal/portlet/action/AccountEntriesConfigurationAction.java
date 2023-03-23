@@ -18,11 +18,9 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -37,15 +35,6 @@ public class AccountEntriesConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/account_entries_admin/configuration.jsp";
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.account.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 }

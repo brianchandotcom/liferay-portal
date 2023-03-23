@@ -38,7 +38,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,15 +82,6 @@ public class SampleDroolsConfigurationAction
 				_portal.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 		}
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.rules.engine.sample.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private void _updatePreferences(

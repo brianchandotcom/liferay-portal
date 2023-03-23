@@ -72,7 +72,7 @@ public class AccountGroupLocalServiceTest {
 	public void testAccountGroupName() throws Exception {
 		try {
 			_accountGroupLocalService.addAccountGroup(
-				TestPropsValues.getUserId(), null, "");
+				TestPropsValues.getUserId(), null, "", null);
 
 			Assert.fail();
 		}
@@ -86,7 +86,7 @@ public class AccountGroupLocalServiceTest {
 
 		try {
 			_accountGroupLocalService.updateAccountGroup(
-				accountGroup.getUserId(), null, "");
+				accountGroup.getUserId(), null, "", null);
 
 			Assert.fail();
 		}
@@ -255,7 +255,7 @@ public class AccountGroupLocalServiceTest {
 
 			_accountGroupLocalService.updateAccountGroup(
 				accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), null);
 		}
 		catch (ModelListenerException modelListenerException) {
 			Assert.assertTrue(

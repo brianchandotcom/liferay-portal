@@ -29,7 +29,7 @@ public class AccountGroupTestUtil {
 		throws Exception {
 
 		return accountGroupLocalService.addAccountGroup(
-			TestPropsValues.getUserId(), description, name);
+			TestPropsValues.getUserId(), description, name, null);
 	}
 
 }

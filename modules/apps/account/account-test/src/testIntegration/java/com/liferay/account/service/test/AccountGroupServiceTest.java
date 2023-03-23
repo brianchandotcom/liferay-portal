@@ -75,14 +75,14 @@ public class AccountGroupServiceTest {
 
 		_accountGroupService.addAccountGroup(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), null);
 	}
 
 	@Test(expected = PrincipalException.class)
 	public void testAddAccountGroupWithoutPermission() throws Exception {
 		_accountGroupService.addAccountGroup(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), null);
 	}
 
 	@Test
@@ -175,7 +175,7 @@ public class AccountGroupServiceTest {
 
 		_accountGroupService.updateAccountGroup(
 			accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-			accountGroup.getName());
+			accountGroup.getName(), null);
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -186,7 +186,7 @@ public class AccountGroupServiceTest {
 
 		_accountGroupService.updateAccountGroup(
 			accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-			accountGroup.getName());
+			accountGroup.getName(), null);
 	}
 
 	@Inject

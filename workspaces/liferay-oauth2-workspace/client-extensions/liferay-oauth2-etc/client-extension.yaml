@@ -1,0 +1,10 @@
+liferay-oauth2-custom-element:
+    name: Liferay OAuth2 Custom Element
+    type: customElement
+liferay-oauth2-oauth-application-headless-server:
+    homePageURL: http://localhost:3000
+    name: Liferay OAuth2 OAuth Application Headless Server
+    scopes:
+        - liferay-json-web-services.everything.read.userprofile
+    type: oAuthApplicationHeadlessServer
+    userAccountEmailAddress: test@liferay.com

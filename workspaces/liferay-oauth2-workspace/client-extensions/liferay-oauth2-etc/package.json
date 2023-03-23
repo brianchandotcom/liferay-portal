@@ -1,0 +1,33 @@
+{
+	"browserslist": {
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		]
+	},
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.4.2",
+		"react-scripts": "5.0.1"
+	},
+	"devDependencies": {
+		"@liferay/npm-scripts": "^47.16.0"
+	},
+	"name": "liferay-oauth2",
+	"private": true,
+	"scripts": {
+		"build": "react-scripts build",
+		"eject": "react-scripts eject",
+		"format": "yarn liferay-npm-scripts format --experimental-standalone && yarn liferay-npm-scripts lint:fix --experimental-standalone",
+		"start": "react-scripts start",
+		"test": "react-scripts test"
+	},
+	"version": "0.1.0"
+}

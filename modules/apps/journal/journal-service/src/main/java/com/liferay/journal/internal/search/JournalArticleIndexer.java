@@ -20,6 +20,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -57,16 +59,15 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityCon
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -151,17 +152,18 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			});
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		service = ModelDocumentContributor.class,
-		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
-	)
-	protected void addModelDocumentContributor(
-		ModelDocumentContributor<JournalArticle> modelDocumentContributor) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext,
+			(Class<ModelDocumentContributor<JournalArticle>>)
+				(Class<?>)ModelDocumentContributor.class,
+			"(indexer.class.name=com.liferay.journal.model.JournalArticle)");
+	}
 
-		_modelDocumentContributors.add(modelDocumentContributor);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	@Override
@@ -178,7 +180,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, journalArticle);
 
-		_modelDocumentContributors.forEach(
+		_serviceTrackerList.forEach(
 			modelDocumentContributor -> modelDocumentContributor.contribute(
 				document, journalArticle));
 
@@ -264,12 +266,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		return false;
-	}
-
-	protected void removeModelDocumentContributor(
-		ModelDocumentContributor<JournalArticle> modelDocumentContributor) {
-
-		_modelDocumentContributors.remove(modelDocumentContributor);
 	}
 
 	@Reference(
@@ -476,9 +472,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	)
 	private KeywordQueryContributor _keywordQueryContributor;
 
-	private final List<ModelDocumentContributor<JournalArticle>>
-		_modelDocumentContributors = new CopyOnWriteArrayList<>();
-
 	@Reference(
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
@@ -486,5 +479,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerList<ModelDocumentContributor<JournalArticle>>
+		_serviceTrackerList;
 
 }

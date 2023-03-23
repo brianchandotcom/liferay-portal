@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>CARD_NAME</td>
-	<td>//div[contains(@class, 'cp-account-subscription-card')]//h5[text()='${cardName}']</td>
+	<td>//div[contains(@class, 'cp-account-subscription-card')]//*[text()='${cardName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>CARD_DATE</td>
-	<td>//*[contains(@class, 'card-body')]//*[(text()='${date}')]//..//*[(text()='${status}')]</td>
+	<td>//*[contains(@class, 'card-body')]//*[(text()='${key_date}')]//..//*[(text()='${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -327,12 +327,12 @@
 </tr>
 <tr>
 	<td>CARD_SUBSCRIPTION</td>
-	<td>//p[contains(@class, 'text-paragraph') and contains(text(), '${title}')]</td>
+	<td>//*[contains(@class, 'text-paragraph') and contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CARD_TITLE</td>
-	<td>//span[contains(@class, 'text-truncate') and contains(.,'${project}')]</td>
+	<td>//*[contains(@class, 'card-title') and contains(.,'${project}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -342,12 +342,12 @@
 </tr>
 <tr>
 	<td>CARD_LOGO</td>
-	<td>//img[contains(@class, 'cp-img-activation-status') and contains(@src, '${product}')]</td>
+	<td>//*[contains(@class, 'cp-img-activation-status') and contains(@src, '${product}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS_CARD</td>
-	<td>//span[contains(text(),'${key_status}')]</td>
+	<td>//*[contains(text(),'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

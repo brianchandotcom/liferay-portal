@@ -1,3 +1,6 @@
+assemble:
+    - from: build/buildTheme/img
+      into: static/img
 liferay-sample-theme-css:
     clayURL: css/clay.css
     mainURL: css/main.css

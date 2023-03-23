@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.util.Properties;
 import java.util.regex.Matcher;
 
@@ -25,6 +24,10 @@ import java.util.regex.Matcher;
  * @author Peter Yoo
  */
 public class BuildFactory {
+
+	public static DefaultBuild newDefaultBuild(String url) {
+		return new DefaultBuild(url);
+	}
 
 	public static Build newBuild(String url, Build parentBuild) {
 		return newBuild(url, parentBuild, null);
@@ -269,7 +272,7 @@ public class BuildFactory {
 
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
-			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/?",
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+(/label=[^/]+)?)/",
 			_BUILD_URL_SUFFIX_REGEX),
 		JenkinsResultsParserUtil.combine(
 			".*?Test/+[^/]+/+(?<master>test-[0-9]-[0-9]{1,2})/",

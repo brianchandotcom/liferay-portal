@@ -17,7 +17,9 @@
 		<field name="classPK" type="long" />
 		<field name="priority" type="double" />
 		<field name="sentDate" type="Date" />
-		<field name="subject" type="String" />
+		<field name="subject" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="type" type="String" />
 		<field name="status" type="int" />
 	</model>

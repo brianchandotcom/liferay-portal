@@ -95,7 +95,7 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
 				<div className="col-4 col-lg-4 col-md-12 pb-5">
 					<TableChart
 						matrixData={matrixData.values}
-						title="Number of Case Results"
+						title={i18n.translate('number-of-case-results')}
 					/>
 				</div>
 			</div>

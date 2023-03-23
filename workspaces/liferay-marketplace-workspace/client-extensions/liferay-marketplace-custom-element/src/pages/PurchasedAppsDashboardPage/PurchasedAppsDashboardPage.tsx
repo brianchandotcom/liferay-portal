@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
-import {getOrders} from '../../utils/api';
+import {getAccount, getChannels, getOrders} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
 export interface PurchasedAppProps {
@@ -67,12 +67,23 @@ export function PurchasedAppsDashboardPage() {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const placedOrder = await getOrders(
+			const account = await getAccount();
+
+			const channels = await getChannels();
+
+			const channel =
+				channels.find(
+					(channel) => channel.name === 'Marketplace Channel'
+				) || channels[0];
+
+			const placedOrders = await getOrders(
+				account.accountBriefs[0]?.id || 50307,
+				channel.id,
 				page,
 				purchasedAppTable.pageSize
 			);
 
-			const newOrderItems = placedOrder.items.map((order) => {
+			const newOrderItems = placedOrders.items.map((order) => {
 				const [placeOrderItem] = order.placedOrderItems;
 
 				const date = new Date(order.createDate);
@@ -99,7 +110,7 @@ export function PurchasedAppsDashboardPage() {
 			setPurchasedAppTable({
 				...purchasedAppTable,
 				items: newOrderItems,
-				totalCount: placedOrder.totalCount,
+				totalCount: placedOrders.totalCount,
 			});
 		};
 		makeFetch();

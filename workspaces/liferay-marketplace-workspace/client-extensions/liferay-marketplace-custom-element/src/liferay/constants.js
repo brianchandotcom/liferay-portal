@@ -5,4 +5,4 @@ export function getIconSpriteMap() {
 	const spritemap = `${pathThemeImages}/clay/icons.svg`;
 
 	return spritemap;
-};
+}

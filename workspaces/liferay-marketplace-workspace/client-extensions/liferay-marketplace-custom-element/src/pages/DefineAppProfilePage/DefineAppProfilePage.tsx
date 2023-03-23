@@ -11,7 +11,13 @@ import {Section} from '../../components/Section/Section';
 import {UploadLogo} from '../../components/UploadLogo/UploadLogo';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createApp, createImage, getCategories, getVocabularies, updateApp} from '../../utils/api';
+import {
+	createApp,
+	createImage,
+	getCategories,
+	getVocabularies,
+	updateApp,
+} from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
@@ -25,8 +31,18 @@ export function DefineAppProfilePage({
 	onClickBack,
 	onClickContinue,
 }: DefineAppProfilePageProps) {
-	const [{appCategories, appDescription, appERC, appLogo, appName, appTags, catalogId}, dispatch] =
-		useAppContext();
+	const [
+		{
+			appCategories,
+			appDescription,
+			appERC,
+			appLogo,
+			appName,
+			appTags,
+			catalogId,
+		},
+		dispatch,
+	] = useAppContext();
 
 	const handleLogoUpload = (files: FileList) => {
 		const file = files[0];
@@ -69,42 +85,58 @@ export function DefineAppProfilePage({
 			let categoryVocabId = 0;
 			let tagVocabId = 0;
 
-			vocabulariesResponse.items.forEach((vocab : { id : number; name : string; }) => {
-				if (vocab.name === "Marketplace Solution Category") {
-					categoryVocabId = vocab.id;
-				}
+			vocabulariesResponse.items.forEach(
+				(vocab: {id: number; name: string}) => {
+					if (vocab.name === 'Marketplace Solution Category') {
+						categoryVocabId = vocab.id;
+					}
 
-				if (vocab.name === "Marketplace Solution Tags") {
-					tagVocabId = vocab.id;
+					if (vocab.name === 'Marketplace Solution Tags') {
+						tagVocabId = vocab.id;
+					}
 				}
+			);
+
+			let categoriesList = await getCategories({
+				vocabId: categoryVocabId,
 			});
+			let tagsList = await getCategories({vocabId: tagVocabId});
 
-			let categoriesList = await getCategories({ vocabId: categoryVocabId });
-			let tagsList = await getCategories({ vocabId: tagVocabId });
-
-			categoriesList = categoriesList.items.map((category : { externalReferenceCode : string; id : number; name : string; }) => {
-				return {
-					checked: false,
-					externalReferenceCode: category.externalReferenceCode,
-					id: category.id,
-					label: category.name,
-					value: category.name,
+			categoriesList = categoriesList.items.map(
+				(category: {
+					externalReferenceCode: string;
+					id: number;
+					name: string;
+				}) => {
+					return {
+						checked: false,
+						externalReferenceCode: category.externalReferenceCode,
+						id: category.id,
+						label: category.name,
+						value: category.name,
+					};
 				}
-			})
+			);
 
-			tagsList = tagsList.items.map((tag : { externalReferenceCode : string; id : number; name : string; }) => {
-				return {
-					checked: false,
-					externalReferenceCode: tag.externalReferenceCode,
-					id: tag.id,
-					label: tag.name,
-					value: tag.name,
+			tagsList = tagsList.items.map(
+				(tag: {
+					externalReferenceCode: string;
+					id: number;
+					name: string;
+				}) => {
+					return {
+						checked: false,
+						externalReferenceCode: tag.externalReferenceCode,
+						id: tag.id,
+						label: tag.name,
+						value: tag.name,
+					};
 				}
-			})
+			);
 
 			setCategories(categoriesList);
 			setTags(tagsList);
-		}
+		};
 		getData();
 	}, []);
 
@@ -201,7 +233,9 @@ export function DefineAppProfilePage({
 			</div>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={!appCategories || !appDescription || !appName  || !appTags}
+				disableContinueButton={
+					!appCategories || !appDescription || !appName || !appTags
+				}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					let product;

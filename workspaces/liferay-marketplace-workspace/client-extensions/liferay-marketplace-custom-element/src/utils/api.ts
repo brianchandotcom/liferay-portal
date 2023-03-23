@@ -1,14 +1,14 @@
-declare let Liferay: {ThemeDisplay: any, authToken: string};
+declare let Liferay: {ThemeDisplay: any; authToken: string};
 const headers = {
 	'Content-Type': 'application/json',
 	'X-CSRF-Token': Liferay.authToken,
 };
 
 type Categories = {
-	externalReferenceCode: string,
-	id: number,
-	name: string,
-	vocabulary: string
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	vocabulary: string;
 };
 
 export function createApp({
@@ -212,7 +212,7 @@ export async function getCategories({vocabId}: {vocabId: number}) {
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabId}/taxonomy-categories`,
 		{
 			headers,
-			method: 'GET'
+			method: 'GET',
 		}
 	);
 
@@ -289,7 +289,7 @@ export async function getVocabularies() {
 		`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`,
 		{
 			headers,
-			method: 'GET'
+			method: 'GET',
 		}
 	);
 

@@ -1,6 +1,6 @@
 import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
 import {PublishedAppsDashboardPage} from './pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage';
-import { PurchasedAppsDashboardPage } from './pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
+import {PurchasedAppsDashboardPage} from './pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
 
 interface AppRoutesProps {
 	route: string;

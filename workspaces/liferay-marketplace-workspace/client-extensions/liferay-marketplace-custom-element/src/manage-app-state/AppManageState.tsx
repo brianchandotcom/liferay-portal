@@ -4,10 +4,10 @@ import {UploadedFile} from '../components/FileList/FileList';
 import {TAction, appReducer} from './reducer';
 
 type Categories = {
-	externalReferenceCode: string,
-	id: number,
-	name: string,
-	vocabulary: string
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	vocabulary: string;
 };
 
 type Specification = {
@@ -30,7 +30,7 @@ export interface InitialStateProps {
 	appNotes: Specification;
 	appProductId: number;
 	appStorefrontImages: UploadedFile[];
-	appTags: Categories[],
+	appTags: Categories[];
 	appType: Specification;
 	appUsageTermsURL: Specification;
 	appVersion: Specification;

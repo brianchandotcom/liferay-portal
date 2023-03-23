@@ -245,7 +245,7 @@ export async function getProductImages({appProductId}: {appProductId: number}) {
 
 export async function getProducts() {
 	const response = await fetch(
-		`/o/headless-commerce-admin-catalog/v1.0/products`,
+		`/o/headless-commerce-admin-catalog/v1.0/products?pageSize=-1`,
 		{
 			headers,
 			method: 'GET',

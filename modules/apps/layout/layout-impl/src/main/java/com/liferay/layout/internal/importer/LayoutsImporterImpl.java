@@ -65,6 +65,9 @@ import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConve
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
@@ -120,7 +123,10 @@ import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -221,6 +227,20 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return _importPageElement(
 			consumer, layout, layoutStructure, parentItemId, pageElementJSON,
 			position, segmentsExperienceId);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, LayoutStructureItemImporter.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext,
+				LayoutStructureItemImporter::getPageElementType));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private void _deleteExistingPortletPreferences(long plid) {
@@ -1369,8 +1389,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		throws Exception {
 
 		LayoutStructureItemImporter layoutStructureItemImporter =
-			_layoutStructureItemImporterRegistry.getLayoutStructureItemImporter(
-				pageElement.getType());
+			_serviceTrackerMap.getService(pageElement.getType());
 
 		LayoutStructureItem layoutStructureItem = null;
 
@@ -1698,10 +1717,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private List<LayoutsImporterResultEntry> _layoutsImporterResultEntries;
 
 	@Reference
-	private LayoutStructureItemImporterRegistry
-		_layoutStructureItemImporterRegistry;
-
-	@Reference
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
 
@@ -1719,6 +1734,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	private ServiceTrackerMap<PageElement.Type, LayoutStructureItemImporter>
+		_serviceTrackerMap;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

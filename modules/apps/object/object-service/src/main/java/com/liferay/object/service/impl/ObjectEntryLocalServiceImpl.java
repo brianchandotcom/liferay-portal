@@ -509,7 +509,7 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public Map<Object, Long> getAggregationCounts(
-			long objectDefinitionId, String aggregationTerm,
+			long groupId, long objectDefinitionId, String aggregationTerm,
 			Predicate predicate, int start, int end)
 		throws PortalException {
 

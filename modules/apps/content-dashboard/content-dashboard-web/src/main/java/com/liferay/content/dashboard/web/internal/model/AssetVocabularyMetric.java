@@ -14,8 +14,10 @@
 
 package com.liferay.content.dashboard.web.internal.model;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -23,8 +25,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author David Arques
@@ -43,15 +43,16 @@ public class AssetVocabularyMetric {
 		String key, String name,
 		List<AssetCategoryMetric> assetCategoryMetrics) {
 
+		if (assetCategoryMetrics == null) {
+			_assetCategoryMetrics = Collections.emptyList();
+		}
+		else {
+			_assetCategoryMetrics = Collections.unmodifiableList(
+				assetCategoryMetrics);
+		}
+
 		_key = key;
 		_name = name;
-		_assetCategoryMetrics = Optional.ofNullable(
-			assetCategoryMetrics
-		).map(
-			Collections::unmodifiableList
-		).orElse(
-			Collections.emptyList()
-		);
 	}
 
 	@Override
@@ -96,21 +97,21 @@ public class AssetVocabularyMetric {
 			return Collections.emptyList();
 		}
 
-		Stream<AssetCategoryMetric> stream = _assetCategoryMetrics.stream();
+		for (AssetCategoryMetric assetCategoryMetric : _assetCategoryMetrics) {
+			AssetVocabularyMetric assetVocabularyMetric =
+				assetCategoryMetric.getAssetVocabularyMetric();
 
-		return stream.map(
-			AssetCategoryMetric::getAssetVocabularyMetric
-		).filter(
-			assetVocabularyMetric -> ListUtil.isNotEmpty(
-				assetVocabularyMetric.getAssetCategoryMetrics())
-		).findFirst(
-		).map(
-			AssetVocabularyMetric::getName
-		).map(
-			name -> Collections.unmodifiableList(Arrays.asList(_name, name))
-		).orElse(
-			Collections.singletonList(_name)
-		);
+			if (ListUtil.isEmpty(
+					assetVocabularyMetric.getAssetCategoryMetrics())) {
+
+				continue;
+			}
+
+			return Collections.unmodifiableList(
+				Arrays.asList(_name, assetVocabularyMetric.getName()));
+		}
+
+		return Collections.singletonList(_name);
 	}
 
 	@Override
@@ -119,12 +120,11 @@ public class AssetVocabularyMetric {
 	}
 
 	public JSONArray toJSONArray() {
-		Stream<AssetCategoryMetric> stream = _assetCategoryMetrics.stream();
-
 		return JSONUtil.putAll(
-			stream.map(
-				assetCategoryMetric -> assetCategoryMetric.toJSONObject(_name)
-			).toArray());
+			(Object[])TransformUtil.transformToArray(
+				_assetCategoryMetrics,
+				assetCategoryMetric -> assetCategoryMetric.toJSONObject(_name),
+				JSONObject.class));
 	}
 
 	private static final AssetVocabularyMetric _EMPTY =

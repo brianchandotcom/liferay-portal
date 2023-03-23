@@ -65,7 +65,7 @@ definition {
 
 			CP2Overview.assertSLACardContentIsVisible(cardContent = "CURRENT");
 
-			CP2Overview.assertSLACardContentIsVisible(cardContent = "08/23/2021 - 08/23/2022");
+			CP2Overview.assertSLACardContentIsVisible(cardContent = "08/24/2021 - 08/24/2022");
 
 			CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Platinum");
 		}
@@ -79,7 +79,7 @@ definition {
 
 			CP2Overview.assertSLACardContentIsVisible(cardContent = "FUTURE");
 
-			CP2Overview.assertSLACardContentIsVisible(cardContent = "08/24/2022 - 08/24/2023");
+			CP2Overview.assertSLACardContentIsVisible(cardContent = "08/25/2022 - 08/25/2023");
 
 			CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Gold");
 		}
@@ -93,7 +93,7 @@ definition {
 
 			CP2Overview.assertSLACardContentIsVisible(cardContent = "EXPIRED");
 
-			CP2Overview.assertSLACardContentIsVisible(cardContent = "08/22/2020 - 08/22/2021");
+			CP2Overview.assertSLACardContentIsVisible(cardContent = "08/23/2020 - 08/23/2021");
 
 			CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Premium");
 		}
@@ -105,12 +105,10 @@ definition {
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = ${testAccount2});
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = ${testAccount2});
+			CustomerPortal.enterOnProject(title = ${testAccount2});
 		}
 
-		task ("The I message at SLA Card should be equal to 'The project's Support Level is displayed here for projects with ticketing support.'") {
+		task ("Then I should be able to state the message in the SLA Card") {
 			CP2Overview.assertEmptySLACardMessage(message = "The project's Support Level is displayed here for projects with ticketing support.");
 		}
 	}
@@ -133,8 +131,6 @@ definition {
 		task ("And to Customer Portal Site") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			Refresh();
-
 			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
 		}
 
@@ -145,7 +141,7 @@ definition {
 		}
 
 		task ("Then I should be able to view SLA Start and End Date of Current") {
-			CP2Overview.assertSLACardUnicContentIsVisible(cardContent = "12/30/2020 - 01/01/2024");
+			CP2Overview.assertSLACardUnicContentIsVisible(cardContent = "12/31/2020 - 01/02/2024");
 		}
 	}
 

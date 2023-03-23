@@ -220,20 +220,19 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_styleBookName = "Styles from Theme",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Styles from Theme");
 
-			AssertClick(
-				key_text = "Change Style Book",
-				locator1 = "Button#ANY",
-				value1 = "Change Style Book");
+			Click(
+				ariaLabel = "Change Style Book",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			StyleBooks.selectStyleBook(styleBookName = "Test Style Book Name");
 
-			AssertElementPresent(
-				key_styleBookName = "Test Style Book Name",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
 
 			Button.clickSave();
 
@@ -291,20 +290,19 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_styleBookName = "Test Style Book Name",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
 
-			AssertClick(
-				key_text = "Change Style Book",
-				locator1 = "Button#ANY",
-				value1 = "Change Style Book");
+			Click(
+				ariaLabel = "Change Style Book",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			StyleBooks.selectStyleBook(styleBookName = "Styles from Theme");
 
-			AssertElementPresent(
-				key_styleBookName = "Styles from Theme",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Styles from Theme");
 
 			Button.clickSave();
 
@@ -417,20 +415,19 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertElementPresent(
-				key_styleBookName = "Styles from Theme",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Styles from Theme");
 
-			AssertClick(
-				key_text = "Change Style Book",
-				locator1 = "Button#ANY",
-				value1 = "Change Style Book");
+			Click(
+				ariaLabel = "Change Style Book",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			StyleBooks.selectStyleBook(styleBookName = "Test Style Book Name");
 
-			AssertElementPresent(
-				key_styleBookName = "Test Style Book Name",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
 
 			Button.clickSave();
 
@@ -454,20 +451,19 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertElementPresent(
-				key_styleBookName = "Test Style Book Name",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Test Style Book Name");
 
-			AssertClick(
-				key_text = "Change Style Book",
-				locator1 = "Button#ANY",
-				value1 = "Change Style Book");
+			Click(
+				ariaLabel = "Change Style Book",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			StyleBooks.selectStyleBook(styleBookName = "Styles from Theme");
 
-			AssertElementPresent(
-				key_styleBookName = "Styles from Theme",
-				locator1 = "PagesAdmin#STYLE_BOOK_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
+				value1 = "Styles from Theme");
 
 			Button.clickSave();
 

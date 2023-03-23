@@ -269,20 +269,19 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertNotVisible(
 				key_sectionTitle = "Theme",
@@ -293,8 +292,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Navigator.gotoBack();
 
@@ -322,32 +321,31 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertElementNotPresent(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Button.clickSave();
 
@@ -416,20 +414,19 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertNotVisible(
 				key_sectionTitle = "Theme",
@@ -440,8 +437,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Navigator.gotoBack();
 
@@ -479,32 +476,31 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertElementNotPresent(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Button.clickSave();
 
@@ -612,20 +608,19 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertNotVisible(
 				key_sectionTitle = "Theme",
@@ -636,8 +631,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Navigator.gotoBack();
 
@@ -670,32 +665,31 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertElementNotPresent(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Button.clickSave();
 
@@ -751,20 +745,19 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertNotVisible(
 				key_sectionTitle = "Theme",
@@ -775,8 +768,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -800,32 +793,31 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertElementNotPresent(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Button.clickSave();
 
@@ -898,20 +890,19 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertNotVisible(
 				key_sectionTitle = "Theme",
@@ -922,8 +913,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Navigator.gotoBack();
 
@@ -949,32 +940,31 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Blank",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertElementNotPresent(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			Button.clickSave();
 
@@ -1038,10 +1028,9 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
@@ -1312,10 +1301,9 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
 
@@ -1395,16 +1383,15 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
-			AssertClick(
-				key_text = "Change Master",
-				locator1 = "Button#ANY",
-				value1 = "Change Master");
+			Click(
+				ariaLabel = "Change Master",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(
-				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
 
 			Button.clickSave();
 
@@ -1467,8 +1454,8 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Click(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 
 			AssertClick(
 				locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
@@ -1552,8 +1539,8 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			Click(
-				key_text = "Edit Master",
-				locator1 = "Button#ANY");
+				ariaLabel = "Edit Master",
+				locator1 = "Link#ANY_WITH_ARIA_LABEL");
 		}
 
 		task ("View fragment and widget exist in page") {

@@ -2786,6 +2786,10 @@ public class JournalArticleLocalServiceWrapper
 			userId, article);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long groupId, java.util.List<Long> folderIds, java.util.Locale locale,
@@ -2820,7 +2824,9 @@ public class JournalArticleLocalServiceWrapper
 	 * @param end the upper bound of the range of web content articles to
 	 return (not inclusive)
 	 * @return the matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long groupId, long folderId, int status, int start, int end) {
@@ -2887,7 +2893,9 @@ public class JournalArticleLocalServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -2969,7 +2977,9 @@ public class JournalArticleLocalServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3052,7 +3062,9 @@ public class JournalArticleLocalServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3115,7 +3127,9 @@ public class JournalArticleLocalServiceWrapper
 	 * @param sort the field, type, and direction by which to sort (optionally
 	 <code>null</code>)
 	 * @return the matching web content articles ordered by <code>sort</code>
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3184,7 +3198,9 @@ public class JournalArticleLocalServiceWrapper
 	 * @param sort the field, type, and direction by which to sort (optionally
 	 <code>null</code>)
 	 * @return the matching web content articles ordered by <code>sort</code>
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3229,7 +3245,9 @@ public class JournalArticleLocalServiceWrapper
 	 return (not inclusive)
 	 * @return the matching web content articles
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 			long groupId, long userId, long creatorUserId, int status,
@@ -3270,7 +3288,9 @@ public class JournalArticleLocalServiceWrapper
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(long groupId, long folderId, int status) {
 		return _journalArticleLocalService.searchCount(
@@ -3316,7 +3336,9 @@ public class JournalArticleLocalServiceWrapper
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3376,7 +3398,9 @@ public class JournalArticleLocalServiceWrapper
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3439,7 +3463,9 @@ public class JournalArticleLocalServiceWrapper
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3507,7 +3533,9 @@ public class JournalArticleLocalServiceWrapper
 	 hits and an ordered range of all the matching web content
 	 articles ordered by <code>sort</code>
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<JournalArticle> searchJournalArticles(
@@ -3586,7 +3614,9 @@ public class JournalArticleLocalServiceWrapper
 	 hits and an ordered range of all the matching web content
 	 articles ordered by <code>sort</code>
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<JournalArticle> searchJournalArticles(
@@ -3643,7 +3673,9 @@ public class JournalArticleLocalServiceWrapper
 	 hits and an ordered range of all the matching web content
 	 articles ordered by <code>sort</code>
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<JournalArticle> searchJournalArticles(

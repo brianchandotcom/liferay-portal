@@ -2594,6 +2594,10 @@ public class JournalArticleLocalServiceUtil {
 		return getService().restoreArticleFromTrash(userId, article);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long groupId, List<Long> folderIds, java.util.Locale locale, int status,
 		int start, int end) {
@@ -2627,7 +2631,9 @@ public class JournalArticleLocalServiceUtil {
 	 * @param end the upper bound of the range of web content articles to
 	 return (not inclusive)
 	 * @return the matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long groupId, long folderId, int status, int start, int end) {
 
@@ -2692,7 +2698,9 @@ public class JournalArticleLocalServiceUtil {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
@@ -2772,7 +2780,9 @@ public class JournalArticleLocalServiceUtil {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -2852,7 +2862,9 @@ public class JournalArticleLocalServiceUtil {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -2912,7 +2924,9 @@ public class JournalArticleLocalServiceUtil {
 	 * @param sort the field, type, and direction by which to sort (optionally
 	 <code>null</code>)
 	 * @return the matching web content articles ordered by <code>sort</code>
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String ddmStructureKey, String ddmTemplateKey, String keywords,
@@ -2980,7 +2994,9 @@ public class JournalArticleLocalServiceUtil {
 	 * @param sort the field, type, and direction by which to sort (optionally
 	 <code>null</code>)
 	 * @return the matching web content articles ordered by <code>sort</code>
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, String title, String description, String content,
@@ -3023,7 +3039,9 @@ public class JournalArticleLocalServiceUtil {
 	 return (not inclusive)
 	 * @return the matching web content articles
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(
 			long groupId, long userId, long creatorUserId, int status,
 			int start, int end)
@@ -3061,7 +3079,9 @@ public class JournalArticleLocalServiceUtil {
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static int searchCount(long groupId, long folderId, int status) {
 		return getService().searchCount(groupId, folderId, status);
 	}
@@ -3105,7 +3125,9 @@ public class JournalArticleLocalServiceUtil {
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
@@ -3163,7 +3185,9 @@ public class JournalArticleLocalServiceUtil {
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -3224,7 +3248,9 @@ public class JournalArticleLocalServiceUtil {
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -3290,7 +3316,9 @@ public class JournalArticleLocalServiceUtil {
 	 hits and an ordered range of all the matching web content
 	 articles ordered by <code>sort</code>
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<JournalArticle> searchJournalArticles(
 				long companyId, long groupId, List<Long> folderIds,
@@ -3368,7 +3396,9 @@ public class JournalArticleLocalServiceUtil {
 	 hits and an ordered range of all the matching web content
 	 articles ordered by <code>sort</code>
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<JournalArticle> searchJournalArticles(
 				long companyId, long groupId, List<Long> folderIds,
@@ -3424,7 +3454,9 @@ public class JournalArticleLocalServiceUtil {
 	 hits and an ordered range of all the matching web content
 	 articles ordered by <code>sort</code>
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<JournalArticle> searchJournalArticles(
 				long groupId, long userId, long creatorUserId, int status,

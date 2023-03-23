@@ -1607,7 +1607,9 @@ public class JournalArticleServiceWrapper
 	 return (not inclusive)
 	 * @return the matching web content articles
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 			long groupId, long creatorUserId, int status, int start, int end)
@@ -1673,7 +1675,9 @@ public class JournalArticleServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -1752,7 +1756,9 @@ public class JournalArticleServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -1835,7 +1841,9 @@ public class JournalArticleServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -1893,7 +1901,9 @@ public class JournalArticleServiceWrapper
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -1953,7 +1963,9 @@ public class JournalArticleServiceWrapper
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -2016,7 +2028,9 @@ public class JournalArticleServiceWrapper
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,

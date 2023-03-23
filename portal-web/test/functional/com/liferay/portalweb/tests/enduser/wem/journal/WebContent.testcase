@@ -1794,6 +1794,8 @@ definition {
 
 		task ("Then there's warning message in pop up") {
 			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States) already exists in other sites or asset libraries.");
+
+			Alert.closeMessage(messageType = "WARNING");
 		}
 
 		task ("When go to view the web content ") {
@@ -1803,7 +1805,7 @@ definition {
 		task ("Then there's warning message inside Friendly URL section") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States) already exists in other sites or asset libraries.");
+				value1 = "Warning:The URL used in English (United States) already exists in other sites or asset libraries.");
 		}
 
 		task ("When publish the web content with three duplicated friendly URLs") {
@@ -1824,6 +1826,8 @@ definition {
 
 		task ("Then there's warning message in pop up") {
 			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China) and Japanese (Japan) already exists in other sites or asset libraries.");
+
+			Alert.closeMessage(messageType = "WARNING");
 		}
 
 		task ("When go to view the web content ") {
@@ -1833,7 +1837,7 @@ definition {
 		task ("Then there's warning message inside Friendly URL section") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China) and Japanese (Japan) already exists in other sites or asset libraries.");
+				value1 = "Warning:The URL used in English (United States), Chinese (China) and Japanese (Japan) already exists in other sites or asset libraries.");
 		}
 
 		task ("When publish the web content with four duplicated friendly URLs") {
@@ -1850,6 +1854,8 @@ definition {
 
 		task ("Then there's warning message in pop up") {
 			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Japanese (Japan) and 1 more translations already exist in other sites or asset libraries.");
+
+			Alert.closeMessage(messageType = "WARNING");
 		}
 
 		task ("When go to view the web content ") {
@@ -1859,7 +1865,7 @@ definition {
 		task ("Then there's warning message inside Friendly URL section") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Japanese (Japan) and 1 more translations already exist in other sites or asset libraries.");
+				value1 = "Warning:The URL used in English (United States), Chinese (China), Japanese (Japan) and 1 more translations already exist in other sites or asset libraries.");
 		}
 
 		task ("When publish the web content with five duplicated friendly URLs") {
@@ -1876,6 +1882,8 @@ definition {
 
 		task ("Then there's warning message in pop up") {
 			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Spanish (Spain) and 2 more translations already exist in other sites or asset libraries.");
+
+			Alert.closeMessage(messageType = "WARNING");
 		}
 
 		task ("When go to view the web content ") {
@@ -1885,7 +1893,7 @@ definition {
 		task ("Then there's warning message inside Friendly URL section") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Spanish (Spain) and 2 more translations already exist in other sites or asset libraries.");
+				value1 = "Warning:The URL used in English (United States), Chinese (China), Spanish (Spain) and 2 more translations already exist in other sites or asset libraries.");
 		}
 	}
 

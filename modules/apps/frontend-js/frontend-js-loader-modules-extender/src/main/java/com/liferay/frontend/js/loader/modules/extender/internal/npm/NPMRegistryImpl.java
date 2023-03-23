@@ -127,7 +127,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getJSModule(String identifier) {
-		Map<String, JSModule> jsModules = _jsModulesCache._jsModules;
+		Map<String, JSModule> jsModules = _jsModulesCache.jsModules;
 
 		return jsModules.get(identifier);
 	}
@@ -140,7 +140,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSPackage getJSPackage(String identifier) {
-		Map<String, JSPackage> jsPackages = _jsModulesCache._jsPackages;
+		Map<String, JSPackage> jsPackages = _jsModulesCache.jsPackages;
 
 		return jsPackages.get(identifier);
 	}
@@ -152,7 +152,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSPackage> getJSPackages() {
-		Map<String, JSPackage> jsPackages = _jsModulesCache._jsPackages;
+		Map<String, JSPackage> jsPackages = _jsModulesCache.jsPackages;
 
 		return jsPackages.values();
 	}
@@ -166,7 +166,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public JSModule getResolvedJSModule(String identifier) {
 		Map<String, JSModule> resolvedJSModules =
-			_jsModulesCache._resolvedJSModules;
+			_jsModulesCache.resolvedJSModules;
 
 		return resolvedJSModules.get(identifier);
 	}
@@ -179,7 +179,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSModule> getResolvedJSModules() {
 		Map<String, JSModule> resolvedJSModules =
-			_jsModulesCache._resolvedJSModules;
+			_jsModulesCache.resolvedJSModules;
 
 		return resolvedJSModules.values();
 	}
@@ -187,7 +187,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public JSPackage getResolvedJSPackage(String identifier) {
 		Map<String, JSPackage> resolvedJSPackages =
-			_jsModulesCache._resolvedJSPackages;
+			_jsModulesCache.resolvedJSPackages;
 
 		return resolvedJSPackages.get(identifier);
 	}
@@ -201,14 +201,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSPackage> getResolvedJSPackages() {
 		Map<String, JSPackage> resolvedJSPackages =
-			_jsModulesCache._resolvedJSPackages;
+			_jsModulesCache.resolvedJSPackages;
 
 		return resolvedJSPackages.values();
 	}
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		Map<String, String> exactMatchMap = _jsModulesCache._exactMatchMap;
+		Map<String, String> exactMatchMap = _jsModulesCache.exactMatchMap;
 
 		String mappedModuleName = exactMatchMap.get(moduleName);
 
@@ -274,10 +274,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 		Range range = Range.from(versionConstraints, true);
 
 		for (JSPackageVersion jsPackageVersion :
-				_jsModulesCache._jsPackageVersions) {
+				_jsModulesCache.jsPackageVersions) {
 
-			JSPackage innerJSPackage = jsPackageVersion._jsPackage;
-			Version version = jsPackageVersion._version;
+			JSPackage innerJSPackage = jsPackageVersion.jsPackage;
+			Version version = jsPackageVersion.version;
 
 			if (packageName.equals(innerJSPackage.getName()) &&
 				range.test(version)) {
@@ -301,6 +301,61 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public NPMRegistryUpdate update() {
 		return new NPMRegistryUpdateImpl(this);
+	}
+
+	public static class JSModulesCache {
+
+		public JSModulesCache() {
+			exactMatchMap = Collections.emptyMap();
+			jsModules = Collections.emptyMap();
+			jsPackages = Collections.emptyMap();
+			jsPackageVersions = Collections.emptyList();
+			resolvedJSModules = Collections.emptyMap();
+			resolvedJSPackages = Collections.emptyMap();
+		}
+
+		public JSModulesCache(
+			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,
+			Map<String, JSPackage> jsPackages,
+			List<JSPackageVersion> jsPackageVersions,
+			Map<String, JSModule> resolvedJSModules,
+			Map<String, JSPackage> resolvedJSPackages) {
+
+			this.exactMatchMap = Collections.unmodifiableMap(exactMatchMap);
+			this.jsModules = Collections.unmodifiableMap(jsModules);
+			this.jsPackages = Collections.unmodifiableMap(jsPackages);
+			this.jsPackageVersions = Collections.unmodifiableList(
+				jsPackageVersions);
+			this.resolvedJSModules = Collections.unmodifiableMap(
+				resolvedJSModules);
+			this.resolvedJSPackages = Collections.unmodifiableMap(
+				resolvedJSPackages);
+		}
+
+		public final Map<String, String> exactMatchMap;
+		public final Map<String, JSModule> jsModules;
+		public final Map<String, JSPackage> jsPackages;
+		public final List<JSPackageVersion> jsPackageVersions;
+		public final Map<String, JSModule> resolvedJSModules;
+		public final Map<String, JSPackage> resolvedJSPackages;
+
+	}
+
+	public class JSPackageVersion {
+
+		public JSPackageVersion(JSPackage jsPackage) {
+			this.jsPackage = jsPackage;
+
+			version = Version.from(jsPackage.getVersion(), true);
+		}
+
+		public Version getVersion() {
+			return version;
+		}
+
+		public final JSPackage jsPackage;
+		public final Version version;
+
 	}
 
 	@Activate
@@ -543,7 +598,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		Comparator<JSPackageVersion> comparator = Comparator.comparing(
-			JSPackageVersion::_getVersion);
+			JSPackageVersion::getVersion);
 
 		jsPackageVersions.sort(comparator.reversed());
 
@@ -594,60 +649,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		new ConcurrentHashMap<>();
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
-
-	private static class JSModulesCache {
-
-		private JSModulesCache() {
-			_exactMatchMap = Collections.emptyMap();
-			_jsModules = Collections.emptyMap();
-			_jsPackages = Collections.emptyMap();
-			_jsPackageVersions = Collections.emptyList();
-			_resolvedJSModules = Collections.emptyMap();
-			_resolvedJSPackages = Collections.emptyMap();
-		}
-
-		private JSModulesCache(
-			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,
-			Map<String, JSPackage> jsPackages,
-			List<JSPackageVersion> jsPackageVersions,
-			Map<String, JSModule> resolvedJSModules,
-			Map<String, JSPackage> resolvedJSPackages) {
-
-			_exactMatchMap = Collections.unmodifiableMap(exactMatchMap);
-			_jsModules = Collections.unmodifiableMap(jsModules);
-			_jsPackages = Collections.unmodifiableMap(jsPackages);
-			_jsPackageVersions = Collections.unmodifiableList(
-				jsPackageVersions);
-			_resolvedJSModules = Collections.unmodifiableMap(resolvedJSModules);
-			_resolvedJSPackages = Collections.unmodifiableMap(
-				resolvedJSPackages);
-		}
-
-		private final Map<String, String> _exactMatchMap;
-		private final Map<String, JSModule> _jsModules;
-		private final Map<String, JSPackage> _jsPackages;
-		private final List<JSPackageVersion> _jsPackageVersions;
-		private final Map<String, JSModule> _resolvedJSModules;
-		private final Map<String, JSPackage> _resolvedJSPackages;
-
-	}
-
-	private class JSPackageVersion {
-
-		private JSPackageVersion(JSPackage jsPackage) {
-			_jsPackage = jsPackage;
-
-			_version = Version.from(jsPackage.getVersion(), true);
-		}
-
-		private Version _getVersion() {
-			return _version;
-		}
-
-		private final JSPackage _jsPackage;
-		private final Version _version;
-
-	}
 
 	private class NPMRegistryBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<JSBundle> {

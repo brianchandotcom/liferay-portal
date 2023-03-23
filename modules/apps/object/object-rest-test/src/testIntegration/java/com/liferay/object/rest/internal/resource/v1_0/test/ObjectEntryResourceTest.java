@@ -25,8 +25,14 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -35,25 +41,48 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -61,12 +90,24 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.hamcrest.CoreMatchers;
 
@@ -78,6 +119,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Luis Miguel Barcos
@@ -2234,6 +2280,303 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithAuditEvents() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				Arrays.asList(
+					ListTypeEntryUtil.createListTypeEntry(
+						"listTypeEntryKey1",
+						Collections.singletonMap(
+							LocaleUtil.US, "List Type Entry Key 1")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"listTypeEntryKey2",
+						Collections.singletonMap(
+							LocaleUtil.US, "List Type Entry Key 2"))));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						"Author of Gospel", "authorOfGospel", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"Email Address", "emailAddress", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+						ObjectFieldConstants.DB_TYPE_DOUBLE, true, false, null,
+						"Height", "height", false),
+					ObjectFieldUtil.createObjectField(
+						listTypeDefinition.getListTypeDefinitionId(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"List Type Entry Key", "listTypeEntryKey", false,
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+						ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+						"Upload", "upload",
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								"acceptedFileExtensions"
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								"fileSource"
+							).value(
+								"userComputer"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								"maximumFileSize"
+							).value(
+								"100"
+							).build()),
+						false)));
+
+		objectDefinition.setEnableObjectEntryHistory(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.portal.security.audit.router.configuration." +
+						"PersistentAuditMessageProcessorConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
+
+			ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryLocalService.addObjectEntry(
+					TestPropsValues.getUserId(), 0,
+					objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"authorOfGospel", true
+					).put(
+						"emailAddress", "john@liferay.com"
+					).put(
+						"height", 110.1
+					).put(
+						"listTypeEntryKey", "listTypeEntryKey1"
+					).put(
+						"upload",
+						() -> {
+							FileEntry fileEntry = _addTempFileEntry(
+								objectDefinition, "Old Testament");
+
+							return fileEntry.getFileEntryId();
+						}
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			long objectEntryId = serviceBuilderObjectEntry.getObjectEntryId();
+
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId,
+				HashMapBuilder.<String, Serializable>put(
+					"authorOfGospel", false
+				).put(
+					"emailAddress", "peter@liferay.com"
+				).put(
+					"height", 120.2
+				).put(
+					"listTypeEntryKey", "listTypeEntryKey2"
+				).put(
+					"upload",
+					() -> {
+						FileEntry fileEntry = _addTempFileEntry(
+							objectDefinition, "New Testament");
+
+						return fileEntry.getFileEntryId();
+					}
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			User user = UserTestUtil.addUser();
+
+			PrincipalThreadLocal.setName(user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			// Add permissions to get object entry with audit events
+
+			_addModelResourcePermissions(
+				new String[] {
+					ActionKeys.VIEW, ObjectActionKeys.OBJECT_ENTRY_HISTORY
+				},
+				objectDefinition.getClassName(), objectEntryId,
+				user.getUserId());
+
+			// Get object entry with null contextUriInfo
+
+			ObjectEntryResource objectEntryResource = _getObjectEntryResource(
+				objectDefinition, user);
+
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+				objectEntryResource.getObjectEntry(objectEntryId);
+
+			Assert.assertNull(objectEntry.getAuditEvents());
+
+			// Get object entry with empty nestedFields parameter
+
+			objectEntryResource.setContextUriInfo(
+				_getContextUriInfo(StringPool.BLANK));
+
+			objectEntry = objectEntryResource.getObjectEntry(objectEntryId);
+
+			Assert.assertNull(objectEntry.getAuditEvents());
+
+			// Get object entry with auditEvents value in nestedFields parameter
+
+			objectEntryResource.setContextUriInfo(
+				_getContextUriInfo("auditEvents"));
+
+			objectEntry = objectEntryResource.getObjectEntry(objectEntryId);
+
+			JSONAssert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"auditFieldChanges",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"name", "authorOfGospel"
+							).put(
+								"newValue", true
+							),
+							JSONUtil.put(
+								"name", "emailAddress"
+							).put(
+								"newValue", "john@liferay.com"
+							),
+							JSONUtil.put(
+								"name", "height"
+							).put(
+								"newValue", 110.1
+							),
+							JSONUtil.put(
+								"name", "listTypeEntryKey"
+							).put(
+								"newValue",
+								JSONUtil.put(
+									"key", "listTypeEntryKey1"
+								).put(
+									"name", "List Type Entry Key 1"
+								)
+							),
+							JSONUtil.put(
+								"name", "upload"
+							).put(
+								"newValue",
+								JSONUtil.put("title", "Old Testament")
+							))
+					).put(
+						"eventType", "ADD"
+					),
+					JSONUtil.put(
+						"auditFieldChanges",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"name", "authorOfGospel"
+							).put(
+								"newValue", false
+							).put(
+								"oldValue", true
+							),
+							JSONUtil.put(
+								"name", "emailAddress"
+							).put(
+								"newValue", "peter@liferay.com"
+							).put(
+								"oldValue", "john@liferay.com"
+							),
+							JSONUtil.put(
+								"name", "height"
+							).put(
+								"newValue", 120.2
+							).put(
+								"oldValue", 110.1
+							),
+							JSONUtil.put(
+								"name", "listTypeEntryKey"
+							).put(
+								"newValue",
+								JSONUtil.put(
+									"key", "listTypeEntryKey2"
+								).put(
+									"name", "List Type Entry Key 2"
+								)
+							).put(
+								"oldValue",
+								JSONUtil.put(
+									"key", "listTypeEntryKey1"
+								).put(
+									"name", "List Type Entry Key 1"
+								)
+							),
+							JSONUtil.put(
+								"name", "upload"
+							).put(
+								"newValue",
+								JSONUtil.put("title", "New Testament")
+							).put(
+								"oldValue",
+								JSONUtil.put("title", "Old Testament")
+							))
+					).put(
+						"eventType", "UPDATE"
+					)
+				).toString(),
+				String.valueOf(
+					JSONFactoryUtil.createJSONArray(
+						JSONFactoryUtil.looseSerializeDeep(
+							objectEntry.getAuditEvents()))),
+				false);
+
+			// Get object entry without object entry history permission
+
+			_addModelResourcePermissions(
+				new String[] {ActionKeys.VIEW}, objectDefinition.getClassName(),
+				objectEntryId, user.getUserId());
+
+			objectEntry = objectEntryResource.getObjectEntry(objectEntryId);
+
+			Assert.assertNull(objectEntry.getAuditEvents());
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			listTypeDefinition);
+	}
+
+	@Test
 	public void testGetObjectEntryWithKeywords() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -3045,6 +3388,21 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
 	}
 
+	private void _addModelResourcePermissions(
+			String[] actionIds, String className, long objectEntryId,
+			long userId)
+		throws Exception {
+
+		_resourcePermissionLocalService.addModelResourcePermissions(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			userId, className, String.valueOf(objectEntryId),
+			ModelPermissionsFactory.create(
+				HashMapBuilder.put(
+					RoleConstants.USER, actionIds
+				).build(),
+				className));
+	}
+
 	private ObjectRelationship _addObjectRelationshipAndRelateObjectEntries(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, ObjectEntry objectEntry1,
@@ -3099,6 +3457,18 @@ public class ObjectEntryResourceTest {
 					taxonomyVocabularyId = RandomTestUtil.randomLong();
 				}
 			});
+	}
+
+	private FileEntry _addTempFileEntry(
+			ObjectDefinition objectDefinition, String title)
+		throws Exception {
+
+		return TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getPortletId(),
+			TempFileEntryUtil.getTempFileName(title + ".txt"),
+			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			ContentTypes.TEXT_PLAIN);
 	}
 
 	private void _assertFilteredObjectEntries(
@@ -3175,6 +3545,90 @@ public class ObjectEntryResourceTest {
 
 	private String _escape(String string) {
 		return URLCodec.encodeURL(string);
+	}
+
+	private UriInfo _getContextUriInfo(String nestedFields) {
+		return (UriInfo)ProxyUtil.newProxyInstance(
+			ObjectEntryResourceTest.class.getClassLoader(),
+			new Class<?>[] {UriInfo.class},
+			(proxy, method, arguments) -> {
+				if (Objects.equals(method.getName(), "getBaseUriBuilder")) {
+					return UriBuilder.fromPath(RandomTestUtil.randomString());
+				}
+				else if (Objects.equals(method.getName(), "getMatchedURIs")) {
+					return Arrays.asList(StringPool.BLANK);
+				}
+				else if (Objects.equals(
+							method.getName(), "getPathParameters")) {
+
+					return new MultivaluedHashMap<>();
+				}
+				else if (Objects.equals(
+							method.getName(), "getQueryParameters")) {
+
+					MultivaluedMap<String, String> multivaluedMap =
+						new MultivaluedHashMap<>();
+
+					multivaluedMap.add("nestedFields", nestedFields);
+
+					return multivaluedMap;
+				}
+
+				return null;
+			});
+	}
+
+	private ObjectEntryResource _getObjectEntryResource(
+			ObjectDefinition objectDefinition, User user)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(ObjectEntryResourceTest.class);
+
+		try (ServiceTrackerMap<String, ObjectEntryResource> serviceTrackerMap =
+				ServiceTrackerMapFactory.openSingleValueMap(
+					bundle.getBundleContext(), ObjectEntryResource.class,
+					"entity.class.name")) {
+
+			ObjectEntryResource objectEntryResource =
+				serviceTrackerMap.getService(
+					StringBundler.concat(
+						com.liferay.object.rest.dto.v1_0.ObjectEntry.class.
+							getName(),
+						StringPool.POUND, objectDefinition.getOSGiJaxRsName()));
+
+			objectEntryResource.setContextAcceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				});
+			objectEntryResource.setContextCompany(
+				_companyLocalService.getCompany(
+					objectDefinition.getCompanyId()));
+			objectEntryResource.setContextUser(user);
+
+			Class<?> clazz = objectEntryResource.getClass();
+
+			Method method = clazz.getMethod(
+				"setObjectDefinition", ObjectDefinition.class);
+
+			method.invoke(objectEntryResource, objectDefinition);
+
+			return objectEntryResource;
+		}
 	}
 
 	private void _postObjectEntryWithKeywords(String... keywords)
@@ -3333,6 +3787,12 @@ public class ObjectEntryResourceTest {
 	private static AssetVocabulary _assetVocabulary;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;
 	private ObjectDefinition _objectDefinition3;
@@ -3352,6 +3812,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	private ObjectDefinition _siteScopedObjectDefinition1;
 	private ObjectEntry _siteScopedObjectEntry1;

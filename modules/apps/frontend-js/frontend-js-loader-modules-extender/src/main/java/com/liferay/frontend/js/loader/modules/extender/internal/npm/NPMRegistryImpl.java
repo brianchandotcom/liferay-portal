@@ -112,9 +112,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 * @return the OSGi bundles
 	 */
 	public Collection<JSBundle> getJSBundles() {
-		Map<Bundle, JSBundle> map = _bundleTracker.getTracked();
+		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
-		return map.values();
+		return tracked.values();
 	}
 
 	/**
@@ -365,20 +365,21 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		if (jsConfigGeneratorPackages == null) {
-			Map<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
-				map = _serviceTracker.getTracked();
+			SortedMap
+				<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
+					tracked = _serviceTracker.getTracked();
 
-			jsConfigGeneratorPackages = map.values();
+			jsConfigGeneratorPackages = tracked.values();
 		}
 
 		Map<String, String> globalAliases = new HashMap<>();
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
 		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
-		Map<String, String> partialMatches = new HashMap<>();
+		Map<String, String> partialMatchMap = new HashMap<>();
 		Map<String, JSModule> resolvedJSModules = new HashMap<>();
 		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
-		Map<String, String> exactMatches = new HashMap<>();
+		Map<String, String> exactMatchMap = new HashMap<>();
 
 		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
 				jsConfigGeneratorPackages) {
@@ -387,7 +388,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 				jsConfigGeneratorPackage.getName() + StringPool.AT +
 					jsConfigGeneratorPackage.getVersion();
 
-			partialMatches.put(
+			partialMatchMap.put(
 				jsConfigGeneratorPackage.getName(),
 				jsConfigGeneratorPackageResolvedId);
 		}
@@ -405,7 +406,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 				resolvedJSPackages.put(resolvedId, jsPackage);
 
-				exactMatches.put(
+				exactMatchMap.put(
 					resolvedId,
 					ModuleNameUtil.getModuleResolvedId(
 						jsPackage, jsPackage.getMainModuleName()));
@@ -416,7 +417,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 					String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
 						jsPackage, jsModuleAlias.getAlias());
 
-					exactMatches.put(
+					exactMatchMap.put(
 						aliasResolvedId,
 						ModuleNameUtil.getModuleResolvedId(
 							jsPackage, jsModuleAlias.getModuleName()));
@@ -482,8 +483,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		jsPackageVersions.sort(comparator.reversed());
 
 		_npmRegistryStateSnapshotImpl = new NPMRegistryStateSnapshotImpl(
-			exactMatches, globalAliases, jsModules, jsPackages,
-			jsPackageVersions, partialMatches, resolvedJSModules,
+			exactMatchMap, globalAliases, jsModules, jsPackages,
+			jsPackageVersions, partialMatchMap, resolvedJSModules,
 			resolvedJSPackages);
 	}
 

@@ -6,7 +6,6 @@
 		<suppress checks="VariableNameCheck" files="portal-tools-bundle-support/src/main/java/com/liferay/portal/tools/bundle/support/maven/CreateTokenMojo\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="BNDBundleInformationCheck" files="client-extension-util-spring/bnd.bnd" />
 		<suppress checks="JavaDeprecatedJavadocCheck" files=".*" />
 		<suppress checks="JavaModuleTestCheck" files="pmd/src/test/java/com/liferay/pmd/rules/junit/AssertFailJUnitRuleTest\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="css-builder/src/main/java/com/liferay/css/builder/maven/BuildCSSMojo\.java" />

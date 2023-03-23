@@ -101,9 +101,7 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.format(
 						_dlRequestHelper.getRequest(), "new-x",
-						LanguageUtil.get(
-							_dlRequestHelper.getRequest(), "metadata-set"),
-						false));
+						"metadata-set"));
 			}
 		).build();
 	}

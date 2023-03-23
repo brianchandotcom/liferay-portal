@@ -74,10 +74,7 @@ public class DLViewFileEntryTypesDisplayContext {
 						PortalUtil.getCurrentURL(_httpServletRequest));
 					dropdownItem.setLabel(
 						LanguageUtil.format(
-							_httpServletRequest, "new-x",
-							LanguageUtil.get(
-								_httpServletRequest, "document-type"),
-							false));
+							_httpServletRequest, "new-x", "document-type"));
 				}
 			).build();
 		}

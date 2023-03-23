@@ -67,6 +67,23 @@ definition {
 		Click(locator1 = "ObjectField#MODAL_CLOSE_BUTTON");
 	}
 
+	macro editFormulaField {
+		ObjectField.typeLabel(content = ${newContent});
+
+		Click(
+			key_filterLabel = "Output",
+			locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+
+		Click(
+			key_dropdownItem = ${newTypeFormula},
+			locator1 = "ObjectField#SELECT_FORMULA_FIELD_OPTION");
+
+		Type(
+			key_text = "Formula Builder",
+			locator1 = "TextInput#ANY",
+			value1 = ${formulaScript});
+	}
+
 	macro save {
 		Click(locator1 = "ObjectField#SAVE_BUTTON");
 

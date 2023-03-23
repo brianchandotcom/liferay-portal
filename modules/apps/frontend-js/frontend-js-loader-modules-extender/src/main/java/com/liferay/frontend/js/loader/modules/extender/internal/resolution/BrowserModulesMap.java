@@ -16,7 +16,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.adapter.JSBrowserModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,23 +28,22 @@ public class BrowserModulesMap {
 
 	public BrowserModulesMap(
 		BrowserModulesResolution browserModulesResolution,
-		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
+		NPMRegistry npmRegistry) {
 
 		_browserModulesResolution = browserModulesResolution;
-		_npmRegistryStateSnapshot = npmRegistryStateSnapshot;
+		_npmRegistry = npmRegistry;
 	}
 
 	public JSBrowserModule get(String resolvedModuleId) {
 		JSBrowserModule jsBrowserModule = _map.get(resolvedModuleId);
 
 		if (jsBrowserModule == null) {
-			JSModule jsModule = _npmRegistryStateSnapshot.getResolvedJSModule(
+			JSModule jsModule = _npmRegistry.getResolvedJSModule(
 				resolvedModuleId);
 
 			if (jsModule != null) {
 				jsBrowserModule = new JSBrowserModule(
-					_browserModulesResolution, jsModule,
-					_npmRegistryStateSnapshot);
+					_browserModulesResolution, jsModule, _npmRegistry);
 
 				_map.put(jsBrowserModule.getName(), jsBrowserModule);
 			}
@@ -55,6 +54,6 @@ public class BrowserModulesMap {
 
 	private final BrowserModulesResolution _browserModulesResolution;
 	private final Map<String, JSBrowserModule> _map = new HashMap<>();
-	private final NPMRegistryStateSnapshot _npmRegistryStateSnapshot;
+	private final NPMRegistry _npmRegistry;
 
 }

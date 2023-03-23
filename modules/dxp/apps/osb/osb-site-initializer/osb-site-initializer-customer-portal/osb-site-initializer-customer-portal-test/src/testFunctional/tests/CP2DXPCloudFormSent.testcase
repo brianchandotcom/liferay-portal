@@ -29,6 +29,16 @@ definition {
 
 			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 	}
 
 	tearDown {
@@ -56,42 +66,26 @@ definition {
 	@description = "Automation ID: LPS-149144 | Test Summary: Verify if after a user submits the DXP Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
 	@priority = 4
 	test CanViewAUsefulMessage {
-		task ("Change the user role in the project") {
-			Account.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = ${testAccount});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to Customer Portal Site") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+		task ("Given that I go to the card activation page") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
-		}
 
-		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
-		}
 
-		task ("And I go through onboarding") {
 			CP2Utils.onboardingFlow();
-		}
 
-		task ("Then I click on the LXC - SM product") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("Then I open a new browser tab and send the card activation form") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		task ("And I open a new tab, go to the Set up modal, fill out the whole form and send it") {
+			Open.openInTheNewTab(locator1 = "http://localhost:8080/web/customer-portal-site");
 
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			WaitForPageLoad();
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 
@@ -117,7 +111,7 @@ definition {
 		}
 
 		task ("Then I assert that the form has already been sent") {
-			CustomerPortal.viewConfirmationModal(text = "Another user already submitted the LXC - SM activation request.");
+			CustomerPortal.viewConfirmationModal(modalText = "Another user already submitted the LXC - SM activation request.");
 
 			CustomerPortal.clickAtButton(text = "Done");
 		}

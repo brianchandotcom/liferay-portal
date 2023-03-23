@@ -821,7 +821,7 @@ definition {
 	}
 
 	macro viewConfirmationModal {
-		var key_text = ${text};
+		var key_text = ${modalText};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}

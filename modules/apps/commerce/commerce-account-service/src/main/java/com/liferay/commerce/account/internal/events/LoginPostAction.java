@@ -15,7 +15,7 @@
 package com.liferay.commerce.account.internal.events;
 
 import com.liferay.commerce.account.configuration.CommerceAccountServiceConfiguration;
-import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -49,7 +49,7 @@ public class LoginPostAction extends Action {
 			if (commerceAccountServiceConfiguration.
 					applyDefaultRoleToExistingUsers()) {
 
-				_commerceAccountUserRelLocalService.addDefaultRoles(
+				_commerceAccountHelper.addDefaultRoles(
 					_portal.getUserId(httpServletRequest));
 			}
 		}
@@ -62,8 +62,7 @@ public class LoginPostAction extends Action {
 		LoginPostAction.class);
 
 	@Reference
-	private CommerceAccountUserRelLocalService
-		_commerceAccountUserRelLocalService;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

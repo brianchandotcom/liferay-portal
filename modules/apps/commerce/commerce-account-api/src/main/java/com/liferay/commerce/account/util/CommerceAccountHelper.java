@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.account.util;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,9 +28,24 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface CommerceAccountHelper {
 
+	public AccountEntryUserRel addAccountEntryUserRel(
+			long commerceAccountId, long commerceAccountUserId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void addAccountEntryUserRels(
+			long accountEntryId, long[] userIds, String[] emailAddresses,
+			long[] roleIds, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void addDefaultRoles(long userId) throws PortalException;
+
 	public int countUserCommerceAccounts(
 			long userId, long commerceChannelGroupId)
 		throws PortalException;
+
+	public String[] getAccountEntryTypes(long commerceChannelGroupId)
+		throws ConfigurationException;
 
 	public String getAccountManagementPortletURL(
 			HttpServletRequest httpServletRequest)
@@ -35,11 +53,10 @@ public interface CommerceAccountHelper {
 
 	public long[] getCommerceAccountGroupIds(long commerceAccountId);
 
-	public CommerceAccount getCurrentCommerceAccount(
-			HttpServletRequest httpServletRequest)
-		throws PortalException;
+	public int getCommerceSiteType(long commerceChannelGroupId)
+		throws ConfigurationException;
 
-	public CommerceAccount getCurrentCommerceAccount(
+	public AccountEntry getCurrentAccountEntry(
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException;
 
@@ -51,5 +68,7 @@ public interface CommerceAccountHelper {
 			HttpServletRequest httpServletRequest, long groupId,
 			long commerceAccountId)
 		throws PortalException;
+
+	public String[] toAccountEntryTypes(int commerceSiteType);
 
 }

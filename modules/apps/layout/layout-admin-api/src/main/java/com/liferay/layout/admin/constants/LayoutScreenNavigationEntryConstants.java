@@ -25,4 +25,7 @@ public class LayoutScreenNavigationEntryConstants {
 
 	public static final String SCREEN_NAVIGATION_KEY_LAYOUT = "layout.form";
 
+	public static final String SCREEN_NAVIGATION_KEY_LAYOUT_SET =
+		"layout.set.form";
+
 }

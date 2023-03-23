@@ -668,6 +668,20 @@ public class LayoutsAdminDisplayContext {
 		).buildPortletURL();
 	}
 
+	public PortletURL getLayoutSetScreenNavigationPortletURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout_set"
+		).setBackURL(
+			getBackURL()
+		).setPortletResource(
+			ParamUtil.getString(httpServletRequest, "portletResource")
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).buildPortletURL();
+	}
+
 	public SearchContainer<Layout> getLayoutsSearchContainer()
 		throws PortalException {
 

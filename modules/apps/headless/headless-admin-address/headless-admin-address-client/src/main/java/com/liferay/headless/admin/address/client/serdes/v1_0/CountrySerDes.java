@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -433,14 +432,18 @@ public class CountrySerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "regions")) {
 				if (jsonParserFieldValue != null) {
-					country.setRegions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RegionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Region[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Region[] regionsArray =
+						new Region[jsonParserFieldValues.length];
+
+					for (int i = 0; i < regionsArray.length; i++) {
+						regionsArray[i] = RegionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					country.setRegions(regionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAllowed")) {

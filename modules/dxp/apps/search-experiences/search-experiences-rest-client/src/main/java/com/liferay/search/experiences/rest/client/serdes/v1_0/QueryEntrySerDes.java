@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -214,14 +213,18 @@ public class QueryEntrySerDes {
 
 			if (Objects.equals(jsonParserFieldName, "clauses")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setClauses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ClauseSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Clause[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Clause[] clausesArray =
+						new Clause[jsonParserFieldValues.length];
+
+					for (int i = 0; i < clausesArray.length; i++) {
+						clausesArray[i] = ClauseSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					queryEntry.setClauses(clausesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "condition")) {
@@ -237,26 +240,34 @@ public class QueryEntrySerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "postFilterClauses")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setPostFilterClauses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ClauseSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Clause[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Clause[] postFilterClausesArray =
+						new Clause[jsonParserFieldValues.length];
+
+					for (int i = 0; i < postFilterClausesArray.length; i++) {
+						postFilterClausesArray[i] = ClauseSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					queryEntry.setPostFilterClauses(postFilterClausesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "rescores")) {
 				if (jsonParserFieldValue != null) {
-					queryEntry.setRescores(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RescoreSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Rescore[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Rescore[] rescoresArray =
+						new Rescore[jsonParserFieldValues.length];
+
+					for (int i = 0; i < rescoresArray.length; i++) {
+						rescoresArray[i] = RescoreSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					queryEntry.setRescores(rescoresArray);
 				}
 			}
 		}

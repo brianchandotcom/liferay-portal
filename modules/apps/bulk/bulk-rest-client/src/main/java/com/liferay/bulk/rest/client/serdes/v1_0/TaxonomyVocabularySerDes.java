@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -232,15 +231,20 @@ public class TaxonomyVocabularySerDes {
 						jsonParserFieldName, "taxonomyCategories")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TaxonomyCategory[] taxonomyCategoriesArray =
+						new TaxonomyCategory[jsonParserFieldValues.length];
+
+					for (int i = 0; i < taxonomyCategoriesArray.length; i++) {
+						taxonomyCategoriesArray[i] =
+							TaxonomyCategorySerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					taxonomyVocabulary.setTaxonomyCategories(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new TaxonomyCategory[size]
-						));
+						taxonomyCategoriesArray);
 				}
 			}
 			else if (Objects.equals(

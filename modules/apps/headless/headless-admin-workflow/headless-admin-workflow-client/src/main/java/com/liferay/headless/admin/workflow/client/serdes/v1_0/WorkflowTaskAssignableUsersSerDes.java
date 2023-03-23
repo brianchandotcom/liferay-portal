@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -152,15 +151,24 @@ public class WorkflowTaskAssignableUsersSerDes {
 					jsonParserFieldName, "workflowTaskAssignableUsers")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					WorkflowTaskAssignableUser[]
+						workflowTaskAssignableUsersArray =
+							new WorkflowTaskAssignableUser
+								[jsonParserFieldValues.length];
+
+					for (int i = 0; i < workflowTaskAssignableUsersArray.length;
+						 i++) {
+
+						workflowTaskAssignableUsersArray[i] =
+							WorkflowTaskAssignableUserSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					workflowTaskAssignableUsers.setWorkflowTaskAssignableUsers(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WorkflowTaskAssignableUserSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new WorkflowTaskAssignableUser[size]
-						));
+						workflowTaskAssignableUsersArray);
 				}
 			}
 		}

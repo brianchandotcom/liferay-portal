@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -512,14 +511,18 @@ public class TermSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "termOrderType")) {
 				if (jsonParserFieldValue != null) {
-					term.setTermOrderType(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TermOrderTypeSerDes.toDTO((String)object)
-						).toArray(
-							size -> new TermOrderType[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TermOrderType[] termOrderTypeArray =
+						new TermOrderType[jsonParserFieldValues.length];
+
+					for (int i = 0; i < termOrderTypeArray.length; i++) {
+						termOrderTypeArray[i] = TermOrderTypeSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					term.setTermOrderType(termOrderTypeArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

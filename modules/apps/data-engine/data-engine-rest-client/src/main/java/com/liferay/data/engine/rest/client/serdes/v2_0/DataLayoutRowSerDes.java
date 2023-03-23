@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -131,15 +130,19 @@ public class DataLayoutRowSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "dataLayoutColumns")) {
 				if (jsonParserFieldValue != null) {
-					dataLayoutRow.setDataLayoutColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataLayoutColumnSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataLayoutColumn[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					DataLayoutColumn[] dataLayoutColumnsArray =
+						new DataLayoutColumn[jsonParserFieldValues.length];
+
+					for (int i = 0; i < dataLayoutColumnsArray.length; i++) {
+						dataLayoutColumnsArray[i] =
+							DataLayoutColumnSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					dataLayoutRow.setDataLayoutColumns(dataLayoutColumnsArray);
 				}
 			}
 		}

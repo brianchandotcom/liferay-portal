@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -461,14 +460,18 @@ public class WorkflowTaskSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "assigneeRoles")) {
 				if (jsonParserFieldValue != null) {
-					workflowTask.setAssigneeRoles(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RoleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Role[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Role[] assigneeRolesArray =
+						new Role[jsonParserFieldValues.length];
+
+					for (int i = 0; i < assigneeRolesArray.length; i++) {
+						assigneeRolesArray[i] = RoleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					workflowTask.setAssigneeRoles(assigneeRolesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "completed")) {

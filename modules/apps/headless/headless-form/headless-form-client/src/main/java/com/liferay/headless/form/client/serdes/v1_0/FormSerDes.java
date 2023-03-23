@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -487,14 +486,18 @@ public class FormSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "formRecords")) {
 				if (jsonParserFieldValue != null) {
-					form.setFormRecords(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormRecordSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FormRecord[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					FormRecord[] formRecordsArray =
+						new FormRecord[jsonParserFieldValues.length];
+
+					for (int i = 0; i < formRecordsArray.length; i++) {
+						formRecordsArray[i] = FormRecordSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					form.setFormRecords(formRecordsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formRecordsIds")) {

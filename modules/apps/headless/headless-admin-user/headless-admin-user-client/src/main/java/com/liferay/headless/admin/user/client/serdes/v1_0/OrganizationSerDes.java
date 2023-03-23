@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -585,14 +584,18 @@ public class OrganizationSerDes {
 						jsonParserFieldName, "childOrganizations")) {
 
 				if (jsonParserFieldValue != null) {
-					organization.setChildOrganizations(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OrganizationSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Organization[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Organization[] childOrganizationsArray =
+						new Organization[jsonParserFieldValues.length];
+
+					for (int i = 0; i < childOrganizationsArray.length; i++) {
+						childOrganizationsArray[i] = OrganizationSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setChildOrganizations(childOrganizationsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "comment")) {
@@ -602,14 +605,18 @@ public class OrganizationSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
-					organization.setCustomFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomField[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CustomField[] customFieldsArray =
+						new CustomField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customFieldsArray.length; i++) {
+						customFieldsArray[i] = CustomFieldSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -683,14 +690,19 @@ public class OrganizationSerDes {
 						jsonParserFieldName, "organizationAccounts")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Account[] organizationAccountsArray =
+						new Account[jsonParserFieldValues.length];
+
+					for (int i = 0; i < organizationAccountsArray.length; i++) {
+						organizationAccountsArray[i] = AccountSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
 					organization.setOrganizationAccounts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AccountSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Account[size]
-						));
+						organizationAccountsArray);
 				}
 			}
 			else if (Objects.equals(
@@ -713,26 +725,34 @@ public class OrganizationSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "services")) {
 				if (jsonParserFieldValue != null) {
-					organization.setServices(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ServiceSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Service[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Service[] servicesArray =
+						new Service[jsonParserFieldValues.length];
+
+					for (int i = 0; i < servicesArray.length; i++) {
+						servicesArray[i] = ServiceSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setServices(servicesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {
 				if (jsonParserFieldValue != null) {
-					organization.setUserAccounts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> UserAccountSerDes.toDTO((String)object)
-						).toArray(
-							size -> new UserAccount[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserAccount[] userAccountsArray =
+						new UserAccount[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userAccountsArray.length; i++) {
+						userAccountsArray[i] = UserAccountSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setUserAccounts(userAccountsArray);
 				}
 			}
 		}

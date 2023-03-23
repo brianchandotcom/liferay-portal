@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -586,28 +585,39 @@ public class PlacedOrderItemSerDes {
 						jsonParserFieldName, "placedOrderItemShipments")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PlacedOrderItemShipment[] placedOrderItemShipmentsArray =
+						new PlacedOrderItemShipment
+							[jsonParserFieldValues.length];
+
+					for (int i = 0; i < placedOrderItemShipmentsArray.length;
+						 i++) {
+
+						placedOrderItemShipmentsArray[i] =
+							PlacedOrderItemShipmentSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					placedOrderItem.setPlacedOrderItemShipments(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PlacedOrderItemShipmentSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PlacedOrderItemShipment[size]
-						));
+						placedOrderItemShipmentsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "placedOrderItems")) {
 				if (jsonParserFieldValue != null) {
-					placedOrderItem.setPlacedOrderItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PlacedOrderItemSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PlacedOrderItem[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PlacedOrderItem[] placedOrderItemsArray =
+						new PlacedOrderItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < placedOrderItemsArray.length; i++) {
+						placedOrderItemsArray[i] = PlacedOrderItemSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					placedOrderItem.setPlacedOrderItems(placedOrderItemsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "price")) {

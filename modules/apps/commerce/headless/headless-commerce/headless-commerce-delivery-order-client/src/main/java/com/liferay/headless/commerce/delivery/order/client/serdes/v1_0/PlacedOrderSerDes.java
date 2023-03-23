@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -1030,28 +1029,36 @@ public class PlacedOrderSerDes {
 						jsonParserFieldName, "placedOrderComments")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PlacedOrderComment[] placedOrderCommentsArray =
+						new PlacedOrderComment[jsonParserFieldValues.length];
+
+					for (int i = 0; i < placedOrderCommentsArray.length; i++) {
+						placedOrderCommentsArray[i] =
+							PlacedOrderCommentSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					placedOrder.setPlacedOrderComments(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PlacedOrderCommentSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PlacedOrderComment[size]
-						));
+						placedOrderCommentsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "placedOrderItems")) {
 				if (jsonParserFieldValue != null) {
-					placedOrder.setPlacedOrderItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PlacedOrderItemSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PlacedOrderItem[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PlacedOrderItem[] placedOrderItemsArray =
+						new PlacedOrderItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < placedOrderItemsArray.length; i++) {
+						placedOrderItemsArray[i] = PlacedOrderItemSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					placedOrder.setPlacedOrderItems(placedOrderItemsArray);
 				}
 			}
 			else if (Objects.equals(

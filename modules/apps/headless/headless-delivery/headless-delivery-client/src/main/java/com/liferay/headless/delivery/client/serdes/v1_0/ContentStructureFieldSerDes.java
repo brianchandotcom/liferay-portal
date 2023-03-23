@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -460,27 +459,38 @@ public class ContentStructureFieldSerDes {
 						jsonParserFieldName, "nestedContentStructureFields")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ContentStructureField[] nestedContentStructureFieldsArray =
+						new ContentStructureField[jsonParserFieldValues.length];
+
+					for (int i = 0;
+						 i < nestedContentStructureFieldsArray.length; i++) {
+
+						nestedContentStructureFieldsArray[i] =
+							ContentStructureFieldSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					contentStructureField.setNestedContentStructureFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContentStructureFieldSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ContentStructureField[size]
-						));
+						nestedContentStructureFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "options")) {
 				if (jsonParserFieldValue != null) {
-					contentStructureField.setOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Option[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Option[] optionsArray =
+						new Option[jsonParserFieldValues.length];
+
+					for (int i = 0; i < optionsArray.length; i++) {
+						optionsArray[i] = OptionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contentStructureField.setOptions(optionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "predefinedValue")) {

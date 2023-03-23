@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -445,14 +444,17 @@ public class WorkflowDefinitionSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "nodes")) {
 				if (jsonParserFieldValue != null) {
-					workflowDefinition.setNodes(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> NodeSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Node[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Node[] nodesArray = new Node[jsonParserFieldValues.length];
+
+					for (int i = 0; i < nodesArray.length; i++) {
+						nodesArray[i] = NodeSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					workflowDefinition.setNodes(nodesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -469,14 +471,18 @@ public class WorkflowDefinitionSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "transitions")) {
 				if (jsonParserFieldValue != null) {
-					workflowDefinition.setTransitions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TransitionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Transition[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Transition[] transitionsArray =
+						new Transition[jsonParserFieldValues.length];
+
+					for (int i = 0; i < transitionsArray.length; i++) {
+						transitionsArray[i] = TransitionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					workflowDefinition.setTransitions(transitionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "version")) {

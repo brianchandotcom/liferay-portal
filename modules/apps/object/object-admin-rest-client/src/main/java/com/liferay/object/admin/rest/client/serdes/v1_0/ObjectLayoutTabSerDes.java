@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -214,15 +213,19 @@ public class ObjectLayoutTabSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectLayoutBoxes")) {
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ObjectLayoutBox[] objectLayoutBoxesArray =
+						new ObjectLayoutBox[jsonParserFieldValues.length];
+
+					for (int i = 0; i < objectLayoutBoxesArray.length; i++) {
+						objectLayoutBoxesArray[i] = ObjectLayoutBoxSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
 					objectLayoutTab.setObjectLayoutBoxes(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ObjectLayoutBoxSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectLayoutBox[size]
-						));
+						objectLayoutBoxesArray);
 				}
 			}
 			else if (Objects.equals(

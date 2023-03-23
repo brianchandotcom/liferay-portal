@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -233,14 +232,18 @@ public class ChannelSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "dataSources")) {
 				if (jsonParserFieldValue != null) {
-					channel.setDataSources(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataSourceSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataSource[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					DataSource[] dataSourcesArray =
+						new DataSource[jsonParserFieldValues.length];
+
+					for (int i = 0; i < dataSourcesArray.length; i++) {
+						dataSourcesArray[i] = DataSourceSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					channel.setDataSources(dataSourcesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

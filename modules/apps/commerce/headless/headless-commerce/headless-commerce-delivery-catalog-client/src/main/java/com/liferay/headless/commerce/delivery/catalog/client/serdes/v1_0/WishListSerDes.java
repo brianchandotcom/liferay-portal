@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -195,14 +194,18 @@ public class WishListSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "wishListItems")) {
 				if (jsonParserFieldValue != null) {
-					wishList.setWishListItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WishListItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new WishListItem[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					WishListItem[] wishListItemsArray =
+						new WishListItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < wishListItemsArray.length; i++) {
+						wishListItemsArray[i] = WishListItemSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					wishList.setWishListItems(wishListItemsArray);
 				}
 			}
 		}

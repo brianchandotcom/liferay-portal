@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -483,15 +482,22 @@ public class DataDefinitionFieldSerDes {
 						jsonParserFieldName, "nestedDataDefinitionFields")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					DataDefinitionField[] nestedDataDefinitionFieldsArray =
+						new DataDefinitionField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < nestedDataDefinitionFieldsArray.length;
+						 i++) {
+
+						nestedDataDefinitionFieldsArray[i] =
+							DataDefinitionFieldSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					dataDefinitionField.setNestedDataDefinitionFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataDefinitionFieldSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataDefinitionField[size]
-						));
+						nestedDataDefinitionFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {

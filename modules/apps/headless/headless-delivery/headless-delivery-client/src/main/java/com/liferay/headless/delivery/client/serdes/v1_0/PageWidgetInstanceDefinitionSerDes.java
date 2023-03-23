@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -326,15 +325,20 @@ public class PageWidgetInstanceDefinitionSerDes {
 						jsonParserFieldName, "customCSSViewports")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CustomCSSViewport[] customCSSViewportsArray =
+						new CustomCSSViewport[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customCSSViewportsArray.length; i++) {
+						customCSSViewportsArray[i] =
+							CustomCSSViewportSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					pageWidgetInstanceDefinition.setCustomCSSViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomCSSViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new CustomCSSViewport[size]
-						));
+						customCSSViewportsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
@@ -346,15 +350,20 @@ public class PageWidgetInstanceDefinitionSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					FragmentViewport[] fragmentViewportsArray =
+						new FragmentViewport[jsonParserFieldValues.length];
+
+					for (int i = 0; i < fragmentViewportsArray.length; i++) {
+						fragmentViewportsArray[i] =
+							FragmentViewportSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					pageWidgetInstanceDefinition.setFragmentViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FragmentViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FragmentViewport[size]
-						));
+						fragmentViewportsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

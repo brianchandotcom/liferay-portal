@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -457,14 +456,18 @@ public class CartItemSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "cartItems")) {
 				if (jsonParserFieldValue != null) {
-					cartItem.setCartItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CartItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CartItem[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CartItem[] cartItemsArray =
+						new CartItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < cartItemsArray.length; i++) {
+						cartItemsArray[i] = CartItemSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					cartItem.setCartItems(cartItemsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

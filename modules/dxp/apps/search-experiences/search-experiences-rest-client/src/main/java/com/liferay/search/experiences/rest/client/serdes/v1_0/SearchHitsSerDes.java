@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -157,14 +156,17 @@ public class SearchHitsSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "hits")) {
 				if (jsonParserFieldValue != null) {
-					searchHits.setHits(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> HitSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Hit[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Hit[] hitsArray = new Hit[jsonParserFieldValues.length];
+
+					for (int i = 0; i < hitsArray.length; i++) {
+						hitsArray[i] = HitSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					searchHits.setHits(hitsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "maxScore")) {

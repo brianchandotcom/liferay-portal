@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -123,13 +122,13 @@ public abstract class BaseJSONParser<T> {
 
 		Object[] objects = (Object[])_readValue();
 
-		return Stream.of(
-			objects
-		).map(
-			object -> parseToDTO((String)object)
-		).toArray(
-			size -> createDTOArray(size)
-		);
+		T[] dtos = createDTOArray(objects.length);
+
+		for (int i = 0; i < dtos.length; i++) {
+			dtos[i] = parseToDTO((String)objects[i]);
+		}
+
+		return dtos;
 	}
 
 	public Map<String, Object> parseToMap(String json) {
@@ -202,33 +201,33 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	protected Date[] toDates(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			object -> toDate((String)object)
-		).toArray(
-			size -> new Date[size]
-		);
+		Date[] dates = new Date[objects.length];
+
+		for (int i = 0; i < dates.length; i++) {
+			dates[i] = toDate((String)objects[i]);
+		}
+
+		return dates;
 	}
 
 	protected Integer[] toIntegers(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			object -> Integer.valueOf(object.toString())
-		).toArray(
-			size -> new Integer[size]
-		);
+		Integer[] integers = new Integer[objects.length];
+
+		for (int i = 0; i < integers.length; i++) {
+			integers[i] = Integer.valueOf(objects[i].toString());
+		}
+
+		return integers;
 	}
 
 	protected Long[] toLongs(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			object -> Long.valueOf(object.toString())
-		).toArray(
-			size -> new Long[size]
-		);
+		Long[] longs = new Long[objects.length];
+
+		for (int i = 0; i < longs.length; i++) {
+			longs[i] = Long.valueOf(objects[i].toString());
+		}
+
+		return longs;
 	}
 
 	protected String toString(Date date) {
@@ -236,13 +235,13 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	protected String[] toStrings(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			String.class::cast
-		).toArray(
-			size -> new String[size]
-		);
+		String[] strings = new String[objects.length];
+
+		for (int i = 0; i < strings.length; i++) {
+			strings[i] = (String)objects[i];
+		}
+
+		return strings;
 	}
 
 	private void _assertLastChar(char c) {

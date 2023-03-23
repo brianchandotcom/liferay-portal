@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -143,14 +142,18 @@ public class PauseNodeKeysSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "nodeKeys")) {
 				if (jsonParserFieldValue != null) {
-					pauseNodeKeys.setNodeKeys(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> NodeKeySerDes.toDTO((String)object)
-						).toArray(
-							size -> new NodeKey[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					NodeKey[] nodeKeysArray =
+						new NodeKey[jsonParserFieldValues.length];
+
+					for (int i = 0; i < nodeKeysArray.length; i++) {
+						nodeKeysArray[i] = NodeKeySerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					pauseNodeKeys.setNodeKeys(nodeKeysArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

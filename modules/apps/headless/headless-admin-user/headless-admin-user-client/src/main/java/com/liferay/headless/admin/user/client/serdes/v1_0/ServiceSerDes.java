@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -144,14 +143,18 @@ public class ServiceSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "hoursAvailable")) {
 				if (jsonParserFieldValue != null) {
-					service.setHoursAvailable(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> HoursAvailableSerDes.toDTO((String)object)
-						).toArray(
-							size -> new HoursAvailable[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					HoursAvailable[] hoursAvailableArray =
+						new HoursAvailable[jsonParserFieldValues.length];
+
+					for (int i = 0; i < hoursAvailableArray.length; i++) {
+						hoursAvailableArray[i] = HoursAvailableSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					service.setHoursAvailable(hoursAvailableArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "serviceType")) {

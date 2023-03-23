@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -204,14 +203,18 @@ public class AccountBriefSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
 				if (jsonParserFieldValue != null) {
-					accountBrief.setRoleBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RoleBriefSerDes.toDTO((String)object)
-						).toArray(
-							size -> new RoleBrief[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					RoleBrief[] roleBriefsArray =
+						new RoleBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < roleBriefsArray.length; i++) {
+						roleBriefsArray[i] = RoleBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					accountBrief.setRoleBriefs(roleBriefsArray);
 				}
 			}
 		}

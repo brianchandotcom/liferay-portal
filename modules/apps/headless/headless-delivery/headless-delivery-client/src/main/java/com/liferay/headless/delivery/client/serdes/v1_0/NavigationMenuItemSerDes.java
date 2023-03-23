@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -534,15 +533,20 @@ public class NavigationMenuItemSerDes {
 						jsonParserFieldName, "navigationMenuItems")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					NavigationMenuItem[] navigationMenuItemsArray =
+						new NavigationMenuItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < navigationMenuItemsArray.length; i++) {
+						navigationMenuItemsArray[i] =
+							NavigationMenuItemSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					navigationMenuItem.setNavigationMenuItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> NavigationMenuItemSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new NavigationMenuItem[size]
-						));
+						navigationMenuItemsArray);
 				}
 			}
 			else if (Objects.equals(

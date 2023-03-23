@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -176,14 +175,18 @@ public class PageElementSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {
 				if (jsonParserFieldValue != null) {
-					pageElement.setPageElements(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PageElementSerDes.toDTO((String)object)
-						).toArray(
-							size -> new PageElement[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PageElement[] pageElementsArray =
+						new PageElement[jsonParserFieldValues.length];
+
+					for (int i = 0; i < pageElementsArray.length; i++) {
+						pageElementsArray[i] = PageElementSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					pageElement.setPageElements(pageElementsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

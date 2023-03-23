@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -166,15 +165,18 @@ public class GridSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "columns")) {
 				if (jsonParserFieldValue != null) {
-					grid.setColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldOptionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FormFieldOption[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					FormFieldOption[] columnsArray =
+						new FormFieldOption[jsonParserFieldValues.length];
+
+					for (int i = 0; i < columnsArray.length; i++) {
+						columnsArray[i] = FormFieldOptionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					grid.setColumns(columnsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -184,15 +186,18 @@ public class GridSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "rows")) {
 				if (jsonParserFieldValue != null) {
-					grid.setRows(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldOptionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FormFieldOption[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					FormFieldOption[] rowsArray =
+						new FormFieldOption[jsonParserFieldValues.length];
+
+					for (int i = 0; i < rowsArray.length; i++) {
+						rowsArray[i] = FormFieldOptionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					grid.setRows(rowsArray);
 				}
 			}
 		}

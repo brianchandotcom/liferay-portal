@@ -16,6 +16,7 @@ package com.liferay.commerce.product.subscription.type.web.internal;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.util.CPSubscriptionType;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -76,6 +77,22 @@ public class DailyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties) {
 
 		return new Date();
+	}
+
+	@Override
+	public UnicodeProperties validateDeliverySubscriptionTypeSettingsProperties(
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
+	public UnicodeProperties validateSubscriptionTypeSettingsProperties(
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return null;
 	}
 
 	@Reference

@@ -49,7 +49,6 @@ import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountOrderType;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProduct;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProductGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountRule;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.DiscountDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.odata.entity.v2_0.DiscountEntityModel;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountAccountUtil;
@@ -71,6 +70,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -639,8 +639,10 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 	@Reference
 	private CProductLocalService _cProductLocalService;
 
-	@Reference
-	private DiscountDTOConverter _discountDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.DiscountDTOConverter)"
+	)
+	private DTOConverter<CommerceDiscount, Discount> _discountDTOConverter;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

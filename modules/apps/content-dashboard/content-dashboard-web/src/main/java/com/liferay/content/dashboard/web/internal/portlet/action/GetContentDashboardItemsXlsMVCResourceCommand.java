@@ -137,6 +137,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		WorkbookBuilder workbookBuilder) {
 
 		workbookBuilder.cell(
+			String.valueOf(contentDashboardItem.getId())
+		).cell(
 			contentDashboardItem.getTitle(locale)
 		).cell(
 			contentDashboardItem.getUserName()
@@ -205,6 +207,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 	private void _addWorkbookHeaders(WorkbookBuilder workbookBuilder) {
 		workbookBuilder.localizedCell(
+			"id"
+		).localizedCell(
 			"title"
 		).localizedCell(
 			"author"

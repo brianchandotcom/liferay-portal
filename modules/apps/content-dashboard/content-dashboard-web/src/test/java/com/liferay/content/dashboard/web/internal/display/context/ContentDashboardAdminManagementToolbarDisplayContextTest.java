@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageImpl;
@@ -39,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -383,23 +383,18 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					new MockLiferayPortletActionResponse(), LocaleUtil.US,
 					Mockito.mock(UserLocalService.class));
 
-		List<LabelItem> labelItems =
-			contentDashboardAdminManagementToolbarDisplayContext.
-				getFilterLabelItems();
-
-		Stream<LabelItem> stream = labelItems.stream();
-
 		Assert.assertEquals(
 			2,
-			stream.filter(
+			ListUtil.count(
+				contentDashboardAdminManagementToolbarDisplayContext.
+					getFilterLabelItems(),
 				labelItem ->
 					Objects.equals(
 						labelItem.get("label"),
 						"contentDashboardItemFilterParameterLabel: value1") ||
 					Objects.equals(
 						labelItem.get("label"),
-						"contentDashboardItemFilterParameterLabel: value2")
-			).count());
+						"contentDashboardItemFilterParameterLabel: value2")));
 	}
 
 }

@@ -1129,8 +1129,6 @@ definition {
 	@description = "This test ensures it's not possible to edit a fieldset inside a field group on a structure."
 	@priority = 4
 	test VerifyNestedFieldsetEditionOnStructure {
-		property portal.upstream = "quarantine";
-
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(

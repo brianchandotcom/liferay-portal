@@ -71,6 +71,14 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			(CommercePricingClass)baseModel);
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _commercePricingClassLocalService.
+			fetchCommercePricingClassByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

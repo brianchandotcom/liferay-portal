@@ -70,6 +70,13 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 			(CPDefinition)baseModel);
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _cProductLocalService.fetchCProductByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

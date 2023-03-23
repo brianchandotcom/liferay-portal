@@ -72,6 +72,14 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 			(CommerceOrder)baseModel);
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _commerceOrderLocalService.
+			fetchCommerceOrderByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

@@ -61,6 +61,13 @@ public class AddressSystemObjectDefinitionMetadata
 		return _addressLocalService.deleteAddress((Address)baseModel);
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _addressLocalService.fetchAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

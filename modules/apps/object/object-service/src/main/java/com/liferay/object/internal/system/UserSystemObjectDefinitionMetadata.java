@@ -71,6 +71,13 @@ public class UserSystemObjectDefinitionMetadata
 		return _userLocalService.deleteUser((User)baseModel);
 	}
 
+	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _userLocalService.fetchUserByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	@Override
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

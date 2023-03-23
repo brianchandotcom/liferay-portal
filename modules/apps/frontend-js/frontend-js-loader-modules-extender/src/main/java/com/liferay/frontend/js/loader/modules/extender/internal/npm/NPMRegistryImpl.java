@@ -583,10 +583,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
 
-	private volatile JSModulesCache _jsModulesCache = new JSModulesCache(
-		Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(),
-		Collections.emptyList(), Collections.emptyMap(),
-		Collections.emptyMap());
+	private volatile JSModulesCache _jsModulesCache = new JSModulesCache();
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -599,6 +596,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_serviceTracker;
 
 	private static class JSModulesCache {
+
+		private JSModulesCache() {
+			_exactMatchMap = Collections.emptyMap();
+			_jsModules = Collections.emptyMap();
+			_jsPackages = Collections.emptyMap();
+			_jsPackageVersions = Collections.emptyList();
+			_resolvedJSModules = Collections.emptyMap();
+			_resolvedJSPackages = Collections.emptyMap();
+		}
 
 		private JSModulesCache(
 			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,

@@ -502,7 +502,13 @@ public class PoshiContext {
 				}
 			}
 
-			properties.remove("test.class.method.name");
+			if (!properties.containsKey("test.liferay.virtual.instance") ||
+				Boolean.parseBoolean(
+					(String)properties.get("test.liferay.virtual.instance"))) {
+
+				properties.remove("test.class.method.name");
+			}
+
 			properties.remove("test.class.name");
 
 			multimap.put(properties, classCommandName);

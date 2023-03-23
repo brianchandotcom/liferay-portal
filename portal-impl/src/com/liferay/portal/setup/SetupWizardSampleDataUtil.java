@@ -159,7 +159,9 @@ public class SetupWizardSampleDataUtil {
 		}
 
 		User adminUser = UserLocalServiceUtil.fetchUserByEmailAddress(
-			company.getCompanyId(), emailAddress);
+			company.getCompanyId(),
+			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT +
+				company.getMx());
 
 		if (adminUser != null) {
 			FullNameGenerator fullNameGenerator =

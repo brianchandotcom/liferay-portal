@@ -1,5 +1,14 @@
 definition {
 
+	macro assertTheDatesAndStatusOfTheCard {
+		WaitForPageLoad();
+
+		AssertElementPresent(
+				key_date = ${dates},
+				key_status = ${status},
+				locator1 = "CustomerPortalSite#CARD_DATE");
+	}
+
 	macro changeTheStatusToDisplayCards {
 		var key_status = ${status};
 

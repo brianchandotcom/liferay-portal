@@ -16,8 +16,8 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModifiableJSPackage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author Iván Zaera
  */
-public class FlatJSPackage implements JSPackage {
+public class FlatJSPackage implements ModifiableJSPackage {
 
 	/**
 	 * Constructs a <code>FlatJSPackage</code> with the package's bundle, name,
@@ -66,6 +66,7 @@ public class FlatJSPackage implements JSPackage {
 	 *
 	 * @param jsModule the NPM module
 	 */
+	@Override
 	public void addJSModule(JSModule jsModule) {
 		if (jsModule.getJSPackage() != this) {
 			throw new IllegalArgumentException(
@@ -179,6 +180,29 @@ public class FlatJSPackage implements JSPackage {
 	@Override
 	public String getVersion() {
 		return _version;
+	}
+
+	@Override
+	public void removeJSModule(JSModule jsModule) {
+		if (jsModule.getJSPackage() != this) {
+			throw new IllegalArgumentException(
+				"The given JS module does not belong to this JS package");
+		}
+
+		_jsModules.remove(jsModule.getName());
+	}
+
+	@Override
+	public void replaceJSModule(JSModule jsModule) {
+		if (jsModule.getJSPackage() != this) {
+			throw new IllegalArgumentException(
+				"The given JS module does not belong to this JS package");
+		}
+
+		if (_jsModules.replace(jsModule.getName(), jsModule) == null) {
+			throw new IllegalArgumentException(
+				"No JS module with the same name exists");
+		}
 	}
 
 	@Override

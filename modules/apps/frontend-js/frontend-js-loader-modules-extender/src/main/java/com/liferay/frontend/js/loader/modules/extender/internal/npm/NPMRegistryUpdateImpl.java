@@ -14,18 +14,13 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModifiableJSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Iván Zaera
@@ -45,55 +40,44 @@ public class NPMRegistryUpdateImpl implements NPMRegistryUpdate {
 		_npmRegistryImpl.finishUpdate(this);
 	}
 
-	public Collection<JSModuleRegistration> getJSModuleRegistrations(
-		JSPackage jsPackage) {
-
-		Collection<JSModuleRegistration> jsModuleRegistrations =
-			_jsModuleRegistrationsMap.get(jsPackage.getId());
-
-		if (jsModuleRegistrations == null) {
-			return Collections.emptyList();
-		}
-
-		return jsModuleRegistrations;
-	}
-
-	public JSModuleUpdate getJSModuleUpdate(String id) {
-		return _jsModuleUpdates.get(id);
-	}
-
-	public boolean isUnregistered(String id) {
-		return _jsModuleUnregistrations.contains(id);
-	}
-
 	@Override
-	public void registerJSModule(
+	public JSModule registerJSModule(
 		JSPackage jsPackage, String moduleName, Collection<String> dependencies,
 		String js, String map) {
 
 		_failIfFinished();
 
-		String id = ModuleNameUtil.getModuleId(jsPackage, moduleName);
-
-		Collection<JSModuleRegistration> jsModuleRegistrations =
-			_jsModuleRegistrationsMap.get(jsPackage.getId());
-
-		if (jsModuleRegistrations == null) {
-			jsModuleRegistrations = new ArrayList<>();
-
-			_jsModuleRegistrationsMap.put(
-				jsPackage.getId(), jsModuleRegistrations);
+		if (!(jsPackage instanceof ModifiableJSPackage)) {
+			throw new IllegalArgumentException(
+				"Invalid JS package type " + jsPackage.getClass());
 		}
 
-		jsModuleRegistrations.add(
-			new JSModuleRegistration(id, moduleName, dependencies, js, map));
+		ModifiableJSPackage modifiableJSPackage =
+			(ModifiableJSPackage)jsPackage;
+
+		JSModule jsModule = new DynamicJSModule(
+			modifiableJSPackage, moduleName, dependencies, js, map);
+
+		modifiableJSPackage.addJSModule(jsModule);
+
+		return jsModule;
 	}
 
 	@Override
 	public void unregisterJSModule(JSModule jsModule) {
 		_failIfFinished();
 
-		_jsModuleUnregistrations.add(jsModule.getId());
+		JSPackage jsPackage = jsModule.getJSPackage();
+
+		if (!(jsPackage instanceof ModifiableJSPackage)) {
+			throw new IllegalArgumentException(
+				"Invalid JS package type " + jsPackage.getClass());
+		}
+
+		ModifiableJSPackage modifiableJSPackage =
+			(ModifiableJSPackage)jsPackage;
+
+		modifiableJSPackage.removeJSModule(jsModule);
 	}
 
 	@Override
@@ -103,85 +87,20 @@ public class NPMRegistryUpdateImpl implements NPMRegistryUpdate {
 
 		_failIfFinished();
 
-		_jsModuleUpdates.put(
-			jsModule.getId(),
-			new JSModuleUpdate(jsModule.getName(), dependencies, js, map));
-	}
+		JSPackage jsPackage = jsModule.getJSPackage();
 
-	public static class JSModuleRegistration {
-
-		public JSModuleRegistration(
-			String id, String moduleName, Collection<String> dependencies,
-			String js, String map) {
-
-			_id = id;
-			_moduleName = moduleName;
-			_dependencies = new ArrayList<>(dependencies);
-			_js = js;
-			_map = map;
+		if (!(jsPackage instanceof ModifiableJSPackage)) {
+			throw new IllegalArgumentException(
+				"Invalid JS package type " + jsPackage.getClass());
 		}
 
-		public Collection<String> getDependencies() {
-			return _dependencies;
-		}
+		ModifiableJSPackage modifiableJSPackage =
+			(ModifiableJSPackage)jsPackage;
 
-		public String getId() {
-			return _id;
-		}
-
-		public String getJS() {
-			return _js;
-		}
-
-		public String getMap() {
-			return _map;
-		}
-
-		public String getModuleName() {
-			return _moduleName;
-		}
-
-		private final Collection<String> _dependencies;
-		private final String _id;
-		private final String _js;
-		private final String _map;
-		private final String _moduleName;
-
-	}
-
-	public static class JSModuleUpdate {
-
-		public JSModuleUpdate(
-			String moduleName, Collection<String> dependencies, String js,
-			String map) {
-
-			_moduleName = moduleName;
-			_dependencies = new ArrayList<>(dependencies);
-			_js = js;
-			_map = map;
-		}
-
-		public Collection<String> getDependencies() {
-			return _dependencies;
-		}
-
-		public String getJS() {
-			return _js;
-		}
-
-		public String getMap() {
-			return _map;
-		}
-
-		public String getModuleName() {
-			return _moduleName;
-		}
-
-		private Collection<String> _dependencies;
-		private String _js;
-		private String _map;
-		private String _moduleName;
-
+		modifiableJSPackage.replaceJSModule(
+			new DynamicJSModule(
+				modifiableJSPackage, jsModule.getName(), dependencies, js,
+				map));
 	}
 
 	private synchronized void _failIfFinished() {
@@ -191,11 +110,6 @@ public class NPMRegistryUpdateImpl implements NPMRegistryUpdate {
 	}
 
 	private boolean _finished;
-	private final Map<String, Collection<JSModuleRegistration>>
-		_jsModuleRegistrationsMap = new HashMap<>();
-	private final Set<String> _jsModuleUnregistrations = new HashSet<>();
-	private final Map<String, JSModuleUpdate> _jsModuleUpdates =
-		new HashMap<>();
 	private final NPMRegistryImpl _npmRegistryImpl;
 
 }

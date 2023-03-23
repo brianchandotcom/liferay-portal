@@ -86,17 +86,8 @@ public class JSModulesCache implements NPMRegistryStateSnapshot {
 		return _jsPackages;
 	}
 
-	@Override
-	public JSModule getResolvedJSModule(String identifier) {
-		return _resolvedJSModules.get(identifier);
-	}
-
 	public Map<String, JSModule> getResolvedJSModules() {
 		return _resolvedJSModules;
-	}
-
-	public JSPackage getResolvedJSPackage(String identifier) {
-		return _resolvedJSPackages.get(identifier);
 	}
 
 	public Map<String, JSPackage> getResolvedJSPackages() {

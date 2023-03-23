@@ -172,7 +172,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getResolvedJSModule(String identifier) {
-		return _jsModulesCache.getResolvedJSModule(identifier);
+		Map<String, JSModule> resolvedJSModules =
+			_jsModulesCache.getResolvedJSModules();
+
+		return resolvedJSModules.get(identifier);
 	}
 
 	/**
@@ -190,7 +193,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override
 	public JSPackage getResolvedJSPackage(String identifier) {
-		return _jsModulesCache.getResolvedJSPackage(identifier);
+		Map<String, JSPackage> resolvedJSPackages =
+			_jsModulesCache.getResolvedJSPackages();
+
+		return resolvedJSPackages.get(identifier);
 	}
 
 	/**

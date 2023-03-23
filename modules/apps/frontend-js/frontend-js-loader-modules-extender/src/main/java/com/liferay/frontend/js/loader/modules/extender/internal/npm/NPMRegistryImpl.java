@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.github.yuchi.semver.Range;
+
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -56,6 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
@@ -261,7 +265,49 @@ public class NPMRegistryImpl implements NPMRegistry {
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 
-		return _jsModulesCache.resolveJSPackageDependency(jsPackageDependency);
+		String packageName = jsPackageDependency.getPackageName();
+		String versionConstraints = jsPackageDependency.getVersionConstraints();
+
+		String cacheKey = StringBundler.concat(
+			packageName, StringPool.UNDERLINE, versionConstraints);
+
+		ConcurrentHashMap<String, JSPackage> cachedDependencyJSPackages =
+			_jsModulesCache.getCachedDependencyJSPackages();
+
+		JSPackage jsPackage = cachedDependencyJSPackages.get(cacheKey);
+
+		if (jsPackage != null) {
+			if (jsPackage == _NULL_JS_PACKAGE) {
+				return null;
+			}
+
+			return jsPackage;
+		}
+
+		Range range = Range.from(versionConstraints, true);
+
+		for (JSPackageVersion jsPackageVersion :
+				_jsModulesCache.getJSPackageVersions()) {
+
+			JSPackage innerJSPackage = jsPackageVersion.getJSPackage();
+
+			if (packageName.equals(innerJSPackage.getName()) &&
+				range.test(jsPackageVersion.getVersion())) {
+
+				jsPackage = innerJSPackage;
+
+				break;
+			}
+		}
+
+		if (jsPackage == null) {
+			cachedDependencyJSPackages.put(cacheKey, _NULL_JS_PACKAGE);
+		}
+		else {
+			cachedDependencyJSPackages.put(cacheKey, jsPackage);
+		}
+
+		return jsPackage;
 	}
 
 	@Override
@@ -499,6 +545,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 			}
 		}
 	}
+
+	private static final JSPackage _NULL_JS_PACKAGE =
+		ProxyFactory.newDummyInstance(JSPackage.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NPMRegistryImpl.class);

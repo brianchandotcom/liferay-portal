@@ -68,8 +68,7 @@ public class LanguageResources {
 			return overrideValue;
 		}
 
-		MapHolder mapHolder = _mapHolders.computeIfAbsent(
-			locale, MapHolder::new);
+		MapHolder mapHolder = _getMapHolder(locale);
 
 		Map<String, String> languageMap = mapHolder.getMap();
 
@@ -120,6 +119,25 @@ public class LanguageResources {
 		}
 
 		_mapHolders.clear();
+	}
+
+	private static MapHolder _getMapHolder(Locale locale) {
+		MapHolder mapHolder = _mapHolders.get(locale);
+
+		if (mapHolder == null) {
+			mapHolder = new MapHolder(locale);
+
+			MapHolder previousMapHolder = _mapHolders.putIfAbsent(
+				locale, mapHolder);
+
+			if (previousMapHolder != null) {
+				mapHolder.close();
+
+				mapHolder = previousMapHolder;
+			}
+		}
+
+		return mapHolder;
 	}
 
 	private static String _getOverrideValue(String key, Locale locale) {
@@ -215,8 +233,7 @@ public class LanguageResources {
 
 		@Override
 		public Enumeration<String> getKeys() {
-			MapHolder mapHolder = _mapHolders.computeIfAbsent(
-				_locale, MapHolder::new);
+			MapHolder mapHolder = _getMapHolder(_locale);
 
 			Map<String, String> languageMap = mapHolder.getMap();
 
@@ -244,8 +261,7 @@ public class LanguageResources {
 				return overrideValue;
 			}
 
-			MapHolder mapHolder = _mapHolders.computeIfAbsent(
-				_locale, MapHolder::new);
+			MapHolder mapHolder = _getMapHolder(_locale);
 
 			Map<String, String> languageMap = mapHolder.getMap();
 
@@ -254,8 +270,7 @@ public class LanguageResources {
 
 		@Override
 		protected Set<String> handleKeySet() {
-			MapHolder mapHolder = _mapHolders.computeIfAbsent(
-				_locale, MapHolder::new);
+			MapHolder mapHolder = _getMapHolder(_locale);
 
 			Map<String, String> languageMap = mapHolder.getMap();
 

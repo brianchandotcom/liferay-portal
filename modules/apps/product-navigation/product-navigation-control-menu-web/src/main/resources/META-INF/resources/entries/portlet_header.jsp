@@ -18,8 +18,60 @@
 
 <%
 String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_TITLE);
+
+Group group = layout.getGroup();
+
+Group liveGroup = group;
+
+boolean inStaging = false;
+
+if (group.isControlPanel()) {
+	long doAsGroupId = ParamUtil.getLong(request, "doAsGroupId");
+
+	if (doAsGroupId > 0) {
+		try {
+			liveGroup = GroupLocalServiceUtil.getGroup(doAsGroupId);
+
+			if (liveGroup.isStagingGroup()) {
+				liveGroup = liveGroup.getLiveGroup();
+
+				inStaging = true;
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+}
+else if (group.isStagingGroup()) {
+	liveGroup = group.getLiveGroup();
+
+	inStaging = true;
+}
 %>
 
 <div class="control-menu-nav-item control-menu-nav-item-content">
 	<h1 class="control-menu-level-1-heading mb-0 text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></h1>
+
+	<c:if test="<%= liveGroup.isStaged() && !liveGroup.isStagedPortlet(portletDisplay.getRootPortletId()) %>">
+		<c:choose>
+			<c:when test="<%= !liveGroup.isStagedRemotely() && inStaging %>">
+				<span class="align-items-center lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-portlet-is-not-staged-local-alert") %>">
+					<clay:icon
+						aria-label='<%= LanguageUtil.get(request, "this-portlet-is-not-staged-local-alert") %>'
+						cssClass="ml-3 mt-0"
+						symbol="warning-full"
+					/>
+				</span>
+			</c:when>
+			<c:when test="<%= liveGroup.isStagedRemotely() && themeDisplay.isSignedIn() %>">
+				<span class="align-items-center lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-portlet-is-not-staged-remote-alert") %>">
+					<clay:icon
+						aria-label='<%= LanguageUtil.get(request, "this-portlet-is-not-staged-remote-alert") %>'
+						cssClass="ml-3 mt-0"
+						symbol="warning-full"
+					/>
+				</span>
+			</c:when>
+		</c:choose>
+	</c:if>
 </div>

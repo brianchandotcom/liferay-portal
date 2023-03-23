@@ -113,8 +113,8 @@ public class CustomFacetPortletSharedSearchContributor
 		}
 		else {
 			_contributeWithCustomFacet(
-				fieldToAggregate, searchRequestBuilder,
-				portletSharedSearchSettings, customFacetPortletPreferences);
+				customFacetPortletPreferences, fieldToAggregate,
+				portletSharedSearchSettings, searchRequestBuilder);
 		}
 	}
 
@@ -128,9 +128,10 @@ public class CustomFacetPortletSharedSearchContributor
 	protected NestedFacetSearchContributor nestedFacetSearchContributor;
 
 	private void _contributeWithCustomFacet(
-		String fieldToAggregate, SearchRequestBuilder searchRequestBuilder,
+		CustomFacetPortletPreferences customFacetPortletPreferences,
+		String fieldToAggregate,
 		PortletSharedSearchSettings portletSharedSearchSettings,
-		CustomFacetPortletPreferences customFacetPortletPreferences) {
+		SearchRequestBuilder searchRequestBuilder) {
 
 		customFacetSearchContributor.contribute(
 			searchRequestBuilder,

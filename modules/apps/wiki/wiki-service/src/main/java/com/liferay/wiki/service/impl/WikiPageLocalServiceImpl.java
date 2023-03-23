@@ -1428,7 +1428,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public List<WikiPage> getPages(
-		long groupId, long nodeId, long statusByUserId, int status) {
+		long groupId, long nodeId, int status, long statusByUserId) {
 
 		return dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -1441,9 +1441,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				).and(
 					WikiPageTable.INSTANCE.nodeId.eq(nodeId)
 				).and(
-					WikiPageTable.INSTANCE.statusByUserId.eq(statusByUserId)
-				).and(
 					WikiPageTable.INSTANCE.status.eq(status)
+				).and(
+					WikiPageTable.INSTANCE.statusByUserId.eq(statusByUserId)
 				)
 			));
 	}

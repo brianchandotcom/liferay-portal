@@ -559,7 +559,7 @@ public class WikiListPagesDisplayContext {
 				searchContainer.setResultsAndTotal(
 					WikiPageLocalServiceUtil.getPages(
 						themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
-						wikiPageDraftUserId, wikiPageStatus));
+						wikiPageStatus, wikiPageDraftUserId));
 			}
 		}
 		else if (navigation.equals("frontpage")) {

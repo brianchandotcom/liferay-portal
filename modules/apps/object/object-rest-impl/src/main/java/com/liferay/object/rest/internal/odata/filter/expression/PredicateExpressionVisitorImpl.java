@@ -156,6 +156,16 @@ public class PredicateExpressionVisitorImpl
 						relatedObjectDefinitionId));
 		}
 
+		if (propertyExpression instanceof ComplexPropertyExpression) {
+			return _handleComplexPropertyExpression(
+				propertyExpression,
+				new ArrayList<String>() {
+					{
+						add(complexPropertyExpression.getName());
+					}
+				});
+		}
+
 		return complexPropertyExpression.toString();
 	}
 
@@ -778,6 +788,36 @@ public class PredicateExpressionVisitorImpl
 
 			return right;
 		}
+	}
+
+	private Object _handleComplexPropertyExpression(
+		PropertyExpression propertyExpression,
+		List<String> relationshipsNames) {
+
+		if (propertyExpression instanceof ComplexPropertyExpression) {
+			ComplexPropertyExpression complexPropertyExpression =
+				(ComplexPropertyExpression)propertyExpression;
+
+			relationshipsNames.add(propertyExpression.getName());
+
+			return _handleComplexPropertyExpression(
+				complexPropertyExpression.getPropertyExpression(),
+				relationshipsNames);
+		}
+		else if (propertyExpression instanceof CollectionPropertyExpression) {
+			relationshipsNames.add(propertyExpression.toString());
+
+			return _getObjectRelationshipPredicate(
+				StringUtil.merge(relationshipsNames, StringPool.SLASH),
+				(objectFieldName, relatedObjectDefinitionId) ->
+					_visitCollectionPropertyExpression(
+						(CollectionPropertyExpression)propertyExpression,
+						relatedObjectDefinitionId));
+		}
+
+		relationshipsNames.add(propertyExpression.toString());
+
+		return StringUtil.merge(relationshipsNames, StringPool.SLASH);
 	}
 
 	private boolean _isComplexProperExpression(Object object) {

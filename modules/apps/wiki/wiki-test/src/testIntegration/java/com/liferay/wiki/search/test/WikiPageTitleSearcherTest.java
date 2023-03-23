@@ -43,7 +43,6 @@ import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.test.util.WikiTestUtil;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -140,8 +139,7 @@ public class WikiPageTitleSearcherTest {
 		addPage(_node.getNodeId(), title, content);
 	}
 
-	protected void assertSearch(
-			String keywords, Collection<String> expectedValues)
+	protected void assertSearch(String keywords, List<String> expectedValues)
 		throws Exception {
 
 		Hits hits = search(keywords);

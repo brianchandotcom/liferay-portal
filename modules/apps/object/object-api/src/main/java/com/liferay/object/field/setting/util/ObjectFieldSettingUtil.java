@@ -23,6 +23,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
@@ -38,31 +40,28 @@ public class ObjectFieldSettingUtil {
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		Map<String, Object> values) {
 
-		ObjectFieldSetting objectFieldSetting =
-			objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId,
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
-
-		if (objectFieldSetting == null) {
-			return StringPool.BLANK;
-		}
-
 		ObjectFieldSetting defaultValueObjectFieldSetting =
 			objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectFieldId, ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
 
-		if (StringUtil.equals(
-				objectFieldSetting.getValue(),
+		if (defaultValueObjectFieldSetting == null) {
+			return null;
+		}
+
+		ObjectFieldSetting objectFieldSettingDefaultValueType =
+			objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId,
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
+
+		if ((objectFieldSettingDefaultValueType == null) ||
+			StringUtil.equals(
+				objectFieldSettingDefaultValueType.getValue(),
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE)) {
 
 			return defaultValueObjectFieldSetting.getValue();
 		}
 
-		if ((ddmExpressionFactory == null) ||
-			!StringUtil.equals(
-				objectFieldSetting.getValue(),
-				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
-
+		if (ddmExpressionFactory == null) {
 			return StringPool.BLANK;
 		}
 
@@ -78,7 +77,11 @@ public class ObjectFieldSettingUtil {
 			return ddmExpression.evaluate();
 		}
 		catch (DDMExpressionException ddmExpressionException) {
-			throw new RuntimeException(ddmExpressionException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(ddmExpressionException);
+			}
+
+			return StringPool.BLANK;
 		}
 	}
 
@@ -93,5 +96,8 @@ public class ObjectFieldSettingUtil {
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectFieldSettingUtil.class);
 
 }

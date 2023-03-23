@@ -1,24 +1,20 @@
-<div class="applications-menu-wrapper dropdown">
+<div class="applications-menu-wrapper dropdown mt-1">
 	<div class="applications-menu-header flex-shrink-0">
 		<span>
-			<p>
-			</p>
-			</div>
-			[@liferay_ui["user-portrait"]
-			size="xxl"
-			userId=user.userId
-			/]
-	</span>
+			[@liferay_ui["user-portrait"] size="xxl" userId=user.userId /]
+		</span>
 
-	<div class="applications-menu-bg applications-menu-border-top applications-menu-content dropdown-content mb-6 p-3">
-		<span class="user-name"></span>
+	<div class="applications-menu-bg applications-menu-border-top applications-menu-content bg-white dropdown-content mb-6 p-3 rounded">
+			<span class="font-weight-bold text-neutral-7 user-name"></span>
 
-		<div class="d-flex dropdown-items flex-column mt-3">
+			<div class="d-flex dropdown-items flex-column mt-3">
 			<a class="mb-3" id="dropdown-item-dashboard" href="dashboard">Dashboard</a>
 			<a class="mb-3" id="dropdown-item-myaccount" href="javascript:void(0);">My Account</a>
 			<a class="mb-3" id="dropdown-item-notifications" href="notifications-list">Notifications</a>
 			<a class="mb-3" id="dropdown-item-accountsettings" href="account-settings">Account Settings</a>
-			<a class="mb-3" id="dropdown-item-signout" href="/c/portal/logout" role="menuitem" tabindex="-1"> Sign Out</a>
+			<a href="/c/portal/logout" id="dropdown-item-signout" role="menuitem" tabindex="-1">
+					Sign Out</a>
+			</div>
 		</div>
 	</div>
 </div>

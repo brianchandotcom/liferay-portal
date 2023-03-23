@@ -1,17 +1,10 @@
 .dropdown .dropdown-content {
-	background-color: #fff;
-	border-radius: 0.25rem;
 	bottom: 20px;
 	box-shadow: 0 1px 5px -1px rgb(0 0 0 / 30%);
 	display: none;
 	left: 50px;
 	min-width: 240px;
 	position: absolute;
-}
-
-.dropdown .dropdown-content span {
-	color: #6b6c7e;
-	font-weight: bold;
 }
 
 .dropdown .dropdown-content a {

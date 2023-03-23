@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.product.type.virtual.order.service.impl;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
-import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemException;
 import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemUrlException;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
@@ -88,9 +88,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		if (Validator.isNotNull(url)) {
 			fileEntryId = 0;
 		}
-		else {
-			url = null;
-		}
 
 		_validate(fileEntryId, url);
 
@@ -149,6 +146,14 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 					getCPDefinitionVirtualSetting(
 						CPDefinition.class.getName(),
 						commerceOrderItem.getCPDefinitionId());
+		}
+
+		if (cpDefinitionVirtualSetting == null) {
+			return commerceVirtualOrderItemLocalService.
+				addCommerceVirtualOrderItem(
+					commerceOrderItemId, 0, null,
+					CommerceOrderConstants.ORDER_STATUS_COMPLETED, 0, 0, 0,
+					serviceContext);
 		}
 
 		return commerceVirtualOrderItemLocalService.addCommerceVirtualOrderItem(
@@ -325,9 +330,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		if (Validator.isNotNull(url)) {
 			fileEntryId = 0;
 		}
-		else {
-			url = null;
-		}
 
 		_validate(fileEntryId, url);
 
@@ -452,10 +454,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 					noSuchFileEntryException);
 			}
 		}
-		else if ((fileEntryId <= 0) && Validator.isNull(url)) {
-			throw new CommerceVirtualOrderItemException();
-		}
-		else if (Validator.isNull(url)) {
+		else if ((fileEntryId < 0) && Validator.isNull(url)) {
 			throw new CommerceVirtualOrderItemUrlException();
 		}
 	}

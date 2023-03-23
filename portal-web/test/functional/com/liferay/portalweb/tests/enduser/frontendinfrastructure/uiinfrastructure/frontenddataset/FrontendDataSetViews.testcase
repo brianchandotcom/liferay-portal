@@ -38,13 +38,26 @@ definition {
 
 	}
 
-	@description = "Confirm that the user can create a data set view"
-	@ignore = "Test Stub"
+	@description = "LPS-178773 Confirm that the user can create a data set view"
 	@priority = 5
 	test CanCreateDataSet {
+		task ("When Create a DataSet ") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Liferay Analytics Settings REST");
+		}
 
-		// TODO CanCreateDataSet pending implementation JQuery enabled
+		task ("Then Confirm the name as expected") {
+			AssertElementPresent(
+				key_itemName = "Test Dataset",
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
 
+		task ("And Confirm the Provider as expected") {
+			AssertElementPresent(
+				key_itemName = "Channel (Liferay Analytics Settings REST v1.0)",
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
 	}
 
 	@description = "Confirm that the user can create a dataset view via API"

@@ -116,9 +116,8 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 				%>
 
 				<c:choose>
-					<c:when test='<%= kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>'>
-
-					<c:choose>
+					<c:when test="<%= kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>">
+						<c:choose>
 							<c:when test='<%= Objects.equals(kbAdminManagementToolbarDisplayContext.getDisplayStyle(), "descriptive") %>'>
 								<liferay-util:include page="/admin/view_descriptive.jsp" servletContext="<%= application %>" />
 							</c:when>

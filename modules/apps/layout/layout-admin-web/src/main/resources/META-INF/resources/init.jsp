@@ -40,6 +40,7 @@ page import="com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryExcepti
 page import="com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants" %><%@
 page import="com.liferay.layout.admin.constants.LayoutAdminPortletKeys" %><%@
 page import="com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants" %><%@
+page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminFormNavigatorConstants" %><%@
 page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutLookAndFeelDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutUtilityPageEntryDisplayContext" %><%@

@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminFormNavigatorConstants;
 
 import javax.servlet.ServletContext;
 
@@ -35,6 +36,12 @@ public class LayoutSetRobotsFormNavigatorEntry
 	@Override
 	public String getCategoryKey() {
 		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_SET_ADVANCED;
+	}
+
+	@Override
+	public String getFormNavigatorId() {
+		return LayoutAdminFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_LAYOUT_SET_ADVANCED;
 	}
 
 	@Override

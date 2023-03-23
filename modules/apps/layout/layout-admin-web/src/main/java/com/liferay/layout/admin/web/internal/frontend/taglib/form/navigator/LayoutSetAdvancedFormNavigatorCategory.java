@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminFormNavigatorConstants;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
@@ -35,7 +36,8 @@ public class LayoutSetAdvancedFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET;
+		return LayoutAdminFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_LAYOUT_SET_ADVANCED;
 	}
 
 	@Override

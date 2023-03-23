@@ -63,7 +63,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:form-navigator
 			formModelBean="<%= selLayoutSet %>"
-			id="layout.set.form.advanced"
+			id="<%= LayoutAdminFormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET_ADVANCED %>"
 			showButtons="<%= false %>"
 		/>
 	</liferay-frontend:edit-form-body>

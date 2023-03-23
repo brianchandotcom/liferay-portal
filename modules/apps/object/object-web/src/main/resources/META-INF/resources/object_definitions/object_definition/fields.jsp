@@ -67,7 +67,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		module="js/components/ExpressionBuilderModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements()
+				"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements(ObjectFieldConstants.BUSINESS_TYPE_FORMULA)
 			).build()
 		%>'
 	/>

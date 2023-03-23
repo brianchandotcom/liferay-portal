@@ -637,9 +637,10 @@ public class PoshiContext {
 			poshiFileIncludes.toArray(new String[0]), "default/testFunctional",
 			"testFunctional");
 
+		String testBaseDirName = PropsUtil.get("test.base.dir.name");
+
 		if (((baseDirNames == null) || (baseDirNames.length == 0)) &&
-			(Validator.isNull(PropsValues.TEST_BASE_DIR_NAME) ||
-			 PropsValues.TEST_BASE_DIR_NAME.isEmpty())) {
+			(Validator.isNull(testBaseDirName) || testBaseDirName.isEmpty())) {
 
 			throw new RuntimeException("Please set 'test.base.dir.name'");
 		}
@@ -652,12 +653,14 @@ public class PoshiContext {
 			Collections.addAll(testDirNames, baseDirNames);
 		}
 
-		if (Validator.isNotNull(PropsValues.TEST_BASE_DIR_NAME)) {
-			testDirNames.add(PropsValues.TEST_BASE_DIR_NAME);
+		if (Validator.isNotNull(testBaseDirName)) {
+			testDirNames.add(testBaseDirName);
 		}
 
-		if (Validator.isNotNull(PropsValues.TEST_DIRS)) {
-			Collections.addAll(testDirNames, PropsValues.TEST_DIRS);
+		String[] testDirs = StringUtil.split(PropsUtil.get("test.dirs"));
+
+		if (Validator.isNotNull(testDirs)) {
+			Collections.addAll(testDirNames, testDirs);
 		}
 
 		for (String testDirName : testDirNames) {
@@ -668,9 +671,11 @@ public class PoshiContext {
 
 		Set<String> testSupportDirNames = new HashSet<>();
 
-		if (Validator.isNotNull(PropsValues.TEST_SUPPORT_DIRS)) {
-			Collections.addAll(
-				testSupportDirNames, PropsValues.TEST_SUPPORT_DIRS);
+		String[] testSupportDirs = StringUtil.split(
+			PropsUtil.get("test.support.dirs"));
+
+		if (Validator.isNotNull(testSupportDirs)) {
+			Collections.addAll(testSupportDirNames, testSupportDirs);
 		}
 
 		for (String testSupportDirName : testSupportDirNames) {

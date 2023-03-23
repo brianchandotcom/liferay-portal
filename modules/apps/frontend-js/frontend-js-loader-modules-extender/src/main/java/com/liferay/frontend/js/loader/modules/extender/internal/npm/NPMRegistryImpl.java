@@ -29,6 +29,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
@@ -96,7 +97,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdateImpl npmRegistryUpdateImpl) {
-		_refreshNPMRegistryStateSnapshot(null, null, npmRegistryUpdateImpl);
+		_refreshNPMRegistryStateSnapshot(
+			null, null, npmRegistryUpdateImpl,
+			_getNPMRegistryUpdatesListeners());
 	}
 
 	@Override
@@ -260,7 +263,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_activationThreadLocal.set(Boolean.FALSE);
 
-		_refreshNPMRegistryStateSnapshot(null, null, null);
+		_refreshNPMRegistryStateSnapshot(null, null, null, null);
 
 		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
@@ -268,6 +271,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Deactivate
 	protected void deactivate() {
+		if (_npmRegistryUpdatesListeners != null) {
+			_npmRegistryUpdatesListeners.close();
+		}
+
 		_javaScriptAwarePortalWebResources.close();
 
 		_serviceTracker.close();
@@ -287,6 +294,17 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_serviceTracker.open();
 		}
+	}
+
+	private ServiceTrackerList<NPMRegistryUpdatesListener>
+		_getNPMRegistryUpdatesListeners() {
+
+		if (_npmRegistryUpdatesListeners == null) {
+			_npmRegistryUpdatesListeners = ServiceTrackerListFactory.open(
+				_bundleContext, NPMRegistryUpdatesListener.class);
+		}
+
+		return _npmRegistryUpdatesListeners;
 	}
 
 	private JSONObject _getPackageJSONObject(Bundle bundle) {
@@ -355,7 +373,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private void _refreshNPMRegistryStateSnapshot(
 		Map<Bundle, JSBundle> jsBundlesMap,
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages,
-		NPMRegistryUpdateImpl npmRegistryUpdateImpl) {
+		NPMRegistryUpdateImpl npmRegistryUpdateImpl,
+		ServiceTrackerList<NPMRegistryUpdatesListener>
+			npmRegistryUpdatesListeners) {
 
 		if (jsBundlesMap == null) {
 			jsBundlesMap = _bundleTracker.getTracked();
@@ -483,6 +503,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 			globalAliases, exactMatchMap, jsModules, jsPackages,
 			jsPackageVersions, partialMatchMap, resolvedJSModules,
 			resolvedJSPackages);
+
+		if (npmRegistryUpdatesListeners != null) {
+			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
+					npmRegistryUpdatesListeners) {
+
+				npmRegistryUpdatesListener.onAfterUpdate();
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -511,6 +539,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyList(), Collections.emptyMap(),
 			Collections.emptyMap(), Collections.emptyMap());
+	private ServiceTrackerList<NPMRegistryUpdatesListener>
+		_npmRegistryUpdatesListeners;
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
 
@@ -532,7 +562,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 					).put(
 						bundle, jsBundle
 					).build(),
-					null, null);
+					null, null, _getNPMRegistryUpdatesListeners());
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
@@ -556,7 +586,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshNPMRegistryStateSnapshot(null, null, null);
+				_refreshNPMRegistryStateSnapshot(
+					null, null, null, _getNPMRegistryUpdatesListeners());
 			}
 		}
 
@@ -594,7 +625,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			jsConfigGeneratorPackages.add(jsConfigGeneratorPackage);
 
 			_refreshNPMRegistryStateSnapshot(
-				null, jsConfigGeneratorPackages, null);
+				null, jsConfigGeneratorPackages, null,
+				_getNPMRegistryUpdatesListeners());
 
 			return jsConfigGeneratorPackage;
 		}
@@ -610,7 +642,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			ServiceReference<ServletContext> serviceReference,
 			JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 
-			_refreshNPMRegistryStateSnapshot(null, null, null);
+			_refreshNPMRegistryStateSnapshot(
+				null, null, null, _getNPMRegistryUpdatesListeners());
 		}
 
 	}

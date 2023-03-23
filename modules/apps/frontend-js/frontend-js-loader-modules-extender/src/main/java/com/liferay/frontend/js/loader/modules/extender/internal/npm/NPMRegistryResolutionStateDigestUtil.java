@@ -61,7 +61,8 @@ public class NPMRegistryResolutionStateDigestUtil {
 			throw new RuntimeException(noSuchAlgorithmException);
 		}
 
-		// Hash dynamic JS modules that do not honor immutability of packages
+		// Hash DynamicModules which don't honor immutability of packages
+		// with given (name, version) value
 
 		List<DynamicJSModule> dynamicJSModules = new ArrayList<>();
 
@@ -83,7 +84,7 @@ public class NPMRegistryResolutionStateDigestUtil {
 			_update(messageDigest, dynamicJSModule);
 		}
 
-		// Hash JS packages
+		// Now hash packages alone
 
 		List<JSPackage> jsPackages = new ArrayList<>(
 			npmRegistry.getResolvedJSPackages());
@@ -100,8 +101,9 @@ public class NPMRegistryResolutionStateDigestUtil {
 			_update(messageDigest, jsPackage);
 		}
 
-		// Hash the list of applied patches because Liferay Support's patches
-		// break the immutability convention of packages
+		// Finally, hash the list of applied patches. This is necessary because
+		// Liferay Support's patches break the immutability convention of
+		// packages with given (name, version) value.
 
 		List<String> installedPatches = Arrays.asList(
 			PatcherUtil.getInstalledPatches());
@@ -133,7 +135,9 @@ public class NPMRegistryResolutionStateDigestUtil {
 	private static void _update(
 		MessageDigest messageDigest, JSPackage jsPackage) {
 
-		// Hash the fields besides (name and version) for extra safety
+		// In theory name and version should be enough because npm packages are
+		// supposed to be immutable, but since it doesn't take too much longer,
+		// we add more fields to be safer.
 
 		_update(messageDigest, jsPackage.getMainModuleName());
 		_update(messageDigest, jsPackage.getName());

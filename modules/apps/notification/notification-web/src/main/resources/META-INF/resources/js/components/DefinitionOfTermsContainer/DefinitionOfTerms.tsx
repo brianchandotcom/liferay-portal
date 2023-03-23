@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayPanel from '@clayui/panel';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	AutoComplete,
@@ -23,9 +24,21 @@ import {
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import RelationshipSection from './RelationshipSection';
+
 interface DefinitionOfTermsProps {
 	baseResourceURL: string;
 	objectDefinitions: ObjectDefinition[];
+}
+export interface RelationshipSections {
+	relationshipId: number;
+	sectionLabel: string;
+	terms?: Item[];
+}
+
+interface TermsResponse {
+	relationshipSections: RelationshipSections[];
+	terms: Item[];
 }
 
 export interface Item {
@@ -41,6 +54,9 @@ export function DefinitionOfTerms({
 	const [query, setQuery] = useState<string>('');
 
 	const [entityFields, setObjectFieldTerms] = useState<Item[]>([]);
+	const [relationshipSections, setRelationshipSections] = useState<
+		RelationshipSections[]
+	>([]);
 
 	const filteredObjectDefinitions = useMemo(() => {
 		if (objectDefinitions) {
@@ -61,9 +77,20 @@ export function DefinitionOfTerms({
 			}).toString()
 		);
 
-		const responseJSON = (await response.json()) as Item[];
+		if (Liferay.FeatureFlags['LPS-165849']) {
+			const {
+				relationshipSections,
+				terms,
+			} = (await response.json()) as TermsResponse;
 
-		setObjectFieldTerms(responseJSON);
+			setObjectFieldTerms(terms);
+			setRelationshipSections(relationshipSections);
+		}
+		else {
+			const terms = (await response.json()) as Item[];
+
+			setObjectFieldTerms(terms);
+		}
 	};
 
 	const copyObjectFieldTerm = ({itemData}: {itemData: Item}) => {
@@ -85,77 +112,189 @@ export function DefinitionOfTerms({
 
 	return (
 		<>
-			<AutoComplete<ObjectDefinition>
-				creationLanguageId={selectedEntity?.defaultLanguageId as Locale}
-				emptyStateMessage={Liferay.Language.get(
-					'no-entities-were-found'
-				)}
-				items={filteredObjectDefinitions ?? []}
-				label={Liferay.Language.get('entity')}
-				onChangeQuery={setQuery}
-				onSelectItem={(item) => {
-					getObjectFieldTerms(item);
-					setSelectedEntity(item);
-				}}
-				query={query}
-				value={getLocalizableLabel(
-					selectedEntity?.defaultLanguageId as Locale,
-					selectedEntity?.label,
-					selectedEntity?.name as string
-				)}
-			>
-				{({defaultLanguageId, label, name}) => (
-					<div className="d-flex justify-content-between">
-						<div>
-							{getLocalizableLabel(
-								defaultLanguageId,
-								label,
-								name
-							)}
-						</div>
+			{Liferay.FeatureFlags['LPS-165849'] ? (
+				<>
+					<AutoComplete<ObjectDefinition>
+						creationLanguageId={
+							selectedEntity?.defaultLanguageId as Locale
+						}
+						emptyStateMessage={Liferay.Language.get(
+							'no-entities-were-found'
+						)}
+						items={filteredObjectDefinitions ?? []}
+						label={Liferay.Language.get('entity')}
+						onChangeQuery={setQuery}
+						onSelectItem={(item) => {
+							getObjectFieldTerms(item);
+							setSelectedEntity(item);
+						}}
+						query={query}
+						value={getLocalizableLabel(
+							selectedEntity?.defaultLanguageId as Locale,
+							selectedEntity?.label,
+							selectedEntity?.name as string
+						)}
+					>
+						{({defaultLanguageId, label, name}) => (
+							<div className="d-flex justify-content-between">
+								<div>
+									{getLocalizableLabel(
+										defaultLanguageId,
+										label,
+										name
+									)}
+								</div>
+							</div>
+						)}
+					</AutoComplete>
+					<div id="lfr-notification-web__definition-of-terms-table">
+						<FrontendDataSet
+							id="DefinitionOfTermsTable"
+							items={entityFields}
+							itemsActions={[
+								{
+									href: 'copyObjectFieldTerm',
+									id: 'copyObjectFieldTerm',
+									label: Liferay.Language.get('copy'),
+									target: 'event',
+								},
+							]}
+							onActionDropdownItemClick={
+								onActionDropdownItemClick
+							}
+							selectedItemsKey="id"
+							showManagementBar={false}
+							showPagination={false}
+							showSearch={false}
+							views={[
+								{
+									contentRenderer: 'table',
+									label: 'Table',
+									name: 'table',
+									schema: {
+										fields: [
+											{
+												fieldName: 'termLabel',
+												label: Liferay.Language.get(
+													'label'
+												),
+											},
+											{
+												fieldName: 'termName',
+												label: Liferay.Language.get(
+													'term'
+												),
+											},
+										],
+									},
+									thumbnail: 'table',
+								},
+							]}
+						/>
 					</div>
-				)}
-			</AutoComplete>
+				</>
+			) : (
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={Liferay.Language.get('definition-of-terms')}
+					displayType="unstyled"
+					showCollapseIcon={true}
+				>
+					<ClayPanel.Body>
+						<AutoComplete<ObjectDefinition>
+							creationLanguageId={
+								selectedEntity?.defaultLanguageId as Locale
+							}
+							emptyStateMessage={Liferay.Language.get(
+								'no-entities-were-found'
+							)}
+							items={filteredObjectDefinitions ?? []}
+							label={Liferay.Language.get('entity')}
+							onChangeQuery={setQuery}
+							onSelectItem={(item) => {
+								getObjectFieldTerms(item);
+								setSelectedEntity(item);
+							}}
+							query={query}
+							value={getLocalizableLabel(
+								selectedEntity?.defaultLanguageId as Locale,
+								selectedEntity?.label,
+								selectedEntity?.name as string
+							)}
+						>
+							{({defaultLanguageId, label, name}) => (
+								<div className="d-flex justify-content-between">
+									<div>
+										{getLocalizableLabel(
+											defaultLanguageId,
+											label,
+											name
+										)}
+									</div>
+								</div>
+							)}
+						</AutoComplete>
 
-			<div id="lfr-notification-web__definition-of-terms-table">
-				<FrontendDataSet
-					id="DefinitionOfTermsTable"
-					items={entityFields}
-					itemsActions={[
-						{
-							href: 'copyObjectFieldTerm',
-							id: 'copyObjectFieldTerm',
-							label: Liferay.Language.get('copy'),
-							target: 'event',
-						},
-					]}
-					onActionDropdownItemClick={onActionDropdownItemClick}
-					selectedItemsKey="id"
-					showManagementBar={false}
-					showPagination={false}
-					showSearch={false}
-					views={[
-						{
-							contentRenderer: 'table',
-							label: 'Table',
-							name: 'table',
-							schema: {
-								fields: [
+						<div id="lfr-notification-web__definition-of-terms-table">
+							<FrontendDataSet
+								id="DefinitionOfTermsTable"
+								items={entityFields}
+								itemsActions={[
 									{
-										fieldName: 'termLabel',
-										label: Liferay.Language.get('label'),
+										href: 'copyObjectFieldTerm',
+										id: 'copyObjectFieldTerm',
+										label: Liferay.Language.get('copy'),
+										target: 'event',
 									},
+								]}
+								onActionDropdownItemClick={
+									onActionDropdownItemClick
+								}
+								selectedItemsKey="id"
+								showManagementBar={false}
+								showPagination={false}
+								showSearch={false}
+								views={[
 									{
-										fieldName: 'termName',
-										label: Liferay.Language.get('term'),
+										contentRenderer: 'table',
+										label: 'Table',
+										name: 'table',
+										schema: {
+											fields: [
+												{
+													fieldName: 'termLabel',
+													label: Liferay.Language.get(
+														'label'
+													),
+												},
+												{
+													fieldName: 'termName',
+													label: Liferay.Language.get(
+														'term'
+													),
+												},
+											],
+										},
+										thumbnail: 'table',
 									},
-								],
-							},
-							thumbnail: 'table',
-						},
-					]}
+								]}
+							/>
+						</div>
+					</ClayPanel.Body>
+				</ClayPanel>
+			)}
+
+			{relationshipSections?.map((relationshipSection, index) => (
+				<RelationshipSection
+					baseResourceURL={baseResourceURL}
+					currentRelationshipSectionIndex={index}
+					key={relationshipSection.relationshipId}
+					relationshipSection={relationshipSection}
+					relationshipSections={relationshipSections}
+					setRelationshipSections={setRelationshipSections}
 				/>
-			</div>
+			))}
 		</>
 	);
 }

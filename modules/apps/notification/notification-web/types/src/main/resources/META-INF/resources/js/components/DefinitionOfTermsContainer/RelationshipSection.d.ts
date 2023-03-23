@@ -14,21 +14,19 @@
 
 /// <reference types="react" />
 
-interface DefinitionOfTermsProps {
+import {RelationshipSections} from './DefinitionOfTerms';
+interface RelationshipSectionProps {
 	baseResourceURL: string;
-	objectDefinitions: ObjectDefinition[];
+	currentRelationshipSectionIndex: number;
+	relationshipSection: RelationshipSections;
+	relationshipSections: RelationshipSections[];
+	setRelationshipSections: (value: RelationshipSections[]) => void;
 }
-export interface RelationshipSections {
-	relationshipId: number;
-	sectionLabel: string;
-	terms?: Item[];
-}
-export interface Item {
-	termLabel: string;
-	termName: string;
-}
-export declare function DefinitionOfTerms({
+export default function RelationshipSection({
 	baseResourceURL,
-	objectDefinitions,
-}: DefinitionOfTermsProps): JSX.Element;
+	currentRelationshipSectionIndex,
+	relationshipSection,
+	relationshipSections,
+	setRelationshipSections,
+}: RelationshipSectionProps): JSX.Element;
 export {};

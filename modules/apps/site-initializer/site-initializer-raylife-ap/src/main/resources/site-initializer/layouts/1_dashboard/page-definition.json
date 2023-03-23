@@ -27,7 +27,7 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "AP1"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"layoutName": "Dashboard"
@@ -66,7 +66,7 @@
 												"definition": {
 													"fragment": {
 														"key": "avatar-dropdown-menu",
-														"siteKey": "AP1"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},
@@ -92,7 +92,7 @@
 												"widgetConfig": {
 													"properties": "route=notification-sidebar"
 												},
-												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 											}
 										},
 										"type": "Widget"
@@ -108,7 +108,7 @@
 										"definition": {
 											"fragment": {
 												"key": "dashboard-title",
-												"siteKey": "AP1"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 											},
@@ -329,7 +329,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "section",
-																										"siteKey": "AP1"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"sectionId": "primary"
@@ -347,7 +347,7 @@
 																												"definition": {
 																													"fragment": {
 																														"key": "dashboard-tasks",
-																														"siteKey": "AP1"
+																														"siteKey": "[$GROUP_KEY$]"
 																													},
 																													"fragmentConfig": {
 																														"textColor": ""
@@ -398,7 +398,7 @@
 																								"widgetConfig": {
 																									"properties": "route=whats-new-modal"
 																								},
-																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																							}
 																						},
 																						"type": "Widget"
@@ -407,7 +407,7 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "section",
-																								"siteKey": "AP1"
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"sectionId": "primary"
@@ -429,7 +429,7 @@
 																										"definition": {
 																											"fragment": {
 																												"key": "dashboard-whats-new",
-																												"siteKey": "AP1"
+																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
 																												"textColor": ""
@@ -537,7 +537,7 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "section",
-																								"siteKey": "AP1"
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"sectionId": "primary"
@@ -555,7 +555,7 @@
 																										"definition": {
 																											"fragment": {
 																												"key": "dashboard-sales",
-																												"siteKey": "AP1"
+																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
 																												"textColor": ""
@@ -602,7 +602,7 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "section",
-																								"siteKey": "AP1"
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"sectionId": "primary"
@@ -620,7 +620,7 @@
 																										"definition": {
 																											"fragment": {
 																												"key": "dashboard-commission",
-																												"siteKey": "AP1"
+																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
 																												"textColor": ""
@@ -671,7 +671,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "AP1"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -691,7 +691,7 @@
 																										"widgetConfig": {
 																											"properties": "route=product-performance"
 																										},
-																										"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+																										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																									}
 																								},
 																								"type": "Widget"
@@ -710,7 +710,7 @@
 																			"widgetInstance": {
 																				"widgetConfig": {
 																				},
-																				"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																			}
 																		},
 																		"type": "Widget"
@@ -813,7 +813,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "section",
-																				"siteKey": "AP1"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"sectionId": "primary"
@@ -841,7 +841,7 @@
 																								"widgetConfig": {
 																									"properties": "route=recent-applications"
 																								},
-																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																							}
 																						},
 																						"type": "Widget"
@@ -882,7 +882,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "section",
-																				"siteKey": "AP1"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"sectionId": "primary"
@@ -900,7 +900,7 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "dashboard-active-claims",
-																								"siteKey": "AP1"
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"textColor": ""

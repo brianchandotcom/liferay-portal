@@ -23,7 +23,7 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "Ap"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"layoutName": "Details"
@@ -62,7 +62,7 @@
 												"definition": {
 													"fragment": {
 														"key": "avatar-dropdown-menu",
-														"siteKey": "RayLife Ap"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},
@@ -148,7 +148,7 @@
 										"definition": {
 											"fragment": {
 												"key": "label-by-query-string",
-												"siteKey": "Ap"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"parameterName": "id"

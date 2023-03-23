@@ -29,7 +29,7 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "AP-SITE NOVO"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"layoutName": "Policies"
@@ -68,7 +68,7 @@
 												"definition": {
 													"fragment": {
 														"key": "avatar-dropdown-menu",
-														"siteKey": "AP-SITE NOVO"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},
@@ -94,7 +94,7 @@
 												"widgetConfig": {
 													"properties": "route=notification-sidebar"
 												},
-												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 											}
 										},
 										"type": "Widget"
@@ -295,7 +295,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "AP-SITE NOVO"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -313,7 +313,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "policies-total-active",
-																										"siteKey": "AP-SITE NOVO"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"textColor": ""
@@ -368,7 +368,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "AP-SITE NOVO"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -386,7 +386,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "policies-expiring",
-																										"siteKey": "AP-SITE NOVO"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"textColor": ""
@@ -440,7 +440,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "section",
-																		"siteKey": "AP-SITE NOVO"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"sectionId": "primary"
@@ -458,7 +458,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "policies-total-premium-due",
-																						"siteKey": "AP-SITE NOVO"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"textColor": ""
@@ -512,7 +512,7 @@
 														"definition": {
 															"fragment": {
 																"key": "section",
-																"siteKey": "AP-SITE NOVO"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"sectionId": "primary"
@@ -532,7 +532,7 @@
 																				"widgetConfig": {
 																					"properties": "route=policies-table"
 																				},
-																				"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_RAYLIFEAGENTPORTAL001"
+																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																			}
 																		},
 																		"type": "Widget"

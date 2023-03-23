@@ -61,7 +61,7 @@
 												"definition": {
 													"fragment": {
 														"key": "avatar-dropdown-menu",
-														"siteKey": "RayLife Ap"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},

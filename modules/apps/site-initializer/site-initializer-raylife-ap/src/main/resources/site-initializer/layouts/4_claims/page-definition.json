@@ -29,7 +29,7 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "AP"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"layoutName": "Claims"
@@ -68,7 +68,7 @@
 												"definition": {
 													"fragment": {
 														"key": "avatar-dropdown-menu",
-														"siteKey": "RayLife Ap"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},
@@ -143,7 +143,7 @@
 										"definition": {
 											"fragment": {
 												"key": "plus-button",
-												"siteKey": "AP"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"buttonName": "NEW CLAIMS",
@@ -319,7 +319,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "AP"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -337,7 +337,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "claims-total",
-																										"siteKey": "AP"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"textColor": ""
@@ -384,7 +384,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "AP"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -402,7 +402,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "claims-settled",
-																										"siteKey": "AP"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"textColor": ""
@@ -456,7 +456,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "section",
-																		"siteKey": "AP"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"sectionId": "primary"
@@ -474,7 +474,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "claims-total-settlements-paid",
-																						"siteKey": "AP"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"textColor": ""
@@ -528,7 +528,7 @@
 														"definition": {
 															"fragment": {
 																"key": "section",
-																"siteKey": "AP"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"sectionId": "primary"

@@ -23,7 +23,7 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "AP1"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"layoutName": "Notifications"
@@ -41,7 +41,7 @@
 										"definition": {
 											"fragment": {
 												"key": "avatar-dropdown-menu",
-												"siteKey": "AP1"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 											},
@@ -126,7 +126,7 @@
 												"definition": {
 													"fragment": {
 														"key": "notifications",
-														"siteKey": "AP1"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},

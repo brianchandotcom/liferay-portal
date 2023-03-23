@@ -2131,6 +2131,95 @@ definition {
 		}
 	}
 
+	@description = "LPS-164948 - Verify that the user can use Formula Field with User Notification"
+	@priority = 4
+	test CanFormulaFieldBeUsedWithUserNotification {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: A new user and Notification Template") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			UserNotificationAPI.createNotificationTemplate(
+				en_US = "Subject Test",
+				externalReferenceCode = "test",
+				name = "User Notification Template",
+				recipientType = "user",
+				type = "userNotification",
+				userScreenName = "usersn");
+		}
+
+		task ("And given: A Custom Object with a Notification action and the Formula Field is used on the condition tab") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176850",
+				objectName = "CustomObject176850",
+				pluralLabelName = "Custom Objects 176850");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject176850");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Formula",
+				fieldLabelName = "Custom Formula Field",
+				fieldName = "customFormulaField",
+				fieldType = "String",
+				formulaScript = "customInteger + customInteger",
+				isRequired = "false",
+				objectName = "CustomObject176850",
+				outputOption = "Integer");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176850");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176850");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when entry is added",
+				active = "true",
+				notificationName = "User Notification Template",
+				objectLabel = "Custom Object 176850",
+				thenAction = "Notification",
+				whenAction = "On After Add");
+		}
+
+		task ("When: An entry is added") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customInteger",
+				objectName = "CustomObject176850",
+				value = 15);
+		}
+
+		task ("Then: The action is triggered and the notification is sent to the user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+			Notifications.clickOnTheNotificationTitle(key_notificationsTitle = "Subject Test");
+
+			AssertValue(
+				key_labelName = "Custom Formula Field",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = 30);
+		}
+	}
+
 	@description = "LPS-139008 - Verify that it is possible to inactivate an Action"
 	@priority = 4
 	test CanInactivateAction {

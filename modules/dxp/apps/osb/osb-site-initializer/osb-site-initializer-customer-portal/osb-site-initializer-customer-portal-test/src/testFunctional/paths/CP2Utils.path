@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ANY_ACCOUNT_ELLIPSIS_BUTTON</td>
+	<td>//*[text()='${key_accountName}']/parent::*//following-sibling::*[contains(@class, 'item-actions')]//*[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OBJECT_ENTRY_ELLIPSIS_BUTTON</td>
 	<td>//*[text()='${key_text}']/parent::*//following-sibling::*[contains(@class, 'item-actions')]//*[@type='button']</td>
 	<td></td>

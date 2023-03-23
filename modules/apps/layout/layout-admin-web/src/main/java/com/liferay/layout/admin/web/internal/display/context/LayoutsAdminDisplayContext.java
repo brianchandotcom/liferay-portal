@@ -516,6 +516,8 @@ public class LayoutsAdminDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"clearButtonEnabled", isClearFaviconButtonEnabled()
 		).put(
+			"defaultImgURL", _getDefaultFaviconURL()
+		).put(
 			"defaultTitle", _getDefaultFaviconTitle()
 		).put(
 			"faviconFileEntryId",
@@ -2191,6 +2193,39 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
+	}
+
+	private String _getDefaultFaviconURL() {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout != null) {
+			if (hasEditableMasterLayout() &&
+				(selLayout.getMasterLayoutPlid() > 0)) {
+
+				Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+					selLayout.getMasterLayoutPlid());
+
+				if (masterLayout != null) {
+					String faviconURL = FaviconUtil.getFaviconURL(
+						_cetManager, masterLayout);
+
+					if (Validator.isNotNull(faviconURL)) {
+						return faviconURL;
+					}
+				}
+			}
+			else {
+				String faviconURL = FaviconUtil.getFaviconURL(
+					_cetManager, getSelLayoutSet());
+
+				if (Validator.isNotNull(faviconURL)) {
+					return faviconURL;
+				}
+			}
+		}
+
+		return themeDisplay.getPathThemeImages() + "/" +
+			PropsUtil.get(PropsKeys.THEME_SHORTCUT_ICON);
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {

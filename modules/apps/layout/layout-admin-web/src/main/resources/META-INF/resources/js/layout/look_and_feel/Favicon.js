@@ -19,6 +19,7 @@ import React, {useState} from 'react';
 
 export default function Favicon({
 	clearButtonEnabled: initialClearButtonEnabled,
+	defaultImgURL,
 	defaultTitle,
 	faviconFileEntryId: initialFaviconFileEntryId,
 	imgURL: initialImgURL,
@@ -70,7 +71,7 @@ export default function Favicon({
 		setValues({
 			clearButtonEnabled: false,
 			faviconFileEntryId: 0,
-			imgURL: '',
+			imgURL: defaultImgURL,
 			themeFaviconCETExternalReferenceCode: '',
 			title: defaultTitle,
 		});

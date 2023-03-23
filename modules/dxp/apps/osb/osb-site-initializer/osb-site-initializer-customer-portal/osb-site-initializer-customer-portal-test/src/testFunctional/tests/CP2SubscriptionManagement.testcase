@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account Analytics Cloud";
 	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account Portal,Test Account Commerce,Test Account Partnership,Test Account Others";
 
 	setUp {
@@ -52,7 +53,13 @@ definition {
 		}
 
 		task ("Assert the signature card details") {
-			CustomerPortal.viewCardValue();
+			CustomerPortal.viewCardValue(
+				cardName = "Non-Production",
+				date = "04/01/2021 - 03/31/2022",
+				instanceSize = "1",
+				logo = "dxp_icon",
+				position = "2",
+				status = "Active");
 		}
 	}
 
@@ -66,9 +73,8 @@ definition {
 		}
 
 		task ("Assert if the Active status reflects the dates") {
-			AssertElementPresent(
-				date = "03/31/2021 - 03/30/2022",
-				locator1 = "CustomerPortalSite#CARD_DATE",
+			CP2Subscription.assertTheDatesAndStatusOfTheCard(
+				dates = "10/01/2021 - 01/31/2024",
 				status = "Active");
 		}
 	}
@@ -79,9 +85,7 @@ definition {
 		task ("Given that I go to the subscriptions page") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 
@@ -89,9 +93,8 @@ definition {
 		}
 
 		task ("Then I claim that the Expired status reflects the dates") {
-			AssertElementPresent(
-				date = "01/14/2021 - 03/13/2021",
-				locator1 = "CustomerPortalSite#CARD_DATE",
+			CP2Subscription.assertTheDatesAndStatusOfTheCard(
+				dates = "01/15/2021 - 03/14/2021",
 				status = "Expired");
 		}
 	}
@@ -108,9 +111,8 @@ definition {
 		}
 
 		task ("Then I claim that the Future status reflects the dates") {
-			AssertElementPresent(
-				date = "01/14/2023 - 03/13/2026",
-				locator1 = "CustomerPortalSite#CARD_DATE",
+			CP2Subscription.assertTheDatesAndStatusOfTheCard(
+				dates = "01/15/2023 - 03/14/2026",
 				status = "Future");
 		}
 	}

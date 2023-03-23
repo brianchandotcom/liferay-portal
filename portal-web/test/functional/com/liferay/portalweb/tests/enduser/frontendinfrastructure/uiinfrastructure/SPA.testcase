@@ -37,7 +37,6 @@ definition {
 	@description = "LRQA-29748: Set the user notification timeout to 1 second"
 	@priority = 4
 	test SPANotificationSetTimeout {
-
 		task ("Given: set the user notification timeout to 1 second") {
 			SystemSettings.openSystemSettingsAdmin();
 

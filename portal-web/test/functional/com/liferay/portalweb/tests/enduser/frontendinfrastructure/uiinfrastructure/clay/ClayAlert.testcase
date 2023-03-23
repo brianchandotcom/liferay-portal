@@ -103,7 +103,6 @@ definition {
 	@priority = 3
 	@refactordone
 	test ToastMessageCanBeClosedManually {
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
@@ -125,7 +124,6 @@ definition {
 	@priority = 4
 	@refactordone
 	test ToastMessageCanCloseAutomatically {
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(

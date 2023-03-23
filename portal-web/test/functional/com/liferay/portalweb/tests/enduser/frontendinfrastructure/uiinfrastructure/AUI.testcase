@@ -27,7 +27,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeEnabledToPreloadModules {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

@@ -86,7 +86,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeDeactivatedAndReactivated {
-
 		var appName = "test-theme";
 
 		User.firstLoginPG();
@@ -160,7 +159,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeUnInstalledAndRedeployed {
-
 		var appName = "test-theme";
 
 		User.firstLoginPG();

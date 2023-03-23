@@ -39,7 +39,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test LogLevelCanBeConfigured {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

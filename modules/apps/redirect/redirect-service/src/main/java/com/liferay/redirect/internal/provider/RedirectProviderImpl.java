@@ -160,7 +160,21 @@ public class RedirectProviderImpl
 		_redirectPatternEntries = redirectPatternEntries;
 	}
 
+	private String[] _getCrawlerUserAgents() {
+		return new String[0];
+	}
+
 	private boolean _isCrawlerUserAgent(String userAgent) {
+		if (Validator.isNull(userAgent)) {
+			return false;
+		}
+
+		for (String crawlerUserAgent : _getCrawlerUserAgents()) {
+			if (userAgent.contains(StringUtil.toLowerCase(crawlerUserAgent))) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

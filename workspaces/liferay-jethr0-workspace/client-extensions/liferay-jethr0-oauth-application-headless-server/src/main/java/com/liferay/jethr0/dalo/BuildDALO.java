@@ -74,6 +74,7 @@ public class BuildDALO extends BaseDALO {
 
 			build.addBuildParameters(
 				_buildToBuildParametersDALO.retrieveBuildParameters(build));
+			build.addBuildRuns(_buildToBuildRunsDALO.retrieveBuildRuns(build));
 			build.addTasks(_buildToTasksDALO.retrieveTasks(build));
 
 			builds.add(build);
@@ -84,6 +85,7 @@ public class BuildDALO extends BaseDALO {
 
 	public Build updateBuild(Build build) {
 		_buildToBuildParametersDALO.updateRelationships(build);
+		_buildToBuildRunsDALO.updateRelationships(build);
 		_buildToTasksDALO.updateRelationships(build);
 
 		JSONObject responseJSONObject = update(build.getJSONObject());
@@ -102,6 +104,9 @@ public class BuildDALO extends BaseDALO {
 
 	@Autowired
 	private BuildToBuildParametersDALO _buildToBuildParametersDALO;
+
+	@Autowired
+	private BuildToBuildRunsDALO _buildToBuildRunsDALO;
 
 	@Autowired
 	private BuildToTasksDALO _buildToTasksDALO;

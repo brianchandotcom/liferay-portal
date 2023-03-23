@@ -25,7 +25,9 @@ definition {
 
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
-		AssertElementPresent(locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		AssertElementPresent(
+			key_modalText = ${modalText},
+			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 	}
 
 	macro searchProvider {

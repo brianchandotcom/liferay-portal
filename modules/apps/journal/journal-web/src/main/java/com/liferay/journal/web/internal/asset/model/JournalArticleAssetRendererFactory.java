@@ -126,6 +126,20 @@ public class JournalArticleAssetRendererFactory
 				article = _journalArticleLocalService.fetchLatestArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId(),
+					WorkflowConstants.STATUS_EXPIRED);
+			}
+
+			if (article == null) {
+				article = _journalArticleLocalService.fetchLatestArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
+					WorkflowConstants.STATUS_SCHEDULED);
+			}
+
+			if (article == null) {
+				article = _journalArticleLocalService.fetchLatestArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
 					WorkflowConstants.STATUS_ANY);
 			}
 

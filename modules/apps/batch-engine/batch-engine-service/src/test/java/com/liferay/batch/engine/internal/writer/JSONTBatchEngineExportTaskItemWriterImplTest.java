@@ -72,14 +72,21 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration,
 		List<String> fieldNames, List<Item> items) {
 
+		String batchEndpoint =
+			"/o/headless-batch-engine/v1.0/import-task/" +
+				batchEngineUnitConfiguration.getClassName();
+
 		StringBundler sb = new StringBundler();
 
-		sb.append("{\"actions\":\n{\"createBatch\": {\"href\": ");
-		sb.append("\"/o/headless-batch-engine/v1.0/import-task/");
-		sb.append(batchEngineUnitConfiguration.getClassName());
-		sb.append("\", \"method\": \"POST\"}},");
-		sb.append("\"configuration\": {\"callbackURL\": null, \"className\": ");
-		sb.append("\"");
+		sb.append("{\"actions\":\n{\"createBatch\": {\"href\": \"");
+		sb.append(batchEndpoint);
+		sb.append("\", \"method\": \"POST\"}, \"deleteBatch\": {\"href\": \"");
+		sb.append(batchEndpoint);
+		sb.append(
+			"\", \"method\": \"DELETE\"}, \"updateBatch\": {\"href\": \"");
+		sb.append(batchEndpoint);
+		sb.append("\", \"method\": \"PUT\"}},\n\"configuration\":\n");
+		sb.append("{\"callbackURL\": null, \"className\": \"");
 		sb.append(batchEngineUnitConfiguration.getClassName());
 		sb.append("\",\n\"companyId\": ");
 		sb.append(batchEngineUnitConfiguration.getCompanyId());

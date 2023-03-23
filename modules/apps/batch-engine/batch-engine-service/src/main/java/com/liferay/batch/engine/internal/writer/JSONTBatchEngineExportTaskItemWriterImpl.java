@@ -42,16 +42,24 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
+		String batchEndpoint =
+			"/o/headless-batch-engine/v1.0/import-task/" +
+				batchEngineUnitConfiguration.getClassName();
+
 		_unsyncPrintWriter.write(
 			"{\"actions\":\n{\"createBatch\": {\"href\": \"");
-		_unsyncPrintWriter.write("/o/headless-batch-engine/v1.0/import-task/");
-		_unsyncPrintWriter.write(batchEngineUnitConfiguration.getClassName());
+		_unsyncPrintWriter.write(batchEndpoint);
 		_unsyncPrintWriter.write(
-			"\", \"method\": \"POST\"}},\n\"configuration\":\n");
+			"\", \"method\": \"POST\"}, \"deleteBatch\": {\"href\": \"");
+		_unsyncPrintWriter.write(batchEndpoint);
+		_unsyncPrintWriter.write(
+			"\", \"method\": \"DELETE\"}, \"updateBatch\": {\"href\": \"");
+		_unsyncPrintWriter.write(batchEndpoint);
+		_unsyncPrintWriter.write(
+			"\", \"method\": \"PUT\"}},\n\"configuration\":\n");
 		_unsyncPrintWriter.write(
 			_objectWriter.writeValueAsString(batchEngineUnitConfiguration));
-		_unsyncPrintWriter.write(",\n");
-		_unsyncPrintWriter.write("\"items\": [");
+		_unsyncPrintWriter.write(",\n\"items\": [");
 	}
 
 	@Override

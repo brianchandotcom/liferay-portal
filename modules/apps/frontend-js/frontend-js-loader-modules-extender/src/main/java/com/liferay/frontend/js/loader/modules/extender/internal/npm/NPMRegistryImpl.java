@@ -613,12 +613,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Map<String, JSModule> resolvedJSModules,
 			Map<String, JSPackage> resolvedJSPackages) {
 
-			_exactMatchMap = exactMatchMap;
-			_jsModules = jsModules;
-			_jsPackages = jsPackages;
-			_jsPackageVersions = jsPackageVersions;
-			_resolvedJSModules = resolvedJSModules;
-			_resolvedJSPackages = resolvedJSPackages;
+			_exactMatchMap = Collections.unmodifiableMap(exactMatchMap);
+			_jsModules = Collections.unmodifiableMap(jsModules);
+			_jsPackages = Collections.unmodifiableMap(jsPackages);
+			_jsPackageVersions = Collections.unmodifiableList(
+				jsPackageVersions);
+			_resolvedJSModules = Collections.unmodifiableMap(resolvedJSModules);
+			_resolvedJSPackages = Collections.unmodifiableMap(
+				resolvedJSPackages);
 		}
 
 		private final Map<String, String> _exactMatchMap;

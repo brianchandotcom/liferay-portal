@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.1.10.3."
-	@priority = "4"
+	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade71103 {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
@@ -65,12 +65,12 @@ definition {
 		task ("And: All the configurations which defines in saml-idp.json are configured") {
 			SAMLNavigation.gotoIdentityProvider();
 
-			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = 10000);
 		}
 	}
 
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.2.10.1."
-	@priority = "4"
+	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade72101 {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
@@ -118,12 +118,12 @@ definition {
 		task ("And: All the configurations which defines in saml-idp.json are configured") {
 			SAMLNavigation.gotoIdentityProvider();
 
-			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = 10000);
 		}
 	}
 
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.3.10.1."
-	@priority = "4"
+	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade73101 {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
@@ -171,12 +171,12 @@ definition {
 		task ("And: All the configurations which defines in saml-idp.json are configured") {
 			SAMLNavigation.gotoIdentityProvider();
 
-			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = 10000);
 		}
 	}
 
 	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.0.10.16."
-	@priority = "4"
+	@priority = 4
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade701016 {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
@@ -224,7 +224,7 @@ definition {
 		task ("And: All the configurations which defines in saml-idp.json are configured") {
 			SAMLNavigation.gotoIdentityProvider();
 
-			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = 10000);
 		}
 	}
 

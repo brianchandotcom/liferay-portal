@@ -3022,7 +3022,7 @@ definition {
 	}
 
 	@description = "LPS-152122 TC6. Import JSon file to configure the SAML IdP provider via Import/Export Center."
-	@priority = "4"
+	@priority = 4
 	test ImportJSONFileToConfigureSAMLIDP {
 		property app.server.bundles.size = "0";
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
@@ -3071,12 +3071,12 @@ definition {
 		task ("And: All the configurations which defines in saml-idp.json are configured") {
 			SAMLNavigation.gotoIdentityProvider();
 
-			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = 10000);
 		}
 	}
 
 	@description = "LPS-152122 TC5. Import JSon file to configure the SAML SP provider via Import/Export Center."
-	@priority = "4"
+	@priority = 4
 	test ImportJSONFileToConfigureSAMLSP {
 		property app.server.bundles.size = "0";
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
@@ -3125,12 +3125,12 @@ definition {
 		task ("And: All the configurations which defines in saml-sp.json are configured") {
 			SAMLNavigation.gotoServiceProvider();
 
-			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = "3500");
+			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = 3500);
 		}
 	}
 
 	@description = "LPS-152122 TC7. Import JSON file to configure the SAML SP provider via Import/Export Center in a non-default port."
-	@priority = "4"
+	@priority = 4
 	test ImportJSONFileToConfigureSAMLSPOnNonDefaultPort {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property keystore.enabled = "true";
@@ -3141,7 +3141,7 @@ definition {
 		task ("Given: Start up second bundle and add SAP") {
 			Clustering.startSpecificServer(
 				deleteLiferayHome = "false",
-				nodePort = "9080");
+				nodePort = 9080);
 
 			User.logoutPG();
 
@@ -3188,7 +3188,7 @@ definition {
 		task ("And: All the configurations which defines in saml-sp.json are configured") {
 			SAMLNavigation.gotoServiceProvider();
 
-			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = "3500");
+			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = 3500);
 		}
 	}
 

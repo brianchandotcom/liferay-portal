@@ -200,12 +200,6 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_FIELD_ON_MENU");
 	}
 
-	macro assertMenuItemColumn {
-		AssertElementPresent(
-			key_dropdownItem = ${dropdownItem},
-			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
-	}
-
 	macro assertNoFieldsWereFound {
 		AssertTextEquals(
 			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",

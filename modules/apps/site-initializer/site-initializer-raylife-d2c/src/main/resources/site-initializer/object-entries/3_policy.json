@@ -2037,9 +2037,9 @@
 		{
 			"boundDate": "2022-06-02T02:04:18Z",
 			"commission": 201,
-			"externalReferenceCode": "PO-33-889-2219",
 			"currencyType": "USD",
 			"endDate": "2023-06-02T02:04:18Z",
+			"externalReferenceCode": "PO-33-889-2219",
 			"lastPaymentDate": "2023-05-02T02:04:18Z",
 			"paymentDueDate": "2022-06-07T02:04:18Z",
 			"policyCreateDate": "2022-06-02T02:04:18Z",

@@ -18,7 +18,7 @@
 			"externalReferenceCode": "CL-62-174-3884",
 			"incidentDate": "2022-01-05T12:43:32Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-62-174-3884",
-			"settledDate": "2022-01-05T12:43:32Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 4082,
@@ -58,7 +58,7 @@
 			"externalReferenceCode": "CL-96-710-6810",
 			"incidentDate": "2022-04-29T15:52:38Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-96-710-6810",
-			"settledDate": "2022-05-02T15:52:38Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2961,
@@ -78,7 +78,7 @@
 			"externalReferenceCode": "CL-14-768-3243",
 			"incidentDate": "2023-04-11T14:59:31Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-14-768-3243",
-			"settledDate": "2023-04-12T14:59:31Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 4185,
@@ -88,7 +88,7 @@
 			"externalReferenceCode": "CL-57-402-8342",
 			"incidentDate": "2022-11-29T14:32:47Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-57-402-8342",
-			"settledDate": "2022-12-05T14:32:47Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 0,
@@ -98,7 +98,7 @@
 			"externalReferenceCode": "CL-81-788-4032",
 			"incidentDate": "2023-07-07T13:04:21Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-81-788-4032",
-			"settledDate": "2023-07-08T13:04:21Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 4409,
@@ -108,7 +108,7 @@
 			"externalReferenceCode": "CL-97-931-1823",
 			"incidentDate": "2022-10-05T04:20:43Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-97-931-1823",
-			"settledDate": "2022-10-09T04:20:43Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2270,
@@ -138,7 +138,7 @@
 			"externalReferenceCode": "CL-38-562-7204",
 			"incidentDate": "2022-10-30T16:13:36Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-38-562-7204",
-			"settledDate": "2022-11-05T16:13:36Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 3491,
@@ -158,7 +158,7 @@
 			"externalReferenceCode": "CL-24-969-1132",
 			"incidentDate": "2023-05-24T09:24:22Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-24-969-1132",
-			"settledDate": "2023-05-25T09:24:22Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2786,
@@ -178,7 +178,7 @@
 			"externalReferenceCode": "CL-49-835-7668",
 			"incidentDate": "2022-11-11T11:27:46Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-49-835-7668",
-			"settledDate": "2022-11-16T11:27:46Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 350,
@@ -248,7 +248,7 @@
 			"externalReferenceCode": "CL-01-048-4146",
 			"incidentDate": "2023-09-24T15:34:02Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-01-048-4146",
-			"settledDate": "2023-10-01T15:34:02Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 3390,
@@ -278,7 +278,7 @@
 			"externalReferenceCode": "CL-07-512-8878",
 			"incidentDate": "2023-02-13T02:07:57Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-07-512-8878",
-			"settledDate": "2023-02-15T02:07:57Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 1373,
@@ -378,7 +378,7 @@
 			"externalReferenceCode": "CL-06-747-0313",
 			"incidentDate": "2022-04-09T22:29:52Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-06-747-0313",
-			"settledDate": "2022-04-16T22:29:52Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2099,
@@ -388,7 +388,7 @@
 			"externalReferenceCode": "CL-76-477-2427",
 			"incidentDate": "2023-04-08T11:08:09Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-76-477-2427",
-			"settledDate": "2023-04-09T11:08:09Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 1798,
@@ -418,7 +418,7 @@
 			"externalReferenceCode": "CL-27-857-7605",
 			"incidentDate": "2022-05-30T17:51:18Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-27-857-7605",
-			"settledDate": "2022-05-31T17:51:18Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 3804,
@@ -438,7 +438,7 @@
 			"externalReferenceCode": "CL-02-464-7849",
 			"incidentDate": "2022-03-16T08:43:57Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-02-464-7849",
-			"settledDate": "2022-03-21T08:43:57Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 4047,
@@ -448,7 +448,7 @@
 			"externalReferenceCode": "CL-61-121-5224",
 			"incidentDate": "2022-04-21T09:07:57Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-61-121-5224",
-			"settledDate": "2022-04-23T09:07:57Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2320,
@@ -458,7 +458,7 @@
 			"externalReferenceCode": "CL-68-705-6331",
 			"incidentDate": "2022-10-29T07:53:17Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-68-705-6331",
-			"settledDate": "2022-11-04T07:53:17Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 1895,
@@ -468,7 +468,7 @@
 			"externalReferenceCode": "CL-82-419-3469",
 			"incidentDate": "2022-05-02T20:59:18Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-82-419-3469",
-			"settledDate": "2022-05-09T20:59:18Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2494,
@@ -478,7 +478,7 @@
 			"externalReferenceCode": "CL-39-022-9968",
 			"incidentDate": "2023-11-11T22:41:21Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-39-022-9968",
-			"settledDate": "2023-11-18T22:41:21Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 4150,
@@ -508,7 +508,7 @@
 			"externalReferenceCode": "CL-84-871-1015",
 			"incidentDate": "2023-11-15T04:12:30Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-84-871-1015",
-			"settledDate": "2023-11-18T04:12:30Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 2275,
@@ -528,7 +528,7 @@
 			"externalReferenceCode": "CL-71-999-0946",
 			"incidentDate": "2022-05-02T08:30:36Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-71-999-0946",
-			"settledDate": "2022-05-05T08:30:36Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 773,
@@ -558,7 +558,7 @@
 			"externalReferenceCode": "CL-98-127-2687",
 			"incidentDate": "2023-05-11T04:43:09Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-98-127-2687",
-			"settledDate": "2023-05-13T04:43:09Z"
+			"settledDate": null
 		},
 		{
 			"claimAmount": 1050,
@@ -568,7 +568,547 @@
 			"externalReferenceCode": "CL-56-014-6401",
 			"incidentDate": "2022-04-02T18:29:05Z",
 			"r_policyToClaims_c_raylifePolicyERC": "PO-56-014-6401",
-			"settledDate": "2022-04-08T18:29:05Z"
+			"settledDate": null
+		},
+		{
+			"claimAmount": 19390,
+			"claimCreateDate": "2022-03-22T07:06:24Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-50-170-1310",
+			"incidentDate": "2022-03-19T07:06:24Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-50-170-1310",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 21667,
+			"claimCreateDate": "2023-10-20T03:09:17Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-03-354-4783",
+			"incidentDate": "2023-10-13T03:09:17Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-03-354-4783",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 28075,
+			"claimCreateDate": "2023-03-17T10:22:53Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-49-718-9087",
+			"incidentDate": "2023-03-15T10:22:53Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-49-718-9087",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 32119,
+			"claimCreateDate": "2022-09-03T11:18:56Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-12-697-8753",
+			"incidentDate": "2022-08-31T11:18:56Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-12-697-8753",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 38484,
+			"claimCreateDate": "2023-12-14T14:06:47Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-57-079-0997",
+			"incidentDate": "2023-12-09T14:06:47Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-57-079-0997",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 39104,
+			"claimCreateDate": "2021-10-26T00:09:57Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-49-384-8171",
+			"incidentDate": "2021-10-21T00:09:57Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-49-384-8171",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 45218,
+			"claimCreateDate": "2023-01-31T19:08:51Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-29-684-6794",
+			"incidentDate": "2023-01-28T19:08:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-29-684-6794",
+			"settledDate": "2023-01-31T19:08:51Z"
+		},
+		{
+			"claimAmount": 1879,
+			"claimCreateDate": "2022-02-23T08:38:54Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-90-972-6070",
+			"incidentDate": "2022-02-21T08:38:54Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-90-972-6070",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 37209,
+			"claimCreateDate": "2022-12-24T14:01:35Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-42-620-5412",
+			"incidentDate": "2022-12-18T14:01:35Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-42-620-5412",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 27068,
+			"claimCreateDate": "2022-05-31T08:58:09Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-00-932-0229",
+			"incidentDate": "2022-05-24T08:58:09Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-00-932-0229",
+			"settledDate": "2022-05-31T08:58:09Z"
+		},
+		{
+			"claimAmount": 4940,
+			"claimCreateDate": "2022-10-26T03:19:10Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-19-218-6606",
+			"incidentDate": "2022-10-25T03:19:10Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-19-218-6606",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 35351,
+			"claimCreateDate": "2022-08-10T08:20:42Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-95-568-4553",
+			"incidentDate": "2022-08-04T08:20:42Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-95-568-4553",
+			"settledDate": "2022-08-10T08:20:42Z"
+		},
+		{
+			"claimAmount": 48820,
+			"claimCreateDate": "2022-10-04T12:19:24Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-20-651-4416",
+			"incidentDate": "2022-10-01T12:19:24Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-20-651-4416",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 23911,
+			"claimCreateDate": "2022-07-12T03:23:21Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-24-103-4848",
+			"incidentDate": "2022-07-06T03:23:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-24-103-4848",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 978,
+			"claimCreateDate": "2022-02-05T17:58:25Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-91-443-8487",
+			"incidentDate": "2022-02-01T17:58:25Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-91-443-8487",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29970,
+			"claimCreateDate": "2022-07-14T11:10:52Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-17-214-1457",
+			"incidentDate": "2022-07-10T11:10:52Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-17-214-1457",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9150,
+			"claimCreateDate": "2022-05-19T23:16:45Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-09-615-0298",
+			"incidentDate": "2022-05-15T23:16:45Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-09-615-0298",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 30909,
+			"claimCreateDate": "2022-06-19T14:54:36Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-28-790-5786",
+			"incidentDate": "2022-06-14T14:54:36Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-28-790-5786",
+			"settledDate": "2022-06-19T14:54:36Z"
+		},
+		{
+			"claimAmount": 29075,
+			"claimCreateDate": "2023-08-14T07:19:42Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-35-502-0350",
+			"incidentDate": "2023-08-11T07:19:42Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-35-502-0350",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 41889,
+			"claimCreateDate": "2023-02-11T03:46:30Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-80-645-0770",
+			"incidentDate": "2023-02-04T03:46:30Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-80-645-0770",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 49640,
+			"claimCreateDate": "2022-06-27T23:53:59Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-26-840-9269",
+			"incidentDate": "2022-06-24T23:53:59Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-26-840-9269",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 25240,
+			"claimCreateDate": "2023-09-08T00:28:54Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-12-740-3916",
+			"incidentDate": "2023-09-04T00:28:54Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-12-740-3916",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 24701,
+			"claimCreateDate": "2022-11-25T10:02:33Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-39-867-3548",
+			"incidentDate": "2022-11-20T10:02:33Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-39-867-3548",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9726,
+			"claimCreateDate": "2022-02-13T02:54:08Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-78-702-7140",
+			"incidentDate": "2022-02-07T02:54:08Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-78-702-7140",
+			"settledDate": "2022-02-13T02:54:08Z"
+		},
+		{
+			"claimAmount": 41621,
+			"claimCreateDate": "2022-02-11T09:30:46Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-78-479-8457",
+			"incidentDate": "2022-02-10T09:30:46Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-78-479-8457",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 37086,
+			"claimCreateDate": "2022-04-10T13:18:29Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-34-994-6005",
+			"incidentDate": "2022-04-03T13:18:29Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-34-994-6005",
+			"settledDate": "2022-04-10T13:18:29Z"
+		},
+		{
+			"claimAmount": 15828,
+			"claimCreateDate": "2022-03-22T22:29:23Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-89-014-0947",
+			"incidentDate": "2022-03-21T22:29:23Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-89-014-0947",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 13871,
+			"claimCreateDate": "2022-11-21T15:13:45Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-04-036-2064",
+			"incidentDate": "2022-11-16T15:13:45Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-04-036-2064",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 15915,
+			"claimCreateDate": "2023-08-14T14:37:45Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-81-862-3592",
+			"incidentDate": "2023-08-13T14:37:45Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-81-862-3592",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2037,
+			"claimCreateDate": "2021-11-16T12:56:21Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-09-783-3860",
+			"incidentDate": "2021-11-14T12:56:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-09-783-3860",
+			"settledDate": "2021-11-16T12:56:21Z"
+		},
+		{
+			"claimAmount": 26193,
+			"claimCreateDate": "2023-01-13T09:52:34Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-87-656-9828",
+			"incidentDate": "2023-01-07T09:52:34Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-87-656-9828",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9525,
+			"claimCreateDate": "2022-11-12T10:04:24Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-72-105-2771",
+			"incidentDate": "2022-11-10T10:04:24Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-72-105-2771",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 17123,
+			"claimCreateDate": "2022-11-06T10:29:52Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-89-520-7494",
+			"incidentDate": "2022-10-31T10:29:52Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-89-520-7494",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29384,
+			"claimCreateDate": "2023-11-12T13:14:56Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-92-063-4942",
+			"incidentDate": "2023-11-05T13:14:56Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-92-063-4942",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 33823,
+			"claimCreateDate": "2022-05-07T02:03:35Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-80-512-1851",
+			"incidentDate": "2022-05-06T02:03:35Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-80-512-1851",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 31591,
+			"claimCreateDate": "2022-07-23T06:53:39Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-99-297-3123",
+			"incidentDate": "2022-07-22T06:53:39Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-99-297-3123",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 5266,
+			"claimCreateDate": "2022-10-12T05:21:10Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-82-741-5754",
+			"incidentDate": "2022-10-10T05:21:10Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-82-741-5754",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 20156,
+			"claimCreateDate": "2021-10-26T15:25:05Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-15-665-3471",
+			"incidentDate": "2021-10-23T15:25:05Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-15-665-3471",
+			"settledDate": "2021-10-26T15:25:05Z"
+		},
+		{
+			"claimAmount": 22649,
+			"claimCreateDate": "2022-05-27T13:46:42Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-52-796-5083",
+			"incidentDate": "2022-05-20T13:46:42Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-52-796-5083",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 46883,
+			"claimCreateDate": "2021-11-05T03:09:27Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-10-177-9775",
+			"incidentDate": "2021-11-01T03:09:27Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-10-177-9775",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 46558,
+			"claimCreateDate": "2022-08-06T09:14:37Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-62-028-5052",
+			"incidentDate": "2022-07-30T09:14:37Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-62-028-5052",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 30197,
+			"claimCreateDate": "2023-01-28T06:38:21Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-21-770-2462",
+			"incidentDate": "2023-01-21T06:38:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-21-770-2462",
+			"settledDate": "2023-01-28T06:38:21Z"
+		},
+		{
+			"claimAmount": 6699,
+			"claimCreateDate": "2023-01-29T20:53:43Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-34-660-4892",
+			"incidentDate": "2023-01-27T20:53:43Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-34-660-4892",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29975,
+			"claimCreateDate": "2022-11-16T18:01:25Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-36-436-4987",
+			"incidentDate": "2022-11-15T18:01:25Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-36-436-4987",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 11514,
+			"claimCreateDate": "2022-06-17T08:36:26Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-17-532-6902",
+			"incidentDate": "2022-06-13T08:36:26Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-17-532-6902",
+			"settledDate": "2022-06-17T08:36:26Z"
+		},
+		{
+			"claimAmount": 21871,
+			"claimCreateDate": "2022-02-08T23:41:51Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-55-818-8951",
+			"incidentDate": "2022-02-05T23:41:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-55-818-8951",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 41023,
+			"claimCreateDate": "2023-02-10T02:04:18Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-33-889-2219",
+			"incidentDate": "2023-02-09T02:04:18Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-33-889-2219",
+			"settledDate": "2023-02-10T02:04:18Z"
+		},
+		{
+			"claimAmount": 10084,
+			"claimCreateDate": "2022-10-25T12:59:06Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-34-014-7801",
+			"incidentDate": "2022-10-21T12:59:06Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-34-014-7801",
+			"settledDate": "2022-10-25T12:59:06Z"
+		},
+		{
+			"claimAmount": 44710,
+			"claimCreateDate": "2022-09-30T23:03:51Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-41-253-4807",
+			"incidentDate": "2022-09-25T23:03:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-41-253-4807",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 36376,
+			"claimCreateDate": "2023-06-03T16:23:49Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-98-316-2130",
+			"incidentDate": "2023-06-01T16:23:49Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-98-316-2130",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 17829,
+			"claimCreateDate": "2023-02-03T07:51:15Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-61-528-2307",
+			"incidentDate": "2023-02-02T07:51:15Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-61-528-2307",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9286,
+			"claimCreateDate": "2023-10-04T16:19:23Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-98-428-9284",
+			"incidentDate": "2023-09-30T16:19:23Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-98-428-9284",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 24457,
+			"claimCreateDate": "2023-12-03T18:52:32Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-12-228-9789",
+			"incidentDate": "2023-11-27T18:52:32Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-12-228-9789",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 42977,
+			"claimCreateDate": "2022-07-05T11:49:49Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-86-430-5624",
+			"incidentDate": "2022-06-29T11:49:49Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-86-430-5624",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 31756,
+			"claimCreateDate": "2022-11-03T17:14:43Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-62-605-0517",
+			"incidentDate": "2022-10-31T17:14:43Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-62-605-0517",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 33358,
+			"claimCreateDate": "2022-03-17T23:58:26Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-41-732-6472",
+			"incidentDate": "2022-03-16T23:58:26Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-41-732-6472",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29801,
+			"claimCreateDate": "2022-12-28T03:18:11Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-50-820-8485",
+			"incidentDate": "2022-12-26T03:18:11Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-50-820-8485",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 6315,
+			"claimCreateDate": "2022-11-15T08:44:08Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-86-054-3284",
+			"incidentDate": "2022-11-14T08:44:08Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-86-054-3284",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 23777,
+			"claimCreateDate": "2023-11-18T07:10:48Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-72-120-2350",
+			"incidentDate": "2023-11-12T07:10:48Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-72-120-2350",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 36893,
+			"claimCreateDate": "2023-05-21T01:35:07Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-40-057-7878",
+			"incidentDate": "2023-05-14T01:35:07Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-40-057-7878",
+			"settledDate": null
 		}
 	],
 	"objectDefinitionName": "RaylifeClaim"

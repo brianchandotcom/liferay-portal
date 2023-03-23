@@ -186,7 +186,7 @@
 			"externalReferenceCode": "QT-14-445-2863",
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
-			"quoteCreateDate": "2021-12-26T21:10:09Z",
+			"quoteCreateDate": "2022-11-28T14:17:51Z",
 			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-14-445-2863"
 		},
 		{
@@ -529,7 +529,7 @@
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2021-10-19T07:06:24Z",
-			"r_applicationToQuotes_c_raylifeApplicationId": "AP-50-170-1310"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-50-170-1310"
 		},
 		{
 			"billingOption": "payInFull",
@@ -565,7 +565,7 @@
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2023-03-04T14:06:47Z",
-			"r_applicationToQuotes_c_raylifeApplicationId": "AP-57-079-0997"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-57-079-0997"
 		},
 		{
 			"billingOption": "payInFull",
@@ -574,7 +574,7 @@
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2021-10-08T00:09:57Z",
-			"r_applicationToQuotes_c_raylifeApplicationId": "AP-49-384-8171"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-49-384-8171"
 		},
 		{
 			"billingOption": "payInFull",
@@ -592,7 +592,7 @@
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2021-10-04T08:38:54Z",
-			"r_applicationToQuotes_c_raylifeApplicationId": "AP-90-972-6070"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-90-972-6070"
 		},
 		{
 			"billingOption": "payInFull",
@@ -601,7 +601,7 @@
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-07-04T14:01:35Z",
-			"r_applicationToQuotes_c_raylifeApplicationId": "AP-42-620-5412"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-42-620-5412"
 		},
 		{
 			"billingOption": "payInFull",
@@ -620,15 +620,6 @@
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2022-04-19T03:19:10Z",
 			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-19-218-6606"
-		},
-		{
-			"billingOption": "payInFull",
-			"dataJSON": "",
-			"externalReferenceCode": "",
-			"policyTerm": "yearToYear",
-			"quoteBillingOption": "payInFull",
-			"quoteCreateDate": "",
-			"r_applicationToQuotes_c_raylifeApplicationERC": ""
 		},
 		{
 			"billingOption": "payInFull",
@@ -682,7 +673,7 @@
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
 			"quoteCreateDate": "2021-10-25T23:16:45Z",
-			"r_applicationToQuotes_c_raylifeApplicationId": "AP-09-615-0298"
+			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-09-615-0298"
 		},
 		{
 			"billingOption": "payInFull",
@@ -735,7 +726,7 @@
 			"externalReferenceCode": "QT-39-867-3548",
 			"policyTerm": "yearToYear",
 			"quoteBillingOption": "payInFull",
-			"quoteCreateDate": "",
+			"quoteCreateDate": "2022-04-18T10:02:33Z",
 			"r_applicationToQuotes_c_raylifeApplicationERC": "AP-39-867-3548"
 		},
 		{

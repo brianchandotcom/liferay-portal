@@ -269,4 +269,24 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-176898 | Test Summary: Verify that can clear the filter results with the close button"
+	@priority = 3
+	test CanClearFilterWithCloseButton {
+		task ("When the user filters a filter by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				locator1 = "TestrayFilter#SEARCH_FILTERS",
+				value1 = "testTest");
+
+			AssertElementPresent(locator1 = "TestrayFilter#MESSAGE_NO_RESULTS");
+		}
+
+		task ("Then you can clear the filter results by close button") {
+			Click(locator1 = "Button#CLEAR");
+
+			AssertElementNotPresent(locator1 = "TestrayFilter#MESSAGE_NO_RESULTS");
+		}
+	}
+
 }

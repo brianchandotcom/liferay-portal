@@ -420,7 +420,7 @@ public class DefaultObjectEntryManagerImpl
 
 				Map<Object, Long> aggregationCounts =
 					_objectEntryLocalService.getAggregationCounts(
-						objectDefinition.getObjectDefinitionId(),
+						groupId, objectDefinition.getObjectDefinitionId(),
 						entry1.getKey(), predicate, start, end);
 
 				for (Map.Entry<Object, Long> entry2 :

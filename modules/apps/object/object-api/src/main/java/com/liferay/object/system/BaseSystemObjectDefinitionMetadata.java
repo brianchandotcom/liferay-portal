@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -72,6 +73,26 @@ public abstract class BaseSystemObjectDefinitionMetadata
 	@Override
 	public String getTitleObjectFieldName() {
 		return "id";
+	}
+
+	@Override
+	public long upsertBaseModel(
+			String externalReferenceCode, long companyId, User user,
+			Map<String, Object> values)
+		throws Exception {
+
+		BaseModel<?> baseModel = fetchBaseModelByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (baseModel != null) {
+			long primaryKey = (long)baseModel.getPrimaryKeyObj();
+
+			updateBaseModel(primaryKey, user, values);
+
+			return primaryKey;
+		}
+
+		return addBaseModel(user, values);
 	}
 
 	protected Map<Locale, String> createLabelMap(String labelKey) {

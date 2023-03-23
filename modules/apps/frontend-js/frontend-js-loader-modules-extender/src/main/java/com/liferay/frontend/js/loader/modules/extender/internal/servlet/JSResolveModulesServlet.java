@@ -18,7 +18,6 @@ import com.liferay.frontend.js.loader.modules.extender.internal.configuration.De
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolution;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolver;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -59,10 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 public class JSResolveModulesServlet extends HttpServlet {
 
 	public String getURL() {
-		NPMRegistryStateSnapshot npmRegistryStateSnapshot =
-			_npmRegistry.getNPMRegistryStateSnapshot();
-
-		return "/js_resolve_modules/" + npmRegistryStateSnapshot.getDigest();
+		return "/js_resolve_modules/" + _npmRegistry.getResolutionStateDigest();
 	}
 
 	@Override
@@ -71,11 +67,8 @@ public class JSResolveModulesServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		NPMRegistryStateSnapshot npmRegistryStateSnapshot =
-			_npmRegistry.getNPMRegistryStateSnapshot();
-
 		String expectedPathInfo =
-			StringPool.SLASH + npmRegistryStateSnapshot.getDigest();
+			StringPool.SLASH + _npmRegistry.getResolutionStateDigest();
 
 		if (!expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -83,7 +76,7 @@ public class JSResolveModulesServlet extends HttpServlet {
 					httpServletRequest);
 
 			String url = absolutePortalURLBuilder.forServlet(
-				"/js_resolve_modules/" + npmRegistryStateSnapshot.getDigest()
+				"/js_resolve_modules/" + _npmRegistry.getResolutionStateDigest()
 			).build();
 
 			// Send a redirect so that the AMD loader knows that it must update
@@ -106,8 +99,7 @@ public class JSResolveModulesServlet extends HttpServlet {
 
 		BrowserModulesResolution browserModulesResolution =
 			_browserModulesResolver.resolve(
-				_getModuleNames(httpServletRequest), httpServletRequest,
-				npmRegistryStateSnapshot);
+				_getModuleNames(httpServletRequest), httpServletRequest);
 
 		printWriter.write(browserModulesResolution.toJSON());
 

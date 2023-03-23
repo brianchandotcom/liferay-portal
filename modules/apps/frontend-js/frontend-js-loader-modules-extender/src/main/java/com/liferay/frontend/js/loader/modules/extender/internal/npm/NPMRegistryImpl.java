@@ -162,6 +162,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		return _npmRegistryStateSnapshotImpl;
 	}
 
+	@Override
+	public String getResolutionStateDigest() {
+		return _npmRegistryStateSnapshotImpl.getDigest();
+	}
+
 	/**
 	 * Returns the resolved module with the ID.
 	 *

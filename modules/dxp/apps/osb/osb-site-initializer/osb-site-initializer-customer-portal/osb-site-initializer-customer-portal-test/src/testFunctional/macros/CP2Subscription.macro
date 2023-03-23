@@ -4,9 +4,9 @@ definition {
 		WaitForPageLoad();
 
 		AssertElementPresent(
-				key_date = ${dates},
-				key_status = ${status},
-				locator1 = "CustomerPortalSite#CARD_DATE");
+			key_date = ${dates},
+			key_status = ${status},
+			locator1 = "CustomerPortalSite#CARD_DATE");
 	}
 
 	macro changeTheStatusToDisplayCards {

@@ -56,9 +56,9 @@ definition {
 			CustomerPortal.viewCardValue(
 				cardName = "Non-Production",
 				date = "04/01/2021 - 03/31/2022",
-				instanceSize = "1",
+				instanceSize = 1,
 				logo = "dxp_icon",
-				position = "2",
+				position = 2,
 				status = "Active");
 		}
 	}

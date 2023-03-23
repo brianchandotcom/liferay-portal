@@ -69,7 +69,7 @@ definition {
 	test NonStaffUsersJustSeeTheAssociatedProject {
 
 		// This test will be ignored until the account restriction bug is fixed
-		
+
 		task ("Then I go to CP2.0 and assert that all projects are visible") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

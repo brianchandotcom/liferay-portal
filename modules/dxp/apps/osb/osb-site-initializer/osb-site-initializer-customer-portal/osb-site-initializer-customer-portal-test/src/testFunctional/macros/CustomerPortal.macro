@@ -295,7 +295,7 @@ definition {
 
 		Search.searchCP(searchTerm = ${key_status});
 
-		if (IsElementPresent(locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON", key_accountName = ${key_status})) {
+		if (IsElementPresent(key_accountName = ${key_status}, locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON")) {
 			Click(
 				key_accountName = ${key_status},
 				locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON");
@@ -442,7 +442,7 @@ definition {
 			category = "Object",
 			panel = "Control Panel",
 			portlet = "Account Flags");
-			
+
 		ObjectPortlet.deleteEntry(entry = ${entry});
 	}
 
@@ -748,8 +748,8 @@ definition {
 
 	macro viewActivationStatusCardChange {
 		AssertElementPresent(
-			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-			key_text = ${subtitle});
+			key_text = ${subtitle},
+			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
 
 		AssertElementPresent(
 			key_status = ${status},
@@ -758,8 +758,8 @@ definition {
 
 	macro viewActivationStatusCardValue {
 		AssertElementPresent(
-			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-			key_text = ${subtitle});
+			key_text = ${subtitle},
+			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
 
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_LOGO",
@@ -816,8 +816,8 @@ definition {
 
 		AssertElementPresent(
 			key_date = ${date},
-			locator1 = "CustomerPortalSite#CARD_DATE",
-			key_status = ${status});
+			key_status = ${status},
+			locator1 = "CustomerPortalSite#CARD_DATE");
 	}
 
 	macro viewConfirmationModal {

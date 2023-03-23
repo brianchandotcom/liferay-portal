@@ -100,12 +100,6 @@ definition {
 			value1 = ${role});
 	}
 
-	macro clearCloudEntries {
-		CustomerPortal.clearActivationStatus(
-			position = ${position},
-			status = ${status});
-	}
-
 	macro clickAtFilterMenu {
 		Click.pauseClickAt(
 			key_text = ${text},

@@ -133,8 +133,8 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 
 			AssertElementPresent(
-				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-				key_text = "Almost there! Setup Analytics Cloud by finishing the activation form.");
+				key_text = "Almost there! Setup Analytics Cloud by finishing the activation form.",
+				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
 		}
 
 		task ("Open the Setup Analytics Cloud modal and Fill out the activation form and submit") {
@@ -167,8 +167,8 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 
 			AssertElementPresent(
-				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-				key_text = "Your Analytics Cloud workspace is being set up and will be available soon.");
+				key_text = "Your Analytics Cloud workspace is being set up and will be available soon.",
+				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
 		}
 
 		task ("Delete the entries and objects created") {

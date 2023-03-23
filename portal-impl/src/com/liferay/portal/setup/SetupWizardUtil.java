@@ -384,9 +384,15 @@ public class SetupWizardUtil {
 		unicodeProperties.put(
 			PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
 
+		String defaultAdminEmailAddressPrefix = emailAddress.substring(
+			0, index);
+
 		unicodeProperties.put(
 			PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX,
-			emailAddress.substring(0, index));
+			defaultAdminEmailAddressPrefix);
+
+		PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX =
+			defaultAdminEmailAddressPrefix;
 
 		HttpSession httpSession = httpServletRequest.getSession();
 

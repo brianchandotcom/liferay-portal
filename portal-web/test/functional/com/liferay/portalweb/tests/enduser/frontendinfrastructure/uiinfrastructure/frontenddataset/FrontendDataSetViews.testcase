@@ -97,12 +97,31 @@ definition {
 	}
 
 	@description = "Confirm that the user can cancel the creation of a data set view"
-	@ignore = "Test Stub"
 	@priority = 5
 	test NotCreatedAfterCancel {
+		task ("When The user goes to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO NotCreatedAfterCancel pending implementation JQuery enabled
+		task ("And fills the field name with name 'Test Dataset'") {
+			PortletEntry.inputName(name = "Test Dataset");
+		}
 
+		task ("And choose the Provider called channel ") {
+			FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+		}
+
+		task ("And clicking on the Cancel button ") {
+			Click(
+				key_text = "Cancel",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("Then Confirm that the dataset was not created") {
+			AssertElementNotPresent(
+				key_itemName = "Test Dataset",
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
 	}
 
 }

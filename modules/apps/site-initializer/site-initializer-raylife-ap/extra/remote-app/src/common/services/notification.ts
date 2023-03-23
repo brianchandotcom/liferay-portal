@@ -18,7 +18,6 @@ const headlessAPI = 'o/headless-user-notification/v1.0';
 
 type Parameters = {
 	order?: string;
-	page: number;
 	pageSize: number;
 	sortBy?: string;
 };
@@ -26,7 +25,7 @@ type Parameters = {
 export function getUserNotification(parameters: Parameters) {
 	if (parameters) {
 		return axios.get(
-			`${headlessAPI}/my-user-notifications/?&pageSize=${parameters.pageSize}&page=${parameters.page}&sort=${parameters.sortBy}:${parameters.order}`
+			`${headlessAPI}/my-user-notifications/?&pageSize=${parameters.pageSize}&sort=${parameters.sortBy}:${parameters.order}`
 		);
 	}
 

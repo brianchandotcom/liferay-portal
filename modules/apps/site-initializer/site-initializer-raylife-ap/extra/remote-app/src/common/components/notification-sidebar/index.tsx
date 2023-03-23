@@ -27,7 +27,7 @@ import createUrlByERC from '../../utils/createUrlByERC';
 import {PostType} from './postTypes';
 
 const initialPagination = {
-	page: 1,
+	pageSize: 7,
 	totalCount: 0,
 };
 
@@ -37,13 +37,15 @@ const NotificationSidebar: React.FC = () => {
 		initialPagination.totalCount
 	);
 	const [postsWithLinks, setPostsWithLinks] = useState<PostType[]>([]);
-	const [page, setPage] = useState<number>(initialPagination.page);
 	const hasMorePostsToLoad = posts.length < totalCount;
+	const [isRead, setIsRead] = useState<any>([]);
+	const [pageSize, setPageSize] = useState<number>(
+		initialPagination.pageSize
+	);
 
 	const parameters = {
 		order: 'desc',
-		page,
-		pageSize: 7,
+		pageSize,
 		sortBy: 'dateCreated',
 	};
 	const notificationCategory = 'Application ';
@@ -51,6 +53,14 @@ const NotificationSidebar: React.FC = () => {
 	const markAsRead = (post: PostType) => {
 		if (!post.read) {
 			putUserNotificationRead(post.id);
+		}
+	};
+
+	const markAsReadState = (_post: PostType, index: number) => {
+		if (!isRead[index]) {
+			const arrayOfReads = [...isRead];
+			arrayOfReads[index] = !arrayOfReads[index];
+			setIsRead(arrayOfReads);
 		}
 	};
 
@@ -67,10 +77,7 @@ const NotificationSidebar: React.FC = () => {
 
 			if (notifications) {
 				setTotalCount(notifications.totalCount);
-				setPosts((previousPosts: PostType[]) => [
-					...previousPosts,
-					...notifications.items,
-				]);
+				setPosts(() => [...notifications.items]);
 			}
 
 			return response;
@@ -104,8 +111,10 @@ const NotificationSidebar: React.FC = () => {
 	}
 
 	const generateLinks = async () => {
+		const arrayRead: any = [];
 		const newLinks = await Promise.all(
 			posts.map(async (post) => {
+				arrayRead.push(post.read);
 				const postId = extractNumber(post.message as string);
 				const isMatchingApplication = post.message?.includes(
 					notificationCategory + postId
@@ -128,47 +137,64 @@ const NotificationSidebar: React.FC = () => {
 				return {...post, link: genericRoute};
 			})
 		);
-
+		setIsRead(arrayRead);
 		setPostsWithLinks(newLinks);
 	};
 
 	const loadMore = () => {
-		const nextPage = page + 1;
-		setPage(nextPage);
+		const nextPage = pageSize + 7;
+		setPageSize(nextPage);
 	};
 
 	useEffect(() => {
 		getNotifications();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page]);
+	}, [pageSize]);
 
 	useEffect(() => {
 		generateLinks();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [posts]);
 
+	useEffect(() => {}, [isRead]);
+
 	return (
 		<div className="notification-container">
-			{!postsWithLinks && (
+			{!postsWithLinks.length && (
 				<p className="align-items-center d-flex justify-content-center pt-8 vh-100">
 					No notifications
 				</p>
 			)}
 
-			{!!postsWithLinks && (
+			{!!postsWithLinks.length && (
 				<div className="vh-100">
 					{postsWithLinks.map((item: PostType, index: number) => (
 						<div
 							className={classNames({
-								'post-container-unread align-items-center d-flex justify-content-center position-relative bubble-unread': !item.read,
+								'post-container-unread align-items-center d-flex justify-content-center position-relative bubble-unread': !isRead[
+									index
+								],
 							})}
 							key={index}
-							onClick={() => {
-								markAsRead(item);
-							}}
 						>
 							<div className="align-items-center dotted-line h-100 post-container">
-								<a href={item.link}>
+								<a
+									href={item.link}
+									onClick={() => {
+										if (!item.read) {
+											markAsRead(item);
+											markAsReadState(item, index);
+
+											return true;
+										}
+
+										return false;
+									}}
+								>
+									{item.message?.includes(
+										notificationCategory
+									) && <p>{notificationCategory}</p>}
+
 									<p className="mt-0 my-0">{item.message}</p>
 								</a>
 

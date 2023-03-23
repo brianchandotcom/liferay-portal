@@ -15,9 +15,11 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistryResolutionStateDigestUtil;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolution;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolver;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -53,12 +55,23 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.http.whiteboard.servlet.pattern=/js_resolve_modules/*",
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},
-	service = {JSResolveModulesServlet.class, Servlet.class}
+	service = {
+		JSResolveModulesServlet.class, NPMRegistryUpdatesListener.class,
+		Servlet.class
+	}
 )
-public class JSResolveModulesServlet extends HttpServlet {
+public class JSResolveModulesServlet
+	extends HttpServlet implements NPMRegistryUpdatesListener {
 
 	public String getURL() {
-		return "/js_resolve_modules/" + _npmRegistry.getResolutionStateDigest();
+		State state = _getState();
+
+		return state._url;
+	}
+
+	@Override
+	public void onAfterUpdate() {
+		_state = null;
 	}
 
 	@Override
@@ -67,16 +80,22 @@ public class JSResolveModulesServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String expectedPathInfo =
-			StringPool.SLASH + _npmRegistry.getResolutionStateDigest();
+		State state = _getState();
 
-		if (!expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
+		if (state == null) {
+			httpServletResponse.sendError(
+				HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+
+			return;
+		}
+
+		if (!state._expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
 			String url = absolutePortalURLBuilder.forServlet(
-				"/js_resolve_modules/" + _npmRegistry.getResolutionStateDigest()
+				state._url
 			).build();
 
 			// Send a redirect so that the AMD loader knows that it must update
@@ -137,6 +156,27 @@ public class JSResolveModulesServlet extends HttpServlet {
 		return Collections.emptyList();
 	}
 
+	private State _getState() {
+		State state = _state;
+
+		if (state != null) {
+			return state;
+		}
+
+		synchronized (this) {
+			if (_state != null) {
+				return _state;
+			}
+
+			state = new State(
+				NPMRegistryResolutionStateDigestUtil.digest(_npmRegistry));
+
+			_state = state;
+		}
+
+		return state;
+	}
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
@@ -145,5 +185,19 @@ public class JSResolveModulesServlet extends HttpServlet {
 
 	@Reference
 	private NPMRegistry _npmRegistry;
+
+	private volatile State _state;
+
+	private static class State {
+
+		private State(String digest) {
+			_expectedPathInfo = StringPool.SLASH + digest;
+			_url = "/js_resolve_modules/" + digest;
+		}
+
+		private final String _expectedPathInfo;
+		private final String _url;
+
+	}
 
 }

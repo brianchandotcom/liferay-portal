@@ -360,12 +360,6 @@ definition {
 			locator1 = "CreateObject#ERROR_MESSAGE");
 	}
 
-	macro viewObject {
-		Click(
-			key_labelName = ${labelName},
-			locator1 = "CreateObject#VIEW_OBJECT");
-	}
-
 	macro withdrawObjectTask {
 		Click(
 			key_taskName = ${objectLabel},

@@ -24,6 +24,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -65,7 +68,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -121,6 +123,15 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 			ContentDashboardItem<?> contentDashboardItem =
 				contentDashboardItemFactory.create(classPK);
+
+			String subtypeLabel = StringPool.BLANK;
+
+			ContentDashboardItemSubtype<?> contentDashboardItemSubtype =
+				contentDashboardItem.getContentDashboardItemSubtype();
+
+			if (contentDashboardItemSubtype != null) {
+				subtypeLabel = contentDashboardItemSubtype.getLabel(locale);
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -215,15 +226,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_getSubscribeJSONObject(
 						contentDashboardItem, httpServletRequest)
 				).put(
-					"subType",
-					Optional.ofNullable(
-						contentDashboardItem.getContentDashboardItemSubtype()
-					).map(
-						contentDashboardItemSubtype ->
-							contentDashboardItemSubtype.getLabel(locale)
-					).orElse(
-						StringPool.BLANK
-					)
+					"subType", subtypeLabel
 				).put(
 					"tags", _getAssetTagsJSONArray(contentDashboardItem)
 				).put(
@@ -303,17 +306,19 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private Map<String, Object> _getAssetVocabularyMap(
 		AssetVocabulary assetVocabulary, Locale locale) {
 
+		String groupName = StringPool.BLANK;
+
+		Group group = _groupLocalService.fetchGroup(
+			assetVocabulary.getGroupId());
+
+		if (group != null) {
+			groupName = ContentDashboardGroupUtil.getGroupName(group, locale);
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"categories", ListUtil.fromArray()
 		).put(
-			"groupName",
-			Optional.ofNullable(
-				_groupLocalService.fetchGroup(assetVocabulary.getGroupId())
-			).map(
-				group -> ContentDashboardGroupUtil.getGroupName(group, locale)
-			).orElse(
-				StringPool.BLANK
-			)
+			"groupName", groupName
 		).put(
 			"isPublic",
 			assetVocabulary.getVisibilityType() ==
@@ -511,13 +516,16 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
 
-		return Optional.ofNullable(
+		JSONObject jsonObject =
 			_getSubscribeContentDashboardItemActionJSONObject(
-				contentDashboardItem, httpServletRequest)
-		).orElseGet(
-			() -> _getUnSubscribeContentDashboardItemActionJSONObject(
-				contentDashboardItem, httpServletRequest)
-		);
+				contentDashboardItem, httpServletRequest);
+
+		if (jsonObject == null) {
+			return _getUnSubscribeContentDashboardItemActionJSONObject(
+				contentDashboardItem, httpServletRequest);
+		}
+
+		return jsonObject;
 	}
 
 	private JSONObject _getUnSubscribeContentDashboardItemActionJSONObject(
@@ -552,28 +560,24 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private JSONObject _getUserJSONObject(
 		ContentDashboardItem contentDashboardItem, ThemeDisplay themeDisplay) {
 
+		String url = null;
+
+		User user = _userLocalService.fetchUser(
+			contentDashboardItem.getUserId());
+
+		if ((user != null) && (user.getPortraitId() > 0)) {
+			try {
+				url = user.getPortraitURL(themeDisplay);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+
 		return JSONUtil.put(
 			"name", contentDashboardItem.getUserName()
 		).put(
-			"url",
-			Optional.ofNullable(
-				_userLocalService.fetchUser(contentDashboardItem.getUserId())
-			).filter(
-				user -> user.getPortraitId() > 0
-			).map(
-				user -> {
-					try {
-						return user.getPortraitURL(themeDisplay);
-					}
-					catch (PortalException portalException) {
-						_log.error(portalException);
-
-						return null;
-					}
-				}
-			).orElse(
-				null
-			)
+			"url", url
 		).put(
 			"userId", contentDashboardItem.getUserId()
 		);

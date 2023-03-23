@@ -1,0 +1,187 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account Analytics Cloud";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation ID: LPS-150680 | Test Summary: Verify if the same user submits the setup page in two different tabs or diferrent user submits the setup at the same project displays a message to the user that the form was sent"
+	@priority = 3
+	test MessageConfirmingFormHasAlreadyBeenSent {
+		task ("Given that I go to the card activation page") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
+
+			CP2Utils.onboardingFlow();
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+		}
+
+		task ("And I open a new tab, go to the Set up modal, fill out the whole form and send it") {
+			Open.openInTheNewTab(locator1 = "http://localhost:8080/web/customer-portal-site");
+
+			WaitForPageLoad();
+
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			CustomerPortal.clickAtButton(text = "Submit");
+
+			CustomerPortal.clickAtButton(text = "Done");
+
+			Navigator.closeWindow();
+		}
+
+		task ("When I go to the first open tab and try to submit the form again") {
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			CustomerPortal.clickAtButton(text = "Submit");
+		}
+
+		task ("Then I should be able to assert the message in the modal that the form has already been submitted ") {
+			CustomerPortal.viewConfirmationModal(modalText = "Another user already submitted the Analytics Cloud activation request.");
+
+			CustomerPortal.clickAtButton(text = "Done");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.clearStatus(status = "In-Progress");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				entry = "test@liferay.com",
+				portlet = "Analytics Cloud Workspaces");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				entry = "test@liferay.com",
+				portlet = "Incident Report Contacts Analytics Cloud");
+		}
+	}
+
+	@description = "Automation ID: LPS-150681 | Test Summary: Verify if when the first customer admin logs in and goes through the onboarding flow, and an staff already made the set up the form should be already submitted."
+	@priority = 3
+	test UserDoesNotGoThroughOnboarding {
+		task ("Go to CP2.0 and join a project and Going through onboarding") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
+
+			CP2Utils.onboardingFlow();
+		}
+
+		task ("Go to the product activation page and assert the subtitle") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
+				key_text = "Almost there! Setup Analytics Cloud by finishing the activation form.");
+		}
+
+		task ("Open the Setup Analytics Cloud modal and Fill out the activation form and submit") {
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			CustomerPortal.clickAtButton(text = "Submit");
+
+			CustomerPortal.clickAtButton(text = "Done");
+		}
+
+		task ("Delete account flag and go to CP2.0 and join a project") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
+		}
+
+		task ("Going through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("Assert that the activation card link has changed") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
+				key_text = "Your Analytics Cloud workspace is being set up and will be available soon.");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.clearStatus(status = "In-Progress");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				entry = "test@liferay.com",
+				portlet = "Analytics Cloud Workspaces");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				entry = "test@liferay.com",
+				portlet = "Incident Report Contacts Analytics Cloud");
+		}
+	}
+
+}

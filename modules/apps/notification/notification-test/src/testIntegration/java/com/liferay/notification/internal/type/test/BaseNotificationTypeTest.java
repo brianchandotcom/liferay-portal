@@ -60,6 +60,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -96,6 +97,17 @@ public class BaseNotificationTypeTest {
 			PermissionCheckerFactoryUtil.create(user2));
 
 		PrincipalThreadLocal.setName(user2.getUserId());
+
+		randomObjectEntryValues =
+			LinkedHashMapBuilder.<String, Serializable>put(
+				"booleanObjectField", RandomTestUtil.randomBoolean()
+			).put(
+				"dateObjectField", RandomTestUtil.nextDate()
+			).put(
+				"integerObjectField", RandomTestUtil.nextInt()
+			).put(
+				"textObjectField", RandomTestUtil.randomString()
+			).build();
 	}
 
 	@Before
@@ -191,7 +203,7 @@ public class BaseNotificationTypeTest {
 
 	protected List<Object> getAllTermValues() throws PortalException {
 		return ListUtil.concat(
-			ListUtil.fromMapValues(randomObjectEntryValues()),
+			ListUtil.fromMapValues(randomObjectEntryValues),
 			ListUtil.fromMapValues(_getAuthorTermValues()),
 			ListUtil.fromMapValues(_getCurrentUserTermValues()));
 	}
@@ -200,18 +212,6 @@ public class BaseNotificationTypeTest {
 		return StringBundler.concat(
 			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
 			StringUtil.upperCase(objectFieldName), "%]");
-	}
-
-	protected HashMap<String, Serializable> randomObjectEntryValues() {
-		return LinkedHashMapBuilder.<String, Serializable>put(
-			"booleanObjectField", RandomTestUtil.randomBoolean()
-		).put(
-			"dateObjectField", RandomTestUtil.nextDate()
-		).put(
-			"integerObjectField", RandomTestUtil.nextInt()
-		).put(
-			"textObjectField", RandomTestUtil.randomString()
-		).build();
 	}
 
 	protected void sendNotification(
@@ -237,6 +237,8 @@ public class BaseNotificationTypeTest {
 	@Inject
 	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
 
+	protected static LinkedHashMap<String, Serializable>
+		randomObjectEntryValues;
 	protected static User user1;
 	protected static User user2;
 

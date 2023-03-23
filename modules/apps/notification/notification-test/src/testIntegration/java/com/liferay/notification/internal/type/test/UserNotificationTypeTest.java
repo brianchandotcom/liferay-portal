@@ -151,7 +151,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user1.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			randomObjectEntryValues(),
+			randomObjectEntryValues,
 			ServiceContextTestUtil.getServiceContext());
 
 		sendNotification(
@@ -171,7 +171,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				).put(
 					"currentUserId", user1.getUserId()
 				).putAll(
-					randomObjectEntryValues()
+					randomObjectEntryValues
 				).build()
 			).userId(
 				user1.getUserId()

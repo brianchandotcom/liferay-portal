@@ -172,7 +172,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private void _testObjectDefinitionTermEvaluator() throws Exception {
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			randomObjectEntryValues(),
+			randomObjectEntryValues,
 			ServiceContextTestUtil.getServiceContext());
 
 		sendNotification(
@@ -191,7 +191,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				).put(
 					"currentUserId", user2.getUserId()
 				).putAll(
-					randomObjectEntryValues()
+					randomObjectEntryValues
 				).build()
 			).userId(
 				user2.getUserId()

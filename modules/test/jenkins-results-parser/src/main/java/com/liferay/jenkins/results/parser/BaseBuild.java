@@ -851,25 +851,31 @@ public abstract class BaseBuild implements Build {
 
 		return filteredDownstreamBuilds;
 	}
+	
+	private Long _duration = null;
 
 	@Override
 	public long getDuration() {
-		JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
+		if (_duration == null) {
+			JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
 
-		if (buildJSONObject == null) {
-			return 0;
+			if (buildJSONObject == null) {
+				return 0;
+			}
+
+			long duration = buildJSONObject.getLong("duration");
+
+			if (duration == 0) {
+				long timestamp = buildJSONObject.getLong("timestamp");
+
+				duration =
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - timestamp;
+			}
+
+			_duration = duration;
 		}
 
-		long duration = buildJSONObject.getLong("duration");
-
-		if (duration == 0) {
-			long timestamp = buildJSONObject.getLong("timestamp");
-
-			duration =
-				JenkinsResultsParserUtil.getCurrentTimeMillis() - timestamp;
-		}
-
-		return duration;
+		return _duration;
 	}
 
 	@Override
@@ -2099,6 +2105,8 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public synchronized void update() {
+		_duration = null;
+
 		String status = getStatus();
 
 		if ((status.equals("completed") &&
@@ -4377,8 +4385,7 @@ public abstract class BaseBuild implements Build {
 
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
-			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
-			"\\d+)/?"));
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+(/label=[^/]+)?)/(?<buildNumber>\\d+)/?"));
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		"\\[beanshell\\] Uploaded (?<url>https://testray.liferay.com/[^\\s]+)");
 	private static final Pattern _testrayS3ObjectURLPattern = Pattern.compile(

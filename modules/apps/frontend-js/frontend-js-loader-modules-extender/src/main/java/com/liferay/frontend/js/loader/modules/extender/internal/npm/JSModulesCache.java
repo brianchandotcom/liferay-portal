@@ -14,17 +14,13 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
-import com.github.yuchi.semver.Range;
-
 import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -63,6 +59,12 @@ public class JSModulesCache {
 		_resolvedJSPackages = resolvedJSPackages;
 	}
 
+	public ConcurrentHashMap<String, JSPackage>
+		getCachedDependencyJSPackages() {
+
+		return _cachedDependencyJSPackages;
+	}
+
 	public Map<String, String> getExactMatchMap() {
 		return _exactMatchMap;
 	}
@@ -77,6 +79,10 @@ public class JSModulesCache {
 
 	public Map<String, JSPackage> getJSPackages() {
 		return _jsPackages;
+	}
+
+	public List<JSPackageVersion> getJSPackageVersions() {
+		return _jsPackageVersions;
 	}
 
 	public Map<String, String> getPartialMatchMap() {
@@ -97,49 +103,6 @@ public class JSModulesCache {
 
 	public Map<String, JSPackage> getResolvedJSPackages() {
 		return _resolvedJSPackages;
-	}
-
-	public JSPackage resolveJSPackageDependency(
-		JSPackageDependency jsPackageDependency) {
-
-		String packageName = jsPackageDependency.getPackageName();
-		String versionConstraints = jsPackageDependency.getVersionConstraints();
-
-		String cacheKey = StringBundler.concat(
-			packageName, StringPool.UNDERLINE, versionConstraints);
-
-		JSPackage jsPackage = _cachedDependencyJSPackages.get(cacheKey);
-
-		if (jsPackage != null) {
-			if (jsPackage == _NULL_JS_PACKAGE) {
-				return null;
-			}
-
-			return jsPackage;
-		}
-
-		Range range = Range.from(versionConstraints, true);
-
-		for (JSPackageVersion jsPackageVersion : _jsPackageVersions) {
-			JSPackage innerJSPackage = jsPackageVersion.getJSPackage();
-
-			if (packageName.equals(innerJSPackage.getName()) &&
-				range.test(jsPackageVersion.getVersion())) {
-
-				jsPackage = innerJSPackage;
-
-				break;
-			}
-		}
-
-		if (jsPackage == null) {
-			_cachedDependencyJSPackages.put(cacheKey, _NULL_JS_PACKAGE);
-		}
-		else {
-			_cachedDependencyJSPackages.put(cacheKey, jsPackage);
-		}
-
-		return jsPackage;
 	}
 
 	private String _computeResolutionStateDigest() {
@@ -311,9 +274,6 @@ public class JSModulesCache {
 			throw new RuntimeException(unsupportedEncodingException);
 		}
 	}
-
-	private static final JSPackage _NULL_JS_PACKAGE =
-		ProxyFactory.newDummyInstance(JSPackage.class);
 
 	private final ConcurrentHashMap<String, JSPackage>
 		_cachedDependencyJSPackages = new ConcurrentHashMap<>();

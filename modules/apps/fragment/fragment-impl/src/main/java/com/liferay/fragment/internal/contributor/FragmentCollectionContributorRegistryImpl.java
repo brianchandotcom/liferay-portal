@@ -32,12 +32,22 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -51,6 +61,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -276,59 +288,104 @@ public class FragmentCollectionContributorRegistryImpl
 			propagateContributedFragmentChanges();
 	}
 
+	private void _setCompanyContext(
+		Company company, HttpServletRequest httpServletRequest) {
+
+		CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+		User user = _userLocalService.fetchDefaultUser(company.getCompanyId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(company.getCompanyId());
+
+		serviceContext.setRequest(httpServletRequest);
+
+		serviceContext.setUserId(user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+	}
+
 	private void _updateFragmentEntryLinks(
 		Map<String, FragmentEntry> fragmentEntries) {
 
-		_companyLocalService.forEachCompany(
-			company -> {
-				try {
-					if (!_isPropagateContributedFragmentChanges(
-							company.getCompanyId())) {
+		long originalCompanyId = CompanyThreadLocal.getCompanyId();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+		ServiceContext originalServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-						PortletPreferences portletPreferences =
-							_portalPreferencesLocalService.getPreferences(
-								company.getCompanyId(),
-								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+		try {
+			_companyLocalService.forEachCompany(
+				company -> {
+					try {
+						if (!_isPropagateContributedFragmentChanges(
+								company.getCompanyId())) {
 
-						portletPreferences.setValue(
-							"alreadyPropagateContributedFragmentChanges",
-							Boolean.FALSE.toString());
+							PortletPreferences portletPreferences =
+								_portalPreferencesLocalService.getPreferences(
+									company.getCompanyId(),
+									PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-						portletPreferences.store();
+							portletPreferences.setValue(
+								"alreadyPropagateContributedFragmentChanges",
+								Boolean.FALSE.toString());
+
+							portletPreferences.store();
+
+							return;
+						}
+
+						_setCompanyContext(
+							company, originalServiceContext.getRequest());
+					}
+					catch (Exception exception) {
+						_log.error(exception);
 
 						return;
 					}
-				}
-				catch (Exception exception) {
-					_log.error(exception);
 
-					return;
-				}
+					Set<String> fragmentEntriesSet = fragmentEntries.keySet();
 
-				Set<String> fragmentEntriesSet = fragmentEntries.keySet();
+					List<FragmentEntryLink> fragmentEntryLinks =
+						_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+							company.getCompanyId(),
+							fragmentEntriesSet.toArray(new String[0]));
 
-				List<FragmentEntryLink> fragmentEntryLinks =
-					_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-						company.getCompanyId(),
-						fragmentEntriesSet.toArray(new String[0]));
+					for (FragmentEntryLink fragmentEntryLink :
+							fragmentEntryLinks) {
 
-				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-					FragmentEntry fragmentEntry = fragmentEntries.get(
-						fragmentEntryLink.getRendererKey());
+						FragmentEntry fragmentEntry = fragmentEntries.get(
+							fragmentEntryLink.getRendererKey());
 
-					if (fragmentEntry == null) {
-						continue;
+						if (fragmentEntry == null) {
+							continue;
+						}
+
+						try {
+							_fragmentEntryLinkLocalService.updateLatestChanges(
+								fragmentEntry, fragmentEntryLink);
+						}
+						catch (PortalException portalException) {
+							_log.error(portalException);
+						}
 					}
-
-					try {
-						_fragmentEntryLinkLocalService.updateLatestChanges(
-							fragmentEntry, fragmentEntryLink);
-					}
-					catch (PortalException portalException) {
-						_log.error(portalException);
-					}
-				}
-			});
+				});
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(originalCompanyId);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+			ServiceContextThreadLocal.pushServiceContext(
+				originalServiceContext);
+		}
 	}
 
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
@@ -371,6 +428,9 @@ public class FragmentCollectionContributorRegistryImpl
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	private ServiceTrackerMap<String, FragmentCollectionBag> _serviceTrackerMap;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	private static class FragmentCollectionBag {
 

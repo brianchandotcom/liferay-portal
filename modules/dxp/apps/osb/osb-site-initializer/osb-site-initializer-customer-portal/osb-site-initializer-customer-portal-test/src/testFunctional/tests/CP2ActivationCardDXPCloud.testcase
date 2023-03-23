@@ -182,7 +182,7 @@ definition {
 		//task ("Assert the card legend change") {
 		//	AssertElementPresent(
 		//		locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-		//		title = "Your LXC - SM environments are being set up and will be available soon");
+		//		key_text = "Your LXC - SM environments are being set up and will be available soon");
 		//}
 
 		task ("Delete the entries and objects created") {

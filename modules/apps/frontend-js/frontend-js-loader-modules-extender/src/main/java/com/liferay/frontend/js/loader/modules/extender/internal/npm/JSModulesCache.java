@@ -14,26 +14,11 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.UnsupportedEncodingException;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -91,7 +76,9 @@ public class JSModulesCache {
 
 	public String getResolutionStateDigest() {
 		if (_resolutionStateDigest == null) {
-			_resolutionStateDigest = _computeResolutionStateDigest();
+			_resolutionStateDigest =
+				NPMRegistryResolutionStateDigestUtil.digest(
+					_resolvedJSModules.values(), _resolvedJSPackages.values());
 		}
 
 		return _resolutionStateDigest;
@@ -103,151 +90,6 @@ public class JSModulesCache {
 
 	public Map<String, JSPackage> getResolvedJSPackages() {
 		return _resolvedJSPackages;
-	}
-
-	private String _computeResolutionStateDigest() {
-		MessageDigest messageDigest;
-
-		try {
-			messageDigest = MessageDigest.getInstance("SHA-1");
-		}
-		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			throw new RuntimeException(noSuchAlgorithmException);
-		}
-
-		// Hash dynamic JS modules that do not honor immutability of packages
-
-		List<DynamicJSModule> dynamicJSModules = new ArrayList<>();
-
-		for (JSModule jsModule : _resolvedJSModules.values()) {
-			if (jsModule instanceof DynamicJSModule) {
-				dynamicJSModules.add((DynamicJSModule)jsModule);
-			}
-		}
-
-		Collections.sort(
-			dynamicJSModules,
-			(dynamicJSModule1, dynamicJSModule2) -> {
-				String resolvedId = dynamicJSModule1.getResolvedId();
-
-				return resolvedId.compareTo(dynamicJSModule2.getResolvedId());
-			});
-
-		for (DynamicJSModule dynamicJSModule : dynamicJSModules) {
-			_update(messageDigest, dynamicJSModule);
-		}
-
-		// Hash JS packages
-
-		List<JSPackage> jsPackages = new ArrayList<>(
-			_resolvedJSPackages.values());
-
-		Collections.sort(
-			jsPackages,
-			(jsPackage1, jsPackage2) -> {
-				String resolvedId = jsPackage1.getResolvedId();
-
-				return resolvedId.compareTo(jsPackage2.getResolvedId());
-			});
-
-		for (JSPackage jsPackage : jsPackages) {
-			_update(messageDigest, jsPackage);
-		}
-
-		// Hash the list of applied patches because Liferay Support's patches
-		// break the immutability convention of packages
-
-		List<String> installedPatches = Arrays.asList(
-			PatcherUtil.getInstalledPatches());
-
-		Collections.sort(installedPatches);
-
-		for (String installedPatch : installedPatches) {
-			_update(messageDigest, installedPatch);
-		}
-
-		return StringUtil.bytesToHexString(messageDigest.digest());
-	}
-
-	private void _update(
-		MessageDigest messageDigest, DynamicJSModule dynamicJSModule) {
-
-		_update(messageDigest, dynamicJSModule.getResolvedId());
-
-		List<String> dependencies = new ArrayList<>(
-			dynamicJSModule.getDependencies());
-
-		Collections.sort(dependencies);
-
-		for (String dependency : dependencies) {
-			_update(messageDigest, dependency);
-		}
-	}
-
-	private void _update(MessageDigest messageDigest, JSPackage jsPackage) {
-
-		// Hash the fields besides (name and version) for extra safety
-
-		_update(messageDigest, jsPackage.getMainModuleName());
-		_update(messageDigest, jsPackage.getName());
-		_update(messageDigest, jsPackage.getVersion());
-
-		List<JSPackageDependency> jsPackageDependencies = new ArrayList<>(
-			jsPackage.getJSPackageDependencies());
-
-		Collections.sort(
-			jsPackageDependencies,
-			(jsPackageDependency1, jsPackageDependency2) -> {
-				String packageName1 = jsPackageDependency1.getPackageName();
-				String packageName2 = jsPackageDependency2.getPackageName();
-
-				if (!Objects.equals(packageName1, packageName2)) {
-					packageName1.compareTo(packageName2);
-				}
-
-				String versionConstraints =
-					jsPackageDependency1.getVersionConstraints();
-
-				return versionConstraints.compareTo(
-					jsPackageDependency2.getVersionConstraints());
-			});
-
-		for (JSPackageDependency jsPackageDependency : jsPackageDependencies) {
-			_update(messageDigest, jsPackageDependency.getPackageName());
-			_update(messageDigest, jsPackageDependency.getVersionConstraints());
-		}
-
-		List<JSModuleAlias> jsModuleAliases = new ArrayList<>(
-			jsPackage.getJSModuleAliases());
-
-		Collections.sort(
-			jsModuleAliases,
-			(jsModuleAlias1, jsModuleAlias2) -> {
-				String alias1 = jsModuleAlias1.getAlias();
-				String alias2 = jsModuleAlias2.getAlias();
-
-				if (!Objects.equals(alias1, alias2)) {
-					return alias1.compareTo(alias2);
-				}
-
-				String moduleName = jsModuleAlias1.getModuleName();
-
-				return moduleName.compareTo(jsModuleAlias2.getModuleName());
-			});
-
-		for (JSModuleAlias jsModuleAlias : jsModuleAliases) {
-			_update(messageDigest, jsModuleAlias.getAlias());
-			_update(messageDigest, jsModuleAlias.getModuleName());
-		}
-	}
-
-	private void _update(MessageDigest messageDigest, String string) {
-		try {
-			messageDigest.update(string.getBytes(StringPool.UTF8));
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(unsupportedEncodingException);
-		}
 	}
 
 	private final ConcurrentHashMap<String, JSPackage>

@@ -67,11 +67,49 @@ public class CustomFacetPortletSharedSearchContributor
 		String fieldToAggregate = fieldToAggregateOptional.get();
 
 		if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
-			fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+			fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_ARRAY)) {
 
-			_contributeWithNestedFacet(
-				fieldToAggregate, searchRequestBuilder,
-				portletSharedSearchSettings, customFacetPortletPreferences);
+			String[] ddmStructureParts = StringUtil.split(
+				fieldToAggregate, StringPool.PERIOD);
+
+			if (ddmStructureParts.length != 3) {
+				return;
+			}
+
+			_contributeWithNestedFieldFacet(
+				customFacetPortletPreferences, ddmStructureParts[2],
+				DDMIndexer.DDM_FIELD_NAME, ddmStructureParts[1],
+				DDMIndexer.DDM_FIELD_ARRAY, portletSharedSearchSettings,
+				searchRequestBuilder);
+		}
+		else if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
+				 fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+
+			String[] ddmStructureParts = StringUtil.split(
+				fieldToAggregate, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+			_contributeWithNestedFieldFacet(
+				customFacetPortletPreferences,
+				ddmIndexer.getValueFieldName(
+					ddmStructureParts[1],
+					_getSuffixLocale(ddmStructureParts[3])),
+				DDMIndexer.DDM_FIELD_NAME, fieldToAggregate,
+				DDMIndexer.DDM_FIELD_ARRAY, portletSharedSearchSettings,
+				searchRequestBuilder);
+		}
+		else if (fieldToAggregate.startsWith(_OBJECT_FIELD_ARRAY)) {
+			String[] objectStructureParts = StringUtil.split(
+				fieldToAggregate, StringPool.PERIOD);
+
+			if (objectStructureParts.length != 3) {
+				return;
+			}
+
+			_contributeWithNestedFieldFacet(
+				customFacetPortletPreferences, objectStructureParts[2],
+				_OBJECT_FIELD_NAME, objectStructureParts[1],
+				_OBJECT_FIELD_ARRAY, portletSharedSearchSettings,
+				searchRequestBuilder);
 		}
 		else {
 			_contributeWithCustomFacet(
@@ -110,37 +148,28 @@ public class CustomFacetPortletSharedSearchContributor
 			));
 	}
 
-	private void _contributeWithNestedFacet(
-		String fieldToAggregate, SearchRequestBuilder searchRequestBuilder,
-		PortletSharedSearchSettings portletSharedSearchSettings,
-		CustomFacetPortletPreferences customFacetPortletPreferences) {
-
-		String[] ddmStructureParts = StringUtil.split(
-			fieldToAggregate, DDMIndexer.DDM_FIELD_SEPARATOR);
-
-		String nestedFieldToAggregate = ddmIndexer.getValueFieldName(
-			ddmStructureParts[1], _getSuffixLocale(ddmStructureParts[3]));
+	private void _contributeWithNestedFieldFacet(
+		CustomFacetPortletPreferences customFacetPortletPreferences,
+		String fieldToAggregate, String filterField, String filterValue,
+		String path, PortletSharedSearchSettings portletSharedSearchSettings,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		nestedFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			nestedFacetBuilder -> nestedFacetBuilder.aggregationName(
 				portletSharedSearchSettings.getPortletId()
 			).fieldToAggregate(
-				StringBundler.concat(
-					DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
-					nestedFieldToAggregate)
+				StringBundler.concat(path, StringPool.PERIOD, fieldToAggregate)
 			).filterField(
-				StringBundler.concat(
-					DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
-					DDMIndexer.DDM_FIELD_NAME)
+				StringBundler.concat(path, StringPool.PERIOD, filterField)
 			).filterValue(
-				fieldToAggregate
+				filterValue
 			).frequencyThreshold(
 				customFacetPortletPreferences.getFrequencyThreshold()
 			).maxTerms(
 				customFacetPortletPreferences.getMaxTerms()
 			).path(
-				DDMIndexer.DDM_FIELD_ARRAY
+				path
 			).selectedValues(
 				portletSharedSearchSettings.getParameterValues(
 					_getParameterName(customFacetPortletPreferences))
@@ -174,6 +203,10 @@ public class CustomFacetPortletSharedSearchContributor
 
 		return null;
 	}
+
+	private static final String _OBJECT_FIELD_ARRAY = "nestedFieldArray";
+
+	private static final String _OBJECT_FIELD_NAME = "fieldName";
 
 	@Reference
 	private Language _language;

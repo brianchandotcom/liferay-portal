@@ -547,6 +547,93 @@ const filterSchema = {
 			baseFilters.hasRequirements,
 		] as RendererFields[],
 	},
+	compareRunsCases: {
+		fields: [
+			overrides(baseFilters.priority, {
+				name: 'priority',
+				removeQuoteMark: true,
+				type: 'select',
+			}),
+			overrides(baseFilters.team, {
+				disabled: true,
+				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.component, {
+				disabled: true,
+				name: 'componentToCaseResult/id',
+				type: 'multiselect',
+			}),
+			{
+				label: i18n.translate('case-name'),
+				name: 'name',
+				operator: 'contains',
+				type: 'text',
+			},
+			overrides(baseFilters.dueStatus, {
+				disabled: true,
+				label: i18n.sub('status-in-x', 'run-a'),
+				options: [
+					{
+						label: i18n.translate('blocked'),
+						value: CaseResultStatuses.BLOCKED,
+					},
+					{
+						label: i18n.translate('failed'),
+						value: CaseResultStatuses.FAILED,
+					},
+					{
+						label: i18n.translate('in-progress'),
+						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: i18n.translate('passed'),
+						value: CaseResultStatuses.PASSED,
+					},
+					{
+						label: i18n.translate('test-fix'),
+						value: CaseResultStatuses.TEST_FIX,
+					},
+					{
+						label: i18n.translate('untested'),
+						value: CaseResultStatuses.UNTESTED,
+					},
+				],
+				type: 'select',
+			}),
+			overrides(baseFilters.dueStatus, {
+				disabled: true,
+				label: i18n.sub('status-in-x', 'run-b'),
+				options: [
+					{
+						label: i18n.translate('blocked'),
+						value: CaseResultStatuses.BLOCKED,
+					},
+					{
+						label: i18n.translate('failed'),
+						value: CaseResultStatuses.FAILED,
+					},
+					{
+						label: i18n.translate('in-progress'),
+						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: i18n.translate('passed'),
+						value: CaseResultStatuses.PASSED,
+					},
+					{
+						label: i18n.translate('test-fix'),
+						value: CaseResultStatuses.TEST_FIX,
+					},
+					{
+						label: i18n.translate('untested'),
+						value: CaseResultStatuses.UNTESTED,
+					},
+				],
+				type: 'select',
+			}),
+		] as RendererFields[],
+	},
 	components: {
 		fields: [
 			{

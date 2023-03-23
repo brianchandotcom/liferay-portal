@@ -1566,7 +1566,7 @@ definition {
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Page Fragments",
 				configurationName = "Page Fragments",
-				configurationScope = "Virtual Instance Scope");
+				configurationScope = "System Scope");
 
 			FormFields.enableCheckbox(fieldName = "Propagate Fragment Changes Automatically");
 

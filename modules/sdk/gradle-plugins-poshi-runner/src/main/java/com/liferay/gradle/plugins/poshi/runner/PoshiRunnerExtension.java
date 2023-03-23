@@ -70,6 +70,10 @@ public class PoshiRunnerExtension {
 		return GradleUtil.toStringList(_testNames);
 	}
 
+	public String getTestRunType() {
+		return GradleUtil.toString(_testRunType);
+	}
+
 	public String getVersion() {
 		return GradleUtil.toString(_version);
 	}
@@ -114,6 +118,10 @@ public class PoshiRunnerExtension {
 		setTestNames(Arrays.asList(testNames));
 	}
 
+	public void setTestRunType(Object testRunType) {
+		_testRunType = testRunType;
+	}
+
 	public void setVersion(Object version) {
 		_version = version;
 	}
@@ -134,6 +142,7 @@ public class PoshiRunnerExtension {
 		Arrays.asList("poshi.properties"));
 	private final Project _project;
 	private final Set<Object> _testNames = new LinkedHashSet<>();
+	private Object _testRunType = "sequential";
 	private Object _version = "1.0.405";
 
 }

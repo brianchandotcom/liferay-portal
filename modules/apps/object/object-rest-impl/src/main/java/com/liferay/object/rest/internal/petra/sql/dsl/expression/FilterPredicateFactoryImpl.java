@@ -18,6 +18,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionVisitorImpl;
+import com.liferay.object.rest.internal.odata.filter.expression.field.predicate.provider.FieldPredicateProviderTracker;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -60,8 +61,9 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 
 			return (Predicate)expression.accept(
 				new PredicateExpressionVisitorImpl(
-					entityModel, objectDefinitionId,
-					_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
+					entityModel, _fieldPredicateProviderTracker,
+					objectDefinitionId, _objectFieldBusinessTypeRegistry,
+					_objectFieldLocalService,
 					_objectRelatedModelsPredicateProviderRegistry));
 		}
 		catch (ExpressionVisitException expressionVisitException) {
@@ -98,6 +100,9 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 			throw new ServerErrorException(500, exception);
 		}
 	}
+
+	@Reference
+	private FieldPredicateProviderTracker _fieldPredicateProviderTracker;
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;

@@ -1612,7 +1612,9 @@ definition {
 
 		ObjectPortlet.searchColumn(columnName = "Field");
 
-		ObjectPortlet.assertMenuItemColumn(dropdownItem = "Field");
+		AssertElementPresent(
+			key_dropdownItem = "Field",
+			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
 	@description = "LPS-140082 - Verify it is possible to search for a partial Object entry on the Relationship field"

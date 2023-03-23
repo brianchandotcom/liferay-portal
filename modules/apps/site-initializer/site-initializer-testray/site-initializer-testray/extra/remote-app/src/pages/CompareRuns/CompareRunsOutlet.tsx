@@ -17,7 +17,13 @@ import {useEffect, useMemo} from 'react';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 import {useFetch} from '~/hooks/useFetch';
 import useSearchBuilder from '~/hooks/useSearchBuilder';
-import {TestrayComponent, TestrayTeam, testrayRunImpl} from '~/services/rest';
+import {
+	APIResponse,
+	TestrayComponent,
+	TestrayRun,
+	TestrayTeam,
+	testrayRunImpl,
+} from '~/services/rest';
 
 import CompareRunDetails from '.';
 import Container from '../../components/Layout/Container';
@@ -28,42 +34,72 @@ import useCompareRuns from './useCompareRuns';
 export type ApiResponse = {
 	components: TestrayComponent;
 	dueStatuses: string[];
-	team: TestrayTeam;
+	teams: TestrayTeam;
 	values: number[][];
 };
 
 const COMPARE_RUNS_ROOT_PATH = '/compare-runs';
 
-const apiData: ApiResponse = {
-	components: {
-		dateCreated: '',
-		dateModified: '',
-		externalReferenceCode: '',
-		id: 0,
-		name: 'Solutions',
-		originationKey: '',
-		r_teamToComponents_c_teamId: 0,
-		status: '',
-		teamId: 0,
+const apiResponse: ApiResponse[] = [
+	{
+		components: {
+			dateCreated: '',
+			dateModified: '',
+			externalReferenceCode: '',
+			id: 0,
+			name: 'Solutions',
+			originationKey: '',
+			r_teamToComponents_c_teamId: 0,
+			status: '',
+			teamId: 0,
+		},
+		dueStatuses: ['PASSED', 'FAILED', 'BLOCKED', 'TEST FIX', 'DNR'],
+		teams: {
+			dateCreated: '',
+			dateModified: '',
+			externalReferenceCode: '',
+			id: 0,
+			name: 'Solutions',
+		},
+		values: [
+			[1, 0, 0, 4, 5],
+			[1, 2, 3, 4, 5],
+			[1, 2, 3, 4, 5],
+			[1, 2, 3, 4, 5],
+			[1, 2, 3, 4, 5],
+		],
 	},
-	dueStatuses: ['PASSED', 'FAILED', 'BLOCKED', 'TEST FIX', 'DNR'],
-	team: {
-		dateCreated: '',
-		dateModified: '',
-		externalReferenceCode: '',
-		id: 0,
-		name: 'Solutions',
+	{
+		components: {
+			dateCreated: '',
+			dateModified: '',
+			externalReferenceCode: '',
+			id: 0,
+			name: 'Global Service',
+			originationKey: '',
+			r_teamToComponents_c_teamId: 0,
+			status: '',
+			teamId: 0,
+		},
+		dueStatuses: ['PASSED', 'FAILED', 'BLOCKED', 'TEST FIX', 'DNR'],
+		teams: {
+			dateCreated: '',
+			dateModified: '',
+			externalReferenceCode: '',
+			id: 0,
+			name: 'Global Service',
+		},
+		values: [
+			[1, 0, 0, 4, 5],
+			[1, 2, 3, 4, 5],
+			[1, 2, 3, 4, 5],
+			[1, 2, 3, 4, 5],
+			[1, 2, 3, 4, 5],
+		],
 	},
-	values: [
-		[1, 0, 0, 4, 5],
-		[1, 2, 3, 4, 5],
-		[1, 2, 3, 4, 5],
-		[1, 2, 3, 4, 5],
-		[1, 2, 3, 4, 5],
-	],
-};
+];
 
-const CompareRunsOutlet: React.FC = () => {
+const CompareRunsOutlet = () => {
 	const navigate = useNavigate();
 	const {setDropdownIcon, setHeading, setTabs} = useHeader();
 	const {comparableTabs, currentTab} = useCompareRuns();
@@ -72,21 +108,27 @@ const CompareRunsOutlet: React.FC = () => {
 	const caseResultFilter = useSearchBuilder({useURIEncode: false});
 
 	const filter = caseResultFilter
-		.in('id', [String(runA), String(runB)])
+		.in('id', [runA as string, runB as string])
 		.build();
 
-	const {data} = useFetch(testrayRunImpl.resource, {
+	const {data} = useFetch<APIResponse<TestrayRun>>(testrayRunImpl.resource, {
 		params: {
 			filter,
 		},
 		transformData: (response) =>
 			testrayRunImpl.transformDataFromList(response),
 	});
+	const runs = useMemo(() => {
+		const items = data?.items ?? [];
 
-	const runs = useMemo(() => data?.items, [data?.items]);
+		const getRun = (runId: string) =>
+			items?.find(({id}) => runId === String(id)) as TestrayRun;
+
+		return [getRun(runA as string), getRun(runB as string)];
+	}, [data?.items, runA, runB]);
 
 	useEffect(() => {
-		const title = runs[0].build?.project?.name;
+		const title = runs[0]?.build?.project?.name;
 		if (title) {
 			setTimeout(() => {
 				setHeading([
@@ -97,25 +139,13 @@ const CompareRunsOutlet: React.FC = () => {
 				]);
 			});
 		}
-		setDropdownIcon('drop');
-	}, [runs, setDropdownIcon, setHeading]);
-
-	useEffect(() => {
-		setTimeout(() => {
-			setHeading([
-				{
-					category: i18n.translate('project'),
-					title: 'Liferay Portal 7.4',
-				},
-			]);
-		});
-
 		setTabs([]);
-	}, [runs, setHeading, setTabs]);
+		setDropdownIcon('drop');
+	}, [runs, setDropdownIcon, setHeading, setTabs]);
 
 	return (
 		<>
-			<CompareRunDetails matrixData={apiData} runs={runs} />
+			<CompareRunDetails matrixData={apiResponse?.[0]} runs={runs} />
 
 			<Container className="mt-3">
 				<ClayTabs className="header-container-tabs">
@@ -136,7 +166,7 @@ const CompareRunsOutlet: React.FC = () => {
 
 				<h5 className="mt-5">{currentTab?.title}</h5>
 
-				<Outlet context={{COMPARE_RUNS_ROOT_PATH}} />
+				<Outlet context={{COMPARE_RUNS_ROOT_PATH, apiResponse}} />
 			</Container>
 		</>
 	);

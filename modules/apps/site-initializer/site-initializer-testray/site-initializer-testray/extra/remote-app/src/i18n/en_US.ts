@@ -262,6 +262,7 @@ export default {
 	'no-x': 'No {0}',
 	'none': 'None',
 	'notifications': 'Notifications',
+	'number-of-case-results': 'Number of Case Results',
 	'open': 'Open',
 	'operating-system': 'Operating System',
 	'option': 'Option',

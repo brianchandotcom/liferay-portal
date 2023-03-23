@@ -12,52 +12,33 @@
  * details.
  */
 
+import {useOutletContext} from 'react-router-dom';
+
 import TableChart from '../../components/TableChart';
-import useTableChartData from '../../hooks/data/useTableChartData';
 import i18n from '../../i18n';
+import {ApiResponse} from './CompareRunsOutlet';
 
-const CompareRunsComponents: React.FC = () => {
-	const {colors, columns, data} = useTableChartData();
+type ComponentsOutlet = {
+	apiResponse: ApiResponse[];
+};
 
+const CompareRunsComponents = () => {
 	document.title = i18n.sub('compare-x', 'cases');
+
+	const {apiResponse} = useOutletContext<ComponentsOutlet>();
 
 	return (
 		<div className="d-flex flex-wrap mt-5">
-			<div className="col-6 col-lg-6 col-md-12 mb-3">
-				<TableChart
-					colors={colors}
-					columns={columns}
-					data={data}
-					title="Number of Case Results"
-				/>
-			</div>
-
-			<div className="col-6 col-lg-6 col-md-12 mb-3">
-				<TableChart
-					colors={colors}
-					columns={columns}
-					data={data}
-					title="Number of Case Results"
-				/>
-			</div>
-
-			<div className="col-6 col-lg-6 col-md-12 mb-3">
-				<TableChart
-					colors={colors}
-					columns={columns}
-					data={data}
-					title="Number of Case Results"
-				/>
-			</div>
-
-			<div className="col-6 col-lg-6 col-md-12 mb-3">
-				<TableChart
-					colors={colors}
-					columns={columns}
-					data={data}
-					title="Number of Case Results"
-				/>
-			</div>
+			{apiResponse.map(({components, values}, index) => {
+				return (
+					<div className="col-6 col-lg-6 col-md-12 mb-3" key={index}>
+						<TableChart
+							matrixData={values}
+							title={components.name}
+						/>
+					</div>
+				);
+			})}
 		</div>
 	);
 };

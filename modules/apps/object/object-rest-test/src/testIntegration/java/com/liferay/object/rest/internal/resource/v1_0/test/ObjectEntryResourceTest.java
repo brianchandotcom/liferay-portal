@@ -1841,6 +1841,225 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByStringOperatorsObjectEntriesByRelatesObjectEntriesFieldsThroughMultipleRelationships()
+		throws Exception {
+
+		String objectFieldValue1 = String.valueOf(_OBJECT_FIELD_VALUE_1);
+		String objectFieldValue2 = String.valueOf(_OBJECT_FIELD_VALUE_2);
+		String objectFieldValue3 = String.valueOf(_OBJECT_FIELD_VALUE_3);
+
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, objectFieldValue1);
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2, objectFieldValue2);
+
+		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition3, _OBJECT_FIELD_NAME_3, objectFieldValue3);
+
+		// 1 to many relationship, custom object field
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectsEntries(
+			_objectDefinition1, _objectDefinition2, _objectEntry1,
+			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectsEntries(
+			_objectDefinition2, _objectDefinition3, _objectEntry2,
+			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"contains(%s/%s/%s,'%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_3,
+					objectFieldValue3.substring(1))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"startswith(%s/%s/%s,'%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_3,
+					objectFieldValue3.substring(0, 2))),
+			_objectDefinition1);
+
+		// 1 to many relationship, system object field
+
+		String objectEntry3ExternalReferenceCode =
+			_objectEntry3.getExternalReferenceCode();
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"contains(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					objectEntry3ExternalReferenceCode.substring(1))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"startswith(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					objectEntry3ExternalReferenceCode.substring(0, 2))),
+			_objectDefinition1);
+
+		// 1 to many relationship (other side), custom object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"contains(%s/%s/%s,'%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_1,
+					objectFieldValue1.substring(1))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"startswith(%s/%s/%s,'%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_1,
+					objectFieldValue1.substring(0, 2))),
+			_objectDefinition3);
+
+		// 1 to many relationship (other side), system object field
+
+		String objectEntry1ExternalReferenceCode =
+			_objectEntry1.getExternalReferenceCode();
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"contains(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					objectEntry1ExternalReferenceCode.substring(1))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"startswith(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					objectEntry1ExternalReferenceCode.substring(0, 2))),
+			_objectDefinition3);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship2);
+
+		// Many to many relationship, custom object field
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectsEntries(
+			_objectDefinition1, _objectDefinition2, _objectEntry1,
+			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectsEntries(
+			_objectDefinition2, _objectDefinition3, _objectEntry2,
+			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"contains(%s/%s/%s,'%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_3,
+					objectFieldValue3.substring(1))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"startswith(%s/%s/%s,'%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_3,
+					objectFieldValue3.substring(0, 2))),
+			_objectDefinition1);
+
+		// Many to many relationship, system object field
+
+		objectEntry3ExternalReferenceCode =
+			_objectEntry3.getExternalReferenceCode();
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"contains(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					objectEntry3ExternalReferenceCode.substring(1))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, objectFieldValue1,
+			_escape(
+				String.format(
+					"startswith(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					objectEntry3ExternalReferenceCode.substring(0, 2))),
+			_objectDefinition1);
+
+		// Many to many relationship (other side), custom object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"contains(%s/%s/%s,'%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_1,
+					objectFieldValue1.substring(1))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"startswith(%s/%s/%s,'%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_1,
+					objectFieldValue1.substring(0, 2))),
+			_objectDefinition3);
+
+		// Many to many relationship (other side), system object field
+
+		objectEntry1ExternalReferenceCode =
+			_objectEntry1.getExternalReferenceCode();
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"contains(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					objectEntry1ExternalReferenceCode.substring(1))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, objectFieldValue3,
+			_escape(
+				String.format(
+					"startswith(%s/%s/externalReferenceCode,'%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					objectEntry1ExternalReferenceCode.substring(0, 2))),
+			_objectDefinition3);
+	}
+
+	@Test
 	public void testGetNestedFieldDetailsInOneToManyRelationships()
 		throws Exception {
 

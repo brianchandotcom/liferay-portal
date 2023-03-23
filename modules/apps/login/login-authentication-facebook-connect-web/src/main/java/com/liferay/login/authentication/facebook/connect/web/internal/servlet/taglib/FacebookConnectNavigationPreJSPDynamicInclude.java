@@ -108,14 +108,10 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 		return _log;
 	}
 
-	@Reference(unbind = "-")
-	protected void setFacebookConnect(FacebookConnect facebookConnect) {
-		_facebookConnect = facebookConnect;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectNavigationPreJSPDynamicInclude.class);
 
+	@Reference
 	private FacebookConnect _facebookConnect;
 
 	@Reference(

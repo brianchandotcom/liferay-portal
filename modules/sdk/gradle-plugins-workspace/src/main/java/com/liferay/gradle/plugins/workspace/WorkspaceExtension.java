@@ -28,6 +28,7 @@ import com.liferay.gradle.plugins.workspace.configurator.ThemesProjectConfigurat
 import com.liferay.gradle.plugins.workspace.configurator.WarsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.tools.bundle.support.commands.DownloadCommand;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 import com.liferay.workspace.bundle.url.codec.BundleURLCodec;
@@ -47,6 +48,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -110,6 +112,8 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
+		_dirExcludesGlobs = StringUtil.split(
+			GradleUtil.toString(_getProperty(settings, "dir.excludes.globs")));
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
@@ -272,6 +276,10 @@ public class WorkspaceExtension {
 		);
 	}
 
+	public List<String> getDirExcludesGlobs() {
+		return GradleUtil.toStringList(_dirExcludesGlobs);
+	}
+
 	public String getDockerContainerId() {
 		return GradleUtil.toString(_dockerContainerId);
 	}
@@ -400,6 +408,10 @@ public class WorkspaceExtension {
 
 	public void setConfigsDir(Object configsDir) {
 		_configsDir = configsDir;
+	}
+
+	public void setDirExcludesGlobs(Iterable<String> dirExcludesGlobs) {
+		_dirExcludesGlobs = dirExcludesGlobs;
 	}
 
 	public void setDockerContainerId(Object dockerContainerId) {
@@ -711,6 +723,7 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
+	private Iterable<String> _dirExcludesGlobs;
 	private Object _dockerContainerId;
 	private Object _dockerDir;
 	private Object _dockerImageId;

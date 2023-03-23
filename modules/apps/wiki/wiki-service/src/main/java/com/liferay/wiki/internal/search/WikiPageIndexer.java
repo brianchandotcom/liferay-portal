@@ -15,6 +15,8 @@
 package com.liferay.wiki.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -62,16 +64,15 @@ import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -234,17 +235,18 @@ public class WikiPageIndexer
 	public void updateFullQuery(SearchContext searchContext) {
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		service = ModelDocumentContributor.class,
-		target = "(indexer.class.name=com.liferay.wiki.model.WikiPage)"
-	)
-	protected void addModelDocumentContributor(
-		ModelDocumentContributor<WikiPage> modelDocumentContributor) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext,
+			(Class<ModelDocumentContributor<WikiPage>>)
+				(Class<?>)ModelDocumentContributor.class,
+			"(indexer.class.name=com.liferay.wiki.model.WikiPage)");
+	}
 
-		_modelDocumentContributors.add(modelDocumentContributor);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	@Override
@@ -257,7 +259,7 @@ public class WikiPageIndexer
 	protected Document doGetDocument(WikiPage wikiPage) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiPage);
 
-		_modelDocumentContributors.forEach(
+		_serviceTrackerList.forEach(
 			modelDocumentContributor -> modelDocumentContributor.contribute(
 				document, wikiPage));
 
@@ -321,12 +323,6 @@ public class WikiPageIndexer
 			wikiPage.getCompanyId(), getDocument(wikiPage));
 
 		_reindexAttachments(wikiPage);
-	}
-
-	protected void removeModelDocumentContributor(
-		ModelDocumentContributor<WikiPage> modelDocumentContributor) {
-
-		_modelDocumentContributors.remove(modelDocumentContributor);
 	}
 
 	@Reference
@@ -435,10 +431,10 @@ public class WikiPageIndexer
 	@Reference
 	private Localization _localization;
 
-	private final List<ModelDocumentContributor<WikiPage>>
-		_modelDocumentContributors = new CopyOnWriteArrayList<>();
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
+	private ServiceTrackerList<ModelDocumentContributor<WikiPage>>
+		_serviceTrackerList;
 
 	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;

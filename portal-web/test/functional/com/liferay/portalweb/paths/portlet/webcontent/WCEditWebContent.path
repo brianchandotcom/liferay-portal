@@ -226,7 +226,7 @@
 
 <tr>
 	<td>REPEATED_FIELD</td>
-	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}] | //div[@class='form-builder-layout']//div[@class='ddm-field'][${key_index}]//*[text()='${key_fieldName}']</td>
+	<td>//div[contains(@class,'lfr-forms') and contains(., '${key_fieldName}')][not(contains(@class,'container'))][${key_index}] | //div[@class='form-builder-layout']//div[@class='ddm-field'][${key_index}]//*[text()='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

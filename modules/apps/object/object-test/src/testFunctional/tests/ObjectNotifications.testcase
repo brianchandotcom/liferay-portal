@@ -459,4 +459,105 @@ definition {
 		}
 	}
 
+	@description = "LPS-173894 - Verify that it's possible to send an e-mail notification via an Action (Delete)"
+	@priority = 5
+	test CanSendEmailViaActionDelete {
+		property custom.properties = "feature.flag.LPS-173894=true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionDelete";
+
+		task ("Given an Email Notification Template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "Liferay",
+				fromName = "Test Test",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "Subject");
+
+			PortletEntry.save();
+		}
+
+		task ("And given a custom object with a text field and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 178781",
+				objectName = "CustomObject178781",
+				pluralLabelName = "Custom Objects 178781");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject178781");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject178781");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject178781",
+				value = "Entry Test");
+		}
+
+		task ("And given an Action to send an email notification after deleting an object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 178781");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
+				active = "true",
+				notificationName = "Notification Template",
+				objectLabel = "Custom Object 178781",
+				thenAction = "Notification",
+				whenAction = "On After Delete");
+		}
+
+		task ("And given the Notification Queue Entry Delete Interval is set to 1 in System Settings > Notifications > Notification Queue") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Notifications",
+				configurationName = "Notification Queue",
+				configurationScope = "System Scope");
+
+			SystemSettings.editTextSetting(
+				settingName = "Notification Queue Entry Delete Interval",
+				settingValue = 1);
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("When the object entry is deleted") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject178781");
+
+			ObjectPortlet.deleteEntry(entry = "Entry Test");
+		}
+
+		task ("Then the Action is triggered and a sent email is seen in the Notification Queue") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Queue");
+
+			AssertElementPresent(
+				key_entryLabel = "CustomObject178781",
+				key_entryStatus = "Sent",
+				locator1 = "ObjectNotifications#VIEW_NOTIFICATION_ENTRIES");
+		}
+	}
+
 }

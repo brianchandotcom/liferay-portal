@@ -197,6 +197,15 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public CommerceVirtualOrderItem
+		fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+			long commerceOrderItemId, boolean useFinderCache) {
+
+		return commerceVirtualOrderItemPersistence.fetchByCommerceOrderItemId(
+			commerceOrderItemId, useFinderCache);
+	}
+
+	@Override
 	public List<CommerceVirtualOrderItem> getCommerceVirtualOrderItems(
 		long groupId, long commerceAccountId, int start, int end,
 		OrderByComparator<CommerceVirtualOrderItem> orderByComparator) {

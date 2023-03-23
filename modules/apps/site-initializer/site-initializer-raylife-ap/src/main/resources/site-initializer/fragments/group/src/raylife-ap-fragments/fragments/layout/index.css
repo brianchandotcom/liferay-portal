@@ -12,6 +12,13 @@
 	padding-left: 12px;
 }
 
+.layout-container .ray-sticky-top,
+.ray-sidebar-container.ray-sticky-top {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
 .ray-sidebar-container .footer-bar .avatar-container,
 .ray-sidebar-container .footer-bar .notification-container,
 .ray-sidebar-container .top-bar {
@@ -170,7 +177,7 @@
 	font-weight: 700;
 }
 
-@media creen and (max-width: 1625px) {
+@media screen and (max-width: 1625px) {
 	.layout-container
 		.raylife-agent-portal-content:not(#Applications
 			.raylife-agent-portal-content, #Details

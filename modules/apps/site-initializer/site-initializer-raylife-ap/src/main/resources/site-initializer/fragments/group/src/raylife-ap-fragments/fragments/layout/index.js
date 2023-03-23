@@ -13,19 +13,6 @@
  */
 
 /* eslint-disable no-undef */
-const btnDashboard = fragmentElement.querySelector('.dashboard-menu');
-const btnApplications = fragmentElement.querySelector('.applications-menu');
-const btnPolicies = fragmentElement.querySelector('.policies-menu');
-const btnClaims = fragmentElement.querySelector('.claims-menu');
-const btnReports = fragmentElement.querySelector('.reports-menu');
-const btnLogo = fragmentElement.querySelector('.top-bar');
-const btnNotification = fragmentElement.querySelector(
-	'.notification-container'
-);
-const notificationIcon = document.getElementById('panel-sidebar');
-
-const userName = Liferay.ThemeDisplay.getUserName();
-document.querySelector('.user-name-span').innerHTML = userName;
 
 const redirectUrl = (routeName) => {
 	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
@@ -36,6 +23,22 @@ const redirectUrl = (routeName) => {
 
 	window.location.href = `${origin}${siteName}/${routeName}`;
 };
+
+const userName = Liferay.ThemeDisplay.getUserName();
+fragmentElement.querySelector(
+	'.footer-bar .avatar-user-name'
+).innerHTML = userName;
+
+const btnDashboard = fragmentElement.querySelector('.dashboard-menu');
+const btnApplications = fragmentElement.querySelector('.applications-menu');
+const btnPolicies = fragmentElement.querySelector('.policies-menu');
+const btnClaims = fragmentElement.querySelector('.claims-menu');
+const btnReports = fragmentElement.querySelector('.reports-menu');
+const btnLogo = fragmentElement.querySelector('.top-bar');
+const btnNotification = fragmentElement.querySelector(
+	'.notification-container'
+);
+const notificationIcon = fragmentElement.querySelector('#panel-sidebar');
 
 btnNotification.onclick = () =>
 	notificationIcon.classList.toggle('notification-open-side-bar');

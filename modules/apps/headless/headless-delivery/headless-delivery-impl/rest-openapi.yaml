@@ -5870,6 +5870,40 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["DocumentFolder"]
+    "/asset-libraries/{assetLibraryId}/document-folders/rated-by-me":
+        get:
+            description:
+                Retrieves the document folders rated by the user.
+            operationId: getAssetLibraryDocumentFoldersRatedByMePage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
+            tags: ["DocumentFolder"]
     "/asset-libraries/{assetLibraryId}/documents":
         get:
             operationId: getAssetLibraryDocumentsPage
@@ -11728,6 +11762,40 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["DocumentFolder"]
+    "/sites/{siteId}/document-folders/rated-by-me":
+        get:
+            description:
+                Retrieves the document folders rated by the user.
+            operationId: getSiteDocumentFoldersRatedByMePage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
             tags: ["DocumentFolder"]
     "/sites/{siteId}/documents":
         get:

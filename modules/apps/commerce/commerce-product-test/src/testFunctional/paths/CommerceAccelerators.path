@@ -236,6 +236,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_OPTION_VALUE</td>
+	<td>//input[contains(@class,"quantity-selector") and @value='${key_optionValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR</td>
+	<td>//div[contains(@class,'has-error')]/input[contains(@class,"quantity-selector")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR</td>
 	<td>//p[@title='${key_productName}']//..//..//div[contains(@class,'has-error')]/input[contains(@class,"quantity-selector")]</td>
 	<td></td>

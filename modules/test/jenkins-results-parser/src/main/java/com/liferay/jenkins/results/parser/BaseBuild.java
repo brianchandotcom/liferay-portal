@@ -851,13 +851,12 @@ public abstract class BaseBuild implements Build {
 
 		return filteredDownstreamBuilds;
 	}
-	
-	private Long _duration = null;
 
 	@Override
 	public long getDuration() {
 		if (_duration == null) {
-			JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
+			JSONObject buildJSONObject = getBuildJSONObject(
+				"duration,timestamp");
 
 			if (buildJSONObject == null) {
 				return 0;
@@ -4385,7 +4384,8 @@ public abstract class BaseBuild implements Build {
 
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
-			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+(/label=[^/]+)?)/(?<buildNumber>\\d+)/?"));
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+(/label=[^/]+)?)/",
+			"(?<buildNumber>\\d+)/?"));
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		"\\[beanshell\\] Uploaded (?<url>https://testray.liferay.com/[^\\s]+)");
 	private static final Pattern _testrayS3ObjectURLPattern = Pattern.compile(
@@ -4417,6 +4417,7 @@ public abstract class BaseBuild implements Build {
 	private String _buildDescription;
 	private Boolean _buildDurationsEnabled;
 	private int _buildNumber = -1;
+	private Long _duration;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;

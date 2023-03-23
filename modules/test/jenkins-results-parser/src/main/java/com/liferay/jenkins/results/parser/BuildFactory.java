@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+
 import java.util.Properties;
 import java.util.regex.Matcher;
 
@@ -24,10 +25,6 @@ import java.util.regex.Matcher;
  * @author Peter Yoo
  */
 public class BuildFactory {
-
-	public static DefaultBuild newDefaultBuild(String url) {
-		return new DefaultBuild(url);
-	}
 
 	public static Build newBuild(String url, Build parentBuild) {
 		return newBuild(url, parentBuild, null);
@@ -258,6 +255,10 @@ public class BuildFactory {
 
 	public static Build newBuildFromArchive(String archiveName) {
 		return newBuildFromArchive(null, archiveName);
+	}
+
+	public static DefaultBuild newDefaultBuild(String url) {
+		return new DefaultBuild(url);
 	}
 
 	private static final String _BUILD_URL_SUFFIX_REGEX =

@@ -162,8 +162,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return new ArrayList<>(_buildURLs);
 	}
 
-	private List<DefaultBuild> _defaultBuilds = new ArrayList<>();
-
 	public List<DefaultBuild> getDefaultBuilds() {
 		List<String> buildURLs = getBuildURLs();
 
@@ -822,6 +820,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private boolean _blacklisted;
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
+	private final List<DefaultBuild> _defaultBuilds = new ArrayList<>();
 	private JenkinsCohort _jenkinsCohort;
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());

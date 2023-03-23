@@ -69,6 +69,7 @@ export default function StyleBookConfiguration({
 				</ClayForm.Group>
 
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('change-style-book')}
 					className="ml-2"
 					displayType="secondary"
 					onClick={handleChangeStyleBookClick}

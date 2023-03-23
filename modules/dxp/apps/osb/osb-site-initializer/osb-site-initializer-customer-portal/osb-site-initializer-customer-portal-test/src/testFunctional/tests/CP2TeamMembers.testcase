@@ -92,9 +92,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
 		task ("Start the project configuration and invite a user to the project") {
@@ -132,9 +130,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
 		task ("Start the project configuration and invite a user to the project") {
@@ -172,9 +168,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
 		task ("Going through onboarding to Setup") {
@@ -206,9 +200,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
 		task ("Start the project configuration and assert de subtitle") {

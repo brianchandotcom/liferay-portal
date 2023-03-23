@@ -107,9 +107,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = "Test Account Portal");
+			CustomerPortal.enterOnProject(title = "Test Account Portal");
 		}
 
 		task ("Go to the product activation page and Portal product") {
@@ -129,9 +127,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = "Test Account Portal");
+			CustomerPortal.enterOnProject(title = "Test Account Portal");
 		}
 
 		task ("Go to the product activation page and Portal product") {
@@ -189,9 +185,7 @@ definition {
 		}
 
 		task ("Selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = "Test Account Portal");
+			CustomerPortal.enterOnProject(title = "Test Account Portal");
 		}
 
 		task ("Go to the product activation page and Download Key") {

@@ -51,9 +51,7 @@ definition {
 
 			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = ${testAccount});
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I go through onboarding") {

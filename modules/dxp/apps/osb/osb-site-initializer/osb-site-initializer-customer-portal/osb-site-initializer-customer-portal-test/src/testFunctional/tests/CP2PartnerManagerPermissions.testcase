@@ -72,9 +72,7 @@ definition {
 		}
 
 		task ("Get into the project") {
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = ${testAccount});
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the Team Members page and click on the Invite button") {
@@ -141,9 +139,7 @@ definition {
 		}
 
 		task ("Get into the project") {
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = ${testAccount});
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the team members page and remove a guest user") {

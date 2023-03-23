@@ -71,9 +71,7 @@ definition {
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = ${testAccount});
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the team members page") {
@@ -117,9 +115,7 @@ definition {
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = ${testAccount});
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the team members page") {
@@ -157,9 +153,7 @@ definition {
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = ${testAccount});
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the team members page") {

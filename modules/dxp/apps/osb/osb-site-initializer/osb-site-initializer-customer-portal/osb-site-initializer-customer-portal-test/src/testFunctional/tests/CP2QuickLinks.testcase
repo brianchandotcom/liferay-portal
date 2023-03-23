@@ -76,9 +76,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account No SLA");
+			CustomerPortal.enterOnProject(title = "Test Account No SLA");
 		}
 
 		task ("Assert that the project does not have an SLA card and that the 'Submit a Ticket' card does not appear in Quick Links") {
@@ -197,9 +195,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
 		task ("Go to the product activation page") {
@@ -312,9 +308,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "Test Account Analytics Cloud");
+			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 
 		task ("Check that the following subscriptions are not part of the project") {

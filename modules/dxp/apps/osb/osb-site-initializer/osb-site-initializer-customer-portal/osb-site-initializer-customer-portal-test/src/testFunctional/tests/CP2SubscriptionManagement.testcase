@@ -83,7 +83,7 @@ definition {
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
 
-			CP2Utils.onboardingFlow();
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2Subscription.changeTheStatusToDisplayCards(status = "All");
 		}
@@ -102,9 +102,7 @@ definition {
 		task ("Given that I go to the subscriptions page") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = "Test Account Portal");
+			CustomerPortal.enterOnProject(title = "Test Account Portal");
 
 			CP2Subscription.changeTheStatusToDisplayCards(status = "All");
 		}
@@ -123,9 +121,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(
-				status = "Future",
-				title = "Test Account Portal");
+			CustomerPortal.enterOnProject(title = "Test Account Portal");
 		}
 
 		task ("Assert that the tab is being displayed") {

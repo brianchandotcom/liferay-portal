@@ -720,10 +720,33 @@ public abstract class BaseJob implements Job {
 
 		List<Callable<BatchTestClassGroup>> callables = new ArrayList<>();
 
+		String testSuiteName = null;
+
+		if (this instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+
 		final Job job = this;
 
+		Map<File, List<Callable<BatchTestClassGroup>>> testBaseDirCallablesMap =
+			new HashMap<>();
+
 		for (final String batchName : rawBatchNames) {
-			callables.add(
+			File testBaseDir = null;
+
+			JobProperty jobProperty = getJobProperty(
+				"test.base.dir", testSuiteName, batchName);
+
+			if ((jobProperty != null) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(
+					jobProperty.getValue())) {
+
+				testBaseDir = new File(jobProperty.getValue());
+			}
+
+			Callable<BatchTestClassGroup> callable =
 				new Callable<BatchTestClassGroup>() {
 
 					@Override
@@ -788,7 +811,26 @@ public abstract class BaseJob implements Job {
 					private final Integer _pauseRetryCount = 2;
 					private final Integer _pauseRetryDuration = 5000;
 
-				});
+				};
+
+			if (testBaseDir == null) {
+				callables.add(callable);
+
+				continue;
+			}
+
+			List<Callable<BatchTestClassGroup>> testBaseDirCallables =
+				testBaseDirCallablesMap.get(testBaseDir);
+
+			if (testBaseDirCallables == null) {
+				testBaseDirCallables = new ArrayList<>();
+
+				testBaseDirCallablesMap.put(testBaseDir, testBaseDirCallables);
+			}
+
+			testBaseDirCallables.add(callable);
+
+			testBaseDirCallablesMap.put(testBaseDir, testBaseDirCallables);
 		}
 
 		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
@@ -796,6 +838,15 @@ public abstract class BaseJob implements Job {
 
 		List<BatchTestClassGroup> batchTestClassGroups =
 			parallelExecutor.execute();
+
+		for (List<Callable<BatchTestClassGroup>> testBaseDirCallables :
+				testBaseDirCallablesMap.values()) {
+
+			parallelExecutor = new ParallelExecutor<>(
+				testBaseDirCallables, _executorService);
+
+			batchTestClassGroups.addAll(parallelExecutor.execute());
+		}
 
 		batchTestClassGroups.removeAll(Collections.singleton(null));
 
@@ -859,6 +910,13 @@ public abstract class BaseJob implements Job {
 		return JobPropertyFactory.newJobProperty(
 			basePropertyName, null, null, this, null, null,
 			useBasePropertyName);
+	}
+
+	protected JobProperty getJobProperty(
+		String basePropertyName, String testSuiteName, String batchName) {
+
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, testSuiteName, batchName, this, null, null, true);
 	}
 
 	protected Set<String> getRawBatchNames() {

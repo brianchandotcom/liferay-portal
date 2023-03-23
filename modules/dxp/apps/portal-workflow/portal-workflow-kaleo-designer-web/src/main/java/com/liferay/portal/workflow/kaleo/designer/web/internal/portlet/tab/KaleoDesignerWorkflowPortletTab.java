@@ -103,7 +103,8 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
+		KaleoDesignerDisplayContext kaleoDesignerDisplayContext =
+			new KaleoDesignerDisplayContext(
 			_actionExecutorManager, renderRequest,
 			_kaleoDefinitionVersionLocalService, _portletResourcePermission,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
@@ -111,7 +112,7 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
-			_kaleoDesignerDisplayContext);
+			kaleoDesignerDisplayContext);
 
 		String name = ParamUtil.getString(renderRequest, "name");
 
@@ -157,8 +158,6 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-
-	private KaleoDesignerDisplayContext _kaleoDesignerDisplayContext;
 
 	@Reference(
 		target = "(resource.name=" + WorkflowConstants.RESOURCE_NAME + ")"

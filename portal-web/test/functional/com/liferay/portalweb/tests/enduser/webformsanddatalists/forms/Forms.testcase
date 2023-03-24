@@ -1387,9 +1387,8 @@ definition {
 	@description = "This is a use case for LPS-50757."
 	@priority = 4
 	test EditAllFormFieldsTypesUsedBySystemSettings {
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.release = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#EditAllFormFieldsTypesUsedBySystemSettings";
 
 		Navigator.openURL();

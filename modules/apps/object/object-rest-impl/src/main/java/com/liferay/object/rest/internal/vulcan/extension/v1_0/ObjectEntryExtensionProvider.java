@@ -56,7 +56,7 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 		long companyId, String className, Object entity) {
 
 		try {
-			ObjectDefinition objectDefinition = getObjectDefinition(
+			ObjectDefinition objectDefinition = fetchObjectDefinition(
 				companyId, className);
 
 			Map<String, Serializable> values =
@@ -94,7 +94,7 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 		Map<String, PropertyDefinition> extendedPropertyDefinitions =
 			new HashMap<>();
 
-		ObjectDefinition objectDefinition = getObjectDefinition(
+		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
 		for (ObjectField objectField :
@@ -140,7 +140,7 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 		Map<String, Serializable> extendedProperties) {
 
 		try {
-			ObjectDefinition objectDefinition = getObjectDefinition(
+			ObjectDefinition objectDefinition = fetchObjectDefinition(
 				companyId, className);
 
 			for (ObjectField objectField :

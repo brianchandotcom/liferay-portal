@@ -19,12 +19,15 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.workflow.kaleo.definition.ActionType;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
@@ -45,8 +48,33 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 		String actionExecutorKey = _getActionExecutorKey(kaleoAction);
 
-		ActionExecutor actionExecutor = _serviceTrackerMap.getService(
+		ActionExecutor actionExecutor = null;
+
+		List<ActionExecutor> actionExecutors = _serviceTrackerMap.getService(
 			actionExecutorKey);
+
+		if (actionExecutors != null) {
+			if (Objects.equals(
+					String.valueOf(ScriptLanguage.JAVA),
+					kaleoAction.getScriptLanguage())) {
+
+				String className = kaleoAction.getScript();
+
+				for (ActionExecutor innerActionExecutor : actionExecutors) {
+					if (Objects.equals(
+							ClassUtil.getClassName(innerActionExecutor),
+							className)) {
+
+						actionExecutor = innerActionExecutor;
+
+						break;
+					}
+				}
+			}
+			else {
+				actionExecutor = actionExecutors.get(0);
+			}
+		}
 
 		if (actionExecutor == null) {
 			throw new PortalException(
@@ -72,7 +100,7 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ActionExecutor.class, null,
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
@@ -100,6 +128,6 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		return kaleoAction.getScriptLanguage();
 	}
 
-	private ServiceTrackerMap<String, ActionExecutor> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<ActionExecutor>> _serviceTrackerMap;
 
 }

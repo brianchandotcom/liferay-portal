@@ -40,6 +40,15 @@
 				},
 				{
 					"defaultValue": true,
+					"label": "show-discontinued-label",
+					"name": "showDiscontinuedLabel",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
 					"label": "show-image",
 					"name": "showImage",
 					"type": "checkbox",

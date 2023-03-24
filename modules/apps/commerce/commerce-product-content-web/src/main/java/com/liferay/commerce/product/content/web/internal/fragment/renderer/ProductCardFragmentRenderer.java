@@ -228,6 +228,12 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 						configuration, editableValues, locale,
 						"showCompareCheckbox")));
 			httpServletRequest.setAttribute(
+				"liferay-commerce:product-card:showDiscontinuedLabel",
+				GetterUtil.getBoolean(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						configuration, editableValues, locale,
+						"showDiscontinuedLabel")));
+			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showImage",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(

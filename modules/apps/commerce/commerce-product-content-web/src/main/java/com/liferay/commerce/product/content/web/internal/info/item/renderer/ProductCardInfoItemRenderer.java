@@ -95,6 +95,9 @@ public class ProductCardInfoItemRenderer
 				"liferay-commerce:product-card:showCompareCheckbox",
 				Boolean.TRUE);
 			httpServletRequest.setAttribute(
+				"liferay-commerce:product-card:showDiscontinuedLabel",
+				Boolean.TRUE);
+			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showImage", Boolean.TRUE);
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showName", Boolean.TRUE);

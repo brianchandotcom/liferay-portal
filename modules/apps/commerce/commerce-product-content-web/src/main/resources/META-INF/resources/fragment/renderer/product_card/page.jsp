@@ -52,11 +52,19 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 					</c:choose>
 				</c:if>
 
-				<c:if test="<%= showAvailabilityLabel %>">
+				<c:if test="<%= showAvailabilityLabel || showDiscontinuedLabel %>">
 					<div class="aspect-ratio-item-bottom-left">
-						<commerce-ui:availability-label
-							CPCatalogEntry="<%= cpCatalogEntry %>"
-						/>
+						<c:if test="<%= showAvailabilityLabel %>">
+							<commerce-ui:availability-label
+								CPCatalogEntry="<%= cpCatalogEntry %>"
+							/>
+						</c:if>
+
+						<c:if test="<%= showDiscontinuedLabel %>">
+							<commerce-ui:discontinued-label
+								CPCatalogEntry="<%= cpCatalogEntry %>"
+							/>
+						</c:if>
 					</div>
 				</c:if>
 			</a>

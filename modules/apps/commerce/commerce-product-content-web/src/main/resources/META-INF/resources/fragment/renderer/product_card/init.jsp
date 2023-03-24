@@ -45,6 +45,7 @@ boolean showAddToCartButton = (boolean)request.getAttribute("liferay-commerce:pr
 boolean showAddToWishListButton = (boolean)request.getAttribute("liferay-commerce:product-card:showAddToWishListButton");
 boolean showAvailabilityLabel = (boolean)request.getAttribute("liferay-commerce:product-card:showAvailabilityLabel");
 boolean showCompareCheckbox = (boolean)request.getAttribute("liferay-commerce:product-card:showCompareCheckbox");
+boolean showDiscontinuedLabel = (boolean)request.getAttribute("liferay-commerce:product-card:showDiscontinuedLabel");
 boolean showImage = (boolean)request.getAttribute("liferay-commerce:product-card:showImage");
 boolean showName = (boolean)request.getAttribute("liferay-commerce:product-card:showName");
 boolean showPrice = (boolean)request.getAttribute("liferay-commerce:product-card:showPrice");

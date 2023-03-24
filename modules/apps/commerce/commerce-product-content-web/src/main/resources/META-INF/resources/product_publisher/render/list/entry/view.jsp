@@ -129,6 +129,14 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 
 					<div class="autofit-col">
 						<div class="autofit-section">
+							<commerce-ui:discontinued-label
+								CPCatalogEntry="<%= cpCatalogEntry %>"
+							/>
+						</div>
+					</div>
+
+					<div class="autofit-col">
+						<div class="autofit-section">
 							<commerce-ui:add-to-wish-list
 								CPCatalogEntry="<%= cpCatalogEntry %>"
 							/>

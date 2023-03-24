@@ -668,12 +668,7 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setOrderByComparator(orderByComparator);
 		dlSearchContainer.setOrderByType(getOrderByType());
 
-		List<RepositoryEntry> results = new ArrayList<>();
-
 		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine")) {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-				DLFileEntryConstants.getClassName());
-
 			SearchContext searchContext = _getSearchContext(dlSearchContainer);
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -688,34 +683,13 @@ public class DLAdminDisplayContext {
 			searchContext.setBooleanClauses(
 				_getBooleanClauses(extensions, fileEntryTypeId, userId));
 
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+				DLFileEntryConstants.getClassName());
+
 			Hits hits = indexer.search(searchContext);
 
-			for (Document doc : hits.getDocs()) {
-				long fileEntryId = GetterUtil.getLong(
-					doc.get(Field.ENTRY_CLASS_PK));
-
-				FileEntry fileEntry = null;
-
-				try {
-					fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Documents and Media search index is stale ",
-								"and contains file entry {", fileEntryId, "}"),
-							exception);
-					}
-
-					continue;
-				}
-
-				results.add(fileEntry);
-			}
-
 			dlSearchContainer.setResultsAndTotal(
-				() -> results, hits.getLength());
+				() -> _getFileEntries(hits), hits.getLength());
 		}
 		else {
 			if (navigation.equals("home")) {
@@ -732,6 +706,8 @@ public class DLAdminDisplayContext {
 
 					assetEntryQuery.setEnablePermissions(true);
 					assetEntryQuery.setExcludeZeroViewCount(false);
+
+					List<RepositoryEntry> results = new ArrayList<>();
 
 					for (AssetEntry assetEntry :
 							AssetEntryServiceUtil.getEntries(assetEntryQuery)) {
@@ -802,6 +778,36 @@ public class DLAdminDisplayContext {
 		}
 
 		return termsFilter;
+	}
+
+	private List<RepositoryEntry> _getFileEntries(Hits hits) {
+		List<RepositoryEntry> results = new ArrayList<>();
+
+		for (Document doc : hits.getDocs()) {
+			long fileEntryId = GetterUtil.getLong(
+				doc.get(Field.ENTRY_CLASS_PK));
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Documents and Media search index is stale ",
+							"and contains file entry {", fileEntryId, "}"),
+						exception);
+				}
+
+				continue;
+			}
+
+			results.add(fileEntry);
+		}
+
+		return results;
 	}
 
 	private Hits _getHits(SearchContainer<RepositoryEntry> searchContainer)
@@ -893,7 +899,12 @@ public class DLAdminDisplayContext {
 		searchContext.setAttribute("paginationType", "none");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setStart(searchContainer.getStart());
+		searchContext.setSorts(_getSort());
 
+		return searchContext;
+	}
+
+	private Sort _getSort() {
 		int type = Sort.STRING_TYPE;
 		String fieldName = getOrderByCol();
 
@@ -909,12 +920,9 @@ public class DLAdminDisplayContext {
 			type = Sort.LONG_TYPE;
 		}
 
-		searchContext.setSorts(
-			SortFactoryUtil.create(
-				fieldName, type,
-				!StringUtil.equalsIgnoreCase(getOrderByType(), "asc")));
-
-		return searchContext;
+		return SortFactoryUtil.create(
+			fieldName, type,
+			!StringUtil.equalsIgnoreCase(getOrderByType(), "asc"));
 	}
 
 	private List<RepositoryEntry> _getSearchResults(Hits hits)

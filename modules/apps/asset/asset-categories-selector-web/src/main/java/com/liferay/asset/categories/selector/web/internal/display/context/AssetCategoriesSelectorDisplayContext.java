@@ -244,6 +244,22 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _showSelectedCounter;
 	}
 
+	private List<String> _getAncestorAssetCategoryIds(
+			AssetCategory assetCategory)
+		throws Exception {
+
+		List<String> ancestorAssetCategoryIds = new ArrayList<>();
+
+		for (AssetCategory ancestorAssetCategory :
+				assetCategory.getAncestors()) {
+
+			ancestorAssetCategoryIds.add(
+				String.valueOf(ancestorAssetCategory.getCategoryId()));
+		}
+
+		return ancestorAssetCategoryIds;
+	}
+
 	private JSONArray _getCategoriesJSONArray(
 			long vocabularyId, long categoryId)
 		throws Exception {
@@ -262,6 +278,8 @@ public class AssetCategoriesSelectorDisplayContext {
 		for (AssetCategory category : categories) {
 			jsonArray.put(
 				JSONUtil.put(
+					"ancestorIds", _getAncestorAssetCategoryIds(category)
+				).put(
 					"children",
 					() -> {
 						JSONArray childrenJSONArray = _getCategoriesJSONArray(

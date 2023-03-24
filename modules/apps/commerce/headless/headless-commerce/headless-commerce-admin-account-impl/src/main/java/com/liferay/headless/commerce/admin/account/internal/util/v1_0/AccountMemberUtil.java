@@ -19,6 +19,7 @@ import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
@@ -45,11 +45,8 @@ public class AccountMemberUtil {
 		AccountRole[] accountRoles = accountMember.getAccountRoles();
 
 		if (accountRoles != null) {
-			Stream<AccountRole> accountRoleStream = Arrays.stream(accountRoles);
-
-			roleIds = accountRoleStream.mapToLong(
-				AccountRole::getRoleId
-			).toArray();
+			roleIds = TransformUtil.transformToLongArray(
+				Arrays.asList(accountRoles), AccountRole::getRoleId);
 		}
 
 		return commerceAccountUserRelService.addCommerceAccountUserRel(

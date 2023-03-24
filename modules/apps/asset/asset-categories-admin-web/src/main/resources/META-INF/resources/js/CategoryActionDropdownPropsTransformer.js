@@ -54,11 +54,14 @@ const ACTIONS = {
 				const parentCategoryId = item.categoryId || 0;
 				const vocabularyId = item.vocabularyId;
 
-				if (categoryId === parentCategoryId) {
+				if (
+					categoryId === parentCategoryId ||
+					item.ancestorIds.includes(categoryId)
+				) {
 					openToast({
 						message: sub(
 							Liferay.Language.get(
-								'unable-to-move-the-category-x-into-itself'
+								'unable-to-move-the-category-x-into-itself-or-one-of-its-children'
 							),
 							categoryTitle
 						),

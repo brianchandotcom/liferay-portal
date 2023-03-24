@@ -104,23 +104,22 @@ public class ContentDashboardSearchContextBuilder {
 				TransformUtil.transformToLongArray(
 					Arrays.asList(contentDashboardItemSubtypePayloads),
 					contentDashboardItemSubtypePayload -> {
-						JSONObject jsonObject = null;
-
 						try {
-							jsonObject = JSONFactoryUtil.createJSONObject(
-								contentDashboardItemSubtypePayload);
+							JSONObject jsonObject =
+								JSONFactoryUtil.createJSONObject(
+									contentDashboardItemSubtypePayload);
+
+							if (!jsonObject.isNull("classPK")) {
+								return null;
+							}
+
+							return jsonObject.getLong("classPK");
 						}
 						catch (JSONException jsonException) {
 							_log.error(jsonException);
 
 							return null;
 						}
-
-						if (!jsonObject.isNull("classPK")) {
-							return null;
-						}
-
-						return jsonObject.getLong("classPK");
 					}));
 		}
 
@@ -133,19 +132,18 @@ public class ContentDashboardSearchContextBuilder {
 				TransformUtil.transform(
 					contentDashboardItemSubtypePayloads,
 					contentDashboardItemSubtypePayload -> {
-						JSONObject jsonObject = null;
-
 						try {
-							jsonObject = JSONFactoryUtil.createJSONObject(
-								contentDashboardItemSubtypePayload);
+							JSONObject jsonObject =
+								JSONFactoryUtil.createJSONObject(
+									contentDashboardItemSubtypePayload);
+
+							return jsonObject.getString(Field.ENTRY_CLASS_NAME);
 						}
 						catch (JSONException jsonException) {
 							_log.error(jsonException);
 
 							return null;
 						}
-
-						return jsonObject.getString(Field.ENTRY_CLASS_NAME);
 					},
 					String.class));
 		}

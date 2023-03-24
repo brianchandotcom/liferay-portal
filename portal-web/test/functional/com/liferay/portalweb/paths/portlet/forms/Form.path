@@ -629,7 +629,7 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_INPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_inputParameterType}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*//li[contains(.,'${key_inputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -662,12 +662,12 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>

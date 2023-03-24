@@ -146,7 +146,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_ADD_FIELD_LIST</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_calculateFieldOption}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*//li[contains(.,'${key_calculateFieldOption}')]</td>
 	<td></td>
 </tr>
 <tr>

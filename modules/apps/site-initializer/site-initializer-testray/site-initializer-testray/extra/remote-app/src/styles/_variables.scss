@@ -237,8 +237,21 @@ $sidebar-divider-color: #8b8db2;
 
 // ---------- Result status colors ----------
 
+.build-status {
+	&.in-analysis {
+		background-color: $in-analysis-color;
+		border-color: $in-analysis-color;
+		color: $in-analysis-color;
+		border-radius: 50%;
+	}
+}
+
 .label-chart {
 	font-weight: 500;
+
+	&.symbol {
+		border-radius: 50%;
+	}
 
 	&.blocked {
 		background-color: $blockedColor;
@@ -246,45 +259,75 @@ $sidebar-divider-color: #8b8db2;
 		color: $color-black;
 	}
 
-	&.completed {
+	&.completed,
+	&.complete {
 		background-color: $completed-color;
 		border-color: $completed-color;
 		color: $color-white;
+
+		&.symbol {
+			color: $completed-color;
+		}
 	}
 
 	&.failed {
 		background-color: $failedColor;
 		border-color: $failedColor;
 		color: $color-white;
+
+		&.symbol {
+			color: $failedColor;
+		}
 	}
 
+	&.inanalysis,
 	&.in-analysis {
 		background-color: $in-analysis-color;
 		border-color: $in-analysis-color;
 		color: $color-white;
+
+		&.symbol {
+			color: $in-analysis-color;
+		}
 	}
 
 	&.untested {
 		background-color: $color-gray-light;
 		border-color: $color-gray-light;
 		color: $color-black;
+
+		&.symbol {
+			color: $color-gray-light;
+		}
 	}
 
 	&.inprogress {
 		background-color: $color-gray-light;
 		border-color: $color-gray-light;
 		color: $color-black;
+
+		&.symbol {
+			color: $color-gray-light;
+		}
 	}
 
 	&.test-fix {
 		background-color: $testFixColor;
 		border-color: $testFixColor;
 		color: $color-white;
+
+		&.symbol {
+			color: $testFixColor;
+		}
 	}
 
 	&.secondary {
 		background-color: #ed7105;
 		border-color: #ed7105;
+
+		&.symbol {
+			color: #ed7105;
+		}
 	}
 
 	&.light {

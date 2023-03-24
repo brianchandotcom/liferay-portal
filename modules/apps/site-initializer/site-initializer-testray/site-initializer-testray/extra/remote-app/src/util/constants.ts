@@ -70,8 +70,3 @@ export const PAGINATION = {
 	delta: PAGINATION_DELTA,
 	ellipsisBuffer: 3,
 };
-
-export const BUILD_STATUS = {
-	0: {color: 'label-chart-in-analysis', label: 'IN ANALYSIS'},
-	2: {color: 'label-secondary', label: 'OPEN'},
-};

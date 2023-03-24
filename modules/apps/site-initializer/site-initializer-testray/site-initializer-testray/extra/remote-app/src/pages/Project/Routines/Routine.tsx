@@ -14,6 +14,7 @@
 
 import ClayChart from '@clayui/charts';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useParams} from 'react-router-dom';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
@@ -21,7 +22,7 @@ import ProgressBar from '~/components/ProgressBar';
 import useSearchBuilder from '~/hooks/useSearchBuilder';
 import i18n from '~/i18n';
 import {TestrayBuild, testrayBuildImpl} from '~/services/rest';
-import {BUILD_STATUS, DATA_COLORS, Statuses} from '~/util/constants';
+import {DATA_COLORS, Statuses} from '~/util/constants';
 import dayjs from '~/util/date';
 
 import BuildAddButton from './Builds/BuildAddButton';
@@ -181,11 +182,13 @@ const Routine = () => {
 										{task && (
 											<span title={task.dueStatus.name}>
 												<ClayIcon
-													className={
-														(BUILD_STATUS as any)[
-															task.dueStatus.key
-														]?.color
-													}
+													className={classNames(
+														'label-chart symbol',
+														{
+															[task.dueStatus.key.toLowerCase()]: task
+																.dueStatus.key,
+														}
+													)}
 													symbol="circle"
 												/>
 											</span>

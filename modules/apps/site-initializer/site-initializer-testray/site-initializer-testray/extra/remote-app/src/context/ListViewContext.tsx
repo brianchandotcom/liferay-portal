@@ -23,15 +23,15 @@ import isDeepEqual from '~/util/object';
 
 const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 
-export type Sort = {
-	direction: SortDirection;
-	key: string;
-};
-
 export type Entry = {
 	label: string;
 	name: string;
 	value: string;
+};
+
+export type Sort = {
+	direction: SortDirection;
+	key: string;
 };
 
 type ListViewFilter = {
@@ -134,8 +134,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -209,8 +208,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 					JSON.stringify(state.filters),
 					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
+			} else {
 				testrayStorage.removeItem(storageName);
 			}
 

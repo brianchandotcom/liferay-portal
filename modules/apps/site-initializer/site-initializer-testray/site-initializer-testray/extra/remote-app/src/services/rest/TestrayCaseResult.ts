@@ -91,11 +91,9 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				component: caseResult?.r_componentToCaseResult_c_component
 					? {
 							...caseResult.r_componentToCaseResult_c_component,
-							team: caseResult.r_componentToCaseResult_c_component
-								.r_teamToComponents_c_team
-								? caseResult.r_componentToCaseResult_c_component
-										.r_teamToComponents_c_team
-								: undefined,
+							team:
+								caseResult.r_componentToCaseResult_c_component
+									.r_teamToComponents_c_team,
 					  }
 					: undefined,
 				issues: caseResult.caseResultToCaseResultsIssues ?? [],
@@ -193,8 +191,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}

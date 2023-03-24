@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -36,6 +37,35 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DocumentFolderResourceTest
 	extends BaseDocumentFolderResourceTestCase {
+
+	@Override
+	@Test
+	public void testDeleteDocumentFolderMyRating() throws Exception {
+		super.testDeleteDocumentFolderMyRating();
+
+		DocumentFolder documentFolder =
+			testDeleteDocumentFolderMyRating_addDocumentFolder();
+
+		assertHttpResponseStatusCode(
+			200,
+			documentFolderResource.putDocumentFolderMyRatingHttpResponse(
+				documentFolder.getId(), randomRating()));
+
+		assertHttpResponseStatusCode(
+			200,
+			documentFolderResource.getDocumentFolderMyRatingHttpResponse(
+				documentFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			204,
+			documentFolderResource.deleteDocumentFolderMyRatingHttpResponse(
+				documentFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentFolderResource.getDocumentFolderMyRatingHttpResponse(
+				documentFolder.getId()));
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

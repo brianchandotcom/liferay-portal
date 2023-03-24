@@ -184,6 +184,16 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 			cpOptionsSearchFacetTermDisplayContext;
 	}
 
+	public Boolean showClear(long companyId, String fieldName) {
+		CPOption cpOption = getCPOption(companyId, fieldName);
+
+		Optional<String[]> parameterValuesOptional =
+			_portletSharedSearchResponse.getParameterValues(
+				cpOption.getKey(), _renderRequest);
+
+		return parameterValuesOptional.isPresent();
+	}
+
 	private static final long _DISPLAY_STYLE_GROUP_ID = 0;
 
 	private CPOptionLocalService _cpOptionLocalService;

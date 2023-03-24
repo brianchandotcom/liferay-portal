@@ -74,6 +74,10 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 								<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= facet.getFieldName() %>" />
 								<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= cpPriceRangeFacetsDisplayContext.getPaginationStartParameterName() %>" />
 
+								<c:if test="<%= cpPriceRangeFacetsDisplayContext.showClear(facet.getFieldName()) %>">
+									<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+								</c:if>
+
 								<aui:fieldset>
 									<ul class="list-unstyled">
 

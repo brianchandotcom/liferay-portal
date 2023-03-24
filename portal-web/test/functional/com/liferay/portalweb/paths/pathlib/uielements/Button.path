@@ -477,7 +477,7 @@
 </tr>
 <tr>
 	<td>IMAGE_SELECTOR</td>
-	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//*[*[name()='svg'][contains(@class,'lexicon-icon-plus')]]</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[contains(@id,'openGraphImageButton')]</td>
 	<td></td>
 </tr>
 <tr>

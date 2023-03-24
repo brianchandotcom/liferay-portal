@@ -561,11 +561,12 @@ definition {
 
 		task ("When with POST request I create a structured content with erc equals to the internal id of the previously created structured content") {
 			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = ${response});
+
 			var response = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
 				depotName = "Test Depot Name",
-				externalReferenceCode = ${customErc},
+				externalReferenceCode = ${structuredContentId},
 				label = "Text",
 				name = "Text",
 				title = "WC Second WebContent Title");
@@ -573,7 +574,7 @@ definition {
 
 		task ("Then I can see erc equals to the previous id in the body response") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedactualExternalReferenceCodeValueValue = ${structuredContentId},
+				expectedExternalReferenceCodeValue = ${structuredContentId},
 				responseToParse = ${response});
 		}
 

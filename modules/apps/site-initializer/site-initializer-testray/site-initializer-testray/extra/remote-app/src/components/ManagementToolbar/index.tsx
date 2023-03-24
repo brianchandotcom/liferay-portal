@@ -72,7 +72,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				/>
 			</ClayManagementToolbar>
 
-			{!!filters.entries?.length && (
+			{!!filters.entries?.filter(({value}) => value).length && (
 				<ManagementToolbarResultsBar totalItems={totalItems} />
 			)}
 		</>

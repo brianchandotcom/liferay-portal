@@ -56,45 +56,47 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 				</span>
 			</ClayResultsBar.Item>
 
-			{entries.map((entry, index) => (
-				<ClayResultsBar.Item
-					expand={index === entries.length - 1}
-					key={index}
-				>
-					<ClayLabel
-						className="component-label result-filter tbar-label"
-						displayType="unstyled"
+			{entries
+				.filter(({value}) => value)
+				.map((entry, index) => (
+					<ClayResultsBar.Item
+						expand={index === entries.length - 1}
+						key={index}
 					>
-						<span className="d-flex flex-row">
-							<b>{entry.label}</b>
+						<ClayLabel
+							className="component-label result-filter tbar-label"
+							displayType="unstyled"
+						>
+							<span className="d-flex flex-row">
+								<b>{entry.label}</b>
 
-							{`: ${
-								Array.isArray(entry.value)
-									? entry.value
-											.map((entryValue) =>
-												String(
-													typeof entryValue ===
-														'object'
-														? entryValue.label
-														: entryValue
+								{`: ${
+									Array.isArray(entry.value)
+										? entry.value
+												.map((entryValue) =>
+													String(
+														typeof entryValue ===
+															'object'
+															? entryValue.label
+															: entryValue
+													)
 												)
-											)
-											.sort((entryA, entryB) =>
-												entryA.localeCompare(entryB)
-											)
-											.join(', ')
-									: entry.value
-							}`}
+												.sort((entryA, entryB) =>
+													entryA.localeCompare(entryB)
+												)
+												.join(', ')
+										: entry.value
+								}`}
 
-							<ClayIcon
-								className="cursor-pointer ml-2"
-								onClick={() => onRemoveFilter(entry.name)}
-								symbol="times"
-							/>
-						</span>
-					</ClayLabel>
-				</ClayResultsBar.Item>
-			))}
+								<ClayIcon
+									className="cursor-pointer ml-2"
+									onClick={() => onRemoveFilter(entry.name)}
+									symbol="times"
+								/>
+							</span>
+						</ClayLabel>
+					</ClayResultsBar.Item>
+				))}
 
 			<ClayResultsBar.Item>
 				<ClayButton

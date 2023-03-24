@@ -520,12 +520,12 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			_getSubscribeContentDashboardItemActionJSONObject(
 				contentDashboardItem, httpServletRequest);
 
-		if (jsonObject == null) {
-			return _getUnSubscribeContentDashboardItemActionJSONObject(
-				contentDashboardItem, httpServletRequest);
+		if (jsonObject != null) {
+			return jsonObject;
 		}
 
-		return jsonObject;
+		return _getUnSubscribeContentDashboardItemActionJSONObject(
+			contentDashboardItem, httpServletRequest);
 	}
 
 	private JSONObject _getUnSubscribeContentDashboardItemActionJSONObject(

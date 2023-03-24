@@ -17,7 +17,6 @@ import {useParams} from 'react-router-dom';
 import Container from '../../../../../../components/Layout/Container';
 import ListView from '../../../../../../components/ListView';
 import SearchBuilder from '../../../../../../core/SearchBuilder';
-import useRuns from '../../../../../../hooks/useRuns';
 import i18n from '../../../../../../i18n';
 import {testrayRunImpl} from '../../../../../../services/rest';
 import RunFormModal from './RunFormModal';
@@ -26,7 +25,6 @@ import useRunActions from './useRunActions';
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
 	const {buildId} = useParams();
-	const {setRunId} = useRuns();
 
 	return (
 		<Container className="mt-4">
@@ -84,9 +82,7 @@ const Runs = () => {
 						},
 					],
 					navigateTo: (run) => {
-						setRunId(run.id);
-
-						return '..';
+						return `..?runId=${run.id}`;
 					},
 				}}
 				transformData={(response) =>

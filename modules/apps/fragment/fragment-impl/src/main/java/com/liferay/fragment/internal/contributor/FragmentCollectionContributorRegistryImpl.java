@@ -33,6 +33,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -44,12 +50,22 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplayFactory;
 
 import java.io.IOException;
 
@@ -58,11 +74,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -268,6 +287,107 @@ public class FragmentCollectionContributorRegistryImpl
 		}
 	}
 
+	private HttpServletRequest _getHttpServletRequest(
+			Company company, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			PermissionChecker permissionChecker, User user)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			company, permissionChecker, user);
+
+		HttpServletRequest companyHttpServletRequest =
+			new HttpServletRequestWrapper(httpServletRequest) {
+
+				@Override
+				public Object getAttribute(String name) {
+					if (Objects.equals(name, WebKeys.COMPANY_ID)) {
+						return company.getCompanyId();
+					}
+
+					if (Objects.equals(name, WebKeys.LAYOUT)) {
+						return themeDisplay.getLayout();
+					}
+
+					if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
+						return themeDisplay;
+					}
+
+					if (Objects.equals(name, WebKeys.USER)) {
+						return user;
+					}
+
+					if (Objects.equals(name, WebKeys.USER_ID)) {
+						return user.getUserId();
+					}
+
+					return super.getAttribute(name);
+				}
+
+			};
+
+		themeDisplay.setRequest(companyHttpServletRequest);
+
+		themeDisplay.setResponse(httpServletResponse);
+
+		return companyHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+			Company company, PermissionChecker permissionChecker, User user)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+
+		themeDisplay.setCompany(company);
+
+		Group group = _groupLocalService.getGroup(
+			company.getCompanyId(), GroupConstants.GUEST);
+
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			false);
+
+		themeDisplay.setLayout(layout);
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
+
+		themeDisplay.setLanguageId(layout.getDefaultLanguageId());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
+		themeDisplay.setPermissionChecker(permissionChecker);
+		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setPortalDomain(company.getVirtualHostname());
+		themeDisplay.setPortalURL(company.getPortalURL(layout.getGroupId()));
+		themeDisplay.setRealUser(user);
+		themeDisplay.setScopeGroupId(layout.getGroupId());
+		themeDisplay.setServerPort(
+			_portal.getPortalServerPort(_isHttpsEnabled()));
+		themeDisplay.setSiteGroupId(layout.getGroupId());
+		themeDisplay.setTimeZone(user.getTimeZone());
+		themeDisplay.setUser(user);
+
+		return themeDisplay;
+	}
+
+	private boolean _isHttpsEnabled() {
+		if (Objects.equals(
+				Http.HTTPS,
+				PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
+			Objects.equals(
+				Http.HTTPS, PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isPropagateContributedFragmentChanges(long companyId)
 		throws ConfigurationException {
 
@@ -289,14 +409,18 @@ public class FragmentCollectionContributorRegistryImpl
 	}
 
 	private void _setCompanyContext(
-		Company company, HttpServletRequest httpServletRequest) {
+			Company company, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
 
 		CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
 		User user = _userLocalService.fetchDefaultUser(company.getCompanyId());
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
@@ -304,7 +428,10 @@ public class FragmentCollectionContributorRegistryImpl
 
 		serviceContext.setCompanyId(company.getCompanyId());
 
-		serviceContext.setRequest(httpServletRequest);
+		serviceContext.setRequest(
+			_getHttpServletRequest(
+				company, httpServletRequest, httpServletResponse,
+				permissionChecker, user));
 
 		serviceContext.setUserId(user.getUserId());
 
@@ -320,6 +447,29 @@ public class FragmentCollectionContributorRegistryImpl
 		String originalName = PrincipalThreadLocal.getName();
 		ServiceContext originalServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
+
+		HttpServletRequest httpServletRequest;
+		HttpServletResponse httpServletResponse;
+
+		ThemeDisplay themeDisplay = originalServiceContext.getThemeDisplay();
+
+		if ((originalServiceContext.getRequest() == null) &&
+			(themeDisplay != null)) {
+
+			httpServletRequest = themeDisplay.getRequest();
+		}
+		else {
+			httpServletRequest = originalServiceContext.getRequest();
+		}
+
+		if ((originalServiceContext.getResponse() == null) &&
+			(themeDisplay != null)) {
+
+			httpServletResponse = themeDisplay.getResponse();
+		}
+		else {
+			httpServletResponse = originalServiceContext.getResponse();
+		}
 
 		try {
 			_companyLocalService.forEachCompany(
@@ -343,7 +493,7 @@ public class FragmentCollectionContributorRegistryImpl
 						}
 
 						_setCompanyContext(
-							company, originalServiceContext.getRequest());
+							company, httpServletRequest, httpServletResponse);
 					}
 					catch (Exception exception) {
 						_log.error(exception);
@@ -423,6 +573,15 @@ public class FragmentCollectionContributorRegistryImpl
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

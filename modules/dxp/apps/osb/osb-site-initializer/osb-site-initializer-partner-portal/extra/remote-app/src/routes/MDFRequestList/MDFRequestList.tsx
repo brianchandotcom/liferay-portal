@@ -14,6 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useMemo} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -31,6 +32,7 @@ import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import {isPartnerManager} from '../../common/utils/isPartnerManager';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
@@ -43,9 +45,10 @@ type MDFRequestItem = {
 
 const MDFRequestList = () => {
 	const {
+		accountRoleEntries,
 		companiesEntries,
 		fieldEntries,
-		userAccountRoles,
+		roleEntries,
 	} = useDynamicFieldEntries();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
@@ -57,11 +60,24 @@ const MDFRequestList = () => {
 		filtersTerm
 	);
 
+	const isPartnerManagerRole = useMemo(() => {
+		if (companiesEntries) {
+			const roles = accountRoleEntries(
+				companiesEntries[0].value as number
+			);
+
+			return roles && isPartnerManager(roles);
+		}
+
+		return false;
+	}, [accountRoleEntries, companiesEntries]);
+
 	const siteURL = useLiferayNavigate();
 	const columns = getMDFListColumns(
 		data.listColumns,
 		siteURL,
-		userAccountRoles
+		roleEntries,
+		isPartnerManagerRole
 	);
 
 	const getTable = (

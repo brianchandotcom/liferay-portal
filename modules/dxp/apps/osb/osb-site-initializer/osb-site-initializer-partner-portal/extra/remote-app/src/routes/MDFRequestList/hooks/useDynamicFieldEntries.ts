@@ -30,7 +30,6 @@ export default function useDynamicFieldEntries() {
 			})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
 		[userAccount?.accountBriefs]
 	);
-
 	const userAccountRoles = useMemo(
 		() =>
 			userAccount?.roleBriefs.map((roleBrief) => ({
@@ -46,8 +45,13 @@ export default function useDynamicFieldEntries() {
 	);
 
 	return {
+		accountRoleEntries: (accountId?: number) =>
+			userAccount?.accountBriefs.find(
+				(accountBrief) => accountBrief.id === accountId
+			)?.roleBriefs,
 		companiesEntries,
 		fieldEntries,
+		roleEntries: userAccount?.roleBriefs,
 		userAccountRoles,
 	};
 }

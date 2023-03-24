@@ -14,28 +14,21 @@ import StatusBadge from '../../../common/components/StatusBadge';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
+import Role from '../../../common/interfaces/role';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import {Status} from '../../../common/utils/constants/status';
+import {isLiferayManager} from '../../../common/utils/isLiferayManager';
 
 export default function getMDFListColumns(
 	columns?: TableColumn<MDFRequestListItem>[],
 	siteURL?: string,
-	userAccountRoles?: React.OptionHTMLAttributes<HTMLOptionElement>[]
+	roleEntries?: Role[],
+	isPartnerManagerRole?: boolean
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFRequestListItem) => {
-		const canEditRoles = [
-			'Channel General Manager',
-			'Channel Account Manager',
-			'Channel Regional Marketing Manager',
-			'Channel Global Marketing Manager',
-			'Channel Finance Manager',
-		];
-
-		const userAccountRolesCanEdit = userAccountRoles?.filter(
-			(userAccountRole) =>
-				canEditRoles.includes(userAccountRole.label as string)
-		).length;
+		const userAccountRolesCanEdit =
+			isLiferayManager(roleEntries as Role[]) || isPartnerManagerRole;
 
 		if (
 			!userAccountRolesCanEdit &&

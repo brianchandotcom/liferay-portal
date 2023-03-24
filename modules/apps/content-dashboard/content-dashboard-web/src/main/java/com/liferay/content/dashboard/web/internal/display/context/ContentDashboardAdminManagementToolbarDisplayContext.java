@@ -565,13 +565,17 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			_contentDashboardItemFilterProviderRegistry.
 				getContentDashboardItemFilterProviders(),
 			contentDashboardItemFilterProvider -> {
-				ContentDashboardItemFilter contentDashboardItemFilter = null;
-
 				try {
-					contentDashboardItemFilter =
+					ContentDashboardItemFilter contentDashboardItemFilter =
 						contentDashboardItemFilterProvider.
 							getContentDashboardItemFilter(
 								_liferayPortletRequest.getHttpServletRequest());
+
+					if (contentDashboardItemFilter == null) {
+						return null;
+					}
+
+					return contentDashboardItemFilter.getDropdownItem();
 				}
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
@@ -579,11 +583,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					_log.error(contentDashboardItemActionException);
 				}
 
-				if (contentDashboardItemFilter == null) {
-					return null;
-				}
-
-				return contentDashboardItemFilter.getDropdownItem();
+				return null;
 			});
 	}
 

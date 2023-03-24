@@ -22,6 +22,9 @@ public class CommerceNotificationScreenNavigationConstants {
 	public static final String CATEGORY_KEY_COMMERCE_NOTIFICATION_QUEUE =
 		"notification-queue";
 
+	public static final String CATEGORY_KEY_COMMERCE_NOTIFICATION_TEMPLATES =
+		"notification-templates";
+
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL =
 		"commerce.channel.general";
 

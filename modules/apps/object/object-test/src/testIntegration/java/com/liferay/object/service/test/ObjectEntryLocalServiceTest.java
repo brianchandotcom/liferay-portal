@@ -648,7 +648,72 @@ public class ObjectEntryLocalServiceTest {
 				objectEntryValuesException.getMessage());
 		}
 
-		_testAddObjectEntryExternalReferenceCode();
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"firstName", "John"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+		Assert.assertEquals(
+			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
+
+		objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"externalReferenceCode", ""
+			).put(
+				"firstName", "John"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+		Assert.assertEquals(
+			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
+
+		objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"externalReferenceCode", "newExternalReferenceCode"
+			).put(
+				"firstName", "John"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+		Assert.assertEquals(
+			"newExternalReferenceCode",
+			objectEntry1.getExternalReferenceCode());
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "matthew@liferay.com"
+				).put(
+					"externalReferenceCode", "newExternalReferenceCode"
+				).put(
+					"firstName", "Matthew"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey2"
+				).build());
+		}
+		catch (ObjectEntryValuesException.MustNotBeDuplicate
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Duplicate value newExternalReferenceCode",
+				objectEntryValuesException.getMessage());
+		}
 	}
 
 	@Test
@@ -1961,7 +2026,7 @@ public class ObjectEntryLocalServiceTest {
 	public void testUpdateObjectEntry() throws Exception {
 		_assertCount(0);
 
-		ObjectEntry objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
@@ -1977,17 +2042,17 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
 
-		_getValuesFromCacheField(objectEntry);
+		_getValuesFromCacheField(objectEntry1);
 
 		//Assert.assertNotNull(
 		//	ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 
 		_messages.clear();
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
 			).put(
@@ -2005,15 +2070,15 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntry.getObjectEntryId());
+		objectEntry1 = _objectEntryLocalService.getObjectEntry(
+			objectEntry1.getObjectEntryId());
 
 		Assert.assertNull(
-			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
 
-		Map<String, Serializable> values = objectEntry.getValues();
+		Map<String, Serializable> values = objectEntry1.getValues();
 
-		Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
+		Assert.assertEquals(_getValuesFromCacheField(objectEntry1), values);
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertFalse((boolean)values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));
@@ -2036,7 +2101,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(),
+			objectEntry1.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 20, values.size());
 
@@ -2051,7 +2116,7 @@ public class ObjectEntryLocalServiceTest {
 		FileEntry fileEntry = _addTempFileEntry(StringUtil.randomString());
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"ageOfDeath", "94"
 			).put(
@@ -2086,7 +2151,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
+			objectEntry1.getObjectEntryId());
 
 		Assert.assertEquals(94L, values.get("ageOfDeath"));
 		Assert.assertTrue((boolean)values.get("authorOfGospel"));
@@ -2112,7 +2177,7 @@ public class ObjectEntryLocalServiceTest {
 			fileEntry.getFileEntryId(), values.get("upload"));
 		Assert.assertEquals(60D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(),
+			objectEntry1.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 20, values.size());
 
@@ -2135,7 +2200,7 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"state", "listTypeEntryKey3"
 			).put(
@@ -2148,7 +2213,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
+			objectEntry1.getObjectEntryId());
 
 		Assert.assertEquals(94L, values.get("ageOfDeath"));
 		Assert.assertTrue((boolean)values.get("authorOfGospel"));
@@ -2173,7 +2238,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(65D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(),
+			objectEntry1.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 20, values.size());
 
@@ -2191,12 +2256,12 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 			new HashMap<String, Serializable>(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				_objectDefinition.getPKObjectFieldName(), ""
 			).put(
@@ -2206,7 +2271,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"numberOfBooksWritten", "2147483648"
 				).build(),
@@ -2224,7 +2289,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"numberOfBooksWritten", "-2147483649"
 				).build(),
@@ -2242,7 +2307,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"ageOfDeath", "9007199254740992"
 				).build(),
@@ -2260,7 +2325,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"ageOfDeath", "-9007199254740992"
 				).build(),
@@ -2279,7 +2344,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"ageOfDeath", "9223372036854775808"
 				).build(),
@@ -2297,7 +2362,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"ageOfDeath", "-9223372036854775809"
 				).build(),
@@ -2315,7 +2380,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", RandomTestUtil.randomString(281)
 				).build(),
@@ -2332,7 +2397,69 @@ public class ObjectEntryLocalServiceTest {
 				objectEntryValuesException.getMessage());
 		}
 
-		_testUpdateObjectEntryExternalReferenceCode();
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", "newExternalReferenceCode"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			"newExternalReferenceCode",
+			objectEntry1.getExternalReferenceCode());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "matthew@liferay.com"
+			).put(
+				"firstName", "Matthew"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
+			).build());
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"externalReferenceCode", "newExternalReferenceCode"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		catch (ObjectEntryValuesException.MustNotBeDuplicate
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Duplicate value newExternalReferenceCode",
+				objectEntryValuesException.getMessage());
+		}
+
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", ""
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			objectEntry2.getUuid(), objectEntry2.getExternalReferenceCode());
+
+		int randomInt = RandomTestUtil.randomInt();
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", randomInt
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			String.valueOf(randomInt), objectEntry1.getExternalReferenceCode());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry1.getObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry2.getObjectEntryId());
 		_testUpdateObjectEntryObjectStateTransitions();
 	}
 
@@ -2540,75 +2667,6 @@ public class ObjectEntryLocalServiceTest {
 		return values;
 	}
 
-	private void _testAddObjectEntryExternalReferenceCode() throws Exception {
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"firstName", "John"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
-		Assert.assertEquals(
-			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
-
-		objectEntry1 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"externalReferenceCode", ""
-			).put(
-				"firstName", "John"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
-		Assert.assertEquals(
-			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
-
-		objectEntry1 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"externalReferenceCode", "newExternalReferenceCode"
-			).put(
-				"firstName", "John"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
-		Assert.assertEquals(
-			"newExternalReferenceCode",
-			objectEntry1.getExternalReferenceCode());
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddressRequired", "matthew@liferay.com"
-				).put(
-					"externalReferenceCode", "newExternalReferenceCode"
-				).put(
-					"firstName", "Matthew"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey2"
-				).build());
-		}
-		catch (ObjectEntryValuesException.MustNotBeDuplicate
-					objectEntryValuesException) {
-
-			Assert.assertEquals(
-				"Duplicate value newExternalReferenceCode",
-				objectEntryValuesException.getMessage());
-		}
-	}
-
 	private void _testScope(long groupId, String scope, boolean expectSuccess)
 		throws Exception {
 
@@ -2675,83 +2733,6 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-	}
-
-	private void _testUpdateObjectEntryExternalReferenceCode()
-		throws Exception {
-
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"firstName", "John"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", "newExternalReferenceCode"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			"newExternalReferenceCode",
-			objectEntry1.getExternalReferenceCode());
-
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "matthew@liferay.com"
-			).put(
-				"firstName", "Matthew"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey2"
-			).build());
-
-		try {
-			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
-				HashMapBuilder.<String, Serializable>put(
-					"externalReferenceCode", "newExternalReferenceCode"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-		}
-		catch (ObjectEntryValuesException.MustNotBeDuplicate
-					objectEntryValuesException) {
-
-			Assert.assertEquals(
-				"Duplicate value newExternalReferenceCode",
-				objectEntryValuesException.getMessage());
-		}
-
-		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", ""
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			objectEntry2.getUuid(), objectEntry2.getExternalReferenceCode());
-
-		int randomInt = RandomTestUtil.randomInt();
-
-		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", randomInt
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			String.valueOf(randomInt), objectEntry1.getExternalReferenceCode());
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry1.getObjectEntryId());
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry2.getObjectEntryId());
 	}
 
 	private void _testUpdateObjectEntryObjectStateTransitions()

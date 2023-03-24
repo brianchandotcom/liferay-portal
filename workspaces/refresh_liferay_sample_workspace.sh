@@ -229,6 +229,100 @@ EOF
 	mv liferay-sample-custom-element-3 liferay-sample-workspace/client-extensions
 }
 
+	#
+	# Client Extension: Sample Theme Spritemap 2
+	#
+
+	rm -fr liferay-sample-workspace/client-extensions/liferay-sample-theme-spritemap-2
+
+	cd liferay-sample-workspace/client-extensions
+
+	cat <<EOF > liferay-sample-theme-spritemap-2-config.json
+{
+	"extendClay": false,
+	"platform": "dxp-7.4",
+	"target": "Liferay Theme Spritemap Client Extension"
+}
+EOF
+
+	npx @liferay/cli new liferay-sample-theme-spritemap-2 --options liferay-sample-theme-spritemap-2-config.json --batch
+
+	rm liferay-sample-theme-spritemap-2-config.json
+
+	mv liferay-sample-theme-spritemap-2/README.md liferay-sample-theme-spritemap-2/README.markdown
+
+	cat <<EOF > liferay-sample-theme-spritemap-2/src/cog.svg
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+	<path class="lexicon-icon-outline books-1-spine-top" d="M96.1,32h-64c-17.7,0-32,14.3-32,32v32h128V64C128.1,46.3,113.8,32,96.1,32z" />
+	<path class="lexicon-icon-outline books-1-spine-bottom" d="M0.1,448c0,17.7,14.3,32,32,32h64c17.7,0,32-14.3,32-32v-32H0.1V448z" />
+	<rect class="lexicon-icon-outline books-1-spine" height="256" width="128" x="0.1" y="128" />
+	<path class="lexicon-icon-outline books-2-spine-top" d="M256.1,32h-64c-17.7,0-32,14.3-32,32v32h128V64C288.1,46.3,273.8,32,256.1,32z" />
+	<path class="lexicon-icon-outline books-2-spine-bottom" d="M160.1,448c0,17.7,14.3,32,32,32h64c17.7,0,32-14.3,32-32v-32h-128V448z" />
+	<rect class="lexicon-icon-outline books-2-spine" height="256" width="128" x="160.1" y="128" />
+	<path class="lexicon-icon-outline books-3-spine-top" d="M359.2,35.2l-31,8.1c-17.1,4.5-27.4,21.9-22.9,39l8.1,31l92.9-24.2l-8.1-31C393.7,41,376.3,30.7,359.2,35.2z" />
+	<rect class="lexicon-icon-outline books-3-spine" height="256" transform="matrix(0.9678 -0.2518 0.2518 0.9678 -51.571 108.9927)" width="96" x="352.1" y="128" />
+	<path class="lexicon-icon-outline books-3-spine-bottom" d="M402,453.9c4.5,17.1,21.9,27.4,39,22.9l31-8.1c17.1-4.5,27.4-21.9,22.9-39l-8.1-31l-92.9,24.2L402,453.9z" />
+</svg>
+EOF
+
+	echo "assemble:" > liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo "    - from: build" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo "      include: spritemap.svg" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo "      into: static" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo "liferay-sample-theme-spritemap-2:" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo "    name: Liferay Sample Theme Spritemap 2" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo "    type: themeSpritemap" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+	echo -n "    url: spritemap.svg" >> liferay-sample-theme-spritemap-2/client-extension.yaml
+
+	cd ../..
+
+#
+	# Client Extension: Sample Theme Spritemap 3
+	#
+
+	rm -fr liferay-sample-workspace/client-extensions/liferay-sample-theme-spritemap-3
+
+	cd liferay-sample-workspace/client-extensions
+
+	cat <<EOF > liferay-sample-theme-spritemap-3-config.json
+{
+	"extendClay": true,
+	"platform": "dxp-7.4",
+	"target": "Liferay Theme Spritemap Client Extension"
+}
+EOF
+
+	npx @liferay/cli new liferay-sample-theme-spritemap-3 --options liferay-sample-theme-spritemap-3-config.json --batch
+
+	rm liferay-sample-theme-spritemap-3-config.json
+
+	mv liferay-sample-theme-spritemap-3/README.md liferay-sample-theme-spritemap-3/README.markdown
+
+	cat <<EOF > liferay-sample-theme-spritemap-3/src/cog.svg
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+	<path class="lexicon-icon-outline books-1-spine-top" d="M96.1,32h-64c-17.7,0-32,14.3-32,32v32h128V64C128.1,46.3,113.8,32,96.1,32z" />
+	<path class="lexicon-icon-outline books-1-spine-bottom" d="M0.1,448c0,17.7,14.3,32,32,32h64c17.7,0,32-14.3,32-32v-32H0.1V448z" />
+	<rect class="lexicon-icon-outline books-1-spine" height="256" width="128" x="0.1" y="128" />
+	<path class="lexicon-icon-outline books-2-spine-top" d="M256.1,32h-64c-17.7,0-32,14.3-32,32v32h128V64C288.1,46.3,273.8,32,256.1,32z" />
+	<path class="lexicon-icon-outline books-2-spine-bottom" d="M160.1,448c0,17.7,14.3,32,32,32h64c17.7,0,32-14.3,32-32v-32h-128V448z" />
+	<rect class="lexicon-icon-outline books-2-spine" height="256" width="128" x="160.1" y="128" />
+	<path class="lexicon-icon-outline books-3-spine-top" d="M359.2,35.2l-31,8.1c-17.1,4.5-27.4,21.9-22.9,39l8.1,31l92.9-24.2l-8.1-31C393.7,41,376.3,30.7,359.2,35.2z" />
+	<rect class="lexicon-icon-outline books-3-spine" height="256" transform="matrix(0.9678 -0.2518 0.2518 0.9678 -51.571 108.9927)" width="96" x="352.1" y="128" />
+	<path class="lexicon-icon-outline books-3-spine-bottom" d="M402,453.9c4.5,17.1,21.9,27.4,39,22.9l31-8.1c17.1-4.5,27.4-21.9,22.9-39l-8.1-31l-92.9,24.2L402,453.9z" />
+</svg>
+EOF
+
+	echo "assemble:" > liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo "    - from: build" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo "      include: spritemap.svg" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo "      into: static" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo "liferay-sample-theme-spritemap-3:" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo "    name: Liferay Sample Theme Spritemap 2" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo "    type: themeSpritemap" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+	echo -n "    url: spritemap.svg" >> liferay-sample-theme-spritemap-3/client-extension.yaml
+
+	cd ../..
+
 function main {
 	check_blade
 

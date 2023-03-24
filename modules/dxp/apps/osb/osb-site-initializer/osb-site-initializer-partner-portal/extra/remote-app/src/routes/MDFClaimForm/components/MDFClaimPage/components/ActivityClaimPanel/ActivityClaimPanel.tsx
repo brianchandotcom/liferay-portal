@@ -19,6 +19,7 @@ import PRMForm from '../../../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
 import {useWebDAV} from '../../../../../../common/context/WebDAV';
+import LiferayFile from '../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
 import {Status} from '../../../../../../common/utils/constants/status';
@@ -109,7 +110,7 @@ const ActivityClaimPanel = ({
 						</p>
 
 						<h5 className="text-neutral-10">
-							{activity.name} ({activity.id})
+							{`${activity.name} (${activity.r_actToMDFClmActs_c_activityId})`}
 						</h5>
 
 						<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
@@ -180,10 +181,10 @@ const ActivityClaimPanel = ({
 								description="You can downloaded the Excel Template, fill it out, and upload it back here"
 								displayType="secondary"
 								label="List of Qualified Leads"
-								name={`activities[${activityIndex}].listQualifiedLeads`}
+								name={`activities[${activityIndex}].listOfQualifiedLeads`}
 								onAccept={(value: File) =>
 									setFieldValue(
-										`activities[${activityIndex}].listQualifiedLeads`,
+										`activities[${activityIndex}].listOfQualifiedLeads`,
 										value
 									)
 								}
@@ -216,7 +217,9 @@ const ActivityClaimPanel = ({
 								setFieldValue(
 									`activities[${activityIndex}].allContents`,
 									activity.allContents
-										? activity.allContents.concat(value)
+										? activity.allContents.concat(
+												value as LiferayFile[]
+										  )
 										: value
 								)
 							}

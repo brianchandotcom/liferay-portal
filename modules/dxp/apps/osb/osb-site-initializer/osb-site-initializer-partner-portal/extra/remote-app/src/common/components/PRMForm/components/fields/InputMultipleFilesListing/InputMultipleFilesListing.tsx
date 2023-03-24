@@ -18,7 +18,7 @@ interface IProps {
 	label: string;
 	name: string;
 	onAccept: (value: File[]) => void;
-	value?: File[];
+	value?: File[] | Object[];
 }
 
 const InputMultipleFilesListing = ({

@@ -170,7 +170,7 @@ const MDFClaimPage = ({
 						leftContent="Total MDF Requested Amount"
 						rightContent={getIntlNumberFormat(
 							values.currency
-						).format(values.totalrequestedAmount || 0)}
+						).format(values.totalMDFRequestedAmount || 0)}
 					/>
 
 					<PRMFormik.Field
@@ -189,15 +189,10 @@ const MDFClaimPage = ({
 					<div className="d-flex mr-auto">
 						<ClayButton
 							className="inline-item inline-item-after pl-0"
-							disabled={isSubmitting}
 							displayType={null}
 							onClick={() => onSaveAsDraft(values, formikHelpers)}
 						>
 							Save as Draft
-							{isSubmitting &&
-								values.mdfClaimStatus === Status.DRAFT && (
-									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-								)}
 						</ClayButton>
 					</div>
 

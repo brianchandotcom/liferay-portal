@@ -14,13 +14,16 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
+import MDFClaimDTO from '../../common/interfaces/dto/mdfClaimDTO';
 import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivityDTO';
 import LiferayPicklist from '../../common/interfaces/liferayPicklist';
 import MDFClaim from '../../common/interfaces/mdfClaim';
 import {Liferay} from '../../common/services/liferay';
 import useGetDocumentFolder from '../../common/services/liferay/headless-delivery/useGetDocumentFolders';
+import useGetMDFClaimById from '../../common/services/liferay/object/mdf-claim/useGetMDFClaimById';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
 import {Status} from '../../common/utils/constants/status';
+import {getMDFClaimFromDTO} from '../../common/utils/dto/mdf-claim/getMDFClaimFromDTO';
 import MDFClaimPage from './components/MDFClaimPage';
 import claimSchema from './components/MDFClaimPage/schema/yup';
 import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';
@@ -30,38 +33,95 @@ const getInitialFormValues = (
 	mdfRequestId: number,
 	currency: LiferayPicklist,
 	activitiesDTO?: MDFRequestActivityDTO[],
-	totalrequestedAmount?: number
+	totalMDFRequestAmount?: number,
+	mdfClaim?: MDFClaim
 ): MDFClaim => ({
-	activities: activitiesDTO?.map((activity) => ({
-		activityStatus: activity.activityStatus,
-		budgets: activity.actToBgts?.map((budget) => ({
-			expenseName: budget.expense.name,
-			id: budget.id,
-			invoiceAmount: budget.cost,
-			requestAmount: budget.cost,
+	...mdfClaim,
+	activities: activitiesDTO?.map((activity) => {
+		const mdfClaimActivity = mdfClaim?.activities?.find(
+			(claimActivity) =>
+				claimActivity.r_actToMDFClmActs_c_activityId === activity.id
+		);
+
+		if (mdfClaimActivity) {
+			return {
+				...mdfClaimActivity,
+				activityStatus: activity.activityStatus,
+				budgets: activity?.actToBgts?.map((budget) => {
+					const mdfClaimBudget = mdfClaimActivity.budgets?.find(
+						(claimBudget) =>
+							claimBudget.r_bgtToMDFClmBgts_c_budgetId ===
+							budget.id
+					);
+
+					if (mdfClaimBudget) {
+						return {
+							...mdfClaimBudget,
+							r_bgtToMDFClmBgts_c_budgetId: budget.id,
+							requestAmount: budget.cost,
+						};
+					}
+
+					return {
+						expenseName: budget.expense.name,
+						invoiceAmount: budget.cost,
+						r_bgtToMDFClmBgts_c_budgetId: budget.id,
+						requestAmount: budget.cost,
+						selected: false,
+					};
+				}),
+				claimed: activity.actToMDFClmActs
+					?.map((mdfClaimActivity) => {
+						return (
+							mdfClaimActivity?.r_mdfClmToMDFClmActs_c_mdfClaim
+								?.mdfClaimStatus.key !== 'draft'
+						);
+					})
+					.includes(true),
+				name: activity.name,
+				r_actToMDFClmActs_c_activityId: activity.id,
+			};
+		}
+
+		return {
+			activityStatus: activity.activityStatus,
+			budgets: activity?.actToBgts?.map((budget) => {
+				return {
+					expenseName: budget.expense.name,
+					invoiceAmount: budget.cost,
+					r_bgtToMDFClmBgts_c_budgetId: budget.id,
+					requestAmount: budget.cost,
+					selected: false,
+				};
+			}),
+			claimed: activity.actToMDFClmActs
+				?.map((mdfClaimActivity) => {
+					return (
+						mdfClaimActivity?.r_mdfClmToMDFClmActs_c_mdfClaim
+							?.mdfClaimStatus.key !== 'draft'
+					);
+				})
+				.includes(true),
+			currency: activity.currency,
+			metrics: '',
+			name: activity.name,
+			r_actToMDFClmActs_c_activityId: activity.id,
 			selected: false,
-		})),
-		claimed: activity.actToMDFClmActs
-			?.map((mdfClaimActivity) => {
-				return (
-					mdfClaimActivity?.r_mdfClmToMDFClmActs_c_mdfClaim
-						?.mdfClaimStatus.key !== 'draft'
-				);
-			})
-			.includes(true),
-		currency: activity.currency,
-		id: activity.id,
-		metrics: '',
-		name: activity.name,
-		selected: false,
-		totalCost: 0,
-	})),
-	currency,
-	mdfClaimStatus: Status.PENDING,
+			totalCost: 0,
+		};
+	}),
+	currency: mdfClaim?.currency ? mdfClaim?.currency : currency,
+	mdfClaimStatus: mdfClaim?.mdfClaimStatus
+		? mdfClaim.mdfClaimStatus
+		: Status.PENDING,
 	r_mdfReqToMDFClms_c_mdfRequestId: mdfRequestId,
-	totalClaimAmount: 0,
-	totalrequestedAmount,
+	totalMDFRequestedAmount: mdfClaim?.totalMDFRequestedAmount
+		? mdfClaim.totalMDFRequestedAmount
+		: totalMDFRequestAmount,
 });
+
+const SECOND_POSITION_AFTER_HASH = 1;
+const FOURTH_POSITION_AFTER_HASH = 3;
 
 const MDFClaimForm = () => {
 	const {
@@ -71,12 +131,18 @@ const MDFClaimForm = () => {
 
 	const claimParentFolderId = claimParentFolder?.items[0].id;
 
-	const mdfRequestId = useGetMDFRequestIdByHash();
+	const mdfRequestId = useGetMDFRequestIdByHash(SECOND_POSITION_AFTER_HASH);
+	const mdfClaimId = useGetMDFRequestIdByHash(FOURTH_POSITION_AFTER_HASH);
 
 	const {
 		data: mdfRequest,
 		isValidating: isValidatingMDFRequestById,
 	} = useGetMDFRequestById(Number(mdfRequestId));
+
+	const {
+		data: mdfClaimDTO,
+		isValidating: isValidatingMDFClaimById,
+	} = useGetMDFClaimById(Number(mdfClaimId));
 
 	const siteURL = useLiferayNavigate();
 
@@ -85,12 +151,21 @@ const MDFClaimForm = () => {
 
 	if (
 		!mdfRequest ||
+		(mdfClaimId && !mdfClaimDTO) ||
 		isValidatingMDFRequestById ||
+		(mdfClaimId && isValidatingMDFClaimById) ||
 		isValidatingClaimFolder ||
 		!claimParentFolderId
 	) {
 		return <ClayLoadingIndicator />;
 	}
+
+	const mdfClaim = getMDFClaimFromDTO(mdfClaimDTO as MDFClaimDTO);
+	// eslint-disable-next-line no-console
+	console.log(
+		'🚀 ~ file: MDFClaimForm.tsx:131 ~ MDFClaimForm ~ mdfClaim:',
+		mdfClaim
+	);
 
 	return (
 		<PRMFormik
@@ -98,7 +173,8 @@ const MDFClaimForm = () => {
 				Number(mdfRequestId),
 				mdfRequest.currency,
 				mdfRequest.mdfReqToActs,
-				mdfRequest.totalMDFRequestAmount
+				mdfRequest.totalMDFRequestAmount,
+				mdfClaim
 			)}
 			onSubmit={(values, formikHelpers) =>
 				submitForm(

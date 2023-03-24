@@ -27,10 +27,6 @@ const ListFiles = ({arrayHelpers, files}: IProps) => {
 				>
 					<div className="font-weight-bold">
 						<div className="text-neutral-8">{file.name}</div>
-
-						<div className="text-neutral-5">
-							{(file.size / 1000).toFixed(2)} KB
-						</div>
 					</div>
 
 					<ClayButtonWithIcon

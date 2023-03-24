@@ -11,7 +11,7 @@
 
 import {useMemo} from 'react';
 
-export default function useGetMDFRequestIdByHash(position: number = 1) {
+export default function useGetMDFRequestIdByHash(position: number) {
 	return useMemo(() => {
 		const hashLocation = window.location.hash;
 

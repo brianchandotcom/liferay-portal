@@ -3,6 +3,6 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Claim Detail Panel List",
-	"type": "react"
+	"name": "Claim Detail Document List",
+	"type": "component"
 }

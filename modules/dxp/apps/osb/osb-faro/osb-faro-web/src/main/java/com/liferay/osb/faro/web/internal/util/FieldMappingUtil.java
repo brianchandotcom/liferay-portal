@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -36,36 +34,31 @@ public class FieldMappingUtil {
 		ContactsEngineClient contactsEngineClient, FaroProject faroProject,
 		String context, List<FieldMappingMap> fieldMappingMaps) {
 
-		List<FieldMappingMap> newFieldMappingMaps = new ArrayList<>();
+		ArrayList<String> fieldMappingMapsName = new ArrayList<>();
 
-		Stream<FieldMappingMap> fieldMappingMapsStream =
-			fieldMappingMaps.stream();
+		for (FieldMappingMap fieldMappingMap : fieldMappingMaps) {
+			fieldMappingMapsName.add(fieldMappingMap.getName());
+		}
 
 		Results<FieldMapping> results = contactsEngineClient.getFieldMappings(
-			faroProject, context,
-			fieldMappingMapsStream.map(
-				FieldMappingMap::getName
-			).collect(
-				Collectors.toList()
-			),
-			1, 10000, null);
+			faroProject, context, fieldMappingMapsName, 1, 10000, null);
 
 		List<FieldMapping> fieldMappings = results.getItems();
 
-		Stream<FieldMapping> fieldMappingsStream = fieldMappings.stream();
+		HashSet<String> fieldMappingsDisplayName = new HashSet<>();
 
-		Set<String> currentFieldNames = fieldMappingsStream.map(
-			FieldMapping::getFieldName
-		).collect(
-			Collectors.toSet()
-		);
+		for (FieldMapping fieldMapping : fieldMappings) {
+			fieldMappingsDisplayName.add(fieldMapping.getDisplayName());
+		}
+
+		List<FieldMappingMap> newFieldMappingMaps = new ArrayList<>();
 
 		Set<String> newFieldMappingNames = new HashSet<>();
 
 		for (FieldMappingMap fieldMappingMap : fieldMappingMaps) {
 			String name = fieldMappingMap.getName();
 
-			if (currentFieldNames.contains(name) ||
+			if (fieldMappingsDisplayName.contains(name) ||
 				newFieldMappingNames.contains(name)) {
 
 				continue;

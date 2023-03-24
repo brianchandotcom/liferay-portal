@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,7 +70,7 @@ public class PhotoURLHelper {
 
 		long folderId = getFolderId(userId, group.getGroupId(), serviceContext);
 
-		url = _http.getDomain(url);
+		url = HttpComponentsUtil.getDomain(url);
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
 			group.getGroupId(), folderId, url);
@@ -79,15 +80,17 @@ public class PhotoURLHelper {
 		}
 
 		byte[] bytes = _http.URLtoByteArray(
-			_CLEARBIT_URL + _http.encodeParameters(url));
+			_CLEARBIT_URL + HttpComponentsUtil.encodeParameters(url));
 
 		try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
 			String mimeType = MimeTypesUtil.getContentType(inputStream, null);
 
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				userId, group.getGroupId(), folderId,
-				url.concat(getExtension(mimeType)), mimeType, url, null, null,
-				inputStream, bytes.length, serviceContext);
+				dlFileEntry.getExternalReferenceCode(), userId,
+				dlFileEntry.getRepositoryId(), folderId,
+				dlFileEntry.getFileName(), mimeType, bytes,
+				dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
+				serviceContext);
 
 			if (bytes.length > _MINIMUM_IMAGE_SIZE) {
 				dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
@@ -131,8 +134,10 @@ public class PhotoURLHelper {
 		}
 
 		Folder folder = _dlAppLocalService.addFolder(
-			userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_FOLDER_NAME, null, serviceContext);
+			dlFolder.getExternalReferenceCode(), userId,
+			dlFolder.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FOLDER_NAME, null,
+			serviceContext);
 
 		return folder.getFolderId();
 	}

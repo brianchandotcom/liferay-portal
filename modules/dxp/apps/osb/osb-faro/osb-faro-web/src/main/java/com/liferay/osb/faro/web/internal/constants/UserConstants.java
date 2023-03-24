@@ -16,8 +16,8 @@ package com.liferay.osb.faro.web.internal.constants;
 
 import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,19 +34,18 @@ public class UserConstants {
 	}
 
 	private static final Map<String, String> _roleNames =
-		new HashMap<String, String>() {
-			{
-				put("administrator", RoleConstants.SITE_ADMINISTRATOR);
-				put("member", RoleConstants.SITE_MEMBER);
-				put("owner", RoleConstants.SITE_OWNER);
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			"administrator", RoleConstants.SITE_ADMINISTRATOR
+		).put(
+			"member", RoleConstants.SITE_MEMBER
+		).put(
+			"owner", RoleConstants.SITE_OWNER
+		).build();
 	private static final Map<String, Integer> _statuses =
-		new HashMap<String, Integer>() {
-			{
-				put("approved", FaroUserConstants.STATUS_APPROVED);
-				put("pending", FaroUserConstants.STATUS_PENDING);
-			}
-		};
+		new HashMapBuilder<>().<String, Integer>put(
+			"approved", FaroUserConstants.STATUS_APPROVED
+		).put(
+			"pending", FaroUserConstants.STATUS_PENDING
+		).build();
 
 }

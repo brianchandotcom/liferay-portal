@@ -58,7 +58,7 @@ public class FaroParamConverterProvider implements ParamConverterProvider {
 			paramConverter = new ParamConverter<T>() {
 
 				@Override
-				public T fromString(final String value) {
+				public T fromString(String value) {
 					try {
 						if (rawType.equals(long.class) &&
 							_containsPathParam(annotations, "groupId")) {
@@ -109,7 +109,7 @@ public class FaroParamConverterProvider implements ParamConverterProvider {
 				}
 
 				@Override
-				public String toString(final T value) {
+				public String toString(T value) {
 					try {
 						return JSONUtil.writeValueAsString(value);
 					}

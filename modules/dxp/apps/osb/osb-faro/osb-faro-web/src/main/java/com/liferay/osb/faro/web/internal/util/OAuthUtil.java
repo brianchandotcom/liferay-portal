@@ -30,7 +30,9 @@ import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.credentials.OAuth1Credentials;
 import com.liferay.osb.faro.engine.client.model.credentials.OAuth2Credentials;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 
 import java.io.IOException;
 
@@ -73,6 +75,8 @@ public class OAuthUtil {
 		}
 		catch (ExecutionException | InterruptedException | IOException
 					exception) {
+
+			_log.error(exception);
 
 			return getOAuth2Credentials(
 				serviceBuilder, new LiferayApi20(baseURL), oAuthConsumerKey,
@@ -173,6 +177,8 @@ public class OAuthUtil {
 		return oAuth2Credentials;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(OAuthUtil.class);
+
 	private static class LiferayApi10a extends DefaultApi10a {
 
 		public LiferayApi10a(String baseURL) {
@@ -195,11 +201,11 @@ public class OAuthUtil {
 		public String getAuthorizationUrl(
 			OAuth1RequestToken oAuth1RequestToken) {
 
-			String authorizationURL = HttpUtil.addParameter(
+			String authorizationURL = HttpComponentsUtil.addParameter(
 				_baseURL.concat(_AUTHORIZATION_URL_PATH), OAuthConstants.TOKEN,
 				oAuth1RequestToken.getToken());
 
-			return HttpUtil.addParameter(
+			return HttpComponentsUtil.addParameter(
 				authorizationURL, OAuthConstants.CALLBACK, _callbackURL);
 		}
 

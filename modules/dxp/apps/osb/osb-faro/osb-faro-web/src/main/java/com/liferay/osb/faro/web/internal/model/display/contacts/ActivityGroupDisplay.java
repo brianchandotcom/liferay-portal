@@ -24,12 +24,11 @@ import com.liferay.osb.faro.engine.client.model.ActivityGroup;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Shinn Lok
@@ -51,13 +50,13 @@ public class ActivityGroupDisplay {
 				});
 
 			if (activities != null) {
-				Stream<Activity> stream = activities.stream();
+				ArrayList<ActivityDisplay> activityDisplays = new ArrayList<>();
 
-				_activityDisplays = stream.map(
-					ActivityDisplay::new
-				).collect(
-					Collectors.toList()
-				);
+				for (Activity activity : activities) {
+					activityDisplays.add(new ActivityDisplay(activity));
+				}
+
+				_activityDisplays = activityDisplays;
 			}
 
 			Map<String, Integer> activitiesCount =

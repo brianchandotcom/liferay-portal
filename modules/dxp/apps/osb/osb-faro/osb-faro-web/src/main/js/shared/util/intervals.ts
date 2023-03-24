@@ -19,7 +19,7 @@ export const createDateKeysIMap = (
 		return [dateStart, [dateStart, dateEnd]];
 	};
 
-	return Map<number, [number, number?]>(history.map(parseHistory));
+	return Map<Date, [Date, Date?]>(history.map(parseHistory));
 };
 
 export const getIntervalHandle = (

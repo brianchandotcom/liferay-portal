@@ -5,6 +5,7 @@ import getMetricsMapper from 'cerebro-shared/hocs/mappers/metrics';
 import React, {useCallback, useState} from 'react';
 import {ASSET_METRICS} from 'shared/util/constants';
 import {compose} from 'redux';
+import {DocumentNode} from 'graphql';
 import {graphql} from '@apollo/react-hoc';
 import {MetricChart} from 'shared/components/metric-card/MetricChart';
 import {RangeSelectors, Router} from 'shared/types';
@@ -89,7 +90,7 @@ const getMapper = ({chartType, metric}) => {
 
 interface IAssetCardProps extends React.HTMLAttributes<HTMLElement> {
 	assetId: string;
-	itemQuery: string;
+	itemQuery: DocumentNode;
 	label: string;
 	legacyDropdownRangeKey: boolean;
 	onRemoveAsset: () => void;

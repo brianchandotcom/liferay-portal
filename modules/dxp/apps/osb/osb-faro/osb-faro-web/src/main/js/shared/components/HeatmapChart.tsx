@@ -52,7 +52,7 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 	// Build X scales and axis
 	const x = d3
 		.scaleBand()
-		.domain(columns)
+		.domain(String(columns))
 		.range([0, computedWidth])
 		.padding(0.1);
 
@@ -65,7 +65,7 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 	// Build Y scales and axis
 	const y = d3
 		.scaleBand()
-		.domain(rows)
+		.domain(String(rows))
 		.range([0, computedHeight])
 		.padding(0.1);
 
@@ -129,6 +129,7 @@ const updateChart = (chartElement, props) => {
 		.selectAll('rect')
 		.data(data, ({column, row}) => `${column}:${row}`)
 		.style('fill', ({value}) => colorScale(value))
+		// @ts-ignore
 		.on('mouseenter', (d, i, nodes) => {
 			tooltip.style('opacity', 1);
 
@@ -140,6 +141,7 @@ const updateChart = (chartElement, props) => {
 
 			const {
 				width: widthTooltip
+				// @ts-ignore
 			} = tooltip.node().getBoundingClientRect();
 
 			tooltip
@@ -147,6 +149,7 @@ const updateChart = (chartElement, props) => {
 					'left',
 					`${pageXRect + widthRect / 2 - widthTooltip / 2}px`
 				)
+				// @ts-ignore
 				.style('top', `${d3.event.pageY + 28}px`);
 
 			d3.select(nodes[i]).style(
@@ -154,6 +157,7 @@ const updateChart = (chartElement, props) => {
 				colorRange[colorRange.length - 1]
 			);
 		})
+		// @ts-ignore
 		.on('mouseout', ({value}, i, nodes) => {
 			tooltip.style('opacity', 0);
 
@@ -197,6 +201,7 @@ const updateChart = (chartElement, props) => {
 			i > 0 ? i * legendItemWidth + i * legendItemPadding : 0
 		)
 		.attr('y', 30)
+		// @ts-ignore
 		.text(d => toThousands(d));
 };
 

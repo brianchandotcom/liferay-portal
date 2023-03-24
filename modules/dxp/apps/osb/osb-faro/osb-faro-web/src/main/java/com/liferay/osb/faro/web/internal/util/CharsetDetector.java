@@ -14,6 +14,8 @@
 
 package com.liferay.osb.faro.web.internal.util;
 
+import com.liferay.portal.kernel.repository.RepositoryException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,7 +49,8 @@ public class CharsetDetector {
 				return Charset.forName(universalDetector.getDetectedCharset());
 			}
 			catch (IllegalArgumentException illegalArgumentException) {
-				return null;
+				throw new RepositoryException(
+					"Unexpected permission action " + illegalArgumentException);
 			}
 		}
 		finally {

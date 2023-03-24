@@ -17,7 +17,6 @@ package com.liferay.osb.faro.web.internal.model.display.contacts;
 import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -34,19 +33,15 @@ public class ActivityHistoryDisplay {
 
 		_activityAggregations = activityAggregations;
 
-		Stream<ActivityAggregation> activityAggregationStream =
-			_activityAggregations.stream();
+		for (ActivityAggregation activityAggregation : activityAggregations) {
+			_count += activityAggregation.getTotalElements();
+		}
 
-		_count = activityAggregationStream.mapToLong(
-			ActivityAggregation::getTotalElements
-		).sum();
+		for (ActivityAggregation previousActivityAggregation :
+				previousActivityAggregations) {
 
-		Stream<ActivityAggregation> previousActivityAggregationsStream =
-			previousActivityAggregations.stream();
-
-		_previousCount = previousActivityAggregationsStream.mapToLong(
-			ActivityAggregation::getTotalElements
-		).sum();
+			_previousCount += previousActivityAggregation.getTotalElements();
+		}
 
 		_change = (double)(_count - _previousCount) / _previousCount;
 	}

@@ -16,7 +16,6 @@ package com.liferay.osb.faro.web.internal.model.preferences;
 
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +24,6 @@ import java.util.Map;
  */
 @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
 public class WorkspacePreferences {
-
-	public WorkspacePreferences() {
-	}
 
 	public void addDistributionCardTabPreferences(
 		String id, String individualSegmentId,
@@ -38,19 +34,6 @@ public class WorkspacePreferences {
 
 		distributionCardTabsPreferences.addDistributionTab(
 			id, distributionCardTabPreferences);
-	}
-
-	public Map<String, EmailReportPreferences> addEmailReportPreference(
-		String channelId, Boolean enabled, String frequency) {
-
-		if (enabled == null) {
-			enabled = false;
-		}
-
-		_emailReportPreferences.put(
-			channelId, new EmailReportPreferences(enabled, frequency));
-
-		return _emailReportPreferences;
 	}
 
 	public String getDefaultChannelId() {
@@ -77,19 +60,6 @@ public class WorkspacePreferences {
 
 		return individualSegmentPreferences.
 			getDistributionCardTabsPreferences();
-	}
-
-	public Map<String, EmailReportPreferences> getEmailReportPreferences(
-		String channelId) {
-
-		if (Validator.isNull(channelId)) {
-			return _emailReportPreferences;
-		}
-
-		return Collections.singletonMap(
-			channelId,
-			_emailReportPreferences.getOrDefault(
-				channelId, new EmailReportPreferences(false, "monthly")));
 	}
 
 	public IndividualDashboardPreferences getIndividualDashboardPreferences() {
@@ -123,12 +93,6 @@ public class WorkspacePreferences {
 		_defaultChannelId = defaultChannelId;
 	}
 
-	public void setEmailReportPreferences(
-		Map<String, EmailReportPreferences> emailReportPreferences) {
-
-		_emailReportPreferences = emailReportPreferences;
-	}
-
 	public void setIndividualDashboardPreferences(
 		IndividualDashboardPreferences individualDashboardPreferences) {
 
@@ -147,8 +111,6 @@ public class WorkspacePreferences {
 	}
 
 	private String _defaultChannelId;
-	private Map<String, EmailReportPreferences> _emailReportPreferences =
-		new HashMap<>();
 	private IndividualDashboardPreferences _individualDashboardPreferences =
 		new IndividualDashboardPreferences();
 	private Map<String, IndividualSegmentPreferences>

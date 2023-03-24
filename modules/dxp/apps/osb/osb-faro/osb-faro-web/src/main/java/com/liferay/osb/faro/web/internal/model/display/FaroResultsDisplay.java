@@ -16,11 +16,10 @@ package com.liferay.osb.faro.web.internal.model.display;
 
 import com.liferay.osb.faro.engine.client.model.Results;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Shinn Lok
@@ -51,13 +50,13 @@ public class FaroResultsDisplay<T> {
 
 		List<T> items = results.getItems();
 
-		Stream<T> stream = items.stream();
+		List<Object> functionItems = new ArrayList<>();
 
-		_items = stream.map(
-			function
-		).collect(
-			Collectors.toList()
-		);
+		for (T item : items) {
+			functionItems.add(function.apply(item));
+		}
+
+		_items = functionItems;
 
 		_total = results.getTotal();
 	}

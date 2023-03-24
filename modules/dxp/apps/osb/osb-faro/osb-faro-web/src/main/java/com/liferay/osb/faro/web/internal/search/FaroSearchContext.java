@@ -24,9 +24,6 @@ import java.util.Map;
  */
 public class FaroSearchContext {
 
-	public FaroSearchContext() {
-	}
-
 	public int getCur() {
 		return _cur;
 	}

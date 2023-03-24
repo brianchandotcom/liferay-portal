@@ -32,7 +32,6 @@ import com.liferay.osb.faro.engine.client.model.Organization;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
-import com.liferay.osb.faro.web.internal.util.StreamUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
@@ -201,8 +200,14 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 		List<T> objects = JSONUtil.convertValue(
 			referencedObjects.get(name), typeReference);
 
-		_referencedObjects.put(
-			name, StreamUtil.toMap(objects, keyMapper, valueMapper));
+		Map<String, R> objectsMap = new HashMap<>();
+
+		for (T object : objects) {
+			objectsMap.put(
+				(String)keyMapper.apply(object), valueMapper.apply(object));
+		}
+
+		_referencedObjects.put(name, objectsMap);
 	}
 
 	private long _activeIndividualCount;

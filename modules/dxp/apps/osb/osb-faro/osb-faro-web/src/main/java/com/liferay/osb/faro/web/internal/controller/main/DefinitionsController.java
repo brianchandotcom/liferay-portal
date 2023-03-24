@@ -22,9 +22,8 @@ import com.liferay.osb.faro.web.internal.model.display.contacts.AttributesDispla
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.RoleConstants;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -59,15 +58,14 @@ public class DefinitionsController extends BaseFaroController {
 			contactsEngineClient.getIndividualAttributes(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), name);
 
-		Stream<FieldMapping> stream = individualAttributes.stream();
+		List<AttributesDisplay> attributesDisplay = new ArrayList<>();
+
+		for (FieldMapping individualAttribute : individualAttributes) {
+			attributesDisplay.add(new AttributesDisplay(individualAttribute));
+		}
 
 		return new FaroResultsDisplay(
-			stream.map(
-				AttributesDisplay::new
-			).collect(
-				Collectors.toList()
-			),
-			individualAttributes.size());
+			attributesDisplay, individualAttributes.size());
 	}
 
 }

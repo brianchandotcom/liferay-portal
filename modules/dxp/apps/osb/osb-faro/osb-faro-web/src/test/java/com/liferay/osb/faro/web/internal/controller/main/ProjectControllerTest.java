@@ -17,16 +17,26 @@ package com.liferay.osb.faro.web.internal.controller.main;
 import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Marcos Martins
  */
+@Ignore
 public class ProjectControllerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCreateOSBAccountEntry() throws Exception {

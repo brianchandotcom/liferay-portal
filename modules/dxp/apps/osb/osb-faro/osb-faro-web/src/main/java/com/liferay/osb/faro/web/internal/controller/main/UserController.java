@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -212,14 +210,14 @@ public class UserController extends BaseFaroController {
 			groupId, query, statuses, startAndEnd[0], startAndEnd[1],
 			orderByComparator);
 
-		Stream<FaroUser> stream = faroUsers.stream();
+		List<FaroUserDisplay> faroUserDisplay = new ArrayList<>();
+
+		for (FaroUser faroUser : faroUsers) {
+			faroUserDisplay.add(new FaroUserDisplay(faroUser));
+		}
 
 		return new FaroResultsDisplay(
-			stream.map(
-				FaroUserDisplay::new
-			).collect(
-				Collectors.toList()
-			),
+			faroUserDisplay,
 			_faroUserLocalService.searchCount(groupId, query, statuses));
 	}
 

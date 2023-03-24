@@ -179,7 +179,6 @@ public class AccountController extends BaseFaroController {
 	@SuppressWarnings("unchecked")
 	public FaroResultsDisplay searchValues(
 			@PathParam("groupId") long groupId,
-			@QueryParam("channelId") long channelId,
 			@QueryParam("fieldMappingId") String fieldMappingId,
 			@QueryParam("query") String query, @QueryParam("cur") int cur,
 			@QueryParam("delta") int delta)
@@ -187,8 +186,8 @@ public class AccountController extends BaseFaroController {
 
 		return new FaroResultsDisplay(
 			contactsEngineClient.getFieldValues(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, query, fieldMappingId, cur, delta));
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), query,
+				fieldMappingId, cur, delta));
 	}
 
 	@SuppressWarnings("unchecked")

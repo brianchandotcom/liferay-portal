@@ -43,7 +43,7 @@ interface IActiveIndividualsChartProps {
 		knownVisitors: number;
 		visitors: number;
 	}[];
-	dateKeysIMap: Map<number, [number, number?]>;
+	dateKeysIMap: Map<Date, [Date, Date?]>;
 	height: number;
 	interval: Interval;
 	loading: Boolean;

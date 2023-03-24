@@ -11,9 +11,7 @@
 
 import MDFClaimBudget from '../mdfClaimBudget';
 
-export default interface MDFClaimBudgetDTO
-	extends Omit<MDFClaimBudget, 'invoice'> {
-	invoice?: number;
+export default interface MDFClaimBudgetDTO extends MDFClaimBudget {
 	r_bgtToMDFClmBgts_c_budgetId?: number;
 	r_mdfClmActToMDFClmBgts_c_mdfClaimActivityId?: number;
 }

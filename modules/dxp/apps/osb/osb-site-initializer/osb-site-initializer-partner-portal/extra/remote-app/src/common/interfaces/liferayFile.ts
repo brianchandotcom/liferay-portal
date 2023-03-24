@@ -9,13 +9,7 @@
  * distribution rights of the Software.
  */
 
-import MDFClaimActivity from '../mdfClaimActivity';
-import MDFClaimActivityDocumentDTO from './mdfClaimActivityDocumentDTO';
-import MDFClaimBudgetDTO from './mdfClaimBudgetDTO';
-import MDFClaimDTO from './mdfClaimDTO';
-
-export default interface MDFClaimActivityDTO extends MDFClaimActivity {
-	mdfClmActToMDFActDocs?: MDFClaimActivityDocumentDTO[];
-	mdfClmActToMDFClmBgts?: MDFClaimBudgetDTO[];
-	r_mdfClmToMDFClmActs_c_mdfClaim?: MDFClaimDTO;
+export default interface LiferayFile extends File {
+	id?: number;
+	link: Object;
 }

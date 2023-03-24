@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import LiferayFile from './liferayFile';
 import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
 import MDFClaimActivity from './mdfClaimActivity';
@@ -20,7 +21,7 @@ export default interface MDFClaim extends Partial<LiferayObject> {
 	mdfClaimStatus: LiferayPicklist;
 	partial?: boolean;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;
-	reimbursementInvoice?: File;
+	reimbursementInvoice?: LiferayFile & number;
 	totalClaimAmount?: number;
-	totalrequestedAmount?: number;
+	totalMDFRequestedAmount?: number;
 }

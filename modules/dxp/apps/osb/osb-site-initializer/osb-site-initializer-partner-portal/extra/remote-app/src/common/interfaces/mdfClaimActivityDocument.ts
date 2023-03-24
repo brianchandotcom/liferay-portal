@@ -9,9 +9,10 @@
  * distribution rights of the Software.
  */
 
+import LiferayFile from './liferayFile';
 import LiferayObject from './liferayObject';
 
 export default interface MDFClaimActivityDocument
 	extends Partial<LiferayObject> {
-	allContents?: File;
+	allContents?: LiferayFile & number;
 }

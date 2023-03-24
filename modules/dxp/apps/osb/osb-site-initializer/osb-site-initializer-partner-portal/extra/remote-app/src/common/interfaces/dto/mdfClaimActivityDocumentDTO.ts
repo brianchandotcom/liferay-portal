@@ -9,10 +9,9 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from '../liferayObject';
+import MDFClaimActivityDocument from '../mdfClaimActivityDocument';
 
 export default interface MDFClaimActivityDocumentDTO
-	extends Partial<LiferayObject> {
-	allContents: number;
+	extends MDFClaimActivityDocument {
 	r_mdfClmActToMDFActDocs_c_mdfClaimActivityId?: number;
 }

@@ -22,15 +22,17 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.odata.entity.EntityModel;
-import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.core.UriInfo;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Ivica Cardic
@@ -46,12 +48,20 @@ public interface BatchEngineTaskItemDelegate<T> {
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception;
 
+	public Set<String> getAvailableCreateStrategies();
+
+	public Set<String> getAvailableUpdateStrategies();
+
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception;
 
 	public default Class<T> getItemClass() {
 		return null;
 	}
+
+	public boolean hasCreateStrategy(String createStrategy);
+
+	public boolean hasUpdateStrategy(String updateStrategy);
 
 	public Page<T> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

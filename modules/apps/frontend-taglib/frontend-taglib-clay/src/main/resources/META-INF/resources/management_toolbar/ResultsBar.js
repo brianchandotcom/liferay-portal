@@ -64,6 +64,10 @@ const ResultsBar = ({
 						<ClayLabel
 							className="component-label tbar-label"
 							closeButtonProps={{
+								['aria-label']: sub(
+									Liferay.Language.get('remove-x-filter'),
+									item.label
+								),
 								onClick: () => {
 									navigate(item.data?.removeLabelURL);
 								},

@@ -173,11 +173,6 @@ public abstract class BasePanelApp implements PanelApp {
 		this.groupProvider = groupProvider;
 	}
 
-	@Override
-	public void setPortlet(Portlet portlet) {
-		_portlet = portlet;
-	}
-
 	public void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 

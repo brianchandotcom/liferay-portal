@@ -93,11 +93,4 @@ public interface PanelApp extends PanelEntry {
 	 */
 	public void setGroupProvider(GroupProvider groupProvider);
 
-	/**
-	 * Sets the portlet associated with the application.
-	 *
-	 * @param portlet the portlet associated with the application
-	 */
-	public void setPortlet(Portlet portlet);
-
 }

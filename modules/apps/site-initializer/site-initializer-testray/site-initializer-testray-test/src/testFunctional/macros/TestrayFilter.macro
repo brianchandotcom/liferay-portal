@@ -8,6 +8,12 @@ definition {
 		}
 	}
 
+	macro assertNoResultsFound {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
+	}
+
 	macro clickColumn {
 		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
 	}
@@ -47,12 +53,6 @@ definition {
 		}
 
 		Button.click(button = "Apply");
-	}
-
-    macro assertNoResultsFound {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
 	}
 
 }

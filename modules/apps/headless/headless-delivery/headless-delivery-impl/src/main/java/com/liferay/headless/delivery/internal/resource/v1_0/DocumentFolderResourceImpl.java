@@ -23,10 +23,13 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
+import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentFolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,6 +63,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +88,15 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 	@Override
 	public void deleteDocumentFolder(Long documentFolderId) throws Exception {
 		_dlAppService.deleteFolder(documentFolderId);
+	}
+
+	@Override
+	public void deleteDocumentFolderMyRating(Long documentFolderId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		spiRatingResource.deleteRating(documentFolderId);
 	}
 
 	@Override
@@ -185,6 +199,15 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 	}
 
 	@Override
+	public Rating getDocumentFolderMyRating(Long documentFolderId)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.getRating(documentFolderId);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return new DocumentFolderEntityModel(
 			EntityFieldsUtil.getEntityFields(
@@ -277,6 +300,17 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 	}
 
 	@Override
+	public Rating postDocumentFolderMyRating(
+			Long documentFolderId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), documentFolderId);
+	}
+
+	@Override
 	public DocumentFolder postSiteDocumentFolder(
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception {
@@ -293,6 +327,17 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 
 		return _updateDocumentFolder(
 			_dlAppService.getFolder(documentFolderId), documentFolder);
+	}
+
+	@Override
+	public Rating putDocumentFolderMyRating(
+			Long documentFolderId, Rating rating)
+		throws Exception {
+
+		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
+
+		return spiRatingResource.addOrUpdateRating(
+			rating.getRatingValue(), documentFolderId);
 	}
 
 	@Override
@@ -435,6 +480,44 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			pagination, _dlFolderService.getFoldersCount(groupId, 0.1));
 	}
 
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			DLFolder.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> {
+				Folder folder = _dlAppService.getFolder(
+					ratingsEntry.getClassPK());
+
+				return RatingUtil.toRating(
+					HashMapBuilder.put(
+						"create",
+						addAction(
+							ActionKeys.VIEW, folder.getPrimaryKey(),
+							"postDocumentFolderMyRating", folder.getUserId(),
+							DLFolder.class.getName(), folder.getGroupId())
+					).put(
+						"delete",
+						addAction(
+							ActionKeys.VIEW, folder.getPrimaryKey(),
+							"deleteDocumentFolderMyRating", folder.getUserId(),
+							DLFolder.class.getName(), folder.getGroupId())
+					).put(
+						"get",
+						addAction(
+							ActionKeys.VIEW, folder.getPrimaryKey(),
+							"getDocumentFolderMyRating", folder.getUserId(),
+							DLFolder.class.getName(), folder.getGroupId())
+					).put(
+						"replace",
+						addAction(
+							ActionKeys.VIEW, folder.getPrimaryKey(),
+							"putDocumentFolderMyRating", folder.getUserId(),
+							DLFolder.class.getName(), folder.getGroupId())
+					).build(),
+					_portal, ratingsEntry, _userLocalService);
+			},
+			contextUser);
+	}
+
 	private DocumentFolder _toDocumentFolder(Folder folder) throws Exception {
 		return _documentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -546,9 +629,15 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 	private Queries _queries;
 
 	@Reference
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private Sorts _sorts;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

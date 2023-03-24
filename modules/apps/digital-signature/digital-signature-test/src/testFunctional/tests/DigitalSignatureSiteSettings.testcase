@@ -57,6 +57,12 @@ definition {
 			key_itemName = "Digital Signature",
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
+		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
+
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
 			value1 = ${digitalSignatureApiUsername});
@@ -106,6 +112,11 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		var siteSettingsStrategy = "Always Inherit";
+		var digitalSignatureApiUsername = ${digitalSignatureApiUsername};
+		var digitalSignatureApiAccountId = ${digitalSignatureApiAccountId};
+		var digitalSignatureAccountBaseUri = ${digitalSignatureAccountBaseUri};
+		var digitalSignatureIntegrationKey = ${digitalSignatureIntegrationKey};
+		var digitalSignatureRsaPrivateKey = ${digitalSignatureRsaPrivateKey};
 
 		AssertElementPresent(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
@@ -150,6 +161,11 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		var siteSettingsStrategy = "Inherit or Override";
+		var digitalSignatureApiUsername = ${digitalSignatureApiUsername};
+		var digitalSignatureApiAccountId = ${digitalSignatureApiAccountId};
+		var digitalSignatureAccountBaseUri = ${digitalSignatureAccountBaseUri};
+		var digitalSignatureIntegrationKey = ${digitalSignatureIntegrationKey};
+		var digitalSignatureRsaPrivateKey = ${digitalSignatureRsaPrivateKey};
 
 		AssertElementPresent(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",

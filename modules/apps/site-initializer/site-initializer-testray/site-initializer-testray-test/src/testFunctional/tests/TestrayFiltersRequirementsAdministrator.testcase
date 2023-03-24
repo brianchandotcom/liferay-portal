@@ -153,7 +153,7 @@ definition {
 			TestrayFilter.searchFilter(value = "Link");
 		}
 
-		task ("Then can see the field called link and don not see the field key") {
+		task ("Then can see the field called link and do not see the field key") {
 			AssertElementPresent(
 				key_fieldLabel = "Link",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT");
@@ -207,6 +207,41 @@ definition {
 
 		task ("Then can see the team selected in the table") {
 			Testray.assertItemName(key_name = "Team 1");
+		}
+	}
+
+	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterRequirementsWithMultipleOptions {
+		task ("When the user filter a requirement with multiple options") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			TestrayFilter.multiSelect(
+				header = "Component",
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			Type(
+				key_fieldLabel = "Summary",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Requirement 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the multiple options in the table and do not see the requirement 2") {
+			TestrayRequirements.verifyRequirement(
+				linkTitle = "The front page of the internet",
+				requirementComponent = "Component 1",
+				requirementSummary = "Requirement 1",
+				requirementTeam = "Team 1");
+
+			Testray.assertItemNotPresent(key_name = "Requirement 2");
 		}
 	}
 

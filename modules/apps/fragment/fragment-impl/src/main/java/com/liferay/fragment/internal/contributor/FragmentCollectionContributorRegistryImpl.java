@@ -477,13 +477,13 @@ public class FragmentCollectionContributorRegistryImpl
 
 		ThemeDisplay themeDisplay = originalServiceContext.getThemeDisplay();
 
-		if ((originalServiceContext.getRequest() == null) &&
-			(themeDisplay != null) && (themeDisplay.getRequest() != null)) {
+		if (originalServiceContext.getRequest() != null) {
+			httpServletRequest = originalServiceContext.getRequest();
+		}
+		else if ((themeDisplay != null) &&
+				 (themeDisplay.getRequest() != null)) {
 
 			httpServletRequest = themeDisplay.getRequest();
-		}
-		else if (originalServiceContext.getRequest() != null) {
-			httpServletRequest = originalServiceContext.getRequest();
 		}
 		else {
 			httpServletRequest = new MockHttpServletRequest();

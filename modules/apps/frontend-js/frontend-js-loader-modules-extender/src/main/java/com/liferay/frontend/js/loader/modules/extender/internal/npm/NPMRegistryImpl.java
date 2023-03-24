@@ -34,6 +34,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesLis
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -59,6 +60,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 import javax.servlet.ServletContext;
 
@@ -98,7 +100,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdate npmRegistryUpdate) {
-		_refreshJSModuleCaches(null);
+		_setDataBagSupplier(() -> _createDataBag(null));
 
 		_notifyNPMRegistryUpdatesListeners();
 	}
@@ -128,7 +130,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getJSModule(String identifier) {
-		return _jsModules.get(identifier);
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSModule> jsModules = dataBag._jsModules;
+
+		return jsModules.get(identifier);
 	}
 
 	/**
@@ -139,7 +145,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSPackage getJSPackage(String identifier) {
-		return _jsPackages.get(identifier);
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSPackage> jsPackages = dataBag._jsPackages;
+
+		return jsPackages.get(identifier);
 	}
 
 	/**
@@ -149,7 +159,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSPackage> getJSPackages() {
-		return _jsPackages.values();
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSPackage> jsPackages = dataBag._jsPackages;
+
+		return jsPackages.values();
 	}
 
 	/**
@@ -160,7 +174,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getResolvedJSModule(String identifier) {
-		return _resolvedJSModules.get(identifier);
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSModule> resolvedJSModules = dataBag._resolvedJSModules;
+
+		return resolvedJSModules.get(identifier);
 	}
 
 	/**
@@ -170,12 +188,20 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSModule> getResolvedJSModules() {
-		return _resolvedJSModules.values();
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSModule> resolvedJSModules = dataBag._resolvedJSModules;
+
+		return resolvedJSModules.values();
 	}
 
 	@Override
 	public JSPackage getResolvedJSPackage(String identifier) {
-		return _resolvedJSPackages.get(identifier);
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSPackage> resolvedJSPackages = dataBag._resolvedJSPackages;
+
+		return resolvedJSPackages.get(identifier);
 	}
 
 	/**
@@ -186,12 +212,20 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSPackage> getResolvedJSPackages() {
-		return _resolvedJSPackages.values();
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSPackage> resolvedJSPackages = dataBag._resolvedJSPackages;
+
+		return resolvedJSPackages.values();
 	}
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		String mappedModuleName = _exactMatchMap.get(moduleName);
+		DataBag dataBag = _getDataBag();
+
+		Map<String, String> exactMatchMap = dataBag._exactMatchMap;
+
+		String mappedModuleName = exactMatchMap.get(moduleName);
 
 		if (Validator.isNotNull(mappedModuleName)) {
 			return mapModuleName(mappedModuleName);
@@ -242,7 +276,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 		String cacheKey = StringBundler.concat(
 			packageName, StringPool.UNDERLINE, versionConstraints);
 
-		JSPackage jsPackage = _dependencyJSPackages.get(cacheKey);
+		DataBag dataBag = _getDataBag();
+
+		Map<String, JSPackage> dependencyJSPackages =
+			dataBag._dependencyJSPackages;
+
+		JSPackage jsPackage = dependencyJSPackages.get(cacheKey);
 
 		if (jsPackage != null) {
 			if (jsPackage == _NULL_JS_PACKAGE) {
@@ -254,7 +293,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		Range range = Range.from(versionConstraints, true);
 
-		for (JSPackageVersion jsPackageVersion : _jsPackageVersions) {
+		List<JSPackageVersion> jsPackageVersions = dataBag._jsPackageVersions;
+
+		for (JSPackageVersion jsPackageVersion : jsPackageVersions) {
 			JSPackage innerJSPackage = jsPackageVersion._jsPackage;
 			Version version = jsPackageVersion._version;
 
@@ -268,10 +309,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		if (jsPackage == null) {
-			_dependencyJSPackages.put(cacheKey, _NULL_JS_PACKAGE);
+			dependencyJSPackages.put(cacheKey, _NULL_JS_PACKAGE);
 		}
 		else {
-			_dependencyJSPackages.put(cacheKey, jsPackage);
+			dependencyJSPackages.put(cacheKey, jsPackage);
 		}
 
 		return jsPackage;
@@ -300,7 +341,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
-		_refreshJSModuleCaches(tracked.values());
+		_setDataBagSupplier(() -> _createDataBag(tracked.values()));
 
 		Details details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
@@ -338,6 +379,67 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_serviceTracker = _openServiceTracker();
 		}
+	}
+
+	private DataBag _createDataBag(Collection<JSBundle> jsBundles) {
+		if (jsBundles == null) {
+			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
+
+			jsBundles = tracked.values();
+		}
+
+		Map<String, JSModule> jsModules = new HashMap<>();
+		Map<String, JSPackage> jsPackages = new HashMap<>();
+		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
+		Map<String, JSModule> resolvedJSModules = new HashMap<>();
+		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
+		Map<String, String> exactMatchMap = new HashMap<>();
+
+		for (JSBundle jsBundle : jsBundles) {
+			for (JSPackage jsPackage : jsBundle.getJSPackages()) {
+				jsPackages.put(jsPackage.getId(), jsPackage);
+				jsPackageVersions.add(new JSPackageVersion(jsPackage));
+
+				String resolvedId = jsPackage.getResolvedId();
+
+				resolvedJSPackages.put(resolvedId, jsPackage);
+
+				exactMatchMap.put(
+					resolvedId,
+					ModuleNameUtil.getModuleResolvedId(
+						jsPackage, jsPackage.getMainModuleName()));
+
+				for (JSModuleAlias jsModuleAlias :
+						jsPackage.getJSModuleAliases()) {
+
+					String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
+						jsPackage, jsModuleAlias.getAlias());
+
+					exactMatchMap.put(
+						aliasResolvedId,
+						ModuleNameUtil.getModuleResolvedId(
+							jsPackage, jsModuleAlias.getModuleName()));
+				}
+
+				for (JSModule jsModule : jsPackage.getJSModules()) {
+					jsModules.put(jsModule.getId(), jsModule);
+					resolvedJSModules.put(jsModule.getResolvedId(), jsModule);
+				}
+			}
+		}
+
+		Comparator<JSPackageVersion> comparator = Comparator.comparing(
+			JSPackageVersion::getVersion);
+
+		jsPackageVersions.sort(comparator.reversed());
+
+		return new DataBag(
+			exactMatchMap, jsModules, jsPackages, jsPackageVersions,
+			resolvedJSModules, resolvedJSPackages);
+	}
+
+	private DataBag _getDataBag() {
+		return _dataBagDCLSingleton.getSingleton(_dataBagSupplier);
 	}
 
 	private ServiceTrackerList<NPMRegistryUpdatesListener>
@@ -476,66 +578,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private void _refreshJSModuleCaches(Collection<JSBundle> jsBundles) {
-		if (jsBundles == null) {
-			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
-
-			jsBundles = tracked.values();
-		}
-
-		_dependencyJSPackages.clear();
-
-		Map<String, JSModule> jsModules = new HashMap<>();
-		Map<String, JSPackage> jsPackages = new HashMap<>();
-		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
-		Map<String, JSModule> resolvedJSModules = new HashMap<>();
-		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
-		Map<String, String> exactMatchMap = new HashMap<>();
-
-		for (JSBundle jsBundle : jsBundles) {
-			for (JSPackage jsPackage : jsBundle.getJSPackages()) {
-				jsPackages.put(jsPackage.getId(), jsPackage);
-				jsPackageVersions.add(new JSPackageVersion(jsPackage));
-
-				String resolvedId = jsPackage.getResolvedId();
-
-				resolvedJSPackages.put(resolvedId, jsPackage);
-
-				exactMatchMap.put(
-					resolvedId,
-					ModuleNameUtil.getModuleResolvedId(
-						jsPackage, jsPackage.getMainModuleName()));
-
-				for (JSModuleAlias jsModuleAlias :
-						jsPackage.getJSModuleAliases()) {
-
-					String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
-						jsPackage, jsModuleAlias.getAlias());
-
-					exactMatchMap.put(
-						aliasResolvedId,
-						ModuleNameUtil.getModuleResolvedId(
-							jsPackage, jsModuleAlias.getModuleName()));
-				}
-
-				for (JSModule jsModule : jsPackage.getJSModules()) {
-					jsModules.put(jsModule.getId(), jsModule);
-					resolvedJSModules.put(jsModule.getResolvedId(), jsModule);
-				}
-			}
-		}
-
-		Comparator<JSPackageVersion> comparator = Comparator.comparing(
-			JSPackageVersion::getVersion);
-
-		jsPackageVersions.sort(comparator.reversed());
-
-		_jsModules = jsModules;
-		_jsPackages = jsPackages;
-		_jsPackageVersions = jsPackageVersions;
-		_resolvedJSModules = resolvedJSModules;
-		_resolvedJSPackages = resolvedJSPackages;
-		_exactMatchMap = exactMatchMap;
+	private void _setDataBagSupplier(Supplier<DataBag> dataBagSupplier) {
+		_dataBagSupplier = dataBagSupplier;
+		_dataBagDCLSingleton.destroy(null);
 	}
 
 	private static final JSPackage _NULL_JS_PACKAGE =
@@ -552,9 +597,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private volatile Boolean _applyVersioning;
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
-	private final Map<String, JSPackage> _dependencyJSPackages =
-		new ConcurrentHashMap<>();
-	private Map<String, String> _exactMatchMap;
+	private final DCLSingleton<DataBag> _dataBagDCLSingleton =
+		new DCLSingleton<>();
+	private volatile Supplier<DataBag> _dataBagSupplier;
 	private final Map<String, String> _globalAliases = new HashMap<>();
 	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
 		_javaScriptAwarePortalWebResources;
@@ -562,21 +607,43 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
 
-	private Map<String, JSModule> _jsModules = new HashMap<>();
-
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private Map<String, JSPackage> _jsPackages = new HashMap<>();
-	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
 	private ServiceTrackerList<NPMRegistryUpdatesListener>
 		_npmRegistryUpdatesListeners;
 	private final Map<String, String> _partialMatchMap =
 		new ConcurrentHashMap<>();
-	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
-	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
+
+	private static class DataBag {
+
+		private DataBag(
+			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,
+			Map<String, JSPackage> jsPackages,
+			List<JSPackageVersion> jsPackageVersions,
+			Map<String, JSModule> resolvedJSModules,
+			Map<String, JSPackage> resolvedJSPackages) {
+
+			_exactMatchMap = exactMatchMap;
+			_jsModules = jsModules;
+			_jsPackages = jsPackages;
+			_jsPackageVersions = jsPackageVersions;
+			_resolvedJSModules = resolvedJSModules;
+			_resolvedJSPackages = resolvedJSPackages;
+		}
+
+		private final Map<String, JSPackage> _dependencyJSPackages =
+			new ConcurrentHashMap<>();
+		private final Map<String, String> _exactMatchMap;
+		private final Map<String, JSModule> _jsModules;
+		private final Map<String, JSPackage> _jsPackages;
+		private final List<JSPackageVersion> _jsPackageVersions;
+		private final Map<String, JSModule> _resolvedJSModules;
+		private final Map<String, JSPackage> _resolvedJSPackages;
+
+	}
 
 	private static class JSPackageVersion {
 
@@ -616,7 +683,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 				jsBundles.add(jsBundle);
 
-				_refreshJSModuleCaches(jsBundles);
+				_setDataBagSupplier(() -> _createDataBag(jsBundles));
 
 				_notifyNPMRegistryUpdatesListeners();
 
@@ -642,7 +709,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshJSModuleCaches(null);
+				_setDataBagSupplier(() -> _createDataBag(null));
 
 				_notifyNPMRegistryUpdatesListeners();
 			}

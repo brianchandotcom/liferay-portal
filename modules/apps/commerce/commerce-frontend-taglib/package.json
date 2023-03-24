@@ -2,6 +2,7 @@
 	"dependencies": {
 		"clay-icon": "2.24.1",
 		"clay-modal": "2.24.1",
+		"commerce-frontend-js": "*",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.9"

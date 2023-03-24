@@ -4,6 +4,7 @@
 .gh.json
 .gradle/
 .idea/
+.npmscripts/
 .project
 .sass-cache/
 .settings/

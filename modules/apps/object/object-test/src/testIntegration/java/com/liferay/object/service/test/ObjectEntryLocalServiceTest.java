@@ -648,7 +648,7 @@ public class ObjectEntryLocalServiceTest {
 				objectEntryValuesException.getMessage());
 		}
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
+		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
@@ -658,11 +658,11 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 		Assert.assertEquals(
-			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
+			objectEntry.getUuid(), objectEntry.getExternalReferenceCode());
 
-		objectEntry1 = _addObjectEntry(
+		objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
@@ -674,11 +674,11 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 		Assert.assertEquals(
-			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
+			objectEntry.getUuid(), objectEntry.getExternalReferenceCode());
 
-		objectEntry1 = _addObjectEntry(
+		objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
@@ -690,10 +690,9 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(objectEntry1, "_values"));
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 		Assert.assertEquals(
-			"newExternalReferenceCode",
-			objectEntry1.getExternalReferenceCode());
+			"newExternalReferenceCode", objectEntry.getExternalReferenceCode());
 
 		try {
 			_addObjectEntry(

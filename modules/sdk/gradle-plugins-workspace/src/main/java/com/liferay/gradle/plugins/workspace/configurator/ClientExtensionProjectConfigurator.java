@@ -35,6 +35,7 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildC
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
+import com.liferay.gradle.util.Validator;
 import com.liferay.petra.string.StringBundler;
 
 import groovy.lang.Closure;
@@ -213,9 +214,7 @@ public class ClientExtensionProjectConfigurator
 
 							clientExtension.id = id;
 
-							if ((clientExtension.type == null) ||
-								clientExtension.type.isEmpty()) {
-
+							if (Validator.isNull(clientExtension.type)) {
 								clientExtension.type = id;
 							}
 
@@ -223,6 +222,8 @@ public class ClientExtensionProjectConfigurator
 								clientExtension.id, clientExtension.type);
 
 							clientExtension.projectName = project.getName();
+
+							_validateClientExtension(clientExtension);
 
 							createClientExtensionConfigTaskProvider.configure(
 								createClientExtensionConfigTask ->
@@ -679,6 +680,20 @@ public class ClientExtensionProjectConfigurator
 	private File _getZipFile(Project project) {
 		return project.file(
 			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
+	}
+
+	private void _validateClientExtension(ClientExtension clientExtension) {
+		if (Objects.equals(clientExtension.type, "batch")) {
+			if (!clientExtension.typeSettings.containsKey(
+					"oAuthApplicationHeadlessServer")) {
+
+				throw new GradleException(
+					StringBundler.concat(
+						"Client extension ", clientExtension.id, " with type ",
+						clientExtension.type, " must define the property ",
+						"'oAuthApplicationHeadlessServer'"));
+			}
+		}
 	}
 
 	private static final String _CLIENT_EXTENSION_YAML =

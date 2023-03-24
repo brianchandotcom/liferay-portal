@@ -131,8 +131,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				return entrySetStream.map(
 					entry -> new AbstractMap.SimpleEntry<>(
 						StringBundler.concat(
-							"__", clientExtension.id, ".", entry.getKey(),
-							"__"),
+							"__", _getIdOrBatch(clientExtension), ".",
+							entry.getKey(), "__"),
 						String.valueOf(entry.getValue())));
 			}
 		).collect(
@@ -297,6 +297,16 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return null;
 	}
 
+	private String _getIdOrBatch(ClientExtension clientExtension) {
+		String id = clientExtension.id;
+
+		if (Objects.equals(clientExtension.type, "batch")) {
+			id = "batch";
+		}
+
+		return id;
+	}
+
 	private Properties _getPluginPackageProperties() {
 		Properties pluginPackageProperties = new Properties();
 
@@ -392,13 +402,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				throw new GradleException(
 					"A client extension project must not contain more than " +
 						"one batch type client extension");
-			}
-
-			ClientExtension batchClientExtension = batches.get(0);
-
-			if (!Objects.equals(batchClientExtension.id, "batch")) {
-				throw new GradleException(
-					"The batch client extension must be named batch");
 			}
 
 			return "batch";

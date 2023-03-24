@@ -1,7 +1,7 @@
 {
 	"cpu": 0.2,
 	"env": {
-		"OAUTH2_JOB_PROFILE": "__batch.oAuth2ApplicationExternalReferenceCode__"
+		"LIFERAY_BATCH_OAUTH_APP_ERC": "__batch.oAuthApplicationHeadlessServer__"
 	},
 	"environments": {
 		"infra": {

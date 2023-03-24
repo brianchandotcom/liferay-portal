@@ -37,18 +37,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -285,74 +280,5 @@ public class FragmentCollectionContributorTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
-
-	private static class TestFragmentCollectionContributor
-		implements FragmentCollectionContributor {
-
-		public TestFragmentCollectionContributor(
-			String fragmentCollectionKey,
-			Map<Integer, FragmentEntry> fragmentEntriesMap) {
-
-			_fragmentCollectionKey = fragmentCollectionKey;
-			_fragmentEntriesMap = fragmentEntriesMap;
-		}
-
-		@Override
-		public String getFragmentCollectionKey() {
-			return _fragmentCollectionKey;
-		}
-
-		@Override
-		public List<FragmentEntry> getFragmentEntries() {
-			return Collections.emptyList();
-		}
-
-		@Override
-		public List<FragmentEntry> getFragmentEntries(int type) {
-			FragmentEntry fragmentEntry = _fragmentEntriesMap.get(type);
-
-			if (fragmentEntry != null) {
-				return Collections.singletonList(fragmentEntry);
-			}
-
-			return Collections.emptyList();
-		}
-
-		@Override
-		public List<FragmentEntry> getFragmentEntries(int[] types) {
-			List<FragmentEntry> fragmentEntries = new ArrayList<>();
-
-			for (int type : types) {
-				FragmentEntry fragmentEntry = _fragmentEntriesMap.get(type);
-
-				if (fragmentEntry != null) {
-					fragmentEntries.add(fragmentEntry);
-				}
-			}
-
-			return fragmentEntries;
-		}
-
-		@Override
-		public List<FragmentEntry> getFragmentEntries(Locale locale) {
-			return Collections.emptyList();
-		}
-
-		@Override
-		public String getName() {
-			return "Test Fragment Collection Contributor";
-		}
-
-		@Override
-		public Map<Locale, String> getNames() {
-			return HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), getName()
-			).build();
-		}
-
-		private final String _fragmentCollectionKey;
-		private final Map<Integer, FragmentEntry> _fragmentEntriesMap;
-
-	}
 
 }

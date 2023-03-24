@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter.upgrade;
+package com.liferay.source.formatter.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
 

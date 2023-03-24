@@ -3508,7 +3508,9 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+			AssertElementNotPresent(
+				key_fieldName = "Formula Builder",
+				locator1 = "ObjectField#MANDATORY_FIELD");
 
 			PortletEntry.save();
 		}

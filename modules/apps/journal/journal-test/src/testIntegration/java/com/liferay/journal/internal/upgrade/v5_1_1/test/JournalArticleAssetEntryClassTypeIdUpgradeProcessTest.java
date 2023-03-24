@@ -260,7 +260,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		Assert.assertTrue(
 			message.startsWith(
 				expectedClassTypeId +
-					" has been set as class type ID for the entryIds"));
+					" has been set as class type ID for the entry IDs"));
 
 		List<Long> expectedEntryIds = new ArrayList<>();
 

@@ -27,7 +27,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,9 +85,7 @@ public class AccountMemberDTOConverter
 						dtoConverterContext.getLocale())));
 		}
 
-		Stream<AccountRole> stream = accountRoles.stream();
-
-		return stream.toArray(AccountRole[]::new);
+		return accountRoles.toArray(new AccountRole[0]);
 	}
 
 	@Reference(

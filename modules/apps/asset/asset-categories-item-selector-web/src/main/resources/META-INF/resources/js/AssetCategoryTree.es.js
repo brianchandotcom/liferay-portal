@@ -84,6 +84,7 @@ export function AssetCategoryTree({
 			}
 
 			selectedItems[item.id] = {
+				ancestorIds: item.ancestorIds,
 				categoryId: item.vocabulary ? 0 : item.id,
 				className: item.className,
 				classNameId: item.classNameId,

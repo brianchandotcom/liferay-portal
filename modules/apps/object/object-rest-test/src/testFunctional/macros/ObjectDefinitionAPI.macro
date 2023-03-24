@@ -709,6 +709,51 @@ definition {
 			var body = StringUtil.add("${body},", "\"secondField\":\"${secondFieldValue}\"", "");
 		}
 
+		if (isSet(nestedField)) {
+			var size = ${numberOfRelatedObjectEntries};
+
+			if (!(isSet(externalReferenceCode))) {
+				var externalReferenceCode = "";
+			}
+
+			var data = '''
+				"externalReferenceCode": "${externalReferenceCode}",
+				"${nestedField}":
+			''';
+			var entryBody = '''[''';
+			var i = 0;
+
+			while ((${i} != ${size}) && (maxIterations = "10")) {
+				var relatedObjectEntry = '''
+					{
+						"${relatedEntryFieldName}": "${relatedEntryFieldName}${i}"
+					}
+				''';
+
+				if (isSet(relatedEntryExternalReferenceCode)) {
+					var relatedObjectEntry = '''
+					{
+						"${relatedEntryFieldName}": "${relatedEntryFieldName}${i}",
+						"externalReferenceCode": "${relatedEntryExternalReferenceCode}${i}"
+					}
+				''';
+				}
+
+				var j = ${i} + 1;
+
+				if (${j} == ${size}) {
+					var data = StringUtil.add(${data}, "${entryBody}${relatedObjectEntry}]", "");
+				}
+				else {
+					var entryBody = StringUtil.add(${entryBody}, "${relatedObjectEntry},", "");
+				}
+
+				var i = ${i} + 1;
+			}
+
+			var body = StringUtil.add("${body},", ${data}, "");
+		}
+
 		var api = ${en_US_plural_label_lowercase};
 
 		if (isSet(scopeKey)) {

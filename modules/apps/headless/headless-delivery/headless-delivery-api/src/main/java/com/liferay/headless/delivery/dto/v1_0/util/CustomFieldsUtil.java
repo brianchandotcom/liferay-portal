@@ -86,7 +86,7 @@ public class CustomFieldsUtil {
 			return null;
 		}
 
-		Map<String, Serializable> customFieldValues = new HashMap<>();
+		Map<String, Serializable> map = new HashMap<>();
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, className);
@@ -101,21 +101,18 @@ public class CustomFieldsUtil {
 			Object data = customValue.getData();
 
 			if (ExpandoColumnConstants.DATE == attributeType) {
-				customFieldValues.put(
-					fieldName, _parseDate(String.valueOf(data)));
+				map.put(fieldName, _parseDate(String.valueOf(data)));
 			}
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				customFieldValues.put(
-					fieldName, ArrayUtil.toDoubleArray((List<Number>)data));
+				map.put(fieldName, ArrayUtil.toDoubleArray((List<Number>)data));
 			}
 			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				customFieldValues.put(
-					fieldName, ArrayUtil.toFloatArray((List<Number>)data));
+				map.put(fieldName, ArrayUtil.toFloatArray((List<Number>)data));
 			}
 			else if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 				Geo geo = customValue.getGeo();
 
-				customFieldValues.put(
+				map.put(
 					fieldName,
 					JSONUtil.put(
 						"latitude", geo.getLatitude()
@@ -124,30 +121,28 @@ public class CustomFieldsUtil {
 					).toString());
 			}
 			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				customFieldValues.put(
-					fieldName, ArrayUtil.toIntArray((List<Number>)data));
+				map.put(fieldName, ArrayUtil.toIntArray((List<Number>)data));
 			}
 			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-				customFieldValues.put(
-					fieldName, ArrayUtil.toLongArray((List<Number>)data));
+				map.put(fieldName, ArrayUtil.toLongArray((List<Number>)data));
 			}
 			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
 				List<?> list = (List<?>)data;
 
-				customFieldValues.put(fieldName, list.toArray(new String[0]));
+				map.put(fieldName, list.toArray(new String[0]));
 			}
 			else if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
-				customFieldValues.put(
+				map.put(
 					fieldName,
 					(Serializable)LocalizedMapUtil.getLocalizedMap(
 						locale, (String)data, customValue.getData_i18n()));
 			}
 			else {
-				customFieldValues.put(fieldName, (Serializable)data);
+				map.put(fieldName, (Serializable)data);
 			}
 		}
 
-		return customFieldValues;
+		return map;
 	}
 
 	private static Map<String, String> _getLocalizedValues(

@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -24,7 +25,6 @@ import com.liferay.commerce.tax.engine.fixed.configuration.CommerceTaxByAddressT
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.constants.CommerceTaxRateSettingFDSNames;
-import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.taglib.servlet.taglib.CommerceTaxMethodAddressRateRelsScreenNavigationCategory;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -169,8 +169,8 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 
 	@Override
 	public String getScreenNavigationCategoryKey() {
-		return CommerceTaxMethodAddressRateRelsScreenNavigationCategory.
-			CATEGORY_KEY;
+		return CommerceTaxScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_TAX_RATING_SETTINGS;
 	}
 
 	public boolean isTaxAppliedToShippingAddress() throws PortalException {

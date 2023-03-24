@@ -91,16 +91,16 @@ public class UserGroupIndexerTest {
 
 		long companyId = role.getCompanyId();
 
-		int count = userGroupLocalService.searchCount(
+		int originalUserGroupCount = userGroupLocalService.searchCount(
 			companyId, null, new LinkedHashMap<String, Object>());
 
 		String baseName = RandomTestUtil.randomString();
-		int i = 2;
+		int newUserGroupCount = 2;
 
 		List<UserGroup> userGroups = Stream.generate(
 			() -> addUserGroup(baseName)
 		).limit(
-			i
+			newUserGroupCount
 		).collect(
 			Collectors.toList()
 		);
@@ -130,7 +130,9 @@ public class UserGroupIndexerTest {
 				0
 			).build());
 
-		Assert.assertEquals(count + i, searchResponse2.getCount());
+		Assert.assertEquals(
+			originalUserGroupCount + newUserGroupCount,
+			searchResponse2.getCount());
 	}
 
 	@Rule

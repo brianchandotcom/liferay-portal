@@ -341,6 +341,23 @@
 							{
 								"definition": {
 								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "clay-icon-link"
+											},
+											"fragmentConfig": {
+												"iconLink": "",
+												"iconName": "video"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
 								"type": "FragmentDropZone"
 							},
 							{
@@ -350,12 +367,56 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "clay-icon-link"
+												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
-												"iconName": "video"
+												"buttonSize": "nm",
+												"buttonType": "primary"
 											},
 											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"ar_SA": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"ca_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"de_DE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"es_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"fi_FI": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"fr_FR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"hu_HU": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"ja_JP": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"nl_NL": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"pt_BR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"sv_SE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+																		"zh_CN": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Partner Marketing Guide",
+																"ca_ES": "Partner Marketing Guide",
+																"de_DE": "Partner Marketing Guide",
+																"en_US": "Partner Marketing Guide",
+																"es_ES": "Partner Marketing Guide",
+																"fi_FI": "Partner Marketing Guide",
+																"fr_FR": "Partner Marketing Guide",
+																"hu_HU": "Partner Marketing Guide",
+																"ja_JP": "Partner Marketing Guide",
+																"nl_NL": "Partner Marketing Guide",
+																"pt_BR": "Partner Marketing Guide",
+																"sv_SE": "Partner Marketing Guide",
+																"zh_CN": "Partner Marketing Guide"
+															}
+														}
+													}
+												}
 											],
 											"indexed": true
 										},

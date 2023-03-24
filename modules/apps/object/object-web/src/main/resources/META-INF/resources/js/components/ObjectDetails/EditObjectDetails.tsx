@@ -265,7 +265,9 @@ export default function EditObjectDetails({
 						values={values}
 					/>
 
-					{values.modifiable && (
+					{(Liferay.FeatureFlags['LPS-167253']
+						? values.modifiable
+						: !values.system) && (
 						<AccountRestrictionContainer
 							errors={errors}
 							isApproved={isApproved}

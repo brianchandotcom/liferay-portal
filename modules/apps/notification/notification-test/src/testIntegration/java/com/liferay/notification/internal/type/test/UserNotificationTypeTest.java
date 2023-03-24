@@ -33,13 +33,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -57,15 +57,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			notificationQueueEntry.getSentDate());
-
-		_userNotificationEventLocalService.deleteUserNotificationEvents(
-			user1.getUserId());
-	}
-
 	@Test
 	public void testSendNotificationRecipientTypeRole() throws Exception {
 		_testSendNotification(
@@ -79,7 +70,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	@Test
 	public void testSendNotificationRecipientTypeTerm() throws Exception {
 		_testSendNotification(
-			2,
+			1,
 			Arrays.asList(
 				createNotificationRecipientSetting("term", getTerm("creator")),
 				createNotificationRecipientSetting(
@@ -150,7 +141,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				user1.getUserId()));
 
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
-			user1.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 			randomObjectEntryValues,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -167,14 +158,14 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 						getAllTermNames()))
 			).termValues(
 				HashMapBuilder.<String, Object>put(
-					"creator", user1.getUserId()
+					"creator", user2.getUserId()
 				).put(
-					"currentUserId", user1.getUserId()
+					"currentUserId", user2.getUserId()
 				).putAll(
 					randomObjectEntryValues
 				).build()
 			).userId(
-				user1.getUserId()
+				user2.getUserId()
 			).build(),
 			NotificationConstants.TYPE_USER_NOTIFICATION);
 
@@ -209,8 +200,13 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 			Assert.assertEquals(
 				"userFullName", notificationRecipientSetting.getName());
-			Assert.assertEquals(
-				"Test Test", notificationRecipientSetting.getValue());
+			Assert.assertTrue(
+				StringUtil.equals(
+					notificationRecipientSetting.getValue(),
+					user1.getFullName()) ||
+				StringUtil.equals(
+					notificationRecipientSetting.getValue(),
+					user2.getFullName()));
 		}
 	}
 

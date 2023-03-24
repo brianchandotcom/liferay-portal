@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -159,11 +158,6 @@ public class CommerceChannelAccountEntryRelAccountEntryLocalServiceWrapper
 		userAccountEntries.addAll(accountEntries);
 
 		return new ArrayList<>(new LinkedHashSet<>(userAccountEntries));
-	}
-
-	@Activate
-	protected void activate() {
-		setWrappedService(_accountEntryLocalService);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

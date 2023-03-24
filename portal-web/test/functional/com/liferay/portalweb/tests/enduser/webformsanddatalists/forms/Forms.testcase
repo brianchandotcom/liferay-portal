@@ -2025,7 +2025,6 @@ definition {
 	@priority = 5
 	test ShouldHaveAtLeastOneField {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		FormsAdmin.addForm();
 

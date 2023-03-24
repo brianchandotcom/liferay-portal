@@ -694,6 +694,17 @@ public class ClientExtensionProjectConfigurator
 						"'oAuthApplicationHeadlessServer'"));
 			}
 		}
+		else if (Objects.equals(
+					clientExtension.type, "instanceConfiguration")) {
+
+			if (!clientExtension.typeSettings.containsKey("pid")) {
+				throw new GradleException(
+					StringBundler.concat(
+						"Client extension ", clientExtension.id, " with type ",
+						clientExtension.type,
+						" must define the property 'pid'"));
+			}
+		}
 	}
 
 	private static final String _CLIENT_EXTENSION_YAML =

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -115,14 +117,19 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
 		MBMessage message = (MBMessage)classedModel;
 
-		MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
-			getSearchKeywords(), getSearchKeywords(),
-			MBTestUtil.getInputStreamOVPs(
-				"OSX_Test.docx", getClass(), getSearchKeywords()),
-			0, false,
-			ServiceContextTestUtil.getServiceContext(
-				message.getGroupId(), TestPropsValues.getUserId()));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.xmlbeans.impl.common.SAXHelper",
+				LoggerTestUtil.WARN)) {
+
+			MBMessageLocalServiceUtil.updateMessage(
+				TestPropsValues.getUserId(), message.getMessageId(),
+				getSearchKeywords(), getSearchKeywords(),
+				MBTestUtil.getInputStreamOVPs(
+					"OSX_Test.docx", getClass(), getSearchKeywords()),
+				0, false,
+				ServiceContextTestUtil.getServiceContext(
+					message.getGroupId(), TestPropsValues.getUserId()));
+		}
 	}
 
 	@Override

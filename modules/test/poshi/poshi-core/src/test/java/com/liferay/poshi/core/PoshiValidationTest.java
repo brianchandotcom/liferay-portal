@@ -16,7 +16,7 @@ package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
 
 import java.net.MalformedURLException;
@@ -85,7 +85,7 @@ public class PoshiValidationTest extends TestCase {
 
 	protected String getFilePath(String fileName) {
 		String filePath = FileUtil.getCanonicalPath(
-			PropsValues.TEST_BASE_DIR_NAME +
+			PropsUtil.get("test.base.dir.name") +
 				"resources/com/liferay/poshi/core/dependencies/validation/" +
 					fileName);
 

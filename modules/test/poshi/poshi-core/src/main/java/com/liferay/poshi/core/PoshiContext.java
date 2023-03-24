@@ -659,7 +659,7 @@ public class PoshiContext {
 
 		String[] testDirs = StringUtil.split(PropsUtil.get("test.dirs"));
 
-		if (Validator.isNotNull(testDirs)) {
+		if ((testDirs != null) && (testDirs.length > 0)) {
 			Collections.addAll(testDirNames, testDirs);
 		}
 
@@ -674,7 +674,7 @@ public class PoshiContext {
 		String[] testSupportDirs = StringUtil.split(
 			PropsUtil.get("test.support.dirs"));
 
-		if (Validator.isNotNull(testSupportDirs)) {
+		if ((testSupportDirs != null) && (testSupportDirs.length > 0)) {
 			Collections.addAll(testSupportDirNames, testSupportDirs);
 		}
 

@@ -1,11 +1,10 @@
 .ddm__radio {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
 	word-break: break-all;
 
-	.custom-control-inline + .custom-control-inline {
-		margin-left: 0;
-	}
-
-	.custom-control:not(:last-child) {
-		margin-right: 1rem;
+	.custom-control-inline {
+		margin-left: 1rem;
 	}
 }

@@ -46,7 +46,7 @@ export function AppDetailsPage({
 			},
 			type: TYPES.SUBMIT_APP_PROFILE,
 		});
-	}, []);
+	}, [selectedApp]);
 
 	return (
 		<div className="app-details-page-container">

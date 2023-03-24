@@ -112,9 +112,15 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition1, _objectDefinition2,
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
 	@After
@@ -197,20 +203,6 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			Arrays.asList(objectFields));
 	}
 
-	private ObjectRelationship _addObjectRelationship(
-			ObjectDefinition objectDefinition,
-			ObjectDefinition relatedObjectDefinition, String type)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			relatedObjectDefinition.getObjectDefinitionId(),
-			objectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), type);
-	}
-
 	private void _assertRelatedInfoCollectionProvider(
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		ObjectEntry... relatedObjectEntries) {
@@ -256,10 +248,8 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
 	@Inject

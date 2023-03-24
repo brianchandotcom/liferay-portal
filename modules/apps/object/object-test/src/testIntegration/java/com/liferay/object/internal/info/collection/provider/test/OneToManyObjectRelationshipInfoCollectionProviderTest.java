@@ -110,6 +110,16 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_parentObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_parentObjectDefinition.getObjectDefinitionId(),
+				_childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@After
@@ -124,10 +134,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 	public void testOneToManyObjectRelationshipRelatedInfoCollectionProvider()
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_childObjectDefinition, _parentObjectDefinition,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_parentObjectDefinition.getObjectDefinitionId(),
@@ -138,11 +144,11 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		ObjectEntry childObjectEntry1 = _addChildObjectEntry(
 			_group, _childObjectDefinition, _parentObjectDefinition,
-			parentObjectEntry, objectRelationship);
+			parentObjectEntry, _objectRelationship);
 
 		ObjectEntry childObjectEntry2 = _addChildObjectEntry(
 			_group, _childObjectDefinition, _parentObjectDefinition,
-			parentObjectEntry, objectRelationship);
+			parentObjectEntry, _objectRelationship);
 
 		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -208,21 +214,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			Arrays.asList(objectFields));
 	}
 
-	private ObjectRelationship _addObjectRelationship(
-			ObjectDefinition objectDefinition,
-			ObjectDefinition relatedObjectDefinition, String type)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			relatedObjectDefinition.getObjectDefinitionId(),
-			objectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), type);
-	}
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _childObjectDefinition;
 
 	@DeleteAfterTestRun
@@ -237,10 +228,12 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
+	@DeleteAfterTestRun
+	private ObjectRelationship _objectRelationship;
+
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;
 
 }

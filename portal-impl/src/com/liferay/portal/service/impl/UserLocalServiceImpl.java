@@ -26,6 +26,7 @@ import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -2097,7 +2098,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User fetchGuestUser(long companyId) {
 		User user = _guestUsers.get(companyId);
 
-		if (user == null) {
+		if ((user == null) && !StartupHelperUtil.isUpgrading()) {
 			user = userPersistence.fetchByC_T_First(
 				companyId, UserConstants.TYPE_GUEST, null);
 

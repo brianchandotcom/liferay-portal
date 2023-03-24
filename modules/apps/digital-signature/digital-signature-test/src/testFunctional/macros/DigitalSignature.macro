@@ -144,6 +144,32 @@ definition {
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = ${siteStrategy});
 
+		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
+			value1 = ${digitalSignatureApiUsername});
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID",
+			value1 = ${digitalSignatureApiAccountId});
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI",
+			value1 = ${digitalSignatureAccountBaseUri});
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY",
+			value1 = ${digitalSignatureIntegrationKey});
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY",
+			value1 = ${digitalSignatureRsaPrivateKey});
+
 		SystemSettings.saveConfiguration();
 	}
 

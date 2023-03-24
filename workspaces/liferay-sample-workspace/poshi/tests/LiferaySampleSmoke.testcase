@@ -1,0 +1,31 @@
+definition {
+
+	property workspace.client.extensions.includes = "liferay-sample-workspace";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PagesAdmin.tearDownCP();
+
+			Site.tearDownCP();
+
+			WebContent.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test Smoke {
+		property testray.main.component.name = "Liferay Sample Workspace";
+
+		SignIn.signInTestSetup();
+	}
+
+}

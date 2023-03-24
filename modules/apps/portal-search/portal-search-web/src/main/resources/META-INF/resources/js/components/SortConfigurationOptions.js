@@ -238,10 +238,10 @@ function SortConfigurationOptions({
 			}
 		};
 
-		formElement.addEventListener('submit', handleFormSubmit);
+		formElement?.addEventListener('submit', handleFormSubmit);
 
 		return () => {
-			formElement.removeEventListener('submit', handleFormSubmit);
+			formElement?.removeEventListener('submit', handleFormSubmit);
 		};
 	}, [fieldsInputName, namespace]);
 

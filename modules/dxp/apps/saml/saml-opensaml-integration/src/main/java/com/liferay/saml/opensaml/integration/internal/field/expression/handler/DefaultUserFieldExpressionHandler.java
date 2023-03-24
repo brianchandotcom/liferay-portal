@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,7 +80,23 @@ public class DefaultUserFieldExpressionHandler
 
 				user.setModifiedDate(dateTime.toDate());
 			});
-		userBind.mapString("screenName", User::setScreenName);
+		userBind.mapString(
+			"screenName",
+			(user, screenName) -> {
+				if (_prefsProps.getBoolean(
+						user.getCompanyId(),
+						PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Ignored incoming screen name because auto " +
+								"generation is configured");
+					}
+				}
+				else {
+					user.setScreenName(screenName);
+				}
+			});
 		userBind.mapString("uuid", User::setUuid);
 
 		processorContext.bind(_processingIndex, this::_updateUser);
@@ -235,13 +251,6 @@ public class DefaultUserFieldExpressionHandler
 				newUser.getUserId(), true);
 		}
 
-		if (PrefsPropsUtil.getBoolean(
-				currentUser.getCompanyId(),
-				PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
-
-			newUser.setScreenName(currentUser.getScreenName());
-		}
-
 		if (Objects.equals(
 				currentUser.getFirstName(), newUser.getFirstName()) &&
 			Objects.equals(currentUser.getLastName(), newUser.getLastName()) &&
@@ -297,6 +306,9 @@ public class DefaultUserFieldExpressionHandler
 
 	@Reference
 	private LDAPUserImporter _ldapUserImporter;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	private int _processingIndex;
 

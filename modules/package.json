@@ -34,8 +34,8 @@
 			"apps/*/*",
 			"apps/*/*/*",
 			"dxp/apps/*/*",
-			"dxp/apps/*/*/*",
-			"dxp/apps/osb/*/*/*"
+			"dxp/apps/*/!(osb-faro/osb-faro-web)*/*",
+			"dxp/apps/osb/*/!(osb-faro/osb-faro-web)*/*"
 		]
 	}
 }

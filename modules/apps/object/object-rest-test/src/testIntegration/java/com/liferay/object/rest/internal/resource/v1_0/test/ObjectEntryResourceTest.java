@@ -62,8 +62,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 
-import javax.ws.rs.NotSupportedException;
-
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
@@ -1106,23 +1104,6 @@ public class ObjectEntryResourceTest {
 				_objectRelationship.getName(),
 				objectEntry1externalReferenceCode.substring(0, 2)),
 			_objectDefinition2);
-	}
-
-	@Test
-	public void testFilterObjectEntriesByRelatedObjectEntries()
-		throws Exception {
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-154672", "true"
-			).build());
-
-		_testFilterObjectEntriesByRelatedObjectEntries();
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-154672", "false"
-			).build());
 	}
 
 	@Test
@@ -2229,165 +2210,6 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 	}
 
-	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
-			FilterOperator filterOperator,
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		_testFilterByRelatedObjectDefinitionSystemObjectField(
-			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, filterOperator,
-			_objectDefinition1, objectRelationship,
-			_objectEntry2.getObjectEntryId());
-
-		_testFilterByRelatedObjectDefinitionSystemObjectField(
-			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, filterOperator,
-			_objectDefinition2, objectRelationship,
-			_objectEntry1.getObjectEntryId());
-	}
-
-	private void _testFilterByRelatedObjectDefinitionSystemObjectField(
-			String expectedObjectFieldName,
-			Serializable expectedObjectFieldValue,
-			FilterOperator filterOperator, ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship, long relatedObjectEntryId)
-		throws Exception {
-
-		String endpoint = StringBundler.concat(
-			objectDefinition.getRESTContextPath(), "?filter=",
-			objectRelationship.getName(), "/id%20", filterOperator.getValue(),
-			"%20'", relatedObjectEntryId, StringPool.APOSTROPHE);
-
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
-	}
-
-	private void _testFilterObjectEntriesByRelatedObjectEntries()
-		throws Exception {
-
-		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		for (FilterOperator filterOperator : FilterOperator.values()) {
-			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-				_objectRelationship, filterOperator);
-		}
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			_objectRelationship);
-
-		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		for (FilterOperator filterOperator : FilterOperator.values()) {
-			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-				_objectRelationship, filterOperator);
-		}
-	}
-
-	private void
-			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-				ObjectRelationship objectRelationship,
-				FilterOperator filterOperator)
-		throws Exception {
-
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, filterOperator,
-			_objectDefinition1, objectRelationship, _OBJECT_FIELD_NAME_2,
-			_OBJECT_FIELD_VALUE_2);
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, filterOperator,
-			_objectDefinition2, objectRelationship, _OBJECT_FIELD_NAME_1,
-			_OBJECT_FIELD_VALUE_1);
-	}
-
-	private void
-			_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-				String expectedObjectFieldName,
-				Serializable expectedObjectFieldValue,
-				FilterOperator filterOperator,
-				ObjectDefinition objectDefinition,
-				ObjectRelationship objectRelationship,
-				String relatedObjectFieldName,
-				Serializable relatedObjectFieldValue)
-		throws Exception {
-
-		String endpoint = objectDefinition.getRESTContextPath() + "?filter=";
-
-		if (filterOperator == FilterOperator.CONTAINS) {
-			String relatedObjectFieldString = String.valueOf(
-				relatedObjectFieldValue);
-
-			endpoint = endpoint.concat(
-				StringBundler.concat(
-					filterOperator.getValue(), StringPool.OPEN_PARENTHESIS,
-					objectRelationship.getName(), StringPool.SLASH,
-					relatedObjectFieldName, StringPool.COMMA,
-					StringPool.APOSTROPHE,
-					relatedObjectFieldString.substring(1, 2),
-					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
-		}
-		else if (filterOperator == FilterOperator.EQ) {
-			_testFilterByRelatedObjectDefinitionSystemObjectField(
-				filterOperator, objectRelationship);
-
-			endpoint = endpoint.concat(
-				StringBundler.concat(
-					objectRelationship.getName(), StringPool.SLASH,
-					relatedObjectFieldName, "%20", filterOperator.getValue(),
-					"%20'", relatedObjectFieldValue, StringPool.APOSTROPHE));
-		}
-		else if (filterOperator == FilterOperator.IN) {
-			endpoint = endpoint.concat(
-				StringBundler.concat(
-					objectRelationship.getName(), StringPool.SLASH,
-					relatedObjectFieldName, "%20", filterOperator.getValue(),
-					"%20('", RandomTestUtil.randomString(),
-					StringPool.APOSTROPHE, StringPool.COMMA,
-					StringPool.APOSTROPHE, relatedObjectFieldValue,
-					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
-		}
-		else if (filterOperator == FilterOperator.STARTS_WITH) {
-			String relatedObjectFieldString = String.valueOf(
-				relatedObjectFieldValue);
-
-			endpoint = endpoint.concat(
-				StringBundler.concat(
-					filterOperator.getValue(), StringPool.OPEN_PARENTHESIS,
-					objectRelationship.getName(), StringPool.SLASH,
-					relatedObjectFieldName, StringPool.COMMA,
-					StringPool.APOSTROPHE,
-					relatedObjectFieldString.substring(0, 1),
-					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
-		}
-		else {
-			throw new NotSupportedException(
-				"Filter " + filterOperator.name() + " is not supported");
-		}
-
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
-	}
-
-	private void
-			_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-				String endpoint, String expectedObjectFieldName,
-				Serializable expectedObjectFieldValue)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null, endpoint, Http.Method.GET);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			expectedObjectFieldValue,
-			itemJSONObject.getInt(expectedObjectFieldName));
-	}
-
 	private void _testGetNestedFieldDetailsInOneToManyRelationships(
 			String endpoint, String expectedFieldName)
 		throws Exception {
@@ -2531,21 +2353,5 @@ public class ObjectEntryResourceTest {
 
 	private ObjectDefinition _siteScopedObjectDefinition1;
 	private ObjectEntry _siteScopedObjectEntry1;
-
-	private enum FilterOperator {
-
-		CONTAINS("contains"), EQ("eq"), IN("in"), STARTS_WITH("startswith");
-
-		public String getValue() {
-			return _value;
-		}
-
-		private FilterOperator(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 }

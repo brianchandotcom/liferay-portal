@@ -54,6 +54,7 @@ jest.mock(
 					value: '22222',
 				},
 			],
+			restrictedItemIds: new Set(),
 		},
 	})
 );

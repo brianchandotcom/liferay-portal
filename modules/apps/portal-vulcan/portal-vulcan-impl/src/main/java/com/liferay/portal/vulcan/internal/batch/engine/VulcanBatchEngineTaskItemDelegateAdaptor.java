@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -76,6 +77,18 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 	}
 
 	@Override
+	public Set<String> getAvailableCreateStrategies() {
+		return _vulcanBatchEngineTaskItemDelegate.
+			getAvailableCreateStrategies();
+	}
+
+	@Override
+	public Set<String> getAvailableUpdateStrategies() {
+		return _vulcanBatchEngineTaskItemDelegate.
+			getAvailableUpdateStrategies();
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -99,6 +112,22 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 		}
 
 		return itemClass;
+	}
+
+	@Override
+	public boolean hasCreateStrategy(String createStrategy) {
+		Set<String> createStrategies =
+			_vulcanBatchEngineTaskItemDelegate.getAvailableCreateStrategies();
+
+		return createStrategies.contains(createStrategy);
+	}
+
+	@Override
+	public boolean hasUpdateStrategy(String updateStrategy) {
+		Set<String> updateStrategies =
+			_vulcanBatchEngineTaskItemDelegate.getAvailableUpdateStrategies();
+
+		return updateStrategies.contains(updateStrategy);
 	}
 
 	@Override

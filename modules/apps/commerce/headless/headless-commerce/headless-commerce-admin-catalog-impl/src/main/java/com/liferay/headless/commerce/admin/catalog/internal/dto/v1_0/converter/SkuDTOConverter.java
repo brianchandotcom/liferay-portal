@@ -21,6 +21,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -59,6 +60,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		return new Sku() {
 			{
 				cost = cpInstance.getCost();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPInstance.class.getName(), cpInstance.getCPInstanceId(),
+					cpInstance.getCompanyId(), dtoConverterContext.getLocale());
 				depth = cpInstance.getDepth();
 				discontinued = cpInstance.isDiscontinued();
 				discontinuedDate = cpInstance.getDiscontinuedDate();

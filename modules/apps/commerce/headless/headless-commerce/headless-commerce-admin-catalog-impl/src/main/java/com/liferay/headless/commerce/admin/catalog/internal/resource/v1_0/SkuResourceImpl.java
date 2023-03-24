@@ -25,6 +25,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.SkuEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
@@ -38,7 +39,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -51,10 +52,12 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.io.Serializable;
+
 import java.math.BigDecimal;
 
-import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -250,8 +253,17 @@ public class SkuResourceImpl
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpDefinition.getGroupId());
 
+		Map<String, Serializable> expandoBridgeAttributes =
+			_getExpandoBridgeAttributes(sku);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
 		CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
 			_cpInstanceService, sku, cpDefinition, serviceContext);
+
+		serviceContext.setExpandoBridgeAttributes(null);
 
 		SkuUtil.updateCommercePriceEntries(
 			_commercePriceEntryLocalService, _commercePriceListLocalService,
@@ -264,6 +276,12 @@ public class SkuResourceImpl
 		return _toSku(cpInstance.getCPInstanceId());
 	}
 
+	private Map<String, Serializable> _getExpandoBridgeAttributes(Sku sku) {
+		return CustomFieldsUtil.toMap(
+			CPInstance.class.getName(), contextCompany.getCompanyId(),
+			sku.getCustomFields(), contextAcceptLanguage.getPreferredLocale());
+	}
+
 	private Sku _toSku(Long cpInstanceId) throws Exception {
 		return _skuDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -274,8 +292,16 @@ public class SkuResourceImpl
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpInstance.getGroupId());
 
-		long replacementCProductId = 0;
-		String replacementCPInstanceUuid = null;
+		Map<String, Serializable> expandoBridgeAttributes =
+			_getExpandoBridgeAttributes(sku);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
+		long replacementCProductId = cpInstance.getReplacementCProductId();
+		String replacementCPInstanceUuid =
+			cpInstance.getReplacementCPInstanceUuid();
 
 		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
 			CPInstance discontinuedCPInstance = null;
@@ -307,46 +333,68 @@ public class SkuResourceImpl
 			}
 		}
 
-		Calendar discontinuedCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+		int discontinuedDateMonth = 0;
+		int discontinuedDateDay = 0;
+		int discontinuedDateYear = 0;
 
-		if (sku.getDiscontinuedDate() != null) {
-			discontinuedCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDiscontinuedDate());
+		if (cpInstance.getDiscontinuedDate() != null) {
+			DateConfig discontinuedDateConfig = new DateConfig(
+				DateConfigUtil.convertDateToCalendar(
+					GetterUtil.getDate(
+						sku.getDiscontinuedDate(),
+						DateFormatFactoryUtil.getDate(
+							contextAcceptLanguage.getPreferredLocale(),
+							contextUser.getTimeZone()),
+						cpInstance.getDiscontinuedDate())));
+
+			discontinuedDateMonth = discontinuedDateConfig.getMonth();
+			discontinuedDateDay = discontinuedDateConfig.getDay();
+			discontinuedDateYear = discontinuedDateConfig.getYear();
 		}
 
-		DateConfig discontinuedDateConfig = new DateConfig(
-			discontinuedCalendar);
+		DateConfig displayDateConfig = new DateConfig(
+			DateConfigUtil.convertDateToCalendar(
+				GetterUtil.getDate(
+					sku.getDisplayDate(),
+					DateFormatFactoryUtil.getDate(
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUser.getTimeZone()),
+					cpInstance.getDisplayDate())));
 
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
 
-		if (sku.getDisplayDate() != null) {
-			displayCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDisplayDate());
+		if (cpInstance.getExpirationDate() != null) {
+			DateConfig expirationDateConfig = new DateConfig(
+				DateConfigUtil.convertDateToCalendar(
+					GetterUtil.getDate(
+						sku.getExpirationDate(),
+						DateFormatFactoryUtil.getDate(
+							contextAcceptLanguage.getPreferredLocale(),
+							contextUser.getTimeZone()),
+						cpInstance.getExpirationDate())));
+
+			expirationDateMonth = expirationDateConfig.getMonth();
+			expirationDateDay = expirationDateConfig.getDay();
+			expirationDateYear = expirationDateConfig.getYear();
+			expirationDateHour = expirationDateConfig.getHour();
+			expirationDateMinute = expirationDateConfig.getMinute();
 		}
-
-		DateConfig displayDateConfig = new DateConfig(displayCalendar);
-
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		expirationCalendar.add(Calendar.MONTH, 1);
-
-		if (sku.getExpirationDate() != null) {
-			expirationCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getExpirationDate());
-		}
-
-		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
 		cpInstance = _cpInstanceService.updateCPInstance(
 			cpInstance.getExternalReferenceCode(), cpInstance.getCPInstanceId(),
-			sku.getSku(), sku.getGtin(), sku.getManufacturerPartNumber(),
+			GetterUtil.get(sku.getSku(), cpInstance.getSku()),
+			GetterUtil.get(sku.getGtin(), cpInstance.getGtin()),
+			GetterUtil.get(
+				sku.getManufacturerPartNumber(),
+				cpInstance.getManufacturerPartNumber()),
 			GetterUtil.get(sku.getPurchasable(), cpInstance.isPurchasable()),
 			GetterUtil.get(sku.getWidth(), cpInstance.getWidth()),
 			GetterUtil.get(sku.getHeight(), cpInstance.getHeight()),
-			GetterUtil.get(sku.getDepth(), cpInstance.getWeight()),
+			GetterUtil.get(sku.getDepth(), cpInstance.getDepth()),
 			GetterUtil.get(sku.getWeight(), cpInstance.getWeight()),
 			(BigDecimal)GetterUtil.get(sku.getPrice(), cpInstance.getPrice()),
 			(BigDecimal)GetterUtil.get(
@@ -355,16 +403,20 @@ public class SkuResourceImpl
 			GetterUtil.get(sku.getPublished(), cpInstance.isPublished()),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
-			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
-			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
-			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
+			displayDateConfig.getMinute(), expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute,
 			GetterUtil.get(
 				sku.getNeverExpire(),
 				(cpInstance.getExpirationDate() == null) ? true : false),
-			sku.getUnspsc(), sku.getDiscontinued(), replacementCPInstanceUuid,
-			replacementCProductId, discontinuedDateConfig.getMonth(),
-			discontinuedDateConfig.getDay(), discontinuedDateConfig.getYear(),
+			GetterUtil.getString(sku.getUnspsc(), cpInstance.getUnspsc()),
+			GetterUtil.getBoolean(
+				sku.getDiscontinued(), cpInstance.isDiscontinued()),
+			replacementCPInstanceUuid, replacementCProductId,
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
 			serviceContext);
+
+		serviceContext.setExpandoBridgeAttributes(null);
 
 		SkuUtil.updateCommercePriceEntries(
 			_commercePriceEntryLocalService, _commercePriceListLocalService,

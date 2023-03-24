@@ -17,4 +17,5 @@ export enum MDFClaimColumnKey {
 	REQUEST_ID = 'REQUEST_ID',
 	STATUS = 'STATUS',
 	TYPE = 'TYPE',
+	CLAIM_ID = 'ID',
 }

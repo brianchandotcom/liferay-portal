@@ -20,8 +20,7 @@ import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBContext;
-import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -94,13 +93,8 @@ public class InitialUpgradeStep implements UpgradeStep {
 	public void upgrade(DBProcessContext dbProcessContext)
 		throws UpgradeException {
 
-		DBContext dbContext = dbProcessContext.getDBContext();
-
-		DBManager dbManager = dbContext.getDBManager();
-
-		_db = dbManager.getDB(
-			dbManager.getDBType(DialectDetector.getDialect(_dataSource)),
-			_dataSource);
+		_db = DBManagerUtil.getDB(
+			DialectDetector.getDialect(_dataSource), _dataSource);
 
 		try {
 			_db.process(

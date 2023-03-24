@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -211,11 +210,6 @@ public class UpgradeExecutor {
 
 				upgradeStep.upgrade(
 					new DBProcessContext() {
-
-						@Override
-						public DBContext getDBContext() {
-							return new DBContext();
-						}
 
 						@Override
 						public OutputStream getOutputStream() {

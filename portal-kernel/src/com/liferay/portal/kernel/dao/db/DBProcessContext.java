@@ -21,8 +21,6 @@ import java.io.OutputStream;
  */
 public interface DBProcessContext {
 
-	public DBContext getDBContext();
-
 	public OutputStream getOutputStream();
 
 }

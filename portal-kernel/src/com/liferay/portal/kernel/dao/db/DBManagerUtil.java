@@ -41,10 +41,6 @@ public class DBManagerUtil {
 		return dbManager.getDB(dbManager.getDBType(dialect), dataSource);
 	}
 
-	public static DBManager getDBManager() {
-		return _dbManager;
-	}
-
 	public static DBType getDBType(Object dialect) {
 		DBManager dbManager = _dbManager;
 

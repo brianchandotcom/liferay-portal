@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.exception.OldServiceComponentException;
@@ -280,11 +279,6 @@ public class ServiceComponentLocalServiceImpl
 
 				upgradeStep.upgrade(
 					new DBProcessContext() {
-
-						@Override
-						public DBContext getDBContext() {
-							return new DBContext();
-						}
 
 						@Override
 						public OutputStream getOutputStream() {

@@ -18,7 +18,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,11 +75,6 @@ public class UpgradeStepRegistratorTracker {
 
 			if (releaseUpgradeSteps != null) {
 				DBProcessContext dbProcessContext = new DBProcessContext() {
-
-					@Override
-					public DBContext getDBContext() {
-						return new DBContext();
-					}
 
 					@Override
 					public OutputStream getOutputStream() {

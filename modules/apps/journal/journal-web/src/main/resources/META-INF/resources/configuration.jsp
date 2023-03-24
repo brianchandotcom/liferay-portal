@@ -38,13 +38,7 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
-	String tabs1Names = "email-from,web-content-added-email";
-
-	if (FeatureFlagManagerUtil.isEnabled("LPS-179142")) {
-		tabs1Names = tabs1Names + ",web-content-expired-email";
-	}
-
-	tabs1Names = tabs1Names + ",web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
+	String tabs1Names = "email-from,web-content-added-email,web-content-expired-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
 
 	if (JournalUtil.hasWorkflowDefinitionsLinks(themeDisplay)) {
 		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email");

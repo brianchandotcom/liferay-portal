@@ -118,7 +118,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -6738,8 +6737,7 @@ public class JournalArticleLocalServiceImpl
 		if (action.equals("add") &&
 			journalGroupServiceConfiguration.emailArticleAddedEnabled()) {
 		}
-		else if (FeatureFlagManagerUtil.isEnabled("LPS-179142") &&
-				 action.equals("expired") &&
+		else if (action.equals("expired") &&
 				 journalGroupServiceConfiguration.
 					 emailArticleExpiredEnabled()) {
 		}
@@ -7037,9 +7035,7 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_USER_NAME$]", article.getUserName());
 		subscriptionSender.setEntryTitle(article.getTitle(user.getLocale()));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-179142") &&
-			emailType.equals("review") && (serviceContext.getUserId() == 0)) {
-
+		if (emailType.equals("review") && (serviceContext.getUserId() == 0)) {
 			subscriptionSender.setSendToCurrentUser(true);
 		}
 

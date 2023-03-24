@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.notifications.test.util.BaseUserNotificationTestCase;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -63,46 +62,36 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	public void testUserNotificationWhenJournalArticleExpiredAutomatically()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-179142", Boolean.TRUE.toString())) {
+		JournalArticle expiredArticle = (JournalArticle)addBaseModel();
 
-			JournalArticle expiredArticle = (JournalArticle)addBaseModel();
+		expiredArticle.setExpirationDate(
+			new Date(System.currentTimeMillis() - (Time.HOUR * 2)));
 
-			expiredArticle.setExpirationDate(
-				new Date(System.currentTimeMillis() - (Time.HOUR * 2)));
+		expiredArticle = _journalArticleLocalService.updateJournalArticle(
+			expiredArticle);
 
-			expiredArticle = _journalArticleLocalService.updateJournalArticle(
-				expiredArticle);
+		subscribeToContainer();
 
-			subscribeToContainer();
+		_journalArticleLocalService.checkArticles();
 
-			_journalArticleLocalService.checkArticles();
-
-			_assertExpiredJournalArticleNotifications(expiredArticle);
-		}
+		_assertExpiredJournalArticleNotifications(expiredArticle);
 	}
 
 	@Test
 	public void testUserNotificationWhenJournalArticleExpiredManually()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-179142", Boolean.TRUE.toString())) {
+		JournalArticle expiredArticle = (JournalArticle)addBaseModel();
 
-			JournalArticle expiredArticle = (JournalArticle)addBaseModel();
+		subscribeToContainer();
 
-			subscribeToContainer();
+		expiredArticle = JournalArticleLocalServiceUtil.expireArticle(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			expiredArticle.getArticleId(), expiredArticle.getVersion(),
+			expiredArticle.getUrlTitle(),
+			ServiceContextTestUtil.getServiceContext());
 
-			expiredArticle = JournalArticleLocalServiceUtil.expireArticle(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				expiredArticle.getArticleId(), expiredArticle.getVersion(),
-				expiredArticle.getUrlTitle(),
-				ServiceContextTestUtil.getServiceContext());
-
-			_assertExpiredJournalArticleNotifications(expiredArticle);
-		}
+		_assertExpiredJournalArticleNotifications(expiredArticle);
 	}
 
 	@Override

@@ -19,36 +19,36 @@ definition {
 
 			User.firstLoginPG();
 
-			// Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
-		// task ("create all objects: projects, teams, components, requirements") {
-		// 	JSONTestray.addProject(
-		// 		projectDescription = "Project Description 1",
-		// 		projectName = ${projectName});
+		task ("create all objects: projects, teams, components, requirements") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
 
-		// 	JSONTestray.addTeam(
-		// 		projectName = ${projectName},
-		// 		teamName = ${teamName});
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 
-		// 	JSONTestray.addComponent(
-		// 		componentName = ${componentName},
-		// 		projectName = ${projectName},
-		// 		teamName = ${teamName});
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
 
-        //     JSONTestray.addRequirement(
-		// 		componentName = ${componentName},
-		// 		linkTitle = "The front page of the internet",
-		// 		projectName = ${projectName},
-		// 		requirementName = "Requirement 1");
+            JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = "Requirement 1");
 
-        //       JSONTestray.addRequirement(
-		// 		componentName = ${componentName},
-		// 		linkTitle = "Page of the internet 2",
-        //         linkURL = "https://reddit.com",
-		// 		projectName = ${projectName},
-		// 		requirementName = "Requirement 2");
-		// }
+              JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "Page of the internet 2",
+                linkURL = "https://reddit.com",
+				projectName = ${projectName},
+				requirementName = "Requirement 2");
+		}
 
 		task ("Go to the Requirements page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -63,21 +63,21 @@ definition {
 		}
 	}
 
-	// tearDown {
-	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	// 	JSONTestrayAPI.deleteObjectViaAPI(
-	// 		object = "teams",
-	// 		objectName = ${teamName});
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "teams",
+			objectName = ${teamName});
 
-	// 	JSONTestrayAPI.deleteProject(projectName = ${projectName});
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-	// 	Testray.testrayApisTearDown();
+		Testray.testrayApisTearDown();
 
-	// 	if (${testPortalInstance} == "true") {
-	// 		PortalInstances.tearDownCP();
-	// 	}
-	// }
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by link"
 	@priority = 5
@@ -122,6 +122,25 @@ definition {
 			Testray.assertItemName(key_name = "Requirement 1");
 
 			Testray.assertItemNotPresent(key_name = "Requirement 2");
+		}
+	}
+
+	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
+	@priority = 4
+	test AdminCanFilterForNonexistantRequirements {
+		task ("When the user filters a requirement by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Summary",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Requirement 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
 		}
 	}
 

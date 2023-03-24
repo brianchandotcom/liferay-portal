@@ -9,10 +9,16 @@
  * distribution rights of the Software.
  */
 
-import Role from './role';
+import Role from '../interfaces/role';
 
-export default interface LiferayAccountBrief {
-	id?: number;
-	name?: string;
-	roleBriefs?: Role[];
+export enum RoleTypes {
+	PARTNER_MANAGER = 'Partner Manager',
+}
+
+export function isPartnerManager(roles: Role[]) {
+	const allowedPartnerRole = [RoleTypes.PARTNER_MANAGER];
+
+	return roles.some((role) =>
+		allowedPartnerRole.includes(role.name as RoleTypes)
+	);
 }

@@ -126,7 +126,7 @@ const People: React.FC = () => {
 				/>
 
 				<ClayLabel className="ml-4" displayType="info">
-					{Liferay.Language.get('recomended')}
+					{Liferay.Language.get('recommended')}
 				</ClayLabel>
 			</div>
 

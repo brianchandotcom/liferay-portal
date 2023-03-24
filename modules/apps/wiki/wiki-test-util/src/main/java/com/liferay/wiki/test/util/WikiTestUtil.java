@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -400,9 +402,14 @@ public class WikiTestUtil {
 			long userId, long nodeId, String title, Class<?> clazz)
 		throws Exception {
 
-		String fileName = RandomTestUtil.randomString() + ".docx";
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.xmlbeans.impl.common.SAXHelper",
+				LoggerTestUtil.WARN)) {
 
-		return addWikiAttachment(userId, nodeId, title, fileName, clazz);
+			String fileName = RandomTestUtil.randomString() + ".docx";
+
+			return addWikiAttachment(userId, nodeId, title, fileName, clazz);
+		}
 	}
 
 	public static File addWikiAttachment(

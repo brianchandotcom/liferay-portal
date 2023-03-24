@@ -80,10 +80,10 @@ if (Validator.isNull(backURL)) {
 				type="submit"
 			/>
 
-			<clay:link
+			<clay:button
 				displayType="secondary"
-				href="<%= HtmlUtil.escape(backURL) %>"
 				label='<%= LanguageUtil.get(request, "cancel") %>'
+				onclick='<%= "location.href=\'" + HtmlUtil.escape(backURL) + "\'" %>'
 				type="button"
 			/>
 		</clay:sheet-footer>

@@ -243,7 +243,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 						<aui:button type="submit" />
 
 						<c:if test="<%= Validator.isNotNull(backURL) %>">
-							<aui:button href="<%= backURL %>" name="cancelButton" type="cancel" />
+							<aui:button name="cancelButton" onClick='<%= "location.href=\'" + HtmlUtil.escape(backURL) + "\'" %>' type="cancel" />
 						</c:if>
 					</c:if>
 				</clay:sheet-footer>

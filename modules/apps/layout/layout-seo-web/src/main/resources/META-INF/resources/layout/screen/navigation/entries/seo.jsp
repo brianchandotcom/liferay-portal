@@ -240,10 +240,10 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 				type="submit"
 			/>
 
-			<clay:link
+			<clay:button
 				displayType="secondary"
-				href="<%= backURL %>"
 				label='<%= LanguageUtil.get(request, "cancel") %>'
+				onclick='<%= "location.href=\'" + HtmlUtil.escape(backURL) + "\'" %>'
 				type="button"
 			/>
 		</clay:sheet-footer>

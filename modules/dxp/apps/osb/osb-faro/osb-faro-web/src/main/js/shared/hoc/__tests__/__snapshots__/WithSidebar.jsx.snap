@@ -256,49 +256,6 @@ exports[`withSidebar should render with the sidebar 1`] = `
           <h5
             class="section-title"
           >
-            Commerce
-          </h5>
-          <ul
-            class="nav-list"
-          >
-            <li
-              class="sidebar-item-root"
-            >
-              <a
-                class="link btn btn-unstyled"
-                href="/workspace/23/1/commerce"
-              >
-                <span
-                  class="link-content-wrapper"
-                >
-                  <span
-                    class="icon-wrapper"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-ac-commerce icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#ac-commerce"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    class="item-label"
-                  >
-                    Commerce
-                  </span>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div
-          class="section"
-        >
-          <h5
-            class="section-title"
-          >
             Optimize
           </h5>
           <ul

@@ -38,7 +38,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Jiaxu Wei
  */
-public class ActionExecutorManagerTest {
+public class ActionExecutorManagerImplTest {
 
 	@ClassRule
 	@Rule

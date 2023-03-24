@@ -91,10 +91,13 @@ public class UserGroupIndexerTest {
 
 		long companyId = role.getCompanyId();
 
+		groupLocalService.addRoleGroup(role.getRoleId(), _group.getGroupId());
+
 		int originalUserGroupCount = userGroupLocalService.searchCount(
 			companyId, null, new LinkedHashMap<String, Object>());
 
 		String baseName = RandomTestUtil.randomString();
+
 		int newUserGroupCount = 2;
 
 		List<UserGroup> userGroups = Stream.generate(
@@ -104,8 +107,6 @@ public class UserGroupIndexerTest {
 		).collect(
 			Collectors.toList()
 		);
-
-		groupLocalService.addRoleGroup(role.getRoleId(), _group.getGroupId());
 
 		SearchRequestBuilder searchRequestBuilder1 = _getSearchRequestBuilder(
 			companyId);

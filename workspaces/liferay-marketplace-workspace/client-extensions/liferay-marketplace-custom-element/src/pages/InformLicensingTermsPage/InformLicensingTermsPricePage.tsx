@@ -5,7 +5,7 @@ import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 
 import './InformLicensingTermsPage.scss';
-import {createAppLicensePrice} from '../../utils/api';
+import {getSKUById, patchSKUById} from '../../utils/api';
 
 interface InformLicensingTermsPricePageProps {
 	onClickBack: () => void;
@@ -16,7 +16,7 @@ export function InformLicensingTermsPricePage({
 	onClickBack,
 	onClickContinue,
 }: InformLicensingTermsPricePageProps) {
-	const [{appLicensePrice, appProductId}, _] = useAppContext();
+	const [{appLicensePrice, skuId}, _] = useAppContext();
 
 	return (
 		<div className="informing-licensing-terms-page-container">
@@ -38,16 +38,18 @@ export function InformLicensingTermsPricePage({
 				disableContinueButton={!appLicensePrice}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
-					createAppLicensePrice({
-						appProductId,
-						body: {
-							neverExpire: true,
+					const submitLicensePrice = async () => {
+						const skuJSON = await getSKUById(skuId);
+
+						const skuBody = {
+							...skuJSON,
 							price: parseFloat(appLicensePrice),
-							published: true,
-							purchasable: true,
-							sku: 'default',
-						},
-					});
+						};
+
+						await patchSKUById(skuId, skuBody);
+					};
+
+					submitLicensePrice();
 
 					onClickContinue();
 				}}

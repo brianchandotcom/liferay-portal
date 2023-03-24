@@ -130,6 +130,29 @@ export function InformLicensingTermsPage({
 
 							await patchSKUById(skuId, skuBody);
 						}
+						else {
+							if (appLicense === 'non-perpetual') {
+								createProductSubscriptionConfiguration({
+									body: {
+										length: 1,
+										numberOfLength: 1,
+										subscriptionType: 'yearly',
+									},
+									externalReferenceCode: appERC,
+								});
+							}
+
+							const skuJSON = await getSKUById(skuId);
+
+							const skuBody = {
+								...skuJSON,
+								neverExpire: appLicense === 'perpetual',
+								price: 0,
+								purchasable: true,
+							};
+
+							await patchSKUById(skuId, skuBody);
+						}
 
 						if (dayTrial === 'yes' && priceModel !== 'free') {
 							createAppLicensePrice({
@@ -141,22 +164,6 @@ export function InformLicensingTermsPage({
 									purchasable: true,
 									sku: 'trial',
 								},
-							});
-						}
-
-						if (appLicense === 'non-perpetual') {
-							createProductSubscriptionConfiguration({
-								body: {
-									length: 1,
-									numberOfLength: 0,
-									subscriptionType: 'yearly',
-									subscriptionTypeSettings: {
-										month: '0',
-										monthDay: '1',
-										yearlyMode: '0',
-									},
-								},
-								externalReferenceCode: appERC,
 							});
 						}
 					};

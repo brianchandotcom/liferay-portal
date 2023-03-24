@@ -25,9 +25,9 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
 import {Status} from '../../../common/utils/constants/status';
-import {isLiferayManager} from '../../../common/utils/isLiferayManager';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
+import updateStatus from './updateStatus';
 
 export default async function submitForm(
 	values: MDFRequest,
@@ -38,18 +38,7 @@ export default async function submitForm(
 ) {
 	formikHelpers.setSubmitting(true);
 
-	if (!values.id) {
-		values.mdfRequestStatus = currentRequestStatus;
-	}
-
-	if (
-		roles &&
-		!isLiferayManager(roles) &&
-		values.totalMDFRequestAmount >= 15000 &&
-		values.mdfRequestStatus !== Status.DRAFT
-	) {
-		values.mdfRequestStatus = Status.MARKETING_DIRECTOR_REVIEW;
-	}
+	values = updateStatus(values, currentRequestStatus, roles);
 
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 

@@ -49,7 +49,7 @@ export function AccountRestrictionContainer({
 	useEffect(() => {
 		const accountRelationshipFieldsResponse = objectFields.filter(
 			(field) => {
-				if (values.storageType !== 'default') {
+				if (values.storageType && values.storageType !== 'default') {
 					return (
 						field.businessType === 'Text' ||
 						field.businessType === 'Integer' ||

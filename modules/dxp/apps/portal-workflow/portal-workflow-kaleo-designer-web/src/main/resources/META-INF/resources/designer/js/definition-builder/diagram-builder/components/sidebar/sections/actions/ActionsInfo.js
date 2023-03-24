@@ -149,6 +149,7 @@ const ActionsInfo = ({
 					...updatedSection[index],
 					...item,
 				};
+
 				updateSelectedItem(updatedSection);
 
 				return updatedSection;

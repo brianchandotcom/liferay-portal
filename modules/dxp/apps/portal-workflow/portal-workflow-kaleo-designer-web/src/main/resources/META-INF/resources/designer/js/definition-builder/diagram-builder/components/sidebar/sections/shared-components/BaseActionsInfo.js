@@ -142,7 +142,6 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
-							status,
 						})
 					}
 				>
@@ -184,6 +183,7 @@ const BaseActionsInfo = ({
 								priority,
 								script,
 								scriptLanguage,
+								status: undefined,
 							})
 						}
 						onChange={({target}) => {

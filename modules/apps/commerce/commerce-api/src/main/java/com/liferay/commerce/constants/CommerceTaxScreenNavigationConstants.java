@@ -22,6 +22,8 @@ public class CommerceTaxScreenNavigationConstants {
 	public static final String CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL =
 		"detail";
 
+	public static final String CATEGORY_KEY_COMMERCE_TAX_RATES = "tax-rates";
+
 	public static final String CATEGORY_KEY_COMMERCE_TAX_RATING_SETTINGS =
 		"tax-rate-settings";
 

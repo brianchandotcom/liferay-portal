@@ -35,13 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceTaxMethodFixedRatesScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
-	public static final String CATEGORY_KEY = "tax-rates";
-
-	public static final String ENTRY_KEY = "tax-rates";
-
 	@Override
 	public String getCategoryKey() {
-		return CATEGORY_KEY;
+		return CommerceTaxScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_TAX_RATES;
 	}
 
 	@Override
@@ -49,7 +46,7 @@ public class CommerceTaxMethodFixedRatesScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return language.get(resourceBundle, ENTRY_KEY);
+		return language.get(resourceBundle, getCategoryKey());
 	}
 
 	@Override

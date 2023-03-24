@@ -1,1 +1,161 @@
-<div>Loading...</div>
+[#setting locale=themeDisplay.getLanguageId() /]
+[#setting date_format="yyyy-MM-dd" /]
+
+[#assign claim_status_style = { "claimed": "ml-3 label label-tonal-info ml-2", "unclaimed": "ml-3 label label-tonal-warning ml-2" } /]
+[#assign request_status_style = { "active": "label label-tonal-info ml-2", "submitted": "label label-tonal-warning ml-2", "approved": "label label-tonal-success ml-2", "expired": "label label-tonal-danger ml-2" } /]
+
+[#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
+
+[#function days_difference_from_now date]
+	[#assign now = .now /]
+
+	[#return (date?long - now?long) / (1000 * 60 * 60 * 24) /]
+[/#function]
+
+[#function get_event_fields activity]
+    [#return [{ "title": "Activity Description", "value": activity.description}, { "title": "Venue Name", "value": activity.venueName }, { "title": "Liferay Branding", "value": activity.liferayBranding }, { "title": "Liferay Participation / Requirements", "value": activity.liferayParticipationRequirements }, { "title": "Source and Size of Invitee List", "value": activity.sourceAndSizeOfInviteeList }, { "title": "Activity Promotion", "value": activity.activityPromotion }] /]
+[/#function]
+
+[#function get_digital_marketing_fields activity]
+    [#return [{ "title": "Overall message, content or CTA", "value": activity.overallMessageContentCTA}, { "title": "Specific sites to be used", "value": activity.specificSites }, { "title": "Keywords for PPC campaigns", "value": activity.keywordsForPPCCampaigns }, { "title": "Ad (any size/type)", "value": activity.ad }, { "title": "Do you require any assets from Liferay?", "value": activity.assetsLiferayRequired?string("Yes", "No") }, { "title": "How will the Liferay brand be used in the campaign?", "value": activity.howLiferayBrandUsed }] /]
+[/#function]
+
+[#function get_content_marketing_fields activity]
+    [#return [{ "title": "Will this content be gated and have a landing page?", "value": activity.gatedLandingPage?string("Yes", "No")}, { "title": "Primary theme or message of your content", "value": activity.primaryThemeOrMessage }, { "title": "Goal of Content", "value": activity.goalOfContent }, { "title": "Are you hiring an outside writer or agency to prepare the content?", "value": activity.hiringOutsideWriterOrAgency?string("Yes", "No") }] /]
+[/#function]
+
+[#function get_miscellaneous_marketing_fields activity]
+    [#return [{ "title": "Marketing activity", "value": activity.marketingActivity}] /]
+[/#function]
+
+[#function get_fields_by_activity activity]
+  [#assign fields = { "prmtact001": get_event_fields(activity), "prmtact002": get_digital_marketing_fields(activity), "prmtact003": get_content_marketing_fields(activity), "prmtact004": get_miscellaneous_marketing_fields(activity) }]
+
+  [#return fields[activity.typeActivity.key] /]
+[/#function]
+
+[#function get_activity_fields activity]
+  [#return [{ "title": "Activity name", "value": activity.name }, { "title": "Type of Activity", "value": activity.typeActivity.name }, { "title": "Tactic", "value": activity.tactic.name }] + get_fields_by_activity(activity) + [{ "title": "Start Date", "value": activity.startDate?date?string.short }, { "title": "End Date", "value": activity.endDate?date?string.short }] /]
+[/#function]
+
+[#macro table title items]
+  <div class="table-responsive">
+    <table class="table table-autofit show-quick-actions-on-hover table-hover table-list bg-brand-primary-lighten-6 border-0 table-striped">
+      <thead>
+        <tr>
+          <th class="border-neutral-2 border-top rounded-0 w-50 table-cell-expand">
+            <p class="mt-4 text-neutral-10">${title}</p>
+          </th>
+          <td class="border-neutral-2 border-top rounded-0 w-50"></td>
+        </tr>
+      </thead>
+      <tbody>
+        [#list items as item]
+          <tr>
+            <td class="border-0 w-50">
+              <p class="text-neutral-10">
+                ${item.title}
+              </p>
+            </td>
+            <td class="border-0 w-50 text-neutral-10">
+              <p class="text-neutral-10">
+                ${item.value}
+              </p>
+            </td>
+          </tr>
+        [/#list]
+      </tbody>
+    </table>
+  </div>
+[/#macro]
+
+[#macro leads_table activity]
+	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": activity.leadGenerated?string("Yes", "No") }, { "title": "Target # of Leads", "value": activity.targetOfLeads }, { "title": "Lead Follow Up strategy", "value": activity.leadFollowUpStrategies }, { "title": "Details on Lead Follow Up", "value": activity.detailsLeadFollowUp }] /]
+
+	[@table title="Lead List" items=items /]
+[/#macro]
+
+[#macro campaign_table activity]
+  [@table title="Campaign Activity" items=get_activity_fields(activity) /]
+[/#macro]
+
+[#macro budgets_table budgets currency_key="USD"]
+	[#assign items = budgets?map(budget -> {"title": budget.expense.name, "value": budget.cost?string["¤,##0.00;; currencyCode=${currency_key}"]}) /]
+
+	[@table title="Budget Breakdown" items=items /]
+[/#macro]
+
+[#macro range_date end_date start_date]
+	<div class="mb-1 text-neutral-7 text-paragraph-sm">
+		${start_date?date?string("MMM dd")} - ${end_date?date?string.medium}
+	</div>
+[/#macro]
+
+[#macro claim_status activity_claims]
+	[#assign claim_status = activity_claims?filter(activity_claim -> activity_claim.r_mdfClmToMDFClmActs_c_mdfClaim.mdfClaimStatus.key != "draft")?has_content?string("claimed", "unclaimed") /]
+
+	<div class="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
+		Claim Status: <span class="${claim_status_style[claim_status]}">${claim_status?capitalize}</span>
+	</div>
+[/#macro]
+
+[#macro request_status activity_status end_date]
+	[#assign request_date = days_difference_from_now(end_date) /]
+
+	<div class="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
+		<p class="mb-0">
+			Request Status: 
+			<span class="${request_status_style[activity_status.key]}">
+				${activity_status.name}
+			</span> 
+			<span class="font-weight-light ml-sm-2">
+				${(request_date > 0)?then(request_date?ceiling, 0)} days left to claim
+			</span>
+		</p>
+	</div>
+[/#macro]
+
+[#if mdf_request_id?has_content]
+	[#assign activities = restClient.get("/c/mdfrequests/${mdf_request_id}/mdfReqToActs?nestedFields=actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId&nestedFieldsDepth=3").items /]
+
+	[#list activities as activity]
+		<div class="panel border-brand-primary-lighten-4" role="tablist">
+			<button
+				aria-controls="mdfRequestActivitiesPanel"
+				aria-expanded="false"
+				class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
+				data-target="#mdfRequestActivitiesPanel"
+				data-toggle="liferay-collapse"
+				role="tab"
+			>
+				<div class="py-2 text-dark">
+					[@range_date end_date=activity.endDate start_date=activity.startDate /]
+
+					<h4 class="mb-1">${activity.name} (${activity.id})</h4>
+
+					[@claim_status activity_claims=activity.actToMDFClmActs /]
+					
+					[@request_status activity_status=activity.activityStatus end_date=activity.endDate?date /]
+				</div>
+			</button>
+			<div
+				class="panel-collapse collapse"
+				id="mdfRequestActivitiesPanel"
+				role="tabpanel"
+			>
+				<div class="panel-body">
+					[@campaign_table activity=activity /]
+
+					[@budgets_table budgets=activity.actToBgts currency_key=(activity.currency.key)! /]
+
+					[@leads_table activity=activity /]
+				</div>
+			</div>
+		</div>
+	[/#list]
+[#else]
+	<div class="alert alert-info">
+		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>
+		<p class="mb-0">It's important to note that this will only display the attributes of a display page when you view the published display page not when you are editing it.</p>
+	</div>
+[/#if]

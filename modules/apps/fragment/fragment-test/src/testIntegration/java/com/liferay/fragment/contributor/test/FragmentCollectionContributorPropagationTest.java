@@ -153,6 +153,8 @@ public class FragmentCollectionContributorPropagationTest {
 						MapUtil.singletonDictionary(
 							"fragment.collection.key",
 							fragmentCollectionContributorKey)));
+
+				_assertCompanyContext(TestPropsValues.getCompanyId());
 			}
 			finally {
 				ServiceContextThreadLocal.pushServiceContext(

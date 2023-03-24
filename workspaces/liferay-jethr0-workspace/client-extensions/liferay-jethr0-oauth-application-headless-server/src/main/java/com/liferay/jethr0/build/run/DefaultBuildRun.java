@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.jethr0.builds.parameter;
+package com.liferay.jethr0.build.run;
 
-import com.liferay.jethr0.builds.Build;
+import com.liferay.jethr0.build.Build;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class DefaultBuildParameter extends BaseBuildParameter {
+public class DefaultBuildRun extends BaseBuildRun {
 
-	protected DefaultBuildParameter(Build build, JSONObject jsonObject) {
+	protected DefaultBuildRun(Build build, JSONObject jsonObject) {
 		super(build, jsonObject);
 	}
 

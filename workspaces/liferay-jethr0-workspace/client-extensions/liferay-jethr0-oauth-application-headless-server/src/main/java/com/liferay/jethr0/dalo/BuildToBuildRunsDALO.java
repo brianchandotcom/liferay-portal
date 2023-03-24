@@ -14,9 +14,9 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.builds.Build;
-import com.liferay.jethr0.builds.run.BuildRun;
-import com.liferay.jethr0.builds.run.BuildRunFactory;
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.build.run.BuildRunFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;

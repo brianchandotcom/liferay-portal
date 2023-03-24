@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.jethr0.builds.run;
+package com.liferay.jethr0.build.run;
 
-import com.liferay.jethr0.builds.Build;
+import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;

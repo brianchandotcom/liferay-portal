@@ -14,7 +14,7 @@
 
 package com.liferay.jethr0.jenkins.master;
 
-import com.liferay.jethr0.builds.Build;
+import com.liferay.jethr0.build.Build;
 
 import org.json.JSONObject;
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.jethr0.builds.parameter;
+package com.liferay.jethr0.build.run;
 
-import com.liferay.jethr0.builds.Build;
+import com.liferay.jethr0.build.Build;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,39 +25,37 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BuildParameterFactory {
+public class BuildRunFactory {
 
-	public static BuildParameter newBuildParameter(
-		Build build, JSONObject jsonObject) {
-
+	public static BuildRun newBuildRun(Build build, JSONObject jsonObject) {
 		long id = jsonObject.getLong("id");
 
-		BuildParameter buildParameter = null;
+		BuildRun buildRun = null;
 
-		synchronized (_buildParameters) {
-			if (_buildParameters.containsKey(id)) {
-				return _buildParameters.get(id);
+		synchronized (_buildRuns) {
+			if (_buildRuns.containsKey(id)) {
+				return _buildRuns.get(id);
 			}
 
-			buildParameter = new DefaultBuildParameter(build, jsonObject);
+			buildRun = new DefaultBuildRun(build, jsonObject);
 
-			_buildParameters.put(buildParameter.getId(), buildParameter);
+			_buildRuns.put(buildRun.getId(), buildRun);
 		}
 
-		return buildParameter;
+		return buildRun;
 	}
 
-	public static void removeBuildParameter(BuildParameter buildParameter) {
-		if (buildParameter == null) {
+	public static void removeBuildRun(BuildRun buildRun) {
+		if (buildRun == null) {
 			return;
 		}
 
-		synchronized (_buildParameters) {
-			_buildParameters.remove(buildParameter.getId());
+		synchronized (_buildRuns) {
+			_buildRuns.remove(buildRun.getId());
 		}
 	}
 
-	private static final Map<Long, BuildParameter> _buildParameters =
+	private static final Map<Long, BuildRun> _buildRuns =
 		Collections.synchronizedMap(new HashMap<>());
 
 }

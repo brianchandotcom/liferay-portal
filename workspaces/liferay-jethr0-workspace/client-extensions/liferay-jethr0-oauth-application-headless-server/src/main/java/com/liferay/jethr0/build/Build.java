@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.jethr0.builds;
+package com.liferay.jethr0.build;
 
-import com.liferay.jethr0.builds.parameter.BuildParameter;
-import com.liferay.jethr0.builds.run.BuildRun;
+import com.liferay.jethr0.build.parameter.BuildParameter;
+import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 

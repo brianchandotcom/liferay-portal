@@ -301,13 +301,6 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 	private static class ResourceURLsBag {
 
-		public ResourceURLsBag(
-			List<String> cssResourceURLs, List<String> jsResourceURLs) {
-
-			_cssResourceURLs = cssResourceURLs;
-			_jsResourceURLs = jsResourceURLs;
-		}
-
 		public String getMergedCSSResourceURLs() {
 			String mergedCSSResourceURLs = _mergedCSSResourceURLs;
 
@@ -350,6 +343,13 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			}
 
 			return mergedJSResourceURLs;
+		}
+
+		private ResourceURLsBag(
+			List<String> cssResourceURLs, List<String> jsResourceURLs) {
+
+			_cssResourceURLs = cssResourceURLs;
+			_jsResourceURLs = jsResourceURLs;
 		}
 
 		private final List<String> _cssResourceURLs;

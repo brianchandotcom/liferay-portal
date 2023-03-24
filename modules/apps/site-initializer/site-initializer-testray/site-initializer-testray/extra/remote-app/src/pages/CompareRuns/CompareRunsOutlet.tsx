@@ -26,11 +26,14 @@ import i18n from '../../i18n';
 import useCompareRuns from './useCompareRuns';
 
 const CompareRunsOutlet = () => {
-	const navigate = useNavigate();
-	const {setDropdownIcon, setHeading, setTabs} = useHeader();
-	const {runA, runB} = useParams();
-	const {pathname} = useLocation();
 	const compareRuns = useCompareRuns('details');
+	const {setHeading} = useHeader({
+		icon: 'drop',
+		tabs: [],
+	});
+	const {pathname} = useLocation();
+	const {runA, runB} = useParams();
+	const navigate = useNavigate();
 
 	const caseResultFilter = useSearchBuilder({useURIEncode: false});
 
@@ -45,6 +48,7 @@ const CompareRunsOutlet = () => {
 		transformData: (response) =>
 			testrayRunImpl.transformDataFromList(response),
 	});
+
 	const runs = useMemo(() => {
 		const items = data?.items ?? [];
 
@@ -67,9 +71,7 @@ const CompareRunsOutlet = () => {
 				]);
 			});
 		}
-		setTabs([]);
-		setDropdownIcon('drop');
-	}, [runs, setDropdownIcon, setHeading, setTabs]);
+	}, [runs, setHeading]);
 
 	return (
 		<>

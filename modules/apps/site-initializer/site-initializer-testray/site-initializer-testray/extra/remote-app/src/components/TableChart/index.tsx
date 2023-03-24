@@ -13,15 +13,24 @@
  */
 
 import classNames from 'classnames';
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {translate} from '~/i18n';
+import i18n from '~/i18n';
 
 type TableChartProps = {
 	matrixData: number[][];
 	title: string;
 };
 
-const COLORS = {
+const columns = [
+	i18n.translate('passed'),
+	i18n.translate('failed'),
+	i18n.translate('blocked'),
+	i18n.translate('test-fix'),
+	i18n.translate('dnr'),
+];
+
+const STATUS_COLOR = {
 	BLOCKED: 'blocked',
 	DNR: 'dnr',
 	FAILED: 'failed',
@@ -29,136 +38,102 @@ const COLORS = {
 	TEST_FIX: 'test-fix',
 };
 
-const COLUMNS = {
-	BLOCKED: translate('blocked'),
-	DNR: translate('dnr'),
-	FAILED: translate('failed'),
-	PASSED: translate('passed'),
-	TEST_FIX: translate('test-fix'),
-};
+const colors = [
+	[
+		STATUS_COLOR.PASSED,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.BLOCKED,
+		STATUS_COLOR.TEST_FIX,
+		STATUS_COLOR.PASSED,
+	],
+	[
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.FAILED,
+	],
+	[
+		STATUS_COLOR.BLOCKED,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.BLOCKED,
+		STATUS_COLOR.BLOCKED,
+		STATUS_COLOR.BLOCKED,
+	],
+	[
+		STATUS_COLOR.TEST_FIX,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.BLOCKED,
+		STATUS_COLOR.TEST_FIX,
+		STATUS_COLOR.TEST_FIX,
+	],
+	[
+		STATUS_COLOR.PASSED,
+		STATUS_COLOR.FAILED,
+		STATUS_COLOR.BLOCKED,
+		STATUS_COLOR.TEST_FIX,
+		STATUS_COLOR.DNR,
+	],
+];
 
-const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
-	const columns = {
-		horizontalColumns: [
-			`B ${COLUMNS.PASSED}`,
-			`B ${COLUMNS.FAILED}`,
-			`B ${COLUMNS.BLOCKED}`,
-			`B ${COLUMNS.TEST_FIX}`,
-			`B ${COLUMNS.DNR}`,
-		],
-		verticalColumns: [
-			`A ${COLUMNS.PASSED}`,
-			`A ${COLUMNS.FAILED}`,
-			`A ${COLUMNS.BLOCKED}`,
-			`A ${COLUMNS.TEST_FIX}`,
-			`A ${COLUMNS.DNR}`,
-		],
-	};
+const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => (
+	<table className="table table-borderless table-sm tr-table-chart">
+		<thead>
+			<tr>
+				<td className="border-0 pb-2" colSpan={6}>
+					{title}
+				</td>
+			</tr>
+		</thead>
 
-	const colors = [
-		[
-			COLORS.PASSED,
-			COLORS.FAILED,
-			COLORS.BLOCKED,
-			COLORS.TEST_FIX,
-			COLORS.PASSED,
-		],
-		[
-			COLORS.FAILED,
-			COLORS.FAILED,
-			COLORS.FAILED,
-			COLORS.FAILED,
-			COLORS.FAILED,
-		],
-		[
-			COLORS.BLOCKED,
-			COLORS.FAILED,
-			COLORS.BLOCKED,
-			COLORS.BLOCKED,
-			COLORS.BLOCKED,
-		],
-		[
-			COLORS.TEST_FIX,
-			COLORS.FAILED,
-			COLORS.BLOCKED,
-			COLORS.TEST_FIX,
-			COLORS.TEST_FIX,
-		],
-		[
-			COLORS.PASSED,
-			COLORS.FAILED,
-			COLORS.BLOCKED,
-			COLORS.TEST_FIX,
-			COLORS.DNR,
-		],
-	];
+		<tbody>
+			<tr>
+				<th></th>
 
-	return (
-		<table className="table table-borderless table-sm tr-table-chart">
-			<thead>
-				<tr>
-					<td className="border-0 pb-2" colSpan={6}>
-						{title}
+				{columns.map((horizontalColumn, index) => (
+					<td
+						className="text-paragraph-xs tr-table-chart__column-title"
+						key={index}
+					>
+						B {horizontalColumn}
 					</td>
-				</tr>
-			</thead>
+				))}
+			</tr>
 
-			<tbody>
-				<tr>
-					<th></th>
+			{columns.map((verticalColumn, verticalColumnIndex) => (
+				<tr key={verticalColumnIndex}>
+					<td className="text-paragraph-xs tr-table-chart__column-title">
+						A {verticalColumn}
+					</td>
 
-					{columns.horizontalColumns.map((horizontalColumn) => (
-						<td
-							className="text-paragraph-xs tr-table-chart__column-title"
-							key={horizontalColumn}
-						>
-							{horizontalColumn}
-						</td>
-					))}
-				</tr>
+					{columns.map((_, horizontalColumnIndex) => {
+						const value =
+							matrixData[verticalColumnIndex][
+								horizontalColumnIndex
+							];
 
-				{columns.verticalColumns.map(
-					(verticalColumn, verticalColumnIndex) => (
-						<tr key={verticalColumn}>
-							<td className="text-paragraph-xs tr-table-chart__column-title">
-								{verticalColumn}
+						return (
+							<td
+								className={classNames(
+									'border py-2 tr-table-chart__data-area text-center',
+									colors[verticalColumnIndex][
+										horizontalColumnIndex
+									]
+								)}
+								key={`${verticalColumnIndex}-${horizontalColumnIndex}`}
+							>
+								{value > 0 && (
+									<Link className="font-weight-bold" to="">
+										{value}
+									</Link>
+								)}
 							</td>
+						);
+					})}
+				</tr>
+			))}
+		</tbody>
+	</table>
+);
 
-							{columns.horizontalColumns.map(
-								(_, horizontalColumnIndex) => {
-									const dataType =
-										matrixData[verticalColumnIndex][
-											horizontalColumnIndex
-										];
-
-									return (
-										<td
-											className={classNames(
-												'border py-2 tr-table-chart__data-area text-center',
-												colors[verticalColumnIndex][
-													horizontalColumnIndex
-												]
-											)}
-											key={`${verticalColumnIndex}-${horizontalColumnIndex}`}
-										>
-											{dataType > 0 && (
-												<Link
-													className="font-weight-bold"
-													to=""
-												>
-													{dataType}
-												</Link>
-											)}
-										</td>
-									);
-								}
-							)}
-						</tr>
-					)
-				)}
-			</tbody>
-		</table>
-	);
-};
-
-export default TableChart;
+export default memo(TableChart);

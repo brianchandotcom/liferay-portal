@@ -12,6 +12,7 @@
  * details.
  */
 
+import {memo} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
@@ -32,8 +33,17 @@ type CompareRunsOutlet = {
 	runs: TestrayRun[];
 };
 
-const nestedFieldsAndFilds =
-	'?nestedFields=componentToCases,caseToCaseResult,runToCaseResult&nestedFieldsDepth=2&fields=priority,caseToCaseResult.r_runToCaseResult_c_runId,name,r_componentToCases_c_component.name,caseToCaseResult.dueStatus,caseToCaseResult.id';
+const searchParams = new URLSearchParams();
+
+searchParams.set(
+	'fields',
+	'priority,caseToCaseResult.r_runToCaseResult_c_runId,name,r_componentToCases_c_component.name,caseToCaseResult.dueStatus,caseToCaseResult.id'
+);
+searchParams.set(
+	'nestedFields',
+	'componentToCases,caseToCaseResult,runToCaseResult'
+);
+searchParams.set('nestedFieldsDepth', '2');
 
 const RunStatus: React.FC<RunStatusProps> = ({caseResults, runId}) => {
 	const {runs} = useOutletContext<CompareRunsOutlet>();
@@ -70,6 +80,8 @@ const RunStatus: React.FC<RunStatusProps> = ({caseResults, runId}) => {
 	);
 };
 
+const RunStatusMemoized = memo(RunStatus);
+
 const CompareRunsCases = () => {
 	const {runA, runB} = useParams();
 
@@ -77,8 +89,8 @@ const CompareRunsCases = () => {
 
 	const filter = caseResultFilter
 		.in('caseToCaseResult/r_runToCaseResult_c_runId', [
-			String(runA),
-			String(runB),
+			runA as string,
+			runB as string,
 		])
 		.build();
 
@@ -91,7 +103,7 @@ const CompareRunsCases = () => {
 					filterSchema: 'compareRunsCases',
 					title: i18n.translate('cases'),
 				}}
-				resource={`/${testrayCaseRest.uri}${nestedFieldsAndFilds}`}
+				resource={`/${testrayCaseRest.uri}?${searchParams.toString()}`}
 				tableProps={{
 					columns: [
 						{
@@ -113,32 +125,28 @@ const CompareRunsCases = () => {
 						},
 						{
 							key: 'dueStatus',
-							render: (_, data: TestrayCase) => {
-								return (
-									<RunStatus
-										caseResults={
-											data.caseResults as TestrayCaseResult[]
-										}
-										runId={Number(runA)}
-									/>
-								);
-							},
+							render: (_, data: TestrayCase) => (
+								<RunStatusMemoized
+									caseResults={
+										data.caseResults as TestrayCaseResult[]
+									}
+									runId={Number(runA)}
+								/>
+							),
 							size: 'md',
 							sorteable: true,
 							value: i18n.sub('status-in-x', 'run-a'),
 						},
 						{
 							key: 'dueStatus',
-							render: (_, data: TestrayCase) => {
-								return (
-									<RunStatus
-										caseResults={
-											data.caseResults as TestrayCaseResult[]
-										}
-										runId={Number(runB)}
-									/>
-								);
-							},
+							render: (_, data: TestrayCase) => (
+								<RunStatusMemoized
+									caseResults={
+										data.caseResults as TestrayCaseResult[]
+									}
+									runId={Number(runB)}
+								/>
+							),
 							size: 'md',
 							sorteable: true,
 							value: i18n.sub('status-in-x', 'run-b'),

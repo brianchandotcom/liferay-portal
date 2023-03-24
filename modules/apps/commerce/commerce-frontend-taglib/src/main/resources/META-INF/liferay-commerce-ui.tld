@@ -122,6 +122,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>discontinued-label</name>
+		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.DiscontinuedLabelTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>CPCatalogEntry</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>namespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>gallery</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.GalleryTag</tag-class>
 		<body-content>empty</body-content>

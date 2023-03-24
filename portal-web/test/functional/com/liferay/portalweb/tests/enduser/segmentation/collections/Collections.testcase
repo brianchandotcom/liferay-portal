@@ -3687,7 +3687,7 @@ definition {
 	}
 
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
-	@priority = "3"
+	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInAssetPublisher {
 		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentDynamicCollectionInAssetPublisher";
 
@@ -3778,7 +3778,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_assetTitle = "WC_Title_1",
-				key_index = "2",
+				key_index = 2,
 				locator1 = "AP#ASSET_ORDER");
 		}
 
@@ -3788,7 +3788,7 @@ definition {
 	}
 
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
-	@priority = "3"
+	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment {
 		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment";
 
@@ -3883,12 +3883,12 @@ definition {
 
 		task ("Assert the asset appear only once in Collection Display Fragment") {
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_1");
 
 			AssertElementNotPresent(
-				index = "2",
+				index = 2,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_1");
 		}
@@ -3899,7 +3899,7 @@ definition {
 	}
 
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
-	@priority = "3"
+	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInAssetPublisher {
 		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentManualCollectionInAssetPublisher";
 
@@ -3991,7 +3991,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_assetTitle = "WC_Title_1",
-				key_index = "2",
+				key_index = 2,
 				locator1 = "AP#ASSET_ORDER");
 		}
 
@@ -4001,7 +4001,7 @@ definition {
 	}
 
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
-	@priority = "3"
+	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInCollectionDisplayFragment {
 		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentManualCollectionInCollectionDisplayFragment";
 
@@ -4098,12 +4098,12 @@ definition {
 
 		task ("Assert the asset appear only once in Collection Display Fragment") {
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_1");
 
 			AssertElementNotPresent(
-				index = "2",
+				index = 2,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_1");
 		}
@@ -4114,7 +4114,7 @@ definition {
 	}
 
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
-	@priority = "3"
+	@priority = 3
 	test ViewCombineContentOrderForMultisegmentDynamicCollection {
 		property test.name.skip.portal.instance = "Collections#ViewCombineContentOrderForMultisegmentDynamicCollection";
 
@@ -4211,22 +4211,22 @@ definition {
 
 		task ("Assert the asset appear only once in Collection Display Fragment") {
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_4");
 
 			AssertTextEquals(
-				index = "2",
+				index = 2,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_3");
 
 			AssertTextEquals(
-				index = "3",
+				index = 3,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_2");
 
 			AssertTextEquals(
-				index = "4",
+				index = 4,
 				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
 				value1 = "WC_Title_1");
 		}
@@ -4237,7 +4237,7 @@ definition {
 	}
 
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
-	@priority = "3"
+	@priority = 3
 	test ViewCombineContentOrderForMultisegmentManualCollection {
 		property test.name.skip.portal.instance = "Collections#ViewCombineContentOrderForMultisegmentManualCollection";
 

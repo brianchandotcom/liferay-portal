@@ -114,9 +114,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 						"Liferay-Client-Extension-Batch", "batch/");
 				}
 
-				if (Objects.equals(clientExtension.classification, "static")) {
+				if (Objects.equals(
+						clientExtension.classification, "frontend")) {
+
 					pluginPackageProperties.put(
-						"Liferay-Client-Extension-Static", "static/");
+						"Liferay-Client-Extension-Frontend", "static/");
 				}
 			});
 
@@ -413,12 +415,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			return "batch";
 		}
 
-		if (_groupService.containsAll(classifications)) {
-			return "service";
+		if (_groupMicroservice.containsAll(classifications)) {
+			return "microservice";
 		}
 
-		if (_groupStatic.containsAll(classifications)) {
-			return "static";
+		if (_groupFrontend.containsAll(classifications)) {
+			return "frontend";
 		}
 
 		if (!classifications.isEmpty()) {
@@ -426,11 +428,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				StringBundler.concat(
 					"The combination of client extensions in ", classifications,
 					" cannot be grouped in a single project. The following ",
-					"groupings are allowed: ", _groupBatch, _groupService,
-					_groupStatic));
+					"groupings are allowed: ", _groupBatch, _groupFrontend,
+					_groupMicroservice));
 		}
 
-		return "static";
+		return "frontend";
 	}
 
 	private static final String _CLIENT_EXTENSION_CONFIG_FILE_NAME =
@@ -443,10 +445,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		"batch", "configuration");
 	private static final Set<String> _groupConfiguration = Sets.newHashSet(
 		"configuration");
-	private static final Set<String> _groupService = Sets.newHashSet(
-		"configuration", "service");
-	private static final Set<String> _groupStatic = Sets.newHashSet(
-		"configuration", "static");
+	private static final Set<String> _groupFrontend = Sets.newHashSet(
+		"configuration", "frontend");
+	private static final Set<String> _groupMicroservice = Sets.newHashSet(
+		"configuration", "microservice");
 
 	private final Object _clientExtensionConfigFile;
 	private Properties _clientExtensionProperties;
@@ -455,6 +457,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private Object _dockerFile;
 	private Object _lcpJsonFile;
 	private final Object _pluginPackagePropertiesFile;
-	private String _type = "static";
+	private String _type = "frontend";
 
 }

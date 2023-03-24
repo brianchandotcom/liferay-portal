@@ -26,15 +26,16 @@ public class CommercePaymentScreenNavigationConstants {
 		"details";
 
 	public static final String
-		CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS = "restrictions";
+		CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS =
+			"payment-restrictions";
 
 	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
 
 	public static final String ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS =
 		"details";
 
-	public static final String ENTRY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS =
-		"restrictions";
+	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL =
+		"commerce.channel.general";
 
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD =
 		"commerce.payment.method";

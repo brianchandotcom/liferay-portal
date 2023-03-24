@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.payment.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.payment.constants.CommercePaymentScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +37,8 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "payment-restrictions";
+		return CommercePaymentScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS;
 	}
 
 	@Override
@@ -49,7 +51,8 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "commerce.channel.general";
+		return CommercePaymentScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL;
 	}
 
 	@Reference

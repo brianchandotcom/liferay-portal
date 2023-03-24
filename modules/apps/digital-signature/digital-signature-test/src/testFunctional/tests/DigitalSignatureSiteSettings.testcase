@@ -1,14 +1,6 @@
 @component-name = "portal-solutions"
 definition {
 
-	var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
-	var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
-	var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
-	var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
-	var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
-
-	property osgi.module.configuration.file.names = "com.liferay.digital.signature.configuration.DigitalSignatureConfiguration.config";
-	property osgi.module.configurations = "enabled=\"TRUE\"${line.separator}apiUsername=\"${digitalSignatureApiUsername}\"${line.separator}apiAccountId=\"${digitalSignatureApiAccountId}\"${line.separator}accountBaseURI=\"digitalSignatureAccountBaseUri\"${line.separator}integrationKey=\"${digitalSignatureIntegrationKey}\"${line.separator}rsaPrivateKey=\"digitalSignatureRsaPrivateKey\"${line.separator}siteSettingsStrategy=\"always-inherit\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Digital Signature";
@@ -17,6 +9,18 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginUI();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Digital Signature",
+			configurationName = "Digital Signature Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
 	}
 
 	tearDown {
@@ -33,17 +37,11 @@ definition {
 	@description = "This is a test for LPS-131427. Verify if Digital Signature can be enable in Site Settings, using the Always Override Strategy"
 	@priority = 5
 	test CanEnableDigitalSignatureBySiteSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		var siteStrategy = "Always Override";
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Digital Signature",
-			configurationName = "Digital Signature Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Override");
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = ${siteStrategy});
 
 		SystemSettings.saveConfiguration();
 

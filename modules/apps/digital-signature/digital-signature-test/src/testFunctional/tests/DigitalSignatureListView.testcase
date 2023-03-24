@@ -1,14 +1,6 @@
 @component-name = "portal-solutions"
 definition {
 
-	var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
-	var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
-	var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
-	var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
-	var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
-
-	property osgi.module.configuration.file.names = "com.liferay.digital.signature.configuration.DigitalSignatureConfiguration.config";
-	property osgi.module.configurations = "enabled=\"TRUE\"${line.separator}apiUsername=\"${digitalSignatureApiUsername}\"${line.separator}apiAccountId=\"${digitalSignatureApiAccountId}\"${line.separator}accountBaseURI=\"digitalSignatureAccountBaseUri\"${line.separator}integrationKey=\"${digitalSignatureIntegrationKey}\"${line.separator}rsaPrivateKey=\"digitalSignatureRsaPrivateKey\"${line.separator}siteSettingsStrategy=\"always-inherit\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Digital Signature";
@@ -17,6 +9,18 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginUI();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Digital Signature",
+			configurationName = "Digital Signature Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
 	}
 
 	tearDown {
@@ -33,6 +37,8 @@ definition {
 	@description = "This is a test for LPS-131206. Verify if its possible download envelopes by Envelope Description "
 	@priority = 3
 	test CanDownloadEnvelopeByEnvelopeDescription {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		DigitalSignature.createEnvelope(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			emailMessage = "Email Message",
@@ -63,6 +69,8 @@ definition {
 	@description = "This is a test for LPS-131206. Verify if its possible download envelopes by Envelope List"
 	@priority = 3
 	test CanDownloadEnvelopeByEnvelopeList {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -81,6 +89,8 @@ definition {
 	@description = "This is a test for LPS-131206. Verify if is possible navigate between pages"
 	@priority = 3
 	test CanNavigateBetweenPages {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -93,6 +103,8 @@ definition {
 	@description = "This is a test for LPS-133595. Verify if the Create Date column shows the date correctly after created one envelope in local Timezone "
 	@priority = 4
 	test CanViewCorrectDate {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		DigitalSignature.createEnvelope(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			emailMessage = "Email Message",
@@ -125,6 +137,8 @@ definition {
 	@description = "This is a test for LPS-131206. Verify if its possible view envelope details"
 	@priority = 4
 	test CanViewEnvelopeDetails {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -143,6 +157,8 @@ definition {
 	@description = "This is a test for LPS-131206. Verify if Digital Signature can be enabled"
 	@priority = 5
 	test DigitalSignatureCanBeEnabled {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -159,6 +175,8 @@ definition {
 	@description = "This is a test for LPS-137169. Verify if have more recipients than one"
 	@priority = 4
 	test HaveMoreRecipientsThanOne {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		DigitalSignature.createEnvelope(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			emailMessage = "Email Message",

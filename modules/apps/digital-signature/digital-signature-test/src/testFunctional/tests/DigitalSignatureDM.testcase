@@ -1,14 +1,6 @@
 @component-name = "portal-solutions"
 definition {
 
-	var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
-	var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
-	var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
-	var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
-	var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
-
-	property osgi.module.configuration.file.names = "com.liferay.digital.signature.configuration.DigitalSignatureConfiguration.config";
-	property osgi.module.configurations = "enabled=\"TRUE\"${line.separator}apiUsername=\"${digitalSignatureApiUsername}\"${line.separator}apiAccountId=\"${digitalSignatureApiAccountId}\"${line.separator}accountBaseURI=\"digitalSignatureAccountBaseUri\"${line.separator}integrationKey=\"${digitalSignatureIntegrationKey}\"${line.separator}rsaPrivateKey=\"digitalSignatureRsaPrivateKey\"${line.separator}siteSettingsStrategy=\"always-inherit\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Digital Signature";
@@ -17,6 +9,18 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginUI();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Digital Signature",
+			configurationName = "Digital Signature Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
 	}
 
 	tearDown {
@@ -38,6 +42,8 @@ definition {
 	@priority = 5
 	test CanCollectDigitalSignatureByButton {
 		property solutions.acceptance = "true";
+
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -62,6 +68,8 @@ definition {
 	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By vertical ellipsis"
 	@priority = 5
 	test CanCollectDigitalSignatureByVerticalEllipsis {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -86,6 +94,8 @@ definition {
 	@priority = 5
 	test CanGetMultipleSignaturesByButton {
 		property solutions.acceptance = "true";
+
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -113,6 +123,8 @@ definition {
 	@description = "This is a test for LPS-134093. Verify if warning message appear after try insert more than 10 documents to collect the digital signature"
 	@priority = 5
 	test CanViewWarningMessageForMoreThan10Documents {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png,Document_4.jpg,Document_5.txt,Commerce_Black.jpg,Commerce_Blue.jpg,Commerce_White.jpg,Spaceport.jpg,analytics-cloud-hero-image.png,marketplace_icon.png");

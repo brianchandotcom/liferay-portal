@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/drop-down": "3.90.0",
+		"@clayui/drop-down": "3.91.0",
 		"@liferay/frontend-data-set-web": "*",
 		"frontend-js-web": "*"
 	},

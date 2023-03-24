@@ -179,22 +179,25 @@ const DropdownList = ({
 	currentValue,
 	expand,
 	handleSelect,
+	label,
 	multiple,
 	options,
 }) => (
 	<ClayDropDown.ItemList>
-		{options.map((option, index) => (
-			<DropdownItem
-				currentValue={currentValue}
-				expand={expand}
-				index={index}
-				key={`${option.value}-${index}`}
-				multiple={multiple}
-				onSelect={handleSelect}
-				option={option}
-				options={options}
-			/>
-		))}
+		<ClayDropDown.Group header={label}>
+			{options.map((option, index) => (
+				<DropdownItem
+					currentValue={currentValue}
+					expand={expand}
+					index={index}
+					key={`${option.value}-${index}`}
+					multiple={multiple}
+					onSelect={handleSelect}
+					option={option}
+					options={options}
+				/>
+			))}
+		</ClayDropDown.Group>
 	</ClayDropDown.ItemList>
 );
 
@@ -282,6 +285,7 @@ const Trigger = forwardRef(
 
 const Select = ({
 	defaultSearch,
+	label,
 	multiple,
 	onCloseButtonClicked,
 	onDropdownItemClicked,
@@ -486,6 +490,7 @@ const Select = ({
 							currentValue={currentValue}
 							expand={expand}
 							handleSelect={handleSelect}
+							label={label}
 							multiple={multiple}
 							options={options}
 							showEmptyOption={showEmptyOption}
@@ -495,6 +500,7 @@ const Select = ({
 							currentValue={currentValue}
 							expand={expand}
 							handleSelect={handleSelect}
+							label={label}
 							multiple={multiple}
 							options={options}
 						/>
@@ -569,6 +575,7 @@ const Main = ({
 		>
 			<Select
 				defaultSearch={defaultSearch}
+				label={label}
 				multiple={multiple}
 				name={`${name}_field`}
 				onCloseButtonClicked={({event, value}) =>

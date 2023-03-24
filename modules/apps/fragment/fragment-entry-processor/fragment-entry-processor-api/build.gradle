@@ -4,4 +4,5 @@ dependencies {
 	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.3"
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:info:info-api")
+	compileOnly project(":core:petra:petra-string")
 }

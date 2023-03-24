@@ -4466,6 +4466,133 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168664. View collections in Asset Publisher in list and table views."
+	@priority = 3
+	test ViewListAndTableStylesOfCollectionsInSelector {
+		property asset.publisher.selection.style = "asset-list";
+
+		task ("Given a site designer accesses to the Select Collection modal of Asset Publisher") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Web Content Article",
+				itemSubtype = "Basic Web Content",
+				title = "Manual Collection");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.gotoSelectCollection(portletName = "Asset Publisher");
+
+			Panel.expandPanel(panel = "Select Collection");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("When the site designer changes the display style to list") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		}
+
+		task ("Then the site designer sees the list styles of collections") {
+			AssertElementNotPresent(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconList.viewListEntryTitle(listEntry = ${collectionName});
+
+				AssertElementNotPresent(
+					key_listEntry = ${collectionName},
+					locator1 = "LexiconList#AVATAR_ICON");
+			}
+		}
+
+		task ("When the site designer change the display style to table") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		}
+
+		task ("Then the site designer sees the table styles of collections") {
+			AssertVisible(
+				key_tableEntry = "Dynamic Collection",
+				key_text = "bolt",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+
+			AssertVisible(
+				key_tableEntry = "Manual Collection",
+				key_text = "list",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "type",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = "Dynamic");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "type",
+				tableEntry = "Manual Collection",
+				tableEntryInfo = "Manual");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "item-type",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = "Asset");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "item-type",
+				tableEntry = "Manual Collection",
+				tableEntryInfo = "Web Content Article");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "subtype",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = "-");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "subtype",
+				tableEntry = "Manual Collection",
+				tableEntryInfo = "Basic Web Content");
+
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconTable.viewTableEntryInfo(
+					columnName = "name",
+					tableEntry = ${collectionName},
+					tableEntryInfo = ${collectionName});
+
+				LexiconTable.viewTableEntryInfo(
+					columnName = "variations",
+					tableEntry = ${collectionName},
+					tableEntryInfo = 0);
+
+				LexiconTable.viewTableEntryInfo(
+					columnName = "usages",
+					tableEntry = ${collectionName},
+					tableEntryInfo = 0);
+
+				AssertTextEquals.assertPartialText(
+					key_columnName = "modified",
+					key_tableEntry = ${collectionName},
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+					value1 = "Ago");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-166046. The site designer could see the tooltip when hover on the icon of collection."
 	@priority = 3
 	test ViewTooltipWhenHoverOnCollectionIcon {

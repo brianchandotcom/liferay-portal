@@ -150,8 +150,7 @@ public class ActionExecutorManagerImplTest {
 		}
 		catch (PortalException portalException) {
 			Assert.assertEquals(
-				"No action executor for java:test",
-				portalException.getMessage());
+				"No action executor for java", portalException.getMessage());
 		}
 	}
 

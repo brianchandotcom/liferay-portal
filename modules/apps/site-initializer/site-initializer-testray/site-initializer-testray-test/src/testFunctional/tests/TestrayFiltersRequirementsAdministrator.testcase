@@ -164,4 +164,27 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by component"
+	@priority = 5
+	test AdminCanFilterRequirementsByComponent {
+		task ("When the user filter a requirement by component") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Component",
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			TestrayFilter.assertMultiSelect(
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the component selected in the table") {
+			Testray.assertItemName(key_name = "Component 1");
+		}
+	}
+
 }

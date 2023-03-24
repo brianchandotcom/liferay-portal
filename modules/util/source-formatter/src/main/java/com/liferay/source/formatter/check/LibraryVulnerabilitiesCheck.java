@@ -407,23 +407,21 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			DefaultArtifactVersion defaultArtifactVersion =
 				new DefaultArtifactVersion(version);
 
-			if ((parts.length != 5) ||
-				!Objects.equals(
-					securityAdvisoryEcosystemEnum.name(), parts[0]) ||
-				!packageName.equals(parts[1]) ||
-				!versionRange.containsVersion(defaultArtifactVersion)) {
+			if ((parts.length == 5) &&
+				Objects.equals(
+					securityAdvisoryEcosystemEnum.name(), parts[0]) &&
+				packageName.equals(parts[1]) &&
+				versionRange.containsVersion(defaultArtifactVersion)) {
 
-				continue;
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Library '", packageName, ":", version,
+						"' contains known vulnerabilities(", parts[3], ", ",
+						parts[4], ")"));
+
+				return;
 			}
-
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Library '", packageName, ":", version,
-					"' contains known vulnerabilities(", parts[3], ", ",
-					parts[4], ")"));
-
-			return;
 		}
 
 		if (!_cachedVulnerableVersionMap.containsKey(

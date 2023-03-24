@@ -3,81 +3,81 @@
 [#assign claim_status_style = {"draft": "label label-tonal-dark ml-2", "pendingMarketingReview": "label label-tonal-warning ml-2", "approved": "label label-tonal-success ml-2", "moreInfoRequested": "label label-tonal-warning ml-2", "rejected": "label label-tonal-danger ml-2", "expired": "label label-tonal-danger ml-2", "claimPaid": "label label-tonal-info ml-2", "inFinanceReview": "label label-tonal-light ml-2"}]
 
 [#function check_claim status_key]
-    [#return status_key != "draft" && status_key != "expired" && status_key != "rejected" /]
+	[#return status_key != "draft" && status_key != "expired" && status_key != "rejected" /]
 [/#function]
 
 [#function get_currency value currency_key="USD"]
-    [#return value?string["¤,##0.00;; currencyCode=${currency_key}"] /]
+	[#return value?string["¤,##0.00;; currencyCode=${currency_key}"] /]
 [/#function]
 
 [#macro panel claim site_url]
-    <div>
-        <div class="text-neutral-7 text-paragraph-xs">
-            Type: ${claim.partial?string('Partial','Full')}
-        </div>
+	<div>
+		<div class="text-neutral-7 text-paragraph-xs">
+			Type: ${claim.partial?string('Partial','Full')}
+		</div>
 
-        <div class="mb-1 mt-1 text-neutral-9 text-paragraph-sm">
-            Claim (${claim.id})
-        </div>
+		<div class="mb-1 mt-1 text-neutral-9 text-paragraph-sm">
+			Claim (${claim.id})
+		</div>
 
-        <div class="align-items-baseline d-flex justify-content-between">
-            <div class="align-items-baseline d-flex">
-                <p class="font-weight-bold text-neutral-9 text-paragraph-sm">
-                    Claimed ${get_currency(claim.amountClaimed, claim.currency.key)}
-                </p>
+		<div class="align-items-baseline d-flex justify-content-between">
+			<div class="align-items-baseline d-flex">
+				<p class="font-weight-bold text-neutral-9 text-paragraph-sm">
+					Claimed ${get_currency(claim.amountClaimed, claim.currency.key)}
+				</p>
 
-                <div class="${claim_status_style[claim.mdfClaimStatus.key]}">
-                    ${claim.mdfClaimStatus.name}
-                </div>
-            </div>
+				<div class="${claim_status_style[claim.mdfClaimStatus.key]}">
+					${claim.mdfClaimStatus.name}
+				</div>
+			</div>
 
-            <a class="btn btn-secondary btn-sm" href="${site_url}/l/${claim.id}">
-                View
-            </a>
-        </div>
+			<a class="btn btn-secondary btn-sm" href="${site_url}/l/${claim.id}">
+				View
+			</a>
+		</div>
 
-        <hr/>
-    </div>
+		<hr />
+	</div>
 [/#macro]
 
 [#if mdf_request_id?has_content]
-    [#assign site_url = (themeDisplay.getURLCurrent()?keep_before("/l/${mdf_request_id}"))! /]
+	[#assign site_url = (themeDisplay.getURLCurrent()?keep_before("/l/${mdf_request_id}"))! /]
 
-    [#assign mdf_request = restClient.get("/c/mdfrequests/${mdf_request_id}?nestedFields=mdfReqToMDFClms,mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=3") /]
-    [#assign valid_claims_size = mdf_request.mdfReqToMDFClms?filter(mdf_claim -> check_claim(mdf_claim.mdfClaimStatus.key))?size /]
+	[#assign mdf_request = restClient.get("/c/mdfrequests/${mdf_request_id}?nestedFields=mdfReqToMDFClms,mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=3") /]
+	[#assign valid_claims_size = mdf_request.mdfReqToMDFClms?filter(mdf_claim -> check_claim(mdf_claim.mdfClaimStatus.key))?size /]
 
-    [#if mdf_request.mdfRequestStatus.key == "approved"]
-        [#list mdf_request.mdfReqToMDFClms as claim]
-            [@panel claim=claim site_url=site_url /]
-        [/#list]
+	[#if mdf_request.mdfRequestStatus.key == "approved"]
+		[#list mdf_request.mdfReqToMDFClms as claim]
+			[@panel claim=claim site_url=site_url /]
+		[/#list]
 
-        <div class="align-items-start d-flex justify-content-between">
-            <div>
-                <h6 class="font-weight-normal text-neutral-9">
-                    Get Reimbursed
-                </h6>
+		<div class="align-items-start d-flex justify-content-between">
+			<div>
+				<h6 class="font-weight-normal text-neutral-9">
+					Get Reimbursed
+				</h6>
 
-                [#if valid_claims_size < 2]
-                    <h6 class="font-weight-normal text-neutral-8">
-                        You can submit up to ${2 - valid_claims_size} claim(s).
-                    </h6>
-                [#else]
-                    <h6 class="font-weight-normal text-neutral-8">
-                        You already submitted 2 claims.
-                    </h6>
-                [/#if]
-            </div>
+				[#if valid_claims_size < 2]
+					<h6 class="font-weight-normal text-neutral-8">
+						You can submit up to ${2 - valid_claims_size} claim(s).
+					</h6>
+				[#else]
+					<h6 class="font-weight-normal text-neutral-8">
+						You already submitted 2 claims.
+					</h6>
+				[/#if]
+			</div>
 
-            [#if valid_claims_size < 2]
-                <a class="btn btn-primary" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdf_request_id}">
-                    New Claim
-                </a>
-            [/#if]
+			[#if valid_claims_size < 2]
+				<a class="btn btn-primary" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdf_request_id}">
+					New Claim
+				</a>
+			[/#if]
 
-        </div>
-    [#else]
-        [@clay.alert displayType="info" message="Waiting for manager approval." title="Info" /]
-    [/#if]
+		</div>
+	[#else]
+		[@clay.alert displayType="info" message="Waiting for manager approval." title="Info" /]
+	[/#if]
 [#else]
 	<div class="alert alert-info">
 		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>

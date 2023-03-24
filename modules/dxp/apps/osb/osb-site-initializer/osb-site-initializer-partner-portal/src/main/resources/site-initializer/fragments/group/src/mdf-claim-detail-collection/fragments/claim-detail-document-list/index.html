@@ -6,14 +6,16 @@
 			<p class="card-title text-truncate text-truncate-inline">
 				Reimbursement Invoice
 			</p>
+
 			<div class="card-text">
 				<a class="d-flex mt-3 text-decoration-none" href="${document.url}">
 					<span class="mr-2 mt-3 text-neutral-5">
 						[@clay.icon class="mr-2 mt-3 text-neutral-5" symbol="document-pdf" /]
 					</span>
-	
+
 					<div>
 						<h5 class="mb-0 text-neutral-9">${document.fileName}</h5>
+
 						<p class="mb-0 text-neutral-9">Size: ${(document.fileSize?number/1000)?ceiling}KB</p>
 					</div>
 				</a>

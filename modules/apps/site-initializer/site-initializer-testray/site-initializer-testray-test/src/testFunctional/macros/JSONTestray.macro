@@ -159,6 +159,7 @@ definition {
 		var requirementId = JSONTestrayAPI.createRequirementAPI(
 			componentId = ${componentId},
 			linkTitle = ${linkTitle},
+			linkURL = ${linkURL},
 			projectId = ${projectId},
 			requirementName = ${requirementName});
 	}

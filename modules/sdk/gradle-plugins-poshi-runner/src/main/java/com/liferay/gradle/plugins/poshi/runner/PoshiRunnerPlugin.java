@@ -133,9 +133,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			_addTaskDownloadWebDriverBrowserBinary(
 				project, poshiRunnerExtension);
 
-		final Test runPoshiTask = _addTaskRunPoshi(
-			project, poshiRunnerExtension);
-
 		final JavaExec validatePoshiTask = _addTaskValidatePoshi(project);
 		final JavaExec writePoshiPropertiesTask = _addTaskWritePoshiProperties(
 			project);
@@ -145,6 +142,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					Test runPoshiTask = _addTaskRunPoshi(
+						project, poshiRunnerExtension);
+
 					Properties poshiProperties = _getPoshiProperties(
 						poshiRunnerExtension);
 

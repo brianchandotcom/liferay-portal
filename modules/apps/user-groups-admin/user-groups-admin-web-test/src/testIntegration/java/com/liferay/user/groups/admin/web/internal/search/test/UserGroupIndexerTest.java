@@ -15,7 +15,6 @@
 package com.liferay.user.groups.admin.web.internal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -47,8 +46,6 @@ import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,13 +97,13 @@ public class UserGroupIndexerTest {
 
 		int newUserGroupCount = 2;
 
-		List<UserGroup> userGroups = Stream.generate(
-			() -> addUserGroup(baseName)
-		).limit(
-			newUserGroupCount
-		).collect(
-			Collectors.toList()
-		);
+		List<String> userGroupNames = new ArrayList<>();
+
+		for (int i = 0; i < newUserGroupCount; i++) {
+			UserGroup userGroup = addUserGroup(baseName);
+
+			userGroupNames.add(userGroup.getName());
+		}
 
 		SearchRequestBuilder searchRequestBuilder1 = _getSearchRequestBuilder(
 			companyId);
@@ -118,8 +115,7 @@ public class UserGroupIndexerTest {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			searchResponse1.getRequestString(), searchResponse1.getDocuments(),
-			Field.NAME,
-			TransformUtil.transform(userGroups, UserGroup::getName));
+			Field.NAME, userGroupNames);
 
 		SearchRequestBuilder searchRequestBuilder2 = _getSearchRequestBuilder(
 			companyId);

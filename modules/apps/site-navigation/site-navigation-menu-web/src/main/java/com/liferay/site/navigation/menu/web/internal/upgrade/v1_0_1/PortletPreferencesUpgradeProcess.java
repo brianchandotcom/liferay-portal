@@ -17,7 +17,7 @@ package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_1;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 
 /**
  * @author Balázs Sáfrány-Kovalik

@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
-import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 
 /**
  * @author Marcellus Tavares

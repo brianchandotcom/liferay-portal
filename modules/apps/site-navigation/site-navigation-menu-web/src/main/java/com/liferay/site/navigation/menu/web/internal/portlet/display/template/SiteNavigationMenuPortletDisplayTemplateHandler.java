@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.web.internal.configuration.SiteNavigationMenuWebTemplateConfiguration;
-import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.theme.SiteNavigationMenuNavItem;
 
 import java.util.List;

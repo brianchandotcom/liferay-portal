@@ -198,8 +198,7 @@ definition {
 					}'
 			''';
 		}
-
-		if (${fieldBusinessType} == "Formula") {
+		else if (${fieldBusinessType} == "Formula") {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
 					-H 'Content-Type: application/json' \

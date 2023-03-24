@@ -2136,7 +2136,7 @@ definition {
 	test CanFormulaFieldBeUsedWithUserNotification {
 		property custom.properties = "feature.flag.LPS-164948=true";
 
-		task ("Given: A new user and Notification Template") {
+		task ("Given: a new user and Notification Template") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -2156,7 +2156,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		task ("And given: A Custom Object with a Notification action and the Formula Field is used on the condition tab") {
+		task ("And given: a Custom Object with a Notification action and the Formula Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176850",
 				objectName = "CustomObject176850",
@@ -2197,14 +2197,14 @@ definition {
 				whenAction = "On After Add");
 		}
 
-		task ("When: An entry is added") {
+		task ("When: an entry is added") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customInteger",
 				objectName = "CustomObject176850",
-				value = 15);
+				value = 1111);
 		}
 
-		task ("Then: The action is triggered and the notification is sent to the user") {
+		task ("Then: the action is triggered and the notification is sent to the user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -2216,7 +2216,7 @@ definition {
 			AssertValue(
 				key_labelName = "Custom Formula Field",
 				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-				value1 = 30);
+				value1 = 2222);
 		}
 	}
 

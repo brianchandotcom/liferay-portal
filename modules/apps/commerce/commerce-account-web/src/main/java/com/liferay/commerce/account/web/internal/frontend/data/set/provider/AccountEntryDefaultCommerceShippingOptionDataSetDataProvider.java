@@ -30,6 +30,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,6 +63,10 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 			httpServletRequest, "accountEntryId");
 		long companyId = _portal.getCompanyId(httpServletRequest);
 		Locale locale = _portal.getLocale(httpServletRequest);
+
+		if (sort == null) {
+			sort = new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false);
+		}
 
 		return TransformUtil.transform(
 			_commerceChannelService.search(

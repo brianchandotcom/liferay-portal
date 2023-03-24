@@ -599,6 +599,26 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-10008 | Can view search bar removed from the data-sets in the account's channel defaults"
+	@priority = 3
+	test CannotViewSearchBarInTheAccountsChannelDefaults {
+		property portal.acceptance = "false";
+
+		task ("Given the admin navigates to the account entry (Commerce Account)") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+		}
+
+		task ("When the admin navigates to the Channel Defaults tab") {
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+		}
+
+		task ("Then the search bar is removed from the data-sets") {
+			AssertElementNotPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
+		}
+	}
+
 	@description = "Verify an account reverts to priority settings after an offline payment method that is set as default payment method for the account is removed"
 	@priority = 3
 	test CanRemoveOfflinePaymentSetAsDefaultPaymentMethod {
@@ -654,6 +674,103 @@ definition {
 				key_productName = "Minium Portal",
 				key_value = "Use Priority Settings",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+	}
+
+	@description = "COMMERCE-10008 | Can see pagination working properly in the accounts channel defaults"
+	@priority = 3
+	test CanSeePaginationWorkingProperlyInTheAccountsChannelDefaults {
+		property portal.acceptance = "false";
+
+		task ("Given 10 other channels are created (the Minium site is the first channel)") {
+			for (var num : list "1,2,3,4,5,6,7,8,9,10") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "Test Channel ${num}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("When the admin navigates to the channel defaults") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+		}
+
+		task ("And the admin changes the pagination for shipping options table") {
+			Pagination.changePagination(itemsPerPage = "4 items");
+
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 11");
+		}
+
+		task ("Then the first 4 items are present in the first page") {
+			for (var channel : list "Minium Portal,Test Channel 1,Test Channel 2,Test Channel 3") {
+				AssertElementPresent(
+					key_firstColumnValue = ${channel},
+					key_secondColumnValue = "",
+					key_table = "ShippingOption",
+					locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+			}
+		}
+
+		task ("And the 5th item is not present in the first page") {
+			AssertElementNotPresent(
+				key_firstColumnValue = "Test Channel 4",
+				key_secondColumnValue = "",
+				key_table = "ShippingOption",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+		}
+
+		task ("When the admin goes to the next page") {
+			Click(locator1 = "ACUtils#NEXT_PAGES");
+
+			CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 11");
+		}
+
+		task ("Then all items from 5th to 8th are shown in the second page") {
+			for (var channel : list "Test Channel 4,Test Channel 5,Test Channel 6,Test Channel 7") {
+				AssertElementPresent(
+					key_firstColumnValue = ${channel},
+					key_secondColumnValue = "",
+					key_table = "ShippingOption",
+					locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+			}
+		}
+
+		task ("And the 4th and 9th items are not shown in the second page") {
+			for (var num : list "3,8") {
+				AssertElementNotPresent(
+					key_firstColumnValue = "Test Channel ${num}",
+					key_secondColumnValue = "",
+					key_table = "ShippingOption",
+					locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+			}
+		}
+
+		task ("When the admin goes to the next page") {
+			Click(locator1 = "ACUtils#NEXT_PAGES");
+
+			CommerceEntry.viewPaginationResults(results = "Showing 9 to 11 of 11");
+		}
+
+		task ("Then all items from 9th to 11th are shown in the third page") {
+			for (var channel : list "Test Channel 8,Test Channel 9,Test Channel 10") {
+				AssertElementPresent(
+					key_firstColumnValue = ${channel},
+					key_secondColumnValue = "",
+					key_table = "ShippingOption",
+					locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+			}
+		}
+
+		task ("And the 8th item is not shown in the third page") {
+			AssertElementNotPresent(
+				key_firstColumnValue = "Test Channel 7",
+				key_secondColumnValue = "",
+				key_table = "ShippingOption",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 		}
 	}
 

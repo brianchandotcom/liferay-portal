@@ -48,9 +48,20 @@ const ResultsBar = ({
 					expand={!(filterLabelItems?.length > 0)}
 				>
 					<span
+						aria-label={sub(
+							itemsTotal === 1
+								? Liferay.Language.get('x-result-for-x')
+								: Liferay.Language.get('x-results-for-x'),
+							[
+								itemsTotal,
+								filterLabelItems
+									?.map((item) => item.label)
+									.join(', '),
+							]
+						)}
 						className="component-text text-truncate-inline"
 						ref={resultsBarRef}
-						tabIndex={0}
+						tabIndex={-1}
 					>
 						<span className="text-truncate">
 							{sub(

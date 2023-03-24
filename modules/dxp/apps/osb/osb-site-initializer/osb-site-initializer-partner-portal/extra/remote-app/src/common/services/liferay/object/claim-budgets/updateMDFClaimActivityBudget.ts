@@ -10,6 +10,7 @@
  */
 
 import {Liferay} from '../..';
+import LiferayFile from '../../../../interfaces/liferayFile';
 import MDFClaimBudget from '../../../../interfaces/mdfClaimBudget';
 import getDTOFromMDFClaimBudget from '../../../../utils/dto/mdf-claim-budget/getDTOFromMDFClaimBudget';
 import {LiferayAPIs} from '../../common/enums/apis';
@@ -18,8 +19,8 @@ import liferayFetcher from '../../common/utils/fetcher';
 export default async function updateMDFClaimActivityBudget(
 	mdfClaimBudget: MDFClaimBudget,
 	mdfClaimActivityId?: number,
-	budgetInvoiceId?: number,
-	mdfClaimBudgetId?: number
+	mdfClaimBudgetId?: number,
+	budgetInvoiceId?: LiferayFile & number
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/mdfclaimbudgets/${mdfClaimBudgetId}`,

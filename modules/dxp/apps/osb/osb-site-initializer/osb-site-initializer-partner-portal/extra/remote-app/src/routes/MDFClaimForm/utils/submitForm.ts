@@ -11,7 +11,9 @@
 
 import {FormikHelpers} from 'formik';
 
+import mdfClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import LiferayFile from '../../../common/interfaces/liferayFile';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
 import {Liferay} from '../../../common/services/liferay';
@@ -46,17 +48,33 @@ export default async function submitForm(
 		Boolean(activity.budgets?.some((budget) => !budget.selected))
 	);
 
-	const dtoMDFClaim =
+	let dtoMDFClaim: mdfClaimDTO | undefined = undefined;
+
+	if (
 		Liferay.FeatureFlags['LPS-164528'] &&
 		values.mdfClaimStatus !== Status.DRAFT
-			? await createMDFClaimProxyAPI(values, mdfRequest)
-			: await createMDFClaim(
-					ResourceName.MDF_CLAIM_DXP,
-					values,
-					mdfRequest
-			  );
+	) {
+		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
+	} else if (values.id) {
+		dtoMDFClaim = await updateMDFClaim(
+			ResourceName.MDF_CLAIM_DXP,
+			values,
+			mdfRequest,
+			values.id
+		);
+	} else {
+		dtoMDFClaim = await createMDFClaim(
+			ResourceName.MDF_CLAIM_DXP,
+			values,
+			mdfRequest
+		);
+	}
 
-	if (values.reimbursementInvoice && dtoMDFClaim?.id) {
+	if (
+		values.reimbursementInvoice &&
+		!values.reimbursementInvoice.id &&
+		dtoMDFClaim?.id
+	) {
 		const reimbursementInvoiceRenamed = renameFileKeepingExtention(
 			values.reimbursementInvoice,
 			`${values.reimbursementInvoice.name}#${dtoMDFClaim.id}`
@@ -73,9 +91,9 @@ export default async function submitForm(
 					ResourceName.MDF_CLAIM_DXP,
 					values,
 					mdfRequest,
-					dtoMDFClaim.externalReferenceCodeSF,
-					dtoReimbursementInvoice.id,
-					dtoMDFClaim.id
+					dtoMDFClaim.id,
+					dtoReimbursementInvoice.id as LiferayFile & number,
+					dtoMDFClaim.externalReferenceCodeSF
 				);
 			}
 		}
@@ -86,29 +104,40 @@ export default async function submitForm(
 			values.activities
 				.filter((activity) => activity.selected)
 				.map(async (activity) => {
-					const dtoMDFClaimActivity = await createMDFClaimActivity(
-						activity,
-						dtoMDFClaim?.id
-					);
+					const dtoMDFClaimActivity = activity.id
+						? await updateMDFClaimActivity(
+								activity,
+								dtoMDFClaim?.id,
+								activity.id
+						  )
+						: await createMDFClaimActivity(
+								activity,
+								dtoMDFClaim?.id
+						  );
 
-					if (activity.listQualifiedLeads && dtoMDFClaimActivity.id) {
-						const listQualifiedLeadsRenamed = renameFileKeepingExtention(
-							activity.listQualifiedLeads,
-							`${activity.listQualifiedLeads.name}#${dtoMDFClaimActivity.id}`
+					if (
+						activity.listOfQualifiedLeads &&
+						!activity.listOfQualifiedLeads.id &&
+						dtoMDFClaimActivity.id
+					) {
+						const listOfQualifiedLeadsRenamed = renameFileKeepingExtention(
+							activity.listOfQualifiedLeads,
+							`${activity.listOfQualifiedLeads.name}#${dtoMDFClaimActivity.id}`
 						);
 
-						if (listQualifiedLeadsRenamed) {
-							const dtoListQualifiedLeads = await createDocumentFolderDocument(
+						if (listOfQualifiedLeadsRenamed) {
+							const dtoListOfQualifiedLeads = await createDocumentFolderDocument(
 								claimParentFolderId,
-								listQualifiedLeadsRenamed
+								listOfQualifiedLeadsRenamed
 							);
 
-							if (dtoListQualifiedLeads.id) {
+							if (dtoListOfQualifiedLeads.id) {
 								updateMDFClaimActivity(
 									activity,
-									dtoMDFClaim.id,
-									dtoListQualifiedLeads.id,
-									dtoMDFClaimActivity.id
+									dtoMDFClaim?.id,
+									dtoMDFClaimActivity.id,
+									dtoListOfQualifiedLeads.id as LiferayFile &
+										number
 								);
 							}
 						}
@@ -121,22 +150,25 @@ export default async function submitForm(
 						await Promise.all(
 							activity.allContents.map(
 								async (allContentDocument) => {
-									const allContentDocumentRenamed = renameFileKeepingExtention(
-										allContentDocument,
-										`${allContentDocument.name}#${dtoMDFClaimActivity.id}`
-									);
-
-									if (allContentDocumentRenamed) {
-										const dtoAllContentDocument = await createDocumentFolderDocument(
-											claimParentFolderId,
-											allContentDocumentRenamed
+									if (!allContentDocument.id) {
+										const allContentDocumentRenamed = renameFileKeepingExtention(
+											allContentDocument,
+											`${allContentDocument.name}#${dtoMDFClaimActivity.id}`
 										);
 
-										if (dtoAllContentDocument.id) {
-											createMDFClaimActivityDocument(
-												dtoAllContentDocument.id,
-												dtoMDFClaimActivity.id
+										if (allContentDocumentRenamed) {
+											const dtoAllContentDocument = await createDocumentFolderDocument(
+												claimParentFolderId,
+												allContentDocumentRenamed
 											);
+
+											if (dtoAllContentDocument.id) {
+												createMDFClaimActivityDocument(
+													dtoAllContentDocument.id as LiferayFile &
+														number,
+													dtoMDFClaimActivity.id
+												);
+											}
 										}
 									}
 								}
@@ -149,13 +181,20 @@ export default async function submitForm(
 							activity.budgets
 								.filter((budget) => budget.selected)
 								.map(async (budget) => {
-									const dtoMDFClaimBudget = await createMDFClaimActivityBudget(
-										budget,
-										dtoMDFClaimActivity.id
-									);
+									const dtoMDFClaimBudget = budget.id
+										? await updateMDFClaimActivityBudget(
+												budget,
+												dtoMDFClaimActivity.id,
+												budget.id
+										  )
+										: await createMDFClaimActivityBudget(
+												budget,
+												dtoMDFClaimActivity.id
+										  );
 
 									if (
 										budget.invoice &&
+										!budget.invoice.id &&
 										dtoMDFClaimBudget.id
 									) {
 										const budgetInvoiceRenamed = renameFileKeepingExtention(
@@ -173,8 +212,9 @@ export default async function submitForm(
 												updateMDFClaimActivityBudget(
 													budget,
 													dtoMDFClaimActivity.id,
-													dtoBudgetInvoice.id,
-													dtoMDFClaimBudget.id
+													dtoMDFClaimBudget.id,
+													dtoBudgetInvoice.id as LiferayFile &
+														number
 												);
 											}
 										}
@@ -186,5 +226,5 @@ export default async function submitForm(
 		);
 	}
 
-	Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
+	// Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
 }

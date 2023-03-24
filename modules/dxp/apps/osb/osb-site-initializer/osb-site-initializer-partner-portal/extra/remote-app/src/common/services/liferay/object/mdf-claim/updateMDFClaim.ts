@@ -11,6 +11,7 @@
 
 import {Liferay} from '../..';
 import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
+import LiferayFile from '../../../../interfaces/liferayFile';
 import MDFClaim from '../../../../interfaces/mdfClaim';
 import {getDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getDTOFromMDFClaim';
 import {LiferayAPIs} from '../../common/enums/apis';
@@ -21,9 +22,9 @@ export default async function updateMDFClaim(
 	apiOption: ResourceName,
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
-	externalReferenceCodeSF?: string,
-	reimbursementInvoiceDocumentId?: number,
-	mdfClaimId?: number
+	mdfClaimId?: number,
+	reimbursementInvoiceDocumentId?: LiferayFile & number,
+	externalReferenceCodeSF?: string
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/${mdfClaimId}`,

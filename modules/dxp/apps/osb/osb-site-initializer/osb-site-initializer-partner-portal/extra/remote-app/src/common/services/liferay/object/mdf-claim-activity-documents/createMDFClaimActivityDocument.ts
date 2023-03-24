@@ -10,12 +10,13 @@
  */
 
 import {Liferay} from '../..';
+import LiferayFile from '../../../../interfaces/liferayFile';
 import {getDTOFromMDFClaimActivityDocument} from '../../../../utils/dto/mdf-claim-activiy-document/getDTOFromMDFClaimActivityDocument';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimActivityDocument(
-	allContentId: number,
+	allContentId: LiferayFile & number,
 	mdfClaimActivityId?: number
 ) {
 	return await liferayFetcher.post(

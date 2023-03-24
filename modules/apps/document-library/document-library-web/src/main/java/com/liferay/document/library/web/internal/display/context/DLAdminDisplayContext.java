@@ -526,7 +526,7 @@ public class DLAdminDisplayContext {
 	}
 
 	private BooleanClause<Query>[] _getBooleanClauses(
-		long fileEntryTypeId, String[] extensions) {
+		String[] extensions, long fileEntryTypeId, long userId) {
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -539,6 +539,12 @@ public class DLAdminDisplayContext {
 		if (ArrayUtil.isNotEmpty(extensions)) {
 			booleanFilter.add(
 				_getExtensionsFilter(extensions), BooleanClauseOccur.MUST);
+		}
+
+		if (userId > 0) {
+			booleanFilter.addTerm(
+				Field.USER_ID, String.valueOf(userId),
+				BooleanClauseOccur.MUST);
 		}
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
@@ -664,7 +670,7 @@ public class DLAdminDisplayContext {
 
 		List<RepositoryEntry> results = new ArrayList<>();
 
-		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions)) {
+		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine")) {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				DLFileEntryConstants.getClassName());
 
@@ -674,8 +680,13 @@ public class DLAdminDisplayContext {
 				searchContext.setFolderIds(new long[] {folderId});
 			}
 
+			long userId = 0;
+			if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
+				userId = _themeDisplay.getUserId();
+			}
+
 			searchContext.setBooleanClauses(
-				_getBooleanClauses(fileEntryTypeId, extensions));
+				_getBooleanClauses(extensions, fileEntryTypeId, userId));
 
 			Hits hits = indexer.search(searchContext);
 
@@ -773,41 +784,6 @@ public class DLAdminDisplayContext {
 							getFoldersAndFileEntriesAndFileShortcutsCount(
 								repositoryId, folderId, dlAppStatus, true));
 				}
-			}
-			else if (navigation.equals("mine") || navigation.equals("recent")) {
-				long groupFileEntriesUserId = 0;
-
-				if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
-					groupFileEntriesUserId = _themeDisplay.getUserId();
-
-					status = WorkflowConstants.STATUS_ANY;
-				}
-
-				long repositoryId = getRepositoryId();
-
-				OrderByComparator<FileEntry> fileEntryOrderByComparator =
-					DLUtil.getRepositoryModelOrderByComparator(
-						getOrderByCol(), getOrderByType(), orderByModel);
-
-				int dlAppStatus = status;
-
-				long dlAppGroupFileEntriesUserId = groupFileEntriesUserId;
-
-				dlSearchContainer.setResultsAndTotal(
-					() -> {
-						results.addAll(
-							DLAppServiceUtil.getGroupFileEntries(
-								repositoryId, dlAppGroupFileEntriesUserId,
-								folderId, null, dlAppStatus,
-								dlSearchContainer.getStart(),
-								dlSearchContainer.getEnd(),
-								fileEntryOrderByComparator));
-
-						return results;
-					},
-					DLAppServiceUtil.getGroupFileEntriesCount(
-						repositoryId, dlAppGroupFileEntriesUserId, folderId,
-						null, dlAppStatus));
 			}
 		}
 

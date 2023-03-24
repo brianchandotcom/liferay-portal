@@ -37,7 +37,7 @@ public class CPInstancePriceListsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "price-lists";
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICE_LISTS;
 	}
 
 	@Override

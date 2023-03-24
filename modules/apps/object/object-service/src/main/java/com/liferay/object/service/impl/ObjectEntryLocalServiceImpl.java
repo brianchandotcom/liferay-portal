@@ -40,7 +40,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.entry.util.ObjectEntryThreadLocalUtil;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
@@ -488,7 +488,7 @@ public class ObjectEntryLocalServiceImpl
 						objectRelationship.getType());
 
 			try {
-				ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 					true);
 
 				objectRelatedModelsProvider.deleteRelatedModel(
@@ -500,7 +500,7 @@ public class ObjectEntryLocalServiceImpl
 					principalException.getMessage());
 			}
 			finally {
-				ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 					false);
 			}
 		}
@@ -1997,7 +1997,7 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinitionId2)
 			).and(
 				() -> {
-					if (ObjectEntryThreadLocalUtil.
+					if (ObjectEntryThreadLocal.
 							isSkipObjectEntryResourcePermission() ||
 						(PermissionThreadLocal.getPermissionChecker() ==
 							null)) {
@@ -2178,7 +2178,7 @@ public class ObjectEntryLocalServiceImpl
 						primaryKeyColumn.neq(primaryKey) : null
 			).and(
 				() -> {
-					if (ObjectEntryThreadLocalUtil.
+					if (ObjectEntryThreadLocal.
 							isSkipObjectEntryResourcePermission() ||
 						(PermissionThreadLocal.getPermissionChecker() ==
 							null)) {

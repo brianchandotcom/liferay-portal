@@ -22,7 +22,7 @@ import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.entry.util.ObjectEntryThreadLocalUtil;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectAction;
@@ -995,7 +995,7 @@ public class DefaultObjectEntryManagerImpl
 			int count = 0;
 
 			try {
-				ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 					true);
 
 				count = objectRelatedModelsProvider.getRelatedModelsCount(
@@ -1007,7 +1007,7 @@ public class DefaultObjectEntryManagerImpl
 				_log.error(exception);
 			}
 			finally {
-				ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
+				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 					false);
 			}
 

@@ -21,7 +21,7 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
-import com.liferay.object.entry.util.ObjectEntryThreadLocalUtil;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
@@ -73,8 +73,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			_userLocalService.getUser(userId));
 
 		try {
-			ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
-				true);
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 			_executeObjectAction(
 				objectAction, objectDefinition, payloadJSONObject, userId,
@@ -83,8 +82,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					_systemObjectDefinitionMetadataRegistry));
 		}
 		finally {
-			ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
-				false);
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
 	}
 
@@ -116,8 +114,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
-				true);
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 			PrincipalThreadLocal.setName(userId);
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
@@ -145,8 +142,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			}
 		}
 		finally {
-			ObjectEntryThreadLocalUtil.setSkipObjectEntryResourcePermission(
-				false);
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 			PrincipalThreadLocal.setName(name);
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}

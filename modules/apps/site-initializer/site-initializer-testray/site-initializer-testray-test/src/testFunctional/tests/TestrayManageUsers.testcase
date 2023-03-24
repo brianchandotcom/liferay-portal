@@ -19,6 +19,14 @@ definition {
 			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "user@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
 		task ("Go to Testray") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
@@ -33,6 +41,31 @@ definition {
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
+	@priority = 5
+	test AdminCanFilterManageUsersByName {
+		task ("When the user filter a user by name") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "userfn userln");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the filters apply in the list by user name") {
+			Testray.assertItemName(key_name = "userfn userln");
+
+			Testray.assertItemNotPresent(key_name = "Test Test");
 		}
 	}
 

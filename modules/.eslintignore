@@ -64,3 +64,9 @@
     /**/*-min.js
     /test/jenkins-results-parser/**
     /test/poshi/**
+
+    #
+    # LRAC-12941 Temporarily ignore SF on FARO files
+    #
+    dxp/apps/osb/osb-faro/osb-faro-web
+    dxp/apps/osb/osb-faro/osb-faro-theme

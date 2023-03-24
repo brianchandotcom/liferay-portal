@@ -15,10 +15,12 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect, ClayToggle} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import getCN from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import FieldList from './FieldList';
+import InputSets, {useInputSets} from '../shared/input_sets/index';
 
 const ORDERS = {
 	ASC: {
@@ -108,7 +110,7 @@ const removeOrderFromFieldName = (fieldName) => {
 
 /**
  * Transforms the preference key fields format into a format easier to work with
- * in the component. Adds an `id` and `order` property.
+ * in the component. Adds `order` property.
  * @param {Array} fieldsJSONArray
  * @returns {Array}
  */
@@ -118,18 +120,17 @@ const transformFieldsJSONArrayToFieldsArray = (fieldsJSONArray) => {
 	);
 
 	return fieldsJSONArrayWithRemovedRelevance.map(
-		({field: fieldName, label}, index) => ({
+		({field: fieldName, label}) => ({
 			field: removeOrderFromFieldName(fieldName),
-			id: index, // For FieldList item `key` when reordering.
 			label,
 			order: getOrderFromFieldName(fieldName),
 		})
 	);
 };
 
-function Inputs({onChange, value}) {
+function Inputs({index, onInputSetItemChange, value}) {
 	const _handleChangeValue = (property) => (event) => {
-		onChange({[property]: event.target.value});
+		onInputSetItemChange(index, {[property]: event.target.value});
 	};
 
 	return (
@@ -197,9 +198,15 @@ function SortConfigurationOptions({
 	const relevanceField = getRelevanceFieldObject(fieldsJSONArray);
 
 	const [classicFields, setClassicFields] = useState(fieldsJSONArray);
-	const [fields, setFields] = useState(
-		transformFieldsJSONArrayToFieldsArray(fieldsJSONArray)
-	);
+
+	const {
+		getInputSetItemProps,
+		onInputSetItemChange,
+		onInputSetsAdd,
+		onInputSetsChange,
+		value: fields,
+	} = useInputSets(transformFieldsJSONArrayToFieldsArray(fieldsJSONArray));
+
 	const [relevanceLabel, setRelevanceLabel] = useState(
 		relevanceField ? relevanceField.label : 'relevance'
 	);
@@ -316,7 +323,7 @@ function SortConfigurationOptions({
 		else {
 			const newFields = _getInputElementsFieldsArray();
 
-			setFields(transformFieldsJSONArrayToFieldsArray(newFields));
+			onInputSetsChange(transformFieldsJSONArrayToFieldsArray(newFields));
 
 			const classicRelevanceField = getRelevanceFieldObject(newFields);
 
@@ -350,55 +357,76 @@ function SortConfigurationOptions({
 
 			{view.value === VIEWS.NEW.value && (
 				<>
-					<ClayForm.Group className="field-item relevance">
-						<ClayInput.Group>
-							<ClayInput.GroupItem>
-								<label htmlFor="relevance">
-									{Liferay.Language.get('display-label')}
-								</label>
+					<InputSets>
+						<ClayForm.Group className="input-sets-item-form-group relevance">
+							<ClayInput.Group>
+								<ClayInput.GroupItem>
+									<label htmlFor="relevance">
+										{Liferay.Language.get('display-label')}
+									</label>
 
-								<ClayInput
-									id="relevance"
-									onChange={(event) =>
-										setRelevanceLabel(event.target.value)
-									}
-									type="text"
-									value={relevanceLabel}
+									<ClayInput
+										id="relevance"
+										onChange={(event) =>
+											setRelevanceLabel(
+												event.target.value
+											)
+										}
+										type="text"
+										value={relevanceLabel}
+									/>
+
+									<div className="text-secondary">
+										{Liferay.Language.get(
+											'relevance-can-be-turned-on-or-off-but-not-removed'
+										)}
+									</div>
+								</ClayInput.GroupItem>
+
+								<ClayInput.GroupItem shrink>
+									<ClayToggle
+										label={
+											relevanceOn
+												? Liferay.Language.get('on')
+												: Liferay.Language.get('off')
+										}
+										onToggle={() =>
+											setRelevanceOn(!relevanceOn)
+										}
+										toggled={relevanceOn}
+									/>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayForm.Group>
+
+						{fields.map((valueItem, valueIndex) => (
+							// eslint-disable-next-line react/jsx-key
+							<InputSets.Item
+								{...getInputSetItemProps(valueItem, valueIndex)}
+							>
+								<Inputs
+									index={valueIndex}
+									onInputSetItemChange={onInputSetItemChange}
+									value={valueItem}
 								/>
+							</InputSets.Item>
+						))}
 
-								<div className="text-secondary">
-									{Liferay.Language.get(
-										'relevance-can-be-turned-on-or-off-but-not-removed'
-									)}
-								</div>
-							</ClayInput.GroupItem>
+						<ClayButton
+							aria-label={Liferay.Language.get('add-option')}
+							className={getCN({
+								'mt-4': !fields.length,
+							})}
+							displayType="secondary"
+							onClick={onInputSetsAdd}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol="plus" />
+							</span>
 
-							<ClayInput.GroupItem shrink>
-								<ClayToggle
-									label={
-										relevanceOn
-											? Liferay.Language.get('on')
-											: Liferay.Language.get('off')
-									}
-									onToggle={() =>
-										setRelevanceOn(!relevanceOn)
-									}
-									toggled={relevanceOn}
-								/>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayForm.Group>
-
-					<FieldList
-						initialValue={{
-							field: '',
-							label: '',
-							order: ORDERS.ASC.value,
-						}}
-						onChange={setFields}
-						renderInputs={(props) => <Inputs {...props} />}
-						value={fields}
-					/>
+							{Liferay.Language.get('add-option')}
+						</ClayButton>
+					</InputSets>
 
 					<input
 						name={`${namespace}${fieldsInputName}`}

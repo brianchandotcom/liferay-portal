@@ -130,6 +130,19 @@ function useInputSets(initialValue) {
 	};
 
 	/**
+	 * Replaces the input sets with a new list and updates
+	 * idCounterRef for the new length.
+	 * @param {Array} newValue The new list for input sets.
+	 */
+	const _handleInputSetsChange = (newValue) => {
+		const preparedValue = prepareInitialValue(newValue);
+
+		setValue(preparedValue);
+
+		idCounterRef.current = preparedValue.length;
+	};
+
+	/**
 	 * Changes a single object property's value.
 	 * @param {number} index The position of the item in the list.
 	 * @param {string|object} newValue If this is a string, value will be used as
@@ -204,6 +217,7 @@ function useInputSets(initialValue) {
 		onInputSetItemMove: _handleInputSetItemMove,
 		onInputSetItemReplace: _handleInputSetItemReplace,
 		onInputSetsAdd: _handleItemSetsAdd,
+		onInputSetsChange: _handleInputSetsChange,
 		value,
 	};
 }

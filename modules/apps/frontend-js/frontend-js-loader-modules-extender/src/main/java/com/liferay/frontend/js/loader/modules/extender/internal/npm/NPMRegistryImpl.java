@@ -98,7 +98,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdate npmRegistryUpdate) {
-		_refreshJSModuleCaches(null, _getNPMRegistryUpdatesListeners());
+		_refreshJSModuleCaches(null);
+
+		_notifyNPMRegistryUpdatesListeners();
 	}
 
 	@Override
@@ -298,7 +300,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
-		_refreshJSModuleCaches(tracked.values(), null);
+		_refreshJSModuleCaches(tracked.values());
 
 		Details details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
@@ -385,6 +387,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
+	private void _notifyNPMRegistryUpdatesListeners() {
+		for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
+				_getNPMRegistryUpdatesListeners()) {
+
+			npmRegistryUpdatesListener.onAfterUpdate();
+		}
+	}
+
 	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_openServiceTracker() {
 
@@ -466,11 +476,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private void _refreshJSModuleCaches(
-		Collection<JSBundle> jsBundles,
-		ServiceTrackerList<NPMRegistryUpdatesListener>
-			npmRegistryUpdatesListeners) {
-
+	private void _refreshJSModuleCaches(Collection<JSBundle> jsBundles) {
 		if (jsBundles == null) {
 			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
@@ -530,14 +536,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
 		_exactMatchMap = exactMatchMap;
-
-		if (npmRegistryUpdatesListeners != null) {
-			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
-					npmRegistryUpdatesListeners) {
-
-				npmRegistryUpdatesListener.onAfterUpdate();
-			}
-		}
 	}
 
 	private static final JSPackage _NULL_JS_PACKAGE =
@@ -618,8 +616,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 				jsBundles.add(jsBundle);
 
-				_refreshJSModuleCaches(
-					jsBundles, _getNPMRegistryUpdatesListeners());
+				_refreshJSModuleCaches(jsBundles);
+
+				_notifyNPMRegistryUpdatesListeners();
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
@@ -643,7 +642,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshJSModuleCaches(null, _getNPMRegistryUpdatesListeners());
+				_refreshJSModuleCaches(null);
+
+				_notifyNPMRegistryUpdatesListeners();
 			}
 		}
 

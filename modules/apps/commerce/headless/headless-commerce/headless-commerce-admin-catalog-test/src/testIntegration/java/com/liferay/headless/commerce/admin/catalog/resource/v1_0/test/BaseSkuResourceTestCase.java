@@ -1124,6 +1124,14 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (sku.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("depth", additionalAssertFieldName)) {
 				if (sku.getDepth() == null) {
 					valid = false;
@@ -1436,6 +1444,16 @@ public abstract class BaseSkuResourceTestCase {
 
 			if (Objects.equals("cost", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(sku1.getCost(), sku2.getCost())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sku1.getCustomFields(), sku2.getCustomFields())) {
+
 					return false;
 				}
 
@@ -1791,6 +1809,11 @@ public abstract class BaseSkuResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("cost")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

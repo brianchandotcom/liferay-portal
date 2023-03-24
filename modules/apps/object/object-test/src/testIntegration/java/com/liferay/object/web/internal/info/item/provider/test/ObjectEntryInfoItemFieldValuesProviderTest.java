@@ -89,7 +89,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_objectDefinition = _addObjectDefinition(
+		_childObjectDefinition = _addObjectDefinition(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -103,10 +103,10 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build());
 
-		_objectDefinition =
+		_childObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId());
+				_childObjectDefinition.getObjectDefinitionId());
 
 		_parentObjectDefinition = _addObjectDefinition(
 			new TextObjectFieldBuilder(
@@ -123,9 +123,15 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				TestPropsValues.getUserId(),
 				_parentObjectDefinition.getObjectDefinitionId());
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition, _parentObjectDefinition,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_parentObjectDefinition.getObjectDefinitionId(),
+				_childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@After
@@ -147,7 +153,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		InfoItemFieldValuesProvider<ObjectEntry> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				_objectDefinition.getClassName());
+				_childObjectDefinition.getClassName());
 
 		String parentTextObjectFieldNameValue = RandomTestUtil.randomString();
 
@@ -163,7 +169,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			infoItemFieldValuesProvider.getInfoItemFieldValues(
 				_objectEntryLocalService.addObjectEntry(
 					TestPropsValues.getUserId(), _group.getGroupId(),
-					_objectDefinition.getObjectDefinitionId(),
+					_childObjectDefinition.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
 						StringBundler.concat(
 							"r_", _objectRelationship.getName(), "_",
@@ -177,7 +183,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		Assert.assertNotNull(infoItemFieldValues);
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(),
+			_childObjectDefinition.getObjectDefinitionId(),
 			"attachmentObjectFieldName");
 
 		InfoFieldValue<Object> downloadURLInfoFieldValue =
@@ -210,7 +216,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			parentTextObjectFieldNameInfoFieldValue.getValue());
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
+	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -220,21 +226,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Arrays.asList(objectFields));
-	}
-
-	private ObjectRelationship _addObjectRelationship(
-			ObjectDefinition objectDefinition,
-			ObjectDefinition relatedObjectDefinition, String type)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			relatedObjectDefinition.getObjectDefinitionId(),
-			objectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), type);
+			Arrays.asList(objectField));
 	}
 
 	private void _assertInfoFieldValue(
@@ -260,6 +252,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		return objectFieldSetting;
 	}
 
+	private ObjectDefinition _childObjectDefinition;
+
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
@@ -271,9 +265,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -293,7 +284,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;
 
 }

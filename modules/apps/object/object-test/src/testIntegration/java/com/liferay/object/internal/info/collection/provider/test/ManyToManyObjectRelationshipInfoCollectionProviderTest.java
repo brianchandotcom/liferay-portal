@@ -190,7 +190,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			objectDefinition1ObjectEntry1, objectDefinition1ObjectEntry2);
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
+	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -200,7 +200,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Arrays.asList(objectFields));
+			Arrays.asList(objectField));
 	}
 
 	private void _assertRelatedInfoCollectionProvider(
@@ -249,7 +249,6 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private ObjectDefinition _objectDefinition1;
-
 	private ObjectDefinition _objectDefinition2;
 
 	@Inject

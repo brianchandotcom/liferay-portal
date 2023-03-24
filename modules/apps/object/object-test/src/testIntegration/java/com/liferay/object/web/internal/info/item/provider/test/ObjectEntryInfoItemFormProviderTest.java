@@ -70,7 +70,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 				"feature.flag.LPS-176083", "true"
 			).build());
 
-		_objectDefinition = _addObjectDefinition(
+		_childObjectDefinition = _addObjectDefinition(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -84,12 +84,12 @@ public class ObjectEntryInfoItemFormProviderTest {
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build());
 
-		_objectDefinition =
+		_childObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId());
+				_childObjectDefinition.getObjectDefinitionId());
 
-		_parentObjectDefinition = _addObjectDefinition(
+		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -99,14 +99,20 @@ public class ObjectEntryInfoItemFormProviderTest {
 				Collections.emptyList()
 			).build());
 
-		_parentObjectDefinition =
+		parentObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				_parentObjectDefinition.getObjectDefinitionId());
+				parentObjectDefinition.getObjectDefinitionId());
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition, _parentObjectDefinition,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				_childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@After
@@ -121,10 +127,11 @@ public class ObjectEntryInfoItemFormProviderTest {
 	public void testObjectEntryInfoItemFormProvider() throws Exception {
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, _objectDefinition.getClassName());
+				InfoItemFormProvider.class,
+				_childObjectDefinition.getClassName());
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			String.valueOf(_objectDefinition.getObjectDefinitionId()));
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()));
 
 		Assert.assertNotNull(infoForm);
 
@@ -132,7 +139,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 			infoForm.getInfoField("attachmentObjectFieldName"));
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			_objectDefinition.getObjectDefinitionId(),
+			_childObjectDefinition.getObjectDefinitionId(),
 			"attachmentObjectFieldName");
 
 		Assert.assertNotNull(
@@ -151,7 +158,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 			infoForm.getInfoField("parentTextObjectFieldName"));
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
+	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -161,21 +168,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Arrays.asList(objectFields));
-	}
-
-	private ObjectRelationship _addObjectRelationship(
-			ObjectDefinition objectDefinition,
-			ObjectDefinition relatedObjectDefinition, String type)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			relatedObjectDefinition.getObjectDefinitionId(),
-			objectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), type);
+			Arrays.asList(objectField));
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -190,11 +183,10 @@ public class ObjectEntryInfoItemFormProviderTest {
 		return objectFieldSetting;
 	}
 
+	private ObjectDefinition _childObjectDefinition;
+
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -210,8 +202,5 @@ public class ObjectEntryInfoItemFormProviderTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _parentObjectDefinition;
 
 }

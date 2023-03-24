@@ -201,7 +201,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField objectFields)
+	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -211,7 +211,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Arrays.asList(objectFields));
+			Arrays.asList(objectField));
 	}
 
 	private ObjectDefinition _childObjectDefinition;

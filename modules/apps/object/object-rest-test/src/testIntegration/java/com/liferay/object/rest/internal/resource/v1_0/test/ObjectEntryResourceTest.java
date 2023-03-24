@@ -28,6 +28,7 @@ import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategory
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -158,32 +159,60 @@ public class ObjectEntryResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.emptyList());
+
+		_listTypeEntryLocalService.addListTypeEntry(
+			null, TestPropsValues.getUserId(),
+			_listTypeDefinition.getListTypeDefinitionId(), _LIST_TYPE_ENTRY_KEY,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()));
+
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
+			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
-					false)));
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1, false),
+				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
+					null, RandomTestUtil.randomString(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, false, false)));
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
+			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
-					false)));
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2, false),
+				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
+					null, RandomTestUtil.randomString(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, false, false)));
 
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
 		_objectDefinition3 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
+			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_3,
-					false)));
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_3, false),
+				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
+					null, RandomTestUtil.randomString(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, false, false)));
 
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3);
@@ -222,6 +251,8 @@ public class ObjectEntryResourceTest {
 			_objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_siteScopedObjectDefinition1);
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			_listTypeDefinition);
 	}
 
 	@Test
@@ -1285,6 +1316,383 @@ public class ObjectEntryResourceTest {
 					_objectRelationship2.getName(),
 					_objectRelationship1.getName(),
 					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition3);
+	}
+
+	@Test
+	public void testFilterByLambdaOperatorsObjectEntriesByRelatesObjectEntriesFieldsThroughMultipleRelationships()
+		throws Exception {
+
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY
+			).put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+			).build(),
+			_TAG_1);
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2,
+			HashMapBuilder.<String, Serializable>put(
+				_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY
+			).put(
+				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+			).build(),
+			_TAG_1);
+
+		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition3,
+			HashMapBuilder.<String, Serializable>put(
+				_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY
+			).put(
+				_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3
+			).build(),
+			_TAG_1);
+
+		// 1 to many relationship, custom object field
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _objectDefinition2, _objectEntry1,
+			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition2, _objectDefinition3, _objectEntry2,
+			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k eq '%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:contains(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:startswith(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k in ('%s', '%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY,
+					RandomTestUtil.randomString())),
+			_objectDefinition1);
+
+		// 1 to many relationship, system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k eq '%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:contains(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1.substring(1))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:startswith(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1.substring(0, 2))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k in ('%s', '%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1,
+					RandomTestUtil.randomString())),
+			_objectDefinition1);
+
+		// 1 to many relationship (other side), custom object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k eq '%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:contains(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:startswith(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k in ('%s', '%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY,
+					RandomTestUtil.randomString())),
+			_objectDefinition3);
+
+		// 1 to many relationship (other side), system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k eq '%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:contains(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1.substring(1))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:startswith(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1.substring(0, 2))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k in ('%s', '%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1,
+					RandomTestUtil.randomString())),
+			_objectDefinition3);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship2);
+
+		// Many to many relationship, custom object field
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _objectDefinition2, _objectEntry1,
+			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition2, _objectDefinition3, _objectEntry2,
+			_objectEntry3, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k eq '%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:contains(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:startswith(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k in ('%s', '%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY,
+					RandomTestUtil.randomString())),
+			_objectDefinition1);
+
+		// Many to many relationship, system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k eq '%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:contains(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1.substring(1))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:startswith(k,'%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1.substring(0, 2))),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k in ('%s', '%s'))",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1,
+					RandomTestUtil.randomString())),
+			_objectDefinition1);
+
+		// Many to many relationship (other side), custom object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k eq '%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:contains(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:startswith(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k in ('%s', '%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_MULTIPLE_LIST_TYPE_ENTRIES_KEY, _LIST_TYPE_ENTRY_KEY,
+					RandomTestUtil.randomString())),
+			_objectDefinition3);
+
+		// Many to many relationship (other side), system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k eq '%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1)),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:contains(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1.substring(1))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:startswith(k,'%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1.substring(0, 2))),
+			_objectDefinition3);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k in ('%s', '%s'))",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_1,
+					RandomTestUtil.randomString())),
 			_objectDefinition3);
 	}
 
@@ -4020,6 +4428,12 @@ public class ObjectEntryResourceTest {
 
 	private static final String _ERC_VALUE_2 = RandomTestUtil.randomString();
 
+	private static final String _LIST_TYPE_ENTRY_KEY =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _MULTIPLE_LIST_TYPE_ENTRIES_KEY =
+		"x" + RandomTestUtil.randomString();
+
 	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
 		RandomTestUtil.randomString();
 
@@ -4041,14 +4455,22 @@ public class ObjectEntryResourceTest {
 
 	private static final int _OBJECT_FIELD_VALUE_3 = RandomTestUtil.randomInt();
 
+	private static final String _TAG_1 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
+
 	private static AssetVocabulary _assetVocabulary;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private ListTypeDefinition _listTypeDefinition;
+
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;

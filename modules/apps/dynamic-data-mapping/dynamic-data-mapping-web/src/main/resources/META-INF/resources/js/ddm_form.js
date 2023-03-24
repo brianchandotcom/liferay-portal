@@ -1291,6 +1291,15 @@ AUI.add(
 					if (dataType || fields.length) {
 						fieldJSON.value = instance.get('localizationMap');
 
+						if (
+							!Object.keys(fieldJSON.value).length &&
+							instance.getValue() !== null
+						) {
+							fieldJSON.value[
+								instance.getDefaultLocale()
+							] = instance.getValue();
+						}
+
 						if (instance.get('localizable')) {
 							const form = instance.getForm();
 

@@ -1,0 +1,164 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-153117=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given Student object with name field created and published") {
+			var studentObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given Subject object with name field created and published") {
+			var subjectObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given a many-to-many studentsSubjects relationship created between Student and Subject") {
+			var objectDefinitionId1 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "studentsSubjects",
+				name = "studentsSubjects",
+				objectDefinitionId1 = ${studentObjectDefinitionId},
+				objectDefinitionId2 = ${subjectObjectDefinitionId},
+				type = "manyToMany");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateCustomObjectsEntriesWithPostChildObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When creating a Subject entry with postSubject including studentsSubjects with Student entries information") {
+			ObjectDefinitionAPI.createObjectEntryWithField(
+				en_US_plural_label = "subjects",
+				fieldName = "name",
+				fieldValue = "Math",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then both Subject and Student entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "students",
+				expectedCount = 2);
+
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "subjects",
+				expectedCount = 1);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateCustomObjectsEntriesWithPostParentObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When creating a Student entry with postStudent including studentsSubjects with Subject entries information") {
+			ObjectDefinitionAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then both Student and Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "students",
+				expectedCount = 1);
+
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "subjects",
+				expectedCount = 2);
+		}
+	}
+
+	@description = "Ignore tests unitl LPS-169348 fixed"
+	@disable-webdriver = "true"
+	@ignore = "true"
+	@priority = 4
+	test CannotCreateCustomObjectsEntriesWithInvliadObjectFieldInNestedFieldInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When creating a Student entry with postStudent including studentsSubjects with nonexistent field in Subject entries") {
+			ObjectDefinitionAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "subjectErc",
+				relatedEntryFieldName = "nonexistentField");
+		}
+
+		task ("Then no Student and Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "students",
+				expectedCount = 0);
+
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "subjects",
+				expectedCount = 0);
+		}
+	}
+
+	@description = "Ignore tests unitl LPS-169348 fixed"
+	@disable-webdriver = "true"
+	@ignore = "true"
+	@priority = 3
+	test CannotCreateCustomObjectsEntriesWithNonexistentNestedFieldInManyToManyRelationships {
+		property portal.acceptance = "true";
+
+		task ("When creating a Student entry with postStudent including nonexistent nestedField with Subject entries information") {
+			ObjectDefinitionAPI.createObjectEntryWithField(
+				en_US_plural_label = "subjects",
+				externalReferenceCode = "subjectErc",
+				fieldName = "name",
+				fieldValue = "Math",
+				nestedField = "nonexistentNestedField",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "studentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then no Student and Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "students",
+				expectedCount = 0);
+
+			CustomObjectAPI.assertCorrectObjectEntryCount(
+				en_US_plural_label = "subjects",
+				expectedCount = 0);
+		}
+	}
+
+}

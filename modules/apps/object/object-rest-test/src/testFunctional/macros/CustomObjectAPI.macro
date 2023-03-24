@@ -20,6 +20,18 @@ definition {
 		return ${curl};
 	}
 
+	macro assertCorrectObjectEntryCount {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${expectedCount}");
+
+		var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
+
+		var objectEntryCount = JSONUtil.getWithJSONPath(${response}, "$.totalCount");
+
+		TestUtils.assertEquals(
+			actual = ${objectEntryCount},
+			expected = ${expectedCount});
+	}
+
 	macro getObjectPermissions {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 

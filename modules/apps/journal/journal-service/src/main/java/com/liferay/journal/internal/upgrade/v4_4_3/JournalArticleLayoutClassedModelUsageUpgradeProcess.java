@@ -93,7 +93,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"'</asset-entry-uuid>') - (INSTR(value, '<asset-entry-uuid>') + ",
 			"LENGTH('<asset-entry-uuid>'))) uuid, portletPreferencesId from ",
 			"(select COALESCE(NULLIF(CAST_TEXT(largeValue), ''), smallValue) ",
-			"value, portletPreferencesId from PortletPreferenceValue where ",
+			"as value, portletPreferencesId from PortletPreferenceValue where ",
 			"name = 'assetEntryXml') innerTemp where value like ",
 			"'%<asset-entry-type>com.liferay.journal.model.JournalArticle%' ",
 			"or value like '%<asset-entry-type></asset-entry-type>%' or value ",

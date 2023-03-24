@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -220,6 +221,63 @@ public class FragmentCollectionContributorPropagationTest {
 			});
 	}
 
+	private void _assertCompanyContext(long companyId) {
+		Assert.assertTrue(
+			Objects.equals(companyId, CompanyThreadLocal.getCompanyId()));
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Assert.assertNotNull(serviceContext);
+		Assert.assertEquals(companyId, serviceContext.getCompanyId());
+		_assertThemeDisplay(companyId, serviceContext.getThemeDisplay());
+		_assertHttpServletRequest(companyId, serviceContext.getRequest());
+	}
+
+	private void _assertHttpServletRequest(
+		long companyId, HttpServletRequest httpServletRequest) {
+
+		Assert.assertNotNull(httpServletRequest);
+		Assert.assertEquals(
+			companyId,
+			GetterUtil.getLong(
+				httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
+
+		_assertThemeDisplay(
+			companyId,
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
+
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
+
+		Assert.assertNotNull(layout);
+		Assert.assertEquals(companyId, layout.getCompanyId());
+
+		User user = (User)httpServletRequest.getAttribute(WebKeys.USER);
+
+		Assert.assertNotNull(user);
+
+		User defaultUser = _userLocalService.fetchDefaultUser(companyId);
+
+		Assert.assertEquals(defaultUser.getUserId(), user.getUserId());
+
+		Assert.assertEquals(
+			user.getUserId(),
+			GetterUtil.getLong(
+				httpServletRequest.getAttribute(WebKeys.USER_ID)));
+	}
+
+	private void _assertThemeDisplay(
+		long companyId, ThemeDisplay themeDisplay) {
+
+		Assert.assertNotNull(themeDisplay);
+		Assert.assertNotNull(themeDisplay.getCompany());
+		Assert.assertEquals(companyId, themeDisplay.getCompanyId());
+		Assert.assertNotNull(themeDisplay.getRequest());
+		Assert.assertNotNull(themeDisplay.getResponse());
+		Assert.assertNotNull(themeDisplay.getUser());
+	}
+
 	private FragmentEntry _getFragmentEntry(String key, String html, int type) {
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
@@ -293,6 +351,8 @@ public class FragmentCollectionContributorPropagationTest {
 		serviceContext.setRequest(httpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_assertCompanyContext(company.getCompanyId());
 	}
 
 	@Inject
@@ -345,7 +405,10 @@ public class FragmentCollectionContributorPropagationTest {
 				return html;
 			}
 
-			Assert.assertNotNull(
+			_assertCompanyContext(fragmentEntryLink.getCompanyId());
+
+			_assertHttpServletRequest(
+				fragmentEntryLink.getCompanyId(),
 				fragmentEntryProcessorContext.getHttpServletRequest());
 
 			Assert.assertNotNull(

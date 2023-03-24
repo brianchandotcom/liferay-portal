@@ -251,6 +251,12 @@ definition {
 				fieldValue = ${frequencyThreshold});
 		}
 
+		if (isSet(rangesArray)) {
+			FormFields.editTextMultiline(
+				fieldName = "rangesJSONArray",
+				fieldValue = ${rangesArray});
+		}
+
 		if (${displayFrequencies} == "disable") {
 			FormFields.disableCheckbox(fieldName = "frequenciesVisible");
 		}

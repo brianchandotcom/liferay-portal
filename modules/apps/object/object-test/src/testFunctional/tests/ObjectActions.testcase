@@ -1194,9 +1194,13 @@ definition {
 				value1 = "Canceled");
 
 			Button.click(button = "Submit");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Then assert the action run and the notification is in the queue") {
+			Navigator.openURL();
+
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Commerce Order");

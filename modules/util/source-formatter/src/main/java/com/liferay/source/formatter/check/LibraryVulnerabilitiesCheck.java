@@ -411,7 +411,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 				!Objects.equals(
 					securityAdvisoryEcosystemEnum.name(), parts[0]) ||
 				!packageName.equals(parts[1]) ||
-				versionRange.containsVersion(defaultArtifactVersion)) {
+				!versionRange.containsVersion(defaultArtifactVersion)) {
 
 				continue;
 			}

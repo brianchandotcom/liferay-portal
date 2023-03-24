@@ -584,7 +584,7 @@ const filterSchema = {
 			},
 			{
 				label: i18n.translate('link'),
-				name: 'linkURL',
+				name: 'linkTitle',
 				operator: 'contains',
 				type: 'text',
 			},

@@ -59,10 +59,7 @@ const Build = () => {
 	const caseResultFilter = useSearchBuilder({useURIEncode: false});
 
 	const filter = runId
-		? caseResultFilter
-				.eq('buildId', buildId as string)
-
-				.build()
+		? caseResultFilter.eq('buildId', buildId as string).build()
 		: caseResultFilter.eq('buildId', buildId as string).build();
 
 	return (
@@ -71,8 +68,6 @@ const Build = () => {
 				initialContext={{
 					columns: {environment: false},
 					filters: filterInitialContext,
-
-					// ...(runId && {filters: filterInitialContext}),
 				}}
 				managementToolbarProps={{
 					filterSchema: 'buildResults',

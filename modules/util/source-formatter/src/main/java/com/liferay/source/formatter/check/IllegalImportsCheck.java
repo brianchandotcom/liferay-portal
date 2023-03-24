@@ -62,14 +62,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				});
 		}
 
-		if (isAttributeValue(
-				_ENFORCE_PETRA_FUNCTION_TRANSFORM_UTIL_KEY, absolutePath)) {
-
-			content = StringUtil.replace(
-				content, "com.liferay.portal.vulcan.util.TransformUtil",
-				"com.liferay.petra.function.transform.TransformUtil");
-		}
-
 		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
 			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
 			content.contains("import java.lang.reflect.Proxy;")) {
@@ -254,9 +246,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 	private static final String _ENFORCE_JAVA_UTIL_FUNCTION_IMPORTS_KEY =
 		"enforceJavaUtilFunctionImports";
-
-	private static final String _ENFORCE_PETRA_FUNCTION_TRANSFORM_UTIL_KEY =
-		"enforcePetraFunctionTransformUtil";
 
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 

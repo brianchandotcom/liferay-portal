@@ -6,7 +6,6 @@ definition {
 	property testray.main.component.name = "Deployment";
 
 	@description = "LPS-173157 Verify a file is not consumed by auto deploy before it's listener is ready."
-	@ignore = "true"
 	@priority = 3
 	test FragmentAutoDeploy {
 		property skip.start.app.server = "true";

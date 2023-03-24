@@ -87,10 +87,10 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().cancelCheckOut(userId, fileEntryId);
 	}
 
-	public static void checkFileEntries(long checkInterval)
+	public static void checkFileEntries(long companyId, long checkInterval)
 		throws PortalException {
 
-		getService().checkFileEntries(checkInterval);
+		getService().checkFileEntries(companyId, checkInterval);
 	}
 
 	public static void checkInFileEntry(

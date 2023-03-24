@@ -109,7 +109,8 @@ public interface DLFileEntryLocalService
 	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException;
 
-	public void checkFileEntries(long checkInterval) throws PortalException;
+	public void checkFileEntries(long companyId, long checkInterval)
+		throws PortalException;
 
 	public void checkInFileEntry(
 			long userId, long fileEntryId,

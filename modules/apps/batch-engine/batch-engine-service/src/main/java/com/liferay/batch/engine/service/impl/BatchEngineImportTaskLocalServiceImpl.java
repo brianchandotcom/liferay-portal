@@ -14,6 +14,8 @@
 
 package com.liferay.batch.engine.service.impl;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
@@ -62,6 +64,10 @@ public class BatchEngineImportTaskLocalServiceImpl
 				(String)parameters.getOrDefault("delimiter", null));
 			_validateEnclosingCharacter(
 				(String)parameters.getOrDefault("enclosingCharacter", null));
+			_validateStrategies(
+				className, taskItemDelegateName,
+				(String)parameters.getOrDefault("createStrategy", null),
+				(String)parameters.getOrDefault("updateStrategy", null));
 		}
 
 		BatchEngineImportTask batchEngineImportTask =
@@ -160,11 +166,39 @@ public class BatchEngineImportTaskLocalServiceImpl
 		}
 	}
 
+	private void _validateStrategies(
+			String className, String taskItemDelegateName,
+			String createStrategy, String updateStrategy)
+		throws BatchEngineImportTaskParametersException {
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				className, taskItemDelegateName);
+
+		if (Validator.isNotNull(createStrategy) &&
+			!batchEngineTaskItemDelegate.hasCreateStrategy(createStrategy)) {
+
+			throw new BatchEngineImportTaskParametersException(
+				"Illegal create strategy " + createStrategy);
+		}
+
+		if (Validator.isNotNull(updateStrategy) &&
+			!batchEngineTaskItemDelegate.hasUpdateStrategy(updateStrategy)) {
+
+			throw new BatchEngineImportTaskParametersException(
+				"Illegal update strategy " + updateStrategy);
+		}
+	}
+
 	private static final String _INVALID_ENCLOSING_CHARACTERS =
 		StringPool.APOSTROPHE + StringPool.QUOTE;
 
 	@Reference
 	private BatchEngineImportTaskErrorPersistence
 		_batchEngineImportTaskErrorPersistence;
+
+	@Reference
+	private BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
 
 }

@@ -2344,8 +2344,6 @@ definition {
 		}
 	}
 
-	
-
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = 3
 	test CheckDefaultLanguageTag {
@@ -2486,8 +2484,6 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 	}
-
-	
 
 	@description = "LPS-152077 Bug: Error updating segment which contains a non-existing segment"
 	@priority = 4
@@ -2726,8 +2722,6 @@ definition {
 		}
 	}
 
-	
-
 	@description = "LPS-150511 Bug: Can't scroll down in segments editor sidebar"
 	@priority = 4
 	test ScrollDownSegmentsEditor {
@@ -2928,12 +2922,6 @@ definition {
 				value1 = "Segmento Espanol");
 		}
 	}
-
-	
-
-	
-
-	
 
 	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
 	@priority = 4
@@ -3325,12 +3313,6 @@ definition {
 			}
 		}
 	}
-
-	
-
-	
-
-	
 
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = 4

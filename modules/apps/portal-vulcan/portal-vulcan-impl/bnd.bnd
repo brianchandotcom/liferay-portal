@@ -23,3 +23,4 @@ Import-Package:\
 	!org.jsoup.*,\
 	\
 	*
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

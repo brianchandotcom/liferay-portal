@@ -28,3 +28,4 @@ test-results
 **/dist
 **/node_modules_cache
 .DS_Store
+!**/src/main/java/**/build

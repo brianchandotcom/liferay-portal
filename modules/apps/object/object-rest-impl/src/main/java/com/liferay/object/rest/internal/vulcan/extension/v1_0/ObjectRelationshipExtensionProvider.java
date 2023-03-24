@@ -75,7 +75,7 @@ public class ObjectRelationshipExtensionProvider
 			return Collections.emptyMap();
 		}
 
-		ObjectDefinition objectDefinition = getObjectDefinition(
+		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
 		List<ObjectRelationship> objectRelationships = _getObjectRelationships(
@@ -118,7 +118,7 @@ public class ObjectRelationshipExtensionProvider
 
 		PropertyValidator propertyValidator;
 
-		ObjectDefinition objectDefinition = getObjectDefinition(
+		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
 		for (ObjectRelationship objectRelationship :
@@ -176,7 +176,7 @@ public class ObjectRelationshipExtensionProvider
 			Map<String, Serializable> extendedProperties)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = getObjectDefinition(
+		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
 		if (objectDefinition == null) {

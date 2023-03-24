@@ -25,6 +25,11 @@
 	<td>//div[@class='liferay-modal-body'][contains(text(),'${key_modalText}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_ENTRY_BUTTON</td>
+	<td>//div[contains(@class,'show')]//button[contains(.,'View')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

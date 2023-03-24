@@ -305,17 +305,9 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			String mergedCSSResourceURLs = _mergedCSSResourceURLs;
 
 			if (mergedCSSResourceURLs == null) {
-				StringBundler sb = new StringBundler(
-					(_cssResourceURLs.size() * 2) + 1);
-
-				for (String cssResourceURL : _cssResourceURLs) {
-					sb.append("&");
-					sb.append(cssResourceURL);
-				}
-
-				sb.append("\" rel=\"stylesheet\" type = \"text/css\" />\n");
-
-				mergedCSSResourceURLs = sb.toString();
+				mergedCSSResourceURLs =
+					_mergeURLs(_cssResourceURLs) +
+						"\" rel=\"stylesheet\" type = \"text/css\" />\n";
 
 				_mergedCSSResourceURLs = mergedCSSResourceURLs;
 			}
@@ -327,17 +319,9 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			String mergedJSResourceURLs = _mergedJSResourceURLs;
 
 			if (mergedJSResourceURLs == null) {
-				StringBundler sb = new StringBundler(
-					(_jsResourceURLs.size() * 2) + 1);
-
-				for (String jsResourceURL : _jsResourceURLs) {
-					sb.append("&");
-					sb.append(jsResourceURL);
-				}
-
-				sb.append("\" type = \"text/javascript\"></script>\n");
-
-				mergedJSResourceURLs = sb.toString();
+				mergedJSResourceURLs =
+					_mergeURLs(_jsResourceURLs) +
+						"\" type = \"text/javascript\"></script>\n";
 
 				_mergedJSResourceURLs = mergedJSResourceURLs;
 			}
@@ -350,6 +334,17 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 			_cssResourceURLs = cssResourceURLs;
 			_jsResourceURLs = jsResourceURLs;
+		}
+
+		private String _mergeURLs(List<String> urls) {
+			StringBundler sb = new StringBundler(urls.size() * 2);
+
+			for (String url : urls) {
+				sb.append("&");
+				sb.append(url);
+			}
+
+			return sb.toString();
 		}
 
 		private final List<String> _cssResourceURLs;

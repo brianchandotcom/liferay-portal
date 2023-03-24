@@ -23,7 +23,7 @@
 		<div class="align-items-baseline d-flex justify-content-between">
 			<div class="align-items-baseline d-flex">
 				<p class="font-weight-bold text-neutral-9 text-paragraph-sm">
-					Claimed ${get_currency(claim.amountClaimed, claim.currency.key)}
+					Claimed ${get_currency(claim.amountClaimed, (claim.currency.key)!"USD")}
 				</p>
 
 				<div class="${claim_status_style[claim.mdfClaimStatus.key]}">
@@ -46,35 +46,36 @@
 	[#assign mdf_request = restClient.get("/c/mdfrequests/${mdf_request_id}?nestedFields=mdfReqToMDFClms,mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=3") /]
 	[#assign valid_claims_size = mdf_request.mdfReqToMDFClms?filter(mdf_claim -> check_claim(mdf_claim.mdfClaimStatus.key))?size /]
 
-	[#if mdf_request.mdfRequestStatus.key == "approved"]
+	[#if mdf_request.mdfRequestStatus.key == "approved" || mdf_request.mdfRequestStatus.key == "canceled" ]
 		[#list mdf_request.mdfReqToMDFClms as claim]
 			[@panel claim=claim site_url=site_url /]
 		[/#list]
 
-		<div class="align-items-start d-flex justify-content-between">
-			<div>
-				<h6 class="font-weight-normal text-neutral-9">
-					Get Reimbursed
-				</h6>
+		[#if mdf_request.mdfRequestStatus.key != "canceled" ]
+			<div class="align-items-start d-flex justify-content-between">
+				<div>
+					<h6 class="font-weight-normal text-neutral-9">
+						Get Reimbursed
+					</h6>
+
+					[#if valid_claims_size < 2]
+						<h6 class="font-weight-normal text-neutral-8">
+							You can submit up to ${2 - valid_claims_size} claim(s).
+						</h6>
+					[#else]
+						<h6 class="font-weight-normal text-neutral-8">
+							You already submitted 2 claims.
+						</h6>
+					[/#if]
+				</div>
 
 				[#if valid_claims_size < 2]
-					<h6 class="font-weight-normal text-neutral-8">
-						You can submit up to ${2 - valid_claims_size} claim(s).
-					</h6>
-				[#else]
-					<h6 class="font-weight-normal text-neutral-8">
-						You already submitted 2 claims.
-					</h6>
+					<a class="btn btn-primary" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdf_request_id}">
+						New Claim
+					</a>
 				[/#if]
 			</div>
-
-			[#if valid_claims_size < 2]
-				<a class="btn btn-primary" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdf_request_id}">
-					New Claim
-				</a>
-			[/#if]
-
-		</div>
+		[/#if]
 	[#else]
 		[@clay.alert displayType="info" message="Waiting for manager approval." title="Info" /]
 	[/#if]

@@ -11,6 +11,7 @@
 		"@clayui/management-toolbar": "^3.65.1",
 		"@clayui/modal": "^3.89.0",
 		"@clayui/navigation-bar": "^3.85.0",
+		"@clayui/pagination-bar": "^3.91.0",
 		"@clayui/table": "^3.56.0",
 		"@clayui/tooltip": "^3.85.0",
 		"@types/lodash": "^4.14.191",

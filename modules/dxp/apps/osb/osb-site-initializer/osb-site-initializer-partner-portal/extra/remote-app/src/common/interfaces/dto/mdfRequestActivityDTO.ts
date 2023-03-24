@@ -28,6 +28,7 @@ type MDFRequestActivityDTO = Omit<
 		mdfRequestExternalReferenceCodeSF?: string;
 		r_accToActs_accountEntryId?: number;
 		r_mdfReqToActs_c_mdfRequestId?: number;
+		selected?: boolean;
 	};
 
 export default MDFRequestActivityDTO;

@@ -10,19 +10,21 @@
  */
 
 import MDFClaimActivityDTO from '../../../interfaces/dto/mdfClaimActivityDTO';
+import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaimActivity from '../../../interfaces/mdfClaimActivity';
 
 export default function getDTOFromMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
 	mdfClaimId?: number,
-	listQualifiedLeadsDocumentId?: number
+	listOfQualifiedLeadsDocumentId?: LiferayFile & number
 ): MDFClaimActivityDTO {
 	return {
 		currency: mdfClaimActivity.currency,
-		listOfQualifiedLeads: listQualifiedLeadsDocumentId,
+		listOfQualifiedLeads: listOfQualifiedLeadsDocumentId,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
-		r_actToMDFClmActs_c_activityId: mdfClaimActivity.id,
+		r_actToMDFClmActs_c_activityId:
+			mdfClaimActivity.r_actToMDFClmActs_c_activityId,
 		r_mdfClmToMDFClmActs_c_mdfClaimId: mdfClaimId,
 		selected: mdfClaimActivity.selected,
 		totalCost: mdfClaimActivity.totalCost,

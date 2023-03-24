@@ -10,18 +10,20 @@
  */
 
 import MDFClaimBudgetDTO from '../../../interfaces/dto/mdfClaimBudgetDTO';
+import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaimBudget from '../../../interfaces/mdfClaimBudget';
 
 export default function getDTOFromMDFClaimBudget(
 	mdfClaimBudget: MDFClaimBudget,
 	mdfClaimActivityId?: number,
-	budgetInvoiceId?: number
+	budgetInvoiceId?: LiferayFile & number
 ): MDFClaimBudgetDTO {
 	return {
 		expenseName: mdfClaimBudget.expenseName,
 		invoice: budgetInvoiceId,
 		invoiceAmount: mdfClaimBudget.invoiceAmount,
-		r_bgtToMDFClmBgts_c_budgetId: mdfClaimBudget.id,
+		r_bgtToMDFClmBgts_c_budgetId:
+			mdfClaimBudget.r_bgtToMDFClmBgts_c_budgetId,
 		r_mdfClmActToMDFClmBgts_c_mdfClaimActivityId: mdfClaimActivityId,
 		selected: mdfClaimBudget.selected,
 	};

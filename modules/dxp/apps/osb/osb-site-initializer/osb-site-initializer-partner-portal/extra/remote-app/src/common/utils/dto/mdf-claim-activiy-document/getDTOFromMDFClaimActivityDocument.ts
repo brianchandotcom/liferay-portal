@@ -10,9 +10,10 @@
  */
 
 import MDFClaimActivityDocumentDTO from '../../../interfaces/dto/mdfClaimActivityDocumentDTO';
+import LiferayFile from '../../../interfaces/liferayFile';
 
 export function getDTOFromMDFClaimActivityDocument(
-	allContentId: number,
+	allContentId: LiferayFile & number,
 	mdfClaimActivityId?: number
 ): MDFClaimActivityDocumentDTO {
 	return {

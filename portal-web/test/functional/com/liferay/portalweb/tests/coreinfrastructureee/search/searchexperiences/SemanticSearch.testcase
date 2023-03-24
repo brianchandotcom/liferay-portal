@@ -312,7 +312,7 @@ definition {
 			Button.clickSave();
 
 			Click(
-				key_text = "Continue",
+				key_text = "Continue to Save",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 			Alert.viewSuccessMessage();
@@ -397,7 +397,7 @@ definition {
 			Button.clickSave();
 
 			Click(
-				key_text = "Continue",
+				key_text = "Continue to Save",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 			Alert.viewSuccessMessage();
@@ -453,7 +453,7 @@ definition {
 			Button.clickSave();
 
 			Click(
-				key_text = "Continue",
+				key_text = "Continue to Save",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 			Alert.viewSuccessMessage();
@@ -509,7 +509,7 @@ definition {
 			SystemSettings.saveConfiguration();
 
 			AssertElementNotPresent(
-				key_text = "Continue",
+				key_text = "Continue to Save",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 			Navigator.openURL();
@@ -530,7 +530,7 @@ definition {
 			Button.clickSave();
 
 			Click(
-				key_text = "Continue",
+				key_text = "Continue to Save",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 			Alert.viewSuccessMessage();
@@ -554,7 +554,7 @@ definition {
 			Button.clickSave();
 
 			Click(
-				key_text = "Close",
+				key_text = "Cancel",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 			AssertElementPresent(

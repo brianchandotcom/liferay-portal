@@ -201,7 +201,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
+	private ObjectDefinition _addObjectDefinition(ObjectField objectFields)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(

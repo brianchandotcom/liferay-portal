@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openToast, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -77,16 +77,11 @@ import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
-import {
-	FORM_ERROR_TYPES,
-	getFormErrorDescription,
-} from '../../../../../app/utils/getFormErrorDescription';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
-import updateItemStyle from '../../../../../app/utils/updateItemStyle';
-import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 import useControlledState from '../../../../../common/hooks/useControlledState';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
+import VisibilityButton from './VisibilityButton';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -591,53 +586,6 @@ const NameLabel = React.forwardRef(
 		);
 	}
 );
-
-const VisibilityButton = ({dispatch, node, selectedViewportSize, visible}) => {
-	const hasRequiredChild = useHasRequiredChild(node.id);
-
-	return (
-		<ClayButton
-			aria-label={sub(
-				node.hidden || node.hiddenAncestor
-					? Liferay.Language.get('show-x')
-					: Liferay.Language.get('hide-x'),
-				[node.name]
-			)}
-			className={classNames(
-				'page-editor__page-structure__tree-node__visibility-button',
-				{
-					'page-editor__page-structure__tree-node__visibility-button--visible': visible,
-				}
-			)}
-			disabled={node.isMasterItem || node.hiddenAncestor}
-			displayType="unstyled"
-			onClick={() => {
-				updateItemStyle({
-					dispatch,
-					itemId: node.id,
-					selectedViewportSize,
-					styleName: 'display',
-					styleValue: node.hidden ? 'block' : 'none',
-				});
-
-				if (!node.hidden && hasRequiredChild()) {
-					const {message} = getFormErrorDescription({
-						type: FORM_ERROR_TYPES.hiddenFragment,
-					});
-
-					openToast({
-						message,
-						type: 'warning',
-					});
-				}
-			}}
-		>
-			<ClayIcon
-				symbol={node.hidden || node.hiddenAncestor ? 'hidden' : 'view'}
-			/>
-		</ClayButton>
-	);
-};
 
 const MoveButton = ({
 	canUpdate,

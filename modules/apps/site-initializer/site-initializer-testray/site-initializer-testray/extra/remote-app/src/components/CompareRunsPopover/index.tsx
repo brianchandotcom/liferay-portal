@@ -38,6 +38,8 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 	triggedRef,
 	visible,
 }) => {
+	const ref = useRef<HTMLDivElement>(null);
+
 	const {compareRuns, setRunA, setRunB} = useRuns();
 	const disableButtonA = !(compareRuns?.runId || compareRuns?.runA);
 	const disableButtonB = !(compareRuns?.runId || compareRuns?.runB);
@@ -67,7 +69,6 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 				})
 			);
 	};
-	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {

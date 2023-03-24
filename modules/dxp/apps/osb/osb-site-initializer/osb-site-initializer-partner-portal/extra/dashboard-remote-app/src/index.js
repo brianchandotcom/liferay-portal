@@ -20,30 +20,30 @@ import RevenueChart from './routes/revenue-chart';
 
 const ELEMENT_ID = 'liferay-dashboard-remote-app-partner-portal';
 
-const DashboardPartnerPortalApp = ({route}) => {
-	if (route === 'deals-chart') {
+const DashboardPartnerPortalApp = ({type}) => {
+	if (type === 'deals-chart') {
 		return <DealsChart />;
 	}
 
-	if (route === 'level-chart') {
+	if (type === 'level-chart') {
 		return <LevelChart />;
 	}
 
-	if (route === 'mdf-requests-chart') {
+	if (type === 'mdf-requests-chart') {
 		return <MDFRequestChart />;
 	}
 
-	if (route === 'renewals-chart') {
+	if (type === 'renewals-chart') {
 		return <RenewalsChart />;
 	}
 
-	if (route === 'revenue-chart') {
+	if (type === 'revenue-chart') {
 		return <RevenueChart />;
 	}
 
 	return (
 		<ClayAlert displayType="danger" title="Error:">
-			Route not defined
+			Type not defined
 		</ClayAlert>
 	);
 };
@@ -51,7 +51,7 @@ const DashboardPartnerPortalApp = ({route}) => {
 class DashboardPartnerPortalWebComponent extends HTMLElement {
 	connectedCallback() {
 		ReactDOM.render(
-			<DashboardPartnerPortalApp route={super.getAttribute('route')} />,
+			<DashboardPartnerPortalApp type={super.getAttribute('type')} />,
 			this
 		);
 	}

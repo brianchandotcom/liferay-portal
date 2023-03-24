@@ -37,7 +37,7 @@ export default function () {
 		if (response.ok) {
 			const revenueData = await response.json();
 
-			const revenueCurrency = revenueData?.items[0]?.currency.key;
+			const revenueCurrency = revenueData?.items[0]?.currency?.key;
 
 			setCurrencyData(revenueCurrency);
 

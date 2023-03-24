@@ -82,7 +82,7 @@ const ChangeUserPassword: React.FC = () => {
 			.then(mutatePassword)
 			.then(() => onSave())
 			.catch((error) => {
-				if (error.info.type === 'MustMatchCurrentPassword') {
+				if (error.info.type.includes('MustMatchCurrentPassword')) {
 					return setError('currentPassword', {
 						message: i18n.translate(
 							'current-password-is-incorrect'

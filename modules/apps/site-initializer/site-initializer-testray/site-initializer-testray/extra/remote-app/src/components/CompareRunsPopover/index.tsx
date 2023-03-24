@@ -44,12 +44,6 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 	const validateCompareButtons = !(compareRuns?.runA && compareRuns?.runB);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (compareRuns?.runA || compareRuns?.runB) {
-			setVisible(true);
-		}
-	}, [compareRuns, setVisible]);
-
 	const onAutoFill = (type: 'Build' | 'Run') => {
 		if (!compareRuns.runA || !compareRuns.runB) {
 			return;

@@ -149,23 +149,20 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		Set<InfoItemReference> infoItemReferences = new HashSet<>();
 
 		for (String parameterValue : parameterValues) {
-			JSONObject jsonObject = null;
-
 			try {
-				jsonObject = _jsonFactory.createJSONObject(parameterValue);
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					parameterValue);
+
+				infoItemReferences.add(
+					new InfoItemReference(
+						jsonObject.getString("className"),
+						new ClassNameClassPKInfoItemIdentifier(
+							jsonObject.getString("entryClassName"),
+							jsonObject.getLong("classPK"))));
 			}
 			catch (JSONException jsonException) {
 				_log.error(jsonException);
-
-				continue;
 			}
-
-			infoItemReferences.add(
-				new InfoItemReference(
-					jsonObject.getString("className"),
-					new ClassNameClassPKInfoItemIdentifier(
-						jsonObject.getString("entryClassName"),
-						jsonObject.getLong("classPK"))));
 		}
 
 		return infoItemReferences;

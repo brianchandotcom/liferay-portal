@@ -15,108 +15,24 @@
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectFieldService;
-import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
-import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=30",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=30",
+	service = ScreenNavigationCategory.class
 )
 public class ObjectDefinitionsRelationshipsScreenNavigationCategory
-	extends BaseObjectDefinitionsScreenNavigationEntry
-	implements ScreenNavigationCategory {
+	extends BaseObjectDefinitionsScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
 			CATEGORY_KEY_RELATIONSHIPS;
 	}
-
-	@Override
-	public String getEntryKey() {
-		return ObjectDefinitionsScreenNavigationEntryConstants.
-			ENTRY_KEY_RELATIONSHIPS;
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/object_definitions/object_definition/relationships.jsp";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "relationships");
-	}
-
-	@Override
-	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
-		return objectDefinition.isDefaultStorageType();
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new ObjectDefinitionsRelationshipsDisplayContext(
-				_ffOneToOneRelationshipConfigurationActivator,
-				httpServletRequest, _objectDefinitionModelResourcePermission,
-				_objectDefinitionService, _objectFieldService,
-				_systemObjectDefinitionManagerRegistry));
-
-		super.render(httpServletRequest, httpServletResponse);
-	}
-
-	@Reference
-	private FFOneToOneRelationshipConfigurationActivator
-		_ffOneToOneRelationshipConfigurationActivator;
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
-	)
-	private ModelResourcePermission<ObjectDefinition>
-		_objectDefinitionModelResourcePermission;
-
-	@Reference
-	private ObjectDefinitionService _objectDefinitionService;
-
-	@Reference
-	private ObjectFieldService _objectFieldService;
-
-	@Reference
-	private SystemObjectDefinitionManagerRegistry
-		_systemObjectDefinitionManagerRegistry;
 
 }

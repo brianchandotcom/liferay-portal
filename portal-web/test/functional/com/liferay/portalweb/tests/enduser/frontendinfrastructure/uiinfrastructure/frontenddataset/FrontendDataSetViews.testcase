@@ -66,11 +66,7 @@ definition {
 		}
 
 		task ("And the user deletes a dataset") {
-			FrontendDataSetAdmin.deleteDataSet(
-				entry = "Test Dataset",
-				modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.");
-
-			Button.clickDelete();
+			FrontendDataSetAdmin.deleteDataSet(entry = "Test Dataset");
 		}
 
 		task ("Then The dataset is not present in the data set Admin page") {
@@ -80,7 +76,7 @@ definition {
 		}
 	}
 
-	@description = "Confirm the error message that appears when the user tries to create a dataset view with more than 280 characters in the name field"
+	@description = "LPS-178779. Confirm the error message that appears when the user tries to create a dataset view with more than 280 characters in the name field"
 	@priority = 3
 	test CannotExceed280Characters {
 		task ("When the user goes to add Datasets") {
@@ -103,6 +99,28 @@ definition {
 			AssertTextPresent(
 				locator1 = "Message#ERROR",
 				value1 = "Your request failed to complete.");
+		}
+	}
+
+	@description = "LPS-179768. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
+	@priority = 3
+	test DeleteAndViewAreAvailable {
+		task ("When The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Channel");
+		}
+
+		task ("And opening the dropdown menu") {
+			Click(
+				key_entry = "Test Dataset",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
+
+		task ("Then Confirm that the options view and Delete is present and is visible") {
+			AssertElementPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			AssertElementPresent(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
 		}
 	}
 
@@ -188,9 +206,15 @@ definition {
 		}
 
 		task ("And the user deletes a dataset") {
-			FrontendDataSetAdmin.deleteDataSet(
-				entry = "Test Dataset",
-				modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.");
+			Click(
+				key_entry = "Test Dataset",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			AssertElementPresent(
+				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 			Button.clickCancel();
 		}
@@ -212,9 +236,15 @@ definition {
 		}
 
 		task ("And When the user deletes a dataset") {
-			FrontendDataSetAdmin.deleteDataSet(
-				entry = "Test Dataset",
-				modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.");
+			Click(
+				key_entry = "Test Dataset",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			AssertElementPresent(
+				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And When the user clicks on the 'X' button in the modal") {

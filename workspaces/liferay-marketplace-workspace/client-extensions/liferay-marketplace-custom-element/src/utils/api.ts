@@ -284,6 +284,23 @@ export async function getProductSpecifications({
 	return await response.json();
 }
 
+
+export async function getProductSubscriptionConfiguration({
+	appERC,
+}: {
+	appERC: string;
+}) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}/subscriptionConfiguration`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
 export async function getVocabularies() {
 	const response = await fetch(
 		`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`,

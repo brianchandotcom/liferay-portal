@@ -18,6 +18,7 @@ import {
 	getProduct,
 	getProductSKU,
 	getProductSpecifications,
+	getProductSubscriptionConfiguration,
 } from '../../utils/api';
 import {CardSection} from './CardSection';
 import {ReviewAndSubmitAppPageUtilProps} from './ReviewAndSubmitAppPageUtil';
@@ -54,8 +55,6 @@ export function ReviewAndSubmitAppPage({
 	const [notes, setNotes] = useState('');
 	const [appLicense, setAppLicense] = useState('');
 
-	const [price, setPrice] = useState(0);
-
 	const [cardInfos, setCardInfos] = useState<
 		{icon: string; link: string; title: string}[]
 	>([]);
@@ -73,14 +72,13 @@ export function ReviewAndSubmitAppPage({
 				appERC,
 			});
 
-
 			const productCategories = {
 				section: "Categories",
 				tags: productResponse.categories
-					.filter((category : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+					.filter((category : any) => {
 						return category.vocabulary === 'marketplace-solution-category';
 					})
-					.map((category : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+					.map((category : any) => {
 						return category.name;
 					})
 			};
@@ -88,10 +86,10 @@ export function ReviewAndSubmitAppPage({
 			const productTags = {
 				section: "Tags",
 				tags: productResponse.categories
-					.filter((tag : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+					.filter((tag : any) => {
 						return tag.vocabulary === 'marketplace-solution-tags';
 					})
-					.map((tag : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+					.map((tag : any) => {
 						return tag.name;
 					})
 			};
@@ -113,14 +111,30 @@ export function ReviewAndSubmitAppPage({
 				title: priceModel,
 			};
 
-			setReviewAndSubmitAppPageItems([productCategories, productTags, pricing]);
-			
-			setPrice(skuResponse.items[0]?.price);
+			dispatch({
+				payload: {
+					value: skuResponse.items[0]?.price
+				},
+				type: TYPES.UPDATE_APP_LICENSE_PRICE,
+			});
+
+			const productSubscriptionConfigurationResponse = await getProductSubscriptionConfiguration({
+				appERC,
+			});
+
+			const licensing = {
+				description: productSubscriptionConfigurationResponse.subscriptionType ? 'License must be renewed annually.' : 'License never expires.',
+				icon: scheduleIcon,
+				section: 'Licensing',
+				title: productSubscriptionConfigurationResponse.subscriptionType ? 'Non-Perpetual License' : 'Perpetual License',
+			};
+
+			setReviewAndSubmitAppPageItems([productCategories, productTags, pricing, licensing]);
 
 			const productSpecificationsResponse =
 				await getProductSpecifications({
 					appProductId,
-				});
+				})
 
 			// const productImages = await getProductImages({ appProductId });
 
@@ -272,7 +286,7 @@ export function ReviewAndSubmitAppPage({
 										return priceModel;
 									}
 									else if (item.section === 'Licensing') {
-										return appLicense;
+										return item.title;
 									}
 									else if (item.section === 'Version') {
 										return item.title;

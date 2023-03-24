@@ -140,6 +140,21 @@
 	top: 0;
 }
 
+.layout-container .icon-tools {
+	margin-right: 20px;
+	margin-top: 3px !important;
+}
+
+.layout-container .notification-span {
+	margin-left: 20px;
+}
+
+.layout-container .notifications-sidebar-header {
+	box-shadow: 0 5px 15px rgb(77 133 255 / 12%);
+	padding-bottom: 18px;
+	padding-top: 18px;
+}
+
 .layout-container .mobile-header-container .search-icon,
 .layout-container .mobile-header-container .menu-icon,
 .page-header-container .header-content .search-icon {

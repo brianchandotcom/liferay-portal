@@ -1456,6 +1456,10 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 depth:
                     example: 1.1
                     format: double

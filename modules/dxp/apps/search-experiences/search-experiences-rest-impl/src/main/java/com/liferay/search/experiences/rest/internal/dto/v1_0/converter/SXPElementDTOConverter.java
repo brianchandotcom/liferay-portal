@@ -104,6 +104,10 @@ public class SXPElementDTOConverter
 			UiConfiguration uiConfiguration =
 				elementDefinition.getUiConfiguration();
 
+			if (uiConfiguration == null) {
+				return elementDefinition;
+			}
+
 			FieldSet[] fieldSets = uiConfiguration.getFieldSets();
 
 			if (fieldSets == null) {

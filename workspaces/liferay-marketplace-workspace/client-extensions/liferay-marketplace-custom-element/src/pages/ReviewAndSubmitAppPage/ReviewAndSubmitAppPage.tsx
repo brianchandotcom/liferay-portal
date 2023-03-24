@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react';
 
+import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
 import documentationIcon from '../../assets/icons/documentation-icon.svg';
 import emptyImage from '../../assets/icons/emptyImage.svg';
 import globeIcon from '../../assets/icons/globe-icon.svg';
 import guideIcon from '../../assets/icons/guide-icon.svg';
 import phoneIcon from '../../assets/icons/phone-icon.svg';
+import scheduleIcon from '../../assets/icons/schedule-icon.svg';
 import usageTermsIcon from '../../assets/icons/usage-terms-icon.svg';
 import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Header} from '../../components/Header/Header';
@@ -18,7 +20,7 @@ import {
 	getProductSpecifications,
 } from '../../utils/api';
 import {CardSection} from './CardSection';
-import {initialReviewAndSubmitAppPageItems} from './ReviewAndSubmitAppPageUtil';
+import {ReviewAndSubmitAppPageUtilProps} from './ReviewAndSubmitAppPageUtil';
 
 import './ReviewAndSubmitAppPage.scss';
 
@@ -52,10 +54,13 @@ export function ReviewAndSubmitAppPage({
 	const [notes, setNotes] = useState('');
 	const [appLicense, setAppLicense] = useState('');
 
-	// const [price, setPrice] = useState('');
+	const [price, setPrice] = useState(0);
 
 	const [cardInfos, setCardInfos] = useState<
 		{icon: string; link: string; title: string}[]
+	>([]);
+	const [reviewAndSubmitAppPageItems, setReviewAndSubmitAppPageItems] = useState<
+		ReviewAndSubmitAppPageUtilProps[]
 	>([]);
 
 	const buildZIPTitles = buildZIPFiles?.map(
@@ -68,11 +73,49 @@ export function ReviewAndSubmitAppPage({
 				appERC,
 			});
 
+
+			const productCategories = {
+				section: "Categories",
+				tags: productResponse.categories
+					.filter((category : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+						return category.vocabulary === 'marketplace-solution-category';
+					})
+					.map((category : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+						return category.name;
+					})
+			};
+
+			const productTags = {
+				section: "Tags",
+				tags: productResponse.categories
+					.filter((tag : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+						return tag.vocabulary === 'marketplace-solution-tags';
+					})
+					.map((tag : { externalReferenceCode : string, id : number, name : string, vocabulary: string}) => {
+						return tag.name;
+					})
+			};
+			
 			const skuResponse = await getProductSKU({
 				appProductId,
 			});
 
-			// setPrice(skuResponse.items[0]?.price);
+			dispatch({
+				payload: {
+					value: skuResponse.items[0]?.price === 0 ? "Free" : "Paid"
+				},
+				type: TYPES.UPDATE_APP_PRICE_MODEL,
+			});
+
+			const pricing = {
+				icon: brightnessEmptyIcon,
+				section: 'Pricing',
+				title: priceModel,
+			};
+
+			setReviewAndSubmitAppPageItems([productCategories, productTags, pricing]);
+			
+			setPrice(skuResponse.items[0]?.price);
 
 			const productSpecificationsResponse =
 				await getProductSpecifications({
@@ -222,7 +265,7 @@ export function ReviewAndSubmitAppPage({
 							sectionName="Description"
 						/>
 
-						{initialReviewAndSubmitAppPageItems.map(
+						{reviewAndSubmitAppPageItems.map(
 							(item, index) => {
 								const cardTitle = () => {
 									if (item.section === 'Pricing') {
@@ -261,7 +304,7 @@ export function ReviewAndSubmitAppPage({
 
 								return (
 									<CardSection
-										build={item.section === 'Build'}
+										build={false}
 										buildZIPTitles={buildZIPTitles}
 										cardDescription={cardDescription()}
 										cardInfos={cardInfos}

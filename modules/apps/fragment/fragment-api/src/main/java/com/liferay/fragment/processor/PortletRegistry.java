@@ -38,6 +38,10 @@ public interface PortletRegistry {
 
 	public String getPortletName(String alias);
 
+	public void registerAlias(String alias, String portletName);
+
+	public void unregisterAlias(String alias);
+
 	public void writePortletPaths(
 			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,

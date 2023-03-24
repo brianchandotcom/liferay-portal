@@ -80,7 +80,7 @@ export function ReviewAndSubmitAppPage({
 					})
 					.map((category : any) => {
 						return category.name;
-					})
+					}),
 			};
 
 			const productTags = {
@@ -91,7 +91,7 @@ export function ReviewAndSubmitAppPage({
 					})
 					.map((tag : any) => {
 						return tag.name;
-					})
+					}),
 			};
 			
 			const skuResponse = await getProductSKU({
@@ -100,7 +100,7 @@ export function ReviewAndSubmitAppPage({
 
 			dispatch({
 				payload: {
-					value: skuResponse.items[0]?.price === 0 ? "Free" : "Paid"
+					value: skuResponse.items[0]?.price === 0 ? "Free" : "Paid",
 				},
 				type: TYPES.UPDATE_APP_PRICE_MODEL,
 			});
@@ -113,7 +113,7 @@ export function ReviewAndSubmitAppPage({
 
 			dispatch({
 				payload: {
-					value: skuResponse.items[0]?.price
+					value: skuResponse.items[0]?.price,
 				},
 				type: TYPES.UPDATE_APP_LICENSE_PRICE,
 			});
@@ -129,7 +129,22 @@ export function ReviewAndSubmitAppPage({
 				title: productSubscriptionConfigurationResponse.subscriptionType ? 'Non-Perpetual License' : 'Perpetual License',
 			};
 
-			setReviewAndSubmitAppPageItems([productCategories, productTags, pricing, licensing]);
+			const storefront = {
+				section: 'Storefront',
+			};
+
+			const versioning = {
+				description: notes,
+				section: 'Version',
+				title: 'Release Notes',
+				version: version,
+			};
+
+			const supportHelp = {
+				section: 'Support & Help',
+			};
+
+			setReviewAndSubmitAppPageItems([productCategories, productTags, pricing, licensing, storefront, versioning, supportHelp]);
 
 			const productSpecificationsResponse =
 				await getProductSpecifications({

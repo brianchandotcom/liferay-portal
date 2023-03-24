@@ -284,7 +284,6 @@ export async function getProductSpecifications({
 	return await response.json();
 }
 
-
 export async function getProductSubscriptionConfiguration({
 	appERC,
 }: {

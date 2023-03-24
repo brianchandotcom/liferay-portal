@@ -125,7 +125,7 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
+	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should not see requirement that don't exist when I try filtering for them"
 	@priority = 4
 	test AdminCanFilterForNonexistantRequirements {
 		task ("When the user filters a requirement by its non-existent name") {
@@ -141,6 +141,26 @@ definition {
 
 		task ("Then can see message no results found") {
 			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
+	@description = "Story ID: LPS-173519 | Test Summary: Verify that can search for a field"
+	@priority = 5
+	test AdminCanSearchForField {
+		task ("When the user search field called link") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.searchFilter(value = "Link");
+		}
+
+		task ("Then can see the field called link and don not see the field key") {
+			AssertElementPresent(
+				key_fieldLabel = "Link",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+            AssertElementNotPresent(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
 		}
 	}
 

@@ -266,51 +266,48 @@ public class FileEntryContentDashboardItem
 					WorkflowConstants.getStatusLabel(
 						WorkflowConstants.STATUS_DRAFT)))) {
 
-			Optional<ContentDashboardItemActionProvider>
-				contentDashboardItemActionProviderOptional =
+			ContentDashboardItemActionProvider
+				contentDashboardItemActionProvider =
 					_contentDashboardItemActionProviderRegistry.
-						getContentDashboardItemActionProviderOptional(
+						getContentDashboardItemActionProvider(
 							FileEntry.class.getName(),
 							ContentDashboardItemAction.Type.EDIT);
 
-			return contentDashboardItemActionProviderOptional.map(
-				contentDashboardItemActionProvider ->
-					_toContentDashboardItemAction(
-						contentDashboardItemActionProvider, httpServletRequest)
-			).orElse(
-				null
-			);
+			if (contentDashboardItemActionProvider == null) {
+				return null;
+			}
+
+			ContentDashboardItemAction contentDashboardItemAction =
+				_toContentDashboardItemAction(
+					contentDashboardItemActionProvider, httpServletRequest);
+
+			if (contentDashboardItemAction == null) {
+				return null;
+			}
+
+			return contentDashboardItemAction;
 		}
 
-		Optional<ContentDashboardItemActionProvider>
-			viewContentDashboardItemActionProviderOptional =
+		ContentDashboardItemActionProvider
+			viewContentDashboardItemActionProvider =
 				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
+					getContentDashboardItemActionProvider(
 						FileEntry.class.getName(),
 						ContentDashboardItemAction.Type.VIEW);
 
-		return viewContentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider -> _toContentDashboardItemAction(
-				contentDashboardItemActionProvider, httpServletRequest)
-		).orElseGet(
-			() -> {
-				Optional<ContentDashboardItemActionProvider>
-					editContentDashboardItemActionProviderOptional =
-						_contentDashboardItemActionProviderRegistry.
-							getContentDashboardItemActionProviderOptional(
-								FileEntry.class.getName(),
-								ContentDashboardItemAction.Type.EDIT);
+		if (viewContentDashboardItemActionProvider == null) {
+			return _getContentDashboardItemAction(httpServletRequest);
+		}
 
-				return editContentDashboardItemActionProviderOptional.map(
-					contentDashboardItemActionProvider ->
-						_toContentDashboardItemAction(
-							contentDashboardItemActionProvider,
-							httpServletRequest)
-				).orElse(
-					null
-				);
-			}
-		);
+		ContentDashboardItemAction contentDashboardItemAction =
+			_toContentDashboardItemAction(
+				viewContentDashboardItemActionProvider, httpServletRequest);
+
+		if (contentDashboardItemAction == null) {
+			return _getContentDashboardItemAction(httpServletRequest);
+		}
+
+		return contentDashboardItemAction;
 	}
 
 	@Override
@@ -500,20 +497,43 @@ public class FileEntryContentDashboardItem
 			return false;
 		}
 
-		Optional<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
-						FileEntry.class.getName(),
-						ContentDashboardItemAction.Type.VIEW);
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProvider(
+					FileEntry.class.getName(),
+					ContentDashboardItemAction.Type.VIEW);
 
-		return contentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider ->
-				contentDashboardItemActionProvider.isShow(
-					_fileEntry, httpServletRequest)
-		).orElse(
-			false
-		);
+		if (contentDashboardItemActionProvider == null) {
+			return false;
+		}
+
+		return contentDashboardItemActionProvider.isShow(
+			_fileEntry, httpServletRequest);
+	}
+
+	private ContentDashboardItemAction _getContentDashboardItemAction(
+		HttpServletRequest httpServletRequest) {
+
+		ContentDashboardItemActionProvider
+			editContentDashboardItemActionProvider =
+				_contentDashboardItemActionProviderRegistry.
+					getContentDashboardItemActionProvider(
+						FileEntry.class.getName(),
+						ContentDashboardItemAction.Type.EDIT);
+
+		if (editContentDashboardItemActionProvider == null) {
+			return null;
+		}
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			_toContentDashboardItemAction(
+				editContentDashboardItemActionProvider, httpServletRequest);
+
+		if (contentDashboardItemAction == null) {
+			return null;
+		}
+
+		return contentDashboardItemAction;
 	}
 
 	private List<ContentDashboardItemVersionAction>

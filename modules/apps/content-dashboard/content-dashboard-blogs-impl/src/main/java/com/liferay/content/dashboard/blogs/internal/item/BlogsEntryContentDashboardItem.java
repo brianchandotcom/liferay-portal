@@ -178,51 +178,48 @@ public class BlogsEntryContentDashboardItem
 					WorkflowConstants.getStatusLabel(
 						WorkflowConstants.STATUS_DRAFT)))) {
 
-			Optional<ContentDashboardItemActionProvider>
-				contentDashboardItemActionProviderOptional =
+			ContentDashboardItemActionProvider
+				contentDashboardItemActionProvider =
 					_contentDashboardItemActionProviderRegistry.
-						getContentDashboardItemActionProviderOptional(
+						getContentDashboardItemActionProvider(
 							BlogsEntry.class.getName(),
 							ContentDashboardItemAction.Type.EDIT);
 
-			return contentDashboardItemActionProviderOptional.map(
-				contentDashboardItemActionProvider ->
-					_toContentDashboardItemAction(
-						contentDashboardItemActionProvider, httpServletRequest)
-			).orElse(
-				null
-			);
+			if (contentDashboardItemActionProvider == null) {
+				return null;
+			}
+
+			ContentDashboardItemAction contentDashboardItemAction =
+				_toContentDashboardItemAction(
+					contentDashboardItemActionProvider, httpServletRequest);
+
+			if (contentDashboardItemAction == null) {
+				return null;
+			}
+
+			return contentDashboardItemAction;
 		}
 
-		Optional<ContentDashboardItemActionProvider>
-			viewContentDashboardItemActionProviderOptional =
+		ContentDashboardItemActionProvider
+			viewContentDashboardItemActionProvider =
 				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
+					getContentDashboardItemActionProvider(
 						BlogsEntry.class.getName(),
 						ContentDashboardItemAction.Type.VIEW);
 
-		return viewContentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider -> _toContentDashboardItemAction(
-				contentDashboardItemActionProvider, httpServletRequest)
-		).orElseGet(
-			() -> {
-				Optional<ContentDashboardItemActionProvider>
-					editContentDashboardItemActionProviderOptional =
-						_contentDashboardItemActionProviderRegistry.
-							getContentDashboardItemActionProviderOptional(
-								BlogsEntry.class.getName(),
-								ContentDashboardItemAction.Type.EDIT);
+		if (viewContentDashboardItemActionProvider == null) {
+			return _getContentDashboardItemAction(httpServletRequest);
+		}
 
-				return editContentDashboardItemActionProviderOptional.map(
-					contentDashboardItemActionProvider ->
-						_toContentDashboardItemAction(
-							contentDashboardItemActionProvider,
-							httpServletRequest)
-				).orElse(
-					null
-				);
-			}
-		);
+		ContentDashboardItemAction viewContentDashboardItemAction =
+			_toContentDashboardItemAction(
+				viewContentDashboardItemActionProvider, httpServletRequest);
+
+		if (viewContentDashboardItemAction == null) {
+			return _getContentDashboardItemAction(httpServletRequest);
+		}
+
+		return viewContentDashboardItemAction;
 	}
 
 	@Override
@@ -326,20 +323,43 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
-		Optional<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
-						BlogsEntry.class.getName(),
-						ContentDashboardItemAction.Type.VIEW);
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProvider(
+					BlogsEntry.class.getName(),
+					ContentDashboardItemAction.Type.VIEW);
 
-		return contentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider ->
-				contentDashboardItemActionProvider.isShow(
-					_blogsEntry, httpServletRequest)
-		).orElse(
-			false
-		);
+		if (contentDashboardItemActionProvider == null) {
+			return false;
+		}
+
+		return contentDashboardItemActionProvider.isShow(
+			_blogsEntry, httpServletRequest);
+	}
+
+	private ContentDashboardItemAction _getContentDashboardItemAction(
+		HttpServletRequest httpServletRequest) {
+
+		ContentDashboardItemActionProvider
+			editContentDashboardItemActionProvider =
+				_contentDashboardItemActionProviderRegistry.
+					getContentDashboardItemActionProvider(
+						BlogsEntry.class.getName(),
+						ContentDashboardItemAction.Type.EDIT);
+
+		if (editContentDashboardItemActionProvider == null) {
+			return null;
+		}
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			_toContentDashboardItemAction(
+				editContentDashboardItemActionProvider, httpServletRequest);
+
+		if (contentDashboardItemAction == null) {
+			return null;
+		}
+
+		return contentDashboardItemAction;
 	}
 
 	private ContentDashboardItemVersion _getLastContentDashboardItemVersion(

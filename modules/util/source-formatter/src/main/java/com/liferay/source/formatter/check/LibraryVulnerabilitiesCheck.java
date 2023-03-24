@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
-import com.liferay.source.formatter.upgrade.GradleBuildFile;
-import com.liferay.source.formatter.upgrade.GradleDependency;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.GradleBuildFile;
+import com.liferay.source.formatter.util.GradleDependency;
 
 import java.io.File;
 import java.io.FileNotFoundException;

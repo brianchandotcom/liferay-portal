@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
-import com.liferay.source.formatter.upgrade.GradleBuildFile;
-import com.liferay.source.formatter.upgrade.GradleDependency;
+import com.liferay.source.formatter.util.GradleBuildFile;
+import com.liferay.source.formatter.util.GradleDependency;
 
 import java.io.IOException;
 

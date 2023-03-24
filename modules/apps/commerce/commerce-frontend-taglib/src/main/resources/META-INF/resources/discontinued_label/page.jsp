@@ -26,5 +26,5 @@
 			"namespace", namespace
 		).build()
 	%>'
-	module="js/DiscontinuedLabelCPInstanceChangeHandler"
+	module="discontinued_label/js/DiscontinuedLabelCPInstanceChangeHandler"
 />

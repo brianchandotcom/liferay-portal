@@ -44,6 +44,29 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should not see manage users that don't exist when I try filtering for them"
+	@priority = 4
+	test AdminCanFilterForNonexistantManageUsers {
+		task ("When the user filters a user by its non-existent name") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Test 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
 	@priority = 5
 	test AdminCanFilterManageUsersByName {

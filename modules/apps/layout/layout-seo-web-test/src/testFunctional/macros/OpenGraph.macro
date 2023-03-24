@@ -13,8 +13,7 @@ definition {
 	macro clearImage {
 		Click(
 			key_fieldLabel = "Image",
-			key_text = "Clear",
-			locator1 = "Button#ANY_WITH_LABEL");
+			locator1 = "Button#IMAGE_CLEAR");
 	}
 
 	macro configureOpenGraph {

@@ -17,15 +17,14 @@ package com.liferay.content.dashboard.item.action;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Cristina González
  */
 public interface ContentDashboardItemActionProviderRegistry {
 
-	public Optional<ContentDashboardItemActionProvider>
-		getContentDashboardItemActionProviderOptional(
+	public ContentDashboardItemActionProvider
+		getContentDashboardItemActionProvider(
 			String className, ContentDashboardItemAction.Type type);
 
 	public List<ContentDashboardItemActionProvider>

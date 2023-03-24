@@ -21,16 +21,16 @@ export default function getSummaryMDFClaims(
 	MdfClaims?: MDFClaimDTO[]
 ) {
 	if (MdfClaims?.length) {
-		const amountClaimed = getIntlNumberFormat(currency).format(
+		const totalClaimAmount = getIntlNumberFormat(currency).format(
 			getTotalAmountClaimed(MdfClaims)
 		);
 		const amountPaid = getIntlNumberFormat(currency).format(
 			getTotalAmountPaid(MdfClaims)
 		);
 
-		if (amountClaimed) {
+		if (totalClaimAmount) {
 			return {
-				[MDFColumnKey.AMOUNT_CLAIMED]: amountClaimed,
+				[MDFColumnKey.AMOUNT_CLAIMED]: totalClaimAmount,
 			};
 		}
 

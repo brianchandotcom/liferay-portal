@@ -31,8 +31,8 @@ const getMDFClaimSummary = async () => {
 	if (response.ok) {
 		const data = await response.json();
 
-		const amountClaimed = formatCurrency(
-			Liferay.Util.escape(data.amountClaimed),
+		const totalClaimAmount = formatCurrency(
+			Liferay.Util.escape(data.totalClaimAmount),
 			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
 		const check = formatCurrency(
@@ -48,7 +48,7 @@ const getMDFClaimSummary = async () => {
 		fragmentElement.querySelector('#mdf-claim-type').innerHTML = type;
 		fragmentElement.querySelector(
 			'#mdf-claim-amount-claimed'
-		).innerHTML = amountClaimed;
+		).innerHTML = totalClaimAmount;
 		fragmentElement.querySelector(
 			'#mdf-claim-payment-received'
 		).innerHTML = paymentReceived;

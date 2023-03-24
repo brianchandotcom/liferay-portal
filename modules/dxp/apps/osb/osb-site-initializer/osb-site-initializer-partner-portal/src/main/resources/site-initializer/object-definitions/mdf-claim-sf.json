@@ -38,9 +38,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "MDF Requested Amount"
+				"en_US": "Total MDF Requested Amount"
 			},
-			"name": "mdfRequestedAmount",
+			"name": "totalMDFRequestedAmount",
 			"required": false,
 			"type": "BigDecimal"
 		},
@@ -51,9 +51,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Amount Claimed"
+				"en_US": "Total Claim Amount"
 			},
-			"name": "amountClaimed",
+			"name": "totalClaimAmount",
 			"required": false,
 			"type": "BigDecimal"
 		},

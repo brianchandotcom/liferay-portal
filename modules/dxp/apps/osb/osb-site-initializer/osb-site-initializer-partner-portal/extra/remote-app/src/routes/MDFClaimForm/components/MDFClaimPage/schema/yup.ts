@@ -109,27 +109,27 @@ const claimSchema = object({
 						),
 				}),
 
-				listQualifiedLeads: mixed().when('selected', {
+				listOfQualifiedLeads: mixed().when('selected', {
 					is: (selected: boolean) => selected,
 					then: (schema) =>
 						schema
 							.test(
 								'fileSize',
 								validateDocument.fileSize.message,
-								(listQualifiedLeads) =>
-									listQualifiedLeads
+								(listOfQualifiedLeads) =>
+									listOfQualifiedLeads
 										? Math.ceil(
-												listQualifiedLeads.size / 1000
+												listOfQualifiedLeads.size / 1000
 										  ) <= validateDocument.fileSize.maxSize
 										: false
 							)
 							.test(
 								'fileType',
 								validateDocument.listOfLeadsDocuments.message,
-								(listQualifiedLeads) =>
-									listQualifiedLeads
+								(listOfQualifiedLeads) =>
+									listOfQualifiedLeads
 										? validateDocument.listOfLeadsDocuments.types.includes(
-												listQualifiedLeads.type
+												listOfQualifiedLeads.type
 										  )
 										: false
 							),
@@ -201,7 +201,7 @@ const claimSchema = object({
 			'Total Claim Amount cannot be greater than Total MDF Requested Amount',
 			(totalClaimAmount, testContext) =>
 				Number(totalClaimAmount) <=
-				Number(testContext.parent.totalrequestedAmount)
+				Number(testContext.parent.totalMDFRequestedAmount)
 		),
 });
 

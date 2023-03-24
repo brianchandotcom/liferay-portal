@@ -14,14 +14,14 @@ import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
 export default function getMDFClaimAmountClaimedInfo(
-	amountClaimed?: number,
+	totalClaimAmount?: number,
 	currency?: LiferayPicklist
 ) {
-	if (amountClaimed) {
+	if (totalClaimAmount) {
 		return {
 			[MDFClaimColumnKey.AMOUNT_CLAIMED]: getIntlNumberFormat(
 				currency
-			).format(amountClaimed),
+			).format(totalClaimAmount),
 		};
 	}
 }

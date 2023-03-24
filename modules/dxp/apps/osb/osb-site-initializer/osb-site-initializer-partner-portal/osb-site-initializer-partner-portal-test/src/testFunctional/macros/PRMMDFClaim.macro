@@ -50,7 +50,7 @@ definition {
 				}
 
 				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-					key_fieldName = "activities[${actvIndex}].listQualifiedLeads",
+					key_fieldName = "activities[${actvIndex}].listOfQualifiedLeads",
 					locator1 = "PRMMDFClaim#UPLOAD_FIELD",
 					value1 = ${listLeads});
 			}

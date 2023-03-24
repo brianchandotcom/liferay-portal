@@ -23,7 +23,7 @@
 		<div class="align-items-baseline d-flex justify-content-between">
 			<div class="align-items-baseline d-flex">
 				<p class="font-weight-bold text-neutral-9 text-paragraph-sm">
-					Claimed ${get_currency(claim.amountClaimed, (claim.currency.key)!"USD")}
+					Claimed ${get_currency(claim.totalClaimAmount, (claim.currency.key)!"USD")}
 				</p>
 
 				<div class="${claim_status_style[claim.mdfClaimStatus.key]}">

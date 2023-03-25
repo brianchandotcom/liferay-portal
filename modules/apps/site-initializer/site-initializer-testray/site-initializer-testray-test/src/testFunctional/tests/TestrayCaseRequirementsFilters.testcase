@@ -174,4 +174,34 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterCaseRequirementsWithMultipleOptions {
+		task ("When the user filter a case requirement with multiple options") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Summary",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Requirement 1");
+
+            Type(
+				key_fieldLabel = "Link",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "google");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the multiple options in the table and do not see the requirement 2") {
+			TestrayRequirements.verifyRequirement(
+				linkTitle = "The front page of the internet",
+				requirementComponent = "Component 1",
+				requirementSummary = "Requirement 1",
+				requirementTeam = "Team 1");
+
+			Testray.assertItemNotPresent(key_name = "Requirement 2");
+		}
+	}
+
 }

@@ -56,10 +56,10 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 				}
 			}
 		}
-		catch (IllegalAccessException iae) {
+		catch (IllegalAccessException illegalAccessException) {
 			throw new BuildException(
 				"Unable to access listenersLock field of " + currentProject,
-				iae);
+				illegalAccessException);
 		}
 	}
 
@@ -87,8 +87,8 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 
 			_listenersLockField.setAccessible(true);
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
 

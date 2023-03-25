@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -124,13 +125,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			}
 		}
 
-		ServiceContext serviceContext = new ServiceContext() {
-			{
-				setCompanyId(contextCompany.getCompanyId());
-				setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-				setUserId(contextUser.getUserId());
-			}
-		};
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			contextHttpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

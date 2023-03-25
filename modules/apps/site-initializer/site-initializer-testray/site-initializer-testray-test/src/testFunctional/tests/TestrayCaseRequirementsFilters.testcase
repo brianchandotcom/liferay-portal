@@ -128,4 +128,29 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by link"
+	@priority = 5
+	test AdminCanFilterCaseRequirementsByLink {
+		task ("When the user filter a case requirement by link") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Link",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "google");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the filters apply in the list by link") {
+			TestrayRequirements.verifyRequirement(
+				linkTitle = "The front page of the internet",
+				requirementComponent = "Component 1",
+				requirementSummary = "Requirement 1",
+				requirementTeam = "Team 1");
+
+			Testray.assertItemNotPresent(key_name = "Requirement 2");
+		}
+	}
+
 }

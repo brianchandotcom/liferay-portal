@@ -905,6 +905,251 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component bodyContent="false" name="Nav">
+		<description>Creates a navigation wrapper component to hold <![CDATA[<code>&lt;nav:item&gt;</code>]]> components for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
+		<attributes>
+			<attribute>
+				<description>A name for the navigation component for assistive technologies to interpret.</description>
+				<name>ariaLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
+				<name>ariaRole</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>collapsible</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<description>A CSS class for styling the component.</description>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>icon</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>An ID for the component instance.</description>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>A search container for the navigation component to use.</description>
+				<name>searchContainer</name>
+				<inputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></inputType>
+				<outputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></outputType>
+			</attribute>
+			<attribute>
+				<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
+				<name>useNamespace</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+		</attributes>
+	</component>
+	<component bodyContent="false" name="NavBar">
+		<description>Creates a navigation bar to house navigation components.</description>
+		<attributes>
+			<attribute>
+				<description>A CSS class for styling the component.</description>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+				<name>data</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.util.Map</outputType>
+			</attribute>
+			<attribute>
+				<description>An ID for the component instance.</description>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>markupView</name>
+				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component bodyContent="true" name="NavBarSearch">
+		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
+		<attributes>
+			<attribute>
+				<description>A CSS class for styling the component.</description>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>file</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>An ID for the component instance.</description>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>A search container for the navigation bar to use.</description>
+				<name>searchContainer</name>
+				<inputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></inputType>
+				<outputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component bodyContent="true" name="NavItem" writeStartJSP="false">
+		<description>Creates a navigation item for using in an <![CDATA[<code>&lt;aui:nav&gt;</code>]]> component.</description>
+		<attributes>
+			<attribute>
+				<description>A CSS class for styling the link set in the <![CDATA[<code>href</code>]]> attribute.</description>
+				<name>anchorCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+				<name>anchorData</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.util.Map</outputType>
+			</attribute>
+			<attribute>
+				<description>An ID for the instance of the navigation item's link, set in the <![CDATA[<code>href</code>]]> attribute.</description>
+				<name>anchorId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>A name for the navigation item for assistive technologies to interpret.</description>
+				<name>ariaLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
+				<name>ariaRole</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>A CSS class for styling the component.</description>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+				<name>data</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.util.Map</outputType>
+			</attribute>
+			<attribute>
+				<description>Whether the navigation item is a dropdown menu. The default value is <![CDATA[<code>false</code>]]>.</description>
+				<name>dropdown</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<description>A URL navigated to when the navigation item is clicked.</description>
+				<name>href</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue>javascript:void(0);</defaultValue>
+			</attribute>
+			<attribute>
+				<description>A CSS class for styling the navigation item's icon.</description>
+				<name>iconCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>iconSrc</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>An ID for the component instance.</description>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>Text to display for the navigation item.</description>
+				<name>label</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
+				<name>localizeLabel</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<description>Whether the navigation item is selected by default. The default value is <![CDATA[<code>false</code>]]>.</description>
+				<name>selected</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>state</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>target</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>Sets the navigation item's title.</description>
+				<name>title</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>toggle</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>toggleTouch</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<description>Whether to open a dialog window with the <![CDATA[<code>href</code>]]> location when a user clicks the navigation item. The default value is <![CDATA[<code>false</code>]]>.</description>
+				<name>useDialog</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<description>Whether to wrap the navigation item's dropdown menu in an unordered list with the <![CDATA[<code>drop-down-menu</code>]]> class. The default value is <![CDATA[<code>true</code>]]>.</description>
+				<name>wrapDropDownMenu</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+		</attributes>
+	</component>
 	<component bodyContent="true" name="Option" writeEndJSP="false">
 		<description>Creates an option component for using in an <![CDATA[<code>&lt;aui:select&gt;</code>]]> component.</description>
 		<attributes>

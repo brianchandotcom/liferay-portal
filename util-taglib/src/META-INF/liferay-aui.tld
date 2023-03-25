@@ -980,6 +980,269 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a navigation wrapper component to hold <![CDATA[<code>&lt;nav:item&gt;</code>]]> components for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
+		<name>nav</name>
+		<tag-class>com.liferay.taglib.aui.NavTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A name for the navigation component for assistive technologies to interpret.</description>
+			<name>ariaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
+			<name>ariaRole</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>collapsible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the component.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>An ID for the component instance.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A search container for the navigation component to use.</description>
+			<name>searchContainer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
+		</attribute>
+		<attribute>
+			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>useNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<description>Creates a navigation bar to house navigation components.</description>
+		<name>nav-bar</name>
+		<tag-class>com.liferay.taglib.aui.NavBarTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A CSS class for styling the component.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>An ID for the component instance.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
+		<name>nav-bar-search</name>
+		<tag-class>com.liferay.taglib.aui.NavBarSearchTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A CSS class for styling the component.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>file</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>An ID for the component instance.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A search container for the navigation bar to use.</description>
+			<name>searchContainer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<description>Creates a navigation item for using in an <![CDATA[<code>&lt;aui:nav&gt;</code>]]> component.</description>
+		<name>nav-item</name>
+		<tag-class>com.liferay.taglib.aui.NavItemTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A CSS class for styling the link set in the <![CDATA[<code>href</code>]]> attribute.</description>
+			<name>anchorCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+			<name>anchorData</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>An ID for the instance of the navigation item's link, set in the <![CDATA[<code>href</code>]]> attribute.</description>
+			<name>anchorId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A name for the navigation item for assistive technologies to interpret.</description>
+			<name>ariaLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
+			<name>ariaRole</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the component.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>Whether the navigation item is a dropdown menu. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>dropdown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>A URL navigated to when the navigation item is clicked.</description>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A CSS class for styling the navigation item's icon.]]></description>
+			<name>iconCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>iconSrc</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>An ID for the component instance.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Text to display for the navigation item.</description>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>localizeLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether the navigation item is selected by default. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>selected</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>state</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>target</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Sets the navigation item's title.]]></description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>toggle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>toggleTouch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether to open a dialog window with the <![CDATA[<code>href</code>]]> location when a user clicks the navigation item. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>useDialog</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether to wrap the navigation item's dropdown menu in an unordered list with the <![CDATA[<code>drop-down-menu</code>]]> class. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>wrapDropDownMenu</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
 		<description>Creates an option component for using in an <![CDATA[<code>&lt;aui:select&gt;</code>]]> component.</description>
 		<name>option</name>
 		<tag-class>com.liferay.taglib.aui.OptionTag</tag-class>

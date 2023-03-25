@@ -4479,8 +4479,8 @@ definition {
 
 			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
-				itemType = "Web Content Article",
 				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
 				title = "Manual Collection");
 
 			JSONLayout.addPublicLayout(

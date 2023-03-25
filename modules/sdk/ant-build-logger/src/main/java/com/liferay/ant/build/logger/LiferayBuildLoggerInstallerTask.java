@@ -42,7 +42,7 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 					}
 
 					boolean buildPerformanceLoggerEnabled =
-						isBuildPerformanceLoggerEnabled();
+						_isBuildPerformanceLoggerEnabled();
 
 					currentProject.removeBuildListener(buildListener);
 
@@ -63,7 +63,7 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 		}
 	}
 
-	private boolean isBuildPerformanceLoggerEnabled() {
+	private boolean _isBuildPerformanceLoggerEnabled() {
 		Project project = getProject();
 
 		String buildPerformanceLoggerEnabled = project.getProperty(

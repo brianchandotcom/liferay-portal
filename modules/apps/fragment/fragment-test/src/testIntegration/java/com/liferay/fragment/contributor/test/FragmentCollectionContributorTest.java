@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -46,6 +47,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -75,8 +77,17 @@ public class FragmentCollectionContributorTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_originalServiceContext = ServiceContextThreadLocal.getServiceContext();
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.pushServiceContext(_originalServiceContext);
 	}
 
 	@Test
@@ -275,6 +286,8 @@ public class FragmentCollectionContributorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private ServiceContext _originalServiceContext;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

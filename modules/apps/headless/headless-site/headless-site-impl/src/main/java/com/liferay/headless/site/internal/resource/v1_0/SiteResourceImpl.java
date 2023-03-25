@@ -16,6 +16,8 @@ package com.liferay.headless.site.internal.resource.v1_0;
 
 import com.liferay.headless.site.dto.v1_0.Site;
 import com.liferay.headless.site.resource.v1_0.SiteResource;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -25,9 +27,11 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.site.initializer.SiteInitializer;
@@ -125,6 +129,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			}
 		}
 
+		_initThemeDisplay();
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			contextHttpServletRequest);
 
@@ -207,6 +213,27 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		return group;
+	}
+
+	private void _initThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			return;
+		}
+
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		servicePreAction.servicePre(
+			contextHttpServletRequest, contextHttpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(
+			contextHttpServletRequest, contextHttpServletResponse);
 	}
 
 	@Reference

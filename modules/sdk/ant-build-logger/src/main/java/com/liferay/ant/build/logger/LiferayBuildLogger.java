@@ -23,8 +23,11 @@ import org.apache.tools.ant.Project;
  * @author Shuyang Zhou
  * @author Kevin Yen
  */
-
 public class LiferayBuildLogger implements BuildListener {
+
+	public LiferayBuildLogger(BuildListener buildListener) {
+		_buildListener = buildListener;
+	}
 
 	@Override
 	public void buildFinished(BuildEvent buildEvent) {
@@ -65,10 +68,6 @@ public class LiferayBuildLogger implements BuildListener {
 	@Override
 	public void taskStarted(BuildEvent buildEvent) {
 		_buildListener.taskStarted(buildEvent);
-	}
-
-	public LiferayBuildLogger(BuildListener buildListener) {
-		_buildListener = buildListener;
 	}
 
 	private final BuildListener _buildListener;

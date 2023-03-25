@@ -14,7 +14,6 @@
 
 package com.liferay.ant.build.logger;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,8 +24,12 @@ import org.apache.tools.ant.Target;
 /**
  * @author Kevin Yen
  */
-
 public class LiferayBuildPerformanceLogger extends DefaultLogger {
+
+	public LiferayBuildPerformanceLogger() {
+		err = System.err;
+		out = System.out;
+	}
 
 	@Override
 	public void targetFinished(BuildEvent buildEvent) {
@@ -62,11 +65,6 @@ public class LiferayBuildPerformanceLogger extends DefaultLogger {
 		sb.append(target.getName());
 
 		printMessage(sb.toString(), out, buildEvent.getPriority());
-	}
-
-	public LiferayBuildPerformanceLogger() {
-		err = System.err;
-		out = System.out;
 	}
 
 	private final Map<Target, Long> _startTimes = new HashMap<>();

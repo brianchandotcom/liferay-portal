@@ -33,7 +33,7 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 		Project currentProject = getProject();
 
 		try {
-			synchronized(_listenersLockField.get(currentProject)) {
+			synchronized (_listenersLockField.get(currentProject)) {
 				for (BuildListener buildListener :
 						currentProject.getBuildListeners()) {
 

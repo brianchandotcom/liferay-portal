@@ -998,7 +998,6 @@ public class SourceFormatter {
 				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.m2/**"),
 				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.settings/**"),
 				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/bin/**"),
-				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/build/**"),
 				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/classes/**"),
 				new ExcludeSyntaxPattern(
 					ExcludeSyntax.GLOB, "**/liferay-theme.json"),
@@ -1027,7 +1026,9 @@ public class SourceFormatter {
 					".*/tests?/.*/dependencies/.+\\.(jar|lar|war|zip)/.+"),
 				new ExcludeSyntaxPattern(
 					ExcludeSyntax.REGEX,
-					"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*")));
+					"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.REGEX, "^((?!/src/).)*/build/.*")));
 
 		_portalSource = _containsDir("portal-impl");
 

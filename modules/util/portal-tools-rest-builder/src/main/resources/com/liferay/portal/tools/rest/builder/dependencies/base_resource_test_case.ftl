@@ -1496,9 +1496,20 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEquals(random${schemaName}, put${schemaName});
 					assertValid(put${schemaName});
 
-					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
-						<@getGetterParameters javaMethodSignature=javaMethodSignature />
-					);
+					${schemaName} get${schemaName} =
+
+					<#assign
+						getJavaMethodSignature = javaMethodSignature.methodName?replace("put", "get", "f")
+					/>
+
+					<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignature)>
+						 ${schemaVarName}Resource.${getJavaMethodSignature}(
+							<@getGetterParameters javaMethodSignature=javaMethodSignature />
+						);
+
+					<#else>
+						test${javaMethodSignature.methodName?cap_first}_${getJavaMethodSignature}();
+					</#if>
 
 					assertEquals(random${schemaName}, get${schemaName});
 					assertValid(get${schemaName});
@@ -1542,6 +1553,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				javaMethodSignature=javaMethodSignature
 				testNamePrefix="test"
 			/>
+
+			<#if !freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))>
+
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_${javaMethodSignature.methodName?replace("put", "get", "f")}() {
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				}
+			</#if>
 
 			<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_create${schemaName}() throws Exception {

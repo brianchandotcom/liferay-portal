@@ -1,0 +1,112 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+    var caseName = "Case 1";
+	var componentName = "Component 1";
+	var projectName = "Project 1";
+	var teamName = "Team 1";
+	var testSiteName = "Testray 2";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.addTR2Site(siteName = ${testSiteName});
+		}
+
+		task ("create all objects: projects, teams, components, cases, requirements") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
+
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+            JSONTestray.addCases(
+				caseName = ${caseName},
+				caseType = ${caseType},
+				componentName = ${componentName},
+				description = "Description 1",
+				priority = 5,
+				projectName = ${projectName},
+				steps = "Steps 1");
+
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = "Requirement 1");
+
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "Page of the internet 2",
+				linkURL = "https://reddit.com",
+				projectName = ${projectName},
+				requirementName = "Requirement 2");
+		}
+
+		task ("Go to the Requirements page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+            Testray.goToProjectPage(projectName = ${caseName});
+
+            Testray.projectTabNavigator(navTabName = "Requirements");
+		}
+
+        task ("add a case to the requirement") {
+			TestrayRequirements.addRequirementCase(
+				buttonText = "Select Requirements",
+				caseName = "Requirement 1",
+				linkText = "Link Requirements");
+
+            TestrayRequirements.addRequirementCase(
+				buttonText = "Select Requirements",
+				caseName = "Requirement 2",
+				linkText = "Link Requirements");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "teams",
+			objectName = ${teamName});
+
+        JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
+
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+
+		Testray.testrayApisTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+}

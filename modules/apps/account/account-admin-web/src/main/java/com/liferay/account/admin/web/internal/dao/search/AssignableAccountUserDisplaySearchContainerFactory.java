@@ -21,8 +21,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -49,13 +47,9 @@ import java.io.Serializable;
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
 public class AssignableAccountUserDisplaySearchContainerFactory {
 
 	public static SearchContainer<AccountUserDisplay> create(
@@ -108,8 +102,11 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 			accountEntryIds = new long[0];
 		}
 
+		AccountUserRetriever accountUserRetriever =
+			_accountUserRetrieverSnapshot.get();
+
 		BaseModelSearchResult<User> baseModelSearchResult =
-			_accountUserRetriever.searchAccountUsers(
+			accountUserRetriever.searchAccountUsers(
 				accountEntryIds, keywords,
 				LinkedHashMapBuilder.<String, Serializable>put(
 					"emailAddressDomains",
@@ -127,41 +124,6 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 		searchContainer.setRowChecker(rowChecker);
 
 		return searchContainer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountEntryLocalService(
-		AccountEntryLocalService accountEntryLocalService) {
-
-		_accountEntryLocalService = accountEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountEntryUserRelLocalService(
-		AccountEntryUserRelLocalService accountEntryUserRelLocalService) {
-
-		_accountEntryUserRelLocalService = accountEntryUserRelLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountRoleLocalService(
-		AccountRoleLocalService accountRoleLocalService) {
-
-		_accountRoleLocalService = accountRoleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAccountUserRetriever(
-		AccountUserRetriever accountUserRetriever) {
-
-		_accountUserRetriever = accountUserRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupRoleLocalService(
-		UserGroupRoleLocalService userGroupRoleLocalService) {
-
-		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
 	private static String _getDefaultNavigation(
@@ -193,8 +155,11 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 		long accountEntryId, String navigation) {
 
 		if (Objects.equals(navigation, "valid-domain-users")) {
+			AccountEntryLocalService accountEntryLocalService =
+				_accountEntryLocalServiceSnapshot.get();
+
 			AccountEntry accountEntry =
-				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
+				accountEntryLocalService.fetchAccountEntry(accountEntryId);
 
 			return StringUtil.split(accountEntry.getDomains());
 		}
@@ -213,11 +178,13 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssignableAccountUserDisplaySearchContainerFactory.class);
 
-	private static AccountEntryLocalService _accountEntryLocalService;
-	private static AccountEntryUserRelLocalService
-		_accountEntryUserRelLocalService;
-	private static AccountRoleLocalService _accountRoleLocalService;
-	private static AccountUserRetriever _accountUserRetriever;
-	private static UserGroupRoleLocalService _userGroupRoleLocalService;
+	private static final Snapshot<AccountEntryLocalService>
+		_accountEntryLocalServiceSnapshot = new Snapshot<>(
+			AssignableAccountUserDisplaySearchContainerFactory.class,
+			AccountEntryLocalService.class);
+	private static final Snapshot<AccountUserRetriever>
+		_accountUserRetrieverSnapshot = new Snapshot<>(
+			AssignableAccountUserDisplaySearchContainerFactory.class,
+			AccountUserRetriever.class);
 
 }

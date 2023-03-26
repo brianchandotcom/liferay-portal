@@ -15,7 +15,6 @@
 package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
@@ -32,6 +31,7 @@ import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.salesforce.internal.http.SalesforceHttp;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -60,7 +60,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -278,24 +277,6 @@ public class SalesforceObjectEntryManagerImpl
 		return null;
 	}
 
-	private List<String> _getAccountEntriesExternalReferenceCode(long userId)
-		throws Exception {
-
-		List<String> accountEntriesExternalReferenceCode = new ArrayList<>();
-
-		for (AccountEntryUserRel accountEntryUserRel :
-				_accountEntryUserRelLocalService.
-					getAccountEntryUserRelsByAccountUserId(userId)) {
-
-			AccountEntry accountEntry = accountEntryUserRel.getAccountEntry();
-
-			accountEntriesExternalReferenceCode.add(
-				accountEntry.getExternalReferenceCode());
-		}
-
-		return accountEntriesExternalReferenceCode;
-	}
-
 	private String _getAccountRestrictionFilterString(
 			long companyId, DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, String scopeKey)
@@ -314,8 +295,16 @@ public class SalesforceObjectEntryManagerImpl
 		return StringBundler.concat(
 			" WHERE ", objectField.getExternalReferenceCode(), " IN ('",
 			StringUtil.merge(
-				_getAccountEntriesExternalReferenceCode(
-					dtoConverterContext.getUserId()),
+				TransformUtil.transform(
+					_accountEntryUserRelLocalService.
+						getAccountEntryUserRelsByAccountUserId(
+							dtoConverterContext.getUserId()),
+					accountEntryUserRel -> {
+						AccountEntry accountEntry =
+							accountEntryUserRel.getAccountEntry();
+
+						return accountEntry.getExternalReferenceCode();
+					}),
 				", '"),
 			"')");
 	}

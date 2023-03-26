@@ -16,17 +16,14 @@ package com.liferay.journal.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(service = {})
 public class DDMTemplatePermission {
 
 	public static boolean contains(
@@ -34,7 +31,10 @@ public class DDMTemplatePermission {
 			String actionId)
 		throws PortalException {
 
-		return _ddmTemplateModelResourcePermission.contains(
+		ModelResourcePermission<DDMTemplate> modelResourcePermission =
+			_ddmTemplateModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, ddmTemplate, actionId);
 	}
 
@@ -43,7 +43,10 @@ public class DDMTemplatePermission {
 			String actionId)
 		throws PortalException {
 
-		return _ddmTemplateModelResourcePermission.contains(
+		ModelResourcePermission<DDMTemplate> modelResourcePermission =
+			_ddmTemplateModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, ddmTemplateId, actionId);
 	}
 
@@ -52,36 +55,31 @@ public class DDMTemplatePermission {
 			long resourceClassNameId)
 		throws PortalException {
 
-		return _ddmPermissionSupport.containsAddTemplatePermission(
+		DDMPermissionSupport ddmPermissionSupport =
+			_ddmPermissionSupportSnapshot.get();
+
+		return ddmPermissionSupport.containsAddTemplatePermission(
 			permissionChecker, groupId, classNameId, resourceClassNameId);
 	}
 
 	public static String getTemplateModelResourceName(long resourceClassNameId)
 		throws PortalException {
 
-		return _ddmPermissionSupport.getTemplateModelResourceName(
+		DDMPermissionSupport ddmPermissionSupport =
+			_ddmPermissionSupportSnapshot.get();
+
+		return ddmPermissionSupport.getTemplateModelResourceName(
 			resourceClassNameId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMPermissionSupport(
-		DDMPermissionSupport ddmPermissionSupport) {
-
-		_ddmPermissionSupport = ddmPermissionSupport;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<DDMTemplate> modelResourcePermission) {
-
-		_ddmTemplateModelResourcePermission = modelResourcePermission;
-	}
-
-	private static DDMPermissionSupport _ddmPermissionSupport;
-	private static ModelResourcePermission<DDMTemplate>
-		_ddmTemplateModelResourcePermission;
+	private static final Snapshot<DDMPermissionSupport>
+		_ddmPermissionSupportSnapshot = new Snapshot<>(
+			DDMTemplatePermission.class, DDMPermissionSupport.class);
+	private static final Snapshot<ModelResourcePermission<DDMTemplate>>
+		_ddmTemplateModelResourcePermissionSnapshot = new Snapshot<>(
+			DDMTemplatePermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.dynamic.data.mapping.model." +
+				"DDMTemplate)");
 
 }

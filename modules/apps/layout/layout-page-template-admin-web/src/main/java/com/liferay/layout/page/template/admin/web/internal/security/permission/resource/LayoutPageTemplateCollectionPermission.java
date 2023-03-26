@@ -15,17 +15,14 @@
 package com.liferay.layout.page.template.admin.web.internal.security.permission.resource;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class LayoutPageTemplateCollectionPermission {
 
 	public static boolean contains(
@@ -34,7 +31,12 @@ public class LayoutPageTemplateCollectionPermission {
 			String actionId)
 		throws PortalException {
 
-		return _layoutPageTemplateCollectionModelResourcePermission.contains(
+		ModelResourcePermission<LayoutPageTemplateCollection>
+			modelResourcePermission =
+				_layoutPageTemplateCollectionModelResourcePermissionSnapshot.
+					get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, layoutPageTemplateCollection, actionId);
 	}
 
@@ -43,23 +45,22 @@ public class LayoutPageTemplateCollectionPermission {
 			long layoutPageTemplateCollectionId, String actionId)
 		throws PortalException {
 
-		return _layoutPageTemplateCollectionModelResourcePermission.contains(
+		ModelResourcePermission<LayoutPageTemplateCollection>
+			modelResourcePermission =
+				_layoutPageTemplateCollectionModelResourcePermissionSnapshot.
+					get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, layoutPageTemplateCollectionId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateCollection)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<LayoutPageTemplateCollection>
-			modelResourcePermission) {
-
-		_layoutPageTemplateCollectionModelResourcePermission =
-			modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<LayoutPageTemplateCollection>
-		_layoutPageTemplateCollectionModelResourcePermission;
+	private static final Snapshot
+		<ModelResourcePermission<LayoutPageTemplateCollection>>
+			_layoutPageTemplateCollectionModelResourcePermissionSnapshot =
+				new Snapshot<>(
+					LayoutPageTemplateCollectionPermission.class,
+					Snapshot.cast(ModelResourcePermission.class),
+					"(model.class.name=com.liferay.layout.page.template." +
+						"model.LayoutPageTemplateCollection)");
 
 }

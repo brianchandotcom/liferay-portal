@@ -15,17 +15,14 @@
 package com.liferay.microblogs.web.internal.security.permission.resource;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class MicroblogsEntryPermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class MicroblogsEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _microblogsEntryModelResourcePermission.contains(
+		ModelResourcePermission<MicroblogsEntry> modelResourcePermission =
+			_microblogsEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, microblogsEntryId, actionId);
 	}
 
@@ -42,21 +42,17 @@ public class MicroblogsEntryPermission {
 			MicroblogsEntry microblogsEntry, String actionId)
 		throws PortalException {
 
-		return _microblogsEntryModelResourcePermission.contains(
+		ModelResourcePermission<MicroblogsEntry> modelResourcePermission =
+			_microblogsEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, microblogsEntry, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.microblogs.model.MicroblogsEntry)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<MicroblogsEntry> modelResourcePermission) {
-
-		_microblogsEntryModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<MicroblogsEntry>
-		_microblogsEntryModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<MicroblogsEntry>>
+		_microblogsEntryModelResourcePermissionSnapshot = new Snapshot<>(
+			MicroblogsEntryPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.microblogs.model.MicroblogsEntry)");
 
 }

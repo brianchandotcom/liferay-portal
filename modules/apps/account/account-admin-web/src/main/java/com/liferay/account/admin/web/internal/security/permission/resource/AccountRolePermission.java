@@ -15,19 +15,16 @@
 package com.liferay.account.admin.web.internal.security.permission.resource;
 
 import com.liferay.account.model.AccountRole;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
 public class AccountRolePermission {
 
 	public static boolean contains(
@@ -35,7 +32,10 @@ public class AccountRolePermission {
 		String actionId) {
 
 		try {
-			return _accountRoleModelResourcePermission.contains(
+			ModelResourcePermission<AccountRole> modelResourcePermission =
+				_accountRoleModelResourcePermissionSnapshot.get();
+
+			return modelResourcePermission.contains(
 				permissionChecker, accountRole, actionId);
 		}
 		catch (PortalException portalException) {
@@ -52,7 +52,10 @@ public class AccountRolePermission {
 		String actionId) {
 
 		try {
-			return _accountRoleModelResourcePermission.contains(
+			ModelResourcePermission<AccountRole> modelResourcePermission =
+				_accountRoleModelResourcePermissionSnapshot.get();
+
+			return modelResourcePermission.contains(
 				permissionChecker, accountRoleId, actionId);
 		}
 		catch (PortalException portalException) {
@@ -64,20 +67,13 @@ public class AccountRolePermission {
 		return false;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.account.model.AccountRole)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<AccountRole> modelResourcePermission) {
-
-		_accountRoleModelResourcePermission = modelResourcePermission;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountRolePermission.class);
 
-	private static ModelResourcePermission<AccountRole>
-		_accountRoleModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<AccountRole>>
+		_accountRoleModelResourcePermissionSnapshot = new Snapshot<>(
+			AccountRolePermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.account.model.AccountRole)");
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.security.permission.resource;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +26,18 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
 public class AccountPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return _portletResourcePermission.contains(
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissionSnapshot.get();
+
+		return portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
 	}
 
@@ -46,8 +46,11 @@ public class AccountPermission {
 		String actionId) {
 
 		try {
+			OrganizationLocalService organizationLocalService =
+				_organizationLocalServiceSnapshot.get();
+
 			List<Organization> organizations =
-				_organizationLocalService.getUserOrganizations(
+				organizationLocalService.getUserOrganizations(
 					permissionChecker.getUserId(), true);
 
 			for (Organization organization : organizations) {
@@ -67,27 +70,15 @@ public class AccountPermission {
 		return false;
 	}
 
-	@Reference(
-		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")",
-		unbind = "-"
-	)
-	protected void setPortletResourcePermission(
-		PortletResourcePermission portletResourcePermission) {
-
-		_portletResourcePermission = portletResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	private void _setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-
-		_organizationLocalService = organizationLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountPermission.class);
 
-	private static OrganizationLocalService _organizationLocalService;
-	private static PortletResourcePermission _portletResourcePermission;
+	private static final Snapshot<OrganizationLocalService>
+		_organizationLocalServiceSnapshot = new Snapshot<>(
+			AccountPermission.class, OrganizationLocalService.class);
+	private static final Snapshot<PortletResourcePermission>
+		_portletResourcePermissionSnapshot = new Snapshot<>(
+			AccountPermission.class, PortletResourcePermission.class,
+			"(resource.name=" + AccountConstants.RESOURCE_NAME + ")");
 
 }

@@ -16,18 +16,15 @@ package com.liferay.template.web.internal.security.permissions.resource;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.template.model.TemplateEntry;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = {})
 public class TemplateEntryPermission {
 
 	public static boolean contains(
@@ -35,32 +32,27 @@ public class TemplateEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _ddmTemplateModelResourcePermission.contains(
+		ModelResourcePermission<DDMTemplate> modelResourcePermission =
+			_ddmTemplateModelResourcePermissionSnapshot.get();
+
+		DDMTemplateLocalService ddmTemplateLocalService =
+			_ddmTemplateLocalServiceSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker,
-			_ddmTemplateLocalService.fetchDDMTemplate(
+			ddmTemplateLocalService.fetchDDMTemplate(
 				templateEntry.getDDMTemplateId()),
 			actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<DDMTemplate> modelResourcePermission) {
-
-		_ddmTemplateModelResourcePermission = modelResourcePermission;
-	}
-
-	private static DDMTemplateLocalService _ddmTemplateLocalService;
-	private static ModelResourcePermission<DDMTemplate>
-		_ddmTemplateModelResourcePermission;
+	private static final Snapshot<DDMTemplateLocalService>
+		_ddmTemplateLocalServiceSnapshot = new Snapshot<>(
+			TemplateEntryPermission.class, DDMTemplateLocalService.class);
+	private static final Snapshot<ModelResourcePermission<DDMTemplate>>
+		_ddmTemplateModelResourcePermissionSnapshot = new Snapshot<>(
+			TemplateEntryPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.dynamic.data.mapping.model." +
+				"DDMTemplate)");
 
 }

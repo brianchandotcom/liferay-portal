@@ -14,25 +14,25 @@
 
 package com.liferay.wiki.web.internal.security.permission.resource;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.wiki.model.WikiPage;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class WikiPagePermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return _wikiPageModelResourcePermission.contains(
+		ModelResourcePermission<WikiPage> modelResourcePermission =
+			_wikiPageModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -40,21 +40,17 @@ public class WikiPagePermission {
 			PermissionChecker permissionChecker, WikiPage page, String actionId)
 		throws PortalException {
 
-		return _wikiPageModelResourcePermission.contains(
+		ModelResourcePermission<WikiPage> modelResourcePermission =
+			_wikiPageModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, page, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.wiki.model.WikiPage)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<WikiPage> modelResourcePermission) {
-
-		_wikiPageModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<WikiPage>
-		_wikiPageModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<WikiPage>>
+		_wikiPageModelResourcePermissionSnapshot = new Snapshot<>(
+			WikiPagePermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.wiki.model.WikiPage)");
 
 }

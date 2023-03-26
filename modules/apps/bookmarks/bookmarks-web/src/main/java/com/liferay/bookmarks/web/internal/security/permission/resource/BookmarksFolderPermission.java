@@ -15,18 +15,15 @@
 package com.liferay.bookmarks.web.internal.security.permission.resource;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class BookmarksFolderPermission {
 
 	public static boolean contains(
@@ -34,7 +31,10 @@ public class BookmarksFolderPermission {
 			String actionId)
 		throws PortalException {
 
-		return _bookmarksFolderModelResourcePermission.contains(
+		ModelResourcePermission<BookmarksFolder> modelResourcePermission =
+			_bookmarksFolderModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, folder, actionId);
 	}
 
@@ -43,22 +43,18 @@ public class BookmarksFolderPermission {
 			String actionId)
 		throws PortalException {
 
+		ModelResourcePermission<BookmarksFolder> modelResourcePermission =
+			_bookmarksFolderModelResourcePermissionSnapshot.get();
+
 		return ModelResourcePermissionUtil.contains(
-			_bookmarksFolderModelResourcePermission, permissionChecker, groupId,
-			folderId, actionId);
+			modelResourcePermission, permissionChecker, groupId, folderId,
+			actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<BookmarksFolder> modelResourcePermission) {
-
-		_bookmarksFolderModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<BookmarksFolder>
-		_bookmarksFolderModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<BookmarksFolder>>
+		_bookmarksFolderModelResourcePermissionSnapshot = new Snapshot<>(
+			BookmarksFolderPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)");
 
 }

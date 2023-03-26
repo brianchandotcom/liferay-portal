@@ -15,19 +15,16 @@
 package com.liferay.account.admin.web.internal.security.permission.resource;
 
 import com.liferay.account.model.AccountGroup;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
 public class AccountGroupPermission {
 
 	public static boolean contains(
@@ -35,7 +32,10 @@ public class AccountGroupPermission {
 		String actionId) {
 
 		try {
-			return _accountGroupModelResourcePermission.contains(
+			ModelResourcePermission<AccountGroup> modelResourcePermission =
+				_accountGroupModelResourcePermissionSnapshot.get();
+
+			return modelResourcePermission.contains(
 				permissionChecker, accountGroup, actionId);
 		}
 		catch (PortalException portalException) {
@@ -52,7 +52,10 @@ public class AccountGroupPermission {
 		String actionId) {
 
 		try {
-			return _accountGroupModelResourcePermission.contains(
+			ModelResourcePermission<AccountGroup> modelResourcePermission =
+				_accountGroupModelResourcePermissionSnapshot.get();
+
+			return modelResourcePermission.contains(
 				permissionChecker, accountGroupId, actionId);
 		}
 		catch (PortalException portalException) {
@@ -64,20 +67,13 @@ public class AccountGroupPermission {
 		return false;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.account.model.AccountGroup)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<AccountGroup> modelResourcePermission) {
-
-		_accountGroupModelResourcePermission = modelResourcePermission;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountGroupPermission.class);
 
-	private static ModelResourcePermission<AccountGroup>
-		_accountGroupModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<AccountGroup>>
+		_accountGroupModelResourcePermissionSnapshot = new Snapshot<>(
+			AccountGroupPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.account.model.AccountGroup)");
 
 }

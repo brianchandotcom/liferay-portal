@@ -14,18 +14,15 @@
 
 package com.liferay.blogs.web.internal.security.permission.resource;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class BlogsImagesFileEntryPermission {
 
 	public static boolean contains(
@@ -33,21 +30,18 @@ public class BlogsImagesFileEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _fileEntryModelResourcePermission.contains(
+		ModelResourcePermission<FileEntry> modelResourcePermission =
+			_fileEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, fileEntry, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)",
-		unbind = "-"
-	)
-	protected void setFileEntryModelResourcePermission(
-		ModelResourcePermission<FileEntry> modelResourcePermission) {
-
-		_fileEntryModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<FileEntry>>
+		_fileEntryModelResourcePermissionSnapshot = new Snapshot<>(
+			BlogsImagesFileEntryPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.portal.kernel.repository.model." +
+				"FileEntry)");
 
 }

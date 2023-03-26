@@ -15,17 +15,14 @@
 package com.liferay.document.library.web.internal.security.permission.resource;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class DLFileEntryTypePermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class DLFileEntryTypePermission {
 			String actionId)
 		throws PortalException {
 
-		return _dlFileEntryTypeModelResourcePermission.contains(
+		ModelResourcePermission<DLFileEntryType> modelResourcePermission =
+			_dlFileEntryTypeModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, fileEntryType, actionId);
 	}
 
@@ -42,21 +42,18 @@ public class DLFileEntryTypePermission {
 			String actionId)
 		throws PortalException {
 
-		return _dlFileEntryTypeModelResourcePermission.contains(
+		ModelResourcePermission<DLFileEntryType> modelResourcePermission =
+			_dlFileEntryTypeModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, fileEntryTypeId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)",
-		unbind = "-"
-	)
-	protected void setDLFileEntryTypeModelResourcePermission(
-		ModelResourcePermission<DLFileEntryType> modelResourcePermission) {
-
-		_dlFileEntryTypeModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<DLFileEntryType>
-		_dlFileEntryTypeModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<DLFileEntryType>>
+		_dlFileEntryTypeModelResourcePermissionSnapshot = new Snapshot<>(
+			DLFileEntryTypePermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.document.library.kernel.model." +
+				"DLFileEntryType)");
 
 }

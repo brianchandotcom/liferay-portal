@@ -15,35 +15,28 @@
 package com.liferay.change.tracking.web.internal.security.permission.resource;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class CTPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
-		return _portletResourcePermission.contains(
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissionSnapshot.get();
+
+		return portletResourcePermission.contains(
 			permissionChecker, null, actionId);
 	}
 
-	@Reference(
-		target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")",
-		unbind = "-"
-	)
-	protected void setPortletResourcePermission(
-		PortletResourcePermission portletResourcePermission) {
-
-		_portletResourcePermission = portletResourcePermission;
-	}
-
-	private static PortletResourcePermission _portletResourcePermission;
+	private static final Snapshot<PortletResourcePermission>
+		_portletResourcePermissionSnapshot = new Snapshot<>(
+			CTPermission.class, PortletResourcePermission.class,
+			"(resource.name=" + CTConstants.RESOURCE_NAME + ")");
 
 }

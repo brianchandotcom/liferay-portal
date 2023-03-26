@@ -15,17 +15,14 @@
 package com.liferay.knowledge.base.web.internal.security.permission.resource;
 
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class KBTemplatePermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class KBTemplatePermission {
 			String actionId)
 		throws PortalException {
 
-		return _kbTemplateModelResourcePermission.contains(
+		ModelResourcePermission<KBTemplate> modelResourcePermission =
+			_kbTemplateModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, kbTemplate, actionId);
 	}
 
@@ -42,21 +42,17 @@ public class KBTemplatePermission {
 			String actionId)
 		throws PortalException {
 
-		return _kbTemplateModelResourcePermission.contains(
+		ModelResourcePermission<KBTemplate> modelResourcePermission =
+			_kbTemplateModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, kbTemplateId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.knowledge.base.model.KBTemplate)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<KBTemplate> modelResourcePermission) {
-
-		_kbTemplateModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<KBTemplate>
-		_kbTemplateModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<KBTemplate>>
+		_kbTemplateModelResourcePermissionSnapshot = new Snapshot<>(
+			KBTemplatePermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.knowledge.base.model.KBTemplate)");
 
 }

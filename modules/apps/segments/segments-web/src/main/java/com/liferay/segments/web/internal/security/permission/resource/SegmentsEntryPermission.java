@@ -14,25 +14,25 @@
 
 package com.liferay.segments.web.internal.security.permission.resource;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.segments.model.SegmentsEntry;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(service = {})
 public class SegmentsEntryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return _segmentsEntryModelResourcePermission.contains(
+		ModelResourcePermission<SegmentsEntry> modelResourcePermission =
+			_segmentsEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, entryId, actionId);
 	}
 
@@ -41,21 +41,17 @@ public class SegmentsEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _segmentsEntryModelResourcePermission.contains(
+		ModelResourcePermission<SegmentsEntry> modelResourcePermission =
+			_segmentsEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, segmentsEntry, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.segments.model.SegmentsEntry)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<SegmentsEntry> modelResourcePermission) {
-
-		_segmentsEntryModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<SegmentsEntry>
-		_segmentsEntryModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<SegmentsEntry>>
+		_segmentsEntryModelResourcePermissionSnapshot = new Snapshot<>(
+			SegmentsEntryPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.segments.model.SegmentsEntry)");
 
 }

@@ -15,17 +15,14 @@
 package com.liferay.commerce.product.options.web.internal.security.permission.resource;
 
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  */
-@Component(service = {})
 public class CPOptionPermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class CPOptionPermission {
 			String actionId)
 		throws PortalException {
 
-		return _cpOptionModelResourcePermission.contains(
+		ModelResourcePermission<CPOption> modelResourcePermission =
+			_cpOptionModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, cpOption, actionId);
 	}
 
@@ -42,21 +42,17 @@ public class CPOptionPermission {
 			String actionId)
 		throws PortalException {
 
-		return _cpOptionModelResourcePermission.contains(
+		ModelResourcePermission<CPOption> modelResourcePermission =
+			_cpOptionModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, cpOptionId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<CPOption> modelResourcePermission) {
-
-		_cpOptionModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<CPOption>
-		_cpOptionModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<CPOption>>
+		_cpOptionModelResourcePermissionSnapshot = new Snapshot<>(
+			CPOptionPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.commerce.product.model.CPOption)");
 
 }

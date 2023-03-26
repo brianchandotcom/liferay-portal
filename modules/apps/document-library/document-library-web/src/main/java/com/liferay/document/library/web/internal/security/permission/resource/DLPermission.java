@@ -14,44 +14,40 @@
 
 package com.liferay.document.library.web.internal.security.permission.resource;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class DLPermission {
 
 	public static void check(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PrincipalException {
 
-		_portletResourcePermission.check(permissionChecker, classPK, actionId);
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissionSnapshot.get();
+
+		portletResourcePermission.check(permissionChecker, classPK, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return _portletResourcePermission.contains(
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissionSnapshot.get();
+
+		return portletResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")",
-		unbind = "-"
-	)
-	protected void setPortletResourcePermission(
-		PortletResourcePermission portletResourcePermission) {
-
-		_portletResourcePermission = portletResourcePermission;
-	}
-
-	private static PortletResourcePermission _portletResourcePermission;
+	private static final Snapshot<PortletResourcePermission>
+		_portletResourcePermissionSnapshot = new Snapshot<>(
+			DLPermission.class, PortletResourcePermission.class,
+			"(resource.name=" + DLConstants.RESOURCE_NAME + ")");
 
 }

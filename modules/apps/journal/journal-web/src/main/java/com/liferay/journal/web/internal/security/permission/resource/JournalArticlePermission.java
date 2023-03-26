@@ -15,17 +15,14 @@
 package com.liferay.journal.web.internal.security.permission.resource;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class JournalArticlePermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class JournalArticlePermission {
 			String actionId)
 		throws PortalException {
 
-		return _journalArticleModelResourcePermission.contains(
+		ModelResourcePermission<JournalArticle> modelResourcePermission =
+			_journalArticleModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, article, actionId);
 	}
 
@@ -41,21 +41,17 @@ public class JournalArticlePermission {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return _journalArticleModelResourcePermission.contains(
+		ModelResourcePermission<JournalArticle> modelResourcePermission =
+			_journalArticleModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.journal.model.JournalArticle)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<JournalArticle> modelResourcePermission) {
-
-		_journalArticleModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<JournalArticle>
-		_journalArticleModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<JournalArticle>>
+		_journalArticleModelResourcePermissionSnapshot = new Snapshot<>(
+			JournalArticlePermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.journal.model.JournalArticle)");
 
 }

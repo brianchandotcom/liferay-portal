@@ -15,17 +15,14 @@
 package com.liferay.knowledge.base.web.internal.security.permission.resource;
 
 import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class KBCommentPermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class KBCommentPermission {
 			String actionId)
 		throws PortalException {
 
-		return _kbCommentModelResourcePermission.contains(
+		ModelResourcePermission<KBComment> modelResourcePermission =
+			_kbCommentModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, kbComment, actionId);
 	}
 
@@ -42,21 +42,17 @@ public class KBCommentPermission {
 			String actionId)
 		throws PortalException {
 
-		return _kbCommentModelResourcePermission.contains(
+		ModelResourcePermission<KBComment> modelResourcePermission =
+			_kbCommentModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, kbCommentId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.knowledge.base.model.KBComment)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<KBComment> modelResourcePermission) {
-
-		_kbCommentModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<KBComment>
-		_kbCommentModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<KBComment>>
+		_kbCommentModelResourcePermissionSnapshot = new Snapshot<>(
+			KBCommentPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.knowledge.base.model.KBComment)");
 
 }

@@ -14,19 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.permission;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marcellus Tavares
  */
-@Component(service = {})
 public class KaleoDefinitionVersionPermission {
 
 	public static boolean contains(
@@ -34,7 +31,11 @@ public class KaleoDefinitionVersionPermission {
 			KaleoDefinitionVersion kaleoDefinitionVersion, String actionId)
 		throws PortalException {
 
-		return _kaleoDefinitionVersionModelResourcePermission.contains(
+		ModelResourcePermission<KaleoDefinitionVersion>
+			modelResourcePermission =
+				_kaleoDefinitionVersionModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, kaleoDefinitionVersion, actionId);
 	}
 
@@ -61,19 +62,13 @@ public class KaleoDefinitionVersionPermission {
 		return false;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion)",
-		unbind = "-"
-	)
-	protected void setModelPermissionChecker(
-		ModelResourcePermission<KaleoDefinitionVersion>
-			modelResourcePermission) {
-
-		_kaleoDefinitionVersionModelResourcePermission =
-			modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<KaleoDefinitionVersion>
-		_kaleoDefinitionVersionModelResourcePermission;
+	private static final Snapshot
+		<ModelResourcePermission<KaleoDefinitionVersion>>
+			_kaleoDefinitionVersionModelResourcePermissionSnapshot =
+				new Snapshot<>(
+					KaleoDefinitionVersionPermission.class,
+					Snapshot.cast(ModelResourcePermission.class),
+					"(model.class.name=com.liferay.portal.workflow.kaleo." +
+						"model.KaleoDefinitionVersion)");
 
 }

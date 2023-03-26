@@ -35,6 +35,7 @@ dependencies {
 	compileOnly project(":apps:site-navigation:site-navigation-taglib")
 	compileOnly project(":apps:site:site-item-selector-api")
 	compileOnly project(":apps:staging:staging-api")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

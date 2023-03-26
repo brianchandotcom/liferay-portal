@@ -14,18 +14,15 @@
 
 package com.liferay.site.navigation.admin.web.internal.security.permission.resource;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Preston Crary
  */
-@Component(service = {})
 public class SiteNavigationMenuItemPermission {
 
 	public static boolean contains(
@@ -33,7 +30,11 @@ public class SiteNavigationMenuItemPermission {
 			String actionId)
 		throws PortalException {
 
-		return _siteNavigationMenuItemModelResourcePermission.contains(
+		ModelResourcePermission<SiteNavigationMenuItem>
+			modelResourcePermission =
+				_siteNavigationMenuItemModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, siteNavigationMenuItemId, actionId);
 	}
 
@@ -42,23 +43,21 @@ public class SiteNavigationMenuItemPermission {
 			SiteNavigationMenuItem siteNavigationMenuItem, String actionId)
 		throws PortalException {
 
-		return _siteNavigationMenuItemModelResourcePermission.contains(
+		ModelResourcePermission<SiteNavigationMenuItem>
+			modelResourcePermission =
+				_siteNavigationMenuItemModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, siteNavigationMenuItem, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.site.navigation.model.SiteNavigationMenuItem)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<SiteNavigationMenuItem>
-			modelResourcePermission) {
-
-		_siteNavigationMenuItemModelResourcePermission =
-			modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<SiteNavigationMenuItem>
-		_siteNavigationMenuItemModelResourcePermission;
+	private static final Snapshot
+		<ModelResourcePermission<SiteNavigationMenuItem>>
+			_siteNavigationMenuItemModelResourcePermissionSnapshot =
+				new Snapshot<>(
+					SiteNavigationMenuItemPermission.class,
+					Snapshot.cast(ModelResourcePermission.class),
+					"(model.class.name=com.liferay.site.navigation.model." +
+						"SiteNavigationMenuItem)");
 
 }

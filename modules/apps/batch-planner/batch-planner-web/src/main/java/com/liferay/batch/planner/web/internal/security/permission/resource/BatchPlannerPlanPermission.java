@@ -15,17 +15,14 @@
 package com.liferay.batch.planner.web.internal.security.permission.resource;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Matija Petanjek
  */
-@Component(service = {})
 public class BatchPlannerPlanPermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class BatchPlannerPlanPermission {
 			BatchPlannerPlan batchPlannerPlan, String actionId)
 		throws PortalException {
 
-		return _batchPlannerPlanModelResourcePermission.contains(
+		ModelResourcePermission<BatchPlannerPlan> modelResourcePermission =
+			_batchPlannerPlanModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, batchPlannerPlan, actionId);
 	}
 
@@ -42,21 +42,18 @@ public class BatchPlannerPlanPermission {
 			String actionId)
 		throws PortalException {
 
-		return _batchPlannerPlanModelResourcePermission.contains(
+		ModelResourcePermission<BatchPlannerPlan> modelResourcePermission =
+			_batchPlannerPlanModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, batchPlannerPlanId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.batch.planner.model.BatchPlannerPlan)",
-		unbind = "-"
-	)
-	protected void setModelPermissionChecker(
-		ModelResourcePermission<BatchPlannerPlan> modelResourcePermission) {
-
-		_batchPlannerPlanModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<BatchPlannerPlan>
-		_batchPlannerPlanModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<BatchPlannerPlan>>
+		_batchPlannerPlanModelResourcePermissionSnapshot = new Snapshot<>(
+			BatchPlannerPlanPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.batch.planner.model." +
+				"BatchPlannerPlan)");
 
 }

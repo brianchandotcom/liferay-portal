@@ -15,17 +15,14 @@
 package com.liferay.calendar.web.internal.security.permission.resource;
 
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jonathan McCann
  */
-@Component(service = {})
 public class CalendarBookingPermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class CalendarBookingPermission {
 			CalendarBooking calendarBooking, String actionId)
 		throws PortalException {
 
-		return _calendarBookingeModelResourcePermission.contains(
+		ModelResourcePermission<CalendarBooking> modelResourcePermission =
+			_calendarBookingeModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, calendarBooking, actionId);
 	}
 
@@ -42,21 +42,17 @@ public class CalendarBookingPermission {
 			String actionId)
 		throws PortalException {
 
-		return _calendarBookingeModelResourcePermission.contains(
+		ModelResourcePermission<CalendarBooking> modelResourcePermission =
+			_calendarBookingeModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, calendarBookingId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.calendar.model.CalendarBooking)",
-		unbind = "-"
-	)
-	protected void setModelPermissionChecker(
-		ModelResourcePermission<CalendarBooking> modelResourcePermission) {
-
-		_calendarBookingeModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<CalendarBooking>
-		_calendarBookingeModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<CalendarBooking>>
+		_calendarBookingeModelResourcePermissionSnapshot = new Snapshot<>(
+			CalendarBookingPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.calendar.model.CalendarBooking)");
 
 }

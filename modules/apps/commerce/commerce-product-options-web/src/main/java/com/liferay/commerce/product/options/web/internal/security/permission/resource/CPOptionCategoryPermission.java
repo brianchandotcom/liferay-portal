@@ -15,17 +15,14 @@
 package com.liferay.commerce.product.options.web.internal.security.permission.resource;
 
 import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  */
-@Component(service = {})
 public class CPOptionCategoryPermission {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class CPOptionCategoryPermission {
 			CPOptionCategory cpOptionCategory, String actionId)
 		throws PortalException {
 
-		return _cpOptionCategoryModelResourcePermission.contains(
+		ModelResourcePermission<CPOptionCategory> modelResourcePermission =
+			_cpOptionCategoryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, cpOptionCategory, actionId);
 	}
 
@@ -42,21 +42,18 @@ public class CPOptionCategoryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _cpOptionCategoryModelResourcePermission.contains(
+		ModelResourcePermission<CPOptionCategory> modelResourcePermission =
+			_cpOptionCategoryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, cpOptionCategoryId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPOptionCategory)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<CPOptionCategory> modelResourcePermission) {
-
-		_cpOptionCategoryModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<CPOptionCategory>
-		_cpOptionCategoryModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<CPOptionCategory>>
+		_cpOptionCategoryModelResourcePermissionSnapshot = new Snapshot<>(
+			CPOptionCategoryPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.commerce.product.model." +
+				"CPOptionCategory)");
 
 }

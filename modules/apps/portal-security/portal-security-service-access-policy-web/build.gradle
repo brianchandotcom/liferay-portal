@@ -11,6 +11,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":apps:portal-security:portal-security-service-access-policy-service")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

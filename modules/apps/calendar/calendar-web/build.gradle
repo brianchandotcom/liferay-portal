@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-api")
 	compileOnly project(":apps:rss:rss-taglib")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

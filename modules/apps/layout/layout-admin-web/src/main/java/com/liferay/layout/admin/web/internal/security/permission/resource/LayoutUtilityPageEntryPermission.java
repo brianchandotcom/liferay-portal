@@ -15,17 +15,14 @@
 package com.liferay.layout.admin.web.internal.security.permission.resource;
 
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = {})
 public class LayoutUtilityPageEntryPermission {
 
 	public static void check(
@@ -33,7 +30,11 @@ public class LayoutUtilityPageEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		_layoutUtilityPageEntryModelResourcePermission.check(
+		ModelResourcePermission<LayoutUtilityPageEntry>
+			modelResourcePermission =
+				_layoutUtilityPageEntryModelResourcePermissionSnapshot.get();
+
+		modelResourcePermission.check(
 			permissionChecker, layoutUtilityPageEntryId, actionId);
 	}
 
@@ -42,7 +43,11 @@ public class LayoutUtilityPageEntryPermission {
 			LayoutUtilityPageEntry layoutUtilityPageEntry, String actionId)
 		throws PortalException {
 
-		return _layoutUtilityPageEntryModelResourcePermission.contains(
+		ModelResourcePermission<LayoutUtilityPageEntry>
+			modelResourcePermission =
+				_layoutUtilityPageEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, layoutUtilityPageEntry, actionId);
 	}
 
@@ -51,23 +56,21 @@ public class LayoutUtilityPageEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _layoutUtilityPageEntryModelResourcePermission.contains(
+		ModelResourcePermission<LayoutUtilityPageEntry>
+			modelResourcePermission =
+				_layoutUtilityPageEntryModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, layoutUtilityPageEntryId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.layout.utility.page.model.LayoutUtilityPageEntry)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<LayoutUtilityPageEntry>
-			modelResourcePermission) {
-
-		_layoutUtilityPageEntryModelResourcePermission =
-			modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<LayoutUtilityPageEntry>
-		_layoutUtilityPageEntryModelResourcePermission;
+	private static final Snapshot
+		<ModelResourcePermission<LayoutUtilityPageEntry>>
+			_layoutUtilityPageEntryModelResourcePermissionSnapshot =
+				new Snapshot<>(
+					LayoutUtilityPageEntryPermission.class,
+					Snapshot.cast(ModelResourcePermission.class),
+					"(model.class.name=com.liferay.layout.utility.page.model." +
+						"LayoutUtilityPageEntry)");
 
 }

@@ -277,7 +277,7 @@ public class SalesforceObjectEntryManagerImpl
 		return null;
 	}
 
-	private String _getAccountRestrictionFilterString(
+	private String _getAccountRestrictionPredicateString(
 			long companyId, DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
@@ -314,7 +314,7 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private String _getLocation(
-		String filterString, ObjectDefinition objectDefinition,
+		String predicateString, ObjectDefinition objectDefinition,
 		Pagination pagination, String search, Sort[] sorts) {
 
 		if (Validator.isNotNull(search)) {
@@ -323,7 +323,7 @@ public class SalesforceObjectEntryManagerImpl
 				StringBundler.concat(
 					"FIND {", search, "} IN ALL FIELDS RETURNING ",
 					objectDefinition.getExternalReferenceCode(), "(FIELDS(ALL)",
-					filterString,
+					predicateString,
 					_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 					_getSalesforcePagination(pagination), ")"));
 		}
@@ -332,7 +332,7 @@ public class SalesforceObjectEntryManagerImpl
 			"query", "q",
 			StringBundler.concat(
 				"SELECT FIELDS(ALL) FROM ",
-				objectDefinition.getExternalReferenceCode(), filterString,
+				objectDefinition.getExternalReferenceCode(), predicateString,
 				_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 				_getSalesforcePagination(pagination)));
 	}
@@ -346,7 +346,7 @@ public class SalesforceObjectEntryManagerImpl
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
-				_getAccountRestrictionFilterString(
+				_getAccountRestrictionPredicateString(
 					companyId, dtoConverterContext, objectDefinition, scopeKey),
 				objectDefinition, pagination, search, sorts));
 
@@ -366,7 +366,7 @@ public class SalesforceObjectEntryManagerImpl
 			pagination,
 			_getTotalCount(
 				companyId,
-				_getAccountRestrictionFilterString(
+				_getAccountRestrictionPredicateString(
 					companyId, dtoConverterContext, objectDefinition, scopeKey),
 				objectDefinition, scopeKey, search));
 	}
@@ -460,14 +460,14 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private int _getTotalCount(
-		long companyId, String filterString, ObjectDefinition objectDefinition,
-		String scopeKey, String search) {
+		long companyId, String predicateString,
+		ObjectDefinition objectDefinition, String scopeKey, String search) {
 
 		if (Validator.isNotNull(search)) {
 			JSONObject responseJSONObject = _salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				_getLocation(
-					filterString, objectDefinition, Pagination.of(1, 200),
+					predicateString, objectDefinition, Pagination.of(1, 200),
 					search, null));
 
 			JSONArray jsonArray = responseJSONObject.getJSONArray(
@@ -483,7 +483,7 @@ public class SalesforceObjectEntryManagerImpl
 				StringBundler.concat(
 					"SELECT COUNT(Id) FROM ",
 					objectDefinition.getExternalReferenceCode(),
-					filterString)));
+					predicateString)));
 
 		JSONArray jsonArray = responseJSONObject.getJSONArray("records");
 

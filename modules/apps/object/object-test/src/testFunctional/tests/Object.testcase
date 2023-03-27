@@ -662,7 +662,11 @@ definition {
 		}
 
 		task ("Then: The title field of System Object is present") {
-			Navigator.gotoBack();
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject178761");
+
+			WaitForElementPresent(
+				key_entry = "business",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
 
 			ObjectPortlet.viewEntry(entry = "business");
 		}

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Cristina González
@@ -76,13 +75,20 @@ public class DownloadFileEntryContentDashboardItemAction
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
-		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue("downloadURL")
-		).map(
-			InfoFieldValue::getValue
-		).orElse(
-			StringPool.BLANK
-		).toString();
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("downloadURL");
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
+		return value.toString();
 	}
 
 	@Override

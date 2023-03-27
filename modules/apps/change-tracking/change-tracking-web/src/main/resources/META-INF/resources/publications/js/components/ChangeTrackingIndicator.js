@@ -1124,7 +1124,7 @@ export default function ChangeTrackingIndicator({
 			{renderModal()}
 
 			<ClayLayout.ContentRow style={{justifyContent: 'center'}}>
-				<ClayLayout.ContentCol style={{marginRight: '50px'}}>
+				<ClayLayout.ContentCol>
 					<div
 						className="c-inner"
 						style={{
@@ -1163,7 +1163,7 @@ export default function ChangeTrackingIndicator({
 					/>
 				</ClayLayout.ContentCol>
 
-				<ClayLayout.ContentCol style={{marginLeft: '50px'}}>
+				<ClayLayout.ContentCol>
 					<div
 						className="c-inner"
 						style={{

@@ -24,7 +24,6 @@ String currentLogoURL = (String)request.getAttribute("liferay-frontend:logo-sele
 boolean defaultLogo = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:defaultLogo"));
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
 boolean preserveRatio = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:preserveRatio"));
-boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:showButtons"));
 String tempImageFileName = (String)request.getAttribute("liferay-frontend:logo-selector:tempImageFileName");
 
 boolean deleteLogo = ParamUtil.getBoolean(request, "deleteLogo");
@@ -49,62 +48,49 @@ else {
 }
 %>
 
-<c:choose>
-	<c:when test="<%= showButtons %>">
-		<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
-			<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
-				<span class="lfr-change-logo">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-fluid mw-100" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
-				</span>
+<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
+	<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
+		<span class="lfr-change-logo">
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-fluid mw-100" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
+		</span>
 
-				<c:if test='<%= Validator.isNull(imageURL) || imageURL.contains("/spacer.png") %>'>
-					<p class="text-muted" id="<%= randomNamespace %>emptyResultMessage">
-						<liferay-ui:message key="none" />
-					</p>
-				</c:if>
+		<c:if test='<%= Validator.isNull(imageURL) || imageURL.contains("/spacer.png") %>'>
+			<p class="text-muted" id="<%= randomNamespace %>emptyResultMessage">
+				<liferay-ui:message key="none" />
+			</p>
+		</c:if>
 
-				<div class="mb-4 mt-3 portrait-icons">
-					<div class="btn-group button-holder">
-						<aui:button aria-label='<%= LanguageUtil.get(request, "change-image") %>' cssClass="edit-logo modify-link mr-3" value="change" />
+		<div class="mb-4 mt-3 portrait-icons">
+			<div class="btn-group button-holder">
+				<aui:button aria-label='<%= LanguageUtil.get(request, "change-image") %>' cssClass="edit-logo modify-link mr-3" value="change" />
 
-						<aui:button aria-label='<%= LanguageUtil.get(request, "delete-image") %>' cssClass="delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
-					</div>
-
-					<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />
-
-					<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
-				</div>
+				<aui:button aria-label='<%= LanguageUtil.get(request, "delete-image") %>' cssClass="delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
 			</div>
-		</div>
 
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.IMAGE_UPLOADER %>" var="uploadImageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<liferay-portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
-			<liferay-portlet:param name="randomNamespace" value="<%= randomNamespace %>" />
-			<liferay-portlet:param name="aspectRatio" value="<%= String.valueOf(aspectRatio) %>" />
-			<liferay-portlet:param name="currentLogoURL" value="<%= currentLogoURL %>" />
-			<liferay-portlet:param name="preserveRatio" value="<%= String.valueOf(preserveRatio) %>" />
-			<liferay-portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
-		</liferay-portlet:renderURL>
+			<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />
 
-		<aui:script use="liferay-logo-selector">
-			new Liferay.LogoSelector({
-				boundingBox: '#<%= randomNamespace %>taglibLogoSelector',
-				contentBox: '#<%= randomNamespace %>taglibLogoSelectorContent',
-				defaultLogo: '<%= defaultLogo %>',
-				defaultLogoURL: '<%= defaultLogoURL %>',
-				editLogoURL: '<%= uploadImageURL %>',
-				portletNamespace: '<portlet:namespace />',
-				randomNamespace: '<%= randomNamespace %>',
-			}).render();
-		</aui:script>
-	</c:when>
-	<c:otherwise>
-		<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
-			<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
-				<span class="lfr-change-logo">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-fluid" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
-				</span>
-			</div>
+			<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
 		</div>
-	</c:otherwise>
-</c:choose>
+	</div>
+</div>
+
+<liferay-portlet:renderURL portletName="<%= PortletKeys.IMAGE_UPLOADER %>" var="uploadImageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<liferay-portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
+	<liferay-portlet:param name="randomNamespace" value="<%= randomNamespace %>" />
+	<liferay-portlet:param name="aspectRatio" value="<%= String.valueOf(aspectRatio) %>" />
+	<liferay-portlet:param name="currentLogoURL" value="<%= currentLogoURL %>" />
+	<liferay-portlet:param name="preserveRatio" value="<%= String.valueOf(preserveRatio) %>" />
+	<liferay-portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
+</liferay-portlet:renderURL>
+
+<aui:script use="liferay-logo-selector">
+	new Liferay.LogoSelector({
+		boundingBox: '#<%= randomNamespace %>taglibLogoSelector',
+		contentBox: '#<%= randomNamespace %>taglibLogoSelectorContent',
+		defaultLogo: '<%= defaultLogo %>',
+		defaultLogoURL: '<%= defaultLogoURL %>',
+		editLogoURL: '<%= uploadImageURL %>',
+		portletNamespace: '<portlet:namespace />',
+		randomNamespace: '<%= randomNamespace %>',
+	}).render();
+</aui:script>

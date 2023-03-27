@@ -49,10 +49,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _preserveRatio;
 	}
 
-	public boolean isShowButtons() {
-		return _showButtons;
-	}
-
 	public void setAspectRatio(int aspectRatio) {
 		_aspectRatio = aspectRatio;
 	}
@@ -80,10 +76,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_preserveRatio = preserveRatio;
 	}
 
-	public void setShowButtons(boolean showButtons) {
-		_showButtons = showButtons;
-	}
-
 	public void setTempImageFileName(String tempImageFileName) {
 		_tempImageFileName = tempImageFileName;
 	}
@@ -97,7 +89,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_defaultLogo = false;
 		_defaultLogoURL = null;
 		_preserveRatio = false;
-		_showButtons = true;
 		_tempImageFileName = null;
 	}
 
@@ -122,9 +113,6 @@ public class LogoSelectorTag extends IncludeTag {
 			"liferay-frontend:logo-selector:preserveRatio",
 			String.valueOf(_preserveRatio));
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:showButtons",
-			String.valueOf(_showButtons));
-		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:tempImageFileName",
 			_tempImageFileName);
 	}
@@ -136,7 +124,6 @@ public class LogoSelectorTag extends IncludeTag {
 	private boolean _defaultLogo;
 	private String _defaultLogoURL;
 	private boolean _preserveRatio;
-	private boolean _showButtons = true;
 	private String _tempImageFileName;
 
 }

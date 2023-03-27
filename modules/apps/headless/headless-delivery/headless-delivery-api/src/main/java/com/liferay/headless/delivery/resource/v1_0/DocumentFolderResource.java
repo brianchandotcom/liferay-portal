@@ -87,6 +87,10 @@ public interface DocumentFolderResource {
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
+	public Page<DocumentFolder> getAssetLibraryDocumentFoldersRatedByMePage(
+			Long assetLibraryId, Pagination pagination)
+		throws Exception;
+
 	public void deleteDocumentFolder(Long documentFolderId) throws Exception;
 
 	public Response deleteDocumentFolderBatch(String callbackURL, Object object)
@@ -160,6 +164,10 @@ public interface DocumentFolderResource {
 			putSiteDocumentFolderPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Page<DocumentFolder> getSiteDocumentFoldersRatedByMePage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public void deleteSiteDocumentsFolderByExternalReferenceCode(

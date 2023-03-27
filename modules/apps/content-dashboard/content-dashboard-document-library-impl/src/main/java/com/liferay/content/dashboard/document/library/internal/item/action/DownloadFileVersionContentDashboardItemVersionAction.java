@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -61,13 +60,20 @@ public class DownloadFileVersionContentDashboardItemVersionAction
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
-		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue("downloadURL")
-		).map(
-			InfoFieldValue::getValue
-		).orElse(
-			StringPool.BLANK
-		).toString();
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("downloadURL");
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
+		return value.toString();
 	}
 
 	private final FileEntry _fileEntry;

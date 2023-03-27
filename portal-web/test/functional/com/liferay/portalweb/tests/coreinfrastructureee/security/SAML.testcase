@@ -3050,7 +3050,7 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-idp.json",
+				fileName = "identity-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
@@ -3068,7 +3068,7 @@ definition {
 				samlRoleType = "Identity Provider");
 		}
 
-		task ("And: All the configurations which defines in saml-idp.json are configured") {
+		task ("And: All the configurations which defines in identity-provider-configuration.json are configured") {
 			SAMLNavigation.gotoIdentityProvider();
 
 			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = 10000);
@@ -3104,7 +3104,7 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-sp.json",
+				fileName = "service-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
@@ -3122,7 +3122,7 @@ definition {
 				samlRoleType = "Service Provider");
 		}
 
-		task ("And: All the configurations which defines in saml-sp.json are configured") {
+		task ("And: All the configurations which defines in service-provider-configuration.json are configured") {
 			SAMLNavigation.gotoServiceProvider();
 
 			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = 3500);
@@ -3167,7 +3167,7 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
-				fileName = "saml-sp.json",
+				fileName = "service-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 
 			Button.click(button = "Next");
@@ -3185,7 +3185,7 @@ definition {
 				samlRoleType = "Service Provider");
 		}
 
-		task ("And: All the configurations which defines in saml-sp.json are configured") {
+		task ("And: All the configurations which defines in service-provider-configuration.json are configured") {
 			SAMLNavigation.gotoServiceProvider();
 
 			SAMLPortlet.viewServiceProviderConfigurations(clockSkew = 3500);

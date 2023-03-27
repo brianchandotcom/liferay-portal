@@ -748,9 +748,6 @@ public class FriendlyURLServletTest {
 	}
 
 	@Inject
-	private static LayoutLocalService _layoutLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
@@ -765,6 +762,10 @@ public class FriendlyURLServletTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 	private Constructor<?> _redirectConstructor1;
 	private Constructor<?> _redirectConstructor2;
 

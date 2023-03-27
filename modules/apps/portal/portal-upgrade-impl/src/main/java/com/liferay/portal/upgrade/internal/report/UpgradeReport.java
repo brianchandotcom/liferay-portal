@@ -55,7 +55,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -621,43 +620,35 @@ public class UpgradeReport {
 	}
 
 	private List<EventMessage> _getSortedLogEvents(String type) {
-		List<Map.Entry<String, Map<String, Integer>>> events =
+		List<Map.Entry<String, Map<String, Integer>>> classEventsList =
 			new ArrayList<>();
 
 		if (type.equals("errors")) {
-			events.addAll(_errorMessages.entrySet());
+			classEventsList.addAll(_errorMessages.entrySet());
 		}
 		else {
-			events.addAll(_warningMessages.entrySet());
+			classEventsList.addAll(_warningMessages.entrySet());
 		}
 
 		ListUtil.sort(
-			events,
+			classEventsList,
 			Collections.reverseOrder(
 				Map.Entry.comparingByValue(
 					Comparator.comparingInt(Map::size))));
 
-		Map<String, Map<String, Integer>> sortedEventsMap = new LinkedHashMap<>(
-			events.size());
-
-		for (Map.Entry<String, Map<String, Integer>> event : events) {
-			sortedEventsMap.put(event.getKey(), event.getValue());
-		}
-
 		List<EventMessage> eventMessages = new ArrayList<>();
 
-		for (Map.Entry<String, Map<String, Integer>> event :
-				sortedEventsMap.entrySet()) {
+		for (Map.Entry<String, Map<String, Integer>> classEvents :
+				classEventsList) {
 
-			EventMessage eventMessage = new EventMessage(event.getKey());
+			EventMessage eventMessage = new EventMessage(classEvents.getKey());
 
 			eventMessages.add(eventMessage);
 
-			Map<String, Integer> value = event.getValue();
+			Map<String, Integer> value = classEvents.getValue();
 
-			for (Map.Entry<String, Integer> innerEvent : value.entrySet()) {
-				eventMessage.addEvent(
-					innerEvent.getKey(), innerEvent.getValue());
+			for (Map.Entry<String, Integer> event : value.entrySet()) {
+				eventMessage.addEvent(event.getKey(), event.getValue());
 			}
 		}
 

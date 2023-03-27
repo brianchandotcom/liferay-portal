@@ -537,6 +537,70 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>logo-selector</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.LogoSelectorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>aspectRatio</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>currentLogoURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>defaultLogo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>defaultLogoURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>editLogoFn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>logoDisplaySelector</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
+			<name>maxFileSize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>preserveRatio</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>showBackground</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showButtons</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>tempImageFileName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>screen-navigation</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationTag</tag-class>
 		<body-content>JSP</body-content>

@@ -9,7 +9,7 @@ function main {
 			continue
 		fi
 
-		rsync -a --delete --exclude "client-extensions" --exclude "modules" --exclude "themes" liferay-sample-workspace/ ${dir}
+		rsync -a --delete --exclude "client-extensions" --exclude "modules" --exclude "poshi" --exclude "themes" liferay-sample-workspace/ ${dir}
 	done
 }
 

@@ -23,10 +23,8 @@ int aspectRatio = GetterUtil.getInteger((String)request.getAttribute("liferay-fr
 String currentLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:currentLogoURL");
 boolean defaultLogo = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:defaultLogo"));
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
-String editLogoFn = GetterUtil.getString((String)request.getAttribute("liferay-frontend:logo-selector:editLogoFn"));
 String logoDisplaySelector = (String)request.getAttribute("liferay-frontend:logo-selector:logoDisplaySelector");
 boolean preserveRatio = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:preserveRatio"));
-boolean showBackground = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:showBackground"));
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:showButtons"));
 String tempImageFileName = (String)request.getAttribute("liferay-frontend:logo-selector:tempImageFileName");
 
@@ -56,7 +54,7 @@ else {
 	<c:when test="<%= showButtons %>">
 		<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
 			<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
-				<span class="lfr-change-logo <%= showBackground ? "show-background" : StringPool.BLANK %>">
+				<span class="lfr-change-logo">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-fluid mw-100" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
 				</span>
 
@@ -95,7 +93,6 @@ else {
 				contentBox: '#<%= randomNamespace %>taglibLogoSelectorContent',
 				defaultLogo: '<%= defaultLogo %>',
 				defaultLogoURL: '<%= defaultLogoURL %>',
-				editLogoFn: '<%= editLogoFn %>',
 				editLogoURL: '<%= uploadImageURL %>',
 				logoDisplaySelector: '<%= logoDisplaySelector %>',
 				portletNamespace: '<portlet:namespace />',
@@ -106,7 +103,7 @@ else {
 	<c:otherwise>
 		<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
 			<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
-				<span class="lfr-change-logo <%= showBackground ? "show-background" : StringPool.BLANK %>">
+				<span class="lfr-change-logo">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-fluid" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
 				</span>
 			</div>

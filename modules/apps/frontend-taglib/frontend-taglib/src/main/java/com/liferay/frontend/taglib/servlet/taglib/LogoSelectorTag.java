@@ -37,10 +37,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _defaultLogoURL;
 	}
 
-	public String getEditLogoFn() {
-		return _editLogoFn;
-	}
-
 	public String getLogoDisplaySelector() {
 		return _logoDisplaySelector;
 	}
@@ -65,10 +61,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _preserveRatio;
 	}
 
-	public boolean isShowBackground() {
-		return _showBackground;
-	}
-
 	public boolean isShowButtons() {
 		return _showButtons;
 	}
@@ -87,10 +79,6 @@ public class LogoSelectorTag extends IncludeTag {
 
 	public void setDefaultLogoURL(String defaultLogoURL) {
 		_defaultLogoURL = defaultLogoURL;
-	}
-
-	public void setEditLogoFn(String editLogoFn) {
-		_editLogoFn = editLogoFn;
 	}
 
 	public void setLogoDisplaySelector(String logoDisplaySelector) {
@@ -116,10 +104,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_preserveRatio = preserveRatio;
 	}
 
-	public void setShowBackground(boolean showBackground) {
-		_showBackground = showBackground;
-	}
-
 	public void setShowButtons(boolean showButtons) {
 		_showButtons = showButtons;
 	}
@@ -136,11 +120,9 @@ public class LogoSelectorTag extends IncludeTag {
 		_currentLogoURL = null;
 		_defaultLogo = false;
 		_defaultLogoURL = null;
-		_editLogoFn = null;
 		_logoDisplaySelector = null;
 		_maxFileSize = 0;
 		_preserveRatio = false;
-		_showBackground = true;
 		_showButtons = true;
 		_tempImageFileName = null;
 	}
@@ -163,16 +145,11 @@ public class LogoSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:editLogoFn", _editLogoFn);
-		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:logoDisplaySelector",
 			_logoDisplaySelector);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:preserveRatio",
 			String.valueOf(_preserveRatio));
-		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:showBackground",
-			String.valueOf(_showBackground));
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:showButtons",
 			String.valueOf(_showButtons));
@@ -187,11 +164,9 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _currentLogoURL;
 	private boolean _defaultLogo;
 	private String _defaultLogoURL;
-	private String _editLogoFn;
 	private String _logoDisplaySelector;
 	private long _maxFileSize;
 	private boolean _preserveRatio;
-	private boolean _showBackground = true;
 	private boolean _showButtons = true;
 	private String _tempImageFileName;
 

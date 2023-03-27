@@ -55,7 +55,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Subject entry with postSubject including studentsSubjects with Student entries information") {
-			ObjectDefinitionAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryWithField(
 				en_US_plural_label = "subjects",
 				fieldName = "name",
 				fieldValue = "Math",
@@ -81,7 +81,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsSubjects with Subject entries information") {
-			ObjectDefinitionAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryWithField(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -109,14 +109,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsSubjects with nonexistent field in Subject entries") {
-			ObjectDefinitionAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryWithField(
 				en_US_plural_label = "students",
-				externalReferenceCode = "studentErc",
 				fieldName = "name",
 				fieldValue = "Able",
 				nestedField = "studentsSubjects",
 				numberOfRelatedObjectEntries = 1,
-				relatedEntryExternalReferenceCode = "subjectErc",
 				relatedEntryFieldName = "nonexistentField");
 		}
 
@@ -139,14 +137,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including nonexistent nestedField with Subject entries information") {
-			ObjectDefinitionAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryWithField(
 				en_US_plural_label = "subjects",
-				externalReferenceCode = "subjectErc",
 				fieldName = "name",
 				fieldValue = "Math",
 				nestedField = "nonexistentNestedField",
 				numberOfRelatedObjectEntries = 1,
-				relatedEntryExternalReferenceCode = "studentErc",
 				relatedEntryFieldName = "name");
 		}
 
@@ -158,6 +154,57 @@ definition {
 			CustomObjectAPI.assertCorrectObjectEntryCount(
 				en_US_plural_label = "subjects",
 				expectedCount = 0);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateCustomObjectEntriesWithPutParentObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given Student and Subject entries with custom ERCs are created with postStudent including studentsSubjects with Subject entries information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryExternalReferenceCode = "subjectErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("When with putStudent and studentId including studentsSubjects with modified names of Subject entries and their ERCs to update Student entry") {
+			var studentId = JSONPathUtil.getIdValue(response = ${response});
+
+			CustomObjectAPI.updateObjectEntry(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				fieldName = "name",
+				fieldValue = "Bob",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				objectEntryId = ${studentId},
+				relatedEntryExternalReferenceCode = "subjectErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then both Student and Subject entries are updated") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var studentName = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
+
+			TestUtils.assertEquals(
+				actual = ${studentName},
+				expected = "Bob");
+
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "subjects");
+
+			var subjectNames = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
+
+			TestUtils.assertEquals(
+				actual = ${subjectNames},
+				expected = "name0-update,name1-update");
 		}
 	}
 

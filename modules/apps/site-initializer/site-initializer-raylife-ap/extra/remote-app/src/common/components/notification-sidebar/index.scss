@@ -1,4 +1,5 @@
 .notification-container {
+	height: 96vh;
 	.bubble-unread::before {
 		background-color: #ec0d6b;
 		border-radius: 50%;
@@ -6,6 +7,7 @@
 		height: 0.5rem;
 		position: absolute;
 		right: 1rem;
+		top: 50%;
 		transform: translate(-50%, -50%);
 		width: 0.5rem;
 	}
@@ -26,6 +28,17 @@
 	}
 
 	.post-container {
+		.title {
+			color: #a8a8a8;
+			font-size: 8px;
+			font-weight: 400;
+			height: 10px;
+			letter-spacing: 0.1em;
+			letter-spacing: 0.1em;
+			line-height: 10px;
+			width: 270px;
+		}
+		padding-bottom: 1px;
 		padding-left: 20px;
 
 		a {
@@ -69,5 +82,6 @@
 
 	.post-container-unread {
 		background-color: #edf2ff;
+		padding-bottom: 1px;
 	}
 }

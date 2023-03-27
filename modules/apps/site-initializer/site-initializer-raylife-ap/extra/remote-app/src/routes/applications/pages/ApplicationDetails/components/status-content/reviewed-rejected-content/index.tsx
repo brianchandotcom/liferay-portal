@@ -61,7 +61,6 @@ const UnderwritingContent = ({
 	useEffect(() => {
 		getUserNotification().then((response) => {
 			const notifications = response?.data?.items;
-
 			const message = notifications.filter(
 				(notification: ConstantListType) => {
 					if (notification.message.includes(`${id}`)) {

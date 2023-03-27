@@ -38,7 +38,7 @@ const NotificationSidebar: React.FC = () => {
 	);
 	const [postsWithLinks, setPostsWithLinks] = useState<PostType[]>([]);
 	const hasMorePostsToLoad = posts.length < totalCount;
-	const [isRead, setIsRead] = useState<any>([]);
+	const [isRead, setIsRead] = useState<boolean[]>([]);
 	const [pageSize, setPageSize] = useState<number>(
 		initialPagination.pageSize
 	);
@@ -111,10 +111,10 @@ const NotificationSidebar: React.FC = () => {
 	}
 
 	const generateLinks = async () => {
-		const arrayRead: any = [];
+		const arrayRead: boolean[] = [];
 		const newLinks = await Promise.all(
 			posts.map(async (post) => {
-				arrayRead.push(post.read);
+				arrayRead.push(post.read as boolean);
 				const postId = extractNumber(post.message as string);
 				const isMatchingApplication = post.message?.includes(
 					notificationCategory + postId
@@ -156,22 +156,20 @@ const NotificationSidebar: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [posts]);
 
-	useEffect(() => {}, [isRead]);
-
 	return (
 		<div className="notification-container">
 			{!postsWithLinks.length && (
-				<p className="align-items-center d-flex justify-content-center pt-8 vh-100">
+				<p className="align-items-center d-flex justify-content-center pt-8 vh-80">
 					No notifications
 				</p>
 			)}
 
 			{!!postsWithLinks.length && (
-				<div className="vh-100">
+				<div>
 					{postsWithLinks.map((item: PostType, index: number) => (
 						<div
 							className={classNames({
-								'post-container-unread align-items-center d-flex justify-content-center position-relative bubble-unread': !isRead[
+								'post-container-unread align-items-center justify-content-center position-relative bubble-unread': !isRead[
 									index
 								],
 							})}
@@ -193,7 +191,11 @@ const NotificationSidebar: React.FC = () => {
 								>
 									{item.message?.includes(
 										notificationCategory
-									) && <p>{notificationCategory}</p>}
+									) && (
+										<p className="align-items-center d-flex text-left text-uppercase title">
+											{notificationCategory}
+										</p>
+									)}
 
 									<p className="mt-0 my-0">{item.message}</p>
 								</a>
@@ -207,11 +209,11 @@ const NotificationSidebar: React.FC = () => {
 
 					{hasMorePostsToLoad && (
 						<ClayButton
-							className="align-items-center mb-7 mt-9 pb-7 shadow-none w-100"
+							className="align-items-center mt-5 pt-7 shadow-none w-100"
 							displayType="link"
 							onClick={() => loadMore()}
 						>
-							Load More
+							Load older notifications
 						</ClayButton>
 					)}
 				</div>

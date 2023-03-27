@@ -13,7 +13,7 @@
  */
 
 export type Parameters = {
-	[key: string]: string | string[];
+	[key: string]: string | string[] | number;
 };
 
 export function parametersFormater(

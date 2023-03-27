@@ -217,4 +217,41 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by product version name"
+	@priority = 5
+	test AdminCanFilterCaseHistoryByProductVersionName {
+		task ("Given that the user has two product version different in the table") {
+            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+            Testray.projectTabNavigator(navTabName = "History");
+
+			Testray.assertItemName(key_name = "7.0");
+
+            Testray.assertItemName(key_name = "1.2");
+		}
+
+		task ("When the user filter a product version by name") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Product Version Name",
+				label = "Product Version Name",
+				listMultiSelect = "7.0");
+
+			TestrayFilter.assertMultiSelect(
+				label = "Product Version Name",
+				listMultiSelect = "7.0");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only product version 7.0 in the table") {
+			Testray.assertItemName(key_name = "7.0");
+		}
+
+		task ("And do not see the product version 1.2 in the table") {
+			Testray.assertItemNotPresent(key_name = "1.2");
+		}
+	}
+
 }

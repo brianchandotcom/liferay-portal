@@ -92,13 +92,8 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 			Comparator.comparing(
 				this::_getAssetVocabularyLabel, String.CASE_INSENSITIVE_ORDER));
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (AssetVocabulary assetVocabulary : filteredAssetVocabularies) {
-			jsonArray.put(_toJSONObject(assetVocabulary));
-		}
-
-		return jsonArray;
+		return JSONUtil.toJSONArray(
+			filteredAssetVocabularies, this::_toJSONObject, _log);
 	}
 
 	public JSONArray getCurrentVocabularyJSONArray() {

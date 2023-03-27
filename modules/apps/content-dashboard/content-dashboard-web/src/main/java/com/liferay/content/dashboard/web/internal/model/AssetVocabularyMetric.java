@@ -14,11 +14,11 @@
 
 package com.liferay.content.dashboard.web.internal.model;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Arrays;
@@ -120,15 +120,17 @@ public class AssetVocabularyMetric {
 	}
 
 	public JSONArray toJSONArray() {
-		return JSONUtil.putAll(
-			(Object[])TransformUtil.transformToArray(
-				_assetCategoryMetrics,
-				assetCategoryMetric -> assetCategoryMetric.toJSONObject(_name),
-				JSONObject.class));
+		return JSONUtil.toJSONArray(
+			_assetCategoryMetrics,
+			assetCategoryMetric -> assetCategoryMetric.toJSONObject(_name),
+			_log);
 	}
 
 	private static final AssetVocabularyMetric _EMPTY =
 		new AssetVocabularyMetric(StringPool.BLANK, StringPool.BLANK);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetVocabularyMetric.class.getName());
 
 	private final List<AssetCategoryMetric> _assetCategoryMetrics;
 	private final String _key;

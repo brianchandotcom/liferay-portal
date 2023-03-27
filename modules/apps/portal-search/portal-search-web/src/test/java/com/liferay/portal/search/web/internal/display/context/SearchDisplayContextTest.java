@@ -17,7 +17,6 @@ package com.liferay.portal.search.web.internal.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -252,10 +251,6 @@ public class SearchDisplayContextTest {
 
 		PropsTestUtil.setProps(Collections.emptyMap());
 
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(_createJSONFactory());
-
 		SearchFacetRegistry searchFacetRegistry = new SearchFacetRegistry();
 
 		ReflectionTestUtil.invoke(
@@ -268,7 +263,8 @@ public class SearchDisplayContextTest {
 			Mockito.mock(Html.class), Mockito.mock(Language.class), searcher,
 			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
 			Mockito.mock(SummaryBuilderFactory.class), searchContextFactory,
-			searchRequestBuilderFactory, searchFacetRegistry);
+			searchRequestBuilderFactory, searchFacetRegistry,
+			_createJSONFactory());
 	}
 
 	private ThemeDisplay _createThemeDisplay() throws Exception {

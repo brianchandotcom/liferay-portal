@@ -16,7 +16,13 @@ package com.liferay.portal.search.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -24,6 +30,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -52,6 +59,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import javax.portlet.PortletException;
@@ -74,7 +82,7 @@ public class SearchDisplayContext {
 			SummaryBuilderFactory summaryBuilderFactory,
 			SearchContextFactory searchContextFactory,
 			SearchRequestBuilderFactory searchRequestBuilderFactory,
-			SearchFacetRegistry searchFacetRegistry)
+			SearchFacetRegistry searchFacetRegistry, JSONFactory jsonFactory)
 		throws PortletException {
 
 		_renderRequest = renderRequest;
@@ -154,8 +162,7 @@ public class SearchDisplayContext {
 		searchContext.setKeywords(_keywords.getKeywords());
 
 		searchContext.setEntryClassNames(
-			AssetEntriesSearchFacet.getEntryClassNames(
-				getSearchConfiguration()));
+			_getEntryClassNames(getSearchConfiguration(), jsonFactory));
 
 		SearchRequestImpl searchRequestImpl = new SearchRequestImpl(
 			() -> searchContext, searchContainerOptions -> searchContainer,
@@ -594,6 +601,62 @@ public class SearchDisplayContext {
 		searchContext.setGroupIds(new long[] {groupId});
 	}
 
+	private String[] _getEntryClassNames(
+		String configuration, JSONFactory jsonFactory) {
+
+		if (Validator.isNull(configuration)) {
+			return null;
+		}
+
+		JSONObject configurationJSONObject;
+
+		try {
+			configurationJSONObject = jsonFactory.createJSONObject(
+				configuration);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to parse configuration", jsonException.getCause());
+			}
+
+			return null;
+		}
+
+		JSONArray jsonArray = configurationJSONObject.getJSONArray("facets");
+
+		if (jsonArray == null) {
+			return null;
+		}
+
+		for (int i = 0; i < (jsonArray.length() - 1); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (!Objects.equals(
+					AssetEntriesSearchFacet.class.getName(),
+					jsonObject.getString("id"))) {
+
+				continue;
+			}
+
+			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+			if (dataJSONObject == null) {
+				continue;
+			}
+
+			JSONArray valuesJSONArray = dataJSONObject.getJSONArray("values");
+
+			if (valuesJSONArray == null) {
+				continue;
+			}
+
+			return ArrayUtil.toStringArray(valuesJSONArray);
+		}
+
+		return null;
+	}
+
 	private Facet _getFacet(
 		SearchFacet searchFacet, long companyId, SearchContext searchContext) {
 
@@ -618,6 +681,9 @@ public class SearchDisplayContext {
 
 		attributes.remove("groupId", "0");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchDisplayContext.class);
 
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;

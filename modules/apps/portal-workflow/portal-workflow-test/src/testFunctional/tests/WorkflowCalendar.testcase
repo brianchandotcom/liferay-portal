@@ -121,7 +121,6 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName();
 

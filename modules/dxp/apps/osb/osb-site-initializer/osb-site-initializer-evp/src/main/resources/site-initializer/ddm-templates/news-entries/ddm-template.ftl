@@ -15,6 +15,10 @@
 		cursor: pointer;
 	}
 
+	html:not(#__):not(#___) .cadmin img{
+	  max-width: 100%;
+	}
+
 	.modal-dialog, .modal-dialog:focus {
 		outline: none;
 	}

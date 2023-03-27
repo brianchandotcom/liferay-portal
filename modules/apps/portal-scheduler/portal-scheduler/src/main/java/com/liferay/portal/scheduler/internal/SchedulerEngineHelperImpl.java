@@ -530,16 +530,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 				throw new MessageListenerException(exception);
 			}
-			finally {
-				try {
-					auditSchedulerJobs(message, TriggerState.NORMAL);
-				}
-				catch (Exception exception) {
-					if (_log.isInfoEnabled()) {
-						_log.info("Unable to send audit message", exception);
-					}
-				}
-			}
 		}
 
 		private SchedulerJobConfigurationMessageListener(

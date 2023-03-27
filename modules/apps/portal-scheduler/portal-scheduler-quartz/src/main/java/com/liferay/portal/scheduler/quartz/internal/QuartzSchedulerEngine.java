@@ -42,6 +42,7 @@ import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -930,6 +931,30 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			catch (SchedulerException schedulerException) {
 				_log.error(
 					"Unable to delete job " + triggerKey, schedulerException);
+			}
+		}
+
+		@Override
+		public void triggerFired(
+			Trigger trigger, JobExecutionContext jobExecutionContext) {
+
+			JobDetail jobDetail = jobExecutionContext.getJobDetail();
+
+			JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+			Message message = new Message();
+
+			message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
+
+			try {
+				_schedulerEngineHelper.auditSchedulerJobs(
+					message, TriggerState.NORMAL);
+			}
+			catch (SchedulerException schedulerException) {
+				_log.error(
+					"Unable to send audit message for scheduler job " +
+						trigger.getKey(),
+					schedulerException);
 			}
 		}
 

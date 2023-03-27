@@ -742,7 +742,36 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return null;
+		Layout sourceLayout = layoutLocalService.getLayout(sourcePlid);
+
+		UnicodeProperties sourceTypeSettingsUnicodeProperties =
+			sourceLayout.getTypeSettingsProperties();
+
+		Layout targetLayout = layoutLocalService.addLayout(
+			userId, groupId, privateLayout, sourceLayout.getParentLayoutId(),
+			sourceLayout.getClassNameId(), sourceLayout.getClassPK(), nameMap,
+			sourceLayout.getTitleMap(), sourceLayout.getDescriptionMap(),
+			sourceLayout.getKeywordsMap(), sourceLayout.getRobotsMap(),
+			sourceLayout.getType(),
+			sourceTypeSettingsUnicodeProperties.toString(), hidden, system,
+			new HashMap<>(), sourceLayout.getMasterLayoutPlid(),
+			serviceContext);
+
+		if (copyPermissions) {
+			_resourceLocalService.deleteResource(
+				targetLayout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, targetLayout.getPlid());
+			_resourceLocalService.copyModelResources(
+				sourceLayout.getCompanyId(), Layout.class.getName(),
+				sourceLayout.getPlid(), targetLayout.getPlid());
+		}
+
+		UnicodeProperties unicodeProperties =
+			targetLayout.getTypeSettingsProperties();
+
+		unicodeProperties.put("published", Boolean.FALSE.toString());
+
+		return layoutLocalService.updateLayout(targetLayout);
 	}
 
 	/**

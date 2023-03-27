@@ -386,7 +386,25 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return null;
+		Layout sourceLayout = layoutLocalService.getLayout(sourcePlid);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		long parentLayoutId = sourceLayout.getParentLayoutId();
+
+		if (parentLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			GroupPermissionUtil.check(
+				permissionChecker, groupId, ActionKeys.ADD_LAYOUT);
+		}
+		else {
+			LayoutPermissionUtil.check(
+				permissionChecker, groupId, privateLayout, parentLayoutId,
+				ActionKeys.ADD_LAYOUT);
+		}
+
+		return layoutLocalService.copyLayout(
+			getUserId(), groupId, privateLayout, localeNamesMap, hidden, system,
+			copyPermissions, sourcePlid, serviceContext);
 	}
 
 	/**

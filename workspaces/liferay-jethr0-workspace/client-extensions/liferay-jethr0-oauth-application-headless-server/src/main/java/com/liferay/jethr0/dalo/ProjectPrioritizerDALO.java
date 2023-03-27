@@ -98,9 +98,6 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 	}
 
 	@Autowired
-	private ProjectComparatorDALO _projectComparatorDALO;
-
-	@Autowired
 	private ProjectPrioritizerToProjectComparatorsDALO
 		_projectPrioritizerToProjectComparatorsDALO;
 

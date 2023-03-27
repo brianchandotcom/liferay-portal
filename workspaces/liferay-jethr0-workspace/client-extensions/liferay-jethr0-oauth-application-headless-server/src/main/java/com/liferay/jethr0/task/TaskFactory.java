@@ -14,12 +14,12 @@
 
 package com.liferay.jethr0.task;
 
+import com.liferay.jethr0.build.Build;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
-
-import com.liferay.jethr0.build.Build;
 
 /**
  * @author Michael Hashimoto

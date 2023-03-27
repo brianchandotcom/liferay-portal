@@ -114,9 +114,6 @@ public class GitBranchDALO extends BaseDALO {
 	}
 
 	@Autowired
-	private ProjectDALO _projectDALO;
-
-	@Autowired
 	private ProjectsToGitBranchesDALO _projectsToGitBranchesDALO;
 
 }

@@ -157,7 +157,7 @@ public abstract class BaseProject implements Project {
 
 	@Override
 	public void removeBuilds(List<Build> builds) {
-		_builds.remove(builds);
+		_builds.removeAll(builds);
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public abstract class BaseProject implements Project {
 
 	@Override
 	public void removeGitBranches(List<GitBranch> gitBranches) {
-		_gitBranches.remove(gitBranches);
+		_gitBranches.removeAll(gitBranches);
 	}
 
 	@Override

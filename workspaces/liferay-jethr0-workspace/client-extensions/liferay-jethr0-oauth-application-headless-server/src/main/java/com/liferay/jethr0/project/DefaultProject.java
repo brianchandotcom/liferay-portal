@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class DefaultProject extends BaseProject {
 
-	public DefaultProject(JSONObject jsonObject) {
+	protected DefaultProject(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

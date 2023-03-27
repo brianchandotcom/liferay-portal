@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class DefaultGitBranch extends BaseGitBranch {
 
-	public DefaultGitBranch(JSONObject jsonObject) {
+	protected DefaultGitBranch(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

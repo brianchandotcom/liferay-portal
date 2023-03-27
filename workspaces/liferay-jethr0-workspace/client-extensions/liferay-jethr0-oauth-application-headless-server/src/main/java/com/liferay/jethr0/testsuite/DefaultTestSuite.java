@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class DefaultTestSuite extends BaseTestSuite {
 
-	public DefaultTestSuite(JSONObject jsonObject) {
+	protected DefaultTestSuite(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

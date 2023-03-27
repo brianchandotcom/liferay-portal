@@ -20,7 +20,6 @@ import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -88,9 +87,5 @@ public class ProjectComparatorDALO extends BaseDALO {
 	protected String getObjectDefinitionLabel() {
 		return "Project Comparator";
 	}
-
-	@Autowired
-	private ProjectPrioritizerToProjectComparatorsDALO
-		_projectPrioritizerToProjectComparatorsDALO;
 
 }

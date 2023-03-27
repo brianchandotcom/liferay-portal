@@ -8,6 +8,16 @@ import salesIcon from '../../assets/icons/sales-icon.svg';
 
 export const appList: AppProps[] = [];
 
+export type MemberProps = {
+	dateCreated: string;
+	email: string;
+	image: string;
+	lastLoginDate: string;
+	name: string;
+	role: string;
+	userId: number;
+};
+
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,

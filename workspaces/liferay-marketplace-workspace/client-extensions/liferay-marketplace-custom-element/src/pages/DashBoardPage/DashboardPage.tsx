@@ -5,6 +5,7 @@ import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
+import { MemberProps } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './DashboardPage.scss';
 
@@ -20,7 +21,7 @@ type DashBoardPageProps = {
 	accountAppsNumber: string;
 	accountLogo: string;
 	accountTitle: string;
-	buttonMessage: string;
+	buttonMessage?: string;
 	children: ReactNode;
 	dashboardNavigationItems: DashboardListItems[];
 	messages: {
@@ -76,11 +77,13 @@ export function DashboardPage({
 									title={messages.title}
 								/>
 
-								<a href="/create-new-app">
-									<button className="dashboard-page-body-header-button">
-										{buttonMessage}
-									</button>
-								</a>
+								{buttonMessage &&
+									<a href="/create-new-app">
+										<button className="dashboard-page-body-header-button">
+											{buttonMessage}
+										</button>
+									</a>
+								}
 							</div>
 
 							{children}

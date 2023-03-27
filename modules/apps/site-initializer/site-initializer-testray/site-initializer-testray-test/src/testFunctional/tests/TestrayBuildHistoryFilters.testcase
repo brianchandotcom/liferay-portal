@@ -237,4 +237,30 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@priority = 5
+	test AdminCanFilterOptionsToFilter {
+		task ("When the user searches for a field called product version") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.searchFilter(value = "Product Version");
+		}
+
+		task ("Then the user can see the field label called product version") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Product Version");
+		}
+
+		task ("When the user searches for a field that does not exist") {
+			TestrayFilter.searchFilter(value = "Product Version 2");
+		}
+
+		task ("Then the user can no more see the label called product version in the filter") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Product Version");
+		}
+	}
+
 }

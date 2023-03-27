@@ -80,11 +80,8 @@ export default function () {
 	}, []);
 
 	const opportunitiesChartValues = useMemo(() => {
-		return getOpportunitiesChartValues(
-			opportunities
-		);	
-	}, [opportunities])
-		
+		return getOpportunitiesChartValues(opportunities);
+	}, [opportunities]);
 
 	const leadsChartValues = getLeadsChartValues(leads);
 

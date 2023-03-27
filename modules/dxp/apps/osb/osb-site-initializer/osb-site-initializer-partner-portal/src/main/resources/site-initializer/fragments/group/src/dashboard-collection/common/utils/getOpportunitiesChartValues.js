@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import { dealsChartStatus } from './constants/dealsChartStatus';
+import {dealsChartStatus} from './constants/dealsChartStatus';
 import getChartQuarterCount from './getDealsChartQuarterCount';
 import isNotOpportunity from './getIsNotOpportunityDeals';
 
@@ -19,9 +19,7 @@ const INITIAL_OPPORTUNITIES_CHART_VALUES = {
 	rejected: [0, 0, 0, 0],
 };
 
-export function getOpportunitiesChartValues(
-	opportunities
-) {
+export function getOpportunitiesChartValues(opportunities) {
 	return opportunities?.reduce(
 		(accumulatedChartValues, currentOpportunity) => {
 			if (!isNotOpportunity(currentOpportunity)) {

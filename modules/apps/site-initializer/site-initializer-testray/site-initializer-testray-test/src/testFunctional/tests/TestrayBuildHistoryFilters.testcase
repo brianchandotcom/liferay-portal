@@ -147,4 +147,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by build name"
+	@priority = 5
+	test AdminCanFilterBuildHistoryByBuildName {
+		task ("Given that the user has two builds different in the table") {
+            Testray.assertItemName(key_name = "Build 1");
+
+			Testray.assertItemName(key_name = "Build 2");
+		}
+
+		task ("When the user select the build 2 in the filter") {
+			TestrayFilter.clickFilter();
+
+			Type(
+                locator1 = "TestrayManage#NEW_OPTION_NAME",
+                value1 = "Build 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only build 2 in the table") {
+            Testray.assertItemName(key_name = "Build 2");
+        }
+
+        task ("And do not see the build 1 in the table") {
+			Testray.assertItemNotPresent(key_name = "Build 1");
+		}
+	}
+
 }

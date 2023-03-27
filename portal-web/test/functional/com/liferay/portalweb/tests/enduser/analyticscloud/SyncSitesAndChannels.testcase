@@ -289,8 +289,8 @@ definition {
 		task ("Deselect the sites that were selected before") {
 			for (var site : list "Site Name,Minium Demo") {
 				ACDXPSettings.syncSites(
-					siteName = ${site},
-					propertyName = ${assignedPropertyName});
+					propertyName = ${assignedPropertyName},
+					siteName = ${site});
 			}
 		}
 
@@ -824,4 +824,5 @@ definition {
 				itemValueList = ${sitesPageListDown});
 		}
 	}
+
 }

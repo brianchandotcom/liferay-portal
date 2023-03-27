@@ -51,9 +51,7 @@ definition {
 		}
 	}
 
-	@description = "Ignore tests until LPS-177115 fixed"
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = 5
 	test CanChangePermissionsAssignedToObjectEntry {
 		property portal.acceptance = "true";
@@ -123,9 +121,7 @@ definition {
 		}
 	}
 
-	@description = "Ignore tests until LPS-177115 fixed"
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = 4
 	test CanGetPermissionsOfNewRoleAssignedToObjectEntry {
 		property portal.acceptance = "true";

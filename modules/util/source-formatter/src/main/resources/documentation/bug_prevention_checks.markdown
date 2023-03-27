@@ -107,6 +107,7 @@ JavaModuleServiceReferenceCheck | .java | Finds cases where `@BeanReference` ann
 JavaModuleUniqueVerifyProcessCheck | .java | Checks that a module can not have more than 1 verify process class (class extends VerifyProcess). |
 [JavaOSGiReferenceCheck](check/java_osgi_reference_check.markdown#javaosgireferencecheck) | .java | Performs several checks on classes with `@Component` annotation. |
 [JavaPackagePathCheck](check/java_package_path_check.markdown#javapackagepathcheck) | .java | Checks that the package name matches the file location. |
+JavaProblemParameterCheck | .java | Checks if can simply problem parameter. |
 [JavaProcessCallableCheck](check/java_process_callable_check.markdown#javaprocesscallablecheck) | .java | Checks that a class implementing `ProcessCallable` assigns a `serialVersionUID`. |
 JavaProviderTypeAnnotationCheck | .java | Performs several checks on classes with `@ProviderType` annotation. |
 JavaRedundantConstructorCheck | .java | Finds unnecessary empty constructor. |

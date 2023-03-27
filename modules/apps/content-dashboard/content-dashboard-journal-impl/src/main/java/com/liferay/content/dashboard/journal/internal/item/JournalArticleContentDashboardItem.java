@@ -271,51 +271,51 @@ public class JournalArticleContentDashboardItem
 					WorkflowConstants.getStatusLabel(
 						WorkflowConstants.STATUS_DRAFT)))) {
 
-			Optional<ContentDashboardItemActionProvider>
-				contentDashboardItemActionProviderOptional =
+			ContentDashboardItemActionProvider
+				contentDashboardItemActionProvider =
 					_contentDashboardItemActionProviderRegistry.
-						getContentDashboardItemActionProviderOptional(
+						getContentDashboardItemActionProvider(
 							JournalArticle.class.getName(),
 							ContentDashboardItemAction.Type.EDIT);
 
-			return contentDashboardItemActionProviderOptional.map(
-				contentDashboardItemActionProvider ->
-					_toContentDashboardItemAction(
-						contentDashboardItemActionProvider, httpServletRequest)
-			).orElse(
-				null
-			);
+			if (contentDashboardItemActionProvider == null) {
+				return null;
+			}
+
+			return _toContentDashboardItemAction(
+				contentDashboardItemActionProvider, httpServletRequest);
 		}
 
-		Optional<ContentDashboardItemActionProvider>
-			viewContentDashboardItemActionProviderOptional =
+		ContentDashboardItemActionProvider
+			viewContentDashboardItemActionProvider =
 				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
+					getContentDashboardItemActionProvider(
 						JournalArticle.class.getName(),
 						ContentDashboardItemAction.Type.VIEW);
 
-		return viewContentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider -> _toContentDashboardItemAction(
-				contentDashboardItemActionProvider, httpServletRequest)
-		).orElseGet(
-			() -> {
-				Optional<ContentDashboardItemActionProvider>
-					editContentDashboardItemActionProviderOptional =
-						_contentDashboardItemActionProviderRegistry.
-							getContentDashboardItemActionProviderOptional(
-								JournalArticle.class.getName(),
-								ContentDashboardItemAction.Type.EDIT);
+		if (viewContentDashboardItemActionProvider != null) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				_toContentDashboardItemAction(
+					viewContentDashboardItemActionProvider, httpServletRequest);
 
-				return editContentDashboardItemActionProviderOptional.map(
-					contentDashboardItemActionProvider ->
-						_toContentDashboardItemAction(
-							contentDashboardItemActionProvider,
-							httpServletRequest)
-				).orElse(
-					null
-				);
+			if (contentDashboardItemAction != null) {
+				return contentDashboardItemAction;
 			}
-		);
+		}
+
+		ContentDashboardItemActionProvider
+			editContentDashboardItemActionProvider =
+				_contentDashboardItemActionProviderRegistry.
+					getContentDashboardItemActionProvider(
+						JournalArticle.class.getName(),
+						ContentDashboardItemAction.Type.EDIT);
+
+		if (editContentDashboardItemActionProvider == null) {
+			return null;
+		}
+
+		return _toContentDashboardItemAction(
+			editContentDashboardItemActionProvider, httpServletRequest);
 	}
 
 	@Override
@@ -464,20 +464,18 @@ public class JournalArticleContentDashboardItem
 			return false;
 		}
 
-		Optional<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
-						JournalArticle.class.getName(),
-						ContentDashboardItemAction.Type.VIEW);
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProvider(
+					JournalArticle.class.getName(),
+					ContentDashboardItemAction.Type.VIEW);
 
-		return contentDashboardItemActionProviderOptional.map(
-			contentDashboardItemActionProvider ->
-				contentDashboardItemActionProvider.isShow(
-					_journalArticle, httpServletRequest)
-		).orElse(
-			false
-		);
+		if (contentDashboardItemActionProvider == null) {
+			return false;
+		}
+
+		return contentDashboardItemActionProvider.isShow(
+			_journalArticle, httpServletRequest);
 	}
 
 	private List<ContentDashboardItemVersionAction>

@@ -85,7 +85,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1131,14 +1130,14 @@ public class JournalArticleContentDashboardItemTest {
 			ContentDashboardItemAction.Type type)
 		throws Exception {
 
-		Optional<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviderOptional(
-						JournalArticle.class.getName(), type);
-
 		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
-			contentDashboardItemActionProviderOptional.get();
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProvider(
+					JournalArticle.class.getName(), type);
+
+		if (contentDashboardItemActionProvider == null) {
+			return null;
+		}
 
 		return contentDashboardItemActionProvider.getContentDashboardItemAction(
 			journalArticle, httpServletRequest);

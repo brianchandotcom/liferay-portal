@@ -51,6 +51,108 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
+	test CanCreateCustomObjectEntriesWithPutChildObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given Subject and Student entries are created with postSubject including studentsSubjects with Student entries information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "subjects",
+				externalReferenceCode = "subjectErc",
+				fieldName = "name",
+				fieldValue = "Math",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryExternalReferenceCode = "studentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("When with putSubject and subjectId including studentsSubjects with new Student entries information to update Subject entry") {
+			var subjectId = JSONPathUtil.getIdValue(response = ${response});
+
+			CustomObjectAPI.updateObjectEntry(
+				en_US_plural_label = "subjects",
+				externalReferenceCode = "subjectErc",
+				fieldName = "name",
+				fieldValue = "English",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				objectEntryId = ${subjectId},
+				relatedEntryExternalReferenceCode = "newStudentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then Subject entry is updated") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "subjects",
+				expectedValues = "English");
+		}
+
+		task ("And Then new Student entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
+				en_US_plural_label = "subjects",
+				expectedValues = 1);
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
+				en_US_plural_label = "students",
+				expectedValues = 4);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanCreateCustomObjectEntriesWithPutParentObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given Student and Subject entries are created with postStudent including studentsSubjects with Subject entries information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryFieldName = "name");
+		}
+
+		task ("When with putStudent and studentId including studentsSubjects with new Subject entries information to update Student entry") {
+			var studentId = JSONPathUtil.getIdValue(response = ${response});
+
+			CustomObjectAPI.updateObjectEntry(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				fieldName = "name",
+				fieldValue = "Bob",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				objectEntryId = ${studentId},
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then Student entry is updated") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "students",
+				expectedValues = "Bob");
+		}
+
+		task ("And Then new Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
+				en_US_plural_label = "students",
+				expectedValues = 1);
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
+				en_US_plural_label = "subjects",
+				expectedValues = 4);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
 	test CanCreateCustomObjectsEntriesWithPostChildObjectInManyToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -65,11 +167,13 @@ definition {
 		}
 
 		task ("Then both Subject and Student entries are created") {
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "students",
 				expectedCount = 2);
 
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "subjects",
 				expectedCount = 1);
 		}
@@ -81,7 +185,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsSubjects with Subject entries information") {
-			CustomObjectAPI.createObjectEntryWithField(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -91,11 +195,13 @@ definition {
 		}
 
 		task ("Then both Student and Subject entries are created") {
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "students",
 				expectedCount = 1);
 
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "subjects",
 				expectedCount = 2);
 		}
@@ -119,11 +225,13 @@ definition {
 		}
 
 		task ("Then no Student and Subject entries are created") {
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "students",
 				expectedCount = 0);
 
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "subjects",
 				expectedCount = 0);
 		}
@@ -147,13 +255,60 @@ definition {
 		}
 
 		task ("Then no Student and Subject entries are created") {
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "students",
 				expectedCount = 0);
 
-			CustomObjectAPI.assertCorrectObjectEntryCount(
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
 				en_US_plural_label = "subjects",
 				expectedCount = 0);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanUpdateCustomObjectEntriesWithPutChildObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given Subject and Student entries with custom ERCs are created with postSubject including studentsSubjects with Student entries information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "subjects",
+				externalReferenceCode = "subjectErc",
+				fieldName = "name",
+				fieldValue = "Math",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryExternalReferenceCode = "studentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("When with putSubject and subjectId including studentsSubjects with modified names of Student entries and their ERCs to update Subject entry") {
+			var subjectId = JSONPathUtil.getIdValue(response = ${response});
+
+			CustomObjectAPI.updateObjectEntry(
+				en_US_plural_label = "subjects",
+				externalReferenceCode = "subjectErc",
+				fieldName = "name",
+				fieldValue = "English",
+				nestedField = "studentsSubjects",
+				numberOfRelatedObjectEntries = 2,
+				objectEntryId = ${subjectId},
+				relatedEntryExternalReferenceCode = "studentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then both Student and Subject entries are updated") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "subjects",
+				expectedValues = "English");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "students",
+				expectedValues = "name0-update,name1-update");
 		}
 	}
 
@@ -190,21 +345,15 @@ definition {
 		}
 
 		task ("Then both Student and Subject entries are updated") {
-			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "students",
+				expectedValues = "Bob");
 
-			var studentName = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
-
-			TestUtils.assertEquals(
-				actual = ${studentName},
-				expected = "Bob");
-
-			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "subjects");
-
-			var subjectNames = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
-
-			TestUtils.assertEquals(
-				actual = ${subjectNames},
-				expected = "name0-update,name1-update");
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "subjects",
+				expectedValues = "name0-update,name1-update");
 		}
 	}
 

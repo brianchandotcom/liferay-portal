@@ -132,16 +132,16 @@ definition {
 		return ${curl};
 	}
 
-	macro assertCorrectObjectEntryCount {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${expectedCount}");
+	macro assertCorrectObjectEntryValuesInResponse {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${element},${expectedValues}");
 
 		var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
 
-		var objectEntryCount = JSONUtil.getWithJSONPath(${response}, "$.totalCount");
+		var actualValues = JSONUtil.getWithJSONPath(${response}, ${element});
 
 		TestUtils.assertEquals(
-			actual = ${objectEntryCount},
-			expected = ${expectedCount});
+			actual = ${actualValues},
+			expected = ${expectedValues});
 	}
 
 	macro createObjectEntryWithField {

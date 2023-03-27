@@ -271,16 +271,6 @@ definition {
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
-
-		if (isSet(price)) {
-			var price = ${price};
-			var priceListName = "${catalogName} Base Price List";
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = ${price},
-				priceListName = ${priceListName},
-				productSKU = ${sku});
-		}
 	}
 
 	macro _addCommerceProductImage {

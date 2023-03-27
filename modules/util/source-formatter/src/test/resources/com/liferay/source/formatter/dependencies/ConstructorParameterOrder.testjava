@@ -46,11 +46,33 @@ public class ConstructorParameterOrder {
 			stringWithARatherUnnecessaryLongName3;
 	}
 
+	public ConstructorParameterOrder(
+		String stringWithARatherUnnecessaryLongName1,
+		String stringWithARatherUnnecessaryLongName2,
+		String stringWithARatherUnnecessaryLongName3,
+		String stringWithARatherUnnecessaryLongName4) {
+
+		_stringWithARatherUnnecessaryLongName1 =
+			stringWithARatherUnnecessaryLongName1;
+		_stringWithARatherUnnecessaryLongName2 =
+			stringWithARatherUnnecessaryLongName2;
+		_stringWithARatherUnnecessaryLongName3 =
+			stringWithARatherUnnecessaryLongName3;
+
+		_stringWithARatherUnnecessaryLongName4 =
+			stringWithARatherUnnecessaryLongName4;
+
+		if (stringWithARatherUnnecessaryLongName4 == null) {
+			_value = null;
+		}
+	}
+
 	private String _attribute;
 	private String _name;
 	private String _stringWithARatherUnnecessaryLongName1;
 	private String _stringWithARatherUnnecessaryLongName2;
 	private String _stringWithARatherUnnecessaryLongName3;
+	private String _stringWithARatherUnnecessaryLongName4;
 	private int _type;
 	private String _value;
 

@@ -629,8 +629,8 @@ definition {
 	@description = "Add site team name with XSS."
 	@priority = 4
 	test SiteTeamsXSS {
-		property testray.component.names = "Sites Administration,XSS";
 		property test.name.skip.portal.instance = "SiteTeams#SiteTeamsXSS";
+		property testray.component.names = "Sites Administration,XSS";
 
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");

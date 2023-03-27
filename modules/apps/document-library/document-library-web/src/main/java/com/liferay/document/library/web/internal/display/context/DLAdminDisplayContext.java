@@ -241,6 +241,10 @@ public class DLAdminDisplayContext {
 			return _orderByType;
 		}
 
+		if (isNavigationRecent()) {
+			return "desc";
+		}
+
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType");
 
@@ -410,6 +414,14 @@ public class DLAdminDisplayContext {
 
 	public boolean isDefaultFolderView() {
 		return _defaultFolderView;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Objects.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isRootFolderInTrash() {
@@ -661,14 +673,15 @@ public class DLAdminDisplayContext {
 			DLUtil.getRepositoryModelOrderByComparator(
 				getOrderByCol(), getOrderByType(), orderByModel);
 
-		if (navigation.equals("recent")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator();
-		}
-
 		dlSearchContainer.setOrderByComparator(orderByComparator);
 		dlSearchContainer.setOrderByType(getOrderByType());
 
-		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine")) {
+		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine") || navigation.equals("recent")) {
+			if (navigation.equals("recent")) {
+				dlSearchContainer.setOrderByCol("modifiedDate");
+				dlSearchContainer.setOrderByType("desc");
+			}
+
 			SearchContext searchContext = _getSearchContext(dlSearchContainer);
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -899,30 +912,30 @@ public class DLAdminDisplayContext {
 		searchContext.setAttribute("paginationType", "none");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setStart(searchContainer.getStart());
-		searchContext.setSorts(_getSort());
+		searchContext.setSorts(_getSort(searchContainer.getOrderByCol(), searchContainer.getOrderByType()));
 
 		return searchContext;
 	}
 
-	private Sort _getSort() {
+	private Sort _getSort(String orderByCol, String orderByType) {
 		int type = Sort.STRING_TYPE;
-		String fieldName = getOrderByCol();
+		String fieldName = orderByCol;
 
-		if (Objects.equals(getOrderByCol(), "creationDate")) {
+		if (Objects.equals(orderByCol, "creationDate")) {
 			fieldName = Field.CREATE_DATE;
 			type = Sort.LONG_TYPE;
 		}
-		else if (Objects.equals(getOrderByCol(), "modifiedDate")) {
+		else if (Objects.equals(orderByCol, "modifiedDate")) {
 			fieldName = Field.MODIFIED_DATE;
 			type = Sort.LONG_TYPE;
 		}
-		else if (Objects.equals(getOrderByCol(), "size")) {
+		else if (Objects.equals(orderByCol, "size")) {
 			type = Sort.LONG_TYPE;
 		}
 
 		return SortFactoryUtil.create(
 			fieldName, type,
-			!StringUtil.equalsIgnoreCase(getOrderByType(), "asc"));
+			!StringUtil.equalsIgnoreCase(orderByType, "asc"));
 	}
 
 	private List<RepositoryEntry> _getSearchResults(Hits hits)

@@ -313,7 +313,7 @@ public class DLAdminManagementToolbarDisplayContext
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527") && !_dlAdminDisplayContext.isNavigationRecent(),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
@@ -388,6 +388,24 @@ public class DLAdminManagementToolbarDisplayContext
 						"%s: %s",
 						LanguageUtil.get(_httpServletRequest, "owner"),
 						HtmlUtil.escape(user.getFullName())));
+			});
+
+		labelItemListWrapper.add(
+			_dlAdminDisplayContext::isNavigationRecent,
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setNavigation(
+						(String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+
+				labelItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "recent"));
 			});
 
 		return labelItemListWrapper.build();

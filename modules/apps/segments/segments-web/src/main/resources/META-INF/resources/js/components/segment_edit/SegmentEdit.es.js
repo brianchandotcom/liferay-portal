@@ -13,7 +13,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
@@ -39,7 +39,6 @@ import {initialContributorShape} from '../../utils/types.es';
 import {sub} from '../../utils/utils';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';
 import ContributorsBuilder from '../criteria_builder/ContributorsBuilder.es';
-import ClayToggle from '../shared/ClayToggle.es';
 import LocalizedInput from '../title_editor/LocalizedInput.es';
 
 class SegmentEdit extends Component {
@@ -503,24 +502,6 @@ class SegmentEdit extends Component {
 						{hasUpdatePermission && (
 							<div className="form-header-section-right">
 								<div className="btn-group">
-									<div className="btn-group-item mr-2">
-										<ClayToggle
-											aria-label={Liferay.Language.get(
-												'edit-segment'
-											)}
-											checked={editing}
-											className="toggle-editing"
-											iconOff="pencil"
-											iconOn="pencil"
-											onChange={this._handleCriteriaEdit}
-											title={Liferay.Language.get(
-												'edit-segment'
-											)}
-										/>
-									</div>
-								</div>
-
-								<div className="btn-group">
 									<div className="btn-group-item">
 										<ClayButton
 											className="text-capitalize"
@@ -545,6 +526,22 @@ class SegmentEdit extends Component {
 										>
 											{Liferay.Language.get('save')}
 										</ClayButton>
+									</div>
+
+									<div className="btn-group-item">
+										<ClayButtonWithIcon
+											aria-label={Liferay.Language.get(
+												'edit-segment'
+											)}
+											borderless={true}
+											displayType="secondary"
+											onClick={this._handleCriteriaEdit}
+											outline={true}
+											symbol="cog"
+											title={Liferay.Language.get(
+												'edit-segment'
+											)}
+										/>
 									</div>
 								</div>
 							</div>

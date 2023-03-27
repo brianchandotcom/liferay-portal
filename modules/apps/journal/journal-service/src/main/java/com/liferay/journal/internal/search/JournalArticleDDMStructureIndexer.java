@@ -14,8 +14,6 @@
 
 package com.liferay.journal.internal.search;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
@@ -67,17 +65,6 @@ public class JournalArticleDDMStructureIndexer implements DDMStructureIndexer {
 				return;
 			}
 
-			String[] ddmStructureKeys = new String[ddmStructureIds.size()];
-
-			for (int i = 0; i < ddmStructureIds.size(); i++) {
-				long ddmStructureId = ddmStructureIds.get(i);
-
-				DDMStructure ddmStructure =
-					ddmStructureLocalService.getDDMStructure(ddmStructureId);
-
-				ddmStructureKeys[i] = ddmStructure.getStructureKey();
-			}
-
 			ActionableDynamicQuery actionableDynamicQuery =
 				journalArticleResourceLocalService.getActionableDynamicQuery();
 
@@ -102,11 +89,11 @@ public class JournalArticleDDMStructureIndexer implements DDMStructureIndexer {
 						RestrictionsFactoryUtil.eqProperty(
 							"journalArticle.groupId", "this.groupId"));
 
-					Property ddmStructureKey = PropertyFactoryUtil.forName(
-						"DDMStructureKey");
+					Property ddmStructureIdProperty =
+						PropertyFactoryUtil.forName("DDMStructureId");
 
 					journalArticleDynamicQuery.add(
-						ddmStructureKey.in(ddmStructureKeys));
+						ddmStructureIdProperty.in(ddmStructureIds));
 
 					if (!isIndexAllArticleVersions()) {
 						Property statusProperty = PropertyFactoryUtil.forName(
@@ -165,9 +152,6 @@ public class JournalArticleDDMStructureIndexer implements DDMStructureIndexer {
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
 
 	@Reference
 	protected IndexerRegistry indexerRegistry;

@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
@@ -35,6 +37,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -50,15 +53,20 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -74,6 +82,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -121,6 +131,15 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			MessageBoardThreadResource.builder();
 
 		messageBoardThreadResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -645,6 +664,71 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostMessageBoardSectionMessageBoardThreadsPageExportBatch()
+		throws Exception {
+
+		Long messageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
+		Long irrelevantMessageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardThreadsPage_getIrrelevantMessageBoardSectionId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			messageBoardThreadResource.
+				postMessageBoardSectionMessageBoardThreadsPageExportBatchHttpResponse(
+					messageBoardSectionId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		MessageBoardThread[] messageBoardThreads = getMessageBoardThreads(
+			exportTask);
+
+		long totalCount = messageBoardThreads.length;
+
+		if (irrelevantMessageBoardSectionId != null) {
+			MessageBoardThread irrelevantMessageBoardThread =
+				testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
+					irrelevantMessageBoardSectionId,
+					randomIrrelevantMessageBoardThread());
+
+			httpResponse =
+				messageBoardThreadResource.
+					postMessageBoardSectionMessageBoardThreadsPageExportBatchHttpResponse(
+						irrelevantMessageBoardSectionId, null, null, null, null,
+						null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			messageBoardThreads = getMessageBoardThreads(exportTask);
+
+			Assert.assertEquals(1, messageBoardThreads.length);
+
+			assertEquals(irrelevantMessageBoardThread, messageBoardThreads[0]);
+		}
+
+		MessageBoardThread messageBoardThread1 =
+			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
+				messageBoardSectionId, randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
+				messageBoardSectionId, randomMessageBoardThread());
+
+		httpResponse =
+			messageBoardThreadResource.
+				postMessageBoardSectionMessageBoardThreadsPageExportBatchHttpResponse(
+					messageBoardSectionId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		messageBoardThreads = getMessageBoardThreads(exportTask);
+
+		Assert.assertEquals(totalCount + 2, messageBoardThreads.length);
+
+		assertContains(messageBoardThread1, Arrays.asList(messageBoardThreads));
+		assertContains(messageBoardThread2, Arrays.asList(messageBoardThreads));
 	}
 
 	@Test
@@ -1735,6 +1819,68 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		throws Exception {
 
 		return testGraphQLMessageBoardThread_addMessageBoardThread();
+	}
+
+	@Test
+	public void testPostSiteMessageBoardThreadsPageExportBatch()
+		throws Exception {
+
+		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteMessageBoardThreadsPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			messageBoardThreadResource.
+				postSiteMessageBoardThreadsPageExportBatchHttpResponse(
+					siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		MessageBoardThread[] messageBoardThreads = getMessageBoardThreads(
+			exportTask);
+
+		long totalCount = messageBoardThreads.length;
+
+		if (irrelevantSiteId != null) {
+			MessageBoardThread irrelevantMessageBoardThread =
+				testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
+					irrelevantSiteId, randomIrrelevantMessageBoardThread());
+
+			httpResponse =
+				messageBoardThreadResource.
+					postSiteMessageBoardThreadsPageExportBatchHttpResponse(
+						irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			messageBoardThreads = getMessageBoardThreads(exportTask);
+
+			Assert.assertEquals(1, messageBoardThreads.length);
+
+			assertEquals(irrelevantMessageBoardThread, messageBoardThreads[0]);
+		}
+
+		MessageBoardThread messageBoardThread1 =
+			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
+				siteId, randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
+				siteId, randomMessageBoardThread());
+
+		httpResponse =
+			messageBoardThreadResource.
+				postSiteMessageBoardThreadsPageExportBatchHttpResponse(
+					siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		messageBoardThreads = getMessageBoardThreads(exportTask);
+
+		Assert.assertEquals(totalCount + 2, messageBoardThreads.length);
+
+		assertContains(messageBoardThread1, Arrays.asList(messageBoardThreads));
+		assertContains(messageBoardThread2, Arrays.asList(messageBoardThreads));
 	}
 
 	@Test
@@ -3134,6 +3280,55 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		return true;
 	}
 
+	protected MessageBoardThread[] getMessageBoardThreads(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return MessageBoardThreadSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -3576,6 +3771,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	protected MessageBoardThreadResource messageBoardThreadResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

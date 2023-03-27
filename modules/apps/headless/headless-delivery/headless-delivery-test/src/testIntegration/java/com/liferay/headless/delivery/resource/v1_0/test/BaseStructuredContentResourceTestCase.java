@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
@@ -37,6 +39,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,14 +57,19 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -77,6 +85,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -135,6 +145,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 			StructuredContentResource.builder();
 
 		structuredContentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -640,6 +659,71 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostAssetLibraryStructuredContentsPageExportBatch()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryStructuredContentsPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryStructuredContentsPage_getIrrelevantAssetLibraryId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.
+				postAssetLibraryStructuredContentsPageExportBatchHttpResponse(
+					assetLibraryId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		StructuredContent[] structuredContents = getStructuredContents(
+			exportTask);
+
+		long totalCount = structuredContents.length;
+
+		if (irrelevantAssetLibraryId != null) {
+			StructuredContent irrelevantStructuredContent =
+				testGetAssetLibraryStructuredContentsPage_addStructuredContent(
+					irrelevantAssetLibraryId,
+					randomIrrelevantStructuredContent());
+
+			httpResponse =
+				structuredContentResource.
+					postAssetLibraryStructuredContentsPageExportBatchHttpResponse(
+						irrelevantAssetLibraryId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			structuredContents = getStructuredContents(exportTask);
+
+			Assert.assertEquals(1, structuredContents.length);
+
+			assertEquals(irrelevantStructuredContent, structuredContents[0]);
+		}
+
+		StructuredContent structuredContent1 =
+			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
+				assetLibraryId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
+				assetLibraryId, randomStructuredContent());
+
+		httpResponse =
+			structuredContentResource.
+				postAssetLibraryStructuredContentsPageExportBatchHttpResponse(
+					assetLibraryId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		structuredContents = getStructuredContents(exportTask);
+
+		Assert.assertEquals(totalCount + 2, structuredContents.length);
+
+		assertContains(structuredContent1, Arrays.asList(structuredContents));
+		assertContains(structuredContent2, Arrays.asList(structuredContents));
 	}
 
 	@Test
@@ -1386,6 +1470,71 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostContentStructureStructuredContentsPageExportBatch()
+		throws Exception {
+
+		Long contentStructureId =
+			testGetContentStructureStructuredContentsPage_getContentStructureId();
+		Long irrelevantContentStructureId =
+			testGetContentStructureStructuredContentsPage_getIrrelevantContentStructureId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.
+				postContentStructureStructuredContentsPageExportBatchHttpResponse(
+					contentStructureId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		StructuredContent[] structuredContents = getStructuredContents(
+			exportTask);
+
+		long totalCount = structuredContents.length;
+
+		if (irrelevantContentStructureId != null) {
+			StructuredContent irrelevantStructuredContent =
+				testGetContentStructureStructuredContentsPage_addStructuredContent(
+					irrelevantContentStructureId,
+					randomIrrelevantStructuredContent());
+
+			httpResponse =
+				structuredContentResource.
+					postContentStructureStructuredContentsPageExportBatchHttpResponse(
+						irrelevantContentStructureId, null, null, null, null,
+						null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			structuredContents = getStructuredContents(exportTask);
+
+			Assert.assertEquals(1, structuredContents.length);
+
+			assertEquals(irrelevantStructuredContent, structuredContents[0]);
+		}
+
+		StructuredContent structuredContent1 =
+			testGetContentStructureStructuredContentsPage_addStructuredContent(
+				contentStructureId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGetContentStructureStructuredContentsPage_addStructuredContent(
+				contentStructureId, randomStructuredContent());
+
+		httpResponse =
+			structuredContentResource.
+				postContentStructureStructuredContentsPageExportBatchHttpResponse(
+					contentStructureId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		structuredContents = getStructuredContents(exportTask);
+
+		Assert.assertEquals(totalCount + 2, structuredContents.length);
+
+		assertContains(structuredContent1, Arrays.asList(structuredContents));
+		assertContains(structuredContent2, Arrays.asList(structuredContents));
+	}
+
+	@Test
 	public void testGetSiteStructuredContentsPage() throws Exception {
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
 		Long irrelevantSiteId =
@@ -1827,6 +1976,68 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLStructuredContent_addStructuredContent();
+	}
+
+	@Test
+	public void testPostSiteStructuredContentsPageExportBatch()
+		throws Exception {
+
+		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteStructuredContentsPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.
+				postSiteStructuredContentsPageExportBatchHttpResponse(
+					siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		StructuredContent[] structuredContents = getStructuredContents(
+			exportTask);
+
+		long totalCount = structuredContents.length;
+
+		if (irrelevantSiteId != null) {
+			StructuredContent irrelevantStructuredContent =
+				testGetSiteStructuredContentsPage_addStructuredContent(
+					irrelevantSiteId, randomIrrelevantStructuredContent());
+
+			httpResponse =
+				structuredContentResource.
+					postSiteStructuredContentsPageExportBatchHttpResponse(
+						irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			structuredContents = getStructuredContents(exportTask);
+
+			Assert.assertEquals(1, structuredContents.length);
+
+			assertEquals(irrelevantStructuredContent, structuredContents[0]);
+		}
+
+		StructuredContent structuredContent1 =
+			testGetSiteStructuredContentsPage_addStructuredContent(
+				siteId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGetSiteStructuredContentsPage_addStructuredContent(
+				siteId, randomStructuredContent());
+
+		httpResponse =
+			structuredContentResource.
+				postSiteStructuredContentsPageExportBatchHttpResponse(
+					siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		structuredContents = getStructuredContents(exportTask);
+
+		Assert.assertEquals(totalCount + 2, structuredContents.length);
+
+		assertContains(structuredContent1, Arrays.asList(structuredContents));
+		assertContains(structuredContent2, Arrays.asList(structuredContents));
 	}
 
 	@Test
@@ -2799,6 +3010,73 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostStructuredContentFolderStructuredContentsPageExportBatch()
+		throws Exception {
+
+		Long structuredContentFolderId =
+			testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId();
+		Long irrelevantStructuredContentFolderId =
+			testGetStructuredContentFolderStructuredContentsPage_getIrrelevantStructuredContentFolderId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContentsPageExportBatchHttpResponse(
+					structuredContentFolderId, null, null, null, null, null,
+					null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		StructuredContent[] structuredContents = getStructuredContents(
+			exportTask);
+
+		long totalCount = structuredContents.length;
+
+		if (irrelevantStructuredContentFolderId != null) {
+			StructuredContent irrelevantStructuredContent =
+				testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
+					irrelevantStructuredContentFolderId,
+					randomIrrelevantStructuredContent());
+
+			httpResponse =
+				structuredContentResource.
+					postStructuredContentFolderStructuredContentsPageExportBatchHttpResponse(
+						irrelevantStructuredContentFolderId, null, null, null,
+						null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			structuredContents = getStructuredContents(exportTask);
+
+			Assert.assertEquals(1, structuredContents.length);
+
+			assertEquals(irrelevantStructuredContent, structuredContents[0]);
+		}
+
+		StructuredContent structuredContent1 =
+			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
+				structuredContentFolderId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
+				structuredContentFolderId, randomStructuredContent());
+
+		httpResponse =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContentsPageExportBatchHttpResponse(
+					structuredContentFolderId, null, null, null, null, null,
+					null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		structuredContents = getStructuredContents(exportTask);
+
+		Assert.assertEquals(totalCount + 2, structuredContents.length);
+
+		assertContains(structuredContent1, Arrays.asList(structuredContents));
+		assertContains(structuredContent2, Arrays.asList(structuredContents));
 	}
 
 	@Test
@@ -4371,6 +4649,55 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return true;
 	}
 
+	protected StructuredContent[] getStructuredContents(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return StructuredContentSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -4813,6 +5140,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContentResource structuredContentResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected DepotEntry testDepotEntry;

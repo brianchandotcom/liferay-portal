@@ -29,10 +29,13 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.OrganizationSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,15 +48,20 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -69,6 +77,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -115,6 +125,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		OrganizationResource.Builder builder = OrganizationResource.builder();
 
 		organizationResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -1064,6 +1083,66 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testPostAccountOrganizationsPageExportBatch() throws Exception {
+		Long accountId = testGetAccountOrganizationsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountOrganizationsPage_getIrrelevantAccountId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			organizationResource.
+				postAccountOrganizationsPageExportBatchHttpResponse(
+					accountId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Organization[] organizations = getOrganizations(exportTask);
+
+		long totalCount = organizations.length;
+
+		if (irrelevantAccountId != null) {
+			Organization irrelevantOrganization =
+				testGetAccountOrganizationsPage_addOrganization(
+					irrelevantAccountId, randomIrrelevantOrganization());
+
+			httpResponse =
+				organizationResource.
+					postAccountOrganizationsPageExportBatchHttpResponse(
+						irrelevantAccountId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			organizations = getOrganizations(exportTask);
+
+			Assert.assertEquals(1, organizations.length);
+
+			assertEquals(irrelevantOrganization, organizations[0]);
+		}
+
+		Organization organization1 =
+			testGetAccountOrganizationsPage_addOrganization(
+				accountId, randomOrganization());
+
+		Organization organization2 =
+			testGetAccountOrganizationsPage_addOrganization(
+				accountId, randomOrganization());
+
+		httpResponse =
+			organizationResource.
+				postAccountOrganizationsPageExportBatchHttpResponse(
+					accountId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		organizations = getOrganizations(exportTask);
+
+		Assert.assertEquals(totalCount + 2, organizations.length);
+
+		assertContains(organization1, Arrays.asList(organizations));
+		assertContains(organization2, Arrays.asList(organizations));
+	}
+
+	@Test
 	public void testDeleteAccountOrganization() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization =
@@ -1466,6 +1545,38 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOrganization_addOrganization();
+	}
+
+	@Test
+	public void testPostOrganizationsPageExportBatch() throws Exception {
+		HttpInvoker.HttpResponse httpResponse =
+			organizationResource.postOrganizationsPageExportBatchHttpResponse(
+				null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Organization[] organizations = getOrganizations(exportTask);
+
+		long totalCount = organizations.length;
+
+		Organization organization1 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		Organization organization2 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		httpResponse =
+			organizationResource.postOrganizationsPageExportBatchHttpResponse(
+				null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		organizations = getOrganizations(exportTask);
+
+		Assert.assertEquals(totalCount + 2, organizations.length);
+
+		assertContains(organization1, Arrays.asList(organizations));
+		assertContains(organization2, Arrays.asList(organizations));
 	}
 
 	@Test
@@ -3952,6 +4063,55 @@ public abstract class BaseOrganizationResourceTestCase {
 		return true;
 	}
 
+	protected Organization[] getOrganizations(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return OrganizationSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -4292,6 +4452,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected OrganizationResource organizationResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

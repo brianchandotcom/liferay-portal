@@ -15,6 +15,8 @@
 package com.liferay.redirect.internal.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.redirect.model.RedirectPatternEntry;
 
@@ -23,9 +25,14 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
  * @author Adolfo Pérez
@@ -37,10 +44,23 @@ public class PatternUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+
+		PropsUtil.setProps(_props);
+
+		Mockito.when(
+			_props.get("feature.flag.LPS-175850")
+		).thenReturn(
+			"false"
+		);
+	}
+
 	@Test
 	public void testAnchoredPattern() {
 		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
-			new String[] {"^xyz abc"});
+			new String[] {"^xyz abc all"});
 
 		Assert.assertEquals(
 			"^xyz", _getFirstPatternString(redirectPatternEntries));
@@ -52,7 +72,7 @@ public class PatternUtilTest {
 	@Test
 	public void testCaretPattern() {
 		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
-			new String[] {"^xyz abc"});
+			new String[] {"^xyz abc all"});
 
 		Assert.assertEquals(
 			"^xyz", _getFirstPatternString(redirectPatternEntries));
@@ -64,7 +84,7 @@ public class PatternUtilTest {
 	@Test
 	public void testCaretSlashPattern() {
 		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
-			new String[] {"^/xyz abc"});
+			new String[] {"^/xyz abc all"});
 
 		Assert.assertEquals(
 			"^xyz", _getFirstPatternString(redirectPatternEntries));
@@ -74,13 +94,28 @@ public class PatternUtilTest {
 	}
 
 	@Test
-	public void testEmptyPatternOrEmptyReplacement() {
+	public void testEmptyPatternOrEmptyReplacementOrEmptyUserAgent() {
 		Assert.assertTrue(
 			ListUtil.isEmpty(PatternUtil.parse(new String[] {" xyz"})));
 		Assert.assertTrue(
 			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz "})));
 		Assert.assertTrue(
 			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz"})));
+
+		Mockito.when(
+			_props.get("feature.flag.LPS-175850")
+		).thenReturn(
+			"true"
+		);
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {" xyz abc"})));
+		Assert.assertTrue(
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz abc "})));
+		Assert.assertTrue(
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz abc"})));
+		Assert.assertTrue(
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {" xyz  all"})));
 	}
 
 	@Test
@@ -90,13 +125,13 @@ public class PatternUtilTest {
 
 	@Test(expected = PatternSyntaxException.class)
 	public void testInvalidRegexPattern() {
-		PatternUtil.parse(new String[] {"*** a"});
+		PatternUtil.parse(new String[] {"*** a all"});
 	}
 
 	@Test
 	public void testSlashPattern() {
 		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
-			new String[] {"/xyz abc"});
+			new String[] {"/xyz abc all"});
 
 		Assert.assertEquals(
 			"^xyz", _getFirstPatternString(redirectPatternEntries));
@@ -108,7 +143,7 @@ public class PatternUtilTest {
 	@Test
 	public void testUnanchoredPattern() {
 		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
-			new String[] {"xyz abc"});
+			new String[] {"xyz abc all"});
 
 		Assert.assertEquals(
 			"^xyz", _getFirstPatternString(redirectPatternEntries));
@@ -127,5 +162,8 @@ public class PatternUtilTest {
 
 		return pattern.pattern();
 	}
+
+	@Mock
+	private Props _props;
 
 }

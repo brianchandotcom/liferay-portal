@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -290,7 +291,7 @@ public class SystemObjectEntryItemSelectorView
 					_objectRelatedModelsProviderRegistry.
 						getObjectRelatedModelsProvider(
 							_objectDefinition.getClassName(),
-							_objectDefinition.getCompanyId(),
+							CompanyThreadLocal.getCompanyId(),
 							objectRelationshipType);
 
 				List<BaseModel<?>> baseModels =

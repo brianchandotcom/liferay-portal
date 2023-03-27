@@ -1117,7 +1117,7 @@ definition {
 			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
 
 			ObjectField.editFormulaField(
-				formulaScript = "id + id",
+				formulaScript = "customInteger / customInteger1",
 				newContent = "Custom Formula Field Updated",
 				newTypeFormula = "Integer");
 
@@ -1135,7 +1135,7 @@ definition {
 			AssertValue(
 				key_labelName = "Formula Builder",
 				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-				value1 = "id / id");
+				value1 = "customInteger / customInteger1");
 		}
 	}
 

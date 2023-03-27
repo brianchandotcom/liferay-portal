@@ -27,6 +27,14 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else if (IsElementPresent(locator1 = "FrontendDataSet#TABLE_BODY")) {
+			FrontendDataSetAdmin.tearDownCP();
+		}
+		else {
+			AssertElementPresent(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
 	}
 
 	@description = "Confirm that the user can change the pagination on the dataset admin page"

@@ -57,7 +57,6 @@ public class LiferayReader implements Reader<IndexedRecord> {
 		LiferayInputProperties liferayInputProperties) {
 
 		_liferaySource = liferaySource;
-
 		_liferayInputProperties = liferayInputProperties;
 
 		_jsonObjectIndexedRecordConverter =

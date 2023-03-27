@@ -33,7 +33,6 @@ public class FileEntryDisplayContextHelper {
 		PermissionChecker permissionChecker, FileEntry fileEntry) {
 
 		_permissionChecker = permissionChecker;
-
 		_fileEntry = fileEntry;
 
 		if (fileEntry == null) {

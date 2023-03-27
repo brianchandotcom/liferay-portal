@@ -402,14 +402,9 @@ public class WikiTestUtil {
 			long userId, long nodeId, String title, Class<?> clazz)
 		throws Exception {
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"org.apache.xmlbeans.impl.common.SAXHelper",
-				LoggerTestUtil.WARN)) {
+		String fileName = RandomTestUtil.randomString() + ".docx";
 
-			String fileName = RandomTestUtil.randomString() + ".docx";
-
-			return addWikiAttachment(userId, nodeId, title, fileName, clazz);
-		}
+		return addWikiAttachment(userId, nodeId, title, fileName, clazz);
 	}
 
 	public static File addWikiAttachment(
@@ -417,21 +412,26 @@ public class WikiTestUtil {
 			Class<?> clazz)
 		throws Exception {
 
-		byte[] fileBytes = FileUtil.getBytes(
-			clazz, "dependencies/OSX_Test.docx");
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.xmlbeans.impl.common.SAXHelper",
+				LoggerTestUtil.WARN)) {
 
-		File file = null;
+			byte[] fileBytes = FileUtil.getBytes(
+				clazz, "dependencies/OSX_Test.docx");
 
-		if (ArrayUtil.isNotEmpty(fileBytes)) {
-			file = FileUtil.createTempFile(fileBytes);
+			File file = null;
+
+			if (ArrayUtil.isNotEmpty(fileBytes)) {
+				file = FileUtil.createTempFile(fileBytes);
+			}
+
+			String mimeType = MimeTypesUtil.getExtensionContentType("docx");
+
+			WikiPageLocalServiceUtil.addPageAttachment(
+				userId, nodeId, title, fileName, file, mimeType);
+
+			return file;
 		}
-
-		String mimeType = MimeTypesUtil.getExtensionContentType("docx");
-
-		WikiPageLocalServiceUtil.addPageAttachment(
-			userId, nodeId, title, fileName, file, mimeType);
-
-		return file;
 	}
 
 	public static WikiPage copyPage(

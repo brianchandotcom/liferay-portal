@@ -160,7 +160,7 @@ public class FlatJSPackage implements ModifiableJSPackage {
 			sb.append("META-INF/resources/node_modules/");
 
 			if (_name.startsWith(StringPool.AT)) {
-				sb.append(_name.replace(StringPool.SLASH, "%2F"));
+				sb.append(StringUtil.replace(_name, CharPool.SLASH, "%2F"));
 			}
 			else {
 				sb.append(_name);

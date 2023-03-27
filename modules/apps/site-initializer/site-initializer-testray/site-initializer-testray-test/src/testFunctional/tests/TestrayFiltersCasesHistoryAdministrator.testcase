@@ -294,4 +294,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by issues"
+	@priority = 4
+	test AdminCanFilterHistoryByIssue {
+		task ("Given that the user add a issue in the case result") {
+            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-123456",
+				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user filter a issue") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_label = "Issues",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "LPS-123456");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see the issue in the table") {
+			Testray.assertItemName(key_name = "LPS-123456");
+		}
+	}
+
 }

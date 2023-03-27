@@ -64,7 +64,8 @@ public class AccountEntryDefaultUsersDataSetDataProvider
 				getCommerceChannelAccountEntryRels(
 					accountEntryId,
 					CommerceChannelAccountEntryRelConstants.TYPE_USER,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), null),
 			commerceChannelAccountEntryRel -> {
 				com.liferay.portal.kernel.model.User user =
 					_userService.getUserById(

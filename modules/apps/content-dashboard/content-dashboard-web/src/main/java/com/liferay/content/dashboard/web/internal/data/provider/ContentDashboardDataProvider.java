@@ -269,12 +269,12 @@ public class ContentDashboardDataProvider {
 			return Collections.emptyMap();
 		}
 
+		Map<String, Long> bucketDocCounts = new HashMap<>();
+
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)
 				filterAggregationResult.getChildAggregationResult(
 					"childCategories");
-
-		Map<String, Long> bucketDocCounts = new HashMap<>();
 
 		for (Bucket bucket : termsAggregationResult.getBuckets()) {
 			bucketDocCounts.put(bucket.getKey(), bucket.getDocCount());

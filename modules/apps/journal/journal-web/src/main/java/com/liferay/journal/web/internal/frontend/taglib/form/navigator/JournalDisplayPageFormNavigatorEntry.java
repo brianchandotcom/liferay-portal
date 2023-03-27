@@ -70,16 +70,6 @@ public class JournalDisplayPageFormNavigatorEntry
 		return true;
 	}
 
-	@Reference(target = "(view=private)", unbind = "-")
-	public void setPrivateLayoutsItemSelectorView(
-		ItemSelectorView<?> itemSelectorView) {
-	}
-
-	@Reference(target = "(view=public)", unbind = "-")
-	public void setPublicLayoutsItemSelectorView(
-		ItemSelectorView<?> itemSelectorView) {
-	}
-
 	@Override
 	protected String getJspPath() {
 		return "/article/asset_display_page.jsp";
@@ -150,6 +140,12 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(view=private)")
+	private ItemSelectorView<?> _privateLayoutsItemSelectorView;
+
+	@Reference(target = "(view=public)")
+	private ItemSelectorView<?> _publicLayoutsItemSelectorView;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
 	private ServletContext _servletContext;

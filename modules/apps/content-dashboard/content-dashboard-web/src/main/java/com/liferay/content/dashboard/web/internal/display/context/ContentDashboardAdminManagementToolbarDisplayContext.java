@@ -844,15 +844,13 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	}
 
 	private String _getScopeLabel(long scopeId) {
-		String scopeLabel = StringPool.BLANK;
-
 		Group group = _groupLocalService.fetchGroup(scopeId);
 
-		if (group != null) {
-			scopeLabel = ContentDashboardGroupUtil.getGroupName(group, _locale);
+		if (group == null) {
+			return StringPool.BLANK;
 		}
 
-		return scopeLabel;
+		return ContentDashboardGroupUtil.getGroupName(group, _locale);
 	}
 
 	private List<Integer> _getStatuses() {

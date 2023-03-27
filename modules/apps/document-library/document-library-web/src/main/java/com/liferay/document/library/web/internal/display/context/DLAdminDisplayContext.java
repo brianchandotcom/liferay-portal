@@ -644,8 +644,10 @@ public class DLAdminDisplayContext {
 			long userId = 0;
 			if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
 				userId = _themeDisplay.getUserId();
+				status = WorkflowConstants.STATUS_ANY;
 			}
 
+			searchContext.setAttribute("status", status);
 			searchContext.setBooleanClauses(
 				_getBooleanClauses(extensions, fileEntryTypeId, userId));
 
@@ -665,6 +667,8 @@ public class DLAdminDisplayContext {
 				getOrderByCol(), getOrderByType(), true);
 
 		dlSearchContainer.setOrderByComparator(orderByComparator);
+
+		long repositoryId = getRepositoryId();
 
 		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 		String tagName = ParamUtil.getString(_httpServletRequest, "tag");
@@ -701,7 +705,7 @@ public class DLAdminDisplayContext {
 									DLFolderConstants.
 										DEFAULT_PARENT_FOLDER_ID) &&
 								 (fileEntry.getRepositoryId() ==
-									 getRepositoryId()))) {
+									 repositoryId))) {
 
 								results.add(fileEntry);
 							}
@@ -718,8 +722,6 @@ public class DLAdminDisplayContext {
 						AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 				}
 				else {
-					long repositoryId = getRepositoryId();
-
 					int dlAppStatus = status;
 
 					dlSearchContainer.setResultsAndTotal(

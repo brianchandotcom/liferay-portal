@@ -18,7 +18,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.saml.runtime.exception.CredentialException;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,8 +37,7 @@ public class CredentialExceptionMapper
 
 	@Override
 	protected Problem getProblem(CredentialException credentialException) {
-		return new Problem(
-			Response.Status.BAD_REQUEST, credentialException.getMessage());
+		return new Problem(credentialException);
 	}
 
 }

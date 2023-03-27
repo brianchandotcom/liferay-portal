@@ -18,7 +18,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,9 +44,7 @@ public class LockedExperimentExceptionMapper
 	protected Problem getProblem(
 		LockedSegmentsExperimentException lockedSegmentsExperimentException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			lockedSegmentsExperimentException.getMessage());
+		return new Problem(lockedSegmentsExperimentException);
 	}
 
 }

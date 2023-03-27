@@ -18,7 +18,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.IndexKeyException;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,8 +38,7 @@ public class IndexKeyExceptionMapper
 
 	@Override
 	protected Problem getProblem(IndexKeyException indexKeyException) {
-		return new Problem(
-			Response.Status.BAD_REQUEST, indexKeyException.getMessage());
+		return new Problem(indexKeyException);
 	}
 
 }

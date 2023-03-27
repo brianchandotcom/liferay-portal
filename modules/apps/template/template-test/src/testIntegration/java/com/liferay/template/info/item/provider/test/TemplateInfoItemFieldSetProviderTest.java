@@ -139,7 +139,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		InfoFieldSet infoFieldSet =
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey());
+				String.valueOf(_journalArticle.getDDMStructureId()));
 
 		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
 
@@ -153,7 +153,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(), _serviceContext);
+				String.valueOf(_journalArticle.getDDMStructureId()),
+				_serviceContext);
 
 		TemplateTestUtil.addTemplateEntry(
 			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
@@ -161,7 +162,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		InfoFieldSet infoFieldSet =
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey());
+				String.valueOf(_journalArticle.getDDMStructureId()));
 
 		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
 
@@ -196,7 +197,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
-			_journalArticle.getDDMStructureKey(), _serviceContext);
+			String.valueOf(_journalArticle.getDDMStructureId()),
+			_serviceContext);
 
 		TemplateEntry categoryTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
@@ -226,7 +228,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(), _journalArticle);
+				String.valueOf(_journalArticle.getDDMStructureId()),
+				_journalArticle);
 
 		Assert.assertTrue(infoFieldValues.isEmpty());
 	}
@@ -250,7 +253,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(),
+				String.valueOf(_journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				JournalTestUtil.getSampleTemplateFTL(), _serviceContext);
 
@@ -260,7 +263,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(), _journalArticle);
+				String.valueOf(_journalArticle.getDDMStructureId()),
+				_journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -300,7 +304,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
-			_journalArticle.getDDMStructureKey(), _serviceContext);
+			String.valueOf(_journalArticle.getDDMStructureId()),
+			_serviceContext);
 
 		TemplateEntry categoryTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			AssetCategory.class.getName(), StringPool.BLANK,
@@ -364,7 +369,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(),
+				String.valueOf(journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getRepeatableFieldSampleScriptFTL(
 					"categories"),
@@ -373,7 +378,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(), journalArticle);
+				String.valueOf(journalArticle.getDDMStructureId()),
+				journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -406,7 +412,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(),
+				String.valueOf(_journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getSampleScriptFTL("createDate"),
 				_serviceContext);
@@ -414,7 +420,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(), _journalArticle);
+				String.valueOf(_journalArticle.getDDMStructureId()),
+				_journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -454,7 +461,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(),
+				String.valueOf(_journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getSampleScriptFTL("createDate"),
 				_serviceContext);
@@ -469,7 +476,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				_journalArticle.getDDMStructureKey(), _journalArticle);
+				String.valueOf(_journalArticle.getDDMStructureId()),
+				_journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -518,7 +526,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(),
+				String.valueOf(journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getRepeatableFieldSampleScriptFTL("tagNames"),
 				_serviceContext);
@@ -526,7 +534,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(), journalArticle);
+				String.valueOf(journalArticle.getDDMStructureId()),
+				journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -577,7 +586,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(),
+				String.valueOf(journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getSampleScriptFTL(
 					DDMStructure.class.getSimpleName() + StringPool.UNDERLINE +
@@ -587,7 +596,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(), journalArticle);
+				String.valueOf(journalArticle.getDDMStructureId()),
+				journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -643,7 +653,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(),
+				String.valueOf(journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getSampleScriptFTL(
 					DDMStructure.class.getSimpleName() + StringPool.UNDERLINE +
@@ -653,7 +663,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(), journalArticle);
+				String.valueOf(journalArticle.getDDMStructureId()),
+				journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -702,7 +713,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(),
+				String.valueOf(journalArticle.getDDMStructureId()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TemplateTestUtil.getSampleScriptFTL(
 					DDMStructure.class.getSimpleName() + StringPool.UNDERLINE +
@@ -712,7 +723,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(),
-				journalArticle.getDDMStructureKey(), journalArticle);
+				String.valueOf(journalArticle.getDDMStructureId()),
+				journalArticle);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());

@@ -1094,18 +1094,17 @@ public class FragmentCollectionContributorRegistryImpl
 				group.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
 
+			themeDisplay.setLanguageId(layout.getDefaultLanguageId());
 			themeDisplay.setLayout(layout);
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			themeDisplay.setLayoutSet(layoutSet);
-			themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
-
-			themeDisplay.setLanguageId(layout.getDefaultLanguageId());
 			themeDisplay.setLayoutTypePortlet(
 				(LayoutTypePortlet)layout.getLayoutType());
 			themeDisplay.setLocale(
 				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
+			themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPlid(layout.getPlid());
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
@@ -1151,10 +1150,8 @@ public class FragmentCollectionContributorRegistryImpl
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(_company.getCompanyId());
-
 			serviceContext.setRequest(
 				_getHttpServletRequest(permissionChecker, user));
-
 			serviceContext.setUserId(user.getUserId());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);

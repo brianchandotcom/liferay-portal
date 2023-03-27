@@ -232,8 +232,8 @@ public class FragmentCollectionContributorPropagationTest {
 
 		Assert.assertNotNull(serviceContext);
 		Assert.assertEquals(companyId, serviceContext.getCompanyId());
-		_assertThemeDisplay(companyId, serviceContext.getThemeDisplay());
 		_assertHttpServletRequest(companyId, serviceContext.getRequest());
+		_assertThemeDisplay(companyId, serviceContext.getThemeDisplay());
 	}
 
 	private void _assertHttpServletRequest(

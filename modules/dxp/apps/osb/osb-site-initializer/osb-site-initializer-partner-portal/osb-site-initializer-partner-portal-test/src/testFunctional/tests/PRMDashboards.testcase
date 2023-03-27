@@ -67,16 +67,15 @@ definition {
 
 			PRMUtils.gotoPRM();
 		}
-        
-        task ("Create a new MDF Request") {
-            JSONPRM.createMDFRequest(
+
+		task ("Create a new MDF Request") {
+			JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
-				campaignName = "Campaign Name 1",
-                budgetValueList = "3000,2000");
-        }
+				budgetValueList = "3000,2000",
+				campaignName = "Campaign Name 1");
+		}
 
 		PRMNavigator.openSitePage(pageName = "Dashboard");
-
 	}
 
 	tearDown {
@@ -110,8 +109,8 @@ definition {
 		task ("When I create a new MDF Request") {
 			JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
-				campaignName = "Campaign Name 1",
-				budgetValueList = ${budgetValue});
+				budgetValueList = ${budgetValue},
+				campaignName = "Campaign Name 1");
 		}
 
 		task ("And I go back to Dashboard page and get the new amount of requested MDF Value") {
@@ -122,18 +121,18 @@ definition {
 				legendName = "Requested");
 
 			task ("Make a quotient of the Total Activity Cost by 50% (2), which will result in the requested value") {
-				var requestedValue = MathUtil.quotient(${budgetValue}, 2);
+				var requestedValue = ${budgetValue} / 2;
 			}
 
 			task ("Make the sum of the initial value + requested value, to obtain the new value that must be in the dashboard") {
-				var expectedValue = MathUtil.sum(${initialValue}, ${requestedValue});
+				var expectedValue = ${initialValue} + ${requestedValue};
 			}
 		}
 
 		task ("Then the actual amount of requested MDF value was increased") {
 			TestUtils.assertEquals(
-				expected = ${expectedValue},
-				actual = ${newValue});	
+				actual = ${newValue},
+				expected = ${expectedValue});
 		}
 	}
 

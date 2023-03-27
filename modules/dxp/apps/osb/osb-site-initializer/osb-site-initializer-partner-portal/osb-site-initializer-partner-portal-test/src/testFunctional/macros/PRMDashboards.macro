@@ -1,15 +1,16 @@
 definition {
 
-    @summary = "Get the currend legend value in MDF dashboards page"
-    macro getLegendValue {
-        var chartName = StringUtil.lowerCase(${chartName});
-        var key_chartName = ${chartName};
-        var key_legendName = ${legendName};
+	@summary = "Get the currend legend value in MDF dashboards page"
+	macro getLegendValue {
+		var chartName = StringUtil.lowerCase(${chartName});
 
-        var legendValue = selenium.getText("PRMDashboards#LEGEND_VALUE");
-        var legendValue = StringUtil.extractDigits(${legendValue});
+		var key_chartName = ${chartName};
+		var key_legendName = ${legendName};
+		var legendValue = selenium.getText("PRMDashboards#LEGEND_VALUE");
 
-        return ${legendValue};
-    }
+		var legendValue = StringUtil.extractDigits(${legendValue});
+
+		return ${legendValue};
+	}
 
 }

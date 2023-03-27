@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.jethr0.builds.parameter;
-
-import com.liferay.jethr0.builds.Build;
+package com.liferay.jethr0.build.parameter;
 
 import org.json.JSONObject;
+
+import com.liferay.jethr0.build.Build;
 
 /**
  * @author Michael Hashimoto

@@ -14,9 +14,9 @@
 
 package com.liferay.jethr0.jenkins.master;
 
-import com.liferay.jethr0.builds.Build;
-
 import org.json.JSONObject;
+
+import com.liferay.jethr0.build.Build;
 
 /**
  * @author Michael Hashimoto

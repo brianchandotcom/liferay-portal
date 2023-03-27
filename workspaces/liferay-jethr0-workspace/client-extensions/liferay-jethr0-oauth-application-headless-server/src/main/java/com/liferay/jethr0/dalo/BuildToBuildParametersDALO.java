@@ -14,10 +14,6 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.builds.Build;
-import com.liferay.jethr0.builds.parameter.BuildParameter;
-import com.liferay.jethr0.builds.parameter.BuildParameterFactory;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +21,10 @@ import java.util.List;
 import org.json.JSONObject;
 
 import org.springframework.context.annotation.Configuration;
+
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.parameter.BuildParameter;
+import com.liferay.jethr0.build.parameter.BuildParameterFactory;
 
 /**
  * @author Michael Hashimoto

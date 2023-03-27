@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.builds;
+package com.liferay.jethr0.build;
 
 import com.liferay.jethr0.project.Project;
 

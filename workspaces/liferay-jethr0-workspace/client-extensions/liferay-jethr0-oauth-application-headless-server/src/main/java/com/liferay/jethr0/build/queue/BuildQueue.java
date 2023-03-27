@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.jethr0.builds.queue;
+package com.liferay.jethr0.build.queue;
 
-import com.liferay.jethr0.builds.Build;
+import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.jenkins.master.JenkinsMaster;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.queue.ProjectQueue;

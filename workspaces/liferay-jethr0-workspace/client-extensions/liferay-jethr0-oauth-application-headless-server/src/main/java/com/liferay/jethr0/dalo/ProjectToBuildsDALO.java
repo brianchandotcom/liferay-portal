@@ -14,8 +14,8 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.builds.Build;
-import com.liferay.jethr0.builds.BuildFactory;
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.BuildFactory;
 import com.liferay.jethr0.project.Project;
 
 import java.util.ArrayList;

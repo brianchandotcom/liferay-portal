@@ -299,6 +299,10 @@
 																	}
 																}
 															],
+															"fragmentStyle": {
+																"marginBottom": "1",
+																"marginTop": "1"
+															},
 															"indexed": true
 														},
 														"type": "Fragment"

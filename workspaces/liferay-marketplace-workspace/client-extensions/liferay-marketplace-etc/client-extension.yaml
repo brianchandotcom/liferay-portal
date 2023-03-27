@@ -1,0 +1,15 @@
+liferay-marketplace-object-action-provisioning-add:
+    name: Liferay Marketplace Object Action Provisioning Add
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-object-action-provisioning-add
+    resourcePath: /marketplace/object/action/provisioning/add
+    type: objectAction
+liferay-marketplace-object-action-provisioning-delete:
+    name: Liferay Marketplace Object Action Provisioning Delete
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-object-action-provisioning-delete
+    resourcePath: /marketplace/object/action/provisioning/delete
+    type: objectAction
+liferay-marketplace-object-action-provisioning-extend:
+    name: Liferay Marketplace Object Action Provisioning Extend
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-object-action-provisioning-extend
+    resourcePath: /marketplace/object/action/provisioning/extend
+    type: objectAction

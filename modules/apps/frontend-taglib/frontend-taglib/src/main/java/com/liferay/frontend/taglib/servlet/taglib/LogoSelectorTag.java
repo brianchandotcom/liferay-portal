@@ -37,14 +37,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _defaultLogoURL;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public long getMaxFileSize() {
-		return _maxFileSize;
-	}
-
 	public String getTempImageFileName() {
 		return _tempImageFileName;
 	}
@@ -77,14 +69,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_defaultLogoURL = defaultLogoURL;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMaxFileSize(long maxFileSize) {
-		_maxFileSize = maxFileSize;
-	}
-
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -112,7 +96,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_currentLogoURL = null;
 		_defaultLogo = false;
 		_defaultLogoURL = null;
-		_maxFileSize = 0;
 		_preserveRatio = false;
 		_showButtons = true;
 		_tempImageFileName = null;
@@ -152,7 +135,6 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _currentLogoURL;
 	private boolean _defaultLogo;
 	private String _defaultLogoURL;
-	private long _maxFileSize;
 	private boolean _preserveRatio;
 	private boolean _showButtons = true;
 	private String _tempImageFileName;

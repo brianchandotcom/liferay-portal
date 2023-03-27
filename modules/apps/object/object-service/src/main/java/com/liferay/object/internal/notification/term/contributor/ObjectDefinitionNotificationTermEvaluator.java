@@ -217,13 +217,11 @@ public class ObjectDefinitionNotificationTermEvaluator
 					objectRelationship.getObjectDefinitionId1());
 
 			if (!objectDefinition.isSystem()) {
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						GetterUtil.getLong(
-							termValues.get(objectField.getName())));
+				_objectEntry = _objectEntryLocalService.getObjectEntry(
+					GetterUtil.getLong(termValues.get(objectField.getName())));
 
 				return _getTermValue(
-					objectEntry.getValues(), partial, termName);
+					_objectEntry.getValues(), partial, termName);
 			}
 
 			return _getTermValue(
@@ -237,14 +235,22 @@ public class ObjectDefinitionNotificationTermEvaluator
 	}
 
 	private String _getTermValue(
-		Map<String, ?> map, String partial, String termName) {
+			Map<String, ?> map, String partial, String termName)
+		throws PortalException {
+
+		String partialTermName = StringUtil.removeSubstrings(
+			termName, partial + StringPool.UNDERLINE, "[%", "%]");
+
+		String termValue = _getTermValue(
+			partialTermName,
+			_userLocalService.getUser(_objectEntry.getUserId()));
+
+		if (Validator.isNotNull(termValue)) {
+			return termValue;
+		}
 
 		for (Map.Entry<String, ?> entry : map.entrySet()) {
-			if (StringUtil.equalsIgnoreCase(
-					StringUtil.removeSubstrings(
-						termName, partial + StringPool.UNDERLINE, "[%", "%]"),
-					entry.getKey())) {
-
+			if (StringUtil.equalsIgnoreCase(partialTermName, entry.getKey())) {
 				return String.valueOf(entry.getValue());
 			}
 		}
@@ -303,6 +309,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectEntry _objectEntry;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

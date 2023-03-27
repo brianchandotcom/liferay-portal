@@ -226,46 +226,47 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					)
 				));
 
-			Map<Long, List<ConflictInfo>> conflictInfoMap =
-				_ctCollectionLocalService.checkConflicts(
-					currentCTCollection.getCompanyId(), ctEntries,
-					currentCTCollection.getCtCollectionId(),
-					currentCTCollection.getName(),
-					CTConstants.CT_COLLECTION_ID_PRODUCTION,
-					_language.get(themeDisplay.getLocale(), "production"));
+			if ((ctEntries != null) && !ctEntries.isEmpty()) {
+				Map<Long, List<ConflictInfo>> conflictInfoMap =
+					_ctCollectionLocalService.checkConflicts(
+						currentCTCollection.getCompanyId(), ctEntries,
+						currentCTCollection.getCtCollectionId(),
+						currentCTCollection.getName(),
+						CTConstants.CT_COLLECTION_ID_PRODUCTION,
+						_language.get(themeDisplay.getLocale(), "production"));
 
-			if (conflictInfoMap.isEmpty()) {
-				if (possibleConflict) {
+				if (!conflictInfoMap.isEmpty()) {
 					data.put(
 						"conflictIconClass",
-						"change-tracking-conflict-icon-warning");
+						"change-tracking-conflict-icon-danger");
 					data.put(
 						"conflictIconLabel",
 						_language.get(
-							themeDisplay.getLocale(),
-							"possible-modification-conflict"));
+							themeDisplay.getLocale(), "modification-conflict"));
 					data.put("conflictIconName", "warning-full");
-				}
-				else {
-					data.put(
-						"conflictIconClass", "change-tracking-conflict-icon");
-					data.put(
-						"conflictIconLabel",
-						_language.get(
-							themeDisplay.getLocale(),
-							"no-modification-conflict"));
-					data.put("conflictIconName", "check");
+
+					return;
 				}
 			}
-			else {
+
+			if (possibleConflict) {
 				data.put(
 					"conflictIconClass",
-					"change-tracking-conflict-icon-danger");
+					"change-tracking-conflict-icon-warning");
 				data.put(
 					"conflictIconLabel",
 					_language.get(
-						themeDisplay.getLocale(), "modification-conflict"));
+						themeDisplay.getLocale(),
+						"possible-modification-conflict"));
 				data.put("conflictIconName", "warning-full");
+			}
+			else {
+				data.put("conflictIconClass", "change-tracking-conflict-icon");
+				data.put(
+					"conflictIconLabel",
+					_language.get(
+						themeDisplay.getLocale(), "no-modification-conflict"));
+				data.put("conflictIconName", "check");
 			}
 		}
 	}

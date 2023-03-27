@@ -593,15 +593,6 @@ public class DLAdminDisplayContext {
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
-		String tagName = ParamUtil.getString(_httpServletRequest, "tag");
-
-		boolean useAssetEntryQuery = false;
-
-		if ((categoryId > 0) || Validator.isNotNull(tagName)) {
-			useAssetEntryQuery = true;
-		}
-
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		long folderId = getFolderId();
@@ -636,18 +627,6 @@ public class DLAdminDisplayContext {
 			ListUtil.fromArray(
 				_dlPortletInstanceSettingsHelper.getEntryColumns()));
 		dlSearchContainer.setOrderByCol(getOrderByCol());
-
-		boolean orderByModel = false;
-
-		if (navigation.equals("home")) {
-			orderByModel = true;
-		}
-
-		OrderByComparator<RepositoryEntry> orderByComparator =
-			DLUtil.getRepositoryModelOrderByComparator(
-				getOrderByCol(), getOrderByType(), orderByModel);
-
-		dlSearchContainer.setOrderByComparator(orderByComparator);
 		dlSearchContainer.setOrderByType(getOrderByType());
 
 		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine") || navigation.equals("recent")) {
@@ -677,10 +656,20 @@ public class DLAdminDisplayContext {
 
 			dlSearchContainer.setResultsAndTotal(
 				() -> _getFileEntries(hits), hits.getLength());
+
+			return dlSearchContainer;
 		}
-		else {
-			if (navigation.equals("home")) {
-				if (useAssetEntryQuery) {
+
+		OrderByComparator<RepositoryEntry> orderByComparator =
+			DLUtil.getRepositoryModelOrderByComparator(
+				getOrderByCol(), getOrderByType(), true);
+
+		dlSearchContainer.setOrderByComparator(orderByComparator);
+
+		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
+		String tagName = ParamUtil.getString(_httpServletRequest, "tag");
+
+				if ((categoryId > 0) || Validator.isNotNull(tagName)) {
 					long[] classNameIds = {
 						PortalUtil.getClassNameId(
 							DLFileEntryConstants.getClassName()),
@@ -746,8 +735,6 @@ public class DLAdminDisplayContext {
 						DLAppServiceUtil.
 							getFoldersAndFileEntriesAndFileShortcutsCount(
 								repositoryId, folderId, dlAppStatus, true));
-				}
-			}
 		}
 
 		return dlSearchContainer;

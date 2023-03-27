@@ -291,45 +291,48 @@ public class BreadcrumbUtil {
 			}
 		}
 
-		if (!_isGuestGroup(group)) {
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			breadcrumbEntry.setTitle(
-				group.getDescriptiveName(themeDisplay.getLocale()));
-
-			int layoutsPageCount = 0;
-
-			if (layoutSet.isPrivateLayout()) {
-				layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
-					group.getGroupId(), true);
-			}
-			else {
-				layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
-					group.getGroupId(), false);
-			}
-
-			if (layoutsPageCount > 0) {
-				if (group.isActive() &&
-					_hasViewPermissions(group, themeDisplay)) {
-
-					String layoutSetFriendlyURL =
-						PortalUtil.getLayoutSetFriendlyURL(
-							layoutSet, themeDisplay);
-
-					if (themeDisplay.isAddSessionIdToURL()) {
-						layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
-							layoutSetFriendlyURL, themeDisplay.getSessionId());
-					}
-
-					breadcrumbEntry.setURL(layoutSetFriendlyURL);
-				}
-				else {
-					breadcrumbEntry.setBrowsable(false);
-				}
-			}
-
-			breadcrumbEntries.add(breadcrumbEntry);
+		if (_isGuestGroup(group)) {
+			return;
 		}
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(
+			group.getDescriptiveName(themeDisplay.getLocale()));
+
+		int layoutsPageCount = 0;
+
+		if (layoutSet.isPrivateLayout()) {
+			layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
+				group.getGroupId(), true);
+		}
+		else {
+			layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
+				group.getGroupId(), false);
+		}
+
+		if (layoutsPageCount <= 0) {
+			breadcrumbEntries.add(breadcrumbEntry);
+
+			return;
+		}
+
+		if (group.isActive() && _hasViewPermissions(group, themeDisplay)) {
+			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
+				layoutSet, themeDisplay);
+
+			if (themeDisplay.isAddSessionIdToURL()) {
+				layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
+					layoutSetFriendlyURL, themeDisplay.getSessionId());
+			}
+
+			breadcrumbEntry.setURL(layoutSetFriendlyURL);
+		}
+		else {
+			breadcrumbEntry.setBrowsable(false);
+		}
+
+		breadcrumbEntries.add(breadcrumbEntry);
 	}
 
 	private static void _addLayoutBreadcrumbEntries(

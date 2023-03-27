@@ -566,6 +566,7 @@
 							},
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_bankingInfo",
+								"inputRequired": true,
 								"showCharactersCount": false
 							},
 							"fragmentFields": [

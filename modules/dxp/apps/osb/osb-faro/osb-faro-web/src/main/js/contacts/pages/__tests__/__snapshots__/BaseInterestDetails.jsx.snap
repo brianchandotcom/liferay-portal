@@ -93,7 +93,7 @@ exports[`BaseInterestDetails should render 1`] = `
         <h4
           class="list-title"
         >
-          Members Interested in "1" - As of January 1, 1970
+          Members Interested in "1" - As of December 31, 1969
         </h4>
       </div>
       <div

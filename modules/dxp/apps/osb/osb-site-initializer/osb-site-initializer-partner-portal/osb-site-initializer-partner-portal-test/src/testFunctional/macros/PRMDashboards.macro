@@ -10,6 +10,8 @@ definition {
 
 		var legendValue = StringUtil.extractDigits(${legendValue});
 
+		echo("Legend value: ${legendValue}");
+
 		return ${legendValue};
 	}
 

@@ -175,4 +175,41 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterBuildHistoryWithMultipleOptions {
+		task ("Given that the user has two builds different in the table") {
+            Testray.assertItemName(key_name = "Build 1");
+
+			Testray.assertItemName(key_name = "Build 2");
+		}
+
+		task ("When the user select multiple options in the filter") {
+            TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Product Version",
+				value1 = "7.0");
+
+			Type(
+                locator1 = "TestrayManage#NEW_OPTION_NAME",
+                value1 = "Build 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only build 1 and version 7.0 in the table") {
+            Testray.assertItemName(key_name = "Build 1");
+
+            Testray.assertItemName(key_name = "7.0");
+        }
+
+        task ("And do not see the build 2 and version 1.2 in the table") {
+			Testray.assertItemNotPresent(key_name = "Build 2");
+
+            Testray.assertItemNotPresent(key_name = "1.2");
+		}
+	}
+
 }

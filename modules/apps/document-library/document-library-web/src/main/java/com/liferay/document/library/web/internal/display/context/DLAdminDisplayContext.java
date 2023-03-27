@@ -572,9 +572,6 @@ public class DLAdminDisplayContext {
 	private SearchContainer<RepositoryEntry> _getDLSearchContainer()
 		throws PortalException {
 
-		String navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "home");
-
 		String currentFolder = ParamUtil.getString(
 			_httpServletRequest, "curFolder");
 		String deltaFolder = ParamUtil.getString(
@@ -583,9 +580,8 @@ public class DLAdminDisplayContext {
 			_httpServletRequest, "extension");
 		long fileEntryTypeId = ParamUtil.getLong(
 			_httpServletRequest, "fileEntryTypeId", -1);
-
-		String dlFileEntryTypeName = LanguageUtil.get(
-			_httpServletRequest, "basic-document");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "home");
 
 		int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -619,44 +615,22 @@ public class DLAdminDisplayContext {
 				"mvcRenderCommandName", "/document_library/view_folder");
 		}
 
-		portletURL.setParameter("navigation", navigation);
 		portletURL.setParameter("curFolder", currentFolder);
 		portletURL.setParameter("deltaFolder", deltaFolder);
-		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter("extension", extensions);
+		portletURL.setParameter("folderId", String.valueOf(folderId));
+		portletURL.setParameter("navigation", navigation);
 
 		if (fileEntryTypeId >= 0) {
 			portletURL.setParameter(
 				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
-
-			if (fileEntryTypeId > 0) {
-				DLFileEntryType dlFileEntryType =
-					DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-						fileEntryTypeId);
-
-				dlFileEntryTypeName = dlFileEntryType.getName(
-					_httpServletRequest.getLocale());
-			}
-		}
-
-		String emptyResultsMessage = null;
-
-		if (fileEntryTypeId >= 0) {
-			emptyResultsMessage = LanguageUtil.format(
-				_httpServletRequest,
-				"there-are-no-documents-or-media-files-of-type-x",
-				HtmlUtil.escape(dlFileEntryTypeName));
-		}
-		else {
-			emptyResultsMessage =
-				"there-are-no-documents-or-media-files-in-this-folder";
 		}
 
 		SearchContainer<RepositoryEntry> dlSearchContainer =
 			new SearchContainer<>(
 				_liferayPortletRequest, null, null, "curEntry",
 				_dlPortletInstanceSettings.getEntriesPerPage(), portletURL,
-				null, emptyResultsMessage);
+				null, _getEmptyResultsMessage(fileEntryTypeId));
 
 		dlSearchContainer.setHeaderNames(
 			ListUtil.fromArray(
@@ -777,6 +751,30 @@ public class DLAdminDisplayContext {
 		}
 
 		return dlSearchContainer;
+	}
+
+	private String _getEmptyResultsMessage(long fileEntryTypeId)
+		throws PortalException {
+		if (fileEntryTypeId < 0) {
+			return "there-are-no-documents-or-media-files-in-this-folder";
+		}
+
+		String dlFileEntryTypeName = LanguageUtil.get(
+			_httpServletRequest, "basic-document");
+
+		if (fileEntryTypeId > 0) {
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					fileEntryTypeId);
+
+			dlFileEntryTypeName = dlFileEntryType.getName(
+				_httpServletRequest.getLocale());
+		}
+
+		return LanguageUtil.format(
+			_httpServletRequest,
+			"there-are-no-documents-or-media-files-of-type-x",
+			HtmlUtil.escape(dlFileEntryTypeName));
 	}
 
 	private Filter _getExtensionsFilter(String[] extensions) {

@@ -15,6 +15,7 @@
 package com.liferay.object.internal.system;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -23,6 +24,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -126,6 +128,21 @@ public class AddressSystemObjectDefinitionMetadata
 	@Override
 	public String getTitleObjectFieldName() {
 		return "name";
+	}
+
+	@Override
+	public Map<String, Object> getVariables(
+		String contentType, ObjectDefinition objectDefinition,
+		boolean oldValues, JSONObject payloadJSONObject) {
+
+		Map<String, Object> variables = super.getVariables(
+			contentType, objectDefinition, oldValues, payloadJSONObject);
+
+		if (variables.containsKey("street1")) {
+			variables.put("streetAddressLine1", variables.get("street1"));
+		}
+
+		return variables;
 	}
 
 	@Override

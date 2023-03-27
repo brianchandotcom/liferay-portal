@@ -20,7 +20,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
-import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
 import com.liferay.petra.string.CharPool;
@@ -45,8 +46,6 @@ import java.util.UUID;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -188,19 +187,24 @@ public class DLFileVersionConstraintResolver
 			String oldStoreFileName = entry.getKey();
 			String newStoreFileName = entry.getValue();
 
-			try (InputStream inputStream = _store.getFileAsStream(
+			try (InputStream inputStream = DLStoreUtil.getFileAsStream(
 					dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
 					dlFileEntry.getName(), oldStoreFileName)) {
 
-				_store.addFile(
-					dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
-					dlFileEntry.getName(), newStoreFileName, inputStream);
+				DLStoreUtil.addFile(
+					DLStoreRequest.builder(
+						dlFileEntry.getCompanyId(),
+						dlFileEntry.getRepositoryId(), dlFileEntry.getName()
+					).versionLabel(
+						newStoreFileName
+					).build(),
+					inputStream);
 			}
 			catch (IOException ioException) {
 				throw new UncheckedIOException(ioException);
 			}
 
-			_store.deleteFile(
+			DLStoreUtil.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
 				dlFileEntry.getName(), oldStoreFileName);
 		}
@@ -211,11 +215,5 @@ public class DLFileVersionConstraintResolver
 
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile Store _store;
 
 }

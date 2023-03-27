@@ -96,6 +96,39 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@Schema(
+		description = "Optional field with the audit events associated with this object entry, can be embedded with nestedFields"
+	)
+	@Valid
+	public AuditEvent[] getAuditEvents() {
+		return auditEvents;
+	}
+
+	public void setAuditEvents(AuditEvent[] auditEvents) {
+		this.auditEvents = auditEvents;
+	}
+
+	@JsonIgnore
+	public void setAuditEvents(
+		UnsafeSupplier<AuditEvent[], Exception> auditEventsUnsafeSupplier) {
+
+		try {
+			auditEvents = auditEventsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Optional field with the audit events associated with this object entry, can be embedded with nestedFields"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected AuditEvent[] auditEvents;
+
 	@Schema
 	@Valid
 	public Creator getCreator() {
@@ -458,6 +491,26 @@ public class ObjectEntry implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		if (auditEvents != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"auditEvents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < auditEvents.length; i++) {
+				sb.append(String.valueOf(auditEvents[i]));
+
+				if ((i + 1) < auditEvents.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (creator != null) {

@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -31,6 +32,8 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.AuditEvent;
+import com.liferay.object.rest.dto.v1_0.AuditFieldChange;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -44,6 +47,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
@@ -53,6 +57,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,6 +72,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
+import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -348,6 +357,88 @@ public class ObjectEntryDTOConverter
 		return null;
 	}
 
+	private AuditEvent[] _toAuditEvents(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		if (!objectDefinition.isEnableObjectEntryHistory()) {
+			return null;
+		}
+
+		UriInfo uriInfo = dtoConverterContext.getUriInfo();
+
+		if (uriInfo == null) {
+			return null;
+		}
+
+		MultivaluedMap<String, String> queryParameters =
+			uriInfo.getQueryParameters();
+
+		String nestedFields = queryParameters.getFirst("nestedFields");
+
+		if ((nestedFields == null) || !nestedFields.contains("auditEvents") ||
+			!_objectEntryService.hasModelResourcePermission(
+				objectDefinition.getObjectDefinitionId(),
+				objectEntry.getObjectEntryId(),
+				ObjectActionKeys.OBJECT_ENTRY_HISTORY)) {
+
+			return null;
+		}
+
+		return TransformUtil.transformToArray(
+			_auditEventLocalService.getAuditEvents(
+				0, 0, null, null, null, null, null,
+				String.valueOf(objectEntry.getObjectEntryId()), null, null,
+				null, 0, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			auditEvent -> new AuditEvent() {
+				{
+					auditFieldChanges = _toAuditFieldChanges(
+						auditEvent.getAdditionalInfo(),
+						auditEvent.getEventType());
+					creator = CreatorUtil.toCreator(
+						_portal, dtoConverterContext.getUriInfo(),
+						_userLocalService.fetchUser(auditEvent.getUserId()));
+					dateCreated = auditEvent.getCreateDate();
+					eventType = auditEvent.getEventType();
+				}
+			},
+			AuditEvent.class);
+	}
+
+	private AuditFieldChange[] _toAuditFieldChanges(
+			String additionalInfo, String eventType)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(additionalInfo);
+
+		if (StringUtil.equals(eventType, EventTypes.ADD)) {
+			Map<String, Object> map = jsonObject.toMap();
+
+			return TransformUtil.transformToArray(
+				map.keySet(),
+				key -> new AuditFieldChange() {
+					{
+						name = key;
+						newValue = map.get(key);
+					}
+				},
+				AuditFieldChange.class);
+		}
+
+		return JSONUtil.toArray(
+			jsonObject.getJSONArray("attributes"),
+			attributeJSONObject -> new AuditFieldChange() {
+				{
+					name = attributeJSONObject.getString("name");
+					newValue = attributeJSONObject.get("newValue");
+					oldValue = attributeJSONObject.get("oldValue");
+				}
+			},
+			AuditFieldChange.class);
+	}
+
 	private ObjectEntry _toDTO(
 			DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
 			com.liferay.object.model.ObjectEntry objectEntry)
@@ -359,6 +450,8 @@ public class ObjectEntryDTOConverter
 		return new ObjectEntry() {
 			{
 				actions = dtoConverterContext.getActions();
+				auditEvents = _toAuditEvents(
+					dtoConverterContext, objectDefinition, objectEntry);
 				creator = CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfo(),
 					_userLocalService.fetchUser(objectEntry.getUserId()));
@@ -637,6 +730,9 @@ public class ObjectEntryDTOConverter
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private AuditEventLocalService _auditEventLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -652,6 +748,9 @@ public class ObjectEntryDTOConverter
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -662,6 +761,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

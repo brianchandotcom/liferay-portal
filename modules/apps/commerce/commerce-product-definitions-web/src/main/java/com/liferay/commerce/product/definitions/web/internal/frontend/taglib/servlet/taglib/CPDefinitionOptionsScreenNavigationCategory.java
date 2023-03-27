@@ -14,37 +14,11 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeRegistry;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import java.util.Locale;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,14 +27,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=40",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=40",
+	service = ScreenNavigationCategory.class
 )
 public class CPDefinitionOptionsScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -68,13 +39,8 @@ public class CPDefinitionOptionsScreenNavigationCategory
 	}
 
 	@Override
-	public String getEntryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_OPTIONS;
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
+		return language.get(
 			locale, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_OPTIONS);
 	}
 
@@ -84,88 +50,7 @@ public class CPDefinitionOptionsScreenNavigationCategory
 			SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL;
 	}
 
-	@Override
-	public boolean isVisible(User user, CPDefinition cpDefinition) {
-		if (cpDefinition == null) {
-			return false;
-		}
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		CPType cpType = _cpTypeRegistry.getCPType(
-			cpDefinition.getProductTypeName());
-
-		try {
-			if (_commerceCatalogModelResourcePermission.contains(
-					permissionChecker, cpDefinition.getCommerceCatalog(),
-					ActionKeys.VIEW) &&
-				cpType.isOptionsEnabled()) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return false;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		CPDefinitionOptionRelDisplayContext
-			cpDefinitionOptionRelDisplayContext =
-				new CPDefinitionOptionRelDisplayContext(
-					_actionHelper, httpServletRequest, _configurationProvider,
-					_ddmFormFieldTypeServicesRegistry, _itemSelector);
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			cpDefinitionOptionRelDisplayContext);
-
-		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
-			"/definition_option_rels.jsp");
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionOptionsScreenNavigationCategory.class);
-
 	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
-	)
-	private ModelResourcePermission<CommerceCatalog>
-		_commerceCatalogModelResourcePermission;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private CPTypeRegistry _cpTypeRegistry;
-
-	@Reference
-	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
-
-	@Reference
-	private ItemSelector _itemSelector;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
-	)
-	private ServletContext _setServletContext;
+	protected Language language;
 
 }

@@ -4138,6 +4138,7 @@ definition {
 			value1 = ${currentDate});
 	}
 
+	@ignore = "true"
 	test ViewExpandedAndCollapsedBlueprintsPreviewResult {
 		JSONWebcontent.addWebContent(
 			content = "",

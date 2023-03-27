@@ -19,6 +19,9 @@ package com.liferay.commerce.constants;
  */
 public class CommerceTaxScreenNavigationConstants {
 
+	public static final String CATEGORY_KEY_COMMERCE_REMOTE_CONFIGURATION =
+		"remote-configuration";
+
 	public static final String CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL =
 		"detail";
 

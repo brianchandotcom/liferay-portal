@@ -525,6 +525,10 @@
 			<description name="Checks that the package name matches the file location." />
 			<property name="checkServicePath" value="false" />
 		</check>
+		<check name="JavaProblemParameterCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks if can simply problem parameter." />
+		</check>
 		<check name="JavaProcessCallableCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that a class implementing `ProcessCallable` assigns a `serialVersionUID`." />

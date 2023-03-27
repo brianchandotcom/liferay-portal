@@ -472,6 +472,19 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return ddmStructure.getStructureId();
 	}
 
+	private long _getDDMStructureId() {
+		if (_ddmStructureId != null) {
+			return _ddmStructureId;
+		}
+
+		_ddmStructureId = ParamUtil.getLong(
+			_httpServletRequest, "ddmStructureId",
+			GetterUtil.getLong(
+				_infoItemItemSelectorCriterion.getItemSubtype()));
+
+		return _ddmStructureId;
+	}
+
 	private String _getDDMStructureKey() {
 		if (_ddmStructureKey != null) {
 			return _ddmStructureKey;
@@ -670,10 +683,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
 		searchContext.setAttribute(
 			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
-		searchContext.setAttribute("ddmStructureKey", _getDDMStructureKey());
 		searchContext.setAttribute("head", Boolean.TRUE);
 		searchContext.setAttribute("latest", Boolean.TRUE);
 		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
+
+		if (_getDDMStructureId() > 0) {
+			searchContext.setClassTypeIds(new long[] {_getDDMStructureId()});
+		}
+
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);
@@ -741,6 +758,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	}
 
 	private SearchContainer<?> _articleSearchContainer;
+	private Long _ddmStructureId;
 	private String _ddmStructureKey;
 	private String _displayStyle;
 	private JournalFolder _folder;

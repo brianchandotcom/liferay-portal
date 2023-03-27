@@ -110,15 +110,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 	@Override
 	public String getFormVariationKey() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			"BASIC-WEB-CONTENT", true);
-
-		return String.valueOf(ddmStructure.getStructureId());
+		return String.valueOf(_getDDDMStructureId());
 	}
 
 	@Override
@@ -170,16 +162,29 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return finalStep.build();
 	}
 
+	private long _getDDDMStructureId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"BASIC-WEB-CONTENT", true);
+
+		return ddmStructure.getStructureId();
+	}
+
 	private SearchContext _populateSearchContext(
 		CollectionQuery collectionQuery, SearchContext searchContext) {
 
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put("ddmStructureKey", "BASIC-WEB-CONTENT");
 		attributes.put("head", true);
 
 		searchContext.setAttributes(attributes);
+
+		searchContext.setClassTypeIds(new long[] {_getDDDMStructureId()});
 
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();

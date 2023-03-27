@@ -153,7 +153,6 @@ public class DDMStructureRelatedInfoCollectionProvider
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put("ddmStructureKey", _ddmStructure.getStructureKey());
 		attributes.put("head", true);
 
 		searchContext.setAttributes(attributes);

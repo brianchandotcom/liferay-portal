@@ -24,7 +24,9 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.constants.JournalFeedConstants;
@@ -513,10 +515,6 @@ public class JournalRSSHelper {
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 
-		if (Validator.isNotNull(feed.getDDMStructureKey())) {
-			attributes.put("ddmStructureKey", feed.getDDMStructureKey());
-		}
-
 		if (Validator.isNotNull(feed.getDDMTemplateKey())) {
 			attributes.put("ddmTemplateKey", feed.getDDMTemplateKey());
 		}
@@ -524,6 +522,19 @@ public class JournalRSSHelper {
 		attributes.put("head", true);
 
 		searchContext.setAttributes(attributes);
+
+		if (Validator.isNotNull(feed.getDDMStructureKey())) {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(
+					feed.getGroupId(),
+					_portal.getClassNameId(JournalArticle.class),
+					feed.getDDMStructureKey(), true);
+
+			if (ddmStructure != null) {
+				searchContext.setClassTypeIds(
+					new long[] {ddmStructure.getStructureId()});
+			}
+		}
 
 		searchContext.setCompanyId(feed.getCompanyId());
 		searchContext.setEnd(feed.getDelta());
@@ -687,6 +698,9 @@ public class JournalRSSHelper {
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

@@ -229,8 +229,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return _getTermValue(
 				_objectEntryLocalService.getSystemModelAttributes(
 					objectDefinition,
-					GetterUtil.getLong(
-						termValues.get(objectField.getDBColumnName()))),
+					GetterUtil.getLong(termValues.get(objectField.getName()))),
 				partial, termName);
 		}
 

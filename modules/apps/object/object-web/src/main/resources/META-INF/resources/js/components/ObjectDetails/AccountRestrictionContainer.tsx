@@ -51,9 +51,9 @@ export function AccountRestrictionContainer({
 			(field) => {
 				if (values.storageType && values.storageType !== 'default') {
 					return (
-						field.businessType === 'Text' ||
 						field.businessType === 'Integer' ||
-						field.businessType === 'LongInteger'
+						field.businessType === 'LongInteger' ||
+						field.businessType === 'Text'
 					);
 				}
 

@@ -314,8 +314,8 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private String _getLocation(
-		String predicateString, ObjectDefinition objectDefinition,
-		Pagination pagination, String search, Sort[] sorts) {
+		ObjectDefinition objectDefinition, Pagination pagination,
+		String predicateString, String search, Sort[] sorts) {
 
 		if (Validator.isNotNull(search)) {
 			return HttpComponentsUtil.addParameter(
@@ -346,9 +346,10 @@ public class SalesforceObjectEntryManagerImpl
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
+				objectDefinition, pagination,
 				_getAccountRestrictionPredicateString(
 					companyId, dtoConverterContext, objectDefinition, scopeKey),
-				objectDefinition, pagination, search, sorts));
+				search, sorts));
 
 		if ((responseJSONObject == null) ||
 			(responseJSONObject.length() == 0)) {
@@ -365,10 +366,10 @@ public class SalesforceObjectEntryManagerImpl
 				companyId, dtoConverterContext, jsonArray, objectDefinition),
 			pagination,
 			_getTotalCount(
-				companyId,
+				companyId, objectDefinition,
 				_getAccountRestrictionPredicateString(
 					companyId, dtoConverterContext, objectDefinition, scopeKey),
-				objectDefinition, scopeKey, search));
+				scopeKey, search));
 	}
 
 	private ObjectField _getObjectFieldByExternalReferenceCode(
@@ -460,14 +461,14 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private int _getTotalCount(
-		long companyId, String predicateString,
-		ObjectDefinition objectDefinition, String scopeKey, String search) {
+		long companyId, ObjectDefinition objectDefinition,
+		String predicateString, String scopeKey, String search) {
 
 		if (Validator.isNotNull(search)) {
 			JSONObject responseJSONObject = _salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				_getLocation(
-					predicateString, objectDefinition, Pagination.of(1, 200),
+					objectDefinition, Pagination.of(1, 200), predicateString,
 					search, null));
 
 			JSONArray jsonArray = responseJSONObject.getJSONArray(

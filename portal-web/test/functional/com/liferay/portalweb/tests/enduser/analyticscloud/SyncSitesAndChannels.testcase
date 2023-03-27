@@ -250,38 +250,8 @@ definition {
 	test CheckEventNotBeingSentWhenDesynchronizedSites {
 		property proxy.server.enabled = "true";
 
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Sync channels and sites") {
-			ACDXPSettings.syncChannel(
-				channelName = "Minium Demo Portal",
-				propertyName = ${assignedPropertyName});
-
-			for (var siteName : list "Site Name,Minium Demo") {
-				ACDXPSettings.syncSites(
-					propertyName = ${assignedPropertyName},
-					siteName = ${siteName});
-			}
-		}
-
-		task ("Sync contacts and accounts, sync the attributes, save and finish") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			ACDXPSettings.syncContactsAndAccountstData();
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Finish",
-				locator1 = "Button#ANY");
+		task ("Connect DXP to AC > Sync channel and the two sites > Sync contacts and accounts > Sync attributes > Finish") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
 		task ("Go to the Site Name and see that the events are being sent") {
@@ -341,7 +311,7 @@ definition {
 		}
 
 		task ("Deselect the sites that were selected before") {
-			for (var sites : list "Site Name,Minium Demo") {
+			for (var site : list "Site Name,Minium Demo") {
 				ACDXPSettings.syncSites(
 					siteName = ${site},
 					propertyName = ${assignedPropertyName});

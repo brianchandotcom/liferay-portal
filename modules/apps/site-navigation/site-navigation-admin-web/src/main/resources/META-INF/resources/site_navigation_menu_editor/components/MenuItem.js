@@ -158,6 +158,7 @@ export function MenuItem({
 		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';
 
 	const {
+		element,
 		isTarget,
 		onBlur,
 		onFocus,
@@ -190,8 +191,8 @@ export function MenuItem({
 				data-item-id={item.siteNavigationMenuItemId}
 				data-parent-item-id={parentItemId}
 				onBlur={onBlur}
-				onClick={() => {
-					if (!isMovementEnabled) {
+				onClick={(event) => {
+					if (!isMovementEnabled && event.pointerType) {
 						setSelectedMenuItemId(siteNavigationMenuItemId);
 						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
 					}
@@ -200,7 +201,8 @@ export function MenuItem({
 				onKeyDown={(event) => {
 					if (
 						(event.key === ' ' || event.key === 'Enter') &&
-						!isMovementEnabled
+						!isMovementEnabled &&
+						event.target === element
 					) {
 						setSelectedMenuItemId(siteNavigationMenuItemId);
 						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);

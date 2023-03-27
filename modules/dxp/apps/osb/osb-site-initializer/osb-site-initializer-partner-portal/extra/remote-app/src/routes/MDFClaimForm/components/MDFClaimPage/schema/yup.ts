@@ -88,7 +88,7 @@ const claimSchema = object({
 														invoice &&
 														!invoice.id
 													) {
-														invoice
+														return invoice
 															? validateDocument.imageDocument.types.includes(
 																	invoice.type
 															  )
@@ -136,12 +136,13 @@ const claimSchema = object({
 										listOfQualifiedLeads &&
 										!listOfQualifiedLeads.id
 									) {
-										listOfQualifiedLeads
+										return listOfQualifiedLeads
 											? Math.ceil(
 													listOfQualifiedLeads.size /
 														1000
 											  ) <=
-											  validateDocument.fileSize.maxSize
+													validateDocument.fileSize
+														.maxSize
 											: false;
 									}
 
@@ -156,7 +157,7 @@ const claimSchema = object({
 										listOfQualifiedLeads &&
 										!listOfQualifiedLeads.id
 									) {
-										listOfQualifiedLeads
+										return listOfQualifiedLeads
 											? validateDocument.listOfLeadsDocuments.types.includes(
 													listOfQualifiedLeads.type
 											  )
@@ -212,7 +213,7 @@ const claimSchema = object({
 			validateDocument.fileSize.message,
 			(reimbursementInvoice) => {
 				if (reimbursementInvoice && !reimbursementInvoice.id) {
-					return !reimbursementInvoice.id
+					return reimbursementInvoice
 						? Math.ceil(reimbursementInvoice.size / 1000) <=
 								validateDocument.fileSize.maxSize
 						: false;
@@ -226,7 +227,7 @@ const claimSchema = object({
 			validateDocument.imageDocument.message,
 			(reimbursementInvoice) => {
 				if (reimbursementInvoice && !reimbursementInvoice.id) {
-					reimbursementInvoice
+					return reimbursementInvoice
 						? validateDocument.imageDocument.types.includes(
 								reimbursementInvoice.type
 						  )

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -43,11 +42,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.security.pwd.PwdToolkitUtilThreadLocal;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -102,12 +101,9 @@ public class UpdatePasswordAction implements Action {
 				}
 			}
 
-			String remoteUser = httpServletRequest.getRemoteUser();
+			User user = PortalUtil.getUser(httpServletRequest);
 
-			if (Validator.isNotNull(remoteUser)) {
-				User user = UserLocalServiceUtil.getUserById(
-					GetterUtil.getLong(remoteUser));
-
+			if ((user != null) && _isUserDefaultAdmin(user)) {
 				String reminderQueryAnswer = user.getReminderQueryAnswer();
 
 				if (Validator.isNotNull(reminderQueryAnswer) &&
@@ -286,11 +282,14 @@ public class UpdatePasswordAction implements Action {
 
 			PwdToolkitUtilThreadLocal.setValidate(currentValidate);
 
-			UserLocalServiceUtil.updatePassword(
+			User user = UserLocalServiceUtil.updatePassword(
 				userId, password1, password2, passwordReset);
 
-			if (Validator.isNull(PropsValues.DEFAULT_ADMIN_PASSWORD)) {
-				User user = UserLocalServiceUtil.getUser(userId);
+			String reminderQueryAnswer = user.getReminderQueryAnswer();
+
+			if (_isUserDefaultAdmin(user) &&
+				reminderQueryAnswer.equals(WorkflowConstants.LABEL_PENDING) &&
+				Validator.isNull(user.getReminderQueryQuestion())) {
 
 				user.setReminderQueryAnswer(null);
 
@@ -333,6 +332,19 @@ public class UpdatePasswordAction implements Action {
 		AuthenticatedSessionManagerUtil.login(
 			httpServletRequest, httpServletResponse, login, password1, false,
 			null);
+	}
+
+	private boolean _isUserDefaultAdmin(User user) {
+		User defaultAdminUser = DefaultAdminUtil.fetchDefaultAdmin(
+			user.getCompanyId());
+
+		if ((defaultAdminUser != null) &&
+			(defaultAdminUser.getUserId() == user.getUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -470,9 +470,8 @@ public class FileEntryContentDashboardItemTest {
 			}
 		}
 
-		if (extensionSpecificInformation == null) {
-			throw new AssertionError("extension not found");
-		}
+		Assert.assertNotNull(
+			"extension not found", extensionSpecificInformation);
 
 		Assert.assertEquals("jpg", extensionSpecificInformation.getValue());
 
@@ -489,9 +488,7 @@ public class FileEntryContentDashboardItemTest {
 			}
 		}
 
-		if (sizeSpecificInformation == null) {
-			throw new AssertionError("size not found");
-		}
+		Assert.assertNotNull("size not found", sizeSpecificInformation);
 
 		Assert.assertEquals("0 B", sizeSpecificInformation.getValue());
 
@@ -516,9 +513,8 @@ public class FileEntryContentDashboardItemTest {
 			}
 		}
 
-		if (webDAVSpecificInformation == null) {
-			throw new AssertionError("web-dav-url not found");
-		}
+		Assert.assertNotNull(
+			"web-dav-url not found", webDAVSpecificInformation);
 
 		String url = String.valueOf(webDAVSpecificInformation.getValue());
 

@@ -55,6 +55,11 @@
 	<td>//p[contains(.,'There are no matching results.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STATUS_IN_FILTER</td>
+	<td>//label[normalize-space()='${key_label}']//following::span[contains(text(),'${key_status}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

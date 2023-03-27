@@ -300,6 +300,86 @@
 	},
 	{
 		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifePolicy$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifePolicy$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeClaim$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeClaim$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",

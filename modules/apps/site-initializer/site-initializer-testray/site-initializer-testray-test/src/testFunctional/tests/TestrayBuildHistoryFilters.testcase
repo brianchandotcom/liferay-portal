@@ -56,17 +56,17 @@ definition {
 				productVersion = "7.0",
 				projectName = ${projectName});
 
-            JSONTestray.addProductVersion(
+			JSONTestray.addProductVersion(
 				productVersion = "1.2",
 				projectName = ${projectName});
 
-            JSONTestray.addBuild(
+			JSONTestray.addBuild(
 				buildName = "Build 1",
 				productVersion = "7.0",
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-            JSONTestray.addBuild(
+			JSONTestray.addBuild(
 				buildName = "Build 2",
 				productVersion = "1.2",
 				projectName = ${projectName},
@@ -93,15 +93,15 @@ definition {
 			object = "productversions",
 			objectName = ${productVersion});
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "routines",
 			objectName = ${routineName});
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "teams",
 			objectName = ${teamName});
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
 
@@ -118,11 +118,39 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by build name"
+	@priority = 5
+	test AdminCanFilterBuildHistoryByBuildName {
+		task ("Given that the user has two builds different in the table") {
+			Testray.assertItemName(key_name = "Build 1");
+
+			Testray.assertItemName(key_name = "Build 2");
+		}
+
+		task ("When the user select the build 2 in the filter") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "Build 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only build 2 in the table") {
+			Testray.assertItemName(key_name = "Build 2");
+		}
+
+		task ("And do not see the build 1 in the table") {
+			Testray.assertItemNotPresent(key_name = "Build 1");
+		}
+	}
+
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by product version"
 	@priority = 5
 	test AdminCanFilterBuildHistoryByProductVersion {
-        task ("Given that the user has two builds with different versions in the table") {
-            Testray.assertItemName(key_name = "7.0");
+		task ("Given that the user has two builds with different versions in the table") {
+			Testray.assertItemName(key_name = "7.0");
 
 			Testray.assertItemName(key_name = "1.2");
 		}
@@ -139,53 +167,25 @@ definition {
 		}
 
 		task ("Then the user gets only products with version 7.0 in the table") {
-            Testray.assertItemName(key_name = "7.0");
-        }
+			Testray.assertItemName(key_name = "7.0");
+		}
 
-        task ("And do not get the products with other versions in the table") {
+		task ("And do not get the products with other versions in the table") {
 			Testray.assertItemNotPresent(key_name = "1.2");
 		}
 	}
 
-	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by build name"
-	@priority = 5
-	test AdminCanFilterBuildHistoryByBuildName {
-		task ("Given that the user has two builds different in the table") {
-            Testray.assertItemName(key_name = "Build 1");
-
-			Testray.assertItemName(key_name = "Build 2");
-		}
-
-		task ("When the user select the build 2 in the filter") {
-			TestrayFilter.clickFilter();
-
-			Type(
-                locator1 = "TestrayManage#NEW_OPTION_NAME",
-                value1 = "Build 2");
-
-			Button.click(button = "Apply");
-		}
-
-		task ("Then the user see only build 2 in the table") {
-            Testray.assertItemName(key_name = "Build 2");
-        }
-
-        task ("And do not see the build 1 in the table") {
-			Testray.assertItemNotPresent(key_name = "Build 1");
-		}
-	}
-
-    @description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history using multiple filtering options"
+	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history using multiple filtering options"
 	@priority = 5
 	test AdminCanFilterBuildHistoryWithMultipleOptions {
 		task ("Given that the user has two builds different in the table") {
-            Testray.assertItemName(key_name = "Build 1");
+			Testray.assertItemName(key_name = "Build 1");
 
 			Testray.assertItemName(key_name = "Build 2");
 		}
 
 		task ("When the user select multiple options in the filter") {
-            TestrayFilter.clickFilter();
+			TestrayFilter.clickFilter();
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -193,30 +193,30 @@ definition {
 				value1 = "7.0");
 
 			Type(
-                locator1 = "TestrayManage#NEW_OPTION_NAME",
-                value1 = "Build 1");
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "Build 1");
 
 			Button.click(button = "Apply");
 		}
 
 		task ("Then the user see only build 1 and version 7.0 in the table") {
-            Testray.assertItemName(key_name = "Build 1");
+			Testray.assertItemName(key_name = "Build 1");
 
-            Testray.assertItemName(key_name = "7.0");
-        }
+			Testray.assertItemName(key_name = "7.0");
+		}
 
-        task ("And do not see the build 2 and version 1.2 in the table") {
+		task ("And do not see the build 2 and version 1.2 in the table") {
 			Testray.assertItemNotPresent(key_name = "Build 2");
 
-            Testray.assertItemNotPresent(key_name = "1.2");
+			Testray.assertItemNotPresent(key_name = "1.2");
 		}
 	}
 
-    @description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should not see build history that don't exist when I try filtering for them"
+	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should not see build history that don't exist when I try filtering for them"
 	@priority = 4
 	test AdminCanFilterForNonexistantBuildHistory {
-        task ("Given that the user has two builds different in the table") {
-            Testray.assertItemName(key_name = "Build 1");
+		task ("Given that the user has two builds different in the table") {
+			Testray.assertItemName(key_name = "Build 1");
 
 			Testray.assertItemName(key_name = "Build 2");
 		}
@@ -237,7 +237,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 5
 	test AdminCanFilterOptionsToFilter {
 		task ("When the user searches for a field called product version") {

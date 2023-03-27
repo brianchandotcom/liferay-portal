@@ -44,13 +44,13 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 	}
 
 	protected List<T> parseMany(Object object) {
-		List<T> objects;
+		List<T> objects = null;
 
-		if (object instanceof Object[]) {
-			objects = (List<T>)Arrays.asList((Object[])object);
-		}
-		else if (object instanceof List) {
+		if (object instanceof List) {
 			objects = (List<T>)object;
+		}
+		else if (object instanceof Object[]) {
+			objects = (List<T>)Arrays.asList((Object[])object);
 		}
 		else {
 			throw new BadRequestException(

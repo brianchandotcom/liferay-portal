@@ -407,4 +407,63 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterCaseResultsHistoryWithMultipleOptions {
+		task ("Given that the user complete a test with passed test fix") {
+            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-123456",
+				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user filter a case result with multiple options") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_label = "Issues",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "LPS-123456");
+
+			TestrayFilter.multiSelect(
+				header = "Product Version Name",
+				label = "Product Version Name",
+				listMultiSelect = "7.0");
+
+			Click.clickAtNotVisible(
+				locator1 = "TestrayFilter#STATUS_IN_FILTER",
+				key_label = "Status",
+				key_status = "Test Fix");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Routines",
+				value1 = "Routine 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see the multiple options in the table") {
+			Testray.assertItemName(key_name = "Routine 1");
+
+			Testray.assertItemName(key_name = "LPS-123456");
+
+			Testray.assertItemName(key_name = "Test Fix");
+
+			Testray.assertItemName(key_name = "Routine 1");
+
+			Testray.assertItemNotPresent(key_name = "Routine 2");
+		}
+	}
+
 }

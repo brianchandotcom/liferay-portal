@@ -301,7 +301,6 @@ const PatternFieldOld = ({
 	);
 };
 
-
 const PatternField = ({...props}) => {
 	return (
 		<>

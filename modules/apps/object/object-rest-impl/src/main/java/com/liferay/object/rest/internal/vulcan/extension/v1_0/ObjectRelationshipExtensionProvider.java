@@ -116,8 +116,6 @@ public class ObjectRelationshipExtensionProvider
 		Map<String, PropertyDefinition> extendedPropertyDefinitions =
 			new HashMap<>();
 
-		PropertyValidator propertyValidator;
-
 		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
@@ -144,6 +142,8 @@ public class ObjectRelationshipExtensionProvider
 
 				continue;
 			}
+
+			PropertyValidator propertyValidator = null;
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
 				propertyValidator = new DefaultPropertyValidator();
@@ -181,17 +181,17 @@ public class ObjectRelationshipExtensionProvider
 
 		if (objectDefinition == null) {
 			throw new IllegalStateException(
-				"No object definition exists with className=" + className);
+				"No object definition exists with class name " + className);
 		}
 
-		for (Map.Entry<String, Serializable> extendedProperty :
+		for (Map.Entry<String, Serializable> entry :
 				extendedProperties.entrySet()) {
 
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
 					getObjectRelationshipByObjectDefinitionId(
 						objectDefinition.getObjectDefinitionId(),
-						extendedProperty.getKey());
+						entry.getKey());
 
 			ObjectDefinition relatedObjectDefinition =
 				_getRelatedObjectDefinition(
@@ -209,7 +209,7 @@ public class ObjectRelationshipExtensionProvider
 
 			List<ObjectEntry> nestedObjectEntries =
 				objectRelationshipElementsParser.parse(
-					objectRelationship, extendedProperty.getValue());
+					objectRelationship, entry.getValue());
 
 			for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
 				nestedObjectEntry = objectEntryManager.addOrUpdateObjectEntry(
@@ -303,17 +303,14 @@ public class ObjectRelationshipExtensionProvider
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		long relatedObjectDefinitionId;
+		long relatedObjectDefinitionId =
+			objectRelationship.getObjectDefinitionId1();
 
-		if (objectRelationship.getObjectDefinitionId1() ==
-				objectDefinition.getObjectDefinitionId()) {
+		if (objectDefinition.getObjectDefinitionId() ==
+				objectRelationship.getObjectDefinitionId1()) {
 
 			relatedObjectDefinitionId =
 				objectRelationship.getObjectDefinitionId2();
-		}
-		else {
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId1();
 		}
 
 		return _objectDefinitionLocalService.getObjectDefinition(

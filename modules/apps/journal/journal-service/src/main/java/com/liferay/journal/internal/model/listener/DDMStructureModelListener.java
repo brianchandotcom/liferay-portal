@@ -73,12 +73,12 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property ddmStructureKeyProperty = PropertyFactoryUtil.forName(
-					"DDMStructureKey");
+				Property ddmStructureIdProperty = PropertyFactoryUtil.forName(
+					"DDMStructureId");
 
 				dynamicQuery.add(
-					ddmStructureKeyProperty.eq(
-						originalDDMStructure.getStructureKey()));
+					ddmStructureIdProperty.eq(
+						originalDDMStructure.getStructureId()));
 			});
 		actionableDynamicQuery.setGroupId(originalDDMStructure.getGroupId());
 		actionableDynamicQuery.setPerformActionMethod(

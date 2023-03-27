@@ -227,7 +227,7 @@ public class ObjectFieldLocalServiceImpl
 				indexedLanguageId, labelMap, name, required, state);
 		}
 
-		_validateLabel(labelMap);
+		_validateLabel(labelMap, existingObjectField);
 
 		existingObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
@@ -591,7 +591,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
-		_validateLabel(labelMap);
+		_validateLabel(labelMap, newObjectField);
 		_validateLocalized(
 			businessType, localized, oldObjectField.getObjectDefinition());
 
@@ -717,7 +717,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
-		_validateLabel(labelMap);
+		_validateLabel(labelMap, null);
 		_validateLocalized(businessType, localized, objectDefinition);
 		_validateName(0, objectDefinition, name, system);
 		_validateState(required, state);
@@ -1055,10 +1055,30 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
-	private void _validateLabel(Map<Locale, String> labelMap)
+	private void _validateLabel(
+			Map<Locale, String> labelMap, ObjectField objectField)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (objectField == null) {
+			_validateLabelLocale(labelMap, locale);
+		}
+		else {
+			Locale objectFieldDefaultLocale = LocaleUtil.fromLanguageId(
+				objectField.getDefaultLanguageId());
+
+			_validateLabelLocale(labelMap, objectFieldDefaultLocale);
+
+			if (Validator.isNull(labelMap.get(locale))) {
+				labelMap.put(locale, labelMap.get(objectFieldDefaultLocale));
+			}
+		}
+	}
+
+	private void _validateLabelLocale(
+			Map<Locale, String> labelMap, Locale locale)
+		throws PortalException {
 
 		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
 			throw new ObjectFieldLabelException(

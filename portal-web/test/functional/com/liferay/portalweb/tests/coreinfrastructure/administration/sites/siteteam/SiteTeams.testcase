@@ -630,6 +630,7 @@ definition {
 	@priority = 4
 	test SiteTeamsXSS {
 		property testray.component.names = "Sites Administration,XSS";
+		property test.name.skip.portal.instance = "SiteTeams#SiteTeamsXSS";
 
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");

@@ -2483,6 +2483,7 @@ definition {
 	@priority = 4
 	test CannotAddUserWithBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "Account#CannotAddUserWithBlockedEmailDomain";
 
 		task ("Given an account is created and is configured to have blocked domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2541,6 +2542,7 @@ definition {
 	@priority = 3
 	test CannotAddUserWithInvalidEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "Account#CannotAddUserWithInvalidEmailDomain";
 
 		task ("Given an account is created and is configured to have valid email domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2728,6 +2730,7 @@ definition {
 	@priority = 4
 	test CanRemoveDomainFromBlacklist {
 		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
+		property test.name.skip.portal.instance = "Account#CanRemoveDomainFromBlacklist";
 
 		for (var settingValue : list "yahoo.com,blocked.com,google.com") {
 			SystemSettings.viewTextareaPartialText(

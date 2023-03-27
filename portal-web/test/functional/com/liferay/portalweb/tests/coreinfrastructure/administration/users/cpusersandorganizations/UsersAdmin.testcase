@@ -1655,6 +1655,7 @@ definition {
 
 	@priority = 4
 	test ImpersonatingAdministratorandOwner {
+		property test.name.skip.portal.instance = "UsersAdmin#ImpersonatingAdministratorandOwner";
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONRole.addRegularRole(roleTitle = "Impersonating Role Name");
@@ -2365,6 +2366,8 @@ definition {
 
 	@priority = 4
 	test ValidateRegExPasswordPolicyCP {
+		property test.name.skip.portal.instance = "UsersAdmin#ValidateRegExPasswordPolicyCP";
+
 		JSONUser.addUser(
 			userEmailAddress = "test1@liferay.com",
 			userFirstName = "test1",

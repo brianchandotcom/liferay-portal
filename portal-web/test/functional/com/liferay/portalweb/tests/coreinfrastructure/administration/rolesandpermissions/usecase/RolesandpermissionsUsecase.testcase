@@ -237,6 +237,8 @@ definition {
 
 	@priority = 4
 	test EditTeamPermissions {
+		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#EditTeamPermissions";
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = 90,
@@ -1322,6 +1324,7 @@ definition {
 	@priority = 4
 	test ViewRegRolePermissionsDefaultView {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#ViewRegRolePermissionsDefaultView";
 
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",

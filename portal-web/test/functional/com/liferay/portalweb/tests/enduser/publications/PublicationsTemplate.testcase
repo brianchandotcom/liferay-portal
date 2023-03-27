@@ -72,6 +72,10 @@ definition {
 
 		PublicationsTemplate.viewPublicationTemplate(templateName = "Template Name");
 
+		PublicationsTemplate.viewTemplateInvitedUser(
+			templateName = "Template Name",
+			usersAndRoles = "userfn1/Editor,userfn2/Viewer");
+
 		Publications.createNewPublicationWithTemplate(
 			gotoPublicationsAdmin = "true",
 			publicationDescription = "Publications Description test",

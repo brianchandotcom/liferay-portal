@@ -1066,63 +1066,68 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			}
 		}
 
-		// Diagram
-
 		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());
 
-		if ((cpType != null) &&
-			CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
+		if (cpType != null) {
+
+			// Diagram
 
 			Diagram diagram = product.getDiagram();
-
-			if (diagram != null) {
-				DiagramUtil.addOrUpdateCSDiagramSetting(
-					contextCompany.getCompanyId(),
-					_cpAttachmentFileEntryService,
-					cpDefinition.getCPDefinitionId(),
-					_cpDefinitionOptionRelService,
-					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_csDiagramSettingService, diagram,
-					cpDefinition.getGroupId(),
-					contextAcceptLanguage.getPreferredLocale(),
-					_serviceContextHelper, _uniqueFileNameProvider);
-			}
-
 			MappedProduct[] mappedProducts = product.getMappedProducts();
-
-			if (mappedProducts != null) {
-				_csDiagramEntryService.deleteCSDiagramEntries(
-					cpDefinition.getCPDefinitionId());
-
-				for (MappedProduct mappedProduct : mappedProducts) {
-					MappedProductUtil.addOrUpdateCSDiagramEntry(
-						contextCompany.getCompanyId(),
-						cpDefinition.getCPDefinitionId(), _cpDefinitionService,
-						_cpInstanceService, _csDiagramEntryService,
-						cpDefinition.getGroupId(),
-						contextAcceptLanguage.getPreferredLocale(),
-						mappedProduct, _serviceContextHelper);
-				}
-			}
-
 			Pin[] pins = product.getPins();
 
-			if (pins != null) {
-				_csDiagramPinService.deleteCSDiagramPins(
-					cpDefinition.getCPDefinitionId());
+			if ((diagram != null) || (mappedProducts != null) ||
+				(pins != null)) {
 
-				for (Pin pin : pins) {
-					PinUtil.addOrUpdateCSDiagramPin(
-						cpDefinition.getCPDefinitionId(), _csDiagramPinService,
-						pin);
+				if (CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
+					if (diagram != null) {
+						DiagramUtil.addOrUpdateCSDiagramSetting(
+							contextCompany.getCompanyId(),
+							_cpAttachmentFileEntryService,
+							cpDefinition.getCPDefinitionId(),
+							_cpDefinitionOptionRelService,
+							_cpDefinitionOptionValueRelService,
+							_cpOptionService, _csDiagramSettingService, diagram,
+							cpDefinition.getGroupId(),
+							contextAcceptLanguage.getPreferredLocale(),
+							_serviceContextHelper, _uniqueFileNameProvider);
+					}
+
+					if (mappedProducts != null) {
+						_csDiagramEntryService.deleteCSDiagramEntries(
+							cpDefinition.getCPDefinitionId());
+
+						for (MappedProduct mappedProduct : mappedProducts) {
+							MappedProductUtil.addOrUpdateCSDiagramEntry(
+								contextCompany.getCompanyId(),
+								cpDefinition.getCPDefinitionId(),
+								_cpDefinitionService, _cpInstanceService,
+								_csDiagramEntryService,
+								cpDefinition.getGroupId(),
+								contextAcceptLanguage.getPreferredLocale(),
+								mappedProduct, _serviceContextHelper);
+						}
+					}
+
+					if (pins != null) {
+						_csDiagramPinService.deleteCSDiagramPins(
+							cpDefinition.getCPDefinitionId());
+
+						for (Pin pin : pins) {
+							PinUtil.addOrUpdateCSDiagramPin(
+								cpDefinition.getCPDefinitionId(),
+								_csDiagramPinService, pin);
+						}
+					}
+				}
+				else {
+					throw new CPDefinitionProductTypeNameException();
 				}
 			}
-		}
 
-		// Virtual
+			// Virtual
 
-		if (cpType != null) {
 			ProductVirtualSettings productVirtualSettings =
 				product.getVirtualSettings();
 

@@ -439,7 +439,7 @@ public class BreadcrumbUtil {
 			Group parentGroup = group.getParentGroup();
 
 			if (parentGroup != null) {
-				return LayoutSetLocalServiceUtil.getLayoutSet(
+				return LayoutSetLocalServiceUtil.fetchLayoutSet(
 					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
 			}
 		}
@@ -455,7 +455,7 @@ public class BreadcrumbUtil {
 
 				Group parentGroup = organization.getGroup();
 
-				return LayoutSetLocalServiceUtil.getLayoutSet(
+				return LayoutSetLocalServiceUtil.fetchLayoutSet(
 					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
 			}
 		}

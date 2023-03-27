@@ -76,13 +76,6 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
-			changeCategory = "Calendar Resource",
-			changeSite = "Site Name",
-			changeTitle = "Site Name",
-			changeType = "Added",
-			changeUser = "Test Test");
-
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");

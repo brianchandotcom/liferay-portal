@@ -17,6 +17,8 @@ package com.liferay.oauth2.provider.redirect;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -42,14 +44,28 @@ public class OAuth2RedirectURIInterpolator {
 
 		String protocol = Http.HTTP;
 
-		boolean secure = portal.isSecure(httpServletRequest);
+		boolean secure = false;
+
+		if (httpServletRequest != null) {
+			secure = portal.isSecure(httpServletRequest);
+		}
+		else if (Http.HTTPS.equals(
+					PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
+				 Http.HTTPS.equals(
+					 PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
+
+			secure = true;
+		}
 
 		if (secure) {
 			protocol = Http.HTTPS;
 		}
 
-		String portWithColon =
-			":" + portal.getForwardedPort(httpServletRequest);
+		String portWithColon = ":" + portal.getPortalLocalPort(secure);
+
+		if (httpServletRequest != null) {
+			portWithColon = ":" + portal.getForwardedPort(httpServletRequest);
+		}
 
 		if (Objects.equals(portWithColon, ":80")) {
 			portWithColon = StringPool.BLANK;

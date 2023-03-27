@@ -33,6 +33,12 @@
 					"type": "checkbox"
 				},
 				{
+					"defaultValue": true,
+					"label": "Partner Manager",
+					"name": "partnerManager",
+					"type": "checkbox"
+				},
+				{
 					"defaultValue": false,
 					"label": "User",
 					"name": "user",

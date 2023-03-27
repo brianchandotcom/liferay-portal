@@ -523,7 +523,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "edit-button"
+																		"key": "edit-button-mdf-request"
 																	},
 																	"fragmentConfig": {
 																		"channelAccountManager": true,
@@ -531,6 +531,7 @@
 																		"channelGeneralManager": true,
 																		"channelGlobalMarketingManager": true,
 																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
 																		"user": false
 																	},
 																	"fragmentFields": [

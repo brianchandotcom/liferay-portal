@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -228,8 +230,19 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			httpServletRequest, "segmentsExperienceId", -1);
 
 		if (segmentsExperienceId != -1) {
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, "segmentsExperienceId", segmentsExperienceId);
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperienceId);
+
+			if ((segmentsExperience != null) &&
+				(_portal.getClassNameId(Layout.class.getName()) ==
+					segmentsExperience.getClassNameId()) &&
+				((layout.getPlid() == segmentsExperience.getClassPK()) ||
+				 (layout.getClassPK() == segmentsExperience.getClassPK()))) {
+
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "segmentsExperienceId", segmentsExperienceId);
+			}
 		}
 
 		return redirect;
@@ -258,6 +271,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private Sites _sites;

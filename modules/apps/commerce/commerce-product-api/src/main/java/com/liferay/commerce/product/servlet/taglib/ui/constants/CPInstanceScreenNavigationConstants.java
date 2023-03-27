@@ -21,6 +21,8 @@ public class CPInstanceScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
+	public static final String CATEGORY_KEY_INVENTORY = "inventory";
+
 	public static final String CATEGORY_KEY_SUBSCRIPTION_OVERRIDE =
 		"subscription-override";
 

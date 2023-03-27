@@ -37,7 +37,7 @@ public class CPInstanceWarehouseItemsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "inventory";
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_INVENTORY;
 	}
 
 	@Override

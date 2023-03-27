@@ -78,6 +78,18 @@ export function ManagementToolbar({
 		onClose: () => setVisibleModal(false),
 	});
 
+	const [disabled, setDisabled] = useState(!hasPublishPermission);
+
+	const onPublish = () => {
+		onSubmit(false);
+
+		setDisabled(true);
+
+		setTimeout(() => {
+			setDisabled(false);
+		}, 1000);
+	};
+
 	return (
 		<>
 			<ClayManagementToolbar
@@ -164,10 +176,10 @@ export function ManagementToolbar({
 
 							{isApproved !== undefined && !isApproved && (
 								<ClayButton
-									disabled={!hasPublishPermission}
+									disabled={!hasUpdatePermission || disabled}
 									id={`${portletNamespace}publish`}
 									name="publish"
-									onClick={() => onSubmit(false)}
+									onClick={() => onPublish()}
 								>
 									{Liferay.Language.get('publish')}
 								</ClayButton>

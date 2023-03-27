@@ -9,29 +9,57 @@
  * distribution rights of the Software.
  */
 
+import mdfClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import LiferayFile from '../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFClaim from '../../../common/services/liferay/object/mdf-claim/createMDFClaim';
+import updateMDFClaim from '../../../common/services/liferay/object/mdf-claim/updateMDFClaim';
+import updateMDFClaimSF from '../../../common/services/liferay/object/mdf-claim/updateMDFClaimSF';
 
 export default async function createMDFClaimProxyAPI(
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO
 ) {
-	const dtoMDFClaimSFResponse = await createMDFClaim(
-		ResourceName.MDF_CLAIM_SALESFORCE,
-		mdfClaim,
-		mdfRequest
-	);
+	let dtoMDFClaimSFResponse: mdfClaimDTO | undefined = undefined;
 
-	if (dtoMDFClaimSFResponse.externalReferenceCode) {
-		const dtoMDFClaimResponse = await createMDFClaim(
-			ResourceName.MDF_CLAIM_DXP,
+	if (mdfClaim.externalReferenceCodeSF) {
+		dtoMDFClaimSFResponse = await updateMDFClaimSF(
+			ResourceName.MDF_CLAIM_SALESFORCE,
 			mdfClaim,
 			mdfRequest,
-			dtoMDFClaimSFResponse.externalReferenceCode
+			mdfClaim.externalReferenceCodeSF
 		);
-
-		return dtoMDFClaimResponse;
+	} else {
+		dtoMDFClaimSFResponse = await createMDFClaim(
+			ResourceName.MDF_CLAIM_SALESFORCE,
+			mdfClaim,
+			mdfRequest
+		);
 	}
+
+	let dtoMDFClaimResponse: mdfClaimDTO | undefined = undefined;
+
+	if (dtoMDFClaimSFResponse.externalReferenceCode) {
+		if (mdfClaim.id) {
+			dtoMDFClaimResponse = await updateMDFClaim(
+				ResourceName.MDF_CLAIM_DXP,
+				mdfClaim,
+				mdfRequest,
+				mdfClaim.id,
+				mdfClaim.reimbursementInvoice?.id as LiferayFile & number,
+				dtoMDFClaimSFResponse.externalReferenceCode
+			);
+		} else {
+			dtoMDFClaimResponse = await createMDFClaim(
+				ResourceName.MDF_CLAIM_DXP,
+				mdfClaim,
+				mdfRequest,
+				dtoMDFClaimSFResponse.externalReferenceCode
+			);
+		}
+	}
+
+	return dtoMDFClaimResponse;
 }

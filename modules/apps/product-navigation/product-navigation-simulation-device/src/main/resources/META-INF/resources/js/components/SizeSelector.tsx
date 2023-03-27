@@ -67,11 +67,11 @@ export default function SizeSelector({
 	return (
 		<ClayLayout.Container>
 			<ClayLayout.Row className="size-selector">
-				{sizesList.map((size) => (
+				{sizesList.map((size, index) => (
 					<SizeButton
 						activeSize={activeSize}
 						customSizeSelectorId={customSizeSelectorId}
-						key={size.id}
+						key={index}
 						onRotate={onRotate}
 						setActiveSize={setActiveSize}
 						size={size}

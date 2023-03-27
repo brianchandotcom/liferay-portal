@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
@@ -189,8 +190,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new SystemObjectEntryItemSelectorView(
-					_itemSelectorViewDescriptorRenderer, objectDefinition,
-					_objectFieldLocalService,
+					_itemSelector, _itemSelectorViewDescriptorRenderer,
+					objectDefinition, _objectFieldLocalService,
 					_objectRelatedModelsProviderRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
@@ -261,6 +262,9 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>

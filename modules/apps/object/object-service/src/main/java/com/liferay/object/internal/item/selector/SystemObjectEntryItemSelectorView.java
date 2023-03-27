@@ -15,12 +15,14 @@
 package com.liferay.object.internal.item.selector;
 
 import com.liferay.info.item.selector.InfoItemSelectorView;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -67,6 +70,7 @@ public class SystemObjectEntryItemSelectorView
 			   ItemSelectorView<InfoItemItemSelectorCriterion> {
 
 	public SystemObjectEntryItemSelectorView(
+		ItemSelector itemSelector,
 		ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 			itemSelectorViewDescriptorRenderer,
 		ObjectDefinition objectDefinition,
@@ -74,6 +78,7 @@ public class SystemObjectEntryItemSelectorView
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		Portal portal) {
 
+		_itemSelector = itemSelector;
 		_itemSelectorViewDescriptorRenderer =
 			itemSelectorViewDescriptorRenderer;
 		_objectDefinition = objectDefinition;
@@ -106,6 +111,25 @@ public class SystemObjectEntryItemSelectorView
 	}
 
 	@Override
+	public boolean isVisible(
+		InfoItemItemSelectorCriterion itemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
+		if (StringUtil.equals(
+				_itemSelector.getItemSelectedEventName(
+					themeDisplay.getURLCurrent()),
+				StringBundler.concat(
+					"_",
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					"_selectInfoItem"))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
@@ -128,6 +152,7 @@ public class SystemObjectEntryItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new InfoItemItemSelectorReturnType());
 
+	private final ItemSelector _itemSelector;
 	private final ItemSelectorViewDescriptorRenderer
 		<InfoItemItemSelectorCriterion> _itemSelectorViewDescriptorRenderer;
 	private final ObjectDefinition _objectDefinition;

@@ -23,9 +23,9 @@ definition {
 		var statusKey = StringUtil.lowerCase(${mdfStatus});
 
 		JSONPRMAPI.changeMDFStatus(
+			mdfStatus = ${mdfStatus},
 			requestId = ${requestId},
-			mdfStatus = "${mdfStatus}",
-			statusKey = "${statusKey}");
+			statusKey = ${statusKey});
 	}
 
 	macro createMDFRequest {

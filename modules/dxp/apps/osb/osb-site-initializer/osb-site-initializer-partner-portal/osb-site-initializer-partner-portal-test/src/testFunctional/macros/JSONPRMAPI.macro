@@ -281,7 +281,7 @@ definition {
 						"key" : "${statusKey}",
 						"name" : "${mdfStatus}"
 					}
-			}'
+				}'
 		''';
 
 		var response = JSONCurlUtil.patch(${curl});

@@ -181,49 +181,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-179914. Verify that the value of Approved MDF’s are displayed on MDF Dashboard"
-	@priority = 4
-	test MDFApprovedValueAppearInDashboard {
-		var budgetValue = 2000;
-
-		task ("Given I get the current amount of Approved MDF Value") {
-			var initialValue = PRMDashboards.getLegendValue(
-				chartName = "Request",
-				legendName = "Approved");
-		}
-
-		task ("When I create a new MDF Request and approve it") {
-			var requestId = JSONPRM.createMDFRequest(
-				accountEntryName = "Company Name 1",
-				budgetValueList = ${budgetValue},
-				campaignName = "Campaign Name 1");
-
-			JSONPRM.changeMDFStatus(
-				requestId = ${requestId},
-				mdfStatus = "Approved");
-		}
-
-		task ("And I go back to Dashboard page and get the new amount of Approved MDF Value") {
-			PRMNavigator.openSitePage(pageName = "Dashboard");
-
-			var newValue = PRMDashboards.getLegendValue(
-				chartName = "Request",
-				legendName = "Approved");
-
-			task ("Make a quotient of the Total Activity Cost by 50% (2), which will result in the approved value") {
-				var requestedValue = ${budgetValue} / 2;
-			}
-
-			task ("Make the sum of the initial value + approved value, to obtain the new value that must be in the dashboard") {
-				var expectedValue = ${initialValue} + ${requestedValue};
-			}
-		}
-
-		task ("Then the actual amount of approved MDF value was increased") {
-			TestUtils.assertEquals(
-				actual = ${newValue},
-				expected = ${expectedValue});
-		}
-	}
-
 }

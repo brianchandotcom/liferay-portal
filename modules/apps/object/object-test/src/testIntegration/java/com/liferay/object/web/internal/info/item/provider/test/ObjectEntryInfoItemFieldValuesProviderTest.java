@@ -30,13 +30,11 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -49,7 +47,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -123,15 +120,14 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				TestPropsValues.getUserId(),
 				_parentObjectDefinition.getObjectDefinitionId());
 
-		_objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_parentObjectDefinition.getObjectDefinitionId(),
-				_childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_parentObjectDefinition.getObjectDefinitionId(),
+			_childObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@After
@@ -171,9 +167,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 					TestPropsValues.getUserId(), _group.getGroupId(),
 					_childObjectDefinition.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
-						StringBundler.concat(
-							"r_", _objectRelationship.getName(), "_",
-							_parentObjectDefinition.getPKObjectFieldName()),
+						"r_oneToManyRelationshipName_" +
+							_parentObjectDefinition.getPKObjectFieldName(),
 						parentObjectEntry.getObjectEntryId()
 					).put(
 						"attachmentObjectFieldName", fileEntry.getFileEntryId()
@@ -252,6 +247,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		return objectFieldSetting;
 	}
 
+	@DeleteAfterTestRun
 	private ObjectDefinition _childObjectDefinition;
 
 	@Inject
@@ -278,12 +274,10 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
-	@DeleteAfterTestRun
-	private ObjectRelationship _objectRelationship;
-
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
+	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;
 
 }

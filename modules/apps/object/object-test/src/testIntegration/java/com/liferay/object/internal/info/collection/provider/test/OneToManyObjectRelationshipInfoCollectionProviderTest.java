@@ -26,7 +26,6 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -111,15 +109,14 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 				TestPropsValues.getUserId(),
 				_parentObjectDefinition.getObjectDefinitionId());
 
-		_objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_parentObjectDefinition.getObjectDefinitionId(),
-				_childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_parentObjectDefinition.getObjectDefinitionId(),
+			_childObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@After
@@ -144,11 +141,11 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		ObjectEntry childObjectEntry1 = _addChildObjectEntry(
 			_group, _childObjectDefinition, _parentObjectDefinition,
-			parentObjectEntry, _objectRelationship);
+			parentObjectEntry);
 
 		ObjectEntry childObjectEntry2 = _addChildObjectEntry(
 			_group, _childObjectDefinition, _parentObjectDefinition,
-			parentObjectEntry, _objectRelationship);
+			parentObjectEntry);
 
 		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -183,8 +180,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 	private ObjectEntry _addChildObjectEntry(
 			Group group, ObjectDefinition objectDefinition,
 			ObjectDefinition parentObjectDefinition,
-			ObjectEntry parentObjectEntry,
-			ObjectRelationship objectRelationship)
+			ObjectEntry parentObjectEntry)
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
@@ -193,9 +189,8 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			HashMapBuilder.<String, Serializable>put(
 				"childTextObjectFieldName", RandomTestUtil.randomString()
 			).put(
-				StringBundler.concat(
-					"r_", objectRelationship.getName(), "_",
-					parentObjectDefinition.getPKObjectFieldName()),
+				"r_oneToManyRelationshipName_" +
+					parentObjectDefinition.getPKObjectFieldName(),
 				parentObjectEntry.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
@@ -214,6 +209,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			Arrays.asList(objectField));
 	}
 
+	@DeleteAfterTestRun
 	private ObjectDefinition _childObjectDefinition;
 
 	@DeleteAfterTestRun
@@ -228,12 +224,10 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@DeleteAfterTestRun
-	private ObjectRelationship _objectRelationship;
-
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
+	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;
 
 }

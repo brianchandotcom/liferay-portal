@@ -58,9 +58,8 @@ export function ReviewAndSubmitAppPage({
 	const [cardInfos, setCardInfos] = useState<
 		{icon: string; link: string; title: string}[]
 	>([]);
-	const [reviewAndSubmitAppPageItems, setReviewAndSubmitAppPageItems] = useState<
-		ReviewAndSubmitAppPageUtilProps[]
-	>([]);
+	const [reviewAndSubmitAppPageItems, setReviewAndSubmitAppPageItems] =
+		useState<ReviewAndSubmitAppPageUtilProps[]>([]);
 
 	const buildZIPTitles = buildZIPFiles?.map(
 		(buildZIPFile) => buildZIPFile.fileName
@@ -73,34 +72,37 @@ export function ReviewAndSubmitAppPage({
 			});
 
 			const productCategories = {
-				section: "Categories",
+				section: 'Categories',
 				tags: productResponse.categories
-					.filter((category : any) => {
-						return category.vocabulary === 'marketplace-solution-category';
+					.filter((category: any) => {
+						return (
+							category.vocabulary ===
+							'marketplace-solution-category'
+						);
 					})
-					.map((category : any) => {
+					.map((category: any) => {
 						return category.name;
 					}),
 			};
 
 			const productTags = {
-				section: "Tags",
+				section: 'Tags',
 				tags: productResponse.categories
-					.filter((tag : any) => {
+					.filter((tag: any) => {
 						return tag.vocabulary === 'marketplace-solution-tags';
 					})
-					.map((tag : any) => {
+					.map((tag: any) => {
 						return tag.name;
 					}),
 			};
-			
+
 			const skuResponse = await getProductSKU({
 				appProductId,
 			});
 
 			dispatch({
 				payload: {
-					value: skuResponse.items[0]?.price === 0 ? "Free" : "Paid",
+					value: skuResponse.items[0]?.price === 0 ? 'Free' : 'Paid',
 				},
 				type: TYPES.UPDATE_APP_PRICE_MODEL,
 			});
@@ -118,15 +120,21 @@ export function ReviewAndSubmitAppPage({
 				type: TYPES.UPDATE_APP_LICENSE_PRICE,
 			});
 
-			const productSubscriptionConfigurationResponse = await getProductSubscriptionConfiguration({
-				appERC,
-			});
+			const productSubscriptionConfigurationResponse =
+				await getProductSubscriptionConfiguration({
+					appERC,
+				});
 
 			const licensing = {
-				description: productSubscriptionConfigurationResponse.subscriptionType ? 'License must be renewed annually.' : 'License never expires.',
+				description:
+					productSubscriptionConfigurationResponse.subscriptionType
+						? 'License must be renewed annually.'
+						: 'License never expires.',
 				icon: scheduleIcon,
 				section: 'Licensing',
-				title: productSubscriptionConfigurationResponse.subscriptionType ? 'Non-Perpetual License' : 'Perpetual License',
+				title: productSubscriptionConfigurationResponse.subscriptionType
+					? 'Non-Perpetual License'
+					: 'Perpetual License',
 			};
 
 			const storefront = {
@@ -137,19 +145,27 @@ export function ReviewAndSubmitAppPage({
 				description: notes,
 				section: 'Version',
 				title: 'Release Notes',
-				version: version,
+				version,
 			};
 
 			const supportHelp = {
 				section: 'Support & Help',
 			};
 
-			setReviewAndSubmitAppPageItems([productCategories, productTags, pricing, licensing, storefront, versioning, supportHelp]);
+			setReviewAndSubmitAppPageItems([
+				productCategories,
+				productTags,
+				pricing,
+				licensing,
+				storefront,
+				versioning,
+				supportHelp,
+			]);
 
 			const productSpecificationsResponse =
 				await getProductSpecifications({
 					appProductId,
-				})
+				});
 
 			// const productImages = await getProductImages({ appProductId });
 
@@ -294,84 +310,78 @@ export function ReviewAndSubmitAppPage({
 							sectionName="Description"
 						/>
 
-						{reviewAndSubmitAppPageItems.map(
-							(item, index) => {
-								const cardTitle = () => {
-									if (item.section === 'Pricing') {
-										return priceModel;
-									}
-									else if (item.section === 'Licensing') {
-										return item.title;
-									}
-									else if (item.section === 'Version') {
-										return item.title;
-									}
-								};
+						{reviewAndSubmitAppPageItems.map((item, index) => {
+							const cardTitle = () => {
+								if (item.section === 'Pricing') {
+									return priceModel;
+								}
+								else if (item.section === 'Licensing') {
+									return item.title;
+								}
+								else if (item.section === 'Version') {
+									return item.title;
+								}
+							};
 
-								const cardDescription = () => {
-									if (item.section === 'Pricing') {
-										if (priceModel === 'free') {
-											return 'The app is offered in the Marketplace with no charge.';
-										}
-										else {
-											return 'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.';
-										}
+							const cardDescription = () => {
+								if (item.section === 'Pricing') {
+									if (priceModel === 'free') {
+										return 'The app is offered in the Marketplace with no charge.';
 									}
 									else {
-										return item.description;
+										return 'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.';
 									}
-								};
+								}
+								else {
+									return item.description;
+								}
+							};
 
-								const description = () => {
-									if (item.section === 'Version') {
-										return notes;
-									}
-									else {
-										return item.description;
-									}
-								};
+							const description = () => {
+								if (item.section === 'Version') {
+									return notes;
+								}
+								else {
+									return item.description;
+								}
+							};
 
-								return (
-									<CardSection
-										build={false}
-										buildZIPTitles={buildZIPTitles}
-										cardDescription={cardDescription()}
-										cardInfos={cardInfos}
-										cardLink={
-											item.section === 'Support & Help'
-										}
-										cardTags={item.cardTags}
-										cardTitle={cardTitle()}
-										cardView={
-											item.section === 'Pricing' ||
-											item.section === 'Licensing'
-										}
-										description={description()}
-										enableEdit={!readonly}
-										files={appStorefrontImages}
-										icon={item.icon}
-										key={index}
-										price={appLicensePrice}
-										required
-										sectionName={item.section}
-										storefront={
-											item.section === 'Storefront'
-										}
-										tags={item.tags}
-										title={
-											item.section === 'Build'
-												? item.fileName
-												: item.title
-										}
-										version={
-											item.section === 'Version'
-												? version
-												: null
-										}
-									/>
-								);
-							}
-						)}
+							return (
+								<CardSection
+									build={false}
+									buildZIPTitles={buildZIPTitles}
+									cardDescription={cardDescription()}
+									cardInfos={cardInfos}
+									cardLink={item.section === 'Support & Help'}
+									cardTags={item.cardTags}
+									cardTitle={cardTitle()}
+									cardView={
+										item.section === 'Pricing' ||
+										item.section === 'Licensing'
+									}
+									description={description()}
+									enableEdit={!readonly}
+									files={appStorefrontImages}
+									icon={item.icon}
+									key={index}
+									price={appLicensePrice}
+									required
+									sectionName={item.section}
+									storefront={item.section === 'Storefront'}
+									tags={item.tags}
+									title={
+										item.section === 'Build'
+											? item.fileName
+											: item.title
+									}
+									version={
+										item.section === 'Version'
+											? version
+											: null
+									}
+								/>
+							);
+						})}
 					</div>
 				</div>
 			</Section>

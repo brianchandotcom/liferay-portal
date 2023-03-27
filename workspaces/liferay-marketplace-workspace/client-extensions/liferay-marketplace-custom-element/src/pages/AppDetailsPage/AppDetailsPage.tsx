@@ -1,24 +1,20 @@
-import {useEffect} from 'react';
-
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
+import {useEffect, useState} from 'react';
 
 import arrowDown from '../../assets/icons/arrow-down.svg';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 import circleFullIcon from '../../assets/icons/circle_fill.svg';
 import circleInfoIcon from '../../assets/icons/info-circle-icon.svg';
-
-import './AppDetailsPage.scss';
-
-import {useState} from 'react';
-
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
-import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
-import {TYPES} from '../../manage-app-state/actionTypes';
 import {useAppContext} from '../../manage-app-state/AppManageState';
+import {TYPES} from '../../manage-app-state/actionTypes';
+import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+
+import './AppDetailsPage.scss';
 
 interface AppDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];

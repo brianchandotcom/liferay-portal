@@ -14,41 +14,11 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
-import com.liferay.commerce.product.ddm.DDMHelper;
-import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeRegistry;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import java.util.Locale;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,14 +27,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=60",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=60",
+	service = ScreenNavigationCategory.class
 )
 public class CPDefinitionInstancesScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -72,13 +39,8 @@ public class CPDefinitionInstancesScreenNavigationCategory
 	}
 
 	@Override
-	public String getEntryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS;
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
+		return language.get(
 			locale, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
 	}
 
@@ -88,100 +50,7 @@ public class CPDefinitionInstancesScreenNavigationCategory
 			SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL;
 	}
 
-	@Override
-	public boolean isVisible(User user, CPDefinition cpDefinition) {
-		if (cpDefinition == null) {
-			return false;
-		}
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		CPType cpType = _cpTypeRegistry.getCPType(
-			cpDefinition.getProductTypeName());
-
-		try {
-			if (_commerceCatalogModelResourcePermission.contains(
-					permissionChecker, cpDefinition.getCommerceCatalog(),
-					ActionKeys.VIEW) &&
-				cpType.isSkusEnabled()) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return false;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		CPInstanceDisplayContext cpInstanceDisplayContext =
-			new CPInstanceDisplayContext(
-				_actionHelper, httpServletRequest,
-				_commerceCurrencyLocalService, _commercePriceFormatter,
-				_commerceProductPriceCalculation, _cpDefinitionOptionRelService,
-				_cpInstanceHelper, _cpMeasurementUnitLocalService, _ddmHelper);
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
-
-		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
-			"/instances.jsp");
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionInstancesScreenNavigationCategory.class);
-
 	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
-	)
-	private ModelResourcePermission<CommerceCatalog>
-		_commerceCatalogModelResourcePermission;
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
-
-	@Reference
-	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
-
-	@Reference
-	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
-
-	@Reference
-	private CPInstanceHelper _cpInstanceHelper;
-
-	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-
-	@Reference
-	private CPTypeRegistry _cpTypeRegistry;
-
-	@Reference
-	private DDMHelper _ddmHelper;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
-	)
-	private ServletContext _setServletContext;
+	protected Language language;
 
 }

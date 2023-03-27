@@ -149,6 +149,9 @@ const MDFClaimForm = () => {
 	const onCancel = () =>
 		Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
 
+	const mdfClaim =
+		mdfClaimDTO && getMDFClaimFromDTO(mdfClaimDTO as MDFClaimDTO);
+
 	if (
 		!mdfRequest ||
 		(mdfClaimId && !mdfClaimDTO) ||
@@ -159,13 +162,6 @@ const MDFClaimForm = () => {
 	) {
 		return <ClayLoadingIndicator />;
 	}
-
-	const mdfClaim = getMDFClaimFromDTO(mdfClaimDTO as MDFClaimDTO);
-	// eslint-disable-next-line no-console
-	console.log(
-		'🚀 ~ file: MDFClaimForm.tsx:131 ~ MDFClaimForm ~ mdfClaim:',
-		mdfClaim
-	);
 
 	return (
 		<PRMFormik

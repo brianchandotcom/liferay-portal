@@ -61,27 +61,42 @@ const claimSchema = object({
 												validateDocument.fileSize
 													.message,
 												(invoice) => {
-													return invoice
-														? Math.ceil(
-																invoice.size /
-																	1000
-														  ) <=
-																validateDocument
-																	.fileSize
-																	.maxSize
-														: false;
+													if (
+														invoice &&
+														!invoice.id
+													) {
+														return invoice
+															? Math.ceil(
+																	invoice.size /
+																		1000
+															  ) <=
+																	validateDocument
+																		.fileSize
+																		.maxSize
+															: false;
+													}
+
+													return true;
 												}
 											)
 											.test(
 												'fileType',
 												validateDocument.imageDocument
 													.message,
-												(invoice) =>
-													invoice
-														? validateDocument.imageDocument.types.includes(
-																invoice.type
-														  )
-														: false
+												(invoice) => {
+													if (
+														invoice &&
+														!invoice.id
+													) {
+														invoice
+															? validateDocument.imageDocument.types.includes(
+																	invoice.type
+															  )
+															: false;
+													}
+
+													return true;
+												}
 											),
 								}),
 								invoiceAmount: number().when('selected', {
@@ -116,22 +131,40 @@ const claimSchema = object({
 							.test(
 								'fileSize',
 								validateDocument.fileSize.message,
-								(listOfQualifiedLeads) =>
-									listOfQualifiedLeads
-										? Math.ceil(
-												listOfQualifiedLeads.size / 1000
-										  ) <= validateDocument.fileSize.maxSize
-										: false
+								(listOfQualifiedLeads) => {
+									if (
+										listOfQualifiedLeads &&
+										!listOfQualifiedLeads.id
+									) {
+										listOfQualifiedLeads
+											? Math.ceil(
+													listOfQualifiedLeads.size /
+														1000
+											  ) <=
+											  validateDocument.fileSize.maxSize
+											: false;
+									}
+
+									return true;
+								}
 							)
 							.test(
 								'fileType',
 								validateDocument.listOfLeadsDocuments.message,
-								(listOfQualifiedLeads) =>
-									listOfQualifiedLeads
-										? validateDocument.listOfLeadsDocuments.types.includes(
-												listOfQualifiedLeads.type
-										  )
-										: false
+								(listOfQualifiedLeads) => {
+									if (
+										listOfQualifiedLeads &&
+										!listOfQualifiedLeads.id
+									) {
+										listOfQualifiedLeads
+											? validateDocument.listOfLeadsDocuments.types.includes(
+													listOfQualifiedLeads.type
+											  )
+											: false;
+									}
+
+									return true;
+								}
 							),
 				}),
 				metrics: string().max(
@@ -177,21 +210,31 @@ const claimSchema = object({
 		.test(
 			'fileSize',
 			validateDocument.fileSize.message,
-			(reimbursementInvoice) =>
-				reimbursementInvoice
-					? Math.ceil(reimbursementInvoice.size / 1000) <=
-					  validateDocument.fileSize.maxSize
-					: false
+			(reimbursementInvoice) => {
+				if (reimbursementInvoice && !reimbursementInvoice.id) {
+					return !reimbursementInvoice.id
+						? Math.ceil(reimbursementInvoice.size / 1000) <=
+								validateDocument.fileSize.maxSize
+						: false;
+				}
+
+				return true;
+			}
 		)
 		.test(
 			'fileType',
 			validateDocument.imageDocument.message,
-			(reimbursementInvoice) =>
-				reimbursementInvoice
-					? validateDocument.imageDocument.types.includes(
-							reimbursementInvoice.type
-					  )
-					: false
+			(reimbursementInvoice) => {
+				if (reimbursementInvoice && !reimbursementInvoice.id) {
+					reimbursementInvoice
+						? validateDocument.imageDocument.types.includes(
+								reimbursementInvoice.type
+						  )
+						: false;
+				}
+
+				return true;
+			}
 		),
 	totalClaimAmount: number()
 		.moreThan(0, 'Need be bigger than 0')

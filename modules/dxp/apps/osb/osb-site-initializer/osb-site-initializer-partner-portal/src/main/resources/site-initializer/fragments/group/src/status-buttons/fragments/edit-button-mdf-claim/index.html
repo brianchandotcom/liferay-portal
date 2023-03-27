@@ -1,0 +1,58 @@
+[#assign mdfClaimId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
+[#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#assign approvedRoles = [""] /]
+
+[#if configuration.channelAccountManager]
+	[#assign approvedRoles = approvedRoles + ["Channel Account Manager"] /]
+[/#if]
+
+[#if configuration.channelFinanceManager]
+	[#assign approvedRoles = approvedRoles + ["Channel Finance Manager"] /]
+[/#if]
+
+[#if configuration.channelGeneralManager]
+	[#assign approvedRoles = approvedRoles + ["Channel General Manager"] /]
+[/#if]
+
+[#if configuration.channelGlobalMarketingManager]
+	[#assign approvedRoles = approvedRoles + ["Channel Global Marketing Manager"] /]
+[/#if]
+
+[#if configuration.channelRegionalMarketingManager]
+	[#assign approvedRoles = approvedRoles + ["Channel Regional Marketing Manager"] /]
+[/#if]
+
+[#if configuration.partnerManager]
+	[#assign approvedRoles = approvedRoles + ["Partner Manager"] /]
+[/#if]
+
+[#if configuration.user]
+	[#assign approvedRoles = approvedRoles + ["User"] /]
+[/#if]
+
+[#if mdfClaimId?has_content]
+	[#assign myUserAccount = restClient.get("/headless-admin-user/v1.0/my-user-account") /]
+	[#assign claim = restClient.get("/c/mdfclaims/${mdfClaimId}?nestedField=r_mdfReqToMDFClms_c_mdfRequestId") /]
+	[#assign accountEntryId = claim.r_mdfReqToMDFClms_c_mdfRequest.r_accToMDFReqs_accountEntryId /]
+
+	[#assign userRoles = userRoles + (myUserAccount.accountBriefs?filter(account_brief -> account_brief.id == accountEntryId)?first.roleBriefs)! /]
+
+	[#list userRoles as userRole]
+		[#if approvedRoles?seq_contains(userRole.name)]
+			<button class="btn btn-primary d-flex mr-2 mt-2" id="edit-button-manager">
+				<div>
+					[@clay["icon"] symbol="pencil"/]
+					Edit
+				</div>
+			</button>
+
+			[#break]
+		[/#if]
+	[/#list]
+	<button class="btn btn-primary d-none mr-2 mt-2" id="edit-button-user">
+		<div>
+			[@clay["icon"] symbol="pencil"/]
+			Edit
+		</div>
+	</button>
+[/#if]

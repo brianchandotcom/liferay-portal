@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.constants.DispatchScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -37,7 +37,7 @@ public class DispatchDetailsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return DispatchConstants.CATEGORY_KEY_DISPATCH_DETAILS;
+		return DispatchScreenNavigationConstants.CATEGORY_KEY_DISPATCH_DETAILS;
 	}
 
 	@Override
@@ -50,7 +50,8 @@ public class DispatchDetailsScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
+		return DispatchScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
 	}
 
 	@Reference

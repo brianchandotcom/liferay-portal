@@ -26,7 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dispatch.constants.DispatchConstants" %><%@
+<%@ page import="com.liferay.dispatch.constants.DispatchScreenNavigationConstants" %><%@
 page import="com.liferay.dispatch.constants.DispatchWebKeys" %><%@
 page import="com.liferay.dispatch.exception.NoSuchLogException" %><%@
 page import="com.liferay.dispatch.exception.NoSuchTriggerException" %><%@

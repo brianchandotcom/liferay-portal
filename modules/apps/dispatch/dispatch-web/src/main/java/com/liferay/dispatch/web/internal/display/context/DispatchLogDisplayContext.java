@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.constants.DispatchScreenNavigationConstants;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -110,7 +110,7 @@ public class DispatchLogDisplayContext {
 
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",
-			DispatchConstants.CATEGORY_KEY_DISPATCH_LOGS);
+			DispatchScreenNavigationConstants.CATEGORY_KEY_DISPATCH_LOGS);
 
 		return portletURL;
 	}

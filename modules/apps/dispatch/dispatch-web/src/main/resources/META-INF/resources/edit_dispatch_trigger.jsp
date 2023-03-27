@@ -35,7 +35,7 @@ portletDisplay.setTitle(title);
 <div id="<portlet:namespace />editDispatchTriggerContainer">
 	<liferay-frontend:screen-navigation
 		containerCssClass="col-md-10"
-		key="<%= DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL %>"
+		key="<%= DispatchScreenNavigationConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL %>"
 		modelBean="<%= dispatchTrigger %>"
 		navCssClass="col-md-2"
 		portletURL="<%= currentURLObj %>"

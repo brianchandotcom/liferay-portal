@@ -63,7 +63,7 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 				if (StringUtil.equals(
 						firstParameter, "Response.Status.BAD_REQUEST") &&
 					secondParameter.matches(
-						"\\w*Exception\\.getMessage\\(\\)")) {
+						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
 					exceptionParameterName = secondParameter;
 				}
@@ -77,7 +77,7 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 					StringUtil.equals(
 						secondParameter, "Response.Status.BAD_REQUEST") &&
 					thirdParameter.matches(
-						"\\w*Exception\\.getMessage\\(\\)")) {
+						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
 					exceptionParameterName = thirdParameter;
 				}

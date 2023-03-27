@@ -379,6 +379,44 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
+	 * Copy a layout from source layout.
+	 *
+	 * <p>
+	 * This method handles the copy of the layout including its resources,
+	 * metadata, and internal data structures. It is not necessary to make
+	 * subsequent calls to any methods to setup default groups, resources, ...
+	 * etc.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param nameMap the layout's locales and localized names
+	 * @param hidden whether the layout is hidden
+	 * @param system whether the layout is system
+	 * @param copyPermissions whether copy permissions
+	 * @param sourcePlid the plid from the source layout
+	 * @param serviceContext the service context to be applied. Must set the
+	 UUID for the layout. Can set the creation date, modification
+	 date, and expando bridge attributes for the layout. For layouts
+	 that belong to a layout set prototype, an attribute named
+	 <code>layoutUpdateable</code> can be used to specify whether site
+	 administrators can modify this page within their site.
+	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static Layout copyLayout(
+			long userId, long groupId, boolean privateLayout,
+			Map<java.util.Locale, String> nameMap, boolean hidden,
+			boolean system, boolean copyPermissions, long sourcePlid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyLayout(
+			userId, groupId, privateLayout, nameMap, hidden, system,
+			copyPermissions, sourcePlid, serviceContext);
+	}
+
+	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
 	 * @param plid the primary key for the new layout

@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,8 +42,7 @@ public class DocumentSourceFileNameExceptionMapper
 	protected Problem getProblem(
 		SourceFileNameException sourceFileNameException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST, sourceFileNameException.getMessage());
+		return new Problem(sourceFileNameException);
 	}
 
 }

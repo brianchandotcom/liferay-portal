@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,9 +40,7 @@ public class DuplicateUserGroupExceptionMapper
 	protected Problem getProblem(
 		DuplicateUserGroupException duplicateUserGroupException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			duplicateUserGroupException.getMessage());
+		return new Problem(duplicateUserGroupException);
 	}
 
 }

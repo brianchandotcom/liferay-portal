@@ -15,6 +15,7 @@
 package com.liferay.jethr0.build;
 
 import com.liferay.jethr0.build.parameter.BuildParameter;
+import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.util.StringUtil;
@@ -49,6 +50,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void addBuildRun(BuildRun buildRun) {
+		addBuildRuns(Arrays.asList(buildRun));
+	}
+
+	@Override
+	public void addBuildRuns(List<BuildRun> buildRuns) {
+		for (BuildRun buildRun : buildRuns) {
+			if (_buildRuns.contains(buildRun)) {
+				continue;
+			}
+
+			_buildRuns.add(buildRun);
+		}
+	}
+
+	@Override
 	public void addTask(Task task) {
 		addTasks(Arrays.asList(task));
 	}
@@ -77,6 +94,11 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public List<BuildParameter> getBuildParameters() {
 		return new ArrayList<>(_buildParameters.values());
+	}
+
+	@Override
+	public List<BuildRun> getBuildRuns() {
+		return _buildRuns;
 	}
 
 	@Override
@@ -193,6 +215,16 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void removeBuildRun(BuildRun buildRun) {
+		_buildRuns.remove(buildRun);
+	}
+
+	@Override
+	public void removeBuildRuns(List<BuildRun> buildRuns) {
+		_buildRuns.removeAll(buildRuns);
+	}
+
+	@Override
 	public void removeTask(Task task) {
 		_tasks.remove(task);
 	}
@@ -269,6 +301,7 @@ public abstract class BaseBuild implements Build {
 	private final String _buildName;
 	private final Map<String, BuildParameter> _buildParameters =
 		new HashMap<>();
+	private final List<BuildRun> _buildRuns = new ArrayList<>();
 	private final List<Build> _childBuilds = new ArrayList<>();
 	private final long _id;
 	private String _jobName;

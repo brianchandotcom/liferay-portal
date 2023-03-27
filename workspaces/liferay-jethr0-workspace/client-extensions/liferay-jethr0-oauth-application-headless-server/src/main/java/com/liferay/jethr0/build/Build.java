@@ -15,6 +15,7 @@
 package com.liferay.jethr0.build;
 
 import com.liferay.jethr0.build.parameter.BuildParameter;
+import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 
@@ -33,6 +34,10 @@ public interface Build {
 
 	public void addBuildParameters(List<BuildParameter> buildParameters);
 
+	public void addBuildRun(BuildRun buildRun);
+
+	public void addBuildRuns(List<BuildRun> buildRuns);
+
 	public void addTask(Task task);
 
 	public void addTasks(List<Task> tasks);
@@ -42,6 +47,8 @@ public interface Build {
 	public BuildParameter getBuildParameter(String name);
 
 	public List<BuildParameter> getBuildParameters();
+
+	public List<BuildRun> getBuildRuns();
 
 	public List<Build> getChildBuilds();
 
@@ -70,6 +77,10 @@ public interface Build {
 	public void removeBuildParameter(BuildParameter buildParameter);
 
 	public void removeBuildParameters(List<BuildParameter> buildParameters);
+
+	public void removeBuildRun(BuildRun buildRun);
+
+	public void removeBuildRuns(List<BuildRun> buildRuns);
 
 	public void removeTask(Task task);
 

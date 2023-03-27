@@ -23,7 +23,6 @@ int aspectRatio = GetterUtil.getInteger((String)request.getAttribute("liferay-fr
 String currentLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:currentLogoURL");
 boolean defaultLogo = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:defaultLogo"));
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
-String logoDisplaySelector = (String)request.getAttribute("liferay-frontend:logo-selector:logoDisplaySelector");
 boolean preserveRatio = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:preserveRatio"));
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:showButtons"));
 String tempImageFileName = (String)request.getAttribute("liferay-frontend:logo-selector:tempImageFileName");
@@ -94,7 +93,6 @@ else {
 				defaultLogo: '<%= defaultLogo %>',
 				defaultLogoURL: '<%= defaultLogoURL %>',
 				editLogoURL: '<%= uploadImageURL %>',
-				logoDisplaySelector: '<%= logoDisplaySelector %>',
 				portletNamespace: '<portlet:namespace />',
 				randomNamespace: '<%= randomNamespace %>',
 			}).render();

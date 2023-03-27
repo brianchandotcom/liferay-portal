@@ -37,10 +37,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _defaultLogoURL;
 	}
 
-	public String getLogoDisplaySelector() {
-		return _logoDisplaySelector;
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
@@ -81,10 +77,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_defaultLogoURL = defaultLogoURL;
 	}
 
-	public void setLogoDisplaySelector(String logoDisplaySelector) {
-		_logoDisplaySelector = logoDisplaySelector;
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
@@ -120,7 +112,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_currentLogoURL = null;
 		_defaultLogo = false;
 		_defaultLogoURL = null;
-		_logoDisplaySelector = null;
 		_maxFileSize = 0;
 		_preserveRatio = false;
 		_showButtons = true;
@@ -145,9 +136,6 @@ public class LogoSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:logoDisplaySelector",
-			_logoDisplaySelector);
-		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:preserveRatio",
 			String.valueOf(_preserveRatio));
 		httpServletRequest.setAttribute(
@@ -164,7 +152,6 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _currentLogoURL;
 	private boolean _defaultLogo;
 	private String _defaultLogoURL;
-	private String _logoDisplaySelector;
 	private long _maxFileSize;
 	private boolean _preserveRatio;
 	private boolean _showButtons = true;

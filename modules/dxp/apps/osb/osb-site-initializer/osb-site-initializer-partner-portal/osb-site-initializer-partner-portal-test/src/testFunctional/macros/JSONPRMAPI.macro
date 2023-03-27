@@ -265,4 +265,28 @@ definition {
 		return ${response};
 	}
 
+	macro changeMDFStatus {
+		Variables.assertDefined(parameterList = ${requestId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/mdfrequests/${requestId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"id" : ${requestId},
+					"mdfRequestStatus" : {
+						"key" : "${statusKey}",
+						"name" : "${mdfStatus}"
+					}
+			}'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		echo(${response});
+	}
+
 }

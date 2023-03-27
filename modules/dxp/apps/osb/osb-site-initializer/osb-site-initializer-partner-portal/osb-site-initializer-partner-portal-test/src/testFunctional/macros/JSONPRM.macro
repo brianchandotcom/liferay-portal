@@ -19,6 +19,15 @@ definition {
 			currency = ${currency});
 	}
 
+	macro changeMDFStatus {
+		var statusKey = StringUtil.lowerCase(${mdfStatus});
+
+		JSONPRMAPI.changeMDFStatus(
+			requestId = ${requestId},
+			mdfStatus = "${mdfStatus}",
+			statusKey = "${statusKey}");
+	}
+
 	macro createMDFRequest {
 		var totalCostOfExpense = 0;
 
@@ -143,6 +152,8 @@ definition {
 					expenseOption = ${expenseOption});
 			}
 		}
+
+		return ${requestId};
 	}
 
 }

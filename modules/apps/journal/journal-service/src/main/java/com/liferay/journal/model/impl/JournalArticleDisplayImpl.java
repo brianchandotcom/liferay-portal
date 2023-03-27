@@ -30,7 +30,7 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		long companyId, long id, long resourcePrimKey, long groupId,
 		long userId, String articleId, double version, String title,
 		String urlTitle, String description, String[] availableLocales,
-		String content, String ddmStructureKey, String ddmTemplateKey,
+		String content, long ddmStructureId, String ddmTemplateKey,
 		boolean smallImage, long smallImageId, String smallImageURL,
 		int numberOfPages, int currentPage, boolean paginate,
 		boolean cacheable) {
@@ -47,7 +47,7 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_description = description;
 		_availableLocales = availableLocales;
 		_content = content;
-		_ddmStructureKey = ddmStructureKey;
+		_ddmStructureId = ddmStructureId;
 		_ddmTemplateKey = ddmTemplateKey;
 		_smallImage = smallImage;
 		_smallImageId = smallImageId;
@@ -100,8 +100,8 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	}
 
 	@Override
-	public String getDDMStructureKey() {
-		return _ddmStructureKey;
+	public long getDDMStructureId() {
+		return _ddmStructureId;
 	}
 
 	@Override
@@ -195,8 +195,8 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	}
 
 	@Override
-	public void setDDMStructureKey(String ddmStructureKey) {
-		_ddmStructureKey = ddmStructureKey;
+	public void setDDMStructureId(long ddmStructureId) {
+		_ddmStructureId = ddmStructureId;
 	}
 
 	@Override
@@ -235,7 +235,7 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	private final long _companyId;
 	private String _content;
 	private int _currentPage;
-	private String _ddmStructureKey;
+	private long _ddmStructureId;
 	private String _ddmTemplateKey;
 	private final String _description;
 	private final long _groupId;

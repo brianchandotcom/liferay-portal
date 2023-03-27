@@ -10108,44 +10108,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		</for>
 	</target>
 
-	<target name="deploy-workspaces">
-		<for list="${workspaces.includes}" param="workspace.name">
-			<sequential>
-				<local name="workspace.name" />
-
-				<antelope:stringutil property="workspace.name" string="@{workspace.name}">
-					<antelope:trim />
-				</antelope:stringutil>
-
-				<property location="${project.dir}/workspaces/${workspace.name}" name="workspace.dir" />
-
-				<if>
-					<available file="${workspace.dir}" />
-					<then>
-						<execute dir="${workspace.dir}">
-							./gradlew clean assemble
-						</execute>
-
-						<for param="client.extension.zip.file">
-							<path>
-								<fileset
-									dir="${workspace.dir}/client-extensions"
-									includes="**/dist/*.zip"
-								/>
-							</path>
-							<sequential>
-								<copy
-									file="@{client.extension.zip.file}"
-									todir="${liferay.home}/deploy"
-								/>
-							</sequential>
-						</for>
-					</then>
-				</if>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="execute-groovy-script-from-gogo-shell">
 		<set-app-server-properties
 			app.server.bundle.index="${bundle.index}"
@@ -15123,10 +15085,6 @@ mail.send.blacklist=</echo>
 		<get-testcase-property property.name="workspace.client.extensions.includes" />
 
 		<antcall if:set="workspace.client.extensions.includes" target="deploy-workspace-client-extensions" />
-
-		<get-testcase-property property.name="workspaces.includes" />
-
-		<antcall if:set="workspaces.includes" target="deploy-workspaces" />
 
 		<get-testcase-property property.name="liferay.data.guard.enabled" />
 

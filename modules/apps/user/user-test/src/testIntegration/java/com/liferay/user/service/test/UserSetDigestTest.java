@@ -35,6 +35,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -79,20 +80,31 @@ public class UserSetDigestTest {
 		user.setScreenName(RandomTestUtil.randomString());
 		user.setEmailAddress(_generateRandomEmailAddress());
 
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
+		String digest = user.getDigest(RandomTestUtil.randomString());
+
+		Assert.assertNotNull(digest);
+
+		user.setDigest(digest);
+
+		Assert.assertEquals(digest, user.getDigest());
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testSetDigestBeforePrerequisites() throws Exception {
 		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
 
 		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
 
+		Assert.assertNull(
+			"User digest should be null if screenName and/or emailAddress is " +
+				"not set",
+			user.getDigest());
+
 		user.setScreenName(RandomTestUtil.randomString());
 		user.setEmailAddress(_generateRandomEmailAddress());
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testSetEmailAndDigestBeforeScreenName() throws Exception {
 		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
 
@@ -100,10 +112,14 @@ public class UserSetDigestTest {
 
 		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
 
+		Assert.assertNull(
+			"User digest should be null if screenName is not set",
+			user.getDigest());
+
 		user.setScreenName(RandomTestUtil.randomString());
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testSetScreenNameAndDigestBeforeEmailAddress()
 		throws Exception {
 
@@ -112,6 +128,10 @@ public class UserSetDigestTest {
 		user.setScreenName(RandomTestUtil.randomString());
 
 		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
+
+		Assert.assertNull(
+			"User digest should be null if emailAddress is not set",
+			user.getDigest());
 
 		user.setEmailAddress(_generateRandomEmailAddress());
 	}

@@ -15,7 +15,6 @@
 package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -60,8 +59,10 @@ import org.quartz.Calendar;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.JobPersistenceException;
+import org.quartz.ListenerManager;
 import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerContext;
@@ -71,6 +72,7 @@ import org.quartz.TriggerUtils;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.quartz.listeners.TriggerListenerSupport;
 import org.quartz.spi.OperableTrigger;
 
 /**
@@ -829,12 +831,14 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Scheduler scheduler = schedulerFactory.getScheduler();
 
+		ListenerManager listenerManager = scheduler.getListenerManager();
+
+		listenerManager.addTriggerListener(new QuartzTriggerListener());
+
 		SchedulerContext schedulerContext = scheduler.getContext();
 
-		schedulerContext.put("clusterExecutor", _clusterExecutor);
 		schedulerContext.put("jSONFactory", _jsonFactory);
 		schedulerContext.put("messageBus", _messageBus);
-		schedulerContext.put("props", _props);
 
 		return scheduler;
 	}
@@ -867,9 +871,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzSchedulerEngine.class);
 
-	@Reference
-	private ClusterExecutor _clusterExecutor;
-
 	private int _descriptionMaxLength;
 	private int _groupNameMaxLength;
 	private int _jobNameMaxLength;
@@ -900,5 +901,38 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+
+	private class QuartzTriggerListener extends TriggerListenerSupport {
+
+		@Override
+		public String getName() {
+			return QuartzTriggerListener.class.getName();
+		}
+
+		@Override
+		public void triggerComplete(
+			Trigger trigger, JobExecutionContext jobExecutionContext,
+			Trigger.CompletedExecutionInstruction
+				completedExecutionInstruction) {
+
+			TriggerKey triggerKey = trigger.getKey();
+
+			JobDetail jobDetail = jobExecutionContext.getJobDetail();
+
+			JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+			try {
+				_schedulerEngineHelper.delete(
+					triggerKey.getName(), triggerKey.getGroup(),
+					StorageType.valueOf(
+						jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
+			}
+			catch (SchedulerException schedulerException) {
+				_log.error(
+					"Unable to delete job " + triggerKey, schedulerException);
+			}
+		}
+
+	}
 
 }

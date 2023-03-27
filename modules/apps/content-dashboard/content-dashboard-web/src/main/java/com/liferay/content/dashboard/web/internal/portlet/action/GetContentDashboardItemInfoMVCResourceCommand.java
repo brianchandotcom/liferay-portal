@@ -124,15 +124,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			ContentDashboardItem<?> contentDashboardItem =
 				contentDashboardItemFactory.create(classPK);
 
-			String subtypeLabel = StringPool.BLANK;
-
-			ContentDashboardItemSubtype<?> contentDashboardItemSubtype =
-				contentDashboardItem.getContentDashboardItemSubtype();
-
-			if (contentDashboardItemSubtype != null) {
-				subtypeLabel = contentDashboardItemSubtype.getLabel(locale);
-			}
-
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
@@ -226,7 +217,19 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_getSubscribeJSONObject(
 						contentDashboardItem, httpServletRequest)
 				).put(
-					"subType", subtypeLabel
+					"subType",
+					() -> {
+						ContentDashboardItemSubtype<?>
+							contentDashboardItemSubtype =
+								contentDashboardItem.
+									getContentDashboardItemSubtype();
+
+						if (contentDashboardItemSubtype == null) {
+							return StringPool.BLANK;
+						}
+
+						return contentDashboardItemSubtype.getLabel(locale);
+					}
 				).put(
 					"tags", _getAssetTagsJSONArray(contentDashboardItem)
 				).put(
@@ -306,19 +309,20 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private Map<String, Object> _getAssetVocabularyMap(
 		AssetVocabulary assetVocabulary, Locale locale) {
 
-		String groupName = StringPool.BLANK;
-
-		Group group = _groupLocalService.fetchGroup(
-			assetVocabulary.getGroupId());
-
-		if (group != null) {
-			groupName = ContentDashboardGroupUtil.getGroupName(group, locale);
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"categories", ListUtil.fromArray()
 		).put(
-			"groupName", groupName
+			"groupName",
+			() -> {
+				Group group = _groupLocalService.fetchGroup(
+					assetVocabulary.getGroupId());
+
+				if (group == null) {
+					return StringPool.BLANK;
+				}
+
+				return ContentDashboardGroupUtil.getGroupName(group, locale);
+			}
 		).put(
 			"isPublic",
 			assetVocabulary.getVisibilityType() ==
@@ -560,24 +564,27 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private JSONObject _getUserJSONObject(
 		ContentDashboardItem contentDashboardItem, ThemeDisplay themeDisplay) {
 
-		String url = null;
-
-		User user = _userLocalService.fetchUser(
-			contentDashboardItem.getUserId());
-
-		if ((user != null) && (user.getPortraitId() > 0)) {
-			try {
-				url = user.getPortraitURL(themeDisplay);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
-
 		return JSONUtil.put(
 			"name", contentDashboardItem.getUserName()
 		).put(
-			"url", url
+			"url",
+			() -> {
+				User user = _userLocalService.fetchUser(
+					contentDashboardItem.getUserId());
+
+				if ((user == null) || (user.getPortraitId() <= 0)) {
+					return null;
+				}
+
+				try {
+					return user.getPortraitURL(themeDisplay);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
+
+				return null;
+			}
 		).put(
 			"userId", contentDashboardItem.getUserId()
 		);

@@ -136,15 +136,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		ContentDashboardItem<?> contentDashboardItem, Locale locale,
 		WorkbookBuilder workbookBuilder) {
 
-		String subtypeLabel = StringPool.BLANK;
-
-		ContentDashboardItemSubtype<?> contentDashboardItemSubtype =
-			contentDashboardItem.getContentDashboardItemSubtype();
-
-		if (contentDashboardItemSubtype != null) {
-			subtypeLabel = contentDashboardItemSubtype.getLabel(locale);
-		}
-
 		workbookBuilder.cell(
 			String.valueOf(contentDashboardItem.getId())
 		).cell(
@@ -154,7 +145,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		).cell(
 			contentDashboardItem.getTypeLabel(locale)
 		).cell(
-			subtypeLabel
+			() -> {
+				ContentDashboardItemSubtype<?> contentDashboardItemSubtype =
+					contentDashboardItem.getContentDashboardItemSubtype();
+
+				if (contentDashboardItemSubtype == null) {
+					return StringPool.BLANK;
+				}
+
+				return contentDashboardItemSubtype.getLabel(locale);
+			}
 		).cell(
 			contentDashboardItem.getScopeName(locale)
 		).cell(

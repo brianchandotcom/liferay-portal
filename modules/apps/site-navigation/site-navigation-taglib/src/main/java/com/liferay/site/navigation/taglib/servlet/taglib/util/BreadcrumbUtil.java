@@ -291,36 +291,41 @@ public class BreadcrumbUtil {
 			}
 		}
 
-		int layoutsPageCount = 0;
-
-		if (layoutSet.isPrivateLayout()) {
-			layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
-				group.getGroupId(), true);
-		}
-		else {
-			layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
-				group.getGroupId(), false);
-		}
-
-		if ((layoutsPageCount > 0) && !_isGuestGroup(group)) {
+		if (!_isGuestGroup(group)) {
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 			breadcrumbEntry.setTitle(
 				group.getDescriptiveName(themeDisplay.getLocale()));
 
-			if (group.isActive() && _hasViewPermissions(group, themeDisplay)) {
-				String layoutSetFriendlyURL =
-					PortalUtil.getLayoutSetFriendlyURL(layoutSet, themeDisplay);
+			int layoutsPageCount = 0;
 
-				if (themeDisplay.isAddSessionIdToURL()) {
-					layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
-						layoutSetFriendlyURL, themeDisplay.getSessionId());
-				}
-
-				breadcrumbEntry.setURL(layoutSetFriendlyURL);
+			if (layoutSet.isPrivateLayout()) {
+				layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
+					group.getGroupId(), true);
 			}
 			else {
-				breadcrumbEntry.setBrowsable(false);
+				layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
+					group.getGroupId(), false);
+			}
+
+			if (layoutsPageCount > 0) {
+				if (group.isActive() &&
+					_hasViewPermissions(group, themeDisplay)) {
+
+					String layoutSetFriendlyURL =
+						PortalUtil.getLayoutSetFriendlyURL(
+							layoutSet, themeDisplay);
+
+					if (themeDisplay.isAddSessionIdToURL()) {
+						layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
+							layoutSetFriendlyURL, themeDisplay.getSessionId());
+					}
+
+					breadcrumbEntry.setURL(layoutSetFriendlyURL);
+				}
+				else {
+					breadcrumbEntry.setBrowsable(false);
+				}
 			}
 
 			breadcrumbEntries.add(breadcrumbEntry);

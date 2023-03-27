@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-177308. Verify that the value of Requested MDFs are displayed on MDF Dashboard"
-	@priority = 5
+	@priority = 4
 	test MDFRequestedValueAppearInDashboard {
 		var budgetValue = 2000;
 

@@ -42,7 +42,7 @@ const USER_AGENT_OPTIONS = [
 	},
 ];
 
-const PatternField = ({
+const PatternFieldWithUserAgent = ({
 	destinationURL: initialDestinationUrl,
 	error,
 	handleAddClick,
@@ -183,6 +183,16 @@ const PatternField = ({
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</div>
+	);
+};
+
+const PatternField = ({...props}) => {
+	return (
+		<>
+			{Liferay.FeatureFlags['LPS-175850'] && (
+				<PatternFieldWithUserAgent {...props} />
+			)}
+		</>
 	);
 };
 

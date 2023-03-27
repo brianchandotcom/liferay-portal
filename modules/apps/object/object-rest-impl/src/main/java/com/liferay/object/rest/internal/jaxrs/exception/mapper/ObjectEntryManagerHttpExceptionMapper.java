@@ -18,7 +18,6 @@ import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -32,9 +31,7 @@ public class ObjectEntryManagerHttpExceptionMapper
 	protected Problem getProblem(
 		ObjectEntryManagerHttpException objectEntryManagerHttpException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			objectEntryManagerHttpException.getMessage());
+		return new Problem(objectEntryManagerHttpException);
 	}
 
 }

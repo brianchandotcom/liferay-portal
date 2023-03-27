@@ -18,7 +18,6 @@ import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,9 +40,7 @@ public class ObjectFieldDBTypeExceptionMapper
 	protected Problem getProblem(
 		ObjectFieldDBTypeException objectFieldDBTypeException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			objectFieldDBTypeException.getMessage());
+		return new Problem(objectFieldDBTypeException);
 	}
 
 }

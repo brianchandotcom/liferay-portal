@@ -17,7 +17,6 @@ package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -31,9 +30,7 @@ public class UnsupportedOperationExceptionMapper
 	protected Problem getProblem(
 		UnsupportedOperationException unsupportedOperationException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			unsupportedOperationException.getMessage());
+		return new Problem(unsupportedOperationException);
 	}
 
 }

@@ -18,7 +18,6 @@ import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -33,9 +32,7 @@ public class RequiredObjectRelationshipExceptionMapper
 		RequiredObjectRelationshipException
 			requiredObjectRelationshipException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			requiredObjectRelationshipException.getMessage());
+		return new Problem(requiredObjectRelationshipException);
 	}
 
 }

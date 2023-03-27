@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.util.PropsValues;
 
@@ -157,10 +158,8 @@ public class SetupWizardSampleDataUtil {
 			}
 		}
 
-		User adminUser = UserLocalServiceUtil.fetchUserByEmailAddress(
-			company.getCompanyId(),
-			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT +
-				company.getMx());
+		User adminUser = DefaultAdminUtil.fetchDefaultAdmin(
+			company.getCompanyId());
 
 		if (adminUser != null) {
 			FullNameGenerator fullNameGenerator =

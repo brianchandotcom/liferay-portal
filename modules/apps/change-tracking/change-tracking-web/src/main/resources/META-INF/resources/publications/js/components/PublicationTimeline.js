@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import React from 'react';
@@ -25,23 +24,17 @@ const PublicationTimeline = ({timelineItems}) => {
 		return (
 			<div className="publication-timeline">
 				{timelineItems.map((timelineItem) => (
-					<ClayPanel key={timelineItem.id}>
+					<ClayPanel
+						key={timelineItem.id}
+						style={{borderBottomColor: '#e7e7ed', marginBottom: 0}}
+					>
 						<ClayPanel.Body>
 							<ClayLayout.ContentRow>
-								<ClayLayout.ContentCol>
-									<ClayIcon
-										style={{
-											color: '#6B6C7E',
-											marginRight: '1em',
-											marginTop: '0.25em',
-										}}
-										symbol="change-list"
-									/>
-								</ClayLayout.ContentCol>
-
 								<ClayLayout.ContentCol expand>
 									<div>
-										{timelineItem.name}
+										<span style={{paddingRight: '10px'}}>
+											{timelineItem.name}
+										</span>
 
 										<WorkflowStatusLabel
 											workflowStatus={timelineItem.status}

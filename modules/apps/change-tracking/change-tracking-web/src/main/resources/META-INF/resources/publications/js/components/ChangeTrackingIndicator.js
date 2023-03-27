@@ -1128,9 +1128,9 @@ export default function ChangeTrackingIndicator({
 					<div
 						className="c-inner"
 						style={{
-							margin: '2px 2px 1px',
+							margin: '2px',
 							padding: '1px',
-							width: '22px',
+							width: '16px',
 						}}
 						tabIndex="-1"
 						title={conflictIconLabel}
@@ -1167,9 +1167,8 @@ export default function ChangeTrackingIndicator({
 					<div
 						className="c-inner"
 						style={{
-							margin: '2px 2px 1px',
 							padding: '1px',
-							width: '22px',
+							width: '21px',
 						}}
 						tabIndex="-1"
 						title="Timeline"

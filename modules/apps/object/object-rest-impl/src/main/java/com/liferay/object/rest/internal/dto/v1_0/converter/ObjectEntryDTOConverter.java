@@ -363,7 +363,9 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		if (!objectDefinition.isEnableObjectEntryHistory()) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-164582") ||
+			!objectDefinition.isEnableObjectEntryHistory()) {
+
 			return null;
 		}
 

@@ -15,6 +15,7 @@
 package com.liferay.redirect.internal.provider;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -189,7 +190,8 @@ public class RedirectProviderImpl
 	private boolean _isUserAgentMatch(
 		RedirectPatternEntry redirectPatternEntry, String userAgent) {
 
-		if (Validator.isNull(redirectPatternEntry.getUserAgent()) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-175850") ||
+			Validator.isNull(redirectPatternEntry.getUserAgent()) ||
 			Validator.isNull(userAgent) ||
 			Objects.equals(
 				RedirectConstants.USER_AGENT_ALL,

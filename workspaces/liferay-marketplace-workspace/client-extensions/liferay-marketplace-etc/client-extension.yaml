@@ -1,0 +1,10 @@
+liferay-marketplace-object-action-provisioning-add:
+    name: Liferay Marketplace Object Action Provisioning Add
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-object-action-provisioning-add
+    resourcePath: /marketplace/object/action/provisioning/add
+    type: objectAction
+liferay-marketplace-object-action-provisioning-status-update:
+    name: Liferay Marketplace Object Action Provisioning Status Update
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-object-action-provisioning-status-update
+    resourcePath: /marketplace/object/action/provisioning/status/update
+    type: objectAction

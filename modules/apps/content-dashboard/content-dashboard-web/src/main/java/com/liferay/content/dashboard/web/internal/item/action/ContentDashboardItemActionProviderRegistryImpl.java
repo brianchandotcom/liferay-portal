@@ -73,17 +73,7 @@ public class ContentDashboardItemActionProviderRegistryImpl
 
 		return TransformUtil.transformToList(
 			types,
-			type -> {
-				ContentDashboardItemActionProvider
-					contentDashboardItemActionProvider =
-						getContentDashboardItemActionProvider(className, type);
-
-				if (contentDashboardItemActionProvider == null) {
-					return null;
-				}
-
-				return contentDashboardItemActionProvider;
-			});
+			type -> getContentDashboardItemActionProvider(className, type));
 	}
 
 	@Activate

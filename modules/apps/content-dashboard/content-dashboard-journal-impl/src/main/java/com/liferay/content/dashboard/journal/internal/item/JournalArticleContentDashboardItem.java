@@ -286,36 +286,34 @@ public class JournalArticleContentDashboardItem
 				contentDashboardItemActionProvider, httpServletRequest);
 		}
 
-		ContentDashboardItemActionProvider
-			viewContentDashboardItemActionProvider =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProvider(
-						JournalArticle.class.getName(),
-						ContentDashboardItemAction.Type.VIEW);
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProvider(
+					JournalArticle.class.getName(),
+					ContentDashboardItemAction.Type.VIEW);
 
-		if (viewContentDashboardItemActionProvider != null) {
+		if (contentDashboardItemActionProvider != null) {
 			ContentDashboardItemAction contentDashboardItemAction =
 				_toContentDashboardItemAction(
-					viewContentDashboardItemActionProvider, httpServletRequest);
+					contentDashboardItemActionProvider, httpServletRequest);
 
 			if (contentDashboardItemAction != null) {
 				return contentDashboardItemAction;
 			}
 		}
 
-		ContentDashboardItemActionProvider
-			editContentDashboardItemActionProvider =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProvider(
-						JournalArticle.class.getName(),
-						ContentDashboardItemAction.Type.EDIT);
+		contentDashboardItemActionProvider =
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProvider(
+					JournalArticle.class.getName(),
+					ContentDashboardItemAction.Type.EDIT);
 
-		if (editContentDashboardItemActionProvider == null) {
+		if (contentDashboardItemActionProvider == null) {
 			return null;
 		}
 
 		return _toContentDashboardItemAction(
-			editContentDashboardItemActionProvider, httpServletRequest);
+			contentDashboardItemActionProvider, httpServletRequest);
 	}
 
 	@Override

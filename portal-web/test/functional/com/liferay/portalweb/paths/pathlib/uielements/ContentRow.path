@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_NAME</td>
-	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}']</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}'] | //*[@class="table-list-title" and contains (., '${key_rowEntry}')]</td>
 	<td></td>
 </tr>
 <tr>

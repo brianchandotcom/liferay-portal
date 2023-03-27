@@ -16,6 +16,7 @@ import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayFile from '../../../common/interfaces/liferayFile';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
+import Role from '../../../common/interfaces/role';
 import {Liferay} from '../../../common/services/liferay';
 import createDocumentFolderDocument from '../../../common/services/liferay/headless-delivery/createDocumentFolderDocument';
 import createMDFClaimActivity from '../../../common/services/liferay/object/claim-activity/createMDFClaimActivity';
@@ -27,6 +28,7 @@ import createMDFClaimActivityDocument from '../../../common/services/liferay/obj
 import createMDFClaim from '../../../common/services/liferay/object/mdf-claim/createMDFClaim';
 import updateMDFClaim from '../../../common/services/liferay/object/mdf-claim/updateMDFClaim';
 import {Status} from '../../../common/utils/constants/status';
+import updateStatus from '../../../common/utils/updateStatus';
 import renameFileKeepingExtention from './RenameFile';
 import createMDFClaimProxyAPI from './createMDFClaimProxyAPI';
 
@@ -36,12 +38,9 @@ export default async function submitForm(
 	mdfRequest: MDFRequestDTO,
 	claimParentFolderId: number,
 	siteURL: string,
-	currentClaimStatus?: LiferayPicklist
+	currentClaimStatus?: LiferayPicklist,
+	roles?: Role[]
 ) {
-	if (currentClaimStatus) {
-		values.mdfClaimStatus = currentClaimStatus;
-	}
-
 	formikHelpers.setSubmitting(true);
 
 	values.partial = values.activities?.some((activity) =>
@@ -55,14 +54,16 @@ export default async function submitForm(
 		values.mdfClaimStatus !== Status.DRAFT
 	) {
 		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
-	} else if (values.id) {
+	}
+	else if (values.id) {
 		dtoMDFClaim = await updateMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,
 			mdfRequest,
 			values.id
 		);
-	} else {
+	}
+	else {
 		dtoMDFClaim = await createMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,
@@ -226,5 +227,23 @@ export default async function submitForm(
 		);
 	}
 
-	// Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
+	const updatedStatus = updateStatus(
+		values.mdfClaimStatus,
+		currentClaimStatus,
+		roles,
+		values.id
+	);
+
+	if (updatedStatus && dtoMDFClaim?.id) {
+		values.mdfClaimStatus = updatedStatus;
+
+		updateMDFClaim(
+			ResourceName.MDF_CLAIM_DXP,
+			values,
+			mdfRequest,
+			dtoMDFClaim?.id
+		);
+	}
+
+	Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
 }

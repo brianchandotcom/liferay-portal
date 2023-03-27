@@ -21,7 +21,7 @@ export default async function updateMDFClaimSF(
 	apiOption: ResourceName,
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
-	externalReferenceCodeSF?: string
+	externalReferenceCodeSF: string
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCodeSF}`,

@@ -22,7 +22,7 @@ export default async function updateMDFClaim(
 	apiOption: ResourceName,
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
-	mdfClaimId?: number,
+	mdfClaimId: number,
 	reimbursementInvoiceDocumentId?: LiferayFile & number,
 	externalReferenceCodeSF?: string
 ) {

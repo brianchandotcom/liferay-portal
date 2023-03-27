@@ -24,7 +24,7 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	externalReferenceCodeSF?: string;
 	liferayBusinessSalesGoals?: string[];
 	maxDateActivity?: string;
-	mdfRequestStatus?: LiferayPicklist;
+	mdfRequestStatus: LiferayPicklist;
 	minDateActivity?: string;
 	overallCampaignDescription: string;
 	overallCampaignName: string;

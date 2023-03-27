@@ -25,9 +25,9 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
 import updateMDFRequest from '../../../common/services/liferay/object/mdf-requests/updateMDFRequest';
 import {Status} from '../../../common/utils/constants/status';
+import updateStatus from '../../../common/utils/updateStatus';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
-import updateStatus from './updateStatus';
 
 export default async function submitForm(
 	values: MDFRequest,
@@ -37,8 +37,6 @@ export default async function submitForm(
 	roles?: Role[]
 ) {
 	formikHelpers.setSubmitting(true);
-
-	values = updateStatus(values, currentRequestStatus, roles);
 
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 
@@ -51,7 +49,8 @@ export default async function submitForm(
 	else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
-			values
+			values,
+			values.id
 		);
 	}
 	else {
@@ -119,6 +118,24 @@ export default async function submitForm(
 				})
 			);
 		}
+	}
+
+	const updatedStatus = updateStatus(
+		values.mdfRequestStatus,
+		currentRequestStatus,
+		roles,
+		values.id,
+		values.totalMDFRequestAmount
+	);
+
+	if (updatedStatus && dtoMDFRequest?.id) {
+		values.mdfRequestStatus = updatedStatus && updatedStatus;
+
+		updateMDFRequest(
+			ResourceName.MDF_REQUEST_DXP,
+			values,
+			dtoMDFRequest.id
+		);
 	}
 
 	if (values.id) {

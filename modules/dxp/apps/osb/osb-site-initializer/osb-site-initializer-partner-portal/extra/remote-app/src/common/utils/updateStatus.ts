@@ -9,19 +9,20 @@
  * distribution rights of the Software.
  */
 
-import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
-import MDFRequest from '../../../common/interfaces/mdfRequest';
-import Role from '../../../common/interfaces/role';
-import {Status} from '../../../common/utils/constants/status';
-import {isLiferayManager} from '../../../common/utils/isLiferayManager';
+import LiferayPicklist from '../interfaces/liferayPicklist';
+import Role from '../interfaces/role';
+import {Status} from './constants/status';
+import {isLiferayManager} from './isLiferayManager';
 
 const updateStatus = (
-	values: MDFRequest,
+	status?: LiferayPicklist,
 	currentRequestStatus?: LiferayPicklist,
-	roles?: Role[]
+	roles?: Role[],
+	id?: number,
+	totalMDFRequestAmount?: number
 ) => {
-	if (!values.id) {
-		values.mdfRequestStatus = currentRequestStatus;
+	if (!id) {
+		status = currentRequestStatus;
 	}
 	else {
 		if (
@@ -29,19 +30,20 @@ const updateStatus = (
 			!isLiferayManager(roles) &&
 			currentRequestStatus !== Status.DRAFT
 		) {
-			values.mdfRequestStatus = Status.PENDING;
+			status = Status.PENDING;
 		}
 
 		if (
 			roles &&
 			!isLiferayManager(roles) &&
-			values.totalMDFRequestAmount >= 15000 &&
-			values.mdfRequestStatus !== Status.DRAFT
+			totalMDFRequestAmount &&
+			totalMDFRequestAmount >= 15000 &&
+			status !== Status.DRAFT
 		) {
-			values.mdfRequestStatus = Status.MARKETING_DIRECTOR_REVIEW;
+			status = Status.MARKETING_DIRECTOR_REVIEW;
 		}
 	}
 
-	return values;
+	return status;
 };
 export default updateStatus;

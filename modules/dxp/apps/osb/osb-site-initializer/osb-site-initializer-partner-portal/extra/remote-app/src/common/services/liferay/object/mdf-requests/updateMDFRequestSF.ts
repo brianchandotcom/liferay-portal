@@ -19,7 +19,7 @@ import {ResourceName} from '../enum/resourceName';
 export default async function updateMDFRequestSF(
 	apiOption: ResourceName,
 	mdfRequest: MDFRequest,
-	externalReferenceCodeSF?: string
+	externalReferenceCodeSF: string
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCodeSF}`,

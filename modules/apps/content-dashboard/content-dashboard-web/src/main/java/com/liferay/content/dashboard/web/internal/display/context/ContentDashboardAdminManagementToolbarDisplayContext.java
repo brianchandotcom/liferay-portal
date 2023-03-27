@@ -205,7 +205,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							() -> TransformUtil.transformToArray(
 								assetCategoryIds,
 								curAssetCategoryId -> {
-									if (curAssetCategoryId == assetCategoryId) {
+									if (Objects.equals(
+											assetCategoryId,
+											curAssetCategoryId)) {
+
 										return null;
 									}
 
@@ -278,7 +281,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							() -> TransformUtil.transformToArray(
 								authorIds,
 								curAuthorId -> {
-									if (curAuthorId == authorId) {
+									if (Objects.equals(authorId, curAuthorId)) {
 										return null;
 									}
 
@@ -329,7 +332,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 								assetTagIds,
 								curAssetTagId -> {
 									if (Objects.equals(
-											curAssetTagId, assetTagId)) {
+											assetTagId, curAssetTagId)) {
 
 										return null;
 									}
@@ -466,8 +469,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 										parameterValues,
 										curParameterValue -> {
 											if (Objects.equals(
-													curParameterValue,
-													parameterValue)) {
+													parameterValue,
+													curParameterValue)) {
 
 												return null;
 											}
@@ -806,7 +809,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						curContentDashboardItemSubtype.getInfoItemReference();
 
 					if (Objects.equals(
-							curInfoItemReference, infoItemReference)) {
+							infoItemReference, curInfoItemReference)) {
 
 						return null;
 					}

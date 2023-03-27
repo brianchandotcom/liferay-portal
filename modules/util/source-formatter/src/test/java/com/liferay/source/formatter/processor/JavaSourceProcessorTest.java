@@ -416,6 +416,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJavaProblemParameter() throws Exception {
+		test("JavaProblemParameter.testjava");
+	}
+
+	@Test
 	public void testJavaTermDividers() throws Exception {
 		test("JavaTermDividers.testjava");
 	}

@@ -251,7 +251,7 @@ public class CommerceOrderTest {
 
 		CommerceOrder actualCommerceOrder = commerceOrders.get(0);
 
-		AccountEntry accountEntry = actualcommerceOrder.getAccountEntry();
+		AccountEntry accountEntry = actualCommerceOrder.getAccountEntry();
 
 		CommerceAccount actualCommerceAccount =
 			_commerceAccountLocalService.getCommerceAccount(
@@ -362,7 +362,7 @@ public class CommerceOrderTest {
 
 		CommerceOrder actualCommerceOrder = commerceOrders.get(0);
 
-		AccountEntry accountEntry = actualcommerceOrder.getAccountEntry();
+		AccountEntry accountEntry = actualCommerceOrder.getAccountEntry();
 
 		CommerceAccount actualCommerceAccount =
 			_commerceAccountLocalService.getCommerceAccount(

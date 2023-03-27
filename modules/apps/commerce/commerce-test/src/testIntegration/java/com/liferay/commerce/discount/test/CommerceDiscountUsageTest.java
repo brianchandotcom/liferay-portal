@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.discount.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
@@ -55,6 +57,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -106,6 +109,9 @@ public class CommerceDiscountUsageTest {
 		_commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
 				_user.getUserId());
+
+		_accountEntry = _accountEntryLocalService.getAccountEntry(
+			_commerceAccount.getCommerceAccountId());
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
@@ -183,7 +189,7 @@ public class CommerceDiscountUsageTest {
 			commercePriceList.getCommercePriceListId(), priceEntryPrice);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
+			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
 			null);
 
 		CommerceProductPrice commerceProductPrice =
@@ -235,7 +241,7 @@ public class CommerceDiscountUsageTest {
 			commerceContext);
 
 		commerceContext = new TestCommerceContext(
-			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
+			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
 			commerceOrder);
 
 		commerceProductPrice =
@@ -263,7 +269,7 @@ public class CommerceDiscountUsageTest {
 		_commerceOrders.add(commerceOrder);
 
 		commerceContext = new TestCommerceContext(
-			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
+			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
 			commerceOrder);
 
 		_commerceProductPriceCalculation.getCommerceProductPrice(
@@ -362,7 +368,7 @@ public class CommerceDiscountUsageTest {
 				cpDefinition.getCPDefinitionId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
+			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
 			commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
@@ -577,8 +583,8 @@ public class CommerceDiscountUsageTest {
 			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 
 			CommerceContext commerceContext = new TestCommerceContext(
-				_commerceCurrency, commerceChannel, _user, _group,
-				_commerceAccount, commerceOrder);
+				_accountEntry, _commerceCurrency, commerceChannel, _user,
+				_group, commerceOrder);
 
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
@@ -594,8 +600,8 @@ public class CommerceDiscountUsageTest {
 			BigDecimal discountPrice = BigDecimal.ZERO;
 
 			commerceContext = new TestCommerceContext(
-				_commerceCurrency, commerceChannel, _user, _group,
-				_commerceAccount, commerceOrder);
+				_accountEntry, _commerceCurrency, commerceChannel, _user,
+				_group, commerceOrder);
 
 			CommerceProductPrice commerceProductPrice =
 				_commerceProductPriceCalculation.getCommerceProductPrice(
@@ -643,7 +649,7 @@ public class CommerceDiscountUsageTest {
 		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
+			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
 			commerceOrder);
 
 		_commerceOrders.add(commerceOrder);
@@ -659,7 +665,7 @@ public class CommerceDiscountUsageTest {
 		BigDecimal discountPrice = BigDecimal.ZERO;
 
 		commerceContext = new TestCommerceContext(
-			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
+			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
 			commerceOrder);
 
 		CommerceProductPrice commerceProductPrice =
@@ -700,6 +706,12 @@ public class CommerceDiscountUsageTest {
 	}
 
 	private static User _user;
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	private CommerceAccount _commerceAccount;
 

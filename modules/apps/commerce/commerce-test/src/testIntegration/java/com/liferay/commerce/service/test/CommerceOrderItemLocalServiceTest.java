@@ -142,7 +142,7 @@ public class CommerceOrderItemLocalServiceTest {
 			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 
 		_commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group, null, null);
+			null, _commerceCurrency, _commerceChannel, _user, _group, null);
 	}
 
 	@After

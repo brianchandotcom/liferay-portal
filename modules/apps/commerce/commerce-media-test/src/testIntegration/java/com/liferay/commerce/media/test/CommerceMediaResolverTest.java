@@ -18,8 +18,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -118,13 +116,10 @@ public class CommerceMediaResolverTest {
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, _serviceContext);
 
-		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
-			_accountEntry.getAccountEntryId());
-
 		CommerceAccountTestUtil.addAccountGroupAndAccountRel(
 			_user.getCompanyId(), RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
-			_commerceAccount.getCommerceAccountId(), _serviceContext);
+			_accountEntry.getAccountEntryId(), _serviceContext);
 
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
 			_user.getUserId(), RandomTestUtil.randomString(),
@@ -136,6 +131,7 @@ public class CommerceMediaResolverTest {
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId(),
 			_commerceCurrency.getCode());
+
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			RandomTestUtil.randomString(), _group.getGroupId(),
 			RandomTestUtil.randomString(),
@@ -198,8 +194,8 @@ public class CommerceMediaResolverTest {
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null, quantity, quantity,
 				new TestCommerceContext(
-					_commerceCurrency, _commerceChannel, _user, _group,
-					_commerceAccount, _commerceOrder),
+					_accountEntry, _commerceCurrency, _commerceChannel, _user,
+					_group, _commerceOrder),
 				_serviceContext);
 
 		_commerceOrderItems.add(commerceOrderItem);
@@ -302,11 +298,11 @@ public class CommerceMediaResolverTest {
 			StringBundler.concat(
 				PortalUtil.getPathModule(), StringPool.SLASH,
 				CommerceMediaConstants.SERVLET_PATH, "/accounts/",
-				_commerceAccount.getCommerceAccountId(), "/images/",
+				_accountEntry.getAccountEntryId(), "/images/",
 				cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 				"?download=false"),
 			_commerceMediaResolver.getURL(
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 	}
 
@@ -318,11 +314,6 @@ public class CommerceMediaResolverTest {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	private CommerceAccount _commerceAccount;
-
-	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	private CommerceCatalog _commerceCatalog;
 

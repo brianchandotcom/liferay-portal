@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.internal.order.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
@@ -128,9 +130,12 @@ public class CommerceOrderHttpHelperImplTest {
 			_commerceAccountLocalService.getPersonalCommerceAccount(
 				_user.getUserId());
 
+		_accountEntry = _accountEntryLocalService.getAccountEntry(
+			_commerceAccount.getCommerceAccountId());
+
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group,
-			_commerceAccount, null);
+			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
+			null);
 
 		_httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
@@ -237,6 +242,12 @@ public class CommerceOrderHttpHelperImplTest {
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	private static User _user;
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	private CommerceAccount _commerceAccount;
 

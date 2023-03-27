@@ -15,9 +15,9 @@
 package com.liferay.commerce.machine.learning.recommendation.info.collection.provider.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -251,9 +251,8 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 			new MockHttpServletRequest();
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, user, _group,
-			_commerceAccountLocalService.getCommerceAccount(commerceAccountId),
-			null);
+			_accountEntryLocalService.getAccountEntry(commerceAccountId),
+			_commerceCurrency, _commerceChannel, user, _group, null);
 
 		mockHttpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
@@ -312,7 +311,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 	private static final int _ACCOUNT_COUNT = 2;
 
 	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;

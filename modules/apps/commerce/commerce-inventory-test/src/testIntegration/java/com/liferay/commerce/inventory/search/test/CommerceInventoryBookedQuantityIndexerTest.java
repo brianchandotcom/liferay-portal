@@ -123,7 +123,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 
 		_commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group, null, null);
+			null, _commerceCurrency, _commerceChannel, _user, _group, null);
 
 		_indexer = _indexerRegistry.nullSafeGetIndexer(
 			CommerceInventoryBookedQuantity.class);

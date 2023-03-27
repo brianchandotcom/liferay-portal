@@ -128,10 +128,8 @@ public class PlacedOrderItemShipmentResourceTest
 				RandomTestUtil.randomInt(1, 10),
 				RandomTestUtil.randomInt(1, 10),
 				new TestCommerceContext(
-					_commerceCurrency, _commerceChannel, _user, testGroup,
-					_commerceAccountLocalService.getCommerceAccount(
-						_accountEntry.getAccountEntryId()),
-					_commerceOrder),
+					_accountEntry, _commerceCurrency, _commerceChannel, _user,
+					testGroup, _commerceOrder),
 				_serviceContext);
 
 		_country = _countryLocalService.addCountry(

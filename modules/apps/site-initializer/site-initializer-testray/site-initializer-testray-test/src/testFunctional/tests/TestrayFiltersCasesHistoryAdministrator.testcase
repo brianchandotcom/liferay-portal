@@ -372,4 +372,39 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
+	@priority = 5
+	test AdminCanFilterCaseHistoryByAssignee {
+		task ("Given that the user assign to me a case result") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			TestrayTestflow.userAvatarNotPresent(
+				label = "Dates",
+				status = "Test Test");
+
+			Button.click(button = "Assign to Me");
+		}
+
+		task ("When the user filter a case result by assign") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee",
+				value1 = "Test");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user sees only routine 1 that was assign to me in the table") {
+			Testray.assertItemName(key_name = "Routine 1");
+		}
+
+		task ("And the user does not see routine 2 which has not been assigned in the table") {
+			Testray.assertItemNotPresent(key_name = "Routine 2");
+		}
+	}
+
 }

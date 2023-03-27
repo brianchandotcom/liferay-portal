@@ -1,3 +1,5 @@
+const isRTL = document.documentElement.classList.contains('rtl');
+
 const buttonElement = fragmentElement.querySelector('.btn');
 const dropdownElement = fragmentElement.querySelector('.dropdown-menu');
 const optionListElement = fragmentElement.querySelector('.list-unstyled');
@@ -396,7 +398,10 @@ function repositionDropdownElement() {
 	}
 
 	dropdownElement.style.transform = `
-		translateX(${uiInputRect.left + window.scrollX}px)
+		translateX(${
+			(isRTL ? uiInputRect.right - window.innerWidth : uiInputRect.left) +
+			window.scrollX
+		}px)
 		translateY(${uiInputRect.bottom + window.scrollY}px)
 	`;
 }

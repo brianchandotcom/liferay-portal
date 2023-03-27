@@ -17,7 +17,6 @@
 <%@ include file="/logo_selector/init.jsp" %>
 
 <%
-boolean defaultLogo = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:defaultLogo"));
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
 String imageURL = (String)request.getAttribute("liferay-frontend:logo-selector:imageURL");
 String randomNamespace = (String)request.getAttribute("liferay-frontend:logo-selector:randomNamespace");

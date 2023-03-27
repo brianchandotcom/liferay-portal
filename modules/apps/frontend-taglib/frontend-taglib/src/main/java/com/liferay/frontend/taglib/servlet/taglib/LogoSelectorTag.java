@@ -52,10 +52,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _tempImageFileName;
 	}
 
-	public boolean isDefaultLogo() {
-		return _defaultLogo;
-	}
-
 	public boolean isPreserveRatio() {
 		return _preserveRatio;
 	}
@@ -66,10 +62,6 @@ public class LogoSelectorTag extends IncludeTag {
 
 	public void setCurrentLogoURL(String currentLogoURL) {
 		_currentLogoURL = currentLogoURL;
-	}
-
-	public void setDefaultLogo(boolean defaultLogo) {
-		_defaultLogo = defaultLogo;
 	}
 
 	public void setDefaultLogoURL(String defaultLogoURL) {
@@ -97,7 +89,6 @@ public class LogoSelectorTag extends IncludeTag {
 
 		_aspectRatio = 0;
 		_currentLogoURL = null;
-		_defaultLogo = false;
 		_defaultLogoURL = null;
 		_preserveRatio = false;
 		_tempImageFileName = null;
@@ -192,7 +183,6 @@ public class LogoSelectorTag extends IncludeTag {
 
 	private int _aspectRatio;
 	private String _currentLogoURL;
-	private boolean _defaultLogo;
 	private String _defaultLogoURL;
 	private boolean _preserveRatio;
 	private String _tempImageFileName;

@@ -184,4 +184,37 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by routine"
+	@priority = 5
+	test AdminCanFilterCaseHistoryByRoutine {
+		task ("Given that the user has two routine different in the table") {
+            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+            Testray.projectTabNavigator(navTabName = "History");
+
+			Testray.assertItemName(key_name = "Routine 1");
+
+            Testray.assertItemName(key_name = "Routine 2");
+		}
+
+		task ("When the user select a routine called routine 1 in the filter") {
+			TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Routines",
+				value1 = "Routine 1");
+
+			Button.click(button = "Apply");
+		}
+
+        task ("Then the user see only the routine 1 in the table") {
+			Testray.assertItemName(key_name = "Routine 1");
+		}
+
+		task ("And do not see Routine 2 in the table") {
+			Testray.assertItemNotPresent(key_name = "Routine 2");
+		}
+	}
+
 }

@@ -143,6 +143,16 @@ export function PublishedAppsDashboardPage() {
 		return productVersion;
 	}
 
+	function getRolesList(roles: any) {
+		const rolesList: any[] = [];
+
+		roles.forEach((role: any) => {
+			rolesList.push(role.name);
+		});
+
+		return rolesList.join(", ");
+	}
+
 	useEffect(() => {
 		(async () => {
 			const appList = await getProducts();
@@ -212,7 +222,7 @@ export function PublishedAppsDashboardPage() {
 						name: account.name,
 						email: account.emailAddress,
 						image: account.image,
-						role: account.roleBriefs[0].name,
+						role: getRolesList(account.roleBriefs),
 						dateCreated: account.dateCreated,
 						lastLoginDate: account.lastLoginDate,
 						userId: account.id

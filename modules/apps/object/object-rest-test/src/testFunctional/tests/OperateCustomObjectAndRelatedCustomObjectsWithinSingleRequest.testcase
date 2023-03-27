@@ -27,14 +27,22 @@ definition {
 		}
 
 		task ("And Given a many-to-many studentsSubjects relationship created between Student and Subject") {
-			var objectDefinitionId1 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
-
 			ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "studentsSubjects",
 				name = "studentsSubjects",
 				objectDefinitionId1 = ${studentObjectDefinitionId},
 				objectDefinitionId2 = ${subjectObjectDefinitionId},
+				type = "manyToMany");
+		}
+
+		task ("And Given a many-to-many studentsStudents relationship created between Student and itself") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "studentsStudents",
+				name = "studentsStudents",
+				objectDefinitionId1 = ${studentObjectDefinitionId},
+				objectDefinitionId2 = ${studentObjectDefinitionId},
 				type = "manyToMany");
 		}
 	}
@@ -98,6 +106,51 @@ definition {
 				element = "$.totalCount",
 				en_US_plural_label = "students",
 				expectedValues = 4);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateCustomObjectEntriesWithPutChildObjectInManyToManyRelationshipWithItself {
+		property portal.acceptance = "true";
+
+		task ("And Given two Student entries are created with postStudent including studentsStudents with another Student entry information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				externalReferenceCode = "ableErc",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsStudents",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryFieldName = "name");
+		}
+
+		task ("When with putStudent and studentId including studentsStudents with new Student entry information to update Student entry") {
+			var studentId = JSONPathUtil.getIdValue(response = ${response});
+
+			CustomObjectAPI.updateObjectEntry(
+				en_US_plural_label = "students",
+				externalReferenceCode = "ableErc",
+				fieldName = "name",
+				fieldValue = "Able-update",
+				nestedField = "studentsStudents",
+				numberOfRelatedObjectEntries = 1,
+				objectEntryId = ${studentId},
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then the original Student entry is updated") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "students",
+				expectedValues = "Able-update,name0,name0-update");
+		}
+
+		task ("And Then one more Student entry is created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
+				en_US_plural_label = "students",
+				expectedValues = 3);
 		}
 	}
 
@@ -207,6 +260,30 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateTwoCustomObjectEntriesWithPostObjectInManyToManyRelationshipWithItself {
+		property portal.acceptance = "true";
+
+		task ("When creating a Student entry with postStudent including studentsStudents with another two Student entries information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsStudents",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then three Student entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.totalCount",
+				en_US_plural_label = "students",
+				expectedValues = 3);
+		}
+	}
+
 	@description = "Ignore tests unitl LPS-169348 fixed"
 	@disable-webdriver = "true"
 	@ignore = "true"
@@ -309,6 +386,46 @@ definition {
 				element = "$.items[*].name",
 				en_US_plural_label = "students",
 				expectedValues = "name0-update,name1-update");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateCustomObjectEntriesWithPutChildObjectInManyToManyRelationshipWithItself {
+		property portal.acceptance = "true";
+
+		task ("And Given two Student entries with custom ERCs are created with postStudent including studentsStudents with another Student entry information") {
+			var response = CustomObjectAPI.createObjectEntryWithField(
+				en_US_plural_label = "students",
+				externalReferenceCode = "ableErc",
+				fieldName = "name",
+				fieldValue = "Able",
+				nestedField = "studentsStudents",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryExternalReferenceCode = "studentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("When with putStudent and studentId including studentsStudents with modified Student name and its erc to update Student entry") {
+			var studentId = JSONPathUtil.getIdValue(response = ${response});
+
+			CustomObjectAPI.updateObjectEntry(
+				en_US_plural_label = "students",
+				externalReferenceCode = "ableErc",
+				fieldName = "name",
+				fieldValue = "Able-update",
+				nestedField = "studentsStudents",
+				numberOfRelatedObjectEntries = 2,
+				objectEntryId = ${studentId},
+				relatedEntryExternalReferenceCode = "studentErc",
+				relatedEntryFieldName = "name");
+		}
+
+		task ("Then both Students entries are updated") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				element = "$.items[*].name",
+				en_US_plural_label = "students",
+				expectedValues = "Able-update,name0-update,name1-update");
 		}
 	}
 

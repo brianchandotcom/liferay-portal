@@ -17,6 +17,7 @@ package com.liferay.headless.admin.content.internal.resource.v1_0;
 import com.liferay.headless.admin.content.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.content.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -33,7 +34,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -22,20 +22,20 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Paulo Albuquerque
@@ -83,6 +83,14 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 		Map<String, String> termNames = new LinkedHashMap<>();
 
 		for (ObjectField objectField : objectFields) {
+			if (StringUtil.equals(objectField.getName(), "creator") &&
+				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+
+				authorObjectFieldNames.forEach(
+					(termLabel, objectFieldName) -> termNames.put(
+						termLabel, _getTermName(objectFieldName)));
+			}
+
 			termNames.put(
 				objectField.getLabel(user.getLocale()),
 				_getTermName(objectField.getName()));

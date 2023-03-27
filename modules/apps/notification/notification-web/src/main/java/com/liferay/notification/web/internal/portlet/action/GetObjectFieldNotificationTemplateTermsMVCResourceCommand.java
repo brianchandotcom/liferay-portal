@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -77,7 +76,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			if (StringUtil.equals(objectField.getName(), "creator") &&
 				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
 
-				_authorObjectFieldNames.forEach(
+				authorObjectFieldNames.forEach(
 					(termLabel, objectFieldName) -> termNames.put(
 						termLabel, _getTermName(objectFieldName)));
 			}
@@ -96,22 +95,6 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			_objectDefinition.getShortName(), objectFieldName);
 	}
 
-	private final Map<String, String> _authorObjectFieldNames =
-		HashMapBuilder.put(
-			"author-email-address", "AUTHOR_EMAIL_ADDRESS"
-		).put(
-			"author-first-name", "AUTHOR_FIRST_NAME"
-		).put(
-			"author-id", "AUTHOR_ID"
-		).put(
-			"author-last-name", "AUTHOR_LAST_NAME"
-		).put(
-			"author-middle-name", "AUTHOR_MIDDLE_NAME"
-		).put(
-			"author-prefix", "AUTHOR_PREFIX"
-		).put(
-			"author-suffix", "AUTHOR_SUFFIX"
-		).build();
 	private ObjectDefinition _objectDefinition;
 
 	@Reference

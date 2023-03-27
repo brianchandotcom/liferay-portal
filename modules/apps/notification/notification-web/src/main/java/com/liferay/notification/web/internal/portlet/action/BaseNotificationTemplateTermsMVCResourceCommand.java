@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
 import java.util.Set;
@@ -61,6 +62,23 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 	}
 
 	protected abstract Set<Map.Entry<String, String>> getTermNamesEntries();
+
+	protected final Map<String, String> authorObjectFieldNames =
+		HashMapBuilder.put(
+			"author-email-address", "AUTHOR_EMAIL_ADDRESS"
+		).put(
+			"author-first-name", "AUTHOR_FIRST_NAME"
+		).put(
+			"author-id", "AUTHOR_ID"
+		).put(
+			"author-last-name", "AUTHOR_LAST_NAME"
+		).put(
+			"author-middle-name", "AUTHOR_MIDDLE_NAME"
+		).put(
+			"author-prefix", "AUTHOR_PREFIX"
+		).put(
+			"author-suffix", "AUTHOR_SUFFIX"
+		).build();
 
 	@Reference
 	protected JSONFactory jsonFactory;

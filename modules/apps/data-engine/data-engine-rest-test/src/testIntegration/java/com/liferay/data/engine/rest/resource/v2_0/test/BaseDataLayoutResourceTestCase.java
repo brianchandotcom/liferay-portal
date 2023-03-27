@@ -28,10 +28,13 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataLayoutSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,13 +47,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -66,6 +74,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -112,6 +122,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 		DataLayoutResource.Builder builder = DataLayoutResource.builder();
 
 		dataLayoutResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -511,6 +530,70 @@ public abstract class BaseDataLayoutResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDataDefinitionDataLayoutsPageExportBatch()
+		throws Exception {
+
+		Long dataDefinitionId =
+			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
+		Long irrelevantDataDefinitionId =
+			testGetDataDefinitionDataLayoutsPage_getIrrelevantDataDefinitionId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			dataLayoutResource.
+				postDataDefinitionDataLayoutsPageExportBatchHttpResponse(
+					dataDefinitionId, RandomTestUtil.randomString(), null, null,
+					null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		DataLayout[] dataLayouts = getDataLayouts(exportTask);
+
+		long totalCount = dataLayouts.length;
+
+		if (irrelevantDataDefinitionId != null) {
+			DataLayout irrelevantDataLayout =
+				testGetDataDefinitionDataLayoutsPage_addDataLayout(
+					irrelevantDataDefinitionId, randomIrrelevantDataLayout());
+
+			httpResponse =
+				dataLayoutResource.
+					postDataDefinitionDataLayoutsPageExportBatchHttpResponse(
+						irrelevantDataDefinitionId, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			dataLayouts = getDataLayouts(exportTask);
+
+			Assert.assertEquals(1, dataLayouts.length);
+
+			assertEquals(irrelevantDataLayout, dataLayouts[0]);
+		}
+
+		DataLayout dataLayout1 =
+			testGetDataDefinitionDataLayoutsPage_addDataLayout(
+				dataDefinitionId, randomDataLayout());
+
+		DataLayout dataLayout2 =
+			testGetDataDefinitionDataLayoutsPage_addDataLayout(
+				dataDefinitionId, randomDataLayout());
+
+		httpResponse =
+			dataLayoutResource.
+				postDataDefinitionDataLayoutsPageExportBatchHttpResponse(
+					dataDefinitionId, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		dataLayouts = getDataLayouts(exportTask);
+
+		Assert.assertEquals(totalCount + 2, dataLayouts.length);
+
+		assertContains(dataLayout1, Arrays.asList(dataLayouts));
+		assertContains(dataLayout2, Arrays.asList(dataLayouts));
 	}
 
 	@Test
@@ -1269,6 +1352,55 @@ public abstract class BaseDataLayoutResourceTestCase {
 		return false;
 	}
 
+	protected DataLayout[] getDataLayouts(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return DataLayoutSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -1543,6 +1675,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayoutResource dataLayoutResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

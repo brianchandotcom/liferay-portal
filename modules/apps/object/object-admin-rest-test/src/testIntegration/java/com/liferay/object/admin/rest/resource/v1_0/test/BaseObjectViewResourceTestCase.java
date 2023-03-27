@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
 import com.liferay.object.admin.rest.client.pagination.Page;
@@ -31,6 +33,7 @@ import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectViewSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,13 +46,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -65,6 +73,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -111,6 +121,15 @@ public abstract class BaseObjectViewResourceTestCase {
 		ObjectViewResource.Builder builder = ObjectViewResource.builder();
 
 		objectViewResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -513,6 +532,68 @@ public abstract class BaseObjectViewResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionObjectViewsPageExportBatch()
+		throws Exception {
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectViewsPage_getObjectDefinitionId();
+		Long irrelevantObjectDefinitionId =
+			testGetObjectDefinitionObjectViewsPage_getIrrelevantObjectDefinitionId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectViewResource.
+				postObjectDefinitionObjectViewsPageExportBatchHttpResponse(
+					objectDefinitionId, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		ObjectView[] objectViews = getObjectViews(exportTask);
+
+		long totalCount = objectViews.length;
+
+		if (irrelevantObjectDefinitionId != null) {
+			ObjectView irrelevantObjectView =
+				testGetObjectDefinitionObjectViewsPage_addObjectView(
+					irrelevantObjectDefinitionId, randomIrrelevantObjectView());
+
+			httpResponse =
+				objectViewResource.
+					postObjectDefinitionObjectViewsPageExportBatchHttpResponse(
+						irrelevantObjectDefinitionId, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			objectViews = getObjectViews(exportTask);
+
+			Assert.assertEquals(1, objectViews.length);
+
+			assertEquals(irrelevantObjectView, objectViews[0]);
+		}
+
+		ObjectView objectView1 =
+			testGetObjectDefinitionObjectViewsPage_addObjectView(
+				objectDefinitionId, randomObjectView());
+
+		ObjectView objectView2 =
+			testGetObjectDefinitionObjectViewsPage_addObjectView(
+				objectDefinitionId, randomObjectView());
+
+		httpResponse =
+			objectViewResource.
+				postObjectDefinitionObjectViewsPageExportBatchHttpResponse(
+					objectDefinitionId, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		objectViews = getObjectViews(exportTask);
+
+		Assert.assertEquals(totalCount + 2, objectViews.length);
+
+		assertContains(objectView1, Arrays.asList(objectViews));
+		assertContains(objectView2, Arrays.asList(objectViews));
 	}
 
 	@Test
@@ -1150,6 +1231,55 @@ public abstract class BaseObjectViewResourceTestCase {
 		return false;
 	}
 
+	protected ObjectView[] getObjectViews(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return ObjectViewSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -1398,6 +1528,7 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	protected ObjectViewResource objectViewResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

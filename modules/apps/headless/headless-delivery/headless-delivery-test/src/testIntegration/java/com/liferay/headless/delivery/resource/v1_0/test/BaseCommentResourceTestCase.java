@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Comment;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -33,6 +35,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,14 +48,19 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -68,6 +76,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -114,6 +124,15 @@ public abstract class BaseCommentResourceTestCase {
 		CommentResource.Builder builder = CommentResource.builder();
 
 		commentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -557,6 +576,62 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostBlogPostingCommentsPageExportBatch() throws Exception {
+		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
+		Long irrelevantBlogPostingId =
+			testGetBlogPostingCommentsPage_getIrrelevantBlogPostingId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			commentResource.postBlogPostingCommentsPageExportBatchHttpResponse(
+				blogPostingId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Comment[] comments = getComments(exportTask);
+
+		long totalCount = comments.length;
+
+		if (irrelevantBlogPostingId != null) {
+			Comment irrelevantComment =
+				testGetBlogPostingCommentsPage_addComment(
+					irrelevantBlogPostingId, randomIrrelevantComment());
+
+			httpResponse =
+				commentResource.
+					postBlogPostingCommentsPageExportBatchHttpResponse(
+						irrelevantBlogPostingId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			comments = getComments(exportTask);
+
+			Assert.assertEquals(1, comments.length);
+
+			assertEquals(irrelevantComment, comments[0]);
+		}
+
+		Comment comment1 = testGetBlogPostingCommentsPage_addComment(
+			blogPostingId, randomComment());
+
+		Comment comment2 = testGetBlogPostingCommentsPage_addComment(
+			blogPostingId, randomComment());
+
+		httpResponse =
+			commentResource.postBlogPostingCommentsPageExportBatchHttpResponse(
+				blogPostingId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		comments = getComments(exportTask);
+
+		Assert.assertEquals(totalCount + 2, comments.length);
+
+		assertContains(comment1, Arrays.asList(comments));
+		assertContains(comment2, Arrays.asList(comments));
 	}
 
 	@Test
@@ -1414,6 +1489,59 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDocumentCommentsPageExportBatch() throws Exception {
+		Long documentId = testGetDocumentCommentsPage_getDocumentId();
+		Long irrelevantDocumentId =
+			testGetDocumentCommentsPage_getIrrelevantDocumentId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			commentResource.postDocumentCommentsPageExportBatchHttpResponse(
+				documentId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Comment[] comments = getComments(exportTask);
+
+		long totalCount = comments.length;
+
+		if (irrelevantDocumentId != null) {
+			Comment irrelevantComment = testGetDocumentCommentsPage_addComment(
+				irrelevantDocumentId, randomIrrelevantComment());
+
+			httpResponse =
+				commentResource.postDocumentCommentsPageExportBatchHttpResponse(
+					irrelevantDocumentId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			comments = getComments(exportTask);
+
+			Assert.assertEquals(1, comments.length);
+
+			assertEquals(irrelevantComment, comments[0]);
+		}
+
+		Comment comment1 = testGetDocumentCommentsPage_addComment(
+			documentId, randomComment());
+
+		Comment comment2 = testGetDocumentCommentsPage_addComment(
+			documentId, randomComment());
+
+		httpResponse =
+			commentResource.postDocumentCommentsPageExportBatchHttpResponse(
+				documentId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		comments = getComments(exportTask);
+
+		Assert.assertEquals(totalCount + 2, comments.length);
+
+		assertContains(comment1, Arrays.asList(comments));
+		assertContains(comment2, Arrays.asList(comments));
 	}
 
 	@Test
@@ -2947,6 +3075,67 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testPostStructuredContentCommentsPageExportBatch()
+		throws Exception {
+
+		Long structuredContentId =
+			testGetStructuredContentCommentsPage_getStructuredContentId();
+		Long irrelevantStructuredContentId =
+			testGetStructuredContentCommentsPage_getIrrelevantStructuredContentId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			commentResource.
+				postStructuredContentCommentsPageExportBatchHttpResponse(
+					structuredContentId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Comment[] comments = getComments(exportTask);
+
+		long totalCount = comments.length;
+
+		if (irrelevantStructuredContentId != null) {
+			Comment irrelevantComment =
+				testGetStructuredContentCommentsPage_addComment(
+					irrelevantStructuredContentId, randomIrrelevantComment());
+
+			httpResponse =
+				commentResource.
+					postStructuredContentCommentsPageExportBatchHttpResponse(
+						irrelevantStructuredContentId, null, null, null, null,
+						null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			comments = getComments(exportTask);
+
+			Assert.assertEquals(1, comments.length);
+
+			assertEquals(irrelevantComment, comments[0]);
+		}
+
+		Comment comment1 = testGetStructuredContentCommentsPage_addComment(
+			structuredContentId, randomComment());
+
+		Comment comment2 = testGetStructuredContentCommentsPage_addComment(
+			structuredContentId, randomComment());
+
+		httpResponse =
+			commentResource.
+				postStructuredContentCommentsPageExportBatchHttpResponse(
+					structuredContentId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		comments = getComments(exportTask);
+
+		Assert.assertEquals(totalCount + 2, comments.length);
+
+		assertContains(comment1, Arrays.asList(comments));
+		assertContains(comment2, Arrays.asList(comments));
+	}
+
+	@Test
 	public void testPostStructuredContentComment() throws Exception {
 		Comment randomComment = randomComment();
 
@@ -3343,6 +3532,53 @@ public abstract class BaseCommentResourceTestCase {
 		return false;
 	}
 
+	protected Comment[] getComments(ExportTask exportTask) throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return CommentSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -3583,6 +3819,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected CommentResource commentResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

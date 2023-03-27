@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -34,6 +36,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,14 +52,19 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -72,6 +80,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -118,6 +128,15 @@ public abstract class BaseWikiNodeResourceTestCase {
 		WikiNodeResource.Builder builder = WikiNodeResource.builder();
 
 		wikiNodeResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -585,6 +604,58 @@ public abstract class BaseWikiNodeResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWikiNode_addWikiNode();
+	}
+
+	@Test
+	public void testPostSiteWikiNodesPageExportBatch() throws Exception {
+		Long siteId = testGetSiteWikiNodesPage_getSiteId();
+		Long irrelevantSiteId = testGetSiteWikiNodesPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			wikiNodeResource.postSiteWikiNodesPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		WikiNode[] wikiNodes = getWikiNodes(exportTask);
+
+		long totalCount = wikiNodes.length;
+
+		if (irrelevantSiteId != null) {
+			WikiNode irrelevantWikiNode = testGetSiteWikiNodesPage_addWikiNode(
+				irrelevantSiteId, randomIrrelevantWikiNode());
+
+			httpResponse =
+				wikiNodeResource.postSiteWikiNodesPageExportBatchHttpResponse(
+					irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			wikiNodes = getWikiNodes(exportTask);
+
+			Assert.assertEquals(1, wikiNodes.length);
+
+			assertEquals(irrelevantWikiNode, wikiNodes[0]);
+		}
+
+		WikiNode wikiNode1 = testGetSiteWikiNodesPage_addWikiNode(
+			siteId, randomWikiNode());
+
+		WikiNode wikiNode2 = testGetSiteWikiNodesPage_addWikiNode(
+			siteId, randomWikiNode());
+
+		httpResponse =
+			wikiNodeResource.postSiteWikiNodesPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		wikiNodes = getWikiNodes(exportTask);
+
+		Assert.assertEquals(totalCount + 2, wikiNodes.length);
+
+		assertContains(wikiNode1, Arrays.asList(wikiNodes));
+		assertContains(wikiNode2, Arrays.asList(wikiNodes));
 	}
 
 	@Test
@@ -1657,6 +1728,53 @@ public abstract class BaseWikiNodeResourceTestCase {
 		return false;
 	}
 
+	protected WikiNode[] getWikiNodes(ExportTask exportTask) throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return WikiNodeSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -1920,6 +2038,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNodeResource wikiNodeResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

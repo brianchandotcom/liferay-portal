@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
 import com.liferay.object.admin.rest.client.pagination.Page;
@@ -31,6 +33,7 @@ import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectLayoutSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,13 +46,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -65,6 +73,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -111,6 +121,15 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		ObjectLayoutResource.Builder builder = ObjectLayoutResource.builder();
 
 		objectLayoutResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -523,6 +542,69 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionObjectLayoutsPageExportBatch()
+		throws Exception {
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId();
+		Long irrelevantObjectDefinitionId =
+			testGetObjectDefinitionObjectLayoutsPage_getIrrelevantObjectDefinitionId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectLayoutResource.
+				postObjectDefinitionObjectLayoutsPageExportBatchHttpResponse(
+					objectDefinitionId, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		ObjectLayout[] objectLayouts = getObjectLayouts(exportTask);
+
+		long totalCount = objectLayouts.length;
+
+		if (irrelevantObjectDefinitionId != null) {
+			ObjectLayout irrelevantObjectLayout =
+				testGetObjectDefinitionObjectLayoutsPage_addObjectLayout(
+					irrelevantObjectDefinitionId,
+					randomIrrelevantObjectLayout());
+
+			httpResponse =
+				objectLayoutResource.
+					postObjectDefinitionObjectLayoutsPageExportBatchHttpResponse(
+						irrelevantObjectDefinitionId, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			objectLayouts = getObjectLayouts(exportTask);
+
+			Assert.assertEquals(1, objectLayouts.length);
+
+			assertEquals(irrelevantObjectLayout, objectLayouts[0]);
+		}
+
+		ObjectLayout objectLayout1 =
+			testGetObjectDefinitionObjectLayoutsPage_addObjectLayout(
+				objectDefinitionId, randomObjectLayout());
+
+		ObjectLayout objectLayout2 =
+			testGetObjectDefinitionObjectLayoutsPage_addObjectLayout(
+				objectDefinitionId, randomObjectLayout());
+
+		httpResponse =
+			objectLayoutResource.
+				postObjectDefinitionObjectLayoutsPageExportBatchHttpResponse(
+					objectDefinitionId, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		objectLayouts = getObjectLayouts(exportTask);
+
+		Assert.assertEquals(totalCount + 2, objectLayouts.length);
+
+		assertContains(objectLayout1, Arrays.asList(objectLayouts));
+		assertContains(objectLayout2, Arrays.asList(objectLayouts));
 	}
 
 	@Test
@@ -1108,6 +1190,55 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		return false;
 	}
 
+	protected ObjectLayout[] getObjectLayouts(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return ObjectLayoutSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -1349,6 +1480,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	}
 
 	protected ObjectLayoutResource objectLayoutResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

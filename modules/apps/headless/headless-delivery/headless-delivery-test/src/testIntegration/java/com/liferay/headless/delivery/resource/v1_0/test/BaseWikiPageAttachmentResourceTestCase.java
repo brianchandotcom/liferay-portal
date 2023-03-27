@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -31,6 +33,7 @@ import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageAttachmentSerDes
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,8 +46,11 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -67,6 +73,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -112,6 +120,15 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			WikiPageAttachmentResource.builder();
 
 		wikiPageAttachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -652,6 +669,69 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testPostWikiPageWikiPageAttachmentsPageExportBatch()
+		throws Exception {
+
+		Long wikiPageId =
+			testGetWikiPageWikiPageAttachmentsPage_getWikiPageId();
+		Long irrelevantWikiPageId =
+			testGetWikiPageWikiPageAttachmentsPage_getIrrelevantWikiPageId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			wikiPageAttachmentResource.
+				postWikiPageWikiPageAttachmentsPageExportBatchHttpResponse(
+					wikiPageId, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		WikiPageAttachment[] wikiPageAttachments = getWikiPageAttachments(
+			exportTask);
+
+		long totalCount = wikiPageAttachments.length;
+
+		if (irrelevantWikiPageId != null) {
+			WikiPageAttachment irrelevantWikiPageAttachment =
+				testGetWikiPageWikiPageAttachmentsPage_addWikiPageAttachment(
+					irrelevantWikiPageId, randomIrrelevantWikiPageAttachment());
+
+			httpResponse =
+				wikiPageAttachmentResource.
+					postWikiPageWikiPageAttachmentsPageExportBatchHttpResponse(
+						irrelevantWikiPageId, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			wikiPageAttachments = getWikiPageAttachments(exportTask);
+
+			Assert.assertEquals(1, wikiPageAttachments.length);
+
+			assertEquals(irrelevantWikiPageAttachment, wikiPageAttachments[0]);
+		}
+
+		WikiPageAttachment wikiPageAttachment1 =
+			testGetWikiPageWikiPageAttachmentsPage_addWikiPageAttachment(
+				wikiPageId, randomWikiPageAttachment());
+
+		WikiPageAttachment wikiPageAttachment2 =
+			testGetWikiPageWikiPageAttachmentsPage_addWikiPageAttachment(
+				wikiPageId, randomWikiPageAttachment());
+
+		httpResponse =
+			wikiPageAttachmentResource.
+				postWikiPageWikiPageAttachmentsPageExportBatchHttpResponse(
+					wikiPageId, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		wikiPageAttachments = getWikiPageAttachments(exportTask);
+
+		Assert.assertEquals(totalCount + 2, wikiPageAttachments.length);
+
+		assertContains(wikiPageAttachment1, Arrays.asList(wikiPageAttachments));
+		assertContains(wikiPageAttachment2, Arrays.asList(wikiPageAttachments));
+	}
+
+	@Test
 	public void testPostWikiPageWikiPageAttachment() throws Exception {
 		WikiPageAttachment randomWikiPageAttachment =
 			randomWikiPageAttachment();
@@ -1105,6 +1185,55 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		return false;
 	}
 
+	protected WikiPageAttachment[] getWikiPageAttachments(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return WikiPageAttachmentSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -1321,6 +1450,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	}
 
 	protected WikiPageAttachmentResource wikiPageAttachmentResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

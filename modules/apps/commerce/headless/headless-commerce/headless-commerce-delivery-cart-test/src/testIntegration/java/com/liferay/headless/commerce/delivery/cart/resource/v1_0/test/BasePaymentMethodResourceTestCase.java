@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.PaymentMethod;
 import com.liferay.headless.commerce.delivery.cart.client.http.HttpInvoker;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
@@ -30,6 +32,7 @@ import com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0.PaymentMet
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,13 +44,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -63,6 +71,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -107,6 +117,15 @@ public abstract class BasePaymentMethodResourceTestCase {
 		PaymentMethodResource.Builder builder = PaymentMethodResource.builder();
 
 		paymentMethodResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -268,6 +287,65 @@ public abstract class BasePaymentMethodResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostCartPaymentMethodsPageExportBatch() throws Exception {
+		Long cartId = testGetCartPaymentMethodsPage_getCartId();
+		Long irrelevantCartId =
+			testGetCartPaymentMethodsPage_getIrrelevantCartId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			paymentMethodResource.
+				postCartPaymentMethodsPageExportBatchHttpResponse(
+					cartId, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		PaymentMethod[] paymentMethods = getPaymentMethods(exportTask);
+
+		long totalCount = paymentMethods.length;
+
+		if (irrelevantCartId != null) {
+			PaymentMethod irrelevantPaymentMethod =
+				testGetCartPaymentMethodsPage_addPaymentMethod(
+					irrelevantCartId, randomIrrelevantPaymentMethod());
+
+			httpResponse =
+				paymentMethodResource.
+					postCartPaymentMethodsPageExportBatchHttpResponse(
+						irrelevantCartId, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			paymentMethods = getPaymentMethods(exportTask);
+
+			Assert.assertEquals(1, paymentMethods.length);
+
+			assertEquals(irrelevantPaymentMethod, paymentMethods[0]);
+		}
+
+		PaymentMethod paymentMethod1 =
+			testGetCartPaymentMethodsPage_addPaymentMethod(
+				cartId, randomPaymentMethod());
+
+		PaymentMethod paymentMethod2 =
+			testGetCartPaymentMethodsPage_addPaymentMethod(
+				cartId, randomPaymentMethod());
+
+		httpResponse =
+			paymentMethodResource.
+				postCartPaymentMethodsPageExportBatchHttpResponse(
+					cartId, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		paymentMethods = getPaymentMethods(exportTask);
+
+		Assert.assertEquals(totalCount + 2, paymentMethods.length);
+
+		assertContains(paymentMethod1, Arrays.asList(paymentMethods));
+		assertContains(paymentMethod2, Arrays.asList(paymentMethods));
 	}
 
 	protected void assertContains(
@@ -549,6 +627,55 @@ public abstract class BasePaymentMethodResourceTestCase {
 		return false;
 	}
 
+	protected PaymentMethod[] getPaymentMethods(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return PaymentMethodSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -705,6 +832,7 @@ public abstract class BasePaymentMethodResourceTestCase {
 	}
 
 	protected PaymentMethodResource paymentMethodResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

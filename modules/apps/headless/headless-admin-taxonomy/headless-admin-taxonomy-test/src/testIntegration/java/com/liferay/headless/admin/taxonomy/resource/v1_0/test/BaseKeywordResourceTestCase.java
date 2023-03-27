@@ -31,10 +31,13 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -52,15 +55,20 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -76,6 +84,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -133,6 +143,15 @@ public abstract class BaseKeywordResourceTestCase {
 		KeywordResource.Builder builder = KeywordResource.builder();
 
 		keywordResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -582,6 +601,63 @@ public abstract class BaseKeywordResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostAssetLibraryKeywordsPageExportBatch() throws Exception {
+		Long assetLibraryId =
+			testGetAssetLibraryKeywordsPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryKeywordsPage_getIrrelevantAssetLibraryId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			keywordResource.postAssetLibraryKeywordsPageExportBatchHttpResponse(
+				assetLibraryId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Keyword[] keywords = getKeywords(exportTask);
+
+		long totalCount = keywords.length;
+
+		if (irrelevantAssetLibraryId != null) {
+			Keyword irrelevantKeyword =
+				testGetAssetLibraryKeywordsPage_addKeyword(
+					irrelevantAssetLibraryId, randomIrrelevantKeyword());
+
+			httpResponse =
+				keywordResource.
+					postAssetLibraryKeywordsPageExportBatchHttpResponse(
+						irrelevantAssetLibraryId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			keywords = getKeywords(exportTask);
+
+			Assert.assertEquals(1, keywords.length);
+
+			assertEquals(irrelevantKeyword, keywords[0]);
+		}
+
+		Keyword keyword1 = testGetAssetLibraryKeywordsPage_addKeyword(
+			assetLibraryId, randomKeyword());
+
+		Keyword keyword2 = testGetAssetLibraryKeywordsPage_addKeyword(
+			assetLibraryId, randomKeyword());
+
+		httpResponse =
+			keywordResource.postAssetLibraryKeywordsPageExportBatchHttpResponse(
+				assetLibraryId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		keywords = getKeywords(exportTask);
+
+		Assert.assertEquals(totalCount + 2, keywords.length);
+
+		assertContains(keyword1, Arrays.asList(keywords));
+		assertContains(keyword2, Arrays.asList(keywords));
 	}
 
 	@Test
@@ -1301,6 +1377,58 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteKeywordsPageExportBatch() throws Exception {
+		Long siteId = testGetSiteKeywordsPage_getSiteId();
+		Long irrelevantSiteId = testGetSiteKeywordsPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			keywordResource.postSiteKeywordsPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		Keyword[] keywords = getKeywords(exportTask);
+
+		long totalCount = keywords.length;
+
+		if (irrelevantSiteId != null) {
+			Keyword irrelevantKeyword = testGetSiteKeywordsPage_addKeyword(
+				irrelevantSiteId, randomIrrelevantKeyword());
+
+			httpResponse =
+				keywordResource.postSiteKeywordsPageExportBatchHttpResponse(
+					irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			keywords = getKeywords(exportTask);
+
+			Assert.assertEquals(1, keywords.length);
+
+			assertEquals(irrelevantKeyword, keywords[0]);
+		}
+
+		Keyword keyword1 = testGetSiteKeywordsPage_addKeyword(
+			siteId, randomKeyword());
+
+		Keyword keyword2 = testGetSiteKeywordsPage_addKeyword(
+			siteId, randomKeyword());
+
+		httpResponse =
+			keywordResource.postSiteKeywordsPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		keywords = getKeywords(exportTask);
+
+		Assert.assertEquals(totalCount + 2, keywords.length);
+
+		assertContains(keyword1, Arrays.asList(keywords));
+		assertContains(keyword2, Arrays.asList(keywords));
+	}
+
+	@Test
 	public void testPostSiteKeyword() throws Exception {
 		Keyword randomKeyword = randomKeyword();
 
@@ -1853,6 +1981,53 @@ public abstract class BaseKeywordResourceTestCase {
 		return false;
 	}
 
+	protected Keyword[] getKeywords(ExportTask exportTask) throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return KeywordSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -2101,6 +2276,7 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected KeywordResource keywordResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected DepotEntry testDepotEntry;

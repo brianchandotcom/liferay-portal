@@ -28,10 +28,13 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,15 +47,20 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -68,6 +76,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -114,6 +124,15 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccountResource.Builder builder = UserAccountResource.builder();
 
 		userAccountResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -1228,6 +1247,66 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPostAccountUserAccountsPageExportBatch() throws Exception {
+		Long accountId = testGetAccountUserAccountsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountUserAccountsPage_getIrrelevantAccountId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			userAccountResource.
+				postAccountUserAccountsPageExportBatchHttpResponse(
+					accountId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		UserAccount[] userAccounts = getUserAccounts(exportTask);
+
+		long totalCount = userAccounts.length;
+
+		if (irrelevantAccountId != null) {
+			UserAccount irrelevantUserAccount =
+				testGetAccountUserAccountsPage_addUserAccount(
+					irrelevantAccountId, randomIrrelevantUserAccount());
+
+			httpResponse =
+				userAccountResource.
+					postAccountUserAccountsPageExportBatchHttpResponse(
+						irrelevantAccountId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			userAccounts = getUserAccounts(exportTask);
+
+			Assert.assertEquals(1, userAccounts.length);
+
+			assertEquals(irrelevantUserAccount, userAccounts[0]);
+		}
+
+		UserAccount userAccount1 =
+			testGetAccountUserAccountsPage_addUserAccount(
+				accountId, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGetAccountUserAccountsPage_addUserAccount(
+				accountId, randomUserAccount());
+
+		httpResponse =
+			userAccountResource.
+				postAccountUserAccountsPageExportBatchHttpResponse(
+					accountId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		userAccounts = getUserAccounts(exportTask);
+
+		Assert.assertEquals(totalCount + 2, userAccounts.length);
+
+		assertContains(userAccount1, Arrays.asList(userAccounts));
+		assertContains(userAccount2, Arrays.asList(userAccounts));
+	}
+
+	@Test
 	public void testPostAccountUserAccount() throws Exception {
 		UserAccount randomUserAccount = randomUserAccount();
 
@@ -1763,6 +1842,69 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPostOrganizationUserAccountsPageExportBatch()
+		throws Exception {
+
+		String organizationId =
+			testGetOrganizationUserAccountsPage_getOrganizationId();
+		String irrelevantOrganizationId =
+			testGetOrganizationUserAccountsPage_getIrrelevantOrganizationId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			userAccountResource.
+				postOrganizationUserAccountsPageExportBatchHttpResponse(
+					organizationId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		UserAccount[] userAccounts = getUserAccounts(exportTask);
+
+		long totalCount = userAccounts.length;
+
+		if (irrelevantOrganizationId != null) {
+			UserAccount irrelevantUserAccount =
+				testGetOrganizationUserAccountsPage_addUserAccount(
+					irrelevantOrganizationId, randomIrrelevantUserAccount());
+
+			httpResponse =
+				userAccountResource.
+					postOrganizationUserAccountsPageExportBatchHttpResponse(
+						irrelevantOrganizationId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			userAccounts = getUserAccounts(exportTask);
+
+			Assert.assertEquals(1, userAccounts.length);
+
+			assertEquals(irrelevantUserAccount, userAccounts[0]);
+		}
+
+		UserAccount userAccount1 =
+			testGetOrganizationUserAccountsPage_addUserAccount(
+				organizationId, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGetOrganizationUserAccountsPage_addUserAccount(
+				organizationId, randomUserAccount());
+
+		httpResponse =
+			userAccountResource.
+				postOrganizationUserAccountsPageExportBatchHttpResponse(
+					organizationId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		userAccounts = getUserAccounts(exportTask);
+
+		Assert.assertEquals(totalCount + 2, userAccounts.length);
+
+		assertContains(userAccount1, Arrays.asList(userAccounts));
+		assertContains(userAccount2, Arrays.asList(userAccounts));
+	}
+
+	@Test
 	public void testGetSiteUserAccountsPage() throws Exception {
 		Long siteId = testGetSiteUserAccountsPage_getSiteId();
 		Long irrelevantSiteId =
@@ -2110,6 +2252,61 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteUserAccountsPageExportBatch() throws Exception {
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteUserAccountsPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			userAccountResource.postSiteUserAccountsPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		UserAccount[] userAccounts = getUserAccounts(exportTask);
+
+		long totalCount = userAccounts.length;
+
+		if (irrelevantSiteId != null) {
+			UserAccount irrelevantUserAccount =
+				testGetSiteUserAccountsPage_addUserAccount(
+					irrelevantSiteId, randomIrrelevantUserAccount());
+
+			httpResponse =
+				userAccountResource.
+					postSiteUserAccountsPageExportBatchHttpResponse(
+						irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			userAccounts = getUserAccounts(exportTask);
+
+			Assert.assertEquals(1, userAccounts.length);
+
+			assertEquals(irrelevantUserAccount, userAccounts[0]);
+		}
+
+		UserAccount userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		UserAccount userAccount2 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		httpResponse =
+			userAccountResource.postSiteUserAccountsPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		userAccounts = getUserAccounts(exportTask);
+
+		Assert.assertEquals(totalCount + 2, userAccounts.length);
+
+		assertContains(userAccount1, Arrays.asList(userAccounts));
+		assertContains(userAccount2, Arrays.asList(userAccounts));
+	}
+
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -2454,6 +2651,38 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
+	public void testPostUserAccountsPageExportBatch() throws Exception {
+		HttpInvoker.HttpResponse httpResponse =
+			userAccountResource.postUserAccountsPageExportBatchHttpResponse(
+				null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		UserAccount[] userAccounts = getUserAccounts(exportTask);
+
+		long totalCount = userAccounts.length;
+
+		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		httpResponse =
+			userAccountResource.postUserAccountsPageExportBatchHttpResponse(
+				null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		userAccounts = getUserAccounts(exportTask);
+
+		Assert.assertEquals(totalCount + 2, userAccounts.length);
+
+		assertContains(userAccount1, Arrays.asList(userAccounts));
+		assertContains(userAccount2, Arrays.asList(userAccounts));
 	}
 
 	@Test
@@ -3616,6 +3845,55 @@ public abstract class BaseUserAccountResourceTestCase {
 		return false;
 	}
 
+	protected UserAccount[] getUserAccounts(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return UserAccountSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -4077,6 +4355,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	protected UserAccountResource userAccountResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

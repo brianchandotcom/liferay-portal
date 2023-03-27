@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -33,6 +35,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -44,14 +47,19 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -67,6 +75,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -113,6 +123,15 @@ public abstract class BaseSitePageResourceTestCase {
 		SitePageResource.Builder builder = SitePageResource.builder();
 
 		sitePageResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -531,6 +550,58 @@ public abstract class BaseSitePageResourceTestCase {
 	@Test
 	public void testGraphQLGetSiteSitePagesPage() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostSiteSitePagesPageExportBatch() throws Exception {
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
+		Long irrelevantSiteId = testGetSiteSitePagesPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			sitePageResource.postSiteSitePagesPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		SitePage[] sitePages = getSitePages(exportTask);
+
+		long totalCount = sitePages.length;
+
+		if (irrelevantSiteId != null) {
+			SitePage irrelevantSitePage = testGetSiteSitePagesPage_addSitePage(
+				irrelevantSiteId, randomIrrelevantSitePage());
+
+			httpResponse =
+				sitePageResource.postSiteSitePagesPageExportBatchHttpResponse(
+					irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			sitePages = getSitePages(exportTask);
+
+			Assert.assertEquals(1, sitePages.length);
+
+			assertEquals(irrelevantSitePage, sitePages[0]);
+		}
+
+		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
+
+		SitePage sitePage2 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
+
+		httpResponse =
+			sitePageResource.postSiteSitePagesPageExportBatchHttpResponse(
+				siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		sitePages = getSitePages(exportTask);
+
+		Assert.assertEquals(totalCount + 2, sitePages.length);
+
+		assertContains(sitePage1, Arrays.asList(sitePages));
+		assertContains(sitePage2, Arrays.asList(sitePages));
 	}
 
 	@Test
@@ -1323,6 +1394,53 @@ public abstract class BaseSitePageResourceTestCase {
 		return false;
 	}
 
+	protected SitePage[] getSitePages(ExportTask exportTask) throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return SitePageSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -1668,6 +1786,7 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected SitePageResource sitePageResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -36,6 +38,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -53,14 +56,19 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -76,6 +84,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Generated;
 
@@ -134,6 +144,15 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			DocumentFolderResource.builder();
 
 		documentFolderResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ExportTaskResource.Builder exportTaskResourceBuilder =
+			ExportTaskResource.builder();
+
+		exportTaskResource = exportTaskResourceBuilder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -626,6 +645,69 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostAssetLibraryDocumentFoldersPageExportBatch()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentFoldersPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryDocumentFoldersPage_getIrrelevantAssetLibraryId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			documentFolderResource.
+				postAssetLibraryDocumentFoldersPageExportBatchHttpResponse(
+					assetLibraryId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		DocumentFolder[] documentFolders = getDocumentFolders(exportTask);
+
+		long totalCount = documentFolders.length;
+
+		if (irrelevantAssetLibraryId != null) {
+			DocumentFolder irrelevantDocumentFolder =
+				testGetAssetLibraryDocumentFoldersPage_addDocumentFolder(
+					irrelevantAssetLibraryId, randomIrrelevantDocumentFolder());
+
+			httpResponse =
+				documentFolderResource.
+					postAssetLibraryDocumentFoldersPageExportBatchHttpResponse(
+						irrelevantAssetLibraryId, null, null, null, null, null,
+						null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			documentFolders = getDocumentFolders(exportTask);
+
+			Assert.assertEquals(1, documentFolders.length);
+
+			assertEquals(irrelevantDocumentFolder, documentFolders[0]);
+		}
+
+		DocumentFolder documentFolder1 =
+			testGetAssetLibraryDocumentFoldersPage_addDocumentFolder(
+				assetLibraryId, randomDocumentFolder());
+
+		DocumentFolder documentFolder2 =
+			testGetAssetLibraryDocumentFoldersPage_addDocumentFolder(
+				assetLibraryId, randomDocumentFolder());
+
+		httpResponse =
+			documentFolderResource.
+				postAssetLibraryDocumentFoldersPageExportBatchHttpResponse(
+					assetLibraryId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		documentFolders = getDocumentFolders(exportTask);
+
+		Assert.assertEquals(totalCount + 2, documentFolders.length);
+
+		assertContains(documentFolder1, Arrays.asList(documentFolders));
+		assertContains(documentFolder2, Arrays.asList(documentFolders));
 	}
 
 	@Test
@@ -1885,6 +1967,65 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteDocumentFoldersPageExportBatch() throws Exception {
+		Long siteId = testGetSiteDocumentFoldersPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDocumentFoldersPage_getIrrelevantSiteId();
+
+		HttpInvoker.HttpResponse httpResponse =
+			documentFolderResource.
+				postSiteDocumentFoldersPageExportBatchHttpResponse(
+					siteId, null, null, null, null, null, null);
+
+		ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		DocumentFolder[] documentFolders = getDocumentFolders(exportTask);
+
+		long totalCount = documentFolders.length;
+
+		if (irrelevantSiteId != null) {
+			DocumentFolder irrelevantDocumentFolder =
+				testGetSiteDocumentFoldersPage_addDocumentFolder(
+					irrelevantSiteId, randomIrrelevantDocumentFolder());
+
+			httpResponse =
+				documentFolderResource.
+					postSiteDocumentFoldersPageExportBatchHttpResponse(
+						irrelevantSiteId, null, null, null, null, null, null);
+
+			exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+			documentFolders = getDocumentFolders(exportTask);
+
+			Assert.assertEquals(1, documentFolders.length);
+
+			assertEquals(irrelevantDocumentFolder, documentFolders[0]);
+		}
+
+		DocumentFolder documentFolder1 =
+			testGetSiteDocumentFoldersPage_addDocumentFolder(
+				siteId, randomDocumentFolder());
+
+		DocumentFolder documentFolder2 =
+			testGetSiteDocumentFoldersPage_addDocumentFolder(
+				siteId, randomDocumentFolder());
+
+		httpResponse =
+			documentFolderResource.
+				postSiteDocumentFoldersPageExportBatchHttpResponse(
+					siteId, null, null, null, null, null, null);
+
+		exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+		documentFolders = getDocumentFolders(exportTask);
+
+		Assert.assertEquals(totalCount + 2, documentFolders.length);
+
+		assertContains(documentFolder1, Arrays.asList(documentFolders));
+		assertContains(documentFolder2, Arrays.asList(documentFolders));
+	}
+
+	@Test
 	public void testPostSiteDocumentFolder() throws Exception {
 		DocumentFolder randomDocumentFolder = randomDocumentFolder();
 
@@ -2839,6 +2980,55 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		return false;
 	}
 
+	protected DocumentFolder[] getDocumentFolders(ExportTask exportTask)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(100);
+
+		boolean completed = false;
+
+		while ((countDownLatch.getCount() > 0) && !completed) {
+			ExportTask updatedExportTask = exportTaskResource.getExportTask(
+				exportTask.getId());
+
+			if (updatedExportTask.getExecuteStatus() ==
+					ExportTask.ExecuteStatus.COMPLETED) {
+
+				completed = true;
+			}
+			else if (updatedExportTask.getExecuteStatus() ==
+						ExportTask.ExecuteStatus.FAILED) {
+
+				throw new PortalException("The export task failed");
+			}
+			else {
+				countDownLatch.countDown();
+				countDownLatch.await(10, TimeUnit.MILLISECONDS);
+			}
+		}
+
+		Assert.assertTrue(
+			"The status of the Export task is not COMPLETED", completed);
+
+		com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse
+			exportTaskHttpResponse =
+				exportTaskResource.getExportTaskContentHttpResponse(
+					exportTask.getId());
+
+		File file = FileUtil.createTempFile(
+			exportTaskHttpResponse.getBinaryContent());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		try {
+			return DocumentFolderSerDes.toDTOs(
+				zipReader.getEntryAsString("export.json"));
+		}
+		finally {
+			zipReader.close();
+		}
+	}
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
@@ -3137,6 +3327,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected DocumentFolderResource documentFolderResource;
+	protected ExportTaskResource exportTaskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected DepotEntry testDepotEntry;

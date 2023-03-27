@@ -202,12 +202,19 @@ public class ObjectDefinitionNotificationTermEvaluator
 				continue;
 			}
 
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+			if (Validator.isNull(
+					GetterUtil.getLong(
+						termValues.get(objectField.getName())))) {
+
+				return null;
+			}
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2());
 
 			if (!objectDefinition.isSystem()) {
 				ObjectEntry objectEntry =

@@ -3478,22 +3478,27 @@ definition {
 				objectName = "CustomObject176829",
 				pluralLabelName = "Custom Objects 176829");
 
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Formula",
+				fieldLabelName = "Custom Formula Field",
+				fieldName = "customFormulaField",
+				fieldType = "String",
+				formulaScript = "",
+				isRequired = "false",
+				objectName = "CustomObject176829",
+				outputOption = "Decimal");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176829");
+		}
+
+		task ("When: view the formula field details (mandatory option is unavailable)") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 176829");
 
 			ObjectAdmin.goToFieldsTab();
 
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Formula 176829",
-				fieldType = "Formula",
-				formulaFieldOption = "Decimal");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176829");
-		}
-
-		task ("When: view the formula field details (mandatory option is unavailable)") {
-			ObjectAdmin.goToFieldsDetails(label = "Custom Formula 176829");
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
 
 			AssertElementNotPresent(locator1 = "ObjectField#MANDATORY_TOGGLE");
 		}

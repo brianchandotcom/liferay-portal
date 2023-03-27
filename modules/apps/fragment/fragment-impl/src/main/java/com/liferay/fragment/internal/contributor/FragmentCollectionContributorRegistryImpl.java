@@ -311,107 +311,6 @@ public class FragmentCollectionContributorRegistryImpl
 		}
 	}
 
-	private HttpServletRequest _getHttpServletRequest(
-			Company company, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			PermissionChecker permissionChecker, User user)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			company, permissionChecker, user);
-
-		HttpServletRequest companyHttpServletRequest =
-			new HttpServletRequestWrapper(httpServletRequest) {
-
-				@Override
-				public Object getAttribute(String name) {
-					if (Objects.equals(name, WebKeys.COMPANY_ID)) {
-						return company.getCompanyId();
-					}
-
-					if (Objects.equals(name, WebKeys.LAYOUT)) {
-						return themeDisplay.getLayout();
-					}
-
-					if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
-						return themeDisplay;
-					}
-
-					if (Objects.equals(name, WebKeys.USER)) {
-						return user;
-					}
-
-					if (Objects.equals(name, WebKeys.USER_ID)) {
-						return user.getUserId();
-					}
-
-					return super.getAttribute(name);
-				}
-
-			};
-
-		themeDisplay.setRequest(companyHttpServletRequest);
-
-		themeDisplay.setResponse(httpServletResponse);
-
-		return companyHttpServletRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay(
-			Company company, PermissionChecker permissionChecker, User user)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
-		themeDisplay.setCompany(company);
-
-		Group group = _groupLocalService.getGroup(
-			company.getCompanyId(), GroupConstants.GUEST);
-
-		Layout layout = _layoutLocalService.fetchFirstLayout(
-			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			false);
-
-		themeDisplay.setLayout(layout);
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-		themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
-
-		themeDisplay.setLanguageId(layout.getDefaultLanguageId());
-		themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)layout.getLayoutType());
-		themeDisplay.setLocale(
-			LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
-		themeDisplay.setPermissionChecker(permissionChecker);
-		themeDisplay.setPlid(layout.getPlid());
-		themeDisplay.setPortalDomain(company.getVirtualHostname());
-		themeDisplay.setPortalURL(company.getPortalURL(layout.getGroupId()));
-		themeDisplay.setRealUser(user);
-		themeDisplay.setScopeGroupId(layout.getGroupId());
-		themeDisplay.setServerPort(
-			_portal.getPortalServerPort(_isHttpsEnabled()));
-		themeDisplay.setSiteGroupId(layout.getGroupId());
-		themeDisplay.setTimeZone(user.getTimeZone());
-		themeDisplay.setUser(user);
-
-		return themeDisplay;
-	}
-
-	private boolean _isHttpsEnabled() {
-		if (Objects.equals(
-				Http.HTTPS,
-				PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
-			Objects.equals(
-				Http.HTTPS, PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isPropagateContributedFragmentChanges(long companyId)
 		throws ConfigurationException {
 
@@ -432,101 +331,38 @@ public class FragmentCollectionContributorRegistryImpl
 			propagateContributedFragmentChanges();
 	}
 
-	private void _setCompanyContext(
-			Company company, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
-
-		CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
-		User user = _userLocalService.fetchDefaultUser(company.getCompanyId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(company.getCompanyId());
-
-		serviceContext.setRequest(
-			_getHttpServletRequest(
-				company, httpServletRequest, httpServletResponse,
-				permissionChecker, user));
-
-		serviceContext.setUserId(user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-	}
-
 	private void _updateFragmentEntryLinks(
 		Map<String, FragmentEntry> fragmentEntries) {
 
-		long originalCompanyId = CompanyThreadLocal.getCompanyId();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-		ServiceContext originalServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		_companyLocalService.forEachCompany(
+			company -> {
+				try {
+					if (!_isPropagateContributedFragmentChanges(
+							company.getCompanyId())) {
 
-		HttpServletRequest httpServletRequest;
-		HttpServletResponse httpServletResponse;
+						PortletPreferences portletPreferences =
+							_portalPreferencesLocalService.getPreferences(
+								company.getCompanyId(),
+								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-		ThemeDisplay themeDisplay = originalServiceContext.getThemeDisplay();
+						portletPreferences.setValue(
+							"alreadyPropagateContributedFragmentChanges",
+							Boolean.FALSE.toString());
 
-		if (originalServiceContext.getRequest() != null) {
-			httpServletRequest = originalServiceContext.getRequest();
-		}
-		else if ((themeDisplay != null) &&
-				 (themeDisplay.getRequest() != null)) {
-
-			httpServletRequest = themeDisplay.getRequest();
-		}
-		else {
-			httpServletRequest = new MockHttpServletRequest();
-		}
-
-		if ((originalServiceContext.getResponse() == null) &&
-			(themeDisplay != null)) {
-
-			httpServletResponse = themeDisplay.getResponse();
-		}
-		else {
-			httpServletResponse = originalServiceContext.getResponse();
-		}
-
-		try {
-			_companyLocalService.forEachCompany(
-				company -> {
-					try {
-						if (!_isPropagateContributedFragmentChanges(
-								company.getCompanyId())) {
-
-							PortletPreferences portletPreferences =
-								_portalPreferencesLocalService.getPreferences(
-									company.getCompanyId(),
-									PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-							portletPreferences.setValue(
-								"alreadyPropagateContributedFragmentChanges",
-								Boolean.FALSE.toString());
-
-							portletPreferences.store();
-
-							return;
-						}
-
-						_setCompanyContext(
-							company, httpServletRequest, httpServletResponse);
-					}
-					catch (Exception exception) {
-						_log.error(exception);
+						portletPreferences.store();
 
 						return;
 					}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return;
+				}
+
+				try (ServiceContextTemporarySwapper
+						serviceContextTemporarySwapper =
+							new ServiceContextTemporarySwapper(company)) {
 
 					Set<String> fragmentEntriesSet = fragmentEntries.keySet();
 
@@ -553,16 +389,11 @@ public class FragmentCollectionContributorRegistryImpl
 							_log.error(portalException);
 						}
 					}
-				});
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(originalCompanyId);
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-			ServiceContextThreadLocal.pushServiceContext(
-				originalServiceContext);
-		}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			});
 	}
 
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
@@ -1149,6 +980,193 @@ public class FragmentCollectionContributorRegistryImpl
 			}
 
 		};
+
+	}
+
+	private class ServiceContextTemporarySwapper implements AutoCloseable {
+
+		public ServiceContextTemporarySwapper(Company company)
+			throws PortalException {
+
+			_company = company;
+
+			_originalCompanyId = CompanyThreadLocal.getCompanyId();
+			_originalPermissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+			_originalName = PrincipalThreadLocal.getName();
+
+			_originalServiceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay =
+				_originalServiceContext.getThemeDisplay();
+
+			if (_originalServiceContext.getRequest() != null) {
+				_httpServletRequest = _originalServiceContext.getRequest();
+			}
+			else if ((themeDisplay != null) &&
+					 (themeDisplay.getRequest() != null)) {
+
+				_httpServletRequest = themeDisplay.getRequest();
+			}
+			else {
+				_httpServletRequest = new MockHttpServletRequest();
+			}
+
+			if ((_originalServiceContext.getResponse() == null) &&
+				(themeDisplay != null)) {
+
+				_httpServletResponse = themeDisplay.getResponse();
+			}
+			else {
+				_httpServletResponse = _originalServiceContext.getResponse();
+			}
+
+			_setCompanyServiceContext();
+		}
+
+		@Override
+		public void close() {
+			CompanyThreadLocal.setCompanyId(_originalCompanyId);
+			PermissionThreadLocal.setPermissionChecker(
+				_originalPermissionChecker);
+			PrincipalThreadLocal.setName(_originalName);
+			ServiceContextThreadLocal.pushServiceContext(
+				_originalServiceContext);
+		}
+
+		private HttpServletRequest _getHttpServletRequest(
+				PermissionChecker permissionChecker, User user)
+			throws PortalException {
+
+			ThemeDisplay themeDisplay = _getThemeDisplay(
+				_company, permissionChecker, user);
+
+			HttpServletRequest companyHttpServletRequest =
+				new HttpServletRequestWrapper(_httpServletRequest) {
+
+					@Override
+					public Object getAttribute(String name) {
+						if (Objects.equals(name, WebKeys.COMPANY_ID)) {
+							return _company.getCompanyId();
+						}
+
+						if (Objects.equals(name, WebKeys.LAYOUT)) {
+							return themeDisplay.getLayout();
+						}
+
+						if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
+							return themeDisplay;
+						}
+
+						if (Objects.equals(name, WebKeys.USER)) {
+							return user;
+						}
+
+						if (Objects.equals(name, WebKeys.USER_ID)) {
+							return user.getUserId();
+						}
+
+						return super.getAttribute(name);
+					}
+
+				};
+
+			themeDisplay.setRequest(companyHttpServletRequest);
+
+			themeDisplay.setResponse(_httpServletResponse);
+
+			return companyHttpServletRequest;
+		}
+
+		private ThemeDisplay _getThemeDisplay(
+				Company company, PermissionChecker permissionChecker, User user)
+			throws PortalException {
+
+			ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+
+			themeDisplay.setCompany(company);
+
+			Group group = _groupLocalService.getGroup(
+				company.getCompanyId(), GroupConstants.GUEST);
+
+			Layout layout = _layoutLocalService.fetchFirstLayout(
+				group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
+
+			themeDisplay.setLayout(layout);
+
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			themeDisplay.setLayoutSet(layoutSet);
+			themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
+
+			themeDisplay.setLanguageId(layout.getDefaultLanguageId());
+			themeDisplay.setLayoutTypePortlet(
+				(LayoutTypePortlet)layout.getLayoutType());
+			themeDisplay.setLocale(
+				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
+			themeDisplay.setPermissionChecker(permissionChecker);
+			themeDisplay.setPlid(layout.getPlid());
+			themeDisplay.setPortalDomain(company.getVirtualHostname());
+			themeDisplay.setPortalURL(
+				company.getPortalURL(layout.getGroupId()));
+			themeDisplay.setRealUser(user);
+			themeDisplay.setScopeGroupId(layout.getGroupId());
+			themeDisplay.setServerPort(
+				_portal.getPortalServerPort(_isHttpsEnabled()));
+			themeDisplay.setSiteGroupId(layout.getGroupId());
+			themeDisplay.setTimeZone(user.getTimeZone());
+			themeDisplay.setUser(user);
+
+			return themeDisplay;
+		}
+
+		private boolean _isHttpsEnabled() {
+			if (Objects.equals(
+					Http.HTTPS,
+					PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
+				Objects.equals(
+					Http.HTTPS, PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private void _setCompanyServiceContext() throws PortalException {
+			CompanyThreadLocal.setCompanyId(_company.getCompanyId());
+
+			User user = _userLocalService.fetchDefaultUser(
+				_company.getCompanyId());
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(_company.getCompanyId());
+
+			serviceContext.setRequest(
+				_getHttpServletRequest(permissionChecker, user));
+
+			serviceContext.setUserId(user.getUserId());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+
+		private final Company _company;
+		private final HttpServletRequest _httpServletRequest;
+		private final HttpServletResponse _httpServletResponse;
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private final PermissionChecker _originalPermissionChecker;
+		private final ServiceContext _originalServiceContext;
 
 	}
 

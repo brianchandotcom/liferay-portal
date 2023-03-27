@@ -891,6 +891,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
+		CalendarEvent.enableEventBySiteCalendarName(calendarName = "Liferay DXP");
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
@@ -918,6 +920,8 @@ definition {
 			workflowResourceValue = "Calendar Event");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.enableEventBySiteCalendarName(calendarName = "Liferay DXP");
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -1019,6 +1023,8 @@ definition {
 	@description = "LRQA-71887 - Verify that the user can edit the event after it has been published"
 	@priority = 4
 	test CanEditEvent {
+		CalendarEvent.enableEventBySiteCalendarName(calendarName = "Liferay DXP");
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
@@ -1059,6 +1065,8 @@ definition {
 			workflowResourceValue = "Calendar Event");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.enableEventBySiteCalendarName(calendarName = "Liferay DXP");
 
 		CalendarNavigator.gotoAddEvent();
 

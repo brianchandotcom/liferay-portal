@@ -32,7 +32,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 
@@ -165,8 +164,7 @@ public class SearchBarPrecedenceHelperTest {
 		_portlets.add(portlet);
 
 		Mockito.doReturn(
-			Optional.ofNullable(
-				_createPortletPreferences(federatedSearchKey, _DESTINATION))
+			_createPortletPreferences(federatedSearchKey, _DESTINATION)
 		).when(
 			_portletPreferencesLookup
 		).fetchPreferences(

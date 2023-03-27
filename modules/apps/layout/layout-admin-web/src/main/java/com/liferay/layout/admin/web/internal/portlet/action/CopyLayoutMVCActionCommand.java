@@ -76,6 +76,8 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
+		boolean copyPermissions = ParamUtil.getBoolean(
+			actionRequest, "copyPermissions");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
@@ -102,7 +104,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			Layout targetLayout = _layoutService.copyLayout(
-				groupId, privateLayout, nameMap, false, false, false,
+				groupId, privateLayout, nameMap, false, false, copyPermissions,
 				sourcePlid, serviceContext);
 
 			targetLayout = _layoutCopyHelper.copyLayoutContent(

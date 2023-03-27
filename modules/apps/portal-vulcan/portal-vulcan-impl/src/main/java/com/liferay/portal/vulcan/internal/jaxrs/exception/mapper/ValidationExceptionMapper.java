@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.validation.ValidationException;
 
-import javax.ws.rs.core.Response;
-
 /**
  * Converts any {@code ValidationException} to a {@code 400} error.
  *
@@ -32,8 +30,7 @@ public class ValidationExceptionMapper
 
 	@Override
 	protected Problem getProblem(ValidationException validationException) {
-		return new Problem(
-			Response.Status.BAD_REQUEST, validationException.getMessage());
+		return new Problem(validationException);
 	}
 
 }

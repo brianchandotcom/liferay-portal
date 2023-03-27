@@ -921,6 +921,14 @@ definition {
 		PortletEntry.inputTitle(title = ${eventTitle});
 	}
 
+	macro enableEventBySiteCalendarName {
+		if (IsElementNotPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
+			Click(
+				key_calendarName = ${calendarName},
+				locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY");
+		}
+	}
+
 	macro expandResourcesAvailabilityPanel {
 		ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
 

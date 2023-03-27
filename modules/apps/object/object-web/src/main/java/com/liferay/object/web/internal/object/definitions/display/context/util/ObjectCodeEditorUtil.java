@@ -326,10 +326,8 @@ public class ObjectCodeEditorUtil {
 			List<Map<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
-				if (StringUtil.equals(
-						ddmExpressionFunction._key, "old-value") ||
-					(StringUtil.equals(ddmExpressionFunction._key, "power") &&
-					 !FeatureFlagManagerUtil.isEnabled("LPS-164948"))) {
+				if (StringUtil.equals(ddmExpressionFunction._key, "power") &&
+					!FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
 
 					continue;
 				}

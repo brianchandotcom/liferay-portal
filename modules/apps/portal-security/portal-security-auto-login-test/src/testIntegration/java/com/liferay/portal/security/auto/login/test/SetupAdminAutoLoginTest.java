@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auto.login.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.UpdatePasswordAction;
 import com.liferay.portal.kernel.log.Log;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,6 +46,7 @@ import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpSession;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -67,6 +70,9 @@ public class SetupAdminAutoLoginTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_safeCloseable = PropsValuesTestUtil.swapWithSafeCloseable(
+			"DEFAULT_ADMIN_PASSWORD", "");
+
 		_company = CompanyTestUtil.addCompany();
 
 		try {
@@ -82,6 +88,11 @@ public class SetupAdminAutoLoginTest {
 				_log.debug("Error getting user ", exception);
 			}
 		}
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -164,6 +175,7 @@ public class SetupAdminAutoLoginTest {
 
 	private static Company _company;
 	private static String _emailAdressAdminUser;
+	private static SafeCloseable _safeCloseable;
 	private static User _user;
 
 	@Inject(filter = "component.name=*.SetupAdminAutoLogin")

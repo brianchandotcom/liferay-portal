@@ -4437,12 +4437,6 @@ definition {
 	test ViewFacetPersistence {
 		property test.name.skip.portal.instance = "Search#ViewFacetPersistence";
 
-		// Workaround for LPS-89026
-
-		SearchAdministration.executeReindex();
-
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -4580,10 +4574,6 @@ definition {
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
-
-		SearchAdministration.executeReindex();
-
-		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -4967,10 +4957,6 @@ definition {
 		property app.server.types = "tomcat";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Search#ViewSearchResultDetails";
-
-		SearchAdministration.executeReindex();
-
-		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Test");
 

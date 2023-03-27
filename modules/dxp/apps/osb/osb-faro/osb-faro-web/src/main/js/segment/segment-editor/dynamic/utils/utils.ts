@@ -322,7 +322,7 @@ export const convertFieldMappingToIndividualProperty = (
 		entityName: Liferay.Language.get('individual'),
 		id,
 		label: displayName || name,
-		name: context ? `${context}/${name}/value` : name,
+		name: context ? `${context}/${id}/value` : id,
 		propertyKey: FieldOwnerTypes.Individual,
 		type: type.toLowerCase()
 	});

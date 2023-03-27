@@ -9,10 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		Refresh();
 	}
 
 	tearDown {

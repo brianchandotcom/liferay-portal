@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>PRMDashboards</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMDashboards</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>LEGEND_VALUE</td>
+	<td>//div[contains(@class,'${key_chartName}-chart')]//span[contains(@class,'status-legend')]//following-sibling::div/div[text()='${key_legendName}']/following-sibling::div</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

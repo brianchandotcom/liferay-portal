@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -137,7 +138,14 @@ public class ContentDashboardSearchContextBuilder {
 								JSONFactoryUtil.createJSONObject(
 									contentDashboardItemSubtypePayload);
 
-							return jsonObject.getString(Field.ENTRY_CLASS_NAME);
+							String entryClassName = jsonObject.getString(
+								Field.ENTRY_CLASS_NAME);
+
+							if (Validator.isNull(entryClassName)) {
+								return null;
+							}
+
+							return entryClassName;
 						}
 						catch (JSONException jsonException) {
 							_log.error(jsonException);

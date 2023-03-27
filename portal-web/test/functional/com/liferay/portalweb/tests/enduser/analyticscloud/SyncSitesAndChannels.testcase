@@ -254,53 +254,29 @@ definition {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
-		task ("Go to the Site Name and see that the events are being sent") {
-			task ("Go to the site page") {
-				ACUtils.navigateToSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+		task ("Go to the sites and assert that the events are being sent") {
+			for (var siteName : list "Site Name,Minium Demo") {
+				task ("Go to the site page") {
+					ApplicationsMenu.gotoSite(site = ${siteName});
+				}
 
-			task ("Start Har recording") {
-				ProxyUtil.startHarRecording("pageEvents");
-			}
+				task ("Start Har recording") {
+					ProxyUtil.startHarRecording("pageEvents");
+				}
 
-			task ("Refresh the page") {
-				Refresh();
-			}
+				task ("Refresh the page") {
+					Refresh();
+				}
 
-			task ("Wait for sending requests") {
-				ACUtils.waitForSendingRequest();
-			}
+				task ("Wait for sending requests") {
+					ACUtils.waitForSendingRequest();
+				}
 
-			task ("View the pageViewed event triggered") {
-				ACUtils.assertEventPresent(
-					applicationId = "Page",
-					eventId = "pageViewed");
-			}
-		}
-
-		task ("Go to the Minium site and see that the events are being sent") {
-			task ("Go to the site") {
-				ApplicationsMenu.gotoSite(site = "Minium Demo");
-			}
-
-			task ("Start Har recording") {
-				ProxyUtil.startHarRecording("pageEvents");
-			}
-
-			task ("Refresh the page") {
-				Refresh();
-			}
-
-			task ("Wait for sending requests") {
-				ACUtils.waitForSendingRequest();
-			}
-
-			task ("View the pageViewed event triggered") {
-				ACUtils.assertEventPresent(
-					applicationId = "Page",
-					eventId = "pageViewed");
+				task ("View the pageViewed event triggered") {
+					ACUtils.assertEventPresent(
+						applicationId = "Page",
+						eventId = "pageViewed");
+				}
 			}
 		}
 
@@ -318,53 +294,29 @@ definition {
 			}
 		}
 
-		task ("Go to the site and assert that the events are not being sent") {
-			task ("Go to the site page") {
-				ACUtils.navigateToSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+		task ("Go to the sites and assert that the events are not being sent") {
+			for (var siteName : list "Site Name,Minium Demo") {
+				task ("Go to the site page") {
+					ApplicationsMenu.gotoSite(site = ${siteName});
+				}
 
-			task ("Start Har recording") {
-				ProxyUtil.startHarRecording("pageEvents");
-			}
+				task ("Start Har recording") {
+					ProxyUtil.startHarRecording("pageEvents");
+				}
 
-			task ("Refresh the page") {
-				Refresh();
-			}
+				task ("Refresh the page") {
+					Refresh();
+				}
 
-			task ("Wait for sending requests") {
-				ACUtils.waitForSendingRequest();
-			}
+				task ("Wait for sending requests") {
+					ACUtils.waitForSendingRequest();
+				}
 
-			task ("View that the pageViewed event is not triggered") {
-				ACUtils.assertEventNotPresent(
-					applicationId = "Page",
-					eventId = "pageViewed");
-			}
-		}
-
-		task ("Go to the minium site and assert that the events are not being sent") {
-			task ("Go to the minium site page") {
-				ApplicationsMenu.gotoSite(site = "Minium Demo");
-			}
-
-			task ("Start Har recording") {
-				ProxyUtil.startHarRecording("pageEvents");
-			}
-
-			task ("Refresh the page") {
-				Refresh();
-			}
-
-			task ("Wait for sending requests") {
-				ACUtils.waitForSendingRequest();
-			}
-
-			task ("View that the pageViewed event is not triggered") {
-				ACUtils.assertEventNotPresent(
-					applicationId = "Page",
-					eventId = "pageViewed");
+				task ("View that the pageViewed event is not triggered") {
+					ACUtils.assertEventNotPresent(
+						applicationId = "Page",
+						eventId = "pageViewed");
+				}
 			}
 		}
 	}

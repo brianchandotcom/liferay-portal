@@ -14,6 +14,96 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test case for COMMERCE-10907. User can set custom Price Range Facet configurations and use Price Range Facet widget to filter the products, the results should be visible in the Search Result widget"
+	@priority = 3
+	test AssertProductsAreFilteredAfterUpdatingRangesByPriceRangeFacet {
+		property portal.acceptance = "false";
+
+		task ("Given the first two ranges are changed on Price Range Facet widget on a Minium site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			var rangesArray = '''[{'range': '[0 TO 59.99]'}\, {'range': '[60 TO 99.99]'}\, {'range': '[100 TO 199.99]'}\, {'range': '[200 TO 499.99]'}\, {'range': '[500 TO 999.99]'}\, {'range': '[1000 TO *]'}]''';
+
+			CommerceWidget.updateFacetConfiguration(
+				portletName = "Price Range Facet",
+				rangesArray = ${rangesArray});
+		}
+
+		task ("When refresh the page") {
+			Refresh();
+		}
+
+		task ("Then assert the new ranges with the correct counts are shown") {
+			AssertElementPresent(
+				facetValueCount = 23,
+				facetValueName = "$ 0.00 - $ 59.99",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+
+			AssertElementPresent(
+				facetValueCount = 10,
+				facetValueName = "$ 60.00 - $ 99.99",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+
+			AssertElementPresent(
+				facetValueCount = 10,
+				facetValueName = "$ 100.00 - $ 199.99",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+
+			AssertElementPresent(
+				facetValueCount = 4,
+				facetValueName = "$ 200.00 - $ 499.99",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+
+			AssertElementPresent(
+				facetValueCount = 2,
+				facetValueName = "$ 500.00 - $ 999.99",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+
+			AssertElementPresent(
+				facetValueCount = 0,
+				facetValueName = "$ 1,000.00+",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+		}
+
+		task ("And then the user is able to filter products using the first two ranges on the newly set Price Range Facet widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 0.00 - $ 59.99",
+				locator1 = "FormFields#CHECKBOX");
+
+			var productNames = "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount,Transmission Fluid,Wheel Bearing Grease,Tie Rod End Tool,Bushings,Lift Support,Muffler/Resonators,Exhaust Clamps,Valve Cover Grommets,Timing Chain,Timing Chain Tensioner,Seal,Piston,Master Cylinder,Brake Rotors";
+
+			for (var productName : list ${productNames}) {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			Click(
+				key_pageNumber = 2,
+				locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
+
+			for (var productName : list "Premium Brake Pads,Brake Pads,ABS Sensor") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 60.00 - $ 99.99",
+				locator1 = "FormFields#CHECKBOX");
+
+			var productNames = "CV Axles,Shock Absorber,Oil Pump,Bearings,Master Cylinder,Calipers,Wear Sensors,Premium Brake Fluid,Brake Fluid";
+
+			for (var productName : list ${productNames}) {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+	}
+
 	@description = "COMMERCE-6169. As a buyer, I want to filter products using Category Facet widget and the results should be visible on the Search Results widget"
 	@priority = 5
 	test AssertProductsAreFilteredByCategoryFacet {

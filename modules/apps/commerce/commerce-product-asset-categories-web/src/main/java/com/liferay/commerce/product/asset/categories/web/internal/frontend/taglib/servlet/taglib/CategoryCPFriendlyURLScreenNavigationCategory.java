@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.product.asset.categories.web.internal.constants.CPAssetCategoriesScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +37,8 @@ public class CategoryCPFriendlyURLScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "display.page";
+		return CPAssetCategoriesScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_DISPLAY_PAGE;
 	}
 
 	@Override
@@ -49,7 +51,8 @@ public class CategoryCPFriendlyURLScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "general";
+		return CPAssetCategoriesScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_GENERAL;
 	}
 
 	@Reference

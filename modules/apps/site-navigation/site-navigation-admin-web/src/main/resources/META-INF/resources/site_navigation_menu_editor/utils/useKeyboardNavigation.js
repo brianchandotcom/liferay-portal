@@ -28,6 +28,7 @@ export default function useKeyboardNavigation() {
 
 	useEffect(() => {
 		const list = element?.closest('[role="menubar"]');
+
 		const items = list?.querySelectorAll('.focusable-menu-item');
 
 		const isFirstChild = element === items?.[0];
@@ -42,7 +43,7 @@ export default function useKeyboardNavigation() {
 
 		const nextActiveElement = event.relatedTarget;
 
-		if (list.contains(nextActiveElement)) {
+		if (list?.contains(nextActiveElement)) {
 			setIsTarget(false);
 		}
 	}, []);
@@ -50,6 +51,10 @@ export default function useKeyboardNavigation() {
 	const onKeyDown = useCallback(
 		(event) => {
 			const list = element?.closest('[role="menubar"]');
+
+			if (event.target.closest('.add-navigation-menu-item-dropdown')) {
+				return;
+			}
 
 			const items = Array.from(
 				list?.querySelectorAll('.focusable-menu-item')
@@ -101,5 +106,5 @@ export default function useKeyboardNavigation() {
 		[element, rtl]
 	);
 
-	return {isTarget, onBlur, onFocus, onKeyDown, setElement};
+	return {element, isTarget, onBlur, onFocus, onKeyDown, setElement};
 }

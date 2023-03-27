@@ -192,6 +192,18 @@ export async function getAccount() {
 	return response.json();
 }
 
+export async function getUserAccounts() {
+	const response = await fetch(
+		'/o/headless-admin-user/v1.0/user-accounts',
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return response.json();
+}
+
 export async function getCatalogs() {
 	const response = await fetch(
 		'/o/headless-commerce-admin-catalog/v1.0/catalogs',

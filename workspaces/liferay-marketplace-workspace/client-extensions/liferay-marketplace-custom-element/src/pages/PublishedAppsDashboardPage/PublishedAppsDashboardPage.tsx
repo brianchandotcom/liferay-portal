@@ -188,14 +188,14 @@ export function PublishedAppsDashboardPage() {
 			const currentAppNavigationItem = dashboardNavigationItems.find((navigationItem) => navigationItem.itemName === 'apps') as DashboardListItems;
 
 			const newAppNavigationItem = {
-                ...currentAppNavigationItem,
-                items: newAppList,
-            }
+				...currentAppNavigationItem,
+				items: newAppList,
+			}
 
 			setDashboardNavigationItems([
 				newAppNavigationItem,
-                ...dashboardNavigationItems.filter((navigationItem) => navigationItem.itemName !== 'apps')
-            ]);
+				...dashboardNavigationItems.filter((navigationItem) => navigationItem.itemName !== 'apps')
+			]);
 
 			setApps(newAppList);
 		})();

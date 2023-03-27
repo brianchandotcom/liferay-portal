@@ -119,11 +119,13 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
 				</select>
 
-				<div class="mt-3 <%= inputPermissionsShowOptions ? "hide" : "" %>" id="<%= uniqueNamespace %>inputPermissionsShowOptionsLink" style="margin-bottom: 60px;">
-					<a class="btn btn-secondary btn-sm mt-3" href="javascript:<%= uniqueNamespace %>inputPermissionsShowOptions();" role="button"><liferay-ui:message key="more-options" /></a> <liferay-ui:icon-help message="input-permissions-more-options-help" />
-				</div>
+				<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" onclick="<%= uniqueNamespace %>inputPermissionsToggle();" type="button">
+					<%= inputPermissionsShowOptions ? LanguageUtil.get(request, "hide-options") : LanguageUtil.get(request, "more-options") %>
+				</button>
 
-				<a class="btn btn-secondary btn-sm mt-3 <%= inputPermissionsShowOptions ? "" : "hide" %>" href="javascript:<%= uniqueNamespace %>inputPermissionsHideOptions();" id="<%= uniqueNamespace %>inputPermissionsHideOptionsLink" role="button"><liferay-ui:message key="hide-options" /></a>
+				<span class="mt-3 <%= inputPermissionsShowOptions ? "hide" : "" %>" id="<%= uniqueNamespace %>inputPermissionsShowOptionsHelp">
+					<liferay-ui:icon-help message="input-permissions-more-options-help" />
+				</span>
 			</p>
 		</c:if>
 
@@ -137,26 +139,14 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		</c:choose>
 
 		<script>
-			function <%= uniqueNamespace %>inputPermissionsHideOptions() {
-				<%= uniqueNamespace %>togglePermissionsOptions(false);
-			}
 
-			function <%= uniqueNamespace %>inputPermissionsShowOptions() {
-				<%= uniqueNamespace %>togglePermissionsOptions(true);
+			function <%= uniqueNamespace %>inputPermissionsToggle() {
+				var isInputPermissionsShowOptionsTrue = (document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions').value === 'true');
+
+				<%= uniqueNamespace %>togglePermissionsOptions(!isInputPermissionsShowOptionsTrue);
 			}
 
 			function <%= uniqueNamespace %>togglePermissionsOptions(force) {
-				var inputPermissionsHideOptionsLink = document.getElementById('<%= uniqueNamespace %>inputPermissionsHideOptionsLink');
-
-				if (inputPermissionsHideOptionsLink) {
-					if (force) {
-						inputPermissionsHideOptionsLink.classList.remove('hide');
-					}
-					else {
-						inputPermissionsHideOptionsLink.classList.add('hide');
-					}
-				}
-
 				var inputPermissionsTable = document.getElementById('<%= uniqueNamespace %>inputPermissionsTable');
 
 				if (inputPermissionsTable) {
@@ -168,14 +158,14 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					}
 				}
 
-				var inputPermissionsShowOptionsLink = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptionsLink');
+				var inputPermissionsShowOptionsHelp = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptionsHelp');
 
-				if (inputPermissionsShowOptionsLink) {
+				if (inputPermissionsShowOptionsHelp) {
 					if (force) {
-						inputPermissionsShowOptionsLink.classList.add('hide');
+						inputPermissionsShowOptionsHelp.classList.add('hide');
 					}
 					else {
-						inputPermissionsShowOptionsLink.classList.remove('hide');
+						inputPermissionsShowOptionsHelp.classList.remove('hide');
 					}
 				}
 
@@ -183,6 +173,13 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 				if (inputPermissionsShowOptions) {
 					inputPermissionsShowOptions.value = force;
+				}
+
+				var inputPermissionsOptionsButton = document.getElementById('<%= uniqueNamespace %>inputPermissionsOptionsButton');
+
+				if (inputPermissionsOptionsButton) {
+					inputPermissionsOptionsButton.innerText = force ? '<%= LanguageUtil.get(request, "hide-options") %>' :'<%= LanguageUtil.get(request, "more-options") %>' ;
+					inputPermissionsOptionsButton.ariaExpanded = force;
 				}
 			}
 

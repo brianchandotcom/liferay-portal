@@ -37,3 +37,32 @@
 		right: 0;
 	}
 }
+
+.redirect-pattern-row {
+	margin-top: 2rem;
+
+	.redirect-field-repeatable-delete-button,
+	.redirect-field-repeatable-add-button {
+		border-radius: 10px;
+		height: 18px;
+		padding: 2px;
+		position: absolute;
+		top: 0;
+		width: 18px;
+
+		.lexicon-icon {
+			height: 10px;
+			margin-bottom: 7px;
+			margin-top: 0;
+			width: 10px;
+		}
+	}
+
+	.redirect-field-repeatable-delete-button {
+		right: 38px;
+	}
+
+	.redirect-field-repeatable-add-button {
+		right: 16px;
+	}
+}

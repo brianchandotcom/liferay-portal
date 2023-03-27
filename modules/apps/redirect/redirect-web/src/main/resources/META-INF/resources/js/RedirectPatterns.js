@@ -186,11 +186,128 @@ const PatternFieldWithUserAgent = ({
 	);
 };
 
+const PatternFieldOld = ({
+	destinationURL: initialDestinationUrl,
+	error,
+	handleAddClick,
+	handlePatternError,
+	handleRemoveClick,
+	index,
+	pattern = '',
+	portletNamespace,
+	strings,
+}) => {
+	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
+
+	return (
+		<ClayLayout.Row className="redirect-pattern-row">
+			<ClayLayout.Col md="6">
+				<label htmlFor="pattern">
+					{Liferay.Language.get('pattern-field-label')}
+
+					<span
+						className="inline-item-after"
+						title={Liferay.Language.get('pattern-help-message')}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</span>
+				</label>
+
+				<ClayInput
+					defaultValue={pattern}
+					id="pattern"
+					name={`${portletNamespace}pattern_${index}`}
+					type="text"
+				/>
+			</ClayLayout.Col>
+
+			<ClayLayout.Col className={error ? 'has-error' : ''} md="6">
+				<label htmlFor="destinationURL">
+					{Liferay.Language.get('destination-url')}
+
+					<span
+						className="inline-item-after"
+						title={Liferay.Language.get(
+							'destination-url-help-message'
+						)}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</span>
+				</label>
+
+				<ClayInput
+					id="destinationURL"
+					name={`${portletNamespace}destinationURL_${index}`}
+					onBlur={({currentTarget}) => {
+						const error = Boolean(
+							destinationUrl &&
+								!urlAllowRelative(currentTarget.value)
+						);
+
+						handlePatternError(error, index);
+					}}
+					onChange={({currentTarget}) =>
+						setDestinationUrl(currentTarget.value)
+					}
+					type="text"
+					value={destinationUrl}
+				/>
+
+				{index > 0 && (
+					<ClayButton
+						aria-label={Liferay.Language.get('remove')}
+						className="redirect-field-repeatable-delete-button"
+						onClick={() => handleRemoveClick(index)}
+						size="sm"
+						title={Liferay.Language.get('remove')}
+						type="button"
+					>
+						<ClayIcon symbol="hr" />
+					</ClayButton>
+				)}
+
+				<ClayButton
+					className="redirect-field-repeatable-add-button"
+					onClick={() => handleAddClick(index)}
+					size="sm"
+					title={Liferay.Language.get('add')}
+					type="button"
+				>
+					<ClayIcon symbol="plus" />
+				</ClayButton>
+
+				{error && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{Liferay.Language.get('please-enter-a-valid-url')}
+						</ClayForm.FeedbackItem>
+
+						<small>
+							{sub(
+								Liferay.Language.get(
+									'destination-url-error-help-message'
+								),
+								strings.absoluteURL,
+								strings.relativeURL
+							)}
+						</small>
+					</ClayForm.FeedbackGroup>
+				)}
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	);
+};
+
+
 const PatternField = ({...props}) => {
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-175850'] && (
+			{Liferay.FeatureFlags['LPS-175850'] ? (
 				<PatternFieldWithUserAgent {...props} />
+			) : (
+				<PatternFieldOld {...props} />
 			)}
 		</>
 	);

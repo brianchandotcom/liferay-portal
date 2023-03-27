@@ -85,7 +85,7 @@ public class KBAdminNavigationDisplayContext {
 
 		_kbDropdownItemsProvider = new KBDropdownItemsProvider(
 			PortalUtil.getLiferayPortletRequest(
-				(PortletRequest)_httpServletRequest.getAttribute(
+				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST)),
 			_liferayPortletResponse);
 	}

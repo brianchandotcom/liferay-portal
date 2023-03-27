@@ -313,7 +313,9 @@ public class DLAdminManagementToolbarDisplayContext
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527") && !_dlAdminDisplayContext.isNavigationRecent(),
+			() ->
+				!FeatureFlagManagerUtil.isEnabled("LPS-144527") &&
+				!_dlAdminDisplayContext.isNavigationRecent(),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(

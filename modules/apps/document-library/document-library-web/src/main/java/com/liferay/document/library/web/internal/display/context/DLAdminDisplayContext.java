@@ -30,7 +30,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
@@ -96,7 +95,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -555,8 +553,7 @@ public class DLAdminDisplayContext {
 
 		if (userId > 0) {
 			booleanFilter.addTerm(
-				Field.USER_ID, String.valueOf(userId),
-				BooleanClauseOccur.MUST);
+				Field.USER_ID, String.valueOf(userId), BooleanClauseOccur.MUST);
 		}
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
@@ -629,7 +626,9 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setOrderByCol(getOrderByCol());
 		dlSearchContainer.setOrderByType(getOrderByType());
 
-		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine") || navigation.equals("recent")) {
+		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(extensions) ||
+			navigation.equals("mine") || navigation.equals("recent")) {
+
 			if (navigation.equals("recent")) {
 				dlSearchContainer.setOrderByCol("modifiedDate");
 				dlSearchContainer.setOrderByType("desc");
@@ -642,6 +641,7 @@ public class DLAdminDisplayContext {
 			}
 
 			long userId = 0;
+
 			if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
 				userId = _themeDisplay.getUserId();
 				status = WorkflowConstants.STATUS_ANY;
@@ -662,81 +662,73 @@ public class DLAdminDisplayContext {
 			return dlSearchContainer;
 		}
 
-		OrderByComparator<RepositoryEntry> orderByComparator =
+		dlSearchContainer.setOrderByComparator(
 			DLUtil.getRepositoryModelOrderByComparator(
-				getOrderByCol(), getOrderByType(), true);
-
-		dlSearchContainer.setOrderByComparator(orderByComparator);
+				getOrderByCol(), getOrderByType(), true));
 
 		long repositoryId = getRepositoryId();
 
 		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 		String tagName = ParamUtil.getString(_httpServletRequest, "tag");
 
-				if ((categoryId > 0) || Validator.isNotNull(tagName)) {
-					long[] classNameIds = {
-						PortalUtil.getClassNameId(
-							DLFileEntryConstants.getClassName()),
-						PortalUtil.getClassNameId(
-							DLFileShortcutConstants.getClassName())
-					};
+		if ((categoryId > 0) || Validator.isNotNull(tagName)) {
+			long[] classNameIds = {
+				PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()),
+				PortalUtil.getClassNameId(
+					DLFileShortcutConstants.getClassName())
+			};
 
-					AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
-						classNameIds, dlSearchContainer);
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
+				classNameIds, dlSearchContainer);
 
-					assetEntryQuery.setEnablePermissions(true);
-					assetEntryQuery.setExcludeZeroViewCount(false);
+			assetEntryQuery.setEnablePermissions(true);
+			assetEntryQuery.setExcludeZeroViewCount(false);
 
-					List<RepositoryEntry> results = new ArrayList<>();
+			List<RepositoryEntry> results = new ArrayList<>();
 
-					for (AssetEntry assetEntry :
-							AssetEntryServiceUtil.getEntries(assetEntryQuery)) {
+			for (AssetEntry assetEntry :
+					AssetEntryServiceUtil.getEntries(assetEntryQuery)) {
 
-						if (Objects.equals(
-								assetEntry.getClassName(),
-								DLFileEntryConstants.getClassName())) {
+				if (Objects.equals(
+						assetEntry.getClassName(),
+						DLFileEntryConstants.getClassName())) {
 
-							FileEntry fileEntry =
-								DLAppLocalServiceUtil.getFileEntry(
-									assetEntry.getClassPK());
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						assetEntry.getClassPK());
 
-							if (_isAncestorFolder(folderId, fileEntry) ||
-								((folderId ==
-									DLFolderConstants.
-										DEFAULT_PARENT_FOLDER_ID) &&
-								 (fileEntry.getRepositoryId() ==
-									 repositoryId))) {
+					if (_isAncestorFolder(folderId, fileEntry) ||
+						((folderId ==
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+						 (fileEntry.getRepositoryId() == repositoryId))) {
 
-								results.add(fileEntry);
-							}
-						}
-						else {
-							results.add(
-								DLAppLocalServiceUtil.getFileShortcut(
-									assetEntry.getClassPK()));
-						}
+						results.add(fileEntry);
 					}
-
-					dlSearchContainer.setResultsAndTotal(
-						() -> results,
-						AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 				}
 				else {
-					int dlAppStatus = status;
+					results.add(
+						DLAppLocalServiceUtil.getFileShortcut(
+							assetEntry.getClassPK()));
+				}
+			}
 
-					dlSearchContainer.setResultsAndTotal(
-						() ->
-							(List)
-								DLAppServiceUtil.
-									getFoldersAndFileEntriesAndFileShortcuts(
-										repositoryId, folderId, dlAppStatus,
-										true, dlSearchContainer.getStart(),
-										dlSearchContainer.getEnd(),
-										dlSearchContainer.
-											getOrderByComparator()),
+			dlSearchContainer.setResultsAndTotal(
+				() -> results,
+				AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
+		}
+		else {
+			int dlAppStatus = status;
+
+			dlSearchContainer.setResultsAndTotal(
+				() ->
+					(List)
 						DLAppServiceUtil.
-							getFoldersAndFileEntriesAndFileShortcutsCount(
-								repositoryId, folderId, dlAppStatus, true));
+							getFoldersAndFileEntriesAndFileShortcuts(
+								repositoryId, folderId, dlAppStatus, true,
+								dlSearchContainer.getStart(),
+								dlSearchContainer.getEnd(),
+								dlSearchContainer.getOrderByComparator()),
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+					repositoryId, folderId, dlAppStatus, true));
 		}
 
 		return dlSearchContainer;
@@ -744,6 +736,7 @@ public class DLAdminDisplayContext {
 
 	private String _getEmptyResultsMessage(long fileEntryTypeId)
 		throws PortalException {
+
 		if (fileEntryTypeId < 0) {
 			return "there-are-no-documents-or-media-files-in-this-folder";
 		}
@@ -796,8 +789,8 @@ public class DLAdminDisplayContext {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Documents and Media search index is stale ",
-							"and contains file entry {", fileEntryId, "}"),
+							"Documents and Media search index is stale and ",
+							"contains file entry {", fileEntryId, "}"),
 						exception);
 				}
 
@@ -898,31 +891,13 @@ public class DLAdminDisplayContext {
 
 		searchContext.setAttribute("paginationType", "none");
 		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setSorts(
+			_getSort(
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType()));
 		searchContext.setStart(searchContainer.getStart());
-		searchContext.setSorts(_getSort(searchContainer.getOrderByCol(), searchContainer.getOrderByType()));
 
 		return searchContext;
-	}
-
-	private Sort _getSort(String orderByCol, String orderByType) {
-		int type = Sort.STRING_TYPE;
-		String fieldName = orderByCol;
-
-		if (Objects.equals(orderByCol, "creationDate")) {
-			fieldName = Field.CREATE_DATE;
-			type = Sort.LONG_TYPE;
-		}
-		else if (Objects.equals(orderByCol, "modifiedDate")) {
-			fieldName = Field.MODIFIED_DATE;
-			type = Sort.LONG_TYPE;
-		}
-		else if (Objects.equals(orderByCol, "size")) {
-			type = Sort.LONG_TYPE;
-		}
-
-		return SortFactoryUtil.create(
-			fieldName, type,
-			!StringUtil.equalsIgnoreCase(orderByType, "asc"));
 	}
 
 	private List<RepositoryEntry> _getSearchResults(Hits hits)
@@ -984,6 +959,26 @@ public class DLAdminDisplayContext {
 			() -> _getSearchResults(hits), hits.getLength());
 
 		return searchContainer;
+	}
+
+	private Sort _getSort(String orderByCol, String orderByType) {
+		int type = Sort.STRING_TYPE;
+		String fieldName = orderByCol;
+
+		if (Objects.equals(orderByCol, "creationDate")) {
+			fieldName = Field.CREATE_DATE;
+			type = Sort.LONG_TYPE;
+		}
+		else if (Objects.equals(orderByCol, "modifiedDate")) {
+			fieldName = Field.MODIFIED_DATE;
+			type = Sort.LONG_TYPE;
+		}
+		else if (Objects.equals(orderByCol, "size")) {
+			type = Sort.LONG_TYPE;
+		}
+
+		return SortFactoryUtil.create(
+			fieldName, type, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
 	}
 
 	private boolean _isAncestorFolder(long folderId, FileEntry fileEntry) {

@@ -39,6 +39,7 @@ import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -82,9 +83,10 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 		for (int i = 0; i < (jsonArray.length() - 1); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String id = AssetEntriesSearchFacet.class.getName();
+			if (!Objects.equals(
+					AssetEntriesSearchFacet.class.getName(),
+					jsonObject.getString("id"))) {
 
-			if (!id.equals(jsonObject.getString("id"))) {
 				continue;
 			}
 

@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -102,6 +103,10 @@ public class ObjectDefinitionResourcePermissionUtil {
 				"<action-key>ADD_DISCUSSION</action-key>",
 				"<action-key>DELETE_DISCUSSION</action-key>",
 				"<action-key>UPDATE_DISCUSSION</action-key>");
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-164582")) {
+			return permissionsSupports;
 		}
 
 		if (objectDefinition.isEnableObjectEntryHistory()) {

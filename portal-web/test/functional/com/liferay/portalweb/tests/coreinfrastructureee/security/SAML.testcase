@@ -3298,7 +3298,7 @@ definition {
 				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:8080",
-				uploadMetadataXML = "idp-metadata.xml",
+				uploadMetadataXML = "identity-provider-metadata.xml",
 				userEmailAddress = "test@www.able.com",
 				userMatchingAttributeIndex = 4,
 				userResolution = "attribute");
@@ -3380,7 +3380,7 @@ definition {
 				idpEntityId = "samlidp",
 				metadata = "true",
 				spURL = "http://www.able.com:8080",
-				uploadMetadataXML = "idp-metadata.xml",
+				uploadMetadataXML = "identity-provider-metadata.xml",
 				userEmailAddress = "test@www.able.com",
 				viewMetadata = "true");
 		}
@@ -5513,7 +5513,7 @@ uuid''',
 				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:8080",
-				uploadMetadataXML = "idp-metadata.xml",
+				uploadMetadataXML = "identity-provider-metadata.xml",
 				userEmailAddress = "test@www.able.com",
 				userMatchingAttributeIndex = 4,
 				userResolution = "attribute");
@@ -5536,7 +5536,7 @@ uuid''',
 				spEntityId = "samlsp",
 				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
 				spURL = "http://www.able.com:8080",
-				uploadMetadataXML = "sp-metadata.xml",
+				uploadMetadataXML = "service-provider-metadata.xml",
 				userEmailAddress = "test@liferay.com");
 		}
 

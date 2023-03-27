@@ -393,7 +393,7 @@ public class ObjectLayoutLocalServiceTest {
 		List<ScreenNavigationCategory> screenNavigationCategories =
 			_screenNavigationRegistry.getScreenNavigationCategories(
 				_objectDefinition.getClassName(), TestPropsValues.getUser(),
-				ObjectLayoutTab.class);
+				null);
 
 		Assert.assertTrue(screenNavigationCategories.isEmpty());
 
@@ -408,7 +408,7 @@ public class ObjectLayoutLocalServiceTest {
 		screenNavigationCategories =
 			_screenNavigationRegistry.getScreenNavigationCategories(
 				_objectDefinition.getClassName(), TestPropsValues.getUser(),
-				ObjectLayoutTab.class);
+				null);
 
 		Assert.assertEquals(
 			screenNavigationCategories.toString(), 1,
@@ -419,7 +419,7 @@ public class ObjectLayoutLocalServiceTest {
 		screenNavigationCategories =
 			_screenNavigationRegistry.getScreenNavigationCategories(
 				_objectDefinition.getClassName(), TestPropsValues.getUser(),
-				ObjectLayoutTab.class);
+				null);
 
 		Assert.assertEquals(
 			screenNavigationCategories.toString(), 1,
@@ -432,7 +432,7 @@ public class ObjectLayoutLocalServiceTest {
 		screenNavigationCategories =
 			_screenNavigationRegistry.getScreenNavigationCategories(
 				_objectDefinition.getClassName(), TestPropsValues.getUser(),
-				ObjectLayoutTab.class);
+				null);
 
 		Assert.assertTrue(screenNavigationCategories.isEmpty());
 	}

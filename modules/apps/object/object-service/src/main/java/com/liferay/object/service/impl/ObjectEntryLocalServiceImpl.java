@@ -228,13 +228,13 @@ public class ObjectEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validateValues(
-			user.isDefaultUser(), objectDefinitionId, null,
-			objectDefinition.getPortletId(), serviceContext, userId, values);
-
 		_fillDefaultValue(
 			_objectFieldLocalService.getObjectFields(objectDefinitionId),
 			values);
+
+		_validateValues(
+			user.isDefaultUser(), objectDefinitionId, null,
+			objectDefinition.getPortletId(), serviceContext, userId, values);
 
 		long objectEntryId = counterLocalService.increment();
 

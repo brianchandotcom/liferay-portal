@@ -289,10 +289,12 @@ public class BreadcrumbUtil {
 		int layoutsPageCount = 0;
 
 		if (layoutSet.isPrivateLayout()) {
-			layoutsPageCount = group.getPrivateLayoutsPageCount();
+			layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
+				group.getGroupId(), true);
 		}
 		else {
-			layoutsPageCount = group.getPublicLayoutsPageCount();
+			layoutsPageCount = LayoutServiceUtil.getLayoutsCount(
+				group.getGroupId(), false);
 		}
 
 		if ((layoutsPageCount > 0) && !_isGuestGroup(group)) {

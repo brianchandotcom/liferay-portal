@@ -40,6 +40,7 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 			dtoMDFRequestResponse = await updateMDFRequest(
 				ResourceName.MDF_REQUEST_DXP,
 				mdfRequest,
+				mdfRequest.id,
 				dtoMDFRequestSFResponse.externalReferenceCode
 			);
 		}

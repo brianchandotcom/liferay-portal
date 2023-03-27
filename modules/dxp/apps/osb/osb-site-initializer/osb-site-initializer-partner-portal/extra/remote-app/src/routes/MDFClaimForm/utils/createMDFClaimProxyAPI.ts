@@ -31,7 +31,8 @@ export default async function createMDFClaimProxyAPI(
 			mdfRequest,
 			mdfClaim.externalReferenceCodeSF
 		);
-	} else {
+	}
+	else {
 		dtoMDFClaimSFResponse = await createMDFClaim(
 			ResourceName.MDF_CLAIM_SALESFORCE,
 			mdfClaim,
@@ -51,7 +52,8 @@ export default async function createMDFClaimProxyAPI(
 				mdfClaim.reimbursementInvoice?.id as LiferayFile & number,
 				dtoMDFClaimSFResponse.externalReferenceCode
 			);
-		} else {
+		}
+		else {
 			dtoMDFClaimResponse = await createMDFClaim(
 				ResourceName.MDF_CLAIM_DXP,
 				mdfClaim,

@@ -151,7 +151,8 @@
 							},
 							{
 								"key": "claimPaid",
-								"objectStateTransitions": []
+								"objectStateTransitions": [
+								]
 							},
 							{
 								"key": "inFinanceReview",

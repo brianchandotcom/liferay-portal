@@ -102,6 +102,8 @@ public class UserSetDigestTest {
 
 		user.setScreenName(RandomTestUtil.randomString());
 		user.setEmailAddress(_generateRandomEmailAddress());
+
+		Assert.assertNotNull(user.getDigest());
 	}
 
 	@Test
@@ -117,6 +119,8 @@ public class UserSetDigestTest {
 			user.getDigest());
 
 		user.setScreenName(RandomTestUtil.randomString());
+
+		Assert.assertNotNull(user.getDigest());
 	}
 
 	@Test
@@ -134,6 +138,8 @@ public class UserSetDigestTest {
 			user.getDigest());
 
 		user.setEmailAddress(_generateRandomEmailAddress());
+
+		Assert.assertNotNull(user.getDigest());
 	}
 
 	private String _generateRandomEmailAddress() {

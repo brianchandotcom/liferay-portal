@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.sample;
+package com.sample;
 
-import org.springframework.boot.SpringApplication;
+import com.liferay.client.extension.util.spring.ClientExtensionUtilSpringComponentScan;
+
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Import;
 
 /**
- * @author Raymond Augé
  * @author Gregory Amerson
- * @author Brian Wing Shun Chan
  */
+@Import(ClientExtensionUtilSpringComponentScan.class)
 @SpringBootApplication
 public class SampleSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SampleSpringBootApplication.class, args);
+		new SpringApplicationBuilder(
+			SampleSpringBootApplication.class
+		).web(
+			WebApplicationType.NONE
+		).run(
+			args
+		);
 	}
 
 }

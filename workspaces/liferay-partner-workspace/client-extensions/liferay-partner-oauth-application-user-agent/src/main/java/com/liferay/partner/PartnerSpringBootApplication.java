@@ -14,13 +14,17 @@
 
 package com.liferay.partner;
 
+import com.liferay.client.extension.util.spring.ClientExtensionUtilSpringComponentScan;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author Jair Medeiros
  * @author Thaynam Lázaro
  */
+@Import(ClientExtensionUtilSpringComponentScan.class)
 @SpringBootApplication
 public class PartnerSpringBootApplication {
 

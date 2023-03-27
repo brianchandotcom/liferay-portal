@@ -1,7 +1,7 @@
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
-		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.3"
+		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.9"
 	}
 
 	repositories {
@@ -20,14 +20,15 @@ apply plugin: "org.springframework.boot"
 dependencies {
 	compile group: "com.force.api", name: "force-partner-api", version: "56.2.0"
 	compile group: "com.force.api", name: "force-wsc", version: "56.2.0"
+	compile group: "com.liferay", name: "com.liferay.client.extension.util.spring", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.object.admin.rest.client", version: "latest.release"
 	compile group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
 	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
 	compile group: "commons-logging", name: "commons-logging", version: "1.2"
 	compile group: "org.json", name: "json", version: "20220320"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.3"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.3"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.3"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.9"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.9"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.9"
 
 	runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.89.Final:osx-aarch_64")
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0;
 
+import com.liferay.client.extension.util.spring.ClientExtensionUtilSpringComponentScan;
 import com.liferay.jethr0.dalo.ProjectComparatorDALO;
 import com.liferay.jethr0.dalo.ProjectDALO;
 import com.liferay.jethr0.dalo.ProjectPrioritizerDALO;
@@ -26,10 +27,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author Michael Hashimoto
  */
+@Import(ClientExtensionUtilSpringComponentScan.class)
 @SpringBootApplication
 public class Jethr0SpringBootApplication {
 

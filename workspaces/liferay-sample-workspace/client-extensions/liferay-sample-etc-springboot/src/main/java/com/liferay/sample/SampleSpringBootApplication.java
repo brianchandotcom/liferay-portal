@@ -12,17 +12,25 @@
  * details.
  */
 
-package com.liferay.jethr0.util;
+package com.liferay.sample;
 
-import java.util.Locale;
+import com.liferay.client.extension.util.spring.ClientExtensionUtilSpringComponentScan;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 /**
- * @author Michael Hashimoto
+ * @author Raymond Augé
+ * @author Gregory Amerson
+ * @author Brian Wing Shun Chan
  */
-public class LocaleUtil {
+@Import(ClientExtensionUtilSpringComponentScan.class)
+@SpringBootApplication
+public class SampleSpringBootApplication {
 
-	public static Locale getDefault() {
-		return Locale.getDefault();
+	public static void main(String[] args) {
+		SpringApplication.run(SampleSpringBootApplication.class, args);
 	}
 
 }

@@ -316,12 +316,7 @@ public class FragmentCollectionContributorPropagationTest {
 
 		httpServletRequest.setAttribute(
 			WebKeys.COMPANY_ID, company.getCompanyId());
-
 		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		httpServletRequest.setAttribute(WebKeys.USER, user);
-
-		httpServletRequest.setAttribute(WebKeys.USER_ID, user.getUserId());
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -347,6 +342,9 @@ public class FragmentCollectionContributorPropagationTest {
 		themeDisplay.setUser(user);
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		httpServletRequest.setAttribute(WebKeys.USER, user);
+		httpServletRequest.setAttribute(WebKeys.USER_ID, user.getUserId());
 
 		serviceContext.setRequest(httpServletRequest);
 

@@ -109,7 +109,7 @@ public class ContentDashboardSearchContextBuilder {
 								JSONFactoryUtil.createJSONObject(
 									contentDashboardItemSubtypePayload);
 
-							if (!jsonObject.isNull("classPK")) {
+							if (jsonObject.isNull("classPK")) {
 								return null;
 							}
 

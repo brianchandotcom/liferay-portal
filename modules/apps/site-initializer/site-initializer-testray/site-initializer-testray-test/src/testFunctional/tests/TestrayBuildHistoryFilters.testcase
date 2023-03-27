@@ -118,4 +118,33 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by product version"
+	@priority = 5
+	test AdminCanFilterBuildHistoryByProductVersion {
+        task ("Given that the user has two builds with different versions in the table") {
+            Testray.assertItemName(key_name = "7.0");
+
+			Testray.assertItemName(key_name = "1.2");
+		}
+
+		task ("When the user select product version 7.0 in the filter") {
+			TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Product Version",
+				value1 = "7.0");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user gets only products with version 7.0 in the table") {
+            Testray.assertItemName(key_name = "7.0");
+        }
+
+        task ("And do not get the products with other versions in the table") {
+			Testray.assertItemNotPresent(key_name = "1.2");
+		}
+	}
+
 }

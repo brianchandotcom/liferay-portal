@@ -235,7 +235,9 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 									),
 									[
 										interestName,
-										formatUTCDateFromUnix(Date.now())
+										formatUTCDateFromUnix(
+											Date.now() - 24 * 60 * 60 * 1000
+										)
 									]
 							  )
 							: sub(

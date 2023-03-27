@@ -212,4 +212,29 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should not see build history that don't exist when I try filtering for them"
+	@priority = 4
+	test AdminCanFilterForNonexistantBuildHistory {
+        task ("Given that the user has two builds different in the table") {
+            Testray.assertItemName(key_name = "Build 1");
+
+			Testray.assertItemName(key_name = "Build 2");
+		}
+
+		task ("When the user filters a build by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Build Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Build 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
 }

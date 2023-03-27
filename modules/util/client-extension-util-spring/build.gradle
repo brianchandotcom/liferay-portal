@@ -1,3 +1,5 @@
 dependencies {
-	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.3"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.9"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.9"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.9"
 }

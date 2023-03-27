@@ -14,13 +14,13 @@
 
 package com.liferay.client.extension.util.spring;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Gregory Amerson
  */
+@ComponentScan
 @Configuration
-@EnableWebSecurity
-public class ClientExtensionEnableWebSecurity {
+public class ClientExtensionUtilSpringComponentScan {
 }

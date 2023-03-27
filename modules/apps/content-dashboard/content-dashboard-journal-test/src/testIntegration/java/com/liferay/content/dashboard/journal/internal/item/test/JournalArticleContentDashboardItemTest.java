@@ -653,7 +653,7 @@ public class JournalArticleContentDashboardItemTest {
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
 				specificInformationList) {
 
-			if (Objects.equals("display-date", specificInformation.getKey())) {
+			if (Objects.equals(specificInformation.getKey(), "display-date")) {
 				displayDateSpecificInformation = specificInformation;
 
 				break;
@@ -697,7 +697,7 @@ public class JournalArticleContentDashboardItemTest {
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
 				specificInformationList) {
 
-			if (Objects.equals("review-date", specificInformation.getKey())) {
+			if (Objects.equals(specificInformation.getKey(), "review-date")) {
 				reviewDateSpecificInformation = specificInformation;
 
 				break;

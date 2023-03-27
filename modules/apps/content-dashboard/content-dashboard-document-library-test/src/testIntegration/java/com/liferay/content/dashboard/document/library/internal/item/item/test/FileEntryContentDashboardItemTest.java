@@ -463,7 +463,7 @@ public class FileEntryContentDashboardItemTest {
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
 				specificInformationList) {
 
-			if (Objects.equals("extension", specificInformation.getKey())) {
+			if (Objects.equals(specificInformation.getKey(), "extension")) {
 				extensionSpecificInformation = specificInformation;
 
 				break;
@@ -482,7 +482,7 @@ public class FileEntryContentDashboardItemTest {
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
 				specificInformationList) {
 
-			if (Objects.equals("size", specificInformation.getKey())) {
+			if (Objects.equals(specificInformation.getKey(), "size")) {
 				sizeSpecificInformation = specificInformation;
 
 				break;
@@ -507,7 +507,7 @@ public class FileEntryContentDashboardItemTest {
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
 				specificInformationList) {
 
-			if (Objects.equals("web-dav-url", specificInformation.getKey())) {
+			if (Objects.equals(specificInformation.getKey(), "web-dav-url")) {
 				webDAVSpecificInformation =
 					(ContentDashboardItem.SpecificInformation<URL>)
 						specificInformation;

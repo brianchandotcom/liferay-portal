@@ -1,0 +1,14 @@
+definition {
+
+	property workspace.client.extensions.includes = "liferay-sample-workspace";
+
+	@priority = 5
+	test Smoke {
+		property testray.main.component.name = "Liferay Sample Workspace";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Default.Open(locator1 = ${portalURL});
+	}
+
+}

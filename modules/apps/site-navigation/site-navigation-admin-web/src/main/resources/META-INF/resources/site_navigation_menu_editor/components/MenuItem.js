@@ -129,6 +129,70 @@ export function MenuItem({
 		setElement,
 	} = useKeyboardNavigation();
 
+	const onDragHandlerKeyDown = (event) => {
+		if (!Liferay.FeatureFlags['LPS-134527']) {
+			return;
+		}
+
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			event.stopPropagation();
+
+			setIsMovementEnabled(
+				(previousIsMovementEnabled) => !previousIsMovementEnabled
+			);
+		}
+
+		if (event.key === 'Escape') {
+			setIsMovementEnabled(false);
+		}
+
+		if (!isMovementEnabled) {
+			return;
+		}
+
+		event.stopPropagation();
+
+		const eventKey = event.key;
+
+		if (eventKey === 'ArrowDown' || eventKey === 'ArrowUp') {
+			const computeFunction =
+				eventKey === 'ArrowDown' ? getDownPosition : getUpPosition;
+
+			const result = computeFunction({
+				items,
+				order,
+				parentSiteNavigationMenuItemId:
+					item.parentSiteNavigationMenuItemId,
+			});
+
+			if (!result) {
+				return;
+			}
+
+			updateMenuItem({
+				editSiteNavigationMenuItemParentURL,
+				itemId: item.siteNavigationMenuItemId,
+				order: result.order,
+				parentId: result.parentSiteNavigationMenuItemId,
+				portletNamespace,
+			}).then(({siteNavigationMenuItems}) => {
+				const newItems = getFlatItems(siteNavigationMenuItems);
+
+				setItems(newItems);
+
+				setMovementText(
+					sub(
+						eventKey === 'ArrowDown'
+							? Liferay.Language.get('x-moved-down')
+							: Liferay.Language.get('x-moved-up'),
+						`${title} (${type})`
+					)
+				);
+			});
+		}
+	};
+
 	return (
 		<>
 			<div
@@ -196,94 +260,7 @@ export function MenuItem({
 										onBlur={() =>
 											setIsMovementEnabled(false)
 										}
-										onKeyDown={(event) => {
-											if (
-												!Liferay.FeatureFlags[
-													'LPS-134527'
-												]
-											) {
-												return;
-											}
-
-											if (event.key === 'Enter') {
-												event.preventDefault();
-												event.stopPropagation();
-
-												setIsMovementEnabled(
-													(
-														previousIsMovementEnabled
-													) =>
-														!previousIsMovementEnabled
-												);
-											}
-
-											if (event.key === 'Escape') {
-												setIsMovementEnabled(false);
-											}
-
-											if (!isMovementEnabled) {
-												return;
-											}
-
-											event.stopPropagation();
-
-											const eventKey = event.key;
-
-											if (
-												eventKey === 'ArrowDown' ||
-												eventKey === 'ArrowUp'
-											) {
-												const computeFunction =
-													eventKey === 'ArrowDown'
-														? getDownPosition
-														: getUpPosition;
-
-												const result = computeFunction({
-													items,
-													order,
-													parentSiteNavigationMenuItemId:
-														item.parentSiteNavigationMenuItemId,
-												});
-
-												if (!result) {
-													return;
-												}
-
-												updateMenuItem({
-													editSiteNavigationMenuItemParentURL,
-													itemId:
-														item.siteNavigationMenuItemId,
-													order: result.order,
-													parentId:
-														result.parentSiteNavigationMenuItemId,
-													portletNamespace,
-												}).then(
-													({
-														siteNavigationMenuItems,
-													}) => {
-														const newItems = getFlatItems(
-															siteNavigationMenuItems
-														);
-
-														setItems(newItems);
-
-														setMovementText(
-															sub(
-																eventKey ===
-																	'ArrowDown'
-																	? Liferay.Language.get(
-																			'x-moved-down'
-																	  )
-																	: Liferay.Language.get(
-																			'x-moved-up'
-																	  ),
-																`${title} (${type})`
-															)
-														);
-													}
-												);
-											}
-										}}
+										onKeyDown={onDragHandlerKeyDown}
 										size="sm"
 										symbol="drag"
 										tabIndex={

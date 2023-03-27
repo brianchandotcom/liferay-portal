@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_ITEMS_FILE_NAME</td>
+	<td>//span[contains(@id,'_CommerceOrderPortlet_fileEntryNameInput')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_ITEMS_PRODUCT_DETAILS</td>
 	<td>//tbody//td[2][contains(.,'${key_productSku}')]/..//div[@class='table-list-title']/button</td>
 	<td></td>

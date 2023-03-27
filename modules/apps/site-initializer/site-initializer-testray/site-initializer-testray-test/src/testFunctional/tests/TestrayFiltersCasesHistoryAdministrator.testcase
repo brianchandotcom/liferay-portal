@@ -15,8 +15,8 @@ definition {
 	var environmentFactorsName = "Environment Factors 1";
 	var productVersion = "1.2";
 	var projectName = "Project 1";
-    var teamName = "Team 1";
-    var routineName = "Routine 1";
+	var teamName = "Team 1";
+	var routineName = "Routine 1";
 	var runName = "Option 1";
 	var caseResultName = "case result 1";
 	var testSiteName = "Testray 2";
@@ -39,7 +39,7 @@ definition {
 				projectName = ${projectName},
 				teamName = "Team 1");
 
-            JSONTestray.addTeam(
+			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = "Team 2");
 
@@ -52,11 +52,11 @@ definition {
 				projectName = ${projectName},
 				routineName = "Routine 1");
 
-            JSONTestray.addRoutine(
+			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = "Routine 2");
 
-            JSONTestray.addCaseType(caseType = "Case Type 2");
+			JSONTestray.addCaseType(caseType = "Case Type 2");
 
 			JSONTestray.addCases(
 				caseName = "Case 1",
@@ -64,7 +64,7 @@ definition {
 				componentName = ${componentName},
 				projectName = ${projectName});
 
-            JSONTestray.addCases(
+			JSONTestray.addCases(
 				caseName = "Case 2",
 				caseType = "Case Type 2",
 				componentName = ${componentName},
@@ -86,7 +86,7 @@ definition {
 				projectName = ${projectName},
 				routineName = "Routine 1");
 
-            JSONTestray.addBuild(
+			JSONTestray.addBuild(
 				buildName = "Build 2",
 				productVersion = "1.2",
 				projectName = ${projectName},
@@ -96,7 +96,7 @@ definition {
 				buildName = "Build 1",
 				runName = "Run 1");
 
-            JSONTestray.addRun(
+			JSONTestray.addRun(
 				buildName = "Build 2",
 				runName = "Run 2");
 
@@ -107,7 +107,7 @@ definition {
 				componentName = ${componentName},
 				runName = "Run 1");
 
-            JSONTestray.addCaseResult(
+			JSONTestray.addCaseResult(
 				buildName = "Build 2",
 				caseName = "Case 1",
 				caseResultName = "case result 2",
@@ -126,7 +126,7 @@ definition {
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-            TestrayBuild.goToBuild(buildName = ${buildName});
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 	}
 
@@ -137,7 +137,7 @@ definition {
 			object = "productversions",
 			objectName = "1.2");
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "productversions",
 			objectName = "7.0");
 
@@ -145,7 +145,7 @@ definition {
 			object = "routines",
 			objectName = "Routine 1");
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "routines",
 			objectName = "Routine 2");
 
@@ -153,7 +153,7 @@ definition {
 			object = "teams",
 			objectName = "Team 1");
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "teams",
 			objectName = "Team 2");
 
@@ -161,7 +161,7 @@ definition {
 			object = "casetypes",
 			objectName = "Case Type 1");
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = "Case Type 2");
 
@@ -169,200 +169,12 @@ definition {
 			object = "factorcategories",
 			objectName = "Category 1");
 
-        JSONTestrayAPI.deleteProject(projectName = ${projectName});
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
-		}
-	}
-
-	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by routine"
-	@priority = 5
-	test AdminCanFilterCaseHistoryByRoutine {
-		task ("Given that the user has two routine different in the table") {
-            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
-
-            Testray.projectTabNavigator(navTabName = "History");
-
-			Testray.assertItemName(key_name = "Routine 1");
-
-            Testray.assertItemName(key_name = "Routine 2");
-		}
-
-		task ("When the user select a routine called routine 1 in the filter") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Routines",
-				value1 = "Routine 1");
-
-			Button.click(button = "Apply");
-		}
-
-        task ("Then the user see only the routine 1 in the table") {
-			Testray.assertItemName(key_name = "Routine 1");
-		}
-
-		task ("And do not see Routine 2 in the table") {
-			Testray.assertItemNotPresent(key_name = "Routine 2");
-		}
-	}
-
-	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by product version name"
-	@priority = 5
-	test AdminCanFilterCaseHistoryByProductVersionName {
-		task ("Given that the user has two product version different in the table") {
-            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
-
-            Testray.projectTabNavigator(navTabName = "History");
-
-			Testray.assertItemName(key_name = "7.0");
-
-            Testray.assertItemName(key_name = "1.2");
-		}
-
-		task ("When the user filter a product version by name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Product Version Name",
-				label = "Product Version Name",
-				listMultiSelect = "7.0");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Product Version Name",
-				listMultiSelect = "7.0");
-
-			Button.click(button = "Apply");
-		}
-
-		task ("Then the user see only product version 7.0 in the table") {
-			Testray.assertItemName(key_name = "7.0");
-		}
-
-		task ("And do not see the product version 1.2 in the table") {
-			Testray.assertItemNotPresent(key_name = "1.2");
-		}
-	}
-
-	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
-	@priority = 5
-	test AdminCanFilterForNonexistantCaseResultHistory {
-		task ("Given that the user add a issues in the case result") {
-            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
-
-			Button.click(button = "Assign to Me");
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(
-				comment = "button does not work",
-				issues = "LPS-111111",
-				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
-		}
-
-		task ("And that the issues appears in the table") {
-            Testray.projectTabNavigator(navTabName = "History");
-
-			Testray.assertItemName(key_name = "LPS-111111");
-		}
-
-		task ("When the user filters a issues by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_label = "Issues",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "LPS-123456");
-
-			Button.click(button = "Apply");
-		}
-
-		task ("Then can see message no results found") {
-			TestrayFilter.assertNoResultsFound();
-		}
-	}
-
-	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by issues"
-	@priority = 4
-	test AdminCanFilterHistoryByIssue {
-		task ("Given that the user add a issue in the case result") {
-            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
-
-			Button.click(button = "Assign to Me");
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(
-				comment = "button does not work",
-				issues = "LPS-123456",
-				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
-		}
-
-		task ("When the user filter a issue") {
-			Testray.projectTabNavigator(navTabName = "History");
-
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_label = "Issues",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "LPS-123456");
-
-			Button.click(button = "Apply");
-		}
-
-		task ("Then the user see the issue in the table") {
-			Testray.assertItemName(key_name = "LPS-123456");
-		}
-	}
-
-	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
-	@priority = 5
-	test AdminCanFilterCaseHistoryByStatus {
-		task ("Given that the user complete a test with passed status") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
-
-			Testray.projectTabNavigator(navTabName = "History");
-
-			AssertElementNotPresent(
-				key_label = "Test History",
-				key_status = "Passed",
-				locator1 = "TestrayTestflow#TESTFLOW_STATUS");
-
-			Testray.projectTabNavigator(navTabName = "Result");
-
-			Button.click(button = "Assign to Me");
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
-		}
-
-		task ("When the user filter a case result with passed status") {
-			Testray.projectTabNavigator(navTabName = "History");
-
-			TestrayFilter.clickFilter();
-
-			Click.clickAtNotVisible(
-				locator1 = "TestrayFilter#STATUS_IN_FILTER",
-				key_label = "Status",
-				key_status = "Passed");
-
-			Button.click(button = "Apply");
-		}
-
-		task ("Then the user see passed status in the table") {
-			Testray.assertItemName(key_name = "Passed");
 		}
 	}
 
@@ -401,11 +213,123 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by product version name"
+	@priority = 5
+	test AdminCanFilterCaseHistoryByProductVersionName {
+		task ("Given that the user has two product version different in the table") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			Testray.assertItemName(key_name = "7.0");
+
+			Testray.assertItemName(key_name = "1.2");
+		}
+
+		task ("When the user filter a product version by name") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Product Version Name",
+				label = "Product Version Name",
+				listMultiSelect = "7.0");
+
+			TestrayFilter.assertMultiSelect(
+				label = "Product Version Name",
+				listMultiSelect = "7.0");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only product version 7.0 in the table") {
+			Testray.assertItemName(key_name = "7.0");
+		}
+
+		task ("And do not see the product version 1.2 in the table") {
+			Testray.assertItemNotPresent(key_name = "1.2");
+		}
+	}
+
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by routine"
+	@priority = 5
+	test AdminCanFilterCaseHistoryByRoutine {
+		task ("Given that the user has two routine different in the table") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			Testray.assertItemName(key_name = "Routine 1");
+
+			Testray.assertItemName(key_name = "Routine 2");
+		}
+
+		task ("When the user select a routine called routine 1 in the filter") {
+			TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Routines",
+				value1 = "Routine 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the routine 1 in the table") {
+			Testray.assertItemName(key_name = "Routine 1");
+		}
+
+		task ("And do not see Routine 2 in the table") {
+			Testray.assertItemNotPresent(key_name = "Routine 2");
+		}
+	}
+
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
+	@priority = 5
+	test AdminCanFilterCaseHistoryByStatus {
+		task ("Given that the user complete a test with passed status") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			AssertElementNotPresent(
+				key_label = "Test History",
+				key_status = "Passed",
+				locator1 = "TestrayTestflow#TESTFLOW_STATUS");
+
+			Testray.projectTabNavigator(navTabName = "Result");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user filter a case result with passed status") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayFilter.clickFilter();
+
+			Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Passed",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see passed status in the table") {
+			Testray.assertItemName(key_name = "Passed");
+		}
+	}
+
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
 	@priority = 5
 	test AdminCanFilterCaseResultsHistoryWithMultipleOptions {
 		task ("Given that the user complete a test with passed test fix") {
-            TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
 			Button.click(button = "Assign to Me");
 
@@ -425,8 +349,7 @@ definition {
 			TestrayFilter.clickFilter();
 
 			Type(
-				key_label = "Issues",
-				locator1 = "TextArea#ANY_LABELED",
+				locator1 = "TestrayTestflow#INPUT_ISSUES",
 				value1 = "LPS-123456");
 
 			TestrayFilter.multiSelect(
@@ -435,9 +358,9 @@ definition {
 				listMultiSelect = "7.0");
 
 			Click.clickAtNotVisible(
-				locator1 = "TestrayFilter#STATUS_IN_FILTER",
 				key_label = "Status",
-				key_status = "Test Fix");
+				key_status = "Test Fix",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -460,13 +383,87 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
+	@priority = 5
+	test AdminCanFilterForNonexistantCaseResultHistory {
+		task ("Given that the user add a issues in the case result") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-111111",
+				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
+		}
+
+		task ("And that the issues appears in the table") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			Testray.assertItemName(key_name = "LPS-111111");
+		}
+
+		task ("When the user filters a issues by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				locator1 = "TestrayTestflow#INPUT_ISSUES",
+				value1 = "LPS-123456");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by issues"
+	@priority = 4
+	test AdminCanFilterHistoryByIssue {
+		task ("Given that the user add a issue in the case result") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-123456",
+				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user filter a issue") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayFilter.clickFilter();
+
+			Type(
+				locator1 = "TestrayTestflow#INPUT_ISSUES",
+				value1 = "LPS-123456");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see the issue in the table") {
+			Testray.assertItemName(key_name = "LPS-123456");
+		}
+	}
+
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 5
 	test AdminCanFilterOptionsToFilter {
 		task ("When the user searches for a field called routine") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
-            Testray.projectTabNavigator(navTabName = "History");
+			Testray.projectTabNavigator(navTabName = "History");
 
 			TestrayFilter.clickFilter();
 

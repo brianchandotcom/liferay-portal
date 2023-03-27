@@ -1516,6 +1516,36 @@ public class Product implements Serializable {
 
 	@Schema
 	@Valid
+	public ProductVirtualSettings getVirtualSettings() {
+		return virtualSettings;
+	}
+
+	public void setVirtualSettings(ProductVirtualSettings virtualSettings) {
+		this.virtualSettings = virtualSettings;
+	}
+
+	@JsonIgnore
+	public void setVirtualSettings(
+		UnsafeSupplier<ProductVirtualSettings, Exception>
+			virtualSettingsUnsafeSupplier) {
+
+		try {
+			virtualSettings = virtualSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ProductVirtualSettings virtualSettings;
+
+	@Schema
+	@Valid
 	public Status getWorkflowStatusInfo() {
 		return workflowStatusInfo;
 	}
@@ -2245,6 +2275,16 @@ public class Product implements Serializable {
 			sb.append("\"version\": ");
 
 			sb.append(version);
+		}
+
+		if (virtualSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"virtualSettings\": ");
+
+			sb.append(String.valueOf(virtualSettings));
 		}
 
 		if (workflowStatusInfo != null) {

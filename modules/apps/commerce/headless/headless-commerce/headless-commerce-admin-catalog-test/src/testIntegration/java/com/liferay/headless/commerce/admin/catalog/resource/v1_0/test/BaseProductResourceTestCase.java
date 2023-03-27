@@ -1510,6 +1510,14 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("virtualSettings", additionalAssertFieldName)) {
+				if (product.getVirtualSettings() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"workflowStatusInfo", additionalAssertFieldName)) {
 
@@ -2159,6 +2167,17 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("virtualSettings", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getVirtualSettings(),
+						product2.getVirtualSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"workflowStatusInfo", additionalAssertFieldName)) {
 
@@ -2642,6 +2661,11 @@ public abstract class BaseProductResourceTestCase {
 			sb.append(String.valueOf(product.getVersion()));
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("virtualSettings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("workflowStatusInfo")) {

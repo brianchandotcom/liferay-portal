@@ -750,6 +750,16 @@ public class ProductSerDes {
 			sb.append(product.getVersion());
 		}
 
+		if (product.getVirtualSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"virtualSettings\": ");
+
+			sb.append(String.valueOf(product.getVirtualSettings()));
+		}
+
 		if (product.getWorkflowStatusInfo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1163,6 +1173,15 @@ public class ProductSerDes {
 		}
 		else {
 			map.put("version", String.valueOf(product.getVersion()));
+		}
+
+		if (product.getVirtualSettings() == null) {
+			map.put("virtualSettings", null);
+		}
+		else {
+			map.put(
+				"virtualSettings",
+				String.valueOf(product.getVirtualSettings()));
 		}
 
 		if (product.getWorkflowStatusInfo() == null) {
@@ -1630,6 +1649,13 @@ public class ProductSerDes {
 				if (jsonParserFieldValue != null) {
 					product.setVersion(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "virtualSettings")) {
+				if (jsonParserFieldValue != null) {
+					product.setVirtualSettings(
+						ProductVirtualSettingsSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

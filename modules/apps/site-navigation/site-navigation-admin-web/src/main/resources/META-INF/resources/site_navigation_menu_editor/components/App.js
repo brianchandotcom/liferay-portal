@@ -21,6 +21,7 @@ import {ConstantsProvider} from '../contexts/ConstantsContext';
 import {ItemsProvider, useItems} from '../contexts/ItemsContext';
 import {SelectedMenuItemIdProvider} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelIdProvider} from '../contexts/SidebarPanelIdContext';
+import decorateAddSiteNavigationMenuItemOptions from '../utils/decorateAddSiteNavigationMenuItemOptions';
 import {DragDropProvider} from '../utils/useDragAndDrop';
 import {AppLayout} from './AppLayout';
 import DragPreview from './DragPreview';
@@ -42,11 +43,23 @@ const SIDEBAR_PANELS = [
 ];
 
 export function App(props) {
-	const {siteNavigationMenuItems} = props;
+	const {
+		addSiteNavigationMenuItemOptions,
+		portletNamespace,
+		siteNavigationMenuItems,
+	} = props;
 
 	return (
 		<DndProvider backend={HTML5Backend}>
-			<ConstantsProvider constants={props}>
+			<ConstantsProvider
+				constants={{
+					...props,
+					addSiteNavigationMenuItemOptions: decorateAddSiteNavigationMenuItemOptions(
+						{addSiteNavigationMenuItemOptions, portletNamespace}
+					),
+					portletNamespace,
+				}}
+			>
 				<ItemsProvider initialItems={siteNavigationMenuItems}>
 					<DragPreview />
 

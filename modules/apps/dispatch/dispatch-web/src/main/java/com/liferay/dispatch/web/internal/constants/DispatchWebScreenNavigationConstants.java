@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.dispatch.constants;
+package com.liferay.dispatch.web.internal.constants;
 
 /**
- * @author Marco Leo
+ * @author Joao Victor Alves
  */
-public class DispatchConstants {
+public class DispatchWebScreenNavigationConstants {
 
-	public static final String EXECUTOR_DESTINATION_NAME =
-		"liferay/dispatch/executor";
+	public static final String CATEGORY_KEY_DISPATCH_DETAILS = "details";
 
-	public static final String FILE_VALIDATOR_TYPE_DEFAULT = "default";
+	public static final String CATEGORY_KEY_DISPATCH_LOGS = "logs";
 
-	public static final int REPOSITORY_DEFAULT_PARENT_FOLDER_ID = 0;
-
-	public static final String REPOSITORY_FOLDER_NAME = "dispatch";
-
-	public static final String RESOURCE_NAME = "com.liferay.dispatch";
+	public static final String CATEGORY_KEY_DISPATCH_TRIGGER =
+		"dispatch-trigger";
 
 }

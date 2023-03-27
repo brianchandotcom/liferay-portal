@@ -14,11 +14,11 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogService;
+import com.liferay.dispatch.web.internal.constants.DispatchWebScreenNavigationConstants;
 import com.liferay.dispatch.web.internal.display.context.helper.DispatchRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -110,7 +110,7 @@ public class DispatchLogDisplayContext {
 
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",
-			DispatchConstants.CATEGORY_KEY_DISPATCH_LOGS);
+			DispatchWebScreenNavigationConstants.CATEGORY_KEY_DISPATCH_LOGS);
 
 		return portletURL;
 	}

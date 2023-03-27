@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.talend.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.constants.DispatchScreenNavigationConstants;
 import com.liferay.dispatch.talend.web.internal.constants.DispatchTalendScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
@@ -51,7 +51,8 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
+		return DispatchScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
 	}
 
 	@Reference

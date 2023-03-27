@@ -17,8 +17,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import Container from '../../common/components/container';
 import {dealsChartColumnColors} from '../../common/utils/constants/chartColumnsColors';
-import {dealsChartStatus} from '../../common/utils/constants/dealsChartStatus';
-import getChartQuarterCount from '../../common/utils/getDealsChartQuarterCount';
 import getLeadsChartValues from '../../common/utils/getLeadsChartValues';
 import {getOpportunitiesChartValues} from '../../common/utils/getOpportunitiesChartValues';
 import {siteURL} from '../../common/utils/getSiteURL';
@@ -83,11 +81,11 @@ export default function () {
 		getLeads();
 	}, []);
 
-	const opportunitiesChartValues = getOpportunitiesChartValues(
-		dealsChartStatus,
-		getChartQuarterCount,
-		opportunities
-	);
+	const opportunitiesChartValues = useMemo(() => {
+		return getOpportunitiesChartValues(
+			opportunities
+		);
+	}, [opportunities])
 
 	const leadsChartValues = getLeadsChartValues(leads);
 

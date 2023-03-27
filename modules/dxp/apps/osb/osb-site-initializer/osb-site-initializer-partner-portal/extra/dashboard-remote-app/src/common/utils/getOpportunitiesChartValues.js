@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import { dealsChartStatus } from './constants/dealsChartStatus';
+import getChartQuarterCount from './getDealsChartQuarterCount';
 import isNotOpportunity from './getIsNotOpportunityDeals';
 
 const INITIAL_OPPORTUNITIES_CHART_VALUES = {
@@ -18,8 +20,6 @@ const INITIAL_OPPORTUNITIES_CHART_VALUES = {
 };
 
 export function getOpportunitiesChartValues(
-	dealsChartStatus,
-	getChartQuarterCount,
 	opportunities
 ) {
 	return opportunities?.reduce(

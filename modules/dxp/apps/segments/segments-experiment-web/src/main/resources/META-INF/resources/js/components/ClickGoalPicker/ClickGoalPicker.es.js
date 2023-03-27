@@ -236,13 +236,16 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					<label htmlFor="clickableElement">
 						{Liferay.Language.get('element-id')}
 
-						<ClayIcon
-							className="c-ml-1 text-secondary"
+						<span
 							data-tooltip-align="top"
-							small="true"
-							symbol="question-circle"
 							title={Liferay.Language.get('element-id-help')}
-						/>
+						>
+							<ClayIcon
+								className="c-ml-1 text-secondary"
+								small="true"
+								symbol="question-circle"
+							/>
+						</span>
 					</label>
 
 					<ClayInput.Group

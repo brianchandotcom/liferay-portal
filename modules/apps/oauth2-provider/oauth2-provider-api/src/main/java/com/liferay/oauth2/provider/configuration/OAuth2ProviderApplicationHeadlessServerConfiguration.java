@@ -25,10 +25,17 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface OAuth2ProviderApplicationHeadlessServerConfiguration {
 
+	@Meta.AD(type = Meta.Type.String)
+	public String baseURL();
+
 	@Meta.AD(deflt = "", required = false, type = Meta.Type.String)
 	public String description();
 
-	@Meta.AD(type = Meta.Type.String)
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String homePageURL();
 
 	@Meta.AD(deflt = "", required = false, type = Meta.Type.String)

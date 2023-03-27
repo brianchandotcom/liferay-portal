@@ -446,7 +446,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return null;
 		}
 
-		File testBaseDir = new File(jobProperty.getValue());
+		File testBaseDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			jobProperty.getValue());
 
 		if (!testBaseDir.exists()) {
 			return null;

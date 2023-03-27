@@ -97,7 +97,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"name = 'assetEntryXml') innerTemp where value like ",
 			"'%<asset-entry-type>com.liferay.journal.model.JournalArticle%' ",
 			"or value like '%<asset-entry-type></asset-entry-type>%' or value ",
-			"like '%<asset-entry>[$NEW_LINE$]<asset-entry-type/>%') temp on ",
+			"like '%<asset-entry>%$NEW_LINE$%<asset-entry-type/>%') temp on ",
 			"PortletPreferences.ownerId = ", PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			" and PortletPreferences.ownerType = ",
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,

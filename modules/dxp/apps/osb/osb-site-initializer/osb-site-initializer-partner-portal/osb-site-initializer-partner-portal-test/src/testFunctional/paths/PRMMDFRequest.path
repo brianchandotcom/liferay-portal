@@ -73,6 +73,20 @@
 <tr>
 	<td>DETAIL_FIELD</td>
 	<td>//td/*[contains(text(),'${key_fieldName}')]//ancestor::tr//*[contains(text(),'${key_nameValue}')]</td>
+</tr>
+<tr>
+	<td>APPLY_BUTTON</td>
+	<td>//div[contains(@class,'drilldown-current')]//button[contains(@class,'btn-sm btn-primary') and contains(text(),'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_TYPE</td>
+	<td>//div[contains (@class,'dropdown-menu') and contains(@class,'show')]//button/span[text()='${key_partnerOptions}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_CHECKBOX</td>
+	<td>//div[contains(@class,'drilldown-current')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

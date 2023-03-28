@@ -68,6 +68,21 @@ definition {
 		WaitForPageLoad();
 	}
 
+	@summary = "Filter the claim by Company Name"
+	macro filterClaimID {
+		Click(
+			key_filterOption = ${buttonOption},
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		Click(
+			key_filterOption = ${optionDropdown},
+			locator1 = "PRMMDFRequest#DROPDOWN_OPTIONS");
+
+		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#CHECKBOX_OPTIONS");
+
+		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#APPLY_BUTTON");
+	}
+
 	@summary = "Get the claim ID by index"
 	macro getClaimID {
 		var key_index = ${claimIndex};
@@ -76,6 +91,19 @@ definition {
 		var orderID = StringUtil.extractLast(${orderID}, "-");
 
 		return ${orderID};
+	}
+
+	@summary = "Search claim by ID"
+	macro searchClaim {
+		Type(
+			key_placeHolder = "Search",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = ${claimID});
+
+		KeyPress(
+			key_placeHolder = "Search",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = "\RETURN");
 	}
 
 	@summary = "View claim type on MDF Request details page"

@@ -109,7 +109,7 @@ definition {
 		task ("View warning message is shown in Information Templates admin") {
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
-			Alert.viewWarningSpecific(warningMessage = "The data of this portlet is not staged. Any data changes are immediately available to the Local Live site.");
+			Staging.viewNotStagedAssetMessageOnStaging();
 		}
 
 		task ("Add an information template in staging site") {

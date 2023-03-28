@@ -669,7 +669,7 @@ definition {
 		}
 
 		task ("Assert specific warning message is shown in Style Books admin") {
-			Alert.viewWarningSpecific(warningMessage = "The data of this portlet is not staged. Any data changes are immediately available to the Local Live site.");
+			Staging.viewNotStagedAssetMessageOnStaging();
 		}
 
 		task ("Add a content page") {

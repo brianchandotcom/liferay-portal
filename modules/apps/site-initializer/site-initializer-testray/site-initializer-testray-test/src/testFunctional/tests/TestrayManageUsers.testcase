@@ -44,51 +44,65 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should not see manage users that don't exist when I try filtering for them"
-	@priority = 4
-	test AdminCanFilterForNonexistantManageUsers {
-		task ("When the user filters a user by its non-existent name") {
+	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
+	@priority = 5
+	test AdminCanFilterUsersByName {
+		task ("Given that there are two users present in the table") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
 
-			TestrayFilter.clickFilter();
+			AssertElementPresent(
+				key_projectName = "userfn userln",
+				locator1 = "Testray#ITEM_NAME");
 
-			Type(
-				key_fieldLabel = "Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Test 2");
-
-			Button.click(button = "Apply");
+			AssertElementPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("Then can see message no results found") {
-			TestrayFilter.assertNoResultsFound();
+		task ("When the user filter a user by name") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.typeFilter(
+				label = "Name",
+				value = "userfn userln");
+		}
+
+		task ("Then can see the user named test test in the table and no longer see the userfn userln") {
+			AssertElementPresent(
+				key_projectName = "userfn userln",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementNotPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
-	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
-	@priority = 5
-	test AdminCanFilterManageUsersByName {
-		task ("When the user filter a user by name") {
+	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should not see manage users that don't exist when I try filtering for them"
+	@priority = 4
+	test AdminCanNotFilterForNonExistentUsers {
+		task ("When filtering a user by his non-existent name") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
 
+			AssertElementPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
+
 			TestrayFilter.clickFilter();
 
-			Type(
-				key_fieldLabel = "Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "userfn userln");
-
-			Button.click(button = "Apply");
+			TestrayFilter.typeFilter(
+				label = "Name",
+				value = "Test 2");
 		}
 
-		task ("Then can see the filters apply in the list by user name") {
-			Testray.assertItemName(key_name = "userfn userln");
-
-			Testray.assertItemNotPresent(key_name = "Test Test");
+		task ("Then the user is not present in the User table") {
+			AssertElementNotPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 

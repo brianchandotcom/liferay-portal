@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.persistence.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +31,12 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 		registry.registerInitialization();
 
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.1", "0.0.2",
+			UpgradeProcessFactory.alterColumnType(
+				"Configuration_", "configurationId", "VARCHAR(512) not null"));
+
+		registry.register(
+			"0.0.2", "1.0.0",
 			new com.liferay.portal.configuration.persistence.internal.upgrade.
 				v1_0_0.ConfigurationUpgradeProcess());
 
@@ -38,6 +44,11 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 			"1.0.0", "1.0.1",
 			new com.liferay.portal.configuration.persistence.internal.upgrade.
 				v1_0_1.ConfigurationUpgradeProcess());
+
+		registry.register(
+			"1.0.1", "1.0.2",
+			UpgradeProcessFactory.alterColumnType(
+				"Configuration_", "configurationId", "VARCHAR(512) not null"));
 	}
 
 }

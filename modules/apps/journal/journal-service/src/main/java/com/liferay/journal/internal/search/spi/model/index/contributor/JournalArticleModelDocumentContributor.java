@@ -73,13 +73,14 @@ public class JournalArticleModelDocumentContributor
 		DDMFormValues ddmFormValues = null;
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(journalArticle.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			journalArticle.getDDMStructureKey(), true);
+			journalArticle.getDDMStructureId());
 
 		if (ddmStructure != null) {
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
+
+			document.addKeyword(
+				"ddmStructureKey", ddmStructure.getStructureKey());
 
 			ddmFormValues = journalArticle.getDDMFormValues();
 
@@ -141,8 +142,6 @@ public class JournalArticleModelDocumentContributor
 			Field.TREE_PATH,
 			StringUtil.split(journalArticle.getTreePath(), CharPool.SLASH));
 		document.addKeyword(Field.VERSION, journalArticle.getVersion());
-		document.addKeyword(
-			"ddmStructureKey", journalArticle.getDDMStructureKey());
 		document.addKeyword(
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
 

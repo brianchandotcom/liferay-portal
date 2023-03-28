@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 
 import java.lang.reflect.Method;
 
@@ -46,9 +45,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -176,7 +172,9 @@ public class PortalClassPathUtil {
 			files.length * 2);
 
 		for (File file : files) {
-			if (_isPetraJar(file)) {
+			String filePath = file.getAbsolutePath();
+
+			if (filePath.contains("petra")) {
 				bootstrapClassPathSB.append(file.getAbsolutePath());
 				bootstrapClassPathSB.append(File.pathSeparator);
 			}
@@ -283,38 +281,6 @@ public class PortalClassPathUtil {
 		sb.append(portalRuntiemClasspath);
 
 		return sb.toString();
-	}
-
-	private static boolean _isPetraJar(File file) {
-		String filePath = file.getAbsolutePath();
-
-		if (filePath.contains("petra")) {
-			try (JarFile jarFile = new JarFile(new File(filePath))) {
-				Manifest manifest = jarFile.getManifest();
-
-				if (manifest == null) {
-					return false;
-				}
-
-				Attributes attributes = manifest.getMainAttributes();
-
-				if (attributes.containsKey(
-						new Attributes.Name("Liferay-Releng-App-Title"))) {
-
-					return false;
-				}
-
-				return true;
-			}
-			catch (IOException ioException) {
-				_log.error(
-					"Unable to resolve bootstrap entry: " + file.getName() +
-						" from bundle",
-					ioException);
-			}
-		}
-
-		return false;
 	}
 
 	private static File[] _listClassPathFiles(Class<?> clazz) {

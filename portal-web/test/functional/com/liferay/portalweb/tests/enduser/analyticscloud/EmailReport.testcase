@@ -434,7 +434,7 @@ definition {
 		task ("Check the Learn Liferay page link") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn Liferay");
 
-			SelectWindow(locator1 = "title=Liferay Learn — Liferay Learn");
+			SelectWindow(locator1 = "title=Liferay Learn - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Welcome to Liferay Docs");
 

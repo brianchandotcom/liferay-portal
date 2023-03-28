@@ -146,7 +146,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by location.");
 
-			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+			SelectWindow(locator1 = "title=Blogs - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
 
@@ -164,7 +164,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by technology.");
 
-			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+			SelectWindow(locator1 = "title=Blogs - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
 
@@ -178,7 +178,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about assets.");
 
-			SelectWindow(locator1 = "title=Assets — Liferay Learn");
+			SelectWindow(locator1 = "title=Assets - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Assets");
 
@@ -201,7 +201,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about individuals.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Individuals Dashboard");
 
@@ -244,7 +244,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about downloads by location.");
 
-			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+			SelectWindow(locator1 = "title=Documents and Media - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Downloads by Location");
 
@@ -262,7 +262,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about downloads by technology.");
 
-			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+			SelectWindow(locator1 = "title=Documents and Media - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
 
@@ -305,7 +305,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about submissions by location.");
 
-			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+			SelectWindow(locator1 = "title=Forms - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Submissions by Location");
 
@@ -323,7 +323,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about submissions by technology.");
 
-			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+			SelectWindow(locator1 = "title=Forms - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Submissions by Technology");
 
@@ -366,7 +366,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by location.");
 
-			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+			SelectWindow(locator1 = "title=Web Content - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
 
@@ -384,7 +384,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by technology.");
 
-			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+			SelectWindow(locator1 = "title=Web Content - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
 
@@ -412,7 +412,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
+			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
 
@@ -426,7 +426,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Scoping Sites and Individuals Using Properties — Liferay Learn");
+			SelectWindow(locator1 = "title=Scoping Sites and Individuals Using Properties - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Scoping Sites and Individuals Using Properties");
 
@@ -456,7 +456,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about event tracking.");
 
-			SelectWindow(locator1 = "title=Definitions for Event Attributes — Liferay Learn");
+			SelectWindow(locator1 = "title=Definitions for Event Attributes - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Definitions for Event Attributes");
 
@@ -474,7 +474,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn how to add custom events on your site.");
 
-			SelectWindow(locator1 = "title=Tracking Events — Liferay Learn");
+			SelectWindow(locator1 = "title=Tracking Events - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Events");
 
@@ -490,7 +490,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn how to manage custom events.");
 
-			SelectWindow(locator1 = "title=Definitions for Events — Liferay Learn");
+			SelectWindow(locator1 = "title=Definitions for Events - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Definitions for Events");
 
@@ -506,7 +506,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interest topics.");
 
-			SelectWindow(locator1 = "title=Managing Interest Topics — Liferay Learn");
+			SelectWindow(locator1 = "title=Managing Interest Topics - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Managing Interest Topics");
 
@@ -541,7 +541,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Data Control and Privacy — Liferay Learn");
+			SelectWindow(locator1 = "title=Data Control and Privacy - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Data Control and Privacy");
 		}
@@ -588,7 +588,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about blogs.");
 
-			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+			SelectWindow(locator1 = "title=Blogs - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Blogs");
 
@@ -607,7 +607,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
 
-			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+			SelectWindow(locator1 = "title=Documents and Media - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Documents and Media");
 
@@ -626,7 +626,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about forms.");
 
-			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+			SelectWindow(locator1 = "title=Forms - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Forms");
 
@@ -645,7 +645,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about web content.");
 
-			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+			SelectWindow(locator1 = "title=Web Content - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Web Content");
 
@@ -664,7 +664,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about custom assets.");
 
-			SelectWindow(locator1 = "title=Tracking Custom Assets — Liferay Learn");
+			SelectWindow(locator1 = "title=Tracking Custom Assets - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Custom Assets");
 
@@ -678,7 +678,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Events Analysis — Liferay Learn");
+			SelectWindow(locator1 = "title=Events Analysis - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");
 
@@ -692,7 +692,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
 
@@ -706,7 +706,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about active individuals.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Active Individuals");
 
@@ -716,7 +716,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
 
@@ -734,7 +734,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
 
@@ -748,7 +748,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
 
@@ -762,7 +762,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
 
@@ -778,7 +778,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about tests.");
 
-			SelectWindow(locator1 = "title=A/B Testing — Liferay Learn");
+			SelectWindow(locator1 = "title=A/B Testing - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,A/B Testing");
 
@@ -913,7 +913,7 @@ definition {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
 			task ("Switch to the documentation tab") {
-				SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
+				SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
 			}
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
@@ -1006,7 +1006,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by location.");
 
-			SelectWindow(locator1 = "title=Pages — Liferay Learn");
+			SelectWindow(locator1 = "title=Pages - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
 
@@ -1024,7 +1024,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by technology.");
 
-			SelectWindow(locator1 = "title=Pages — Liferay Learn");
+			SelectWindow(locator1 = "title=Pages - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
 
@@ -1042,7 +1042,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about path.");
 
-			SelectWindow(locator1 = "title=Paths — Liferay Learn");
+			SelectWindow(locator1 = "title=Paths - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Paths");
 
@@ -1065,7 +1065,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about individuals.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Individuals Dashboard");
 
@@ -1098,7 +1098,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about individuals.");
 
-			SelectWindow(locator1 = "title=Individual Profiles — Liferay Learn");
+			SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Individual Profiles");
 
@@ -1115,7 +1115,7 @@ definition {
 
 				ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about segments.");
 
-				SelectWindow(locator1 = "title=Individual Profiles — Liferay Learn");
+				SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
 				ACUtils.viewGenericText(textValueList = "Documentation,Segments");
 
@@ -1130,7 +1130,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Individual Profiles — Liferay Learn");
+			SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
 
@@ -1144,7 +1144,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
 
@@ -1162,7 +1162,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about individuals.");
 
-			SelectWindow(locator1 = "title=Individual Profiles — Liferay Learn");
+			SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Individual Profiles");
 
@@ -1204,7 +1204,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
 
@@ -1241,7 +1241,7 @@ definition {
 
 				ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about segment membership.");
 
-				SelectWindow(locator1 = "title=Segments — Liferay Learn");
+				SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
 				ACUtils.viewGenericText(textValueList = "Documentation,Segment Membership Panel");
 
@@ -1258,7 +1258,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Top Interests Panel");
 
@@ -1274,7 +1274,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Interests Tab");
 
@@ -1289,7 +1289,7 @@ definition {
 
 				ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
 
-				SelectWindow(locator1 = "title=Segments — Liferay Learn");
+				SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
 				ACUtils.viewGenericText(textValueList = "Documentation,Distribution Tab");
 
@@ -1330,7 +1330,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about site activity.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Site Activities");
 
@@ -1352,7 +1352,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about pages.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Top Pages");
 
@@ -1374,7 +1374,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about acquisitions.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Acquisitions");
 
@@ -1392,7 +1392,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about visitors by day and time.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Visitors by Day and Time");
 
@@ -1406,7 +1406,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about search terms.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
 
@@ -1420,7 +1420,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
 
@@ -1438,7 +1438,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about sessions by location.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Sessions by Location");
 
@@ -1456,7 +1456,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about sessions by technology.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Session Technology");
 
@@ -1474,7 +1474,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about sessions by cohort analysis.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Cohort Analysis");
 
@@ -1493,7 +1493,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about pages.");
 
-			SelectWindow(locator1 = "title=Pages — Liferay Learn");
+			SelectWindow(locator1 = "title=Pages - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Pages");
 
@@ -1512,7 +1512,7 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
-			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
 		}

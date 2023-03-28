@@ -111,7 +111,7 @@ public class GetCollectionFieldMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactorys.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -189,10 +189,10 @@ public class GetCollectionFieldMVCResourceCommand
 			String templateKey)
 		throws PortalException {
 
-		JSONObject jsonObject = _jsonFactorys.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		JSONObject layoutObjectReferenceJSONObject =
-			_jsonFactorys.createJSONObject(layoutObjectReference);
+			_jsonFactory.createJSONObject(layoutObjectReference);
 
 		String type = layoutObjectReferenceJSONObject.getString("type");
 
@@ -272,10 +272,10 @@ public class GetCollectionFieldMVCResourceCommand
 						itemType);
 			}
 
-			return _jsonFactorys.createJSONObject();
+			return _jsonFactory.createJSONObject();
 		}
 
-		JSONArray jsonArray = _jsonFactorys.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<Object> list = layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
@@ -414,7 +414,7 @@ public class GetCollectionFieldMVCResourceCommand
 			infoItemFieldValues.getInfoItemReference();
 
 		if (infoItemReference == null) {
-			return _jsonFactorys.createJSONObject();
+			return _jsonFactory.createJSONObject();
 		}
 
 		JSONObject displayObjectJSONObject = JSONUtil.put(
@@ -549,7 +549,7 @@ public class GetCollectionFieldMVCResourceCommand
 	private ItemSelector _itemSelector;
 
 	@Reference
-	private JSONFactory _jsonFactorys;
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

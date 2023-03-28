@@ -69,6 +69,7 @@ public class KBArticleAssetEntriesUtil {
 
 		assetEntryQuery.setAnyTagIds(assetTagIds);
 		assetEntryQuery.setClassNameIds(classNameIds);
+		assetEntryQuery.setEnablePermissions(true);
 		assetEntryQuery.setEnd(end + 1);
 		assetEntryQuery.setGroupIds(groupIds);
 		assetEntryQuery.setOrderByCol1(orderByColumn);

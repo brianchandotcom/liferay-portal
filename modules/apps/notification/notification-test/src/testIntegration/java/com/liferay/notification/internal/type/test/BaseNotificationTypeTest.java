@@ -78,13 +78,13 @@ public class BaseNotificationTypeTest {
 	public static void setUpClass() throws Exception {
 		user1 = TestPropsValues.getUser();
 
-		ListType prefixListType = listTypeLocalService.getListType(
+		ListType prefixListType = _listTypeLocalService.getListType(
 			"dr", ListTypeConstants.CONTACT_PREFIX);
 
-		ListType suffixListType = listTypeLocalService.getListType(
+		ListType suffixListType = _listTypeLocalService.getListType(
 			"ii", ListTypeConstants.CONTACT_SUFFIX);
 
-		user2 = userLocalService.addUser(
+		user2 = _userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
 			null, RandomTestUtil.randomString() + "@liferay.com",
 			user1.getLocale(), RandomTestUtil.randomString(),
@@ -113,7 +113,7 @@ public class BaseNotificationTypeTest {
 	@Before
 	public void setUp() throws Exception {
 		objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
@@ -159,7 +159,7 @@ public class BaseNotificationTypeTest {
 					).build()));
 
 		objectDefinition =
-			objectDefinitionLocalService.publishCustomObjectDefinition(
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				user1.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
@@ -176,7 +176,7 @@ public class BaseNotificationTypeTest {
 		String name, Object value) {
 
 		NotificationRecipientSetting notificationRecipientSetting =
-			notificationRecipientSettingLocalService.
+			_notificationRecipientSettingLocalService.
 				createNotificationRecipientSetting(0L);
 
 		notificationRecipientSetting.setName(name);
@@ -228,22 +228,13 @@ public class BaseNotificationTypeTest {
 		notificationType.sendNotification(notificationContext);
 	}
 
-	@Inject
-	protected static ListTypeLocalService listTypeLocalService;
-
 	@DeleteAfterTestRun
 	protected static ObjectDefinition objectDefinition;
-
-	@Inject
-	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	protected static LinkedHashMap<String, Serializable>
 		randomObjectEntryValues;
 	protected static User user1;
 	protected static User user2;
-
-	@Inject
-	protected static UserLocalService userLocalService;
 
 	@DeleteAfterTestRun
 	protected NotificationQueueEntry notificationQueueEntry;
@@ -255,10 +246,6 @@ public class BaseNotificationTypeTest {
 	@Inject
 	protected NotificationRecipientLocalService
 		notificationRecipientLocalService;
-
-	@Inject
-	protected NotificationRecipientSettingLocalService
-		notificationRecipientSettingLocalService;
 
 	@Inject
 	protected NotificationTemplateLocalService notificationTemplateLocalService;
@@ -323,10 +310,23 @@ public class BaseNotificationTypeTest {
 			return StringPool.BLANK;
 		}
 
-		ListType listType = listTypeLocalService.getListType(listTypeId);
+		ListType listType = _listTypeLocalService.getListType(listTypeId);
 
 		return listType.getName();
 	}
+
+	@Inject
+	private static ListTypeLocalService _listTypeLocalService;
+
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private static UserLocalService _userLocalService;
+
+	@Inject
+	private NotificationRecipientSettingLocalService
+		_notificationRecipientSettingLocalService;
 
 	@Inject
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;

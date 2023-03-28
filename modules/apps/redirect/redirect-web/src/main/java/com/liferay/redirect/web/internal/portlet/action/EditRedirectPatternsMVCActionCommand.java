@@ -15,6 +15,7 @@
 package com.liferay.redirect.web.internal.portlet.action;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -23,10 +24,14 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.constants.RedirectConstants;
+import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,7 +62,7 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 
 			_redirectPatternConfigurationProvider.updatePatternStrings(
 				themeDisplay.getScopeGroupId(),
-				_getPatternStrings(actionRequest));
+				_getRedirectPatternEntries(actionRequest));
 		}
 		catch (ConfigurationModelListenerException
 					configurationModelListenerException) {
@@ -72,10 +77,10 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Map<String, String> _getPatternStrings(
+	private List<RedirectPatternEntry> _getRedirectPatternEntries(
 		ActionRequest actionRequest) {
 
-		Map<String, String> patternStrings = new LinkedHashMap<>();
+		List<RedirectPatternEntry> redirectPatternEntries = new ArrayList<>();
 
 		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
 
@@ -100,12 +105,33 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 				destinationURL = destinationURLs[0];
 			}
 
-			if ((patternString != null) && (destinationURL != null)) {
-				patternStrings.put(patternString, destinationURL);
+			String userAgent = _getUserAgent(parameterMap, i);
+
+			if ((patternString != null) && (destinationURL != null) &&
+				(userAgent != null)) {
+
+				redirectPatternEntries.add(
+					new RedirectPatternEntry(
+						Pattern.compile(patternString), destinationURL,
+						userAgent));
 			}
 		}
 
-		return patternStrings;
+		return redirectPatternEntries;
+	}
+
+	private String _getUserAgent(Map<String, String[]> parameterMap, int i) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-175850")) {
+			return RedirectConstants.USER_AGENT_ALL;
+		}
+
+		String[] userAgents = parameterMap.get("userAgent_" + i);
+
+		if ((userAgents.length != 0) && Validator.isNotNull(userAgents[0])) {
+			return userAgents[0];
+		}
+
+		return null;
 	}
 
 	@Reference

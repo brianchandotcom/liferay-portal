@@ -26,6 +26,7 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -42,9 +43,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,14 +88,10 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public List<AssetCategory> getAssetCategories(long assetVocabularyId) {
-		Stream<AssetCategory> stream = _assetCategories.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			_assetCategories,
 			assetCategory ->
-				assetCategory.getVocabularyId() == assetVocabularyId
-		).collect(
-			Collectors.toList()
-		);
+				assetCategory.getVocabularyId() == assetVocabularyId);
 	}
 
 	@Override
@@ -115,22 +109,15 @@ public class BlogsEntryContentDashboardItem
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types) {
 
-		List<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviders =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviders(
-						BlogsEntry.class.getName(), types);
-
-		Stream<ContentDashboardItemActionProvider> stream =
-			contentDashboardItemActionProviders.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProviders(
+					BlogsEntry.class.getName(), types),
 			contentDashboardItemActionProvider -> {
 				try {
-					return Optional.ofNullable(
-						contentDashboardItemActionProvider.
-							getContentDashboardItemAction(
-								_blogsEntry, httpServletRequest));
+					return contentDashboardItemActionProvider.
+						getContentDashboardItemAction(
+							_blogsEntry, httpServletRequest);
 				}
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
@@ -138,15 +125,8 @@ public class BlogsEntryContentDashboardItem
 					_log.error(contentDashboardItemActionException);
 				}
 
-				return Optional.<ContentDashboardItemAction>empty();
-			}
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).collect(
-			Collectors.toList()
-		);
+				return null;
+			});
 	}
 
 	@Override
@@ -271,26 +251,22 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public String getScopeName(Locale locale) {
-		return Optional.ofNullable(
-			_group
-		).map(
-			group -> {
-				try {
-					return Optional.ofNullable(
-						group.getDescriptiveName(locale)
-					).orElseGet(
-						() -> group.getName(locale)
-					);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
+		if (_group == null) {
+			return StringPool.BLANK;
+		}
 
-					return group.getName(locale);
-				}
+		try {
+			String descriptiveName = _group.getDescriptiveName(locale);
+
+			if (descriptiveName != null) {
+				return descriptiveName;
 			}
-		).orElse(
-			StringPool.BLANK
-		);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return _group.getName(locale);
 	}
 
 	@Override

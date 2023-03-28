@@ -141,15 +141,11 @@ definition {
 
 			Picklist.gotoPicklists();
 
-			Picklist.optionsPicklist(
-				menuItem = "Delete",
-				picklistName = "Custom Picklist Edit After Upgrade");
-
-			Picklist.optionsPicklist(
-				menuItem = "Delete",
-				picklistName = "Custom Picklist Add After Upgrade");
-
 			for (var picklistName : list "Custom Picklist Add After Upgrade,Custom Picklist Edit After Upgrade") {
+				Picklist.optionsPicklist(
+					menuItem = "Delete",
+					picklistName = ${picklistName});
+
 				AssertElementNotPresent(
 					key_picklistName = ${picklistName},
 					locator1 = "Picklist#VIEW_PICKLIST");

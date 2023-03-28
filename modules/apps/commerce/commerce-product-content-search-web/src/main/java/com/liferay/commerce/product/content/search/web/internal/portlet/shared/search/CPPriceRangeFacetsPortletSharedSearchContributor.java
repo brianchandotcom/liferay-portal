@@ -91,8 +91,7 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 
 	private Facet _getFacet(
 			PortletSharedSearchSettings portletSharedSearchSettings,
-			RenderRequest renderRequest,
-			SearchContext searchContext)
+			RenderRequest renderRequest, SearchContext searchContext)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

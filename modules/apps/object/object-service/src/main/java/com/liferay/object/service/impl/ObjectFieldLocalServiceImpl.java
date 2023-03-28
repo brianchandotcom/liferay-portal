@@ -30,7 +30,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributorRegistry;
-import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;

@@ -15,8 +15,8 @@
 package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
-import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
+import com.liferay.object.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectRelationship;

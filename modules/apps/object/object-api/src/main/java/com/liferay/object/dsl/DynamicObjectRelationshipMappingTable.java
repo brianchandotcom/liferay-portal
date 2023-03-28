@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.petra.sql.dsl;
+package com.liferay.object.dsl;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;

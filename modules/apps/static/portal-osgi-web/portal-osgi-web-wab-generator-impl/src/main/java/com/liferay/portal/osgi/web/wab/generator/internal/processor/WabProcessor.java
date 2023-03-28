@@ -314,12 +314,12 @@ public class WabProcessor {
 
 			Path metatInfBatchPath = _createPath(
 				clientExtensionBundlePath, "META-INF/batch");
-			Path siteInitializerPath = _createPath(
-				clientExtensionBundlePath, "site-initializer");
 			Path metatInfResourcesPath = _createPath(
 				clientExtensionBundlePath, "META-INF/resources");
 			Path osgiInfConfiguratorPath = _createPath(
 				clientExtensionBundlePath, "OSGI-INF/configurator");
+			Path siteInitializerPath = _createPath(
+				clientExtensionBundlePath, "site-initializer");
 
 			UnicodeProperties unicodeProperties = null;
 

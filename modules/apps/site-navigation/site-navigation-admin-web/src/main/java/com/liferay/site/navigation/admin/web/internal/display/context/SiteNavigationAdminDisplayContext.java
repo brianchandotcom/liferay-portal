@@ -109,6 +109,16 @@ public class SiteNavigationAdminDisplayContext {
 			_siteNavigationMenuItemTypeRegistry.
 				getSiteNavigationMenuItemTypes();
 
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext =
+			new DefaultSiteNavigationMenuItemTypeContext(
+				_themeDisplay.getScopeGroup());
+
+		siteNavigationMenuItemTypes = ListUtil.filter(
+			siteNavigationMenuItemTypes,
+			siteNavigationMenuItemType ->
+				siteNavigationMenuItemType.isAvailable(
+					siteNavigationMenuItemTypeContext));
+
 		ListUtil.sort(
 			siteNavigationMenuItemTypes,
 			Comparator.comparing(
@@ -116,23 +126,11 @@ public class SiteNavigationAdminDisplayContext {
 					siteNavigationMenuItemType.getLabel(
 						_themeDisplay.getLocale())));
 
-		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext =
-			new DefaultSiteNavigationMenuItemTypeContext(
-				_themeDisplay.getScopeGroup());
-
 		return DropdownItemListBuilder.addAll(
 			TransformUtil.transform(
 				siteNavigationMenuItemTypes,
-				siteNavigationMenuItemType -> {
-					if (!siteNavigationMenuItemType.isAvailable(
-							siteNavigationMenuItemTypeContext)) {
-
-						return null;
-					}
-
-					return _getDropdownItem(
-						siteNavigationMenuItemType, _themeDisplay);
-				})
+				siteNavigationMenuItemType -> _getDropdownItem(
+					siteNavigationMenuItemType, _themeDisplay))
 		).build();
 	}
 

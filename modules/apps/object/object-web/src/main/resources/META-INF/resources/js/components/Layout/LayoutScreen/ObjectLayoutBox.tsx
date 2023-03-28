@@ -99,7 +99,7 @@ export function ObjectLayoutBox({
 										type:
 											type === 'categorization'
 												? TYPES.DELETE_OBJECT_LAYOUT_BOX_CATEGORIZATION
-												: TYPES.DELETE_OBJECT_LAYOUT_BOX_CATEGORIZATION,
+												: TYPES.DELETE_OBJECT_LAYOUT_BOX,
 									});
 								}}
 								disabled={disabled}

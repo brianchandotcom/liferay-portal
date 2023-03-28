@@ -241,7 +241,7 @@ public class AssetListAssetEntryProviderImpl
 							ddmStructure.getStructureId(),
 							_getFieldReference(
 								ddmStructure, ddmStructureFieldName),
-							LocaleUtil.getMostRelevantLocale()));
+							LocaleUtil.getSiteDefault()));
 				}
 			}
 			else {
@@ -253,7 +253,7 @@ public class AssetListAssetEntryProviderImpl
 						ddmStructureId,
 						_getFieldReference(
 							ddmStructureId, ddmStructureFieldName),
-						LocaleUtil.getMostRelevantLocale()));
+						LocaleUtil.getSiteDefault()));
 			}
 
 			assetEntryQuery.setAttribute(

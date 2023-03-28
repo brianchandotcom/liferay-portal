@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -156,19 +156,14 @@ public class CommerceSubscriptionEntryServiceImpl
 			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
 
-		List<CommerceChannel> commerceChannels =
-			_commerceChannelLocalService.search(companyId);
-
-		Stream<CommerceChannel> stream = commerceChannels.stream();
-
-		long[] commerceChannelGroupIds = stream.mapToLong(
-			CommerceChannel::getGroupId
-		).toArray();
-
 		return commerceSubscriptionEntryLocalService.
 			searchCommerceSubscriptionEntries(
-				companyId, commerceChannelGroupIds, maxSubscriptionCycles,
-				subscriptionStatus, keywords, start, end, sort);
+				companyId,
+				TransformUtil.transformToLongArray(
+					_commerceChannelLocalService.search(companyId),
+					CommerceChannel::getGroupId),
+				maxSubscriptionCycles, subscriptionStatus, keywords, start, end,
+				sort);
 	}
 
 	/**

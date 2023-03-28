@@ -2459,6 +2459,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry2.getObjectEntryId());
+
 		_testUpdateObjectEntryObjectStateTransitions();
 	}
 

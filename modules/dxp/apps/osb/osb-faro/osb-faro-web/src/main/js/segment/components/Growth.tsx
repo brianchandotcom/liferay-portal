@@ -698,7 +698,6 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 			return [
 				changesListColumns.getIndividualName({channelId, groupId}),
 				changesListColumns.individualEmail,
-				individualsListColumns.accountNames,
 				changesListColumns.getDateFirst(timeZoneId),
 				changesListColumns.getOperation(timeZoneId)
 			];
@@ -707,7 +706,6 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 		return [
 			individualsListColumns.getName({channelId, groupId}),
 			individualsListColumns.email,
-			individualsListColumns.accountNames,
 			individualsListColumns.getDateCreated(timeZoneId)
 		];
 	};

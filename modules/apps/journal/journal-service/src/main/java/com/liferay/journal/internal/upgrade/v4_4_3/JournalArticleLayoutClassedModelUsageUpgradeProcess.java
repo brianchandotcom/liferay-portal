@@ -150,10 +150,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					long plid = (Long)values[3];
 					String portletId = (String)values[4];
 
-					_addBatch(
-						groupId, journalArticleClassNameId, classPK, companyId,
-						portletId, portletClassNameId,
-						layoutClassedModelUsageTypes, plid, preparedStatement,
+					_addLayoutClassedModelUsage(
+						groupId, companyId, journalArticleClassNameId, classPK,
+						portletId, portletClassNameId, plid,
+						layoutClassedModelUsageTypes, preparedStatement,
 						resourcePrimKeysMap);
 
 					Map<Long, Long> companyResourcePrimKeysMap =
@@ -166,47 +166,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				"Unable to create manual selection asset publisher layout " +
 					"classed model usages");
 		}
-	}
-
-	private void _addBatch(
-			long groupId, long classNameId, long classPK, long companyId,
-			String containerKey, long containerType,
-			Map<Long, Integer> layoutClassedModelUsageTypes, long plid,
-			PreparedStatement preparedStatement,
-			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
-		throws Exception {
-
-		Timestamp now = new Timestamp(System.currentTimeMillis());
-
-		preparedStatement.setString(1, PortalUUIDUtil.generate());
-		preparedStatement.setLong(2, increment());
-		preparedStatement.setLong(3, groupId);
-		preparedStatement.setLong(4, companyId);
-		preparedStatement.setTimestamp(5, now);
-		preparedStatement.setTimestamp(6, now);
-		preparedStatement.setLong(7, classNameId);
-		preparedStatement.setLong(8, classPK);
-		preparedStatement.setString(9, containerKey);
-		preparedStatement.setLong(10, containerType);
-		preparedStatement.setLong(11, plid);
-
-		Integer type = layoutClassedModelUsageTypes.get(plid);
-
-		if (type == null) {
-			type = _getLayoutClassedModelUsageType(plid);
-
-			layoutClassedModelUsageTypes.put(plid, type);
-		}
-
-		preparedStatement.setInt(12, type);
-
-		preparedStatement.addBatch();
-
-		Map<Long, Long> companyResourcePrimKeysMap =
-			resourcePrimKeysMap.computeIfAbsent(
-				companyId, key -> new ConcurrentHashMap<>());
-
-		companyResourcePrimKeysMap.computeIfAbsent(classPK, key -> groupId);
 	}
 
 	private void _addDefaultLayoutClassedModelUsages(
@@ -318,15 +277,56 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					String portletId = (String)values[3];
 					long plid = (Long)values[4];
 
-					_addBatch(
-						groupId, journalArticleClassNameId, resourcePrimKey,
-						companyId, portletId, portletClassNameId,
-						layoutClassedModelUsageTypes, plid, preparedStatement,
+					_addLayoutClassedModelUsage(
+						groupId, companyId, journalArticleClassNameId,
+						resourcePrimKey, portletId, portletClassNameId, plid,
+						layoutClassedModelUsageTypes, preparedStatement,
 						resourcePrimKeysMap);
 				},
 				"Unable to create journal articles search layout classed " +
 					"model usages");
 		}
+	}
+
+	private void _addLayoutClassedModelUsage(
+			long groupId, long companyId, long classNameId, long classPK,
+			String containerKey, long containerType, long plid,
+			Map<Long, Integer> layoutClassedModelUsageTypes,
+			PreparedStatement preparedStatement,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
+		throws Exception {
+
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		preparedStatement.setString(1, PortalUUIDUtil.generate());
+		preparedStatement.setLong(2, increment());
+		preparedStatement.setLong(3, groupId);
+		preparedStatement.setLong(4, companyId);
+		preparedStatement.setTimestamp(5, now);
+		preparedStatement.setTimestamp(6, now);
+		preparedStatement.setLong(7, classNameId);
+		preparedStatement.setLong(8, classPK);
+		preparedStatement.setString(9, containerKey);
+		preparedStatement.setLong(10, containerType);
+		preparedStatement.setLong(11, plid);
+
+		Integer type = layoutClassedModelUsageTypes.get(plid);
+
+		if (type == null) {
+			type = _getLayoutClassedModelUsageType(plid);
+
+			layoutClassedModelUsageTypes.put(plid, type);
+		}
+
+		preparedStatement.setInt(12, type);
+
+		preparedStatement.addBatch();
+
+		Map<Long, Long> companyResourcePrimKeysMap =
+			resourcePrimKeysMap.computeIfAbsent(
+				companyId, key -> new ConcurrentHashMap<>());
+
+		companyResourcePrimKeysMap.computeIfAbsent(classPK, key -> groupId);
 	}
 
 	private int _getLayoutClassedModelUsageType(long plid) throws Exception {

@@ -442,15 +442,15 @@ public class WabProcessor {
 				pluginPackageProperties.setProperty(
 					"Liferay-Site-Initializer-Description",
 					unicodeProperties.getProperty(
-						"templateDescription", StringPool.BLANK));
+						"siteTemplateDescription", StringPool.BLANK));
 				pluginPackageProperties.setProperty(
 					"Liferay-Site-Initializer-Feature-Flag",
 					unicodeProperties.getProperty(
-						"templateFeatureFlag", StringPool.BLANK));
+						"siteTemplateFeatureFlag", StringPool.BLANK));
 				pluginPackageProperties.setProperty(
 					"Liferay-Site-Initializer-Name",
 					unicodeProperties.getProperty(
-						"templateName", StringPool.BLANK));
+						"siteTemplateName", StringPool.BLANK));
 				pluginPackageProperties.setProperty(
 					Constants.PROVIDE_CAPABILITY, "liferay.site.initializer");
 			}

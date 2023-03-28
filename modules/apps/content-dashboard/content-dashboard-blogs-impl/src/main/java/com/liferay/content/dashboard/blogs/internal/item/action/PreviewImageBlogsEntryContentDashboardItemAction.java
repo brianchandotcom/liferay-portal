@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Cristina González
@@ -66,13 +65,20 @@ public class PreviewImageBlogsEntryContentDashboardItemAction
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_blogsEntry);
 
-		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue("previewImage")
-		).map(
-			InfoFieldValue::getValue
-		).orElse(
-			StringPool.BLANK
-		).toString();
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("previewImage");
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
+		return value.toString();
 	}
 
 	@Override

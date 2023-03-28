@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPTypeVirtualScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -34,12 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceOrderItemVirtualSettingsScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
-	public static final String
-		CATEGORY_KEY_COMMERCE_ORDER_ITEM_VIRTUAL_SETTINGS = "virtual-settings";
-
 	@Override
 	public String getCategoryKey() {
-		return CATEGORY_KEY_COMMERCE_ORDER_ITEM_VIRTUAL_SETTINGS;
+		return CPTypeVirtualScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_VIRTUAL_SETTINGS;
 	}
 
 	@Override
@@ -52,7 +51,8 @@ public class CommerceOrderItemVirtualSettingsScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "commerce.order.item.general";
+		return CPTypeVirtualScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL;
 	}
 
 	@Reference

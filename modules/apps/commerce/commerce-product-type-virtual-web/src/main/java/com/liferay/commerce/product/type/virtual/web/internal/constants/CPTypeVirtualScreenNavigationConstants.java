@@ -21,4 +21,11 @@ public class CPTypeVirtualScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_VIRTUAL = "virtual";
 
+	public static final String CATEGORY_KEY_COMMERCE_VIRTUAL_SETTINGS =
+		"virtual-settings";
+
+	public static final String
+		SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL =
+			"commerce.order.item.general";
+
 }

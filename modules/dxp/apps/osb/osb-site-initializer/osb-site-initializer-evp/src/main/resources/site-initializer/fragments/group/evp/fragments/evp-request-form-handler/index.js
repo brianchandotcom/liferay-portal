@@ -115,21 +115,23 @@ function handleDocumentClick(requestType) {
 }
 
 const getUser = async () => {
-	const response = await fetch(`/o/c/evpuseraccounts`, {
-		headers: {
-			'content-type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'GET',
-	});
-	const data = await response.json();
-	const filteredUser = data.items.filter(
-		(item) => item.creator.id === userId
-	);
-	userInformation.push(filteredUser);
+	try {
+		const response = await fetch(`/o/c/evpuseraccounts`, {
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'GET',
+		});
+		const data = await response.json();
+		const filteredUser = data.items.filter(
+			(item) => item.creator.id === userId
+		);
+		userInformation.push(filteredUser);
+	} catch (error) {
+		console.error(error);
+	}
 };
-
-getUser();
 
 const grantInput = document.querySelector('input[name="grantAmount"]');
 const hoursInput = document.querySelector('input[name="totalHoursRequested"]');
@@ -138,25 +140,37 @@ const hoursInputDiv = hoursInput.parentNode;
 const newParagraph = document.createElement('p');
 const message = document.createTextNode('Text');
 grantInputDiv.style.position = 'relative';
-newParagraph.setAttribute('style', 'display:none');
-newParagraph.setAttribute('style', 'color:#a90f0f');
 newParagraph.setAttribute('class', 'error-msg');
+newParagraph.setAttribute('style', 'color:#a90f0f');
+newParagraph.setAttribute('style', 'display:none');
 newParagraph.appendChild(message);
 
 const compareGrants = async () => {
 	const grantInputValue = grantInput.value;
 
-	await getUser();
-	if (grantInputValue > userInformation[0][0].fundsAvailable) {
-		grantInputDiv.appendChild(newParagraph);
-		newParagraph.style.position = 'absolute';
+	try {
+		await getUser();
 
-		document.querySelector('.error-msg').innerText = 'No funds available.';
-		document.querySelector('.error-msg').style.display = 'block';
-		document.querySelector('button[type="submit"]').disabled = true;
-	} else {
-		document.querySelector('.error-msg').style.display = 'none';
-		document.querySelector('button[type="submit"]').disabled = false;
+		if (grantInputValue > userInformation[0][0].fundsAvailable) {
+			grantInputDiv.appendChild(newParagraph);
+			newParagraph.style.position = 'absolute';
+
+			const errorMsg = document.querySelector('.error-msg');
+			if (errorMsg) {
+				errorMsg.innerText = 'No funds available.';
+				errorMsg.style.color = '#a90f0f';
+				errorMsg.style.display = 'block';
+			}
+			document.querySelector('button[type="submit"]').disabled = true;
+		} else {
+			const errorMsg = document.querySelector('.error-msg');
+			if (errorMsg) {
+				errorMsg.style.display = 'none';
+			}
+			document.querySelector('button[type="submit"]').disabled = false;
+		}
+	} catch (error) {
+		console.error(error);
 	}
 };
 
@@ -166,14 +180,22 @@ const compareHours = async () => {
 	const hoursInputValue = hoursInput.value;
 
 	await getUser();
+
 	if (hoursInputValue > userInformation[0][0].serviceHoursAvailable) {
 		hoursInputDiv.appendChild(newParagraph);
-		document.querySelector('.error-msg').innerText =
-			'No service hours available.';
-		document.querySelector('.error-msg').style.display = 'block';
+
+		const errorMsg = document.querySelector('.error-msg');
+		if (errorMsg) {
+			errorMsg.innerText = 'No service hours available.';
+			errorMsg.style.color = '#a90f0f';
+			errorMsg.style.display = 'block';
+		}
 		document.querySelector('button[type="submit"]').disabled = true;
 	} else {
-		document.querySelector('.error-msg').style.display = 'none';
+		const errorMsg = document.querySelector('.error-msg');
+		if (errorMsg) {
+			errorMsg.style.display = 'none';
+		}
 		document.querySelector('button[type="submit"]').disabled = false;
 	}
 };

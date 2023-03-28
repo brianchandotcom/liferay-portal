@@ -128,7 +128,7 @@ definition {
 			MenuItem.click(menuItem = "Configuration");
 		}
 
-		Navigator.gotoNavTab(navTab = "Advanced");
+		Navigator.gotoNavTab(navTab = "SEO");
 
 		Panel.expandPanel(panel = "JavaScript");
 
@@ -568,7 +568,7 @@ definition {
 			MenuItem.click(menuItem = "Configuration");
 		}
 
-		Navigator.gotoNavTab(navTab = "Advanced");
+		Navigator.gotoNavTab(navTab = "SEO");
 
 		Panel.expandPanel(panel = "JavaScript");
 

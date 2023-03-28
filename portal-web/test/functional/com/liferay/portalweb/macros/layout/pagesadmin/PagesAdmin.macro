@@ -704,7 +704,7 @@ definition {
 				locator1 = "Icon#COG_PAGE");
 		}
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
+		Navigator.gotoNavTab(navTab = "Design");
 
 		Panel.expandPanel(panel = "Look and Feel");
 

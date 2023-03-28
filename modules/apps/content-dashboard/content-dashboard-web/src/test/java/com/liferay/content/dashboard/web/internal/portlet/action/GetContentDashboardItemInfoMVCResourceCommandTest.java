@@ -104,6 +104,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		User user = Mockito.mock(User.class);
 
 		Mockito.when(
+			user.getFirstName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
 			user.getPortraitId()
 		).thenReturn(
 			12345L
@@ -113,6 +119,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			user.getPortraitURL(Mockito.any(ThemeDisplay.class))
 		).thenReturn(
 			"portraitURL"
+		);
+
+		Mockito.when(
+			user.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
 		);
 
 		ContentDashboardItem<?> contentDashboardItem =

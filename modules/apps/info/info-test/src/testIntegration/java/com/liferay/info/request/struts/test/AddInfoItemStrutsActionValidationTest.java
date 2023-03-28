@@ -61,11 +61,14 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -161,6 +164,21 @@ public class AddInfoItemStrutsActionValidationTest {
 
 				_addInfoItemStrutsAction.execute(
 					mockHttpServletRequest, new MockHttpServletResponse());
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					LoggerTestUtil.ERROR, logEntry.getPriority());
+
+				Assert.assertEquals(
+					"CAPTCHA text is null. User null may be trying to " +
+						"circumvent the CAPTCHA.",
+					logEntry.getMessage());
 			}
 
 			Assert.assertTrue(

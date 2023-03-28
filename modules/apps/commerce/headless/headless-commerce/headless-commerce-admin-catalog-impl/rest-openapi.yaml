@@ -1572,17 +1572,19 @@ components:
         SkuOption:
             properties:
                 key:
+                    type: string
+                optionId:
                     example: 31130
                     format: int64
                     minimum: 0
-                    readOnly: true
+                    type: integer
+                optionValueId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
                     type: integer
                 value:
-                    example: 31130
-                    format: int64
-                    minimum: 0
-                    readOnly: true
-                    type: integer
+                    type: string
             type: object
         Specification:
             properties:

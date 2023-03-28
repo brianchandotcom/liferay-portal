@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.commerce.shop.by.diagram.web
 Bundle-Version: 1.0.61
 Liferay-JS-Submodules-Bridge: commerce-shop-by-diagram-web
 Web-ContextPath: /commerce-shop-by-diagram-web
+-dsannotations-options: inherit

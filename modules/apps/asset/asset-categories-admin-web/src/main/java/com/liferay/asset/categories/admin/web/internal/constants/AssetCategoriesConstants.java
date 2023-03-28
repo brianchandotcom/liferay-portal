@@ -21,6 +21,8 @@ public class AssetCategoriesConstants {
 
 	public static final String CATEGORY_KEY_GENERAL = "general";
 
+	public static final String CATEGORY_KEY_PROPERTIES = "properties";
+
 	public static final String FORM_NAVIGATOR_ID_EDIT_CATEGORY =
 		"edit.category.form";
 

@@ -10,8 +10,8 @@
  */
 
 export const PartnershipLevels = {
-	AUTHORIZED: 'Authorized',
-	GOLD: 'Gold',
-	PLATINUM: 'Platinum',
-	SILVER: 'Silver',
+	AUTHORIZED: 'authorized',
+	GOLD: 'gold',
+	PLATINUM: 'platinum',
+	SILVER: 'silver',
 };

@@ -9,17 +9,21 @@
  * distribution rights of the Software.
  */
 
-export const partnerLevelData = {
-	arr: {
-		arr: 100000,
-		npOrNb: 2,
+export const partnerLevelProperties = {
+	gold: {
+		growthARR: 125000,
+		newProjectExistingBusiness: 2,
+		partnerMarketingUser: 1,
+		partnerSalesUsers: 3,
 	},
-	certification: 'Solution Delivery Certification',
-	headcount: {
-		marketing: 1,
-		sales: 2,
+	platinum: {
+		partnerMarketingUser: 1,
+		partnerSalesUsers: 5,
 	},
-	marketing: 'Plan & Performance',
+	silver: {
+		partnerMarketingUser: 1,
+		partnerSalesUsers: 1,
+	},
 };
 
 export const mdf = {

@@ -82,7 +82,7 @@ const LevelProgressBar = ({currentValue, total, type}) => {
 
 			<div className="bg-neutral-2 w-100">
 				<div
-					className={classNames('mr-1 p-2', {
+					className={classNames('p-2', {
 						'bg-brand-primary-darken-5':
 							type === ChartTypes.NP_OR_NB,
 						'bg-brand-primary-lighten-4': type === ChartTypes.ARR,

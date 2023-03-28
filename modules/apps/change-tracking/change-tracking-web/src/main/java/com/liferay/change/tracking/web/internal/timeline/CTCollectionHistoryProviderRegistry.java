@@ -14,10 +14,14 @@
 
 package com.liferay.change.tracking.web.internal.timeline;
 
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -43,6 +47,17 @@ public class CTCollectionHistoryProviderRegistry {
 		}
 
 		return ctCollectionHistoryProvider;
+	}
+
+	public static List<CTCollection> getCTCollections(
+			long classNameId, long classPK)
+		throws PortalException {
+
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			getCTCollectionHistoryProvider(classNameId);
+
+		return ctCollectionHistoryProvider.getCTCollections(
+			classNameId, classPK);
 	}
 
 	@Activate

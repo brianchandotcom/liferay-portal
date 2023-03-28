@@ -27,7 +27,6 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
@@ -490,12 +489,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		if ((className != null) && (classPK != 0)) {
 			long classNameId = _portal.getClassNameId(className);
 
-			CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-				CTCollectionHistoryProviderRegistry.
-					getCTCollectionHistoryProvider(classNameId);
-
 			List<CTCollection> ctCollections =
-				ctCollectionHistoryProvider.getCTCollections(
+				CTCollectionHistoryProviderRegistry.getCTCollections(
 					classNameId, classPK);
 
 			CTCollection possibleConflictCollection = null;

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPTypeVirtualScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -37,7 +37,8 @@ public class CPDefinitionCPTypeVirtualScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return VirtualCPTypeConstants.NAME;
+		return CPTypeVirtualScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_VIRTUAL;
 	}
 
 	@Override
@@ -45,7 +46,10 @@ public class CPDefinitionCPTypeVirtualScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return language.get(resourceBundle, "virtual");
+		return language.get(
+			resourceBundle,
+			CPTypeVirtualScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_VIRTUAL);
 	}
 
 	@Override

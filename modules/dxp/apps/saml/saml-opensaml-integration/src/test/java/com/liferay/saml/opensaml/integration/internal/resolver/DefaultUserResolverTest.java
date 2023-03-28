@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -67,6 +69,7 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
+import org.mockito.stubbing.Answer;
 
 import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
@@ -149,7 +152,43 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_initMessageContext(
 			true, NameIDType.ENTITY, _SAML_NAME_IDENTIFIER_VALUE);
-		_initUnknownUserHandling();
+	}
+
+	@Test
+	public void testImportUserWithAutoScreenName() throws Exception {
+		Mockito.when(
+			_company.isStrangers()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_company.isStrangersWithMx()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_prefsProps.getBoolean(
+				Mockito.anyLong(),
+				Mockito.eq(PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE))
+		).thenReturn(
+			true
+		);
+
+		_initMessageContext(
+			false, NameIDType.UNSPECIFIED, _SAML_NAME_IDENTIFIER_VALUE);
+		_initUnknownUserHandling(true);
+
+		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
+
+		User resolvedUser = _defaultUserResolver.resolveUser(
+			new UserResolverSAMLContextImpl(_messageContext),
+			new ServiceContext());
+
+		Assert.assertNotNull(resolvedUser);
+
+		Assert.assertEquals("NULL_PROVIDED", resolvedUser.getScreenName());
 	}
 
 	@Test
@@ -168,6 +207,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_initMessageContext(
 			true, NameIDType.EMAIL, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+		_initUnknownUserHandling(false);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
@@ -194,6 +234,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_initMessageContext(
 			true, NameIDType.UNSPECIFIED, _SAML_NAME_IDENTIFIER_VALUE);
+		_initUnknownUserHandling(false);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
 
@@ -296,6 +337,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_initMessageContext(
 			true, NameIDType.EMAIL, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+		_initUnknownUserHandling(false);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
@@ -322,6 +364,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_initMessageContext(
 			true, NameIDType.EMAIL, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+		_initUnknownUserHandling(false);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
@@ -541,7 +584,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 	}
 
-	private void _initUnknownUserHandling() throws Exception {
+	private void _initUnknownUserHandling(boolean autoScreenName)
+		throws Exception {
+
 		Mockito.when(
 			_userLocalService.getUserByEmailAddress(
 				1, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS)
@@ -555,8 +600,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_userLocalService.addUser(
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
 				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.anyBoolean(),
-				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME),
+				Mockito.anyBoolean(), Mockito.nullable(String.class),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS),
 				Mockito.any(Locale.class), Mockito.eq("test"),
 				Mockito.nullable(String.class), Mockito.eq("test"),
@@ -566,8 +610,27 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.nullable(long[].class), Mockito.nullable(long[].class),
 				Mockito.nullable(long[].class), Mockito.eq(false),
 				Mockito.any(ServiceContext.class))
-		).thenReturn(
-			user
+		).thenAnswer(
+			(Answer<User>)invocationOnMock -> {
+				if (autoScreenName &&
+					Validator.isBlank(invocationOnMock.getArgument(6))) {
+
+					Mockito.when(
+						user.getScreenName()
+					).thenReturn(
+						"NULL_PROVIDED"
+					);
+
+					return user;
+				}
+				else if (_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME.equals(
+							invocationOnMock.getArgument(6))) {
+
+					return user;
+				}
+
+				return null;
+			}
 		);
 
 		Mockito.when(

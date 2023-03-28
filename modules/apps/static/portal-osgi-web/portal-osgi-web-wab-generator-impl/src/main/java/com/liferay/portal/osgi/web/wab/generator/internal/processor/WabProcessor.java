@@ -293,7 +293,7 @@ public class WabProcessor {
 		boolean siteInitializerDetected = false;
 
 		String siteInitializerPathString = pluginPackageProperties.getProperty(
-			_LIFERAY_CLIENT_EXTENSION_BATCH, "site-initializer/");
+			_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER, "site-initializer/");
 
 		if (!siteInitializerPathString.endsWith("/")) {
 			siteInitializerPathString += "/";

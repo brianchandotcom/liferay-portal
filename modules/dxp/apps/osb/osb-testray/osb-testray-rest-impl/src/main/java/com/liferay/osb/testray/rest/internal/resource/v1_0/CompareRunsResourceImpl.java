@@ -35,12 +35,14 @@ public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
 
 		return new CompareRuns() {
 			{
-				failedAfailedB = 5L;
-				failedApassedB = 1L;
-				idRunA = idTestrayRunA;
-				idRunB = idTestrayRunB;
-				passedAfailedB = 10L;
-				passedApassedB = 100L;
+				dueStatuses = new String[] {
+					"BLOCKED", "DNR", "FAILED", "FIX", "PASSED", "TEST"
+				};
+
+				values = new int[][] {
+					{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5},
+					{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}
+				};
 			}
 		};
 	}

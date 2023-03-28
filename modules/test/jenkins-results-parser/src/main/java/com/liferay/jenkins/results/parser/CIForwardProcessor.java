@@ -113,9 +113,10 @@ public class CIForwardProcessor {
 				@Override
 				public String execute() {
 					return _pullRequest.forward(
-						_getCIForwardCommentBody(initialComment), _consoleLogURL,
-						_recipientUsername, _getCIForwardBranchName(),
-						ciUsername, _gitRepositoryDir);
+						_getCIForwardCommentBody(initialComment),
+						_consoleLogURL, _recipientUsername,
+						_getCIForwardBranchName(), ciUsername,
+						_gitRepositoryDir);
 
 					/*return _pullRequest.forward(
 						getCIForwardCommentBody(initialComment), _consoleLogURL,
@@ -175,6 +176,35 @@ public class CIForwardProcessor {
 		}
 
 		_pullRequest.addComment(sb.toString());
+	}
+
+	private String[] _getBuildPropertyAsArray(String propertyName)
+		throws IOException {
+
+		String propertyValue = JenkinsResultsParserUtil.getProperty(
+			JenkinsResultsParserUtil.getBuildProperties(), propertyName,
+			_pullRequest.getGitRepositoryName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
+			return new String[0];
+		}
+
+		return propertyValue.split("\\s*,\\s*");
+	}
+
+	private String _getCIForwardBranchName() {
+		try {
+			return JenkinsResultsParserUtil.combine(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"pull.request.forward.branch.name.prefix"),
+				_pullRequest.getSenderBranchName(), "-pr-",
+				_pullRequest.getNumber(), "-sender-",
+				_pullRequest.getSenderUsername());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build property", ioException);
+		}
 	}
 
 	private String _getCIForwardCommentBody(String initialComment) {
@@ -249,63 +279,7 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	private List<String> _getOpenForwardedPullRequestUrls() throws IOException {
-		List<String> openForwardedPullRequestUrls = new ArrayList<>();
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			_getGitHubApiSearchUrl());
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		if ((itemsJSONArray == null) || itemsJSONArray.isEmpty()) {
-			return openForwardedPullRequestUrls;
-		}
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			JSONObject itemsJSONObject = itemsJSONArray.getJSONObject(i);
-
-			openForwardedPullRequestUrls.add(
-				itemsJSONObject.optString("html_url"));
-		}
-
-		return openForwardedPullRequestUrls;
-	}
-
-	private boolean _isForwardEligible() throws IOException {
-		List<String> incompleteRequiredCompletedTestSuiteNames =
-			_getIncompleteRequiredCompletedTestSuiteNames();
-
-		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
-			return false;
-		}
-
-		List<String> failedRequiredPassingTestSuiteNames =
-			_getFailedRequiredPassingTestSuiteNames();
-
-		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private String[] _getBuildPropertyAsArray(String propertyName)
-		throws IOException {
-
-		String propertyValue = JenkinsResultsParserUtil.getProperty(
-			JenkinsResultsParserUtil.getBuildProperties(), propertyName,
-			_pullRequest.getGitRepositoryName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
-			return new String[0];
-		}
-
-		return propertyValue.split("\\s*,\\s*");
-	}
-
-	private String _getCIForwardPullRequestInitialComment()
-		throws IOException {
-
+	private String _getCIForwardPullRequestInitialComment() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
 		JSONObject pullRequestJSONObject = _pullRequest.getJSONObject();
@@ -381,6 +355,32 @@ public class CIForwardProcessor {
 		return JenkinsResultsParserUtil.getGitHubApiSearchUrl(filters);
 	}
 
+	private String _getHasOpenForwardedPullRequestCommentBody(
+		List<String> openForwardedPullRequestURLs) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			"This pull request already has open forwarded pull request(s):\n");
+
+		for (String openForwardedPullRequestURL :
+				openForwardedPullRequestURLs) {
+
+			sb.append(openForwardedPullRequestURL);
+			sb.append("\n");
+		}
+
+		sb.append("\nPull request will not be forwarded to ");
+		sb.append("`");
+		sb.append(_recipientUsername);
+		sb.append("`.\n");
+		sb.append("[Console](");
+		sb.append(_consoleLogURL);
+		sb.append(")\n");
+
+		return sb.toString();
+	}
+
 	private List<String> _getIncompleteRequiredCompletedTestSuiteNames()
 		throws IOException {
 
@@ -420,6 +420,28 @@ public class CIForwardProcessor {
 		return incompleteRequiredCompletedTestSuiteNames;
 	}
 
+	private List<String> _getOpenForwardedPullRequestUrls() throws IOException {
+		List<String> openForwardedPullRequestUrls = new ArrayList<>();
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			_getGitHubApiSearchUrl());
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		if ((itemsJSONArray == null) || itemsJSONArray.isEmpty()) {
+			return openForwardedPullRequestUrls;
+		}
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemsJSONObject = itemsJSONArray.getJSONObject(i);
+
+			openForwardedPullRequestUrls.add(
+				itemsJSONObject.optString("html_url"));
+		}
+
+		return openForwardedPullRequestUrls;
+	}
+
 	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
 		String propertyNamePrefix = "pull.request.forward";
 
@@ -442,9 +464,7 @@ public class CIForwardProcessor {
 			propertyNamePrefix + ".required.passing.suites");
 	}
 
-	private Set<String> _getSuiteTestResultGithubComments()
-		throws IOException {
-
+	private Set<String> _getSuiteTestResultGithubComments() throws IOException {
 		Set<String> suiteTestResultGithubComments = new HashSet<>();
 
 		Set<String> testSuiteNames = new HashSet<>();
@@ -543,45 +563,22 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	private String _getCIForwardBranchName() {
-		try {
-			return JenkinsResultsParserUtil.combine(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"pull.request.forward.branch.name.prefix"),
-				_pullRequest.getSenderBranchName(), "-pr-",
-				_pullRequest.getNumber(), "-sender-",
-				_pullRequest.getSenderUsername());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build property", ioException);
-		}
-	}
+	private boolean _isForwardEligible() throws IOException {
+		List<String> incompleteRequiredCompletedTestSuiteNames =
+			_getIncompleteRequiredCompletedTestSuiteNames();
 
-	private String _getHasOpenForwardedPullRequestCommentBody(
-		List<String> openForwardedPullRequestURLs) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-			"This pull request already has open forwarded pull request(s):\n");
-
-		for (String openForwardedPullRequestURL :
-				openForwardedPullRequestURLs) {
-
-			sb.append(openForwardedPullRequestURL);
-			sb.append("\n");
+		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
+			return false;
 		}
 
-		sb.append("\nPull request will not be forwarded to ");
-		sb.append("`");
-		sb.append(_recipientUsername);
-		sb.append("`.\n");
-		sb.append("[Console](");
-		sb.append(_consoleLogURL);
-		sb.append(")\n");
+		List<String> failedRequiredPassingTestSuiteNames =
+			_getFailedRequiredPassingTestSuiteNames();
 
-		return sb.toString();
+		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final String _consoleLogURL;

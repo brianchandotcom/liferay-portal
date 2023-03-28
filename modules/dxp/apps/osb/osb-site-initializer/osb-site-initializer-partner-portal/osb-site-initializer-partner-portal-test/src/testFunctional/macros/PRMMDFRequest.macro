@@ -194,6 +194,23 @@ definition {
 		}
 	}
 
+	@summary = "Filter the MDF Listing by the selected option"
+	macro FilterMDF {
+		Click(
+			key_filterOption = ${keyFilter},
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		Click(
+			key_partnerOptions = ${filterType},
+			locator1 = "PRMMDFRequest#FILTER_TYPE");
+
+		Click.clickAtNotVisible(
+			checkboxName = ${checkboxName},
+			locator1 = "PRMMDFRequest#FILTER_CHECKBOX");
+
+		Click(locator1 = "PRMMDFRequest#APPLY_BUTTON");
+	}
+
 	@summary = "Format the date that will be inputed on start and end date"
 	macro formatDate {
 		var nextDayDate = DateUtil.getFormattedDate("+1", "MMddyyyy");

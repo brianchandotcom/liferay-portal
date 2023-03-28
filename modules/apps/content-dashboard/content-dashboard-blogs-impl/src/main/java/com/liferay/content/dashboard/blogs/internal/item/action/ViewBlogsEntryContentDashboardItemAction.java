@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -96,26 +95,24 @@ public class ViewBlogsEntryContentDashboardItemAction
 
 			clonedThemeDisplay.setScopeGroupId(_blogsEntry.getGroupId());
 
-			return Optional.ofNullable(
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					BlogsEntry.class.getName(), _blogsEntry.getEntryId(),
-					locale, clonedThemeDisplay)
-			).map(
-				url -> {
-					String backURL = ParamUtil.getString(
-						_httpServletRequest, "backURL");
+			String url = _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				BlogsEntry.class.getName(), _blogsEntry.getEntryId(), locale,
+				clonedThemeDisplay);
 
-					if (Validator.isNotNull(backURL)) {
-						return HttpComponentsUtil.setParameter(
-							url, "p_l_back_url", backURL);
-					}
+			if (url == null) {
+				return StringPool.BLANK;
+			}
 
-					return HttpComponentsUtil.setParameter(
-						url, "p_l_back_url", themeDisplay.getURLCurrent());
-				}
-			).orElse(
-				StringPool.BLANK
-			);
+			String backURL = ParamUtil.getString(
+				_httpServletRequest, "backURL");
+
+			if (Validator.isNotNull(backURL)) {
+				return HttpComponentsUtil.setParameter(
+					url, "p_l_back_url", backURL);
+			}
+
+			return HttpComponentsUtil.setParameter(
+				url, "p_l_back_url", themeDisplay.getURLCurrent());
 		}
 		catch (CloneNotSupportedException | PortalException exception) {
 			_log.error(exception);

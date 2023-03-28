@@ -75,8 +75,8 @@ public class CustomFacetPortletSharedSearchContributor
 				customFacetPortletPreferences, fieldToAggregate,
 				portletSharedSearchSettings);
 		}
-		else if (fieldToAggregate.startsWith(_OBJECT_FIELD_ARRAY)) {
-			_contributeWithObjectFieldArray(
+		else if (fieldToAggregate.startsWith(_OBJECT_NESTED_FIELD_ARRAY)) {
+			_contributeWithObjectNestedFieldArray(
 				customFacetPortletPreferences, fieldToAggregate,
 				portletSharedSearchSettings);
 		}
@@ -184,22 +184,22 @@ public class CustomFacetPortletSharedSearchContributor
 			));
 	}
 
-	private void _contributeWithObjectFieldArray(
+	private void _contributeWithObjectNestedFieldArray(
 		CustomFacetPortletPreferences customFacetPortletPreferences,
 		String fieldToAggregate,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		String[] objectFieldArrayParts = StringUtil.split(
+		String[] objectNestedFieldArrayParts = StringUtil.split(
 			fieldToAggregate, StringPool.PERIOD);
 
-		if (objectFieldArrayParts.length != 3) {
+		if (objectNestedFieldArrayParts.length != 3) {
 			return;
 		}
 
 		_contributeWithNestedFieldFacet(
-			customFacetPortletPreferences, objectFieldArrayParts[2],
-			_OBJECT_FIELD_NAME, objectFieldArrayParts[1], _OBJECT_FIELD_ARRAY,
-			portletSharedSearchSettings);
+			customFacetPortletPreferences, objectNestedFieldArrayParts[2],
+			_OBJECT_FIELD_NAME, objectNestedFieldArrayParts[1],
+			_OBJECT_NESTED_FIELD_ARRAY, portletSharedSearchSettings);
 	}
 
 	private String _getParameterName(
@@ -230,9 +230,9 @@ public class CustomFacetPortletSharedSearchContributor
 		return null;
 	}
 
-	private static final String _OBJECT_FIELD_ARRAY = "nestedFieldArray";
-
 	private static final String _OBJECT_FIELD_NAME = "fieldName";
+
+	private static final String _OBJECT_NESTED_FIELD_ARRAY = "nestedFieldArray";
 
 	@Reference
 	private Language _language;

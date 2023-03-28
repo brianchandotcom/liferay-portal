@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.timeline;
 
+import com.liferay.change.tracking.constants.CTDestinationNames;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
@@ -93,7 +94,7 @@ public class CTCollectionHistoryDataProvider {
 				SchedulerResponse schedulerResponse =
 					SchedulerEngineHelperUtil.getScheduledJob(
 						String.valueOf(_ctCollection.getCtCollectionId()),
-						"liferay/ct_collection_scheduled_publish",
+						CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
 						StorageType.PERSISTED);
 
 				if (schedulerResponse == null) {

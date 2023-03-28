@@ -48,14 +48,14 @@ public class ObjectFieldSettingUtil {
 			return null;
 		}
 
-		ObjectFieldSetting objectFieldSettingDefaultValueType =
+		ObjectFieldSetting defaultValueTypeObjectFieldSetting =
 			objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectFieldId,
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
 
-		if ((objectFieldSettingDefaultValueType == null) ||
+		if ((defaultValueTypeObjectFieldSetting == null) ||
 			StringUtil.equals(
-				objectFieldSettingDefaultValueType.getValue(),
+				defaultValueTypeObjectFieldSetting.getValue(),
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE)) {
 
 			return defaultValueObjectFieldSetting.getValue();

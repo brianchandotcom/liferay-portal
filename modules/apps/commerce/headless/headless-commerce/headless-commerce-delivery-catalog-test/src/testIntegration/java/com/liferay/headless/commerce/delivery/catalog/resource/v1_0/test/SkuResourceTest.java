@@ -126,7 +126,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			sku.getWidth(), sku.getHeight(), sku.getDepth(), sku.getWeight(),
 			BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
 			sku.getPublished(), 1, 1, 2022, 12, 0, 0, 0, 0, 0, 0, true, false,
-			false, 0, null, null, 0, false, 0, null, null, 0,
+			false, 1, null, null, 0, false, 1, null, null, 0,
 			RandomTestUtil.randomString(), false, null, 0, 0, 0, 0,
 			_serviceContext);
 

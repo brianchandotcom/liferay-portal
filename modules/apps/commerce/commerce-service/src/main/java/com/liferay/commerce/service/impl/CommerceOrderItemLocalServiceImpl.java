@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -104,8 +105,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -1522,20 +1521,12 @@ public class CommerceOrderItemLocalServiceImpl
 			long cpDefinitionId, String jsonArrayString)
 		throws PortalException {
 
-		List<CommerceOptionValue> commerceOptionValues =
+		return ListUtil.filter(
 			_commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
-				cpDefinitionId, jsonArrayString);
-
-		Stream<CommerceOptionValue> commerceOptionValuesStream =
-			commerceOptionValues.stream();
-
-		Stream<CommerceOptionValue> commerceOptionValuesFiltered =
-			commerceOptionValuesStream.filter(
-				commerceOptionValue ->
-					_isStaticPriceType(commerceOptionValue.getPriceType()) &&
-					(commerceOptionValue.getCPInstanceId() == 0));
-
-		return commerceOptionValuesFiltered.collect(Collectors.toList());
+				cpDefinitionId, jsonArrayString),
+			commerceOptionValue ->
+				_isStaticPriceType(commerceOptionValue.getPriceType()) &&
+				(commerceOptionValue.getCPInstanceId() == 0));
 	}
 
 	private boolean _isDiscountChanged(

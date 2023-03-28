@@ -184,7 +184,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			).notificationTemplate(
 				notificationTemplateLocalService.addNotificationTemplate(
 					_createNotificationContext(
-						getAllTermNames(), getTerm("AUTHOR_EMAIL_ADDRESS")))
+						getTermNames(), getTerm("AUTHOR_EMAIL_ADDRESS")))
 			).termValues(
 				HashMapBuilder.<String, Object>put(
 					"creator", user2.getUserId()
@@ -206,12 +206,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.size() - 1);
 
 		assertTerms(
-			getAllTermValues(),
+			getTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
 		assertTerms(
-			getAllTermValues(),
+			getTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getBody(), StringPool.COMMA));
 	}

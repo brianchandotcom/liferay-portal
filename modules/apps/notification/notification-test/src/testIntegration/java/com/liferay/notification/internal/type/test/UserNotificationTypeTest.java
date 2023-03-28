@@ -27,14 +27,13 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -61,17 +60,16 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	@Test
 	public void testSendNotificationRecipientTypeRole() throws Exception {
 		_testSendNotification(
-			1,
 			Arrays.asList(
-				createNotificationRecipientSetting("roleName", "Administrator"),
-				createNotificationRecipientSetting("roleName", "User")),
+				createNotificationRecipientSetting(
+					"roleName", RoleConstants.ADMINISTRATOR),
+				createNotificationRecipientSetting("roleName", role.getName())),
 			NotificationRecipientConstants.TYPE_ROLE);
 	}
 
 	@Test
 	public void testSendNotificationRecipientTypeTerm() throws Exception {
 		_testSendNotification(
-			1,
 			Arrays.asList(
 				createNotificationRecipientSetting("term", getTerm("creator")),
 				createNotificationRecipientSetting(
@@ -82,17 +80,28 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	@Test
 	public void testSendNotificationRecipientTypeUser() throws Exception {
 		_testSendNotification(
-			1,
 			Arrays.asList(
 				createNotificationRecipientSetting(
-					"userScreenName", user1.getScreenName())),
+					"userScreenName", user1.getScreenName()),
+				createNotificationRecipientSetting(
+					"userScreenName", user2.getScreenName())),
 			NotificationRecipientConstants.TYPE_USER);
+	}
+
+	private void _assertNotificationRecipientSetting(
+		NotificationRecipientSetting notificationRecipientSetting,
+		String userFullName) {
+
+		Assert.assertEquals(
+			"userFullName", notificationRecipientSetting.getName());
+		Assert.assertEquals(
+			notificationRecipientSetting.getValue(), userFullName);
 	}
 
 	private NotificationContext _createNotificationContext(
 			List<NotificationRecipientSetting> notificationRecipientSettings,
 			String recipientType)
-		throws PortalException {
+		throws Exception {
 
 		NotificationContext notificationContext = new NotificationContext();
 
@@ -107,7 +116,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setRecipientType(recipientType);
 		notificationTemplate.setSubject(
-			ListUtil.toString(getAllTermNames(), StringPool.BLANK));
+			ListUtil.toString(getTermNames(), StringPool.BLANK));
 		notificationTemplate.setType(
 			NotificationConstants.TYPE_USER_NOTIFICATION);
 
@@ -124,7 +133,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _testSendNotification(
-			long expectedUserNotificationEventsCount,
 			List<NotificationRecipientSetting> notificationRecipientSettings,
 			String recipientType)
 		throws Exception {
@@ -175,7 +183,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			expectedUserNotificationEventsCount,
+			1,
 			_userNotificationEventLocalService.getUserNotificationEventsCount(
 				user1.getUserId()));
 
@@ -189,26 +197,24 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		notificationQueueEntry = notificationQueueEntries.get(0);
 
 		assertTerms(
-			getAllTermValues(),
+			getTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
 		NotificationRecipient notificationRecipient =
 			notificationQueueEntry.getNotificationRecipient();
 
-		for (NotificationRecipientSetting notificationRecipientSetting :
-				notificationRecipient.getNotificationRecipientSettings()) {
+		notificationRecipientSettings =
+			notificationRecipient.getNotificationRecipientSettings();
 
-			Assert.assertEquals(
-				"userFullName", notificationRecipientSetting.getName());
-			Assert.assertTrue(
-				StringUtil.equals(
-					notificationRecipientSetting.getValue(),
-					user1.getFullName()) ||
-				StringUtil.equals(
-					notificationRecipientSetting.getValue(),
-					user2.getFullName()));
-		}
+		Assert.assertEquals(
+			notificationRecipientSettings.toString(), 2,
+			notificationRecipientSettings.size());
+
+		_assertNotificationRecipientSetting(
+			notificationRecipientSettings.get(0), user1.getFullName());
+		_assertNotificationRecipientSetting(
+			notificationRecipientSettings.get(1), user2.getFullName());
 	}
 
 	@Inject

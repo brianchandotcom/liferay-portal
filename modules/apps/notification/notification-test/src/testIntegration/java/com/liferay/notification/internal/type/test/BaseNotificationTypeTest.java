@@ -37,7 +37,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -84,14 +87,16 @@ public class BaseNotificationTypeTest {
 		ListType suffixListType = _listTypeLocalService.getListType(
 			"ii", ListTypeConstants.CONTACT_SUFFIX);
 
+		role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
 		user2 = _userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
 			null, RandomTestUtil.randomString() + "@liferay.com",
 			user1.getLocale(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			prefixListType.getListTypeId(), suffixListType.getListTypeId(),
-			true, Month.FEBRUARY.getValue(), 7, 1988, null, null, null, null,
-			null, true, null);
+			true, Month.FEBRUARY.getValue(), 7, 1988, null, null, null,
+			new long[] {role.getRoleId()}, null, true, null);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user2));
@@ -192,7 +197,13 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
-	protected List<String> getAllTermNames() throws PortalException {
+	protected String getTerm(String objectFieldName) {
+		return StringBundler.concat(
+			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
+			StringUtil.upperCase(objectFieldName), "%]");
+	}
+
+	protected List<String> getTermNames() throws PortalException {
 		return ListUtil.concat(
 			ListUtil.fromMapKeys(_getAuthorTermValues()),
 			ListUtil.fromMapKeys(_getCurrentUserTermValues()),
@@ -201,17 +212,11 @@ public class BaseNotificationTypeTest {
 				getTerm("integerObjectField"), getTerm("textObjectField")));
 	}
 
-	protected List<Object> getAllTermValues() throws PortalException {
+	protected List<Object> getTermValues() throws PortalException {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_getAuthorTermValues()),
 			ListUtil.fromMapValues(_getCurrentUserTermValues()),
 			ListUtil.fromMapValues(randomObjectEntryValues));
-	}
-
-	protected String getTerm(String objectFieldName) {
-		return StringBundler.concat(
-			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
-			StringUtil.upperCase(objectFieldName), "%]");
 	}
 
 	protected void sendNotification(
@@ -233,6 +238,7 @@ public class BaseNotificationTypeTest {
 
 	protected static LinkedHashMap<String, Serializable>
 		randomObjectEntryValues;
+	protected static Role role;
 	protected static User user1;
 	protected static User user2;
 

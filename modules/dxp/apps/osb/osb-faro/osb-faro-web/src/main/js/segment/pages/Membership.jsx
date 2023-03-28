@@ -83,12 +83,6 @@ export default class Membership extends React.Component {
 					<Card.Title>
 						{Liferay.Language.get('segment-membership')}
 					</Card.Title>
-
-					<div className='subtitle-segment'>
-						{Liferay.Language.get(
-							'segment-membership-processes-daily-and-does-not-include-todays-activities'
-						)}
-					</div>
 				</Card.Header>
 
 				<MembershipChart

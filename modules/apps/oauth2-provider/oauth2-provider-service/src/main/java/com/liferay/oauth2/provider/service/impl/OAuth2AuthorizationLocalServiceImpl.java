@@ -21,8 +21,11 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Time;
@@ -106,17 +109,46 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 	@Override
 	public void deleteExpiredOAuth2Authorizations() {
-		Date purgeDate = new Date();
+		ActionableDynamicQuery actionableDynamicQuery =
+			oAuth2AuthorizationLocalService.getActionableDynamicQuery();
 
-		purgeDate.setTime(
-			purgeDate.getTime() -
-				_expiredAuthorizationsAfterlifeDurationMillis);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Date purgeDate = new Date();
 
-		for (OAuth2Authorization oAuth2Authorization :
-				oAuth2AuthorizationFinder.findByPurgeDate(
-					purgeDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+				purgeDate.setTime(
+					purgeDate.getTime() -
+						_expiredAuthorizationsAfterlifeDurationMillis);
 
-			oAuth2AuthorizationPersistence.remove(oAuth2Authorization);
+				Criterion accessTokenExpired = RestrictionsFactoryUtil.lt(
+					"accessTokenExpirationDate", purgeDate);
+
+				Criterion refreshTokenExpired = RestrictionsFactoryUtil.and(
+					RestrictionsFactoryUtil.isNotNull(
+						"refreshTokenExpirationDate"),
+					RestrictionsFactoryUtil.lt(
+						"refreshTokenExpirationDate", purgeDate));
+
+				Criterion refreshTokenIsNull = RestrictionsFactoryUtil.isNull(
+					"refreshTokenExpirationDate");
+
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.and(
+						accessTokenExpired,
+						RestrictionsFactoryUtil.or(
+							refreshTokenExpired, refreshTokenIsNull)));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(OAuth2Authorization oAuth2Authorization) ->
+				oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+					oAuth2Authorization));
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

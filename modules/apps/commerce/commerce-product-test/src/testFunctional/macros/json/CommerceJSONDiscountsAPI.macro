@@ -46,6 +46,70 @@ definition {
 			}
 		}
 
+		if (isSet(productNames)) {
+			Variables.assertDefined(parameterList = ${productNames});
+
+			var productIds = CommerceJSONProductsAPI.getProductIdsByName(
+				productNames = ${productNames},
+				responseBody = ${productsJSON});
+			var fieldsList = ListUtil.newList();
+
+			for (var productId : list ${productIds}) {
+				var product = '''{"productId": ${productId}}''';
+
+				ListUtil.add(${fieldsList}, ${product});
+			}
+
+			var productList = ListUtil.toString(${fieldsList});
+		}
+		else {
+			var productList = "";
+		}
+
+		if (isSet(categoryNames)) {
+			Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
+
+			var categoryIds = CommmerceJSONCategoriesAPI._getCategoryIdByName(
+				categoryNames = ${categoryNames},
+				groupName = ${groupName},
+				vocabularyName = ${vocabularyName});
+			var fieldsList = ListUtil.newList();
+
+			for (var categoryId : list ${categoryIds}) {
+				var category = '''{"categoryId": ${categoryIds}}''';
+
+				ListUtil.add(${fieldsList}, ${category});
+			}
+
+			var categoryList = ListUtil.toString(${fieldsList});
+		}
+		else {
+			var categoryList = "";
+		}
+
+		if (isSet(productGroupNames)) {
+			Variables.assertDefined(parameterList = ${productGroupNames});
+
+			var productGroupIds = CommmerceJSONProductGroupsAPI.getProductGroupIdsByName(
+				productGroupNames = ${productGroupNames},
+				responseBody = ${productsJSON});
+
+			echo("productGroup id: ${productGroupIds}");
+
+			var fieldsList = ListUtil.newList();
+
+			for (var productGroupId : list ${productGroupIds}) {
+				var productGroup = '''{"productGroupId": ${productGroupIds}}''';
+
+				ListUtil.add(${fieldsList}, ${productGroup});
+			}
+
+			var productGroupList = ListUtil.toString(${fieldsList});
+		}
+		else {
+			var productGroupList = "";
+		}
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
 				-u test@liferay.com:test \
@@ -54,6 +118,9 @@ definition {
 				-d '{
 					"active": ${active},
 					"couponCode": "${couponCode}",
+					"discountCategories": [${categoryList}],
+					"discountProductGroups": [${productGroupList}],
+					"discountProducts": [${productList}],
 					"level": "${level}",
 					"limitationType": "${limitationType}",
 					"maximumDiscountAmount": ${maximumDiscountAmount},
@@ -70,6 +137,16 @@ definition {
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+
+		if (isSet(productSKUs)) {
+			Variables.assertDefined(parameterList = ${productSKUs});
+
+			for (var productSKU : list ${productSKUs}) {
+				var discountId = CommerceJSONDiscountsAPI._addDiscountSku(
+					discountTitle = ${title},
+					productSKU = ${productSKU});
+			}
+		}
 	}
 
 	macro _addDiscountAccount {

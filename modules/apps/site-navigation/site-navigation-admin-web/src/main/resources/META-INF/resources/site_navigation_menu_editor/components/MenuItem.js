@@ -150,7 +150,16 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			event.stopPropagation();
 
 			if (isKeyboardDragging) {
-				setKeyboardDragLayer(null);
+				updateMenuItem({
+					editSiteNavigationMenuItemParentURL,
+					itemId: keyboardDragLayer.siteNavigationMenuItemId,
+					order: keyboardDragLayer.order,
+					parentId: keyboardDragLayer.parentSiteNavigationMenuItemId,
+					portletNamespace,
+				}).then(({siteNavigationMenuItems}) => {
+					setKeyboardDragLayer(null);
+					setItems(getFlatItems(siteNavigationMenuItems));
+				});
 			}
 			else {
 				setKeyboardDragLayer({
@@ -183,9 +192,10 @@ export function MenuItem({item, onMenuItemRemoved}) {
 
 			const result = computeFunction({
 				items,
-				order,
-				parentSiteNavigationMenuItemId:
-					item.parentSiteNavigationMenuItemId,
+				order: keyboardDragLayer ? keyboardDragLayer.order : order,
+				parentSiteNavigationMenuItemId: keyboardDragLayer
+					? keyboardDragLayer.parentSiteNavigationMenuItemId
+					: item.parentSiteNavigationMenuItemId,
 			});
 
 			if (!result) {
@@ -200,16 +210,6 @@ export function MenuItem({item, onMenuItemRemoved}) {
 				parentSiteNavigationMenuItemId:
 					result.parentSiteNavigationMenuItemId,
 				siteNavigationMenuItemId,
-			});
-
-			updateMenuItem({
-				editSiteNavigationMenuItemParentURL,
-				itemId: item.siteNavigationMenuItemId,
-				order: result.order,
-				parentId: result.parentSiteNavigationMenuItemId,
-				portletNamespace,
-			}).then(({siteNavigationMenuItems}) => {
-				setItems(getFlatItems(siteNavigationMenuItems));
 			});
 		}
 	};

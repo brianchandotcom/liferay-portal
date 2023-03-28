@@ -1725,6 +1725,10 @@ definition {
 		task ("Then: the page shows the Formula Field value") {
 			Navigator.gotoPage(pageName = "Formula Page");
 
+			while ((IsElementNotPresent(entry = 1234, locator1 = "ObjectPortlet#ENTRY_VALUE")) && (maxIterations = "5")) {
+				Refresh();
+			}
+
 			ObjectPortlet.viewEntry(entry = 1234);
 		}
 	}

@@ -7,6 +7,7 @@ import {
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/PublishedAppsDashboardTableRow';
+import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
 	getProductSpecifications,
 	getProducts,
@@ -63,6 +64,7 @@ export function PublishedAppsDashboardPage() {
 	const [selectedNavigationItem, setSelectedNavigationItem] =
 		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
+	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 
 	const appMessages = {
 		description: 'Manage and publish apps on the Marketplace',
@@ -297,20 +299,23 @@ export function PublishedAppsDashboardPage() {
 								setDashboardNavigationItems
 							}
 						>
-							<DashboardTable<MemberProps>
-								emptyStateMessage={
-									memberMessages.emptyStateMessage
-								}
-								items={members}
-								tableHeaders={memberTableHeaders}
-							>
-								{(item) => (
-									<DashboardMemberTableRow
-										item={item}
-										key={item.name}
-									/>
-								)}
-							</DashboardTable>
+							{selectedMember ? (
+								<MemberProfile member={selectedMember} setSelectedMember={setSelectedMember}></MemberProfile>
+							) : (
+								<DashboardTable<MemberProps>
+									emptyStateMessage={memberMessages.emptyStateMessage}
+									items={members}
+									tableHeaders={memberTableHeaders}
+								>
+									{(item) => (
+										<DashboardMemberTableRow
+											item={item}
+											key={item.name}
+											onSelectedMemberChange={setSelectedMember}
+										/>
+									)}
+								</DashboardTable>
+							)}
 						</DashboardPage>
 					);
 				}

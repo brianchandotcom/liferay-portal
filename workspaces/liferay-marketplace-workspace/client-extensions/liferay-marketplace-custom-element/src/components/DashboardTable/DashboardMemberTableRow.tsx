@@ -5,15 +5,16 @@ import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashb
 
 interface DashboardMemberTableRowProps {
 	item: MemberProps;
+	onSelectedMemberChange: (value: MemberProps | undefined) => void;
 }
 
-export function DashboardMemberTableRow({item}: DashboardMemberTableRowProps) {
+export function DashboardMemberTableRow({item, onSelectedMemberChange}: DashboardMemberTableRowProps) {
 	const {email, image, name, role} = item;
 
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell>
-				<div className="dashboard-table-row-name-container">
+				<div className="dashboard-table-row-name-container" onClick={() => onSelectedMemberChange(item)}>
 					<img
 						alt="Member Image"
 						className="dashboard-table-row-name-logo"

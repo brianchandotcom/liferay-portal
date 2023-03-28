@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.model.impl.UserImpl;
@@ -107,11 +108,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_mockSamlProviderConfigurationHelper();
 		_samlSpIdpConnection = _mockSamlSpIdConnection();
 
+		_prefsProps = _mockPrefsProps();
 		_userLocalService = _mockUserLocalService();
 
 		_userFieldExpressionHandlerRegistry =
 			_mockDefaultUserFieldExpressionRegistry(
-				_createDefaultUserFieldExpressionHandler(_userLocalService));
+				_createDefaultUserFieldExpressionHandler(
+					_userLocalService, _prefsProps));
 
 		_testUserFieldExpressionResolver =
 			new TestUserFieldExpressionResolver();
@@ -338,11 +341,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 	private DefaultUserFieldExpressionHandler
 		_createDefaultUserFieldExpressionHandler(
-			UserLocalService userLocalService) {
+			UserLocalService userLocalService, PrefsProps prefsProps) {
 
 		DefaultUserFieldExpressionHandler defaultUserFieldExpressionHandler =
 			new DefaultUserFieldExpressionHandler();
 
+		ReflectionTestUtil.setFieldValue(
+			defaultUserFieldExpressionHandler, "_prefsProps", prefsProps);
 		ReflectionTestUtil.setFieldValue(
 			defaultUserFieldExpressionHandler, "_userLocalService",
 			userLocalService);
@@ -652,6 +657,10 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		languageUtil.setLanguage(new LanguageImpl());
 	}
 
+	private PrefsProps _mockPrefsProps() {
+		return Mockito.mock(PrefsProps.class);
+	}
+
 	private SamlPeerBindingLocalService _mockSamlPeerBindingLocalService() {
 		SamlPeerBindingLocalService samlPeerBindingLocalService = Mockito.mock(
 			SamlPeerBindingLocalService.class);
@@ -765,6 +774,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	private final DefaultUserResolver _defaultUserResolver =
 		new DefaultUserResolver();
 	private MessageContext<Response> _messageContext;
+	private PrefsProps _prefsProps;
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 	private SamlSpIdpConnection _samlSpIdpConnection;
 	private TestUserFieldExpressionResolver _testUserFieldExpressionResolver;

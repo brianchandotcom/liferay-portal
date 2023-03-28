@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
@@ -119,7 +120,8 @@ public class ResourceOpenAPIParser {
 
 							if (configYAML.isGenerateBatch()) {
 								_addBatchJavaMethodSignature(
-									javaMethodSignature, javaMethodSignatures);
+									configYAML, javaMethodSignature,
+									javaMethodSignatures);
 							}
 						});
 				});
@@ -366,7 +368,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static void _addBatchJavaMethodSignature(
-		JavaMethodSignature javaMethodSignature,
+		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
 		List<JavaMethodSignature> javaMethodSignatures) {
 
 		BatchOperationType batchOperationType = null;
@@ -376,7 +378,8 @@ public class ResourceOpenAPIParser {
 			javaMethodSignature.getParentSchemaName());
 		String schemaName = javaMethodSignature.getSchemaName();
 
-		if (methodName.equals(
+		if (ConfigUtil.isVersionCompatible(configYAML, 2) &&
+			methodName.equals(
 				StringBundler.concat(
 					"get", parentSchemaName, schemaName, "sPage"))) {
 

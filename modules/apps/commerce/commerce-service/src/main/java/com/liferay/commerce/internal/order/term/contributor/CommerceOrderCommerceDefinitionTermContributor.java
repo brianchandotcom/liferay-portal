@@ -71,7 +71,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -469,28 +469,23 @@ public class CommerceOrderCommerceDefinitionTermContributor
 					commerceShippingMethod.getEngineKey());
 
 			if (commerceShippingEngine != null) {
-				List<CommerceShippingOption> commerceShippingOptions =
-					commerceShippingEngine.getCommerceShippingOptions(
-						null, commerceOrder, locale);
+				for (CommerceShippingOption commerceShippingOption :
+						commerceShippingEngine.getCommerceShippingOptions(
+							null, commerceOrder, locale)) {
 
-				Stream<CommerceShippingOption> commerceShippingOptionsStream =
-					commerceShippingOptions.stream();
+					if (Objects.equals(
+							commerceShippingOption.getKey(),
+							commerceOrder.getShippingOptionName())) {
 
-				return commerceShippingOptionsStream.filter(
-					commerceShippingOption -> commerceShippingOption.getKey(
-					).equals(
-						commerceOrder.getShippingOptionName()
-					)
-				).findFirst(
-				).map(
-					CommerceShippingOption::getName
-				).orElse(
-					""
-				);
+						return commerceShippingOption.getName();
+					}
+				}
+
+				return StringPool.BLANK;
 			}
 		}
 
-		return "";
+		return StringPool.BLANK;
 	}
 
 	private String _getOrderUrlTerm(CommerceOrder commerceOrder)

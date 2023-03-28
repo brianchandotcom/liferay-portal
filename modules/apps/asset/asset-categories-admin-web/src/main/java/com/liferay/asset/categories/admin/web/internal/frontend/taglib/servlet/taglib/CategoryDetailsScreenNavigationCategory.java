@@ -35,12 +35,13 @@ public class CategoryDetailsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "details";
+		return AssetCategoriesConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return language.get(locale, "details");
+		return language.get(
+			locale, AssetCategoriesConstants.CATEGORY_KEY_DETAILS);
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
-import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -259,14 +258,8 @@ public class ObjectLayoutResourceImpl
 			serviceBuilderObjectLayoutColumn =
 				_objectLayoutColumnPersistence.create(0L);
 
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinitionId, objectLayoutColumn.getObjectFieldName());
-
-		if (objectField == null) {
-			throw new NoSuchObjectFieldException(
-				"There is no object field with the name: " +
-					objectLayoutColumn.getObjectFieldName());
-		}
 
 		serviceBuilderObjectLayoutColumn.setObjectFieldId(
 			objectField.getObjectFieldId());

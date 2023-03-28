@@ -24,12 +24,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -158,245 +156,11 @@ public class PullRequest {
 
 		_jsonObject.put("state", "closed");
 	}
-	
-	private String _getCIForwardBranchName() {
-		try {
-		return JenkinsResultsParserUtil.combine(
-			JenkinsResultsParserUtil.getBuildProperty(
-				"pull.request.forward.branch.name.prefix"),
-			getSenderBranchName(), "-pr-", getNumber(), "-sender-",
-			getSenderUsername());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException("Unable to get build property", ioException);
-		}
-	}
 
-	protected String getGitHubApiSearchUrl(String ciForwardReceiverUsername) throws IOException {
-		List<String> filters = Arrays.asList(
-			"author:" +
-				JenkinsResultsParserUtil.getBuildProperty("github.ci.username"),
-			"head:" + _getCIForwardBranchName(), "is:pr", "is:open",
-			JenkinsResultsParserUtil.combine(
-				"repo:", ciForwardReceiverUsername, "/",
-				getGitRepositoryName()));
 
-		return JenkinsResultsParserUtil.getGitHubApiSearchUrl(filters);
-	}
 
-	public List<String> getOpenForwardedPullRequestUrls(String ciForwardReceiverUsername) throws IOException {
-		List<String> openForwardedPullRequestUrls = new ArrayList<>();
-
-		String gitHubApiSearchUrl = getGitHubApiSearchUrl(ciForwardReceiverUsername);
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(gitHubApiSearchUrl);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		if ((itemsJSONArray == null) || itemsJSONArray.isEmpty()) {
-			return openForwardedPullRequestUrls;
-		}
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			JSONObject itemsJSONObject = itemsJSONArray.getJSONObject(i);
-
-			openForwardedPullRequestUrls.add(itemsJSONObject.optString("html_url"));
-		}
-
-		return openForwardedPullRequestUrls;
-	}
-
-	private String _getHasOpenForwardedPullRequestCommentBody(String ciForwardReceiverUsername, String consoleURL, List<String> openForwardedPullRequestURLs) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("This pull request already has open forwarded pull request(s):\n");
-
-		for (String openForwardedPullRequestURL : openForwardedPullRequestURLs) {
-			sb.append(openForwardedPullRequestURL);
-			sb.append("\n");
-		}
-
-		sb.append("\nPull request will not be forwarded to ");
-		sb.append("`");
-		sb.append(ciForwardReceiverUsername);
-		sb.append("`.\n");
-		sb.append("[Console](");
-		sb.append(consoleURL);
-		sb.append(")\n");
-
-		return sb.toString();
-	}
-
-	protected String getUnsuccessfulCommentBody(String ciForwardReceiverUsername, String consoleURL, boolean force) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		List<String> incompleteRequiredCompletedTestSuiteNames = getIncompleteRequiredCompletedTestSuiteNames(force);
-
-		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
-			sb.append("Not all required test suite(s) completed:\n");
-	
-			for (String requiredCompletedTestSuiteName : getRequiredCompletedTestSuiteNames(force)) {
-				sb.append("`");
-				sb.append(requiredCompletedTestSuiteName);
-				sb.append("`\n");
-			}
-		}
-
-		List<String> failedRequiredPassingTestSuiteNames = getFailedRequiredPassingTestSuiteNames(force);
-
-		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
-			sb.append("Not all required test suite(s) passed:\n");
-	
-			for (String requiredPassingTestSuiteName : getRequiredPassingTestSuiteNames(force)) {
-				sb.append("`");
-				sb.append(requiredPassingTestSuiteName);
-				sb.append("`\n");
-			}
-		}
-
-		sb.append("\nPull request will not be forwarded to ");
-		sb.append("`");
-		sb.append(ciForwardReceiverUsername);
-		sb.append("`.\n");
-		sb.append("[Console](");
-		sb.append(consoleURL);
-		sb.append(")\n");
-
-		return sb.toString();
-	}
-
-	public void ciForward(String ciForwardReceiverUsername, String consoleUrl, boolean force, File gitRepositoryDir) {
-		try {
-			List<String> openForwardedPullRequestUrls = getOpenForwardedPullRequestUrls(ciForwardReceiverUsername);
-
-			if (!openForwardedPullRequestUrls.isEmpty()) {
-				addComment(_getHasOpenForwardedPullRequestCommentBody(ciForwardReceiverUsername, consoleUrl, openForwardedPullRequestUrls));
-
-				return;
-			}
-
-			if (!isForwardEligible(force)) {
-				addComment(getUnsuccessfulCommentBody(ciForwardReceiverUsername, consoleUrl, force));
-
-				return;
-			}
-
-			String ciUsername;
-
-			try {
-				ciUsername = JenkinsResultsParserUtil.getBuildProperty("github.ci.username");
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException("Unable to get build property", ioException);
-			}
-
-			Retryable<Object> retryable = new Retryable<Object>(true, 3, 60, true) {
-
-				@Override
-				public Object execute() {
-					forward(consoleUrl, ciForwardReceiverUsername, _getCIForwardBranchName(), ciUsername, gitRepositoryDir);
-					return null;
-				}
-				
-			};
-
-			try {
-				retryable.executeWithRetries();
-			}
-			catch (Exception exception) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("Error has occurred while forwarding pull request to `");
-					sb.append(ciForwardReceiverUsername);
-					sb.append("`.\n");
-					sb.append("Please try again later or contact ");
-					sb.append("the CI team for assistance.\n");
-					sb.append("See console log for details: [Full Console](");
-					sb.append(consoleUrl);
-					sb.append("consoleText");
-					sb.append(")");
-
-					addComment(sb.toString());
-			}
-		}
-		catch (IOException ioException) {
-			try {
-				addComment(getUnsuccessfulCommentBody(ciForwardReceiverUsername, consoleUrl, force));
-			}
-			catch (IOException ioException2) {
-				throw new RuntimeException("Unable to post failure comment.", ioException2);
-			}
-
-			throw new RuntimeException("Unable to forward pull request.", ioException);
-		}
-
-	}
-
-	public String getCIForwardCommentBody(String consoleURL) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Forwarded from: ");
-		sb.append(getURL());
-
-		int forwardAttempts = 0;
-		Date firstForwardAttemptDate = null;
-
-		for (Comment comment : getComments()) {
-			String commentBody = comment.getBody();
-
-			if ((commentBody == null) || !commentBody.startsWith("ci:forward")) {
-				continue;
-			}
-
-			forwardAttempts++;
-
-			if (firstForwardAttemptDate == null) {
-				firstForwardAttemptDate = comment.getCreatedDate();
-			}
-		}
-
-		String duration = JenkinsResultsParserUtil.toDurationString(
-			JenkinsResultsParserUtil.getCurrentTimeMillis() - firstForwardAttemptDate.getTime());
-
-		sb.append("Took ");
-		sb.append(forwardAttempts);
-		sb.append(" `ci:forward` ");
-		sb.append(JenkinsResultsParserUtil.getNounForm(forwardAttempts, "attempts", "attempt"));
-		sb.append(" in ");
-		sb.append(duration);
-		sb.append(")\n[Console](");
-		sb.append(consoleURL);
-		sb.append(")\n\n");
-
-		String senderUsername = getSenderUsername();
-
-		sb.append("@");
-		sb.append(senderUsername);
-
-		String receiverUsername = getReceiverUsername();
-
-		if (!senderUsername.equals(receiverUsername)) {
-			sb.append("\n");
-			sb.append("@");
-			sb.append(receiverUsername);
-		}
-
-		try {
-			String initialComment = JenkinsResultsParserUtil.getBuildProperty("pull.request.initial.comment");
-	
-			if (!initialComment.isEmpty()) {
-				sb.append("\n");
-				sb.append(initialComment);
-			}
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-
-		return sb.toString();
-	}
-	public void forward(String consoleURL, String forwardReceiverUsername, String forwardBranchName, String forwardSenderUsername, File gitRepositoryDir) {
-		GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamRemoteGitBranchName(), gitRepositoryDir.getAbsolutePath());
+	public String forward(String commentBody, String consoleURL, String forwardReceiverUsername, String forwardBranchName, String forwardSenderUsername, File gitRepositoryDir) {
+		GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamRemoteGitBranchName(), gitRepositoryDir.getAbsolutePath(), getGitRepositoryName());
 
 		LocalGitBranch forwardLocalGitBranch = gitWorkingDirectory.getRebasedLocalGitBranch(
 			forwardBranchName,
@@ -405,22 +169,23 @@ public class PullRequest {
 			getUpstreamRemoteGitBranchName(),
 			getUpstreamBranchSHA());
 
-		String userRemoteURL = GitUtil.getUserRemoteURL(gitWorkingDirectory.getGitRepositoryName(), forwardSenderUsername);
+		String userRemoteURL = GitUtil.getUserRemoteURL(getGitRepositoryName(), forwardSenderUsername);
 
-		RemoteGitBranch forwardRemoteGitBranch = gitWorkingDirectory.getRemoteGitBranch(forwardLocalGitBranch.getName(), userRemoteURL);
-
-		if ((forwardRemoteGitBranch == null) || !forwardRemoteGitBranch.getSHA().equals(forwardLocalGitBranch.getSHA())) {
-			forwardRemoteGitBranch =
+		RemoteGitBranch forwardRemoteGitBranch =
 				gitWorkingDirectory.pushToRemoteGitRepository(
 					true, forwardLocalGitBranch, forwardLocalGitBranch.getName(),
 					userRemoteURL);
+
+		if (forwardRemoteGitBranch == null) {
+			throw new RuntimeException("Unable to push branch to GitHub");
 		}
 
 		try {
-			gitWorkingDirectory.createPullRequest(
-				getCIForwardCommentBody(consoleURL), forwardBranchName, forwardReceiverUsername, forwardSenderUsername, getTitle());
+			return gitWorkingDirectory.createPullRequest(
+				commentBody, forwardBranchName, forwardReceiverUsername, forwardSenderUsername, getTitle());
 		}
 		catch (IOException ioException) {
+			ioException.printStackTrace();
 			throw new RuntimeException("Unable to create new pull request", ioException);
 		}
 
@@ -831,146 +596,6 @@ public class PullRequest {
 		}
 
 		return false;
-	}
-
-	protected String[] getBuildPropertyAsArray(String propertyName) throws IOException {
-		Properties buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-
-		String propertyValue = JenkinsResultsParserUtil.getProperty(
-			buildProperties, propertyName, getGitRepositoryName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
-			return new String[] {};
-		}
-
-		return propertyValue.split("\\s*,\\s*");
-	}
-	
-	protected String[] getRequiredCompletedTestSuiteNames(boolean force) throws IOException {
-		String propertyNamePrefix = "pull.request.forward";
-
-		if (force) {
-			propertyNamePrefix +=".force";
-		}
-
-		return getBuildPropertyAsArray(propertyNamePrefix + ".completed.suites");
-	}
-	
-	protected String[] getRequiredPassingTestSuiteNames(boolean force) throws IOException {
-		String propertyNamePrefix = "pull.request.forward";
-
-		if (force) {
-			propertyNamePrefix +=".force";
-		}
-
-		return getBuildPropertyAsArray(propertyNamePrefix + ".passing.suites");
-	}
-
-	protected List<String> getIncompleteRequiredCompletedTestSuiteNames(boolean force) throws IOException {
-		List<String>completedTestSuiteNames = getCompletedTestSuites();
-
-		List<String> incompleteRequiredCompletedTestSuiteNames = new ArrayList<>(completedTestSuiteNames.size());
-
-		for (String requiredCompletedTestSuiteName : getRequiredCompletedTestSuiteNames(force)) {
-			if (!completedTestSuiteNames.contains(requiredCompletedTestSuiteName)) {
-				incompleteRequiredCompletedTestSuiteNames.add(requiredCompletedTestSuiteName);
-			}
-		}
-
-		return incompleteRequiredCompletedTestSuiteNames;
-	}
-
-	protected List<String> getFailedRequiredPassingTestSuiteNames(boolean force) throws IOException {
-		List<String>passingTestSuiteNames = getPassingTestSuites();
-
-		List<String> failingRequiredPassingTestSuiteNames = new ArrayList<>(passingTestSuiteNames.size());
-
-		for (String requiredPassingTestSuiteName : getRequiredPassingTestSuiteNames(force)) {
-			if (!passingTestSuiteNames.contains(requiredPassingTestSuiteName)) {
-				failingRequiredPassingTestSuiteNames.add(requiredPassingTestSuiteName);
-			}
-		}
-
-		return failingRequiredPassingTestSuiteNames;
-	}
-
-	public boolean isForwardEligible(boolean force) throws IOException {
-		List<String> incompleteRequiredCompletedTestSuiteNames = getIncompleteRequiredCompletedTestSuiteNames(force);
-
-		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
-			return false;
-		}
-
-		List<String> failedRequiredPassingTestSuiteNames = getFailedRequiredPassingTestSuiteNames(force);
-
-		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean hasRequiredCompletedTestSuites() {
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		String requiredCompletedSuites = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "pull.request.forward.required.completed.suites",
-			getGitRepositoryName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedSuites)) {
-			return true;
-		}
-
-		List<String> completedTestSuites = getCompletedTestSuites();
-
-		for (String requiredCompletedSuite :
-				requiredCompletedSuites.split(",")) {
-
-			if (!completedTestSuites.contains(requiredCompletedSuite)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	public String[] getRequiredPassingTestSuiteNames() throws IOException {
-		Properties buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-
-		String requiredPassingSuites = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "pull.request.forward.required.passing.suites",
-			getGitRepositoryName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredPassingSuites)) {
-			return new String[] {};
-		}
-
-		return requiredPassingSuites.split("\\s*,\\s*");
-	}
-
-	public boolean hasRequiredPassingTestSuites() throws IOException {
-		String[] requiredPassingSuiteNames = getRequiredPassingTestSuiteNames();
-
-		if (requiredPassingSuiteNames.length == 0) {
-			return true;
-		}
-
-		List<String> passingTestSuites = getPassingTestSuites();
-
-		for (String requiredPassingSuite : requiredPassingSuiteNames) {
-			if (!passingTestSuites.contains(requiredPassingSuite)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	public boolean isAutoCloseCommentAvailable() {

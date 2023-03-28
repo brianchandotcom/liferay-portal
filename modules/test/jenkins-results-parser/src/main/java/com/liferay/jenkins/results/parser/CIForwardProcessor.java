@@ -195,7 +195,7 @@ public class CIForwardProcessor {
 	private String _getCIForwardBranchName() throws IOException {
 		return JenkinsResultsParserUtil.combine(
 			JenkinsResultsParserUtil.getBuildProperty(
-				"pull.request.forward.branch.name.prefix"),
+				"ci.forward.branch.name.prefix"),
 			_pullRequest.getSenderBranchName(), "-pr-",
 			_pullRequest.getNumber(), "-sender-",
 			_pullRequest.getSenderUsername());
@@ -437,7 +437,7 @@ public class CIForwardProcessor {
 	}
 
 	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
-		String propertyNamePrefix = "pull.request.forward";
+		String propertyNamePrefix = "ci.forward";
 
 		if (_force) {
 			propertyNamePrefix += ".force";
@@ -448,7 +448,7 @@ public class CIForwardProcessor {
 	}
 
 	private String[] _getRequiredPassingTestSuiteNames() throws IOException {
-		String propertyNamePrefix = "pull.request.forward";
+		String propertyNamePrefix = "ci.forward";
 
 		if (_force) {
 			propertyNamePrefix += ".force";

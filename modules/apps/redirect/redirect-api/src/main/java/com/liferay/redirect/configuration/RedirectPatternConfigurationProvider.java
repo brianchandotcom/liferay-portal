@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.redirect.model.RedirectPatternEntry;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +31,7 @@ public interface RedirectPatternConfigurationProvider {
 		throws ConfigurationException;
 
 	public void updatePatternStrings(
-			long groupId, Map<String, String> patternStrings)
+			long groupId, List<RedirectPatternEntry> redirectPatternEntries)
 		throws Exception;
 
 }

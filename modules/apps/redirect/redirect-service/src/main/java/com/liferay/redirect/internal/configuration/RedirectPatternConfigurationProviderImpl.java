@@ -17,13 +17,14 @@ package com.liferay.redirect.internal.configuration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.provider.RedirectProvider;
 
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -43,7 +44,7 @@ public class RedirectPatternConfigurationProviderImpl
 
 	@Override
 	public void updatePatternStrings(
-			long groupId, Map<String, String> patternStrings)
+			long groupId, List<RedirectPatternEntry> redirectPatternEntries)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
@@ -75,17 +76,22 @@ public class RedirectPatternConfigurationProviderImpl
 			properties = configuration.getProperties();
 		}
 
-		if (patternStrings.isEmpty()) {
+		if (ListUtil.isEmpty(redirectPatternEntries)) {
 			properties.put("patternStrings", new String[0]);
 		}
 		else {
-			String[] patternStringsArray = new String[patternStrings.size()];
-
 			int i = 0;
 
-			for (Map.Entry<String, String> entry : patternStrings.entrySet()) {
-				patternStringsArray[i] =
-					entry.getKey() + StringPool.SPACE + entry.getValue();
+			String[] patternStringsArray =
+				new String[redirectPatternEntries.size()];
+
+			for (RedirectPatternEntry redirectPatternEntry :
+					redirectPatternEntries) {
+
+				patternStringsArray[i] = StringBundler.concat(
+					String.valueOf(redirectPatternEntry.getPattern()),
+					StringPool.SPACE, redirectPatternEntry.getDestinationURL(),
+					StringPool.SPACE, redirectPatternEntry.getUserAgent());
 
 				i++;
 			}

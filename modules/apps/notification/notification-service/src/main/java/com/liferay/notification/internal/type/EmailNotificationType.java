@@ -404,6 +404,10 @@ public class EmailNotificationType extends BaseNotificationType {
 				persistedModelLocalService.getPersistedModel(
 					notificationContext.getClassPK()));
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLocale(siteDefaultLocale);
+
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
@@ -417,7 +421,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			}
 
 			TemplateNode templateNode = _templateNodeFactory.createTemplateNode(
-				infoFieldValue, new ThemeDisplay());
+				infoFieldValue, themeDisplay);
 
 			template.put(infoField.getName(), templateNode);
 			template.put(infoField.getUniqueId(), templateNode);

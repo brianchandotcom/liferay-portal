@@ -37,6 +37,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -461,7 +462,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				));
 		}
 
-		_getTimelineData(ctCollection, data, httpServletRequest, themeDisplay);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-161033")) {
+			_getTimelineData(
+				ctCollection, data, httpServletRequest, themeDisplay);
+		}
 
 		return data;
 	}

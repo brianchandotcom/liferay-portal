@@ -59,7 +59,7 @@ public class PortletSharedTaskExecutorImpl
 			}
 		}
 
-		if (oldTaskExists.get()) {
+		if (!oldTaskExists.get()) {
 			futureTask.run();
 		}
 

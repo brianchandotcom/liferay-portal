@@ -34,15 +34,15 @@ public class SkuOption implements Cloneable, Serializable {
 		return SkuOptionSerDes.toDTO(json);
 	}
 
-	public Long getKey() {
+	public String getKey() {
 		return key;
 	}
 
-	public void setKey(Long key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 
-	public void setKey(UnsafeSupplier<Long, Exception> keyUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
 			key = keyUnsafeSupplier.get();
 		}
@@ -51,17 +51,61 @@ public class SkuOption implements Cloneable, Serializable {
 		}
 	}
 
-	protected Long key;
+	protected String key;
 
-	public Long getValue() {
+	public Long getOptionId() {
+		return optionId;
+	}
+
+	public void setOptionId(Long optionId) {
+		this.optionId = optionId;
+	}
+
+	public void setOptionId(
+		UnsafeSupplier<Long, Exception> optionIdUnsafeSupplier) {
+
+		try {
+			optionId = optionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long optionId;
+
+	public Long getOptionValueId() {
+		return optionValueId;
+	}
+
+	public void setOptionValueId(Long optionValueId) {
+		this.optionValueId = optionValueId;
+	}
+
+	public void setOptionValueId(
+		UnsafeSupplier<Long, Exception> optionValueIdUnsafeSupplier) {
+
+		try {
+			optionValueId = optionValueIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long optionValueId;
+
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Long value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
-	public void setValue(UnsafeSupplier<Long, Exception> valueUnsafeSupplier) {
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
 		try {
 			value = valueUnsafeSupplier.get();
 		}
@@ -70,7 +114,7 @@ public class SkuOption implements Cloneable, Serializable {
 		}
 	}
 
-	protected Long value;
+	protected String value;
 
 	@Override
 	public SkuOption clone() throws CloneNotSupportedException {

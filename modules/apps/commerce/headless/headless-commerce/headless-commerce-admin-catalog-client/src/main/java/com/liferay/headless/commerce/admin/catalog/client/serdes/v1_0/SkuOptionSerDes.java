@@ -60,7 +60,31 @@ public class SkuOptionSerDes {
 
 			sb.append("\"key\": ");
 
-			sb.append(skuOption.getKey());
+			sb.append("\"");
+
+			sb.append(_escape(skuOption.getKey()));
+
+			sb.append("\"");
+		}
+
+		if (skuOption.getOptionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionId\": ");
+
+			sb.append(skuOption.getOptionId());
+		}
+
+		if (skuOption.getOptionValueId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionValueId\": ");
+
+			sb.append(skuOption.getOptionValueId());
 		}
 
 		if (skuOption.getValue() != null) {
@@ -70,7 +94,11 @@ public class SkuOptionSerDes {
 
 			sb.append("\"value\": ");
 
-			sb.append(skuOption.getValue());
+			sb.append("\"");
+
+			sb.append(_escape(skuOption.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -96,6 +124,21 @@ public class SkuOptionSerDes {
 		}
 		else {
 			map.put("key", String.valueOf(skuOption.getKey()));
+		}
+
+		if (skuOption.getOptionId() == null) {
+			map.put("optionId", null);
+		}
+		else {
+			map.put("optionId", String.valueOf(skuOption.getOptionId()));
+		}
+
+		if (skuOption.getOptionValueId() == null) {
+			map.put("optionValueId", null);
+		}
+		else {
+			map.put(
+				"optionValueId", String.valueOf(skuOption.getOptionValueId()));
 		}
 
 		if (skuOption.getValue() == null) {
@@ -127,14 +170,24 @@ public class SkuOptionSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					skuOption.setKey(
+					skuOption.setKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "optionId")) {
+				if (jsonParserFieldValue != null) {
+					skuOption.setOptionId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "optionValueId")) {
+				if (jsonParserFieldValue != null) {
+					skuOption.setOptionValueId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					skuOption.setValue(
-						Long.valueOf((String)jsonParserFieldValue));
+					skuOption.setValue((String)jsonParserFieldValue);
 				}
 			}
 		}

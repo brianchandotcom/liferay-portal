@@ -10,6 +10,8 @@ definition {
 		Click(
 			key_navItem = ${navItem},
 			locator1 = "PRMNavigation#NAV_LINK");
+
+		WaitForPageLoad();
 	}
 
 	macro openSitePage {

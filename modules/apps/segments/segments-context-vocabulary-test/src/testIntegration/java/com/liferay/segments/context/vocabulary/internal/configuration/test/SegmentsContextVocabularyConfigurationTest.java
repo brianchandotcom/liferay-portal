@@ -54,7 +54,7 @@ public class SegmentsContextVocabularyConfigurationTest {
 		try {
 			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
-			_configuration = _configurationAdmin.createFactoryConfiguration(
+			_configuration1 = _configurationAdmin.createFactoryConfiguration(
 				"com.liferay.segments.context.vocabulary.internal." +
 					"configuration.SegmentsContextVocabularyConfiguration",
 				StringPool.QUESTION);
@@ -68,13 +68,18 @@ public class SegmentsContextVocabularyConfigurationTest {
 					"entityFieldName", "entityFieldName"
 				).build();
 
-			_configuration.update(properties);
+			_configuration1.update(properties);
 
 			Assert.assertEquals(
 				"assetVocabularyName", properties.get("assetVocabularyName"));
 			Assert.assertEquals(
 				"entityFieldName", properties.get("entityFieldName"));
 			Assert.assertEquals("987", properties.get("companyId"));
+
+			_configuration2 = _configurationAdmin.createFactoryConfiguration(
+				"com.liferay.segments.context.vocabulary.internal." +
+					"configuration.SegmentsContextVocabularyConfiguration",
+				StringPool.QUESTION);
 
 			properties = HashMapDictionaryBuilder.<String, Object>put(
 				"assetVocabularyName", "differentAssetVocabularyName"
@@ -85,7 +90,7 @@ public class SegmentsContextVocabularyConfigurationTest {
 			).build();
 
 			try {
-				_configuration.update(properties);
+				_configuration2.update(properties);
 
 				Assert.fail();
 			}
@@ -100,15 +105,16 @@ public class SegmentsContextVocabularyConfigurationTest {
 						"property name."),
 					configurationModelListenerException.causeMessage);
 			}
-
-			_configuration.delete();
 		}
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
+			_configuration1.delete();
+			_configuration2.delete();
 		}
 	}
 
-	private Configuration _configuration;
+	private Configuration _configuration1;
+	private Configuration _configuration2;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

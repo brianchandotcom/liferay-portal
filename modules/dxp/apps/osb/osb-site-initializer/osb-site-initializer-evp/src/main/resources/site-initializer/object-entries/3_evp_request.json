@@ -4,7 +4,7 @@
 			"emailAddress": "user1@email.com",
 			"endDate": "2022-09-30T00:00:00Z",
 			"fullName": "User 1",
-			"grantAmount": 11,
+			"grantAmount": 0,
 			"grantRequestType": "proposed",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager1@email.com",
@@ -16,12 +16,12 @@
 			"requestStatus": "awaitingPaymentConfirmation",
 			"requestType": "service",
 			"startDate": "2022-09-29T00:00:00Z",
-			"totalHoursRequested": 11
+			"totalHoursRequested": 5
 		},
 		{
 			"emailAddress": "user2@email.com",
 			"fullName": "User 2",
-			"grantAmount": 22,
+			"grantAmount": 100,
 			"grantRequestType": "sponsorship",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager2@email.com",
@@ -32,12 +32,12 @@
 			"requestPurposes": "disasterRelief",
 			"requestStatus": "awaitCompanyVerification",
 			"requestType": "grant",
-			"totalHoursRequested": 22
+			"totalHoursRequested": 0
 		},
 		{
 			"emailAddress": "user3@email.com",
 			"fullName": "User 3",
-			"grantAmount": 33,
+			"grantAmount": 100,
 			"grantRequestType": "proposed",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager3@email.com",
@@ -48,12 +48,12 @@
 			"requestPurposes": "basicHealth",
 			"requestStatus": "awaitingFinanceReview",
 			"requestType": "grant",
-			"totalHoursRequested": 33
+			"totalHoursRequested": 0
 		},
 		{
 			"emailAddress": "user4@email.com",
 			"fullName": "User 4",
-			"grantAmount": 44,
+			"grantAmount": 200,
 			"grantRequestType": "proposed",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager4@email.com",
@@ -64,12 +64,12 @@
 			"requestPurposes": "basicHealth",
 			"requestStatus": "awaitingApprovalOnEvp",
 			"requestType": "grant",
-			"totalHoursRequested": 44
+			"totalHoursRequested": 0
 		},
 		{
 			"emailAddress": "user5@email.com",
 			"fullName": "User 5",
-			"grantAmount": 55,
+			"grantAmount": 100,
 			"grantRequestType": "proposed",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager5@email.com",
@@ -80,12 +80,12 @@
 			"requestPurposes": "basicHealth",
 			"requestStatus": "closed",
 			"requestType": "grant",
-			"totalHoursRequested": 55
+			"totalHoursRequested": 0
 		},
 		{
 			"emailAddress": "user6@email.com",
 			"fullName": "User 6",
-			"grantAmount": 66,
+			"grantAmount": 150,
 			"grantRequestType": "proposed",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager6@email.com",
@@ -96,7 +96,7 @@
 			"requestPurposes": "basicHealth",
 			"requestStatus": "rejected",
 			"requestType": "grant",
-			"totalHoursRequested": 66
+			"totalHoursRequested": 0
 		}
 	],
 	"objectDefinitionName": "EVPRequest"

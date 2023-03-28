@@ -1,0 +1,45 @@
+{
+	"label": {
+		"en_US": "EVP User Account"
+	},
+	"name": "EVPUserAccount",
+	"objectFields": [
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Funds Available"
+			},
+			"name": "fundsAvailable",
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Service Hours Available"
+			},
+			"name": "serviceHoursAvailable",
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "EVP User Account"
+	},
+	"scope": "company",
+	"titleObjectFieldName": "id"
+}

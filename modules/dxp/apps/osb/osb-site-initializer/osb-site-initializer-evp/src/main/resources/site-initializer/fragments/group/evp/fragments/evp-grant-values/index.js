@@ -19,6 +19,7 @@ const requests = [];
 const userId = parseInt(
 	document.getElementById('user-id-container').textContent
 );
+const userAccountId = [];
 const fundsRequestsByUserId = [];
 const totalFundsRequestedById = [];
 const serviceHoursRequestsByUserId = [];
@@ -141,38 +142,38 @@ const getAvailableHours = async () => {
 
 getAvailableHours();
 
-const updateUser = async () => {
-	await Promise.all([getAvailableFunds(), getAvailableHours()]);
-
-	const customFields = [
-		{
-			customValue: {
-				data: availableServiceHours[0],
-			},
-			dataType: 'Integer',
-			name: 'Service Hours Available',
+const getUser = async () => {
+	const response = await fetch(`/o/c/evpuseraccounts`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
 		},
-		{
-			customValue: {
-				data: availableFunds[0],
-			},
-			dataType: 'Integer',
-			name: 'Funds Available',
-		},
-	];
+		method: 'GET',
+	});
 
-	const response = await fetch(
-		`/o/headless-admin-user/v1.0/user-accounts/${userId}`,
-		{
-			body: JSON.stringify({customFields}),
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'PATCH',
-		}
+	const data = await response.json();
+	const filteredUser = data.items.filter(
+		(item) => item.creator.id === userId
 	);
+	userAccountId.push(filteredUser[0].id);
+};
 
+const updateUser = async () => {
+	await Promise.all([getAvailableFunds(), getAvailableHours(), getUser()]);
+
+	const userAccountFields = {
+		fundsAvailable: availableFunds[0],
+		serviceHoursAvailable: availableServiceHours[0],
+	};
+
+	const response = await fetch(`/o/c/evpuseraccounts/${userAccountId[0]}`, {
+		body: JSON.stringify(userAccountFields),
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PATCH',
+	});
 	const data = await response.json();
 
 	return data;

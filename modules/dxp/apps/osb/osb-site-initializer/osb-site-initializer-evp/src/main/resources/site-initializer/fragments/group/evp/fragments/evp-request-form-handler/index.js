@@ -94,8 +94,7 @@ function toggleServiceRequired(service) {
 		service.querySelector('[name="totalHoursRequested"]').required = false;
 		service.querySelector('[name="startDate"]').required = false;
 		service.querySelector('[name="endDate"]').required = false;
-	}
-	else {
+	} else {
 		service.querySelector('[name="managerEmailAddress"]').required = true;
 		service.querySelector('[name="totalHoursRequested"]').required = true;
 		service.querySelector('[name="startDate"]').required = true;
@@ -106,8 +105,7 @@ function toggleServiceRequired(service) {
 function toggleGrantRequired(grant) {
 	if (grant.querySelector('[name="grantAmount"]').required) {
 		grant.querySelector('[name="grantAmount"]').required = false;
-	}
-	else {
+	} else {
 		grant.querySelector('[name="grantAmount"]').required = true;
 	}
 }
@@ -117,19 +115,18 @@ function handleDocumentClick(requestType) {
 }
 
 const getUser = async () => {
-	const response = await fetch(
-		`/o/headless-admin-user/v1.0/user-accounts/${userId}`,
-		{
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		}
-	);
-
+	const response = await fetch(`/o/c/evpuseraccounts`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	});
 	const data = await response.json();
-	userInformation.push(data);
+	const filteredUser = data.items.filter(
+		(item) => item.creator.id === userId
+	);
+	userInformation.push(filteredUser);
 };
 
 getUser();
@@ -150,16 +147,14 @@ const compareGrants = async () => {
 	const grantInputValue = grantInput.value;
 
 	await getUser();
-
-	if (grantInputValue > userInformation[0].customFields[1].customValue.data) {
+	if (grantInputValue > userInformation[0][0].fundsAvailable) {
 		grantInputDiv.appendChild(newParagraph);
 		newParagraph.style.position = 'absolute';
 
 		document.querySelector('.error-msg').innerText = 'No funds available.';
 		document.querySelector('.error-msg').style.display = 'block';
 		document.querySelector('button[type="submit"]').disabled = true;
-	}
-	else {
+	} else {
 		document.querySelector('.error-msg').style.display = 'none';
 		document.querySelector('button[type="submit"]').disabled = false;
 	}
@@ -171,17 +166,13 @@ const compareHours = async () => {
 	const hoursInputValue = hoursInput.value;
 
 	await getUser();
-
-	if (hoursInputValue > userInformation[0].customFields[0].customValue.data) {
+	if (hoursInputValue > userInformation[0][0].serviceHoursAvailable) {
 		hoursInputDiv.appendChild(newParagraph);
-
 		document.querySelector('.error-msg').innerText =
 			'No service hours available.';
-
 		document.querySelector('.error-msg').style.display = 'block';
 		document.querySelector('button[type="submit"]').disabled = true;
-	}
-	else {
+	} else {
 		document.querySelector('.error-msg').style.display = 'none';
 		document.querySelector('button[type="submit"]').disabled = false;
 	}

@@ -88,7 +88,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 
 			relationshipSectionsJSONArray.put(
 				JSONUtil.put(
-					"relationshipId",
+					"objectRelationshipId",
 					objectRelationship.getObjectRelationshipId()
 				).put(
 					"sectionLabel",

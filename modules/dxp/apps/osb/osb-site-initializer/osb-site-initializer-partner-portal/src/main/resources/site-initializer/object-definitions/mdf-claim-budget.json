@@ -1,4 +1,5 @@
 {
+	"externalReferenceCode": "ee2c4088-1d12-922f-e326-288dfbb4f943",
 	"label": {
 		"en_US": "MDF Claim Budget"
 	},
@@ -7,6 +8,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "0ef6d668-9723-ee13-8628-9d7688b66ead",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -19,6 +21,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "836a082f-5740-cbf7-39bf-ca1c0f1f0d82",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -30,6 +33,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "6117dedb-b451-5b04-2c9f-b953a7f6f314",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

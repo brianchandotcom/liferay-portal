@@ -1,4 +1,5 @@
 {
+	"externalReferenceCode": "38b6bb77-e5a1-495b-28d7-a251258c4897",
 	"label": {
 		"en_US": "Activity"
 	},
@@ -7,6 +8,7 @@
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "1d8c3c66-1e22-7678-c208-7770e3dba0e1",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -19,6 +21,7 @@
 		{
 			"DBType": "Date",
 			"businessType": "Date",
+			"externalReferenceCode": "516e1767-b99b-2f3b-20ae-61f4ef1b19c9",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -31,6 +34,7 @@
 		{
 			"DBType": "Date",
 			"businessType": "Date",
+			"externalReferenceCode": "2e94fbe0-1177-4411-e7da-861488345bca",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -43,6 +47,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "7891dd5d-adde-3c7b-5fc7-52bdd6547fab",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -55,6 +60,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "536d5a32-4e2d-d56a-6441-3c770f6456d0",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -67,6 +73,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "7e752dbd-8e50-41b0-b254-3e4f7d8bf7d4",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -79,6 +86,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "e761c028-dd46-dfc5-677b-d0d745a5b38d",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -91,6 +99,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "4f85598d-d9c2-dd47-71f6-db9717b04e4e",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -103,6 +112,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "fb1e683f-c67f-3746-fed7-56e078337c89",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -115,6 +125,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "c4141a7e-87dc-1274-4815-0e37237ecc50",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -127,6 +138,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "293f0e1e-7095-c8e3-572b-20278903dcaa",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -139,6 +151,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "3ab1aa9f-9efd-988a-ab28-9c27a11896e5",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -151,6 +164,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "a3dd9976-397f-cbe8-4695-45f8f7700d84",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -163,6 +177,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "5a6ebfff-738b-cf49-9d74-ce89b9d867a8",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -175,6 +190,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "029892b4-3baf-d7d6-f95f-100824ae54cc",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -187,6 +203,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "184d7e7d-1580-c0ea-f969-6dfb00f53656",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -199,6 +216,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "e136eacf-1d67-ad52-5eb0-d6b24695ec8f",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -210,6 +228,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "873700b3-2a19-e5d4-c520-a87824de8373",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -221,6 +240,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "251f3631-1535-2a6d-dc88-4233e2cb9798",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -233,6 +253,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "bc43c357-d59e-c4da-f9cc-890cb4712864",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -245,6 +266,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "b385efd1-c900-141e-877c-ed457dba747e",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -256,6 +278,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "9da516cd-057e-2ec6-e79e-f5cbca456cb6",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -268,6 +291,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "d5326d02-eef5-b42e-25a2-e46a9acac9d6",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -280,6 +304,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "a9225833-bc5c-faef-37cf-6cba986bad96",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -291,6 +316,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "460656d4-4830-861a-e2f9-cd336bea6819",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -303,6 +329,7 @@
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "65f69c64-d10a-be22-e44c-409ad6c3bf55",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -315,6 +342,7 @@
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "94cdcdd2-8e03-984c-0032-35f6a857a879",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -327,6 +355,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "916c1240-365d-4957-0935-239e072cdb50",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -339,6 +368,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "9efd221a-6551-3135-a27e-7da3df35db25",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -351,6 +381,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"externalReferenceCode": "6e17e555-4dca-38d4-5c29-152b7070f6f5",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -365,6 +396,7 @@
 			"DBType": "String",
 			"businessType": "Picklist",
 			"defaultValue": "submitted",
+			"externalReferenceCode": "6b4fed71-6c72-93d3-4cad-2f183975065e",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -417,6 +449,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"externalReferenceCode": "0f04222c-6f74-d295-ded2-c7821aab8818",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -430,6 +463,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "62d9d7f4-9a39-678d-9845-1b150c219144",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -442,6 +476,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "412a9c26-10cb-697e-f039-1b47c571cd5b",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -454,6 +489,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "0b9d6db1-e8e3-951e-6251-e488a2c2c277",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -466,6 +502,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "24601c83-5f81-2bec-8409-c4db4d35aae9",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -478,6 +515,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "9840fc3f-bc15-d3e2-1517-750cc5514171",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -490,6 +528,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "c0a9618f-f389-a0f4-e6eb-5d7689716144",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -502,6 +541,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "d67c091a-7a39-198e-588f-e5eba9c8f3ee",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -514,6 +554,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "bab6d116-9e30-1100-c17a-b79959aec404",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -526,6 +567,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "dec71171-9157-6840-abeb-4cd9bb5424f7",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -538,6 +580,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "e0b1e80c-5749-6569-1b77-17f6778330d5",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -550,6 +593,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "be38a1bd-086a-2658-ecaa-103b3d6b6c4d",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -562,6 +606,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "0f9cc063-c6b6-857c-23ff-24fcb28fad45",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -574,6 +619,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "9da2b955-764a-1c64-91fd-4ffeb911a7f3",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -586,6 +632,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "7851fbf0-9d9a-3b41-a8c4-914bcbc303db",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -598,6 +645,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "c40ae75c-c49a-fdd2-5ce3-502dfe7cace0",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -610,6 +658,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "de1a948b-ee1e-e69f-fbc6-af32796c1cda",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -622,6 +671,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "9f8dabe4-da0f-2de0-4a97-37810dfc555e",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -634,6 +684,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "245c6ae2-6c4f-14e3-8560-7fd3d57325a7",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -646,6 +697,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "2f1dc369-10c9-28cc-254e-529f9637158d",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -658,6 +710,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"externalReferenceCode": "3ed3bbf5-870b-4a63-aeaf-60232f86954f",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

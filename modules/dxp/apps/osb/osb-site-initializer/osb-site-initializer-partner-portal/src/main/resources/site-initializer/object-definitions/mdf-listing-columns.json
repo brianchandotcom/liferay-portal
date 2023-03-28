@@ -1,4 +1,5 @@
 {
+	"externalReferenceCode": "c1772913-1c9e-a368-5ad5-396aeee1c3bd",
 	"label": {
 		"en_US": "MDF Listing Column"
 	},
@@ -7,6 +8,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "dd19b003-0b03-e733-b0d6-09915d5c96d6",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

@@ -1,4 +1,5 @@
 {
+	"externalReferenceCode": "19ad7277-8aa5-7eb8-f355-023873316d11",
 	"label": {
 		"en_US": "Budget"
 	},
@@ -7,6 +8,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "6ff1f31a-f6cb-a158-0575-60c29493b9e7",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -19,6 +21,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"externalReferenceCode": "64638b56-a1b8-dfdf-b266-94f633398240",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

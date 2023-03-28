@@ -1,5 +1,6 @@
 {
 	"enableComments": true,
+	"externalReferenceCode": "17caad70-13d2-75f1-2bb0-772610ac23c5",
 	"label": {
 		"en_US": "MDF Claim"
 	},
@@ -8,7 +9,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "MDF_Request__c",
+			"externalReferenceCode": "17123b30-ee57-413b-8aed-71ca50ed04ed",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -21,6 +22,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "b0dd4ffa-ffce-1f54-e2a9-040bf13516a4",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -33,6 +35,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "2e44bf2a-734c-ad8b-6d27-020feffbca22",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -45,6 +48,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "79da1510-5081-43ef-5d12-a49dd92f0741",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -57,6 +61,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "039f6da5-ec52-904a-ce28-fbe9b68e5a4a",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -68,6 +73,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "72fb6b32-2845-91ae-a9ef-eb7f592dd013",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -80,6 +86,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "e4c313f9-0700-e435-baef-fd940901a09d",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -92,6 +99,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "8491c70a-7000-7d1c-8278-b4b703af1219",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -105,6 +113,7 @@
 			"DBType": "String",
 			"businessType": "Picklist",
 			"defaultValue": "pendingMarketingReview",
+			"externalReferenceCode": "9f8bc3c6-b270-0377-c65d-1df3eacbb112",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
@@ -253,6 +262,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"externalReferenceCode": "8c25f49f-b973-4810-9cc4-5fd7c1779fee",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

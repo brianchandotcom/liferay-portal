@@ -1,4 +1,5 @@
 {
+	"externalReferenceCode": "8435a153-5aa0-2a8c-1aa7-e7b91726241f",
 	"label": {
 		"en_US": "MDF Claim Activity"
 	},
@@ -7,6 +8,7 @@
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "06874a36-254c-a249-430b-5df30b14179e",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -19,6 +21,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "49583a65-9d53-b19f-5654-debcb628753b",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -31,6 +34,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "deb2134a-1ed6-ba79-c208-82a0dc8d4c1c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -42,6 +46,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"externalReferenceCode": "b9bc1465-e8bb-1915-fca6-da71e5d0c9d0",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -54,7 +59,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"externalReferenceCode": "CurrencyIsoCode",
+			"externalReferenceCode": "8923a32c-6a65-48e8-a4fd-417704a923c9",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

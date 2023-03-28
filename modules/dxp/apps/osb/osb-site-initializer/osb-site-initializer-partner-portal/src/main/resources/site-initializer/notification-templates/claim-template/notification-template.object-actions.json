@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"externalReferenceCode": "MDF-CLAIM-ACTION",
+		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION",
 		"label": {
 			"en_US": "Notification Template Action"
 		},

@@ -2,7 +2,7 @@
 	{
 		"active": true,
 		"conditionExpression": "totalMDFRequestAmount > 15000",
-		"externalReferenceCode": "MDF Request Total Amount Template",
+		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION",
 		"label": {
 			"en_US": "Notification Request Template Action"
 		},

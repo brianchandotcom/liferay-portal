@@ -152,32 +152,63 @@ definition {
 		}
 	}
 
-			Button.click(button = "Continue");
+	@description = "This is a test for LPS-178119. Verify that is possible to export all visible Claims"
+	@priority = 4
+	test CanExportFilteredClaims {
+		task ("Given a new account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Company Name 2",
+				accountEntryType = "Business");
 
-			Button.click(button = "Continue");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 2",
+				userEmailAddress = "partner@liferay.com");
 
-			Button.click(button = "Submit");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 2",
+				userEmailAddress = "manager@liferay.com");
 		}
 
-		task ("And given that the manager user is logged in and goes to MDF listing page") {
+		task ("And a new MDF is created with a different account") {
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 2",
+				activityName = "Activity Name 3",
+				campaignName = "Campaign Name 1",
+				secondActivityName = "Activity Name 4",
+				secondBudgetValueList = 1000);
+		}
+
+		task ("And the Manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "manager");
 
-			PRMUtils.gotoPRM();
-
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
-		task ("And the MDF is approved") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 2");
+		task ("And the manager approves the MDF's") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+			PRMMDFRequest.changeMDFStatus(key_statusButton = "Approve");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+
+			PRMMDFRequest.changeMDFStatus(key_statusButton = "Approve");
 		}
 
-		task ("And two claims are made") {
+		task ("And the partner logs in and go to Partner Portal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("And the partner user makes two Claims for 'Campaign Name' MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
@@ -190,23 +221,69 @@ definition {
 				thirdInvoice = "Document_1.png");
 		}
 
-		task ("And I go back to the MDF listing page") {
-			PRMUtils.gotoPRM();
-
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+		task ("And the Partner goes to MDF listing page") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
-		task ("And I go to MDF claim listing page") {
-			PRMNavigator.goToNavItem(navItem = "MDF Claim");
+		task ("And the partner user makes two Claims for 'Campaign Name 1' MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.createNewClaim(
+				activityIndex = 1,
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
 		}
 
-		task ("When I export all visible MDF's") {
+		task ("And the Manager user is logged in and goes to Claim listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Claim");
+		}
+
+		task ("When the manager filters the Claims by account 'Company Name 1'") {
+			PRMMDFClaim.filterClaimID(
+				buttonOption = "Filter",
+				checkboxName = "Company Name 1",
+				optionDropdown = "Partner");
+		}
+
+		task ("And export the filter results") {
 			Button.click(button = "Export MDF Claim");
 		}
 
-		task ("Then the information about the visible MDF's will be inside the exported file") {
+		task ("Then the information about the filtered Claims will be inside the file") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Company Name 1",
+				fileName = "MDF Claim.csv");
+		}
+
+		task ("When the manager filters the Claims by account 'Company Name 2'") {
+			Refresh();
+
+			PRMMDFClaim.filterClaimID(
+				buttonOption = "Filter",
+				checkboxName = "Company Name 2",
+				optionDropdown = "Partner");
+		}
+
+		task ("And export the filter results") {
+			Button.click(button = "Export MDF Claim");
+		}
+
+		task ("Then the information about the filtered Claims will be inside the file") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Company Name 2",
+				fileName = "MDF Claim.csv");
+		}
+	}
 			var firstID = PRMMDFClaim.getClaimID(claimIndex = 1);
 			var secondID = PRMMDFClaim.getClaimID(claimIndex = 2);
 

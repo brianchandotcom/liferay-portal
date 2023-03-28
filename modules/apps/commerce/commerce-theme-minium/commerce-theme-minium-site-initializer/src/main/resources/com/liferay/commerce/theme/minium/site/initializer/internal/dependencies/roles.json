@@ -36,6 +36,16 @@
 		"actions": [
 			{
 				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL",
+					"CONFIGURATION",
+					"PERMISSIONS",
+					"PREFERENCES",
+					"VIEW"
+				],
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet"
+			},
+			{
+				"actionIds": [
 					"ACCESS_IN_CONTROL_PANEL"
 				],
 				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet"
@@ -45,6 +55,20 @@
 					"ACCESS_IN_CONTROL_PANEL"
 				],
 				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_CURRENCIES"
+				],
+				"resource": "com.liferay.commerce.currency"
+			},
+			{
+				"actionIds": [
+					"ADD_COMMERCE_DISCOUNT",
+					"PERMISSIONS",
+					"VIEW_COMMERCE_DISCOUNTS"
+				],
+				"resource": "com.liferay.commerce.discount"
 			},
 			{
 				"actionIds": [
@@ -71,6 +95,15 @@
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"
+			},
+			{
+				"actionIds": [
+					"DELETE",
+					"PERMISSIONS",
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.discount.model.CommerceDiscount"
 			}
 		],
 		"name": "Discount Manager",

@@ -10,7 +10,7 @@
 </thead>
 
 <tbody>
-		<tr>
+	<tr>
 		<td>OBJECT_DEFINITION_NAME</td>
 		<td>//input[@id='objectDefinitionName']</td>
 		<td></td>
@@ -33,6 +33,11 @@
 	<tr>
 		<td>SAVE_BUTTON</td>
 		<td>//button[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_save']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT</td>
+		<td>//a[contains(.,'${key_labelName}')]/../../..//a[@class='btn btn-secondary btn-sm link-monospaced']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -200,6 +205,9 @@
 		<td>//span[contains(@class,'actions collapse-icon-${key_closedOrOpen}')]</td>
 		<td></td>
 	</tr>
+
+<!--ACCOUNT_RESTRICTION-->
+
 	<tr>
 		<td>ACCOUNT_RESTRICTED_FIELD</td>
 		<td>//label[text()='Account Restricted Field']/following-sibling::div//input</td>

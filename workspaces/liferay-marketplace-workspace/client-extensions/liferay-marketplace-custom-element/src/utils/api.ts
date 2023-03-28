@@ -371,13 +371,10 @@ export async function getSpecifications() {
 }
 
 export async function getUserAccounts() {
-	const response = await fetch(
-		'/o/headless-admin-user/v1.0/user-accounts',
-		{
-			headers,
-			method: 'GET',
-		}
-	);
+	const response = await fetch('/o/headless-admin-user/v1.0/user-accounts', {
+		headers,
+		method: 'GET',
+	});
 
 	return response.json();
 }

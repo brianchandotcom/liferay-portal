@@ -1,20 +1,14 @@
 import ClayTable from '@clayui/table';
 
 import './PublishedAppsDashboardTableRow.scss';
-
-import { MemberProps } from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 interface DashboardMemberTableRowProps {
 	item: MemberProps;
 }
 
 export function DashboardMemberTableRow({item}: DashboardMemberTableRowProps) {
-	const {
-		email,
-		image,
-		name,
-		role,
-	} = item;
+	const {email, image, name, role} = item;
 
 	return (
 		<ClayTable.Row>

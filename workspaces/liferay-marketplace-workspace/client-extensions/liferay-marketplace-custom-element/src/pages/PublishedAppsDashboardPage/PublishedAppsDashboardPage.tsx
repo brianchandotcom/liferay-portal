@@ -1,15 +1,25 @@
 import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
+import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/PublishedAppsDashboardTableRow';
-import {getProductSpecifications, getProducts, getUserAccounts} from '../../utils/api';
-import {DashboardPage, DashboardListItems} from '../DashBoardPage/DashboardPage';
-import {initialDashboardNavigationItems, MemberProps} from './PublishedDashboardPageUtil';
-import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
+import {
+	getProductSpecifications,
+	getProducts,
+	getUserAccounts,
+} from '../../utils/api';
+import {
+	DashboardListItems,
+	DashboardPage,
+} from '../DashBoardPage/DashboardPage';
+import {
+	MemberProps,
+	initialDashboardNavigationItems,
+} from './PublishedDashboardPageUtil';
 
 declare let Liferay: {ThemeDisplay: any; authToken: string};
 
@@ -50,7 +60,8 @@ export function PublishedAppsDashboardPage() {
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
 	);
-	const [selectedNavigationItem, setSelectedNavigationItem] = useState('Apps');
+	const [selectedNavigationItem, setSelectedNavigationItem] =
+		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 
 	const appMessages = {
@@ -64,7 +75,8 @@ export function PublishedAppsDashboardPage() {
 	};
 
 	const memberMessages = {
-		description: 'Manage users in your development team and invite new ones',
+		description:
+			'Manage users in your development team and invite new ones',
 		emptyStateMessage: {
 			description1: 'Create new members and they will show up here.',
 			description2: 'Click on “New Member” to start.',
@@ -150,7 +162,7 @@ export function PublishedAppsDashboardPage() {
 			rolesList.push(role.name);
 		});
 
-		return rolesList.join(", ");
+		return rolesList.join(', ');
 	}
 
 	useEffect(() => {
@@ -185,16 +197,20 @@ export function PublishedAppsDashboardPage() {
 				}
 			);
 
-			const currentAppNavigationItem = dashboardNavigationItems.find((navigationItem) => navigationItem.itemName === 'apps') as DashboardListItems;
+			const currentAppNavigationItem = dashboardNavigationItems.find(
+				(navigationItem) => navigationItem.itemName === 'apps'
+			) as DashboardListItems;
 
 			const newAppNavigationItem = {
 				...currentAppNavigationItem,
 				items: newAppList,
-			}
+			};
 
 			setDashboardNavigationItems([
 				newAppNavigationItem,
-				...dashboardNavigationItems.filter((navigationItem) => navigationItem.itemName !== 'apps')
+				...dashboardNavigationItems.filter(
+					(navigationItem) => navigationItem.itemName !== 'apps'
+				),
 			]);
 
 			setApps(newAppList);
@@ -204,7 +220,8 @@ export function PublishedAppsDashboardPage() {
 	useEffect(() => {
 		(() => {
 			const clickedNavigationItem: any = dashboardNavigationItems.find(
-				dashboardNavigationItem => dashboardNavigationItem.itemSelected
+				(dashboardNavigationItem) =>
+					dashboardNavigationItem.itemSelected
 			);
 
 			setSelectedNavigationItem(clickedNavigationItem.itemTitle);
@@ -213,21 +230,22 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		(async () => {
-			if (selectedNavigationItem === "Members") {
-
+			if (selectedNavigationItem === 'Members') {
 				const accountsListResponse = await getUserAccounts();
 
-				const membersList = accountsListResponse.items.map((account: any) => {
-					return {
-						name: account.name,
-						email: account.emailAddress,
-						image: account.image,
-						role: getRolesList(account.roleBriefs),
-						dateCreated: account.dateCreated,
-						lastLoginDate: account.lastLoginDate,
-						userId: account.id
+				const membersList = accountsListResponse.items.map(
+					(account: any) => {
+						return {
+							dateCreated: account.dateCreated,
+							email: account.emailAddress,
+							image: account.image,
+							lastLoginDate: account.lastLoginDate,
+							name: account.name,
+							role: getRolesList(account.roleBriefs),
+							userId: account.id,
+						};
 					}
-				})
+				);
 
 				setMembers(membersList);
 			}
@@ -237,7 +255,7 @@ export function PublishedAppsDashboardPage() {
 	return (
 		<div>
 			{(() => {
-				if (selectedNavigationItem === "Apps") {
+				if (selectedNavigationItem === 'Apps') {
 					return (
 						<DashboardPage
 							accountAppsNumber="4"
@@ -246,10 +264,14 @@ export function PublishedAppsDashboardPage() {
 							buttonMessage="+ New App"
 							dashboardNavigationItems={dashboardNavigationItems}
 							messages={appMessages}
-							setDashboardNavigationItems={setDashboardNavigationItems}
+							setDashboardNavigationItems={
+								setDashboardNavigationItems
+							}
 						>
 							<DashboardTable<AppProps>
-								emptyStateMessage={appMessages.emptyStateMessage}
+								emptyStateMessage={
+									appMessages.emptyStateMessage
+								}
 								items={apps}
 								tableHeaders={appTableHeaders}
 							>
@@ -261,8 +283,9 @@ export function PublishedAppsDashboardPage() {
 								)}
 							</DashboardTable>
 						</DashboardPage>
-					)
-				} else if (selectedNavigationItem === "Members") {
+					);
+				}
+				else if (selectedNavigationItem === 'Members') {
 					return (
 						<DashboardPage
 							accountAppsNumber="4"
@@ -270,10 +293,14 @@ export function PublishedAppsDashboardPage() {
 							accountTitle="Acme Co"
 							dashboardNavigationItems={dashboardNavigationItems}
 							messages={memberMessages}
-							setDashboardNavigationItems={setDashboardNavigationItems}
+							setDashboardNavigationItems={
+								setDashboardNavigationItems
+							}
 						>
 							<DashboardTable<MemberProps>
-								emptyStateMessage={memberMessages.emptyStateMessage}
+								emptyStateMessage={
+									memberMessages.emptyStateMessage
+								}
 								items={members}
 								tableHeaders={memberTableHeaders}
 							>
@@ -285,7 +312,7 @@ export function PublishedAppsDashboardPage() {
 								)}
 							</DashboardTable>
 						</DashboardPage>
-					)
+					);
 				}
 			})()}
 		</div>

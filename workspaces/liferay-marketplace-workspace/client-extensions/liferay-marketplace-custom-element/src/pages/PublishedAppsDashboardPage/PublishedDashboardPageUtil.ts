@@ -29,5 +29,5 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemName: 'members',
 		itemSelected: false,
 		itemTitle: 'Members',
-	}
+	},
 ];

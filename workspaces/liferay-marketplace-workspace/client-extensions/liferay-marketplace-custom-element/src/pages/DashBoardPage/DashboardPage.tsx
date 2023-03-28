@@ -5,7 +5,7 @@ import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
-import { MemberProps } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+import {MemberProps} from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './DashboardPage.scss';
 
@@ -77,13 +77,13 @@ export function DashboardPage({
 									title={messages.title}
 								/>
 
-								{buttonMessage &&
+								{buttonMessage && (
 									<a href="/create-new-app">
 										<button className="dashboard-page-body-header-button">
 											{buttonMessage}
 										</button>
 									</a>
-								}
+								)}
 							</div>
 
 							{children}

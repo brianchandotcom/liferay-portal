@@ -463,7 +463,7 @@ public class CommerceOrderCommerceDefinitionTermContributor
 		CommerceShippingMethod commerceShippingMethod =
 			commerceOrder.getCommerceShippingMethod();
 
-		if (commerceShippingMethod == null) {
+		if (commerceShippingMethod != null) {
 			CommerceShippingEngine commerceShippingEngine =
 				_commerceShippingEngineRegistry.getCommerceShippingEngine(
 					commerceShippingMethod.getEngineKey());

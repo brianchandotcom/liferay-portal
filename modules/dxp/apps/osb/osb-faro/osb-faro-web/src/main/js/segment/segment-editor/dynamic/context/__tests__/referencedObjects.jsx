@@ -120,6 +120,7 @@ describe('referencedObjects', () => {
 											demographics: {
 												city: {
 													context: 'demographics',
+													id: name,
 													name,
 													ownerType: 'individual',
 													rawType: 'Text',

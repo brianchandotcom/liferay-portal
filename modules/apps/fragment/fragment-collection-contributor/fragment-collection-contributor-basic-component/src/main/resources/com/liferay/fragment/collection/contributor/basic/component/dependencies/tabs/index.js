@@ -122,6 +122,8 @@ function openTabPanel(event, i) {
 		activeTab(currentTarget, i);
 		activeTabPanel(tabPanelItems[i]);
 		persistedTab.setId(i);
+
+		window.dispatchEvent(new Event('resize'));
 	}
 }
 

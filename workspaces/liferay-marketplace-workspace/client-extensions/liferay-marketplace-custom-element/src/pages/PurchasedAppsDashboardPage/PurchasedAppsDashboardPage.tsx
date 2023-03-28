@@ -4,7 +4,12 @@ import {useEffect, useState} from 'react';
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
-import {getAccount, getChannels, getOrders} from '../../utils/api';
+import {
+	getAccount,
+	getChannels,
+	getOrders,
+	getUserAccountsById,
+} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
 export interface PurchasedAppProps {
@@ -46,7 +51,14 @@ const tableHeaders = [
 	},
 ];
 
+const initialUserAccountState: UserAccount = {
+	accountBriefs: [],
+};
+
 export function PurchasedAppsDashboardPage() {
+	const [userAccounts, setUserAccounts] = useState<UserAccount>(
+		initialUserAccountState
+	);
 	const [purchasedAppTable, setPurchasedAppTable] =
 		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
 	const [page, setPage] = useState<number>(1);
@@ -112,6 +124,10 @@ export function PurchasedAppsDashboardPage() {
 				items: newOrderItems,
 				totalCount: placedOrders.totalCount,
 			});
+
+			const userAccountsResponse = await getUserAccountsById();
+
+			setUserAccounts(userAccountsResponse);
 		};
 		makeFetch();
 	}, [page]);
@@ -120,7 +136,7 @@ export function PurchasedAppsDashboardPage() {
 		<DashboardPage
 			accountAppsNumber="0"
 			accountLogo={accountLogo}
-			accountTitle="Hourglass"
+			accounts={userAccounts.accountBriefs}
 			buttonMessage="Add Apps"
 			dashboardNavigationItems={dashboardNavigationItems}
 			messages={messages}

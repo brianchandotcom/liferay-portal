@@ -1,5 +1,6 @@
 import ClayButton from '@clayui/button';
-import {useState} from 'react';
+import ClayDropDown from '@clayui/drop-down';
+import {useEffect, useState} from 'react';
 
 import arrowDown from '../../assets/icons/arrow-down.svg';
 import arrowUP from '../../assets/icons/arrow-up.svg';
@@ -18,7 +19,7 @@ export interface DashboardListItems {
 interface DashboardNavigationProps {
 	accountAppsNumber: string;
 	accountIcon: string;
-	accountTitle: string;
+	accounts: AccountBrief[];
 	dashboardNavigationItems: DashboardListItems[];
 	onSelectAppChange: (value: AppProps) => void;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
@@ -27,12 +28,24 @@ interface DashboardNavigationProps {
 export function DashboardNavigation({
 	accountAppsNumber,
 	accountIcon,
-	accountTitle,
+	accounts,
 	dashboardNavigationItems,
 	onSelectAppChange,
 	setDashboardNavigationItems,
 }: DashboardNavigationProps) {
 	const [expandList, setExpandList] = useState(true);
+	const [selectedAccount, setSelectedAccount] = useState<AccountBrief>({
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+	});
+
+	useEffect(() => {
+		if (accounts.length) {
+			const [firstAccount] = accounts;
+			setSelectedAccount(firstAccount);
+		}
+	}, [accounts]);
 
 	return (
 		<div className="dashboard-navigation-container">
@@ -45,9 +58,26 @@ export function DashboardNavigation({
 					/>
 
 					<div className="dashboard-navigation-header-text-container">
-						<span className="dashboard-navigation-header-title">
-							{accountTitle}
-						</span>
+						<ClayDropDown
+							trigger={
+								<span className="dashboard-navigation-header-title">
+									{selectedAccount.name}
+								</span>
+							}
+						>
+							<ClayDropDown.ItemList>
+								{accounts.map((account) => (
+									<ClayDropDown.Item
+										key={account.id}
+										onClick={() =>
+											setSelectedAccount(account)
+										}
+									>
+										{account.name}
+									</ClayDropDown.Item>
+								))}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
 
 						<span className="dashboard-navigation-header-apps">
 							{accountAppsNumber} apps

@@ -12,6 +12,7 @@ import {
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
+	getUserAccountsById,
 } from '../../utils/api';
 import {
 	DashboardListItems,
@@ -56,7 +57,14 @@ const memberTableHeaders = [
 	},
 ];
 
+const initialUserAccountState: UserAccount = {
+	accountBriefs: [],
+};
+
 export function PublishedAppsDashboardPage() {
+	const [userAccounts, setUserAccounts] = useState<UserAccount>(
+		initialUserAccountState
+	);
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
@@ -215,6 +223,10 @@ export function PublishedAppsDashboardPage() {
 				),
 			]);
 
+			const accounts = await getUserAccountsById();
+
+			setUserAccounts(accounts);
+
 			setApps(newAppList);
 		})();
 	}, []);
@@ -262,7 +274,7 @@ export function PublishedAppsDashboardPage() {
 						<DashboardPage
 							accountAppsNumber="4"
 							accountLogo={accountLogo}
-							accountTitle="Acme Co"
+							accounts={userAccounts.accountBriefs}
 							buttonMessage="+ New App"
 							dashboardNavigationItems={dashboardNavigationItems}
 							messages={appMessages}
@@ -292,7 +304,7 @@ export function PublishedAppsDashboardPage() {
 						<DashboardPage
 							accountAppsNumber="4"
 							accountLogo={accountLogo}
-							accountTitle="Acme Co"
+							accounts={userAccounts.accountBriefs}
 							dashboardNavigationItems={dashboardNavigationItems}
 							messages={memberMessages}
 							setDashboardNavigationItems={

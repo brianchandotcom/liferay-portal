@@ -20,7 +20,7 @@ export interface DashboardListItems {
 type DashBoardPageProps = {
 	accountAppsNumber: string;
 	accountLogo: string;
-	accountTitle: string;
+	accounts: AccountBrief[];
 	buttonMessage?: string;
 	children: ReactNode;
 	dashboardNavigationItems: DashboardListItems[];
@@ -39,7 +39,7 @@ type DashBoardPageProps = {
 export function DashboardPage({
 	accountAppsNumber,
 	accountLogo,
-	accountTitle,
+	accounts,
 	buttonMessage,
 	children,
 	dashboardNavigationItems,
@@ -55,7 +55,7 @@ export function DashboardPage({
 					<DashboardNavigation
 						accountAppsNumber={accountAppsNumber}
 						accountIcon={accountLogo}
-						accountTitle={accountTitle}
+						accounts={accounts}
 						dashboardNavigationItems={dashboardNavigationItems}
 						onSelectAppChange={setSelectedApp}
 						setDashboardNavigationItems={

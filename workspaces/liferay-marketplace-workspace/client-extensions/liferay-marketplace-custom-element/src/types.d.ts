@@ -1,3 +1,9 @@
+type AccountBrief = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
 type Cart = {
 	accountId: number;
 	cartItems: CartItem[];
@@ -84,4 +90,8 @@ type SKU = {
 	price: number;
 	sku: string;
 	skuOptions: [];
+};
+
+type UserAccount = {
+	accountBriefs: AccountBrief[];
 };

@@ -381,6 +381,18 @@ export async function getUserAccounts() {
 	return response.json();
 }
 
+export async function getUserAccountsById() {
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/user-accounts/${Liferay.ThemeDisplay.getUserId()}`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return (await response.json()) as UserAccount;
+}
+
 export async function getVocabularies() {
 	const response = await fetch(
 		`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`,

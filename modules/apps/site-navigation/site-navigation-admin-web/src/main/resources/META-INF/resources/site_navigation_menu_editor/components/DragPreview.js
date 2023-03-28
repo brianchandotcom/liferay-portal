@@ -18,6 +18,7 @@ import {useDragLayer} from 'react-dnd';
 
 import {useConstants} from '../contexts/ConstantsContext';
 import {useItems} from '../contexts/ItemsContext';
+import {useDragLayer as useKeyboardDragLayer} from '../contexts/KeyboardDndContext';
 import getDescendantsCount from '../utils/getDescendantsCount';
 
 const HANDLER_OFFSET = 10;
@@ -51,17 +52,22 @@ export default function DragPreview() {
 	const items = useItems();
 	const rtl = Liferay.Language.direction[languageId] === 'rtl';
 
-	const {
-		currentOffset,
-		isDragging,
-		itemId,
-		namespace: itemNamespace,
-	} = useDragLayer((monitor) => ({
+	const dragLayer = useDragLayer((monitor) => ({
 		currentOffset: monitor.getClientOffset(),
 		isDragging: monitor.isDragging(),
 		itemId: monitor.getItem()?.id,
 		namespace: monitor.getItem()?.namespace,
 	}));
+
+	const keyboardDragLayer = useKeyboardDragLayer();
+
+	const currentOffset =
+		dragLayer.currentOffset || keyboardDragLayer?.currentOffset;
+	const isDragging = dragLayer.isDragging || Boolean(keyboardDragLayer);
+	const itemId =
+		dragLayer.itemId || keyboardDragLayer?.siteNavigationMenuItemId;
+	const itemNamespace =
+		dragLayer.namespace || (keyboardDragLayer ? portletNamespace : null);
 
 	const [label, setLabel] = useState();
 

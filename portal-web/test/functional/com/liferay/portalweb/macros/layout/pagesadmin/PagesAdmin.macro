@@ -1358,8 +1358,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			buttonId = "uploadImage",
-			locator1 = "Button#BUTTON_ID");
+			key_text = "Select",
+			locator1 = "Button#ANY");
 
 		WaitForEditable(locator1 = "TextInput#FILE");
 

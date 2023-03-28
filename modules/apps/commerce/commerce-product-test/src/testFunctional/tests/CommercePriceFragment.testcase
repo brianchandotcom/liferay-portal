@@ -1,0 +1,418 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-5898=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-7617. Verify that the price shown in the Price fragment is affected by discounts"
+	@priority = 5
+	test CanViewPriceFragmentDiscount {
+		property portal.acceptance = "true";
+
+		task ("Given Hoses has different prices for all the SKUs") {
+			for (var productSKUAndPrice : list "MIN93022A:25,MIN93022B:50,MIN93022C:100") {
+				var productSKU = StringUtil.extractFirst(${productSKUAndPrice}, ":");
+				var price = StringUtil.extractLast(${productSKUAndPrice}, ":");
+
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+					entryPrice = ${price},
+					priceListName = "Minium Base Price List",
+					productSKU = ${productSKU});
+			}
+		}
+
+		task ("And two Discounts are created for Minium") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 50,
+				productNames = "Hoses",
+				target = "products",
+				title = "Discount 1",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 90,
+				productSKUs = "MIN93022C",
+				target = "skus",
+				title = "Discount 2",
+				usePercentage = "false");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the fragments are deployed") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Price",
+				index = 1);
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Option Selector",
+				index = 2,
+				targetFragmentName = "Price");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the Hoses product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
+		}
+
+		task ("Then the price is changed for all the products skus") {
+			for (var rowList : list "6:25:12.50,24:50:25,48:100:10") {
+				var option = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${option}:", "");
+
+				var inactivePrice = StringUtil.extractFirst(${rowList}, ":");
+				var netPrice = StringUtil.extractLast(${rowList}, ":");
+
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Package Quantity",
+					fsOptionValue = ${option});
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+					value1 = ${inactivePrice});
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+					value1 = ${netPrice});
+			}
+		}
+	}
+
+	@description = "COMMERCE-7617. Verify that the price shown in the Price fragment is affected by price lists"
+	@priority = 5
+	test CanViewPriceFragmentPriceList {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.configuration.CommercePriceConfiguration.config";
+		property osgi.module.configurations = "displayDiscountLevels=B\"true\"";
+		property portal.acceptance = "true";
+
+		task ("Given Hoses has different prices for all the SKUs") {
+			for (var productSKUAndPrice : list "MIN93022A:25,MIN93022B:50,MIN93022C:100") {
+				var productSKU = StringUtil.extractFirst(${productSKUAndPrice}, ":");
+				var price = StringUtil.extractLast(${productSKUAndPrice}, ":");
+
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+					entryPrice = ${price},
+					priceListName = "Minium Base Price List",
+					productSKU = ${productSKU});
+			}
+		}
+
+		task ("Given a new Price Lists") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 1");
+		}
+
+		task ("And a Price Modifier is created") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "MIN93022C",
+				title = "Add SKUs");
+
+			Refresh();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93022C");
+
+			CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "100.00");
+
+			CommercePriceLists.setOverrideDiscount(overrideDiscounts = "L1-90");
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
+
+			CommercePriceLists.addNewPriceModifier(
+				modifier = "Percentage",
+				name = "Price Modifier",
+				target = "Products");
+
+			CommercePriceLists.editPriceModifier(
+				active = "true",
+				amountValue = "-50",
+				entryName = "Hoses",
+				priceModifierName = "Price Modifier",
+				relation = "Product",
+				target = "Products");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the fragments are deployed") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Price",
+				index = 1);
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Option Selector",
+				index = 2,
+				targetFragmentName = "Price");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the Hoses product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
+		}
+
+		task ("Then the price is changed for all the products skus") {
+			var index = 1;
+
+			for (var rowList : list "6:12.50:,24:25:,48:100:10") {
+				var option = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${option}:", "");
+
+				var price = StringUtil.extractFirst(${rowList}, ":");
+				var netPrice = StringUtil.extractLast(${rowList}, ":");
+
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Package Quantity",
+					fsOptionValue = ${option});
+
+				if (${netPrice} != "") {
+					for (var discountLevel : list "90,0,0,0") {
+						AssertTextEquals.assertPartialText(
+							key_index = ${index},
+							locator1 = "CommerceAccelerators#MINI_CART_DISCOUNT_LEVELS",
+							value1 = ${discountLevel});
+
+						var index = ${index} + 1;
+					}
+
+					AssertTextEquals.assertPartialText(
+						locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+						value1 = ${price});
+
+					AssertTextEquals.assertPartialText(
+						locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+						value1 = ${netPrice});
+				}
+				else {
+					AssertTextEquals.assertPartialText(
+						locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+						value1 = ${price});
+				}
+			}
+		}
+	}
+
+	@description = "COMMERCE-7617. Verify that the price shown in the Price fragment is affected by promotions"
+	@priority = 5
+	test CanViewPriceFragmentPromotion {
+		property portal.acceptance = "true";
+
+		task ("Given Hoses has different prices for all the SKUs") {
+			for (var productSKUAndPrice : list "MIN93022A:25,MIN93022B:50,MIN93022C:100") {
+				var productSKU = StringUtil.extractFirst(${productSKUAndPrice}, ":");
+				var price = StringUtil.extractLast(${productSKUAndPrice}, ":");
+
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+					entryPrice = ${price},
+					priceListName = "Minium Base Price List",
+					productSKU = ${productSKU});
+			}
+		}
+
+		task ("Given a new Promotion is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion 1");
+		}
+
+		task ("And a Price Modifier is created") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Promotion 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
+
+			CommercePriceLists.addNewPriceModifier(
+				modifier = "Percentage",
+				name = "Price Modifier",
+				target = "Products");
+
+			CommercePriceLists.editPriceModifier(
+				active = "true",
+				amountValue = "-50",
+				entryName = "Hoses",
+				priceModifierName = "Price Modifier",
+				relation = "Product",
+				target = "Products");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the fragments are deployed") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Price",
+				index = 1);
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Option Selector",
+				index = 2,
+				targetFragmentName = "Price");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the Hoses product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
+		}
+
+		task ("Then the price is changed for all the products skus") {
+			for (var rowList : list "6:25:12.50,24:50:25,48:100:50") {
+				var option = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${option}:", "");
+
+				var inactivePrice = StringUtil.extractFirst(${rowList}, ":");
+				var promoPrice = StringUtil.extractLast(${rowList}, ":");
+
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Package Quantity",
+					fsOptionValue = ${option});
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+					value1 = ${inactivePrice});
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
+					value1 = ${promoPrice});
+			}
+		}
+	}
+
+}

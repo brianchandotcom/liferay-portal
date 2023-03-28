@@ -4,14 +4,16 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Select(
-			key_fieldLabel = ${label},
+			key_fieldLabel = ${categoryField},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = ${listOption});
 
-		Select(
-			key_fieldLabel = ${label1},
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${listOption1});
+		if (isSet(label1)) {
+			Select(
+				key_fieldLabel = ${categoryField2},
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${listOption1});
+		}
 
 		Button.click(button = "Save");
 	}
@@ -44,10 +46,12 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = ${listOption});
 
-		Select(
-			key_fieldLabel = ${label1},
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${listOption1});
+		if (isSet(label1)) {
+			Select(
+				key_fieldLabel = ${label1},
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${listOption1});
+		}
 
 		Button.click(button = "Save");
 

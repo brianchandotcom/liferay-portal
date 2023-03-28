@@ -1,7 +1,6 @@
 @component-name = "portal-publications"
 definition {
 
-	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
@@ -856,7 +855,6 @@ definition {
 
 	@priority = 4
 	test IsBrowserHistoryPreserved {
-		property app.server.types = "jboss,tomcat,websphere,wildfly";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Publications#IsBrowserHistoryPreserved";
 
@@ -1279,11 +1277,6 @@ definition {
 	@description = "This is the use case for LPS-158789."
 	@priority = 4
 	test UserWithoutAccessCannotChangePublicationViaURL {
-
-		// Workaround LPS-160890 on Websphere
-
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -1329,12 +1322,6 @@ definition {
 	@description = "Assert Publications change details on Display Data Parents and Children Tabs"
 	@priority = 4
 	test ViewPublicationsChangeDetails {
-
-		// Workaround LPS-140997 and LPS-148148
-
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",

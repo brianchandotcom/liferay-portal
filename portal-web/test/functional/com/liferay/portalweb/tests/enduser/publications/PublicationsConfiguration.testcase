@@ -1,7 +1,6 @@
 @component-name = "portal-publications"
 definition {
 
-	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
@@ -98,7 +97,6 @@ definition {
 	@priority = 4
 	test CreatePublicationsInNonRootContext {
 		property app.server.types = "tomcat";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";

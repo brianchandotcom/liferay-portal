@@ -1,7 +1,6 @@
 @component-name = "portal-publications"
 definition {
 
-	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
@@ -328,11 +327,6 @@ definition {
 
 	@priority = 4
 	test ResolveConflictingPublicationsByDiscarding {
-
-		// Workaround LPS-148148
-
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(

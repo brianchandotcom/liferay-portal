@@ -1,7 +1,6 @@
 @component-name = "portal-publications"
 definition {
 
-	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
@@ -173,11 +172,6 @@ definition {
 	@description = "Assert we can publish the publication with message board thread and reiview the changes."
 	@priority = 4
 	test PublishNewMessageBoardThreadAndMessage {
-
-		// Workaround LPS-129369 and LPS-148424
-
-		property database.types = "hypersonic,mariadb,mysql,postgresql,sqlserver";
-
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

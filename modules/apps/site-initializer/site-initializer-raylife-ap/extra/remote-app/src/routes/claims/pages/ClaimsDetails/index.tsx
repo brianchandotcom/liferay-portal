@@ -19,10 +19,13 @@ import MultiSteps from '../../../../common/components/multi-steps';
 import {getClaimsData} from '../../../../common/services';
 import {setFirstLetterUpperCase} from '../../../../common/utils';
 import {CONSTANTS} from '../../../../common/utils/constants';
-import {ClaimType} from './Types';
 import ClaimActionComponent from './claim-action-details';
 import ClaimDetailsActivities from './claim-activities-details';
 import ClaimDetailsSummary from './claim-summary-details';
+import ClaimNavigator from './claims-navigator-details';
+
+import './index.scss';
+import {ClaimDetailDataType, ClaimType} from './Types';
 
 enum STEP {
 	APPROVED = 3,
@@ -167,6 +170,18 @@ const ClaimDetails = () => {
 						</div>
 
 						<ClaimDetailsActivities claimData={claimData} />
+
+						{claimStatus && (
+							<div className="col-xl-9 d-flex mb-4">
+								<ActionDetail>
+									<ClaimActionComponent
+										claimStatus={claimStatus}
+									/>
+								</ActionDetail>
+							</div>
+						)}
+
+						<ClaimNavigator />
 					</div>
 				</>
 			)}

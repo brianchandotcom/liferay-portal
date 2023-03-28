@@ -148,7 +148,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Blogs - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
+			ACUtils.viewGenericText(textValueList = "Views by Location");
 
 			Close.closeWindow();
 		}
@@ -166,7 +166,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Blogs - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+			ACUtils.viewGenericText(textValueList = "Views by Technology");
 
 			Close.closeWindow();
 		}
@@ -180,7 +180,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Assets - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Assets");
+			ACUtils.viewGenericText(textValueList = "Assets");
 
 			Close.closeWindow();
 		}
@@ -203,7 +203,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Individuals Dashboard");
+			ACUtils.viewGenericText(textValueList = "Individuals Dashboard");
 
 			Close.closeWindow();
 		}
@@ -246,7 +246,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Documents and Media - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Downloads by Location");
+			ACUtils.viewGenericText(textValueList = "Downloads by Location");
 
 			Close.closeWindow();
 		}
@@ -264,7 +264,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Documents and Media - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+			ACUtils.viewGenericText(textValueList = "Views by Technology");
 
 			Close.closeWindow();
 		}
@@ -307,7 +307,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Forms - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Submissions by Location");
+			ACUtils.viewGenericText(textValueList = "Submissions by Location");
 
 			Close.closeWindow();
 		}
@@ -325,7 +325,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Forms - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Submissions by Technology");
+			ACUtils.viewGenericText(textValueList = "Submissions by Technology");
 
 			Close.closeWindow();
 		}
@@ -368,7 +368,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Web Content - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
+			ACUtils.viewGenericText(textValueList = "Views by Location");
 
 			Close.closeWindow();
 		}
@@ -386,7 +386,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Web Content - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+			ACUtils.viewGenericText(textValueList = "Views by Technology");
 
 			Close.closeWindow();
 		}
@@ -414,7 +414,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
+			ACUtils.viewGenericText(textValueList = "Connecting Liferay DXP to Analytics Cloud");
 
 			SelectWindow(locator1 = "title=Data Sources - Settings - Analytics Cloud");
 		}
@@ -428,7 +428,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Scoping Sites and Individuals Using Properties - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Scoping Sites and Individuals Using Properties");
+			ACUtils.viewGenericText(textValueList = "Scoping Sites and Individuals Using Properties");
 
 			SelectWindow(locator1 = "title=Properties - Settings - Analytics Cloud");
 		}
@@ -458,7 +458,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Definitions for Event Attributes - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Definitions for Event Attributes");
+			ACUtils.viewGenericText(textValueList = "Definitions for Event Attributes");
 
 			SelectWindow(locator1 = "title=canonicalUrl - Settings - Analytics Cloud");
 		}
@@ -476,7 +476,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Tracking Events - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Events");
+			ACUtils.viewGenericText(textValueList = "Tracking Events");
 
 			SelectWindow(locator1 = "title=Events - Settings - Analytics Cloud");
 		}
@@ -492,7 +492,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Definitions for Events - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Definitions for Events");
+			ACUtils.viewGenericText(textValueList = "Definitions for Events");
 
 			SelectWindow(locator1 = "title=Block List - Settings - Analytics Cloud");
 		}
@@ -508,7 +508,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Managing Interest Topics - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Managing Interest Topics");
+			ACUtils.viewGenericText(textValueList = "Managing Interest Topics");
 
 			SelectWindow(locator1 = "title=Interest Topics - Settings - Analytics Cloud");
 		}
@@ -543,7 +543,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Data Control and Privacy - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Data Control and Privacy");
+			ACUtils.viewGenericText(textValueList = "Data Control and Privacy");
 		}
 	}
 
@@ -590,7 +590,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Blogs - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Blogs");
+			ACUtils.viewGenericText(textValueList = "Blogs");
 
 			Close.closeWindow();
 		}
@@ -609,7 +609,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Documents and Media - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Documents and Media");
+			ACUtils.viewGenericText(textValueList = "Documents and Media");
 
 			Close.closeWindow();
 		}
@@ -628,7 +628,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Forms - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Forms");
+			ACUtils.viewGenericText(textValueList = "Forms");
 
 			Close.closeWindow();
 		}
@@ -647,7 +647,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Web Content - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Web Content");
+			ACUtils.viewGenericText(textValueList = "Web Content");
 
 			Close.closeWindow();
 		}
@@ -666,7 +666,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Tracking Custom Assets - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Custom Assets");
+			ACUtils.viewGenericText(textValueList = "Tracking Custom Assets");
 
 			Close.closeWindow();
 		}
@@ -680,7 +680,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Events Analysis - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");
+			ACUtils.viewGenericText(textValueList = "Events Analysis");
 
 			Close.closeWindow();
 		}
@@ -694,7 +694,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
+			ACUtils.viewGenericText(textValueList = "Segments");
 
 			Close.closeWindow();
 		}
@@ -708,7 +708,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Active Individuals");
+			ACUtils.viewGenericText(textValueList = "Active Individuals");
 
 			Close.closeWindow();
 
@@ -718,7 +718,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
+			ACUtils.viewGenericText(textValueList = "Interests");
 
 			Close.closeWindow();
 		}
@@ -736,7 +736,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
+			ACUtils.viewGenericText(textValueList = "Breakdown");
 
 			Close.closeWindow();
 		}
@@ -750,7 +750,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
+			ACUtils.viewGenericText(textValueList = "Interests");
 
 			Close.closeWindow();
 		}
@@ -764,7 +764,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
+			ACUtils.viewGenericText(textValueList = "Breakdown");
 
 			Close.closeWindow();
 		}
@@ -780,7 +780,7 @@ definition {
 
 			SelectWindow(locator1 = "title=A/B Testing - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,A/B Testing");
+			ACUtils.viewGenericText(textValueList = "A/B Testing");
 
 			Close.closeWindow();
 		}
@@ -916,7 +916,7 @@ definition {
 				SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
 			}
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
+			ACUtils.viewGenericText(textValueList = "Connecting Liferay DXP to Analytics Cloud");
 		}
 	}
 
@@ -1008,7 +1008,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Pages - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
+			ACUtils.viewGenericText(textValueList = "Views by Location");
 
 			Close.closeWindow();
 		}
@@ -1026,7 +1026,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Pages - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+			ACUtils.viewGenericText(textValueList = "Views by Technology");
 
 			Close.closeWindow();
 		}
@@ -1044,7 +1044,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Paths - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Paths");
+			ACUtils.viewGenericText(textValueList = "Paths");
 
 			Close.closeWindow();
 		}
@@ -1067,7 +1067,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Individuals Dashboard");
+			ACUtils.viewGenericText(textValueList = "Individuals Dashboard");
 
 			Close.closeWindow();
 		}
@@ -1100,7 +1100,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Individual Profiles");
+			ACUtils.viewGenericText(textValueList = "Individual Profiles");
 
 			Close.closeWindow();
 		}
@@ -1117,7 +1117,7 @@ definition {
 
 				SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
-				ACUtils.viewGenericText(textValueList = "Documentation,Segments");
+				ACUtils.viewGenericText(textValueList = "Segments");
 
 				Close.closeWindow();
 			}
@@ -1132,7 +1132,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
+			ACUtils.viewGenericText(textValueList = "Interests");
 
 			Close.closeWindow();
 		}
@@ -1146,7 +1146,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individuals Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
+			ACUtils.viewGenericText(textValueList = "Interests");
 
 			Close.closeWindow();
 		}
@@ -1164,7 +1164,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Individual Profiles - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Individual Profiles");
+			ACUtils.viewGenericText(textValueList = "Individual Profiles");
 
 			Close.closeWindow();
 		}
@@ -1206,7 +1206,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
+			ACUtils.viewGenericText(textValueList = "Segments");
 
 			Close.closeWindow();
 		}
@@ -1243,7 +1243,7 @@ definition {
 
 				SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
-				ACUtils.viewGenericText(textValueList = "Documentation,Segment Membership Panel");
+				ACUtils.viewGenericText(textValueList = "Segment Membership Panel");
 
 				Close.closeWindow();
 			}
@@ -1260,7 +1260,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Top Interests Panel");
+			ACUtils.viewGenericText(textValueList = "Top Interests Panel");
 
 			Close.closeWindow();
 		}
@@ -1276,7 +1276,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests Tab");
+			ACUtils.viewGenericText(textValueList = "Interests Tab");
 
 			Close.closeWindow();
 		}
@@ -1291,7 +1291,7 @@ definition {
 
 				SelectWindow(locator1 = "title=Segments - Liferay Learn");
 
-				ACUtils.viewGenericText(textValueList = "Documentation,Distribution Tab");
+				ACUtils.viewGenericText(textValueList = "Distribution Tab");
 
 				Close.closeWindow();
 			}
@@ -1332,7 +1332,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Site Activities");
+			ACUtils.viewGenericText(textValueList = "Site Activities");
 
 			Close.closeWindow();
 		}
@@ -1354,7 +1354,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Top Pages");
+			ACUtils.viewGenericText(textValueList = "Top Pages");
 
 			Close.closeWindow();
 		}
@@ -1376,7 +1376,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Acquisitions");
+			ACUtils.viewGenericText(textValueList = "Acquisitions");
 
 			Close.closeWindow();
 		}
@@ -1394,7 +1394,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Visitors by Day and Time");
+			ACUtils.viewGenericText(textValueList = "Visitors by Day and Time");
 
 			Close.closeWindow();
 		}
@@ -1408,7 +1408,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
+			ACUtils.viewGenericText(textValueList = "Search Terms and Interests");
 
 			Close.closeWindow();
 		}
@@ -1422,7 +1422,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
+			ACUtils.viewGenericText(textValueList = "Search Terms and Interests");
 
 			Close.closeWindow();
 		}
@@ -1440,7 +1440,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Sessions by Location");
+			ACUtils.viewGenericText(textValueList = "Sessions by Location");
 
 			Close.closeWindow();
 		}
@@ -1458,7 +1458,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Session Technology");
+			ACUtils.viewGenericText(textValueList = "Session Technology");
 
 			Close.closeWindow();
 		}
@@ -1476,7 +1476,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Cohort Analysis");
+			ACUtils.viewGenericText(textValueList = "Cohort Analysis");
 
 			Close.closeWindow();
 		}
@@ -1495,7 +1495,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Pages - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Pages");
+			ACUtils.viewGenericText(textValueList = "Pages");
 
 			Close.closeWindow();
 		}
@@ -1514,7 +1514,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Sites Dashboard - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
+			ACUtils.viewGenericText(textValueList = "Search Terms and Interests");
 		}
 	}
 

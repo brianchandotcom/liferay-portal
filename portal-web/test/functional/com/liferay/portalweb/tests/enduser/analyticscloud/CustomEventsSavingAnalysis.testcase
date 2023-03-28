@@ -893,7 +893,7 @@ definition {
 				SelectWindow(locator1 = "title=Events Analysis - Liferay Learn");
 			}
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");
+			ACUtils.viewGenericText(textValueList = "Events Analysis");
 		}
 	}
 

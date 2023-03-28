@@ -436,7 +436,7 @@ definition {
 
 			SelectWindow(locator1 = "title=Liferay Learn - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Welcome to Liferay Docs");
+			ACUtils.viewGenericText(textValueList = "Welcome to Liferay Docs");
 
 			Close.closeWindow();
 		}

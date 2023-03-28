@@ -34,8 +34,7 @@ export default async function createMDFClaimProxyAPI(
 			mdfClaim,
 			mdfRequest,
 			mdfClaim.reimbursementInvoice?.id as LiferayFile & number,
-			mdfClaim.externalReferenceCode,
-			mdfClaim.externalReferenceCodeSF
+			mdfClaim.externalReferenceCode
 		);
 	}
 	else {

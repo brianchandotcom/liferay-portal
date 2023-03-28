@@ -46,6 +46,7 @@
 		{
 			"DBType": "Long",
 			"businessType": "Attachment",
+			"externalReferenceCode": "b5f0b914-9e71-4714-afb4-ff3eb139644d",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

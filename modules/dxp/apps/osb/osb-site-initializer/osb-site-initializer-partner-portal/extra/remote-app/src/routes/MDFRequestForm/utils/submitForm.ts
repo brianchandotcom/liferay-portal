@@ -124,16 +124,15 @@ export default async function submitForm(
 		}
 	}
 
-	// if (values.id) {
-	// 	Liferay.Util.navigate(
-	// 		`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
-	// 	);
+	if (values.id) {
+		Liferay.Util.navigate(
+			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
+		);
 
-	// 	return;
-	// }
+		return;
+	}
 
-	// Liferay.Util.navigate(
-	// 	`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?new-success=true`
-	// );
-
+	Liferay.Util.navigate(
+		`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?new-success=true`
+	);
 }

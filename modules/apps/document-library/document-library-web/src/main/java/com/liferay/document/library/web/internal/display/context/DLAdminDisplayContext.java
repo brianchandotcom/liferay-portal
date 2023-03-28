@@ -773,36 +773,6 @@ public class DLAdminDisplayContext {
 		return termsFilter;
 	}
 
-	private List<RepositoryEntry> _getRepositoryEntries(Hits hits) {
-		List<RepositoryEntry> results = new ArrayList<>();
-
-		for (Document doc : hits.getDocs()) {
-			long fileEntryId = GetterUtil.getLong(
-				doc.get(Field.ENTRY_CLASS_PK));
-
-			FileEntry fileEntry = null;
-
-			try {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Documents and Media search index is stale and ",
-							"contains file entry ", fileEntryId),
-						exception);
-				}
-
-				continue;
-			}
-
-			results.add(fileEntry);
-		}
-
-		return results;
-	}
-
 	private Hits _getHits(SearchContainer<RepositoryEntry> searchContainer)
 		throws PortalException {
 
@@ -878,6 +848,36 @@ public class DLAdminDisplayContext {
 				_dlRequestHelper.getPortletId(), StringPool.BLANK);
 
 		return _portletPreferences;
+	}
+
+	private List<RepositoryEntry> _getRepositoryEntries(Hits hits) {
+		List<RepositoryEntry> results = new ArrayList<>();
+
+		for (Document doc : hits.getDocs()) {
+			long fileEntryId = GetterUtil.getLong(
+				doc.get(Field.ENTRY_CLASS_PK));
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Documents and Media search index is stale and ",
+							"contains file entry ", fileEntryId),
+						exception);
+				}
+
+				continue;
+			}
+
+			results.add(fileEntry);
+		}
+
+		return results;
 	}
 
 	private SearchContext _getSearchContext(

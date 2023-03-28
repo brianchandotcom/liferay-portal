@@ -39,6 +39,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,6 +61,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -74,6 +78,9 @@ import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Lourdes Fernández Besada
@@ -154,8 +161,14 @@ public class AddInfoItemStrutsActionValidationTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
-				mockHttpServletRequest, new MockHttpServletResponse());
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.ERROR)) {
+
+				_addInfoItemStrutsAction.execute(
+					mockHttpServletRequest, new MockHttpServletResponse());
+
+				_multiVMPool.clear();
+			}
 
 			Assert.assertTrue(
 				SessionErrors.contains(mockHttpServletRequest, formItemId));
@@ -574,6 +587,9 @@ public class AddInfoItemStrutsActionValidationTest {
 		}
 	}
 
+	private static final String _CLASS_NAME =
+		"com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl";
+
 	@Inject(filter = "path=/portal/add_info_item")
 	private StrutsAction _addInfoItemStrutsAction;
 
@@ -602,6 +618,9 @@ public class AddInfoItemStrutsActionValidationTest {
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private Portal _portal;

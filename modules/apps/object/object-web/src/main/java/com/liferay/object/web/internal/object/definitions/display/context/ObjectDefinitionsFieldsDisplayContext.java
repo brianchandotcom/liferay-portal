@@ -169,8 +169,8 @@ public class ObjectDefinitionsFieldsDisplayContext
 		}
 
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			null, objectRequestHelper.getLocale(), getObjectDefinitionId(),
-			objectField -> !objectField.isSystem());
+			true, false, objectRequestHelper.getLocale(),
+			getObjectDefinitionId(), objectField -> !objectField.isSystem());
 	}
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {

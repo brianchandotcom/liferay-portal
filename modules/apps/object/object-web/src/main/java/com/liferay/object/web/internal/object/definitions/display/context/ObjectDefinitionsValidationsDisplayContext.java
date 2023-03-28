@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
@@ -164,8 +165,10 @@ public class ObjectDefinitionsValidationsDisplayContext
 		}
 
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			false, includeDDMExpressionBuilderElements, true,
-			objectRequestHelper.getLocale(), getObjectDefinitionId());
+			includeDDMExpressionBuilderElements, true,
+			objectRequestHelper.getLocale(), getObjectDefinitionId(),
+			objectField -> !objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));
 	}
 
 	private final ObjectValidationRuleEngineRegistry

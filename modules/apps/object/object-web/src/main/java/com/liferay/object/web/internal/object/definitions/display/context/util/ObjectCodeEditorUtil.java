@@ -14,7 +14,6 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context.util;
 
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -42,10 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectCodeEditorUtil {
 
 	public static List<Map<String, Object>> getCodeEditorElements(
-		boolean includeAggregationObjectField,
 		boolean includeDDMExpressionBuilderElements,
-		boolean includeFormulaObjectField, Locale locale,
-		long objectDefinitionId) {
+		boolean includeGeneralVariables, Locale locale, long objectDefinitionId,
+		Predicate<ObjectField> objectFieldPredicate) {
 
 		List<Map<String, Object>> codeEditorElements = new ArrayList<>();
 
@@ -55,14 +53,7 @@ public class ObjectCodeEditorUtil {
 					ListUtil.filter(
 						_objectFieldLocalService.getObjectFields(
 							objectDefinitionId),
-						objectField ->
-							(includeAggregationObjectField ||
-							 !objectField.compareBusinessType(
-								 ObjectFieldConstants.
-									 BUSINESS_TYPE_AGGREGATION)) &&
-							(includeFormulaObjectField ||
-							 !objectField.compareBusinessType(
-								 ObjectFieldConstants.BUSINESS_TYPE_FORMULA))),
+						objectFieldPredicate),
 					objectField -> HashMapBuilder.put(
 						"content", objectField.getName()
 					).put(
@@ -71,17 +62,20 @@ public class ObjectCodeEditorUtil {
 						"label", objectField.getLabel(locale)
 					).build()),
 				"fields", locale));
-		codeEditorElements.add(
-			_createCodeEditorElement(
-				Collections.singletonList(
-					HashMapBuilder.put(
-						"content", "currentUserId"
-					).put(
-						"helpText", StringPool.BLANK
-					).put(
-						"label", LanguageUtil.get(locale, "current-user")
-					).build()),
-				"general-variables", locale));
+
+		if (includeGeneralVariables) {
+			codeEditorElements.add(
+				_createCodeEditorElement(
+					Collections.singletonList(
+						HashMapBuilder.put(
+							"content", "currentUserId"
+						).put(
+							"helpText", StringPool.BLANK
+						).put(
+							"label", LanguageUtil.get(locale, "current-user")
+						).build()),
+					"general-variables", locale));
+		}
 
 		if (includeDDMExpressionBuilderElements) {
 			Collections.addAll(

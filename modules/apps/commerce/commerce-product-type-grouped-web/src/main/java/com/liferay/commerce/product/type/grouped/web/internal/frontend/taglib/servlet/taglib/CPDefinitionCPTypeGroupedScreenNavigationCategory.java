@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.grouped.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.product.type.grouped.web.internal.constants.CPTypeGroupedScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +37,8 @@ public class CPDefinitionCPTypeGroupedScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "grouped";
+		return CPTypeGroupedScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_GROUPED;
 	}
 
 	@Override
@@ -44,7 +46,10 @@ public class CPDefinitionCPTypeGroupedScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return language.get(resourceBundle, "grouped");
+		return language.get(
+			resourceBundle,
+			CPTypeGroupedScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_GROUPED);
 	}
 
 	@Override

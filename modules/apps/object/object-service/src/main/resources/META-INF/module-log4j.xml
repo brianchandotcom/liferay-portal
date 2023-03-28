@@ -2,8 +2,8 @@
 
 <Configuration strict="true">
 	<Loggers>
+		<Logger level="INFO" name="com.liferay.object.dsl.DynamicObjectDefinitionTable" />
 		<Logger level="INFO" name="com.liferay.object.internal.instance.lifecycle.SystemObjectDefinitionMetadataPortalInstanceLifecycleListener" />
-		<Logger level="INFO" name="com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable" />
 		<Logger level="INFO" name="com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor" />
 		<Logger level="INFO" name="com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor" />
 		<Logger level="INFO" name="com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryModelPreFilterContributor" />

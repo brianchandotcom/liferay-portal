@@ -15,18 +15,10 @@
 package com.liferay.asset.categories.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesConstants;
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 
-import java.io.IOException;
-
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,14 +27,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=10",
-		"screen.navigation.entry.order:Integer=10"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.category.order:Integer=10",
+	service = ScreenNavigationCategory.class
 )
 public class CategoryDetailsScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry<AssetCategory> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -50,13 +39,8 @@ public class CategoryDetailsScreenNavigationCategory
 	}
 
 	@Override
-	public String getEntryKey() {
-		return "details";
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "details");
+		return language.get(locale, "details");
 	}
 
 	@Override
@@ -64,20 +48,7 @@ public class CategoryDetailsScreenNavigationCategory
 		return AssetCategoriesConstants.CATEGORY_KEY_GENERAL;
 	}
 
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/category/details.jsp");
-	}
-
 	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
+	protected Language language;
 
 }

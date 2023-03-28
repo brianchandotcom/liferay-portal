@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -108,6 +109,20 @@ public interface DocumentFolderResource {
 		throws Exception;
 
 	public Response putDocumentFolderBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteDocumentFolderMyRating(Long documentFolderId)
+		throws Exception;
+
+	public Rating getDocumentFolderMyRating(Long documentFolderId)
+		throws Exception;
+
+	public Rating postDocumentFolderMyRating(
+			Long documentFolderId, Rating rating)
+		throws Exception;
+
+	public Rating putDocumentFolderMyRating(
+			Long documentFolderId, Rating rating)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

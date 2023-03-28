@@ -636,6 +636,21 @@ public class ServletDataImpl implements ServletData {
 							DocumentFolderResourceImpl.class,
 							"putDocumentFolderBatch"));
 					put(
+						"mutation#deleteDocumentFolderMyRating",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"deleteDocumentFolderMyRating"));
+					put(
+						"mutation#createDocumentFolderMyRating",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"postDocumentFolderMyRating"));
+					put(
+						"mutation#updateDocumentFolderMyRating",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"putDocumentFolderMyRating"));
+					put(
 						"mutation#updateDocumentFolderPermissionsPage",
 						new ObjectValuePair<>(
 							DocumentFolderResourceImpl.class,
@@ -1898,6 +1913,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DocumentFolderResourceImpl.class,
 							"getDocumentFolder"));
+					put(
+						"query#documentFolderMyRating",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"getDocumentFolderMyRating"));
 					put(
 						"query#documentFolderPermissions",
 						new ObjectValuePair<>(

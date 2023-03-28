@@ -502,7 +502,7 @@
 </tr>
 <tr>
 	<td>TRACK_APPROVAL_BODY</td>
-	<td>//div[contains(@class, 'modal-title') and contains(.,'Track Workflow')]//..//..//div[contains(@class,'modal-body')]</td>
+	<td>//h1[contains(@class, 'modal-title') and contains(.,'Track Workflow')]//..//..//div[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -74,7 +74,7 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"'liferay-module-config-generator'",
 				"Do not use deprecated package 'metal-cli'"
 			},
-			new Integer[] {4, 5});
+			new Integer[] {4, 5}, null);
 	}
 
 	@Test

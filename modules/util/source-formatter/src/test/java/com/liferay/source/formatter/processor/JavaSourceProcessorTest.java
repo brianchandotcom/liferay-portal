@@ -44,7 +44,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"The variable assignment for 'settings' should come before the variable assignment for 'type'",
 				"The method calling 'setCompany' should come before the method calling 'setName'"
 			},
-			new Integer[] {29, 33, 42, 48, 54});
+			new Integer[] {29, 33, 42, 48, 54}, null);
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use 'HashMapBuilder' (52, 54)",
 				"Use 'HashMapBuilder' instead of new instance of 'HashMap'"
 			},
-			new Integer[] {28, 38, 47, 52, 58});
+			new Integer[] {28, 38, 47, 52, 58}, null);
 	}
 
 	@Test
@@ -163,7 +163,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Rename exception variable 'ioe1' to 'ioException'",
 				"Rename exception variable 'ioe2' to 'ioException'"
 			},
-			new Integer[] {37, 50, 61, 66, 70, 81, 85, 96, 102});
+			new Integer[] {37, 50, 61, 66, 70, 81, 85, 96, 102}, null);
 	}
 
 	@Test
@@ -270,7 +270,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {
 				53, 57, 61, 97, 101, 105, 141, 145, 149, 185, 189, 193, 229,
 				233, 237, 273, 277, 281
-			});
+			}, null);
 		}
 
 	@Test
@@ -283,7 +283,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Parameter 'TestString' must match pattern " +
 					"'^[a-z][_a-zA-Z0-9]*$'"
 			},
-			new Integer[] {24, 28});
+			new Integer[] {24, 28}, null);
 	}
 
 	@Test
@@ -296,7 +296,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Protected or public non-static field '_test2' must match " +
 					"pattern '^[a-z0-9][_a-zA-Z0-9]*$'"
 			},
-			new Integer[] {22, 28});
+			new Integer[] {22, 28}, null);
 		test(
 			"IncorrectVariableNames2.testjava",
 			"private constant 'STRING_1' of type 'String' must match pattern " +
@@ -310,7 +310,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Local non-final variable 'TestString' must match pattern " +
 					"'^[a-z0-9][_a-zA-Z0-9]*$'"
 			},
-			new Integer[] {26, 29});
+			new Integer[] {26, 29}, null);
 	}
 
 	@Test
@@ -326,7 +326,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use StringUtil.equalsIgnoreCase", "Use StringUtil.toLowerCase",
 				"Use StringUtil.toUpperCase"
 			},
-			new Integer[] {26, 30, 31});
+			new Integer[] {26, 30, 31}, null);
 	}
 
 	@Test
@@ -358,7 +358,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use 'toString' instead of 'toJSONString'",
 				"Use 'toString' instead of 'toJSONString'"
 			},
-			new Integer[] {30, 39, 43, 67});
+			new Integer[] {30, 39, 43, 67}, null);
 	}
 
 	@Test
@@ -377,7 +377,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use _log.isDebugEnabled()", "Use _log.isInfoEnabled()",
 				"Use _log.isTraceEnabled()", "Use _log.isWarnEnabled()"
 			},
-			new Integer[] {27, 36, 41, 53, 58, 68});
+			new Integer[] {27, 36, 41, 53, 58, 68}, null);
 	}
 
 	@Test
@@ -409,7 +409,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"There should be an empty line after 'registry.register'",
 				"There should be an empty line after 'registry.register'"
 			},
-			new Integer[] {23, 24, 34});
+			new Integer[] {23, 24, 34}, null);
 	}
 
 	@Test
@@ -456,7 +456,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {
 				45, 47, 53, 55, 57, 59, 61, 68, 70, 72, 74, 77, 79, 81, 83, 85,
 				87, 89
-			});
+			}, null);
 	}
 
 	@Test
@@ -486,7 +486,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Move 'alterTableAddColumn' call inside " +
 					"'getPostUpgradeSteps' method"
 			},
-			new Integer[] {26, 30});
+			new Integer[] {26, 30}, null);
 	}
 
 	@Test
@@ -498,7 +498,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"Null check for variable 'list' should always be first in if-statement",
 					"Null check for variable 'nameList1' should always be first in if-statement"
 				},
-				new Integer[] {25, 33, 46});
+				new Integer[] {25, 33, 46}, null);
 	}
 
 	@Test
@@ -572,7 +572,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use braces around for-statement clause",
 				"Use braces around if-statement clause"
 			},
-			new Integer[] {23, 28, 31, 34});
+			new Integer[] {23, 28, 31, 34}, null);
 	}
 
 	@Test
@@ -588,7 +588,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use method '_testList.isEmpty()' instead",
 				"Use method 'myList.isEmpty()' instead",
 			},
-			new Integer[] {28, 33});
+			new Integer[] {28, 33}, null);
 	}
 
 	@Test
@@ -669,7 +669,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use 'webCachePool' instead of calling method '_getWebCachePool'",
 				"Use 'webCachePool_1' instead of calling method 'getWebCachePool'"
 			},
-			new Integer[] {35, 43, 47, 53, 79});
+			new Integer[] {35, 43, 47, 53, 79}, null);
 	}
 
 	@Test
@@ -695,7 +695,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Method '_getInteger' is unused",
 				"Method '_getString' is unused"
 			},
-			new Integer[] {33, 41});
+			new Integer[] {33, 41}, null);
 	}
 
 	@Test
@@ -711,7 +711,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Variable 'matcher' is unused", "Variable 'hello' is unused",
 				"Variable '_s' is unused"
 			},
-			new Integer[] {26, 29, 41});
+			new Integer[] {26, 29, 41}, null);
 	}
 
 	@Test

@@ -83,6 +83,12 @@ public abstract class BaseSourceProcessorTestCase {
 		test(fileName, new String[0]);
 	}
 
+	protected void test(String fileName, List<String> relatedFilesNames)
+		throws Exception {
+
+		test(fileName, new String[0], null, relatedFilesNames);
+	}
+
 	protected void test(String fileName, String expectedErrorMessage)
 		throws Exception {
 
@@ -95,50 +101,26 @@ public abstract class BaseSourceProcessorTestCase {
 
 		test(
 			fileName, new String[] {expectedErrorMessage},
-			new Integer[] {lineNumber});
+			new Integer[] {lineNumber}, null);
 	}
 
 	protected void test(String fileName, String[] expectedErrorMessages)
 		throws Exception {
 
-		test(fileName, expectedErrorMessages, null);
+		test(fileName, expectedErrorMessages, null, null);
 	}
 
 	protected void test(
-			String fileName, String[] expectedMessages, Integer[] lineNumbers)
+			String fileName, String[] expectedMessages, Integer[] lineNumbers,
+			List<String> relatedFilesNames)
 		throws Exception {
 
-		int pos = fileName.lastIndexOf(CharPool.PERIOD);
+		File newFile = _generateTempFile(fileName);
 
-		if (pos == -1) {
-			throw new IllegalArgumentException(
-				"The file name " + fileName +
-					" does not end with a valid extension");
-		}
-
-		String originalExtension = fileName.substring(pos + 1);
-
-		String extension = originalExtension;
-
-		fileName = fileName.substring(0, pos);
-
-		if (originalExtension.startsWith("test")) {
-			extension = extension.substring(4);
-		}
-
-		String fullFileName = StringBundler.concat(
-			_DIR_NAME, StringPool.SLASH, fileName, ".", originalExtension);
-
-		URL url = classLoader.getResource(fullFileName);
-
-		if (url == null) {
-			throw new FileNotFoundException(fullFileName);
-		}
-
-		File newFile = new File(_temporaryFolder, fileName + "." + extension);
-
-		try (InputStream inputStream = url.openStream()) {
-			FileUtils.copyInputStreamToFile(inputStream, newFile);
+		if (relatedFilesNames != null) {
+			for (String relatedFileName : relatedFilesNames) {
+				_generateTempFile(relatedFileName);
+			}
 		}
 
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
@@ -198,7 +180,7 @@ public abstract class BaseSourceProcessorTestCase {
 				new File(modifiedFileNames.get(0)));
 
 			String expectedFileName = StringBundler.concat(
-				_DIR_NAME, "/expected/", fileName, ".", originalExtension);
+				_DIR_NAME, "/expected/", fileName);
 
 			URL expectedURL = classLoader.getResource(expectedFileName);
 
@@ -220,6 +202,43 @@ public abstract class BaseSourceProcessorTestCase {
 
 	protected final ClassLoader classLoader =
 		BaseSourceProcessorTestCase.class.getClassLoader();
+
+	private File _generateTempFile(String fileName) throws Exception {
+		int pos = fileName.lastIndexOf(CharPool.PERIOD);
+
+		if (pos == -1) {
+			throw new IllegalArgumentException(
+				"The file name " + fileName +
+					" does not end with a valid extension");
+		}
+
+		String originalExtension = fileName.substring(pos + 1);
+
+		String extension = originalExtension;
+
+		fileName = fileName.substring(0, pos);
+
+		if (originalExtension.startsWith("test")) {
+			extension = extension.substring(4);
+		}
+
+		String fullFileName = StringBundler.concat(
+			_DIR_NAME, StringPool.SLASH, fileName, ".", originalExtension);
+
+		URL url = classLoader.getResource(fullFileName);
+
+		if (url == null) {
+			throw new FileNotFoundException(fullFileName);
+		}
+
+		File newFile = new File(_temporaryFolder, fileName + "." + extension);
+
+		try (InputStream inputStream = url.openStream()) {
+			FileUtils.copyInputStreamToFile(inputStream, newFile);
+		}
+
+		return newFile;
+	}
 
 	private static final String _DIR_NAME =
 		"com/liferay/source/formatter/dependencies";

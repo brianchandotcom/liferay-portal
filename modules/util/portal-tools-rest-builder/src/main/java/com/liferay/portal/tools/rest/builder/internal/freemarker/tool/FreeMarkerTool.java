@@ -30,6 +30,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceTestCaseOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
@@ -1052,11 +1053,7 @@ public class FreeMarkerTool {
 	}
 
 	public boolean isVersionCompatible(ConfigYAML configYAML, int version) {
-		if (configYAML.getCompatibilityVersion() >= version) {
-			return true;
-		}
-
-		return false;
+		return ConfigUtil.isVersionCompatible(configYAML, version);
 	}
 
 	private static DateFormat _getDateFormat(String pattern) {

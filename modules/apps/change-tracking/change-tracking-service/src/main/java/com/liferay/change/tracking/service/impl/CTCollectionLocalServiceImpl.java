@@ -75,6 +75,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -128,6 +130,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CTCollectionLocalServiceImpl
 	extends CTCollectionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTCollection addCTCollection(
 			long companyId, long userId, String name, String description)
@@ -948,6 +951,7 @@ public class CTCollectionLocalServiceImpl
 		return newCTCollection;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)

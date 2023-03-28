@@ -15,10 +15,10 @@
 package com.liferay.change.tracking.web.internal.scheduler;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.change.tracking.constants.CTDestinationNames;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.web.internal.constants.CTDestinationNames;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;

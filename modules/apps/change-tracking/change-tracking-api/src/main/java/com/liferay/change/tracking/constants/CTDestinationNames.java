@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.constants;
+package com.liferay.change.tracking.constants;
 
 /**
  * @author Preston Crary

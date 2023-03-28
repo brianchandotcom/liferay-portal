@@ -45,6 +45,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -231,6 +232,10 @@ public class SortPortletSharedSearchContributor
 
 			JSONArray fieldsJSONArray =
 				sortPortletPreferences.getFieldsJSONArray();
+
+			if (fieldsJSONArray.length() == 0) {
+				return Collections.emptyList();
+			}
 
 			JSONObject jsonObject = fieldsJSONArray.getJSONObject(0);
 

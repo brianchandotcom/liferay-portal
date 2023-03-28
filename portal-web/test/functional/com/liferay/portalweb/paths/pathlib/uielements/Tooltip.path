@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>FLOATING_TOOLTIP_CONTENT</td>
-	<td>//div[contains(@class,'tooltip')]//div[contains(.,'${key_content}')]</td>
+	<td>//div[contains(@class,'tooltip')]//div[contains(.,"${key_content}")]</td>
 	<td></td>
 </tr>
 <tr>

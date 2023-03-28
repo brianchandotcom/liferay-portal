@@ -117,6 +117,15 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return _companySecurityBag;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getGuestUser}
+	 */
+	@Deprecated
+	@Override
+	public User getDefaultUser() throws PortalException {
+		return getGuestUser();
+	}
+
 	@Override
 	public String getDefaultWebId() {
 		return PropsValues.COMPANY_DEFAULT_WEB_ID;

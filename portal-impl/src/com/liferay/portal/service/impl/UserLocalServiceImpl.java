@@ -350,7 +350,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>portal.properties</code> with the key
 	 * <code>admin.default.group.names</code>.
 	 *
-	 * @param userId the primary key of the user
+	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if user was added to default groups;
 	 *         <code>false</code> if user was already a member
 	 */
@@ -440,9 +440,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>portal.properties</code> with the key
 	 * <code>admin.default.role.names</code>.
 	 *
-	 * @param userId the primary key of the user
+	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if user was given default roles;
-	 * 	       <code>false</code> if user already has default roles
+	 *         <code>false</code> if user already has default roles
 	 */
 	@Override
 	public boolean addDefaultRoles(long userId) throws PortalException {
@@ -487,9 +487,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>portal.properties</code> with the property
 	 * <code>admin.default.user.group.names</code>.
 	 *
-	 * @param userId the primary key of the user
+	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if user was added to default user groups;
-	 * 	       <code>false</code> if user is already a user group member
+	 *         <code>false</code> if user is already a user group member
 	 */
 	@Override
 	public boolean addDefaultUserGroups(long userId) throws PortalException {
@@ -1572,15 +1572,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * authentication, without using the AuthPipeline. Primarily used for
 	 * authenticating users of <code>tunnel-web</code>.
 	 *
+	 * @param      companyId the primary key of the user's company
+	 * @param      realm unused
+	 * @param      nonce the number used once
+	 * @param      method the request method
+	 * @param      uri the request URI
+	 * @param      response the authentication response hash
+	 * @return     the user's primary key if authentication is successful;
+	 *             <code>0</code> otherwise
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 * @param  companyId the primary key of the user's company
-	 * @param  realm unused
-	 * @param  nonce the number used once
-	 * @param  method the request method
-	 * @param  uri the request URI
-	 * @param  response the authentication response hash
-	 * @return the user's primary key if authentication is successful;
-	 *         <code>0</code> otherwise
 	 */
 	@Deprecated
 	@Override
@@ -2104,7 +2104,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the guest user for the company, or <code>null</code> if a user
-	 * 			with the company key could not be found
+	 *         with the company key could not be found
 	 */
 	@Override
 	public User fetchGuestUser(long companyId) {
@@ -2262,6 +2262,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public int getCompanyUsersCount(long companyId) {
 		return userPersistence.countByCompanyId(companyId);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getGuestUser(long)}
+	 */
+	@Deprecated
+	@Override
+	public User getDefaultUser(long companyId) throws PortalException {
+		return userLocalService.getGuestUser(companyId);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getGuestUserId(long)}
+	 */
+	@Deprecated
+	@Override
+	public long getDefaultUserId(long companyId) throws PortalException {
+		return userLocalService.getGuestUserId(companyId);
 	}
 
 	/**

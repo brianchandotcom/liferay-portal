@@ -75,6 +75,8 @@ public class ViewPrpKBArticlesDisplayContext {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
 			KBArticle.class.getName(), _searchContainer);
 
+		assetEntryQuery.setEnablePermissions(true);
+
 		_searchContainer.setResultsAndTotal(
 			() -> {
 				assetEntryQuery.setEnd(_searchContainer.getEnd());

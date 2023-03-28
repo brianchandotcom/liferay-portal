@@ -37,7 +37,8 @@ public class CPInstanceVirtualSettingsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "virtual-settings";
+		return CPInstanceScreenNavigationConstants.
+			CATEGORY_KEY_VIRTUAL_SETTINGS;
 	}
 
 	@Override

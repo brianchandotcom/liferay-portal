@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.context;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -51,6 +53,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	public BaseCommerceContextHttp(
 		HttpServletRequest httpServletRequest,
 		CommerceAccountHelper commerceAccountHelper,
+		CommerceAccountLocalService commerceAccountLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
@@ -60,6 +63,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 
 		_httpServletRequest = httpServletRequest;
 		_commerceAccountHelper = commerceAccountHelper;
+		_commerceAccountLocalService = commerceAccountLocalService;
 		_commerceChannelAccountEntryRelLocalService =
 			commerceChannelAccountEntryRelLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
@@ -104,8 +108,20 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			return _commerceAccount;
 		}
 
-		_commerceAccount = _commerceAccountHelper.getCurrentCommerceAccount(
-			commerceChannel.getGroupId(), _httpServletRequest);
+		AccountEntry accountEntry =
+			_commerceAccountHelper.getCurrentAccountEntry(
+				commerceChannel.getGroupId(), _httpServletRequest);
+
+		if (accountEntry == null) {
+			return null;
+		}
+		else if (accountEntry.isGuestAccount()) {
+			return _commerceAccountLocalService.getGuestCommerceAccount(
+				commerceChannel.getCompanyId());
+		}
+
+		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
+			accountEntry.getAccountEntryId());
 
 		return _commerceAccount;
 	}
@@ -280,6 +296,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;
 	private final CommerceAccountHelper _commerceAccountHelper;
+	private final CommerceAccountLocalService _commerceAccountLocalService;
 	private final CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;

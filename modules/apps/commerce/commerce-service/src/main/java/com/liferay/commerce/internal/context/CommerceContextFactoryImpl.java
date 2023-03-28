@@ -43,6 +43,7 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 	public CommerceContext create(HttpServletRequest httpServletRequest) {
 		return new BaseCommerceContextHttp(
 			httpServletRequest, _commerceAccountHelper,
+			_commerceAccountLocalService,
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
 			_commerceOrderHttpHelper, _configurationProvider, _portal);

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.shipping.engine.fixed.web.internal.constants.CommerceShippingFixedOptionScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -34,13 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
-	public static final String CATEGORY_KEY = "shipping-option-settings";
-
-	public static final String ENTRY_KEY = "shipping-option-settings";
-
 	@Override
 	public String getCategoryKey() {
-		return CATEGORY_KEY;
+		return CommerceShippingFixedOptionScreenNavigationConstants.
+			CATEGORY_KEY_SHIPPING_OPTION_SETTINGS;
 	}
 
 	@Override
@@ -48,12 +46,16 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return language.get(resourceBundle, CATEGORY_KEY);
+		return language.get(
+			resourceBundle,
+			CommerceShippingFixedOptionScreenNavigationConstants.
+				CATEGORY_KEY_SHIPPING_OPTION_SETTINGS);
 	}
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "commerce.shipping.method";
+		return CommerceShippingFixedOptionScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
 	}
 
 	@Reference

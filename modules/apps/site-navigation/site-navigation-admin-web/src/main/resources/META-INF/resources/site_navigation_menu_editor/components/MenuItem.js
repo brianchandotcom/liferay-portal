@@ -202,6 +202,8 @@ export function MenuItem({item, onMenuItemRemoved}) {
 				return;
 			}
 
+			event.preventDefault();
+
 			setKeyboardDragLayer({
 				eventKey,
 				menuItemTitle: title,

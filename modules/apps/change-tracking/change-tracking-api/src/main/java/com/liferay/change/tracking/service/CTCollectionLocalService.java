@@ -81,6 +81,7 @@ public interface CTCollectionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTCollection addCTCollection(CTCollection ctCollection);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTCollection addCTCollection(
 			long companyId, long userId, String name, String description)
 		throws PortalException;
@@ -343,6 +344,7 @@ public interface CTCollectionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTCollection updateCTCollection(CTCollection ctCollection);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)
 		throws PortalException;

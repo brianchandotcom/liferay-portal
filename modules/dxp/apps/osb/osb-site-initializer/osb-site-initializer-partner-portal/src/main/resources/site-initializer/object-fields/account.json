@@ -1,0 +1,147 @@
+{
+	"object-fields": [
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "cab9b3aa-b0bf-4a4d-8623-82a77a296f24",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Claim Percent"
+			},
+			"name": "claimPercent",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "ccc810c2-0965-4344-a973-54bf82bf4140",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
+			"name": "country",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "25ac6408-623d-43f5-a524-eb7b354869be",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "c4489185-1e27-4b35-a32a-26ff301b1bec",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Marketing Plan"
+			},
+			"name": "marketingPlan",
+			"required": true
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "70c60104-3c6e-44e2-bd58-adcf2b304462",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Solution Delivery Certification"
+			},
+			"name": "solutionDeliveryCertification",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "f568e4f2-6dbe-4f48-b49c-e64dab6cd968",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Level"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Partner Levels$]",
+			"name": "partnerLevel",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "16a62efa-05bc-4590-a2dc-1fa0409a5c36",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Growth ARR"
+			},
+			"name": "growthARR",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "c112f34f-7ae3-4376-950b-e0f6b7f76a5f",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Renewal ARR"
+			},
+			"name": "renewalARR",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "6aae9991-46db-4048-9b01-ce6155da9e26",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "New Project Existing Business"
+			},
+			"name": "newProjectExistingBusiness",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "b9fcc2ac-2e80-4459-bb3b-09c77cfbf2a2",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "ARR Amount"
+			},
+			"name": "aRRAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "50cb1f1e-19e2-4c91-a336-20fae38ac026",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Marketing Performance"
+			},
+			"name": "marketingPerformance",
+			"required": false,
+			"type": "BigDecimal"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountEntry$]"
+}

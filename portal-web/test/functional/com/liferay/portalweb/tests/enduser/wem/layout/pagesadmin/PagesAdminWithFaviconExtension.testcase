@@ -75,14 +75,12 @@ definition {
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
 			AssertTextEquals(
-				faviconName = "Google Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Google Favicon");
 
@@ -125,14 +123,12 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
 			AssertTextEquals(
-				faviconName = "Google Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Google Favicon");
 
@@ -159,14 +155,12 @@ definition {
 			DropdownMenuItem.click(menuItem = "Configuration");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
 			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
 
 			AssertTextEquals(
-				faviconName = "NBA Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "NBA Favicon");
 
@@ -235,16 +229,14 @@ definition {
 
 		task ("Then the site designer could clear the favicon extension selection") {
 			AssertTextEquals(
-				faviconName = "Google Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Google Favicon");
 
 			Click(
-				buttonId = "clearFaviconButton",
-				locator1 = "Button#BUTTON_ID");
+				ariaLabel = "Clear Favicon",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
@@ -307,7 +299,6 @@ definition {
 			WaitForPageLoad();
 
 			AssertTextEquals(
-				faviconName = "Favicon from Master",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Master");
 		}
@@ -316,7 +307,6 @@ definition {
 			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
 
 			AssertTextEquals(
-				faviconName = "NBA Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "NBA Favicon");
 
@@ -386,7 +376,6 @@ definition {
 			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
 
 			AssertTextEquals(
-				faviconName = "NBA Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "NBA Favicon");
 
@@ -458,7 +447,6 @@ definition {
 			WaitForPageLoad();
 
 			AssertTextEquals(
-				faviconName = "Google Favicon",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Google Favicon");
 		}

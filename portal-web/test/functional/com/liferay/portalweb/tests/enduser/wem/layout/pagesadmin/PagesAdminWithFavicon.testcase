@@ -61,14 +61,12 @@ definition {
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
 			PagesAdmin.selectFavicon(uploadFileName = "Document_1.jpg");
 
 			AssertTextEquals(
-				faviconName = "Document_1.jpg",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Document_1.jpg");
 
@@ -111,14 +109,12 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
 			PagesAdmin.selectFavicon(uploadFileName = "Document_2.jpg");
 
 			AssertTextEquals(
-				faviconName = "Document_2.jpg",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Document_2.jpg");
 
@@ -145,14 +141,12 @@ definition {
 			DropdownMenuItem.click(menuItem = "Configuration");
 
 			AssertTextEquals(
-				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
 			PagesAdmin.selectFavicon(uploadFileName = "Document_3.jpg");
 
 			AssertTextEquals(
-				faviconName = "Document_3.jpg",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Document_3.jpg");
 

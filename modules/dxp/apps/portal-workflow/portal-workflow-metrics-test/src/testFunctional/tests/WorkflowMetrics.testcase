@@ -293,9 +293,9 @@ definition {
 			taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4",
 			taskListUnchecked = "Blogs Entry: Blogs Entry Title 5,Blogs Entry: Blogs Entry Title 6");
 
-		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_PAGINATION_BUTTON");
+		AssertElementPresent(locator1 = "Pagination#NEXT_LINK");
 
-		AssertElementPresent(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
+		AssertElementPresent(locator1 = "Pagination#PREVIOUS_LINK");
 
 		WorkflowMetrics.selectNewAssigneePagination(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5,Blogs Entry: Blogs Entry Title 6");
 

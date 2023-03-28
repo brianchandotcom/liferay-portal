@@ -1001,11 +1001,11 @@ definition {
 
 		Check.checkNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 
-		Click(locator1 = "WorkflowReassignModal#NEXT_PAGINATION_BUTTON");
+		Click(locator1 = "Pagination#NEXT_LINK");
 
 		WorkflowMetrics.assertCheckboxUnchecked(taskListUnchecked = ${taskListUnchecked});
 
-		Click(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
 		WorkflowMetrics.assertCheckboxChecked(taskList = ${taskList});
 
@@ -1143,7 +1143,7 @@ definition {
 			locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE_SPECIFIC",
 			value1 = "Test Test");
 
-		Click(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
 		var key_itemName = "Blogs Entry: Blogs Entry Title 1";
 

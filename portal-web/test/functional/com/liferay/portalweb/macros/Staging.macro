@@ -1426,9 +1426,13 @@ definition {
 	}
 
 	macro viewNotStagedAssetMessageOnStaging {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Staging#NOT_STAGED_ASSET_MESSAGE",
-			value1 = "The data of this portlet is not staged.");
+		MouseOver.javaScriptFocus(
+			key_text = "warning-full",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(
+			key_content = "The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging.",
+			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 	}
 
 	macro viewPageVariationPG {

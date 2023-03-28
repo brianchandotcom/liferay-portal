@@ -39,7 +39,7 @@ portletDisplay.setURLBack(backURL);
 	<aui:input name="objectRelationshipPrimaryKey2" type="hidden" value="" />
 
 	<c:choose>
-		<c:when test="<%= objectDefinition2.isSystem() %>">
+		<c:when test="<%= objectDefinition2.isUnmodifiableSystemObject() %>">
 			<frontend-data-set:classic-display
 				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
 				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectEntryDisplayContext.getObjectRelationship()) %>"

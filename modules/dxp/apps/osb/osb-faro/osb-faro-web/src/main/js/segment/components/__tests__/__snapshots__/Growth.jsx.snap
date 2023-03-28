@@ -190,11 +190,6 @@ exports[`SegmentGrowthWithList should render 1`] = `
               <th
                 class="table-head-title"
               >
-                Account Names
-              </th>
-              <th
-                class="table-head-title"
-              >
                 <button
                   class="inline-item text-truncate-inline btn btn-unstyled"
                   type="button"
@@ -231,15 +226,6 @@ exports[`SegmentGrowthWithList should render 1`] = `
               </td>
               <td>
                 -
-              </td>
-              <td
-                class="name-cell-root"
-              >
-                <div
-                  class="text-truncate"
-                >
-                  -
-                </div>
               </td>
               <td>
                 Jul 8, 2018
@@ -342,31 +328,9 @@ exports[`SelectedPointInfo should render 1`] = `
   <div
     class="selected-point-info"
   >
-    <div
-      class="d-flex align-items-baseline"
-    >
-      <h4>
-        Segment Membership Activities July 10, 2018
-      </h4>
-      <button
-        class="button-root btn btn-sm btn-unstyled"
-        type="button"
-      >
-        Clear Date Selection
-      </button>
-    </div>
-    <div
-      class="changed-values"
-    >
-      Added 
-      <b>
-        1
-      </b>
-      Removed 
-      <b>
-        3
-      </b>
-    </div>
+    <h4>
+      Known Members
+    </h4>
   </div>
 </div>
 `;

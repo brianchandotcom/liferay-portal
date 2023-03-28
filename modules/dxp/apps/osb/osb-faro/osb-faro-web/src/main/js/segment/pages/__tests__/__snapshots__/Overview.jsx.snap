@@ -19,11 +19,6 @@ exports[`SegmentOverview should render 1`] = `
           >
             Segment Membership
           </h5>
-          <div
-            class="subtitle-segment"
-          >
-            Segment membership processes daily and does not include today's activities.
-          </div>
         </div>
         <div
           class="card-body"

@@ -55,6 +55,80 @@ definition {
 			name = "Channels");
 	}
 
+	@description = "This is a test for COMMERCE-10610. Regular users can assert the empty product channels visibility with the view permissions for products and catalogs of the admin panel"
+	@priority = 3
+	test CanAssertEmptyProductChannelsVisibilityWithProductsAndCatalogsViewPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a regular user is created") {
+			JSONUser.addUser(
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "testuser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("And the user has permission to view products and catalogs in the both products and catalogs sections of the admin panel") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = 90,
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_CATALOGS",
+				resourceName = "com.liferay.commerce.catalog",
+				roleTitle = "User");
+		}
+
+		task ("When the user logs in and goes to the Visibility tab of ABS Sensor product in the products admin panel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "testuser@liferay.com",
+				userLoginFullName = "Test User");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+		}
+
+		task ("Then no channels are displayed") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6089. RemoveAccountGroupFilter"
 	@priority = 3
 	test RemoveAccountGroupFilter {

@@ -7666,7 +7666,7 @@ paths:
         delete:
             description:
                 Deletes the document folder's rating and returns a 204 if the operation succeeded.
-            operationId: deleteDocumentMyRating
+            operationId: deleteDocumentFolderMyRating
             parameters:
                 - in: path
                   name: documentFolderId

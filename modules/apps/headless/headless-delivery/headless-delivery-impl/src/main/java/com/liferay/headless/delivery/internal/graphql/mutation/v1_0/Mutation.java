@@ -1853,6 +1853,55 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the document folder's rating and returns a 204 if the operation succeeded."
+	)
+	public boolean deleteDocumentFolderMyRating(
+			@GraphQLName("documentFolderId") Long documentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.deleteDocumentFolderMyRating(
+					documentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Creates a new rating for the document folder, by the user who authenticated the request."
+	)
+	public Rating createDocumentFolderMyRating(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postDocumentFolderMyRating(
+					documentFolderId, rating));
+	}
+
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public Rating updateDocumentFolderMyRating(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putDocumentFolderMyRating(
+					documentFolderId, rating));
+	}
+
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateDocumentFolderPermissionsPage(

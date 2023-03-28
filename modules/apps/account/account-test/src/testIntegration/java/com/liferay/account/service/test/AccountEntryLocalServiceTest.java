@@ -40,8 +40,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -53,7 +56,9 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -457,6 +462,29 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testDeleteAccountEntryByPrimaryKey() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
+
+		_accountEntryLocalService.deleteAccountEntry(
+			accountEntry.getAccountEntryId());
+
+		_assertDeleted(accountEntry);
+	}
+
+	@Test
+	public void testDeleteAccountEntryWithAddress() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
+
+		ListType listType = _listTypeLocalService.getListType(
+			"personal", ListTypeConstants.CONTACT_ADDRESS);
+
+		Address address = _addressLocalService.addAddress(
+			null, accountEntry.getUserId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, RandomTestUtil.randomString(), null, 0, 0,
+			listType.getListTypeId(), false, false, "1234567890",
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNotNull(address);
 
 		_accountEntryLocalService.deleteAccountEntry(
 			accountEntry.getAccountEntryId());
@@ -1117,6 +1145,7 @@ public class AccountEntryLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(accountEntry.getAccountEntryId())));
 		Assert.assertFalse(_hasWorkflowInstance(accountEntry));
+		Assert.assertFalse(_hasAddresses(accountEntry));
 	}
 
 	private void _assertGetUserAccountEntriesWithKeywords(
@@ -1244,6 +1273,18 @@ public class AccountEntryLocalServiceTest {
 		).build();
 	}
 
+	private boolean _hasAddresses(AccountEntry accountEntry) throws Exception {
+		List<Address> addresses = _addressLocalService.getAddresses(
+			accountEntry.getCompanyId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		if (addresses.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _hasWorkflowInstance(AccountEntry accountEntry)
 		throws Exception {
 
@@ -1324,6 +1365,9 @@ public class AccountEntryLocalServiceTest {
 		};
 
 	@Inject
+	private static ListTypeLocalService _listTypeLocalService;
+
+	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
@@ -1334,6 +1378,9 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private AccountUserRetriever _accountUserRetriever;
+
+	@Inject
+	private AddressLocalService _addressLocalService;
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;

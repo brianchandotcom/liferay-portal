@@ -42,8 +42,11 @@ const SortableListItem = ({
 	const [, drop] = useDrop({
 		accept: ItemTypes.SORTABLE_LIST_ITEM,
 
-		drop: () => {
-			handleSavePriority();
+		drop: (item) => {
+			handleSavePriority({
+				itemIndex: item.index,
+				itemName: sortableListItem.name,
+			});
 		},
 
 		hover: (item, monitor) => {

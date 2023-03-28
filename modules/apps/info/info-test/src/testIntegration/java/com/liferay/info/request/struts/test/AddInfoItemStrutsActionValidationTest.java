@@ -39,7 +39,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -162,8 +161,6 @@ public class AddInfoItemStrutsActionValidationTest {
 
 				_addInfoItemStrutsAction.execute(
 					mockHttpServletRequest, new MockHttpServletResponse());
-
-				_multiVMPool.clear();
 			}
 
 			Assert.assertTrue(
@@ -617,9 +614,6 @@ public class AddInfoItemStrutsActionValidationTest {
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private Portal _portal;

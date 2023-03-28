@@ -45,9 +45,6 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -143,12 +140,9 @@ public class BatchEngineExportTaskExecutorImpl
 						batchEngineExportTask.getParameters(),
 						_userLocalService.getUser(
 							batchEngineExportTask.getUserId()));
-			ZipOutputStream zipOutputStream = _getZipOutputStream(
-				batchEngineExportTask.getContentType(),
-				unsyncByteArrayOutputStream);
 			BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_getBatchEngineExportTaskItemWriter(
-					batchEngineExportTask, zipOutputStream)) {
+					batchEngineExportTask, unsyncByteArrayOutputStream)) {
 
 			int exportBatchSize = _getExportBatchSize(
 				batchEngineExportTask.getCompanyId());
@@ -199,8 +193,12 @@ public class BatchEngineExportTaskExecutorImpl
 
 	private BatchEngineExportTaskItemWriter _getBatchEngineExportTaskItemWriter(
 			BatchEngineExportTask batchEngineExportTask,
-			OutputStream outputStream)
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream)
 		throws Exception {
+
+		BatchEngineTaskContentType batchEngineTaskContentType =
+			BatchEngineTaskContentType.valueOf(
+				batchEngineExportTask.getContentType());
 
 		BatchEngineExportTaskItemWriterBuilder
 			batchEngineExportTaskItemWriterBuilder =
@@ -208,8 +206,7 @@ public class BatchEngineExportTaskExecutorImpl
 
 		return batchEngineExportTaskItemWriterBuilder.
 			batchEngineTaskContentType(
-				BatchEngineTaskContentType.valueOf(
-					batchEngineExportTask.getContentType())
+				batchEngineTaskContentType
 			).companyId(
 				batchEngineExportTask.getCompanyId()
 			).csvFileColumnDelimiter(
@@ -223,7 +220,8 @@ public class BatchEngineExportTaskExecutorImpl
 				_batchEngineTaskMethodRegistry.getItemClass(
 					batchEngineExportTask.getClassName())
 			).outputStream(
-				outputStream
+				_getZipOutputStream(
+					batchEngineTaskContentType, unsyncByteArrayOutputStream)
 			).parameters(
 				batchEngineExportTask.getParameters()
 			).userId(
@@ -251,16 +249,26 @@ public class BatchEngineExportTaskExecutorImpl
 		return batchEngineTaskCompanyConfiguration.exportBatchSize();
 	}
 
+	private String _getExportFileExtension(
+		BatchEngineTaskContentType batchEngineTaskContentType) {
+
+		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {
+			return "batch-engine-data.json";
+		}
+
+		return StringUtil.toLowerCase(batchEngineTaskContentType.name());
+	}
+
 	private ZipOutputStream _getZipOutputStream(
-			String contentType,
+			BatchEngineTaskContentType batchEngineTaskContentType,
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream)
-		throws IOException {
+		throws Exception {
 
 		ZipOutputStream zipOutputStream = new ZipOutputStream(
 			unsyncByteArrayOutputStream);
 
 		ZipEntry zipEntry = new ZipEntry(
-			"export." + StringUtil.toLowerCase(contentType));
+			"export." + _getExportFileExtension(batchEngineTaskContentType));
 
 		zipOutputStream.putNextEntry(zipEntry);
 

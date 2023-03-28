@@ -15,20 +15,18 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
-import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,7 +62,12 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 			return;
 		}
 
-		super.doServeResource(resourceRequest, resourceResponse);
+		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			getNotificationTemplateTermsJSONArray());
 	}
 
 	@Override
@@ -77,32 +80,10 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 			return Collections.emptySet();
 		}
 
-		Map<String, String> termNames = new LinkedHashMap<>();
-
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
-
-			if (StringUtil.equals(objectField.getName(), "creator") &&
-				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
-
-				authorObjectFieldNames.forEach(
-					(termLabel, objectFieldName) -> termNames.put(
-						termLabel, _getTermName(objectFieldName)));
-			}
-			else {
-				termNames.put(
-					objectField.getLabel(user.getLocale()),
-					_getTermName(objectField.getName()));
-			}
-		}
-
-		return termNames.entrySet();
-	}
-
-	private String _getTermName(String objectFieldName) {
-		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-			_objectRelationship.getName(), objectFieldName);
+		return getObjectFieldNotificationTermNamesEntries(
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			_objectRelationship.getName());
 	}
 
 	@Reference

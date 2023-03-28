@@ -15,17 +15,23 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
-import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,37 +66,57 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			return;
 		}
 
-		super.doServeResource(resourceRequest, resourceResponse);
+		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-165849")) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				getNotificationTemplateTermsJSONArray());
+		}
+
+		JSONArray relationshipSectionsJSONArray = jsonFactory.createJSONArray();
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.
+					getObjectRelationshipsByObjectDefinitionId2(
+						_objectDefinition.getObjectDefinitionId())) {
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			relationshipSectionsJSONArray.put(
+				JSONUtil.put(
+					"relationshipId",
+					objectRelationship.getObjectRelationshipId()
+				).put(
+					"sectionLabel",
+					StringBundler.concat(
+						objectRelationship.getLabel(themeDisplay.getLocale()),
+						StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+						StringUtil.upperCase(
+							objectDefinition.getLabel(
+								themeDisplay.getLocale())),
+						StringPool.CLOSE_PARENTHESIS)
+				));
+		}
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"relationshipSections", relationshipSectionsJSONArray
+			).put(
+				"terms", getNotificationTemplateTermsJSONArray()
+			));
 	}
 
 	@Override
 	protected Set<Map.Entry<String, String>> getTermNamesEntries() {
-		Map<String, String> termNames = new LinkedHashMap<>();
-
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
-
-			if (StringUtil.equals(objectField.getName(), "creator") &&
-				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
-
-				authorObjectFieldNames.forEach(
-					(termLabel, objectFieldName) -> termNames.put(
-						termLabel, _getTermName(objectFieldName)));
-			}
-			else {
-				termNames.put(
-					objectField.getLabel(user.getLocale()),
-					_getTermName(objectField.getName()));
-			}
-		}
-
-		return termNames.entrySet();
-	}
-
-	private String _getTermName(String objectFieldName) {
-		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-			_objectDefinition.getShortName(), objectFieldName);
+		return getObjectFieldNotificationTermNamesEntries(
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition.getObjectDefinitionId()),
+			_objectDefinition.getShortName());
 	}
 
 	private ObjectDefinition _objectDefinition;
@@ -100,5 +126,8 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

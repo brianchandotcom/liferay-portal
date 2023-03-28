@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.document.library.internal.item.provider;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,11 +24,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -35,8 +37,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -58,17 +58,23 @@ public class FileExtensionGroupsProvider {
 	}
 
 	public String getFileGroupKey(String extension) {
-		Stream<FileExtensionGroup> stream = _fileExtensionGroups.stream();
+		if (_fileExtensionGroups.isEmpty()) {
+			return _OTHER;
+		}
 
-		return stream.filter(
-			fileExtensionGroup -> fileExtensionGroup.containsExtension(
-				extension)
-		).findFirst(
-		).map(
-			FileExtensionGroup::getKey
-		).orElse(
-			_OTHER
-		);
+		String key = null;
+
+		for (FileExtensionGroup fileExtensionGroup : _fileExtensionGroups) {
+			if (fileExtensionGroup.containsExtension(extension)) {
+				key = fileExtensionGroup.getKey();
+
+				if (key != null) {
+					return key;
+				}
+			}
+		}
+
+		return _OTHER;
 	}
 
 	public boolean isOther(String extension) {
@@ -116,37 +122,30 @@ public class FileExtensionGroupsProvider {
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			Language language, Locale locale, Set<String> otherFileExtensions) {
 
-			Stream<String> stream = filterFileExtensions.stream();
-
-			String[] extensions = stream.filter(
-				extension -> {
+			List<String> extensions = ListUtil.filter(
+				filterFileExtensions,
+				filterFileExtension -> {
 					if (!Objects.equals(_key, _OTHER)) {
-						return ArrayUtil.contains(_extensions, extension);
+						return ArrayUtil.contains(
+							_extensions, filterFileExtension);
 					}
 
-					return otherFileExtensions.contains(extension);
-				}
-			).toArray(
-				String[]::new
-			);
+					return otherFileExtensions.contains(filterFileExtension);
+				});
 
-			if (ArrayUtil.isEmpty(extensions)) {
+			if (extensions.isEmpty()) {
 				return null;
 			}
 
 			return JSONUtil.put(
 				"fileExtensions",
-				JSONUtil.putAll(
-					Stream.of(
-						extensions
-					).map(
-						fileExtension -> JSONUtil.put(
-							"fileExtension", fileExtension
-						).put(
-							"selected",
-							checkedFileExtensions.contains(fileExtension)
-						)
-					).toArray())
+				() -> JSONUtil.toJSONArray(
+					extensions,
+					extension -> JSONUtil.put(
+						"fileExtension", extension
+					).put(
+						"selected", checkedFileExtensions.contains(extension)
+					))
 			).put(
 				"icon", _getIcon(dlMimeTypeDisplayContext)
 			).put(
@@ -191,18 +190,12 @@ public class FileExtensionGroupsProvider {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 
-		Set<Map.Entry<String, Function<DLConfiguration, String[]>>> entries =
-			_fileExtensionMimetype.entrySet();
+		_fileExtensionGroups = TransformUtil.transform(
+			_fileExtensionMimetype.entrySet(),
+			entry -> _createFileExtensionGroup(
+				entry.getKey(), entry.getValue()));
 
-		Stream<Map.Entry<String, Function<DLConfiguration, String[]>>> stream =
-			entries.stream();
-
-		_fileExtensionGroups = stream.map(
-			entry -> _createFileExtensionGroup(entry.getKey(), entry.getValue())
-		).sorted(
-		).collect(
-			Collectors.toList()
-		);
+		_fileExtensionGroups.sort(Comparator.naturalOrder());
 	}
 
 	private FileExtensionGroup _createFileExtensionGroup(
@@ -210,29 +203,29 @@ public class FileExtensionGroupsProvider {
 
 		String[] mimeTypes = function.apply(_dlConfiguration);
 
-		Stream<String> stream = Arrays.stream(mimeTypes);
+		List<String> extensions = new ArrayList<>();
 
-		String[] extensions = stream.flatMap(
-			mimeType -> {
-				Set<String> extensionsMimeTypes = _mimeTypes.getExtensions(
+		for (String mimeType : mimeTypes) {
+			Set<String> extensionsMimeTypes = _mimeTypes.getExtensions(
+				mimeType);
+
+			for (String extensionsMimeType : extensionsMimeTypes) {
+				_extensionMimeTypes.put(
+					extensionsMimeType.replaceAll("^\\.", StringPool.BLANK),
 					mimeType);
-
-				for (String extensionsMimeType : extensionsMimeTypes) {
-					_extensionMimeTypes.put(
-						extensionsMimeType.replaceAll("^\\.", StringPool.BLANK),
-						mimeType);
-				}
-
-				return extensionsMimeTypes.stream();
 			}
-		).map(
-			extension -> extension.replaceAll("^\\.", StringPool.BLANK)
-		).sorted(
-		).toArray(
-			String[]::new
-		);
 
-		return new FileExtensionGroup(extensions, key, mimeTypes);
+			extensions.addAll(extensionsMimeTypes);
+		}
+
+		extensions = TransformUtil.transform(
+			extensions,
+			extension -> extension.replaceAll("^\\.", StringPool.BLANK));
+
+		extensions.sort(Comparator.naturalOrder());
+
+		return new FileExtensionGroup(
+			extensions.toArray(new String[0]), key, mimeTypes);
 	}
 
 	private static final String _OTHER = "other";

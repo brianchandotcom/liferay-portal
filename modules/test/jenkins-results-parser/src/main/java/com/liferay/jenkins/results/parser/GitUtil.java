@@ -285,8 +285,11 @@ public class GitUtil {
 		return remoteGitRefs;
 	}
 
-	public static String getUserRemoteURL(String repositoryName, String username) {
-		return JenkinsResultsParserUtil.combine("git@github.com:", username, "/", repositoryName, ".git");
+	public static String getUserRemoteURL(
+		String repositoryName, String username) {
+
+		return JenkinsResultsParserUtil.combine(
+			"git@github.com:", username, "/", repositoryName, ".git");
 	}
 
 	public static boolean isValidGitHubRefURL(String gitHubURL) {

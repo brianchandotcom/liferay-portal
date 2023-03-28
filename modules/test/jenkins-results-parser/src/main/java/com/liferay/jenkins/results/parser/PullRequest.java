@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.File;
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -157,24 +158,27 @@ public class PullRequest {
 		_jsonObject.put("state", "closed");
 	}
 
+	public String forward(
+		String commentBody, String consoleURL, String forwardReceiverUsername,
+		String forwardBranchName, String forwardSenderUsername,
+		File gitRepositoryDir) {
 
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				getUpstreamRemoteGitBranchName(),
+				gitRepositoryDir.getAbsolutePath(), getGitRepositoryName());
 
-	public String forward(String commentBody, String consoleURL, String forwardReceiverUsername, String forwardBranchName, String forwardSenderUsername, File gitRepositoryDir) {
-		GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamRemoteGitBranchName(), gitRepositoryDir.getAbsolutePath(), getGitRepositoryName());
-
-		LocalGitBranch forwardLocalGitBranch = gitWorkingDirectory.getRebasedLocalGitBranch(
-			forwardBranchName,
-			getSenderBranchName(), getSenderRemoteURL(),
-			getSenderSHA(),
-			getUpstreamRemoteGitBranchName(),
-			getUpstreamBranchSHA());
-
-		String userRemoteURL = GitUtil.getUserRemoteURL(getGitRepositoryName(), forwardSenderUsername);
+		LocalGitBranch forwardLocalGitBranch =
+			gitWorkingDirectory.getRebasedLocalGitBranch(
+				forwardBranchName, getSenderBranchName(), getSenderRemoteURL(),
+				getSenderSHA(), getUpstreamRemoteGitBranchName(),
+				getUpstreamBranchSHA());
 
 		RemoteGitBranch forwardRemoteGitBranch =
-				gitWorkingDirectory.pushToRemoteGitRepository(
-					true, forwardLocalGitBranch, forwardLocalGitBranch.getName(),
-					userRemoteURL);
+			gitWorkingDirectory.pushToRemoteGitRepository(
+				true, forwardLocalGitBranch, forwardLocalGitBranch.getName(),
+				GitUtil.getUserRemoteURL(
+					getGitRepositoryName(), forwardSenderUsername));
 
 		if (forwardRemoteGitBranch == null) {
 			throw new RuntimeException("Unable to push branch to GitHub");
@@ -182,13 +186,15 @@ public class PullRequest {
 
 		try {
 			return gitWorkingDirectory.createPullRequest(
-				commentBody, forwardBranchName, forwardReceiverUsername, forwardSenderUsername, getTitle());
+				commentBody, forwardBranchName, forwardReceiverUsername,
+				forwardSenderUsername, getTitle());
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
-			throw new RuntimeException("Unable to create new pull request", ioException);
-		}
 
+			throw new RuntimeException(
+				"Unable to create new pull request", ioException);
+		}
 	}
 
 	public String getCIMergeSHA() {
@@ -306,6 +312,10 @@ public class PullRequest {
 		}
 
 		return testSuiteNames;
+	}
+
+	public Date getCreationDate() {
+		return _creationDate;
 	}
 
 	public List<String> getFileNames() {
@@ -933,30 +943,28 @@ public class PullRequest {
 		private final String _color;
 
 	}
-	
-	public Date getCreationDate() {
-		return _creationDate;
-	}
 
 	protected PullRequest(JSONObject jsonObject) {
 		try {
-			SimpleDateFormat simpleDateFormat =
-				new SimpleDateFormat(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"github.json.timestamp.pattern"));
-	
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"github.json.timestamp.pattern"));
+
 			simpleDateFormat.setTimeZone(
 				TimeZone.getTimeZone(
-					JenkinsResultsParserUtil.getBuildProperty
-					("github.json.timestamp.timezone")));
-	
-			_creationDate = simpleDateFormat.parse(jsonObject.optString("created_at"));
+					JenkinsResultsParserUtil.getBuildProperty(
+						"github.json.timestamp.timezone")));
+
+			_creationDate = simpleDateFormat.parse(
+				jsonObject.optString("created_at"));
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException("Unable to get build property", ioException);
+			throw new RuntimeException(
+				"Unable to get build property", ioException);
 		}
 		catch (ParseException parseException) {
-			throw new RuntimeException("Unable to parse create_at date", parseException);
+			throw new RuntimeException(
+				"Unable to parse create_at date", parseException);
 		}
 
 		JSONObject baseJSONObject = jsonObject.getJSONObject("base");

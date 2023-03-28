@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
@@ -259,13 +260,20 @@ public class LayoutActionsDisplayContext {
 			draftLayout = layout.fetchDraftLayout();
 		}
 
-		return HttpComponentsUtil.addParameters(
+		String pagePreviewURL = HttpComponentsUtil.addParameters(
 			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 				"/portal/get_page_preview",
 			"p_l_mode", Constants.PREVIEW, "p_p_state",
 			WindowState.UNDEFINED.toString(), "segmentsExperienceId",
 			_getSegmentsExperienceId(draftLayout), "selPlid",
 			draftLayout.getPlid());
+
+		if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
+			pagePreviewURL = PortalUtil.addPreservedParameters(
+				_themeDisplay, pagePreviewURL, false, true);
+		}
+
+		return pagePreviewURL;
 	}
 
 	private long _getSegmentsExperienceId(Layout layout) {

@@ -193,7 +193,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 							LayoutPageTemplateEntryTypeConstants.
 								TYPE_DISPLAY_PAGE) {
 
-						return HttpComponentsUtil.addParameters(
+						String previewURL = HttpComponentsUtil.addParameters(
 							_themeDisplay.getPortalURL() +
 								_themeDisplay.getPathMain() +
 									"/portal/get_page_preview",
@@ -203,15 +203,31 @@ public class LayoutPageTemplateEntryItemSelectorView
 							_segmentsExperienceLocalService.
 								fetchDefaultSegmentsExperienceId(
 									_layoutPageTemplateEntry.getPlid()));
+
+						if (Validator.isNotNull(
+								_themeDisplay.getDoAsUserId())) {
+
+							previewURL = _portal.addPreservedParameters(
+								_themeDisplay, previewURL, false, true);
+						}
+
+						return previewURL;
 					}
 
-					return HttpComponentsUtil.addParameters(
+					String previewURL = HttpComponentsUtil.addParameters(
 						PortalUtil.getLayoutFullURL(
 							_layoutLocalService.getLayout(
 								_layoutPageTemplateEntry.getPlid()),
 							_themeDisplay),
 						"p_l_mode", Constants.PREVIEW, "p_p_auth",
 						AuthTokenUtil.getToken(_httpServletRequest));
+
+					if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
+						previewURL = _portal.addPreservedParameters(
+							_themeDisplay, previewURL, false, true);
+					}
+
+					return previewURL;
 				}
 			).put(
 				"url",

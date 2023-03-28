@@ -459,16 +459,18 @@ public class EditStyleBookEntryDisplayContext {
 
 	private String _getPreviewURL(Layout layout) {
 		try {
-			String layoutURL = HttpComponentsUtil.addParameter(
+			String layoutURL = HttpComponentsUtil.addParameters(
 				PortalUtil.getLayoutFullURL(layout, _themeDisplay), "p_l_mode",
-				Constants.PREVIEW);
+				Constants.PREVIEW, "p_p_auth",
+				AuthTokenUtil.getToken(_httpServletRequest),
+				"styleBookEntryPreview", true);
 
-			layoutURL = HttpComponentsUtil.addParameter(
-				layoutURL, "p_p_auth",
-				AuthTokenUtil.getToken(_httpServletRequest));
+			if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
+				layoutURL = PortalUtil.addPreservedParameters(
+					_themeDisplay, layoutURL, false, true);
+			}
 
-			return HttpComponentsUtil.addParameter(
-				layoutURL, "styleBookEntryPreview", true);
+			return layoutURL;
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -484,7 +486,7 @@ public class EditStyleBookEntryDisplayContext {
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				return HttpComponentsUtil.addParameters(
+				String previewURL = HttpComponentsUtil.addParameters(
 					_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 						"/portal/get_page_preview",
 					"p_l_mode", Constants.PREVIEW, "segmentsExperienceId",
@@ -493,6 +495,13 @@ public class EditStyleBookEntryDisplayContext {
 							layoutPageTemplateEntry.getPlid()),
 					"selPlid", layoutPageTemplateEntry.getPlid(),
 					"styleBookEntryPreview", true);
+
+				if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
+					previewURL = PortalUtil.addPreservedParameters(
+						_themeDisplay, previewURL, false, true);
+				}
+
+				return previewURL;
 			}
 
 			return _getPreviewURL(

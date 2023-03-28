@@ -162,6 +162,11 @@ public class JournalEditArticleDisplayContext {
 						_article.getVersion());
 				}
 
+				if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
+					getPagePreviewURL = PortalUtil.addPreservedParameters(
+						_themeDisplay, getPagePreviewURL, false, true);
+				}
+
 				return getPagePreviewURL;
 			}
 		).put(

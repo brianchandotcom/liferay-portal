@@ -194,18 +194,18 @@ public class BaseNotificationTypeTest {
 
 	protected List<String> getAllTermNames() throws PortalException {
 		return ListUtil.concat(
+			ListUtil.fromMapKeys(_getAuthorTermValues()),
+			ListUtil.fromMapKeys(_getCurrentUserTermValues()),
 			Arrays.asList(
 				getTerm("booleanObjectField"), getTerm("dateObjectField"),
-				getTerm("integerObjectField"), getTerm("textObjectField")),
-			ListUtil.fromMapKeys(_getAuthorTermValues()),
-			ListUtil.fromMapKeys(_getCurrentUserTermValues()));
+				getTerm("integerObjectField"), getTerm("textObjectField")));
 	}
 
 	protected List<Object> getAllTermValues() throws PortalException {
 		return ListUtil.concat(
-			ListUtil.fromMapValues(randomObjectEntryValues),
 			ListUtil.fromMapValues(_getAuthorTermValues()),
-			ListUtil.fromMapValues(_getCurrentUserTermValues()));
+			ListUtil.fromMapValues(_getCurrentUserTermValues()),
+			ListUtil.fromMapValues(randomObjectEntryValues));
 	}
 
 	protected String getTerm(String objectFieldName) {

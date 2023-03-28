@@ -1,0 +1,21 @@
+Bundle-Name: Test Include Resource
+Bundle-SymbolicName: com.test.include.resource
+Bundle-Version: 1.0.0
+Export-Package: com.test.include.resource.test
+Import-Package:\
+	!com.sun.*,\
+	!junit*,\
+	!org.apache.avalon.framework.logger,\
+	!org.apache.crimson.jaxp,\
+	!org.apache.jcp.xml.dsig.internal.dom,\
+	!org.apache.log,\
+	!org.apache.xml.resolver*,\
+	!org.bouncycastle.*,\
+	!org.gjt.xpp,\
+	!org.junit*,\
+	!org.relaxng.datatype,\
+	!org.xmlpull.v1,\
+	!com.graphbuilder*,\
+	*
+Include-Resource:\
+	OSGI-INF/configurator=configurator

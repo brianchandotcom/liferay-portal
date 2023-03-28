@@ -27,6 +27,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -89,8 +90,9 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private NotificationContext _createNotificationContext(
-		List<NotificationRecipientSetting> notificationRecipientSettings,
-		String recipientType, List<String> termNames) {
+			List<NotificationRecipientSetting> notificationRecipientSettings,
+			String recipientType)
+		throws PortalException {
 
 		NotificationContext notificationContext = new NotificationContext();
 
@@ -105,7 +107,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setRecipientType(recipientType);
 		notificationTemplate.setSubject(
-			ListUtil.toString(termNames, (String)null));
+			ListUtil.toString(getAllTermNames(), StringPool.BLANK));
 		notificationTemplate.setType(
 			NotificationConstants.TYPE_USER_NOTIFICATION);
 
@@ -154,8 +156,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			).notificationTemplate(
 				notificationTemplateLocalService.addNotificationTemplate(
 					_createNotificationContext(
-						notificationRecipientSettings, recipientType,
-						getAllTermNames()))
+						notificationRecipientSettings, recipientType))
 			).termValues(
 				HashMapBuilder.<String, Object>put(
 					"creator", user2.getUserId()

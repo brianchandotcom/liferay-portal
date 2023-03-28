@@ -20,16 +20,23 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.verify.VerifyProcess;
 
+import org.apache.commons.lang.time.StopWatch;
+import org.apache.logging.log4j.core.Appender;
+
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -61,15 +68,33 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_upgrading = StartupHelperUtil.isUpgrading();
+		_originalUpgrading = StartupHelperUtil.isUpgrading();
+		_originalAppender = ReflectionTestUtil.getFieldValue(
+			DBUpgrader.class, "_appender");
+		_originalStopWatch = ReflectionTestUtil.getFieldValue(
+			DBUpgrader.class, "_stopWatch");
+	}
 
-		StartupHelperUtil.setUpgrading(false);
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_upgrading", _originalUpgrading);
+		ReflectionTestUtil.setFieldValue(
+			DBUpgrader.class, "_appender", _originalAppender);
+		ReflectionTestUtil.setFieldValue(
+			DBUpgrader.class, "_stopWatch", _originalStopWatch);
+	}
+
+	@Before
+	public void setUp() {
+		ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_upgrading", false);
+		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_appender", null);
+		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@After
 	public void tearDown() {
-		StartupHelperUtil.setUpgrading(_upgrading);
-
 		Release release = _releaseLocalService.fetchRelease(_symbolicName);
 
 		if (release != null) {
@@ -321,8 +346,10 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	}
 
 	private static BundleContext _bundleContext;
+	private static Appender _originalAppender;
+	private static StopWatch _originalStopWatch;
+	private static boolean _originalUpgrading;
 	private static String _symbolicName;
-	private static boolean _upgrading;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

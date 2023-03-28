@@ -154,6 +154,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -3041,22 +3042,17 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values)
 		throws PortalException {
 
-		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			if (StringUtil.equals(entry.getKey(), "externalReferenceCode")) {
-				String externalReferenceCode = String.valueOf(entry.getValue());
+		String externalReferenceCode = MapUtil.getString(
+			values, "externalReferenceCode");
 
-				if (Validator.isNull(externalReferenceCode)) {
-					break;
-				}
+		if (Validator.isNotNull(externalReferenceCode)) {
+			_validateExternalReferenceCode(
+				externalReferenceCode, objectEntry.getCompanyId(),
+				objectDefinitionId, objectEntry.getObjectEntryId());
 
-				_validateExternalReferenceCode(
-					externalReferenceCode, objectEntry.getCompanyId(),
-					objectDefinitionId, objectEntry.getObjectEntryId());
+			objectEntry.setExternalReferenceCode(externalReferenceCode);
 
-				objectEntry.setExternalReferenceCode(externalReferenceCode);
-
-				return;
-			}
+			return;
 		}
 
 		if (Validator.isNull(objectEntry.getExternalReferenceCode())) {

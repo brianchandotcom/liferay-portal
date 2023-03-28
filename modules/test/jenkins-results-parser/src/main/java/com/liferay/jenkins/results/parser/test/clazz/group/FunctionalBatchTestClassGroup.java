@@ -443,7 +443,22 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		if ((jobProperty == null) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(jobProperty.getValue())) {
 
-			return null;
+			String workspaceName = _getWorkspaceName();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
+				return null;
+			}
+
+			File testBaseDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				JenkinsResultsParserUtil.combine(
+					"workspaces/", workspaceName, "/poshi"));
+
+			if (!testBaseDir.exists()) {
+				return null;
+			}
+
+			return JenkinsResultsParserUtil.getCanonicalPath(testBaseDir);
 		}
 
 		File testBaseDir = new File(
@@ -549,6 +564,21 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testBatchRunPropertyQuery;
+	}
+
+	private String _getWorkspaceName() {
+		JobProperty jobProperty = getJobProperty(
+			"test.workspace.name", testSuiteName, batchName);
+
+		if ((jobProperty == null) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(jobProperty.getValue())) {
+
+			return null;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return jobProperty.getValue();
 	}
 
 	private void _setTestBatchRunPropertyQueries() {

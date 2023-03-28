@@ -40,6 +40,9 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -61,6 +64,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -285,6 +290,15 @@ public class WabProcessor {
 			batchPathString += "/";
 		}
 
+		boolean siteInitializerDetected = false;
+
+		String siteInitializerPathString = pluginPackageProperties.getProperty(
+			_LIFERAY_CLIENT_EXTENSION_BATCH, "site-initializer/");
+
+		if (!siteInitializerPathString.endsWith("/")) {
+			siteInitializerPathString += "/";
+		}
+
 		boolean staticDetected = false;
 
 		String staticPathString = pluginPackageProperties.getProperty(
@@ -300,10 +314,14 @@ public class WabProcessor {
 
 			Path metatInfBatchPath = _createPath(
 				clientExtensionBundlePath, "META-INF/batch");
+			Path siteInitializerPath = _createPath(
+				clientExtensionBundlePath, "site-initializer");
 			Path metatInfResourcesPath = _createPath(
 				clientExtensionBundlePath, "META-INF/resources");
 			Path osgiInfConfiguratorPath = _createPath(
 				clientExtensionBundlePath, "OSGI-INF/configurator");
+
+			UnicodeProperties unicodeProperties = null;
 
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -320,6 +338,14 @@ public class WabProcessor {
 
 						batchDetected = true;
 					}
+					else if (name.startsWith(siteInitializerPathString)) {
+						Files.createDirectories(
+							siteInitializerPath.resolve(
+								name.replaceFirst(
+									"^" + siteInitializerPathString, "")));
+
+						siteInitializerDetected = true;
+					}
 					else if (name.startsWith(staticPathString)) {
 						Files.createDirectories(
 							metatInfResourcesPath.resolve(
@@ -335,6 +361,39 @@ public class WabProcessor {
 						Files.copy(
 							zipFile.getInputStream(zipEntry),
 							osgiInfConfiguratorPath.resolve(name));
+
+						JSONObject jsonObject1 =
+							JSONFactoryUtil.createJSONObject(
+								StringUtil.read(
+									zipFile.getInputStream(zipEntry)));
+
+						if (jsonObject1 == null) {
+							continue;
+						}
+
+						for (String key : jsonObject1.keySet()) {
+							JSONObject jsonObject2 = jsonObject1.getJSONObject(
+								key);
+
+							JSONArray jsonArray = jsonObject2.getJSONArray(
+								"typeSettings");
+
+							if (jsonArray == null) {
+								continue;
+							}
+
+							StringBundler sb = new StringBundler();
+
+							for (int i = 0; i < jsonArray.length(); i++) {
+								sb.append(jsonArray.getString(i));
+								sb.append("\n");
+							}
+
+							unicodeProperties =
+								UnicodePropertiesBuilder.fastLoad(
+									sb.toString()
+								).build();
+						}
 					}
 					else if (name.startsWith(batchPathString)) {
 						Files.copy(
@@ -343,6 +402,15 @@ public class WabProcessor {
 								name.replaceFirst("^" + batchPathString, "")));
 
 						batchDetected = true;
+					}
+					else if (name.startsWith(siteInitializerPathString)) {
+						Files.copy(
+							zipFile.getInputStream(zipEntry),
+							siteInitializerPath.resolve(
+								name.replaceFirst(
+									"^" + siteInitializerPathString, "")));
+
+						siteInitializerDetected = true;
 					}
 					else if (name.startsWith(staticPathString)) {
 						Files.copy(
@@ -363,6 +431,38 @@ public class WabProcessor {
 				pluginPackageProperties.remove(_LIFERAY_CLIENT_EXTENSION_BATCH);
 			}
 
+			if (siteInitializerDetected) {
+				FileUtil.copyFile(
+					siteInitializerPath.toString() + "/thumbnail.png",
+					metatInfResourcesPath + "/thumbnail.png");
+
+				pluginPackageProperties.setProperty(
+					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER,
+					"site-initializer");
+				pluginPackageProperties.setProperty(
+					"Liferay-Site-Initializer-Description",
+					unicodeProperties.getProperty(
+						"templateDescription", StringPool.BLANK));
+				pluginPackageProperties.setProperty(
+					"Liferay-Site-Initializer-Feature-Flag",
+					unicodeProperties.getProperty(
+						"templateFeatureFlag", StringPool.BLANK));
+				pluginPackageProperties.setProperty(
+					"Liferay-Site-Initializer-Name",
+					unicodeProperties.getProperty(
+						"templateName", StringPool.BLANK));
+				pluginPackageProperties.setProperty(
+					Constants.PROVIDE_CAPABILITY,
+					"osgi.webresource;osgi.webresource=" +
+						"\"@liferay/liferay-site-initializer\";" +
+							"version:Version=\"1.0.0\"," +
+								"liferay.site.initializer");
+			}
+			else {
+				pluginPackageProperties.remove(
+					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER);
+			}
+
 			if (staticDetected) {
 				pluginPackageProperties.setProperty(
 					_LIFERAY_CLIENT_EXTENSION_STATIC, "META-INF/resources");
@@ -372,8 +472,8 @@ public class WabProcessor {
 					_LIFERAY_CLIENT_EXTENSION_STATIC);
 			}
 		}
-		catch (IOException ioException) {
-			_log.error(ioException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return clientExtensionBundlePath.toFile();
@@ -604,7 +704,17 @@ public class WabProcessor {
 			analyzer, Constants.REQUIRE_CAPABILITY, _REQUIRE_CAPABILITY_CDI);
 	}
 
-	private void _processBundleClasspath(Analyzer analyzer) throws IOException {
+	private void _processBundleClasspath(
+			Analyzer analyzer, Properties pluginPackageProperties)
+		throws IOException {
+
+		if (Validator.isNotNull(
+				pluginPackageProperties.getProperty(
+					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER))) {
+
+			return;
+		}
+
 		_appendProperty(
 			analyzer, Constants.BUNDLE_CLASSPATH, "ext/WEB-INF/classes");
 
@@ -1497,7 +1607,7 @@ public class WabProcessor {
 			}
 
 			_processBundleVersion(analyzer);
-			_processBundleClasspath(analyzer);
+			_processBundleClasspath(analyzer, pluginPackageProperties);
 			_processBundleSymbolicName(analyzer);
 			_processExtraHeaders(analyzer);
 			_processPluginPackagePropertiesExportImportPackages(
@@ -1618,6 +1728,9 @@ public class WabProcessor {
 
 	private static final String _LIFERAY_CLIENT_EXTENSION_BATCH =
 		"Liferay-Client-Extension-Batch";
+
+	private static final String _LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER =
+		"Liferay-Client-Extension-Site-Initializer";
 
 	private static final String _LIFERAY_CLIENT_EXTENSION_STATIC =
 		"Liferay-Client-Extension-Static";

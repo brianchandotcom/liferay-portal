@@ -77,7 +77,7 @@ public class CIForwardProcessor {
 
 		try {
 			List<String> openForwardedPullRequestUrls =
-				getOpenForwardedPullRequestUrls();
+				_getOpenForwardedPullRequestUrls();
 
 			if (!openForwardedPullRequestUrls.isEmpty()) {
 				_pullRequest.addComment(
@@ -87,8 +87,8 @@ public class CIForwardProcessor {
 				return;
 			}
 
-			if (!isForwardEligible()) {
-				_pullRequest.addComment(getUnsuccessfulCommentBody());
+			if (!_isForwardEligible()) {
+				_pullRequest.addComment(_getUnsuccessfulCommentBody());
 
 				return;
 			}
@@ -105,7 +105,7 @@ public class CIForwardProcessor {
 			}
 
 			final String initialComment =
-				getCIForwardPullRequestInitialComment();
+				_getCIForwardPullRequestInitialComment();
 
 			Retryable<String> retryable = new Retryable<String>(
 				true, 3, 60, true) {
@@ -113,7 +113,7 @@ public class CIForwardProcessor {
 				@Override
 				public String execute() {
 					return _pullRequest.forward(
-						getCIForwardCommentBody(initialComment), _consoleLogURL,
+						_getCIForwardCommentBody(initialComment), _consoleLogURL,
 						_recipientUsername, _getCIForwardBranchName(),
 						ciUsername, _gitRepositoryDir);
 
@@ -152,7 +152,7 @@ public class CIForwardProcessor {
 		}
 		catch (Exception exception) {
 			try {
-				_pullRequest.addComment(getUnsuccessfulCommentBody());
+				_pullRequest.addComment(_getUnsuccessfulCommentBody());
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(
@@ -177,7 +177,7 @@ public class CIForwardProcessor {
 		_pullRequest.addComment(sb.toString());
 	}
 
-	public String getCIForwardCommentBody(String initialComment) {
+	private String _getCIForwardCommentBody(String initialComment) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Forwarded from: ");
@@ -249,11 +249,11 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	public List<String> getOpenForwardedPullRequestUrls() throws IOException {
+	private List<String> _getOpenForwardedPullRequestUrls() throws IOException {
 		List<String> openForwardedPullRequestUrls = new ArrayList<>();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			getGitHubApiSearchUrl());
+			_getGitHubApiSearchUrl());
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -271,16 +271,16 @@ public class CIForwardProcessor {
 		return openForwardedPullRequestUrls;
 	}
 
-	public boolean isForwardEligible() throws IOException {
+	private boolean _isForwardEligible() throws IOException {
 		List<String> incompleteRequiredCompletedTestSuiteNames =
-			getIncompleteRequiredCompletedTestSuiteNames();
+			_getIncompleteRequiredCompletedTestSuiteNames();
 
 		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
 			return false;
 		}
 
 		List<String> failedRequiredPassingTestSuiteNames =
-			getFailedRequiredPassingTestSuiteNames();
+			_getFailedRequiredPassingTestSuiteNames();
 
 		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
 			return false;
@@ -289,7 +289,7 @@ public class CIForwardProcessor {
 		return true;
 	}
 
-	protected String[] getBuildPropertyAsArray(String propertyName)
+	private String[] _getBuildPropertyAsArray(String propertyName)
 		throws IOException {
 
 		String propertyValue = JenkinsResultsParserUtil.getProperty(
@@ -303,7 +303,7 @@ public class CIForwardProcessor {
 		return propertyValue.split("\\s*,\\s*");
 	}
 
-	protected String getCIForwardPullRequestInitialComment()
+	private String _getCIForwardPullRequestInitialComment()
 		throws IOException {
 
 		StringBuilder sb = new StringBuilder();
@@ -320,7 +320,7 @@ public class CIForwardProcessor {
 		}
 
 		Set<String> suiteTestResultGithubComments =
-			getSuiteTestResultGithubComments();
+			_getSuiteTestResultGithubComments();
 
 		for (String suiteTestResultGithubComment :
 				suiteTestResultGithubComments) {
@@ -332,7 +332,7 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	protected List<String> getFailedRequiredPassingTestSuiteNames()
+	private List<String> _getFailedRequiredPassingTestSuiteNames()
 		throws IOException {
 
 		List<String> passingTestSuiteNames =
@@ -348,7 +348,7 @@ public class CIForwardProcessor {
 			passingTestSuiteNames.size());
 
 		String[] requiredPassingTestSuiteNames =
-			getRequiredPassingTestSuiteNames();
+			_getRequiredPassingTestSuiteNames();
 
 		String joinedRequiredPassingTestSuiteNames =
 			JenkinsResultsParserUtil.join(",", requiredPassingTestSuiteNames);
@@ -369,7 +369,7 @@ public class CIForwardProcessor {
 		return failingRequiredPassingTestSuiteNames;
 	}
 
-	protected String getGitHubApiSearchUrl() throws IOException {
+	private String _getGitHubApiSearchUrl() throws IOException {
 		List<String> filters = Arrays.asList(
 			"author:" +
 				JenkinsResultsParserUtil.getBuildProperty("github.ci.username"),
@@ -381,7 +381,7 @@ public class CIForwardProcessor {
 		return JenkinsResultsParserUtil.getGitHubApiSearchUrl(filters);
 	}
 
-	protected List<String> getIncompleteRequiredCompletedTestSuiteNames()
+	private List<String> _getIncompleteRequiredCompletedTestSuiteNames()
 		throws IOException {
 
 		List<String> completedTestSuiteNames =
@@ -397,7 +397,7 @@ public class CIForwardProcessor {
 			new ArrayList<>(completedTestSuiteNames.size());
 
 		String[] requiredCompletedTestSuiteNames =
-			getRequiredCompletedTestSuiteNames();
+			_getRequiredCompletedTestSuiteNames();
 
 		String joinedRequiredCompletedTestSuiteNames =
 			JenkinsResultsParserUtil.join(",", requiredCompletedTestSuiteNames);
@@ -420,29 +420,29 @@ public class CIForwardProcessor {
 		return incompleteRequiredCompletedTestSuiteNames;
 	}
 
-	protected String[] getRequiredCompletedTestSuiteNames() throws IOException {
+	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
 		String propertyNamePrefix = "pull.request.forward";
 
 		if (_force) {
 			propertyNamePrefix += ".force";
 		}
 
-		return getBuildPropertyAsArray(
+		return _getBuildPropertyAsArray(
 			propertyNamePrefix + ".required.completed.suites");
 	}
 
-	protected String[] getRequiredPassingTestSuiteNames() throws IOException {
+	private String[] _getRequiredPassingTestSuiteNames() throws IOException {
 		String propertyNamePrefix = "pull.request.forward";
 
 		if (_force) {
 			propertyNamePrefix += ".force";
 		}
 
-		return getBuildPropertyAsArray(
+		return _getBuildPropertyAsArray(
 			propertyNamePrefix + ".required.passing.suites");
 	}
 
-	protected Set<String> getSuiteTestResultGithubComments()
+	private Set<String> _getSuiteTestResultGithubComments()
 		throws IOException {
 
 		Set<String> suiteTestResultGithubComments = new HashSet<>();
@@ -450,8 +450,8 @@ public class CIForwardProcessor {
 		Set<String> testSuiteNames = new HashSet<>();
 
 		Collections.addAll(
-			testSuiteNames, getRequiredCompletedTestSuiteNames());
-		Collections.addAll(testSuiteNames, getRequiredPassingTestSuiteNames());
+			testSuiteNames, _getRequiredCompletedTestSuiteNames());
+		Collections.addAll(testSuiteNames, _getRequiredPassingTestSuiteNames());
 
 		List<PullRequest.Comment> comments = _pullRequest.getComments();
 
@@ -496,17 +496,17 @@ public class CIForwardProcessor {
 		return suiteTestResultGithubComments;
 	}
 
-	protected String getUnsuccessfulCommentBody() throws IOException {
+	private String _getUnsuccessfulCommentBody() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
 		List<String> incompleteRequiredCompletedTestSuiteNames =
-			getIncompleteRequiredCompletedTestSuiteNames();
+			_getIncompleteRequiredCompletedTestSuiteNames();
 
 		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
 			sb.append("Not all required test suite(s) completed:\n");
 
 			for (String requiredCompletedTestSuiteName :
-					getRequiredCompletedTestSuiteNames()) {
+					_getRequiredCompletedTestSuiteNames()) {
 
 				sb.append("`");
 				sb.append(requiredCompletedTestSuiteName);
@@ -515,13 +515,13 @@ public class CIForwardProcessor {
 		}
 
 		List<String> failedRequiredPassingTestSuiteNames =
-			getFailedRequiredPassingTestSuiteNames();
+			_getFailedRequiredPassingTestSuiteNames();
 
 		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
 			sb.append("Not all required test suite(s) passed:\n");
 
 			for (String requiredPassingTestSuiteName :
-					getRequiredPassingTestSuiteNames()) {
+					_getRequiredPassingTestSuiteNames()) {
 
 				sb.append("`");
 				sb.append(requiredPassingTestSuiteName);

@@ -1135,6 +1135,8 @@ public class SourceFormatter {
 			if ((line.startsWith(StringPool.MINUS) ||
 				 line.startsWith(StringPool.PLUS)) &&
 				(line.contains("feature.flag") ||
+				 line.contains("Feature.FeatureFlags['") ||
+				 line.contains("FeatureFlagManagerUtil.isEnabled(") ||
 				 line.contains("Liferay-Site-Initializer-Feature-Flag:"))) {
 
 				return true;

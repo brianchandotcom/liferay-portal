@@ -28,7 +28,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -87,15 +86,6 @@ public class CPDefinitionItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "products");
-	}
-
-	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-5898")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 
@@ -37,13 +36,8 @@ public class CPDefinitionInfoItemCapabilitiesProvider
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-5898")) {
-			return ListUtil.fromArray(
-				_displayPageInfoItemCapability,
-				_templatePageInfoItemCapability);
-		}
-
-		return ListUtil.fromArray();
+		return ListUtil.fromArray(
+			_displayPageInfoItemCapability, _templatePageInfoItemCapability);
 	}
 
 	@Reference

@@ -700,11 +700,11 @@ public class ObjectFieldLocalServiceTest {
 			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
 
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addSystemObjectDefinition(
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, "A" + RandomTestUtil.randomString(), null, null,
+				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				_objectDefinitionLocalService,
@@ -1372,12 +1372,12 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			objectDefinition =
-				ObjectDefinitionTestUtil.addSystemObjectDefinition(
+				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
 					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 					null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					false, objectDefinitionName, null, null,
+					objectDefinitionName, null, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,

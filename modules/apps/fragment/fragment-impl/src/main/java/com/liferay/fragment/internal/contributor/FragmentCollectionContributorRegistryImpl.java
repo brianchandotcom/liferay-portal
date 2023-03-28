@@ -1100,6 +1100,7 @@ public class FragmentCollectionContributorRegistryImpl
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			themeDisplay.setLayoutSet(layoutSet);
+
 			themeDisplay.setLayoutTypePortlet(
 				(LayoutTypePortlet)layout.getLayoutType());
 			themeDisplay.setLocale(

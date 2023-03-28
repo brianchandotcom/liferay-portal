@@ -134,7 +134,7 @@ definition {
 	test CanHideEvents {
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
-		CalendarEvent.editTitle(eventTitle = "Calendar Event Title1");
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title 1");
 
 		CalendarEvent.publish();
 
@@ -142,19 +142,17 @@ definition {
 
 		CalendarNavigator.gotoAddEventViaCurrentSite(site = "Liferay DXP");
 
-		CalendarEvent.editTitle(eventTitle = "Calendar Event Title2");
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title 2");
 
 		CalendarEvent.publish();
 
 		IFrame.closeFrame();
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title1");
-
-		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title2");
-
 		CalendarEvent.disableEventBySiteCalendarName(calendarName = "Liferay DXP");
 
-		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Calendar Event Title2");
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Calendar Event Title 1");
+
+		CalendarScheduler.viewSpecificEventPresent(eventTitle = "Calendar Event Title 2");
 	}
 
 	@description = "LRQA-72024 - Verify that the user can hide/show the sidebar"

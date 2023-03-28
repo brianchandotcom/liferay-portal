@@ -573,6 +573,14 @@ definition {
 		AssertNotVisible(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC");
 	}
 
+	macro viewSpecificEventPresent {
+		var key_eventTitle = ${eventTitle};
+
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC");
+
+		AssertTextPresent(value1 = ${eventTitle});
+	}
+
 	macro viewWeek {
 		CalendarNavigator.gotoView(viewType = "Week");
 

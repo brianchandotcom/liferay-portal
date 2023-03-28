@@ -944,8 +944,14 @@ public class ContentManager {
 
 		return JSONUtil.put(
 			"actions",
-			_getActionsJSONObject(
-				layoutClassedModelUsage, themeDisplay, httpServletRequest)
+			() -> {
+				if (restricted) {
+					return _jsonFactory.createJSONObject();
+				}
+
+				return _getActionsJSONObject(
+					layoutClassedModelUsage, themeDisplay, httpServletRequest);
+			}
 		).put(
 			"className", layoutClassedModelUsage.getClassName()
 		).put(
@@ -956,27 +962,59 @@ public class ContentManager {
 			"classTypeId", layoutDisplayPageObjectProvider.getClassTypeId()
 		).put(
 			"icon",
-			_getIcon(
-				layoutClassedModelUsage.getClassName(),
-				layoutClassedModelUsage.getClassPK())
+			() -> {
+				if (restricted) {
+					return StringPool.BLANK;
+				}
+
+				return _getIcon(
+					layoutClassedModelUsage.getClassName(),
+					layoutClassedModelUsage.getClassPK());
+			}
 		).put(
 			"isRestricted", restricted
 		).put(
-			"status", _getStatusJSONObject(layoutClassedModelUsage)
+			"status",
+			() -> {
+				if (restricted) {
+					return _jsonFactory.createJSONObject();
+				}
+
+				return _getStatusJSONObject(layoutClassedModelUsage);
+			}
 		).put(
 			"subtype",
-			_getSubtype(
-				layoutClassedModelUsage.getClassName(),
-				layoutDisplayPageObjectProvider.getClassTypeId(),
-				themeDisplay.getLocale())
+			() -> {
+				if (restricted) {
+					return StringPool.BLANK;
+				}
+
+				return _getSubtype(
+					layoutClassedModelUsage.getClassName(),
+					layoutDisplayPageObjectProvider.getClassTypeId(),
+					themeDisplay.getLocale());
+			}
 		).put(
 			"title",
-			layoutDisplayPageObjectProvider.getTitle(themeDisplay.getLocale())
+			() -> {
+				if (restricted) {
+					return StringPool.BLANK;
+				}
+
+				return layoutDisplayPageObjectProvider.getTitle(
+					themeDisplay.getLocale());
+			}
 		).put(
 			"type",
-			_resourceActions.getModelResource(
-				themeDisplay.getLocale(),
-				layoutClassedModelUsage.getClassName())
+			() -> {
+				if (restricted) {
+					return StringPool.BLANK;
+				}
+
+				return _resourceActions.getModelResource(
+					themeDisplay.getLocale(),
+					layoutClassedModelUsage.getClassName());
+			}
 		).put(
 			"usagesCount",
 			_layoutClassedModelUsageLocalService.

@@ -93,10 +93,10 @@ public class CIForwardProcessor {
 				return;
 			}
 
-			final String ciUsername;
+			final String senderUsername;
 
 			try {
-				ciUsername = JenkinsResultsParserUtil.getBuildProperty(
+				senderUsername = JenkinsResultsParserUtil.getBuildProperty(
 					"github.ci.username");
 			}
 			catch (IOException ioException) {
@@ -116,7 +116,7 @@ public class CIForwardProcessor {
 						return _pullRequest.forward(
 							_getCIForwardCommentBody(initialComment),
 							_consoleLogURL, _recipientUsername,
-							_getCIForwardBranchName(), ciUsername,
+							_getCIForwardBranchName(), senderUsername,
 							_gitRepositoryDir);
 					}
 					catch (IOException ioException) {

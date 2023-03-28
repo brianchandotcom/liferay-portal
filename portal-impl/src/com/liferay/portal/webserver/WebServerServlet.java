@@ -1532,7 +1532,7 @@ public class WebServerServlet extends HttpServlet {
 				FileEntry.class.getName());
 
 		fileEntryModelResourcePermission.check(
-			permissionChecker, fileEntry.getFileEntryId(), ActionKeys.VIEW);
+			permissionChecker, fileEntry.getFileEntryId(), ActionKeys.DOWNLOAD);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

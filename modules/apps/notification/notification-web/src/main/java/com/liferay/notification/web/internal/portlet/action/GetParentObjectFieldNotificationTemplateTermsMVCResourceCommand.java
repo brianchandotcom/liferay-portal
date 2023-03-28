@@ -90,10 +90,11 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 					(termLabel, objectFieldName) -> termNames.put(
 						termLabel, _getTermName(objectFieldName)));
 			}
-
-			termNames.put(
-				objectField.getLabel(user.getLocale()),
-				_getTermName(objectField.getName()));
+			else {
+				termNames.put(
+					objectField.getLabel(user.getLocale()),
+					_getTermName(objectField.getName()));
+			}
 		}
 
 		return termNames.entrySet();

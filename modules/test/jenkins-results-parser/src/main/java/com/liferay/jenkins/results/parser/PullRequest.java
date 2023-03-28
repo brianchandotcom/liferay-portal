@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -312,10 +313,6 @@ public class PullRequest {
 		}
 
 		return testSuiteNames;
-	}
-
-	public Date getCreationDate() {
-		return _creationDate;
 	}
 
 	public List<String> getFileNames() {
@@ -606,6 +603,66 @@ public class PullRequest {
 		}
 
 		return false;
+	}
+
+	public boolean hasRequiredCompletedTestSuites() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String requiredCompletedSuites = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "pull.request.forward.required.completed.suites",
+			getGitRepositoryName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedSuites)) {
+			return true;
+		}
+
+		List<String> completedTestSuites = getCompletedTestSuites();
+
+		for (String requiredCompletedSuite :
+				requiredCompletedSuites.split(",")) {
+
+			if (!completedTestSuites.contains(requiredCompletedSuite)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public boolean hasRequiredPassingTestSuites() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String requiredPassingSuites = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "pull.request.forward.required.passing.suites",
+			getGitRepositoryName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredPassingSuites)) {
+			return true;
+		}
+
+		List<String> passingTestSuites = getPassingTestSuites();
+
+		for (String requiredPassingSuite : requiredPassingSuites.split(",")) {
+			if (!passingTestSuites.contains(requiredPassingSuite)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public boolean isAutoCloseCommentAvailable() {
@@ -945,28 +1002,6 @@ public class PullRequest {
 	}
 
 	protected PullRequest(JSONObject jsonObject) {
-		try {
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"github.json.timestamp.pattern"));
-
-			simpleDateFormat.setTimeZone(
-				TimeZone.getTimeZone(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"github.json.timestamp.timezone")));
-
-			_creationDate = simpleDateFormat.parse(
-				jsonObject.optString("created_at"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build property", ioException);
-		}
-		catch (ParseException parseException) {
-			throw new RuntimeException(
-				"Unable to parse create_at date", parseException);
-		}
-
 		JSONObject baseJSONObject = jsonObject.getJSONObject("base");
 
 		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
@@ -1133,7 +1168,6 @@ public class PullRequest {
 	private String _ciMergeSHA = "";
 	private List<Comment> _comments;
 	private String _commonParentSHA;
-	private Date _creationDate;
 	private final List<String> _fileNames = new ArrayList<>();
 	private List<GitHubRemoteGitCommit> _gitHubRemoteGitCommits;
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;

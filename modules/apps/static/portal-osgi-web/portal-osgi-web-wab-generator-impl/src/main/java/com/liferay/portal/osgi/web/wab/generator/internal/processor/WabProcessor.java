@@ -452,11 +452,7 @@ public class WabProcessor {
 					unicodeProperties.getProperty(
 						"templateName", StringPool.BLANK));
 				pluginPackageProperties.setProperty(
-					Constants.PROVIDE_CAPABILITY,
-					"osgi.webresource;osgi.webresource=" +
-						"\"@liferay/liferay-site-initializer\";" +
-							"version:Version=\"1.0.0\"," +
-								"liferay.site.initializer");
+					Constants.PROVIDE_CAPABILITY, "liferay.site.initializer");
 			}
 			else {
 				pluginPackageProperties.remove(

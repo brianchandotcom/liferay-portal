@@ -93,48 +93,64 @@ definition {
 	@description = "This is a test for LPS-175292. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportAllVisibleClaims {
-		task ("Given I go to add a new MDF Request with two activities") {
-			PRMUtils.gotoPRM();
+		task ("Given that the Manager user is logged in and goes to MDF listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
 
-			PRMNavigator.goToNavItem(navItem = "Marketing");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
 
-			PRMMarketing.gotoAddNewMDF();
+		task ("And the manager approves the MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
-			PRMMDFRequest.fillGoalsPage(
-				accountName = "Company Name 1",
-				campaignDescription = "Campaign Description",
-				campaignName = "Campaign Name 2",
-				countryName = "Global",
-				goalsOptions = "Lead generation",
-				targetMarketOptions = "Education,Energy",
-				targetRolesOptions = "Administrator");
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
 
-			Button.click(button = "Continue");
+		task ("And the partner logs in and go to Partner Portal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
 
-			PRMMDFRequest.newActivity(
-				activityDescription = "Activity Description",
-				activityName = "Activity Name 1",
-				budgetList = "Sponsorship Fee-2000",
-				followUpStrategy = "test",
-				leadFollowUpList = "Other",
-				leadList = "No",
-				tactic = "Other",
-				targetOfLeads = "test",
-				typeOfActivity = "Miscellaneous Marketing");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
 
-			Button.click(button = "Continue");
+		task ("And the partner user makes two claims") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
-			PRMMDFRequest.newActivity(
-				activityDescription = "Activity Description",
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.createNewClaim(
 				activityIndex = 1,
-				activityName = "Activity Name 2",
-				budgetList = "Sponsorship Fee-2000",
-				followUpStrategy = "test",
-				leadFollowUpList = "Other",
-				leadList = "No",
-				tactic = "Other",
-				targetOfLeads = "test",
-				typeOfActivity = "Miscellaneous Marketing");
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+		}
+
+		task ("When the manager logs in and go to Partner Portal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Claim");
+		}
+
+		task ("And export all visible Claims") {
+			Button.click(button = "Export MDF Claim");
+		}
+
+		task ("Then the information about the visible MDF's will be inside the exported file") {
+			var firstID = PRMMDFClaim.getClaimID(claimIndex = 1);
+			var secondID = PRMMDFClaim.getClaimID(claimIndex = 2);
+
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "${firstID},${secondID}",
+				fileName = "MDF Claim.csv");
+		}
+	}
 
 			Button.click(button = "Continue");
 

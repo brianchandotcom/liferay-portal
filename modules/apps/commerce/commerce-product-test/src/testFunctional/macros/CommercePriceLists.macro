@@ -82,10 +82,62 @@ definition {
 		Button.clickSave();
 	}
 
+	macro editPriceModifier {
+		if (!(isSet(active))) {
+			var active = "true";
+		}
+
+		Click(
+			key_value = ${priceModifierName},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(key_menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(amountValue)) {
+			Type(
+				key_fieldLabel = "Amount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${amountValue});
+		}
+
+		if (${active} == "true") {
+			Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACTIVE");
+		}
+
+		Button.clickSave();
+
+		CommerceEntry.gotoMenuTab(menuTab = ${target});
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = ${entryName},
+			title = "Add ${relation}");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+	}
+
 	macro openPriceListsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
+	}
+
+	macro setOverrideDiscount {
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Override Discount",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		for (var overrideDiscount : list ${overrideDiscounts}) {
+			var key_text = StringUtil.extractFirst(${overrideDiscount}, "-");
+			var currentValue = StringUtil.extractLast(${overrideDiscount}, "-");
+
+			Type(
+				locator1 = "TextInput#ANY",
+				value1 = ${currentValue});
+		}
 	}
 
 }

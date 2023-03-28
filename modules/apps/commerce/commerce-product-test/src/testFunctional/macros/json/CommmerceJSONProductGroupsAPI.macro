@@ -1,0 +1,97 @@
+definition {
+
+	macro _getProductGroups {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/product-groups \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
+	macro _postProductGroups {
+		Variables.assertDefined(parameterList = ${productGroupName});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(productNames)) {
+			var payload = "";
+			var productIds = CommerceJSONProductsAPI.getProductIdsByName(
+				productNames = ${productNames},
+				responseBody = ${productsJSON});
+
+			for (var productId : list ${productIds}) {
+				if (${payload} != "") {
+					var comma = ",";
+				}
+				else {
+					var comma = "";
+				}
+
+				var payload = '''
+						${payload}${comma}
+						{
+							"productId": ${productId}
+						}
+					''';
+			}
+		}
+		else {
+			var payload = "";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/product-groups \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"products": [${payload}],
+					"title": {
+						"en_US": "${productGroupName}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro getProductGroupIdsByName {
+		Variables.assertDefined(parameterList = ${productGroupNames});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommmerceJSONProductGroupsAPI._getProductGroups();
+		}
+
+		var productGroupIds = "";
+
+		for (var productGroupName : list ${productGroupNames}) {
+			var productGroupId = JSONUtil.getWithJSONPath(${responseBody}, "$.items[?(@['title']['en_US'] == '${productGroupName}')].['id']");
+
+			if (${productGroupIds} != "") {
+				var comma = ",";
+			}
+			else {
+				var comma = "";
+			}
+
+			var productGroupIds = "${productGroupIds}${comma}${productGroupId}";
+		}
+
+		return ${productGroupIds};
+	}
+
+}

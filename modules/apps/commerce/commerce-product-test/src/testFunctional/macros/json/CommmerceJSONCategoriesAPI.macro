@@ -1,0 +1,59 @@
+definition {
+
+	macro _getCategories {
+		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var groupId = JSONCategorySetter.setGroupId(
+			groupName = ${groupName},
+			site = ${site});
+
+		var vocabularyId = JSONCategorySetter.setVocabularyId(
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
+
+		var curl = '''
+			${baseURL}/api/jsonws/assetcategory/get-vocabulary-categories \
+				-u test@liferay.com:test \
+				-d vocabularyId=${vocabularyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -orderByComparator=
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
+	}
+
+	macro _getCategoryIdByName {
+		if (!(isSet(responseBody))) {
+			var responseBody = CommmerceJSONCategoriesAPI._getCategories(
+				groupName = ${groupName},
+				vocabularyName = ${vocabularyName});
+		}
+
+		var categoryIds = "";
+
+		for (var categoryName : list ${categoryNames}) {
+			var categoryId = JSONUtil.getWithJSONPath(${responseBody}, "$.[?(@['titleCurrentValue'] == '${categoryName}')]['categoryId']");
+
+			if (${categoryIds} != "") {
+				var comma = ",";
+			}
+			else {
+				var comma = "";
+			}
+
+			var categoryIds = "${categoryIds}${comma}${categoryId}";
+		}
+
+		return ${categoryIds};
+	}
+
+}

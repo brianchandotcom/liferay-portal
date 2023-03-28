@@ -26,6 +26,9 @@ public class CommerceShippingFixedOptionScreenNavigationConstants {
 	public static final String CATEGORY_KEY_SHIPPING_OPTION_SETTINGS =
 		"shipping-option-settings";
 
+	public static final String CATEGORY_KEY_SHIPPING_OPTIONS =
+		"shipping-options";
+
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_FIXED_OPTION =
 			"commerce.shipping.fixed.option";

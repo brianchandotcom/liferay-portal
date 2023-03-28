@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -249,16 +248,6 @@ public class BatchEngineExportTaskExecutorImpl
 		return batchEngineTaskCompanyConfiguration.exportBatchSize();
 	}
 
-	private String _getExportFileExtension(
-		BatchEngineTaskContentType batchEngineTaskContentType) {
-
-		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {
-			return "batch-engine-data.json";
-		}
-
-		return StringUtil.toLowerCase(batchEngineTaskContentType.name());
-	}
-
 	private ZipOutputStream _getZipOutputStream(
 			BatchEngineTaskContentType batchEngineTaskContentType,
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream)
@@ -268,7 +257,7 @@ public class BatchEngineExportTaskExecutorImpl
 			unsyncByteArrayOutputStream);
 
 		ZipEntry zipEntry = new ZipEntry(
-			"export." + _getExportFileExtension(batchEngineTaskContentType));
+			"export." + batchEngineTaskContentType.getFileExtension());
 
 		zipOutputStream.putNextEntry(zipEntry);
 

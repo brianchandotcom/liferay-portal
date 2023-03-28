@@ -96,7 +96,7 @@ public class PoshiElementFactoryTest {
 
 	@Test
 	public void testPoshiScriptFunctionFormat() throws Exception {
-		String actualFileName = "UnformattedPoshiScript.function";
+		String actualFileName = "UnformattedPoshiScriptFunction.function";
 		String expectedFileName = "PoshiScriptFunction.function";
 
 		PoshiElement actualElement = _getPoshiElement(actualFileName);
@@ -155,7 +155,7 @@ public class PoshiElementFactoryTest {
 
 	@Test
 	public void testPoshiScriptMacroFormat() throws Exception {
-		String actualFileName = "UnformattedPoshiScript.macro";
+		String actualFileName = "UnformattedPoshiScriptMacro.macro";
 		String expectedFileName = "PoshiScriptMacro.macro";
 
 		PoshiElement actualElement = _getPoshiElement(actualFileName);
@@ -252,7 +252,7 @@ public class PoshiElementFactoryTest {
 
 	@Test
 	public void testPoshiXMLMacroFormat() throws Exception {
-		String actualFileName = "UnformattedPoshiScript.macro";
+		String actualFileName = "UnformattedPoshiScriptMacro.macro";
 		String expectedFileName = "PoshiSyntaxMacro.macro";
 
 		PoshiElement actualElement = _getPoshiElement(actualFileName);

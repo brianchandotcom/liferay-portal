@@ -51,9 +51,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Account External Reference Code SF"
+				"en_US": "Account External Reference Code"
 			},
-			"name": "accountExternalReferenceCodeSF",
+			"name": "accountExternalReferenceCode",
 			"required": false,
 			"type": "String"
 		},

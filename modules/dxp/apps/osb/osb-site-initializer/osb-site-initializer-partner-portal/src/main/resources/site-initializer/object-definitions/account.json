@@ -1,0 +1,136 @@
+{
+	"object-fields": [
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Marketing Plan"
+			},
+			"name": "marketingPlan",
+			"required": true
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Solution Delivery Certification"
+			},
+			"name": "solutionDeliveryCertification",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Level"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Partner Levels$]",
+			"name": "partnerLevel",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Growth ARR"
+			},
+			"name": "growthARR",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Renewal ARR"
+			},
+			"name": "renewalARR",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "New Project Existing Business"
+			},
+			"name": "newProjectExistingBusiness",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "ARR Amount"
+			},
+			"name": "aRRAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Marketing Performance"
+			},
+			"name": "marketingPerformance",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Claim Percent"
+			},
+			"name": "claimPercent",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
+			"name": "country",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountEntry$]"
+}

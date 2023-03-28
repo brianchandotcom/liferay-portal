@@ -18,8 +18,7 @@ export function getDTOFromMDFRequest(
 	externalReferenceCodeSF?: string
 ): MDFRequestDTO {
 	return {
-		accountExternalReferenceCodeSF:
-			mdfRequest.accountExternalReferenceCodeSF,
+		accountExternalReferenceCode: mdfRequest.accountExternalReferenceCode,
 		additionalOption: mdfRequest.additionalOption,
 		companyName: mdfRequest.company?.name,
 		country: mdfRequest.country,

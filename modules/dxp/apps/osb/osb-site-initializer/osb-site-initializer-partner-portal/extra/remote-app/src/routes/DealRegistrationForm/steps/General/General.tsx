@@ -39,22 +39,22 @@ const General = ({
 	} = useFormikContext<DealRegistration>();
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
-
 	const {data: mdfActivities} = useGetMDFActivity(values.partnerAccount.id);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		companiesEntries,
 		useCallback(
-			(country, company, currency, accountExternalReferenceCodeSF) => {
+			(country, company, currency, accountExternalReferenceCode) => {
 				setFieldValue('partnerAccount', company);
 				setFieldValue('currency', currency);
 				setFieldValue(
-					'accountExternalReferenceCodeSF',
-					accountExternalReferenceCodeSF
+					'accountExternalReferenceCode',
+					accountExternalReferenceCode
 				);
 			},
 			[setFieldValue]
-		)
+		),
+		fieldEntries[LiferayPicklistName.CURRENCIES]
 	);
 
 	const {mdfActivitiesOptions, onMDFActivitySelected} = useMDFActivityOptions(

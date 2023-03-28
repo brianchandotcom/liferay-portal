@@ -18,8 +18,8 @@ export function getDTOFromDealRegistration(
 	leadQualificationExternalReferenceCode?: string
 ): DealRegistrationDTO {
 	return {
-		accountExternalReferenceCodeSF:
-			dealRegistration.accountExternalReferenceCodeSF,
+		accountExternalReferenceCode:
+			dealRegistration.accountExternalReferenceCode,
 		additionalContactEmailAddress:
 			dealRegistration.additionalContact?.emailAddress,
 		additionalContactFirstName:

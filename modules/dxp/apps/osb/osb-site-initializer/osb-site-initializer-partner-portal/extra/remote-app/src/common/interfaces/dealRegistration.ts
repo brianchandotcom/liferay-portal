@@ -41,7 +41,7 @@ interface AdditionalContact {
 }
 
 export default interface DealRegistration extends Partial<LiferayObject> {
-	accountExternalReferenceCodeSF?: string;
+	accountExternalReferenceCode?: string;
 	additionalContact?: AdditionalContact;
 	additionalInformationAboutTheOpportunity?: string;
 	currency: LiferayPicklist;

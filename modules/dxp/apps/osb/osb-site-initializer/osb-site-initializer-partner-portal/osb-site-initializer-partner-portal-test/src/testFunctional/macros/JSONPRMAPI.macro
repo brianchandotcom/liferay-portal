@@ -187,7 +187,7 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"accountExternalReferenceCodeSF":"",
+					"accountExternalReferenceCode":"",
 					"claimPercent":"",
 					"country":{
 						"key":"${country}"

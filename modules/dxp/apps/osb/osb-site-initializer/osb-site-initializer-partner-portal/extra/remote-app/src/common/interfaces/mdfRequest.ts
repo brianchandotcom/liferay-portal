@@ -15,7 +15,7 @@ import LiferayPicklist from './liferayPicklist';
 import MDFRequestActivity from './mdfRequestActivity';
 
 export default interface MDFRequest extends Partial<LiferayObject> {
-	accountExternalReferenceCodeSF?: string;
+	accountExternalReferenceCode?: string;
 	activities: MDFRequestActivity[];
 	additionalOption: LiferayPicklist;
 	company?: LiferayAccountBrief;

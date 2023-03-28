@@ -13,7 +13,7 @@ import {useEffect, useState} from 'react';
 
 import LiferayAccountBrief from '../interfaces/liferayAccountBrief';
 import LiferayPicklist from '../interfaces/liferayPicklist';
-import useGetCompanyExtenderByAccountEntryId from '../services/liferay/object/company-extenders/useGetCompanyExtenderByAccountEntryId';
+import useGetAccountById from '../services/liferay/accounts/useGetAccountById';
 import isObjectEmpty from '../utils/isObjectEmpty';
 
 export default function useCompanyOptions(
@@ -22,35 +22,55 @@ export default function useCompanyOptions(
 		country: LiferayPicklist,
 		company: LiferayAccountBrief,
 		currency: LiferayPicklist,
-		accountExternalReferenceCodeSF?: string
+		accountExternalReferenceCode?: string
 	) => void,
-	currentCompany?: LiferayAccountBrief,
+	currencyOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
+	currentCurrency?: LiferayPicklist,
+	countryOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	currentCountry?: LiferayPicklist,
-	currentCurrency?: LiferayPicklist
+	currentCompany?: LiferayAccountBrief
 ) {
 	const [selectedAccountBrief, setSelectedAccountBrief] = useState<
 		LiferayAccountBrief | undefined
 	>(currentCompany);
 
-	const {data: companyExtender} = useGetCompanyExtenderByAccountEntryId(
-		selectedAccountBrief?.id
-	);
+	const {data: account} = useGetAccountById(selectedAccountBrief?.id);
+
+	const currencyPicklist =
+		account &&
+		currencyOptions &&
+		currencyOptions.find((options) => options.value === account.currencies);
+
+	const countryPicklist =
+		account &&
+		countryOptions &&
+		countryOptions.find((options) => options.value === account.country);
 
 	useEffect(() => {
 		if (!isObjectEmpty(selectedAccountBrief) && selectedAccountBrief) {
 			handleSelected(
-				currentCountry && !isObjectEmpty(currentCountry)
+				currentCountry
 					? currentCountry
-					: companyExtender?.country || {},
+					: (countryPicklist && {
+							key: countryPicklist.value as string,
+							name: countryPicklist.label as string,
+					  }) ||
+							{},
 				selectedAccountBrief,
 				currentCurrency && !isObjectEmpty(currentCurrency)
 					? currentCurrency
-					: companyExtender?.currency || {},
-				companyExtender?.accountExternalReferenceCodeSF
+					: (currencyPicklist && {
+							key: currencyPicklist.value as string,
+							name: currencyPicklist.label as string,
+					  }) ||
+							{},
+				account?.externalReferenceCode
 			);
 		}
 	}, [
-		companyExtender,
+		account?.externalReferenceCode,
+		countryPicklist,
+		currencyPicklist,
 		currentCountry,
 		currentCurrency,
 		handleSelected,

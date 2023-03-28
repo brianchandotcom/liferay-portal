@@ -267,7 +267,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException {
 
 		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), fileEntryId, ActionKeys.DOWNLOAD);
 
 		return dlFileEntryLocalService.getFileAsStream(fileEntryId, version);
 	}
@@ -278,7 +278,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException {
 
 		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), fileEntryId, ActionKeys.DOWNLOAD);
 
 		return dlFileEntryLocalService.getFileAsStream(
 			fileEntryId, version, incrementCounter);

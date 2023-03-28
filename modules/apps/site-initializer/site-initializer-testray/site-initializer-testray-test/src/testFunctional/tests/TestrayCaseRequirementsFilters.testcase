@@ -8,7 +8,7 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
-    var caseName = "Case 1";
+	var caseName = "Case 1";
 	var componentName = "Component 1";
 	var projectName = "Project 1";
 	var teamName = "Team 1";
@@ -20,7 +20,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("create all objects: projects, teams, components, cases, requirements") {
@@ -37,7 +37,7 @@ definition {
 				projectName = ${projectName},
 				teamName = ${teamName});
 
-            JSONTestray.addCases(
+			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
 				componentName = ${componentName},
@@ -71,18 +71,18 @@ definition {
 
 			Testray.projectTabNavigator(navTabName = "Cases");
 
-            Testray.goToProjectPage(projectName = ${caseName});
+			Testray.goToProjectPage(projectName = ${caseName});
 
-            Testray.projectTabNavigator(navTabName = "Requirements");
+			Testray.projectTabNavigator(navTabName = "Requirements");
 		}
 
-        task ("add a case to the requirement") {
+		task ("add a case to the requirement") {
 			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Requirements",
 				caseName = "Requirement 1",
 				linkText = "Link Requirements");
 
-            TestrayRequirements.addRequirementCase(
+			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Requirements",
 				caseName = "Requirement 2",
 				linkText = "Link Requirements");
@@ -96,7 +96,7 @@ definition {
 			object = "teams",
 			objectName = ${teamName});
 
-        JSONTestrayAPI.deleteObjectViaAPI(
+		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
 
@@ -106,25 +106,6 @@ definition {
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
-		}
-	}
-
-	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should not see case requirements that don't exist when I try filtering for them"
-	@priority = 4
-	test AdminCanFilterForNonexistantCaseRequirements {
-		task ("When the user filters a case requirement by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 3");
-
-			Button.click(button = "Apply");
-		}
-
-		task ("Then can see message no results found") {
-			TestrayFilter.assertNoResultsFound();
 		}
 	}
 
@@ -185,7 +166,7 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "Requirement 1");
 
-            Type(
+			Type(
 				key_fieldLabel = "Link",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "google");
@@ -201,6 +182,45 @@ definition {
 				requirementTeam = "Team 1");
 
 			Testray.assertItemNotPresent(key_name = "Requirement 2");
+		}
+	}
+
+	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should not see case requirements that don't exist when I try filtering for them"
+	@priority = 4
+	test AdminCanFilterForNonexistantCaseRequirements {
+		task ("When the user filters a case requirement by its non-existent name") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Summary",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Requirement 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
+	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@priority = 4
+	test AdminCanFilterOptionsToFilter {
+		task ("When the user search field called link") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.searchFilter(value = "Link");
+		}
+
+		task ("Then can see the field called link and do not see the field key") {
+			AssertElementPresent(
+				key_fieldLabel = "Link",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
 		}
 	}
 

@@ -15,6 +15,8 @@ definition {
 				en_US_plural_label = "students",
 				name = "Student",
 				requiredStringFieldName = "name");
+
+			CustomObjectAPI.staticObjectDefinitionId(objectDefinitionId = ${objectDefinitionId});
 		}
 
 		task ("And Given student entry created") {
@@ -29,14 +31,6 @@ definition {
 			JSONRole.addRegularRole(
 				roleKey = "Test",
 				roleTitle = "Test");
-		}
-
-		task ("And Given the role "Test" assigned to student entry") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.object.model.ObjectDefinition#${objectDefinitionId}",
-				roleTitle = "Test",
-				roleType = "regular");
 		}
 	}
 
@@ -75,8 +69,42 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
+	test CanChangePermissionsOfNewRoleAssignedToObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("And Given with putStudentPermissionsPage I update "Test" role with no actionIds") {
+			CustomObjectAPI.updateObjectPermissions(
+				actionIds = "\"UPDATE\",\"VIEW\"",
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleName = "Test");
+		}
+
+		task ("Then I can see Test role with correct permissions assigned to student entry") {
+			var response = CustomObjectAPI.getObjectPermissions(
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId});
+
+			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Owner')].actionIds");
+
+			TestUtils.assertEquals(
+				actual = ${actualPermissions},
+				expected = "[\"UPDATE\",\"VIEW\"]");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
 	test CanEmptyPermissionsOfNewRoleAssignedToObjectEntry {
 		property portal.acceptance = "true";
+
+		task ("And Given with putStudentPermissionsPage I update "Test" role with some actionIds") {
+			CustomObjectAPI.updateObjectPermissions(
+				actionIds = "\"UPDATE\",\"VIEW\"",
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleName = "Test");
+		}
 
 		task ("And Given with putStudentPermissionsPage I update "Test" role with no actionIds") {
 			CustomObjectAPI.updateObjectPermissions(
@@ -102,6 +130,35 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetCompanyPermissionsOfNewRoleAssignedToObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("And Given the role "Test" assigned to student entry") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.object.model.ObjectDefinition#${staticObjectDefinitionId}",
+				roleTitle = "Test",
+				roleType = "regular");
+		}
+
+		task ("When requesting getStudentPermissionsPage with created {studentId} and roleNames as "Test"") {
+			var response = CustomObjectAPI.getObjectPermissions(
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleNames = "Test");
+		}
+
+		task ("Then I can see roles with permissions assigned to the student entry") {
+			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Test')].actionIds");
+
+			TestUtils.assertEquals(
+				actual = ${actualPermissions},
+				expected = "[\"VIEW\"]");
+		}
+	}
+
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanGetPermissionsAssignedToObjectEntry {
 		property portal.acceptance = "true";
@@ -123,17 +180,32 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
-	test CanGetPermissionsOfNewRoleAssignedToObjectEntry {
+	test CannotEmptyCompanyPermissionsOfNewRoleAssignedToObjectEntry {
 		property portal.acceptance = "true";
 
-		task ("When requesting getStudentPermissionsPage with created {studentId} and roleNames as "Test"") {
-			var response = CustomObjectAPI.getObjectPermissions(
-				en_US_plural_label = "students",
-				objectEntryId = ${staticObjectId},
-				roleNames = "Test");
+		task ("And Given the role "Test" assigned to student entry through jsonws") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.object.model.ObjectDefinition#${staticObjectDefinitionId}",
+				roleTitle = "Test",
+				roleType = "regular");
 		}
 
-		task ("Then I can see roles with permissions assigned to the student entry") {
+		task ("And Given with putStudentPermissionsPage I update "Test" role with no actionIds") {
+			CustomObjectAPI.updateObjectPermissions(
+				actionIds = "",
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleName = "Test");
+		}
+
+		task ("When requesting getStudentPermissionsPage with created {studentId}") {
+			var response = CustomObjectAPI.getObjectPermissions(
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId});
+		}
+
+		task ("Then I can see "Test" with permission still present") {
 			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Test')].actionIds");
 
 			TestUtils.assertEquals(

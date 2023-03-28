@@ -32,6 +32,14 @@ definition {
 		return ${response};
 	}
 
+	macro staticObjectDefinitionId {
+		Variables.assertDefined(parameterList = ${objectDefinitionId});
+
+		static var staticObjectDefinitionId = ${objectDefinitionId};
+
+		return ${staticObjectDefinitionId};
+	}
+
 	macro staticObjectEntryId {
 		Variables.assertDefined(parameterList = ${objectEntryId});
 

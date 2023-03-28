@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectPatternEntry;
 
 import java.util.ArrayList;
@@ -72,6 +73,17 @@ public class RedirectPatternConfigurationDisplayContext {
 						).put(
 							"pattern",
 							String.valueOf(redirectPatternEntry.getPattern())
+						).put(
+							"userAgent",
+							() -> {
+								if (redirectPatternEntry.getUserAgent() ==
+										null) {
+
+									return RedirectConstants.USER_AGENT_ALL;
+								}
+
+								return redirectPatternEntry.getUserAgent();
+							}
 						).build()));
 
 				return list;

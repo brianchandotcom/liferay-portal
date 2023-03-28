@@ -229,16 +229,26 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-173731. Verify that is possible to export a searched MDF"
+	@description = "This is a test for LPS-174679. Verify that is possible to export filtered MDF’s"
 	@priority = 4
-	test CanExportSearchedMDFs {
-		task ("Given I add two different MDF's") {
+	test CanExportFilteredMDFs {
+		task ("Given a new account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Company Name 2",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 2",
+				userEmailAddress = "partner@liferay.com");
+		}
+
+		task ("And two MDF's are created with different accounts") {
 			JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
 				campaignName = "Campaign Name 1");
 
 			JSONPRM.createMDFRequest(
-				accountEntryName = "Company Name 1",
+				accountEntryName = "Company Name 2",
 				campaignName = "Campaign Name 2");
 		}
 
@@ -250,29 +260,37 @@ definition {
 				buttonText = "MDF");
 		}
 
-		task ("When I search for the first MDF") {
-			PRMMDFRequest.SearchMDF(key_value = "Campaign Name 1");
+		task ("When I filter the MDF by Account and selects 'Company Name 1") {
+			PRMMDFRequest.FilterMDF(
+				checkboxName = "Company Name 1",
+				filterType = "Partner",
+				keyFilter = "Filter");
 		}
 
-		task ("And when I export the search results") {
+		task ("And I click on the 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
-		task ("Then I check if the exported file contains the information about the searched MDF") {
+		task ("Then the information of the visible MDF's will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 1",
 				fileName = "MDF Requests.csv");
 		}
 
-		task ("When I search for the second MDF") {
-			PRMMDFRequest.SearchMDF(key_value = "Campaign Name 2");
+		task ("When I filter the MDF by Account and selects 'Company Name 2") {
+			Refresh();
+
+			PRMMDFRequest.FilterMDF(
+				checkboxName = "Company Name 2",
+				filterType = "Partner",
+				keyFilter = "Filter");
 		}
 
-		task ("And when I export the search results") {
+		task ("And I click on the 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
-		task ("Then I check if the exported file contains the information about the searched MDF") {
+		task ("Then the information of the visible MDF's will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 2",
 				fileName = "MDF Requests.csv");

@@ -148,7 +148,8 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (isSubrepository() || !fileName.endsWith("build.gradle") ||
-			absolutePath.contains("/modules/util/")) {
+			absolutePath.contains("/modules/util/") ||
+			absolutePath.contains("/workspaces/")) {
 
 			return content;
 		}

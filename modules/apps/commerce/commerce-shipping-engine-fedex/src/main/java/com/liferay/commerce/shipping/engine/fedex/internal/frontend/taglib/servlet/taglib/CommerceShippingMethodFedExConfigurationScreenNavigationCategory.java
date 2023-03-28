@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fedex.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.shipping.engine.fedex.internal.constants.CommerceShippingConfigurationScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 
@@ -32,13 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceShippingMethodFedExConfigurationScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
-	public static final String CATEGORY_KEY = "fedex-configuration";
-
-	public static final String ENTRY_KEY = "fedex-configuration";
-
 	@Override
 	public String getCategoryKey() {
-		return CATEGORY_KEY;
+		return CommerceShippingConfigurationScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_FEDEX_CONFIGURATION;
 	}
 
 	@Override
@@ -48,7 +46,8 @@ public class CommerceShippingMethodFedExConfigurationScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "commerce.shipping.method";
+		return CommerceShippingConfigurationScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
 	}
 
 	@Reference

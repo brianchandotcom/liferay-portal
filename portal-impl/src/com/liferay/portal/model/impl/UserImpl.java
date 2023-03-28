@@ -186,8 +186,8 @@ public class UserImpl extends UserBaseImpl {
 	/**
 	 * Returns the user's digest.
 	 *
+	 * @return     the user's digest
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 * @return the user's digest
 	 */
 	@Deprecated
 	@Override
@@ -204,9 +204,9 @@ public class UserImpl extends UserBaseImpl {
 	/**
 	 * Returns a digest for the user, incorporating the password.
 	 *
+	 * @param      password a password to incorporate with the digest
+	 * @return     a digest for the user, incorporating the password
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 * @param  password a password to incorporate with the digest
-	 * @return a digest for the user, incorporating the password
 	 */
 	@Deprecated
 	@Override
@@ -790,6 +790,15 @@ public class UserImpl extends UserBaseImpl {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isGuestUser}
+	 */
+	@Deprecated
+	@Override
+	public boolean isDefaultUser() {
+		return isGuestUser();
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class CSDiagramEntryInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "related-diagrams");
+		return _language.get(locale, "related-diagram");
 	}
 
 	@Override

@@ -123,7 +123,7 @@ definition {
 	test RequestKeywordsUsingGroupID {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingGroupID";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		var groupId1 = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");

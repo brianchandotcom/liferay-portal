@@ -22,7 +22,7 @@ definition {
 		}
 
 		task ("Add a new site with a public widget page") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			ACUtils.addSiteAndPage(
 				groupName = "Site Name",

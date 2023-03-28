@@ -27,7 +27,7 @@ definition {
 			var siteName = "Site Name";
 		}
 
-		JSONGroup.addGroup(groupName = ${siteName});
+		HeadlessSite.addSite(siteName = ${siteName});
 
 		if (!(isSet(layoutName))) {
 			var layoutName = "AC Page";

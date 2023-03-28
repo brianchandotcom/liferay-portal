@@ -4,7 +4,8 @@
 	width: 40ch;
 
 	&:focus,
-	&:focus-within {
+	&:focus-within,
+	&.active {
 		outline: none;
 
 		.card {
@@ -12,6 +13,7 @@
 		}
 
 		.delete-item-button,
+		.menu-item-options-button,
 		.site_navigation_menu_editor_MenuItem-add-button {
 			opacity: 1;
 		}
@@ -55,9 +57,17 @@
 		}
 	}
 
-	&:hover,
-	&.active {
+	.menu-item-options-button {
+		opacity: 0;
+
+		&:focus {
+			opacity: 1;
+		}
+	}
+
+	&:hover {
 		.delete-item-button,
+		.menu-item-options-button,
 		.site_navigation_menu_editor_MenuItem-add-button {
 			opacity: 1;
 		}

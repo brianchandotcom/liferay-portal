@@ -52,7 +52,7 @@ export default function useKeyboardNavigation() {
 		(event) => {
 			const list = element?.closest('[role="menubar"]');
 
-			if (event.target.closest('.add-navigation-menu-item-dropdown')) {
+			if (event.target.closest('.menu-item-dropdown')) {
 				return;
 			}
 

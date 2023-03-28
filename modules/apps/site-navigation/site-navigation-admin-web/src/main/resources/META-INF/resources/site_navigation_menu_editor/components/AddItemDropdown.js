@@ -29,7 +29,7 @@ export function AddItemDropDown({className, trigger}) {
 				className={className}
 				menuElementAttrs={{
 					containerProps: {
-						className: 'add-navigation-menu-item-dropdown',
+						className: 'menu-item-dropdown',
 					},
 				}}
 				onActiveChange={setActive}

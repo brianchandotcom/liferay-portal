@@ -186,55 +186,45 @@ public class PicklistObjectFieldBusinessType
 	@Override
 	public void validateObjectFieldSettingsDefaultValue(
 			ObjectField objectField,
-			List<ObjectFieldSetting> objectFieldSettings)
+			Map<String, String> objectFieldSettingsValuesMap)
 		throws PortalException {
 
-		if (objectFieldSettings.isEmpty()) {
+		if (objectFieldSettingsValuesMap.isEmpty()) {
 			return;
 		}
 
-		ObjectFieldSetting defaultValueObjectFieldSetting = null;
+		ObjectFieldBusinessType.super.validateObjectFieldSettingsDefaultValue(
+			objectField, objectFieldSettingsValuesMap);
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (StringUtil.equals(
-					objectFieldSetting.getName(),
-					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE)) {
+		String defaultValue = objectFieldSettingsValuesMap.get(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+		String defaultValueType = objectFieldSettingsValuesMap.get(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
 
-				defaultValueObjectFieldSetting = objectFieldSetting;
-			}
+		if ((defaultValue == null) ||
+			StringUtil.equals(
+				defaultValueType,
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
 
-			if (objectFieldSetting.compareName(
-					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE) &&
-				StringUtil.equals(
-					objectFieldSetting.getValue(),
-					ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
-
-				return;
-			}
-		}
-
-		if (defaultValueObjectFieldSetting == null) {
 			return;
 		}
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.fetchListTypeEntry(
-				objectField.getListTypeDefinitionId(),
-				defaultValueObjectFieldSetting.getValue());
+				objectField.getListTypeDefinitionId(), defaultValue);
 
 		if (listTypeEntry == null) {
 			if (!FeatureFlagManagerUtil.isEnabled("LPS-163716")) {
 				throw new ObjectFieldDefaultValueException(
 					StringBundler.concat(
-						"Default value \"",
-						defaultValueObjectFieldSetting.getValue(),
+						"Default value \"", defaultValue,
 						"\" is not a list entry in list definition ",
 						String.valueOf(objectField.getListTypeDefinitionId())));
 			}
 
 			throw new ObjectFieldSettingValueException.InvalidValue(
-				objectField.getName(), defaultValueObjectFieldSetting.getName(),
-				defaultValueObjectFieldSetting.getValue());
+				objectField.getName(),
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-163716") &&

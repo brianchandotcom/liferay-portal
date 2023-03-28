@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>FAVICON_NAME</td>
-	<td>//span[contains(@id,'faviconTitle')][contains(.,'${faviconName}')]</td>
+	<td>//*[contains(@class,'sheet-subtitle')][normalize-space()='Favicon']//following-sibling::div//input[not(@type='hidden')]</td>
 	<td></td>
 </tr>
 <tr>

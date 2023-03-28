@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -82,6 +83,12 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String title = titleMap.get(themeDisplay.getLocale());
+
+		if (Validator.isBlank(title)) {
+			title = titleMap.get(themeDisplay.getSiteDefaultLocale());
+		}
+
 		AssetCategory category = null;
 
 		if (categoryId <= 0) {
@@ -99,9 +106,7 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"x-was-created-successfully",
-					new Object[] {
-						HtmlUtil.escape(titleMap.get(themeDisplay.getLocale()))
-					}));
+					new Object[] {HtmlUtil.escape(title)}));
 		}
 		else {
 
@@ -120,9 +125,7 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"x-was-updated-successfully",
-					new Object[] {
-						HtmlUtil.escape(titleMap.get(themeDisplay.getLocale()))
-					}));
+					new Object[] {HtmlUtil.escape(title)}));
 		}
 
 		// Asset display page

@@ -23,6 +23,15 @@
 <tr>
 	<td>CLAIM_TYPE</td>
 	<td>//div[contains(@class,'claims-list')]//div[contains(text(),'Type: ')][contains(.,'${key_claimType}')]</td>
+</tr>
+<tr>
+	<td>CHECKBOX_OPTIONS</td>
+	<td>//div[contains(@class,'show')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLY_BUTTON</td>
+	<td>//div[contains(@class,'drilldown-current')]//button[contains(@class,'btn-sm btn-primary') and contains(text(),'Apply')]</td>
 	<td></td>
 </tr>
 </tbody>

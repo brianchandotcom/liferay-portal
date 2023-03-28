@@ -17,8 +17,7 @@ definition {
 	macro openNewApplicationFlow {
 		Button.click(button = "Application");
 
-		RaylifeApApplication.selectModalOption(
-			key_text = ${insurance});
+		RaylifeApApplication.selectModalOption(key_text = ${insurance});
 
 		Button.click(button = "Next");
 
@@ -27,8 +26,7 @@ definition {
 		}
 
 		if (isSet(product)) {
-			RaylifeApApplication.selectModalOption(
-				key_text = ${product});
+			RaylifeApApplication.selectModalOption(key_text = ${product});
 
 			Button.click(button = "Next");
 		}

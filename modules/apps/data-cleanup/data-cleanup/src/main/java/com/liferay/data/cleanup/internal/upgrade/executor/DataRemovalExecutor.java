@@ -20,6 +20,7 @@ import com.liferay.change.tracking.store.service.CTSContentLocalService;
 import com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration;
 import com.liferay.data.cleanup.internal.upgrade.DLPreviewCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.PublishedCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -65,6 +66,11 @@ public class DataRemovalExecutor {
 			"com.liferay.change.tracking.service",
 			() -> new DLPreviewCTSContentDataUpgradeProcess(
 				_ctCollectionLocalService, _ctEntryLocalService, _portal));
+		_removeModuleData(
+			dataRemovalConfiguration::removeOutdatedPublishedCTCollections,
+			"com.liferay.change.tracking.service",
+			() -> new OutdatedPublishedCTCollectionUpgradeProcess(
+				_ctCollectionLocalService, _portal));
 		_removeModuleData(
 			dataRemovalConfiguration::removePublishedCTSContentData,
 			"com.liferay.change.tracking.store.service",

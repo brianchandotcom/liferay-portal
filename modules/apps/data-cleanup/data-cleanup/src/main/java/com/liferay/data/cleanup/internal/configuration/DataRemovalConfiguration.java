@@ -41,6 +41,12 @@ public interface DataRemovalConfiguration {
 	public boolean removeDLPreviewCTSContentData();
 
 	@Meta.AD(
+		deflt = "false", name = "remove-publications-older-than-6-months",
+		required = false
+	)
+	public boolean removeOutdatedPublishedCTCollections();
+
+	@Meta.AD(
 		deflt = "false", name = "remove-published-cts-content-data",
 		required = false
 	)

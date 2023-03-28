@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.shipping.web.internal.constants.CommerceShippingScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +37,8 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return "shipping-restrictions";
+		return CommerceShippingScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_SHIPPING_RESTRICTIONS;
 	}
 
 	@Override
@@ -49,7 +51,8 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "commerce.channel.general";
+		return CommerceShippingScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL;
 	}
 
 	@Reference

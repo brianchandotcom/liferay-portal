@@ -139,10 +139,16 @@ public class CommerceShipmentServiceImpl
 			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
+		List<CommerceChannel> commerceChannels = _commerceChannelService.search(
+			companyId);
+
+		if (commerceChannels.isEmpty()) {
+			return Collections.emptyList();
+		}
+
 		return commerceShipmentLocalService.getCommerceShipments(
 			TransformUtil.transformToLongArray(
-				_commerceChannelService.search(companyId),
-				CommerceChannel::getGroupId),
+				commerceChannels, CommerceChannel::getGroupId),
 			status, start, end, orderByComparator);
 	}
 
@@ -179,10 +185,16 @@ public class CommerceShipmentServiceImpl
 			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
+		List<CommerceChannel> commerceChannels = _commerceChannelService.search(
+			companyId);
+
+		if (commerceChannels.isEmpty()) {
+			return Collections.emptyList();
+		}
+
 		return commerceShipmentLocalService.getCommerceShipments(
 			TransformUtil.transformToLongArray(
-				_commerceChannelService.search(companyId),
-				CommerceChannel::getGroupId),
+				commerceChannels, CommerceChannel::getGroupId),
 			commerceAddressId, start, end, orderByComparator);
 	}
 
@@ -238,10 +250,16 @@ public class CommerceShipmentServiceImpl
 			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
+		List<CommerceChannel> commerceChannels = _commerceChannelService.search(
+			companyId);
+
+		if (commerceChannels.isEmpty()) {
+			return 0;
+		}
+
 		return commerceShipmentLocalService.getCommerceShipmentsCount(
 			TransformUtil.transformToLongArray(
-				_commerceChannelService.search(companyId),
-				CommerceChannel::getGroupId),
+				commerceChannels, CommerceChannel::getGroupId),
 			status);
 	}
 
@@ -253,10 +271,16 @@ public class CommerceShipmentServiceImpl
 			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
+		List<CommerceChannel> commerceChannels = _commerceChannelService.search(
+			companyId);
+
+		if (commerceChannels.isEmpty()) {
+			return 0;
+		}
+
 		return commerceShipmentLocalService.getCommerceShipmentsCount(
 			TransformUtil.transformToLongArray(
-				_commerceChannelService.search(companyId),
-				CommerceChannel::getGroupId),
+				commerceChannels, CommerceChannel::getGroupId),
 			commerceAddressId);
 	}
 

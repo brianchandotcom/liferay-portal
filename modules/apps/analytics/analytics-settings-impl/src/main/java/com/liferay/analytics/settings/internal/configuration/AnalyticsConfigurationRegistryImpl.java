@@ -997,6 +997,8 @@ public class AnalyticsConfigurationRegistryImpl
 		).put(
 			"createDate", "date"
 		).put(
+			"defaultUser", "boolean"
+		).put(
 			"emailAddress", "Text"
 		).put(
 			"emailAddressVerified", "boolean"

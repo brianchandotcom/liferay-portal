@@ -67,7 +67,7 @@ public class FieldPeopleConstants {
 
 	public static final String[] FIELD_USER_NAMES = {
 		"agreedToTermsOfUse", "comments", "companyId", "contactId",
-		"createDate", "emailAddress", "emailAddressVerified",
+		"createDate", "defaultUser", "emailAddress", "emailAddressVerified",
 		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
 		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
 		"middleName", "modifiedDate", "openId", "portraitId", "screenName",

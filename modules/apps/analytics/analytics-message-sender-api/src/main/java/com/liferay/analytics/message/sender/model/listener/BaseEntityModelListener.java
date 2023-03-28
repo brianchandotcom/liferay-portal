@@ -787,10 +787,10 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			"treePath", "type");
 	private static final List<String> _userAttributeNames = Arrays.asList(
 		"agreedToTermsOfUse", "comments", "companyId", "contactId",
-		"createDate", "emailAddress", "emailAddressVerified", "expando",
-		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
-		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
-		"memberships", "middleName", "modifiedDate", "openId", "portraitId",
-		"screenName", "type", "status", "timeZoneId", "uuid");
+		"createDate", "defaultUser", "emailAddress", "emailAddressVerified",
+		"expando", "externalReferenceCode", "facebookId", "firstName",
+		"googleUserId", "greeting", "jobTitle", "languageId", "lastName",
+		"ldapServerId", "memberships", "middleName", "modifiedDate", "openId",
+		"portraitId", "screenName", "type", "status", "timeZoneId", "uuid");
 
 }

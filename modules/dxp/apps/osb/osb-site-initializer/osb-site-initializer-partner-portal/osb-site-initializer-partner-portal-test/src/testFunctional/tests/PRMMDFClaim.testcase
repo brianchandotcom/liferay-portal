@@ -64,6 +64,14 @@ definition {
 			JSONPRM.addCurrency();
 		}
 
+		task ("Login with the Partner user and go to Partner Portal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMUtils.gotoPRM();
+		}
+
 		task ("Add a new MDF Request") {
 			JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
@@ -284,11 +292,85 @@ definition {
 				fileName = "MDF Claim.csv");
 		}
 	}
+
+	@description = "This is a test for LPS-178117. Verify that is possible to export all Claims searched."
+	@priority = 4
+	test CanExportSearchedClaims {
+		task ("Given that the Manager user is logged in and goes to MDF listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("And the manager approves the MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
+
+		task ("And the partner logs in and go to Partner Portal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("And the partner user makes two claims") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.createNewClaim(
+				activityIndex = 1,
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+		}
+
+		task ("When the manager logs in and go to Partner Portal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Claim");
+		}
+
+		task ("And get the Claim IDs") {
 			var firstID = PRMMDFClaim.getClaimID(claimIndex = 1);
 			var secondID = PRMMDFClaim.getClaimID(claimIndex = 2);
+		}
 
+		task ("When the manager search for the first ID") {
+			PRMMDFClaim.searchClaim(claimID = ${firstID});
+		}
+
+		task ("And export the results") {
+			Button.click(button = "Export MDF Claim");
+		}
+
+		task ("Then the information about the searched Claim should be inside the downloaded file") {
 			PRMMDFRequest.viewExportedMDF(
-				fileContentList = "${firstID},${secondID}",
+				fileContentList = ${firstID},
+				fileName = "MDF Claim.csv");
+		}
+
+		task ("When the manager search for the second ID") {
+			PRMMDFClaim.searchClaim(claimID = ${secondID});
+		}
+
+		task ("And export the results") {
+			Button.click(button = "Export MDF Claim");
+		}
+
+		task ("Then the information about the searched Claim should be inside the downloaded file") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = ${secondID},
 				fileName = "MDF Claim.csv");
 		}
 	}

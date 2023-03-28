@@ -204,7 +204,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	private void _getConflictIconData(
 			long classNameId, long classPK, CTCollection currentCTCollection,
-			Map<String, Object> data, boolean possibleConflict,
+			Map<String, Object> data, CTCollection possibleConflictCollection,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -242,30 +242,29 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					data.put(
 						"conflictIconLabel",
 						_language.get(
-							themeDisplay.getLocale(), "modification-conflict"));
+							themeDisplay.getLocale(),
+							"conflict-detected-help"));
 					data.put("conflictIconName", "warning-full");
-
-					return;
 				}
-			}
-
-			if (possibleConflict) {
-				data.put(
-					"conflictIconClass",
-					"change-tracking-conflict-icon-warning");
-				data.put(
-					"conflictIconLabel",
-					_language.get(
-						themeDisplay.getLocale(),
-						"possible-modification-conflict"));
-				data.put("conflictIconName", "warning-full");
+				else if (possibleConflictCollection != null) {
+					data.put(
+						"conflictIconClass",
+						"change-tracking-conflict-icon-warning");
+					data.put(
+						"conflictIconLabel",
+						_language.format(
+							themeDisplay.getLocale(),
+							"concurrent-modification-help-x",
+							possibleConflictCollection.getName()));
+					data.put("conflictIconName", "warning-full");
+				}
 			}
 			else {
 				data.put("conflictIconClass", "change-tracking-conflict-icon");
 				data.put(
 					"conflictIconLabel",
 					_language.get(
-						themeDisplay.getLocale(), "no-modification-conflict"));
+						themeDisplay.getLocale(), "no-modifications-help"));
 				data.put("conflictIconName", "check");
 			}
 		}
@@ -499,7 +498,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				ctCollectionHistoryProvider.getCTCollections(
 					classNameId, classPK);
 
-			boolean possibleConflict = false;
+			CTCollection possibleConflictCollection = null;
 
 			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
@@ -515,7 +514,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					  (ctCollection.getCtCollectionId() !=
 						  currentCTCollection.getCtCollectionId())))) {
 
-					possibleConflict = true;
+					possibleConflictCollection = ctCollection;
 				}
 
 				CTCollectionHistoryDataProvider
@@ -555,7 +554,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 			_getConflictIconData(
 				classNameId, classPK, currentCTCollection, data,
-				possibleConflict, themeDisplay);
+				possibleConflictCollection, themeDisplay);
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");

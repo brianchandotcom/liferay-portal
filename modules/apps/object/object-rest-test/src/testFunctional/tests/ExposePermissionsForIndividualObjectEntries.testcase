@@ -85,7 +85,7 @@ definition {
 				en_US_plural_label = "students",
 				objectEntryId = ${staticObjectId});
 
-			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Owner')].actionIds");
+			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Test')].actionIds");
 
 			TestUtils.assertEquals(
 				actual = ${actualPermissions},

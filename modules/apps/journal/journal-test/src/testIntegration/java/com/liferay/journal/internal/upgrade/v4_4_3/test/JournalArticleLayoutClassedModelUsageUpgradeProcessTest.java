@@ -107,26 +107,26 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
-		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
+		List<String> expectedPrivateLayoutPortletIds = new ArrayList<>();
 
-		privateLayoutExpectedPortletIds.add(
+		expectedPrivateLayoutPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_privateLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
-		privateLayoutExpectedPortletIds.add(
+		expectedPrivateLayoutPortletIds.add(
 			_addJournalContentPortletToLayout(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
-		List<String> publicLayoutExpectedPortletIds = new ArrayList<>();
+		List<String> expectedPublicLayoutPortletIds = new ArrayList<>();
 
-		publicLayoutExpectedPortletIds.add(
+		expectedPublicLayoutPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_publicLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
-		publicLayoutExpectedPortletIds.add(
+		expectedPublicLayoutPortletIds.add(
 			_addJournalContentPortletToLayout(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
@@ -149,13 +149,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		long portletClassNameId = _classNameLocalService.getClassNameId(
 			Portlet.class.getName());
 
-		for (String expectedPortletId : publicLayoutExpectedPortletIds) {
+		for (String expectedPortletId : expectedPublicLayoutPortletIds) {
 			_assertLayoutClassedModelUsage(
 				expectedPortletId, portletClassNameId, _publicLayout.getPlid(),
 				_journalArticle.getResourcePrimKey());
 		}
 
-		for (String expectedPortletId : privateLayoutExpectedPortletIds) {
+		for (String expectedPortletId : expectedPrivateLayoutPortletIds) {
 			_assertLayoutClassedModelUsage(
 				expectedPortletId, portletClassNameId, _privateLayout.getPlid(),
 				_journalArticle.getResourcePrimKey());
@@ -173,26 +173,26 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
-		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
+		List<String> expectedPrivateLayoutPortletIds = new ArrayList<>();
 
-		privateLayoutExpectedPortletIds.add(
+		expectedPrivateLayoutPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_privateLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
-		privateLayoutExpectedPortletIds.add(
+		expectedPrivateLayoutPortletIds.add(
 			_addJournalContentPortletToLayout(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
-		List<String> publicLayoutExpectedPortletIds = new ArrayList<>();
+		List<String> expectedPublicLayoutPortletIds = new ArrayList<>();
 
-		publicLayoutExpectedPortletIds.add(
+		expectedPublicLayoutPortletIds.add(
 			_addAssetPublisherPortletToLayout(
 				_publicLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
-		publicLayoutExpectedPortletIds.add(
+		expectedPublicLayoutPortletIds.add(
 			_addJournalContentPortletToLayout(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
@@ -242,13 +242,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			assetEntry2.getClassUuid()
 		};
 
-		String privateLayoutExpectedPortletId =
+		String expectedPrivateLayoutPortletId =
 			_addAssetPublisherPortletToLayout(
 				_privateLayout, "manual", assetEntryXml);
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
-		String publicLayoutExpectedPortletId =
+		String expectedPublicLayoutPortletId =
 			_addAssetPublisherPortletToLayout(
 				_publicLayout, "manual", assetEntryXml);
 
@@ -278,13 +278,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			Portlet.class.getName());
 
 		_assertLayoutClassedModelUsage(
-			publicLayoutExpectedPortletId, portletClassNameId,
+			expectedPublicLayoutPortletId, portletClassNameId,
 			_publicLayout.getPlid(), _journalArticle.getResourcePrimKey(),
 			journalArticle1.getResourcePrimKey(),
 			journalArticle2.getResourcePrimKey());
 
 		_assertLayoutClassedModelUsage(
-			privateLayoutExpectedPortletId, portletClassNameId,
+			expectedPrivateLayoutPortletId, portletClassNameId,
 			_privateLayout.getPlid(), _journalArticle.getResourcePrimKey(),
 			journalArticle1.getResourcePrimKey(),
 			journalArticle2.getResourcePrimKey());

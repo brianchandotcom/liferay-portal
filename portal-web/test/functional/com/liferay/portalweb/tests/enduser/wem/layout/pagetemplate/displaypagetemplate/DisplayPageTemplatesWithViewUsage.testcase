@@ -471,10 +471,10 @@ definition {
 				value1 = "There are no display page template usages.");
 		}
 
-		task ("View the View Usages action is not shown") {
+		task ("View the View Usages action is disabled") {
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-			LexiconCard.viewMenuItemNotPresent(
+			LexiconCard.viewMenuItemDisabled(
 				card = "Display Page Name",
 				item = "View Usages");
 		}

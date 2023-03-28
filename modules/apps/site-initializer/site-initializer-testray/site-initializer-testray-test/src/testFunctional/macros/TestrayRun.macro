@@ -35,6 +35,8 @@ definition {
 	}
 
 	macro editRun {
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
 		RightClick.rightClick(
 			key_projectName = ${runName},
 			locator1 = "Testray#ITEM_NAME");

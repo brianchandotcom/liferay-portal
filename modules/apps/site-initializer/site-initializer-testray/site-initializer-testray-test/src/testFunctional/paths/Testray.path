@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>ITEM_NAME</td>
-	<td>//td[contains(@class,'text') and contains(.,'${key_projectName}')]</td>
+	<td>//*[contains(@class, 'table-autofit')]//*[text()='${key_projectName}']</td>
 	<td></td>
 </tr>
 <tr>

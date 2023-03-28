@@ -144,10 +144,6 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign postBatchJavaMethodSignature = javaMethodSignature />
 				</#if>
 			</#if>
-		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "sPageExportBatch")>
-			<#if !freeMarkerTool.isVersionCompatible(configYAML, 2)>
-				<#continue>
-			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "putByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + parentSchemaName + schemaName + "ByExternalReferenceCode")>

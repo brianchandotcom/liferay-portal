@@ -166,7 +166,6 @@ definition {
 	}
 
 	@description = "COMMERCE-10709 | As a buyer I want to be able to download virtual products when the order status matches the activation status"
-	@ignore = "true"
 	@priority = 4
 	test CanDownloadVirtualProductWhenOrderStatusMatchesActivationStatusCompleted {
 		property portal.acceptance = "false";
@@ -459,7 +458,6 @@ definition {
 	}
 
 	@description = "COMMERCE-10709 | As a buyer I want to be able to download virtual products when the order status matches the activation status"
-	@ignore = "true"
 	@priority = 4
 	test CanDownloadVirtualProductWhenOrderStatusMatchesActivationStatusProcessing {
 		property portal.acceptance = "false";

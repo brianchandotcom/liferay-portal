@@ -43,16 +43,22 @@ export default async function submitForm(
 ) {
 	formikHelpers.setSubmitting(true);
 
+	const updatedStatus = updateStatus(
+		values.mdfClaimStatus,
+		currentClaimStatus,
+		roles,
+		values.id
+	);
+
+	values.mdfClaimStatus = updatedStatus;
+
 	values.partial = values.activities?.some((activity) =>
 		Boolean(activity.budgets?.some((budget) => !budget.selected))
 	);
 
 	let dtoMDFClaim: mdfClaimDTO | undefined = undefined;
 
-	if (
-		Liferay.FeatureFlags['LPS-164528'] &&
-		values.mdfClaimStatus !== Status.DRAFT
-	) {
+	if (values.mdfClaimStatus !== Status.DRAFT) {
 		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
 	}
 	else if (values.id) {
@@ -94,7 +100,7 @@ export default async function submitForm(
 					mdfRequest,
 					dtoMDFClaim.id,
 					dtoReimbursementInvoice.id as LiferayFile & number,
-					dtoMDFClaim.externalReferenceCodeSF
+					dtoMDFClaim.externalReferenceCode
 				);
 			}
 		}
@@ -224,24 +230,6 @@ export default async function submitForm(
 						);
 					}
 				})
-		);
-	}
-
-	const updatedStatus = updateStatus(
-		values.mdfClaimStatus,
-		currentClaimStatus,
-		roles,
-		values.id
-	);
-
-	if (updatedStatus && dtoMDFClaim?.id) {
-		values.mdfClaimStatus = updatedStatus;
-
-		updateMDFClaim(
-			ResourceName.MDF_CLAIM_DXP,
-			values,
-			mdfRequest,
-			dtoMDFClaim?.id
 		);
 	}
 

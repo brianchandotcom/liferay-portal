@@ -17,8 +17,9 @@ export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
 	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
-	externalReferenceCodeSF?: string,
-	mdfRequestExternalReferenceCodeSF?: string
+	mdfRequestExternalReferenceCode?: string,
+	externalReferenceCode?: string,
+	externalReferenceCodeSF?: string
 ): MDFRequestActivityDTO {
 	const {activityDescription, ...newMDFRequestActivity} = mdfRequestActivity;
 
@@ -31,11 +32,12 @@ export default function getDTOFromMDFRequestActivity(
 		activityStatus: mdfRequestActivity.activityStatus,
 		currency: mdfRequestActivity.currency,
 		...newMDFRequestActivity,
+		externalReferenceCode,
 		externalReferenceCodeSF,
 		leadFollowUpStrategies: activityDescription?.leadFollowUpStrategies?.join(
 			', '
 		),
-		mdfRequestExternalReferenceCodeSF,
+		mdfRequestExternalReferenceCode,
 		r_accToActs_accountEntryId: company?.id,
 		r_mdfReqToActs_c_mdfRequestId: mdfRequestId,
 	};

@@ -26,6 +26,7 @@ export default interface MDFRequestDTO
 	> {
 	companyName?: string;
 	emailAddress?: string;
+	externalReferenceCode?: string;
 	externalReferenceCodeSF?: string;
 	liferayBusinessSalesGoals?: string;
 	liferaysUserIdSF?: number;

@@ -36,7 +36,7 @@ export default interface DealRegistrationDTO
 	leadQualificationExternalReferenceCode?: string;
 	leadStatus?: string;
 	leadStatusDetail?: string;
-	mdfActivityExternalReferenceCodeSF?: string;
+	mdfActivityExternalReferenceCode?: string;
 	opportunityOwner?: string;
 	ownerName?: string;
 	partnerAccountName?: string;

@@ -39,7 +39,7 @@ export default function useCompanyOptions(
 	const currencyPicklist =
 		account &&
 		currencyOptions &&
-		currencyOptions.find((options) => options.value === account.currencies);
+		currencyOptions.find((options) => options.value === account.currency);
 
 	const countryPicklist =
 		account &&

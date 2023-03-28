@@ -22,7 +22,8 @@ export default async function createMDFRequestActivities(
 	mdfRequestActivity: MDFRequestActivity,
 	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
-	mdfRequestExternalReferenceCodeSF?: string,
+	mdfRequestExternalReferenceCode?: string,
+	externalReferenceCode?: string,
 	externalReferenceCodeSF?: string
 ) {
 	return await liferayFetcher.post(
@@ -32,8 +33,9 @@ export default async function createMDFRequestActivities(
 			mdfRequestActivity,
 			company,
 			mdfRequestId,
-			externalReferenceCodeSF,
-			mdfRequestExternalReferenceCodeSF
+			mdfRequestExternalReferenceCode,
+			externalReferenceCode,
+			externalReferenceCodeSF
 		)
 	);
 }

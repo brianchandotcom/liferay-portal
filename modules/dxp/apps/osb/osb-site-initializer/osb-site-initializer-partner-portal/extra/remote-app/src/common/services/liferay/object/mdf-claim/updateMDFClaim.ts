@@ -24,6 +24,7 @@ export default async function updateMDFClaim(
 	mdfRequest: MDFRequestDTO,
 	mdfClaimId: number,
 	reimbursementInvoiceDocumentId?: LiferayFile & number,
+	externalReferenceCode?: string,
 	externalReferenceCodeSF?: string
 ) {
 	return await liferayFetcher.put(
@@ -32,6 +33,7 @@ export default async function updateMDFClaim(
 		getDTOFromMDFClaim(
 			mdfClaim,
 			mdfRequest,
+			externalReferenceCode,
 			externalReferenceCodeSF,
 			reimbursementInvoiceDocumentId
 		)

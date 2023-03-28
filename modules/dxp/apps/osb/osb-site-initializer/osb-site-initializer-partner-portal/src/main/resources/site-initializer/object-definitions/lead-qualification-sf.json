@@ -64,9 +64,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "MDF Activity External Reference Code SF"
+				"en_US": "MDF Activity External Reference Code"
 			},
-			"name": "mdfActivityExternalReferenceCodeSF",
+			"name": "mdfActivityExternalReferenceCode",
 			"required": false,
 			"type": "String"
 		},

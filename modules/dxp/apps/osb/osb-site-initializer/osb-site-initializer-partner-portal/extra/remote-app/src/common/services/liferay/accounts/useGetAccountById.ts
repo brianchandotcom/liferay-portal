@@ -18,7 +18,7 @@ import liferayFetcher from '../common/utils/fetcher';
 interface Account {
 	claimPercent: number;
 	country: string;
-	currencies: string;
+	currency: string;
 	externalReferenceCode: string;
 	id: number;
 	name: number;

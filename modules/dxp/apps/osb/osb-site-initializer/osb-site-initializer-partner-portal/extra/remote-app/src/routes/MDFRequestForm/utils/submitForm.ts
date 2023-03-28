@@ -38,12 +38,19 @@ export default async function submitForm(
 ) {
 	formikHelpers.setSubmitting(true);
 
+	const updatedStatus = updateStatus(
+		values.mdfRequestStatus,
+		currentRequestStatus,
+		roles,
+		values.id,
+		values.totalMDFRequestAmount
+	);
+
+	values.mdfRequestStatus = updatedStatus && updatedStatus;
+
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 
-	if (
-		Liferay.FeatureFlags['LPS-164528'] &&
-		values.mdfRequestStatus !== Status.DRAFT
-	) {
+	if (values.mdfRequestStatus !== Status.DRAFT) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
 	}
 	else if (values.id) {
@@ -63,15 +70,12 @@ export default async function submitForm(
 	if (values?.activities?.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values?.activities?.map((activity) => {
-				if (
-					Liferay.FeatureFlags['LPS-164528'] &&
-					values.mdfRequestStatus !== Status.DRAFT
-				) {
+				if (values.mdfRequestStatus !== Status.DRAFT) {
 					return createMDFRequestActivitiesProxyAPI(
 						activity,
 						values.company,
 						dtoMDFRequest?.id,
-						dtoMDFRequest?.externalReferenceCodeSF
+						dtoMDFRequest?.externalReferenceCode
 					);
 				}
 
@@ -81,7 +85,7 @@ export default async function submitForm(
 						activity,
 						values.company,
 						dtoMDFRequest?.id,
-						dtoMDFRequest?.externalReferenceCodeSF
+						dtoMDFRequest?.externalReferenceCode
 					);
 				}
 
@@ -90,7 +94,7 @@ export default async function submitForm(
 					activity,
 					values.company,
 					dtoMDFRequest?.id,
-					dtoMDFRequest?.externalReferenceCodeSF
+					dtoMDFRequest?.externalReferenceCode
 				);
 			})
 		);
@@ -120,33 +124,16 @@ export default async function submitForm(
 		}
 	}
 
-	const updatedStatus = updateStatus(
-		values.mdfRequestStatus,
-		currentRequestStatus,
-		roles,
-		values.id,
-		values.totalMDFRequestAmount
-	);
+	// if (values.id) {
+	// 	Liferay.Util.navigate(
+	// 		`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
+	// 	);
 
-	if (updatedStatus && dtoMDFRequest?.id) {
-		values.mdfRequestStatus = updatedStatus && updatedStatus;
+	// 	return;
+	// }
 
-		updateMDFRequest(
-			ResourceName.MDF_REQUEST_DXP,
-			values,
-			dtoMDFRequest.id
-		);
-	}
+	// Liferay.Util.navigate(
+	// 	`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?new-success=true`
+	// );
 
-	if (values.id) {
-		Liferay.Util.navigate(
-			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
-		);
-
-		return;
-	}
-
-	Liferay.Util.navigate(
-		`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?new-success=true`
-	);
 }

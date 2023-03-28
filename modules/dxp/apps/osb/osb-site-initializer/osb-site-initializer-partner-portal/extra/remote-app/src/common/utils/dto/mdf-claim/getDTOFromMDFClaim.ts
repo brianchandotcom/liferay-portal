@@ -17,15 +17,17 @@ import MDFClaim from '../../../interfaces/mdfClaim';
 export function getDTOFromMDFClaim(
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
+	externalReferenceCode?: string,
 	externalReferenceCodeSF?: string,
 	reimbursementInvoiceDocumentId?: LiferayFile & number
 ): MDFClaimDTO {
 	return {
 		companyName: mdfRequest.r_accToMDFReqs_accountEntry?.name,
 		currency: mdfClaim.currency,
+		externalReferenceCode,
 		externalReferenceCodeSF,
 		mdfClaimStatus: mdfClaim.mdfClaimStatus,
-		mdfRequestExternalReferenceCodeSF: mdfRequest?.externalReferenceCodeSF,
+		mdfRequestExternalReferenceCode: mdfRequest?.externalReferenceCode,
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
 		partial: mdfClaim.partial,
 		r_accToMDFClms_accountEntryId:

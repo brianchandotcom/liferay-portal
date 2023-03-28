@@ -20,6 +20,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	budgets: MDFRequestBudget[];
 	currency?: LiferayPicklist;
 	endDate?: string;
+	externalReferenceCode?: string;
 	externalReferenceCodeSF?: string;
 	mdfRequestAmount: number;
 	name: string;

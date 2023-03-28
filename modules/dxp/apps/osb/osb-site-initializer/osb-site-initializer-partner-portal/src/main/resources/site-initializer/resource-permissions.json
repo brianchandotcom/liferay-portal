@@ -148,14 +148,6 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CompanyExtender$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
 		"primKey": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "User",

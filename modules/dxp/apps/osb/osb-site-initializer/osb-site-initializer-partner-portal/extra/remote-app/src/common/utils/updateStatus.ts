@@ -15,13 +15,13 @@ import {Status} from './constants/status';
 import {isLiferayManager} from './isLiferayManager';
 
 const updateStatus = (
-	status?: LiferayPicklist,
+	status: LiferayPicklist,
 	currentRequestStatus?: LiferayPicklist,
 	roles?: Role[],
 	id?: number,
 	totalMDFRequestAmount?: number
 ) => {
-	if (!id) {
+	if (!id && currentRequestStatus) {
 		status = currentRequestStatus;
 	}
 	else {

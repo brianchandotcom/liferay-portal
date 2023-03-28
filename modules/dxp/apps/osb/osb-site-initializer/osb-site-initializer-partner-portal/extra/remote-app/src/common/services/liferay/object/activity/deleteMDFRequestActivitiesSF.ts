@@ -14,12 +14,12 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
 
-export default async function deleteMDFRequestActivitiesSF(
+export default async function deleteMDFRequestActivities(
 	apiOption: ResourceName,
-	externalReferenceCodeSF: string
+	externalReferenceCode: string
 ) {
 	return await liferayFetcher.delete(
-		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCodeSF}`,
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCode}`,
 		Liferay.authToken
 	);
 }

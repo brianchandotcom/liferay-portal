@@ -12,9 +12,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "MDF Request External Reference Code SF"
+				"en_US": "MDF Request External Reference Code"
 			},
-			"name": "mdfRequestExternalReferenceCodeSF",
+			"name": "mdfRequestExternalReferenceCode",
 			"required": false,
 			"type": "String"
 		},

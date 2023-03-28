@@ -15,6 +15,7 @@ import {Liferay} from '../../../services/liferay';
 
 export function getDTOFromMDFRequest(
 	mdfRequest: MDFRequest,
+	externalReferenceCode?: string,
 	externalReferenceCodeSF?: string
 ): MDFRequestDTO {
 	return {
@@ -24,6 +25,7 @@ export function getDTOFromMDFRequest(
 		country: mdfRequest.country,
 		currency: mdfRequest.currency,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
+		externalReferenceCode,
 		externalReferenceCodeSF,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.join(
 			'; '

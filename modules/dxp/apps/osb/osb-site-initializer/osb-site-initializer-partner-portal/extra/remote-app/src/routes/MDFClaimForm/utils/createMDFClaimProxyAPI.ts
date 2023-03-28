@@ -24,11 +24,17 @@ export default async function createMDFClaimProxyAPI(
 ) {
 	let dtoMDFClaimSFResponse: mdfClaimDTO | undefined = undefined;
 
-	if (mdfClaim.externalReferenceCodeSF) {
+	if (
+		mdfClaim.externalReferenceCode &&
+		mdfClaim.externalReferenceCodeSF &&
+		mdfClaim.externalReferenceCode === mdfClaim.externalReferenceCodeSF
+	) {
 		dtoMDFClaimSFResponse = await updateMDFClaimSF(
 			ResourceName.MDF_CLAIM_SALESFORCE,
 			mdfClaim,
 			mdfRequest,
+			mdfClaim.reimbursementInvoice?.id as LiferayFile & number,
+			mdfClaim.externalReferenceCode,
 			mdfClaim.externalReferenceCodeSF
 		);
 	}
@@ -50,6 +56,7 @@ export default async function createMDFClaimProxyAPI(
 				mdfRequest,
 				mdfClaim.id,
 				mdfClaim.reimbursementInvoice?.id as LiferayFile & number,
+				dtoMDFClaimSFResponse.externalReferenceCode,
 				dtoMDFClaimSFResponse.externalReferenceCode
 			);
 		}
@@ -58,6 +65,7 @@ export default async function createMDFClaimProxyAPI(
 				ResourceName.MDF_CLAIM_DXP,
 				mdfClaim,
 				mdfRequest,
+				dtoMDFClaimSFResponse.externalReferenceCode,
 				dtoMDFClaimSFResponse.externalReferenceCode
 			);
 		}

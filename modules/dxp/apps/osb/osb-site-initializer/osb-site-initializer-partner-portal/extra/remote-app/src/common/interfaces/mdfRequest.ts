@@ -21,6 +21,7 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	company?: LiferayAccountBrief;
 	country: LiferayPicklist;
 	currency: LiferayPicklist;
+	externalReferenceCode?: string;
 	externalReferenceCodeSF?: string;
 	liferayBusinessSalesGoals?: string[];
 	maxDateActivity?: string;

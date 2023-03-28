@@ -309,7 +309,8 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-			LocalizedMapUtil.getLocalizedMap("State"), false, "state", true, true,
+			LocalizedMapUtil.getLocalizedMap("State"), false, "state", true,
+			true,
 			Arrays.asList(
 				_createObjectFieldSetting(
 					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,

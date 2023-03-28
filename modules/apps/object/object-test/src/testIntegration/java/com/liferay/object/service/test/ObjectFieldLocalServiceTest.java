@@ -1167,9 +1167,9 @@ public class ObjectFieldLocalServiceTest {
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			StringPool.BLANK, objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER,false, true,
-			StringPool.BLANK, LocalizedMapUtil.getLocalizedMap("charlie"),
-			false, "charlie", false, false,
+			ObjectFieldConstants.DB_TYPE_INTEGER, false, true, StringPool.BLANK,
+			LocalizedMapUtil.getLocalizedMap("charlie"), false, "charlie",
+			false, false,
 			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());

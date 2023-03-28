@@ -1171,12 +1171,12 @@ definition {
 
 	macro selectFavicon {
 		WaitForEditable(
-			key_text = "Change Favicon",
-			locator1 = "Button#ANY");
+			ariaLabel = "Select Favicon",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Click(
-			key_text = "Change Favicon",
-			locator1 = "Button#ANY");
+			ariaLabel = "Select Favicon",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		if (isSet(imageFileName)) {
 			ItemSelector.selectDMImage(imageFileName = ${imageFileName});
@@ -1190,12 +1190,12 @@ definition {
 
 	macro selectFaviconExtension {
 		WaitForEditable(
-			key_text = "Change Favicon",
-			locator1 = "Button#ANY");
+			ariaLabel = "Select Favicon",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Click(
-			key_text = "Change Favicon",
-			locator1 = "Button#ANY");
+			ariaLabel = "Select Favicon",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

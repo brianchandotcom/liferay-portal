@@ -18,8 +18,7 @@ definition {
 		Button.click(button = "Application");
 
 		RaylifeApApplication.selectModalOption(
-			key_text = ${insurance},
-			locator1 = "RaylifeApplicationModal#MODAL_OPTION");
+			key_text = ${insurance});
 
 		Button.click(button = "Next");
 
@@ -29,8 +28,7 @@ definition {
 
 		if (isSet(product)) {
 			RaylifeApApplication.selectModalOption(
-				key_text = ${product},
-				locator1 = "RaylifeApplicationModal#MODAL_OPTION");
+				key_text = ${product});
 
 			Button.click(button = "Next");
 		}

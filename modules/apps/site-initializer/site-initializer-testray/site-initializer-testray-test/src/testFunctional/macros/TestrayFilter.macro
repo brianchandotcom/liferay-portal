@@ -55,4 +55,13 @@ definition {
 		Button.click(button = "Apply");
 	}
 
+	macro typeFilter {
+		Type(
+			key_fieldLabel = ${label},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${value});
+
+		Button.click(button = "Apply");
+	}
+
 }

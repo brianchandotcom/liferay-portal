@@ -23,6 +23,7 @@ import com.liferay.analytics.settings.rest.constants.FieldPeopleConstants;
 import com.liferay.analytics.settings.rest.constants.FieldProductConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -266,13 +266,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 			});
 
 		fieldResource.patchFieldAccount(
-			Stream.of(
-				FieldAccountConstants.FIELD_ACCOUNT_NAMES
-			).map(
-				name -> _getField(name, true, "account")
-			).toArray(
-				Field[]::new
-			));
+			_getFields(
+				FieldAccountConstants.FIELD_ACCOUNT_NAMES, true, "account"));
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -302,13 +297,8 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 			});
 
 		fieldResource.patchFieldAccount(
-			Stream.of(
-				FieldAccountConstants.FIELD_ACCOUNT_NAMES
-			).map(
-				name -> _getField(name, false, "account")
-			).toArray(
-				Field[]::new
-			));
+			_getFields(
+				FieldAccountConstants.FIELD_ACCOUNT_NAMES, false, "account"));
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -419,20 +409,10 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 		fieldResource.patchFieldPeople(
 			ArrayUtil.append(
-				Stream.of(
-					FieldPeopleConstants.FIELD_CONTACT_NAMES
-				).map(
-					name -> _getField(name, true, "contact")
-				).toArray(
-					Field[]::new
-				),
-				Stream.of(
-					FieldPeopleConstants.FIELD_USER_NAMES
-				).map(
-					name -> _getField(name, true, "user")
-				).toArray(
-					Field[]::new
-				)));
+				_getFields(
+					FieldPeopleConstants.FIELD_CONTACT_NAMES, true, "contact"),
+				_getFields(
+					FieldPeopleConstants.FIELD_USER_NAMES, true, "user")));
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -464,20 +444,10 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 		fieldResource.patchFieldPeople(
 			ArrayUtil.append(
-				Stream.of(
-					FieldPeopleConstants.FIELD_CONTACT_NAMES
-				).map(
-					name -> _getField(name, false, "contact")
-				).toArray(
-					Field[]::new
-				),
-				Stream.of(
-					FieldPeopleConstants.FIELD_USER_NAMES
-				).map(
-					name -> _getField(name, false, "user")
-				).toArray(
-					Field[]::new
-				)));
+				_getFields(
+					FieldPeopleConstants.FIELD_CONTACT_NAMES, false, "contact"),
+				_getFields(
+					FieldPeopleConstants.FIELD_USER_NAMES, false, "user")));
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -550,27 +520,14 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 		fieldResource.patchFieldProduct(
 			ArrayUtil.append(
-				Stream.of(
-					FieldProductConstants.FIELD_CATEGORY_NAMES
-				).map(
-					name -> _getField(name, true, "category")
-				).toArray(
-					Field[]::new
-				),
-				Stream.of(
-					FieldProductConstants.FIELD_PRODUCT_NAMES
-				).map(
-					name -> _getField(name, true, "product")
-				).toArray(
-					Field[]::new
-				),
-				Stream.of(
-					FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES
-				).map(
-					name -> _getField(name, true, "product-channel")
-				).toArray(
-					Field[]::new
-				)));
+				_getFields(
+					FieldProductConstants.FIELD_CATEGORY_NAMES, true,
+					"category"),
+				_getFields(
+					FieldProductConstants.FIELD_PRODUCT_NAMES, true, "product"),
+				_getFields(
+					FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES, true,
+					"product-channel")));
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -604,27 +561,15 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 		fieldResource.patchFieldProduct(
 			ArrayUtil.append(
-				Stream.of(
-					FieldProductConstants.FIELD_CATEGORY_NAMES
-				).map(
-					name -> _getField(name, false, "category")
-				).toArray(
-					Field[]::new
-				),
-				Stream.of(
-					FieldProductConstants.FIELD_PRODUCT_NAMES
-				).map(
-					name -> _getField(name, false, "product")
-				).toArray(
-					Field[]::new
-				),
-				Stream.of(
-					FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES
-				).map(
-					name -> _getField(name, false, "product-channel")
-				).toArray(
-					Field[]::new
-				)));
+				_getFields(
+					FieldProductConstants.FIELD_CATEGORY_NAMES, false,
+					"category"),
+				_getFields(
+					FieldProductConstants.FIELD_PRODUCT_NAMES, false,
+					"product"),
+				_getFields(
+					FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES, false,
+					"product-channel")));
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -667,6 +612,13 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 		field.setSource(source);
 
 		return field;
+	}
+
+	private Field[] _getFields(
+		String[] fields, boolean selected, String source) {
+
+		return TransformUtil.transform(
+			fields, name -> _getField(name, selected, source), Field.class);
 	}
 
 	@Inject

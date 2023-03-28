@@ -230,6 +230,36 @@ public class SearchCTTest {
 	}
 
 	@Test
+	public void testCTCollectionSearch() throws Exception {
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).emptySearchEnabled(
+				true
+			).entryClassNames(
+				CTCollection.class.getName()
+			).modelIndexerClasses(
+				CTCollection.class
+			).withSearchContext(
+				searchContext -> {
+				}
+			);
+
+		SearchResponse searchResponse = _searcher.search(
+			searchRequestBuilder.build());
+
+		DocumentsAssert.assertValuesIgnoreRelevance(
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			Field.UID,
+			Arrays.asList(
+				_uidFactory.getUID(
+					CTCollection.class.getName(),
+					_ctCollection1.getCtCollectionId(),
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)));
+	}
+
+	@Test
 	public void testPublishAndUndoArticle() throws Exception {
 		JournalArticle addedJournalArticle = null;
 

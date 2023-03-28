@@ -130,11 +130,6 @@
 	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]//parent::tr[contains(@class, 'table-active')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>PREVIOUS_PAGINATION_BUTTON</td>
-	<td>//div[@class='modal-body']//button[contains(@aria-label,'Previous')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

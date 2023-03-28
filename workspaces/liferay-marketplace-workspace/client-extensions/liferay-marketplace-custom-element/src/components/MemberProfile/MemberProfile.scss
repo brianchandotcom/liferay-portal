@@ -1,0 +1,69 @@
+.member-profile-view-container {
+	.member-profile-heading-container {
+		vertical-align: top;
+
+		.member-profile-subheading {
+			color: #54555F;
+		}
+	}
+
+	.member-profile-card, .member-roles-card, .member-account-card {
+		border: 1px solid #E2E2E4;
+		border-radius: 10px;
+		min-width: 524px;
+		padding: 34px 24px;
+	}
+
+	.member-profile-card-icon, .member-roles-card-icon, .member-account-card-icon {
+		float: right;
+	}
+
+	.member-profile-row {
+		display: flex;
+		align-items: flex-start;
+		width: 100%;
+		height: 200px;
+		gap: 50px;
+		flex-direction: row;
+		margin-top: 1rem;
+
+		table {
+			th, td {
+				font-size: 13px;
+			}
+
+			th {
+				font-weight: 600;
+			}
+
+			td {
+				color: #54555F;
+				padding-left: 6rem;
+			}
+		}
+	}
+
+	.member-profile-image img {
+		border-radius: 72px;
+		height: 72px;
+		width: 72px;
+	}
+
+	.member-profile-back-button {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+
+		svg {
+			margin-top: 1px;
+		}
+
+		&-text, svg {
+			color: #000;
+		}
+
+		&-text {
+			font-weight: 600;
+		}
+	}
+}

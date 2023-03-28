@@ -228,6 +228,44 @@ public class GetCollectionFieldMVCResourceCommand
 			listObjectReferenceFactory.getListObjectReference(
 				layoutObjectReferenceJSONObject);
 
+		String originalItemType = null;
+
+		AssetListEntry assetListEntry = _getAssetListEntry(listObjectReference);
+
+		if (assetListEntry != null) {
+			originalItemType = assetListEntry.getAssetEntryType();
+		}
+		else {
+			originalItemType = listObjectReference.getItemType();
+		}
+
+		if (!_hasViewPermission(httpServletRequest, listObjectReference)) {
+			jsonObject.put(
+				"customCollectionSelectorURL", StringPool.BLANK
+			).put(
+				"isRestricted", true
+			).put(
+				"items", _jsonFactory.createJSONArray()
+			).put(
+				"itemSubtype",
+				() -> {
+					if (assetListEntry == null) {
+						return null;
+					}
+
+					return assetListEntry.getAssetEntrySubtype();
+				}
+			).put(
+				"itemType", originalItemType
+			).put(
+				"length", 0
+			).put(
+				"totalNumberOfItems", 0
+			);
+
+			return jsonObject;
+		}
+
 		int listCount = layoutListRetriever.getListCount(
 			listObjectReference, defaultLayoutListRetrieverContext);
 
@@ -245,17 +283,6 @@ public class GetCollectionFieldMVCResourceCommand
 				_portal.getScopeGroupId(httpServletRequest),
 				_portal.getUserId(httpServletRequest),
 				_requestContextMapper.map(httpServletRequest)));
-
-		String originalItemType = null;
-
-		AssetListEntry assetListEntry = _getAssetListEntry(listObjectReference);
-
-		if (assetListEntry != null) {
-			originalItemType = assetListEntry.getAssetEntryType();
-		}
-		else {
-			originalItemType = listObjectReference.getItemType();
-		}
 
 		String itemType = _infoSearchClassMapperRegistry.getClassName(
 			originalItemType);
@@ -317,8 +344,7 @@ public class GetCollectionFieldMVCResourceCommand
 			_getCustomCollectionSelectorURL(
 				httpServletRequest, itemType, namespace)
 		).put(
-			"isRestricted",
-			!_hasViewPermission(httpServletRequest, listObjectReference)
+			"isRestricted", false
 		).put(
 			"items", jsonArray
 		).put(

@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_LOOK</td>
-	<td>//input[contains(@name,'regularInheritLookAndFeel')]//following-sibling::span[contains(.,'custom')]</td>
+	<td>//div[contains(@id,'UniqueLookAndFeel')]//input</td>
 	<td></td>
 </tr>
 <tr>

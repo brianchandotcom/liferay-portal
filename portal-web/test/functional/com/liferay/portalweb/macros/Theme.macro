@@ -76,7 +76,7 @@ definition {
 	}
 
 	macro configureLookAndFeelSpecificLook {
-		Click(locator1 = "Radio#SPECIFIC_LOOK");
+		Click.clickNoWaitForVisible(locator1 = "Radio#SPECIFIC_LOOK");
 	}
 
 	macro configureLookAndFeelWrapWidgetPageContent {

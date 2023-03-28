@@ -13,6 +13,7 @@ definition {
 	@description = "Runs Proxy Path redirect path. When portal.proxy.path is set, all resources load properly."
 	@priority = 5
 	test ProxyPathRedirect {
+		property test.name.skip.portal.instance = "PortalProxyPath#ProxyPathRedirect";
 
 		// This test should be revisited when Webdriver4 is ready
 

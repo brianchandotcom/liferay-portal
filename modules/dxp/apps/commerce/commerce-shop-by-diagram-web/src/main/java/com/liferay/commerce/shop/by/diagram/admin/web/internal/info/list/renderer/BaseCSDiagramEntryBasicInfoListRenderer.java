@@ -60,13 +60,12 @@ public abstract class BaseCSDiagramEntryBasicInfoListRenderer
 
 	@Override
 	public void render(
-		List<CSDiagramEntry> cpDefinitionSpecificationOptionValues,
+		List<CSDiagramEntry> csDiagramEntries,
 		InfoListRendererContext infoListRendererContext) {
 
 		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
 
-		infoListBasicListTag.setInfoListObjects(
-			cpDefinitionSpecificationOptionValues);
+		infoListBasicListTag.setInfoListObjects(csDiagramEntries);
 
 		String listItemRendererKey =
 			infoListRendererContext.getListItemRendererKey();

@@ -175,7 +175,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Panel.expandPanel(panel = "Look and Feel");
 
@@ -398,7 +398,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Panel.expandPanel(panel = "Look and Feel");
 

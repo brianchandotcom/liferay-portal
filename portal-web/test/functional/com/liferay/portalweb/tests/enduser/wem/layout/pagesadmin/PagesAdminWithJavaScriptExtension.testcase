@@ -232,7 +232,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Advanced");
+			Navigator.gotoNavTab(navTab = "SEO");
 
 			Panel.expandPanel(panel = "JavaScript");
 
@@ -770,7 +770,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Advanced");
+			Navigator.gotoNavTab(navTab = "SEO");
 		}
 
 		task ("When the site designer adds a JavaScript extension to Pages") {
@@ -806,7 +806,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Advanced");
+			Navigator.gotoNavTab(navTab = "SEO");
 
 			Panel.expandPanel(panel = "JavaScript");
 
@@ -906,7 +906,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Advanced");
+			Navigator.gotoNavTab(navTab = "SEO");
 
 			Panel.expandPanel(panel = "JavaScript");
 
@@ -965,7 +965,7 @@ definition {
 
 				WaitForPageLoad();
 
-				Navigator.gotoNavTab(navTab = "Advanced");
+				Navigator.gotoNavTab(navTab = "SEO");
 
 				Panel.expandPanel(panel = "JavaScript");
 

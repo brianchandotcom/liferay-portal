@@ -98,9 +98,9 @@ public interface User extends PersistedModel, UserModel {
 	/**
 	 * Returns a digest for the user, incorporating the password.
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 * @param password a password to incorporate with the digest
 	 * @return a digest for the user, incorporating the password
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	public String getDigest(String password);
@@ -333,6 +333,12 @@ public interface User extends PersistedModel, UserModel {
 	public boolean hasReminderQuery();
 
 	public boolean isActive();
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isGuestUser}
+	 */
+	@Deprecated
+	public boolean isDefaultUser();
 
 	public boolean isEmailAddressComplete();
 

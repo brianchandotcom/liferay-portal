@@ -250,6 +250,17 @@ public class CompanyWrapper
 		return model.getCreateDate();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getGuestUser}
+	 */
+	@Deprecated
+	@Override
+	public User getDefaultUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getDefaultUser();
+	}
+
 	@Override
 	public String getDefaultWebId() {
 		return model.getDefaultWebId();

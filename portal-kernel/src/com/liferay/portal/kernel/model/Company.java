@@ -63,6 +63,13 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public CompanyInfo getCompanyInfo();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getGuestUser}
+	 */
+	@Deprecated
+	public User getDefaultUser()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getDefaultWebId();
 
 	public String getEmailAddress();

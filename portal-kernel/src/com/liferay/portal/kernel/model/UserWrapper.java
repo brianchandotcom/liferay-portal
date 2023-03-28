@@ -510,9 +510,9 @@ public class UserWrapper
 	/**
 	 * Returns a digest for the user, incorporating the password.
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 * @param password a password to incorporate with the digest
 	 * @return a digest for the user, incorporating the password
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1331,6 +1331,15 @@ public class UserWrapper
 	@Override
 	public boolean isAgreedToTermsOfUse() {
 		return model.isAgreedToTermsOfUse();
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isGuestUser}
+	 */
+	@Deprecated
+	@Override
+	public boolean isDefaultUser() {
+		return model.isDefaultUser();
 	}
 
 	@Override

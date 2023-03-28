@@ -582,7 +582,6 @@ public class UserLocalServiceWrapper
 	 * authentication, without using the AuthPipeline. Primarily used for
 	 * authenticating users of <code>tunnel-web</code>.
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 * @param companyId the primary key of the user's company
 	 * @param realm unused
 	 * @param nonce the number used once
@@ -591,6 +590,7 @@ public class UserLocalServiceWrapper
 	 * @param response the authentication response hash
 	 * @return the user's primary key if authentication is successful;
 	 <code>0</code> otherwise
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1252,6 +1252,30 @@ public class UserLocalServiceWrapper
 	@Override
 	public int getCompanyUsersCount(long companyId) {
 		return _userLocalService.getCompanyUsersCount(companyId);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getGuestUser(long)}
+	 */
+	@Deprecated
+	@Override
+	public User getDefaultUser(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.getDefaultUser(companyId);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getGuestUserId(long)}
+	 */
+	@Deprecated
+	@Override
+	public long getDefaultUserId(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.getDefaultUserId(companyId);
 	}
 
 	@Override

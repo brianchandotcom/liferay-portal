@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -78,9 +77,6 @@ import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author Lourdes Fernández Besada
@@ -162,7 +158,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				_getMockHttpServletRequest(layout, formItemId);
 
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.ERROR)) {
+					_CLASS_NAME, LoggerTestUtil.ERROR)) {
 
 				_addInfoItemStrutsAction.execute(
 					mockHttpServletRequest, new MockHttpServletResponse());
@@ -541,6 +537,9 @@ public class AddInfoItemStrutsActionValidationTest {
 			String.valueOf(
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid())));
+
+		mockHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
 		return mockHttpServletRequest;
 	}

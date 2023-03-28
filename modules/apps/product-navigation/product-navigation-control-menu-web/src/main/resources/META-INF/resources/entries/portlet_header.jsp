@@ -55,18 +55,18 @@ else if (group.isStagingGroup()) {
 	<c:if test="<%= liveGroup.isStaged() && !liveGroup.isStagedPortlet(portletDisplay.getRootPortletId()) %>">
 		<c:choose>
 			<c:when test="<%= !liveGroup.isStagedRemotely() && inStaging %>">
-				<span class="align-items-center lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-portlet-is-not-staged-local-alert") %>">
+				<span class="align-items-center lfr-portal-tooltip" title="<%= HtmlUtil.stripHtml(LanguageUtil.get(request, "this-portlet-is-not-staged-local-alert")) %>">
 					<clay:icon
-						aria-label='<%= LanguageUtil.get(request, "this-portlet-is-not-staged-local-alert") %>'
+						aria-label='<%= HtmlUtil.stripHtml(LanguageUtil.get(request, "this-portlet-is-not-staged-local-alert")) %>'
 						cssClass="ml-3 mt-0"
 						symbol="warning-full"
 					/>
 				</span>
 			</c:when>
 			<c:when test="<%= liveGroup.isStagedRemotely() && themeDisplay.isSignedIn() %>">
-				<span class="align-items-center lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-portlet-is-not-staged-remote-alert") %>">
+				<span class="align-items-center lfr-portal-tooltip" title="<%= HtmlUtil.stripHtml(LanguageUtil.get(request, "this-portlet-is-not-staged-remote-alert")) %>">
 					<clay:icon
-						aria-label='<%= LanguageUtil.get(request, "this-portlet-is-not-staged-remote-alert") %>'
+						aria-label='<%= HtmlUtil.stripHtml(LanguageUtil.get(request, "this-portlet-is-not-staged-remote-alert")) %>'
 						cssClass="ml-3 mt-0"
 						symbol="warning-full"
 					/>

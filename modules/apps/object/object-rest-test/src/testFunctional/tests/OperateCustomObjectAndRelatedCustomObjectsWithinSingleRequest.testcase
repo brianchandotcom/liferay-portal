@@ -223,12 +223,12 @@ definition {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedCount = 2);
+				expectedValues = 2);
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedCount = 1);
+				expectedValues = 1);
 		}
 	}
 
@@ -238,7 +238,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsSubjects with Subject entries information") {
-			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+			CustomObjectAPI.createObjectEntryWithField(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -251,12 +251,12 @@ definition {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedCount = 1);
+				expectedValues = 1);
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedCount = 2);
+				expectedValues = 2);
 		}
 	}
 
@@ -305,12 +305,12 @@ definition {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedCount = 0);
+				expectedValues = 0);
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedCount = 0);
+				expectedValues = 0);
 		}
 	}
 
@@ -335,12 +335,12 @@ definition {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedCount = 0);
+				expectedValues = 0);
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedCount = 0);
+				expectedValues = 0);
 		}
 	}
 

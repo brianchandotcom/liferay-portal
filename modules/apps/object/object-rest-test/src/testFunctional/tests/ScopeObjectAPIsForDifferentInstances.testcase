@@ -141,7 +141,7 @@ definition {
 				resourceCheckList = "C_Test.everything",
 				resourcePanels = "C_Test");
 
-			ObjectDefinitionAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryWithField(
 				en_US_plural_label = "tests",
 				fieldName = "location",
 				fieldValue = "Object Entry in Virtual Instance",

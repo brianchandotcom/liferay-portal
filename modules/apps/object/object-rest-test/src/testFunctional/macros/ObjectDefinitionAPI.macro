@@ -119,7 +119,7 @@ definition {
 	macro _createObjectEntryWithName {
 		Variables.assertDefined(parameterList = ${name});
 
-		var response = ObjectDefinitionAPI.createObjectEntryWithField(
+		var response = CustomObjectAPI.createObjectEntryWithField(
 			en_US_plural_label = ${en_US_plural_label},
 			fieldName = "name",
 			fieldValue = ${name},
@@ -685,100 +685,6 @@ definition {
 			expected = ${managerFirstname});
 
 		return ${managerId};
-	}
-
-	macro createObjectEntryWithField {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldName},${fieldValue}");
-
-		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
-
-		if (isSet(virtualHost)) {
-			if (!(isSet(port))) {
-				var port = 8080;
-			}
-
-			var portalURL = "http://${virtualHost}:${port}";
-		}
-		else {
-			var portalURL = JSONCompany.getPortalURL();
-		}
-
-		var body = '''"${fieldName}": "${fieldValue}"''';
-
-		if (isSet(secondField)) {
-			var body = StringUtil.add("${body},", "\"secondField\":\"${secondFieldValue}\"", "");
-		}
-
-		if (isSet(nestedField)) {
-			var size = ${numberOfRelatedObjectEntries};
-
-			if (!(isSet(externalReferenceCode))) {
-				var externalReferenceCode = "";
-			}
-
-			var data = '''
-				"externalReferenceCode": "${externalReferenceCode}",
-				"${nestedField}":
-			''';
-			var entryBody = '''[''';
-			var i = 0;
-
-			while ((${i} != ${size}) && (maxIterations = "10")) {
-				var relatedObjectEntry = '''
-					{
-						"${relatedEntryFieldName}": "${relatedEntryFieldName}${i}"
-					}
-				''';
-
-				if (isSet(relatedEntryExternalReferenceCode)) {
-					var relatedObjectEntry = '''
-					{
-						"${relatedEntryFieldName}": "${relatedEntryFieldName}${i}",
-						"externalReferenceCode": "${relatedEntryExternalReferenceCode}${i}"
-					}
-				''';
-				}
-
-				var j = ${i} + 1;
-
-				if (${j} == ${size}) {
-					var data = StringUtil.add(${data}, "${entryBody}${relatedObjectEntry}]", "");
-				}
-				else {
-					var entryBody = StringUtil.add(${entryBody}, "${relatedObjectEntry},", "");
-				}
-
-				var i = ${i} + 1;
-			}
-
-			var body = StringUtil.add("${body},", ${data}, "");
-		}
-
-		var api = ${en_US_plural_label_lowercase};
-
-		if (isSet(scopeKey)) {
-			var scopeKey = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
-			var api = StringUtil.add(${api}, "/scopes/${scopeKey}", "");
-		}
-
-		var curlWithoutBody = '''
-			${portalURL}/o/c/${api} \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json \
-		''';
-
-		var curl = StringUtil.add(${curlWithoutBody}, "-d {${body}}", " ");
-
-		if (isSet(token)) {
-			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
-		}
-
-		var response = JSONCurlUtil.post(${curl});
-
-		return ${response};
 	}
 
 	macro createObjectEntryWithName {

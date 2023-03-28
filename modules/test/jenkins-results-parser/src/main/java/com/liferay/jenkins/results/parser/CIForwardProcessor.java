@@ -112,16 +112,16 @@ public class CIForwardProcessor {
 
 				@Override
 				public String execute() {
-					return _pullRequest.forward(
-						_getCIForwardCommentBody(initialComment),
-						_consoleLogURL, _recipientUsername,
-						_getCIForwardBranchName(), ciUsername,
-						_gitRepositoryDir);
-
-					/*return _pullRequest.forward(
-						getCIForwardCommentBody(initialComment), _consoleLogURL,
-						_recipientUsername, _getCIForwardBranchName(), "pyoo47",
-						_gitRepositoryDir);*/
+					try {
+						return _pullRequest.forward(
+							_getCIForwardCommentBody(initialComment),
+							_consoleLogURL, _recipientUsername,
+							_getCIForwardBranchName(), ciUsername,
+							_gitRepositoryDir);
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
 				}
 
 			};
@@ -192,19 +192,13 @@ public class CIForwardProcessor {
 		return propertyValue.split("\\s*,\\s*");
 	}
 
-	private String _getCIForwardBranchName() {
-		try {
-			return JenkinsResultsParserUtil.combine(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"pull.request.forward.branch.name.prefix"),
-				_pullRequest.getSenderBranchName(), "-pr-",
-				_pullRequest.getNumber(), "-sender-",
-				_pullRequest.getSenderUsername());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build property", ioException);
-		}
+	private String _getCIForwardBranchName() throws IOException {
+		return JenkinsResultsParserUtil.combine(
+			JenkinsResultsParserUtil.getBuildProperty(
+				"pull.request.forward.branch.name.prefix"),
+			_pullRequest.getSenderBranchName(), "-pr-",
+			_pullRequest.getNumber(), "-sender-",
+			_pullRequest.getSenderUsername());
 	}
 
 	private String _getCIForwardCommentBody(String initialComment) {

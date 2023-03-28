@@ -16,9 +16,9 @@ package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.dsl.DynamicObjectRelationshipMappingTable;
+import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;

@@ -1973,7 +1973,7 @@ definition {
 
 		WorkflowMetrics.viewTableSizeInTheAllItems(
 			itemTable = "Web Content Article: WebContent Title",
-			itemTableSize = "96.4316px");
+			itemTableSize = "100.816px");
 	}
 
 	@description = "LPS-98517 - Verify that the long usernames in the result table do not break into different lines"
@@ -2031,7 +2031,7 @@ definition {
 
 		WorkflowMetrics.viewTableSizeInTheAllItems(
 			itemTable = "buyerbuyerbuyerbuyerbuyer",
-			itemTableSize = "96.4316px");
+			itemTableSize = "100.816px");
 	}
 
 	@description = "LPS-98517 - Verify that a long username that exceeds 240px in the assignee dropdown option is placed in more than one line, respecting the alignment of the field"

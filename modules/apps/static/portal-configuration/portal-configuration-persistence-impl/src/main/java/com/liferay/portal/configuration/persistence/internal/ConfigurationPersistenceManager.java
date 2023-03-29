@@ -336,7 +336,7 @@ public class ConfigurationPersistenceManager
 			statement.executeUpdate(
 				_db.buildSQL(
 					"create table Configuration_ (configurationId " +
-						"VARCHAR(255) not null primary key, dictionary TEXT)"));
+						"VARCHAR(512) not null primary key, dictionary TEXT)"));
 		}
 		catch (IOException | SQLException exception) {
 			ReflectionUtil.throwException(exception);

@@ -463,25 +463,27 @@ public class CommerceOrderCommerceDefinitionTermContributor
 		CommerceShippingMethod commerceShippingMethod =
 			commerceOrder.getCommerceShippingMethod();
 
-		if (commerceShippingMethod != null) {
-			CommerceShippingEngine commerceShippingEngine =
-				_commerceShippingEngineRegistry.getCommerceShippingEngine(
-					commerceShippingMethod.getEngineKey());
+		if (commerceShippingMethod == null) {
+			return StringPool.BLANK;
+		}
 
-			if (commerceShippingEngine != null) {
-				for (CommerceShippingOption commerceShippingOption :
-						commerceShippingEngine.getCommerceShippingOptions(
-							null, commerceOrder, locale)) {
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				commerceShippingMethod.getEngineKey());
 
-					if (Objects.equals(
-							commerceShippingOption.getKey(),
-							commerceOrder.getShippingOptionName())) {
+		if (commerceShippingEngine == null) {
+			return StringPool.BLANK;
+		}
 
-						return commerceShippingOption.getName();
-					}
-				}
+		for (CommerceShippingOption commerceShippingOption :
+				commerceShippingEngine.getCommerceShippingOptions(
+					null, commerceOrder, locale)) {
 
-				return StringPool.BLANK;
+			if (Objects.equals(
+					commerceShippingOption.getKey(),
+					commerceOrder.getShippingOptionName())) {
+
+				return commerceShippingOption.getName();
 			}
 		}
 

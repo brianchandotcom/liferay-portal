@@ -280,7 +280,7 @@ public class LayoutActionDropdownItemsProvider {
 							dropdownItem.putData(
 								"copyLayoutURL",
 								_layoutsAdminDisplayContext.
-									getCopyLayoutRenderURL(layout));
+									getCopyLayoutRenderURL(false, layout));
 
 							if (!_layoutsAdminDisplayContext.
 									isShowCopyLayoutAction(layout)) {

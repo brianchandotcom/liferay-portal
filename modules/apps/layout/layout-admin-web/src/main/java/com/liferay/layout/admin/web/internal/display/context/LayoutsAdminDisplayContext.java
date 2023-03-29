@@ -364,11 +364,15 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
+	public String getCopyLayoutRenderURL(boolean copyPermissions, Layout layout)
+		throws Exception {
+
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/layout_admin/add_layout"
+		).setParameter(
+			"copyPermissions", copyPermissions
 		).setParameter(
 			"privateLayout", isPrivateLayout()
 		).setParameter(
@@ -378,13 +382,15 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getCopyLayoutURL(long sourcePlid) {
+	public String getCopyLayoutURL(boolean copyPermissions, long sourcePlid) {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/layout_admin/copy_layout"
 		).setRedirect(
 			getRedirect()
+		).setParameter(
+			"copyPermissions", copyPermissions
 		).setParameter(
 			"explicitCreation", Boolean.TRUE
 		).setParameter(

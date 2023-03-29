@@ -37,6 +37,19 @@
 
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
+	<condition property="workspace.name" value="${env.TEST_WORKSPACE_NAME}">
+		<and>
+			<isset property="env.TEST_WORKSPACE_NAME" />
+			<not>
+				<equals arg1="${env.TEST_WORKSPACE_NAME}" arg2="" />
+			</not>
+		</and>
+	</condition>
+
+	<condition property="workspace.dir" value="${project.dir}/workspaces/${workspace.name}">
+		<isset property="workspace.name" />
+	</condition>
+
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
 			<if>
@@ -2088,6 +2101,8 @@ war.path=${app.server.portal.dir}/</echo>
 	</macrodef>
 
 	<macrodef name="poshi-execute">
+		<attribute default="portal-web/build-test.gradle" name="build.gradle.file" />
+		<attribute default="${basedir}" name="build.gradle.dir" />
 		<attribute default="false" name="failonerror" />
 		<attribute name="task" />
 
@@ -2122,16 +2137,16 @@ war.path=${app.server.portal.dir}/</echo>
 						</else>
 					</if>
 
-					<gradle-execute failonerror="@{failonerror}" gradlejvmargs="${poshi.gradle.jvm.args}" setupbinariescache="false" stacktrace="false" task="@{task}">
-						<arg value="--build-file=portal-web/build-test.gradle" />
+					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" gradlejvmargs="${poshi.gradle.jvm.args}" setupbinariescache="false" stacktrace="false" task="@{task}">
+						<arg value="--build-file=@{build.gradle.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 						<env key="ANT_OPTS" value="${poshi.java.jdk.opts}" />
 						<env key="JAVA_HOME" path="${java.jdk.home}" />
 					</gradle-execute>
 				</then>
 				<else>
-					<gradle-execute failonerror="@{failonerror}" setupbinariescache="false" stacktrace="false" task="@{task}">
-						<arg value="--build-file=portal-web/build-test.gradle" />
+					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" setupbinariescache="false" stacktrace="false" task="@{task}">
+						<arg value="--build-file=@{build.gradle.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 					</gradle-execute>
 				</else>
@@ -12617,6 +12632,16 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</then>
 			</elseif>
 		</if>
+
+		<if>
+			<isset property="workspace.dir" />
+			<then>
+				<copy
+					file="${test.ext.properties.file}"
+					todir="${workspace.dir}/poshi"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-signing-PCKS12-certificate">
@@ -14141,12 +14166,29 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<poshi-execute task="writePoshiProperties" />
+		<if>
+			<isset property="workspace.dir" />
+			<then>
+				<poshi-execute
+					build.gradle.dir="${workspace.dir}"
+					build.gradle.file="${workspace.dir}/build.gradle"
+					task="writePoshiProperties"
+				/>
 
-		<move
-			file="portal-web/test.case.method.names.properties"
-			tofile="test.case.method.names.properties"
-		/>
+				<move
+					file="${workspace.dir}/test.case.method.names.properties"
+					tofile="test.case.method.names.properties"
+				/>
+			</then>
+			<else>
+				<poshi-execute task="writePoshiProperties" />
+
+				<move
+					file="portal-web/test.case.method.names.properties"
+					tofile="test.case.method.names.properties"
+				/>
+			</else>
+		</if>
 
 		<echo></echo>
 		<echo>##</echo>
@@ -14228,12 +14270,29 @@ if (ppstate.equals("normal")) {
 					</else>
 				</if>
 
-				<poshi-execute task="writePoshiProperties" />
+				<if>
+					<isset property="workspace.dir" />
+					<then>
+						<poshi-execute
+							build.gradle.dir="${workspace.dir}"
+							build.gradle.file="${workspace.dir}/build.gradle"
+							task="writePoshiProperties"
+						/>
 
-				<move
-					file="portal-web/test.generated.properties"
-					tofile="test.generated.properties"
-				/>
+						<move
+							file="${workspace.dir}/test.generated.properties"
+							tofile="test.generated.properties"
+						/>
+					</then>
+					<else>
+						<poshi-execute task="writePoshiProperties" />
+
+						<move
+							file="portal-web/test.generated.properties"
+							tofile="test.generated.properties"
+						/>
+					</else>
+				</if>
 
 				<if>
 					<isset property="test.class" />
@@ -14550,7 +14609,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<poshi-execute task="runPoshi" />
+		<if>
+			<isset property="workspace.dir" />
+			<then>
+				<poshi-execute
+					build.gradle.dir="${workspace.dir}"
+					build.gradle.file="${workspace.dir}/build.gradle"
+					task="runPoshi"
+				/>
+			</then>
+			<else>
+				<poshi-execute task="runPoshi" />
+			</else>
+		</if>
 
 		<property name="test.class" value="${test.simple.class.name}#${test.method.name}" />
 

@@ -1,0 +1,19 @@
+{
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		}
+	},
+	"name": "liferay-marketplace-workspaces",
+	"private": true,
+	"scripts": {
+		"format": "liferay-npm-scripts format --experimental-standalone",
+		"lint": "liferay-npm-scripts lint:fix --experimental-standalone"
+	},
+	"workspaces": {
+		"packages": [
+			"client-extensions/liferay-marketplace-custom-element",
+			"client-extensions/liferay-marketplace-theme-css"
+		]
+	}
+}

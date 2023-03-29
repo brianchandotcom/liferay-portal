@@ -1,6 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Depot";
@@ -608,6 +609,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewCustomizedWCInAP {
+		property test.name.skip.portal.instance = "DepotWCSiteIntegration#CanViewCustomizedWCInAP";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -687,6 +690,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewCustomizedWCInWCD {
+		property test.name.skip.portal.instance = "DepotWCSiteIntegration#CanViewCustomizedWCInWCD";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");

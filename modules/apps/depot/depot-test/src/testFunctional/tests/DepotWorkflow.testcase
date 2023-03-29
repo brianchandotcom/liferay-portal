@@ -1,6 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Depot";
@@ -118,6 +119,7 @@ definition {
 	@refactordone
 	test CanApproveWCArticle {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DepotWorkflow#CanApproveWCArticle";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -349,6 +351,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanApproveWCInFolder {
+		property test.name.skip.portal.instance = "DepotWorkflow#CanApproveWCInFolder";
+
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
 			groupName = "Test Depot Name",
@@ -452,6 +456,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitImage {
+		property test.name.skip.portal.instance = "DepotWorkflow#CanRejectAndResubmitImage";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -568,6 +574,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitWC {
+		property test.name.skip.portal.instance = "DepotWorkflow#CanRejectAndResubmitWC";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

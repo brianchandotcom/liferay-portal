@@ -611,6 +611,36 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public Object getSystemObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long primaryKey)
+		throws Exception {
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			return null;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172094")) {
+			SystemObjectDefinitionManager systemObjectDefinitionManager =
+				_systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(
+						objectDefinition.getName());
+
+			return DTOConverterUtil.toDTO(
+				systemObjectDefinitionManager.
+					getBaseModelByExternalReferenceCode(
+						systemObjectDefinitionManager.getExternalReferenceCode(
+							primaryKey),
+						objectDefinition.getCompanyId()),
+				_dtoConverterRegistry, systemObjectDefinitionManager,
+				dtoConverterContext.getUser());
+		}
+
+		return _objectEntryLocalService.getSystemModelAttributes(
+			objectDefinition, primaryKey);
+	}
+
+	@Override
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,

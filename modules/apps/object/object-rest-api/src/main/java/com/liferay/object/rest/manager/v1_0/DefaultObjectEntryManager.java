@@ -86,6 +86,11 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			String objectRelationshipName, Pagination pagination)
 		throws Exception;
 
+	public Object getSystemObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long primaryKey)
+		throws Exception;
+
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,

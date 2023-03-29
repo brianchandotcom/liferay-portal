@@ -10,7 +10,7 @@ ${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 ${dataFactory.toInsertSQL(countryModel)}
 
-<#include "default_user.ftl">
+<#include "guest_user.ftl">
 
 <#include "commerce_groups.ftl">
 

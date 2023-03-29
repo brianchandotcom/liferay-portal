@@ -1827,45 +1827,6 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	public static List<JournalArticle> getIndexableArticlesByDDMStructureKey(
-		String[] ddmStructureKeys) {
-
-		return getService().getIndexableArticlesByDDMStructureKey(
-			ddmStructureKeys);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	public static List<JournalArticle> getIndexableArticlesByDDMStructureKey(
-		String[] ddmStructureKeys, java.util.Locale locale) {
-
-		return getService().getIndexableArticlesByDDMStructureKey(
-			ddmStructureKeys, locale);
-	}
-
-	/**
-	 * Returns the indexable web content articles matching the resource primary
-	 * key.
-	 *
-	 * @param resourcePrimKey the primary key of the resource instance
-	 * @return the indexable web content articles matching the resource primary
-	 key
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	public static List<JournalArticle> getIndexableArticlesByResourcePrimKey(
-		long resourcePrimKey) {
-
-		return getService().getIndexableArticlesByResourcePrimKey(
-			resourcePrimKey);
-	}
-
-	/**
 	 * Returns the journal article with the primary key.
 	 *
 	 * @param id the primary key of the journal article

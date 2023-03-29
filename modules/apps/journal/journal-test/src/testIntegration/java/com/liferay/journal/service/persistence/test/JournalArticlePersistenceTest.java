@@ -363,23 +363,6 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByDDMStructureKey() throws Exception {
-		_persistence.countByDDMStructureKey("");
-
-		_persistence.countByDDMStructureKey("null");
-
-		_persistence.countByDDMStructureKey((String)null);
-	}
-
-	@Test
-	public void testCountByDDMStructureKeyArrayable() throws Exception {
-		_persistence.countByDDMStructureKey(
-			new String[] {
-				RandomTestUtil.randomString(), "", "null", null, null
-			});
-	}
-
-	@Test
 	public void testCountByDDMTemplateKey() throws Exception {
 		_persistence.countByDDMTemplateKey("");
 
@@ -482,15 +465,6 @@ public class JournalArticlePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_DDMSI(0L, 0L);
-	}
-
-	@Test
-	public void testCountByG_DDMSK() throws Exception {
-		_persistence.countByG_DDMSK(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_DDMSK(0L, "null");
-
-		_persistence.countByG_DDMSK(0L, (String)null);
 	}
 
 	@Test
@@ -636,16 +610,6 @@ public class JournalArticlePersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_DDMSI(0L, 0L, 0L);
-	}
-
-	@Test
-	public void testCountByG_C_DDMSK() throws Exception {
-		_persistence.countByG_C_DDMSK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_C_DDMSK(0L, 0L, "null");
-
-		_persistence.countByG_C_DDMSK(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -1079,22 +1043,6 @@ public class JournalArticlePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				journalArticle, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "DDMStructureId"));
-
-		Assert.assertEquals(
-			Long.valueOf(journalArticle.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				journalArticle, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
-			Long.valueOf(journalArticle.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				journalArticle, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
-		Assert.assertEquals(
-			journalArticle.getDDMStructureKey(),
-			ReflectionTestUtil.invoke(
-				journalArticle, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "DDMStructureKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(journalArticle.getGroupId()),

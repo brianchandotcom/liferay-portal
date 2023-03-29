@@ -1534,36 +1534,6 @@ public interface JournalArticleLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
-		String[] ddmStructureKeys);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
-		String[] ddmStructureKeys, Locale locale);
-
-	/**
-	 * Returns the indexable web content articles matching the resource primary
-	 * key.
-	 *
-	 * @param resourcePrimKey the primary key of the resource instance
-	 * @return the indexable web content articles matching the resource primary
-	 key
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getIndexableArticlesByResourcePrimKey(
-		long resourcePrimKey);
-
-	/**
 	 * Returns the journal article with the primary key.
 	 *
 	 * @param id the primary key of the journal article

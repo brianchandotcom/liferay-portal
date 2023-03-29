@@ -14,25 +14,30 @@
 
 package com.liferay.document.library.web.internal.display.context.helper;
 
-import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Objects;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import org.springframework.test.util.ReflectionTestUtils;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Cristina González
@@ -43,6 +48,22 @@ public class FileEntryDisplayContextHelperTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testIsCancelCheckoutDocumentActionAvailableWithCheckedOutAndOverridePermissionAndMoreThat1Version()
@@ -225,17 +246,26 @@ public class FileEntryDisplayContextHelperTest {
 	private void _configureDLFileEntryPermission(
 		boolean overrideCheckOutPermission, boolean updatePermission) {
 
-		ReflectionTestUtils.setField(
-			_dlFileEntryPermission, "_dlFileEntryModelResourcePermission",
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		bundleContext.registerService(
+			ModelResourcePermission.class,
 			new MockModelResourcePermission(
-				overrideCheckOutPermission, updatePermission));
-		ReflectionTestUtils.setField(
-			_dlFileEntryPermission, "_fileEntryModelResourcePermission",
+				overrideCheckOutPermission, updatePermission),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				"com.liferay.document.library.kernel.model.DLFileEntry"));
+
+		bundleContext.registerService(
+			ModelResourcePermission.class,
 			new MockModelResourcePermission(
-				overrideCheckOutPermission, updatePermission));
+				overrideCheckOutPermission, updatePermission),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				"com.liferay.portal.kernel.repository.model.FileEntry"));
 	}
 
-	private final DLFileEntryPermission _dlFileEntryPermission =
-		new DLFileEntryPermission();
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 }

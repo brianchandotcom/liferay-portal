@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
+	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testCompile project(":core:petra:petra-reflect")

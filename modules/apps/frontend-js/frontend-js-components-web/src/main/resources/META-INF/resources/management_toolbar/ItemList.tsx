@@ -15,9 +15,10 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default function ItemList({children, expand}: IProps) {
+export default function ItemList({children, expand, ...otherProps}: IProps) {
 	return (
 		<ul
+			{...otherProps}
 			className={classNames('navbar-nav', {
 				'navbar-nav-expand': expand,
 			})}

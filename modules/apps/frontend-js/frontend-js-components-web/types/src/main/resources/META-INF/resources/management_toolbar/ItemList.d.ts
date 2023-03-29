@@ -13,7 +13,11 @@
  */
 
 import React from 'react';
-export default function ItemList({children, expand}: IProps): JSX.Element;
+export default function ItemList({
+	children,
+	expand,
+	...otherProps
+}: IProps): JSX.Element;
 interface IProps {
 	children?: React.ReactNode;
 	expand?: boolean;

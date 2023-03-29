@@ -164,7 +164,7 @@ function ManagementToolbar({
 					/>
 				)}
 
-				<FrontendManagementToolbar.ItemList>
+				<FrontendManagementToolbar.ItemList role="none">
 					{!active && showSearch && (
 						<SearchControls.ShowMobileButton
 							disabled={disabled}

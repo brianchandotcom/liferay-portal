@@ -1032,6 +1032,10 @@ public class CommerceOrderContentDisplayContext {
 			CommerceAccount commerceAccount, String actionId)
 		throws PortalException {
 
+		if (commerceAccount == null) {
+			return false;
+		}
+
 		return _portletResourcePermission.contains(
 			_cpRequestHelper.getPermissionChecker(),
 			commerceAccount.getCommerceAccountGroupId(), actionId);

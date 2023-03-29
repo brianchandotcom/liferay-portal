@@ -136,12 +136,12 @@ function Inputs({index, onInputSetItemChange, value}) {
 	return (
 		<>
 			<ClayInput.GroupItem>
-				<label htmlFor="indexedField">
+				<label htmlFor={`indexedField${index}`}>
 					{Liferay.Language.get('indexed-field')}
 				</label>
 
 				<ClayInput
-					id="indexedField"
+					id={`indexedField${index}`}
 					onChange={_handleChangeValue('field')}
 					type="text"
 					value={value.field || ''}
@@ -149,12 +149,12 @@ function Inputs({index, onInputSetItemChange, value}) {
 			</ClayInput.GroupItem>
 
 			<ClayInput.GroupItem>
-				<label htmlFor="displayLabel">
+				<label htmlFor={`displayLabel${index}`}>
 					{Liferay.Language.get('display-label')}
 				</label>
 
 				<ClayInput
-					id="displayLabel"
+					id={`displayLabel${index}`}
 					onChange={_handleChangeValue('label')}
 					type="text"
 					value={value.label || ''}
@@ -162,11 +162,13 @@ function Inputs({index, onInputSetItemChange, value}) {
 			</ClayInput.GroupItem>
 
 			<ClayInput.GroupItem>
-				<label htmlFor="order">{Liferay.Language.get('order')}</label>
+				<label htmlFor={`order${index}`}>
+					{Liferay.Language.get('order')}
+				</label>
 
 				<ClaySelect
 					aria-label={Liferay.Language.get('select-order')}
-					id="order"
+					id={`order${index}`}
 					onChange={_handleChangeValue('order')}
 					value={value.order}
 				>

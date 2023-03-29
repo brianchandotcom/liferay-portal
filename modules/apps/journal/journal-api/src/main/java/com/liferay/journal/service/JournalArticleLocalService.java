@@ -1322,30 +1322,29 @@ public interface JournalArticleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, int status,
+		long groupId, long ddmStructureId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long ddmStructureId, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long ddmStructureId, Locale locale, int status, int start,
+		int end, OrderByComparator<JournalArticle> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, long ddmStructureId, int status,
 		int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, Locale locale,
+		long groupId, long classNameId, long ddmStructureId, Locale locale,
 		int status, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int status, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, Locale locale, int status,
-		int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1534,10 +1533,18 @@ public interface JournalArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys, Locale locale);
@@ -1549,7 +1556,9 @@ public interface JournalArticleLocalService
 	 * @param resourcePrimKey the primary key of the resource instance
 	 * @return the indexable web content articles matching the resource primary
 	 key
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getIndexableArticlesByResourcePrimKey(
 		long resourcePrimKey);
@@ -1869,17 +1878,27 @@ public interface JournalArticleLocalService
 	public JournalArticle getPreviousApprovedArticle(JournalArticle article);
 
 	/**
+	 * Returns the web content articles matching the DDM structure keys.
+	 *
+	 * @param ddmStructureId the primary key of the web content article's
+	 DDM structure
+	 * @return the web content articles matching the DDM structure keys
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getStructureArticles(long ddmStructureId);
+
+	/**
 	 * Returns the web content articles matching the group and DDM structure
 	 * key.
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @return the matching web content articles
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getStructureArticles(
-		long groupId, String ddmStructureKey);
+		long groupId, long ddmStructureId);
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
@@ -1895,7 +1914,7 @@ public interface JournalArticleLocalService
 	 * </p>
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @param start the lower bound of the range of web content articles to
 	 return
@@ -1908,30 +1927,20 @@ public interface JournalArticleLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getStructureArticles(
-		long groupId, String ddmStructureKey, int start, int end,
+		long groupId, long ddmStructureId, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator);
-
-	/**
-	 * Returns the web content articles matching the DDM structure keys.
-	 *
-	 * @param ddmStructureKeys the primary keys of the web content article's
-	 DDM structures
-	 * @return the web content articles matching the DDM structure keys
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticle> getStructureArticles(String[] ddmStructureKeys);
 
 	/**
 	 * Returns the number of web content articles matching the group and DDM
 	 * structure key.
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @return the number of matching web content articles
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStructureArticlesCount(long groupId, String ddmStructureKey);
+	public int getStructureArticlesCount(long groupId, long ddmStructureId);
 
 	/**
 	 * Returns the web content articles matching the group and DDM template key.

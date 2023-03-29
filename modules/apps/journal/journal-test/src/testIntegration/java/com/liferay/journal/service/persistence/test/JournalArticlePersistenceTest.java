@@ -356,6 +356,13 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByDDMStructureId() throws Exception {
+		_persistence.countByDDMStructureId(RandomTestUtil.nextLong());
+
+		_persistence.countByDDMStructureId(0L);
+	}
+
+	@Test
 	public void testCountByDDMStructureKey() throws Exception {
 		_persistence.countByDDMStructureKey("");
 
@@ -467,6 +474,14 @@ public class JournalArticlePersistenceTest {
 		_persistence.countByG_UT(0L, "null");
 
 		_persistence.countByG_UT(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_DDMSI() throws Exception {
+		_persistence.countByG_DDMSI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_DDMSI(0L, 0L);
 	}
 
 	@Test
@@ -612,6 +627,15 @@ public class JournalArticlePersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_C(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_C_DDMSI() throws Exception {
+		_persistence.countByG_C_DDMSI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_DDMSI(0L, 0L, 0L);
 	}
 
 	@Test
@@ -1039,6 +1063,22 @@ public class JournalArticlePersistenceTest {
 			ReflectionTestUtil.<Double>invoke(
 				journalArticle, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "version"));
+
+		Assert.assertEquals(
+			Long.valueOf(journalArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				journalArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(journalArticle.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				journalArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(journalArticle.getDDMStructureId()),
+			ReflectionTestUtil.<Long>invoke(
+				journalArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "DDMStructureId"));
 
 		Assert.assertEquals(
 			Long.valueOf(journalArticle.getGroupId()),

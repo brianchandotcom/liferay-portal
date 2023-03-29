@@ -730,7 +730,7 @@ public class JournalFolderServiceHttp {
 
 	public static java.util.List<Object> getFoldersAndArticles(
 		HttpPrincipal httpPrincipal, long groupId, long userId, long folderId,
-		String ddmStructureKey, int status, java.util.Locale locale, int start,
+		long ddmStructureId, int status, java.util.Locale locale, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
 
@@ -740,7 +740,7 @@ public class JournalFolderServiceHttp {
 				_getFoldersAndArticlesParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, userId, folderId, ddmStructureKey, status,
+				methodKey, groupId, userId, folderId, ddmStructureId, status,
 				locale, start, end, orderByComparator);
 
 			Object returnObj = null;
@@ -896,7 +896,7 @@ public class JournalFolderServiceHttp {
 
 	public static int getFoldersAndArticlesCount(
 		HttpPrincipal httpPrincipal, long groupId, long userId, long folderId,
-		String ddmStructureKey, int status) {
+		long ddmStructureId, int status) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -904,7 +904,7 @@ public class JournalFolderServiceHttp {
 				_getFoldersAndArticlesCountParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, userId, folderId, ddmStructureKey, status);
+				methodKey, groupId, userId, folderId, ddmStructureId, status);
 
 			Object returnObj = null;
 
@@ -1494,7 +1494,7 @@ public class JournalFolderServiceHttp {
 		};
 	private static final Class<?>[] _getFoldersAndArticlesParameterTypes18 =
 		new Class[] {
-			long.class, long.class, long.class, String.class, int.class,
+			long.class, long.class, long.class, long.class, int.class,
 			java.util.Locale.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
@@ -1516,7 +1516,7 @@ public class JournalFolderServiceHttp {
 		};
 	private static final Class<?>[]
 		_getFoldersAndArticlesCountParameterTypes23 = new Class[] {
-			long.class, long.class, long.class, String.class, int.class
+			long.class, long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getFoldersCountParameterTypes24 =
 		new Class[] {long.class, long.class};

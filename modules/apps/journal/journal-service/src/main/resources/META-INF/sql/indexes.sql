@@ -1,3 +1,4 @@
+create index IX_FB23A758 on JournalArticle (DDMStructureId, ctCollectionId);
 create index IX_F1C2B662 on JournalArticle (DDMStructureKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_A01DB92F on JournalArticle (DDMTemplateKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_AAF3B581 on JournalArticle (companyId, ctCollectionId);
@@ -6,11 +7,13 @@ create index IX_F12AB4A3 on JournalArticle (companyId, version, ctCollectionId);
 create index IX_F97E5289 on JournalArticle (companyId, version, status, ctCollectionId);
 create index IX_62EBBA43 on JournalArticle (ctCollectionId);
 create index IX_55CADE3F on JournalArticle (displayDate, status, ctCollectionId);
+create index IX_C56951D8 on JournalArticle (groupId, DDMStructureId, ctCollectionId);
 create index IX_70325BE2 on JournalArticle (groupId, DDMStructureKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_6A6363AF on JournalArticle (groupId, DDMTemplateKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E10314FA on JournalArticle (groupId, articleId[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_9E386BE0 on JournalArticle (groupId, articleId[$COLUMN_LENGTH:75$], status, ctCollectionId);
 create unique index IX_D3ACAD4A on JournalArticle (groupId, articleId[$COLUMN_LENGTH:75$], version, ctCollectionId);
+create index IX_7BEC567C on JournalArticle (groupId, classNameId, DDMStructureId, ctCollectionId);
 create index IX_8A0FEBBE on JournalArticle (groupId, classNameId, DDMStructureKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_20E66853 on JournalArticle (groupId, classNameId, DDMTemplateKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E748358 on JournalArticle (groupId, classNameId, classPK, ctCollectionId);

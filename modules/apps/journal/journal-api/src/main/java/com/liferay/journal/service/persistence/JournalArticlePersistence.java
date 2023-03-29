@@ -887,6 +887,150 @@ public interface JournalArticlePersistence
 	public int countByCompanyId(long companyId);
 
 	/**
+	 * Returns all the journal articles where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByDDMStructureId(
+		long DDMStructureId);
+
+	/**
+	 * Returns a range of all the journal articles where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByDDMStructureId(
+		long DDMStructureId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the journal articles where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the journal articles where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first journal article in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByDDMStructureId_First(
+			long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the first journal article in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByDDMStructureId_First(
+		long DDMStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the last journal article in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByDDMStructureId_Last(
+			long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the last journal article in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByDDMStructureId_Last(
+		long DDMStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	public JournalArticle[] findByDDMStructureId_PrevAndNext(
+			long id, long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Removes all the journal articles where DDMStructureId = &#63; from the database.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 */
+	public void removeByDDMStructureId(long DDMStructureId);
+
+	/**
+	 * Returns the number of journal articles where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching journal articles
+	 */
+	public int countByDDMStructureId(long DDMStructureId);
+
+	/**
 	 * Returns all the journal articles where DDMStructureKey = &#63;.
 	 *
 	 * @param DDMStructureKey the ddm structure key
@@ -3179,6 +3323,231 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_UT(long groupId, String urlTitle);
+
+	/**
+	 * Returns all the journal articles where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_DDMSI(
+		long groupId, long DDMStructureId);
+
+	/**
+	 * Returns a range of all the journal articles where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_DDMSI(
+		long groupId, long DDMStructureId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_DDMSI(
+		long groupId, long DDMStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_DDMSI(
+		long groupId, long DDMStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByG_DDMSI_First(
+			long groupId, long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the first journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByG_DDMSI_First(
+		long groupId, long DDMStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the last journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByG_DDMSI_Last(
+			long groupId, long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the last journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByG_DDMSI_Last(
+		long groupId, long DDMStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	public JournalArticle[] findByG_DDMSI_PrevAndNext(
+			long id, long groupId, long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching journal articles that the user has permission to view
+	 */
+	public java.util.List<JournalArticle> filterFindByG_DDMSI(
+		long groupId, long DDMStructureId);
+
+	/**
+	 * Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles that the user has permission to view
+	 */
+	public java.util.List<JournalArticle> filterFindByG_DDMSI(
+		long groupId, long DDMStructureId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles that the user has permission to view
+	 */
+	public java.util.List<JournalArticle> filterFindByG_DDMSI(
+		long groupId, long DDMStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	public JournalArticle[] filterFindByG_DDMSI_PrevAndNext(
+			long id, long groupId, long DDMStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Removes all the journal articles where groupId = &#63; and DDMStructureId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 */
+	public void removeByG_DDMSI(long groupId, long DDMStructureId);
+
+	/**
+	 * Returns the number of journal articles where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching journal articles
+	 */
+	public int countByG_DDMSI(long groupId, long DDMStructureId);
+
+	/**
+	 * Returns the number of journal articles that the user has permission to view where groupId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching journal articles that the user has permission to view
+	 */
+	public int filterCountByG_DDMSI(long groupId, long DDMStructureId);
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and DDMStructureKey = &#63;.
@@ -6238,6 +6607,66 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_C_C(long groupId, long classNameId, long classPK);
+
+	/**
+	 * Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByG_C_DDMSI(
+			long groupId, long classNameId, long DDMStructureId)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByG_C_DDMSI(
+		long groupId, long classNameId, long DDMStructureId);
+
+	/**
+	 * Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByG_C_DDMSI(
+		long groupId, long classNameId, long DDMStructureId,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the journal article that was removed
+	 */
+	public JournalArticle removeByG_C_DDMSI(
+			long groupId, long classNameId, long DDMStructureId)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and DDMStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching journal articles
+	 */
+	public int countByG_C_DDMSI(
+		long groupId, long classNameId, long DDMStructureId);
 
 	/**
 	 * Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.

@@ -40,7 +40,7 @@ public interface JournalArticleFinder {
 
 	public int countByG_F_C_S(
 		long groupId, java.util.List<Long> folderIds, long classNameId,
-		String ddmStructureKey,
+		long ddmStructureId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -91,7 +91,7 @@ public interface JournalArticleFinder {
 
 	public int filterCountByG_F_C_S(
 		long groupId, java.util.List<Long> folderIds, long classNameId,
-		String ddmStructureKey,
+		long ddmStructureId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -138,7 +138,7 @@ public interface JournalArticleFinder {
 	public java.util.List<com.liferay.journal.model.JournalArticle>
 		filterFindByG_F_C_S_L(
 			long groupId, java.util.List<Long> folderIds, long classNameId,
-			String ddmStructureKey, java.util.Locale locale,
+			long ddmStructureId, java.util.Locale locale,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -192,14 +192,7 @@ public interface JournalArticleFinder {
 	public java.util.List<com.liferay.journal.model.JournalArticle>
 		findByG_F_C_S_L(
 			long groupId, java.util.List<Long> folderIds, long classNameId,
-			String ddmStructureKey, java.util.Locale locale,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.journal.model.JournalArticle> queryDefinition);
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
-		findByG_F_C_S_L(
-			long groupId, java.util.List<Long> folderIds, long classNameId,
-			String[] ddmStructureKeys, java.util.Locale locale,
+			long ddmStructureId, java.util.Locale locale,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 

@@ -624,19 +624,9 @@ public class JournalArticleServiceUtil {
 		return getService().getArticlesByLayoutUuidCount(groupId, layoutUuid);
 	}
 
-	public static List<JournalArticle> getArticlesByStructureId(
-		long groupId, long folderId, long classNameId, String ddmStructureKey,
-		int status, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getService().getArticlesByStructureId(
-			groupId, folderId, classNameId, ddmStructureKey, status, start, end,
-			orderByComparator);
-	}
-
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * group, class name ID, DDM structure key, and workflow status.
+	 * group, default class name ID, and DDM structure key.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -649,12 +639,7 @@ public class JournalArticleServiceUtil {
 	 * </p>
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
@@ -669,57 +654,11 @@ public class JournalArticleServiceUtil {
 	 comparator
 	 */
 	public static List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, int status,
-		int start, int end,
+		long groupId, long ddmStructureId, int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getService().getArticlesByStructureId(
-			groupId, classNameId, ddmStructureKey, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the web content articles matching the
-	 * group, class name ID, DDM structure key, and workflow status.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param start the lower bound of the range of web content articles to
-	 return
-	 * @param end the upper bound of the range of web content articles to
-	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the web content
-	 articles
-	 * @return the range of matching web content articles ordered by the
-	 comparator
-	 */
-	public static List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey,
-		java.util.Locale locale, int status, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getService().getArticlesByStructureId(
-			groupId, classNameId, ddmStructureKey, locale, status, start, end,
-			orderByComparator);
+			groupId, ddmStructureId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -737,11 +676,8 @@ public class JournalArticleServiceUtil {
 	 * </p>
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
 	 * @param start the lower bound of the range of web content articles to
 	 return
 	 * @param end the upper bound of the range of web content articles to
@@ -752,11 +688,11 @@ public class JournalArticleServiceUtil {
 	 comparator
 	 */
 	public static List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int status, int start, int end,
+		long groupId, long ddmStructureId, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getService().getArticlesByStructureId(
-			groupId, ddmStructureKey, status, start, end, orderByComparator);
+			groupId, ddmStructureId, start, end, orderByComparator);
 	}
 
 	/**
@@ -774,41 +710,7 @@ public class JournalArticleServiceUtil {
 	 * </p>
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure
-	 * @param start the lower bound of the range of web content articles to
-	 return
-	 * @param end the upper bound of the range of web content articles to
-	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the web content
-	 articles
-	 * @return the range of matching web content articles ordered by the
-	 comparator
-	 */
-	public static List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int start, int end,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getService().getArticlesByStructureId(
-			groupId, ddmStructureKey, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the web content articles matching the
-	 * group, default class name ID, and DDM structure key.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @param locale web content articles locale
 	 * @param status the web content article's workflow status. For more
@@ -824,12 +726,110 @@ public class JournalArticleServiceUtil {
 	 comparator
 	 */
 	public static List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, java.util.Locale locale,
+		long groupId, long ddmStructureId, java.util.Locale locale, int status,
+		int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().getArticlesByStructureId(
+			groupId, ddmStructureId, locale, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the web content articles matching the
+	 * group, class name ID, DDM structure key, and workflow status.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param classNameId the primary key of the DDMStructure class if the web
+	 content article is related to a DDM structure, the primary key of
+	 the class name associated with the article, or
+	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
+	 module otherwise
+	 * @param ddmStructureId the primary key of the web content article's DDM
+	 structure
+	 * @param status the web content article's workflow status. For more
+	 information see {@link WorkflowConstants} for constants starting
+	 with the "STATUS_" prefix.
+	 * @param start the lower bound of the range of web content articles to
+	 return
+	 * @param end the upper bound of the range of web content articles to
+	 return (not inclusive)
+	 * @param orderByComparator the comparator to order the web content
+	 articles
+	 * @return the range of matching web content articles ordered by the
+	 comparator
+	 */
+	public static List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, long ddmStructureId, int status,
+		int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().getArticlesByStructureId(
+			groupId, classNameId, ddmStructureId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the web content articles matching the
+	 * group, class name ID, DDM structure key, and workflow status.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param classNameId the primary key of the DDMStructure class if the web
+	 content article is related to a DDM structure, the primary key of
+	 the class name associated with the article, or
+	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
+	 module otherwise
+	 * @param ddmStructureId the primary key of the web content article's DDM
+	 structure
+	 * @param status the web content article's workflow status. For more
+	 information see {@link WorkflowConstants} for constants starting
+	 with the "STATUS_" prefix.
+	 * @param start the lower bound of the range of web content articles to
+	 return
+	 * @param end the upper bound of the range of web content articles to
+	 return (not inclusive)
+	 * @param orderByComparator the comparator to order the web content
+	 articles
+	 * @return the range of matching web content articles ordered by the
+	 comparator
+	 */
+	public static List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, long ddmStructureId,
+		java.util.Locale locale, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().getArticlesByStructureId(
+			groupId, classNameId, ddmStructureId, locale, status, start, end,
+			orderByComparator);
+	}
+
+	public static List<JournalArticle> getArticlesByStructureId(
+		long groupId, long folderId, long classNameId, long ddmStructureId,
 		int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getService().getArticlesByStructureId(
-			groupId, ddmStructureKey, locale, status, start, end,
+			groupId, folderId, classNameId, ddmStructureId, status, start, end,
 			orderByComparator);
 	}
 
@@ -882,12 +882,39 @@ public class JournalArticleServiceUtil {
 			groupId, articleId, status);
 	}
 
+	/**
+	 * Returns the number of web content articles matching the group, default
+	 * class name ID, and DDM structure key.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param ddmStructureId the primary key of the web content article's DDM
+	 structure
+	 * @return the number of matching web content articles
+	 */
 	public static int getArticlesCountByStructureId(
-		long groupId, long folderId, long classNameId, String ddmStructureKey,
-		int status) {
+		long groupId, long ddmStructureId) {
 
 		return getService().getArticlesCountByStructureId(
-			groupId, folderId, classNameId, ddmStructureKey, status);
+			groupId, ddmStructureId);
+	}
+
+	/**
+	 * Returns the number of web content articles matching the group, default
+	 * class name ID, and DDM structure key.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param ddmStructureId the primary key of the web content article's DDM
+	 structure
+	 * @param status the web content article's workflow status. For more
+	 information see {@link WorkflowConstants} for constants starting
+	 with the "STATUS_" prefix.
+	 * @return the number of matching web content articles
+	 */
+	public static int getArticlesCountByStructureId(
+		long groupId, long ddmStructureId, int status) {
+
+		return getService().getArticlesCountByStructureId(
+			groupId, ddmStructureId, status);
 	}
 
 	/**
@@ -900,7 +927,7 @@ public class JournalArticleServiceUtil {
 	 the class name associated with the article, or
 	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
 	 module otherwise
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
@@ -908,45 +935,18 @@ public class JournalArticleServiceUtil {
 	 * @return the number of matching web content articles
 	 */
 	public static int getArticlesCountByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, int status) {
+		long groupId, long classNameId, long ddmStructureId, int status) {
 
 		return getService().getArticlesCountByStructureId(
-			groupId, classNameId, ddmStructureKey, status);
+			groupId, classNameId, ddmStructureId, status);
 	}
 
-	/**
-	 * Returns the number of web content articles matching the group, default
-	 * class name ID, and DDM structure key.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure
-	 * @return the number of matching web content articles
-	 */
 	public static int getArticlesCountByStructureId(
-		long groupId, String ddmStructureKey) {
+		long groupId, long folderId, long classNameId, long ddmStructureId,
+		int status) {
 
 		return getService().getArticlesCountByStructureId(
-			groupId, ddmStructureKey);
-	}
-
-	/**
-	 * Returns the number of web content articles matching the group, default
-	 * class name ID, and DDM structure key.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @return the number of matching web content articles
-	 */
-	public static int getArticlesCountByStructureId(
-		long groupId, String ddmStructureKey, int status) {
-
-		return getService().getArticlesCountByStructureId(
-			groupId, ddmStructureKey, status);
+			groupId, folderId, classNameId, ddmStructureId, status);
 	}
 
 	/**

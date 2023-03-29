@@ -1086,9 +1086,8 @@ public class JournalArticleServiceHttp {
 
 	public static java.util.List<com.liferay.journal.model.JournalArticle>
 		getArticlesByStructureId(
-			HttpPrincipal httpPrincipal, long groupId, long folderId,
-			long classNameId, String ddmStructureKey, int status, int start,
-			int end,
+			HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
+			int status, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator) {
 
@@ -1098,8 +1097,84 @@ public class JournalArticleServiceHttp {
 				_getArticlesByStructureIdParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, folderId, classNameId, ddmStructureKey,
-				status, start, end, orderByComparator);
+				methodKey, groupId, ddmStructureId, status, start, end,
+				orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.journal.model.JournalArticle>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle>
+		getArticlesByStructureId(
+			HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.journal.model.JournalArticle> orderByComparator) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				JournalArticleServiceUtil.class, "getArticlesByStructureId",
+				_getArticlesByStructureIdParameterTypes26);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, ddmStructureId, start, end,
+				orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.journal.model.JournalArticle>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle>
+		getArticlesByStructureId(
+			HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
+			java.util.Locale locale, int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.journal.model.JournalArticle> orderByComparator) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				JournalArticleServiceUtil.class, "getArticlesByStructureId",
+				_getArticlesByStructureIdParameterTypes27);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, ddmStructureId, locale, status, start, end,
+				orderByComparator);
 
 			Object returnObj = null;
 
@@ -1126,17 +1201,17 @@ public class JournalArticleServiceHttp {
 	public static java.util.List<com.liferay.journal.model.JournalArticle>
 		getArticlesByStructureId(
 			HttpPrincipal httpPrincipal, long groupId, long classNameId,
-			String ddmStructureKey, int status, int start, int end,
+			long ddmStructureId, int status, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				JournalArticleServiceUtil.class, "getArticlesByStructureId",
-				_getArticlesByStructureIdParameterTypes26);
+				_getArticlesByStructureIdParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, ddmStructureKey, status, start,
+				methodKey, groupId, classNameId, ddmStructureId, status, start,
 				end, orderByComparator);
 
 			Object returnObj = null;
@@ -1164,84 +1239,8 @@ public class JournalArticleServiceHttp {
 	public static java.util.List<com.liferay.journal.model.JournalArticle>
 		getArticlesByStructureId(
 			HttpPrincipal httpPrincipal, long groupId, long classNameId,
-			String ddmStructureKey, java.util.Locale locale, int status,
-			int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.journal.model.JournalArticle> orderByComparator) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				JournalArticleServiceUtil.class, "getArticlesByStructureId",
-				_getArticlesByStructureIdParameterTypes27);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, ddmStructureKey, locale,
-				status, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List<com.liferay.journal.model.JournalArticle>)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List<com.liferay.journal.model.JournalArticle>
-		getArticlesByStructureId(
-			HttpPrincipal httpPrincipal, long groupId, String ddmStructureKey,
-			int status, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.journal.model.JournalArticle> orderByComparator) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				JournalArticleServiceUtil.class, "getArticlesByStructureId",
-				_getArticlesByStructureIdParameterTypes28);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, ddmStructureKey, status, start, end,
-				orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List<com.liferay.journal.model.JournalArticle>)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List<com.liferay.journal.model.JournalArticle>
-		getArticlesByStructureId(
-			HttpPrincipal httpPrincipal, long groupId, String ddmStructureKey,
-			int start, int end,
+			long ddmStructureId, java.util.Locale locale, int status, int start,
+			int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator) {
 
@@ -1251,8 +1250,8 @@ public class JournalArticleServiceHttp {
 				_getArticlesByStructureIdParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, ddmStructureKey, start, end,
-				orderByComparator);
+				methodKey, groupId, classNameId, ddmStructureId, locale, status,
+				start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -1278,8 +1277,9 @@ public class JournalArticleServiceHttp {
 
 	public static java.util.List<com.liferay.journal.model.JournalArticle>
 		getArticlesByStructureId(
-			HttpPrincipal httpPrincipal, long groupId, String ddmStructureKey,
-			java.util.Locale locale, int status, int start, int end,
+			HttpPrincipal httpPrincipal, long groupId, long folderId,
+			long classNameId, long ddmStructureId, int status, int start,
+			int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator) {
 
@@ -1289,8 +1289,8 @@ public class JournalArticleServiceHttp {
 				_getArticlesByStructureIdParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, ddmStructureKey, locale, status, start, end,
-				orderByComparator);
+				methodKey, groupId, folderId, classNameId, ddmStructureId,
+				status, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -1444,8 +1444,7 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int getArticlesCountByStructureId(
-		HttpPrincipal httpPrincipal, long groupId, long folderId,
-		long classNameId, String ddmStructureKey, int status) {
+		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -1454,8 +1453,41 @@ public class JournalArticleServiceHttp {
 				_getArticlesCountByStructureIdParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, folderId, classNameId, ddmStructureKey,
-				status);
+				methodKey, groupId, ddmStructureId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getArticlesCountByStructureId(
+		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
+		int status) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				JournalArticleServiceUtil.class,
+				"getArticlesCountByStructureId",
+				_getArticlesCountByStructureIdParameterTypes36);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, ddmStructureId, status);
 
 			Object returnObj = null;
 
@@ -1480,40 +1512,7 @@ public class JournalArticleServiceHttp {
 
 	public static int getArticlesCountByStructureId(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
-		String ddmStructureKey, int status) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				JournalArticleServiceUtil.class,
-				"getArticlesCountByStructureId",
-				_getArticlesCountByStructureIdParameterTypes36);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, ddmStructureKey, status);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static int getArticlesCountByStructureId(
-		HttpPrincipal httpPrincipal, long groupId, String ddmStructureKey) {
+		long ddmStructureId, int status) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -1522,7 +1521,7 @@ public class JournalArticleServiceHttp {
 				_getArticlesCountByStructureIdParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, ddmStructureKey);
+				methodKey, groupId, classNameId, ddmStructureId, status);
 
 			Object returnObj = null;
 
@@ -1546,8 +1545,8 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int getArticlesCountByStructureId(
-		HttpPrincipal httpPrincipal, long groupId, String ddmStructureKey,
-		int status) {
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		long classNameId, long ddmStructureId, int status) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -1556,7 +1555,8 @@ public class JournalArticleServiceHttp {
 				_getArticlesCountByStructureIdParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, ddmStructureKey, status);
+				methodKey, groupId, folderId, classNameId, ddmStructureId,
+				status);
 
 			Object returnObj = null;
 
@@ -3233,34 +3233,34 @@ public class JournalArticleServiceHttp {
 		};
 	private static final Class<?>[] _getArticlesByStructureIdParameterTypes25 =
 		new Class[] {
-			long.class, long.class, long.class, String.class, int.class,
-			int.class, int.class,
+			long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesByStructureIdParameterTypes26 =
 		new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesByStructureIdParameterTypes27 =
 		new Class[] {
-			long.class, long.class, String.class, java.util.Locale.class,
-			int.class, int.class, int.class,
+			long.class, long.class, java.util.Locale.class, int.class,
+			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesByStructureIdParameterTypes28 =
 		new Class[] {
-			long.class, String.class, int.class, int.class, int.class,
+			long.class, long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesByStructureIdParameterTypes29 =
 		new Class[] {
-			long.class, String.class, int.class, int.class,
+			long.class, long.class, long.class, java.util.Locale.class,
+			int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesByStructureIdParameterTypes30 =
 		new Class[] {
-			long.class, String.class, java.util.Locale.class, int.class,
+			long.class, long.class, long.class, long.class, int.class,
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
@@ -3278,19 +3278,19 @@ public class JournalArticleServiceHttp {
 		};
 	private static final Class<?>[]
 		_getArticlesCountByStructureIdParameterTypes35 = new Class[] {
-			long.class, long.class, long.class, String.class, int.class
+			long.class, long.class
 		};
 	private static final Class<?>[]
 		_getArticlesCountByStructureIdParameterTypes36 = new Class[] {
-			long.class, long.class, String.class, int.class
+			long.class, long.class, int.class
 		};
 	private static final Class<?>[]
 		_getArticlesCountByStructureIdParameterTypes37 = new Class[] {
-			long.class, String.class
+			long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[]
 		_getArticlesCountByStructureIdParameterTypes38 = new Class[] {
-			long.class, String.class, int.class
+			long.class, long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[]
 		_getDisplayArticleByUrlTitleParameterTypes39 = new Class[] {

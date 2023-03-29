@@ -1654,57 +1654,57 @@ public class JournalArticleLocalServiceWrapper
 
 	@Override
 	public java.util.List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, int status,
+		long groupId, long ddmStructureId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleLocalService.getArticlesByStructureId(
+			groupId, ddmStructureId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<JournalArticle> getArticlesByStructureId(
+		long groupId, long ddmStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleLocalService.getArticlesByStructureId(
+			groupId, ddmStructureId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<JournalArticle> getArticlesByStructureId(
+		long groupId, long ddmStructureId, java.util.Locale locale, int status,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
 			orderByComparator) {
 
 		return _journalArticleLocalService.getArticlesByStructureId(
-			groupId, classNameId, ddmStructureKey, status, start, end,
+			groupId, ddmStructureId, locale, status, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public java.util.List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey,
+		long groupId, long classNameId, long ddmStructureId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleLocalService.getArticlesByStructureId(
+			groupId, classNameId, ddmStructureId, status, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, long ddmStructureId,
 		java.util.Locale locale, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
 			orderByComparator) {
 
 		return _journalArticleLocalService.getArticlesByStructureId(
-			groupId, classNameId, ddmStructureKey, locale, status, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public java.util.List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
-			orderByComparator) {
-
-		return _journalArticleLocalService.getArticlesByStructureId(
-			groupId, ddmStructureKey, status, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
-			orderByComparator) {
-
-		return _journalArticleLocalService.getArticlesByStructureId(
-			groupId, ddmStructureKey, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, java.util.Locale locale,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
-			orderByComparator) {
-
-		return _journalArticleLocalService.getArticlesByStructureId(
-			groupId, ddmStructureKey, locale, status, start, end,
+			groupId, classNameId, ddmStructureId, locale, status, start, end,
 			orderByComparator);
 	}
 
@@ -1954,6 +1954,10 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys) {
@@ -1962,6 +1966,10 @@ public class JournalArticleLocalServiceWrapper
 			getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys, java.util.Locale locale) {
@@ -1977,7 +1985,9 @@ public class JournalArticleLocalServiceWrapper
 	 * @param resourcePrimKey the primary key of the resource instance
 	 * @return the indexable web content articles matching the resource primary
 	 key
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> getIndexableArticlesByResourcePrimKey(
 		long resourcePrimKey) {
@@ -2387,20 +2397,34 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the web content articles matching the DDM structure keys.
+	 *
+	 * @param ddmStructureId the primary key of the web content article's
+	 DDM structure
+	 * @return the web content articles matching the DDM structure keys
+	 */
+	@Override
+	public java.util.List<JournalArticle> getStructureArticles(
+		long ddmStructureId) {
+
+		return _journalArticleLocalService.getStructureArticles(ddmStructureId);
+	}
+
+	/**
 	 * Returns the web content articles matching the group and DDM structure
 	 * key.
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @return the matching web content articles
 	 */
 	@Override
 	public java.util.List<JournalArticle> getStructureArticles(
-		long groupId, String ddmStructureKey) {
+		long groupId, long ddmStructureId) {
 
 		return _journalArticleLocalService.getStructureArticles(
-			groupId, ddmStructureKey);
+			groupId, ddmStructureId);
 	}
 
 	/**
@@ -2417,7 +2441,7 @@ public class JournalArticleLocalServiceWrapper
 	 * </p>
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @param start the lower bound of the range of web content articles to
 	 return
@@ -2430,27 +2454,12 @@ public class JournalArticleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<JournalArticle> getStructureArticles(
-		long groupId, String ddmStructureKey, int start, int end,
+		long groupId, long ddmStructureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
 			orderByComparator) {
 
 		return _journalArticleLocalService.getStructureArticles(
-			groupId, ddmStructureKey, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the web content articles matching the DDM structure keys.
-	 *
-	 * @param ddmStructureKeys the primary keys of the web content article's
-	 DDM structures
-	 * @return the web content articles matching the DDM structure keys
-	 */
-	@Override
-	public java.util.List<JournalArticle> getStructureArticles(
-		String[] ddmStructureKeys) {
-
-		return _journalArticleLocalService.getStructureArticles(
-			ddmStructureKeys);
+			groupId, ddmStructureId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2458,14 +2467,14 @@ public class JournalArticleLocalServiceWrapper
 	 * structure key.
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param ddmStructureKey the primary key of the web content article's DDM
+	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure
 	 * @return the number of matching web content articles
 	 */
 	@Override
-	public int getStructureArticlesCount(long groupId, String ddmStructureKey) {
+	public int getStructureArticlesCount(long groupId, long ddmStructureId) {
 		return _journalArticleLocalService.getStructureArticlesCount(
-			groupId, ddmStructureKey);
+			groupId, ddmStructureId);
 	}
 
 	/**

@@ -193,12 +193,12 @@ public class JournalFolderServiceWrapper
 
 	@Override
 	public java.util.List<Object> getFoldersAndArticles(
-		long groupId, long userId, long folderId, String ddmStructureKey,
+		long groupId, long userId, long folderId, long ddmStructureId,
 		int status, java.util.Locale locale, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
 
 		return _journalFolderService.getFoldersAndArticles(
-			groupId, userId, folderId, ddmStructureKey, status, locale, start,
+			groupId, userId, folderId, ddmStructureId, status, locale, start,
 			end, orderByComparator);
 	}
 
@@ -234,11 +234,11 @@ public class JournalFolderServiceWrapper
 
 	@Override
 	public int getFoldersAndArticlesCount(
-		long groupId, long userId, long folderId, String ddmStructureKey,
+		long groupId, long userId, long folderId, long ddmStructureId,
 		int status) {
 
 		return _journalFolderService.getFoldersAndArticlesCount(
-			groupId, userId, folderId, ddmStructureKey, status);
+			groupId, userId, folderId, ddmStructureId, status);
 	}
 
 	@Override

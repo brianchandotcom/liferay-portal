@@ -1464,6 +1464,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put") && javaMethodSignature.returnType?ends_with(schemaName)>
 			<#assign
 				addGetterMethod = false
+				addResourceGetterMethod = false
 				getterJavaMethodParametersMap = {}
 			/>
 
@@ -1498,17 +1499,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					${schemaName} get${schemaName} =
 
-					<#assign
-						getJavaMethodSignature = javaMethodSignature.methodName?replace("put", "get", "f")
-					/>
+					<#assign getJavaMethodSignature = javaMethodSignature.methodName?replace("put", "get", "f") />
 
 					<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignature)>
 						 ${schemaVarName}Resource.${getJavaMethodSignature}(
 							<@getGetterParameters javaMethodSignature=javaMethodSignature />
 						);
-
 					<#else>
-						test${javaMethodSignature.methodName?cap_first}_${getJavaMethodSignature}();
+						<#assign addResourceGetterMethod = true />
+
+						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
+							<@getGetterParameters javaMethodSignature=javaMethodSignature />
+						);
 					</#if>
 
 					assertEquals(random${schemaName}, get${schemaName});
@@ -1536,9 +1538,21 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEquals(new${schemaName}, put${schemaName});
 					assertValid(put${schemaName});
 
-					get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
-						<@getGetterParameters javaMethodSignature=javaMethodSignature />
-					);
+					get${schemaName} =
+
+					<#assign getJavaMethodSignature = javaMethodSignature.methodName?replace("put", "get", "f") />
+
+					<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignature)>
+						${schemaVarName}Resource.${getJavaMethodSignature}(
+							<@getGetterParameters javaMethodSignature=javaMethodSignature />
+						);
+					<#else>
+						<#assign addResourceGetterMethod = true />
+
+						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
+							<@getGetterParameters javaMethodSignature=javaMethodSignature />
+						);
+					</#if>
 
 					assertEquals(new${schemaName}, get${schemaName});
 
@@ -1548,18 +1562,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
+			<#if addResourceGetterMethod>
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
+					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}
+
+						<#sep>, </#sep>
+					</#list>
+				) {
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				}
+			</#if>
+
 			<@getTestGetterMethods
 				getterJavaMethodParametersMap=getterJavaMethodParametersMap
 				javaMethodSignature=javaMethodSignature
 				testNamePrefix="test"
 			/>
-
-			<#if !freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "get", "f"))>
-
-				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_${javaMethodSignature.methodName?replace("put", "get", "f")}() {
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				}
-			</#if>
 
 			<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_create${schemaName}() throws Exception {

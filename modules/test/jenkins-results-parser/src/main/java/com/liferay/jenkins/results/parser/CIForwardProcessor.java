@@ -179,18 +179,20 @@ public class CIForwardProcessor {
 				"Unable to forward pull request", exception);
 		}
 
-		StringBuilder sb = new StringBuilder();
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(forwardedPullRequestURL)) {
+			StringBuilder sb = new StringBuilder();
 
-		sb.append("Pull request has been successfully forwarded to  ");
-		sb.append(forwardedPullRequestURL);
+			sb.append("Pull request has been successfully forwarded to  ");
+			sb.append(forwardedPullRequestURL);
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
-			sb.append("\n[Console](");
-			sb.append(_consoleLogURL);
-			sb.append(")");
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+				sb.append("\n[Console](");
+				sb.append(_consoleLogURL);
+				sb.append(")");
+			}
+
+			_pullRequest.addComment(sb.toString());
 		}
-
-		_pullRequest.addComment(sb.toString());
 	}
 
 	private String[] _getBuildPropertyAsArray(String propertyName)

@@ -87,7 +87,6 @@ interface ObjectField {
 	DBType: string;
 	businessType: ObjectFieldBusinessType;
 	defaultValue?: string;
-	enableLocalization: boolean;
 	externalReferenceCode?: string;
 	id: number;
 	indexed: boolean;
@@ -96,6 +95,7 @@ interface ObjectField {
 	label: LocalizedValue<string>;
 	listTypeDefinitionExternalReferenceCode: string;
 	listTypeDefinitionId?: number;
+	localized: boolean;
 	name: string;
 	objectFieldSettings?: ObjectFieldSetting[];
 	relationshipId?: number;

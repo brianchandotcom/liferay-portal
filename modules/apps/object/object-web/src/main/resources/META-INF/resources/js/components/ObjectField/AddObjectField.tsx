@@ -145,10 +145,10 @@ function ModalAddObjectField({
 										)}
 										onToggle={() =>
 											setValues({
-												enableLocalization: !values.enableLocalization,
+												localized: !values.localized,
 											})
 										}
-										toggled={values.enableLocalization}
+										toggled={values.localized}
 									/>
 
 									<ClayTooltipProvider>

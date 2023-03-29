@@ -88,9 +88,10 @@ public class BlogsStatsUserLocalServiceImpl
 				Users_OrgsTable.INSTANCE,
 				Users_OrgsTable.INSTANCE.userId.eq(
 					BlogsEntryTable.INSTANCE.userId
-				),
-			Users_OrgsTable.INSTANCE.organizationId.eq(organizationId),
-			_lastPostDateExpression.descending(), start, end);
+				).and(
+					Users_OrgsTable.INSTANCE.organizationId.eq(organizationId)
+				)),
+			null, _lastPostDateExpression.descending(), start, end);
 	}
 
 	@Override

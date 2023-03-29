@@ -274,24 +274,57 @@ public class LayoutActionDropdownItemsProvider {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "copyLayout");
-							dropdownItem.putData(
-								"copyLayoutURL",
-								_layoutsAdminDisplayContext.
-									getCopyLayoutRenderURL(false, layout));
+					DropdownItemListBuilder.addContextual(
+						dropdownContextualItem -> {
+							dropdownContextualItem.setDropdownItems(
+								DropdownItemListBuilder.add(
+									dropdownItem -> {
+										dropdownItem.putData(
+											"action", "copyLayout");
+										dropdownItem.putData(
+											"copyLayoutURL",
+											_layoutsAdminDisplayContext.
+												getCopyLayoutRenderURL(
+													false, layout));
 
-							if (!_layoutsAdminDisplayContext.
-									isShowCopyLayoutAction(layout)) {
+										if (!_layoutsAdminDisplayContext.
+												isShowCopyLayoutAction(
+													layout)) {
 
-								dropdownItem.setDisabled(true);
-							}
+											dropdownItem.setDisabled(true);
+										}
 
-							dropdownItem.setIcon("copy");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "copy-page"));
+										dropdownItem.setLabel(
+											LanguageUtil.get(
+												_httpServletRequest, "page"));
+									}
+								).add(
+									dropdownItem -> {
+										dropdownItem.putData(
+											"action",
+											"copyLayoutWithPermissions");
+										dropdownItem.putData(
+											"copyLayoutURL",
+											_layoutsAdminDisplayContext.
+												getCopyLayoutRenderURL(
+													true, layout));
+
+										if (!_layoutsAdminDisplayContext.
+												isShowCopyLayoutAction(
+													layout)) {
+
+											dropdownItem.setDisabled(true);
+										}
+
+										dropdownItem.setLabel(
+											LanguageUtil.get(
+												_httpServletRequest,
+												"page-with-permissions"));
+									}
+								).build());
+							dropdownContextualItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "copy"));
+							dropdownContextualItem.setIcon("copy");
 						}
 					).add(
 						() ->

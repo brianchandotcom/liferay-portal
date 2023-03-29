@@ -28,9 +28,9 @@ export type ClaimType = {
 			};
 		};
 	};
-	r_policyToClaims_c_raylifePolicyERC: string;
-	r_policyToClaims_c_raylifePolicyId: number;
-	settledDate: string;
+	r_policyToClaims_c_raylifePolicyERC?: string;
+	r_policyToClaims_c_raylifePolicyId?: number;
+	settledDate?: string;
 };
 
 export type ClaimDetailDataType = {

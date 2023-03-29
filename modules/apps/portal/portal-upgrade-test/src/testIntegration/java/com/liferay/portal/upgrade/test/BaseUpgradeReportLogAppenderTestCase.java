@@ -425,11 +425,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 	protected abstract String getFilePath();
 
-	private void _assertLogContextContains(String key, String value) {
-		String values = _getLogContextValue(key);
-
+	private void _assertLogContextContains(String key, String text) {
 		Assert.assertTrue(
-			StringUtil.containsIgnoreCase(values, value, StringPool.BLANK));
+			StringUtil.containsIgnoreCase(
+				_getLogContextValue(key), text, StringPool.BLANK));
 	}
 
 	private void _assertReport(String testString) throws Exception {

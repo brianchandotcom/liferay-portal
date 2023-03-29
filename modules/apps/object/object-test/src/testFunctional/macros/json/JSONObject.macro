@@ -674,6 +674,23 @@ definition {
 		return ${objectDefinitionIdList};
 	}
 
+	@summary = "This macro calls the Headless API to return an object definition"
+	macro getObjectDefinition {
+		Variables.assertDefined(parameterList = ${objectName});
+
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+				-u test@liferay.com:test
+		''';
+
+		var objectDefinition = JSONCurlUtil.get(${curl});
+
+		return ${objectDefinition};
+	}
+
 	@summary = "Get a objectDefinitionId by name"
 	macro getObjectDefinitionId {
 		Variables.assertDefined(parameterList = ${name});

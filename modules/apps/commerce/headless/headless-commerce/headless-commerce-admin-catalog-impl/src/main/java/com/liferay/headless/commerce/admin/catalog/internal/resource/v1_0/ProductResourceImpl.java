@@ -972,47 +972,42 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_commerceChannelRelService.deleteCommerceChannelRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-			for (Long commerceChannelId :
-					transformToList(
-						productChannels,
-						productChannel -> {
-							if (productChannel.getExternalReferenceCode() ==
-									null) {
+			for (ProductChannel productChannel : productChannels) {
+				if (productChannel.getExternalReferenceCode() == null) {
+					Long commerceChannelId = productChannel.getChannelId();
 
-								return productChannel.getChannelId();
-							}
+					if (commerceChannelId != null) {
+						_commerceChannelRelService.addCommerceChannelRel(
+							CPDefinition.class.getName(),
+							cpDefinition.getCPDefinitionId(), commerceChannelId,
+							serviceContext);
+					}
 
-							CommerceChannel commerceChannel = null;
+					continue;
+				}
 
-							try {
-								commerceChannel =
-									_commerceChannelService.
-										fetchByExternalReferenceCode(
-											productChannel.
-												getExternalReferenceCode(),
-											contextCompany.getCompanyId());
-							}
-							catch (PortalException portalException) {
-								if (_log.isDebugEnabled()) {
-									_log.debug(portalException);
-								}
-							}
+				CommerceChannel commerceChannel = null;
 
-							if (commerceChannel == null) {
-								return null;
-							}
+				try {
+					commerceChannel =
+						_commerceChannelService.fetchByExternalReferenceCode(
+							productChannel.getExternalReferenceCode(),
+							contextCompany.getCompanyId());
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
 
-							return commerceChannel.getCommerceChannelId();
-						})) {
-
-				if (commerceChannelId == null) {
+				if (commerceChannel == null) {
 					continue;
 				}
 
 				_commerceChannelRelService.addCommerceChannelRel(
 					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(), commerceChannelId,
-					serviceContext);
+					cpDefinition.getCPDefinitionId(),
+					commerceChannel.getCommerceChannelId(), serviceContext);
 			}
 		}
 
@@ -1031,48 +1026,50 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-			for (Long accountGroupId :
-					transformToList(
-						productAccountGroups,
-						productAccountGroup -> {
-							String externalReferenceCode =
-								productAccountGroup.getExternalReferenceCode();
+			for (ProductAccountGroup productAccountGroup :
+					productAccountGroups) {
 
-							if (externalReferenceCode == null) {
-								return productAccountGroup.getAccountGroupId();
-							}
+				String externalReferenceCode =
+					productAccountGroup.getExternalReferenceCode();
 
-							CommerceAccountGroup commerceAccountGroup = null;
+				if (externalReferenceCode == null) {
+					Long accountGroupId =
+						productAccountGroup.getAccountGroupId();
 
-							try {
-								commerceAccountGroup =
-									_commerceAccountGroupService.
-										fetchByExternalReferenceCode(
-											contextCompany.getCompanyId(),
-											productAccountGroup.
-												getExternalReferenceCode());
-							}
-							catch (PortalException portalException) {
-								if (_log.isDebugEnabled()) {
-									_log.debug(portalException);
-								}
-							}
+					if (accountGroupId != null) {
+						_commerceAccountGroupRelService.
+							addCommerceAccountGroupRel(
+								CPDefinition.class.getName(),
+								cpDefinition.getCPDefinitionId(),
+								accountGroupId, serviceContext);
+					}
 
-							if (commerceAccountGroup == null) {
-								return null;
-							}
+					continue;
+				}
 
-							return commerceAccountGroup.
-								getCommerceAccountGroupId();
-						})) {
+				CommerceAccountGroup commerceAccountGroup = null;
 
-				if (accountGroupId == null) {
+				try {
+					commerceAccountGroup =
+						_commerceAccountGroupService.
+							fetchByExternalReferenceCode(
+								contextCompany.getCompanyId(),
+								productAccountGroup.getExternalReferenceCode());
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+
+				if (commerceAccountGroup == null) {
 					continue;
 				}
 
 				_commerceAccountGroupRelService.addCommerceAccountGroupRel(
 					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(), accountGroupId,
+					cpDefinition.getCPDefinitionId(),
+					commerceAccountGroup.getCommerceAccountGroupId(),
 					serviceContext);
 			}
 		}

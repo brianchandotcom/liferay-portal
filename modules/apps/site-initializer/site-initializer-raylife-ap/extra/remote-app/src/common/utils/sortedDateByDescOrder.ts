@@ -12,7 +12,7 @@
  * details.
  */
 
-type InfoPanelType = {[keys: string]: string};
+type InfoPanelType = {[keys: string]: string | number};
 
 const sortedDateByDescOrder = (itemA: InfoPanelType, itemB: InfoPanelType) => {
 	const dateA = new Date(itemA.date);

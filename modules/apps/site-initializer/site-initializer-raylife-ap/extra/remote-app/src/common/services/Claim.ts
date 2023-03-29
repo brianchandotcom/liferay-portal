@@ -47,6 +47,6 @@ export function deleteClaimByExternalReferenceCode(
 
 export function getClaimsData(id: number) {
 	return axios.get(
-		`${DeliveryAPI}/${id}/?nestedFields=raylifePolicy.raylifeQuote.raylifeApplication&fields=claimCreateDate,r_policyToClaims_c_raylifePolicyId,r_policyToClaims_c_raylifePolicyERC,claimStatus,settledDate,claimAmount,r_policyToClaims_c_raylifePolicy.r_quoteToPolicies_c_raylifeQuote.r_applicationToQuotes_c_raylifeApplication&nestedFieldsDepth=4`
+		`${DeliveryAPI}/${id}/?nestedFields=raylifePolicy.raylifeQuote.raylifeApplication&fields=claimCreateDate,dataJSON,r_policyToClaims_c_raylifePolicyId,r_policyToClaims_c_raylifePolicyERC,claimStatus,settledDate,claimAmount,r_policyToClaims_c_raylifePolicy.r_quoteToPolicies_c_raylifeQuote.r_applicationToQuotes_c_raylifeApplication&nestedFieldsDepth=4`
 	);
 }

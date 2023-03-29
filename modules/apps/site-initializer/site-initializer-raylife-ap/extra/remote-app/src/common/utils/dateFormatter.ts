@@ -87,3 +87,14 @@ export function dateFormatter(date?: string) {
 			.replace(',', '');
 	}
 }
+
+export function dateFormatterLocalString(date?: string) {
+	if (date) {
+		return new Date(date).toLocaleString('en-US', {
+			day: 'numeric',
+			month: 'short',
+			timeZone: 'UTC',
+			year: 'numeric',
+		});
+	}
+}

@@ -24,6 +24,7 @@ definition {
 	@refactordone
 	test NewURLLoadEventCanDisplayLoadingBar {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SPA#NewURLLoadEventCanDisplayLoadingBar";
 
 		Navigator.openURL();
 
@@ -37,6 +38,8 @@ definition {
 	@description = "LRQA-29748: Set the user notification timeout to 1 second"
 	@priority = 4
 	test SPANotificationSetTimeout {
+		property test.name.skip.portal.instance = "SPAInfrastructure#SetTimeout";
+
 		task ("Given: set the user notification timeout to 1 second") {
 			SystemSettings.openSystemSettingsAdmin();
 

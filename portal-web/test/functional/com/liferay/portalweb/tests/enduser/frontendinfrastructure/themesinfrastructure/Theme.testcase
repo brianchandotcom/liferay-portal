@@ -27,6 +27,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeAppliedToPage {
+		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPage";
+
 		User.firstLoginPG();
 
 		ApplicationsMenu.gotoPortlet(
@@ -56,6 +58,7 @@ definition {
 	@refactordone
 	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
 		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPageWhenClassicThemeNotAvailable";
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -86,6 +89,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeDeactivatedAndReactivated {
+		property test.name.skip.portal.instance = "Theme#CanBeDeactivatedAndReactivated";
+
 		var appName = "test-theme";
 
 		User.firstLoginPG();
@@ -159,6 +164,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeUnInstalledAndRedeployed {
+		property test.name.skip.portal.instance = "Theme#CanBeUnInstalledAndRedeployed";
+
 		var appName = "test-theme";
 
 		User.firstLoginPG();

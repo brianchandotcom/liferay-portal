@@ -93,7 +93,7 @@ public class CIForwardProcessor {
 				return;
 			}
 
-			_pullRequest.addComment(_getSuccessfulCommentBody());
+			_pullRequest.addComment(_getPassedCommentBody());
 
 			final String senderUsername;
 
@@ -147,23 +147,7 @@ public class CIForwardProcessor {
 			catch (Exception exception) {
 				exception.printStackTrace();
 
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(
-					"Error has occurred while forwarding pull request to `");
-				sb.append(_recipientUsername);
-				sb.append("`.\n");
-				sb.append("Please try again later or contact ");
-				sb.append("the CI team for assistance.\n");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
-					sb.append("See console log for details: [Full Console](");
-					sb.append(_consoleLogURL);
-					sb.append("consoleText");
-					sb.append(")");
-				}
-
-				_pullRequest.addComment(sb.toString());
+				_pullRequest.addComment(_getFailureCommentBody());
 			}
 		}
 		catch (Exception exception) {
@@ -180,18 +164,8 @@ public class CIForwardProcessor {
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(forwardedPullRequestURL)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Pull request has been successfully forwarded to  ");
-			sb.append(forwardedPullRequestURL);
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
-				sb.append("\n[Console](");
-				sb.append(_consoleLogURL);
-				sb.append(")");
-			}
-
-			_pullRequest.addComment(sb.toString());
+			_pullRequest.addComment(
+				_getSuccessCommentBody(forwardedPullRequestURL));
 		}
 	}
 
@@ -354,6 +328,25 @@ public class CIForwardProcessor {
 		return failingRequiredPassingTestSuiteNames;
 	}
 
+	private String _getFailureCommentBody() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Error has occurred while forwarding pull request to `");
+		sb.append(_recipientUsername);
+		sb.append("`.\n");
+		sb.append("Please try again later or contact ");
+		sb.append("the CI team for assistance.\n");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+			sb.append("See console log for details: [Full Console](");
+			sb.append(_consoleLogURL);
+			sb.append("consoleText");
+			sb.append(")");
+		}
+
+		return sb.toString();
+	}
+
 	private String _getGitHubApiSearchUrl() throws IOException {
 		List<String> filters = Arrays.asList(
 			"author:" +
@@ -453,6 +446,32 @@ public class CIForwardProcessor {
 		return openForwardedPullRequestUrls;
 	}
 
+	private String _getPassedCommentBody() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("All required test suite(s) ");
+
+		if (_force) {
+			sb.append("completed");
+		}
+		else {
+			sb.append("passed");
+		}
+
+		sb.append(".\n");
+		sb.append("Forwarding pull request to `");
+		sb.append(_recipientUsername);
+		sb.append("`.\n");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+			sb.append("[Console](");
+			sb.append(_consoleLogURL);
+			sb.append(")\n");
+		}
+
+		return sb.toString();
+	}
+
 	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
 		String propertyNamePrefix = "ci.forward";
 
@@ -494,27 +513,16 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	private String _getSuccessfulCommentBody() {
+	private String _getSuccessCommentBody(String forwardedPullRequestURL) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("All required test suite(s) ");
-
-		if (_force) {
-			sb.append("completed");
-		}
-		else {
-			sb.append("passed");
-		}
-
-		sb.append(".\n");
-		sb.append("Forwarding pull request to `");
-		sb.append(_recipientUsername);
-		sb.append("`.\n");
+		sb.append("Pull request has been successfully forwarded to  ");
+		sb.append(forwardedPullRequestURL);
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
-			sb.append("[Console](");
+			sb.append("\n[Console](");
 			sb.append(_consoleLogURL);
-			sb.append(")\n");
+			sb.append(")");
 		}
 
 		return sb.toString();

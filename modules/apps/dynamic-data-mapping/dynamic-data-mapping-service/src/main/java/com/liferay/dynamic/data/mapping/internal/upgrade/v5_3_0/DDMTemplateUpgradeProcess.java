@@ -38,53 +38,49 @@ public class DDMTemplateUpgradeProcess extends UpgradeProcess {
 		long resourceClassNameId = _classNameLocalService.getClassNameId(
 			"com.liferay.portlet.display.template.PortletDisplayTemplate");
 
-		_deleteOrphanedDefaultSearchBarPortletTemplate(
-			resourceClassNameId,
-			"com.liferay.portal.search.web.internal.search.bar.portlet." +
-				"display.context.SearchBarPortletDisplayContext");
-		_deleteOrphanedDefaultSearchBarPortletTemplate(
-			resourceClassNameId,
-			"com.liferay.portal.search.web.internal.search.bar.portlet." +
-				"SearchBarPortletDisplayContext");
+		for (String oldClassName : _OLD_CLASS_NAMES) {
+			long oldClassNameId = _classNameLocalService.getClassNameId(
+				oldClassName);
 
-		_updateDDMTemplate(
-			newClassNameId,
-			"com.liferay.portal.search.web.internal.search.bar.portlet." +
-				"display.context.SearchBarPortletDisplayContext",
-			resourceClassNameId);
-		_updateDDMTemplate(
-			newClassNameId,
-			"com.liferay.portal.search.web.internal.search.bar.portlet." +
-				"SearchBarPortletDisplayContext",
-			resourceClassNameId);
+			_deleteOrphanedDefaultSearchBarPortletTemplate(
+				oldClassNameId, resourceClassNameId);
+
+			_updateDDMTemplate(
+				newClassNameId, oldClassNameId, resourceClassNameId);
+		}
 	}
 
 	private void _deleteOrphanedDefaultSearchBarPortletTemplate(
-			long resourceClassNameId, String className)
+			long oldClassNameId, long resourceClassNameId)
 		throws Exception {
 
 		runSQL(
 			StringBundler.concat(
 				"delete from DDMTemplate where resourceClassNameId = ",
-				resourceClassNameId, " and classNameId = ",
-				_classNameLocalService.getClassNameId(className),
+				resourceClassNameId, " and classNameId = ", oldClassNameId,
 				" and templateKey = ", _DEFAULT_SEARCH_BAR_TEMPLATE_KEY));
 	}
 
 	private void _updateDDMTemplate(
-			long newClassNameId, String oldClassName, long resourceClassNameId)
+			long newClassNameId, long oldClassNameId, long resourceClassNameId)
 		throws Exception {
 
 		runSQL(
 			StringBundler.concat(
 				"update DDMTemplate set classNameId = ", newClassNameId,
-				" where classNameId = ",
-				_classNameLocalService.getClassNameId(oldClassName),
+				" where classNameId = ", oldClassNameId,
 				" and resourceClassNameId = ", resourceClassNameId));
 	}
 
 	private static final String _DEFAULT_SEARCH_BAR_TEMPLATE_KEY =
 		"'SEARCH-BAR-LEFT-ALIGNED-ICON-FTL'";
+
+	private static final String[] _OLD_CLASS_NAMES = {
+		"com.liferay.portal.search.web.internal.search.bar.portlet.display." +
+			"context.SearchBarPortletDisplayContext",
+		"com.liferay.portal.search.web.internal.search.bar.portlet." +
+			"SearchBarPortletDisplayContext"
+	};
 
 	private final ClassNameLocalService _classNameLocalService;
 

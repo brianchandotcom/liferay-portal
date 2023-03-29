@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration",
 	property = "key=logout.events.post", service = LifecycleAction.class
 )
 public class TokenLogoutAction extends Action {

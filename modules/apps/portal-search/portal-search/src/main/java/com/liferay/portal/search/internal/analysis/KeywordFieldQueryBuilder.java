@@ -31,10 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Joshua Cords
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.configuration.KeywordFieldQueryBuilderConfiguration",
-	service = KeywordFieldQueryBuilder.class
-)
+@Component(service = KeywordFieldQueryBuilder.class)
 public class KeywordFieldQueryBuilder implements FieldQueryBuilder {
 
 	public Query build(String field, String value) {

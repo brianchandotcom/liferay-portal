@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	configurationPid = "com.liferay.layout.page.template.admin.web.configuration.LayoutPageTemplateAdminWebConfiguration",
+	configurationPid = "com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-layout-templates-admin",

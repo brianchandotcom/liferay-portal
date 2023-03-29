@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivia Yu
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.web.internal.sort.configuration.SortWebTemplateConfiguration",
 	property = "javax.portlet.name=" + SortPortletKeys.SORT,
 	service = TemplateHandler.class
 )

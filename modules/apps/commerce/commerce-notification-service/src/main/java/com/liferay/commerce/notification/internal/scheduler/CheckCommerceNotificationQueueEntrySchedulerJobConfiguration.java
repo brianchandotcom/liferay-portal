@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	configurationPid = "com.liferay.commerce.notification.internal.configuration.CommerceNotificationQueueConfiguration",
+	configurationPid = "com.liferay.commerce.notification.internal.configuration.CommerceNotificationQueueEntryConfiguration",
 	service = SchedulerJobConfiguration.class
 )
 public class CheckCommerceNotificationQueueEntrySchedulerJobConfiguration

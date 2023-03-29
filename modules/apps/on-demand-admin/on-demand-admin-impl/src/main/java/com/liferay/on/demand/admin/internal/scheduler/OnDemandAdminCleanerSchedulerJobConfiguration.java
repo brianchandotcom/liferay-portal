@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	configurationPid = "com.liferay.portal.instances.on.demand.admin.internal.configuration.OnDemandAdminConfiguration",
+	configurationPid = "com.liferay.on.demand.admin.internal.configuration.OnDemandAdminConfiguration",
 	service = SchedulerJobConfiguration.class
 )
 public class OnDemandAdminCleanerSchedulerJobConfiguration

@@ -85,10 +85,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Tomas Polesovsky
  * @author Marta Medio
  */
-@Component(
-	configurationPid = "com.liferay.portal.security.ldap.configuration.LDAPConfiguration",
-	service = SafePortalLDAP.class
-)
+@Component(service = SafePortalLDAP.class)
 public class SafePortalLDAPImpl implements SafePortalLDAP {
 
 	@Override

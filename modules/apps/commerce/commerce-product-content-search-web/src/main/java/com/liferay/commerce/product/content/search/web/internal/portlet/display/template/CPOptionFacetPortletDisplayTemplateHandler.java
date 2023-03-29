@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	configurationPid = "com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration",
 	property = "javax.portlet.name=" + CPPortletKeys.CP_OPTION_FACETS,
 	service = TemplateHandler.class
 )

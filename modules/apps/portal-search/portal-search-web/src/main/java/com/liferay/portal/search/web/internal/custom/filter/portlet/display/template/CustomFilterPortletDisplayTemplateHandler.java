@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Kevin Tan
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterWebTemplateConfiguration",
 	property = "javax.portlet.name=" + CustomFilterPortletKeys.CUSTOM_FILTER,
 	service = TemplateHandler.class
 )

@@ -34,11 +34,7 @@ export async function addSkuExpandoValue({
 			companyId,
 			tableName: 'CUSTOM_FIELDS',
 		},
-		(obj: any) => {
-
-			// console.log(obj);
-
-		}
+		(obj: any) => {}
 	);
 }
 
@@ -201,20 +197,20 @@ export async function deleteTrialSKU(skuTrialId: number) {
 	});
 }
 
-export async function getAccounts() {
+export async function getAccountInfo({accountId}: {accountId: number}) {
 	const response = await fetch(
-		'/o/headless-commerce-admin-account/v1.0/accounts',
+		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}`,
 		{headers, method: 'GET'}
 	);
 
 	return response.json();
 }
 
-export async function getAccountInfo({accountId}: {accountId: number}) {
-	const response = await fetch(
-		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}`,
-		{headers, method: 'GET'}
-	);
+export async function getAccounts() {
+	const response = await fetch('/o/headless-admin-user/v1.0/accounts', {
+		headers,
+		method: 'GET',
+	});
 
 	return response.json();
 }
@@ -457,15 +453,6 @@ export async function getSpecifications() {
 	);
 
 	return await response.json();
-}
-
-export async function getAccounts() {
-	const response = await fetch('/o/headless-admin-user/v1.0/accounts', {
-		headers,
-		method: 'GET',
-	});
-
-	return response.json();
 }
 
 export async function getUserAccount() {

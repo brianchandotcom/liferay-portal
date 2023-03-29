@@ -19,9 +19,9 @@ import {useEffect, useState} from 'react';
 
 import NavigationBar from '../../../../../common/components/navigation-bar';
 import PanelComponent from '../../../../../common/components/panel';
-import addImageFallback from '../../../../../common/utils/addImageFallback';
 import sortedByDate from '../../../../../common/utils/sortedByDate';
-import {getWebDavUrl} from '../../../../../common/utils/webdav';
+import DriverInfo from '../PolicyDetail/policies-details-navigator/driver-info';
+import VehicleInfo from '../PolicyDetail/policies-details-navigator/vehicle-info';
 import arrayOfHistory from './policyPanelDataHistory';
 
 type ApplicationPolicyDetailsType = {
@@ -30,7 +30,7 @@ type ApplicationPolicyDetailsType = {
 	phone: string;
 };
 
-type PolicyDetailsType = {
+export type PolicyDetailsType = {
 	annualMileage: number;
 	creditRating: string;
 	features: string;
@@ -46,7 +46,7 @@ type PolicyDetailsType = {
 	year: string;
 };
 
-type InfoPanelType = {[keys: string]: string};
+export type InfoPanelType = {[keys: string]: string};
 
 enum NavBarLabel {
 	Drivers = 'Drivers',
@@ -66,32 +66,17 @@ const PolicyDetail = ({
 	];
 	const [active, setActive] = useState(navbarLabel[0]);
 	const [applicationData, setApplicationData] = useState<any>();
-	const [showPanel, setShowPanel] = useState<boolean[]>([]);
 
-	function calculatedAge(dateOfBirth: string) {
-		return Math.floor(
-			Math.ceil(
-				Math.abs(Date.parse(dateOfBirth) - Date.now()) /
-					(1000 * 3600 * 24)
-			) / 365.25
-		);
-	}
+	const [showPanel, setShowPanel] = useState<boolean[]>([]);
 
 	useEffect(() => {
 		try {
 			const newDataJSON = JSON.parse(dataJSON);
 			setApplicationData(newDataJSON);
-		}
-		catch (error) {
+		} catch (error) {
 			console.warn(error);
 		}
-	}, [dataJSON]);
-
-	const ContentDescription = ({description}: {description: string}) => (
-		<div className="d-flex justify-content-between">
-			<div>{description}</div>
-		</div>
-	);
+	}, [dataJSON, email, phone]);
 
 	const displayHistoryPanel = (index: number) => {
 		const supportArray = [...showPanel];
@@ -127,189 +112,16 @@ const PolicyDetail = ({
 			</div>
 
 			<div>
-				{active === NavBarLabel.Vehicles &&
-					applicationData?.vehicleInfo?.form.map(
-						(
-							currentVehicle: PolicyDetailsType,
-							indexVehicle: number
-						) => (
-							<div
-								className="bg-neutral-0 h-100 pl-6 policy-detail-border pr-6 pt-6"
-								key={indexVehicle}
-							>
-								<div className="d-flex flex-row flex-wrap justify-content-between">
-									{indexVehicle !== 0 && (
-										<div className="align-self-start col-12 layout-line mb-6 mt-1"></div>
-									)}
-									<div className="align-self-start w-25">
-										<h5>
-											{currentVehicle?.year}{' '}
-											{currentVehicle?.make}{' '}
-											{currentVehicle?.model
-												? currentVehicle?.model
-												: 'No data'}
-										</h5>
-										<img
-											className="w-75"
-											onError={addImageFallback}
-											src={`${getWebDavUrl()}/${currentVehicle?.model
-												.replace(/ /g, '')
-												.toLocaleLowerCase()}.svg`}
-										/>
-									</div>
-									<div className="align-self-start">
-										<p className="mb-1 text-neutral-7">
-											Primary Use
-										</p>
-										<div>
-											{currentVehicle?.primaryUsage
-												? currentVehicle?.primaryUsage
-												: 'No data'}
-										</div>
-									</div>
-									<div className="align-self-start">
-										<p className="mb-1 text-neutral-7 w-100">
-											Est. Annual Mileage
-										</p>
-										<div>
-											{currentVehicle?.annualMileage
-												? currentVehicle?.annualMileage
-												: 'No data'}
-										</div>
-									</div>
-									<div className="align-self-start">
-										<p className="mb-1 text-neutral-7 w-100">
-											Ownership Status
-										</p>
-										<div>
-											{currentVehicle?.ownership
-												? currentVehicle?.ownership
-												: 'No data'}
-										</div>
-									</div>
-								</div>
-								<div>
-									<div className="align-self-start mt-3">
-										<p className="mb-1 text-neutral-7 w-100">
-											Features
-										</p>
-										<div>
-											{currentVehicle?.features
-												? currentVehicle?.features
-												: 'No data'}
-										</div>
-									</div>
-								</div>
-							</div>
-						)
-					)}
-				{active === NavBarLabel.Drivers &&
-					applicationData?.driverInfo?.form.map(
-						(
-							curentDriver: PolicyDetailsType,
-							indexDriver: number
-						) => (
-							<div
-								className="bg-neutral-0 pl-6 policy-detail-border pr-6 pt-6"
-								key={indexDriver}
-							>
-								<div className="d-flex flex-row flex-wrap justify-content-between">
-									{indexDriver !== 0 && (
-										<div className="align-self-start col-12 layout-line mb-6 mt-1"></div>
-									)}
-									<div className="align-self-start">
-										<h5>
-											{curentDriver?.firstName
-												? curentDriver?.firstName
-												: 'No data'}
-											,{' '}
-											{calculatedAge(
-												applicationData?.contactInfo
-													?.dateOfBirth
-											)
-												? calculatedAge(
-														applicationData
-															?.contactInfo
-															?.dateOfBirth
-												  )
-												: 'No data'}
-										</h5>
-									</div>
-									<div className="align-self-start">
-										<p className="mb-1 text-neutral-7 w-100">
-											DOB
-										</p>
-										<div className="mb-3">
-											{applicationData?.contactInfo
-												?.dateOfBirth
-												? applicationData?.contactInfo
-														?.dateOfBirth
-												: 'No data'}
-										</div>
-										<p className="mb-1 text-neutral-7 w-100">
-											Education
-										</p>
-										<div className="mb-3">
-											{curentDriver?.highestEducation
-												? curentDriver?.highestEducation
-												: 'No data'}
-										</div>
-										<p className="mb-1 text-neutral-7 w-100">
-											Email
-										</p>
-										<a
-											className="mb-3 text-break"
-											href={email}
-										>
-											{email ? email : 'No data'}
-										</a>
-									</div>
-									<div className="align-self-start">
-										<p className="mb-1 text-neutral-7 w-100">
-											Gender
-										</p>
-										<div className="mb-3">
-											{curentDriver?.gender
-												? curentDriver?.gender
-												: 'No data'}
-										</div>
-										<p className="mb-1 text-neutral-7 w-100">
-											Occupation
-										</p>
-										<div className="mb-3">
-											{curentDriver?.occupation
-												? curentDriver?.occupation
-												: 'No data'}
-										</div>
-										<p className="mb-1 text-neutral-7 w-100">
-											Phone
-										</p>
-										<div className="mb-3">
-											{phone ? phone : 'No data'}
-										</div>
-									</div>
-									<div className="align-self-start">
-										<p className="mb-1 text-neutral-7 w-100">
-											Marital Status
-										</p>
-										<div className="mb-3">
-											{curentDriver?.maritalStatus
-												? curentDriver?.maritalStatus
-												: 'No data'}
-										</div>
-										<p className="mb-1 text-neutral-7 w-100">
-											Credit rating
-										</p>
-										<div className="mb-3">
-											{curentDriver?.creditRating
-												? curentDriver?.creditRating
-												: 'No data'}
-										</div>
-									</div>
-								</div>
-							</div>
-						)
-					)}
+				{active === NavBarLabel.Vehicles && applicationData && (
+					<VehicleInfo dataJSON={applicationData} />
+				)}
+				{active === NavBarLabel.Drivers && applicationData && (
+					<DriverInfo
+						dataJSON={applicationData}
+						email={email}
+						phone={phone}
+					/>
+				)}
 				{active === NavBarLabel.History &&
 					arraySortedByDate?.map(
 						(item: InfoPanelType, index: number) => {

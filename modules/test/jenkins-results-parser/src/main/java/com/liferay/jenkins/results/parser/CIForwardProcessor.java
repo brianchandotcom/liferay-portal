@@ -601,7 +601,16 @@ public class CIForwardProcessor {
 
 				sb.append("`");
 				sb.append(requiredPassingTestSuiteName);
-				sb.append("`\n");
+				sb.append("`");
+
+				if (requiredPassingTestSuiteName.equals("stable")) {
+					sb.append(" - If you believe that the stable test ");
+					sb.append("failures were caused by flaky tests, please ");
+					sb.append("contact QA for confirmation and rerun the ");
+					sb.append("test.");
+				}
+
+				sb.append("\n");
 			}
 		}
 

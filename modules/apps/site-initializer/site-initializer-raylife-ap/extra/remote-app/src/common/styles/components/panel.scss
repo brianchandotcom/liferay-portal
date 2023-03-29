@@ -1,0 +1,35 @@
+.panel-container {
+	.box {
+		max-height: 0;
+		opacity: 0;
+		transition: all 0.5s;
+
+		&.show-box {
+			max-height: 300px;
+			opacity: 1;
+			transition: all 0.5s;
+		}
+	}
+
+	.layout-panel {
+		&.blue-line-activites:after {
+			background-color: #4c84ff;
+			bottom: -1px;
+			content: '';
+			display: block;
+			left: -1px;
+			position: absolute;
+			top: 0;
+			width: 5px;
+		}
+	}
+
+	@media screen and (max-width: 700px) {
+		.layout-panel {
+			display: flex !important;
+			flex-wrap: wrap !important;
+			float: none !important;
+			width: auto !important;
+		}
+	}
+}

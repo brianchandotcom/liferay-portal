@@ -17,6 +17,7 @@ liferay-remote-app-raylife-ap {
 
 	@import 'apps/application/application-details';
 	@import 'apps/application/edit-applications';
+	@import 'apps/claims/claim-details';
 	@import 'apps/dashboard/product-performance/index';
 	@import 'apps/dashboard/recent-applications/index';
 	@import 'apps/policies/policy-details';
@@ -24,6 +25,8 @@ liferay-remote-app-raylife-ap {
 	@import 'components/product-list';
 	@import 'components/summary';
 	@import 'components/table';
+	@import 'components/panel';
+	@import 'components/activities';
 }
 
 @import 'apps/applications/modal';

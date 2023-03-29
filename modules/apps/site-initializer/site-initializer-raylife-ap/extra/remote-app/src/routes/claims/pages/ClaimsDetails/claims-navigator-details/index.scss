@@ -1,18 +1,5 @@
 .claims-details-nav-container {
 	margin: 12px;
-	.border-link-active::after {
-		background-color: #4c84ff;
-		bottom: -1px;
-		content: '';
-		display: block;
-		display: block;
-		height: 2px;
-		left: -1px;
-		position: absolute;
-		right: -1px;
-		width: auto;
-		z-index: 1;
-	}
 
 	.claims-detail-nav-title::after {
 		background-color: var(--primary);
@@ -22,17 +9,5 @@
 		margin-top: 5px;
 		position: relative;
 		width: 25px;
-	}
-
-	.nav-link {
-		align-items: center;
-		background-color: #f3f5f7;
-		border: solid 1px #e7e7ed;
-		border-left-color: transparent;
-		border-right-color: transparent;
-		cursor: pointer;
-		display: flex;
-		height: 49px;
-		margin-top: 10px;
 	}
 }

@@ -14,10 +14,12 @@
 
 import classNames from 'classnames';
 
+import './index.scss';
+
 type NavigationBarType = {
-	active: any;
+	active: string;
 	navbarLabel: string[];
-	setActive: any;
+	setActive: (string: string) => void;
 };
 
 const NavigationBar: Function = (

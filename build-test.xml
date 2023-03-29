@@ -10642,6 +10642,7 @@ send_user $expect_out(buffer)]]></echo>
 				<basedir file="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" />
 				<basedir file="${liferay.faces.bridge.impl.dir}/test/integration" />
 				<basedir file="${liferay.faces.portal.dir}/test/integration" />
+				<basedir file="${workspace.dir}" />
 				<exclude name="**/node_modules/**/TEST-*.xml" />
 				<include name="**/TEST-*.xml" />
 			</multirootfileset>

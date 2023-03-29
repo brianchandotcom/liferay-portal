@@ -404,11 +404,16 @@ definition {
 			var userPassword = "test";
 		}
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
 				-H 'Content-Type: application/json' \
 				-u ${userEmailAddress}:${userPassword} \
 				-d '{
+					"externalReferenceCode": "${externalReferenceCode}",
 					"name": "${picklistName}",
 					"name_i18n": {
 						"en_US": "${picklistName}"

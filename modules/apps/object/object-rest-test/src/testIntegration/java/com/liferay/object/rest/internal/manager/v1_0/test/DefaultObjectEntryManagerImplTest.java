@@ -398,6 +398,35 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
+
+		// Object Definition Scope
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new PicklistObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					_listTypeDefinition.getListTypeDefinitionId()
+				).name(
+					"picklistObjectFieldName"
+				).objectFieldSettings(
+					Collections.emptyList()
+				).build()));
+
+		// Object Field Scope
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			"countAggregationObjectFieldName");
+
+		// Object Entry Scope
+
+		String listTypeEntryKey = _addListTypeEntry();
+
 		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
 			new ObjectEntry() {
@@ -410,8 +439,6 @@ public class DefaultObjectEntryManagerImplTest {
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		String listTypeEntryKey = _addListTypeEntry();
 
 		ObjectEntry childObjectEntry1 = new ObjectEntry() {
 			{
@@ -528,9 +555,44 @@ public class DefaultObjectEntryManagerImplTest {
 				_simpleDTOConverterContext, _objectDefinition1,
 				parentObjectEntry1.getId()));
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			_objectDefinition1.getObjectDefinitionId(),
-			"countAggregationObjectFieldName");
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"picklistObjectFieldName",
+						() -> {
+							ListTypeEntry listTypeEntry =
+								_listTypeEntryLocalService.addListTypeEntry(
+									null, _adminUser.getUserId(),
+									_listTypeDefinition.
+										getListTypeDefinitionId(),
+									RandomTestUtil.randomString(),
+									Collections.singletonMap(
+										LocaleUtil.US,
+										RandomTestUtil.randomString()));
+
+							return new ListEntry() {
+								{
+									key = listTypeEntry.getKey();
+									name = listTypeEntry.getName(LocaleUtil.US);
+								}
+							};
+						}
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_assertEquals(
+			objectEntry,
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				objectEntry.getId()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Filter Local Service Scope
 
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(),
@@ -609,59 +671,6 @@ public class DefaultObjectEntryManagerImplTest {
 			"{\"le\": \"2020-01-02\", \"ge\": \"2020-01-02\"}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
-
-		ObjectDefinition objectDefinition = _createObjectDefinition(
-			Arrays.asList(
-				new PicklistObjectFieldBuilder(
-				).indexed(
-					true
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).listTypeDefinitionId(
-					_listTypeDefinition.getListTypeDefinitionId()
-				).name(
-					"picklistObjectFieldName"
-				).objectFieldSettings(
-					Collections.emptyList()
-				).build()));
-
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			_dtoConverterContext, objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"picklistObjectFieldName",
-						() -> {
-							ListTypeEntry listTypeEntry =
-								_listTypeEntryLocalService.addListTypeEntry(
-									null, _adminUser.getUserId(),
-									_listTypeDefinition.
-										getListTypeDefinitionId(),
-									RandomTestUtil.randomString(),
-									Collections.singletonMap(
-										LocaleUtil.US,
-										RandomTestUtil.randomString()));
-
-							return new ListEntry() {
-								{
-									key = listTypeEntry.getKey();
-									name = listTypeEntry.getName(LocaleUtil.US);
-								}
-							};
-						}
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_assertEquals(
-			objectEntry,
-			_objectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, objectDefinition,
-				objectEntry.getId()));
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test

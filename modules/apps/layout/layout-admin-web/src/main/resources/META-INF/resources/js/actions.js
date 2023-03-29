@@ -31,6 +31,16 @@ const ACTIONS = {
 		});
 	},
 
+	copyLayoutWithPermissions: ({copyLayoutURL}) => {
+		openModal({
+			height: '60vh',
+			id: 'addLayoutDialog',
+			size: 'md',
+			title: Liferay.Language.get('copy-page-with-permissions'),
+			url: copyLayoutURL,
+		});
+	},
+
 	deleteLayout: ({deleteLayoutURL, message}) => {
 		openDeleteLayoutModal({
 			message,

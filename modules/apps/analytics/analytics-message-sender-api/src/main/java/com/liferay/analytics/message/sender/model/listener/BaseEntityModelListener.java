@@ -136,7 +136,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 			analyticsMessageLocalService.addAnalyticsMessage(
 				shardedModel.getCompanyId(),
-				userLocalService.getDefaultUserId(shardedModel.getCompanyId()),
+				userLocalService.getGuestUserId(shardedModel.getCompanyId()),
 				analyticsMessageJSON.getBytes(Charset.defaultCharset()));
 		}
 		catch (Exception exception) {
@@ -765,7 +765,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 				analyticsMessageBuilder.buildJSONString();
 
 			analyticsMessageLocalService.addAnalyticsMessage(
-				companyId, userLocalService.getDefaultUserId(companyId),
+				companyId, userLocalService.getGuestUserId(companyId),
 				analyticsMessageJSON.getBytes(Charset.defaultCharset()));
 		}
 		catch (Exception exception) {
@@ -787,10 +787,10 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			"treePath", "type");
 	private static final List<String> _userAttributeNames = Arrays.asList(
 		"agreedToTermsOfUse", "comments", "companyId", "contactId",
-		"createDate", "defaultUser", "emailAddress", "emailAddressVerified",
-		"expando", "externalReferenceCode", "facebookId", "firstName",
-		"googleUserId", "greeting", "jobTitle", "languageId", "lastName",
-		"ldapServerId", "memberships", "middleName", "modifiedDate", "openId",
-		"portraitId", "screenName", "status", "timeZoneId", "uuid");
+		"createDate", "emailAddress", "emailAddressVerified", "expando",
+		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
+		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
+		"memberships", "middleName", "modifiedDate", "openId", "portraitId",
+		"screenName", "status", "timeZoneId", "uuid");
 
 }

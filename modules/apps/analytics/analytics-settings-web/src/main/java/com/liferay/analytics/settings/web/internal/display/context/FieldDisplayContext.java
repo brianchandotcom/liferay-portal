@@ -336,8 +336,6 @@ public class FieldDisplayContext {
 		).put(
 			"createDate", "Date"
 		).put(
-			"defaultUser", "Boolean"
-		).put(
 			"emailAddress", "String"
 		).put(
 			"emailAddressVerified", "Boolean"

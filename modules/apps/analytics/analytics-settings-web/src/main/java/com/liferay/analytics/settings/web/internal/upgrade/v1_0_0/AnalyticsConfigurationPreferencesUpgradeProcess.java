@@ -106,7 +106,7 @@ public class AnalyticsConfigurationPreferencesUpgradeProcess
 
 	private static final String[] _USER_FIELD_NAMES = {
 		"agreedToTermsOfUse", "comments", "companyId", "contactId",
-		"createDate", "defaultUser", "emailAddress", "emailAddressVerified",
+		"createDate", "emailAddress", "emailAddressVerified",
 		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
 		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
 		"middleName", "modifiedDate", "openId", "portraitId", "screenName",

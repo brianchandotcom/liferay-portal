@@ -317,7 +317,7 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 
 		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId), _SAP_ENTRY_OBJECT[1],
+			_userLocalService.getGuestUserId(companyId), _SAP_ENTRY_OBJECT[1],
 			false, true, sapEntryName,
 			Collections.singletonMap(LocaleUtil.getDefault(), sapEntryName),
 			new ServiceContext());
@@ -859,7 +859,7 @@ public class AnalyticsConfigurationRegistryImpl
 					analyticsMessageBuilder.buildJSONString();
 
 				_analyticsMessageLocalService.addAnalyticsMessage(
-					companyId, _userLocalService.getDefaultUserId(companyId),
+					companyId, _userLocalService.getGuestUserId(companyId),
 					analyticsMessageJSON.getBytes(Charset.defaultCharset()));
 			}
 			catch (Exception exception) {
@@ -996,8 +996,6 @@ public class AnalyticsConfigurationRegistryImpl
 			"contactId", "Integer"
 		).put(
 			"createDate", "date"
-		).put(
-			"defaultUser", "boolean"
 		).put(
 			"emailAddress", "Text"
 		).put(

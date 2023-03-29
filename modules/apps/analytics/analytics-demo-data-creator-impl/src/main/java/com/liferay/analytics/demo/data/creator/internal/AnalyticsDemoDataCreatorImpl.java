@@ -157,7 +157,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 		_companyId = company.getCompanyId();
 
-		_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
+		_guestUserId = _userLocalService.getGuestUserId(_companyId);
 
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
@@ -225,7 +225,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				organization = _organizationLocalService.addOrganization(
-					_defaultUserId, 0, name, false);
+					_guestUserId, 0, name, false);
 			}
 			catch (DuplicateOrganizationException
 						duplicateOrganizationException) {
@@ -256,7 +256,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				role = _roleLocalService.addRole(
-					_defaultUserId, null, 0, name, null, null,
+					_guestUserId, null, 0, name, null, null,
 					RoleConstants.TYPE_REGULAR, null, null);
 			}
 			catch (DuplicateRoleException duplicateRoleException) {
@@ -289,8 +289,8 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				group = _groupLocalService.addGroup(
-					_defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-					null, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+					_guestUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null,
+					0, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
 					new HashMap<>(), GroupConstants.TYPE_SITE_OPEN, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 					StringPool.SLASH + _friendlyURLNormalizer.normalize(name),
@@ -322,7 +322,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				team = _teamLocalService.addTeam(
-					_defaultUserId, _defaultGroupId, name, null,
+					_guestUserId, _defaultGroupId, name, null,
 					new ServiceContext());
 			}
 			catch (DuplicateTeamException duplicateTeamException) {
@@ -347,7 +347,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 		boolean male = StringUtil.equalsIgnoreCase(gender, "male");
 
 		User user = _userLocalService.addUser(
-			_defaultUserId, _companyId, false, csvRecord.get("password"),
+			_guestUserId, _companyId, false, csvRecord.get("password"),
 			csvRecord.get("password"), false, csvRecord.get("screenName"),
 			csvRecord.get("emailAddress"), LocaleUtil.getDefault(),
 			csvRecord.get("firstName"), csvRecord.get("middleName"),
@@ -385,7 +385,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				userGroup = _userGroupLocalService.addUserGroup(
-					_defaultUserId, _companyId, name, null, null);
+					_guestUserId, _companyId, name, null, null);
 			}
 			catch (DuplicateUserGroupException duplicateUserGroupException) {
 				if (_log.isDebugEnabled()) {
@@ -433,7 +433,6 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 	private CompanyLocalService _companyLocalService;
 
 	private long _defaultGroupId;
-	private long _defaultUserId;
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
@@ -442,6 +441,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 	private GroupLocalService _groupLocalService;
 
 	private final HashMap<String, Group> _groups = new HashMap<>();
+	private long _guestUserId;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

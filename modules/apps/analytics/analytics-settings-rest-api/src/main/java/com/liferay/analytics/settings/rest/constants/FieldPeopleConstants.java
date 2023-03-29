@@ -67,7 +67,7 @@ public class FieldPeopleConstants {
 
 	public static final String[] FIELD_USER_NAMES = {
 		"agreedToTermsOfUse", "comments", "companyId", "contactId",
-		"createDate", "defaultUser", "emailAddress", "emailAddressVerified",
+		"createDate", "emailAddress", "emailAddressVerified",
 		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
 		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
 		"middleName", "modifiedDate", "openId", "portraitId", "screenName",
@@ -79,10 +79,10 @@ public class FieldPeopleConstants {
 	};
 
 	public static final String[] FIELD_USER_TYPES = {
-		"Boolean", "String", "Long", "Long", "Date", "Boolean", "String",
-		"Boolean", "String", "Long", "String", "String", "String", "String",
-		"String", "String", "Long", "String", "Date", "String", "Long",
-		"String", "Integer", "Long", "Long", "String"
+		"Boolean", "String", "Long", "Long", "Date", "String", "Boolean",
+		"String", "Long", "String", "String", "String", "String", "String",
+		"String", "Long", "String", "Date", "String", "Long", "String",
+		"Integer", "Long", "Long", "String"
 	};
 
 }

@@ -27,7 +27,6 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
-import com.liferay.object.exception.ObjectFieldDefaultValueException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
 import com.liferay.object.exception.ObjectFieldLocalizedException;
@@ -184,14 +183,12 @@ public class ObjectFieldLocalServiceTest {
 		String objectFieldName = "a" + RandomTestUtil.randomString();
 
 		_testAddCustomObjectField(
-			ObjectFieldDefaultValueException.class,
+			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
 				"The value ", defaultValue, " of setting ",
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
 				" is invalid for object field ", objectFieldName),
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST
+			new PicklistObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).listTypeDefinitionId(
@@ -211,15 +208,11 @@ public class ObjectFieldLocalServiceTest {
 		objectFieldName = "a" + RandomTestUtil.randomString();
 
 		_testAddCustomObjectField(
-			ObjectFieldDefaultValueException.class,
+			ObjectFieldSettingNameException.NotAllowedNames.class,
 			StringBundler.concat(
 				"The settings defaultValue, defaultValueType are not allowed ",
 				"for object field ", objectFieldName),
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_STRING
+			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(

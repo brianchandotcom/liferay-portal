@@ -263,6 +263,7 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setLabel(
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));
+		objectDefinition.setEnableLocalization(true);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 			objectDefinition.setModifiable((Boolean)null);

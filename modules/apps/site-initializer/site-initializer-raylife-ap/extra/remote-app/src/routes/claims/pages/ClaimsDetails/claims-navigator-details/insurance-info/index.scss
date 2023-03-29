@@ -1,0 +1,64 @@
+.insurance-info-nav-bar-claims-details {
+	.list-title {
+		color: rgba(39, 40, 51, 0.5);
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	.list-text {
+		color: #272833;
+		font-size: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.list-text-info {
+		font-size: 1.125rem;
+	}
+
+	.list-subtext {
+		color: #686971;
+		font-size: 0.875rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.list-subtext-info {
+		font-size: 1.125rem;
+	}
+
+	@media (min-width: 768px) {
+		.claims-detail-insured-vehicle-section:after {
+			background-color: #e7e7ed;
+			bottom: 0;
+			content: '';
+			display: block;
+			height: 100%;
+			left: -20px;
+			position: absolute;
+			top: 0;
+			width: 1px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.claims-detail-insurance-info-content {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: flex-start !important;
+			flex-direction: column !important;
+			min-width: 100%;
+		}
+
+		.claims-detail-insurance-info {
+			margin-bottom: 0;
+			margin-right: 1rem;
+			padding-bottom: 3rem;
+		}
+
+		.claims-detail-insured-vehicle-section {
+			display: flex;
+			min-width: 100%;
+			flex-wrap: wrap;
+		}
+	}
+}

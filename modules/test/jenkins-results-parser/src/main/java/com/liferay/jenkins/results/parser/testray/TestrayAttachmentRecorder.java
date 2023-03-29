@@ -677,6 +677,16 @@ public class TestrayAttachmentRecorder {
 			if (testResultsDir.exists()) {
 				testResultsDirs.add(testResultsDir);
 			}
+
+			File workspaceTestResultsDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				JenkinsResultsParserUtil.combine(
+					"workspaces/", System.getenv("TEST_WORKSPACE_NAME"),
+					"/test-results"));
+
+			if (workspaceTestResultsDir.exists()) {
+				testResultsDirs.add(workspaceTestResultsDir);
+			}
 		}
 
 		if (testResultsDirs.isEmpty()) {

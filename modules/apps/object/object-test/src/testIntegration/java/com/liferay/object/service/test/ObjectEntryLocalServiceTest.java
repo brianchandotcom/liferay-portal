@@ -401,6 +401,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(4);
 
 		_assertFailure(
+			ObjectEntryValuesException.Required.class,
 			"No value was provided for required object field " +
 				"\"emailAddressRequired\"",
 			() -> _addObjectEntry(
@@ -411,6 +412,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.Required.class,
 			"No value was provided for required object field " +
 				"\"listTypeEntryKeyRequired\"",
 			() -> _addObjectEntry(
@@ -421,6 +423,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsIntegerSize.class,
 			"Object entry value exceeds integer field allowed size",
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -432,6 +435,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsIntegerSize.class,
 			"Object entry value exceeds integer field allowed size",
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -443,6 +447,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsLongSize.class,
 			"Object entry value exceeds long field allowed size",
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -454,6 +459,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsLongSize.class,
 			"Object entry value exceeds long field allowed size",
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -465,6 +471,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsLongMaxSize.class,
 			"Object entry value exceeds maximum long field allowed size",
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -476,6 +483,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsTextMaxLength.class,
 			"Object entry value exceeds the maximum length of 280 characters " +
 				"for object field \"firstName\"",
 			() -> _addObjectEntry(
@@ -488,6 +496,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsTextMaxLength.class,
 			"Object entry value exceeds the maximum length of 65000 " +
 				"characters for object field \"script\"",
 			() -> _addObjectEntry(
@@ -500,6 +509,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ExceedsLongMinSize.class,
 			"Object entry value falls below minimum long field allowed size",
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -511,6 +521,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.ListTypeEntry.class,
 			"Object field name \"listTypeEntryKeyRequired\" is not mapped to " +
 				"a valid list type entry",
 			() -> _addObjectEntry(
@@ -521,6 +532,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_assertFailure(
+			ObjectEntryValuesException.InvalidFileExtension.class,
 			"The file extension txt is invalid for object field \"upload\"",
 			() -> {
 				ObjectField objectField =
@@ -2280,7 +2292,8 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private void _assertFailure(
-		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
+		Class<?> clazz, String message,
+		UnsafeSupplier<Object, Exception> unsafeSupplier) {
 
 		try {
 			unsafeSupplier.get();
@@ -2289,6 +2302,7 @@ public class ObjectEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(exception.getMessage(), message);
+			Assert.assertTrue(clazz.isInstance(exception));
 		}
 	}
 
@@ -2637,6 +2651,7 @@ public class ObjectEntryLocalServiceTest {
 		long objectEntryId = objectEntry.getObjectEntryId();
 
 		_assertFailure(
+			ObjectEntryValuesException.InvalidObjectStateTransition.class,
 			StringBundler.concat(
 				"Object state ID ",
 				objectStateListTypeEntryKey1.getObjectStateId(),
@@ -2657,6 +2672,7 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertFailure(
+			ObjectEntryValuesException.InvalidObjectStateTransition.class,
 			StringBundler.concat(
 				"Object state ID ",
 				objectStateListTypeEntryKey2.getObjectStateId(),

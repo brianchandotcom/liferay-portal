@@ -19,7 +19,6 @@ import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
@@ -32,10 +31,9 @@ public class OutdatedPublishedCTCollectionUpgradeProcess
 	extends UpgradeProcess {
 
 	public OutdatedPublishedCTCollectionUpgradeProcess(
-		CTCollectionLocalService ctCollectionLocalService, Portal portal) {
+		CTCollectionLocalService ctCollectionLocalService) {
 
 		_ctCollectionLocalService = ctCollectionLocalService;
-		_portal = portal;
 	}
 
 	@Override
@@ -64,6 +62,5 @@ public class OutdatedPublishedCTCollectionUpgradeProcess
 	}
 
 	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final Portal _portal;
 
 }

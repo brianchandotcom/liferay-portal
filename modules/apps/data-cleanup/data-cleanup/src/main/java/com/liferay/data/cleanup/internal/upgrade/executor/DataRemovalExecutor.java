@@ -70,7 +70,7 @@ public class DataRemovalExecutor {
 			dataRemovalConfiguration::removeOutdatedPublishedCTCollections,
 			"com.liferay.change.tracking.service",
 			() -> new OutdatedPublishedCTCollectionUpgradeProcess(
-				_ctCollectionLocalService, _portal));
+				_ctCollectionLocalService));
 		_removeModuleData(
 			dataRemovalConfiguration::removePublishedCTSContentData,
 			"com.liferay.change.tracking.store.service",

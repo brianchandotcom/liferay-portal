@@ -134,14 +134,15 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		Matcher matcher = _pattern.matcher(_reportContent);
 
-		_assertDatabaseTablesAreSorted(matcher);
+		_assertTablesAreSortedByInitialRows(matcher);
 
-		String databaseTables = _getLogContextValue(
+		String tablesInitialFinalRows = _getLogContextValue(
 			"upgrade.report.tables.initial.final.rows");
 
-		matcher = _logContextDatabaseTablePattern.matcher(databaseTables);
+		matcher = _logContextTablesInitialFinalRowsPattern.matcher(
+			tablesInitialFinalRows);
 
-		_assertDatabaseTablesAreSorted(matcher);
+		_assertTablesAreSortedByInitialRows(matcher);
 	}
 
 	@Test
@@ -424,7 +425,24 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 	protected abstract String getFilePath();
 
-	private void _assertDatabaseTablesAreSorted(Matcher matcher) {
+	private void _assertLogContextContains(String key, String testString) {
+		String values = _getLogContextValue(key);
+
+		Assert.assertTrue(
+			StringUtil.containsIgnoreCase(
+				values, testString, StringPool.BLANK));
+	}
+
+	private void _assertReport(String testString) throws Exception {
+		if (_reportContent == null) {
+			_reportContent = _getReportContent();
+		}
+
+		Assert.assertTrue(
+			StringUtil.contains(_reportContent, testString, StringPool.BLANK));
+	}
+
+	private void _assertTablesAreSortedByInitialRows(Matcher matcher) {
 		int previousInitialCount = Integer.MAX_VALUE;
 		String previousTableName = null;
 
@@ -443,23 +461,6 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			previousInitialCount = initialCount;
 			previousTableName = tableName;
 		}
-	}
-
-	private void _assertLogContextContains(String key, String testString) {
-		String values = _getLogContextValue(key);
-
-		Assert.assertTrue(
-			StringUtil.containsIgnoreCase(
-				values, testString, StringPool.BLANK));
-	}
-
-	private void _assertReport(String testString) throws Exception {
-		if (_reportContent == null) {
-			_reportContent = _getReportContent();
-		}
-
-		Assert.assertTrue(
-			StringUtil.contains(_reportContent, testString, StringPool.BLANK));
 	}
 
 	private String _getLogContextContent() {
@@ -521,7 +522,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 	private static DB _db;
 	private static Appender _logContextAppender;
-	private static final Pattern _logContextDatabaseTablePattern =
+	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;

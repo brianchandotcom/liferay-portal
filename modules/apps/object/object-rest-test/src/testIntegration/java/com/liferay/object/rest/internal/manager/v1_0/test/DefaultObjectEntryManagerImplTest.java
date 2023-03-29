@@ -399,7 +399,7 @@ public class DefaultObjectEntryManagerImplTest {
 	@Test
 	public void testAddObjectEntry() throws Exception {
 
-		// Aggregation Field without filters
+		// Aggregation field without filters
 
 		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
@@ -531,13 +531,11 @@ public class DefaultObjectEntryManagerImplTest {
 				_simpleDTOConverterContext, _objectDefinition1,
 				parentObjectEntry1.getId()));
 
-		// Aggregation Field with filters
+		// Aggregation field with filter (date range with date and time)
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition1.getObjectDefinitionId(),
 			"countAggregationObjectFieldName");
-
-		// Date range with createDate and modifiedDate
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
@@ -559,7 +557,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
 
-		// Date range with custom object field
+		// Aggregation field with filter (date range with date only)
 
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(),
@@ -568,7 +566,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
-		// Equals and not equals
+		// Aggregation field with filter (Equals and not equals)
 
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(),
@@ -587,7 +585,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
 			objectField.getObjectFieldId());
 
-		// Excludes and includes with picklist
+		// Aggregation field with filter (excludes and includes with a string)
 
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(),
@@ -606,14 +604,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
 			objectField.getObjectFieldId());
 
-		// Excludes and includes with status
-
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
-			ObjectFilterConstants.TYPE_INCLUDES,
-			"{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}");
-
-		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
+		// Aggregation field with filter (excludes and includes with an int)
 
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
@@ -621,6 +612,13 @@ public class DefaultObjectEntryManagerImplTest {
 			"{\"not\":{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}}");
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
+			ObjectFilterConstants.TYPE_INCLUDES,
+			"{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}");
+
+		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
 
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
 			objectField.getObjectFieldId());

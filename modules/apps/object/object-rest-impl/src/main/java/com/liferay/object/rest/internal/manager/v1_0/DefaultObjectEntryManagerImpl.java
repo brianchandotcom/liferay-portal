@@ -397,13 +397,8 @@ public class DefaultObjectEntryManagerImpl
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (pagination != null) {
-			start = pagination.getStartPosition();
-			end = pagination.getEndPosition();
-		}
+		int start = _getStartPosition(pagination);
+		int end = _getEndPosition(pagination);
 
 		List<Facet> facets = new ArrayList<>();
 
@@ -597,8 +592,8 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderObjectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
 					serviceBuilderObjectEntry.getPrimaryKey(),
-					pagination.getStartPosition(),
-					pagination.getEndPosition())),
+					_getStartPosition(pagination),
+					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				serviceBuilderObjectEntry.getGroupId(),
@@ -636,8 +631,8 @@ public class DefaultObjectEntryManagerImpl
 						serviceBuilderObjectEntry.getGroupId(),
 						objectRelationship.getObjectRelationshipId(),
 						serviceBuilderObjectEntry.getPrimaryKey(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition()),
+						_getStartPosition(pagination),
+						_getEndPosition(pagination)),
 				baseModel -> _toDTO(
 					baseModel, serviceBuilderObjectEntry,
 					_systemObjectDefinitionMetadataRegistry.
@@ -857,6 +852,14 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUserId());
 	}
 
+	private int _getEndPosition(Pagination pagination) {
+		if (pagination != null) {
+			return pagination.getEndPosition();
+		}
+
+		return QueryUtil.ALL_POS;
+	}
+
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
@@ -935,6 +938,14 @@ public class DefaultObjectEntryManagerImpl
 		return relatedObjectDefinition;
 	}
 
+	private int _getStartPosition(Pagination pagination) {
+		if (pagination != null) {
+			return pagination.getStartPosition();
+		}
+
+		return QueryUtil.ALL_POS;
+	}
+
 	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
@@ -972,8 +983,8 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					objectEntryId, pagination.getStartPosition(),
-					pagination.getEndPosition())),
+					objectEntryId, _getStartPosition(pagination),
+					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),

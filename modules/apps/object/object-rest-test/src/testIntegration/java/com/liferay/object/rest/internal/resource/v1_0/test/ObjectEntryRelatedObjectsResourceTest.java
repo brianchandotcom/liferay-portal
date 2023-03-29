@@ -664,6 +664,16 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		Assert.assertEquals(1, jsonObject.getLong("page"));
 		Assert.assertEquals(1, jsonObject.getLong("pageSize"));
 		Assert.assertEquals(2, jsonObject.getLong("totalCount"));
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			_invoke(
+				Http.Method.GET,
+				_getLocation(objectRelationship.getName()) +
+					"?page=0&pageSize=0"));
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(2, itemsJSONArray.length());
 	}
 
 	private Http.Options _createOptions(

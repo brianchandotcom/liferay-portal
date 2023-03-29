@@ -91,7 +91,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 			analyticsDeleteMessageLocalService.addAnalyticsDeleteMessage(
 				companyId, new Date(), model.getModelClassName(),
 				(long)model.getPrimaryKeyObj(),
-				userLocalService.getDefaultUserId(companyId));
+				userLocalService.getGuestUserId(companyId));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -211,7 +211,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 			analyticsAssociationLocalService.addAnalyticsAssociation(
 				companyId, new Date(),
-				userLocalService.getDefaultUserId(companyId),
+				userLocalService.getGuestUserId(companyId),
 				associationClassName, (long)associationClassPK,
 				modelClass.getName(), (long)classPK);
 		}

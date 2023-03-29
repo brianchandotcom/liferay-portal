@@ -296,12 +296,12 @@ public class EditWorkspaceConnectionMVCActionCommand
 				"syncedUserFieldNames",
 				new String[] {
 					"agreedToTermsOfUse", "comments", "companyId", "contactId",
-					"createDate", "defaultUser", "emailAddress",
-					"emailAddressVerified", "externalReferenceCode",
-					"facebookId", "firstName", "googleUserId", "greeting",
-					"jobTitle", "languageId", "lastName", "ldapServerId",
-					"middleName", "modifiedDate", "openId", "portraitId",
-					"screenName", "status", "timeZoneId", "userId", "uuid"
+					"createDate", "emailAddress", "emailAddressVerified",
+					"externalReferenceCode", "facebookId", "firstName",
+					"googleUserId", "greeting", "jobTitle", "languageId",
+					"lastName", "ldapServerId", "middleName", "modifiedDate",
+					"openId", "portraitId", "screenName", "status",
+					"timeZoneId", "userId", "uuid"
 				});
 		}
 

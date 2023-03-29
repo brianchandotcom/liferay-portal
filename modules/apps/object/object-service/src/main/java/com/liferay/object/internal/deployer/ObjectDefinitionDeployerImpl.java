@@ -63,6 +63,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -354,7 +355,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				"item.class.name", objectDefinition.getClassName()
 			).build());
 
+		long oldCompanyId = CompanyThreadLocal.getCompanyId();
+
 		try {
+			CompanyThreadLocal.setCompanyId(objectDefinition.getCompanyId());
+
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {
 				String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -374,6 +379,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(oldCompanyId);
 		}
 
 		ObjectLayout objectLayout =

@@ -224,20 +224,6 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "EVP Request Status"
-			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Request Status$]",
-			"name": "requestStatus",
-			"required": true,
-			"state": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "EVP Liferay Branch"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Request: Liferay Branch$]",

@@ -122,6 +122,21 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		return testClasses;
 	}
 
+	public String getWorkspaceName() {
+		JobProperty jobProperty = getJobProperty(
+			"test.workspace.name", testSuiteName, batchName);
+
+		if ((jobProperty == null) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(jobProperty.getValue())) {
+
+			return null;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return jobProperty.getValue();
+	}
+
 	protected FunctionalBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
@@ -443,7 +458,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		if ((jobProperty == null) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(jobProperty.getValue())) {
 
-			String workspaceName = _getWorkspaceName();
+			String workspaceName = getWorkspaceName();
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
 				return null;
@@ -564,21 +579,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testBatchRunPropertyQuery;
-	}
-
-	private String _getWorkspaceName() {
-		JobProperty jobProperty = getJobProperty(
-			"test.workspace.name", testSuiteName, batchName);
-
-		if ((jobProperty == null) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(jobProperty.getValue())) {
-
-			return null;
-		}
-
-		recordJobProperty(jobProperty);
-
-		return jobProperty.getValue();
 	}
 
 	private void _setTestBatchRunPropertyQueries() {

@@ -142,6 +142,14 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 			sb.append("\n");
 		}
 
+		String workspaceName = _getWorkspaceName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
+			sb.append("TEST_WORKSPACE_NAME=");
+			sb.append(workspaceName);
+			sb.append("\n");
+		}
+
 		return sb.toString();
 	}
 
@@ -179,6 +187,19 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		}
 
 		return new AbstractMap.SimpleEntry<>(key, value);
+	}
+
+	private String _getWorkspaceName() {
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		if (!(batchTestClassGroup instanceof FunctionalBatchTestClassGroup)) {
+			return null;
+		}
+
+		FunctionalBatchTestClassGroup functionalBatchTestClassGroup =
+			(FunctionalBatchTestClassGroup)batchTestClassGroup;
+
+		return functionalBatchTestClassGroup.getWorkspaceName();
 	}
 
 	private String _getWorkspacePortalVersion() {

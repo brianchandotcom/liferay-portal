@@ -135,7 +135,8 @@ const CompareRunsCases = () => {
 			.and()
 			.eq('caseToCaseResult/dueStatus', dueStatusB)
 			.group('CLOSE');
-	} else {
+	}
+	else {
 		caseResultFilter = caseResultFilter.in(
 			'caseToCaseResult/r_runToCaseResult_c_runId',
 			[runA.id, runB.id]

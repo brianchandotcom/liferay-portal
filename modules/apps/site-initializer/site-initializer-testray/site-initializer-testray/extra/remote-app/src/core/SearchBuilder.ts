@@ -161,7 +161,8 @@ export default class SearchBuilder {
 					key.replace('$', ''),
 					value
 				);
-			} else {
+			}
+			else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

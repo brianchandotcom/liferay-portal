@@ -2263,10 +2263,13 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticleLocalization journalArticleLocalization :
 				journalArticleLocalizationList) {
 
-			journalArticleLocalizationDescriptionMap.put(
-				LocaleUtil.fromLanguageId(
-					journalArticleLocalization.getLanguageId()),
-				journalArticleLocalization.getDescription());
+			Locale locale = LocaleUtil.fromLanguageId(
+				journalArticleLocalization.getLanguageId(), true, false);
+
+			if (locale != null) {
+				journalArticleLocalizationDescriptionMap.put(
+					locale, journalArticleLocalization.getDescription());
+			}
 		}
 
 		return journalArticleLocalizationDescriptionMap;
@@ -2975,10 +2978,13 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticleLocalization journalArticleLocalization :
 				journalArticleLocalizationList) {
 
-			journalArticleLocalizationTitleMap.put(
-				LocaleUtil.fromLanguageId(
-					journalArticleLocalization.getLanguageId()),
-				journalArticleLocalization.getTitle());
+			Locale locale = LocaleUtil.fromLanguageId(
+				journalArticleLocalization.getLanguageId(), true, false);
+
+			if (locale != null) {
+				journalArticleLocalizationTitleMap.put(
+					locale, journalArticleLocalization.getTitle());
+			}
 		}
 
 		return journalArticleLocalizationTitleMap;

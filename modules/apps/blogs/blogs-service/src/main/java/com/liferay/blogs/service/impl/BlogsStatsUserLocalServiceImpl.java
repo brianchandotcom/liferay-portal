@@ -86,7 +86,9 @@ public class BlogsStatsUserLocalServiceImpl
 		return _getBlogsStatsUsers(
 			joinStep -> joinStep.innerJoinON(
 				Users_OrgsTable.INSTANCE,
-				Users_OrgsTable.INSTANCE.userId.eq(_userIdAlias)),
+				Users_OrgsTable.INSTANCE.userId.eq(
+					BlogsEntryTable.INSTANCE.userId
+				),
 			Users_OrgsTable.INSTANCE.organizationId.eq(organizationId),
 			_lastPostDateExpression.descending(), start, end);
 	}

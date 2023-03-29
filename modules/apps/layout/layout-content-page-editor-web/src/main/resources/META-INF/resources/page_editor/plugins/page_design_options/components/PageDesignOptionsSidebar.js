@@ -175,6 +175,7 @@ export default function PageDesignOptionsSidebar() {
 							Liferay.Language.get('select-x'),
 							label
 						)}
+						className="p-0"
 						id={getTabPanelId(index)}
 						key={index}
 					>

@@ -249,7 +249,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		throws PortalException {
 
 		String termValue = _getTermValue(
-			partialTermName,
+			StringUtil.removeSubstring(partialTermName, "AUTHOR_"),
 			_userLocalService.getUser(_objectEntry.getUserId()));
 
 		if (Validator.isNotNull(termValue)) {

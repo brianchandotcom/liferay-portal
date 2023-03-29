@@ -1184,6 +1184,14 @@ public class DefaultObjectEntryManagerImplTest {
 					"status", false, WorkflowConstants.STATUS_APPROVED)
 			).build());
 
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildEqualsExpressionFilterString(
+					"creatorId", _adminUser.getUserId())
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+
 		// Range expression
 
 		_testGetObjectEntries(
@@ -1985,9 +1993,13 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	private String _buildEqualsExpressionFilterString(
-		String fieldName, String value) {
+		String fieldName, Object value) {
 
-		return StringBundler.concat("( ", fieldName, " eq '", value, "')");
+		if (value instanceof String) {
+			value = StringUtil.quote(String.valueOf(value));
+		}
+
+		return StringBundler.concat("( ", fieldName, " eq ", value, ")");
 	}
 
 	private String _buildInExpressionFilterString(

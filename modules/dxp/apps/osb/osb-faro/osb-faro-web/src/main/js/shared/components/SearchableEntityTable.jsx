@@ -36,7 +36,7 @@ class SearchableEntityTable extends React.Component {
 		query: PropTypes.string,
 		renderInlineRowActions: PropTypes.func,
 		renderRowActions: PropTypes.func,
-		rowIdentifier: PropTypes.string,
+		rowIdentifier: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
 		showCheckbox: PropTypes.bool
 	};
 

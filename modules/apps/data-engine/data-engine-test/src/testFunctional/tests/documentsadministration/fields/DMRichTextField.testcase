@@ -131,7 +131,7 @@ definition {
 			rowEntry = "DM Document Type");
 
 		DataEngine.assertFieldRepeated(
-			fieldName = "RichText",
+			fieldName = "Rich Text",
 			index = 2);
 	}
 

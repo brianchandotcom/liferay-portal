@@ -96,7 +96,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		DataEngine.assertFieldRepeated(
-			fieldName = "RichText",
+			fieldName = "Rich Text",
 			index = 2);
 
 		Click(
@@ -217,7 +217,7 @@ definition {
 		DataEngine.addRepeatableField(fieldLabel = "Rich Text");
 
 		DataEngine.assertFieldRepeated(
-			fieldName = "RichText",
+			fieldName = "Rich Text",
 			index = 2);
 	}
 

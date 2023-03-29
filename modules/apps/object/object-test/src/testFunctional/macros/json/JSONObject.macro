@@ -394,6 +394,8 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a picklist"
 	macro addPicklist {
+		Variables.assertDefined(parameterList = ${picklistName});
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {

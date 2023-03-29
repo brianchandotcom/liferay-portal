@@ -74,7 +74,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					{
 						clickable: true,
 						key: 'run',
-						render: (run) => run?.externalReferencePK,
+						render: (run) => run?.name,
 						value: i18n.translate('environment'),
 						width: '250',
 					},

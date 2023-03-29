@@ -1353,6 +1353,10 @@ definition {
 		MenuItem.click(menuItem = ${kebabOption});
 	}
 
+	macro setAccountRestrictionViaAPI {
+		JSONObject.setAccountRestriction(objectName = ${objectName});
+	}
+
 	macro viewCategorizationInObjectEntry {
 		AssertVisible(locator1 = "ObjectAdmin#CATEGORIZATION_TITLE_INTO_OBJECT");
 

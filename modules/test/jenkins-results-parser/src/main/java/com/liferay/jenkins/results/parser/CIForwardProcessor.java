@@ -115,11 +115,15 @@ public class CIForwardProcessor {
 				@Override
 				public String execute() {
 					try {
-						return _pullRequest.forward(
+						String pullRequestURL = _pullRequest.forward(
 							_getCIForwardCommentBody(initialComment),
 							_consoleLogURL, _recipientUsername,
 							_getCIForwardBranchName(), senderUsername,
 							_gitRepositoryDir);
+
+						_pullRequest.close();
+
+						return pullRequestURL;
 					}
 					catch (Exception exception) {
 						throw new RuntimeException(exception);

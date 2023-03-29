@@ -145,8 +145,16 @@ const ListView: React.FC<ListViewProps> = ({
 		transformData,
 	});
 
-	const {actions = {}, items = [], page, pageSize, totalCount = 0} =
-		response || {};
+	const {
+		actions = {},
+		items = [],
+		page = 1,
+		pageSize,
+		totalCount = 0,
+		lastPage,
+	} = response || {};
+
+	const itemsMemoized = useMemo(() => items, [items]);
 
 	const columns = useMemo(
 		() =>
@@ -185,8 +193,14 @@ const ListView: React.FC<ListViewProps> = ({
 	const contextString = JSON.stringify(listViewContext);
 
 	const onSelectAllRows = useCallback(() => {
-		onSelectRow(items.map(({id}) => id));
-	}, [items, onSelectRow]);
+		onSelectRow(itemsMemoized.map(({id}) => id));
+	}, [itemsMemoized, onSelectRow]);
+
+	useEffect(() => {
+		if (!loading && page === lastPage && !itemsMemoized.length) {
+			dispatch({payload: page - 1, type: ListViewTypes.SET_PAGE});
+		}
+	}, [dispatch, itemsMemoized.length, lastPage, loading, page]);
 
 	useEffect(() => {
 		if (onContextChange) {
@@ -198,11 +212,13 @@ const ListView: React.FC<ListViewProps> = ({
 	useEffect(() => {
 		if (tableProps.rowSelectable) {
 			dispatch({
-				payload: items.every(({id}) => selectedRows.includes(id)),
+				payload: itemsMemoized.every(({id}) =>
+					selectedRows.includes(id)
+				),
 				type: ListViewTypes.SET_CHECKED_ALL_ROWS,
 			});
 		}
-	}, [items, tableProps, selectedRows, dispatch]);
+	}, [itemsMemoized, tableProps, selectedRows, dispatch]);
 
 	if (loading) {
 		return <Loading />;
@@ -237,11 +253,11 @@ const ListView: React.FC<ListViewProps> = ({
 					{...managementToolbarProps}
 					actions={actions}
 					tableProps={tableProps}
-					totalItems={items.length}
+					totalItems={itemsMemoized.length}
 				/>
 			)}
 
-			{!items.length && (
+			{!itemsMemoized.length && (
 				<EmptyState
 					description={error?.message}
 					type={error ? 'EMPTY_SEARCH' : 'EMPTY_STATE'}
@@ -265,7 +281,7 @@ const ListView: React.FC<ListViewProps> = ({
 						{...tableProps}
 						allRowsChecked={listViewContext.checkAll}
 						columns={columns}
-						items={items}
+						items={itemsMemoized}
 						mutate={mutate}
 						onSelectAllRows={onSelectAllRows}
 						onSelectRow={onSelectRow}

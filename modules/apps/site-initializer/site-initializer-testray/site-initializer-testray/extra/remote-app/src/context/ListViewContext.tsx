@@ -18,6 +18,7 @@ import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
 import useStorage from '~/hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '~/types';
 import {safeJSONParse} from '~/util';
+import {PAGINATION_DELTA} from '~/util/constants';
 import {CONSENT_TYPE} from '~/util/enum';
 import isDeepEqual from '~/util/object';
 
@@ -70,7 +71,7 @@ const initialState: InitialState = {
 	id: '',
 	keywords: '',
 	page: 1,
-	pageSize: 20,
+	pageSize: PAGINATION_DELTA[0],
 	pin: false,
 	selectedRows: [],
 	sort: {direction: SortOption.ASC, key: ''},
@@ -134,8 +135,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -209,8 +209,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 					JSON.stringify(state.filters),
 					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
+			} else {
 				testrayStorage.removeItem(storageName);
 			}
 

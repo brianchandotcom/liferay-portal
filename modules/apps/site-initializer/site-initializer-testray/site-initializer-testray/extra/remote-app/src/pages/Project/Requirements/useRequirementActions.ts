@@ -14,8 +14,8 @@
 
 import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
+import useFormModal from '~/hooks/useFormModal';
 
-import useFormActions from '../../../hooks/useFormActions';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {TestrayRequirement, deleteResource} from '../../../services/rest';
@@ -24,7 +24,9 @@ import {Action, ActionsHookParameter} from '../../../types';
 const useRequirementActions = ({
 	isHeaderActions = false,
 }: ActionsHookParameter = {}) => {
-	const {form} = useFormActions();
+	const {
+		modal: {onError, onSave},
+	} = useFormModal();
 	const {removeItemFromList} = useMutate();
 	const navigate = useNavigate();
 
@@ -50,13 +52,9 @@ const useRequirementActions = ({
 		{
 			action: ({id}, mutate) =>
 				deleteResource(`/requirements/${id}`)
-					?.then(() => {
-						navigate(-1);
-
-						return removeItemFromList(mutate, id);
-					})
-					.then(form.onSuccess)
-					.catch(form.onError),
+					?.then(() => removeItemFromList(mutate, id))
+					.then(onSave)
+					.catch(onError),
 			icon: 'trash',
 			name: i18n.translate(
 				isHeaderActions ? 'delete-requirement' : 'delete'

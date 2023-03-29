@@ -76,7 +76,7 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
 			{
 				divider,
 				title: i18n.translate('environment'),
-				value: run.name,
+				value: run.name.replaceAll('|', ' + '),
 			},
 		];
 	};

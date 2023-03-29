@@ -975,11 +975,7 @@ definition {
 		}
 
 		task ("Navigate to AC Page > Overview") {
-			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
-
-			var dataSourceName = StringUtil.trim(${dataSourceName});
-
-			ACNavigation.openItem(itemName = "Blogs AC Title - Site Name - ${dataSourceName}");
+			ACNavigation.openItem(itemName = "Blogs AC Title - Site Name - ${assignedPropertyName}");
 		}
 
 		task ("Change all cards to last 30 days time filter") {

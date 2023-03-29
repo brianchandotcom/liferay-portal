@@ -21,6 +21,7 @@ import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerVisibleFilter;
 import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -146,10 +148,26 @@ public class DepotApplicationController {
 
 				bundleContext.ungetService(serviceReference);
 			});
+
+		_serviceRegistration = bundleContext.registerService(
+			WorkflowHandlerVisibleFilter.class,
+			(workflowHandler, group) -> {
+				if (!group.isDepot() ||
+					isClassNameEnabled(
+						workflowHandler.getClassName(), group.getGroupId())) {
+
+					return workflowHandler.isVisible(group);
+				}
+
+				return false;
+			},
+			null);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceRegistration.unregister();
+
 		_serviceTrackerMap.close();
 	}
 
@@ -177,6 +195,7 @@ public class DepotApplicationController {
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	private ServiceRegistration<?> _serviceRegistration;
 	private ServiceTrackerMap<String, DepotApplication> _serviceTrackerMap;
 
 }

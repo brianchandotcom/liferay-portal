@@ -13,6 +13,7 @@
  */
 
 import {
+	createPortletURL,
 	fetch,
 	objectToFormData,
 	openModal,
@@ -27,7 +28,11 @@ export default function decorateAddSiteNavigationMenuItemOptions({
 		window.sessionStorage.setItem(`${portletNamespace}itemAdded`, true);
 	};
 
-	const onClick = ({data}) => {
+	const onClick = ({
+		itemData: data,
+		order,
+		parentSiteNavigationMenuItemId,
+	}) => {
 		const useSmallerModal = shouldUseSmallerModal(data.type);
 
 		if (data.itemSelector) {
@@ -39,7 +44,12 @@ export default function decorateAddSiteNavigationMenuItemOptions({
 				multiple: data.multiSelection,
 
 				onSelect: (selection) => {
-					fetch(data.addItemURL, {
+					const addItemURL = createPortletURL(data.addItemURL, {
+						order,
+						parentSiteNavigationMenuItemId,
+					});
+
+					fetch(addItemURL, {
 						body: objectToFormData(
 							data.multiSelection
 								? getNamespacedInfoItems(
@@ -68,13 +78,18 @@ export default function decorateAddSiteNavigationMenuItemOptions({
 			});
 		}
 		else {
+			const url = createPortletURL(data.href, {
+				order,
+				parentSiteNavigationMenuItemId,
+			});
+
 			openModal({
 				height: useSmallerModal ? '60vh' : undefined,
 				id: `${portletNamespace}addMenuItem`,
 				iframeBodyCssClass: 'portal-popup',
 				size: useSmallerModal ? 'md' : undefined,
 				title: data.addTitle,
-				url: data.href,
+				url,
 			});
 
 			Liferay.once('reloadSiteNavigationMenuEditor', () => {
@@ -87,7 +102,12 @@ export default function decorateAddSiteNavigationMenuItemOptions({
 
 	return addSiteNavigationMenuItemOptions.map((item) => ({
 		...item,
-		onClick: () => onClick(item),
+		onClick: ({order, parentSiteNavigationMenuItemId}) =>
+			onClick({
+				itemData: item.data,
+				order,
+				parentSiteNavigationMenuItemId,
+			}),
 	}));
 }
 

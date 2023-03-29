@@ -12,9 +12,9 @@
  * details.
  */
 
-import {fetch, getOpener, openToast} from 'frontend-js-web';
+import {createPortletURL, fetch, getOpener, openToast} from 'frontend-js-web';
 
-export default function ({namespace}) {
+export default function ({namespace, order, parentSiteNavigationMenuItemId}) {
 	const addButton = document.getElementById(`${namespace}addButton`);
 
 	if (addButton) {
@@ -31,7 +31,12 @@ export default function ({namespace}) {
 			const form = document.getElementById(`${namespace}fm`);
 			const formData = new FormData(form);
 
-			fetch(form.action, {
+			const url = createPortletURL(form.action, {
+				order,
+				parentSiteNavigationMenuItemId,
+			});
+
+			fetch(url, {
 				body: formData,
 				method: 'POST',
 			})

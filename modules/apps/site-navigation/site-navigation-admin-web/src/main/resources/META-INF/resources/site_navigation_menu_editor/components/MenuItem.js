@@ -334,6 +334,10 @@ export function MenuItem({
 								{Liferay.FeatureFlags['LPS-134527'] && (
 									<AddItemDropDown
 										className="position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown top-button"
+										order={order}
+										parentSiteNavigationMenuItemId={
+											item.parentSiteNavigationMenuItemId
+										}
 										trigger={
 											<ClayButtonWithIcon
 												aria-label={sub(
@@ -369,6 +373,10 @@ export function MenuItem({
 								{Liferay.FeatureFlags['LPS-134527'] && (
 									<AddItemDropDown
 										className="bottom-button position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown"
+										order={order + 1}
+										parentSiteNavigationMenuItemId={
+											item.parentSiteNavigationMenuItemId
+										}
 										trigger={
 											<ClayButtonWithIcon
 												aria-label={sub(
@@ -403,9 +411,9 @@ export function MenuItem({
 
 								<ClayLayout.ContentCol gutters>
 									<MenuItemOptions
-										hasChildren={item.children.length}
 										isTarget={isTarget}
 										label={`${title} (${type})`}
+										numberOfChildren={item.children.length}
 										onMenuItemRemoved={onMenuItemRemoved}
 										siteNavigationMenuItemId={
 											siteNavigationMenuItemId

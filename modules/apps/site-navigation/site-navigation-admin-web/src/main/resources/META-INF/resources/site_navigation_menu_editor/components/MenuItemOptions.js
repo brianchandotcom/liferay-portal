@@ -27,9 +27,9 @@ import getFlatItems from '../utils/getFlatItems';
 import DeletionModal from './DeletionModal';
 
 export default function MenuItemOptions({
-	hasChildren,
 	isTarget,
 	label,
+	numberOfChildren,
 	onMenuItemRemoved,
 	siteNavigationMenuItemId,
 }) {
@@ -80,7 +80,14 @@ export default function MenuItemOptions({
 
 	const items = [
 		{
-			items: addSiteNavigationMenuItemOptions,
+			items: addSiteNavigationMenuItemOptions.map((child) => ({
+				...child,
+				onClick: () =>
+					child.onClick({
+						order: numberOfChildren,
+						parentSiteNavigationMenuItemId: siteNavigationMenuItemId,
+					}),
+			})),
 			label: Liferay.Language.get('add-child'),
 			symbolLeft: 'plus',
 			symbolRight: 'angle-right',
@@ -100,7 +107,9 @@ export default function MenuItemOptions({
 		{
 			label: Liferay.Language.get('delete'),
 			onClick: () =>
-				hasChildren ? setDeletionModalVisible(true) : deleteMenuItem(),
+				numberOfChildren > 0
+					? setDeletionModalVisible(true)
+					: deleteMenuItem(),
 			symbolLeft: 'trash',
 		},
 	];
@@ -140,7 +149,7 @@ export default function MenuItemOptions({
 					className="delete-item-button"
 					displayType="unstyled"
 					onClick={() =>
-						hasChildren
+						numberOfChildren > 0
 							? setDeletionModalVisible(true)
 							: deleteMenuItem()
 					}

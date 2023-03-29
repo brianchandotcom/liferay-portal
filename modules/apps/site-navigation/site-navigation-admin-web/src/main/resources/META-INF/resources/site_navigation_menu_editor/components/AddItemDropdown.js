@@ -18,7 +18,12 @@ import React, {useState} from 'react';
 
 import {useConstants} from '../contexts/ConstantsContext';
 
-export function AddItemDropDown({className, trigger}) {
+export function AddItemDropDown({
+	className,
+	trigger,
+	order = -1,
+	parentSiteNavigationMenuItemId = 0,
+}) {
 	const [active, setActive] = useState(false);
 	const {addSiteNavigationMenuItemOptions} = useConstants();
 
@@ -38,7 +43,15 @@ export function AddItemDropDown({className, trigger}) {
 				<ClayDropDown.ItemList>
 					{addSiteNavigationMenuItemOptions.map(
 						({label, onClick}) => (
-							<ClayDropDown.Item key={label} onClick={onClick}>
+							<ClayDropDown.Item
+								key={label}
+								onClick={() =>
+									onClick({
+										order,
+										parentSiteNavigationMenuItemId,
+									})
+								}
+							>
 								{label}
 							</ClayDropDown.Item>
 						)

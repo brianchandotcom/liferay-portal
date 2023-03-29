@@ -14,14 +14,15 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {HEADERS, HEADLESS_BATCH_ENGINE_URL} from './constants';
+import {downloadFile} from './DownloadHelper';
+import {
+	EXPORT_FILE_NAME,
+	HEADERS,
+	HEADLESS_BATCH_ENGINE_URL,
+} from './constants';
 
 export function getExportTaskStatusURL(externalReferenceCode) {
 	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/by-external-reference-code/${externalReferenceCode}`;
-}
-
-export function getExportFileURL(externalReferenceCode) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/by-external-reference-code/${externalReferenceCode}/content`;
 }
 
 export async function exportStatus(externalReferenceCode) {
@@ -39,9 +40,6 @@ export async function exportStatus(externalReferenceCode) {
 	return await response.json();
 }
 
-export async function fetchExportedFile(externalReferenceCode) {
-	const response = await fetch(getExportFileURL(externalReferenceCode));
-	const blob = await response.blob();
-
-	return URL.createObjectURL(blob);
+export function fetchExportedFile(externalReferenceCode) {
+	downloadFile(externalReferenceCode, EXPORT_FILE_NAME, 'exportFile');
 }

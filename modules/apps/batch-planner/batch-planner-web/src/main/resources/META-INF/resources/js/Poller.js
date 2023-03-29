@@ -17,7 +17,6 @@ import {fetch} from 'frontend-js-web';
 import {useCallback, useEffect, useReducer} from 'react';
 
 import {
-	EXPORT_FILE_NAME,
 	HEADERS,
 	POLL_INTERVAL,
 	PROCESS_COMPLETED,
@@ -186,27 +185,11 @@ const Poller = (
 		[dispatch, isMounted]
 	);
 
-	const download = (url, filename) => {
-		const linkElement = document.createElement('a');
-
-		linkElement.style.display = 'none';
-		linkElement.href = url;
-		linkElement.download = filename;
-
-		document.body.appendChild(linkElement);
-
-		linkElement.click();
-
-		window.URL.revokeObjectURL(url);
-	};
-
 	const downloadFile = useCallback(async () => {
 		dispatchIfMounted({type: LOADING});
 
 		try {
-			const blobUrl = await requestTaskFile(state.externalReferenceCode);
-
-			download(blobUrl, EXPORT_FILE_NAME);
+			requestTaskFile(state.externalReferenceCode);
 
 			dispatchIfMounted({type: STOP_LOADING});
 		}

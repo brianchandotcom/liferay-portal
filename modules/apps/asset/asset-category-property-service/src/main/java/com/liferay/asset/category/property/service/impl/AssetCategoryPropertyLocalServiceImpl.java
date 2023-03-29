@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -205,8 +206,9 @@ public class AssetCategoryPropertyLocalServiceImpl
 				"Maximum length of key exceeded");
 		}
 
-		if (!_assetHelper.isValidWord(value)) {
-			throw new CategoryPropertyValueException("Invalid value " + value);
+		if (Validator.isBlank(value)) {
+			throw new CategoryPropertyValueException(
+				"Property value cannot be an empty string");
 		}
 
 		int valueMaxLength = ModelHintsUtil.getMaxLength(

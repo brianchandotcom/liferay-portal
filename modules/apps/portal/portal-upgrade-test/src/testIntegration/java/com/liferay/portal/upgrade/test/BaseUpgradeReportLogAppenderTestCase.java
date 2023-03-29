@@ -136,7 +136,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertDatabaseTablesAreSorted(matcher);
 
-		String databaseTables = _getLogContextKey(
+		String databaseTables = _getLogContextValue(
 			"upgrade.report.tables.initial.final.rows");
 
 		matcher = _logContextDatabaseTablePattern.matcher(databaseTables);
@@ -228,7 +228,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			reportContent.indexOf(slowerUpgradeProcessName) <
 				reportContent.indexOf(fasterUpgradeProcessName));
 
-		String upgradeProcesses = _getLogContextKey(
+		String upgradeProcesses = _getLogContextValue(
 			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertTrue(
@@ -446,7 +446,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	}
 
 	private void _assertLogContextContains(String key, String testString) {
-		String values = _getLogContextKey(key);
+		String values = _getLogContextValue(key);
 
 		Assert.assertTrue(
 			StringUtil.containsIgnoreCase(
@@ -466,7 +466,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		return _unsyncStringWriter.toString();
 	}
 
-	private String _getLogContextKey(String key) {
+	private String _getLogContextValue(String key) {
 		String logContext = _getLogContextContent();
 
 		Pattern pattern = Pattern.compile(

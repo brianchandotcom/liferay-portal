@@ -171,6 +171,16 @@ definition {
 
 		// Articles accessed in admin will stay in admin after publishing.
 
+		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
+		var globalGroupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Global",
+			site = "true");
+
+		var basicWebContentStructureId = JSONDDMstructure._getStructureId(
+			classNameId = ${classNameId},
+			groupId = ${globalGroupId},
+			structureName = "Basic Web Content");
+
 		if (isSet(folderName)) {
 			var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
 
@@ -178,7 +188,7 @@ definition {
 				folderName = ${folderName},
 				groupId = ${groupId});
 
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_journal_web_portlet_JournalPortlet_displayStyle%3Ddescriptive%26_com_liferay_journal_web_portlet_JournalPortlet_folderId%3D${folderId}%26_com_liferay_journal_web_portlet_JournalPortlet_groupId%3D${groupId}%26p_p_auth%3DxwwxN5nQ&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureKey=BASIC-WEB-CONTENT&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}");
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_journal_web_portlet_JournalPortlet_displayStyle%3Ddescriptive%26_com_liferay_journal_web_portlet_JournalPortlet_folderId%3D${folderId}%26_com_liferay_journal_web_portlet_JournalPortlet_groupId%3D${groupId}%26p_p_auth%3DxwwxN5nQ&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureId=${basicWebContentStructureId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}");
 		}
 		else {
 			var groupId = JSONWebcontentSetter.setGroupId(
@@ -189,7 +199,7 @@ definition {
 				var folderId = 0;
 			}
 
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3DxwwxN5nQ&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureKey=BASIC-WEB-CONTENT&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}");
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3DxwwxN5nQ&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureId=${basicWebContentStructureId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}");
 		}
 	}
 

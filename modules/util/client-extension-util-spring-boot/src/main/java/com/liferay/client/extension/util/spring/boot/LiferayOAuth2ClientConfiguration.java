@@ -146,10 +146,7 @@ public class LiferayOAuth2ClientConfiguration {
 					".oauth2.headless.server.client.secret");
 
 			if (clientSecret == null) {
-				throw new IllegalArgumentException(
-					"Property \"" + externalReferenceCode +
-						".oauth2.headless.server.client.secret\" is not " +
-							"defined");
+				continue;
 			}
 
 			String tokenURI = _environment.getProperty(

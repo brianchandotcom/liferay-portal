@@ -313,6 +313,12 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String fileName, String absolutePath, JavaClass javaClass,
 		String annotation, String configurationPid) {
 
+		if (!isAttributeValue(
+				_CHECK_CONFIGURATION_PID_ATTRIBUTE_KEY, absolutePath)) {
+
+			return annotation;
+		}
+
 		List<String> configurationClasses = new ArrayList<>();
 
 		if (StringUtil.startsWith(configurationPid, '{')) {
@@ -619,6 +625,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY =
 		"allowedImmediateAttributeClassNames";
+
+	private static final String _CHECK_CONFIGURATION_PID_ATTRIBUTE_KEY =
+		"checkConfigurationPidAttribute";
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
 		"checkConfigurationPolicyAttribute";

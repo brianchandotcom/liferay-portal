@@ -649,6 +649,7 @@
 		<check name="JavaComponentAnnotationsCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@Component` annotation." />
+			<property name="checkConfigurationPidAttribute" value="true" />
 			<property name="checkConfigurationPolicyAttribute" value="false" />
 			<property name="checkMismatchedServiceAttribute" value="false" />
 			<property name="checkSelfRegistration" value="false" />

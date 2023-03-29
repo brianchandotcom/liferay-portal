@@ -30,7 +30,6 @@
 		<suppress checks="GradleBlockOrderCheck" files="gradle-plugins-workspace/src/gradleTest/product.*/settings.gradle" />
 		<suppress checks="GradleDependencyArtifactsCheck" files="gradle-plugins-dependency-local-copy/src/gradleTest/smoke/build\.gradle" />
 		<suppress checks="GradleProvidedDependenciesCheck" files="gradle-plugins-workspace/src/gradleTest/providedModules/build\.gradle" />
-		<suppress checks="JavaComponentAnnotationsCheck" files=".*" />
 		<suppress checks="JavaDeprecatedJavadocCheck" files=".*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-beanshell/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-bnd/.*" />

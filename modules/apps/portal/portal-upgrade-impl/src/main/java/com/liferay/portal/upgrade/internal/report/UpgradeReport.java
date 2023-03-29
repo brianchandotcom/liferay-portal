@@ -481,15 +481,15 @@ public class UpgradeReport {
 							message.substring(startIndex, endIndex)));
 				}
 
-				ArrayList<RunningUpgradeProcess> longestUpgradesList =
-					new ArrayList<>();
+				ArrayList<RunningUpgradeProcess>
+					longestRunningUpgradeProcesses = new ArrayList<>();
 
 				int count = 0;
 
 				for (Map.Entry<String, Integer> entry :
 						_sort(upgradeProcessDurationMap)) {
 
-					longestUpgradesList.add(
+					longestRunningUpgradeProcesses.add(
 						new RunningUpgradeProcess(
 							entry.getKey(), String.valueOf(entry.getValue())));
 
@@ -500,12 +500,12 @@ public class UpgradeReport {
 					}
 				}
 
-				return longestUpgradesList;
+				return longestRunningUpgradeProcesses;
 			}
 		).put(
-			"errors", _getSortedLogEvents("errors")
+			"errors", _getSortedMessageCounts(_errorMessages)
 		).put(
-			"warnings", _getSortedLogEvents("warnings")
+			"warnings", _getSortedMessageCounts(_warningMessages)
 		).put(
 			"osgi.status",
 			() -> {
@@ -616,40 +616,35 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private List<EventMessage> _getSortedLogEvents(String type) {
-		List<Map.Entry<String, Map<String, Integer>>> classEventsList =
+	private List<MessageCounts> _getSortedMessageCounts(
+		Map<String, Map<String, Integer>> messagesMap) {
+
+		List<Map.Entry<String, Map<String, Integer>>> messagesList =
 			new ArrayList<>();
 
-		if (type.equals("errors")) {
-			classEventsList.addAll(_errorMessages.entrySet());
-		}
-		else {
-			classEventsList.addAll(_warningMessages.entrySet());
-		}
+		messagesList.addAll(messagesMap.entrySet());
 
 		ListUtil.sort(
-			classEventsList,
+			messagesList,
 			Collections.reverseOrder(
 				Map.Entry.comparingByValue(
 					Comparator.comparingInt(Map::size))));
 
-		List<EventMessage> eventMessages = new ArrayList<>();
+		List<MessageCounts> messageCountsList = new ArrayList<>();
 
-		for (Map.Entry<String, Map<String, Integer>> classEvents :
-				classEventsList) {
+		for (Map.Entry<String, Map<String, Integer>> messages : messagesList) {
+			MessageCounts messageCounts = new MessageCounts(messages.getKey());
 
-			EventMessage eventMessage = new EventMessage(classEvents.getKey());
+			messageCountsList.add(messageCounts);
 
-			eventMessages.add(eventMessage);
+			Map<String, Integer> valueMap = messages.getValue();
 
-			Map<String, Integer> value = classEvents.getValue();
-
-			for (Map.Entry<String, Integer> event : value.entrySet()) {
-				eventMessage.addEvent(event.getKey(), event.getValue());
+			for (Map.Entry<String, Integer> value : valueMap.entrySet()) {
+				messageCounts.addMessageCount(value.getKey(), value.getValue());
 			}
 		}
 
-		return eventMessages;
+		return messageCountsList;
 	}
 
 	private Map<String, Integer> _getTableCountMap() {
@@ -785,20 +780,20 @@ public class UpgradeReport {
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
-	private static class EventMessage {
+	private static class MessageCounts {
 
-		public EventMessage(String clazz) {
+		public MessageCounts(String clazz) {
 			_clazz = clazz;
 		}
 
-		public void addEvent(String message, int occurrences) {
-			_counts.add(new Count(message, occurrences));
+		public void addMessageCount(String message, int occurrences) {
+			_messageCounts.add(new MessageCount(message, occurrences));
 		}
 
 		@Override
 		public String toString() {
 			if (_logContext) {
-				return _clazz + StringPool.COLON + _counts.toString();
+				return _clazz + StringPool.COLON + _messageCounts.toString();
 			}
 
 			StringBundler sb = new StringBundler();
@@ -807,9 +802,9 @@ public class UpgradeReport {
 			sb.append(_clazz);
 			sb.append(StringPool.NEW_LINE);
 
-			for (Count count : _counts) {
+			for (MessageCount messageCount : _messageCounts) {
 				sb.append(StringPool.TAB);
-				sb.append(count.toString());
+				sb.append(messageCount.toString());
 				sb.append(StringPool.NEW_LINE);
 			}
 
@@ -817,11 +812,11 @@ public class UpgradeReport {
 		}
 
 		private final String _clazz;
-		private final List<Count> _counts = new ArrayList<>();
+		private final List<MessageCount> _messageCounts = new ArrayList<>();
 
-		private class Count {
+		private class MessageCount {
 
-			public Count(String message, int occurrences) {
+			public MessageCount(String message, int occurrences) {
 				_message = message;
 				_occurrences = occurrences;
 			}

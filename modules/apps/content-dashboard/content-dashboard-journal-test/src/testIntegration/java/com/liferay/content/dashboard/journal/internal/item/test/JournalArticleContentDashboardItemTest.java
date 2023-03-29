@@ -660,9 +660,8 @@ public class JournalArticleContentDashboardItemTest {
 			}
 		}
 
-		if (displayDateSpecificInformation == null) {
-			throw new AssertionError("display-date not found");
-		}
+		Assert.assertNotNull(
+			"display-date not found", displayDateSpecificInformation);
 
 		Assert.assertEquals(
 			journalArticle.getDisplayDate(),
@@ -683,9 +682,8 @@ public class JournalArticleContentDashboardItemTest {
 			}
 		}
 
-		if (expirationDateSpecificInformation == null) {
-			throw new AssertionError("expiration-date not found");
-		}
+		Assert.assertNotNull(
+			"expiration-date not found", expirationDateSpecificInformation);
 
 		Assert.assertEquals(
 			journalArticle.getExpirationDate(),
@@ -704,9 +702,8 @@ public class JournalArticleContentDashboardItemTest {
 			}
 		}
 
-		if (reviewDateSpecificInformation == null) {
-			throw new AssertionError("review-date not found");
-		}
+		Assert.assertNotNull(
+			"review-date not found", reviewDateSpecificInformation);
 
 		Assert.assertEquals(
 			journalArticle.getReviewDate(),

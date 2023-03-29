@@ -23,6 +23,7 @@
 <tr>
 	<td>CLAIM_TYPE</td>
 	<td>//div[contains(@class,'claims-list')]//div[contains(text(),'Type: ')][contains(.,'${key_claimType}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CHECKBOX_OPTIONS</td>

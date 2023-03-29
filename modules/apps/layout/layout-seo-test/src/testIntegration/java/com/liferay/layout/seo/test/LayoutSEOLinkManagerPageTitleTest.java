@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -113,7 +112,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
+				subtitleListMergeable.mergeToString(" - "), " - ",
 				layoutPrototypeTitle, " - ", companyName),
 			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, null, subtitleListMergeable, companyName,
@@ -146,7 +145,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
+				subtitleListMergeable.mergeToString(" - "), " - ",
 				_layout.getTitle(), " - ", _group.getName(), " - ",
 				companyName),
 			_layoutSEOLinkManager.getFullPageTitle(
@@ -167,7 +166,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
+				titleListMergeable.mergeToString(" - "), " - ",
 				_group.getName(), " - ", companyName),
 			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, titleListMergeable, null, companyName,
@@ -192,8 +191,8 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
-				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
+				subtitleListMergeable.mergeToString(" - "), " - ",
+				titleListMergeable.mergeToString(" - "), " - ",
 				_group.getName(), " - ", companyName),
 			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, titleListMergeable, subtitleListMergeable,

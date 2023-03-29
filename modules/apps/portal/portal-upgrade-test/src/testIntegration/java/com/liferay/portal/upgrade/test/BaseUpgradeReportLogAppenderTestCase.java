@@ -136,11 +136,11 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertTablesAreSortedByInitialRows(matcher);
 
-		String tablesInitialFinalRows = _getLogContextValue(
+		String tablesInitialFinalRowsValue = _getLogContextValue(
 			"upgrade.report.tables.initial.final.rows");
 
 		matcher = _logContextTablesInitialFinalRowsPattern.matcher(
-			tablesInitialFinalRows);
+			tablesInitialFinalRowsValue);
 
 		_assertTablesAreSortedByInitialRows(matcher);
 	}
@@ -229,12 +229,12 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			reportContent.indexOf(slowerUpgradeProcessName) <
 				reportContent.indexOf(fasterUpgradeProcessName));
 
-		String upgradeProcesses = _getLogContextValue(
+		String longestUpgradeProcessesValue = _getLogContextValue(
 			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertTrue(
-			upgradeProcesses.indexOf(slowerUpgradeProcessName) <
-				upgradeProcesses.indexOf(fasterUpgradeProcessName));
+			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
+				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
 	}
 
 	@Test

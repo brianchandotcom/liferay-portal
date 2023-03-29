@@ -142,12 +142,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public int countByG_F_C_S(
 		long groupId, List<Long> folderIds, long classNameId,
-		String ddmStructureKey,
-		QueryDefinition<JournalArticle> queryDefinition) {
+		long ddmStructureId, QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_F_C_S(
-			groupId, folderIds, classNameId, new String[] {ddmStructureKey},
-			queryDefinition, false);
+			groupId, folderIds, classNameId, ddmStructureId, queryDefinition,
+			false);
 	}
 
 	@Override
@@ -232,12 +231,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public int filterCountByG_F_C_S(
 		long groupId, List<Long> folderIds, long classNameId,
-		String ddmStructureKey,
-		QueryDefinition<JournalArticle> queryDefinition) {
+		long ddmStructureId, QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_F_C_S(
-			groupId, folderIds, classNameId, new String[] {ddmStructureKey},
-			queryDefinition, true);
+			groupId, folderIds, classNameId, ddmStructureId, queryDefinition,
+			true);
 	}
 
 	@Override
@@ -304,12 +302,12 @@ public class JournalArticleFinderImpl
 	@Override
 	public List<JournalArticle> filterFindByG_F_C_S_L(
 		long groupId, List<Long> folderIds, long classNameId,
-		String ddmStructureKey, Locale locale,
+		long ddmStructureId, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_C_S_L(
-			groupId, folderIds, classNameId, new String[] {ddmStructureKey},
-			locale, queryDefinition, true);
+			groupId, folderIds, classNameId, ddmStructureId, locale,
+			queryDefinition, true);
 	}
 
 	@Override
@@ -500,22 +498,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public List<JournalArticle> findByG_F_C_S_L(
 		long groupId, List<Long> folderIds, long classNameId,
-		String ddmStructureKey, Locale locale,
+		long ddmStructureId, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_C_S_L(
-			groupId, folderIds, classNameId, new String[] {ddmStructureKey},
-			locale, queryDefinition, false);
-	}
-
-	@Override
-	public List<JournalArticle> findByG_F_C_S_L(
-		long groupId, List<Long> folderIds, long classNameId,
-		String[] ddmStructureKeys, Locale locale,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_C_S_L(
-			groupId, folderIds, classNameId, ddmStructureKeys, locale,
+			groupId, folderIds, classNameId, ddmStructureId, locale,
 			queryDefinition, false);
 	}
 
@@ -739,8 +726,7 @@ public class JournalArticleFinderImpl
 
 	protected int doCountByG_F_C_S(
 		long groupId, List<Long> folderIds, long classNameId,
-		String[] ddmStructureKeys,
-		QueryDefinition<JournalArticle> queryDefinition,
+		long ddmStructureId, QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -768,10 +754,10 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			sql = StringUtil.replace(
-				sql, "[$DDM_STRUCTURE_KEY$]",
-				getDDMStructureKeys(
-					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
+			if (ddmStructureId <= 0) {
+				sql = StringUtil.removeSubstring(
+					sql, "(JournalArticle.DDMStructureId = ?) AND");
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -795,7 +781,10 @@ public class JournalArticleFinderImpl
 				queryPos.add(folderId);
 			}
 
-			queryPos.add(ddmStructureKeys);
+			if (ddmStructureId > 0) {
+				queryPos.add(ddmStructureId);
+			}
+
 			queryPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> iterator = sqlQuery.iterate();
@@ -1109,7 +1098,7 @@ public class JournalArticleFinderImpl
 
 	protected List<JournalArticle> doFindByG_C_S_L(
 		long groupId, List<Long> folderIds, long classNameId,
-		String[] ddmStructureKeys, Locale locale,
+		long ddmStructureId, Locale locale,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -1143,10 +1132,10 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			sql = StringUtil.replace(
-				sql, "[$DDM_STRUCTURE_KEY$]",
-				getDDMStructureKeys(
-					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
+			if (ddmStructureId <= 0) {
+				sql = StringUtil.removeSubstring(
+					sql, "(JournalArticle.DDMStructureId = ?) AND");
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -1178,7 +1167,10 @@ public class JournalArticleFinderImpl
 				queryPos.add(folderId);
 			}
 
-			queryPos.add(ddmStructureKeys);
+			if (ddmStructureId > 0) {
+				queryPos.add(ddmStructureId);
+			}
+
 			queryPos.add(queryDefinition.getStatus());
 
 			return (List<JournalArticle>)QueryUtil.list(
@@ -1328,20 +1320,20 @@ public class JournalArticleFinderImpl
 		}
 	}
 
-	protected String getDDMStructureKeys(
-		String[] ddmStructureKeys, String tableName) {
+	protected String getDDMStructureIds(
+		long[] ddmStructureIds, String tableName) {
 
-		if (ArrayUtil.isEmpty(ddmStructureKeys)) {
+		if (ArrayUtil.isEmpty(ddmStructureIds)) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler((ddmStructureKeys.length * 3) + 1);
+		StringBundler sb = new StringBundler((ddmStructureIds.length * 3) + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < ddmStructureKeys.length; i++) {
+		for (int i = 0; i < ddmStructureIds.length; i++) {
 			sb.append(tableName);
-			sb.append(".DDMStructureKey = ? ");
+			sb.append(".DDMStructureId = ? ");
 			sb.append(WHERE_OR);
 		}
 

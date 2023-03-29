@@ -4292,7 +4292,7 @@ public class DataFactory {
 				"TestJournalArticle_", articleIndex, StringPool.UNDERLINE,
 				versionIndex));
 
-		journalArticleModel.setDDMStructureKey(_JOURNAL_STRUCTURE_KEY);
+		journalArticleModel.setDDMStructureId(_defaultJournalDDMStructureId);
 		journalArticleModel.setDDMTemplateKey(_JOURNAL_STRUCTURE_KEY);
 		journalArticleModel.setDefaultLanguageId("en_US");
 		journalArticleModel.setDisplayDate(new Date());

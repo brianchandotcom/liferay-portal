@@ -128,8 +128,8 @@ public class JournalArticleTableReferenceDefinition
 				DDMStructureTable.INSTANCE
 			).innerJoinON(
 				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.DDMStructureKey.eq(
-					DDMStructureTable.INSTANCE.structureKey
+				JournalArticleTable.INSTANCE.DDMStructureId.eq(
+					DDMStructureTable.INSTANCE.structureId
 				).and(
 					JournalArticleTable.INSTANCE.companyId.eq(
 						DDMStructureTable.INSTANCE.companyId)

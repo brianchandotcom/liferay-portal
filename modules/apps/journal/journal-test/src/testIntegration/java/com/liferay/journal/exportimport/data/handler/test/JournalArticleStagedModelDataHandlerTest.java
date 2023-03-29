@@ -806,9 +806,6 @@ public class JournalArticleStagedModelDataHandlerTest
 				stagedJournalArticle.getDDMStructureId());
 
 		Assert.assertEquals(
-			stagedJournalArticle.getDDMStructureKey(),
-			stagedDDMStructure.getStructureKey());
-		Assert.assertEquals(
 			_portal.getSiteGroupId(stagedJournalArticle.getGroupId()),
 			stagedDDMStructure.getGroupId());
 
@@ -816,9 +813,6 @@ public class JournalArticleStagedModelDataHandlerTest
 			_ddmStructureLocalService.getDDMStructure(
 				importedJournalArticle.getDDMStructureId());
 
-		Assert.assertEquals(
-			importedJournalArticle.getDDMStructureKey(),
-			importedDDMStructure.getStructureKey());
 		Assert.assertEquals(
 			_portal.getSiteGroupId(importedJournalArticle.getGroupId()),
 			importedDDMStructure.getGroupId());

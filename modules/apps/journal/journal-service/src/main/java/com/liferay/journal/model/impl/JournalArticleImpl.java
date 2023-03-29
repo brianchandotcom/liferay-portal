@@ -288,10 +288,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public DDMStructure getDDMStructure() {
-		return DDMStructureLocalServiceUtil.fetchStructure(
-			PortalUtil.getSiteGroupId(getGroupId()),
-			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			getDDMStructureKey(), true);
+		return DDMStructureLocalServiceUtil.fetchStructure(getDDMStructureId());
 	}
 
 	@Override

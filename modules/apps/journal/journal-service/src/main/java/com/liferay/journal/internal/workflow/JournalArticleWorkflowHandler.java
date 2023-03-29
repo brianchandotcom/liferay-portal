@@ -14,8 +14,6 @@
 
 package com.liferay.journal.internal.workflow;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -77,15 +75,10 @@ public class JournalArticleWorkflowHandler
 		long folderId = _journalFolderLocalService.getInheritedWorkflowFolderId(
 			article.getFolderId());
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				companyId, groupId, JournalFolder.class.getName(), folderId,
-				ddmStructure.getStructureId(), true);
+				article.getDDMStructureId(), true);
 
 		if (workflowDefinitionLink == null) {
 			workflowDefinitionLink =
@@ -149,9 +142,6 @@ public class JournalArticleWorkflowHandler
 	}
 
 	private static final boolean _VISIBLE = true;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

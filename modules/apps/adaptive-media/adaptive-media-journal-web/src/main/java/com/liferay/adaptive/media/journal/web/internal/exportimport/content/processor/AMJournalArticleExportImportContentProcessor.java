@@ -122,18 +122,16 @@ public class AMJournalArticleExportImportContentProcessor
 
 		JournalArticle journalArticle = (JournalArticle)stagedModel;
 
-		Map<String, String> ddmStructureKeys =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class + ".ddmStructureKey");
+		Map<Long, Long> ddmStructureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
 
-		String ddmStructureKey = MapUtil.getString(
-			ddmStructureKeys, journalArticle.getDDMStructureKey(),
-			journalArticle.getDDMStructureKey());
+		long ddmStructureId = MapUtil.getLong(
+			ddmStructureIds, journalArticle.getDDMStructureId(),
+			journalArticle.getDDMStructureId());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
-			true);
+			ddmStructureId);
 
 		if (ddmStructure == null) {
 			return true;

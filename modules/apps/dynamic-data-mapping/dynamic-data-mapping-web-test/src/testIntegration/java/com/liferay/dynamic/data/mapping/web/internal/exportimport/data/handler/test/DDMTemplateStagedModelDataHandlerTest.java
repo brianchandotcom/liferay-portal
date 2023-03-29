@@ -169,8 +169,8 @@ public class DDMTemplateStagedModelDataHandlerTest
 		Assert.assertNotNull(importedTemplate);
 		Assert.assertNotNull(importedJournalArticle);
 		Assert.assertEquals(
-			importedJournalArticle.getDDMStructureKey(),
-			importedStructure.getStructureKey());
+			importedJournalArticle.getDDMStructureId(),
+			importedStructure.getStructureId());
 		Assert.assertEquals(
 			importedJournalArticle.getDDMTemplateKey(),
 			importedTemplate.getTemplateKey());

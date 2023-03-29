@@ -343,18 +343,15 @@ public class JournalArticleExportImportContentProcessor
 	private DDMStructure _fetchDDMStructure(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
-		Map<String, String> ddmStructureKeys =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class + ".ddmStructureKey");
+		Map<Long, Long> ddmStructureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
 
-		String ddmStructureKey = MapUtil.getString(
-			ddmStructureKeys, article.getDDMStructureKey(),
-			article.getDDMStructureKey());
+		long ddmStructureId = MapUtil.getLong(
+			ddmStructureIds, article.getDDMStructureId(),
+			article.getDDMStructureId());
 
-		return _ddmStructureLocalService.fetchStructure(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
-			true);
+		return _ddmStructureLocalService.fetchStructure(ddmStructureId);
 	}
 
 	private Fields _getDDMStructureFields(

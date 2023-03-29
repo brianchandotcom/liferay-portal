@@ -15,8 +15,9 @@
 package com.liferay.journal.internal.upgrade.v5_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -141,17 +141,23 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 		throws Exception {
 
 		for (JournalArticle journalArticle : journalArticles) {
-			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-				_portal.getSiteGroupId(journalArticle.getGroupId()),
-				_classNameLocalService.getClassNameId(JournalArticle.class),
-				journalArticle.getDDMStructureKey(), true);
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				JournalArticle.class.getName(), journalArticle.getId());
+
+			if (assetEntry == null) {
+				assetEntry = _assetEntryLocalService.fetchEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+			}
+
+			Assert.assertNotNull(assetEntry);
 
 			JournalArticle updatedJournalArticle =
 				_journalArticleLocalService.getJournalArticle(
 					journalArticle.getId());
 
 			Assert.assertEquals(
-				ddmStructure.getStructureId(),
+				assetEntry.getClassTypeId(),
 				updatedJournalArticle.getDDMStructureId());
 		}
 	}
@@ -209,6 +215,9 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
@@ -219,9 +228,6 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group1;
@@ -234,8 +240,5 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
-
-	@Inject
-	private Portal _portal;
 
 }

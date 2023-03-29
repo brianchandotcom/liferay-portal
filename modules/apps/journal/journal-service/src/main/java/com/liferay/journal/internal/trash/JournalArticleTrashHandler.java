@@ -17,7 +17,6 @@ package com.liferay.journal.internal.trash;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
@@ -352,15 +351,6 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 		JournalArticle article = _journalArticleLocalService.getLatestArticle(
 			classPK);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
-		if (ddmStructure == null) {
-			return;
-		}
-
 		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
 			containerModelId = article.getFolderId();
 		}
@@ -373,7 +363,7 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 
 		for (DDMStructure folderDDMStructure : folderDDMStructures) {
 			if (folderDDMStructure.getStructureId() ==
-					ddmStructure.getStructureId()) {
+					article.getDDMStructureId()) {
 
 				return;
 			}
@@ -399,9 +389,6 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

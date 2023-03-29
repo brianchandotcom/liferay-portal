@@ -15,7 +15,6 @@
 package com.liferay.journal.internal.validation;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.DuplicateFolderNameException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
@@ -27,9 +26,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.journal.util.JournalValidator;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.validation.ModelValidationResults;
@@ -62,36 +59,15 @@ public class JournalFolderModelValidator
 		JournalFolder folder = _journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
-			folder.getGroupId(), folderId);
+		for (JournalArticle article :
+				_journalArticleLocalService.getArticles(
+					folder.getGroupId(), folderId)) {
 
-		if (!articles.isEmpty()) {
-			long classNameId = _classNameLocalService.getClassNameId(
-				JournalArticle.class);
+			if (!ArrayUtil.contains(
+					ddmStructureIds, article.getDDMStructureId())) {
 
-			for (JournalArticle article : articles) {
-				DDMStructure ddmStructure =
-					_ddmStructureLocalService.fetchStructure(
-						article.getGroupId(), classNameId,
-						article.getDDMStructureKey(), true);
-
-				if (ddmStructure == null) {
-					throw new InvalidDDMStructureException(
-						StringBundler.concat(
-							"No DDM structure exists for group ",
-							article.getGroupId(), ", class name ", classNameId,
-							", and structure key ",
-							article.getDDMStructureKey(),
-							" that includes ancestor structures"));
-				}
-
-				if (!ArrayUtil.contains(
-						ddmStructureIds, ddmStructure.getStructureId())) {
-
-					throw new InvalidDDMStructureException(
-						"Invalid DDM structure " +
-							ddmStructure.getStructureId());
-				}
+				throw new InvalidDDMStructureException(
+					"Invalid DDM structure " + article.getDDMStructureId());
 			}
 		}
 
@@ -230,12 +206,6 @@ public class JournalFolderModelValidator
 				folder, InvalidFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER);
 		}
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -905,9 +905,18 @@ public class ObjectEntryLocalServiceImpl
 			),
 			objectEntry.getObjectDefinitionId(), selectExpressions);
 
-		Map<String, Serializable> values = _getValues(
-			objectEntry.getObjectDefinitionId(), rows.get(0),
-			selectExpressions);
+		Map<String, Serializable> values = Collections.emptyMap();
+
+		if (rows.isEmpty()) {
+			values = _getValues(
+				objectEntry.getObjectDefinitionId(),
+				new Object[selectExpressions.length], selectExpressions);
+		}
+		else {
+			values = _getValues(
+				objectEntry.getObjectDefinitionId(), rows.get(0),
+				selectExpressions);
+		}
 
 		_addObjectRelationshipERCFieldValue(
 			objectEntry.getObjectDefinitionId(), values);
@@ -2585,6 +2594,14 @@ public class ObjectEntryLocalServiceImpl
 			long objectDefinitionId, Object[] objects,
 			Expression<?>[] selectExpressions)
 		throws PortalException {
+
+		if (objects.length < selectExpressions.length) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Objects array length mismatch less than select ",
+					"expressions array ", objects.length, " < ",
+					selectExpressions.length));
+		}
 
 		Map<String, Serializable> values = new HashMap<>();
 

@@ -120,39 +120,49 @@ definition {
 
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by build name"
 	@priority = 5
-	test AdminCanFilterBuildHistoryByBuildName {
+	test AdminCanFilterByBuildName {
 		task ("Given that the user has two builds different in the table") {
-			Testray.assertItemName(key_name = "Build 1");
+			AssertElementPresent(
+				key_projectName = "Build 1",
+				locator1 = "Testray#ITEM_NAME");
 
-			Testray.assertItemName(key_name = "Build 2");
+			AssertElementPresent(
+				key_projectName = "Build 2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
 		task ("When the user select the build 2 in the filter") {
 			TestrayFilter.clickFilter();
 
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Build 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.typeFilter(
+				label = "Build Name",
+				value = "Build 2");
 		}
 
 		task ("Then the user see only build 2 in the table") {
-			Testray.assertItemName(key_name = "Build 2");
+			AssertElementPresent(
+				key_projectName = "Build 2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
 		task ("And do not see the build 1 in the table") {
-			Testray.assertItemNotPresent(key_name = "Build 1");
+			AssertElementNotPresent(
+				key_projectName = "Build 1",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by product version"
 	@priority = 5
-	test AdminCanFilterBuildHistoryByProductVersion {
+	test AdminCanFilterByProductVersion {
 		task ("Given that the user has two builds with different versions in the table") {
-			Testray.assertItemName(key_name = "7.0");
+			AssertElementPresent(
+				key_projectName = "7.0",
+				locator1 = "Testray#ITEM_NAME");
 
-			Testray.assertItemName(key_name = "1.2");
+			AssertElementPresent(
+				key_projectName = "1.2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
 		task ("When the user select product version 7.0 in the filter") {
@@ -166,24 +176,22 @@ definition {
 			Button.click(button = "Apply");
 		}
 
-		task ("Then the user gets only products with version 7.0 in the table") {
-			Testray.assertItemName(key_name = "7.0");
+		task ("Then the user see only products with version 7.0 in the table") {
+			AssertElementPresent(
+				key_projectName = "7.0",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And do not get the products with other versions in the table") {
-			Testray.assertItemNotPresent(key_name = "1.2");
+		task ("And do not see the products with other versions in the table") {
+			AssertElementNotPresent(
+				key_projectName = "1.2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history using multiple filtering options"
 	@priority = 5
-	test AdminCanFilterBuildHistoryWithMultipleOptions {
-		task ("Given that the user has two builds different in the table") {
-			Testray.assertItemName(key_name = "Build 1");
-
-			Testray.assertItemName(key_name = "Build 2");
-		}
-
+	test AdminCanFilterWithMultipleOptions {
 		task ("When the user select multiple options in the filter") {
 			TestrayFilter.clickFilter();
 
@@ -192,54 +200,63 @@ definition {
 				selectFieldLabel = "Product Version",
 				value1 = "7.0");
 
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Build 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.typeFilter(
+				label = "Build Name",
+				value = "Build 1");
 		}
 
 		task ("Then the user see only build 1 and version 7.0 in the table") {
-			Testray.assertItemName(key_name = "Build 1");
+			AssertElementPresent(
+				key_projectName = "Build 1",
+				locator1 = "Testray#ITEM_NAME");
 
-			Testray.assertItemName(key_name = "7.0");
+			AssertElementPresent(
+				key_projectName = "7.0",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
 		task ("And do not see the build 2 and version 1.2 in the table") {
-			Testray.assertItemNotPresent(key_name = "Build 2");
+			AssertElementNotPresent(
+				key_projectName = "Build 2",
+				locator1 = "Testray#ITEM_NAME");
 
-			Testray.assertItemNotPresent(key_name = "1.2");
+			AssertElementNotPresent(
+				key_projectName = "1.2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should not see build history that don't exist when I try filtering for them"
 	@priority = 4
-	test AdminCanFilterForNonexistantBuildHistory {
-		task ("Given that the user has two builds different in the table") {
-			Testray.assertItemName(key_name = "Build 1");
+	test AdminCanNotFilterForNonExistentBuildName {
+		task ("Given that the user has two builds that existent in the table") {
+			AssertElementPresent(
+				key_projectName = "Build 1",
+				locator1 = "Testray#ITEM_NAME");
 
-			Testray.assertItemName(key_name = "Build 2");
+			AssertElementPresent(
+				key_projectName = "Build 2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("When the user filters a build by its non-existent name") {
+		task ("When filtering a build by his non-existent name") {
 			TestrayFilter.clickFilter();
 
-			Type(
-				key_fieldLabel = "Build Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Build 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.typeFilter(
+				label = "Build Name",
+				value = "Build 3");
 		}
 
-		task ("Then the user can see message no results found") {
-			TestrayFilter.assertNoResultsFound();
+		task ("Then the user is not present in the build table") {
+			AssertElementNotPresent(
+				key_projectName = "Build 3",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
-	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@description = "Story ID: LPS-173523 | Test Summary: Verify that can search for a field"
 	@priority = 5
-	test AdminCanFilterOptionsToFilter {
+	test AdminCanSearchForField {
 		task ("When the user searches for a field called product version") {
 			TestrayFilter.clickFilter();
 

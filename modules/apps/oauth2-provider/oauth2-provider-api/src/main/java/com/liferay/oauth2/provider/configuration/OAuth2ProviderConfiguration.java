@@ -108,13 +108,4 @@ public interface OAuth2ProviderConfiguration {
 	)
 	public int expiredAuthorizationsCheckInterval();
 
-	@Meta.AD(
-		deflt = "-1",
-		description = "oauth2-expired-authorizations-processing-batch-size-description",
-		id = "oauth2.expired.authorizations.processing.processing.batch.size",
-		name = "oauth2-expired-authorizations-processing-batch-size",
-		required = false
-	)
-	public int expiredAuthorizationsProcessingBatchSize();
-
 }

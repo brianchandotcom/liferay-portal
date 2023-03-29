@@ -23,11 +23,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Time;
 
@@ -116,29 +112,12 @@ public class OAuth2AuthorizationLocalServiceImpl
 			purgeDate.getTime() -
 				_expiredAuthorizationsAfterlifeDurationMillis);
 
-		boolean lastBatch = false;
+		for (OAuth2Authorization oAuth2Authorization :
+				oAuth2AuthorizationFinder.findByPurgeDate(
+					purgeDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-		do {
-			try {
-				lastBatch = TransactionInvokerUtil.invoke(
-					_transactionConfig,
-					() -> {
-						Collection<OAuth2Authorization> oAuth2Authorizations =
-							oAuth2AuthorizationFinder.findByPurgeDate(
-								purgeDate, QueryUtil.ALL_POS,
-								_expiredAuthorizationsProcessingBatchSize);
-
-						oAuth2Authorizations.forEach(
-							oAuth2AuthorizationPersistence::remove);
-
-						return oAuth2Authorizations.isEmpty();
-					});
-			}
-			catch (Throwable throwable) {
-				throw new SystemException(throwable);
-			}
+			oAuth2AuthorizationPersistence.remove(oAuth2Authorization);
 		}
-		while ((_expiredAuthorizationsProcessingBatchSize > -1) && !lastBatch);
 	}
 
 	@Override
@@ -294,17 +273,8 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 		_expiredAuthorizationsAfterlifeDurationMillis =
 			expiredAuthorizationsAfterlifeDuration * Time.SECOND;
-
-		_expiredAuthorizationsProcessingBatchSize =
-			oAuth2ProviderConfiguration.
-				expiredAuthorizationsProcessingBatchSize();
 	}
 
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
-
 	private volatile long _expiredAuthorizationsAfterlifeDurationMillis;
-	private volatile int _expiredAuthorizationsProcessingBatchSize;
 
 }

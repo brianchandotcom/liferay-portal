@@ -22,15 +22,6 @@ export default function useDynamicFieldEntries() {
 		LiferayPicklistName.MDF_CLAIM_STATUS,
 	]);
 
-	const userAccountRoles = useMemo(
-		() =>
-			userAccount?.roleBriefs.map((roleBrief) => ({
-				label: roleBrief.name,
-				value: roleBrief.id,
-			})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
-		[userAccount?.roleBriefs]
-	);
-
 	const companiesEntries = useMemo(
 		() =>
 			userAccount?.accountBriefs.map((accountBrief) => ({
@@ -46,8 +37,12 @@ export default function useDynamicFieldEntries() {
 	);
 
 	return {
+		accountRoleEntries: (accountId?: number) =>
+			userAccount?.accountBriefs.find(
+				(accountBrief) => accountBrief.id === accountId
+			)?.roleBriefs ?? [],
 		companiesEntries,
 		fieldEntries,
-		userAccountRoles,
+		roleEntries: userAccount?.roleBriefs,
 	};
 }

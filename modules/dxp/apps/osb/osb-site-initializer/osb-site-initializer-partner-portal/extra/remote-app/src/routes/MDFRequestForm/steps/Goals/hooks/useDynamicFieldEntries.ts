@@ -46,7 +46,7 @@ export default function useDynamicFieldEntries() {
 		accountRoleEntries: (accountId?: number) =>
 			userAccount?.accountBriefs.find(
 				(accountBrief) => accountBrief.id === accountId
-			)?.roleBriefs,
+			)?.roleBriefs ?? [],
 		companiesEntries,
 		fieldEntries,
 		roleEntries: userAccount?.roleBriefs,

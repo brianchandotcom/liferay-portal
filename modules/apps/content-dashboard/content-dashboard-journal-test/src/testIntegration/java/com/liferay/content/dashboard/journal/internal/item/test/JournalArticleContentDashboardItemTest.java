@@ -85,7 +85,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -648,47 +647,66 @@ public class JournalArticleContentDashboardItemTest {
 			specificInformationList.toString(), 3,
 			specificInformationList.size());
 
-		Stream<ContentDashboardItem.SpecificInformation<?>> stream =
-			specificInformationList.stream();
-
 		ContentDashboardItem.SpecificInformation<?>
-			displayDateSpecificInformation = stream.filter(
-				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "display-date")
-			).findFirst(
-			).orElseThrow(
-				() -> new AssertionError("display-date not found")
-			);
+			displayDateSpecificInformation = null;
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals(specificInformation.getKey(), "display-date")) {
+				displayDateSpecificInformation = specificInformation;
+
+				break;
+			}
+		}
+
+		if (displayDateSpecificInformation == null) {
+			throw new AssertionError("display-date not found");
+		}
 
 		Assert.assertEquals(
 			journalArticle.getDisplayDate(),
 			displayDateSpecificInformation.getValue());
 
-		stream = specificInformationList.stream();
-
 		ContentDashboardItem.SpecificInformation<?>
-			expirationDateSpecificInformation = stream.filter(
-				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "expiration-date")
-			).findFirst(
-			).orElseThrow(
-				() -> new AssertionError("expiration-date not found")
-			);
+			expirationDateSpecificInformation = null;
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals(
+					specificInformation.getKey(), "expiration-date")) {
+
+				expirationDateSpecificInformation = specificInformation;
+
+				break;
+			}
+		}
+
+		if (expirationDateSpecificInformation == null) {
+			throw new AssertionError("expiration-date not found");
+		}
 
 		Assert.assertEquals(
 			journalArticle.getExpirationDate(),
 			expirationDateSpecificInformation.getValue());
 
-		stream = specificInformationList.stream();
-
 		ContentDashboardItem.SpecificInformation<?>
-			reviewDateSpecificInformation = stream.filter(
-				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "review-date")
-			).findFirst(
-			).orElseThrow(
-				() -> new AssertionError("review-date not found")
-			);
+			reviewDateSpecificInformation = null;
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals(specificInformation.getKey(), "review-date")) {
+				reviewDateSpecificInformation = specificInformation;
+
+				break;
+			}
+		}
+
+		if (reviewDateSpecificInformation == null) {
+			throw new AssertionError("review-date not found");
+		}
 
 		Assert.assertEquals(
 			journalArticle.getReviewDate(),

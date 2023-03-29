@@ -15,27 +15,20 @@ import {MDFClaimColumnKey} from '../../../common/enums/mdfClaimColumnKey';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {MDFClaimListItem} from '../../../common/interfaces/mdfClaimListItem';
+import Role from '../../../common/interfaces/role';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import {Status} from '../../../common/utils/constants/status';
+import {isLiferayManager} from '../../../common/utils/isLiferayManager';
 
 export default function getMDFClaimListColumns(
+	isPartnerManagerRole?: boolean,
 	siteURL?: string,
-	userAccountRoles?: React.OptionHTMLAttributes<HTMLOptionElement>[]
+	roleEntries?: Role[]
 ): TableColumn<MDFClaimListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFClaimListItem) => {
-		const canEditRoles = [
-			'Channel General Manager',
-			'Channel Account Manager',
-			'Channel Regional Marketing Manager',
-			'Channel Global Marketing Manager',
-			'Channel Finance Manager',
-		];
-
-		const userAccountRolesCanEdit = userAccountRoles?.filter(
-			(userAccountRole) =>
-				canEditRoles.includes(userAccountRole.label as string)
-		).length;
+		const userAccountRolesCanEdit =
+			isLiferayManager(roleEntries as Role[]) || isPartnerManagerRole;
 
 		if (
 			!userAccountRolesCanEdit &&

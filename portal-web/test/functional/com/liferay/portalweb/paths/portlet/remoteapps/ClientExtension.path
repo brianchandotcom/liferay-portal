@@ -11,6 +11,26 @@
 
 <tbody>
 <tr>
+	<td>HIDDEN_COG_ICON</td>
+	<td>//ul[@class='control-menu-nav']//span[@id='ored____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#cog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIDDEN_PENCIL_ICON</td>
+	<td>//ul[@class='control-menu-nav']//span[@id='uvlz____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#pencil')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENCIL_ICON_IN_CONFIG_ICON_POSITION</td>
+	<td>//span[@title='Edit']//span[@id='uvlz____']//*[contains(@class,'pencil')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COG_ICON_IN_EDIT_ICON_POSITION</td>
+	<td>//a[@data-qa-id='editLayout']//span[@id='ored____']//*[contains(@class,'cog')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_APPS_HEADER</td>
 	<td>//h1[contains(@data-qa-id,'headerTitle') and contains(@value,'Client Extensions')]</td>
 	<td></td>

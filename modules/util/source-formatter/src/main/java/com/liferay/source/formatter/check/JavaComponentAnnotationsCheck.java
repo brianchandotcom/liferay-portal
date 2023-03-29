@@ -507,7 +507,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _getAttributeValue(String annotation, String attributeName) {
-		Pattern pattern = Pattern.compile("\\W" + attributeName + "\\s*=");
+		Pattern pattern = Pattern.compile("[^\\w\"]" + attributeName + "\\s*=");
 
 		Matcher matcher = pattern.matcher(annotation);
 

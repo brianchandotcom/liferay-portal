@@ -196,16 +196,27 @@ public class PicklistObjectFieldBusinessType
 		ObjectFieldBusinessType.super.validateObjectFieldSettingsDefaultValue(
 			objectField, objectFieldSettingsValuesMap);
 
-		String defaultValue = objectFieldSettingsValuesMap.get(
-			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
 		String defaultValueType = objectFieldSettingsValuesMap.get(
 			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
 
-		if ((defaultValue == null) ||
-			StringUtil.equals(
+		if (StringUtil.equals(
 				defaultValueType,
 				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)) {
 
+			if (objectField.isState()) {
+				throw new ObjectFieldSettingValueException.InvalidValue(
+					objectField.getName(),
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+					defaultValueType);
+			}
+
+			return;
+		}
+
+		String defaultValue = objectFieldSettingsValuesMap.get(
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+
+		if (defaultValue == null) {
 			return;
 		}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.suggestions.spi;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -47,10 +48,14 @@ public class AsahTopKeywordsSuggestionsContributor
 			suggestionsContributorConfiguration) {
 
 		return getSuggestionsContributorResults(
-			searchContext, "counts,desc,lastModifiedDate,desc,keywords,asc",
+			_analyticsSettingsManager, searchContext,
+			"counts,desc,lastModifiedDate,desc,keywords,asc",
 			_suggestionBuilderFactory, suggestionsContributorConfiguration,
 			_suggestionsContributorResultsBuilderFactory);
 	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private SuggestionBuilderFactory _suggestionBuilderFactory;

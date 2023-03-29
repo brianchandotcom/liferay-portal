@@ -8,14 +8,19 @@ import {Section} from '../../components/Section/Section';
 
 import './InformLicensingTermsPage.scss';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
-	createAppLicensePrice,
+	addSkuExpandoValue,
+	createAppSKU,
 	createProductSubscriptionConfiguration,
+	deleteTrialSKU,
+	getProductSKU,
 	getSKUById,
 	patchSKUById,
 } from '../../utils/api';
+import {createSkuName} from '../../utils/util';
 
 interface InformLicensingTermsPageProps {
 	onClickBack: () => void;
@@ -30,12 +35,15 @@ export function InformLicensingTermsPage({
 		{
 			appERC,
 			appLicense,
+			appNotes,
 			appProductId,
+			appVersion,
 			dayTrial,
 			optionValuesId,
 			priceModel,
 			productOptionId,
-			skuId,
+			skuTrialId,
+			skuVersionId,
 		},
 		dispatch,
 	] = useAppContext();
@@ -128,7 +136,7 @@ export function InformLicensingTermsPage({
 				onClickContinue={() => {
 					const submitLicenseTermsPage = async () => {
 						if (priceModel === 'free') {
-							const skuJSON = await getSKUById(skuId);
+							const skuJSON = await getSKUById(skuVersionId);
 
 							const skuBody = {
 								...skuJSON,
@@ -143,7 +151,7 @@ export function InformLicensingTermsPage({
 								],
 							};
 
-							await patchSKUById(skuId, skuBody);
+							await patchSKUById(skuVersionId, skuBody);
 						}
 						else {
 							if (appLicense === 'non-perpetual') {
@@ -157,34 +165,87 @@ export function InformLicensingTermsPage({
 								});
 							}
 
-							const skuJSON = await getSKUById(skuId);
+							const skuJSON = await getSKUById(skuVersionId);
 
 							const skuBody = {
 								...skuJSON,
 								neverExpire: appLicense === 'perpetual',
 								price: 0,
 								purchasable: true,
-								skuOptions:[
-									dayTrial === 'yes'
-										? optionValuesId.yesOptionId
-										: optionValuesId.noOptionId,
-								]
+								skuOptions: [
+									{
+										key: productOptionId,
+										value:
+											dayTrial === 'yes'
+												? optionValuesId.yesOptionId
+												: optionValuesId.noOptionId,
+									},
+								],
 							};
 
-							await patchSKUById(skuId, skuBody);
+							await patchSKUById(skuVersionId, skuBody);
 						}
 
 						if (dayTrial === 'yes' && priceModel !== 'free') {
-							createAppLicensePrice({
+							const skuResponse = await getProductSKU({
 								appProductId,
-								body: {
-									neverExpire: true,
-									price: 0,
-									published: true,
-									purchasable: true,
-									sku: 'trial',
-								},
 							});
+
+							const trialSku = skuResponse.items.find(
+								({sku}) =>
+									sku ===
+									createSkuName(
+										appProductId,
+										appVersion,
+										'ts'
+									)
+							);
+
+							let skuTrialId;
+
+							if (trialSku) {
+								skuTrialId = trialSku.id;
+							}
+							else {
+								const response = await createAppSKU({
+									appProductId,
+									body: {
+										neverExpire: false,
+										price: 0,
+										purchasable: true,
+										sku: createSkuName(
+											appProductId,
+											appVersion,
+											'ts'
+										),
+										skuOptions: [
+											{
+												key: productOptionId,
+												value: optionValuesId.yesOptionId,
+											},
+										],
+									},
+								});
+
+								skuTrialId = response.id;
+
+								dispatch({
+									payload: {
+										value: response.id,
+									},
+									type: TYPES.UPDATE_SKU_TRIAL_ID,
+								});
+							}
+
+							addSkuExpandoValue({
+								companyId: parseInt(getCompanyId()),
+								notesValue: appNotes,
+								skuId: skuTrialId,
+								versionValue: appVersion,
+							});
+						}
+						else if (skuTrialId) {
+							deleteTrialSKU(skuTrialId);
 						}
 					};
 

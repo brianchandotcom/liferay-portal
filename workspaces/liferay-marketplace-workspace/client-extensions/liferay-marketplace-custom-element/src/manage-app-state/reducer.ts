@@ -186,10 +186,16 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return {...state, optionValuesId};
 		}
 
-		case TYPES.UPDATE_SKU_ID: {
-			const id = action.payload.value;
+		case TYPES.UPDATE_SKU_TRIAL_ID: {
+			const skuTrialId = action.payload.value;
 
-			return {...state, skuId: id};
+			return {...state, skuTrialId};
+		}
+
+		case TYPES.UPDATE_SKU_VERSION_ID: {
+			const skuVersionId = action.payload.value;
+
+			return {...state, skuVersionId};
 		}
 
 		default:

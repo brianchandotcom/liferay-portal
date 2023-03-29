@@ -5,6 +5,16 @@ import {
 	updateProductSpecification,
 } from './api';
 
+export function createSkuName(
+	appProductId: number,
+	appVersion: string,
+	concatValue?: string
+) {
+	return `${appProductId}v${appVersion.replace(/[^a-zA-Z0-9 ]/g, '')}${
+		concatValue ? concatValue : ''
+	}`;
+}
+
 export async function getCatalogId() {
 	const response = await getCatalogs();
 

@@ -16,7 +16,7 @@ export function InformLicensingTermsPricePage({
 	onClickBack,
 	onClickContinue,
 }: InformLicensingTermsPricePageProps) {
-	const [{appLicensePrice, skuId}, _] = useAppContext();
+	const [{appLicensePrice, skuVersionId}, _] = useAppContext();
 
 	return (
 		<div className="informing-licensing-terms-page-container">
@@ -39,14 +39,14 @@ export function InformLicensingTermsPricePage({
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
 					const submitLicensePrice = async () => {
-						const skuJSON = await getSKUById(skuId);
+						const skuJSON = await getSKUById(skuVersionId);
 
 						const skuBody = {
 							...skuJSON,
 							price: parseFloat(appLicensePrice),
 						};
 
-						await patchSKUById(skuId, skuBody);
+						await patchSKUById(skuVersionId, skuBody);
 					};
 
 					submitLicensePrice();

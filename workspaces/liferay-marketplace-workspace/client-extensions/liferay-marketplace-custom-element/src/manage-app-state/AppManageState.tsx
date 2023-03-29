@@ -43,7 +43,8 @@ export interface InitialStateProps {
 	priceModel: string;
 	productOptionId: number;
 	publisherWebsiteURL: Specification;
-	skuId: number;
+	skuTrialId: number;
+	skuVersionId: number;
 	supportURL: Specification;
 }
 

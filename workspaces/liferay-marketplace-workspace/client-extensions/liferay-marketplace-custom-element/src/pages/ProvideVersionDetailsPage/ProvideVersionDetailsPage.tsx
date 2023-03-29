@@ -19,6 +19,8 @@ import './ProvideVersionDetailsPage.scss';
 
 import {useEffect} from 'react';
 
+import {createSkuName} from '../../utils/util';
+
 interface ProvideVersionDetailsPageProps {
 	onClickBack: () => void;
 	onClickContinue: () => void;
@@ -28,14 +30,6 @@ export function ProvideVersionDetailsPage({
 	onClickBack,
 	onClickContinue,
 }: ProvideVersionDetailsPageProps) {
-
-	function skuName(appProductId : number, appVersion : string){
-		return `${appProductId}v${appVersion.replace(
-			/[^a-zA-Z0-9 ]/g,
-			''
-		)}`
-	}
-	
 	const [
 		{
 			appNotes,
@@ -153,7 +147,8 @@ export function ProvideVersionDetailsPage({
 					const skuResponse = await getProductSKU({appProductId});
 
 					const versionSku = skuResponse.items.find(
-						({sku}) => sku === skuName(appProductId, appVersion)
+						({sku}) =>
+							sku === createSkuName(appProductId, appVersion)
 					);
 
 					let id;
@@ -165,7 +160,7 @@ export function ProvideVersionDetailsPage({
 						const response = await createAppSKU({
 							appProductId,
 							body: {
-								sku: skuName(appProductId, appVersion),
+								sku: createSkuName(appProductId, appVersion),
 								skuOptions: [
 									{
 										key: productOptionId,
@@ -181,7 +176,7 @@ export function ProvideVersionDetailsPage({
 							payload: {
 								value: response.id,
 							},
-							type: TYPES.UPDATE_SKU_ID,
+							type: TYPES.UPDATE_SKU_VERSION_ID,
 						});
 					}
 

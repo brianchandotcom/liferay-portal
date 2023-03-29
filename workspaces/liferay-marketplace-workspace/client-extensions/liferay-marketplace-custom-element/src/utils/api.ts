@@ -194,6 +194,13 @@ export async function createSpecification({body}: {body: Object}) {
 	return await response.json();
 }
 
+export async function deleteTrialSKU(skuTrialId: number) {
+	await fetch(`/o/headless-commerce-admin-catalog/v1.0/skus/${skuTrialId}`, {
+		headers,
+		method: 'DELETE',
+	});
+}
+
 export async function getAccountInfo({accountId}: {accountId: number}) {
 	const response = await fetch(
 		`/o/headless-admin-user/v1.0/accounts/${accountId}?nestedFields=image`,

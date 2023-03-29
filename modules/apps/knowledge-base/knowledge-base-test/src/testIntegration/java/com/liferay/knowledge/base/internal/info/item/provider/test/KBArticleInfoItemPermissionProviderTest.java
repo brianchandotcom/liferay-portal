@@ -88,7 +88,7 @@ public class KBArticleInfoItemPermissionProviderTest {
 		Assert.assertFalse(
 			infoItemPermissionProvider.hasPermission(
 				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getDefaultUser(_group.getCompanyId())),
+					UserLocalServiceUtil.getGuestUser(_group.getCompanyId())),
 				_kbArticle, ActionKeys.VIEW));
 	}
 

@@ -95,7 +95,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		User user = _userLocalService.getUserByContactId(
 			contact.getContactId());
 
-		if (user.isDefaultUser() ||
+		if (user.isGuestUser() ||
 			((user.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
 			 (user.getStatus() != WorkflowConstants.STATUS_INACTIVE)) ||
 			_isAnonymousUser(user)) {
@@ -274,7 +274,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
 
-		if (user.isDefaultUser() ||
+		if (user.isGuestUser() ||
 			((user.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
 			 (user.getStatus() != WorkflowConstants.STATUS_INACTIVE)) ||
 			_isAnonymousUser(user)) {

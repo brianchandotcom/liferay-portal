@@ -63,7 +63,7 @@ public class SPIRatingResource<T> {
 	}
 
 	private void _checkPermission() throws Exception {
-		if (_user.isDefaultUser()) {
+		if (_user.isGuestUser()) {
 			throw new PrincipalException();
 		}
 	}

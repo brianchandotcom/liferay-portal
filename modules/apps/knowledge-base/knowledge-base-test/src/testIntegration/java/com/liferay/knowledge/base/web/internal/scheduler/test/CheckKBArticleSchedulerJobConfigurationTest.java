@@ -73,7 +73,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 			System.currentTimeMillis() + (Time.MINUTE * 5));
 
 		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
-			null, UserLocalServiceUtil.getDefaultUserId(_group.getCompanyId()),
+			null, UserLocalServiceUtil.getGuestUserId(_group.getCompanyId()),
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,

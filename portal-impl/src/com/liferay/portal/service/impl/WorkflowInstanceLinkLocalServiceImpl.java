@@ -267,7 +267,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		}
 
 		if (userId == 0) {
-			userId = _userLocalService.getDefaultUserId(companyId);
+			userId = _userLocalService.getGuestUserId(companyId);
 		}
 
 		WorkflowHandler<?> workflowHandler =

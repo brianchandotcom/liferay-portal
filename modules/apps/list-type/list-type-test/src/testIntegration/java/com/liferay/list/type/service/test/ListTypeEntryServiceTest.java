@@ -58,7 +58,7 @@ public class ListTypeEntryServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
@@ -82,7 +82,7 @@ public class ListTypeEntryServiceTest {
 	@Test
 	public void testAddListTypeEntry() throws Exception {
 		try {
-			_testAddListTypeEntry(_defaultUser);
+			_testAddListTypeEntry(_guestUser);
 
 			Assert.fail();
 		}
@@ -91,7 +91,7 @@ public class ListTypeEntryServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -101,7 +101,7 @@ public class ListTypeEntryServiceTest {
 	@Test
 	public void testDeleteListTypeEntry() throws Exception {
 		try {
-			_testDeleteListTypeEntry(_defaultUser);
+			_testDeleteListTypeEntry(_guestUser);
 
 			Assert.fail();
 		}
@@ -110,7 +110,7 @@ public class ListTypeEntryServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -120,14 +120,14 @@ public class ListTypeEntryServiceTest {
 	@Test
 	public void testGetListTypeEntry() throws Exception {
 		try {
-			_testGetListTypeEntry(_defaultUser);
+			_testGetListTypeEntry(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -137,14 +137,14 @@ public class ListTypeEntryServiceTest {
 	@Test
 	public void testGetListTypeEntryByExternalReferenceCode() throws Exception {
 		try {
-			_testGetListTypeEntryByExternalReferenceCode(_defaultUser);
+			_testGetListTypeEntryByExternalReferenceCode(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -154,7 +154,7 @@ public class ListTypeEntryServiceTest {
 	@Test
 	public void testUpdateListTypeEntry() throws Exception {
 		try {
-			_testUpdateListTypeEntry(_defaultUser);
+			_testUpdateListTypeEntry(_guestUser);
 
 			Assert.fail();
 		}
@@ -163,7 +163,7 @@ public class ListTypeEntryServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -290,7 +290,7 @@ public class ListTypeEntryServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ListTypeDefinition _listTypeDefinition;

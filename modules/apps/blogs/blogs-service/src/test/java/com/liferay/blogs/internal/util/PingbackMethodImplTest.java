@@ -606,7 +606,7 @@ public class PingbackMethodImplTest {
 
 	private void _setUpUserLocalService() throws Exception {
 		Mockito.when(
-			_userLocalService.getDefaultUserId(Mockito.anyLong())
+			_userLocalService.getGuestUserId(Mockito.anyLong())
 		).thenReturn(
 			_USER_ID
 		);

@@ -505,7 +505,7 @@ public class UserSXPParameterContributorTest {
 
 	@Test
 	public void testIsSignedIn() throws Exception {
-		_testSXPParameter(value -> !_user.isDefaultUser(), "user.is_signed_in");
+		_testSXPParameter(value -> !_user.isGuestUser(), "user.is_signed_in");
 	}
 
 	@Test
@@ -1068,7 +1068,7 @@ public class UserSXPParameterContributorTest {
 			false
 		).when(
 			_user
-		).isDefaultUser();
+		).isGuestUser();
 
 		Mockito.doReturn(
 			true

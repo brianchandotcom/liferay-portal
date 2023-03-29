@@ -66,11 +66,11 @@ public class DDMFormInstanceSubmissionLimitStatusUtilTest {
 	}
 
 	@Test
-	public void testIsSubmissionLimitReachedWithDefaultUser() throws Exception {
+	public void testIsSubmissionLimitReachedWithGuestUser() throws Exception {
 		User user = Mockito.mock(User.class);
 
 		Mockito.when(
-			user.isDefaultUser()
+			user.isGuestUser()
 		).thenReturn(
 			true
 		);

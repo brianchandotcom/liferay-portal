@@ -70,7 +70,7 @@ public class UpgradeCalendarResourceTest {
 
 	@Test
 	public void testUpgradeCalendarResourceUserId() throws Exception {
-		CalendarResource calendarResource = getDefaultUserCalendarResource();
+		CalendarResource calendarResource = getGuestUserCalendarResource();
 
 		long userId = calendarResource.getUserId();
 
@@ -85,7 +85,7 @@ public class UpgradeCalendarResourceTest {
 
 	@Test
 	public void testUpgradeCalendarUserId() throws Exception {
-		CalendarResource calendarResource = getDefaultUserCalendarResource();
+		CalendarResource calendarResource = getGuestUserCalendarResource();
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
@@ -105,7 +105,7 @@ public class UpgradeCalendarResourceTest {
 
 		User user = _userLocalService.getUser(userId);
 
-		Assert.assertFalse(user.isDefaultUser());
+		Assert.assertFalse(user.isGuestUser());
 
 		Role administratorRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.ADMINISTRATOR);
@@ -118,7 +118,7 @@ public class UpgradeCalendarResourceTest {
 	protected void assertUserIsDefault(long userId) throws PortalException {
 		User user = _userLocalService.getUser(userId);
 
-		Assert.assertTrue(user.isDefaultUser());
+		Assert.assertTrue(user.isGuestUser());
 	}
 
 	protected long getCalendarResourceUserId(CalendarResource calendarResource)
@@ -155,7 +155,7 @@ public class UpgradeCalendarResourceTest {
 		}
 	}
 
-	protected CalendarResource getDefaultUserCalendarResource()
+	protected CalendarResource getGuestUserCalendarResource()
 		throws PortalException {
 
 		CalendarResource calendarResource =
@@ -164,11 +164,11 @@ public class UpgradeCalendarResourceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			_group.getCompanyId());
 
-		calendar.setUserId(defaultUserId);
-		calendarResource.setUserId(defaultUserId);
+		calendar.setUserId(guestUserId);
+		calendarResource.setUserId(guestUserId);
 
 		_calendarLocalService.updateCalendar(calendar);
 

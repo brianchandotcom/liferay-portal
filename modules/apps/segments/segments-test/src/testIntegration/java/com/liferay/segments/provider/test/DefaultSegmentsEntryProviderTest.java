@@ -196,7 +196,7 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithContextCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithContextCriterionAndGuestUser()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -211,7 +211,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -222,11 +222,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[] {segmentsEntry.getSegmentsEntryId()},
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithContextCriterionAndDefaultUserWithoutSignedInContext()
+	public void testGetSegmentsEntryIdsWithContextCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -241,7 +241,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -251,7 +251,7 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[] {segmentsEntry.getSegmentsEntryId()},
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
@@ -314,7 +314,7 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithContextCriterionAndModelCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithContextCriterionAndModelCriterionAndGuestUser()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -325,11 +325,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -345,11 +345,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithContextCriterionAndModelCriterionAndDefaultUserWithoutSignedInContext()
+	public void testGetSegmentsEntryIdsWithContextCriterionAndModelCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -360,11 +360,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -379,11 +379,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithContextCriterionOrModelCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithContextCriterionOrModelCriterionAndGuestUser()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -394,11 +394,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
@@ -414,11 +414,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[] {segmentsEntry.getSegmentsEntryId()},
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithContextCriterionOrModelCriterionAndDefaultUserWithoutSignedInContext()
+	public void testGetSegmentsEntryIdsWithContextCriterionOrModelCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -429,11 +429,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
@@ -448,23 +448,23 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[] {segmentsEntry.getSegmentsEntryId()},
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithModelCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithModelCriterionAndGuestUser()
 		throws Exception {
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		Criteria criteria = new Criteria();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -479,7 +479,7 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
@@ -541,7 +541,7 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndGuestUser()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -556,7 +556,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -567,11 +567,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndDefaultUserWithoutSignedInContext()
+	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -586,7 +586,7 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		Context context = new Context();
 
@@ -596,7 +596,7 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
@@ -631,7 +631,7 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndModelCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndModelCriterionAndGuestUser()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -642,11 +642,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -662,11 +662,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndModelCriterionAndDefaultUserWithoutSignedInContext()
+	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionAndModelCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -677,11 +677,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -696,11 +696,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionOrModelCriterionAndDefaultUser()
+	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionOrModelCriterionAndGuestUser()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -711,11 +711,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -731,11 +731,11 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionOrModelCriterionAndDefaultUserWithoutSignedInContext()
+	public void testGetSegmentsEntryIdsWithNonmatchingContextCriterionOrModelCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -746,11 +746,11 @@ public class DefaultSegmentsEntryProviderTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_userSegmentsCriteriaContributor.contribute(
 			criteria,
-			String.format("(firstName eq '%s')", defaultUser.getFirstName()),
+			String.format("(firstName eq '%s')", guestUser.getFirstName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
@@ -765,7 +765,7 @@ public class DefaultSegmentsEntryProviderTest {
 			new long[0],
 			_segmentsEntryProvider.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(),
-				defaultUser.getUserId(), context));
+				guestUser.getUserId(), context));
 	}
 
 	@Test

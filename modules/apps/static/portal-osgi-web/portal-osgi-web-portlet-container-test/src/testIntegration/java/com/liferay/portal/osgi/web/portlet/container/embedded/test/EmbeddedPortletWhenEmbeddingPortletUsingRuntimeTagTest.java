@@ -142,12 +142,11 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 				"The application cannot include itself: " + TEST_PORTLET_ID,
 				logEntry.getMessage());
 
-			User defaultUser = _userLocalService.getDefaultUser(
+			User guestUser = _userLocalService.getGuestUser(
 				group.getCompanyId());
 
 			String errorMessage = _language.get(
-				defaultUser.getLocale(),
-				"the-application-cannot-include-itself");
+				guestUser.getLocale(), "the-application-cannot-include-itself");
 
 			String body = response.getBody();
 

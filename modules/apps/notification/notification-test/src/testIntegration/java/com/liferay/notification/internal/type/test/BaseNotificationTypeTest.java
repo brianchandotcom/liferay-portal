@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -103,7 +104,8 @@ public class BaseNotificationTypeTest {
 			user1.getLocale(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			prefixListType.getListTypeId(), suffixListType.getListTypeId(),
-			true, Month.FEBRUARY.getValue(), 7, 1988, null, null, null,
+			true, Month.FEBRUARY.getValue(), 7, 1988, null,
+			UserConstants.TYPE_REGULAR, null, null,
 			new long[] {role.getRoleId()}, null, true, null);
 
 		PermissionThreadLocal.setPermissionChecker(

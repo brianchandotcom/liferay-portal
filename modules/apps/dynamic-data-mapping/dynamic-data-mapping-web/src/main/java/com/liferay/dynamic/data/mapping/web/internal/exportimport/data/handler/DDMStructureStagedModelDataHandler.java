@@ -147,10 +147,10 @@ public class DDMStructureStagedModelDataHandler
 			"structure-key", structure.getStructureKey()
 		).build();
 
-		long defaultUserId = 0;
+		long guestUserId = 0;
 
 		try {
-			defaultUserId = _userLocalService.getDefaultUserId(
+			guestUserId = _userLocalService.getGuestUserId(
 				structure.getCompanyId());
 		}
 		catch (Exception exception) {
@@ -163,7 +163,7 @@ public class DDMStructureStagedModelDataHandler
 
 		referenceAttributes.put(
 			"preloaded",
-			String.valueOf(_isPreloadedStructure(defaultUserId, structure)));
+			String.valueOf(_isPreloadedStructure(guestUserId, structure)));
 
 		return referenceAttributes;
 	}
@@ -248,7 +248,7 @@ public class DDMStructureStagedModelDataHandler
 		}
 
 		if (_isPreloadedStructure(
-				_userLocalService.getDefaultUserId(structure.getCompanyId()),
+				_userLocalService.getGuestUserId(structure.getCompanyId()),
 				structure)) {
 
 			structureElement.addAttribute("preloaded", "true");
@@ -788,9 +788,9 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	private boolean _isPreloadedStructure(
-		long defaultUserId, DDMStructure structure) {
+		long guestUserId, DDMStructure structure) {
 
-		if (defaultUserId == structure.getUserId()) {
+		if (guestUserId == structure.getUserId()) {
 			return true;
 		}
 
@@ -807,7 +807,7 @@ public class DDMStructureStagedModelDataHandler
 		}
 
 		if ((ddmStructureVersion != null) &&
-			(defaultUserId == ddmStructureVersion.getUserId())) {
+			(guestUserId == ddmStructureVersion.getUserId())) {
 
 			return true;
 		}

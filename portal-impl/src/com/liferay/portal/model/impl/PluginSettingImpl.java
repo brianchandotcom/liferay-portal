@@ -108,7 +108,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 
 			User user = UserLocalServiceUtil.getUserById(userId);
 
-			if (user.isDefaultUser() && hasRoleWithName(RoleConstants.GUEST)) {
+			if (user.isGuestUser() && hasRoleWithName(RoleConstants.GUEST)) {
 				return true;
 			}
 		}

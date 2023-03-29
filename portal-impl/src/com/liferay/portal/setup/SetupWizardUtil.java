@@ -83,9 +83,9 @@ public class SetupWizardUtil {
 			Company company = CompanyLocalServiceUtil.getCompanyById(
 				PortalInstances.getDefaultCompanyId());
 
-			User defaultUser = company.getGuestUser();
+			User guestUser = company.getGuestUser();
 
-			return defaultUser.getTimeZoneId();
+			return guestUser.getTimeZoneId();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

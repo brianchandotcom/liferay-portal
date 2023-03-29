@@ -62,7 +62,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 			try {
 				PermissionThreadLocal.setAddResource(false);
 
-				User user = _userLocalService.getDefaultUser(companyId);
+				User user = _userLocalService.getGuestUser(companyId);
 
 				return _roleLocalService.addRole(
 					user.getUserId(), null, 0, name, null,

@@ -110,12 +110,12 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		if (credentials != null) {
 			Company company = _portal.getCompany(httpServletRequest);
 
-			User defaultUser = _userLocalService.getDefaultUser(
+			User guestUser = _userLocalService.getGuestUser(
 				company.getCompanyId());
 
 			long userId = GetterUtil.getLong(credentials[0]);
 
-			if (defaultUser.getUserId() == userId) {
+			if (guestUser.getUserId() == userId) {
 				removeCookies(httpServletRequest, httpServletResponse);
 
 				return null;

@@ -83,7 +83,7 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 		try {
 			User user = PortalUtil.getUser(httpServletRequest);
 
-			if ((user == null) || user.isDefaultUser() ||
+			if ((user == null) || user.isGuestUser() ||
 				!_isValidRealUserId(httpSession, user)) {
 
 				return false;

@@ -90,7 +90,7 @@ public class ExportDDMFormInstancePortletConfigurationIcon
 
 		User user = themeDisplay.getUser();
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return false;
 		}
 

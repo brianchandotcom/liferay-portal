@@ -212,7 +212,7 @@ public class UserLocalServiceTest {
 
 		User user = companyUsers.get(0);
 
-		Assert.assertFalse(user.isDefaultUser());
+		Assert.assertFalse(user.isGuestUser());
 	}
 
 	@Test

@@ -78,7 +78,7 @@ public class CommerceWishListResource {
 			long userId = _portal.getUserId(httpServletRequest);
 
 			if (userId == 0) {
-				User user = _userLocalService.getDefaultUser(
+				User user = _userLocalService.getGuestUser(
 					_portal.getCompanyId(httpServletRequest));
 
 				userId = user.getUserId();

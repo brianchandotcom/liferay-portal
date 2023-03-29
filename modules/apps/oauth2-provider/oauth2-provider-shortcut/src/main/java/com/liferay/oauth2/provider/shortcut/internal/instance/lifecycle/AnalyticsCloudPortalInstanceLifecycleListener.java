@@ -146,7 +146,7 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 			return oAuth2Applications.get(0);
 		}
 
-		User user = _userLocalService.getDefaultUser(company.getCompanyId());
+		User user = _userLocalService.getGuestUser(company.getCompanyId());
 
 		_addSAPEntries(company.getCompanyId(), user.getUserId());
 

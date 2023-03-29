@@ -167,7 +167,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	public long[] addRequiredRoles(User user, long[] roleIds)
 		throws PortalException {
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return removeRequiredRoles(user, roleIds);
 		}
 

@@ -324,7 +324,7 @@ public class PortletPreferencesFactoryImpl
 
 		String doAsUserId = themeDisplay.getDoAsUserId();
 
-		if ((user != null) && !user.isDefaultUser() &&
+		if ((user != null) && !user.isGuestUser() &&
 			Validator.isNotNull(doAsUserId) &&
 			!Objects.equals(String.valueOf(userId), doAsUserId)) {
 
@@ -994,7 +994,7 @@ public class PortletPreferencesFactoryImpl
 				}
 				else {
 					if ((userId <= 0) || modeEditGuest) {
-						userId = UserLocalServiceUtil.getDefaultUserId(
+						userId = UserLocalServiceUtil.getGuestUserId(
 							layout.getCompanyId());
 					}
 
@@ -1012,7 +1012,7 @@ public class PortletPreferencesFactoryImpl
 				}
 				else {
 					if ((userId <= 0) || modeEditGuest) {
-						userId = UserLocalServiceUtil.getDefaultUserId(
+						userId = UserLocalServiceUtil.getGuestUserId(
 							layout.getCompanyId());
 					}
 

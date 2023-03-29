@@ -41,7 +41,7 @@ public class ContactModelDocumentContributor
 			User user = userLocalService.fetchUserByContactId(
 				contact.getContactId());
 
-			if ((user == null) || user.isDefaultUser() ||
+			if ((user == null) || user.isGuestUser() ||
 				(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 				return;

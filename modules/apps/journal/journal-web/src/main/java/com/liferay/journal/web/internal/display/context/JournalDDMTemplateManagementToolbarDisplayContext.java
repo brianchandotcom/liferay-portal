@@ -162,7 +162,7 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 
 		User user = themeDisplay.getUser();
 
-		return !user.isDefaultUser();
+		return !user.isGuestUser();
 	}
 
 	@Override

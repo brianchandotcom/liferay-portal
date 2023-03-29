@@ -55,7 +55,7 @@ public class UsersTemplateContextContributor
 
 		User user1 = themeDisplay.getUser();
 
-		contextObjects.put("is_default_user", user1.isDefaultUser());
+		contextObjects.put("is_default_user", user1.isGuestUser());
 
 		try {
 			Contact contact = user1.getContact();

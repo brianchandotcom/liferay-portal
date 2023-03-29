@@ -123,7 +123,7 @@ public class CommerceAccountGroupLocalServiceImpl
 			CommerceAccountGroupImpl.fromAccountGroup(
 				_accountGroupLocalService.checkGuestAccountGroup(companyId));
 
-		User user = _userLocalService.getDefaultUser(companyId);
+		User user = _userLocalService.getGuestUser(companyId);
 
 		ServiceContext serviceContext = new ServiceContext();
 

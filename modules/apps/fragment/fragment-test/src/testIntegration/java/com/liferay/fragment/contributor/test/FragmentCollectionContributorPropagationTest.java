@@ -196,7 +196,7 @@ public class FragmentCollectionContributorPropagationTest {
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				User user = _userLocalService.fetchDefaultUser(companyId);
+				User user = _userLocalService.fetchGuestUser(companyId);
 
 				Group group = _groupLocalService.getGroup(
 					companyId, GroupConstants.GUEST);
@@ -259,9 +259,9 @@ public class FragmentCollectionContributorPropagationTest {
 
 		Assert.assertNotNull(user);
 
-		User defaultUser = _userLocalService.fetchDefaultUser(companyId);
+		User guestUser = _userLocalService.fetchGuestUser(companyId);
 
-		Assert.assertEquals(defaultUser.getUserId(), user.getUserId());
+		Assert.assertEquals(guestUser.getUserId(), user.getUserId());
 
 		Assert.assertEquals(
 			user.getUserId(),
@@ -304,7 +304,7 @@ public class FragmentCollectionContributorPropagationTest {
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
-		User user = _userLocalService.fetchDefaultUser(company.getCompanyId());
+		User user = _userLocalService.fetchGuestUser(company.getCompanyId());
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 

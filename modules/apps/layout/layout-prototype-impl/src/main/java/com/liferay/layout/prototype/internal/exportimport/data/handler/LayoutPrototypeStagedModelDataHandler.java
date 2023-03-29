@@ -107,10 +107,10 @@ public class LayoutPrototypeStagedModelDataHandler
 		Element layoutPrototypeElement =
 			portletDataContext.getExportDataElement(layoutPrototype);
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			layoutPrototype.getCompanyId());
 
-		if (defaultUserId == layoutPrototype.getUserId()) {
+		if (guestUserId == layoutPrototype.getUserId()) {
 			layoutPrototypeElement.addAttribute("preloaded", "true");
 		}
 

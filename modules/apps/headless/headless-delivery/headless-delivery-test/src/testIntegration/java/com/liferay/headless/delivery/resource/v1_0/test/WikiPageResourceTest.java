@@ -45,12 +45,12 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		_wikiNode = WikiNodeLocalServiceUtil.addNode(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		WikiNode parentWikiNode = WikiNodeLocalServiceUtil.addNode(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 

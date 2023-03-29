@@ -56,8 +56,7 @@ public class KnowledgeBaseAttachmentResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		_kbArticle = KBArticleLocalServiceUtil.addKBArticle(
-			null,
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			null, UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,

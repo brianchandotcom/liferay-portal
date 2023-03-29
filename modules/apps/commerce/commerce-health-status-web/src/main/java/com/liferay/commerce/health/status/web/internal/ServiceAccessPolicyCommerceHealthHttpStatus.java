@@ -59,7 +59,7 @@ public class ServiceAccessPolicyCommerceHealthHttpStatus
 
 		_commerceSAPHelper.removeCommerceDefaultSAPEntries(companyId);
 
-		User user = _userLocalService.getDefaultUser(companyId);
+		User user = _userLocalService.getGuestUser(companyId);
 
 		_commerceSAPHelper.addCommerceDefaultSAPEntries(
 			companyId, user.getUserId());

@@ -48,7 +48,7 @@ public class UADExporter {
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
-				UserLocalServiceUtil.getDefaultUserId(
+				UserLocalServiceUtil.getGuestUserId(
 					CompanyThreadLocal.getCompanyId()),
 				groupId, String.valueOf(userId),
 				UADExportBackgroundTaskExecutor.class.getName(), taskContextMap,

@@ -321,7 +321,7 @@ public class CMISFileVersion extends BaseCMISModel implements FileVersion {
 	@Override
 	public long getUserId() {
 		try {
-			return UserLocalServiceUtil.getDefaultUserId(getCompanyId());
+			return UserLocalServiceUtil.getGuestUserId(getCompanyId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -340,7 +340,7 @@ public class CMISFileVersion extends BaseCMISModel implements FileVersion {
 	@Override
 	public String getUserUuid() {
 		try {
-			User user = UserLocalServiceUtil.getDefaultUser(getCompanyId());
+			User user = UserLocalServiceUtil.getGuestUser(getCompanyId());
 
 			return user.getUserUuid();
 		}

@@ -93,9 +93,9 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
 
-		serviceContext.setUserId(defaultUserId);
+		serviceContext.setUserId(guestUserId);
 
 		if (!_ddmStructureLocalService.hasStructure(
 				group.getGroupId(),
@@ -117,7 +117,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 			_ddmStructureLocalService.addStructure(
-				defaultUserId, group.getGroupId(),
+				guestUserId, group.getGroupId(),
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_portal.getClassNameId(RawMetadataProcessor.class), name,
 				nameMap, descriptionMap, ddmForm, ddmFormLayout,

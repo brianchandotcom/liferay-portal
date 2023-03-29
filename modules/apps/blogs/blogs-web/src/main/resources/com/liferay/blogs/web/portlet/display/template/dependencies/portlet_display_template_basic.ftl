@@ -48,7 +48,7 @@
 										entryUser = userLocalService.fetchUser(curBlogEntry.getUserId())
 									/>
 
-									<#if entryUser?? && !entryUser.isDefaultUser()>
+									<#if entryUser?? && !entryUser.isGuestUser()>
 										<#assign entryUserURL = entryUser.getDisplayURL(themeDisplay) />
 									</#if>
 								</#if>

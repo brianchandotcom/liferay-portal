@@ -402,7 +402,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		User user = _userLocalService.fetchUser(
 			_portal.getValidUserId(group.getCompanyId(), userId));
 
-		userName = user.isDefaultUser() ? userName : user.getFullName();
+		userName = user.isGuestUser() ? userName : user.getFullName();
 
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
@@ -413,7 +413,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			format = "html";
 		}
 
-		if (anonymous || user.isDefaultUser()) {
+		if (anonymous || user.isGuestUser()) {
 			MBGroupServiceSettings mbGroupServiceSettings =
 				MBGroupServiceSettings.getInstance(groupId);
 
@@ -425,7 +425,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			anonymous = true;
 		}
 
@@ -558,7 +558,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		if (!message.isDiscussion()) {
-			if (user.isDefaultUser()) {
+			if (user.isGuestUser()) {
 				addMessageResources(message, true, true);
 			}
 			else if (serviceContext.isAddGroupPermissions() ||
@@ -2773,7 +2773,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		JSONObject extraDataJSONObject = JSONUtil.put("title", title);
 
 		if (!message.isDiscussion()) {
-			if (!message.isAnonymous() && !user.isDefaultUser()) {
+			if (!message.isAnonymous() && !user.isGuestUser()) {
 				long receiverUserId = 0;
 
 				MBMessage parentMessage =

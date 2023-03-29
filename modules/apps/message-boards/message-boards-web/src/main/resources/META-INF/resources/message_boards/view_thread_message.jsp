@@ -104,7 +104,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 				}
 				%>
 
-				<c:if test="<%= (messageUser != null) && !messageUser.isDefaultUser() %>">
+				<c:if test="<%= (messageUser != null) && !messageUser.isGuestUser() %>">
 					<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
 						<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[1]) %>">
 							<%= HtmlUtil.escape(ranks[1]) %>

@@ -99,7 +99,7 @@ public class OAuth2JSONWSSAPEntryPortalInstanceLifecycleListener
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(), name);
 
 			_sapEntryLocalService.addSAPEntry(
-				_userLocalService.getDefaultUserId(companyId),
+				_userLocalService.getGuestUserId(companyId),
 				allowedServiceSignatures, false, true, name, map,
 				new ServiceContext());
 		}

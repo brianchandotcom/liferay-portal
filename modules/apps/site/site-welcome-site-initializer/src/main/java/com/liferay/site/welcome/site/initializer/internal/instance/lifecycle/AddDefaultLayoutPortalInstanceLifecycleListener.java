@@ -110,14 +110,14 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 			companyId, RoleConstants.ADMINISTRATOR);
 
 		if (role == null) {
-			return _userLocalService.getDefaultUser(companyId);
+			return _userLocalService.getGuestUser(companyId);
 		}
 
 		List<User> adminUsers = _userLocalService.getRoleUsers(
 			role.getRoleId(), 0, 1);
 
 		if (adminUsers.isEmpty()) {
-			return _userLocalService.getDefaultUser(companyId);
+			return _userLocalService.getGuestUser(companyId);
 		}
 
 		return adminUsers.get(0);

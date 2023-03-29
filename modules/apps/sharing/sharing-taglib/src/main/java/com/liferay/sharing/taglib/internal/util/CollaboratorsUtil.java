@@ -69,7 +69,7 @@ public class CollaboratorsUtil {
 
 	private static String _getDisplayURL(ThemeDisplay themeDisplay, User user) {
 		try {
-			if ((user == null) || user.isDefaultUser()) {
+			if ((user == null) || user.isGuestUser()) {
 				return StringPool.BLANK;
 			}
 

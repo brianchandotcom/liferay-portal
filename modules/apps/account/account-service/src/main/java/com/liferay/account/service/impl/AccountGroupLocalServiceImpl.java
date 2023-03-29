@@ -117,7 +117,7 @@ public class AccountGroupLocalServiceImpl
 
 		accountGroup.setCompanyId(companyId);
 
-		User user = _userLocalService.getDefaultUser(companyId);
+		User user = _userLocalService.getGuestUser(companyId);
 
 		accountGroup.setUserId(user.getUserId());
 		accountGroup.setUserName(user.getFullName());

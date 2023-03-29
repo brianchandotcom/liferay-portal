@@ -62,7 +62,7 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 
 			User user = _portal.getUser(httpServletRequest);
 
-			if ((user == null) || user.isDefaultUser()) {
+			if ((user == null) || user.isGuestUser()) {
 				return authVerifierResult;
 			}
 

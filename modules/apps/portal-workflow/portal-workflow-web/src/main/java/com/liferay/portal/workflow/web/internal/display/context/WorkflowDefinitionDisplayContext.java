@@ -509,7 +509,7 @@ public class WorkflowDefinitionDisplayContext {
 	public String getUserName(WorkflowDefinition workflowDefinition) {
 		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
 
-		if ((user == null) || user.isDefaultUser() ||
+		if ((user == null) || user.isGuestUser() ||
 			Validator.isNull(user.getFullName())) {
 
 			return null;

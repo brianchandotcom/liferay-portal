@@ -229,7 +229,7 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionPersistence.fetchByC_N(
 				companyId, systemObjectDefinitionMetadata.getName());
 
-		long userId = _userLocalService.getDefaultUserId(companyId);
+		long userId = _userLocalService.getGuestUserId(companyId);
 
 		if (objectDefinition == null) {
 			Table table = systemObjectDefinitionMetadata.getTable();

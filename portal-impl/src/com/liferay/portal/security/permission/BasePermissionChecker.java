@@ -110,13 +110,13 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	public void init(User user) {
 		this.user = user;
 
-		if (user.isDefaultUser()) {
-			defaultUserId = user.getUserId();
+		if (user.isGuestUser()) {
+			guestUserId = user.getUserId();
 			signedIn = false;
 		}
 		else {
 			try {
-				defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				guestUserId = UserLocalServiceUtil.getGuestUserId(
 					user.getCompanyId());
 			}
 			catch (Exception exception) {
@@ -155,7 +155,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	}
 
 	protected boolean checkGuest = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
-	protected long defaultUserId;
+	protected long guestUserId;
 	protected Boolean omniadmin;
 	protected Role ownerRole;
 	protected boolean signedIn;

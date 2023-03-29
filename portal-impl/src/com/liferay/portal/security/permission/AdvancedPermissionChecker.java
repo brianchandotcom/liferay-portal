@@ -86,13 +86,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Override
 	public long[] getGuestUserRoleIds() {
 		long[] roleIds = PermissionCacheUtil.getUserGroupRoleIds(
-			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			guestUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		if (roleIds != null) {
 			return roleIds;
 		}
 
-		List<Role> roles = RoleLocalServiceUtil.getUserRoles(defaultUserId);
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(guestUserId);
 
 		roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
 
@@ -108,7 +108,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		PermissionCacheUtil.putUserGroupRoleIds(
-			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, roleIds);
+			guestUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, roleIds);
 
 		return roleIds;
 	}
@@ -142,13 +142,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		boolean ownerIsDefaultUser = false;
+		boolean ownerIsGuestUser = false;
 
-		if (ownerId == defaultUserId) {
-			ownerIsDefaultUser = true;
+		if (ownerId == guestUserId) {
+			ownerIsGuestUser = true;
 		}
 
-		if (ownerIsDefaultUser) {
+		if (ownerIsGuestUser) {
 			List<String> guestUnsupportedActions;
 
 			if (name.indexOf(CharPool.PERIOD) != -1) {
@@ -170,7 +170,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			long ownerRoleId = getOwnerRoleId();
 
-			if (ownerIsDefaultUser) {
+			if (ownerIsGuestUser) {
 				Role guestRole = RoleLocalServiceUtil.getRole(
 					companyId, RoleConstants.GUEST);
 
@@ -1248,7 +1248,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				companyId, groupId, name, primKey, actionId, resources);
 
 			return ResourceLocalServiceUtil.hasUserPermissions(
-				defaultUserId, groupId, resources, actionId,
+				guestUserId, groupId, resources, actionId,
 				_applyRoleContributors(getGuestUserRoleIds(), groupId));
 		}
 		catch (NoSuchResourcePermissionException

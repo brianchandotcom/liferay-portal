@@ -63,7 +63,7 @@ group_id = theme_display.getScopeGroupId()
 
 <#if !user_initialized??>
 	<#assign
-	is_default_user = user.isDefaultUser()
+	is_default_user = user.isGuestUser()
 	is_female = user.isFemale()
 	is_male = user.isMale()
 	is_setup_complete = user.isSetupComplete()

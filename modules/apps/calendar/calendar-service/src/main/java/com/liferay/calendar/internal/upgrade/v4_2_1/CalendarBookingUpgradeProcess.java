@@ -68,7 +68,7 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 				if (user == null) {
 					long companyId = resultSet.getLong("companyId");
 
-					user = _userLocalService.getDefaultUser(companyId);
+					user = _userLocalService.getGuestUser(companyId);
 				}
 
 				Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(

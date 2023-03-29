@@ -90,16 +90,16 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(_company.getGroupId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			_company.getCompanyId());
 
-		serviceContext.setUserId(defaultUserId);
+		serviceContext.setUserId(guestUserId);
 
 		Class<?> clazz = getClass();
 
 		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, _company.getGroupId(),
-			_dlFileEntryMetadataClassNameId, clazz.getClassLoader(),
+			guestUserId, _company.getGroupId(), _dlFileEntryMetadataClassNameId,
+			clazz.getClassLoader(),
 			"com/liferay/document/library/google/docs/internal/util" +
 				"/dependencies/google-docs-metadata-structure.xml",
 			serviceContext);
@@ -119,7 +119,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 	private void _addGoogleDocsDLFileEntryType(long ddmStructureId)
 		throws Exception {
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			_company.getCompanyId());
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
@@ -129,10 +129,10 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(_company.getGroupId());
-		serviceContext.setUserId(defaultUserId);
+		serviceContext.setUserId(guestUserId);
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
-			defaultUserId, _company.getGroupId(), ddmStructureId,
+			guestUserId, _company.getGroupId(), ddmStructureId,
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
 			_getGoogleDriveShortcutNameMap(LanguageUtil.getAvailableLocales()),
 			descriptionMap,

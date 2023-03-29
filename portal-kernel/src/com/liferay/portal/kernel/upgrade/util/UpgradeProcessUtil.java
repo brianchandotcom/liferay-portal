@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade.util;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,11 +51,11 @@ public class UpgradeProcessUtil {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select languageId from User_ where companyId = ? and " +
-					"defaultUser = ?")) {
+				"select languageId from User_ where companyId = ? and type_ " +
+					"= ?")) {
 
 			preparedStatement.setLong(1, companyId);
-			preparedStatement.setBoolean(2, true);
+			preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {

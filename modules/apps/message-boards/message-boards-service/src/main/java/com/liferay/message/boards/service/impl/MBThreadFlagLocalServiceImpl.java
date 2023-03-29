@@ -52,7 +52,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return null;
 		}
 
@@ -129,7 +129,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return null;
 		}
 
@@ -142,7 +142,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return true;
 		}
 

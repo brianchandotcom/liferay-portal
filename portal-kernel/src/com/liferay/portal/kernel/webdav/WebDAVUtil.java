@@ -167,7 +167,7 @@ public class WebDAVUtil {
 
 		// Guest
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return ListUtil.fromArray(
 				GroupLocalServiceUtil.getGroup(
 					user.getCompanyId(), GroupConstants.GUEST));
@@ -196,7 +196,7 @@ public class WebDAVUtil {
 
 		// User
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			groups.add(user.getGroup());
 		}
 

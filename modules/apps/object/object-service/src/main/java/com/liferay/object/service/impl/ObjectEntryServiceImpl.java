@@ -546,7 +546,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)
 		throws PortalException {
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			return;
 		}
 

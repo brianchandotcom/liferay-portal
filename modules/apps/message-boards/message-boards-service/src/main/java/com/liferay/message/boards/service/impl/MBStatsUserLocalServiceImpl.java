@@ -106,8 +106,7 @@ public class MBStatsUserLocalServiceImpl
 					groupId
 				).and(
 					MBMessageTable.INSTANCE.userId.neq(
-						_userLocalService.getDefaultUserId(
-							group.getCompanyId()))
+						_userLocalService.getGuestUserId(group.getCompanyId()))
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
@@ -144,7 +143,7 @@ public class MBStatsUserLocalServiceImpl
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			group.getCompanyId());
 
 		Expression<Long> countExpression = DSLFunctionFactoryUtil.count(
@@ -167,7 +166,7 @@ public class MBStatsUserLocalServiceImpl
 				MBMessageTable.INSTANCE.groupId.eq(
 					groupId
 				).and(
-					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+					MBMessageTable.INSTANCE.userId.neq(guestUserId)
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
@@ -214,8 +213,7 @@ public class MBStatsUserLocalServiceImpl
 					groupId
 				).and(
 					MBMessageTable.INSTANCE.userId.neq(
-						_userLocalService.getDefaultUserId(
-							group.getCompanyId()))
+						_userLocalService.getGuestUserId(group.getCompanyId()))
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)

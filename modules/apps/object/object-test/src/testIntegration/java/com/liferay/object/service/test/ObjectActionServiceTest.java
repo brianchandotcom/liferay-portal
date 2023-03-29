@@ -62,7 +62,7 @@ public class ObjectActionServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
@@ -82,7 +82,7 @@ public class ObjectActionServiceTest {
 	@Test
 	public void testAddObjectAction() throws Exception {
 		try {
-			_testAddObjectAction(_defaultUser);
+			_testAddObjectAction(_guestUser);
 
 			Assert.fail();
 		}
@@ -91,7 +91,7 @@ public class ObjectActionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -101,7 +101,7 @@ public class ObjectActionServiceTest {
 	@Test
 	public void testDeleteObjectAction() throws Exception {
 		try {
-			_testDeleteObjectAction(_defaultUser);
+			_testDeleteObjectAction(_guestUser);
 
 			Assert.fail();
 		}
@@ -110,7 +110,7 @@ public class ObjectActionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -120,14 +120,14 @@ public class ObjectActionServiceTest {
 	@Test
 	public void testGetObjectAction() throws Exception {
 		try {
-			_testGetObjectAction(_defaultUser);
+			_testGetObjectAction(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -137,7 +137,7 @@ public class ObjectActionServiceTest {
 	@Test
 	public void testUpdateObjectAction() throws Exception {
 		try {
-			_testUpdateObjectAction(_defaultUser);
+			_testUpdateObjectAction(_guestUser);
 
 			Assert.fail();
 		}
@@ -146,7 +146,7 @@ public class ObjectActionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -263,7 +263,7 @@ public class ObjectActionServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

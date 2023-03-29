@@ -639,7 +639,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				getPermissionChecker(), userId, ActionKeys.VIEW);
 		}
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return Collections.emptyList();
 		}
 

@@ -40,7 +40,7 @@ boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true)
 	searchActionURL="<%= ddmDisplayContext.getTemplateSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"
 	searchFormName="fm1"
-	selectable="<%= includeCheckBox && !user.isDefaultUser() %>"
+	selectable="<%= includeCheckBox && !user.isGuestUser() %>"
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />

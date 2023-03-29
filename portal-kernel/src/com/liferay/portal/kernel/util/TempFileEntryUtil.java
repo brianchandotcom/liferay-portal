@@ -203,7 +203,7 @@ public class TempFileEntryUtil {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		User user = UserLocalServiceUtil.getDefaultUser(group.getCompanyId());
+		User user = UserLocalServiceUtil.getGuestUser(group.getCompanyId());
 
 		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.portal.repository.temporaryrepository." +

@@ -113,11 +113,11 @@ public class CommercePriceListIndexerTest {
 			CommerceCurrencyTestUtil.addCommerceCurrency(
 				_company.getCompanyId());
 
-		User defaultUser = _company.getGuestUser();
+		User guestUser = _company.getGuestUser();
 
 		CommerceCatalog commerceCatalog = CommerceTestUtil.addCommerceCatalog(
-			_company.getCompanyId(), _group.getGroupId(),
-			defaultUser.getUserId(), commerceCurrency.getCode());
+			_company.getCompanyId(), _group.getGroupId(), guestUser.getUserId(),
+			commerceCurrency.getCode());
 
 		_commercePriceListLocalService.addCommercePriceList(
 			null, commerceCatalog.getGroupId(), _user.getUserId(),

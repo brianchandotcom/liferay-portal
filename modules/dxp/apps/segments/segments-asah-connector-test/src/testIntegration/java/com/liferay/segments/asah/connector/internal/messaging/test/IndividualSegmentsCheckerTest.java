@@ -292,19 +292,19 @@ public class IndividualSegmentsCheckerTest {
 							"total", 0
 						).toString())));
 
-			User defaultUser = _userLocalService.getDefaultUser(
+			User guestUser = _userLocalService.getGuestUser(
 				_company.getCompanyId());
 
 			ReflectionTestUtil.invoke(
 				_individualSegmentsChecker, "checkIndividualSegments",
 				new Class<?>[] {long.class, String.class}, _user.getCompanyId(),
-				String.valueOf(defaultUser.getUserId()));
+				String.valueOf(guestUser.getUserId()));
 
 			Context context = new Context();
 
 			context.put(
 				"segmentsAnonymousUserId",
-				String.valueOf(defaultUser.getUserId()));
+				String.valueOf(guestUser.getUserId()));
 
 			Assert.assertArrayEquals(
 				new long[] {segmentsEntry.getSegmentsEntryId()},

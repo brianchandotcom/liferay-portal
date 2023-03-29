@@ -165,7 +165,7 @@ public class LayoutExportController implements ExportController {
 
 		long companyId = portletDataContext.getCompanyId();
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.popServiceContext();
@@ -185,7 +185,7 @@ public class LayoutExportController implements ExportController {
 			serviceContext.setUserId(backgroundTask.getUserId());
 		}
 		else {
-			serviceContext.setUserId(defaultUserId);
+			serviceContext.setUserId(guestUserId);
 		}
 
 		serviceContext.setAttribute("exporting", Boolean.TRUE);

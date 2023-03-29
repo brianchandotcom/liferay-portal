@@ -213,7 +213,7 @@ public class DefaultCommentTreeDisplayContext
 
 		if ((_discussionComment != null) &&
 			(_discussionComment.getUserId() == user.getUserId()) &&
-			!user.isDefaultUser()) {
+			!user.isGuestUser()) {
 
 			return true;
 		}

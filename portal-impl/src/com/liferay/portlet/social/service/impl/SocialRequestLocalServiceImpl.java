@@ -67,8 +67,8 @@ public class SocialRequestLocalServiceImpl
 		User receiverUser = _userPersistence.findByPrimaryKey(receiverUserId);
 		long now = System.currentTimeMillis();
 
-		if ((userId == receiverUserId) || user.isDefaultUser() ||
-			receiverUser.isDefaultUser() ||
+		if ((userId == receiverUserId) || user.isGuestUser() ||
+			receiverUser.isGuestUser() ||
 			(user.getCompanyId() != receiverUser.getCompanyId())) {
 
 			throw new RequestUserIdException();

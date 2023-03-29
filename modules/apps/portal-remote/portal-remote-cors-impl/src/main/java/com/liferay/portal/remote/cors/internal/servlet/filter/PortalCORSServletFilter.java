@@ -276,7 +276,7 @@ public class PortalCORSServletFilter
 
 		User user = permissionChecker.getUser();
 
-		return user.isDefaultUser();
+		return user.isGuestUser();
 	}
 
 	private void _mergeCORSConfiguration(

@@ -53,10 +53,10 @@ public class CompanyModelListenerTest {
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_defaultUser = _company.getGuestUser();
+		_guestUser = _company.getGuestUser();
 
 		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.withOwner(_defaultUser));
+			AccountEntryArgs.withOwner(_guestUser));
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class CompanyModelListenerTest {
 	@Test
 	public void testCleanUpAccountRoles() throws Exception {
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			_defaultUser.getUserId(), _accountEntry.getAccountEntryId(),
+			_guestUser.getUserId(), _accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
 		_deleteCompany();
@@ -101,6 +101,6 @@ public class CompanyModelListenerTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private User _defaultUser;
+	private User _guestUser;
 
 }

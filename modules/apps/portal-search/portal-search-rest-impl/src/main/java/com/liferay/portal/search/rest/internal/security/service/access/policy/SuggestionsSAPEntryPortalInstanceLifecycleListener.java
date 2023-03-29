@@ -67,7 +67,7 @@ public class SuggestionsSAPEntryPortalInstanceLifecycleListener
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(), name);
 
 		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId),
+			_userLocalService.getGuestUserId(companyId),
 			_SAP_ENTRY_OBJECT_ARRAY[1], true, true, name, map,
 			new ServiceContext());
 	}

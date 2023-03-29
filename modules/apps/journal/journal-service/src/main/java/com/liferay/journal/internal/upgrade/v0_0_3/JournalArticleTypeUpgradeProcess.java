@@ -80,7 +80,7 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 			long groupId, long companyId, String title, long assetVocabularyId)
 		throws Exception {
 
-		long userId = _userLocalService.getDefaultUserId(companyId);
+		long userId = _userLocalService.getGuestUserId(companyId);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -96,7 +96,7 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
 		throws Exception {
 
-		long userId = _userLocalService.getDefaultUserId(companyId);
+		long userId = _userLocalService.getGuestUserId(companyId);
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();

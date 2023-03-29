@@ -176,12 +176,12 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private OAuthClientEntry _addOAuthClientEntry(
-			Dictionary<String, ?> properties, long defaultUserId)
+			Dictionary<String, ?> properties, long guestUserId)
 		throws Exception {
 
 		return _oAuthClientEntryLocalService.addOAuthClientEntry(
-			defaultUserId, _generateAuthRequestParametersJSON(properties),
-			_updateOAuthClientASLocalMetadata(defaultUserId, properties),
+			guestUserId, _generateAuthRequestParametersJSON(properties),
+			_updateOAuthClientASLocalMetadata(guestUserId, properties),
 			_generateInfoJSON(properties),
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 			_generateTokenRequestParametersJSON(properties));
@@ -452,7 +452,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private String _updateOAuthClientASLocalMetadata(
-			long defaultUserId, Dictionary<String, ?> properties)
+			long guestUserId, Dictionary<String, ?> properties)
 		throws Exception {
 
 		String discoveryEndPoint = _getPropertyAsString(
@@ -473,7 +473,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 		if (oAuthClientASLocalMetadata == null) {
 			_oAuthClientASLocalMetadataLocalService.
 				addOAuthClientASLocalMetadata(
-					defaultUserId, _generateMetadataJSON(properties),
+					guestUserId, _generateMetadataJSON(properties),
 					"openid-configuration");
 		}
 		else {
@@ -491,15 +491,15 @@ public class OpenIdConnectProviderManagedServiceFactory
 		long companyId, Dictionary<String, ?> oldProperties,
 		String oldProviderName, Dictionary<String, ?> properties) {
 
-		long defaultUserId = 0;
+		long guestUserId = 0;
 
 		try {
-			defaultUserId = _userLocalService.getDefaultUserId(companyId);
+			guestUserId = _userLocalService.getGuestUserId(companyId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get default user ID for company " + companyId,
+					"Unable to get guest user ID for company " + companyId,
 					portalException);
 			}
 		}
@@ -510,7 +510,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 			if (oldProperties != null) {
 				String oldAuthServerWellKnownURI =
 					_updateOAuthClientASLocalMetadata(
-						defaultUserId, oldProperties);
+						guestUserId, oldProperties);
 
 				OAuthClientEntry oldOAuthClientEntry =
 					_oAuthClientEntryLocalService.fetchOAuthClientEntry(
@@ -524,19 +524,19 @@ public class OpenIdConnectProviderManagedServiceFactory
 							oldOAuthClientEntry.getOAuthClientEntryId(),
 							_generateAuthRequestParametersJSON(properties),
 							_updateOAuthClientASLocalMetadata(
-								defaultUserId, properties),
+								guestUserId, properties),
 							_generateInfoJSON(properties),
 							oldOAuthClientEntry.getOIDCUserInfoMapperJSON(),
 							_generateTokenRequestParametersJSON(properties));
 				}
 				else {
 					oAuthClientEntry = _addOAuthClientEntry(
-						properties, defaultUserId);
+						properties, guestUserId);
 				}
 			}
 			else {
 				oAuthClientEntry = _addOAuthClientEntry(
-					properties, defaultUserId);
+					properties, guestUserId);
 			}
 
 			Map<String, Long> oAuthClientEntryIds = _oAuthClientEntryIds.get(

@@ -59,7 +59,7 @@ public class CommerceWishListLocalServiceImpl
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			_validateGuestWishLists();
 		}
 
@@ -199,7 +199,7 @@ public class CommerceWishListLocalServiceImpl
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(user.getUserId());
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			return guestCommerceWishList;
 		}
 

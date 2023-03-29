@@ -53,7 +53,7 @@ public class CPOSGiCommands {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		User user = _userLocalService.getDefaultUser(group.getCompanyId());
+		User user = _userLocalService.getGuestUser(group.getCompanyId());
 
 		List<CommerceCatalog> commerceCatalogs =
 			_commerceCatalogLocalService.getCommerceCatalogs(

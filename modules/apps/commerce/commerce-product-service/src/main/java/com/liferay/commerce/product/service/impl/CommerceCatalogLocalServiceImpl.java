@@ -136,18 +136,18 @@ public class CommerceCatalogLocalServiceImpl
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(company.getCompanyId());
-		serviceContext.setUserId(defaultUser.getUserId());
+		serviceContext.setUserId(guestUser.getUserId());
 		serviceContext.setUuid(_portalUUID.generate());
 
 		return commerceCatalogLocalService.addCommerceCatalog(
 			null, CommerceCatalogConstants.MASTER_COMMERCE_CATALOG,
 			CommerceCatalogConstants.MASTER_COMMERCE_DEFAULT_CURRENCY,
-			defaultUser.getLanguageId(), true, serviceContext);
+			guestUser.getLanguageId(), true, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

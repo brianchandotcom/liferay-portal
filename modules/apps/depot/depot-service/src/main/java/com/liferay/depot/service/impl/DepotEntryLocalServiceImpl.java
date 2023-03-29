@@ -127,7 +127,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			Role role = _roleLocalService.getRole(
 				group.getCompanyId(), DepotRolesConstants.ASSET_LIBRARY_OWNER);
 

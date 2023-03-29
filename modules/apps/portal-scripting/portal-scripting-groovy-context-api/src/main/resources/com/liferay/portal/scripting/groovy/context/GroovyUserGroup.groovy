@@ -63,7 +63,7 @@ class GroovyUserGroup {
 		}
 
 		userGroup = UserGroupLocalServiceUtil.addUserGroup(
-			groovyScriptingContext.defaultUserId,
+			groovyScriptingContext.guestUserId,
 			groovyScriptingContext.companyId, name, StringPool.BLANK,
 			groovyScriptingContext.serviceContext);
 	}

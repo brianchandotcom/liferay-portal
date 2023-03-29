@@ -1147,7 +1147,7 @@ public class FragmentCollectionContributorRegistryImpl
 		private void _setCompanyServiceContext() throws PortalException {
 			CompanyThreadLocal.setCompanyId(_company.getCompanyId());
 
-			User user = _userLocalService.fetchDefaultUser(
+			User user = _userLocalService.fetchGuestUser(
 				_company.getCompanyId());
 
 			PermissionChecker permissionChecker =

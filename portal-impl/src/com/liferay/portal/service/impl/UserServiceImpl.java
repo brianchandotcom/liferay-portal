@@ -3365,9 +3365,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		boolean anonymousUser = ParamUtil.getBoolean(
 			serviceContext, "anonymousUser");
 
-		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+		long guestUserId = userLocalService.getGuestUserId(companyId);
 
-		if (((creatorUserId != 0) && (creatorUserId != defaultUserId)) ||
+		if (((creatorUserId != 0) && (creatorUserId != guestUserId)) ||
 			(!company.isStrangers() && !anonymousUser)) {
 
 			PermissionChecker permissionChecker = getPermissionChecker();
@@ -3384,7 +3384,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		if (((creatorUserId == 0) || (creatorUserId == defaultUserId)) &&
+		if (((creatorUserId == 0) || (creatorUserId == guestUserId)) &&
 			!company.isStrangersWithMx() &&
 			company.hasCompanyMx(emailAddress)) {
 

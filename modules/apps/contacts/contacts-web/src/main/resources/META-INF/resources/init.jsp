@@ -133,5 +133,5 @@ boolean showWebsites = PrefsParamUtil.getBoolean(portletPreferences, request, "s
 
 Group scopeGroup = themeDisplay.getScopeGroup();
 
-Layout embeddedPersonalApplicationLayout = PersonalApplicationURLUtil.getOrAddEmbeddedPersonalApplicationLayout(themeDisplay.getDefaultUser(), scopeGroup, layout.isPrivateLayout());
+Layout embeddedPersonalApplicationLayout = PersonalApplicationURLUtil.getOrAddEmbeddedPersonalApplicationLayout(themeDisplay.getGuestUser(), scopeGroup, layout.isPrivateLayout());
 %>

@@ -194,7 +194,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
 
-		User defaultUser = _userLocalService.getDefaultUser(companyId);
+		User guestUser = _userLocalService.getGuestUser(companyId);
 
 		List<Address> addresses = _usersAdmin.getAddresses(actionRequest);
 
@@ -290,9 +290,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			actionRequest, "size", company.getSize());
 
 		String languageId = ParamUtil.getString(
-			actionRequest, "languageId", defaultUser.getLanguageId());
+			actionRequest, "languageId", guestUser.getLanguageId());
 		String timeZoneId = ParamUtil.getString(
-			actionRequest, "timeZoneId", defaultUser.getTimeZoneId());
+			actionRequest, "timeZoneId", guestUser.getTimeZoneId());
 
 		_companyService.updateCompany(
 			companyId, virtualHostname, mx, homeURL, !deleteLogo, logoBytes,

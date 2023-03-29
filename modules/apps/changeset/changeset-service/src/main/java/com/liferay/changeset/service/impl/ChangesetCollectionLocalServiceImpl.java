@@ -94,7 +94,7 @@ public class ChangesetCollectionLocalServiceImpl
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		User user = _userLocalService.getDefaultUser(group.getCompanyId());
+		User user = _userLocalService.getGuestUser(group.getCompanyId());
 
 		return changesetCollectionLocalService.addChangesetCollection(
 			user.getUserId(), groupId, name, StringPool.BLANK);

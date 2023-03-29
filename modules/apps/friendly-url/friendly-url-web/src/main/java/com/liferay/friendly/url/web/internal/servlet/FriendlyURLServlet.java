@@ -122,7 +122,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		try {
 			User user = _portal.getUser(httpServletRequest);
 
-			if ((user == null) || user.isDefaultUser()) {
+			if ((user == null) || user.isGuestUser()) {
 				_writeJSON(httpServletResponse, JSONUtil.put("success", false));
 			}
 			else {

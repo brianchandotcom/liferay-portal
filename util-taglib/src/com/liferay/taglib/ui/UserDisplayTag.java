@@ -90,7 +90,7 @@ public class UserDisplayTag extends TagSupport {
 			User user = UserLocalServiceUtil.fetchUserById(_userId);
 
 			if (user != null) {
-				if (user.isDefaultUser()) {
+				if (user.isGuestUser()) {
 					user = null;
 				}
 

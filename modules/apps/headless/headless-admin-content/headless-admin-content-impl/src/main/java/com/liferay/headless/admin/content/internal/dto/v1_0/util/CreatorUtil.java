@@ -33,7 +33,7 @@ public class CreatorUtil {
 	public static Creator toCreator(
 		Portal portal, Optional<UriInfo> uriInfoOptional, User user) {
 
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return null;
 		}
 

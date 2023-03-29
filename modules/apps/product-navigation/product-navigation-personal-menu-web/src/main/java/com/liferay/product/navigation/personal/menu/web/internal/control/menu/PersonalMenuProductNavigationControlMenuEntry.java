@@ -68,7 +68,7 @@ public class PersonalMenuProductNavigationControlMenuEntry
 
 		User user = themeDisplay.getUser();
 
-		if (!user.isDefaultUser() &&
+		if (!user.isGuestUser() &&
 			(_userNotificationEventLocalService != null)) {
 
 			httpServletRequest.setAttribute(

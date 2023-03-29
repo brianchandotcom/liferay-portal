@@ -42,7 +42,7 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 			User user, UserExporter userExporter, LDAPSettings ldapSettings)
 		throws Exception {
 
-		if ((user == null) || user.isDefaultUser() ||
+		if ((user == null) || user.isGuestUser() ||
 			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 
 			return;

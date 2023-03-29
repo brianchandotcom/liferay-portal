@@ -43,8 +43,8 @@ public class ControlledFDSDisplayContext {
 
 		return TransformUtil.transform(
 			UserLocalServiceUtil.getUsers(
-				themeDisplay.getCompanyId(), false,
-				WorkflowConstants.STATUS_APPROVED, 0, 20, null),
+				themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+				0, 20, null),
 			user -> new UserEntry(
 				user.getEmailAddress(), user.getFirstName(), user.getUserId(),
 				user.getLastName()));

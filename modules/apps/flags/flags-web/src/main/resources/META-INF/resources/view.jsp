@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long reportedUserId = themeDisplay.getDefaultUserId();
+long reportedUserId = themeDisplay.getGuestUserId();
 
 Group group = layout.getGroup();
 

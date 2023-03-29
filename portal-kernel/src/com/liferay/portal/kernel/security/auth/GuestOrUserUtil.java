@@ -41,7 +41,7 @@ public class GuestOrUserUtil {
 		}
 		catch (PrincipalException principalException) {
 			try {
-				return UserLocalServiceUtil.getDefaultUser(companyId);
+				return UserLocalServiceUtil.getGuestUser(companyId);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -59,7 +59,7 @@ public class GuestOrUserUtil {
 		}
 		catch (PrincipalException principalException) {
 			try {
-				return UserLocalServiceUtil.getDefaultUser(
+				return UserLocalServiceUtil.getGuestUser(
 					CompanyThreadLocal.getCompanyId());
 			}
 			catch (Exception exception) {
@@ -78,7 +78,7 @@ public class GuestOrUserUtil {
 		}
 		catch (PrincipalException principalException) {
 			try {
-				return UserLocalServiceUtil.getDefaultUserId(
+				return UserLocalServiceUtil.getGuestUserId(
 					CompanyThreadLocal.getCompanyId());
 			}
 			catch (Exception exception) {

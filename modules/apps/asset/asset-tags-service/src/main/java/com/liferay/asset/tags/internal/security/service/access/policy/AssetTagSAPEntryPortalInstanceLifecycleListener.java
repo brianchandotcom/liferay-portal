@@ -70,7 +70,7 @@ public class AssetTagSAPEntryPortalInstanceLifecycleListener
 			"service-access-policy-entry-default-asset-tag-title");
 
 		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId),
+			_userLocalService.getGuestUserId(companyId),
 			allowedServiceSignatures, true, true, _SAP_ENTRY_NAME, titleMap,
 			new ServiceContext());
 	}

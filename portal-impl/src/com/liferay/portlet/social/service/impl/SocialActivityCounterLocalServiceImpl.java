@@ -276,7 +276,7 @@ public class SocialActivityCounterLocalServiceImpl
 
 		SocialActivityCounter assetActivitiesCounter = null;
 
-		if (!assetEntryUser.isDefaultUser() && assetEntryUser.isActive() &&
+		if (!assetEntryUser.isGuestUser() && assetEntryUser.isActive() &&
 			assetEntry.isVisible()) {
 
 			assetActivitiesCounter = addAssetActivitiesCounter(activity);
@@ -284,7 +284,7 @@ public class SocialActivityCounterLocalServiceImpl
 
 		SocialActivityCounter userActivitiesCounter = null;
 
-		if (!user.isDefaultUser() && user.isActive()) {
+		if (!user.isGuestUser() && user.isActive()) {
 			userActivitiesCounter = addUserActivitiesCounter(activity);
 		}
 
@@ -1047,14 +1047,14 @@ public class SocialActivityCounterLocalServiceImpl
 		User user, User assetEntryUser, AssetEntry assetEntry,
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
-		if ((user.isDefaultUser() || !user.isActive()) &&
+		if ((user.isGuestUser() || !user.isActive()) &&
 			(activityCounterDefinition.getOwnerType() !=
 				SocialActivityCounterConstants.TYPE_ASSET)) {
 
 			return false;
 		}
 
-		if ((assetEntryUser.isDefaultUser() || !assetEntryUser.isActive()) &&
+		if ((assetEntryUser.isGuestUser() || !assetEntryUser.isActive()) &&
 			(activityCounterDefinition.getOwnerType() !=
 				SocialActivityCounterConstants.TYPE_ACTOR)) {
 

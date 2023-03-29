@@ -395,7 +395,7 @@ public class LayoutPermissionImpl
 
 		User user = permissionChecker.getUser();
 
-		if (!user.isDefaultUser() && !group.isUser()) {
+		if (!user.isGuestUser() && !group.isUser()) {
 
 			// This is new way of doing an ownership check without having to
 			// have a userId field on the model. When the instance model was

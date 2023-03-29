@@ -139,7 +139,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 			return userId;
 		}
 
-		return _userLocalService.getDefaultUserId(companyId);
+		return _userLocalService.getGuestUserId(companyId);
 	}
 
 	private String _getVersion(int version, int draftVersion) {

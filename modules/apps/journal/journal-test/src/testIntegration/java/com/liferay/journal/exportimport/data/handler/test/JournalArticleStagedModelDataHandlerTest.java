@@ -285,12 +285,12 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		initExport();
 
-		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+		User guestUser = UserLocalServiceUtil.getGuestUser(
 			TestPropsValues.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), defaultUser.getUserId());
+				stagingGroup.getGroupId(), guestUser.getUserId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");

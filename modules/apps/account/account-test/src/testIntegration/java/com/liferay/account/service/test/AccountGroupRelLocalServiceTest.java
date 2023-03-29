@@ -116,7 +116,7 @@ public class AccountGroupRelLocalServiceTest {
 			Assert.assertFalse(logEntries.isEmpty());
 
 			Assert.assertEquals(
-				_userLocalService.getDefaultUserId(
+				_userLocalService.getGuestUserId(
 					accountGroupRel.getCompanyId()),
 				accountGroupRel.getUserId());
 		}

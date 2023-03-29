@@ -136,7 +136,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			List<String> scopeAliasesList)
 		throws Exception {
 
-		User user = userLocalService.getDefaultUser(companyId);
+		User user = userLocalService.getGuestUser(companyId);
 
 		User serviceUser = _getServiceUser(
 			companyId, oAuth2ProviderApplicationHeadlessServerConfiguration);

@@ -149,12 +149,12 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		_targetCompany = CompanyTestUtil.addCompany();
 
-		User targetDefaultUser = _targetCompany.getGuestUser();
+		User targetGuestUser = _targetCompany.getGuestUser();
 
 		initImport(companyGroup, _targetCompany.getGroup());
 
 		portletDataContext.setUserIdStrategy(
-			new TestUserIdStrategy(targetDefaultUser));
+			new TestUserIdStrategy(targetGuestUser));
 
 		StagedModel exportedStagedModel = readExportedStagedModel(structure);
 

@@ -292,7 +292,7 @@ public class ObjectEntryDisplayContextImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		if (_readOnly || isDefaultUser()) {
+		if (_readOnly || isGuestUser()) {
 			return null;
 		}
 
@@ -459,12 +459,12 @@ public class ObjectEntryDisplayContextImpl
 					objectLayoutTab.getObjectRelationshipId());
 			}
 		).put(
-			"readOnly", String.valueOf(_readOnly || isDefaultUser())
+			"readOnly", String.valueOf(_readOnly || isGuestUser())
 		).build();
 	}
 
 	@Override
-	public boolean isDefaultUser() {
+	public boolean isGuestUser() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -474,7 +474,7 @@ public class ObjectEntryDisplayContextImpl
 
 		User user = permissionChecker.getUser();
 
-		return user.isDefaultUser();
+		return user.isGuestUser();
 	}
 
 	@Override

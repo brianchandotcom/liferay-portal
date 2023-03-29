@@ -169,7 +169,7 @@ public class WebServerServlet extends HttpServlet {
 
 			User user = _getUser(httpServletRequest);
 
-			if (!user.isDefaultUser()) {
+			if (!user.isGuestUser()) {
 				PrincipalThreadLocal.setName(user.getUserId());
 				PrincipalThreadLocal.setPassword(
 					PortalUtil.getUserPassword(httpServletRequest));
@@ -870,7 +870,7 @@ public class WebServerServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_UNAUTHORIZED, (Exception)throwable,
 				httpServletRequest, httpServletResponse);
@@ -1779,7 +1779,7 @@ public class WebServerServlet extends HttpServlet {
 		User user = PortalUtil.getUser(httpServletRequest);
 
 		if (user == null) {
-			user = UserLocalServiceUtil.getDefaultUser(
+			user = UserLocalServiceUtil.getGuestUser(
 				PortalUtil.getCompanyId(httpServletRequest));
 		}
 

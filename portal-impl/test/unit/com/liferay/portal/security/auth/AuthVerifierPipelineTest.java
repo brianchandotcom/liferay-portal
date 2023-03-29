@@ -230,7 +230,7 @@ public class AuthVerifierPipelineTest {
 		);
 
 		Mockito.when(
-			UserLocalServiceUtil.getDefaultUserId(Mockito.anyLong())
+			UserLocalServiceUtil.getGuestUserId(Mockito.anyLong())
 		).thenReturn(
 			user.getUserId()
 		);

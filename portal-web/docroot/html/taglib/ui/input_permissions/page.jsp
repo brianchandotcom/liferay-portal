@@ -34,7 +34,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 %>
 
 <c:choose>
-	<c:when test="<%= user.getDefaultUser() %>">
+	<c:when test="<%= user.isGuestUser() %>">
 		<liferay-ui:message key="not-available" />
 	</c:when>
 	<c:otherwise>

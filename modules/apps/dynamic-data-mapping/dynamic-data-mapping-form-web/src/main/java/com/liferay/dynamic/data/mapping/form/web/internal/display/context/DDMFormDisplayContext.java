@@ -643,7 +643,7 @@ public class DDMFormDisplayContext {
 			return _autosaveEnabled;
 		}
 
-		if (isDefaultUser()) {
+		if (isGuestUser()) {
 			_autosaveEnabled = Boolean.FALSE;
 		}
 		else {
@@ -1043,12 +1043,6 @@ public class DDMFormDisplayContext {
 		return themeDisplay.getUser();
 	}
 
-	protected boolean isDefaultUser() {
-		User user = getUser();
-
-		return user.isDefaultUser();
-	}
-
 	protected boolean isFormPublished() throws PortalException {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 
@@ -1060,6 +1054,12 @@ public class DDMFormDisplayContext {
 			ddmFormInstance.getSettingsModel();
 
 		return ddmFormInstanceSettings.published();
+	}
+
+	protected boolean isGuestUser() {
+		User user = getUser();
+
+		return user.isGuestUser();
 	}
 
 	private String _createCaptchaResourceURL() {

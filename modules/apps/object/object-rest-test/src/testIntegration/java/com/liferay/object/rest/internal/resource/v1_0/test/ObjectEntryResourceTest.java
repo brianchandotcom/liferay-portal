@@ -151,8 +151,7 @@ public class ObjectEntryResourceTest {
 		).build();
 
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-			UserLocalServiceUtil.getDefaultUserId(
-				TestPropsValues.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(TestPropsValues.getCompanyId()),
 			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 	}

@@ -55,7 +55,7 @@ public class TaxonomyCategoryResourceTest
 		super.setUp();
 
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 	}
@@ -241,7 +241,7 @@ public class TaxonomyCategoryResourceTest
 
 	private AssetVocabulary _addAssetVocabulary() throws Exception {
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 	}

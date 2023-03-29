@@ -678,7 +678,7 @@ public class PortalRequestProcessor {
 
 				// Authenticated users should have a reminder query
 
-				if (!user.isDefaultUser() && !user.isReminderQueryComplete()) {
+				if (!user.isGuestUser() && !user.isReminderQueryComplete()) {
 					return _PATH_PORTAL_UPDATE_REMINDER_QUERY;
 				}
 			}

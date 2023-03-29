@@ -104,7 +104,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 
 		User user = themeDisplay.getUser();
 
-		if (preview || user.isDefaultUser()) {
+		if (preview || user.isGuestUser()) {
 			return;
 		}
 

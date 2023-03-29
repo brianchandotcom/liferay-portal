@@ -113,7 +113,7 @@ public class AssetSearcherPermissionsTest {
 
 	protected void setGuestUser() throws Exception {
 		UserTestUtil.setUser(
-			_userLocalService.getDefaultUser(_group.getCompanyId()));
+			_userLocalService.getGuestUser(_group.getCompanyId()));
 	}
 
 	@Inject

@@ -58,12 +58,12 @@ public class WikiPageAttachmentResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		_wikiPage = WikiPageLocalServiceUtil.addPage(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			wikiNode.getNodeId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);

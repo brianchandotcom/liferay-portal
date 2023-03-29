@@ -114,7 +114,7 @@ public class PasswordPolicyLocalServiceImpl
 
 		long ownerId = userId;
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			ownerId = 0;
 		}
 
@@ -141,7 +141,7 @@ public class PasswordPolicyLocalServiceImpl
 		}
 
 		addPasswordPolicy(
-			_userLocalService.getDefaultUserId(companyId), true,
+			_userLocalService.getGuestUserId(companyId), true,
 			defaultPasswordPolicyName, defaultPasswordPolicyName,
 			PropsValues.PASSWORDS_DEFAULT_POLICY_CHANGEABLE,
 			PropsValues.PASSWORDS_DEFAULT_POLICY_CHANGE_REQUIRED,

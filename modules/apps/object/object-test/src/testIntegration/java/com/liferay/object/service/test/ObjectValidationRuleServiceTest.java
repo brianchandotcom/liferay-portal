@@ -63,7 +63,7 @@ public class ObjectValidationRuleServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
@@ -102,7 +102,7 @@ public class ObjectValidationRuleServiceTest {
 	public void testAddObjectValidationRule() throws Exception {
 		try {
 			_testAddObjectValidationRule(
-				_objectDefinition.getObjectDefinitionId(), _defaultUser);
+				_objectDefinition.getObjectDefinitionId(), _guestUser);
 
 			Assert.fail();
 		}
@@ -111,7 +111,7 @@ public class ObjectValidationRuleServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -122,7 +122,7 @@ public class ObjectValidationRuleServiceTest {
 	@Test
 	public void testDeleteObjectValidationRule() throws Exception {
 		try {
-			_testDeleteObjectValidationRule(_defaultUser);
+			_testDeleteObjectValidationRule(_guestUser);
 
 			Assert.fail();
 		}
@@ -131,7 +131,7 @@ public class ObjectValidationRuleServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -141,14 +141,14 @@ public class ObjectValidationRuleServiceTest {
 	@Test
 	public void testGetObjectValidationRule() throws Exception {
 		try {
-			_testGetObjectValidationRule(_defaultUser);
+			_testGetObjectValidationRule(_guestUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -158,7 +158,7 @@ public class ObjectValidationRuleServiceTest {
 	@Test
 	public void testUpdateObjectValidationRule() throws Exception {
 		try {
-			_testUpdateObjectValidationRule(_defaultUser);
+			_testUpdateObjectValidationRule(_guestUser);
 
 			Assert.fail();
 		}
@@ -167,7 +167,7 @@ public class ObjectValidationRuleServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
@@ -285,7 +285,7 @@ public class ObjectValidationRuleServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

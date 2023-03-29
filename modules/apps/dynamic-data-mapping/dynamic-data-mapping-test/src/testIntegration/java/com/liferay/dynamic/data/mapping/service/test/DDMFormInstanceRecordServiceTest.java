@@ -78,7 +78,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId()));
 
-		_defaultUser = _userLocalService.getDefaultUser(
+		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
@@ -96,7 +96,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testGetFormInstanceRecords1() throws Exception {
 		try {
-			_setUser(_defaultUser);
+			_setUser(_guestUser);
 
 			_ddmFormInstanceRecordService.getFormInstanceRecords(
 				_ddmFormInstance.getFormInstanceId());
@@ -108,7 +108,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -121,7 +121,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testGetFormInstanceRecords2() throws Exception {
 		try {
-			_setUser(_defaultUser);
+			_setUser(_guestUser);
 
 			_ddmFormInstanceRecordService.getFormInstanceRecords(
 				_ddmFormInstance.getFormInstanceId(),
@@ -135,7 +135,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -149,7 +149,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testGetFormInstanceRecordsCount() throws Exception {
 		try {
-			_setUser(_defaultUser);
+			_setUser(_guestUser);
 
 			_ddmFormInstanceRecordService.getFormInstanceRecordsCount(
 				_ddmFormInstance.getFormInstanceId());
@@ -161,7 +161,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _guestUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
@@ -187,7 +187,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 	@Inject
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
-	private User _defaultUser;
+	private User _guestUser;
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private User _user;

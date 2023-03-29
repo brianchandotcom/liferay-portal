@@ -72,7 +72,7 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			renderRequest.setAttribute(
 				ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
 				_getNotificationsCount(themeDisplay));

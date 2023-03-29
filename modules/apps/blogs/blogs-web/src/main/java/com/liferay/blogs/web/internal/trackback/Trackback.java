@@ -45,7 +45,7 @@ public class Trackback {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		long userId = _userLocalService.getDefaultUserId(
+		long userId = _userLocalService.getGuestUserId(
 			themeDisplay.getCompanyId());
 		long groupId = entry.getGroupId();
 		String className = BlogsEntry.class.getName();

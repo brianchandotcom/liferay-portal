@@ -79,7 +79,7 @@ public class AddSalesforceConnectorPortalInstanceLifecycleListener
 			TalendArchiveParserUtil.updateUnicodeProperties(
 				fileInputStream, unicodeProperties);
 
-			long userId = _userLocalService.getDefaultUserId(
+			long userId = _userLocalService.getGuestUserId(
 				company.getCompanyId());
 
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(

@@ -110,10 +110,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 		).put(
 			"preloaded",
 			() -> {
-				long defaultUserId = UserConstants.USER_ID_DEFAULT;
+				long guestUserId = UserConstants.USER_ID_DEFAULT;
 
 				try {
-					defaultUserId = _userLocalService.getDefaultUserId(
+					guestUserId = _userLocalService.getGuestUserId(
 						fileEntryType.getCompanyId());
 				}
 				catch (Exception exception) {
@@ -127,7 +127,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 				if ((fileEntryType.getFileEntryTypeId() ==
 						DLFileEntryTypeConstants.
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) ||
-					(defaultUserId == fileEntryType.getUserId())) {
+					(guestUserId == fileEntryType.getUserId())) {
 
 					preloaded = true;
 				}
@@ -198,10 +198,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 				"structure-id", String.valueOf(ddmStructure.getStructureId()));
 		}
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			fileEntryType.getCompanyId());
 
-		if (defaultUserId == fileEntryType.getUserId()) {
+		if (guestUserId == fileEntryType.getUserId()) {
 			fileEntryTypeElement.addAttribute("preloaded", "true");
 		}
 

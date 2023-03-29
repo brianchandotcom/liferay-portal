@@ -71,7 +71,7 @@ renderResponse.setTitle(userName);
 				String replier = StringPool.BLANK;
 
 				if (membershipRequestReplierUser != null) {
-					if (membershipRequestReplierUser.isDefaultUser()) {
+					if (membershipRequestReplierUser.isGuestUser()) {
 						Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
 
 						replier = HtmlUtil.escape(membershipRequestReplierCompany.getName());

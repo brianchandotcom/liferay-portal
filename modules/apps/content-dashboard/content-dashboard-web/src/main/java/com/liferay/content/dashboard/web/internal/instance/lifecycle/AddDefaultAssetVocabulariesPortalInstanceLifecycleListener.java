@@ -92,7 +92,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 		Map<Locale, String> titleMap = new HashMap<>();
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		for (Locale locale :
 				_language.getCompanyAvailableLocales(company.getCompanyId())) {
@@ -111,7 +111,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		serviceContext.setAddGuestPermissions(true);
 
 		_assetVocabularyLocalService.addVocabulary(
-			null, defaultUser.getUserId(), company.getGroupId(),
+			null, guestUser.getUserId(), company.getGroupId(),
 			PropsValues.ASSET_VOCABULARY_DEFAULT, StringPool.BLANK, titleMap,
 			Collections.emptyMap(), assetVocabularySettingsHelper.toString(),
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC, serviceContext);

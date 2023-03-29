@@ -88,7 +88,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 				String entryUserURL = StringPool.BLANK;
 
-				if ((entryUser != null) && !entryUser.isDefaultUser() && !user.isDefaultUser()) {
+				if ((entryUser != null) && !entryUser.isGuestUser() && !user.isGuestUser()) {
 					entryUserURL = entryUser.getDisplayURL(themeDisplay);
 				}
 				%>

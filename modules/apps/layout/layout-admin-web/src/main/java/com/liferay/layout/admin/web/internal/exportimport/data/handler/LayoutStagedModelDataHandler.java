@@ -2751,10 +2751,10 @@ public class LayoutStagedModelDataHandler
 			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
 				layoutPrototypeUuid, layout.getCompanyId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
+		long guestUserId = _userLocalService.getGuestUserId(
 			layout.getCompanyId());
 
-		if (defaultUserId == layoutPrototype.getUserId()) {
+		if (guestUserId == layoutPrototype.getUserId()) {
 			layoutElement.addAttribute("preloaded", "true");
 		}
 

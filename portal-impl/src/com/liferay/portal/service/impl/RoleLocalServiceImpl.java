@@ -203,7 +203,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		long ownerId = userId;
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			ownerId = 0;
 		}
 
@@ -211,7 +211,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			user.getCompanyId(), 0, ownerId, Role.class.getName(),
 			role.getRoleId(), false, false, false);
 
-		if (!user.isDefaultUser()) {
+		if (!user.isGuestUser()) {
 			_resourceLocalService.addResources(
 				user.getCompanyId(), 0, userId, Role.class.getName(),
 				role.getRoleId(), false, false, false);
@@ -1411,9 +1411,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			throw new IllegalArgumentException(name + " is not a regular role");
 		}
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
 
-		if (userId == defaultUserId) {
+		if (userId == guestUserId) {
 			if (name.equals(RoleConstants.GUEST)) {
 				return true;
 			}
@@ -1937,7 +1937,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 
 		if (role == null) {
-			User user = _userLocalService.getDefaultUser(companyId);
+			User user = _userLocalService.getGuestUser(companyId);
 
 			PermissionThreadLocal.setAddResource(false);
 

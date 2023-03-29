@@ -62,7 +62,7 @@ public class CommerceServicePortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		User user = _userLocalService.getDefaultUser(company.getCompanyId());
+		User user = _userLocalService.getGuestUser(company.getCompanyId());
 
 		_commerceSAPHelper.addCommerceDefaultSAPEntries(
 			company.getCompanyId(), user.getUserId());

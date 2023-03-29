@@ -71,7 +71,7 @@ public class UncontrolledExceptionErrorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_user = _userLocalService.getDefaultUser(group.getCompanyId());
+		_user = _userLocalService.getGuestUser(group.getCompanyId());
 	}
 
 	@Test

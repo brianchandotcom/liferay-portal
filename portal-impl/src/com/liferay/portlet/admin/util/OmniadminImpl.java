@@ -76,7 +76,7 @@ public class OmniadminImpl implements Omniadmin {
 				return false;
 			}
 
-			if (user.isDefaultUser() ||
+			if (user.isGuestUser() ||
 				(user.getCompanyId() !=
 					PortalInstances.getDefaultCompanyId())) {
 

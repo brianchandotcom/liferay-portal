@@ -1209,9 +1209,9 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			extRepositoryFileEntryAdapter.getFileVersion());
 	}
 
-	private User _fetchDefaultUser() {
+	private User _fetchGuestUser() {
 		try {
-			return userLocalService.getDefaultUser(getCompanyId());
+			return userLocalService.getGuestUser(getCompanyId());
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -1274,7 +1274,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	private String _getLogin() {
 		String login = PrincipalThreadLocal.getName();
 
-		if (Validator.isNull(login) || _isDefaultUser(login)) {
+		if (Validator.isNull(login) || _isGuestUser(login)) {
 			return PropsUtil.get(PropsKeys.DL_REPOSITORY_GUEST_USERNAME);
 		}
 
@@ -1309,7 +1309,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	private String _getPassword() {
 		String login = PrincipalThreadLocal.getName();
 
-		if (Validator.isNull(login) || _isDefaultUser(login)) {
+		if (Validator.isNull(login) || _isGuestUser(login)) {
 			return PropsUtil.get(PropsKeys.DL_REPOSITORY_GUEST_PASSWORD);
 		}
 
@@ -1324,12 +1324,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			_extRepository.getRootFolderKey());
 	}
 
-	private boolean _isDefaultUser(String login) {
-		User defaultUser = _fetchDefaultUser();
+	private boolean _isGuestUser(String login) {
+		User guestUser = _fetchGuestUser();
 
-		if ((defaultUser != null) &&
-			login.equals(defaultUser.getScreenName())) {
-
+		if ((guestUser != null) && login.equals(guestUser.getScreenName())) {
 			return true;
 		}
 

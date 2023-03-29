@@ -127,10 +127,10 @@ public class DDMTemplateStagedModelDataHandler
 			"template-key", template.getTemplateKey()
 		).build();
 
-		long defaultUserId = 0;
+		long guestUserId = 0;
 
 		try {
-			defaultUserId = _userLocalService.getDefaultUserId(
+			guestUserId = _userLocalService.getGuestUserId(
 				template.getCompanyId());
 		}
 		catch (Exception exception) {
@@ -143,7 +143,7 @@ public class DDMTemplateStagedModelDataHandler
 
 		referenceAttributes.put(
 			"preloaded",
-			String.valueOf(_isPreloadedTemplate(defaultUserId, template)));
+			String.valueOf(_isPreloadedTemplate(guestUserId, template)));
 
 		return referenceAttributes;
 	}
@@ -258,7 +258,7 @@ public class DDMTemplateStagedModelDataHandler
 		template.setScript(script);
 
 		if (_isPreloadedTemplate(
-				_userLocalService.getDefaultUserId(template.getCompanyId()),
+				_userLocalService.getGuestUserId(template.getCompanyId()),
 				template)) {
 
 			templateElement.addAttribute("preloaded", "true");
@@ -554,9 +554,9 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	private boolean _isPreloadedTemplate(
-		long defaultUserId, DDMTemplate template) {
+		long guestUserId, DDMTemplate template) {
 
-		if (defaultUserId == template.getUserId()) {
+		if (guestUserId == template.getUserId()) {
 			return true;
 		}
 
@@ -573,7 +573,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		if ((ddmTemplateVersion != null) &&
-			(defaultUserId == ddmTemplateVersion.getUserId())) {
+			(guestUserId == ddmTemplateVersion.getUserId())) {
 
 			return true;
 		}

@@ -144,7 +144,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testImportLayoutPageTemplateEntryByDefaultUser()
+	public void testImportLayoutPageTemplateEntryByGuestUser()
 		throws Exception {
 
 		Company company = CompanyLocalServiceUtil.getCompany(
@@ -152,11 +152,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		Group companyGroup = company.getGroup();
 
-		User defaultUser = company.getGuestUser();
+		User guestUser = company.getGuestUser();
 
 		_layoutPrototype = _addLayoutPrototype(
 			company.getCompanyId(), companyGroup.getGroupId(),
-			"Test Layout Prototype", defaultUser.getUserId());
+			"Test Layout Prototype", guestUser.getUserId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
@@ -165,11 +165,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		_targetCompany = CompanyTestUtil.addCompany();
 
-		User targetDefaultUser = _targetCompany.getGuestUser();
+		User targetGuestUser = _targetCompany.getGuestUser();
 
 		_addLayoutPrototype(
 			_targetCompany.getCompanyId(), _targetCompany.getGroupId(),
-			"Test Layout Prototype", targetDefaultUser.getUserId());
+			"Test Layout Prototype", targetGuestUser.getUserId());
 
 		initExport(companyGroup);
 
@@ -186,7 +186,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		initImport(companyGroup, _targetCompany.getGroup());
 
 		portletDataContext.setUserIdStrategy(
-			new TestUserIdStrategy(targetDefaultUser));
+			new TestUserIdStrategy(targetGuestUser));
 
 		StagedModel exportedStagedModel = readExportedStagedModel(
 			layoutPageTemplateEntry);

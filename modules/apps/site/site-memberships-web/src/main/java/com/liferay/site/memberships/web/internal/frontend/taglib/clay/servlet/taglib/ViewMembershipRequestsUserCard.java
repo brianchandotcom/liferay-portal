@@ -94,7 +94,7 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 			return StringPool.BLANK;
 		}
 
-		if (!membershipRequestReplierUser.isDefaultUser()) {
+		if (!membershipRequestReplierUser.isGuestUser()) {
 			return HtmlUtil.escape(membershipRequestReplierUser.getFullName());
 		}
 

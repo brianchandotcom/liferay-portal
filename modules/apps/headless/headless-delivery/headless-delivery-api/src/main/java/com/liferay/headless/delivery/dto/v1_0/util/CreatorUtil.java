@@ -30,7 +30,7 @@ import javax.ws.rs.core.UriInfo;
 public class CreatorUtil {
 
 	public static Creator toCreator(Portal portal, UriInfo uriInfo, User user) {
-		if ((user == null) || user.isDefaultUser()) {
+		if ((user == null) || user.isGuestUser()) {
 			return null;
 		}
 

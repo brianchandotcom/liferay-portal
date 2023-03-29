@@ -46,8 +46,7 @@ public class KnowledgeBaseArticleResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		_kbFolder = KBFolderLocalServiceUtil.addKBFolder(
-			null,
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			null, UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(),
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -108,8 +107,7 @@ public class KnowledgeBaseArticleResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
-			null,
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			null, UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,

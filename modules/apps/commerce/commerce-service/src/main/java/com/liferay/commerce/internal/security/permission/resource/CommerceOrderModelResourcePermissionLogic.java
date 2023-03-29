@@ -172,7 +172,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -228,7 +228,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -267,7 +267,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -288,7 +288,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -309,7 +309,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -326,7 +326,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -372,7 +372,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (user.isGuestUser() && commerceOrder.isGuestOrder()) {
 			return true;
 		}
 

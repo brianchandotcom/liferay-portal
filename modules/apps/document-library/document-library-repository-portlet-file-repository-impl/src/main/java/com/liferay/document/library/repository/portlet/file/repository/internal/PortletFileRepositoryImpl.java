@@ -279,7 +279,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		User user = _userLocalService.getDefaultUser(group.getCompanyId());
+		User user = _userLocalService.getGuestUser(group.getCompanyId());
 
 		long classNameId = _portal.getClassNameId(
 			PortletRepository.class.getName());

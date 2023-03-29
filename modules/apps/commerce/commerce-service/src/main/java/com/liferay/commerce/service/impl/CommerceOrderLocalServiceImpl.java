@@ -196,10 +196,10 @@ public class CommerceOrderLocalServiceImpl
 		if (userId == 0) {
 			Group group = _groupLocalService.getGroup(groupId);
 
-			User defaultUser = _userLocalService.getDefaultUser(
+			User guestUser = _userLocalService.getGuestUser(
 				group.getCompanyId());
 
-			userId = defaultUser.getUserId();
+			userId = guestUser.getUserId();
 		}
 
 		serviceContext.setUserId(userId);

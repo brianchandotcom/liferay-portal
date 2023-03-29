@@ -710,7 +710,7 @@ public class ServicePreAction extends Action {
 			if (!_isLoginRequest(httpServletRequest) &&
 				!hasViewLayoutPermission) {
 
-				if (user.isDefaultUser() &&
+				if (user.isGuestUser() &&
 					AuthLoginGroupSettingsUtil.isPromptEnabled(
 						layout.getGroupId())) {
 
@@ -901,7 +901,7 @@ public class ServicePreAction extends Action {
 			return null;
 		}
 
-		boolean signedIn = !user.isDefaultUser();
+		boolean signedIn = !user.isGuestUser();
 
 		if (PropsValues.BROWSER_CACHE_DISABLED ||
 			(PropsValues.BROWSER_CACHE_SIGNED_IN_DISABLED && signedIn)) {
@@ -1144,7 +1144,7 @@ public class ServicePreAction extends Action {
 					   !_hasAccessPermission(
 						   permissionChecker, layout, false)))) {
 
-				if (!group.isUser() && user.isDefaultUser() &&
+				if (!group.isUser() && user.isGuestUser() &&
 					AuthLoginGroupSettingsUtil.isPromptEnabled(
 						group.getGroupId())) {
 

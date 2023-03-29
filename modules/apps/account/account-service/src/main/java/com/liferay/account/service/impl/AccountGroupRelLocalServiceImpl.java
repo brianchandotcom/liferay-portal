@@ -89,8 +89,7 @@ public class AccountGroupRelLocalServiceImpl
 		}
 
 		if (user == null) {
-			user = _userLocalService.getDefaultUser(
-				accountGroup.getCompanyId());
+			user = _userLocalService.getGuestUser(accountGroup.getCompanyId());
 		}
 
 		accountGroupRel.setCompanyId(user.getCompanyId());

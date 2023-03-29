@@ -245,6 +245,7 @@ import com.liferay.portal.kernel.model.ResourcePermissionModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.VirtualHostModel;
@@ -3057,7 +3058,7 @@ public class DataFactory {
 		sb.append("\"single-page\"}");
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
+			_globalGroupId, _guestUserId,
 			ddmStructureVersionModel.getStructureVersionId(), sb.toString());
 	}
 
@@ -3510,13 +3511,13 @@ public class DataFactory {
 
 	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
 		return newAssetVocabularyModel(
-			_globalGroupId, _defaultUserId, null,
+			_globalGroupId, _guestUserId, null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
 	}
 
 	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel() {
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId, _defaultDLDDMStructureVersionId,
+			_globalGroupId, _guestUserId, _defaultDLDDMStructureVersionId,
 			_dlDDMStructureLayoutContent);
 	}
 
@@ -3524,7 +3525,7 @@ public class DataFactory {
 		_defaultDLDDMStructureId = _counter.get();
 
 		return newDDMStructureModel(
-			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
+			_globalGroupId, _guestUserId, getClassNameId(DLFileEntry.class),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
 			_defaultDLDDMStructureId);
 	}
@@ -3540,8 +3541,7 @@ public class DataFactory {
 
 	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel() {
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
-			_defaultJournalDDMStructureVersionId,
+			_globalGroupId, _guestUserId, _defaultJournalDDMStructureVersionId,
 			_journalDDMStructureLayoutContent,
 			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY);
 	}
@@ -3550,9 +3550,9 @@ public class DataFactory {
 		_defaultJournalDDMStructureId = _counter.get();
 
 		return newDDMStructureModel(
-			_globalGroupId, _defaultUserId,
-			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
-			_journalDDMStructureContent, _defaultJournalDDMStructureId);
+			_globalGroupId, _guestUserId, getClassNameId(JournalArticle.class),
+			_JOURNAL_STRUCTURE_KEY, _journalDDMStructureContent,
+			_defaultJournalDDMStructureId);
 	}
 
 	public DDMStructureVersionModel newDefaultJournalDDMStructureVersionModel(
@@ -3568,7 +3568,7 @@ public class DataFactory {
 		_defaultJournalDDMTemplateId = _counter.get();
 
 		return newDDMTemplateModel(
-			_globalGroupId, _defaultUserId, _defaultJournalDDMStructureId,
+			_globalGroupId, _guestUserId, _defaultJournalDDMStructureId,
 			getClassNameId(JournalArticle.class), _defaultJournalDDMTemplateId);
 	}
 
@@ -3587,7 +3587,7 @@ public class DataFactory {
 		// Audit fields
 
 		ddmTemplateVersionModelImpl.setCompanyId(_companyId);
-		ddmTemplateVersionModelImpl.setUserId(_defaultUserId);
+		ddmTemplateVersionModelImpl.setUserId(_guestUserId);
 		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
 
 		// Other fields
@@ -3605,18 +3605,10 @@ public class DataFactory {
 				"default-locale=\"en_US\"><name language-id=\"en_US\">",
 				_JOURNAL_STRUCTURE_KEY, "</name></root>"));
 
-		ddmTemplateVersionModelImpl.setStatusByUserId(_defaultUserId);
+		ddmTemplateVersionModelImpl.setStatusByUserId(_guestUserId);
 		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
 
 		return ddmTemplateVersionModelImpl;
-	}
-
-	public UserModel newDefaultUserModel() {
-		_defaultUserId = _counter.get();
-
-		return newUserModel(
-			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, true);
 	}
 
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
@@ -4218,7 +4210,11 @@ public class DataFactory {
 	}
 
 	public UserModel newGuestUserModel() {
-		return newUserModel(_counter.get(), "Test", "Test", "Test", false);
+		_guestUserId = _counter.get();
+
+		return newUserModel(
+			_guestUserId, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			UserConstants.TYPE_GUEST);
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
@@ -5034,12 +5030,12 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetVocabularyModel assetVocabularyModel) {
 
-		if (assetVocabularyModel.getUserId() == _defaultUserId) {
+		if (assetVocabularyModel.getUserId() == _guestUserId) {
 			return Collections.singletonList(
 				newResourcePermissionModel(
 					AssetVocabulary.class.getName(),
 					String.valueOf(assetVocabularyModel.getVocabularyId()),
-					_ownerRoleModel.getRoleId(), _defaultUserId));
+					_ownerRoleModel.getRoleId(), _guestUserId));
 		}
 
 		return newResourcePermissionModels(
@@ -5379,7 +5375,7 @@ public class DataFactory {
 
 		return newUserModel(
 			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
-			_SAMPLE_USER_NAME, false);
+			_SAMPLE_USER_NAME, UserConstants.TYPE_REGULAR);
 	}
 
 	public SegmentsEntry newSegmentsEntry(long groupId, int index) {
@@ -5542,7 +5538,8 @@ public class DataFactory {
 			userModels.add(
 				newUserModel(
 					_counter.get(), userName[0], userName[1],
-					"test" + _userScreenNameCounter.get(), false));
+					"test" + _userScreenNameCounter.get(),
+					UserConstants.TYPE_REGULAR));
 		}
 
 		return userModels;
@@ -5551,7 +5548,7 @@ public class DataFactory {
 	public GroupModel newUserPersonalSiteGroupModel() {
 		return newGroupModel(
 			_counter.get(), getClassNameId(UserPersonalSite.class),
-			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
+			_guestUserId, GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
 	public VirtualHostModel newVirtualHostModel() {
@@ -6874,7 +6871,7 @@ public class DataFactory {
 
 	protected UserModel newUserModel(
 		long userId, String firstName, String lastName, String screenName,
-		boolean defaultUser) {
+		int type) {
 
 		if (Validator.isNull(screenName)) {
 			screenName = String.valueOf(userId);
@@ -6894,7 +6891,6 @@ public class DataFactory {
 
 		// Other fields
 
-		userModel.setDefaultUser(defaultUser);
 		userModel.setContactId(_counter.get());
 		userModel.setPassword("test");
 		userModel.setPasswordModifiedDate(new Date());
@@ -6912,6 +6908,7 @@ public class DataFactory {
 		userModel.setLockoutDate(new Date());
 		userModel.setAgreedToTermsOfUse(true);
 		userModel.setEmailAddressVerified(true);
+		userModel.setType(type);
 
 		// Autogenerated fields
 
@@ -7451,7 +7448,6 @@ public class DataFactory {
 	private long _defaultJournalDDMStructureId;
 	private long _defaultJournalDDMStructureVersionId;
 	private long _defaultJournalDDMTemplateId;
-	private long _defaultUserId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dlFileEntryIdCounter;
@@ -7462,6 +7458,7 @@ public class DataFactory {
 	private final SimpleCounter _groupCounter;
 	private long _guestGroupId;
 	private RoleModel _guestRoleModel;
+	private long _guestUserId;
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();

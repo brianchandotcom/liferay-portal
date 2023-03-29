@@ -1667,8 +1667,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			Company company, Date expirationDate)
 		throws PortalException {
 
-		long userId = _userLocalService.getDefaultUserId(
-			company.getCompanyId());
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
 			company.getCompanyId(), expirationDate);
@@ -2191,8 +2190,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			Company company, Date reviewDate)
 		throws PortalException {
 
-		long userId = _userLocalService.getDefaultUserId(
-			company.getCompanyId());
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
 			company.getCompanyId(), _dates.get(company.getCompanyId()),

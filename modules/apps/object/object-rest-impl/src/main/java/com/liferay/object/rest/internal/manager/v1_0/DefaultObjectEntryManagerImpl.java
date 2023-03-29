@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1372,9 +1371,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

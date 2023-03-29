@@ -613,6 +613,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
 
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
 			ObjectFilterConstants.TYPE_INCLUDES,
@@ -623,60 +626,38 @@ public class DefaultObjectEntryManagerImplTest {
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
 			objectField.getObjectFieldId());
 
-		// List Type Entry
+		// Make sure ListEntry key will be accepted as a property for Picklist
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
-			Arrays.asList(
-				new PicklistObjectFieldBuilder(
-				).indexed(
-					true
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).listTypeDefinitionId(
-					_listTypeDefinition.getListTypeDefinitionId()
-				).name(
-					"picklistObjectFieldName"
-				).objectFieldSettings(
-					Collections.emptyList()
-				).build()));
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				null, _adminUser.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
 
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			_dtoConverterContext, objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"picklistObjectFieldName",
-						() -> {
-							ListTypeEntry listTypeEntry =
-								_listTypeEntryLocalService.addListTypeEntry(
-									null, _adminUser.getUserId(),
-									_listTypeDefinition.
-										getListTypeDefinitionId(),
-									RandomTestUtil.randomString(),
-									Collections.singletonMap(
-										LocaleUtil.US,
-										RandomTestUtil.randomString()));
+		ListEntry listEntry = new ListEntry() {
+			{
+				key = listTypeEntry.getKey();
+				name = listTypeEntry.getName(LocaleUtil.US);
+			}
+		};
 
-							return new ListEntry() {
-								{
-									key = listTypeEntry.getKey();
-									name = listTypeEntry.getName(LocaleUtil.US);
-								}
-							};
-						}
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_assertPicklistOjectField(listEntry, listTypeEntry.getKey());
 
-		_assertEquals(
-			objectEntry,
-			_objectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, objectDefinition,
-				objectEntry.getId()));
+		// Make sure ListEntry DTO will be accepted as a property for Picklist
 
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_assertPicklistOjectField(listEntry, listEntry);
+
+		// Make sure Map will be accepted as a property for Picklist
+
+		_assertPicklistOjectField(
+			listEntry,
+			HashMapBuilder.put(
+				"key", listTypeEntry.getKey()
+			).put(
+				"name", listTypeEntry.getName(LocaleUtil.US)
+			).build());
 	}
 
 	@Test
@@ -2024,6 +2005,30 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Assert.assertEquals(
 			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertPicklistOjectField(
+			ListEntry expectedListEntry, Object picklistObjectFieldValue)
+		throws Exception {
+
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"picklistObjectFieldName", expectedListEntry
+					).build();
+				}
+			},
+			_objectEntryManager.addObjectEntry(
+				_dtoConverterContext, _objectDefinition2,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"picklistObjectFieldName", picklistObjectFieldValue
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY));
 	}
 
 	private void _assignAccountEntryRole(

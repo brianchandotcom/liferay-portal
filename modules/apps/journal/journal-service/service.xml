@@ -68,6 +68,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="DDMStructureId" return-type="Collection">
+			<finder-column name="DDMStructureId" />
+		</finder>
 		<finder name="DDMStructureKey" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="DDMStructureKey" />
 		</finder>
@@ -107,6 +110,10 @@
 		<finder name="G_UT" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
+		</finder>
+		<finder name="G_DDMSI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="DDMStructureId" />
 		</finder>
 		<finder name="G_DDMSK" return-type="Collection">
 			<finder-column name="groupId" />
@@ -168,6 +175,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_C_DDMSI" return-type="JournalArticle">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="DDMStructureId" />
 		</finder>
 		<finder name="G_C_DDMSK" return-type="JournalArticle">
 			<finder-column name="groupId" />

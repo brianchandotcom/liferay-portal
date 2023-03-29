@@ -240,6 +240,114 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
+	@description = "COMMERCE-9253. As a Buyer user, I want to be able to Clear selections in Commerce Search Facets."
+	@priority = 3
+	test CanClearSelectionsInCommerceSearchFacets {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the buyer navigates to the Minium Catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the user selects some search fields in Option Facet") {
+			for (var searchFieldValue : list "48,112") {
+				Check.checkToggleSwitch(
+					key_fieldName = ${searchFieldValue},
+					locator1 = "FormFields#CHECKBOX");
+			}
+
+			AssertElementPresent(
+				key_productCount = 2,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+
+		task ("Then the user is able to uncheck selections using Clear button") {
+			SearchFacetPortlet.clearFacet();
+
+			for (var searchFieldValue : list "48,112") {
+				FormViewBuilder.viewCheckboxNotChecked(
+					fieldName = "Option Facet",
+					fieldValue = ${searchFieldValue});
+			}
+
+			AssertElementPresent(
+				key_productCount = 49,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+
+		task ("When the user selects some search fields in Specification Facet") {
+			for (var searchFieldValue : list "Steel,Rubber") {
+				Check.checkToggleSwitch(
+					key_fieldName = ${searchFieldValue},
+					locator1 = "FormFields#CHECKBOX");
+			}
+
+			AssertElementPresent(
+				key_productCount = 24,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+
+		task ("Then the user is able to uncheck selections using Clear button") {
+			SearchFacetPortlet.clearFacet();
+
+			for (var searchFieldValue : list "Steel,Rubber") {
+				FormViewBuilder.viewCheckboxNotChecked(
+					fieldName = "Specification Facet",
+					fieldValue = ${searchFieldValue});
+			}
+
+			AssertElementPresent(
+				key_productCount = 49,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+
+		task ("When the user selects some search fields in Price Range Facet") {
+			for (var searchFieldValue : list "$ 0.00 - $ 49.99,$ 50.00 - $ 99.99") {
+				Check.checkToggleSwitch(
+					key_fieldName = ${searchFieldValue},
+					locator1 = "FormFields#CHECKBOX");
+			}
+
+			AssertElementPresent(
+				key_productCount = 33,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+
+		task ("Then the user is able to uncheck selections using Clear button") {
+			SearchFacetPortlet.clearFacet();
+
+			for (var searchFieldValue : list "$ 0.00 - $ 49.99,$ 50.00 - $ 99.99") {
+				FormViewBuilder.viewCheckboxNotChecked(
+					fieldName = "Price Range Facet",
+					fieldValue = ${searchFieldValue});
+			}
+
+			AssertElementPresent(
+				key_productCount = 49,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+	}
+
 	@description = "COMMERCE-10881 | As a Buyer user, Commerce Facet Widgets work without the Category Facet widget deployed on the page"
 	@ignore = "true"
 	@priority = 3

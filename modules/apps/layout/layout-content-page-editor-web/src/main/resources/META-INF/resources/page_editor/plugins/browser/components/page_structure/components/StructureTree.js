@@ -15,10 +15,14 @@
 import ClayAlert from '@clayui/alert';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {Treeview} from 'frontend-js-components-web';
+import classNames from 'classnames';
+
+// import {Treeview} from 'frontend-js-components-web';
+
 import React, {useCallback, useMemo, useState} from 'react';
 
 import getAllEditables from '../../../../../app/components/fragment_content/getAllEditables';
+import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import getAllPortals from '../../../../../app/components/layout_data_items/getAllPortals';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
@@ -26,17 +30,29 @@ import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes'
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
+import {
+	ARROW_DOWN_KEY_CODE,
+	ARROW_LEFT_KEY_CODE,
+	ARROW_RIGHT_KEY_CODE,
+	ARROW_UP_KEY_CODE,
+} from '../../../../../app/config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../app/config/index';
 import {
 	useActiveItemId,
 	useHoverItem,
+	useHoveredItemId,
 } from '../../../../../app/contexts/ControlsContext';
 import {useMovementTarget} from '../../../../../app/contexts/KeyboardMovementContext';
-import {useSelector} from '../../../../../app/contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorRef,
+} from '../../../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
+import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../../../../app/selectors/selectLayoutDataItemLabel';
 import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
@@ -49,6 +65,8 @@ import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
 import StructureTreeNode from './StructureTreeNode';
+import StructureTreeNodeActions from './StructureTreeNodeActions';
+import VisibilityButton from './VisibilityButton';
 
 const EDITABLE_LABEL = {
 	[EDITABLE_TYPES.backgroundImage]: Liferay.Language.get('background-image'),
@@ -99,10 +117,13 @@ export default function PageStructureSidebar() {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+	const layoutDataRef = useSelectorRef((store) => store.layoutData);
 
 	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] = useState(
 		null
 	);
+
+	const [editingNodeId, setEditingNodeId] = useState(null);
 
 	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
 
@@ -121,10 +142,12 @@ export default function PageStructureSidebar() {
 				canUpdateEditables,
 				canUpdateItemConfiguration,
 				dragAndDropHoveredItemId,
+				editingNodeId,
 				fragmentEntryLinks,
 				isMasterPage,
 				keyboardMovementTargetId,
 				layoutData,
+				layoutDataRef,
 				mappingFields,
 				masterLayoutData,
 				onHoverNode,
@@ -138,10 +161,12 @@ export default function PageStructureSidebar() {
 			data.items,
 			data.rootItems.main,
 			dragAndDropHoveredItemId,
+			editingNodeId,
 			fragmentEntryLinks,
 			isMasterPage,
 			keyboardMovementTargetId,
 			layoutData,
+			layoutDataRef,
 			mappingFields,
 			masterLayoutData,
 			pageContents,
@@ -158,6 +183,72 @@ export default function PageStructureSidebar() {
 		if (focusedItem) {
 			hoverItem(focusedItem.dataset.itemId);
 		}
+	};
+
+	const handleButtonsKeyDown = (event) => {
+		event.stopPropagation();
+
+		if (
+			[
+				ARROW_DOWN_KEY_CODE,
+				ARROW_LEFT_KEY_CODE,
+				ARROW_RIGHT_KEY_CODE,
+				ARROW_UP_KEY_CODE,
+			].includes(event.nativeEvent.code)
+		) {
+			document.activeElement
+				.closest('.lfr-treeview-node-list-item')
+				?.focus();
+		}
+	};
+
+	const ItemActions = ({item}) => {
+		const activeItemId = useActiveItemId();
+		const dispatch = useDispatch();
+		const hoveredItemId = useHoveredItemId();
+		const isSelected = item.id === fromControlsId(activeItemId);
+		const isHovered = item.id === fromControlsId(hoveredItemId);
+		const canUpdatePageStructure = useSelector(
+			selectCanUpdatePageStructure
+		);
+		const showOptions =
+			canUpdatePageStructure &&
+			item.itemType !== ITEM_TYPES.editable &&
+			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+			item.activable &&
+			!item.isMasterItem;
+
+		if (item.editingName) {
+			return null;
+		}
+
+		return (
+			<div
+				className={classNames('flex-shrink-0', {
+					'page-editor__page-structure__tree-node__buttons--hidden':
+						item.hidden || item.hiddenAncestor,
+				})}
+				onFocus={(event) => event.stopPropagation()}
+				onKeyDown={handleButtonsKeyDown}
+			>
+				{(item.hidable || item.hidden) && (
+					<VisibilityButton
+						dispatch={dispatch}
+						node={item}
+						selectedViewportSize={selectedViewportSize}
+						visible={item.hidden || isHovered || isSelected}
+					/>
+				)}
+
+				{showOptions && (
+					<StructureTreeNodeActions
+						item={item}
+						setEditingNodeId={setEditingNodeId}
+						visible={item.hidden || isHovered || isSelected}
+					/>
+				)}
+			</div>
+		);
 	};
 
 	return (
@@ -177,30 +268,46 @@ export default function PageStructureSidebar() {
 
 			<DragAndDropContextProvider>
 				<>
-					<Treeview
+					{/* <Treeview
 						NodeComponent={StructureTreeNode}
 						nodes={nodes}
 						selectedNodeIds={[activeItemId]}
-					/>
+					/> */}
 					<ClayTreeView
-						defaultItems={nodes}
 						displayType="light"
+						expandDoubleClick={false}
 						expanderIcons={{
 							close: <ClayIcon symbol="hr" />,
 							open: <ClayIcon symbol="plus" />,
 						}}
+						items={nodes}
+						onItemsChange={() => {}}
 						showExpanderOnHover={false}
 					>
 						{(item) => (
-							<ClayTreeView.Item>
+							<ClayTreeView.Item
+								actions={<ItemActions item={item} />}
+							>
 								<ClayTreeView.ItemStack>
-									<StructureTreeNode node={item} />
+									<StructureTreeNode
+										node={item}
+										setEditingNodeId={setEditingNodeId}
+									/>
 								</ClayTreeView.ItemStack>
 
 								<ClayTreeView.Group items={item.children}>
 									{(item) => (
-										<ClayTreeView.Item>
-											<StructureTreeNode node={item} />
+										<ClayTreeView.Item
+											actions={
+												<ItemActions item={item} />
+											}
+										>
+											<StructureTreeNode
+												node={item}
+												setEditingNodeId={
+													setEditingNodeId
+												}
+											/>
 										</ClayTreeView.Item>
 									)}
 								</ClayTreeView.Group>
@@ -394,11 +501,13 @@ function visit(
 		canUpdateEditables,
 		canUpdateItemConfiguration,
 		dragAndDropHoveredItemId,
+		editingNodeId,
 		fragmentEntryLinks,
 		hasHiddenAncestor,
 		isMasterPage,
 		keyboardMovementTargetId,
 		layoutData,
+		layoutDataRef,
 		mappingFields,
 		masterLayoutData,
 		onHoverNode,
@@ -500,10 +609,12 @@ function visit(
 						canUpdateEditables,
 						canUpdateItemConfiguration,
 						dragAndDropHoveredItemId,
+						editingNodeId,
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
 						isMasterPage,
 						layoutData,
+						layoutDataRef,
 						mappingFields,
 						masterLayoutData,
 						onHoverNode,
@@ -546,11 +657,13 @@ function visit(
 						canUpdateEditables,
 						canUpdateItemConfiguration,
 						dragAndDropHoveredItemId,
+						editingNodeId,
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
 						isMasterPage,
 						keyboardMovementTargetId,
 						layoutData,
+						layoutDataRef,
 						mappingFields,
 						masterLayoutData,
 						onHoverNode,
@@ -567,11 +680,13 @@ function visit(
 					canUpdateEditables,
 					canUpdateItemConfiguration,
 					dragAndDropHoveredItemId,
+					editingNodeId,
 					fragmentEntryLinks,
 					hasHiddenAncestor: hasHiddenAncestor || hidden,
 					isMasterPage,
 					keyboardMovementTargetId,
 					layoutData,
+					layoutDataRef,
 					mappingFields,
 					masterLayoutData,
 					onHoverNode,
@@ -591,7 +706,9 @@ function visit(
 			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			canUpdateItemConfiguration,
 		children,
+		config: layoutDataRef.current.items[item.itemId]?.config,
 		draggable: true,
+		editingName: editingNodeId === item.itemId,
 		expanded:
 			item.itemId === activeItemId ||
 			item.itemId === dragAndDropHoveredItemId ||

@@ -485,7 +485,6 @@ public class JournalArticleLocalServiceImpl
 		article.setVersion(version);
 		article.setUrlTitle(urlTitleMap.get(LocaleUtil.toLanguageId(locale)));
 		article.setDDMStructureId(ddmStructure.getStructureId());
-		article.setDDMStructureKey(ddmStructure.getStructureKey());
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		article.setLayoutUuid(layoutUuid);
@@ -742,7 +741,6 @@ public class JournalArticleLocalServiceImpl
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
 		article.setDDMStructureId(ddmStructure.getStructureId());
-		article.setDDMStructureKey(ddmStructure.getStructureKey());
 		article.setDDMTemplateKey(ddmTemplateKey);
 
 		Locale locale = getArticleDefaultLocale(content);
@@ -982,7 +980,6 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setArticleId(newArticleId);
 		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
 		newArticle.setDDMStructureId(oldArticle.getDDMStructureId());
-		newArticle.setDDMStructureKey(oldArticle.getDDMStructureKey());
 		newArticle.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
 		newArticle.setLayoutUuid(oldArticle.getLayoutUuid());
@@ -4696,7 +4693,6 @@ public class JournalArticleLocalServiceImpl
 			article.setArticleId(articleId);
 			article.setVersion(version);
 			article.setDDMStructureId(latestArticle.getDDMStructureId());
-			article.setDDMStructureKey(latestArticle.getDDMStructureKey());
 			article.setSmallImageId(latestArticle.getSmallImageId());
 
 			serviceContext.setAttribute("version", version);
@@ -5392,7 +5388,6 @@ public class JournalArticleLocalServiceImpl
 					id, groupId, articleId, title, oldArticle.getUrlTitle(),
 					serviceContext));
 			article.setDDMStructureId(oldArticle.getDDMStructureId());
-			article.setDDMStructureKey(oldArticle.getDDMStructureKey());
 			article.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 			article.setDefaultLanguageId(
 				LocaleUtil.toLanguageId(getArticleDefaultLocale(content)));

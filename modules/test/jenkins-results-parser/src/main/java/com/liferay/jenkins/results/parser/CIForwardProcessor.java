@@ -122,10 +122,17 @@ public class CIForwardProcessor {
 							_gitRepositoryDir);
 					}
 					catch (Exception exception) {
-						_pullRequest.addComment(_getRetryCommentBody());
-
 						throw new RuntimeException(exception);
 					}
+				}
+
+				@Override
+				protected String getRetryMessage(int retryCount) {
+					if (retryCount < maxRetries) {
+						_pullRequest.addComment(_getRetryCommentBody());
+					}
+
+					return null;
 				}
 
 			};
@@ -466,7 +473,7 @@ public class CIForwardProcessor {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
-			"errors occurred while attempting to forward pull request to `");
+			"Error has occurred while attempting to forward pull request to `");
 		sb.append(_recipientUsername);
 		sb.append("`. Retrying in ");
 		sb.append(JenkinsResultsParserUtil.toDurationString(_RETRY_PERIOD));

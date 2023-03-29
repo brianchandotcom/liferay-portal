@@ -155,7 +155,6 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						/>
 					</aui:fieldset>
 
-					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-165476") %>'>
 						<liferay-frontend:fieldset
 							collapsed="<%= true %>"
 							collapsible="<%= true %>"
@@ -171,7 +170,6 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 							<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= editKBArticleDisplayContext.isNeverReview() %>" formName="fm" name="reviewDate" wrapperCssClass="mb-3 review-date" />
 						</liferay-frontend:fieldset>
-					</c:if>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-asset:input-asset-links

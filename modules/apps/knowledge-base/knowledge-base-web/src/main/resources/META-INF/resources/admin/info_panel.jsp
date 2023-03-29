@@ -240,7 +240,6 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							<%= dateFormatDateTime.format(kbArticle.getModifiedDate()) %>
 						</dd>
 
-						<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-165476") %>'>
 							<dt class="sidebar-dt">
 								<liferay-ui:message key="expiration-date" />
 							</dt>
@@ -267,7 +266,6 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 									</c:otherwise>
 								</c:choose>
 							</dd>
-						</c:if>
 
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="views" />

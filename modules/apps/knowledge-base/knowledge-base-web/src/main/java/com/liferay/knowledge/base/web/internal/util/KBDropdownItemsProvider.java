@@ -119,7 +119,6 @@ public class KBDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
-							_isExpirationEnabled() &&
 							_hasExpirationPermission(kbArticle) &&
 							!kbArticle.isExpired(),
 						_getExpireArticleActionConsumer(kbArticle)
@@ -1368,14 +1367,6 @@ public class KBDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), kbTemplate,
 				KBActionKeys.VIEW)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private Boolean _isExpirationEnabled() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
 			return true;
 		}
 

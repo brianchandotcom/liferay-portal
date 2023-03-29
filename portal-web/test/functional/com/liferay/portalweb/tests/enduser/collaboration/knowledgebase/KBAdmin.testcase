@@ -92,7 +92,7 @@ definition {
 	@description = "This test covers LPS-171314. It ensures that the expiration label for Knowledge Base article works."
 	@priority = 4
 	test CanEnableArticleExpirationLabel {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "KBAdmin#CanEnableArticleExpirationLabel";
 
 		task ("Given the Notification Date is changed to 2 weeks") {
@@ -287,7 +287,7 @@ definition {
 	@description = "This test covers LPS-171314. It ensures that the expiration label is displayed when the Notification Date is reached."
 	@priority = 4
 	test ExpirationNotificationShowsWhenNotificationDateIsReached {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
 		task ("Given the Knowledge Base article is created with the expiration date of 1 week and 2 minutes in the future") {
 			KBAdmin.openKBAdmin(siteURLKey = "guest");

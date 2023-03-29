@@ -41,11 +41,8 @@ public class CheckKBArticleSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
+		return () ->
 				_kbArticleLocalService.checkKBArticles();
-			}
-		};
 	}
 
 	@Override

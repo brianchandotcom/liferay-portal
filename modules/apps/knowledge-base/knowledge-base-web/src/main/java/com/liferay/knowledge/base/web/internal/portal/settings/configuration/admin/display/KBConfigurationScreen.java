@@ -65,15 +65,6 @@ public class KBConfigurationScreen implements ConfigurationScreen {
 	}
 
 	@Override
-	public boolean isVisible() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

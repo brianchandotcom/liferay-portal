@@ -70,10 +70,6 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 
 	@Test
 	public void testExpireFileEntry() throws Exception {
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-165476", Boolean.TRUE.toString())) {
-
 			Date expirationDate = new Date(
 				System.currentTimeMillis() + (Time.MINUTE * 5));
 
@@ -99,7 +95,6 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EXPIRED, kbArticle.getStatus());
-		}
 	}
 
 	@DeleteAfterTestRun

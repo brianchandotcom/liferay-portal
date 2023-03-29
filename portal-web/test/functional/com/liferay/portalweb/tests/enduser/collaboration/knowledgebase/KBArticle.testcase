@@ -447,7 +447,7 @@ definition {
 	@description = "This test ensures that the KB article is expired when the user clicks the "Expire" in the ellipses drop-menu."
 	@priority = 5
 	test CanExpireAnArticle {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KBArticle#CanExpireAnArticle";
 
@@ -877,7 +877,7 @@ definition {
 	@description = "This test ensures that the KB article is expired when the user clicks the "Expire" in the ellipses drop-menu."
 	@priority = 5
 	test CanRepublishAnExpiredArticle {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "KBArticle#CanRepublishAnExpiredArticle";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
@@ -931,7 +931,7 @@ definition {
 	@description = "This test ensures that the owner of the kb article receives a notification once the review date is reached."
 	@priority = 5
 	test CanReviewArticleWhenReviewDateIsReached {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsReached";
 
@@ -978,7 +978,7 @@ definition {
 	@description = "This test ensures that the owner of the kb article receives a notification once the review date is reached."
 	@priority = 5
 	test CanReviewArticleWhenReviewDateIsUpdated {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsUpdated";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
@@ -1196,7 +1196,7 @@ definition {
 	@description = "This test ensures that the kb article status is expired when the expiration date is reached."
 	@priority = 5
 	test CanViewExpiredArticle {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "KBArticle#CanViewExpiredArticle";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);

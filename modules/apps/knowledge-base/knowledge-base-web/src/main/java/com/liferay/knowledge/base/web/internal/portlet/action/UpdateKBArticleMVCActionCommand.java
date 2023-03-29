@@ -106,7 +106,6 @@ public class UpdateKBArticleMVCActionCommand
 		Date expirationDate = null;
 		Date reviewDate = null;
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -116,7 +115,6 @@ public class UpdateKBArticleMVCActionCommand
 				actionRequest, true, user.getTimeZone());
 			reviewDate = _getReviewDate(
 				actionRequest, true, user.getTimeZone());
-		}
 
 		String[] sections = actionRequest.getParameterValues("sections");
 		String[] selectedFileNames = ParamUtil.getParameterValues(

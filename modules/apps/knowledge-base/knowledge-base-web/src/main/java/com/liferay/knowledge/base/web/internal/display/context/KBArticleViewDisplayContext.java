@@ -119,10 +119,6 @@ public class KBArticleViewDisplayContext {
 	public boolean isExpiringSoon(KBArticle kbArticle)
 		throws ConfigurationException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
-			return false;
-		}
-
 		Date expirationDate = kbArticle.getExpirationDate();
 
 		if (kbArticle.isDraft() || kbArticle.isExpired() ||

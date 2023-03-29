@@ -431,16 +431,13 @@ public class UpgradeReport {
 						continue;
 					}
 
-					String initialRows =
-						(initialCount >= 0) ? String.valueOf(initialCount) :
-							StringPool.DASH;
-
-					String finalRows =
-						(finalCount >= 0) ? String.valueOf(finalCount) :
-							StringPool.DASH;
-
 					tableCountsList.add(
-						new TableCounts(tableName, initialRows, finalRows));
+						new TableCounts(
+							tableName,
+							(initialCount >= 0) ? String.valueOf(initialCount) :
+								StringPool.DASH,
+							(finalCount >= 0) ? String.valueOf(finalCount) :
+								StringPool.DASH));
 				}
 
 				return tableCountsList;

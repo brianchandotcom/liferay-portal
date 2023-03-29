@@ -62,7 +62,7 @@ export function TranslationOptionsContainer({
 					label={Liferay.Language.get('enable-entry-translation')}
 					onToggle={() =>
 						setValues({
-							enableLocalization: !values.enableLocalization,
+							localized: !values.localized,
 						})
 					}
 				/>

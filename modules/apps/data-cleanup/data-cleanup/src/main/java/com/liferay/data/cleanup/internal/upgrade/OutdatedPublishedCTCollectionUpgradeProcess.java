@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,8 +44,6 @@ public class OutdatedPublishedCTCollectionUpgradeProcess
 
 		calendar.add(Calendar.MONTH, -6);
 
-		Date cutoffDate = calendar.getTime();
-
 		List<CTCollection> ctCollections = _ctCollectionLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 				CTCollectionTable.INSTANCE
@@ -56,7 +53,8 @@ public class OutdatedPublishedCTCollectionUpgradeProcess
 				CTCollectionTable.INSTANCE.status.eq(
 					WorkflowConstants.STATUS_APPROVED
 				).and(
-					CTCollectionTable.INSTANCE.statusDate.lte(cutoffDate)
+					CTCollectionTable.INSTANCE.statusDate.lte(
+						calendar.getTime())
 				)
 			));
 

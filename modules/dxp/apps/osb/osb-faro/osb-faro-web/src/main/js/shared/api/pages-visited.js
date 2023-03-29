@@ -21,6 +21,7 @@ export const INTERVALS_MAP = {
 export function search(params) {
 	const {
 		active = true,
+		channelId = '',
 		contactsEntityId,
 		contactsEntityType,
 		delta = DEFAULT_DELTA,
@@ -40,6 +41,7 @@ export function search(params) {
 	return sendRequest({
 		data: {
 			active,
+			channelId,
 			contactsEntityId,
 			contactsEntityType,
 			cur: page,

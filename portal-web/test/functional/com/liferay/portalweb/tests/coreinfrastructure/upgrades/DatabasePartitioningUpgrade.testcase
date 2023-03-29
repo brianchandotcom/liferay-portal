@@ -48,6 +48,7 @@ definition {
 	@priority = 5
 	test CanUpgradePartitionedDatabase7413U33 {
 		property data.archive.type = "data-archive-portal-partition";
+		property liferay.online.properties = "true";
 		property portal.upgrades = "true";
 		property portal.version = "7.4.13.u33";
 

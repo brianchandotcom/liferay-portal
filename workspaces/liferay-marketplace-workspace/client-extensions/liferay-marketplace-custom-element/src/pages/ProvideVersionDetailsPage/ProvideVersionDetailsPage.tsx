@@ -28,6 +28,14 @@ export function ProvideVersionDetailsPage({
 	onClickBack,
 	onClickContinue,
 }: ProvideVersionDetailsPageProps) {
+
+	function skuName(appProductId : number, appVersion : string){
+		return `${appProductId}v${appVersion.replace(
+			/[^a-zA-Z0-9 ]/g,
+			''
+		)}`
+	}
+	
 	const [
 		{
 			appNotes,
@@ -145,7 +153,7 @@ export function ProvideVersionDetailsPage({
 					const skuResponse = await getProductSKU({appProductId});
 
 					const versionSku = skuResponse.items.find(
-						({sku}) => sku === appVersion
+						({sku}) => sku === skuName(appProductId, appVersion)
 					);
 
 					let id;
@@ -157,10 +165,7 @@ export function ProvideVersionDetailsPage({
 						const response = await createAppSKU({
 							appProductId,
 							body: {
-								sku: `${appProductId}v${appVersion.replace(
-									/[^a-zA-Z0-9 ]/g,
-									''
-								)}`,
+								sku: skuName(appProductId, appVersion),
 								skuOptions: [
 									{
 										key: productOptionId,

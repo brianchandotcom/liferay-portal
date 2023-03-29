@@ -803,7 +803,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	@Override
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		long groupId, long folderId, long classNameId, long ddmStructureId,
 		int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
@@ -812,7 +812,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleFinder.filterFindByG_F_C_S_L(
 			groupId, ListUtil.fromArray(folderId),
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureId,
 			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
@@ -836,7 +836,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
 	 *         module otherwise
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
@@ -852,7 +852,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, int status,
+		long groupId, long classNameId, long ddmStructureId, int status,
 		int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
@@ -860,7 +860,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			status, start, end, orderByComparator);
 
 		return journalArticleFinder.filterFindByG_F_C_S_L(
-			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
+			groupId, Collections.emptyList(), classNameId, ddmStructureId,
 			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
@@ -884,7 +884,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
 	 *         module otherwise
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
@@ -900,7 +900,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, Locale locale,
+		long groupId, long classNameId, long ddmStructureId, Locale locale,
 		int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
@@ -908,7 +908,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			status, start, end, orderByComparator);
 
 		return journalArticleFinder.filterFindByG_F_C_S_L(
-			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
+			groupId, Collections.emptyList(), classNameId, ddmStructureId,
 			locale, queryDefinition);
 	}
 
@@ -927,7 +927,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
@@ -943,7 +943,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int status, int start, int end,
+		long groupId, long ddmStructureId, int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
@@ -951,7 +951,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleFinder.filterFindByG_F_C_S_L(
 			groupId, Collections.emptyList(),
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureId,
 			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
@@ -970,7 +970,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
@@ -983,11 +983,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, int start, int end,
+		long groupId, long ddmStructureId, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getArticlesByStructureId(
-			groupId, ddmStructureKey, WorkflowConstants.STATUS_ANY, start, end,
+			groupId, ddmStructureId, WorkflowConstants.STATUS_ANY, start, end,
 			orderByComparator);
 	}
 
@@ -1006,7 +1006,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  locale web content articles locale
 	 * @param  status the web content article's workflow status. For more
@@ -1023,7 +1023,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getArticlesByStructureId(
-		long groupId, String ddmStructureKey, Locale locale, int status,
+		long groupId, long ddmStructureId, Locale locale, int status,
 		int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
@@ -1032,7 +1032,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleFinder.filterFindByG_F_C_S_L(
 			groupId, Collections.emptyList(),
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureId,
 			locale, queryDefinition);
 	}
 
@@ -1101,11 +1101,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	@Override
 	public int getArticlesCountByStructureId(
-		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		long groupId, long folderId, long classNameId, long ddmStructureId,
 		int status) {
 
 		return journalArticleFinder.filterCountByG_F_C_S(
-			groupId, ListUtil.fromArray(folderId), classNameId, ddmStructureKey,
+			groupId, ListUtil.fromArray(folderId), classNameId, ddmStructureId,
 			new QueryDefinition<JournalArticle>(status));
 	}
 
@@ -1119,7 +1119,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
 	 *         module otherwise
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
@@ -1128,10 +1128,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public int getArticlesCountByStructureId(
-		long groupId, long classNameId, String ddmStructureKey, int status) {
+		long groupId, long classNameId, long ddmStructureId, int status) {
 
 		return journalArticleFinder.filterCountByG_F_C_S(
-			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
+			groupId, Collections.emptyList(), classNameId, ddmStructureId,
 			new QueryDefinition<JournalArticle>(status));
 	}
 
@@ -1140,16 +1140,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * class name ID, and DDM structure key.
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @return the number of matching web content articles
 	 */
 	@Override
 	public int getArticlesCountByStructureId(
-		long groupId, String ddmStructureKey) {
+		long groupId, long ddmStructureId) {
 
 		return getArticlesCountByStructureId(
-			groupId, ddmStructureKey, WorkflowConstants.STATUS_ANY);
+			groupId, ddmStructureId, WorkflowConstants.STATUS_ANY);
 	}
 
 	/**
@@ -1157,7 +1157,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * class name ID, and DDM structure key.
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
+	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
@@ -1166,11 +1166,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public int getArticlesCountByStructureId(
-		long groupId, String ddmStructureKey, int status) {
+		long groupId, long ddmStructureId, int status) {
 
 		return getArticlesCountByStructureId(
 			groupId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			ddmStructureKey, status);
+			ddmStructureId, status);
 	}
 
 	/**

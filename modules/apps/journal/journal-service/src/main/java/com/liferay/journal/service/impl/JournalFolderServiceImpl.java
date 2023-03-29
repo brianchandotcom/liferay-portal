@@ -19,7 +19,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -225,8 +224,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true, start, end,
 			(OrderByComparator<Object>)orderByComparator);
 
-		return journalFolderFinder.filterFindF_A_ByG_F_DDMSK(
-			groupId, folderId, StringPool.BLANK, queryDefinition);
+		return journalFolderFinder.filterFindF_A_ByG_F_DDMSI(
+			groupId, folderId, 0, queryDefinition);
 	}
 
 	@Override
@@ -238,13 +237,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true, start, end,
 			(OrderByComparator<Object>)orderByComparator);
 
-		return journalFolderFinder.filterFindF_A_ByG_F_DDMSK_L(
-			groupId, folderId, StringPool.BLANK, locale, queryDefinition);
+		return journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L(
+			groupId, folderId, 0, locale, queryDefinition);
 	}
 
 	@Override
 	public List<Object> getFoldersAndArticles(
-		long groupId, long userId, long folderId, String ddmStructureKey,
+		long groupId, long userId, long folderId, long ddmStructureId,
 		int status, Locale locale, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
@@ -252,8 +251,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true, start, end,
 			(OrderByComparator<Object>)orderByComparator);
 
-		return journalFolderFinder.filterFindF_A_ByG_F_DDMSK_L(
-			groupId, folderId, ddmStructureKey, locale, queryDefinition);
+		return journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L(
+			groupId, folderId, ddmStructureId, locale, queryDefinition);
 	}
 
 	@Override
@@ -303,20 +302,20 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
 			status, userId, true);
 
-		return journalFolderFinder.filterCountF_A_ByG_F_DDMSK(
-			groupId, folderId, StringPool.BLANK, queryDefinition);
+		return journalFolderFinder.filterCountF_A_ByG_F_DDMSI(
+			groupId, folderId, 0, queryDefinition);
 	}
 
 	@Override
 	public int getFoldersAndArticlesCount(
-		long groupId, long userId, long folderId, String ddmStructureKey,
+		long groupId, long userId, long folderId, long ddmStructureId,
 		int status) {
 
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
 			status, userId, true);
 
-		return journalFolderFinder.filterCountF_A_ByG_F_DDMSK(
-			groupId, folderId, ddmStructureKey, queryDefinition);
+		return journalFolderFinder.filterCountF_A_ByG_F_DDMSI(
+			groupId, folderId, ddmStructureId, queryDefinition);
 	}
 
 	@Override

@@ -1,12 +1,13 @@
 configurations.all {
 	resolutionStrategy {
-		force group: "com.liferay.portal", name: "com.liferay.portal.test", version: "7.1.0"
+		force group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	}
 }
 
 dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+
 	testIntegrationCompile project(":dxp:apps:osb:osb-testray:osb-testray-rest-api")
 	testIntegrationCompile project(":dxp:apps:osb:osb-testray:osb-testray-rest-client")
 }

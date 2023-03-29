@@ -98,6 +98,8 @@ definition {
 
 		Button.click(button = "Done");
 
+		IFrame.selectTopFrame();
+
 		Button.clickSave();
 
 		Navigator.openURL();

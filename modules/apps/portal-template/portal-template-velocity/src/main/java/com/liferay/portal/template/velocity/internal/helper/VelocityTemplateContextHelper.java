@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template.velocity.internal.helper;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,8 +32,6 @@ import com.liferay.portal.template.TemplatePortletPreferences;
 import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,13 +45,12 @@ import org.apache.velocity.tools.generic.MathTool;
 import org.apache.velocity.tools.generic.NumberTool;
 import org.apache.velocity.tools.generic.SortTool;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -141,7 +140,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		// Custom template context contributors
 
 		for (TemplateContextContributor templateContextContributor :
-				_templateContextContributors) {
+				_serviceTrackerList.toList()) {
 
 			templateContextContributor.prepare(
 				contextObjects, httpServletRequest);
@@ -150,9 +149,20 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		Map<String, Object> properties, BundleContext bundleContext) {
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, TemplateContextContributor.class,
+			"(type=" + TemplateContextContributor.TYPE_GLOBAL + ")");
+
 		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
 			VelocityEngineConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	@Override
@@ -202,24 +212,6 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + TemplateContextContributor.TYPE_GLOBAL + ")"
-	)
-	protected synchronized void registerTemplateContextContributor(
-		TemplateContextContributor templateContextContributor) {
-
-		_templateContextContributors.add(templateContextContributor);
-	}
-
-	protected synchronized void unregisterTemplateContextContributor(
-		TemplateContextContributor templateContextContributor) {
-
-		_templateContextContributors.remove(templateContextContributor);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		VelocityTemplateContextHelper.class);
 
@@ -229,7 +221,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 	@Reference
 	private RolePermission _rolePermission;
 
-	private final List<TemplateContextContributor>
-		_templateContextContributors = new ArrayList<>();
+	private volatile ServiceTrackerList<TemplateContextContributor>
+		_serviceTrackerList;
 
 }

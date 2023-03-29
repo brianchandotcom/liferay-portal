@@ -189,6 +189,7 @@ const compareHours = async () => {
 			errorMsg.innerText = 'No service hours available.';
 			errorMsg.style.color = '#a90f0f';
 			errorMsg.style.display = 'block';
+			errorMsg.style.position = 'absolute';
 		}
 		document.querySelector('button[type="submit"]').disabled = true;
 	} else {

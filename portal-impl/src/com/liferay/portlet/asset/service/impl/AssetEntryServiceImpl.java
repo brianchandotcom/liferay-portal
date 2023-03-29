@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -288,13 +289,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			count = filteredEntries.size();
 
 			if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
-				if (end > count) {
-					end = count;
-				}
+				int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+					start, end, count);
 
-				if (start > count) {
-					start = count;
-				}
+				start = startAndEnd[0];
+				end = startAndEnd[1];
 
 				filteredEntries = filteredEntries.subList(start, end);
 			}

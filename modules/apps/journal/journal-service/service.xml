@@ -71,9 +71,6 @@
 		<finder name="DDMStructureId" return-type="Collection">
 			<finder-column name="DDMStructureId" />
 		</finder>
-		<finder name="DDMStructureKey" return-type="Collection">
-			<finder-column arrayable-operator="OR" name="DDMStructureKey" />
-		</finder>
 		<finder name="DDMTemplateKey" return-type="Collection">
 			<finder-column name="DDMTemplateKey" />
 		</finder>
@@ -114,10 +111,6 @@
 		<finder name="G_DDMSI" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="DDMStructureId" />
-		</finder>
-		<finder name="G_DDMSK" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="DDMStructureKey" />
 		</finder>
 		<finder name="G_DDMTK" return-type="Collection">
 			<finder-column name="groupId" />
@@ -180,11 +173,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="DDMStructureId" />
-		</finder>
-		<finder name="G_C_DDMSK" return-type="JournalArticle">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="DDMStructureKey" />
 		</finder>
 		<finder name="G_C_DDMTK" return-type="Collection">
 			<finder-column name="groupId" />

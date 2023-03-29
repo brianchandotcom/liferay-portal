@@ -120,40 +120,6 @@
 				(reviewDate <= ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByR_D">
-		<![CDATA[
-			SELECT
-				{JournalArticle.*}
-			FROM
-				JournalArticle
-			WHERE
-				(resourcePrimKey = ?) AND
-				(displayDate <= ?) AND
-				(status = 0) AND
-				(indexable = [$TRUE$])
-			ORDER BY
-				version DESC
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_ST">
-		<![CDATA[
-			SELECT
-				JournalArticle.*
-			FROM
-				JournalArticle
-			LEFT JOIN
-				JournalArticle tempJournalArticle ON
-					(JournalArticle.groupId = tempJournalArticle.groupId) AND
-					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
-			WHERE
-				(JournalArticle.groupId = ?) AND
-				(JournalArticle.status = ?) AND
-				(tempJournalArticle.id_ IS NULL)
-			ORDER BY
-				JournalArticle.id_ ASC
-		]]>
-	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_ST_L">
 		<![CDATA[
 			SELECT

@@ -469,12 +469,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
-		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(product);
-
-		if (expandoBridgeAttributes != null) {
-			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-		}
+		serviceContext.setExpandoBridgeAttributes(
+			_getExpandoBridgeAttributes(product));
 
 		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			product.getDisplayDate(), serviceContext.getTimeZone());
@@ -671,14 +667,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 						CProductVersionConfiguration.class.getName()));
 
 			if (cProductVersionConfiguration.enabled()) {
-				List<CPDefinition> cProductCPDefinitions =
-					_cpDefinitionService.getCProductCPDefinitions(
-						cpDefinition.getCProductId(),
-						WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS);
-
 				for (CPDefinition cProductCPDefinition :
-						cProductCPDefinitions) {
+						_cpDefinitionService.getCProductCPDefinitions(
+							cpDefinition.getCProductId(),
+							WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS)) {
 
 					_cpDefinitionService.updateStatus(
 						cProductCPDefinition.getCPDefinitionId(),
@@ -912,13 +905,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (images != null) {
 			for (Attachment attachment : images) {
-				Map<String, Serializable> expandoBridgeAttributes =
-					_getExpandoBridgeAttributes(attachment);
-
-				if (expandoBridgeAttributes != null) {
-					serviceContext.setExpandoBridgeAttributes(
-						expandoBridgeAttributes);
-				}
+				serviceContext.setExpandoBridgeAttributes(
+					_getExpandoBridgeAttributes(attachment));
 
 				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
@@ -938,13 +926,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (attachments != null) {
 			for (Attachment attachment : attachments) {
-				Map<String, Serializable> expandoBridgeAttributes =
-					_getExpandoBridgeAttributes(attachment);
-
-				if (expandoBridgeAttributes != null) {
-					serviceContext.setExpandoBridgeAttributes(
-						expandoBridgeAttributes);
-				}
+				serviceContext.setExpandoBridgeAttributes(
+					_getExpandoBridgeAttributes(attachment));
 
 				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
@@ -1149,7 +1132,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		String[] assetTags = product.getTags();
 
-		if (product.getTags() == null) {
+		if (assetTags == null) {
 			assetTags = transformToArray(
 				_assetTagService.getTags(
 					cpDefinition.getModelClassName(),
@@ -1159,12 +1142,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		serviceContext.setAssetTagNames(assetTags);
 
-		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(product);
-
-		if (expandoBridgeAttributes != null) {
-			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-		}
+		serviceContext.setExpandoBridgeAttributes(
+			_getExpandoBridgeAttributes(product));
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());

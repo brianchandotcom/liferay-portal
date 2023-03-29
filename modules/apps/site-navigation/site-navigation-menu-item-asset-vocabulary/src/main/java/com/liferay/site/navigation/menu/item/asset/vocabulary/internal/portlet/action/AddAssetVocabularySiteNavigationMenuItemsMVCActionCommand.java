@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import java.util.Arrays;
@@ -85,25 +86,40 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 					continue;
 				}
 
-				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
-					SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
-					UnicodePropertiesBuilder.create(
-						true
-					).put(
-						"classPK",
-						assetVocabularyJSONObject.getString("assetVocabularyId")
-					).put(
-						"groupId",
-						assetVocabularyJSONObject.getString("groupId")
-					).put(
-						"title", assetVocabularyJSONObject.getString("title")
-					).put(
-						"type", "asset-vocabulary"
-					).put(
-						"uuid", assetVocabularyJSONObject.getString("uuid")
-					).buildString(),
-					serviceContext);
+				long parentSiteNavigationMenuItemId = ParamUtil.getLong(
+					actionRequest, "parentSiteNavigationMenuItemId");
+
+				SiteNavigationMenuItem siteNavigationMenuItem =
+					_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+						themeDisplay.getScopeGroupId(), siteNavigationMenuId,
+						parentSiteNavigationMenuItemId,
+						SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
+						UnicodePropertiesBuilder.create(
+							true
+						).put(
+							"classPK",
+							assetVocabularyJSONObject.getString(
+								"assetVocabularyId")
+						).put(
+							"groupId",
+							assetVocabularyJSONObject.getString("groupId")
+						).put(
+							"title",
+							assetVocabularyJSONObject.getString("title")
+						).put(
+							"type", "asset-vocabulary"
+						).put(
+							"uuid", assetVocabularyJSONObject.getString("uuid")
+						).buildString(),
+						serviceContext);
+
+				int order = ParamUtil.getInteger(actionRequest, "order", -1);
+
+				if (order >= 0) {
+					_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+						parentSiteNavigationMenuItemId, order + i);
+				}
 			}
 
 			String message = _language.format(

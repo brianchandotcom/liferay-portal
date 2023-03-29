@@ -68,6 +68,8 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
+			actionRequest, "parentSiteNavigationMenuItemId");
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
@@ -85,9 +87,17 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 		try {
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
-					type, typeSettingsUnicodeProperties.toString(),
-					serviceContext);
+					themeDisplay.getScopeGroupId(), siteNavigationMenuId,
+					parentSiteNavigationMenuItemId, type,
+					typeSettingsUnicodeProperties.toString(), serviceContext);
+
+			int order = ParamUtil.getInteger(actionRequest, "order", -1);
+
+			if (order >= 0) {
+				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+					parentSiteNavigationMenuItemId, order);
+			}
 
 			jsonObject.put(
 				"siteNavigationMenuItemId",

@@ -129,10 +129,18 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							infoItemReferences);
 				}
 
-				for (InfoItemReference infoItemReference : infoItemReferences) {
+				int order = ParamUtil.getInteger(actionRequest, "order", -1);
+				long parentSiteNavigationMenuItemId = ParamUtil.getLong(
+					actionRequest, "parentSiteNavigationMenuItemId");
+
+				for (int i = 0; i < infoItemReferences.size(); i++) {
+					InfoItemReference infoItemReference =
+						infoItemReferences.get(i);
+
 					_addSiteNavigationMenuItem(
 						themeDisplay.getScopeGroupId(), infoItemReference,
-						jsonObjects, 0, serviceContext, siteNavigationMenuId,
+						jsonObjects, order + i, parentSiteNavigationMenuItemId,
+						serviceContext, siteNavigationMenuId,
 						siteNavigationMenuItemTypeString);
 				}
 
@@ -196,7 +204,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	private void _addSiteNavigationMenuItem(
 			long groupId, InfoItemReference infoItemReference,
-			Map<Long, JSONObject> jsonObjects,
+			Map<Long, JSONObject> jsonObjects, int order,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
 			long siteNavigationMenuId, String siteNavigationMenuItemType)
 		throws PortalException {
@@ -228,6 +236,12 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				).buildString(),
 				serviceContext);
 
+		if (order >= 0) {
+			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				parentSiteNavigationMenuItemId, order);
+		}
+
 		if (!(infoItemReference instanceof HierarchicalInfoItemReference)) {
 			return;
 		}
@@ -240,7 +254,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					getChildrenHierarchicalInfoItemReferences()) {
 
 			_addSiteNavigationMenuItem(
-				groupId, childHierarchicalInfoItemReference, jsonObjects,
+				groupId, childHierarchicalInfoItemReference, jsonObjects, -1,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext, siteNavigationMenuId,
 				siteNavigationMenuItemType);

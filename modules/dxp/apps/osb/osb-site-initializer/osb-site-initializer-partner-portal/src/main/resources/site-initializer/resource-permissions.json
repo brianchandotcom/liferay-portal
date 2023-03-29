@@ -155,7 +155,9 @@
 	},
 	{
 		"actionIds": [
-			"ADD_SUBFOLDER"
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
 		"roleName": "User",

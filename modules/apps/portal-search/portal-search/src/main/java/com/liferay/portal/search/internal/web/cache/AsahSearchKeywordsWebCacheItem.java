@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.internal.web.cache;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration;
-import com.liferay.portal.search.internal.util.AsahUtil;
 
 import java.net.HttpURLConnection;
 
@@ -37,15 +36,10 @@ import java.net.HttpURLConnection;
 public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 
 	public static JSONObject get(
+		AnalyticsConfiguration analyticsConfiguration,
 		AsahSearchKeywordsConfiguration asahSearchKeywordsConfiguration,
 		long companyId, int count, String displayLanguageId, long groupId,
 		int size, String sort) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-159643") ||
-			!AsahUtil.isAnalyticsEnabled(companyId)) {
-
-			return JSONFactoryUtil.createJSONObject();
-		}
 
 		try {
 			return (JSONObject)WebCachePoolUtil.get(
@@ -55,8 +49,8 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 					StringPool.POUND, displayLanguageId, StringPool.POUND,
 					groupId, StringPool.POUND, sort),
 				new AsahSearchKeywordsWebCacheItem(
-					asahSearchKeywordsConfiguration, companyId, count,
-					displayLanguageId, groupId, size, sort));
+					analyticsConfiguration, asahSearchKeywordsConfiguration,
+					count, displayLanguageId, groupId, size, sort));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -68,12 +62,13 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	}
 
 	public AsahSearchKeywordsWebCacheItem(
+		AnalyticsConfiguration analyticsConfiguration,
 		AsahSearchKeywordsConfiguration asahSearchKeywordsConfiguration,
-		long companyId, int count, String displayLanguageId, long groupId,
-		int size, String sort) {
+		int count, String displayLanguageId, long groupId, int size,
+		String sort) {
 
+		_analyticsConfiguration = analyticsConfiguration;
 		_asahSearchKeywordsConfiguration = asahSearchKeywordsConfiguration;
-		_companyId = companyId;
 		_count = count;
 		_displayLanguageId = displayLanguageId;
 		_groupId = groupId;
@@ -88,9 +83,11 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 
 			options.addHeader(
 				"OSB-Asah-Faro-Backend-Security-Signature",
-				AsahUtil.getAsahFaroBackendSecuritySignature(_companyId));
+				_analyticsConfiguration.
+					liferayAnalyticsFaroBackendSecuritySignature());
 			options.addHeader(
-				"OSB-Asah-Project-ID", AsahUtil.getAsahProjectId(_companyId));
+				"OSB-Asah-Project-ID",
+				_analyticsConfiguration.liferayAnalyticsProjectId());
 
 			String url = _getURL();
 
@@ -114,17 +111,13 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		if (AsahUtil.isAnalyticsEnabled(_companyId)) {
-			return _asahSearchKeywordsConfiguration.cacheTimeout();
-		}
-
-		return 0;
+		return _asahSearchKeywordsConfiguration.cacheTimeout();
 	}
 
 	private String _getURL() {
 		StringBundler sb = new StringBundler(11);
 
-		sb.append(AsahUtil.getAsahFaroBackendURL(_companyId));
+		sb.append(_analyticsConfiguration.liferayAnalyticsFaroBackendURL());
 		sb.append("/api/1.0/pages/search-keywords?counts=");
 		sb.append(_count);
 
@@ -164,9 +157,9 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahSearchKeywordsWebCacheItem.class);
 
+	private final AnalyticsConfiguration _analyticsConfiguration;
 	private final AsahSearchKeywordsConfiguration
 		_asahSearchKeywordsConfiguration;
-	private final long _companyId;
 	private final int _count;
 	private final String _displayLanguageId;
 	private final long _groupId;

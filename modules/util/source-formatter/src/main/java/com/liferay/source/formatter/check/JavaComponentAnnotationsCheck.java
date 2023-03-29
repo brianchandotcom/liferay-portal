@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -28,8 +30,11 @@ import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -245,8 +250,13 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String fileName, String absolutePath, JavaClass javaClass,
 		String annotation) {
 
-		if (_getAttributeValue(annotation, "configurationPid") != null) {
-			return annotation;
+		String configurationPid = _getAttributeValue(
+			annotation, "configurationPid");
+
+		if (configurationPid != null) {
+			return _formatConfigurationPid(
+				fileName, absolutePath, javaClass, annotation,
+				configurationPid);
 		}
 
 		for (JavaMethod javaMethod :
@@ -297,6 +307,62 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		return _addAttribute(
 			annotation, "configurationPolicy", "ConfigurationPolicy.IGNORE");
+	}
+
+	private String _formatConfigurationPid(
+		String fileName, String absolutePath, JavaClass javaClass,
+		String annotation, String configurationPid) {
+
+		List<String> configurationClasses = new ArrayList<>();
+
+		if (StringUtil.startsWith(configurationPid, '{')) {
+			configurationPid = configurationPid.substring(
+				1, configurationPid.length() - 1);
+
+			for (String configurationClass :
+					StringUtil.split(configurationPid, ", ")) {
+
+				configurationClasses.add(configurationClass);
+			}
+		}
+		else {
+			configurationClasses.add(configurationPid);
+		}
+
+		List<String> importNames = javaClass.getImportNames();
+
+		for (String configurationClass : configurationClasses) {
+			configurationClass = StringUtil.unquote(configurationClass);
+
+			if (!configurationClass.startsWith("com.liferay")) {
+				continue;
+			}
+
+			int pos = configurationClass.lastIndexOf(".scoped");
+
+			if (pos != -1) {
+				configurationClass = configurationClass.substring(0, pos);
+			}
+
+			if (importNames.contains(configurationClass)) {
+				continue;
+			}
+
+			File javaFile = JavaSourceUtil.getJavaFile(
+				configurationClass, _getRootDirName(absolutePath),
+				_getBundleSymbolicNamesMap(absolutePath));
+
+			if (javaFile == null) {
+				String message = StringBundler.concat(
+					"Remove '", configurationClass,
+					"' from 'configurationPid' as the configuration class ",
+					"does not exist");
+
+				addMessage(fileName, message);
+			}
+		}
+
+		return annotation;
 	}
 
 	private String _formatEnabledAttribute(
@@ -481,6 +547,17 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			new String[] {"", ", ", ""});
 	}
 
+	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
+		String absolutePath) {
+
+		if (_bundleSymbolicNamesMap == null) {
+			_bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
+				_getRootDirName(absolutePath));
+		}
+
+		return _bundleSymbolicNamesMap;
+	}
+
 	private String _getExpectedServiceAttributeValue(
 		List<String> implementedClassNames) {
 
@@ -532,6 +609,14 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return javaMethods;
 	}
 
+	private synchronized String _getRootDirName(String absolutePath) {
+		if (_rootDirName == null) {
+			_rootDirName = SourceUtil.getRootDirName(absolutePath);
+		}
+
+		return _rootDirName;
+	}
+
 	private static final String _ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY =
 		"allowedImmediateAttributeClassNames";
 
@@ -557,6 +642,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		Pattern.compile("\\s(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
+
+	private Map<String, String> _bundleSymbolicNamesMap;
+	private String _rootDirName;
 
 	private class AnnotationParameterPropertyComparator
 		extends NaturalOrderStringComparator {

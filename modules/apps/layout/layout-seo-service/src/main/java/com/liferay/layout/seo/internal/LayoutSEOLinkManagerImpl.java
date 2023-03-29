@@ -21,7 +21,6 @@ import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -236,7 +235,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		}
 
 		return _merge(
-			subtitleListMergeable.mergeToString(StringPool.SPACE),
+			subtitleListMergeable.mergeToString(_SEPARATOR),
 			_getTitle(layout, titleListMergeable, locale));
 	}
 
@@ -291,15 +290,17 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		}
 
 		if (titleListMergeable != null) {
-			return titleListMergeable.mergeToString(StringPool.SPACE);
+			return titleListMergeable.mergeToString(_SEPARATOR);
 		}
 
 		return layout.getHTMLTitle(_language.getLanguageId(locale));
 	}
 
 	private String _merge(String... strings) {
-		return StringUtil.merge(strings, " - ");
+		return StringUtil.merge(strings, _SEPARATOR);
 	}
+
+	private static final String _SEPARATOR = " - ";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSEOLinkManagerImpl.class);

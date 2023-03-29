@@ -188,16 +188,16 @@ public class ObjectDefinitionNotificationTermEvaluator
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
-		String partial = StringUtil.extractFirst(
-			StringUtil.removeSubstrings(termName, "[%"), StringPool.UNDERLINE);
-
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.
 					getObjectRelationshipsByObjectDefinitionId2(
 						_objectDefinition.getObjectDefinitionId())) {
 
 			if (!StringUtil.equalsIgnoreCase(
-					objectRelationship.getName(), partial)) {
+					objectRelationship.getName(),
+					StringUtil.extractFirst(
+						StringUtil.removeSubstrings(termName, "[%"),
+						StringPool.UNDERLINE))) {
 
 				continue;
 			}
@@ -216,30 +216,37 @@ public class ObjectDefinitionNotificationTermEvaluator
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
+			String objectRelationshipNameUpperCase = StringUtil.extractFirst(
+				StringUtil.removeSubstrings(termName, "[%"),
+				StringPool.UNDERLINE);
+
 			if (!objectDefinition.isSystem()) {
 				_objectEntry = _objectEntryLocalService.getObjectEntry(
 					GetterUtil.getLong(termValues.get(objectField.getName())));
 
 				return _getTermValue(
-					_objectEntry.getValues(), partial, termName);
+					_objectEntry.getValues(),
+					StringUtil.removeSubstrings(
+						termName,
+						objectRelationshipNameUpperCase + StringPool.UNDERLINE,
+						"[%", "%]"));
 			}
 
 			return _getTermValue(
 				_objectEntryLocalService.getSystemModelAttributes(
 					objectDefinition,
 					GetterUtil.getLong(termValues.get(objectField.getName()))),
-				partial, termName);
+				StringUtil.removeSubstrings(
+					termName,
+					objectRelationshipNameUpperCase + StringPool.UNDERLINE,
+					"[%", "%]"));
 		}
 
 		return null;
 	}
 
-	private String _getTermValue(
-			Map<String, ?> map, String partial, String termName)
+	private String _getTermValue(Map<String, ?> map, String partialTermName)
 		throws PortalException {
-
-		String partialTermName = StringUtil.removeSubstrings(
-			termName, partial + StringPool.UNDERLINE, "[%", "%]");
 
 		String termValue = _getTermValue(
 			partialTermName,

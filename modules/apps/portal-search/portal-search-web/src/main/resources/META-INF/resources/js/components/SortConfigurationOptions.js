@@ -136,12 +136,12 @@ function Inputs({index, onInputSetItemChange, value}) {
 	return (
 		<>
 			<ClayInput.GroupItem>
-				<label htmlFor="indexedFieldName">
-					{Liferay.Language.get('indexed-field-name')}
+				<label htmlFor="indexedField">
+					{Liferay.Language.get('indexed-field')}
 				</label>
 
 				<ClayInput
-					id="indexedFieldName"
+					id="indexedField"
 					onChange={_handleChangeValue('field')}
 					type="text"
 					value={value.field || ''}

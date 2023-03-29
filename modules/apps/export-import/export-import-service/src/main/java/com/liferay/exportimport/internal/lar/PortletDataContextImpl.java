@@ -2648,9 +2648,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
-		_xStreamConfigurators =
-			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
-
 		try {
 			Class<?> timestampClass = classLoader.loadClass(
 				"com.sybase.jdbc4.tds.SybTimestamp");
@@ -2670,13 +2667,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 			new ConverterAdapter(new TimestampConverter()),
 			XStream.PRIORITY_VERY_HIGH);
 
-		if (_xStreamConfigurators.isEmpty()) {
+		Set<XStreamConfigurator> xStreamConfigurators =
+			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
+
+		if (xStreamConfigurators.isEmpty()) {
 			return;
 		}
 
 		List<String> allowedTypeNames = new ArrayList<>();
 
-		for (XStreamConfigurator xStreamConfigurator : _xStreamConfigurators) {
+		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
 			List<XStreamAlias> xStreamAliases =
 				xStreamConfigurator.getXStreamAliases();
 
@@ -2789,7 +2789,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private static ClassLoader _classLoader;
 	private static long _modifiedCount;
 	private static transient XStream _xStream;
-	private static Set<XStreamConfigurator> _xStreamConfigurators;
 
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
 	private final Set<Long> _assetLinkIds = new HashSet<>();

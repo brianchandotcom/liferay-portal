@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_REFERENCE_DEFAULT_VALUE</td>
+	<td>//*[label[contains(.,'Field Reference')]]//input[contains(@value,'Text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELDS_GROUP_FIELD_WITH_DEPTH</td>
 	<td>//div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][contains(@class, 'ddm-label')][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}] | //div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][not(contains(@class, 'ddm-label'))][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth} + 1]</td>
 	<td></td>

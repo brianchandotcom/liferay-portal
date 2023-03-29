@@ -103,10 +103,13 @@ definition {
 
 		Button.click(button = "Save");
 
-		AssertTextEquals.assertPartialText(
-			key_alertMessage = "Invalid characters were defined for field",
-			locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-			value1 = "Invalid characters were defined for field");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.openField(fieldLabel = "Text");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertVisible(locator1 = "DataEngineBuilder#FIELD_REFERENCE_DEFAULT_VALUE");
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be blank for the Options of a field."
@@ -170,7 +173,10 @@ definition {
 
 		Button.click(button = "Save");
 
-		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+		AssertTextEquals.assertPartialText(
+			key_alertMessage = "The definition field name ${textReference} was defined more than once",
+			locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+			value1 = "The definition field name ${textReference} was defined more than once");
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be the same for two Options of fields."

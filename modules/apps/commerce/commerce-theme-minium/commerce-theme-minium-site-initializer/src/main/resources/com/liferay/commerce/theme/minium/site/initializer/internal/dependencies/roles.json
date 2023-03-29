@@ -199,6 +199,12 @@
 			},
 			{
 				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.model.CommerceOrder"
+			},
+			{
+				"actionIds": [
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"

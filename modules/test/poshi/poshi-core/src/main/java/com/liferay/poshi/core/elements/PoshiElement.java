@@ -922,6 +922,10 @@ public abstract class PoshiElement
 	protected boolean isVarAssignedToMacroInvocation(String poshiScript) {
 		poshiScript = poshiScript.trim();
 
+		if (!poshiScript.startsWith("var")) {
+			return false;
+		}
+
 		String value = getValueFromAssignment(poshiScript);
 
 		if (isValidPoshiScriptStatement(

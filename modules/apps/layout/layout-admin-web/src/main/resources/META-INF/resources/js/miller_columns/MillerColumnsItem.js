@@ -204,29 +204,37 @@ const MillerColumnsItem = ({
 	const [layoutActionsActive, setLayoutActionsActive] = useState(false);
 
 	const dropdownActions = useMemo(() => {
+		const updateItem = (item) => {
+			const newItem = {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action]?.(item.data);
+					}
+				},
+				symbolLeft: item.icon,
+			};
+
+			if (Array.isArray(item.items)) {
+				newItem.items = item.items.map(updateItem);
+			}
+
+			return newItem;
+		};
+
 		const dropdownActions = actions.map((action) => {
 			return {
 				...action,
-				items: action.items?.map((child) => {
-					return {
-						...child,
-						onClick(event) {
-							const action = child.data?.action;
-
-							if (action) {
-								event.preventDefault();
-
-								ACTIONS[action](child.data, namespace);
-							}
-						},
-						symbolLeft: child.icon,
-					};
-				}),
+				items: action.items?.map(updateItem),
 			};
 		});
 
 		return addSeparators(filterEmptyGroups(dropdownActions));
-	}, [actions, namespace]);
+	}, [actions]);
 
 	const layoutActions = useMemo(() => {
 		return quickActions.filter(

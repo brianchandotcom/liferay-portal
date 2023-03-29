@@ -14,31 +14,30 @@
 
 import ACTIONS from './actions';
 
-export default function propsTransformer({
-	items,
-	portletNamespace,
-	...otherProps
-}) {
+export default function propsTransformer({items, ...otherProps}) {
+	const updateItem = (item) => {
+		const newItem = {
+			...item,
+			onClick(event) {
+				const action = item.data?.action;
+
+				if (action) {
+					event.preventDefault();
+
+					ACTIONS[action]?.(item.data);
+				}
+			},
+		};
+
+		if (Array.isArray(item.items)) {
+			newItem.items = item.items.map(updateItem);
+		}
+
+		return newItem;
+	};
+
 	return {
 		...otherProps,
-		items: items.map((item) => {
-			return {
-				...item,
-				items: item.items?.map((child) => {
-					return {
-						...child,
-						onClick(event) {
-							const action = child.data?.action;
-
-							if (action) {
-								event.preventDefault();
-
-								ACTIONS[action](child.data, portletNamespace);
-							}
-						},
-					};
-				}),
-			};
-		}),
+		items: items.map(updateItem),
 	};
 }

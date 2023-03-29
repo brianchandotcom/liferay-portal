@@ -93,6 +93,8 @@ public class CIForwardProcessor {
 				return;
 			}
 
+			_pullRequest.addComment(_getSuccessfulCommentBody());
+
 			final String senderUsername;
 
 			try {
@@ -108,7 +110,7 @@ public class CIForwardProcessor {
 				_getCIForwardPullRequestInitialComment();
 
 			Retryable<String> retryable = new Retryable<String>(
-				true, 3, 60, true) {
+				true, 3, (int)(_RETRY_PERIOD / 1000), true) {
 
 				@Override
 				public String execute() {
@@ -119,8 +121,10 @@ public class CIForwardProcessor {
 							_getCIForwardBranchName(), senderUsername,
 							_gitRepositoryDir);
 					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
+					catch (Exception exception) {
+						_pullRequest.addComment(_getRetryCommentBody());
+
+						throw new RuntimeException(exception);
 					}
 				}
 
@@ -458,6 +462,51 @@ public class CIForwardProcessor {
 			propertyNamePrefix + ".required.passing.suites");
 	}
 
+	private String _getRetryCommentBody() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			"errors occurred while attempting to forward pull request to `");
+		sb.append(_recipientUsername);
+		sb.append("`. Retrying in ");
+		sb.append(JenkinsResultsParserUtil.toDurationString(_RETRY_PERIOD));
+		sb.append("...");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+			sb.append("\nSee console log for detail:[Full Console](");
+			sb.append(_consoleLogURL);
+			sb.append(")\n");
+		}
+
+		return sb.toString();
+	}
+
+	private String _getSuccessfulCommentBody() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("All required test suite(s) ");
+
+		if (_force) {
+			sb.append("completed");
+		}
+		else {
+			sb.append("passed");
+		}
+
+		sb.append(".\n");
+		sb.append("Forwarding pull request to `");
+		sb.append(_recipientUsername);
+		sb.append("`.\n");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+			sb.append("[Console](");
+			sb.append(_consoleLogURL);
+			sb.append(")\n");
+		}
+
+		return sb.toString();
+	}
+
 	private Set<String> _getSuiteTestResultGithubComments() throws IOException {
 		Set<String> suiteTestResultGithubComments = new HashSet<>();
 
@@ -574,6 +623,8 @@ public class CIForwardProcessor {
 
 		return true;
 	}
+
+	private static final long _RETRY_PERIOD = 1000L * 60L;
 
 	private final String _consoleLogURL;
 	private final boolean _force;

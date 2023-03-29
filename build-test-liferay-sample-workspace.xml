@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-liferay-sample-workspace" xmlns:antelope="antlib:ise.antelope.tasks">
+	<property name="workspace.name" value="liferay-sample-workspace" />
+
+	<import file="build-test-workspace.xml" />
+</project>

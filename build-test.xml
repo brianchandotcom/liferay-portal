@@ -15417,12 +15417,30 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<if>
+			<isset property="workspace.name" />
+			<then>
+				<ant antfile="build-test-${workspace.name}.xml" target="start-workspace">
+					<property name="workspace.name" value="${workspace.name}" />
+				</ant>
+			</then>
+		</if>
+
 		<antcall target="run-selenium-test" />
 
 		<if>
 			<equals arg1="${analytics.cloud.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="workspace.name" />
+			<then>
+				<ant antfile="build-test-${workspace.name}.xml" target="stop-workspace">
+					<property name="workspace.name" value="${workspace.name}" />
+				</ant>
 			</then>
 		</if>
 

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-workspace" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
+
+	<propertycopy from="workspace.client.extension.names[${workspace.name}]" name="workspace.client.extension.names" />
+
+	<macrodef name="deploy-workspace-client-extension">
+		<attribute name="workspace.client.extension.name" />
+
+		<sequential>
+			<local name="workspace.client.extension.dir" />
+
+			<property name="workspace.client.extension.dir" value="${workspace.dir}/client-extensions/@{workspace.client.extension.name}" />
+
+			<if>
+				<available file="${workspace.client.extension.dir}" />
+				<then>
+					<gradle-execute dir="${workspace.client.extension.dir}" task="clean" />
+
+					<gradle-execute dir="${workspace.client.extension.dir}" task="assemble" />
+
+					<copy
+						file="${workspace.client.extension.dir}/dist/@{workspace.client.extension.name}.zip"
+						todir="${liferay.home}/deploy"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="deploy-workspace-client-extensions">
+		<sequential>
+			<for list="${workspace.client.extension.names}" param="workspace.client.extension.name">
+				<sequential>
+					<deploy-workspace-client-extension workspace.client.extension.name="@{workspace.client.extension.name}" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-workspace">
+		<sequential>
+			<deploy-workspace-client-extensions />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-workspace">
+		<sequential>
+		</sequential>
+	</macrodef>
+
+	<target name="start-workspace">
+		<stop-workspace />
+
+		<start-workspace />
+	</target>
+
+	<target name="stop-workspace">
+		<stop-workspace />
+	</target>
+</project>

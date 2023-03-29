@@ -43,7 +43,6 @@ public class OutdatedPublishedCTCollectionUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.setTime(new Date());
 		calendar.add(Calendar.MONTH, -6);
 
 		Date cutoffDate = calendar.getTime();

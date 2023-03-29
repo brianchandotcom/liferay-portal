@@ -8,6 +8,19 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "Partner_Account__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account External Reference Code"
+			},
+			"name": "accountExternalReferenceCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "Partner_Account_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,

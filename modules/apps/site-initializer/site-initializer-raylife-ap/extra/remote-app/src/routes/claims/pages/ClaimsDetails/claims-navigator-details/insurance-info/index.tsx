@@ -32,7 +32,8 @@ const InsuranceInfo = (claimData: ClaimTypeJSON) => {
 			const detailsJSON = JSON.parse(dataClaimsJSON.dataJSON);
 
 			setClaimDetails(detailsJSON.Detail.InsuranceInfo);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	}, [claimData]);

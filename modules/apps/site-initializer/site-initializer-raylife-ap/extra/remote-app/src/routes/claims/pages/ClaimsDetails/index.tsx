@@ -119,7 +119,6 @@ const ClaimDetails = () => {
 		if (claimId) {
 			getClaimsData(claimId).then((response) => {
 				const claimData = response?.data;
-
 				const claimStatus = claimData?.claimStatus?.key;
 
 				claimStatus === 'settled'
@@ -127,7 +126,6 @@ const ClaimDetails = () => {
 					: setIsClaimSettled(false);
 
 				selectCurrentStep(claimStatus);
-
 				setClaimData(claimData);
 			});
 		}
@@ -181,7 +179,7 @@ const ClaimDetails = () => {
 							</div>
 						)}
 
-						<ClaimNavigator />
+						<ClaimNavigator dataJSON={claimData} />
 					</div>
 				</>
 			)}

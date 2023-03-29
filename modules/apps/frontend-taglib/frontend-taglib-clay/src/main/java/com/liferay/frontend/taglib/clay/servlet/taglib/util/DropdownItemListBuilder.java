@@ -89,6 +89,26 @@ public class DropdownItemListBuilder {
 			unsafeSupplier, unsafeConsumer);
 	}
 
+	public static DropdownItemListWrapper addContextual(
+		UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.addContextual(unsafeConsumer);
+	}
+
+	public static DropdownItemListWrapper addContextual(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.addContextual(
+			unsafeSupplier, unsafeConsumer);
+	}
+
 	public static DropdownItemListWrapper addGroup(
 		UnsafeConsumer<DropdownGroupItem, Exception> unsafeConsumer) {
 
@@ -222,6 +242,30 @@ public class DropdownItemListBuilder {
 			try {
 				if (unsafeSupplier.get()) {
 					_dropdownItemList.addCheckbox(unsafeConsumer);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return this;
+		}
+
+		public DropdownItemListWrapper addContextual(
+			UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+
+			_dropdownItemList.addContextual(unsafeConsumer);
+
+			return this;
+		}
+
+		public DropdownItemListWrapper addContextual(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.addContextual(unsafeConsumer);
 				}
 			}
 			catch (Exception exception) {

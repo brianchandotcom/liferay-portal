@@ -2667,7 +2667,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			new ConverterAdapter(new TimestampConverter()),
 			XStream.PRIORITY_VERY_HIGH);
 
-		Set<XStreamConfigurator> xStreamConfigurators =
+		List<XStreamConfigurator> xStreamConfigurators =
 			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
 
 		if (xStreamConfigurators.isEmpty()) {

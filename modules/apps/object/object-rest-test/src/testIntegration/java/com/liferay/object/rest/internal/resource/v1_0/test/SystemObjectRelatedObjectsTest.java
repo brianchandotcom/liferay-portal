@@ -62,6 +62,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -276,6 +277,58 @@ public class SystemObjectRelatedObjectsTest {
 			objectRelationship);
 	}
 
+	@Ignore
+	@Test
+	public void testPostSystemObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, _userSystemObjectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			JSONFactoryUtil.createJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString()));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_getLocation(), StringPool.SLASH, systemObjectEntryId),
+			Http.Method.GET);
+
+		Assert.assertEquals(
+			jsonObject.getString(
+				StringBundler.concat(
+					"r_", objectRelationship.getName(), "_",
+					StringUtil.replaceLast(
+						_objectDefinition.getPKObjectFieldName(), "Id",
+						"ERC"))),
+			_ERC_VALUE_1);
+
+		_assertObjectEntryField(
+			_getObjectEntryByExternalReferenceCodeJSONObject(_ERC_VALUE_1),
+			_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+	}
+
 	@Test
 	public void testPostSystemObjectWithObjectRelationshipName()
 		throws Exception {
@@ -336,6 +389,63 @@ public class SystemObjectRelatedObjectsTest {
 
 		_testPutSystemObjectEntryWithNestedCustomObjectEntries(
 			objectRelationship);
+	}
+
+	@Ignore
+	@Test
+	public void testPutSystemObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, _userSystemObjectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			JSONFactoryUtil.createJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString()));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		UserAccount newUserAccount = _randomUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			newUserAccount.toString());
+
+		JSONObject newObjectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			JSONFactoryUtil.createJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString()));
+
+		HTTPTestUtil.invoke(
+			newObjectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_getLocation(), StringPool.SLASH, systemObjectEntryId),
+			Http.Method.PUT);
+
+		_assertObjectEntryField(
+			_getObjectEntryByExternalReferenceCodeJSONObject(_ERC_VALUE_1),
+			_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	private ObjectRelationship _addObjectRelationship(
@@ -421,6 +531,18 @@ public class SystemObjectRelatedObjectsTest {
 		return StringBundler.concat(
 			_getLocation(), StringPool.SLASH, userId, "?nestedFields=",
 			objectRelationshipName);
+	}
+
+	private JSONObject _getObjectEntryByExternalReferenceCodeJSONObject(
+			String externalReferenceCode)
+		throws Exception {
+
+		return HTTPTestUtil.invoke(
+			null,
+			com.liferay.portal.kernel.util.StringBundler.concat(
+				_objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/", externalReferenceCode),
+			Http.Method.GET);
 	}
 
 	private UserAccount _randomUserAccount() throws Exception {

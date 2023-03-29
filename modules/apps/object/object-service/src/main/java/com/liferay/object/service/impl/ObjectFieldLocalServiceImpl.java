@@ -358,6 +358,12 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public Column<?, ?> getColumn(long objectDefinitionId, String name) {
 		try {
+			if (StringUtil.equals(
+					name, ObjectEntryTable.INSTANCE.userId.getName())) {
+
+				return ObjectEntryTable.INSTANCE.getColumn(name);
+			}
+
 			ObjectField objectField = fetchObjectField(
 				objectDefinitionId, name);
 

@@ -19,14 +19,10 @@ import com.liferay.account.admin.web.internal.security.permission.resource.Accou
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joao Victor Alves
@@ -50,11 +46,6 @@ public class AccountEntryOrganizationsScreenNavigationEntry
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "organizations");
-	}
-
-	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
 		if (accountEntry.isNew()) {
 			return false;
@@ -65,8 +56,5 @@ public class AccountEntryOrganizationsScreenNavigationEntry
 			accountEntry.getAccountEntryId(),
 			AccountActionKeys.VIEW_ORGANIZATIONS);
 	}
-
-	@Reference
-	private Language _language;
 
 }

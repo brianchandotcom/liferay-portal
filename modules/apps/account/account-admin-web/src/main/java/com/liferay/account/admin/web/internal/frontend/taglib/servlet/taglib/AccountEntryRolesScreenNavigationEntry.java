@@ -21,15 +21,12 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joao Victor Alves
@@ -52,11 +49,6 @@ public class AccountEntryRolesScreenNavigationEntry
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "roles");
-	}
-
-	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
 		if (accountEntry.isNew() ||
 			!AllowEditAccountRoleThreadLocal.isAllowEditAccountRole() ||
@@ -72,8 +64,5 @@ public class AccountEntryRolesScreenNavigationEntry
 			accountEntry.getAccountEntryId(),
 			AccountActionKeys.VIEW_ACCOUNT_ROLES);
 	}
-
-	@Reference
-	private Language _language;
 
 }

@@ -74,7 +74,7 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
-		_layoutCopyHelper.copyLayout(
+		_layoutCopyHelper.copyLayoutContent(
 			new long[] {segmentsExperienceId}, draftLayout, layout);
 
 		hideDefaultSuccessMessage(actionRequest);

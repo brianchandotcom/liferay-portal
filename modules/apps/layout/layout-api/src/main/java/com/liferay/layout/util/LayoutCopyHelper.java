@@ -24,14 +24,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutCopyHelper {
 
-	public Layout copyLayout(Layout sourceLayout, Layout targetLayout)
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
 
-	public Layout copyLayout(
+	public Layout copyLayoutContent(
 			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
 		throws Exception;
 
-	public Layout copyLayout(
+	public Layout copyLayoutContent(
 			long[] segmentsExperienceIds, Layout sourceLayout,
 			Layout targetLayout)
 		throws Exception;

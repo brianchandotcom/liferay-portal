@@ -121,9 +121,10 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 		Layout draftTargetLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), targetLayout.getPlid());
 
-		_layoutCopyHelper.copyLayout(draftSourceLayout, draftTargetLayout);
+		_layoutCopyHelper.copyLayoutContent(
+			draftSourceLayout, draftTargetLayout);
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		return layoutPageTemplateEntry;
 	}

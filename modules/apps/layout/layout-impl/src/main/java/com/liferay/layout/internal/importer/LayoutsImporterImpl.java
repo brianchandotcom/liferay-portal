@@ -1536,7 +1536,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
 
 		_layoutLocalService.updateStatus(
 			draftLayout.getUserId(), draftLayout.getPlid(),

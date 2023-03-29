@@ -264,7 +264,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			Layout layout = _layoutLocalService.getLayout(
 				draftLayout.getClassPK());
 
-			_layoutCopyHelper.copyLayout(draftLayout, layout);
+			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 
 			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
@@ -364,7 +364,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		}
 
 		try {
-			return _layoutCopyHelper.copyLayout(layout, draftLayout);
+			return _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

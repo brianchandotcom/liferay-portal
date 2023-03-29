@@ -475,7 +475,7 @@ public class LayoutsAdminDisplayContext {
 			unicodeProperties.toString(), true, true, Collections.emptyMap(),
 			layout.getMasterLayoutPlid(), serviceContext);
 
-		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
 
 		serviceContext.setAttribute("published", Boolean.TRUE);
 

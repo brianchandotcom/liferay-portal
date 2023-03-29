@@ -137,7 +137,7 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 			UnicodeProperties originalTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			_layoutCopyHelper.copyLayout(draftLayout, layout);
+			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 
 			layout = _layoutLocalService.getLayout(layout.getPlid());
 

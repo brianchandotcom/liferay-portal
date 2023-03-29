@@ -906,7 +906,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					draftLayout, settingsJSONObject);
 			}
 
-			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+			layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 
 			_layoutLocalService.updateStatus(
 				layout.getUserId(), draftLayout.getPlid(),

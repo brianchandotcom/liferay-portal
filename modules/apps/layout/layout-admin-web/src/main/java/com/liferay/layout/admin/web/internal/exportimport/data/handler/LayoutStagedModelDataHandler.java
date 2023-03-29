@@ -1181,7 +1181,7 @@ public class LayoutStagedModelDataHandler
 
 		boolean published = layout.isPublished();
 
-		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

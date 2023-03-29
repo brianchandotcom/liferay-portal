@@ -55,7 +55,7 @@ public class LayoutServiceWrapper
 			GuestOrUserUtil.getPermissionChecker(), draftLayout,
 			ActionKeys.UPDATE);
 
-		layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+		layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

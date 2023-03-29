@@ -129,7 +129,7 @@ public class LayoutCopyHelperTest {
 			new long[] {assetCategory.getCategoryId()},
 			new String[] {assetTag.getName()});
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(
@@ -198,7 +198,7 @@ public class LayoutCopyHelperTest {
 				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 					_group.getGroupId(), targetLayout.getPlid())));
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		Assert.assertNotNull(
 			_layoutPageTemplateStructureLocalService.
@@ -223,7 +223,7 @@ public class LayoutCopyHelperTest {
 
 		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.
@@ -243,7 +243,7 @@ public class LayoutCopyHelperTest {
 
 		targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.
@@ -309,7 +309,7 @@ public class LayoutCopyHelperTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		_layoutCopyHelper.copyLayout(
+		_layoutCopyHelper.copyLayoutContent(
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				sourceLayout.getPlid()),
 			sourceLayout, targetLayout);
@@ -349,7 +349,8 @@ public class LayoutCopyHelperTest {
 		Assert.assertNotEquals(
 			sourceLayout.getIconImageId(), targetLayout.getIconImageId());
 
-		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		targetLayout = _layoutCopyHelper.copyLayoutContent(
+			sourceLayout, targetLayout);
 
 		Assert.assertTrue(sourceLayout.isIconImage());
 		Assert.assertTrue(targetLayout.isIconImage());
@@ -382,7 +383,8 @@ public class LayoutCopyHelperTest {
 
 		Assert.assertNotEquals(sourceLayout.getCss(), targetLayout.getCss());
 
-		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		targetLayout = _layoutCopyHelper.copyLayoutContent(
+			sourceLayout, targetLayout);
 
 		Assert.assertEquals(
 			sourceLayout.getThemeId(), targetLayout.getThemeId());
@@ -416,7 +418,7 @@ public class LayoutCopyHelperTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		targetPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
@@ -452,7 +454,7 @@ public class LayoutCopyHelperTest {
 			targetUnicodeProperties.getProperty(
 				"lfr-theme:regular:show-header"));
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		targetLayout = _layoutLocalService.fetchLayout(targetLayout.getPlid());
 

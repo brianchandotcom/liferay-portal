@@ -96,10 +96,10 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Override
-	public Layout copyLayout(Layout sourceLayout, Layout targetLayout)
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		return copyLayout(
+		return copyLayoutContent(
 			TransformUtil.transformToLongArray(
 				_segmentsExperienceLocalService.getSegmentsExperiences(
 					sourceLayout.getGroupId(),
@@ -110,7 +110,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	@Override
-	public Layout copyLayout(
+	public Layout copyLayoutContent(
 			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
@@ -156,7 +156,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	@Override
-	public Layout copyLayout(
+	public Layout copyLayoutContent(
 			long[] segmentsExperiencesIds, Layout sourceLayout,
 			Layout targetLayout)
 		throws Exception {

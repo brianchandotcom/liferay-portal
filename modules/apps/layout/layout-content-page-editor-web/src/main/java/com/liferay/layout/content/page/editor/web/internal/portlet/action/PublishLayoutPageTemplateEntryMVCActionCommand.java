@@ -110,7 +110,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		LayoutStructureUtil.deleteMarkedForDeletionItems(
 			draftLayout.getGroupId(), draftLayout.getPlid());
 
-		_layoutCopyHelper.copyLayout(draftLayout, layout);
+		_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 

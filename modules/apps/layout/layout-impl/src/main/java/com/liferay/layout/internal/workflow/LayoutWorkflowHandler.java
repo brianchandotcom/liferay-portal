@@ -119,7 +119,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		try {
 			PrincipalThreadLocal.setName(userId);
 
-			_layoutCopyHelper.copyLayout(draftLayout, layout);
+			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

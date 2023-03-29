@@ -206,7 +206,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				layoutPageTemplateEntryLayout.getGroupId(),
 				layoutPageTemplateEntryLayout.getPlid(), true);
 
-		draftLayout = _layoutCopyHelper.copyLayout(
+		draftLayout = _layoutCopyHelper.copyLayoutContent(
 			layoutPageTemplateEntryLayout, draftLayout);
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -220,7 +220,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		_layoutLocalService.updateLayout(draftLayout);
 
-		_layoutCopyHelper.copyLayout(layoutPageTemplateEntryLayout, layout);
+		_layoutCopyHelper.copyLayoutContent(
+			layoutPageTemplateEntryLayout, layout);
 
 		return null;
 	}

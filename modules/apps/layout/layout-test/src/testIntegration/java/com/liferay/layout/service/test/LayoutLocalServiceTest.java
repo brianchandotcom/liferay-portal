@@ -189,7 +189,7 @@ public class LayoutLocalServiceTest {
 				Collections.emptyMap(), publishedLayout.getMasterLayoutPlid(),
 				serviceContext);
 
-			draftLayout = _layoutCopyHelper.copyLayout(
+			draftLayout = _layoutCopyHelper.copyLayoutContent(
 				publishedLayout, draftLayout);
 		}
 

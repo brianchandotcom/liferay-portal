@@ -134,7 +134,7 @@ public class LayoutPageTemplateEntryServiceImpl
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		_layoutCopyHelper.copyLayout(
+		_layoutCopyHelper.copyLayoutContent(
 			segmentsExperienceId, sourceLayout, layout.fetchDraftLayout());
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(

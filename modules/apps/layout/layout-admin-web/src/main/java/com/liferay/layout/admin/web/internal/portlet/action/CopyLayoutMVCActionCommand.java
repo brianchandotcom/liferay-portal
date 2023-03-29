@@ -105,13 +105,13 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, nameMap, false, false, false,
 				sourcePlid, serviceContext);
 
-			targetLayout = _layoutCopyHelper.copyLayout(
+			targetLayout = _layoutCopyHelper.copyLayoutContent(
 				sourceLayout, targetLayout);
 
 			Layout draftLayout = targetLayout.fetchDraftLayout();
 
 			if (draftLayout != null) {
-				_layoutCopyHelper.copyLayout(targetLayout, draftLayout);
+				_layoutCopyHelper.copyLayoutContent(targetLayout, draftLayout);
 			}
 
 			if (Validator.isNull(redirect)) {

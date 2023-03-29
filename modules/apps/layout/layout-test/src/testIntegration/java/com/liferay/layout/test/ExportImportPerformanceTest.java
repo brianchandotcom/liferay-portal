@@ -271,7 +271,7 @@ public class ExportImportPerformanceTest {
 
 			_layoutLocalService.updateLayout(layoutPrototypeLayout);
 
-			_layoutCopyHelper.copyLayout(layout, layoutPrototypeLayout);
+			_layoutCopyHelper.copyLayoutContent(layout, layoutPrototypeLayout);
 
 			layout.setLayoutPrototypeUuid(layoutPrototype.getUuid());
 			layout.setLayoutPrototypeLinkEnabled(true);
@@ -419,7 +419,7 @@ public class ExportImportPerformanceTest {
 				defaultSegmentsExperienceId,
 				_generateContentLayoutStructureJSONObject(draftLayout));
 
-		_layoutCopyHelper.copyLayout(draftLayout, layout);
+		_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 	}
 
 	private JournalArticle _addJournalArticle() throws Exception {

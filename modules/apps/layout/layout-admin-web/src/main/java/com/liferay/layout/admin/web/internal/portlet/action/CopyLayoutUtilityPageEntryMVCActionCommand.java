@@ -113,10 +113,10 @@ public class CopyLayoutUtilityPageEntryMVCActionCommand
 		Layout targetLayout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
-		_layoutCopyHelper.copyLayout(
+		_layoutCopyHelper.copyLayoutContent(
 			sourceLayout.fetchDraftLayout(), targetLayout.fetchDraftLayout());
 
-		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
 		return layoutUtilityPageEntry;
 	}

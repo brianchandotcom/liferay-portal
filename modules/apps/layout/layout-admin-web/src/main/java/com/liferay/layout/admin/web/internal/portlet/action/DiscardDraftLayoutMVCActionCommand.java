@@ -98,7 +98,7 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean published = layout.isPublished();
 
-		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);

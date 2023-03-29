@@ -598,7 +598,12 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationship.getObjectRelationshipId(),
 					serviceBuilderObjectEntry.getPrimaryKey(),
 					pagination.getStartPosition(),
-					pagination.getEndPosition())));
+					pagination.getEndPosition())),
+			pagination,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				serviceBuilderObjectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(),
+				serviceBuilderObjectEntry.getPrimaryKey()));
 	}
 
 	@Override
@@ -637,7 +642,12 @@ public class DefaultObjectEntryManagerImpl
 					baseModel, serviceBuilderObjectEntry,
 					_systemObjectDefinitionMetadataRegistry.
 						getSystemObjectDefinitionMetadata(
-							relatedObjectDefinition.getName()))));
+							relatedObjectDefinition.getName()))),
+			pagination,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				serviceBuilderObjectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(),
+				serviceBuilderObjectEntry.getPrimaryKey()));
 	}
 
 	@Override
@@ -963,7 +973,11 @@ public class DefaultObjectEntryManagerImpl
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
 					objectEntryId, pagination.getStartPosition(),
-					pagination.getEndPosition())));
+					pagination.getEndPosition())),
+			pagination,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				groupId, objectRelationship.getObjectRelationshipId(),
+				objectEntryId));
 	}
 
 	private boolean _hasRelatedObjectEntries(

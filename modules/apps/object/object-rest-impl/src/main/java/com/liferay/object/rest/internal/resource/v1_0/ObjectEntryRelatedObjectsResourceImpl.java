@@ -135,7 +135,8 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			transform(
 				page.getItems(),
 				objectEntry -> _getRelatedObjectEntry(
-					relatedObjectDefinition, objectEntry)));
+					relatedObjectDefinition, objectEntry)),
+			pagination, page.getTotalCount());
 	}
 
 	@Override

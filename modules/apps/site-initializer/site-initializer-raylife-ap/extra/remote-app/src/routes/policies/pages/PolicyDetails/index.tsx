@@ -14,14 +14,15 @@
 
 import {useEffect, useState} from 'react';
 
+import ActivitiesComponent from '../../../../common/components/activities-table-list';
 import {
 	getApplicationsById,
 	getPolicyByExternalReferenceCode,
 } from '../../../../common/services';
 import {getQuotesById} from '../../../../common/services/Quote';
-import Activities from '../components/Activities';
+import policyDataActivities from '../components/Activities/policyDataActivities';
 import PolicyActiveClaims from '../components/PolicyActiveClaims';
-import PolicyDetail from '../components/PolicyDetail';
+import PolicyDetail from '../components/PolicyPanel';
 import PolicySummary from '../components/PolicySummary';
 interface PolicySummary {
 	boundDate: Date;
@@ -106,7 +107,9 @@ const PolicyDetails = () => {
 				id={policy?.data?.id}
 			/>
 
-			<Activities />
+			<div className="policy-detail-content">
+				<ActivitiesComponent activitiesData={policyDataActivities} />
+			</div>
 		</div>
 	);
 };

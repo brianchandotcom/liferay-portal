@@ -111,8 +111,7 @@
 
 	@media screen and (max-width: 700px) {
 		.layout-show-details,
-		.history-detail-border,
-		.layout-panel {
+		.history-detail-border {
 			display: flex !important;
 			flex-wrap: wrap !important;
 			float: none !important;
@@ -124,15 +123,6 @@
 			float: none !important;
 			padding-bottom: 10px !important;
 			width: auto !important;
-		}
-		.container-button-panel {
-			align-items: center;
-			display: flex;
-			float: right;
-			justify-content: center;
-			padding-top: 7px;
-			text-align: center;
-			width: 100% !important;
 		}
 	}
 }

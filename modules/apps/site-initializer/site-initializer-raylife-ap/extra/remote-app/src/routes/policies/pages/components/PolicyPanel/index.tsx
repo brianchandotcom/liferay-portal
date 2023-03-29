@@ -18,10 +18,11 @@ import './index.scss';
 import {useEffect, useState} from 'react';
 
 import NavigationBar from '../../../../../common/components/navigation-bar';
+import PanelComponent from '../../../../../common/components/panel';
 import sortedByDate from '../../../../../common/utils/sortedByDate';
 import {getWebDavUrl} from '../../../../../common/utils/webdav';
-import arrayOfHistory from './DataHistory';
-import Panel from './Panel';
+import arrayOfHistory from './policyPanelDataHistory';
+
 type ApplicationPolicyDetailsType = {
 	dataJSON: string;
 	email: string;
@@ -79,8 +80,7 @@ const PolicyDetail = ({
 		try {
 			const newDataJSON = JSON.parse(dataJSON);
 			setApplicationData(newDataJSON);
-		}
-		catch (error) {
+		} catch (error) {
 			console.warn(error);
 		}
 	}, [dataJSON]);
@@ -320,7 +320,7 @@ const PolicyDetail = ({
 											{item.date}
 										</div>
 										<div className="w-100">
-											<Panel
+											<PanelComponent
 												Description={
 													<ContentDescription
 														description={
@@ -369,7 +369,7 @@ const PolicyDetail = ({
 														</div>
 													</div>
 												</div>
-											</Panel>
+											</PanelComponent>
 										</div>
 									</div>
 								</div>

@@ -14,7 +14,7 @@
 
 import sortedDateByDescOrder from '../../../../../common/utils/sortedDateByDescOrder';
 
-const activities = [
+const policyDataActivities = [
 	{
 		activity: 'Requested driving history',
 		by: 'Scott Producer (Producer)',
@@ -52,4 +52,4 @@ const activities = [
 	},
 ].sort(sortedDateByDescOrder);
 
-export default activities;
+export default policyDataActivities;

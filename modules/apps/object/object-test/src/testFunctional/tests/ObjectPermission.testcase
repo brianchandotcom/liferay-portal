@@ -1573,7 +1573,9 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		CreateObject.viewObject(labelName = "Picklist Test");
+		Click(
+			key_labelName = "Picklist Test",
+			locator1 = "CreateObject#VIEW_OBJECT");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
@@ -1914,7 +1916,9 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		CreateObject.viewObject(labelName = "Custom Picklist 148939");
+		Click(
+			key_labelName = "Custom Picklist 148939",
+			locator1 = "CreateObject#VIEW_OBJECT");
 
 		Picklist.updatePicklistName(picklistName = "Update Custom Picklist");
 
@@ -1972,7 +1976,9 @@ definition {
 
 		Picklist.assertPicklist(picklistName = "Picklist Test");
 
-		CreateObject.viewObject(labelName = "Picklist Test");
+		Click(
+			key_labelName = "Picklist Test",
+			locator1 = "CreateObject#VIEW_OBJECT");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 

@@ -34323,7 +34323,6 @@ public class JournalArticlePersistenceImpl
 		ctStrictColumnNames.add("version");
 		ctStrictColumnNames.add("urlTitle");
 		ctStrictColumnNames.add("DDMStructureId");
-		ctStrictColumnNames.add("DDMStructureKey");
 		ctStrictColumnNames.add("DDMTemplateKey");
 		ctStrictColumnNames.add("defaultLanguageId");
 		ctStrictColumnNames.add("layoutUuid");

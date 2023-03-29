@@ -19,7 +19,6 @@ create table JournalArticle (
 	version DOUBLE,
 	urlTitle VARCHAR(255) null,
 	DDMStructureId LONG,
-	DDMStructureKey VARCHAR(75) null,
 	DDMTemplateKey VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	layoutUuid VARCHAR(75) null,

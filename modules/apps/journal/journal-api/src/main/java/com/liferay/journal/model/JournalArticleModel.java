@@ -408,21 +408,6 @@ public interface JournalArticleModel
 	public void setDDMStructureId(long DDMStructureId);
 
 	/**
-	 * Returns the ddm structure key of this journal article.
-	 *
-	 * @return the ddm structure key of this journal article
-	 */
-	@AutoEscape
-	public String getDDMStructureKey();
-
-	/**
-	 * Sets the ddm structure key of this journal article.
-	 *
-	 * @param DDMStructureKey the ddm structure key of this journal article
-	 */
-	public void setDDMStructureKey(String DDMStructureKey);
-
-	/**
 	 * Returns the ddm template key of this journal article.
 	 *
 	 * @return the ddm template key of this journal article

@@ -28,7 +28,6 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="DDMStructureId" type="long" />
-		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="layoutUuid" type="String" />

@@ -164,8 +164,6 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setDDMStructureId(RandomTestUtil.nextLong());
 
-		newJournalArticle.setDDMStructureKey(RandomTestUtil.randomString());
-
 		newJournalArticle.setDDMTemplateKey(RandomTestUtil.randomString());
 
 		newJournalArticle.setDefaultLanguageId(RandomTestUtil.randomString());
@@ -258,9 +256,6 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticle.getDDMStructureId(),
 			newJournalArticle.getDDMStructureId());
-		Assert.assertEquals(
-			existingJournalArticle.getDDMStructureKey(),
-			newJournalArticle.getDDMStructureKey());
 		Assert.assertEquals(
 			existingJournalArticle.getDDMTemplateKey(),
 			newJournalArticle.getDDMTemplateKey());
@@ -734,12 +729,12 @@ public class JournalArticlePersistenceTest {
 			true, "modifiedDate", true, "externalReferenceCode", true,
 			"folderId", true, "classNameId", true, "classPK", true, "treePath",
 			true, "articleId", true, "version", true, "urlTitle", true,
-			"DDMStructureId", true, "DDMStructureKey", true, "DDMTemplateKey",
-			true, "defaultLanguageId", true, "layoutUuid", true, "displayDate",
-			true, "expirationDate", true, "reviewDate", true, "indexable", true,
-			"smallImage", true, "smallImageId", true, "smallImageURL", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"DDMStructureId", true, "DDMTemplateKey", true, "defaultLanguageId",
+			true, "layoutUuid", true, "displayDate", true, "expirationDate",
+			true, "reviewDate", true, "indexable", true, "smallImage", true,
+			"smallImageId", true, "smallImageURL", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -1103,8 +1098,6 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setUrlTitle(RandomTestUtil.randomString());
 
 		journalArticle.setDDMStructureId(RandomTestUtil.nextLong());
-
-		journalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 
 		journalArticle.setDDMTemplateKey(RandomTestUtil.randomString());
 

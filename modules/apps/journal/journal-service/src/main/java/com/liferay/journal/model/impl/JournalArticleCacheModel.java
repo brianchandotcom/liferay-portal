@@ -77,7 +77,7 @@ public class JournalArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -119,8 +119,6 @@ public class JournalArticleCacheModel
 		sb.append(urlTitle);
 		sb.append(", DDMStructureId=");
 		sb.append(DDMStructureId);
-		sb.append(", DDMStructureKey=");
-		sb.append(DDMStructureKey);
 		sb.append(", DDMTemplateKey=");
 		sb.append(DDMTemplateKey);
 		sb.append(", defaultLanguageId=");
@@ -232,13 +230,6 @@ public class JournalArticleCacheModel
 		}
 
 		journalArticleImpl.setDDMStructureId(DDMStructureId);
-
-		if (DDMStructureKey == null) {
-			journalArticleImpl.setDDMStructureKey("");
-		}
-		else {
-			journalArticleImpl.setDDMStructureKey(DDMStructureKey);
-		}
 
 		if (DDMTemplateKey == null) {
 			journalArticleImpl.setDDMTemplateKey("");
@@ -355,7 +346,6 @@ public class JournalArticleCacheModel
 		urlTitle = objectInput.readUTF();
 
 		DDMStructureId = objectInput.readLong();
-		DDMStructureKey = objectInput.readUTF();
 		DDMTemplateKey = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 		layoutUuid = objectInput.readUTF();
@@ -449,13 +439,6 @@ public class JournalArticleCacheModel
 
 		objectOutput.writeLong(DDMStructureId);
 
-		if (DDMStructureKey == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(DDMStructureKey);
-		}
-
 		if (DDMTemplateKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -530,7 +513,6 @@ public class JournalArticleCacheModel
 	public double version;
 	public String urlTitle;
 	public long DDMStructureId;
-	public String DDMStructureKey;
 	public String DDMTemplateKey;
 	public String defaultLanguageId;
 	public String layoutUuid;

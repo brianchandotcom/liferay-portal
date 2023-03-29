@@ -78,10 +78,6 @@ public class JournalArticleTable extends BaseTable<JournalArticleTable> {
 	public final Column<JournalArticleTable, Long> DDMStructureId =
 		createColumn(
 			"DDMStructureId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<JournalArticleTable, String> DDMStructureKey =
-		createColumn(
-			"DDMStructureKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, String> DDMTemplateKey =
 		createColumn(
 			"DDMTemplateKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

@@ -65,7 +65,6 @@ public class JournalArticleWrapper
 		attributes.put("version", getVersion());
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("layoutUuid", getLayoutUuid());
@@ -206,12 +205,6 @@ public class JournalArticleWrapper
 
 		if (DDMStructureId != null) {
 			setDDMStructureId(DDMStructureId);
-		}
-
-		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
-
-		if (DDMStructureKey != null) {
-			setDDMStructureKey(DDMStructureKey);
 		}
 
 		String DDMTemplateKey = (String)attributes.get("DDMTemplateKey");
@@ -457,16 +450,6 @@ public class JournalArticleWrapper
 	@Override
 	public long getDDMStructureId() {
 		return model.getDDMStructureId();
-	}
-
-	/**
-	 * Returns the ddm structure key of this journal article.
-	 *
-	 * @return the ddm structure key of this journal article
-	 */
-	@Override
-	public String getDDMStructureKey() {
-		return model.getDDMStructureKey();
 	}
 
 	@Override
@@ -1157,16 +1140,6 @@ public class JournalArticleWrapper
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
 		model.setDDMStructureId(DDMStructureId);
-	}
-
-	/**
-	 * Sets the ddm structure key of this journal article.
-	 *
-	 * @param DDMStructureKey the ddm structure key of this journal article
-	 */
-	@Override
-	public void setDDMStructureKey(String DDMStructureKey) {
-		model.setDDMStructureKey(DDMStructureKey);
 	}
 
 	/**

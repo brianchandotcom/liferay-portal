@@ -124,8 +124,7 @@ public class UpdateDataDefinitionMVCActionCommand
 			dataDefinitionId, dataDefinition);
 
 		List<JournalArticle> journalArticles =
-			_journalArticleLocalService.getStructureArticles(
-				new String[] {structureKey});
+			_journalArticleLocalService.getStructureArticles(dataDefinitionId);
 
 		for (JournalArticle journalArticle : journalArticles) {
 			JournalArticleUtil.clearCache(journalArticle);

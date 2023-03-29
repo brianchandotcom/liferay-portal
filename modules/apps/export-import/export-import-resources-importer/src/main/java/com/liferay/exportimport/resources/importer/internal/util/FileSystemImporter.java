@@ -541,7 +541,7 @@ public class FileSystemImporter extends BaseImporter {
 			throw portalException;
 		}
 
-		_ddmStructureKeys.add(ddmStructure.getStructureKey());
+		_ddmStructureIds.add(ddmStructure.getStructureId());
 
 		addDDMTemplates(
 			ddmStructure.getStructureKey(),
@@ -1114,7 +1114,7 @@ public class FileSystemImporter extends BaseImporter {
 		finally {
 			indexStatusManager.setIndexReadOnly(indexReadOnly);
 
-			_ddmStructureKeys.clear();
+			_ddmStructureIds.clear();
 			_primaryKeys.clear();
 		}
 	}
@@ -1218,7 +1218,7 @@ public class FileSystemImporter extends BaseImporter {
 			}
 		}
 
-		if (_ddmStructureKeys.isEmpty()) {
+		if (_ddmStructureIds.isEmpty()) {
 			return;
 		}
 
@@ -1228,10 +1228,10 @@ public class FileSystemImporter extends BaseImporter {
 		Indexer<?> indexer = indexerRegistry.getIndexer(
 			JournalArticle.class.getName());
 
-		for (String ddmStructureKey : _ddmStructureKeys) {
+		for (long ddmStructureId : _ddmStructureIds) {
 			List<JournalArticle> journalArticles =
 				journalArticleLocalService.getArticlesByStructureId(
-					getGroupId(), ddmStructureKey, QueryUtil.ALL_POS,
+					getGroupId(), ddmStructureId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
 			for (JournalArticle journalArticle : journalArticles) {
@@ -2038,7 +2038,7 @@ public class FileSystemImporter extends BaseImporter {
 		"\\[\\$GROUP_ID\\$\\]");
 
 	private final Map<String, JSONObject> _assetJSONObjectMap = new HashMap<>();
-	private final Set<String> _ddmStructureKeys = new HashSet<>();
+	private final Set<Long> _ddmStructureIds = new HashSet<>();
 	private String _defaultLayoutTemplateId;
 	private final DLURLHelper _dlURLHelper;
 	private final Map<String, FileEntry> _fileEntries = new HashMap<>();

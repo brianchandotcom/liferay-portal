@@ -24,6 +24,8 @@ import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -158,10 +161,15 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 				jsonArray, classLoader,
 				dependenciesFilePath + "journal_articles/", serviceContext);
 
+			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+				serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				"guest-checkout-authentication-structure", true);
+
 			List<JournalArticle> journalArticles =
 				_journalArticleLocalService.getArticlesByStructureId(
 					serviceContext.getScopeGroupId(),
-					"guest-checkout-authentication-structure", 0, 1, null);
+					ddmStructure.getStructureId(), 0, 1, null);
 
 			JournalArticle journalArticle = journalArticles.get(0);
 
@@ -291,6 +299,9 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 	private CPFileImporter _cpFileImporter;
 
 	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
@@ -307,6 +318,9 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;

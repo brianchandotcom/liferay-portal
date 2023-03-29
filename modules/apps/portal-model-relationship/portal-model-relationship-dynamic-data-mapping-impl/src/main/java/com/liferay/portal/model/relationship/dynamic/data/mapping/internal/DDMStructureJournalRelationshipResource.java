@@ -56,7 +56,7 @@ public class DDMStructureJournalRelationshipResource
 
 	private List<JournalArticle> _getStructureArticles(DDMStructure structure) {
 		return _journalArticleLocalService.getArticlesByStructureId(
-			structure.getGroupId(), structure.getStructureKey(), -1, -1, null);
+			structure.getGroupId(), structure.getStructureId(), -1, -1, null);
 	}
 
 	private List<JournalFolder> _getStructureFolders(DDMStructure structure) {

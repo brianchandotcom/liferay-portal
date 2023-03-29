@@ -188,10 +188,10 @@ public class JournalArticleSingleFormVariationInfoCollectionProviderTest {
 
 			return InfoPage.of(
 				_journalArticleLocalService.getStructureArticles(
-					_group.getGroupId(), _ddmStructure.getStructureKey()),
+					_group.getGroupId(), _ddmStructure.getStructureId()),
 				collectionQuery.getPagination(),
 				_journalArticleLocalService.getStructureArticlesCount(
-					_group.getGroupId(), _ddmStructure.getStructureKey()));
+					_group.getGroupId(), _ddmStructure.getStructureId()));
 		}
 
 		@Override

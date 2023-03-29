@@ -416,15 +416,15 @@ public class JournalDisplayContext {
 			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
 	}
 
-	public String getDDMStructureKey() {
-		if (_ddmStructureKey != null) {
-			return _ddmStructureKey;
+	public long getDDMStructureId() {
+		if (_ddmStructureId != null) {
+			return _ddmStructureId;
 		}
 
-		_ddmStructureKey = ParamUtil.getString(
-			_httpServletRequest, "ddmStructureKey");
+		_ddmStructureId = ParamUtil.getLong(
+			_httpServletRequest, "ddmStructureId");
 
-		return _ddmStructureKey;
+		return _ddmStructureId;
 	}
 
 	public String getDDMStructureName() {
@@ -435,14 +435,12 @@ public class JournalDisplayContext {
 		_ddmStructureName = LanguageUtil.get(
 			_httpServletRequest, "basic-web-content");
 
-		if (Validator.isNull(getDDMStructureKey())) {
+		if (getDDMStructureId() <= 0) {
 			return _ddmStructureName;
 		}
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			_themeDisplay.getSiteGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			getDDMStructureKey(), true);
+			getDDMStructureId());
 
 		if (ddmStructure != null) {
 			_ddmStructureName = ddmStructure.getName(_themeDisplay.getLocale());
@@ -824,7 +822,8 @@ public class JournalDisplayContext {
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 
 		if (isNavigationStructure()) {
-			portletURL.setParameter("ddmStructureKey", getDDMStructureKey());
+			portletURL.setParameter(
+				"ddmStructureId", String.valueOf(getDDMStructureId()));
 		}
 
 		String status = ParamUtil.getString(_httpServletRequest, "status");
@@ -1163,19 +1162,19 @@ public class JournalDisplayContext {
 			return _articleSearchContainer;
 		}
 
-		if (Validator.isNotNull(getDDMStructureKey())) {
+		if (getDDMStructureId() > 0) {
 			articleSearchContainer.setResultsAndTotal(
 				() -> JournalArticleServiceUtil.getArticlesByStructureId(
 					_themeDisplay.getScopeGroupId(), getFolderId(),
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getDDMStructureKey(), getStatus(),
+					getDDMStructureId(), getStatus(),
 					articleSearchContainer.getStart(),
 					articleSearchContainer.getEnd(),
 					articleSearchContainer.getOrderByComparator()),
 				JournalArticleServiceUtil.getArticlesCountByStructureId(
 					_themeDisplay.getScopeGroupId(), getFolderId(),
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getDDMStructureKey(), getStatus()));
+					getDDMStructureId(), getStatus()));
 			articleSearchContainer.setRowChecker(_getEntriesChecker());
 
 			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
@@ -1511,7 +1510,7 @@ public class JournalDisplayContext {
 	private SearchContainer<JournalArticle> _articleVersionsSearchContainer;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private String _ddmStructureKey;
+	private Long _ddmStructureId;
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;
 	private String _displayStyle;

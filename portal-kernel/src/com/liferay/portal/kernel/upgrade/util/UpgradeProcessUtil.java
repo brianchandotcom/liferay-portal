@@ -51,21 +51,21 @@ public class UpgradeProcessUtil {
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {
-			String query = "select languageId from User_ where companyId = ?";
-
 			DBInspector dbInspector = new DBInspector(connection);
-			PreparedStatement preparedStatement;
+			String sql = "select languageId from User_ where companyId = ?";
+
+			PreparedStatement preparedStatement = null;
 
 			if (dbInspector.hasColumn("User_", "defaultUser")) {
 				preparedStatement = connection.prepareStatement(
-					query + " and defaultUser = ?");
+					sql + " and defaultUser = ?");
 
 				preparedStatement.setLong(1, companyId);
 				preparedStatement.setBoolean(2, Boolean.TRUE);
 			}
 			else {
 				preparedStatement = connection.prepareStatement(
-					query + " and type_ = " + UserConstants.TYPE_GUEST);
+					sql + " and type_ = " + UserConstants.TYPE_GUEST);
 
 				preparedStatement.setLong(1, companyId);
 			}

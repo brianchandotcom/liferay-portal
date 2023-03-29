@@ -331,85 +331,92 @@ export function MenuItem({
 									</div>
 								</ClayLayout.ContentCol>
 
-								{Liferay.FeatureFlags['LPS-134527'] && (
-									<AddItemDropDown
-										className="position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown top-button"
-										order={order}
-										parentSiteNavigationMenuItemId={
-											item.parentSiteNavigationMenuItemId
-										}
-										trigger={
-											<ClayButtonWithIcon
-												aria-label={sub(
-													Liferay.Language.get(
-														'add-item-before-x'
-													),
-													`${title} (${type})`
-												)}
-												className="site_navigation_menu_editor_MenuItem-add-button"
-												displayType="primary"
-												onClick={(event) => {
-													event.preventDefault();
-													event.stopPropagation();
-												}}
-												size="xs"
-												symbol="plus"
-												tabIndex={
-													isTarget &&
-													Liferay.FeatureFlags[
-														'LPS-134527'
-													]
-														? '0'
-														: '-1'
-												}
-												title={Liferay.Language.get(
-													'add-item'
-												)}
-											/>
-										}
-									/>
-								)}
+								<div
+									onClick={(event) => event.stopPropagation()}
+								>
+									{Liferay.FeatureFlags['LPS-134527'] && (
+										<AddItemDropDown
+											className="position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown top-button"
+											order={order}
+											parentSiteNavigationMenuItemId={
+												item.parentSiteNavigationMenuItemId
+											}
+											trigger={
+												<ClayButtonWithIcon
+													aria-label={sub(
+														Liferay.Language.get(
+															'add-item-before-x'
+														),
+														`${title} (${type})`
+													)}
+													className="site_navigation_menu_editor_MenuItem-add-button"
+													displayType="primary"
+													onClick={(event) => {
+														event.preventDefault();
+														event.stopPropagation();
+													}}
+													size="xs"
+													symbol="plus"
+													tabIndex={
+														isTarget &&
+														Liferay.FeatureFlags[
+															'LPS-134527'
+														]
+															? '0'
+															: '-1'
+													}
+													title={Liferay.Language.get(
+														'add-item'
+													)}
+												/>
+											}
+										/>
+									)}
 
-								{Liferay.FeatureFlags['LPS-134527'] && (
-									<AddItemDropDown
-										className="bottom-button position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown"
-										order={order + 1}
-										parentSiteNavigationMenuItemId={
-											item.parentSiteNavigationMenuItemId
-										}
-										trigger={
-											<ClayButtonWithIcon
-												aria-label={sub(
-													Liferay.Language.get(
-														'add-item-after-x'
-													),
-													`${title} (${type})`
-												)}
-												className="site_navigation_menu_editor_MenuItem-add-button"
-												displayType="primary"
-												onClick={(event) => {
-													event.preventDefault();
-													event.stopPropagation();
-												}}
-												size="xs"
-												symbol="plus"
-												tabIndex={
-													isTarget &&
-													Liferay.FeatureFlags[
-														'LPS-134527'
-													]
-														? '0'
-														: '-1'
-												}
-												title={Liferay.Language.get(
-													'add-item'
-												)}
-											/>
-										}
-									/>
-								)}
+									{Liferay.FeatureFlags['LPS-134527'] && (
+										<AddItemDropDown
+											className="bottom-button position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown"
+											order={order + 1}
+											parentSiteNavigationMenuItemId={
+												item.parentSiteNavigationMenuItemId
+											}
+											trigger={
+												<ClayButtonWithIcon
+													aria-label={sub(
+														Liferay.Language.get(
+															'add-item-after-x'
+														),
+														`${title} (${type})`
+													)}
+													className="site_navigation_menu_editor_MenuItem-add-button"
+													displayType="primary"
+													onClick={(event) => {
+														event.preventDefault();
+														event.stopPropagation();
+													}}
+													size="xs"
+													symbol="plus"
+													tabIndex={
+														isTarget &&
+														Liferay.FeatureFlags[
+															'LPS-134527'
+														]
+															? '0'
+															: '-1'
+													}
+													title={Liferay.Language.get(
+														'add-item'
+													)}
+												/>
+											}
+										/>
+									)}
+								</div>
 
-								<ClayLayout.ContentCol gutters>
+								<ClayLayout.ContentCol
+									gutters
+									onClick={(event) => event.stopPropagation()}
+								>
 									<MenuItemOptions
 										isTarget={isTarget}
 										label={`${title} (${type})`}

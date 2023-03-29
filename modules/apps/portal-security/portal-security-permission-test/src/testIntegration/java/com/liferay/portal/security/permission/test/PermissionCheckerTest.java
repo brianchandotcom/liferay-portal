@@ -250,7 +250,7 @@ public class PermissionCheckerTest {
 		throws Exception {
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_userLocalService.getDefaultUser(TestPropsValues.getCompanyId()));
+			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
 
 		_role = RoleTestUtil.addRole(
 			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);

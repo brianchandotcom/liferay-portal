@@ -36,7 +36,7 @@ public class UserJSONTransformer extends ObjectTransformer {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if ((permissionChecker != null) && !user.isDefaultUser() &&
+		if ((permissionChecker != null) && !user.isGuestUser() &&
 			((user.getUserId() == permissionChecker.getUserId()) ||
 			 UserPermissionUtil.contains(
 				 permissionChecker, user.getUserId(), ActionKeys.VIEW))) {

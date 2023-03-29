@@ -50,7 +50,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			userId = 0;
 		}
 

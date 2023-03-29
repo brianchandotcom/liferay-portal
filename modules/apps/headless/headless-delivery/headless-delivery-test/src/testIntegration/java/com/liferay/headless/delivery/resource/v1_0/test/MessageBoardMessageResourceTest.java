@@ -335,7 +335,7 @@ public class MessageBoardMessageResourceTest
 
 		MBMessage mbMessage = MBTestUtil.addMessage(
 			siteId,
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			subject, body);
 
 		_mbThread = mbMessage.getThread();

@@ -122,7 +122,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		for (User user : _getUsers(resourceRequest, themeDisplay)) {
-			if ((user.isDefaultUser() ||
+			if ((user.isGuestUser() ||
 				 (themeDisplay.getUserId() == user.getUserId())) &&
 				(ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 

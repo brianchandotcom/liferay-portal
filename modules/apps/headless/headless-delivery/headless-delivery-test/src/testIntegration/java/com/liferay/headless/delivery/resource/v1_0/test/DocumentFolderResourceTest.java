@@ -105,7 +105,7 @@ public class DocumentFolderResourceTest
 			Integer.valueOf(0), postDocumentFolder.getNumberOfDocuments());
 
 		DLAppTestUtil.addFileEntryWithWorkflow(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), postDocumentFolder.getId(),
 			StringPool.BLANK, RandomTestUtil.randomString(10), true,
 			new ServiceContext());

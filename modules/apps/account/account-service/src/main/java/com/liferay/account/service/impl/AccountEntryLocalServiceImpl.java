@@ -460,19 +460,19 @@ public class AccountEntryLocalServiceImpl
 	public AccountEntry getGuestAccountEntry(long companyId)
 		throws PortalException {
 
-		User defaultUser = _userLocalService.getDefaultUser(companyId);
+		User guestUser = _userLocalService.getGuestUser(companyId);
 
 		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
 
 		accountEntryImpl.setAccountEntryId(
 			AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
-		accountEntryImpl.setCompanyId(defaultUser.getCompanyId());
-		accountEntryImpl.setUserId(defaultUser.getUserId());
-		accountEntryImpl.setUserName(defaultUser.getFullName());
+		accountEntryImpl.setCompanyId(guestUser.getCompanyId());
+		accountEntryImpl.setUserId(guestUser.getUserId());
+		accountEntryImpl.setUserName(guestUser.getFullName());
 		accountEntryImpl.setParentAccountEntryId(
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT);
-		accountEntryImpl.setEmailAddress(defaultUser.getEmailAddress());
-		accountEntryImpl.setName(defaultUser.getFullName());
+		accountEntryImpl.setEmailAddress(guestUser.getEmailAddress());
+		accountEntryImpl.setName(guestUser.getFullName());
 		accountEntryImpl.setType(AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST);
 		accountEntryImpl.setStatus(WorkflowConstants.STATUS_APPROVED);
 

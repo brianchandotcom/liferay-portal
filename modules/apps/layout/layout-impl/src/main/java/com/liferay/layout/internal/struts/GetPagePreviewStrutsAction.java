@@ -136,10 +136,10 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 			themeDisplay.setSignedIn(false);
 
-			User defaultUser = _userLocalService.getDefaultUser(
+			User guestUser = _userLocalService.getGuestUser(
 				themeDisplay.getCompanyId());
 
-			themeDisplay.setUser(defaultUser);
+			themeDisplay.setUser(guestUser);
 
 			Layout layout = themeDisplay.getLayout();
 

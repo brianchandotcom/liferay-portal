@@ -200,7 +200,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 			serviceContext.setScopeGroupId(group.getGroupId());
 
-			long userId = _userLocalService.getDefaultUserId(
+			long userId = _userLocalService.getGuestUserId(
 				company.getCompanyId());
 
 			serviceContext.setUserId(userId);

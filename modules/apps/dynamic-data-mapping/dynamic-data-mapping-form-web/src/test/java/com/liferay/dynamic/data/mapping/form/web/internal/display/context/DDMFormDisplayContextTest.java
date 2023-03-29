@@ -119,7 +119,7 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Test
-	public void testAutosaveWithDefaultUser() throws Exception {
+	public void testAutosaveWithGuestUser() throws Exception {
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -143,7 +143,7 @@ public class DDMFormDisplayContextTest {
 		User user = Mockito.mock(User.class);
 
 		Mockito.when(
-			user.isDefaultUser()
+			user.isGuestUser()
 		).thenReturn(
 			Boolean.TRUE
 		);
@@ -161,11 +161,11 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Test
-	public void testAutosaveWithNondefaultUser1() throws Exception {
-		RenderRequest renderRequest = _mockRenderRequestWithDefaultUser(false);
+	public void testAutosaveWithNonguestUser1() throws Exception {
+		RenderRequest renderRequest = _mockRenderRequestWithGuestUser(false);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
-			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser();
+			_mockDDMFormInstanceSettingsAutosaveWithNonguestUser();
 
 		Mockito.when(
 			ddmFormInstanceSettings.autosaveEnabled()
@@ -180,11 +180,11 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Test
-	public void testAutosaveWithNondefaultUser2() throws Exception {
-		RenderRequest renderRequest = _mockRenderRequestWithDefaultUser(false);
+	public void testAutosaveWithNonguestUser2() throws Exception {
+		RenderRequest renderRequest = _mockRenderRequestWithGuestUser(false);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
-			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser();
+			_mockDDMFormInstanceSettingsAutosaveWithNonguestUser();
 
 		Mockito.when(
 			ddmFormInstanceSettings.autosaveEnabled()
@@ -205,11 +205,11 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Test
-	public void testAutosaveWithNondefaultUser3() throws Exception {
-		RenderRequest renderRequest = _mockRenderRequestWithDefaultUser(false);
+	public void testAutosaveWithNonguestUser3() throws Exception {
+		RenderRequest renderRequest = _mockRenderRequestWithGuestUser(false);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
-			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser();
+			_mockDDMFormInstanceSettingsAutosaveWithNonguestUser();
 
 		Mockito.when(
 			ddmFormInstanceSettings.autosaveEnabled()
@@ -829,7 +829,7 @@ public class DDMFormDisplayContextTest {
 	}
 
 	private DDMFormInstanceSettings
-			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser()
+			_mockDDMFormInstanceSettingsAutosaveWithNonguestUser()
 		throws Exception {
 
 		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
@@ -926,7 +926,7 @@ public class DDMFormDisplayContextTest {
 		return mockRenderRequest;
 	}
 
-	private RenderRequest _mockRenderRequestWithDefaultUser(boolean defaultUser)
+	private RenderRequest _mockRenderRequestWithGuestUser(boolean guestUser)
 		throws Exception {
 
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
@@ -938,9 +938,9 @@ public class DDMFormDisplayContextTest {
 		User user = Mockito.mock(User.class);
 
 		Mockito.when(
-			user.isDefaultUser()
+			user.isGuestUser()
 		).thenReturn(
-			defaultUser
+			guestUser
 		);
 
 		Mockito.when(

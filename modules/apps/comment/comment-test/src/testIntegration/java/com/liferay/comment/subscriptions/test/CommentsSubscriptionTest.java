@@ -97,8 +97,7 @@ public class CommentsSubscriptionTest {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(
 				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getDefaultUser(
-						_group.getCompanyId())));
+					UserLocalServiceUtil.getGuestUser(_group.getCompanyId())));
 
 		Assert.assertFalse(
 			discussionPermission.hasSubscribePermission(

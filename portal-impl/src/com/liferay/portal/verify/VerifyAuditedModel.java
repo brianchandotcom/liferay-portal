@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -150,16 +151,15 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	protected Object[] getDefaultUserArray(
-			Connection connection, long companyId)
+	protected Object[] getGuestUserArray(Connection connection, long companyId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select userId, firstName, middleName, lastName from User_ " +
-					"where companyId = ? and defaultUser = ?")) {
+					"where companyId = ? and type_ = ?")) {
 
 			preparedStatement.setLong(1, companyId);
-			preparedStatement.setBoolean(2, true);
+			preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -224,7 +224,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			long companyId = (Long)auditedModelArray[0];
 
 			if (auditedModelArray[2] == null) {
-				auditedModelArray = getDefaultUserArray(connection, companyId);
+				auditedModelArray = getGuestUserArray(connection, companyId);
 
 				if (auditedModelArray == null) {
 					return;
@@ -317,7 +317,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 							previousUserId);
 					}
 					else if (previousCompanyId != companyId) {
-						auditedModelArray = getDefaultUserArray(
+						auditedModelArray = getGuestUserArray(
 							connection, companyId);
 
 						previousCompanyId = companyId;

@@ -448,10 +448,7 @@ public class SXPBlueprintSearchResultTest {
 			_addAssetCategory("Promoted", _user)
 		).build();
 
-		User guestUser = _userLocalService.getDefaultUser(
-			_group.getCompanyId());
-
-		_setCurrentUser(guestUser);
+		_setCurrentUser(_userLocalService.getGuestUser(_group.getCompanyId()));
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -1185,10 +1182,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_assertSearchIgnoreRelevance("[Guest Users, Non-Guest Users]");
 
-		User guestUser = _userLocalService.getDefaultUser(
-			_group.getCompanyId());
-
-		_setCurrentUser(guestUser);
+		_setCurrentUser(_userLocalService.getGuestUser(_group.getCompanyId()));
 
 		_assertSearchIgnoreRelevance("[Guest Users]");
 

@@ -201,10 +201,10 @@ public class MembershipRequestLocalServiceImpl
 			membershipRequest.setReplierUserId(replierUserId);
 		}
 		else {
-			long defaultUserId = _userLocalService.getDefaultUserId(
+			long guestUserId = _userLocalService.getGuestUserId(
 				membershipRequest.getCompanyId());
 
-			membershipRequest.setReplierUserId(defaultUserId);
+			membershipRequest.setReplierUserId(guestUserId);
 		}
 
 		membershipRequest.setStatusId(statusId);

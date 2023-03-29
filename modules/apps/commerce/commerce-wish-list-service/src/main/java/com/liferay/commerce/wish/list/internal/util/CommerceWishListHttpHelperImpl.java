@@ -84,7 +84,7 @@ public class CommerceWishListHttpHelperImpl
 		User user = _portal.getUser(httpServletRequest);
 
 		if (user == null) {
-			user = _userLocalService.getDefaultUser(
+			user = _userLocalService.getGuestUser(
 				_portal.getCompanyId(httpServletRequest));
 		}
 
@@ -101,7 +101,7 @@ public class CommerceWishListHttpHelperImpl
 			return commerceWishList;
 		}
 
-		if (user.isDefaultUser()) {
+		if (user.isGuestUser()) {
 			if (Validator.isNull(guestUuid)) {
 				Cookie cookie = new Cookie(
 					cookieName, commerceWishList.getUuid());

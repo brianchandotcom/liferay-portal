@@ -43,7 +43,7 @@ public class BlogPostingImageResourceTest
 	@Test
 	public void testPostSiteBlogPostingImageRollback() throws Exception {
 		Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId());
 
 		Assert.assertNull(folder);
@@ -72,7 +72,7 @@ public class BlogPostingImageResourceTest
 		}
 
 		folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId());
 
 		Assert.assertNull(folder);

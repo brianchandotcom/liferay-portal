@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -241,9 +242,9 @@ public abstract class BaseDBPartitionTestCase {
 						"insert into Company (companyId, webId) values (?, ?)");
 				PreparedStatement preparedStatement2 =
 					connection.prepareStatement(
-						"insert into User_ (userId, companyId, defaultUser, " +
-							"screenName, emailAddress, languageId, " +
-								"timeZoneId) values (?, ?, ?, ?, ?, ?, ?)")) {
+						"insert into User_ (userId, companyId, screenName, " +
+							"emailAddress, languageId, timeZoneId, type_) " +
+								"values (?, ?, ?, ?, ?, ?, ?)")) {
 
 				preparedStatement1.setLong(1, companyId);
 				preparedStatement1.setString(2, "Test" + companyId);
@@ -252,11 +253,11 @@ public abstract class BaseDBPartitionTestCase {
 
 				preparedStatement2.setLong(1, 1);
 				preparedStatement2.setLong(2, companyId);
-				preparedStatement2.setBoolean(3, true);
-				preparedStatement2.setString(4, "Test");
-				preparedStatement2.setString(5, "test@test.com");
-				preparedStatement2.setString(6, "en_US");
-				preparedStatement2.setString(7, "UTC");
+				preparedStatement2.setString(3, "Test");
+				preparedStatement2.setString(4, "test@test.com");
+				preparedStatement2.setString(5, "en_US");
+				preparedStatement2.setString(6, "UTC");
+				preparedStatement2.setInt(7, UserConstants.TYPE_GUEST);
 
 				preparedStatement2.executeUpdate();
 			}

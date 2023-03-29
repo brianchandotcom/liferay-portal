@@ -48,7 +48,7 @@ public abstract class BaseImporter implements Importer {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		User user = UserLocalServiceUtil.getDefaultUser(companyId);
+		User user = UserLocalServiceUtil.getGuestUser(companyId);
 
 		userId = user.getUserId();
 

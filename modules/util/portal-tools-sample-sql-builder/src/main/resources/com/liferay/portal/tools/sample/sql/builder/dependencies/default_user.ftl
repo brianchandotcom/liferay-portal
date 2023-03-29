@@ -1,7 +1,3 @@
-<#-- Default user -->
-
-<@insertUser _userModel=dataFactory.newDefaultUserModel() />
-
 <#-- Guest user -->
 
 <#assign guestUserModel = dataFactory.newGuestUserModel() />

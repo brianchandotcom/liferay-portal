@@ -380,10 +380,10 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
 		if (userId == 0) {
-			User defaultUser = _userLocalService.getDefaultUser(
+			User guestUser = _userLocalService.getGuestUser(
 				commerceOrder.getCompanyId());
 
-			userId = defaultUser.getUserId();
+			userId = guestUser.getUserId();
 		}
 
 		serviceContext.setUserId(userId);

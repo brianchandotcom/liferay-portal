@@ -65,7 +65,7 @@ public class LayoutAssetRendererFactory
 		User user = _userLocalService.fetchUser(layout.getUserId());
 
 		if (user == null) {
-			user = _userLocalService.fetchDefaultUser(layout.getCompanyId());
+			user = _userLocalService.fetchGuestUser(layout.getCompanyId());
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(

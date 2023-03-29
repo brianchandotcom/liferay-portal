@@ -207,7 +207,7 @@ public class CompanyLocalServiceTest {
 		Group group = null;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(companyId);
 
 			companyOrganization = _organizationLocalService.addOrganization(
 				userId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
@@ -249,7 +249,7 @@ public class CompanyLocalServiceTest {
 			companyGroup = company.getGroup();
 
 			_stagingLocalService.enableLocalStaging(
-				_userLocalService.getDefaultUserId(company.getCompanyId()),
+				_userLocalService.getGuestUserId(company.getCompanyId()),
 				companyGroup, false, false, new ServiceContext());
 
 			companyStagingGroup = companyGroup.getStagingGroup();
@@ -274,7 +274,7 @@ public class CompanyLocalServiceTest {
 		DLFileEntryType dlFileEntryType = null;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group guestGroup = _groupLocalService.getGroup(
 				companyId, GroupConstants.GUEST);
@@ -338,7 +338,7 @@ public class CompanyLocalServiceTest {
 		LayoutSetPrototype layoutSetPrototype = null;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group group = GroupTestUtil.addGroup(
 				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -379,7 +379,7 @@ public class CompanyLocalServiceTest {
 		long userGroupId = 0;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group group = GroupTestUtil.addGroup(
 				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -425,7 +425,7 @@ public class CompanyLocalServiceTest {
 		Group parentGroup = null;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(companyId);
 
 			parentGroup = GroupTestUtil.addGroup(
 				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -486,7 +486,7 @@ public class CompanyLocalServiceTest {
 		UserGroup userGroup = null;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group group = GroupTestUtil.addGroup(
 				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -521,7 +521,7 @@ public class CompanyLocalServiceTest {
 		UserGroup userGroup = null;
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(
+			long userId = _userLocalService.getGuestUserId(
 				company.getCompanyId());
 
 			group = GroupTestUtil.addGroup(
@@ -720,7 +720,7 @@ public class CompanyLocalServiceTest {
 		Company company = addCompany();
 
 		try {
-			long userId = _userLocalService.getDefaultUserId(
+			long userId = _userLocalService.getGuestUserId(
 				company.getCompanyId());
 
 			Group group = GroupTestUtil.addGroup(
@@ -893,8 +893,7 @@ public class CompanyLocalServiceTest {
 		Company company = addCompany();
 
 		try {
-			User user = _userLocalService.getDefaultUser(
-				company.getCompanyId());
+			User user = _userLocalService.getGuestUser(company.getCompanyId());
 
 			_userLocalService.updateUser(user);
 
@@ -903,7 +902,7 @@ public class CompanyLocalServiceTest {
 			_companyLocalService.updateDisplay(
 				company.getCompanyId(), languageId, "CET");
 
-			user = _userLocalService.getDefaultUser(company.getCompanyId());
+			user = _userLocalService.getGuestUser(company.getCompanyId());
 
 			Assert.assertEquals(languageId, user.getLanguageId());
 			Assert.assertEquals("CET", user.getTimeZoneId());
@@ -921,7 +920,7 @@ public class CompanyLocalServiceTest {
 
 		try {
 			Group group = GroupTestUtil.addGroup(
-				companyId, _userLocalService.getDefaultUserId(companyId),
+				companyId, _userLocalService.getGuestUserId(companyId),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			testUpdateCompanyNames(

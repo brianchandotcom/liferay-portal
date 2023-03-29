@@ -62,7 +62,7 @@ portletDisplay.setURLBack(backURL);
 	</c:choose>
 </aui:form>
 
-<c:if test="<%= !objectEntryDisplayContext.isDefaultUser() %>">
+<c:if test="<%= !objectEntryDisplayContext.isGuestUser() %>">
 	<aui:script sandbox="<%= true %>">
 		const eventHandlers = [];
 

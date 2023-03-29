@@ -57,7 +57,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsUnicodeProperties.get
 <div class="site-languages">
 
 	<%
-	User defaultUser = company.getDefaultUser();
+	User guestUser = company.getGuestUser();
 	%>
 
 	<react:component
@@ -66,7 +66,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsUnicodeProperties.get
 			HashMapBuilder.<String, Object>put(
 				"availableLocales", DepotLanguageUtil.getAvailableLocalesJSONArray(locale)
 			).put(
-				"defaultLocaleId", LocaleUtil.toLanguageId(defaultUser.getLocale())
+				"defaultLocaleId", LocaleUtil.toLanguageId(guestUser.getLocale())
 			).put(
 				"inheritLocales", inheritLocales
 			).put(

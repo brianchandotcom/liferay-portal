@@ -32,9 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-import java.util.Set;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -59,20 +56,27 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		_objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
-			ParamUtil.getLong(resourceRequest, "objectDefinitionId"));
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				ParamUtil.getLong(resourceRequest, "objectDefinitionId"));
 
-		if (_objectDefinition == null) {
+		if (objectDefinition == null) {
 			return;
 		}
 
-		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		JSONArray termsJSONArray = getTermsJSONArray(
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			objectDefinition.getShortName(), themeDisplay);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-165849")) {
 			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				getNotificationTemplateTermsJSONArray());
+				resourceRequest, resourceResponse, termsJSONArray);
+
+			return;
 		}
 
 		JSONArray relationshipSectionsJSONArray = jsonFactory.createJSONArray();
@@ -80,11 +84,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.
 					getObjectRelationshipsByObjectDefinitionId2(
-						_objectDefinition.getObjectDefinitionId())) {
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
+						objectDefinition.getObjectDefinitionId())) {
 
 			relationshipSectionsJSONArray.put(
 				JSONUtil.put(
@@ -92,13 +92,20 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 					objectRelationship.getObjectRelationshipId()
 				).put(
 					"sectionLabel",
-					StringBundler.concat(
-						objectRelationship.getLabel(themeDisplay.getLocale()),
-						StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-						StringUtil.upperCase(
-							objectDefinition.getLabel(
-								themeDisplay.getLocale())),
-						StringPool.CLOSE_PARENTHESIS)
+					() -> {
+						ObjectDefinition relatedObjectDefinition =
+							_objectDefinitionLocalService.getObjectDefinition(
+								objectRelationship.getObjectDefinitionId1());
+
+						return StringBundler.concat(
+							objectRelationship.getLabel(
+								themeDisplay.getLocale()),
+							" (",
+							StringUtil.upperCase(
+								relatedObjectDefinition.getLabel(
+									themeDisplay.getLocale())),
+							StringPool.CLOSE_PARENTHESIS);
+					}
 				));
 		}
 
@@ -107,19 +114,9 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			JSONUtil.put(
 				"relationshipSections", relationshipSectionsJSONArray
 			).put(
-				"terms", getNotificationTemplateTermsJSONArray()
+				"terms", termsJSONArray
 			));
 	}
-
-	@Override
-	protected Set<Map.Entry<String, String>> getTermNamesEntries() {
-		return getObjectFieldNotificationTermNamesEntries(
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId()),
-			_objectDefinition.getShortName());
-	}
-
-	private ObjectDefinition _objectDefinition;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

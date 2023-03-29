@@ -40,25 +40,9 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
-	protected JSONArray getNotificationTemplateTermsJSONArray() {
-		JSONArray jsonArray = jsonFactory.createJSONArray();
-
-		for (Map.Entry<String, String> entry : getTermNamesEntries()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"termLabel",
-					language.get(themeDisplay.getLocale(), entry.getKey())
-				).put(
-					"termName", entry.getValue()
-				));
-		}
-
-		return jsonArray;
-	}
-
-	protected Set<Map.Entry<String, String>>
-		getObjectFieldNotificationTermNamesEntries(
-			List<ObjectField> objectFields, String partialTermName) {
+	protected Set<Map.Entry<String, String>> getTermNamesEntries(
+		List<ObjectField> objectFields, String partialTermName,
+		ThemeDisplay themeDisplay) {
 
 		Map<String, String> termNames = new LinkedHashMap<>();
 
@@ -69,26 +53,42 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 				authorObjectFieldNames.forEach(
 					(termLabel, objectFieldName) -> termNames.put(
 						termLabel,
-						getTermName(objectFieldName, partialTermName)));
+						ObjectDefinitionNotificationTermUtil.
+							getObjectFieldTermName(
+								partialTermName, objectFieldName)));
 			}
 			else {
 				termNames.put(
 					objectField.getLabel(themeDisplay.getLocale()),
-					getTermName(objectField.getName(), partialTermName));
+					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+						partialTermName, objectField.getName()));
 			}
 		}
 
 		return termNames.entrySet();
 	}
 
-	protected String getTermName(
-		String objectFieldName, String partialTermName) {
+	protected JSONArray getTermsJSONArray(
+		List<ObjectField> objectFields, String partialTermName,
+		ThemeDisplay themeDisplay) {
 
-		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-			partialTermName, objectFieldName);
+		JSONArray termsJSONArray = jsonFactory.createJSONArray();
+
+		for (Map.Entry<String, String> entry :
+				getTermNamesEntries(
+					objectFields, partialTermName, themeDisplay)) {
+
+			termsJSONArray.put(
+				JSONUtil.put(
+					"termLabel",
+					language.get(themeDisplay.getLocale(), entry.getKey())
+				).put(
+					"termName", entry.getValue()
+				));
+		}
+
+		return termsJSONArray;
 	}
-
-	protected abstract Set<Map.Entry<String, String>> getTermNamesEntries();
 
 	protected final Map<String, String> authorObjectFieldNames =
 		HashMapBuilder.put(
@@ -112,8 +112,6 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 
 	@Reference
 	protected Language language;
-
-	protected ThemeDisplay themeDisplay;
 
 	@Reference
 	protected UserLocalService userLocalService;

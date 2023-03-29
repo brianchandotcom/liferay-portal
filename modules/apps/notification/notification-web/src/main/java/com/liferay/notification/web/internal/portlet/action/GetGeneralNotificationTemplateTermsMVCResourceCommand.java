@@ -15,12 +15,14 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
+import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,16 +49,19 @@ public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			getNotificationTemplateTermsJSONArray());
+			getTermsJSONArray(
+				null, null,
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY)));
 	}
 
 	@Override
-	protected Set<Map.Entry<String, String>> getTermNamesEntries() {
+	protected Set<Map.Entry<String, String>> getTermNamesEntries(
+		List<ObjectField> objectFields, String partialTermName,
+		ThemeDisplay themeDisplay) {
+
 		return _termNames.entrySet();
 	}
 

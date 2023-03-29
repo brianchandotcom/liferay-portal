@@ -26,10 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -54,36 +50,30 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		_objectRelationship =
+		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.fetchObjectRelationship(
 				ParamUtil.getLong(resourceRequest, "objectRelationshipId"));
 
-		if (_objectRelationship == null) {
+		if (objectRelationship == null) {
 			return;
 		}
 
-		themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (objectDefinition == null) {
+			return;
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			getNotificationTemplateTermsJSONArray());
-	}
-
-	@Override
-	protected Set<Map.Entry<String, String>> getTermNamesEntries() {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				_objectRelationship.getObjectDefinitionId1());
-
-		if (objectDefinition == null) {
-			return Collections.emptySet();
-		}
-
-		return getObjectFieldNotificationTermNamesEntries(
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId()),
-			_objectRelationship.getName());
+			getTermsJSONArray(
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()),
+				objectRelationship.getName(),
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY)));
 	}
 
 	@Reference
@@ -91,8 +81,6 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private ObjectRelationship _objectRelationship;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

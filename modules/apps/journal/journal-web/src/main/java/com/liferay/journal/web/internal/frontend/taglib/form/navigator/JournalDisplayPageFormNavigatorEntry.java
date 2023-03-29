@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Objects;
+
 import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
@@ -108,18 +110,22 @@ public class JournalDisplayPageFormNavigatorEntry
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			classPK);
 
-		if (ddmStructure == null) {
-			long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long ddmStructureId = ParamUtil.getLong(
+			portletRequest, "ddmStructureId");
 
-			String ddmStructureKey = ParamUtil.getString(
-				portletRequest, "ddmStructureKey");
-
+		if ((ddmStructure == null) && (ddmStructureId > 0)) {
 			ddmStructure = _ddmStructureLocalService.fetchStructure(
-				groupId, _portal.getClassNameId(JournalArticle.class),
-				ddmStructureKey);
+				ddmStructureId);
 		}
 
-		if (ddmStructure == null) {
+		if ((ddmStructure == null) ||
+			!Objects.equals(
+				ParamUtil.getLong(portletRequest, "groupId"),
+				ddmStructure.getGroupId()) ||
+			!Objects.equals(
+				ddmStructure.getClassNameId(),
+				_portal.getClassNameId(JournalArticle.class))) {
+
 			return false;
 		}
 

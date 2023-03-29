@@ -244,8 +244,6 @@ public class JournalManagementToolbarDisplayContext
 		).setNavigation(
 			StringPool.BLANK
 		).setParameter(
-			"ddmStructureKey", StringPool.BLANK
-		).setParameter(
 			"orderByCol", StringPool.BLANK
 		).setParameter(
 			"orderByType", StringPool.BLANK
@@ -353,8 +351,6 @@ public class JournalManagementToolbarDisplayContext
 							currentURLObj, liferayPortletResponse)
 					).setNavigation(
 						(String)null
-					).setParameter(
-						"ddmStructureKey", (String)null
 					).buildString());
 
 				labelItem.setCloseable(true);

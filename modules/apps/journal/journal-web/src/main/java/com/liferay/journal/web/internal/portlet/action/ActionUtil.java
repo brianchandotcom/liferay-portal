@@ -162,20 +162,9 @@ public class ActionUtil {
 		else {
 			long ddmStructureId = ParamUtil.getLong(
 				httpServletRequest, "ddmStructureId");
-			String ddmStructureKey = ParamUtil.getString(
-				httpServletRequest, "ddmStructureKey");
 
-			DDMStructure ddmStructure = null;
-
-			if (ddmStructureId > 0) {
-				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-					ddmStructureId);
-			}
-			else if (Validator.isNotNull(ddmStructureKey)) {
-				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(JournalArticle.class),
-					ddmStructureKey, true);
-			}
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId);
 
 			if (ddmStructure == null) {
 				return null;

@@ -119,7 +119,12 @@ const PartnershipLevel = ({completed, data, headcount}) => {
 
 	return (
 		<div>
-			<h3 className="d-flex mb-5">
+			<h3
+				className={classNames('d-flex', {
+					'mb-4': data.partnerLevel === PartnershipLevels.AUTHORIZED,
+					'mb-5': data.partnerLevel !== PartnershipLevels.AUTHORIZED,
+				})}
+			>
 				<PartnerIcon level={data.partnerLevel} />
 
 				<span

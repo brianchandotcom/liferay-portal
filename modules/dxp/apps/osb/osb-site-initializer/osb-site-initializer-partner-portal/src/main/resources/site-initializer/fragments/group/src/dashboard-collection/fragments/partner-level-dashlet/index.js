@@ -15,14 +15,15 @@ import React, {useEffect, useState} from 'react';
 
 import PartnershipLevel from '../../common/components/PartnershipLevel';
 import Container from '../../common/components/container';
+import {PartnerRoles} from '../../common/enums/partnerRoles';
 import {PartnershipLevels} from '../../common/enums/partnershipLevels';
 import {partnerLevelProperties} from '../../common/mock/mock';
 import ClayIconProvider from '../../common/utils/ClayIconProvider';
 
 export default function () {
-	const [data, setData] = useState({});
-	const [headcount, setHeadcount] = useState({});
-	const [completed, setCompleted] = useState({});
+	const [data, setData] = useState();
+	const [headcount, setHeadcount] = useState();
+	const [completed, setCompleted] = useState();
 	const [loading, setLoading] = useState(false);
 
 	const getAccountInformation = async () => {
@@ -65,7 +66,7 @@ export default function () {
 					}
 				);
 
-				const checkedItems = {};
+				const checkedProperties = {};
 
 				if (accountRequest.ok) {
 					const accountData = await accountRequest.json();
@@ -74,109 +75,96 @@ export default function () {
 						accountData.partnerLevel !==
 						PartnershipLevels.AUTHORIZED
 					) {
-						if (accountData.solutionDeliveryCertification) {
-							checkedItems[
-								'solutionDeliveryCertification'
-							] = true;
-						}
+						checkedProperties['solutionDeliveryCertification'] =
+							accountData.solutionDeliveryCertification;
+
+						checkedProperties['marketingPlan'] =
+							accountData.marketingPlan;
+
+						checkedProperties['marketingPerformance'] = Boolean(
+							accountData.marketingPerformance
+						);
 
 						if (
-							accountData.partnerLevel !==
-							PartnershipLevels.SILVER
+							accountData.partnerLevel === PartnershipLevels.GOLD
 						) {
-							if (accountData.marketingPlan) {
-								checkedItems['marketingPlan'] = true;
-							}
+							const hasMatchingARR =
+								accountData.aRRAmount ===
+								partnerLevelProperties[accountData.partnerLevel]
+									.growthARR;
 
-							if (accountData.marketingPerformance) {
-								checkedItems['marketingPerformance'] = true;
-							}
+							const hastMatchingNPOrNB =
+								accountData.newProjectExistingBusiness ===
+								partnerLevelProperties[accountData.partnerLevel]
+									.newProjectExistingBusiness;
 
-							if (
-								accountData.partnerLevel ===
-								PartnershipLevels.GOLD
-							) {
-								const hasMatchingARR =
-									accountData.aRRAmount ===
-									partnerLevelProperties[
-										accountData.partnerLevel
-									].growthARR;
+							checkedProperties['arr'] =
+								hasMatchingARR || hastMatchingNPOrNB;
+						}
 
-								const hastMatchingNPOrNB =
-									accountData.newProjectExistingBusiness ===
-									partnerLevelProperties[
-										accountData.partnerLevel
-									].newProjectExistingBusiness;
+						const growthRenewalARRTotal =
+							accountData.growthARR + accountData.renewalARR;
 
-								if (hasMatchingARR || hastMatchingNPOrNB) {
-									checkedItems['arr'] = true;
+						if (
+							accountData.partnerLevel ===
+								PartnershipLevels.PLATINUM &&
+							growthRenewalARRTotal > 0 &&
+							accountData.aRRAmount >= growthRenewalARRTotal
+						) {
+							checkedProperties['arr'] = true;
+						}
+
+						if (accountUsersRequest.ok) {
+							const {
+								items: accountUsers,
+							} = await accountUsersRequest.json();
+
+							const countHeadcount = {
+								partnerMarketingUser: 0,
+								partnerSalesUsers: 0,
+							};
+
+							accountUsers.forEach((user) => {
+								if (
+									user.accountBriefs[0].roleBriefs.find(
+										(role) =>
+											role.name ===
+											PartnerRoles.MARKETING_USER
+									)
+								) {
+									countHeadcount['partnerMarketingUser'] += 1;
 								}
-							}
+
+								if (
+									user.accountBriefs[0].roleBriefs.find(
+										(role) =>
+											role.name ===
+											PartnerRoles.SALES_USERS
+									)
+								) {
+									countHeadcount['partnerSalesUsers'] += 1;
+								}
+							});
 
 							if (
-								accountData.partnerLevel ===
-									PartnershipLevels.PLATINUM &&
-								accountData.growthARR + accountData.renewalARR >
-									0 &&
-								accountData.aRRAmount >=
-									accountData.growthARR +
-										accountData.renewalARR
+								countHeadcount.partnerMarketingUser >=
+									partnerLevelProperties[
+										accountData.partnerLevel
+									].partnerMarketingUser &&
+								countHeadcount.partnerSalesUsers >=
+									partnerLevelProperties[
+										accountData.partnerLevel
+									].partnerSalesUsers
 							) {
-								checkedItems['arr'] = true;
+								checkedProperties['headcount'] = true;
 							}
+
+							setHeadcount(countHeadcount);
 						}
-					}
-
-					if (
-						accountUsersRequest.ok &&
-						accountData.partnerLevel !==
-							PartnershipLevels.AUTHORIZED
-					) {
-						const {
-							items: accountUsers,
-						} = await accountUsersRequest.json();
-
-						const countHeadcount = {
-							partnerMarketingUser: 0,
-							partnerSalesUsers: 0,
-						};
-
-						accountUsers.forEach((user) => {
-							if (
-								user.accountBriefs[0].roleBriefs.find(
-									(role) =>
-										role.name === 'Partner Marketing User'
-								)
-							) {
-								countHeadcount['partnerMarketingUser'] += 1;
-							}
-
-							if (
-								user.accountBriefs[0].roleBriefs.find(
-									(role) =>
-										role.name === 'Partner Sales Users'
-								)
-							) {
-								countHeadcount['partnerSalesUsers'] += 1;
-							}
-						});
-
-						if (
-							countHeadcount.partnerMarketingUser >=
-								partnerLevelProperties[accountData.partnerLevel]
-									.partnerMarketingUser &&
-							countHeadcount.partnerSalesUsers >=
-								partnerLevelProperties[accountData.partnerLevel]
-									.partnerSalesUsers
-						) {
-							checkedItems['headcount'] = true;
-						}
-
-						setHeadcount(countHeadcount);
 					}
 
 					setData(accountData);
-					setCompleted(checkedItems);
+					setCompleted(checkedProperties);
 				}
 			}
 		}
@@ -192,7 +180,7 @@ export default function () {
 			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
 		}
 
-		if (!data.partnerLevel && !loading) {
+		if (!data && !loading) {
 			return (
 				<ClayAlert
 					className="mb-8 mt-8 mx-auto text-center w-50"

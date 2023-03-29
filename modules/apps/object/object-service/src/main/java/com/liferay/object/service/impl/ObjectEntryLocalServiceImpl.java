@@ -1518,14 +1518,16 @@ public class ObjectEntryLocalServiceImpl
 		List<ObjectField> objectFields, Map<String, Serializable> values) {
 
 		for (ObjectField objectField : objectFields) {
-			if (!values.containsKey(objectField.getName())) {
-				String value = ObjectFieldSettingUtil.getDefaultValueAsString(
-					_ddmExpressionFactory, objectField.getObjectFieldId(),
-					_objectFieldSettingLocalService, (Map)values);
+			if (values.containsKey(objectField.getName())) {
+				continue;
+			}
 
-				if (value != null) {
-					values.put(objectField.getName(), value);
-				}
+			String value = ObjectFieldSettingUtil.getDefaultValueAsString(
+				_ddmExpressionFactory, objectField.getObjectFieldId(),
+				_objectFieldSettingLocalService, (Map)values);
+
+			if (value != null) {
+				values.put(objectField.getName(), value);
 			}
 		}
 	}

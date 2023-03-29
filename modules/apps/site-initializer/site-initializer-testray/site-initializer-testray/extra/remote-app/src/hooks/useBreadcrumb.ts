@@ -19,6 +19,7 @@ import i18n from '../i18n';
 import {
 	APIResponse,
 	TestrayCaseResult,
+	TestrayRun,
 	testrayCaseResultImpl,
 } from '../services/rest';
 import useDebounce from './useDebounce';
@@ -152,14 +153,33 @@ const defaultEntities: Entity[] = [
 		name: i18n.translate('build'),
 	},
 	{
-		entity: 'caseresults',
-		getPage: ([projectId, routineId, buildId, caseResultsId]) =>
-			`/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultsId}`,
+		entity: 'runs',
+		getPage: ([projectId, routineId, buildId, runId]) =>
+			`/project/${projectId}/routines/${routineId}/build/${buildId}?runId=${runId}`,
 		getResource: ([, , buildId]) =>
-			`/caseresults?filter=${SearchBuilder.eq(
-				'buildId',
+			`/runs?filter=${SearchBuilder.eq(
+				'r_buildToRuns_c_buildId',
 				buildId
-			)}&nestedFields=case,r_runToCaseResult_c_runId&pageSize=20&fields=r_caseToCaseResult_c_case,id,run`,
+			)}&fields=id,number`,
+		name: i18n.translate('run'),
+		transformer: (response: APIResponse<TestrayRun>) => ({
+			...response,
+			items: response.items.map(({id, number}) => ({
+				label: number,
+				value: id,
+			})),
+		}),
+	},
+	{
+		entity: 'caseresults',
+		getPage: ([projectId, routineId, buildId, , caseResultsId]) =>
+			`/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultsId}`,
+		getResource: ([, , buildId, runId]) =>
+			`/caseresults?filter=${new SearchBuilder()
+				.eq('buildId', buildId)
+				.and()
+				.eq('r_runToCaseResult_c_runId', runId)
+				.build()}&nestedFields=case,r_runToCaseResult_c_runId&pageSize=20&fields=r_caseToCaseResult_c_case,id,run`,
 		name: i18n.translate('case-result'),
 		transformer: (response: APIResponse<TestrayCaseResult>) => {
 			const transformedResponse = testrayCaseResultImpl.transformDataFromList(

@@ -398,6 +398,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
+
+		// Aggregation Field without filters
+
 		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
 			new ObjectEntry() {
@@ -528,60 +531,13 @@ public class DefaultObjectEntryManagerImplTest {
 				_simpleDTOConverterContext, _objectDefinition1,
 				parentObjectEntry1.getId()));
 
+		// Aggregation Field with filters
+
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition1.getObjectDefinitionId(),
 			"countAggregationObjectFieldName");
 
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(),
-			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
-			"{\"eq\": \"15\"}");
-
-		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
-
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(),
-			"integerObjectFieldName", ObjectFilterConstants.TYPE_NOT_EQUALS,
-			"{\"ne\":\"15\"}");
-
-		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
-
-		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
-
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(),
-			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
-			"{\"not\":{\"in\":[\"" + listTypeEntryKey + "\"]}}");
-
-		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
-
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(),
-			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
-			"{\"in\":[\"" + listTypeEntryKey + "\"]}");
-
-		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
-
-		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
-
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
-			ObjectFilterConstants.TYPE_INCLUDES,
-			"{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}");
-
-		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
-
-		_objectFilterLocalService.addObjectFilter(
-			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
-			ObjectFilterConstants.TYPE_EXCLUDES,
-			"{\"not\":{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}}");
-
-		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
-
-		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
+		// Date range with createDate and modifiedDate
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
@@ -603,12 +559,73 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
 
+		// Date range with custom object field
+
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(),
 			"dateObjectFieldName", ObjectFilterConstants.TYPE_DATE_RANGE,
 			"{\"le\": \"2020-01-02\", \"ge\": \"2020-01-02\"}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
+
+		// Equals and not equals
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
+			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
+			"{\"eq\": \"15\"}");
+
+		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
+			"integerObjectFieldName", ObjectFilterConstants.TYPE_NOT_EQUALS,
+			"{\"ne\":\"15\"}");
+
+		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
+		// Excludes and includes with picklist
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
+			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
+			"{\"not\":{\"in\":[\"" + listTypeEntryKey + "\"]}}");
+
+		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
+			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
+			"{\"in\":[\"" + listTypeEntryKey + "\"]}");
+
+		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
+		// Excludes and includes with status
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
+			ObjectFilterConstants.TYPE_INCLUDES,
+			"{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}");
+
+		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
+			ObjectFilterConstants.TYPE_EXCLUDES,
+			"{\"not\":{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}}");
+
+		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
+		// List Type Entry
 
 		ObjectDefinition objectDefinition = _createObjectDefinition(
 			Arrays.asList(

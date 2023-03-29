@@ -2,8 +2,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
-import {getCompanyId} from '../../liferay/constants';
 
+import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountInfo,

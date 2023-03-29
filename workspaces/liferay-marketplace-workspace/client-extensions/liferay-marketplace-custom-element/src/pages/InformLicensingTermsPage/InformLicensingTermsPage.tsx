@@ -27,7 +27,16 @@ export function InformLicensingTermsPage({
 	onClickContinue,
 }: InformLicensingTermsPageProps) {
 	const [
-		{appERC, appLicense, appProductId, dayTrial, priceModel, skuId},
+		{
+			appERC,
+			appLicense,
+			appProductId,
+			dayTrial,
+			optionValuesId,
+			priceModel,
+			productOptionId,
+			skuId,
+		},
 		dispatch,
 	] = useAppContext();
 
@@ -126,6 +135,12 @@ export function InformLicensingTermsPage({
 								neverExpire: true,
 								price: 0,
 								purchasable: true,
+								skuOptions: [
+									{
+										key: productOptionId,
+										value: optionValuesId.noOptionId,
+									},
+								],
 							};
 
 							await patchSKUById(skuId, skuBody);
@@ -149,6 +164,11 @@ export function InformLicensingTermsPage({
 								neverExpire: appLicense === 'perpetual',
 								price: 0,
 								purchasable: true,
+								skuOptions:[
+									dayTrial === 'yes'
+										? optionValuesId.yesOptionId
+										: optionValuesId.noOptionId,
+								]
 							};
 
 							await patchSKUById(skuId, skuBody);

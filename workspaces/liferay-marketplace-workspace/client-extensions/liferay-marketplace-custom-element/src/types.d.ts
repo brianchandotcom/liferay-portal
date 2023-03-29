@@ -35,6 +35,12 @@ type Channel = {
 	type: string;
 };
 
+type CommerceOption = {
+	id: number;
+	key: string;
+	name: string;
+};
+
 interface PlacedOrder {
 	account: string;
 	accountId: number;
@@ -83,6 +89,13 @@ interface PostCartResponse {
 interface PostCheckoutCartResponse extends PostCartResponse {
 	cartItems: CartItem[];
 }
+
+type ProductOptionItem = {
+	id: number;
+	key: string;
+	name: string;
+	optionId: number;
+};
 
 type SKU = {
 	cost: number;

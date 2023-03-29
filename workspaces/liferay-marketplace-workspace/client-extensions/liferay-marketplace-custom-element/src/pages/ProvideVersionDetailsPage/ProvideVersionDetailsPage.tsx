@@ -5,9 +5,19 @@ import {Section} from '../../components/Section/Section';
 import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {addSkuExpandoValue, createAppSKU, getProductSKU} from '../../utils/api';
+import {
+	addSkuExpandoValue,
+	createAppSKU,
+	getOptions,
+	getProductSKU,
+	postOptionValue,
+	postTrialOption,
+	postTrialProductOption,
+} from '../../utils/api';
 
 import './ProvideVersionDetailsPage.scss';
+
+import {useEffect} from 'react';
 
 interface ProvideVersionDetailsPageProps {
 	onClickBack: () => void;
@@ -18,14 +28,75 @@ export function ProvideVersionDetailsPage({
 	onClickBack,
 	onClickContinue,
 }: ProvideVersionDetailsPageProps) {
-	const [{appId, appNotes, appProductId, appVersion}, dispatch] =
-		useAppContext();
+	const [
+		{
+			appNotes,
+			appProductId,
+			appVersion,
+			optionId,
+			optionValuesId,
+			productOptionId,
+		},
+		dispatch,
+	] = useAppContext();
+	useEffect(() => {
+		if (!productOptionId) {
+			const makeFetch = async () => {
+				let newOptionId: number;
+				const options = await getOptions();
+
+				const trialOption = options.find(({key}) => key === 'trial');
+
+				if (!optionId && !trialOption) {
+					newOptionId = await postTrialOption();
+				}
+				else {
+					newOptionId = optionId ?? trialOption!.id;
+				}
+
+				dispatch({
+					payload: {value: newOptionId},
+					type: TYPES.UPDATE_OPTION_ID,
+				});
+
+				const newProductOptionId = await postTrialProductOption(
+					newOptionId,
+					appProductId
+				);
+
+				dispatch({
+					payload: {value: newProductOptionId},
+					type: TYPES.UPDATE_PRODUCT_OPTION_ID,
+				});
+
+				const noOptionId = await postOptionValue(
+					'no',
+					'No',
+					newProductOptionId,
+					0
+				);
+				const yesOptionId = await postOptionValue(
+					'yes',
+					'Yes',
+					newProductOptionId,
+					1
+				);
+
+				dispatch({
+					payload: {noOptionId, yesOptionId},
+					type: TYPES.UPDATE_PRODUCT_OPTION_VALUES_ID,
+				});
+			};
+
+			makeFetch();
+		}
+	}, []);
 
 	return (
 		<div className="provide-version-details-page-container">
 			<div className="provide-version-details-page-header">
 				<Header
-					description="Define version information for your app. This will inform users about this version’s updates on the storefront."
+					description="Define version information for your app. This will inform users about this version's updates on the storefront."
 					title="Provide version details"
 				/>
 			</div>
@@ -90,6 +161,12 @@ export function ProvideVersionDetailsPage({
 									/[^a-zA-Z0-9 ]/g,
 									''
 								)}`,
+								skuOptions: [
+									{
+										key: productOptionId,
+										value: optionValuesId.noOptionId,
+									},
+								],
 							},
 						});
 

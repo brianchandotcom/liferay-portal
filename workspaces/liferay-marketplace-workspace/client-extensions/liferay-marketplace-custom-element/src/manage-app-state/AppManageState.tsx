@@ -38,7 +38,10 @@ export interface InitialStateProps {
 	buildZIPFiles: UploadedFile[];
 	catalogId: number;
 	dayTrial: string;
+	optionId: number;
+	optionValuesId: {noOptionId: number; yesOptionId: number};
 	priceModel: string;
+	productOptionId: number;
 	publisherWebsiteURL: Specification;
 	skuId: number;
 	supportURL: Specification;

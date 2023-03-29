@@ -258,8 +258,7 @@ export async function getDeliveryProduct({
 	channelId: number;
 }) {
 	const response = await fetch(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${appId}?nestedFields=skus
-		`,
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${appId}?nestedFields=skus`,
 		{
 			headers,
 			method: 'GET',
@@ -267,6 +266,20 @@ export async function getDeliveryProduct({
 	);
 
 	return await response.json();
+}
+
+export async function getOptions() {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/options`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	const {items} = await response.json();
+
+	return items as CommerceOption[];
 }
 
 export async function getOrders(
@@ -540,6 +553,87 @@ export async function postCheckoutCart({
 	);
 
 	return (await await response.json()) as PostCheckoutCartResponse;
+}
+
+export async function postOptionValue(
+	key: string,
+	name: string,
+	optionId: number,
+	priority: number
+) {
+	{
+		const response = await fetch(
+			`/o/headless-commerce-admin-catalog/v1.0/productOptions/${optionId}/productOptionValues`,
+			{
+				headers,
+				method: 'POST',
+				body: JSON.stringify({
+					key,
+					name: {en_US: name},
+					priority,
+				}),
+			}
+		);
+
+		const {id} = await response.json();
+
+		return id;
+	}
+}
+
+export async function postTrialOption() {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/options`,
+		{
+			headers,
+			method: 'POST',
+			body: JSON.stringify({
+				fieldType: 'radio',
+				key: 'trial',
+				name: {en_US: 'Trial'},
+			}),
+		}
+	);
+
+	const {id} = await response.json();
+
+	return id;
+}
+
+export async function postTrialProductOption(
+	optionId: number,
+	productId: number
+) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions`,
+		{
+			headers,
+			method: 'POST',
+			body: JSON.stringify([
+				{
+					facetable: true,
+					description: {
+						en_US: 'Specifies if a trial exists for a given app or solution submission.',
+					},
+					fieldType: 'radio',
+					key: 'trial',
+					name: {
+						en_US: 'Trial',
+					},
+					optionId,
+					productOptionValues: [],
+					required: true,
+					skuContributor: true,
+				},
+			]),
+		}
+	);
+
+	const {
+		items: [{id}],
+	} = (await response.json()) as {items: ProductOptionItem[]};
+
+	return id;
 }
 
 export function updateApp({

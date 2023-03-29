@@ -165,6 +165,27 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 
+		case TYPES.UPDATE_OPTION_ID: {
+			const optionId = action.payload.value;
+
+			return {...state, optionId};
+		}
+
+		case TYPES.UPDATE_PRODUCT_OPTION_ID: {
+			const productOptionId = action.payload.value;
+
+			return {...state, productOptionId};
+		}
+
+		case TYPES.UPDATE_PRODUCT_OPTION_VALUES_ID: {
+			const noOptionId = action.payload.noOptionId;
+			const yesOptionId = action.payload.yesOptionId;
+
+			const optionValuesId = {noOptionId, yesOptionId};
+
+			return {...state, optionValuesId};
+		}
+
 		case TYPES.UPDATE_SKU_ID: {
 			const id = action.payload.value;
 

@@ -72,6 +72,13 @@ interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	timeZoneId: string;
 }
 
+const INITIAL_CHART_PAYLOAD = {
+	date: '',
+	intervalInitDate: 0,
+	totalEvents: 0,
+	totalSessions: 0
+};
+
 const ProfileCard: React.FC<IProfileCardProps> = ({
 	channelId,
 	entity: {id: entityId},
@@ -81,12 +88,9 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	rangeSelectors,
 	timeZoneId
 }) => {
-	const [chartPayload, setChartPayload] = useState<ChartPayload>({
-		date: '',
-		intervalInitDate: 0,
-		totalEvents: 0,
-		totalSessions: 0
-	});
+	const [chartPayload, setChartPayload] = useState<ChartPayload>(
+		INITIAL_CHART_PAYLOAD
+	);
 
 	const {
 		delta,
@@ -214,21 +218,16 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		onPointSelect(null);
 	};
 
-	const handleChartSelect = ({
+	const handleChangeSelection = ({
 		index,
 		payload
 	}: {
-		index: number;
+		index: number | null;
 		payload: ChartPayload;
 	}) => {
 		resetPage();
 		onPointSelect(index);
 		setChartPayload(payload);
-	};
-
-	const handleClearSelection = () => {
-		resetPage();
-		onPointSelect(null);
 	};
 
 	const handleQuery = (query: string) => {
@@ -288,7 +287,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						hasSelectedPoint={hasSelectedPoint}
 						history={activityHistory}
 						interval={interval}
-						onPointSelect={handleChartSelect}
+						onPointSelect={handleChangeSelection}
 						rangeSelectors={rangeSelectors}
 						selectedPoint={selectedPoint}
 					/>
@@ -312,7 +311,12 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 								<ClayButton
 									className='button-root'
 									displayType='unstyled'
-									onClick={handleClearSelection}
+									onClick={() =>
+										handleChangeSelection({
+											index: null,
+											payload: INITIAL_CHART_PAYLOAD
+										})
+									}
 									size='sm'
 								>
 									{Liferay.Language.get(

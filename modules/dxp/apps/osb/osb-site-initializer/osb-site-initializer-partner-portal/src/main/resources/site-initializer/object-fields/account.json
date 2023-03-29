@@ -50,7 +50,7 @@
 				"en-US": "Marketing Plan"
 			},
 			"name": "marketingPlan",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "Boolean",
@@ -74,7 +74,7 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Partner Levels$]",
 			"name": "partnerLevel",
-			"required": true,
+			"required": false,
 			"type": "String"
 		},
 		{

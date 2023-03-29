@@ -228,6 +228,8 @@ definition {
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."
 	@priority = 4
 	test CanPublishDeletedCoverImageViaSAP {
+		property test.name.skip.portal.instance = "BlogsLocalStaging#CanPublishDeletedCoverImageViaSAP";
+
 		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
 			site = "false",
@@ -1116,6 +1118,8 @@ definition {
 	@description = "This test covers LPS-154410. It ensures that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = 5
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
+		property test.name.skip.portal.instance = "BlogsLocalStaging#CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		VideoShortcut.addCP(

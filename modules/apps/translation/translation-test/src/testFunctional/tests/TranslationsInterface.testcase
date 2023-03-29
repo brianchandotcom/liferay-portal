@@ -26,6 +26,8 @@ definition {
 	@description = "This ensures that the translator can select which target language she wants to translate into numeric fields."
 	@priority = 5
 	test CanTranslateCustomizedWCWithNumericFields {
+		property test.name.skip.portal.instance = "TranslationsInterface#CanTranslateCustomizedWCWithNumericFields";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -215,6 +217,8 @@ definition {
 	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields."
 	@priority = 5
 	test CanTranslateCustomizedWCWithTextFields {
+		property test.name.skip.portal.instance = "TranslationsInterface#CanTranslateCustomizedWCWithTextFields";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();

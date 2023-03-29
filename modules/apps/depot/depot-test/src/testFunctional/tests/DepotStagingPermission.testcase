@@ -212,6 +212,8 @@ definition {
 	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions."
 	@priority = 4
 	test CanPublishDocument {
+		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishDocument";
+
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
@@ -268,6 +270,8 @@ definition {
 	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library."
 	@priority = 4
 	test CanPublishEditedImage {
+		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishEditedImage";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -331,6 +335,8 @@ definition {
 	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library."
 	@priority = 4
 	test CanPublishEditedWC {
+		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishEditedWC";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name (Staging)",
@@ -395,6 +401,8 @@ definition {
 	@description = "This test ensures that a user with permissions can add a basic article and publish it to live in asset library."
 	@priority = 4
 	test CanPublishWC {
+		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishWC";
+
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");

@@ -302,6 +302,7 @@ definition {
 	@refactordone
 	test CanDeleteDMImage {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanDeleteDMImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -376,6 +377,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanDeleteDocument {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanDeleteDocument";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
@@ -457,6 +460,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanDeleteDocumentWithCustomField {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanDeleteDocumentWithCustomField";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -831,6 +836,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditBlogCoverImage {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanEditBlogCoverImage";
+
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -1094,6 +1101,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditDMImage {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanEditDMImage";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -1175,6 +1184,7 @@ definition {
 	@refactordone
 	test CanEditDocument {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanEditDocument";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1256,6 +1266,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditDocumentWithCustomField {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanEditDocumentWithCustomField";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -1533,6 +1545,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditWCImage {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanEditWCImage";
+
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -2252,6 +2266,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishDocumentFolder {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishDocumentFolder";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -2428,6 +2444,8 @@ definition {
 	@description = "This ensures that a document stored in a DM folder of asset library can be edited and republished in DM widget when local staging is enabled."
 	@priority = 4
 	test CanPublishEditedDocumentFromFolderViaWidget {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishEditedDocumentFromFolderViaWidget";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "Depot Folder Name",
@@ -2510,6 +2528,8 @@ definition {
 	@description = "This ensures that a document stored in an asset library can be edited and republished in DM widget when local staging is enabled."
 	@priority = 4
 	test CanPublishEditedDocumentViaWidget {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishEditedDocumentViaWidget";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Description",
 			dmDocumentTitle = "Document_1.doc",
@@ -2581,6 +2601,8 @@ definition {
 	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in DM widget when local staging is enabled."
 	@priority = 4
 	test CanPublishEditedImageFromFolderViaWidget {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishEditedImageFromFolderViaWidget";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "Depot Folder Name",
@@ -2734,6 +2756,8 @@ definition {
 	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in DM widget when local staging is enabled."
 	@priority = 4
 	test CanPublishImageAfterChangingDepot {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishImageAfterChangingDepot";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name 2");
@@ -3011,6 +3035,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishImageWithCustomField {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishImageWithCustomField";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -3072,6 +3098,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishImageWithLatestVersion {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishImageWithLatestVersion";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -3224,6 +3252,8 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanPublishVideoShortcutThumbnail {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishVideoShortcutThumbnail";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(

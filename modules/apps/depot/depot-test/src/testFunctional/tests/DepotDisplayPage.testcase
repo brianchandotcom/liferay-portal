@@ -222,6 +222,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanMapWCWithOpenGraph {
+		property test.name.skip.portal.instance = "DepotDisplayPage#CanMapWCWithOpenGraph";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");

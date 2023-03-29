@@ -36,6 +36,7 @@ definition {
 	@refactordone
 	test CanAddCommentToWorkflowSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "KBWorkflow#CanAddCommentToWorkflowSubmission";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

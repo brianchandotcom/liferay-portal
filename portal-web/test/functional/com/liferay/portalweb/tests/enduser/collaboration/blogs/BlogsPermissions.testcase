@@ -635,6 +635,8 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenOrgRoleHasNoPermissions {
+		property test.name.skip.portal.instance = "BlogsPermissions#CannotDeleteEntryWhenOrgRoleHasNoPermissions";
+
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
 			orgType = "Organization",
@@ -1110,6 +1112,8 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotEditEntryWhenOwnerHasNoPermissions {
+		property test.name.skip.portal.instance = "BlogsPermissions#CannotEditEntryWhenOwnerHasNoPermissions";
+
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1698,6 +1702,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
+		property test.name.skip.portal.instance = "BlogsPermissions#CannotViewEntryAsGuestWhenPermissionsAreRemoved";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

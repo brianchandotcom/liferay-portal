@@ -662,6 +662,8 @@ definition {
 	@description = "This test covers LPS-154424. It ensures that an external video with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
 	@priority = 4
 	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
+		property test.name.skip.portal.instance = "DepotLocalStagingMG#CanViewExternalVideoAfterFriendlyURLIsUpdated";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(

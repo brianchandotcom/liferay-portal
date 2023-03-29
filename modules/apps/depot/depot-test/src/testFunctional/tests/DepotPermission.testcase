@@ -1613,6 +1613,7 @@ definition {
 	@refactordone
 	test DocumentCannotBeSelectedWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "DepotPermission#DocumentCannotBeSelectedWithoutPermissions";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

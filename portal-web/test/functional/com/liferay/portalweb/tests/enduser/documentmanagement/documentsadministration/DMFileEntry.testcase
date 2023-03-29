@@ -2983,6 +2983,8 @@ definition {
 	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed"
 	@priority = 4
 	test VerifyTreeImageIsAvailable {
+		property test.name.skip.portal.instance = "DMFileEntry#VerifyTreeImageIsAvailable";
+
 		task ("Go to Documents and Media Settings") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}

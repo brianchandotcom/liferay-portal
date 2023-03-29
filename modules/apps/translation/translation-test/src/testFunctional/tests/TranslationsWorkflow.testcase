@@ -766,6 +766,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanResubmitImportedEntryFromZipFile {
+		property test.name.skip.portal.instance = "TranslationsWorkflow#CanResubmitImportedEntryFromZipFile";
+
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
 			description = "Description",

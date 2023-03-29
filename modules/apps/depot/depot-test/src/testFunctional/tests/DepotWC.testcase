@@ -139,6 +139,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditTemplateAndStructure {
+		property test.name.skip.portal.instance = "DepotWC#CanEditTemplateAndStructure";
+
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(

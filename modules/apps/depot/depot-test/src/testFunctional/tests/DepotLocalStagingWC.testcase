@@ -153,6 +153,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditFriendlyURL {
+		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanEditFriendlyURL";
+
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
@@ -355,6 +357,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishDeletedWCCustomization {
+		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishDeletedWCCustomization";
+
 		DepotNavigator.openDepotAdmin();
 
 		Depot.configureDDMStructures(
@@ -436,6 +440,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishEditedWCCustomization {
+		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishEditedWCCustomization";
+
 		DepotNavigator.openDepotAdmin();
 
 		Depot.configureDDMStructures(
@@ -528,6 +534,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishWCFolder {
+		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishWCFolder";
+
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(
@@ -620,6 +628,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishWCWithCategory {
+		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishWCWithCategory";
+
 		DepotNavigator.openDepotCategoriesAdminStaging(depotName = "Test Depot Name");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
@@ -680,6 +690,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishWCWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishWCWithEmbeddedVideo";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Embedded Video Depot Name");

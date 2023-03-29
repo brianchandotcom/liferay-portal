@@ -360,6 +360,8 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test CanViewArticlesWithDifferentSiteScopes {
+		property test.name.skip.portal.instance = "KBDisplayWidget#CanViewArticlesWithDifferentSiteScopes";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page 2");

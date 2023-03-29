@@ -21,7 +21,6 @@ import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.web.internal.configuration.KBServiceConfigurationProviderUtil;
 import com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

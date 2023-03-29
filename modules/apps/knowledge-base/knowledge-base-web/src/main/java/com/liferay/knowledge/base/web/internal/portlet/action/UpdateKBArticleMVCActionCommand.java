@@ -22,7 +22,6 @@ import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -103,18 +102,15 @@ public class UpdateKBArticleMVCActionCommand
 		String description = ParamUtil.getString(actionRequest, "description");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
 
-		Date expirationDate = null;
-		Date reviewDate = null;
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
-			User user = _userLocalService.getUser(themeDisplay.getUserId());
-
-			expirationDate = _getExpirationDate(
-				actionRequest, true, user.getTimeZone());
-			reviewDate = _getReviewDate(
-				actionRequest, true, user.getTimeZone());
+		Date expirationDate = _getExpirationDate(
+			actionRequest, true, user.getTimeZone());
+		Date reviewDate = _getReviewDate(
+			actionRequest, true, user.getTimeZone());
 
 		String[] sections = actionRequest.getParameterValues("sections");
 		String[] selectedFileNames = ParamUtil.getParameterValues(

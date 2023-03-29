@@ -26,6 +26,8 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -43,6 +45,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import java.sql.Connection;
 
 import java.util.Objects;
 
@@ -67,6 +71,10 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
+		if (!_hasColumn("JournalArticle", "DDMStructureKey")) {
+			return;
+		}
+
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -179,6 +187,16 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 			});
 
 		return upgradeProcesses[0];
+	}
+
+	private boolean _hasColumn(String tableName, String columnName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasColumn(tableName, columnName);
+		}
 	}
 
 	private void _runUpgrade() throws Exception {

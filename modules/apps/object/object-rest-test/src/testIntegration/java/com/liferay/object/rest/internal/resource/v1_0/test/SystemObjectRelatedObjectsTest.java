@@ -26,6 +26,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinition
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
@@ -35,23 +36,31 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,6 +78,22 @@ public class SystemObjectRelatedObjectsTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-153117", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-153117", "false"
+			).build());
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -175,6 +200,83 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	@Test
+	public void testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN)) {
+
+			// Many to Many
+
+			ObjectRelationship objectRelationship =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_userSystemObjectDefinition, _objectDefinition,
+					_user.getUserId(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+			_objectRelationships.add(objectRelationship);
+
+			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
+				objectRelationship, false);
+
+			// Many to One
+
+			objectRelationship =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectDefinition, _userSystemObjectDefinition,
+					_user.getUserId(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			_objectRelationships.add(objectRelationship);
+
+			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
+				objectRelationship, true);
+
+			// One to Many
+
+			objectRelationship =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_userSystemObjectDefinition, _objectDefinition,
+					_user.getUserId(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
+				objectRelationship, false);
+		}
+	}
+
+	@Test
+	public void testPostSystemObjectEntryWithNestedCustomObjectEntries()
+		throws Exception {
+
+		// Many to Many
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		_testPostSystemObjectEntryWithNestedCustomObjectEntries(
+			objectRelationship);
+
+		// One to Many
+
+		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		_testPostSystemObjectEntryWithNestedCustomObjectEntries(
+			objectRelationship);
+	}
+
+	@Test
 	public void testPostSystemObjectWithObjectRelationshipName()
 		throws Exception {
 
@@ -205,6 +307,35 @@ public class SystemObjectRelatedObjectsTest {
 				StringPool.SPACE, StringPool.UNDERLINE
 			),
 			postJSONObject.getString("status"));
+	}
+
+	@Test
+	public void testPutSystemObjectEntryWithNestedCustomObjectEntries()
+		throws Exception {
+
+		// Many to Many
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		_testPutSystemObjectEntryWithNestedCustomObjectEntries(
+			objectRelationship);
+
+		// One to Many
+
+		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		_testPutSystemObjectEntryWithNestedCustomObjectEntries(
+			objectRelationship);
 	}
 
 	private ObjectRelationship _addObjectRelationship(
@@ -238,6 +369,41 @@ public class SystemObjectRelatedObjectsTest {
 			objectEntry.getObjectEntryId(), jsonObject.getLong("id"));
 	}
 
+	private void _assertObjectEntryField(
+		JSONObject objectEntryJSONObject, String objectFieldName,
+		String objectFieldValue) {
+
+		int objectEntryId = objectEntryJSONObject.getInt("id");
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntryId);
+
+		Assert.assertEquals(
+			MapUtil.getString(objectEntry.getValues(), objectFieldName),
+			objectFieldValue);
+	}
+
+	private JSONArray _createObjectEntriesJSONArray(
+			String[] externalReferenceCodeValues, String objectFieldName,
+			String[] objectFieldValues)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (int i = 0; i < objectFieldValues.length; i++) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONUtil.put(
+					objectFieldName, objectFieldValues[i]
+				).put(
+					"externalReferenceCode", externalReferenceCodeValues[i]
+				).toString());
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
 	private String _getLocation() {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
@@ -251,6 +417,195 @@ public class SystemObjectRelatedObjectsTest {
 			"?nestedFields=", name);
 	}
 
+	private String _getLocation(String userId, String objectRelationshipName) {
+		return StringBundler.concat(
+			_getLocation(), StringPool.SLASH, userId, "?nestedFields=",
+			objectRelationshipName);
+	}
+
+	private UserAccount _randomUserAccount() throws Exception {
+		return new UserAccount() {
+			{
+				additionalName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				alternateName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				birthDate = RandomTestUtil.nextDate();
+				currentPassword = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dashboardURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay.com";
+				familyName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				givenName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				honorificPrefix = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				honorificSuffix = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				jobTitle = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				lastLoginDate = RandomTestUtil.nextDate();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				password = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				profileURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	private void _testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
+			ObjectRelationship objectRelationship, boolean manyToOne)
+		throws Exception {
+
+		JSONObject objectEntryJSONObject;
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		if (manyToOne) {
+			objectEntryJSONObject = jsonObject.put(
+				objectRelationship.getName(),
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME,
+					new String[] {
+						_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+					}));
+		}
+		else {
+			objectEntryJSONObject = jsonObject.put(
+				objectRelationship.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", _ERC_VALUE_1
+					).toString()));
+		}
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+	}
+
+	private void _testPostSystemObjectEntryWithNestedCustomObjectEntries(
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				}));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_getLocation(systemObjectEntryId, objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(1), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_2);
+	}
+
+	private void _testPutSystemObjectEntryWithNestedCustomObjectEntries(
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				}));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		UserAccount newUserAccount = _randomUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			newUserAccount.toString());
+
+		JSONObject newObjectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				}));
+
+		HTTPTestUtil.invoke(
+			newObjectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_getLocation(), StringPool.SLASH, systemObjectEntryId),
+			Http.Method.PUT);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_getLocation(systemObjectEntryId, objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(1), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_2);
+	}
+
+	private static final String _ERC_VALUE_1 = RandomTestUtil.randomString();
+
+	private static final String _ERC_VALUE_2 = RandomTestUtil.randomString();
+
+	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _NEW_OBJECT_FIELD_VALUE_2 =
+		"x" + RandomTestUtil.randomString();
+
 	private static final String _OBJECT_FIELD_NAME =
 		"x" + RandomTestUtil.randomString();
 
@@ -263,6 +618,10 @@ public class SystemObjectRelatedObjectsTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private ObjectEntry _objectEntry;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
 	private final List<ObjectRelationship> _objectRelationships =
 		new ArrayList<>();
 

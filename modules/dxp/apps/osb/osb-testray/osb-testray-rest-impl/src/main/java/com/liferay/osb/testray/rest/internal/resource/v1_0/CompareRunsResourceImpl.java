@@ -36,7 +36,7 @@ public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
 		return new CompareRuns() {
 			{
 				dueStatuses = new String[] {
-					"BLOCKED", "DNR", "FAILED", "FIX", "PASSED", "TEST"
+					"PASSED", "FAILED", "BLOCKED", "TEST FIX", "DNR"
 				};
 
 				values = new int[][] {

@@ -328,7 +328,7 @@
 				feedId ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countA_ByG_U_F_DDMSK">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countA_ByG_U_F_DDMSI">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -354,7 +354,7 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F_DDMSK">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F_DDMSI">
 		<![CDATA[
 			SELECT
 				JournalArticle.folderId AS modelFolderId, JournalArticle.articleId AS articleId, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate AS displayDate, JournalArticle.modifiedDate AS modifiedDate
@@ -380,7 +380,7 @@
 					(TEMP_TABLE.version = JournalArticle.version)
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F_DDMSK_L">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F_DDMSI_L">
 		<![CDATA[
 			SELECT
 				JournalArticle.folderId AS modelFolderId, JournalArticle.articleId AS articleId, JournalArticleLocalization.title AS title, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate AS displayDate, JournalArticle.modifiedDate AS modifiedDate

@@ -328,6 +328,22 @@ public class ThemeDisplay
 	}
 
 	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getGuestUser}
+	 */
+	@Deprecated
+	public User getDefaultUser() throws PortalException {
+		return getGuestUser();
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getGuestUserId}
+	 */
+	@Deprecated
+	public long getDefaultUserId() throws PortalException {
+		return getGuestUserId();
+	}
+
+	/**
 	 * Returns the information about the detected device, such as the device's
 	 * brand, browser, operating system, screen resolution, etc.
 	 *

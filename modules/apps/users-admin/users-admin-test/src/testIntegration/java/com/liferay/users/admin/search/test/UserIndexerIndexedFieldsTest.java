@@ -320,6 +320,8 @@ public class UserIndexerIndexedFieldsTest {
 		).put(
 			Field.USER_NAME, StringUtil.toLowerCase(user.getFullName())
 		).put(
+			"defaultUser", String.valueOf(user.isDefaultUser())
+		).put(
 			"emailAddress", user.getEmailAddress()
 		).put(
 			"emailAddressDomain", _getEmailAddressDomain(user.getEmailAddress())

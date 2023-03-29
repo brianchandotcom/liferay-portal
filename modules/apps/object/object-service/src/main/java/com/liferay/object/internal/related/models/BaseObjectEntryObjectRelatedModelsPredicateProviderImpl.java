@@ -14,8 +14,8 @@
 
 package com.liferay.object.internal.related.models;
 
-import com.liferay.object.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;

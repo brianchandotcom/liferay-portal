@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.dsl;
+package com.liferay.object.petra.sql.dsl;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;

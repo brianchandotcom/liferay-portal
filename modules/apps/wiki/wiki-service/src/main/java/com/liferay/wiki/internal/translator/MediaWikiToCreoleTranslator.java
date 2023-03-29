@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal.translator;
+package com.liferay.wiki.internal.translator;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

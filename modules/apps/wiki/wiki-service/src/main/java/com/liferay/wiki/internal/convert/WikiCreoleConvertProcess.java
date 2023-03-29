@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal.convert;
+package com.liferay.wiki.internal.convert;
 
 import com.liferay.portal.convert.BaseConvertProcess;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
+import com.liferay.wiki.internal.translator.ClassicToCreoleTranslator;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.web.internal.translator.ClassicToCreoleTranslator;
 
 import java.util.List;
 

@@ -73,9 +73,9 @@ definition {
 		}
 
 		task ("Then: new SVG spritemap is applied on the page") {
-			AssertNotVisible(locator1 = "//ul[@class='control-menu-nav']//span[@id='uvlz____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#pencil')]");
+			AssertNotVisible(locator1 = "ClientExtension#HIDDEN_PENCIL_ICON");
 
-			AssertNotVisible(locator1 = "//ul[@class='control-menu-nav']//span[@id='ored____']//*[contains(@href,'webdav/guest/document_library/spritemap_example.svg#cog')]");
+			AssertNotVisible(locator1 = "ClientExtension#HIDDEN_COG_ICON");
 		}
 	}
 
@@ -104,9 +104,9 @@ definition {
 		}
 
 		task ("Then: new SVG spritemap is applied on the page") {
-			AssertVisible(locator1 = "//span[@title='Edit']//span[@id='uvlz____']//*[contains(@class,'pencil')]");
+			AssertVisible(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
 
-			AssertVisible(locator1 = "//a[@data-qa-id='editLayout']//span[@id='ored____']//*[contains(@class,'cog')]");
+			AssertVisible(locator1 = "ClientExtension#COG_ICON_IN_EDIT_ICON_POSITION");
 		}
 	}
 

@@ -15,6 +15,10 @@
 import {useState} from 'react';
 
 import NavigationBar from '../../../../../common/components/navigation-bar';
+import {ClaimType} from '../Types';
+import InsuranceInfo from './insurance-info';
+
+import './index.scss';
 
 enum NavBarLabel {
 	InsuranceInfo = 'Insurance Info',
@@ -22,7 +26,7 @@ enum NavBarLabel {
 	DamageSumary = 'Damage Sumary',
 }
 
-const ClaimNavigator: any = () => {
+const ClaimNavigator = ({dataJSON}: ClaimType) => {
 	const navbarLabel = [
 		NavBarLabel.InsuranceInfo,
 		NavBarLabel.IncidentDetail,
@@ -31,7 +35,11 @@ const ClaimNavigator: any = () => {
 	const [active, setActive] = useState(navbarLabel[0]);
 
 	return (
-		<div className="w-100">
+		<div className="bg-neutral-0 claims-details-nav-container h-100 rounded w-100">
+			<h5 className="bg-neutral-0 claims-detail-nav-title pt-3 px-5 rounded-top">
+				Claims Detail
+			</h5>
+
 			<div className="d-flex flex-row rounded w-100">
 				<NavigationBar
 					active={active}
@@ -40,7 +48,9 @@ const ClaimNavigator: any = () => {
 				/>
 			</div>
 
-			{active === NavBarLabel.InsuranceInfo && <h1>Test</h1>}
+			{active === NavBarLabel.InsuranceInfo && (
+				<InsuranceInfo dataJSON={dataJSON} />
+			)}
 		</div>
 	);
 };

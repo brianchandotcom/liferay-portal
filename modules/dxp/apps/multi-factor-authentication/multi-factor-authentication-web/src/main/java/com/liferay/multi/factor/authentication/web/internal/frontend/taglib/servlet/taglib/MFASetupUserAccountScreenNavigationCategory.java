@@ -15,19 +15,12 @@
 package com.liferay.multi.factor.authentication.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFASetupUserAccountScreenNavigationConstants;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
-import java.io.IOException;
-
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,19 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "screen.navigation.category.order:Integer=40",
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	service = ScreenNavigationCategory.class
 )
 public class MFASetupUserAccountScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry<User> {
+	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return MFASetupUserAccountScreenNavigationConstants.CATEGORY_KEY_MFA;
-	}
-
-	@Override
-	public String getEntryKey() {
-		return null;
 	}
 
 	@Override
@@ -63,18 +51,6 @@ public class MFASetupUserAccountScreenNavigationCategory
 	@Override
 	public String getScreenNavigationKey() {
 		return UserScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_USERS;
-	}
-
-	@Override
-	public boolean isVisible(User user, User context) {
-		return false;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
 	}
 
 	@Reference

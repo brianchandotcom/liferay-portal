@@ -19,15 +19,11 @@ import com.liferay.account.admin.web.internal.security.permission.resource.Accou
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joao Victor Alves
@@ -47,11 +43,6 @@ public class AccountEntryAddressesScreenNavigationEntry
 	@Override
 	public String getJspPath() {
 		return "/account_entries_admin/account_entry/addresses.jsp";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "addresses");
 	}
 
 	@Override
@@ -75,8 +66,5 @@ public class AccountEntryAddressesScreenNavigationEntry
 
 		return false;
 	}
-
-	@Reference
-	private Language _language;
 
 }

@@ -16,12 +16,8 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.portal.kernel.language.Language;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -32,25 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = ScreenNavigationCategory.class
 )
 public class AccountEntryOrganizationsScreenNavigationCategory
-	implements ScreenNavigationCategory {
+	extends BaseAccountEntryScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS;
 	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return language.get(locale, "organizations");
-	}
-
-	@Override
-	public String getScreenNavigationKey() {
-		return AccountScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY;
-	}
-
-	@Reference
-	protected Language language;
 
 }

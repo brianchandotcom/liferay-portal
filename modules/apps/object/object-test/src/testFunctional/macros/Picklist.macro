@@ -92,6 +92,7 @@ definition {
 
 	macro addPicklistViaAPI {
 		JSONObject.addPicklist(
+			externalReferenceCode = ${externalReferenceCode},
 			picklistName = ${picklistName},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});

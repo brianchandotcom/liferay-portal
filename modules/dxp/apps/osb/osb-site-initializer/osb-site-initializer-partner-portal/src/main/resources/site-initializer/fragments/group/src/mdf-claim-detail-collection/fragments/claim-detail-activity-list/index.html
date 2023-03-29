@@ -22,15 +22,17 @@
 
 		<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">
 			<div class="panel-body">
+				[#if activity.listOfQualifiedLeads?has_content]
 				<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${activity.listOfQualifiedLeads.link.href}">
 					<span class="mr-2 mt-3 text-neutral-5">
 						[@clay.icon class="mr-2 mt-3 text-neutral-5" symbol="file-xsl" /]
 					</span>
 
-					<div>
-						<h5 class="mb-0 text-neutral-9">${activity.listOfQualifiedLeads.name?keep_before("#")}</h5>
-					</div>
+						<div>
+							<h5 class="mb-0 text-neutral-9">${activity.listOfQualifiedLeads.name?keep_before("#")}</h5>
+						</div>
 				</a>
+				[/#if]
 
 				<div class="table-responsive">
 					<table class="bg-brand-primary-lighten-6 border-0 show-quick-actions-on-hover table table-autofit table-hover table-list table-striped">
@@ -51,6 +53,7 @@
 										<p class="text-neutral-10">${get_currency(budget.invoiceAmount?number, (activity.currency.key)!"USD")}</p>
 									</td>
 									<td class="align-baseline border-0">
+										[#if budget.invoice?has_content]
 										<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${budget.invoice.link.href}">
 											<span class="mr-2 mt-3 text-neutral-5">
 												[@clay.icon class="mr-2 mt-3 text-neutral-5" symbol="document-table" /]
@@ -60,6 +63,7 @@
 												<h5 class="mb-0 text-neutral-9">${budget.invoice.name?keep_before("#")}</h5>
 											</div>
 										</a>
+										[/#if]
 									</td>
 								</tr>
 							[/#list]

@@ -19,6 +19,7 @@ import {useEffect, useState} from 'react';
 
 import NavigationBar from '../../../../../common/components/navigation-bar';
 import PanelComponent from '../../../../../common/components/panel';
+import addImageFallback from '../../../../../common/utils/addImageFallback';
 import sortedByDate from '../../../../../common/utils/sortedByDate';
 import {getWebDavUrl} from '../../../../../common/utils/webdav';
 import arrayOfHistory from './policyPanelDataHistory';
@@ -149,6 +150,7 @@ const PolicyDetail = ({
 										</h5>
 										<img
 											className="w-75"
+											onError={addImageFallback}
 											src={`${getWebDavUrl()}/${currentVehicle?.model
 												.replace(/ /g, '')
 												.toLocaleLowerCase()}.svg`}

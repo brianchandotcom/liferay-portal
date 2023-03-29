@@ -21,6 +21,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -212,6 +213,14 @@ public class DuplicateItemMVCActionCommand
 			}
 		).put(
 			"layoutData", layoutDataJSONObject
+		).put(
+			"restrictedItemIds",
+			_contentManager.getRestrictedItemIds(
+				_portal.getHttpServletRequest(actionRequest),
+				LayoutStructureUtil.getLayoutStructure(
+					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+					segmentsExperienceId),
+				themeDisplay)
 		);
 	}
 
@@ -360,6 +369,9 @@ public class DuplicateItemMVCActionCommand
 
 		return jsonArray;
 	}
+
+	@Reference
+	private ContentManager _contentManager;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

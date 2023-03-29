@@ -28,14 +28,14 @@ export function getEndpoint(type, externalReferenceCode) {
 	return endpoints[type];
 }
 
-export function downloadFile(externalReferenceCode, fileName, fileType) {
+export function downloadFile({externalReferenceCode, fileName, fileType}) {
 	fetch(getEndpoint(fileType, externalReferenceCode)).then((response) => {
 		response.blob().then((blob) => {
 			const LinkElement = document.createElement('a');
 
 			LinkElement.href = URL.createObjectURL(blob);
 
-			if (fileName === null) {
+			if (fileName === undefined) {
 				fileName = response.headers
 					.get('Content-Disposition')
 					.match(/filename=(.*)/)[1];
@@ -73,6 +73,6 @@ export default function ({
 						.value;
 			}
 
-			downloadFile(externalReferenceCode, null, type);
+			downloadFile({externalReferenceCode, fileType: type});
 		});
 }

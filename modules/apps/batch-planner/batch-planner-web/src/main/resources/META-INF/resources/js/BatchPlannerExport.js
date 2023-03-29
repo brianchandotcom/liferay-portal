@@ -41,5 +41,9 @@ export async function exportStatus(externalReferenceCode) {
 }
 
 export function fetchExportedFile(externalReferenceCode) {
-	downloadFile(externalReferenceCode, EXPORT_FILE_NAME, 'exportFile');
+	downloadFile({
+		externalReferenceCode,
+		fileName: EXPORT_FILE_NAME,
+		fileType: 'exportFile',
+	});
 }

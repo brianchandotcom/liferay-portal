@@ -925,4 +925,31 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	@summary = "This macro calls the Headless API to set the account restriction property to an object definition"
+	macro setAccountRestriction {
+		Variables.assertDefined(parameterList = ${objectName});
+
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+		var objectDefinition = JSONObject.getObjectDefinition(objectName = ${objectName});
+
+		var accountEntryRestrictedObjectFieldName = JSONUtil.getWithJSONPath(${objectDefinition}, "$..objectFields[?(@.businessType=='Relationship')].name");
+
+		if (${accountEntryRestrictedObjectFieldName} == "") {
+			fail("FAIL. Cannot find relationship between ${objectName} and AccountEntry.");
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+				-H 'Content-Type: application/json' \
+				-u test@liferay.com:test \
+				-d '{
+					"accountEntryRestricted": true,
+					"accountEntryRestrictedObjectFieldName": "${accountEntryRestrictedObjectFieldName}"
+				}'
+		''';
+
+		JSONCurlUtil.patch(${curl});
+	}
+
 }

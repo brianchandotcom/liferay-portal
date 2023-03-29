@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.account.item.selector.web.internal;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountItemSelectorCriterion;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountItemSelectorViewDisplayContext;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
@@ -86,8 +87,8 @@ public class CommerceAccountItemSelectorView
 		CommerceAccountItemSelectorViewDisplayContext
 			commerceAccountItemSelectorViewDisplayContext =
 				new CommerceAccountItemSelectorViewDisplayContext(
-					_commerceAccountLocalService, httpServletRequest,
-					portletURL, itemSelectedEventName);
+					_accountEntryLocalService, _commerceAccountHelper,
+					httpServletRequest, portletURL, itemSelectedEventName);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -108,7 +109,10 @@ public class CommerceAccountItemSelectorView
 				new UUIDItemSelectorReturnType()));
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private Language _language;

@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.account.item.selector.web.internal;
 
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupAccountItemSelectorCriterion;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountGroupAccountItemSelectorViewDisplayContext;
-import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
@@ -88,8 +89,8 @@ public class CommerceAccountGroupAccountItemSelectorView
 		CommerceAccountGroupAccountItemSelectorViewDisplayContext
 			commerceAccountGroupAccountItemSelectorViewDisplayContext =
 				new CommerceAccountGroupAccountItemSelectorViewDisplayContext(
-					_commerceAccountGroupCommerceAccountRelLocalService,
-					_commerceAccountGroupService, _commerceAccountLocalService,
+					_accountGroupRelLocalService, _accountGroupService,
+					_accountEntryLocalService, _commerceAccountHelper,
 					httpServletRequest, portletURL, itemSelectedEventName);
 
 		httpServletRequest.setAttribute(
@@ -112,14 +113,16 @@ public class CommerceAccountGroupAccountItemSelectorView
 				new UUIDItemSelectorReturnType()));
 
 	@Reference
-	private CommerceAccountGroupCommerceAccountRelLocalService
-		_commerceAccountGroupCommerceAccountRelLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountGroupService _accountGroupService;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private Language _language;

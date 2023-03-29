@@ -14,14 +14,16 @@
 
 package com.liferay.commerce.account.item.selector.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.helper.CommerceAccountItemSelectorRequestHelper;
 import com.liferay.commerce.account.item.selector.web.internal.search.CommerceAccountGroupAccountItemSelectorChecker;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -37,17 +39,17 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 
 	public CommerceAccountGroupAccountItemSelectorViewDisplayContext(
-		CommerceAccountGroupCommerceAccountRelLocalService
-			commerceAccountGroupCommerceAccountRelLocalService,
-		CommerceAccountGroupService commerceAccountGroupService,
-		CommerceAccountLocalService commerceAccountLocalService,
+		AccountGroupRelLocalService accountGroupRelLocalService,
+		AccountGroupService accountGroupService,
+		AccountEntryLocalService accountEntryLocalService,
+		CommerceAccountHelper commerceAccountHelper,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
-		_commerceAccountGroupCommerceAccountRelLocalService =
-			commerceAccountGroupCommerceAccountRelLocalService;
-		_commerceAccountGroupService = commerceAccountGroupService;
-		_commerceAccountLocalService = commerceAccountLocalService;
+		_accountGroupRelLocalService = accountGroupRelLocalService;
+		_accountGroupService = accountGroupService;
+		_accountEntryLocalService = accountEntryLocalService;
+		_commerceAccountHelper = commerceAccountHelper;
 		_itemSelectedEventName = itemSelectedEventName;
 
 		_commerceAccountItemSelectorRequestHelper =
@@ -83,7 +85,7 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
-	public SearchContainer<CommerceAccount> getSearchContainer()
+	public SearchContainer<AccountEntry> getSearchContainer()
 		throws PortalException {
 
 		if (_searchContainer != null) {
@@ -98,20 +100,22 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
-			() -> _commerceAccountLocalService.getUserCommerceAccounts(
+			() -> _accountEntryLocalService.getUserAccountEntries(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords(),
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, getKeywords(),
+				_commerceAccountHelper.toAccountEntryTypes(
+					CommerceAccountConstants.SITE_TYPE_B2X),
 				_searchContainer.getStart(), _searchContainer.getEnd()),
-			_commerceAccountLocalService.getUserCommerceAccountsCount(
+			_accountEntryLocalService.getUserAccountEntriesCount(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords()));
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, getKeywords(),
+				_commerceAccountHelper.toAccountEntryTypes(
+					CommerceAccountConstants.SITE_TYPE_B2X),
+				null));
 		_searchContainer.setRowChecker(
 			new CommerceAccountGroupAccountItemSelectorChecker(
 				_commerceAccountItemSelectorRequestHelper.getRenderResponse(),
-				_getCommerceAccountGroup(),
-				_commerceAccountGroupCommerceAccountRelLocalService));
+				_getAccountGroup(), _accountGroupRelLocalService));
 
 		return _searchContainer;
 	}
@@ -128,30 +132,27 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		return _keywords;
 	}
 
-	private CommerceAccountGroup _getCommerceAccountGroup()
-		throws PortalException {
-
-		long commerceAccountGroupId = ParamUtil.getLong(
+	private AccountGroup _getAccountGroup() throws PortalException {
+		long accountGroupId = ParamUtil.getLong(
 			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
 			"commerceAccountGroupId");
 
-		if (commerceAccountGroupId > 0) {
-			return _commerceAccountGroupService.getCommerceAccountGroup(
-				commerceAccountGroupId);
+		if (accountGroupId > 0) {
+			return _accountGroupService.getAccountGroup(accountGroupId);
 		}
 
 		return null;
 	}
 
-	private final CommerceAccountGroupCommerceAccountRelLocalService
-		_commerceAccountGroupCommerceAccountRelLocalService;
-	private final CommerceAccountGroupService _commerceAccountGroupService;
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AccountGroupRelLocalService _accountGroupRelLocalService;
+	private final AccountGroupService _accountGroupService;
+	private final CommerceAccountHelper _commerceAccountHelper;
 	private final CommerceAccountItemSelectorRequestHelper
 		_commerceAccountItemSelectorRequestHelper;
-	private final CommerceAccountLocalService _commerceAccountLocalService;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private final PortletURL _portletURL;
-	private SearchContainer<CommerceAccount> _searchContainer;
+	private SearchContainer<AccountEntry> _searchContainer;
 
 }

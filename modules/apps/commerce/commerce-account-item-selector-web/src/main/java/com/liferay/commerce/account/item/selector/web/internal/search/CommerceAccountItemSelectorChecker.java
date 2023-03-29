@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.account.item.selector.web.internal.search;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -39,10 +39,10 @@ public class CommerceAccountItemSelectorChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object object) {
-		CommerceAccount commerceAccount = (CommerceAccount)object;
+		AccountEntry accountEntry = (AccountEntry)object;
 
 		return _checkedCommerceAccountIds.contains(
-			commerceAccount.getCommerceAccountId());
+			accountEntry.getAccountEntryId());
 	}
 
 	@Override

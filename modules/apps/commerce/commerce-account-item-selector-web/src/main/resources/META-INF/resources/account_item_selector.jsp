@@ -28,22 +28,22 @@ String itemSelectedEventName = commerceAccountItemSelectorViewDisplayContext.get
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceAccountSelectorWrapper">
 	<liferay-ui:search-container
-		id="commerceAccounts"
+		id="accountEntries"
 		searchContainer="<%= commerceAccountItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.account.model.CommerceAccount"
+			className="com.liferay.account.model.AccountEntry"
 			cssClass="commerce-account-row"
-			keyProperty="commerceAccountId"
-			modelVar="commerceAccount"
+			keyProperty="accountEntryId"
+			modelVar="accountEntry"
 		>
 
 			<%
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"commerce-account-id", commerceAccount.getCommerceAccountId()
+					"commerce-account-id", accountEntry.getAccountEntryId()
 				).put(
-					"name", commerceAccount.getName()
+					"name", accountEntry.getName()
 				).build());
 			%>
 
@@ -66,7 +66,7 @@ String itemSelectedEventName = commerceAccountItemSelectorViewDisplayContext.get
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />commerceAccounts'
+		'<portlet:namespace />accountEntries'
 	);
 
 	searchContainer.on('rowToggled', (event) => {

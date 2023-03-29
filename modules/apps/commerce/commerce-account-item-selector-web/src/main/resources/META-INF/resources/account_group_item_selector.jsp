@@ -19,7 +19,7 @@
 <%
 CommerceAccountGroupItemSelectorViewDisplayContext commerceAccountGroupItemSelectorViewDisplayContext = (CommerceAccountGroupItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CommerceAccountGroup> commerceAccountGroupSearchContainer = commerceAccountGroupItemSelectorViewDisplayContext.getSearchContainer();
+SearchContainer<AccountGroup> commerceAccountGroupSearchContainer = commerceAccountGroupItemSelectorViewDisplayContext.getSearchContainer();
 %>
 
 <clay:management-toolbar
@@ -28,22 +28,22 @@ SearchContainer<CommerceAccountGroup> commerceAccountGroupSearchContainer = comm
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceAccountGroupSelectorWrapper">
 	<liferay-ui:search-container
-		id="commerceAccountGroups"
+		id="accountGroups"
 		searchContainer="<%= commerceAccountGroupSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.account.model.CommerceAccountGroup"
+			className="com.liferay.account.model.AccountGroup"
 			cssClass="commerce-account-row"
-			keyProperty="commerceAccountGroupId"
-			modelVar="commerceAccountGroup"
+			keyProperty="accountGroupId"
+			modelVar="accountGroup"
 		>
 
 			<%
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"commerce-account-group-id", commerceAccountGroup.getCommerceAccountGroupId()
+					"commerce-account-group-id", accountGroup.getAccountGroupId()
 				).put(
-					"name", commerceAccountGroup.getName()
+					"name", accountGroup.getName()
 				).build());
 			%>
 

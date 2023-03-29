@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.account.item.selector.web.internal.search;
 
-import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -39,11 +39,10 @@ public class CommerceAccountGroupItemSelectorChecker
 
 	@Override
 	public boolean isChecked(Object object) {
-		CommerceAccountGroup commerceAccountGroup =
-			(CommerceAccountGroup)object;
+		AccountGroup accountGroup = (AccountGroup)object;
 
 		return _checkedCommerceAccountGroupIds.contains(
-			commerceAccountGroup.getCommerceAccountGroupId());
+			accountGroup.getAccountGroupId());
 	}
 
 	@Override

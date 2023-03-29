@@ -14,13 +14,17 @@
 
 package com.liferay.commerce.account.item.selector.web.internal.display.context;
 
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.helper.CommerceAccountItemSelectorRequestHelper;
 import com.liferay.commerce.account.item.selector.web.internal.search.CommerceAccountGroupItemSelectorChecker;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -32,11 +36,11 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceAccountGroupItemSelectorViewDisplayContext {
 
 	public CommerceAccountGroupItemSelectorViewDisplayContext(
-		CommerceAccountGroupLocalService commerceAccountGroupLocalService,
+		AccountGroupLocalService accountGroupLocalService,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
-		_commerceAccountGroupLocalService = commerceAccountGroupLocalService;
+		_accountGroupLocalService = accountGroupLocalService;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 
@@ -70,7 +74,7 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
-	public SearchContainer<CommerceAccountGroup> getSearchContainer()
+	public SearchContainer<AccountGroup> getSearchContainer()
 		throws PortalException {
 
 		if (_searchContainer != null) {
@@ -84,14 +88,16 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByType(getOrderByType());
+
+		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
+			_accountGroupLocalService.searchAccountGroups(
+				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
+				getKeywords(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
 		_searchContainer.setResultsAndTotal(
-			() -> _commerceAccountGroupLocalService.search(
-				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
-				getKeywords(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), null),
-			_commerceAccountGroupLocalService.searchCommerceAccountsGroupCount(
-				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
-				getKeywords()));
+			() -> (List<AccountGroup>)baseModelSearchResult.getBaseModels(),
+			baseModelSearchResult.getLength());
+
 		_searchContainer.setRowChecker(
 			new CommerceAccountGroupItemSelectorChecker(
 				_commerceAccountItemSelectorRequestHelper.getRenderResponse(),
@@ -118,13 +124,12 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 			"checkedCommerceAccountGroupIds");
 	}
 
-	private final CommerceAccountGroupLocalService
-		_commerceAccountGroupLocalService;
+	private final AccountGroupLocalService _accountGroupLocalService;
 	private final CommerceAccountItemSelectorRequestHelper
 		_commerceAccountItemSelectorRequestHelper;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private final PortletURL _portletURL;
-	private SearchContainer<CommerceAccountGroup> _searchContainer;
+	private SearchContainer<AccountGroup> _searchContainer;
 
 }

@@ -52,7 +52,7 @@ public class
 
 	@Override
 	public String getSearchContainerId() {
-		return "commerceAccounts";
+		return "accountEntries";
 	}
 
 	@Override

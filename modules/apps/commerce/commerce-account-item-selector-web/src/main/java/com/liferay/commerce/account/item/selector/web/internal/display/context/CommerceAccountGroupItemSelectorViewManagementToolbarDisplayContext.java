@@ -51,7 +51,7 @@ public class CommerceAccountGroupItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "commerceAccountGroups";
+		return "accountGroups";
 	}
 
 	@Override

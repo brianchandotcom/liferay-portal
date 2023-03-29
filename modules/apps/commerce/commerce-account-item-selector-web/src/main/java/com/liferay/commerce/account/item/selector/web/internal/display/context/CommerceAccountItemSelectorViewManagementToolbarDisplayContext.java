@@ -51,7 +51,7 @@ public class CommerceAccountItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "commerceAccounts";
+		return "accountEntries";
 	}
 
 	@Override

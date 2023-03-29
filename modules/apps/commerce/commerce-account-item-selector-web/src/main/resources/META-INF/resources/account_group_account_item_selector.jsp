@@ -28,22 +28,22 @@ String itemSelectedEventName = commerceAccountGroupAccountItemSelectorViewDispla
 
 <div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceAccountSelectorWrapper">
 	<liferay-ui:search-container
-		id="commerceAccounts"
+		id="accountEntry"
 		searchContainer="<%= commerceAccountGroupAccountItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.account.model.CommerceAccount"
+			className="com.liferay.account.model.AccountEntry"
 			cssClass="commerce-account-row"
-			keyProperty="commerceAccountId"
-			modelVar="commerceAccount"
+			keyProperty="accountEntryId"
+			modelVar="accountEntry"
 		>
 
 			<%
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"commerce-account-id", commerceAccount.getCommerceAccountId()
+					"commerce-account-id", accountEntry.getAccountEntryId()
 				).put(
-					"name", commerceAccount.getName()
+					"name", accountEntry.getName()
 				).build());
 			%>
 
@@ -66,7 +66,7 @@ String itemSelectedEventName = commerceAccountGroupAccountItemSelectorViewDispla
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />commerceAccounts'
+		'<portlet:namespace />accountEntries'
 	);
 
 	searchContainer.on('rowToggled', (event) => {
@@ -78,7 +78,7 @@ String itemSelectedEventName = commerceAccountGroupAccountItemSelectorViewDispla
 
 			var data = row.getDOM().dataset;
 
-			arr.push({commerceAccountId: data.commerceAccountId, name: data.name});
+			arr.push({accountEntryId: data.accountEntryId, name: data.name});
 		});
 
 		Liferay.Util.getOpener().Liferay.fire(

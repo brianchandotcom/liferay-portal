@@ -28,7 +28,7 @@ public abstract class Retryable<T> {
 		boolean verbose) {
 
 		_exceptionOnFail = exceptionOnFail;
-		_maxRetries = maxRetries;
+		this.maxRetries = maxRetries;
 		_retryPeriod = retryPeriod;
 		_verbose = verbose;
 	}
@@ -53,7 +53,7 @@ public abstract class Retryable<T> {
 					System.out.println("An error has occurred: " + exception);
 				}
 
-				if ((_maxRetries >= 0) && (retryCount > _maxRetries)) {
+				if ((maxRetries >= 0) && (retryCount > maxRetries)) {
 					if (_exceptionOnFail) {
 						throw exception;
 					}
@@ -63,9 +63,10 @@ public abstract class Retryable<T> {
 
 				sleep(_retryPeriod * 1000);
 
-				if (_verbose) {
-					System.out.println(
-						"Retry attempt " + retryCount + " of " + _maxRetries);
+				String retryMessage = getRetryMessage(retryCount);
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(retryMessage)) {
+					System.out.println(retryMessage);
 				}
 			}
 		}
@@ -80,8 +81,15 @@ public abstract class Retryable<T> {
 		}
 	}
 
+	protected String getRetryMessage(int retryCount) {
+		return JenkinsResultsParserUtil.combine(
+			"Retry attempt ", String.valueOf(retryCount), " of ",
+			String.valueOf(maxRetries));
+	}
+
+	protected int maxRetries;
+
 	private boolean _exceptionOnFail;
-	private int _maxRetries;
 	private int _retryPeriod;
 	private boolean _verbose;
 

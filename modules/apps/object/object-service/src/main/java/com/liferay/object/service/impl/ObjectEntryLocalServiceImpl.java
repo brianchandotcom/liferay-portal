@@ -409,7 +409,7 @@ public class ObjectEntryLocalServiceImpl
 	public ObjectEntry deleteObjectEntry(ObjectEntry objectEntry)
 		throws PortalException {
 
-		Map<String, Serializable> values = objectEntry.getValues();
+		Map<String, Serializable> values = getValues(objectEntry);
 
 		objectEntry = objectEntryPersistence.remove(objectEntry);
 

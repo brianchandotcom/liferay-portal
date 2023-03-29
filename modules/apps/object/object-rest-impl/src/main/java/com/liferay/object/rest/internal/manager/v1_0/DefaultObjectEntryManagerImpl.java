@@ -1279,15 +1279,15 @@ public class DefaultObjectEntryManagerImpl
 					_toDate(locale, String.valueOf(value)));
 			}
 			else if (objectField.getListTypeDefinitionId() != 0) {
-				if (value instanceof Map) {
-					Map<String, String> map = (HashMap<String, String>)value;
-
-					values.put(objectField.getName(), map.get("key"));
-				}
-				else if (value instanceof ListEntry) {
+				if (value instanceof ListEntry) {
 					ListEntry listEntry = (ListEntry)value;
 
 					values.put(objectField.getName(), listEntry.getKey());
+				}
+				else if (value instanceof Map) {
+					Map<String, String> map = (HashMap<String, String>)value;
+
+					values.put(objectField.getName(), map.get("key"));
 				}
 				else {
 					values.put(objectField.getName(), (Serializable)value);

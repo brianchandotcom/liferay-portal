@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TouchpointsListCard should render 1`] = `
+<div>
+  <div
+    class="analytics-touchpoints-list"
+  >
+    <div
+      class="table-responsive table-root flex-grow-1 table-hover"
+    >
+      <table
+        class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+      >
+        <thead>
+          <tr>
+            <th
+              class="table-head-title"
+            >
+              Page Name
+            </th>
+            <th
+              class="table-head-title"
+            >
+              Canonical URL
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+`;

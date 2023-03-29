@@ -1,0 +1,416 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterAndOrder should render 1`] = `
+<body
+  class="dxp"
+>
+  <div>
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root filter-and-order-root"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        data-testid="filter-and-order-button"
+        type="button"
+      >
+        <span
+          class="text-truncate"
+        >
+          Order
+        </span>
+        
+        <span
+          class="caret-root"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`FilterAndOrder should render filters as a flat list 1`] = `
+<body
+  class="dxp"
+>
+  <div>
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root filter-and-order-root"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        data-testid="filter-and-order-button"
+        type="button"
+      >
+        <span
+          class="text-truncate"
+        >
+          Filter
+        </span>
+        
+        <span
+          class="caret-root"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    class="overlay-content-root dropdown dropdown-root filter-and-order-root"
+    data-testid="overlay"
+    id="overlay8"
+    role="dialog"
+    style="top: 0px; left: 0px; transform: translateY(8px);"
+  >
+    <div
+      class="dropdown-menu show"
+    >
+      <div
+        class="dropdown-subheader"
+      >
+        Filter By status
+      </div>
+      <div
+        class="dropdown-item text-truncate"
+      >
+        <div
+          class="custom-control custom-checkbox"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              value="false"
+            />
+            <span
+              class="custom-control-label"
+            >
+              <span
+                class="custom-control-label-text"
+              >
+                done
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="dropdown-item text-truncate"
+      >
+        <div
+          class="custom-control custom-checkbox"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              value="false"
+            />
+            <span
+              class="custom-control-label"
+            >
+              <span
+                class="custom-control-label-text"
+              >
+                running
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`FilterAndOrder should render with filter by options 1`] = `
+<body
+  class="dxp"
+>
+  <div>
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root filter-and-order-root"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        data-testid="filter-and-order-button"
+        type="button"
+      >
+        <span
+          class="text-truncate"
+        >
+          Filter
+        </span>
+        
+        <span
+          class="caret-root"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    class="overlay-content-root dropdown dropdown-root filter-and-order-root"
+    data-testid="overlay"
+    id="overlay2"
+    role="dialog"
+    style="top: 0px; left: 0px; transform: translateY(8px);"
+  >
+    <div
+      class="dropdown-menu show"
+    >
+      <div
+        class="dropdown-subheader"
+      >
+        Filter By
+      </div>
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-unstyled dropdown-item text-truncate dropdown-toggle show-caret"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            status
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-right"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`FilterAndOrder should render with order by options 1`] = `
+<body
+  class="dxp"
+>
+  <div>
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root filter-and-order-root"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        data-testid="filter-and-order-button"
+        type="button"
+      >
+        <span
+          class="text-truncate"
+        >
+          Order
+        </span>
+        
+        <span
+          class="caret-root"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    class="overlay-content-root dropdown dropdown-root filter-and-order-root"
+    data-testid="overlay"
+    id="overlay4"
+    role="dialog"
+    style="top: 0px; left: 0px; transform: translateY(8px);"
+  >
+    <div
+      class="dropdown-menu show"
+    >
+      <div
+        class="dropdown-subheader"
+      >
+        Order By
+      </div>
+      <div
+        class="dropdown-item text-truncate"
+      >
+        <div
+          class="custom-control custom-radio"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              name="filterAndOrder3"
+              type="radio"
+            />
+            <span
+              class="custom-control-label"
+            >
+              <span
+                class="custom-control-label-text"
+              >
+                name
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`FilterAndOrder should render with order by options and filter by options 1`] = `
+<body
+  class="dxp"
+>
+  <div>
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root filter-and-order-root"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        data-testid="filter-and-order-button"
+        type="button"
+      >
+        <span
+          class="text-truncate"
+        >
+          Filter and Order
+        </span>
+        
+        <span
+          class="caret-root"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    class="overlay-content-root dropdown dropdown-root filter-and-order-root"
+    data-testid="overlay"
+    id="overlay5"
+    role="dialog"
+    style="top: 0px; left: 0px; transform: translateY(8px);"
+  >
+    <div
+      class="dropdown-menu show"
+    >
+      <div
+        class="dropdown-subheader"
+      >
+        Filter By
+      </div>
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-unstyled dropdown-item text-truncate dropdown-toggle show-caret"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            status
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-right"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="dropdown-subheader"
+      >
+        Order By
+      </div>
+      <div
+        class="dropdown-item text-truncate"
+      >
+        <div
+          class="custom-control custom-radio"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              name="filterAndOrder4"
+              type="radio"
+            />
+            <span
+              class="custom-control-label"
+            >
+              <span
+                class="custom-control-label-text"
+              >
+                name
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

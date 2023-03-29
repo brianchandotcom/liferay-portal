@@ -1,0 +1,24 @@
+<mj-spacer height="25px" />
+
+<mj-text mj-class="subtitle-text" padding-top="0">[$NOTIFICATION_MSG_1$]</mj-text>
+
+<mj-text padding-top="16px">[$NOTIFICATION_MSG_2$]</mj-text>
+
+<mj-text padding-bottom="16px" padding-top="24px">[$NOTIFICATION_MSG_3$]</mj-text>
+
+
+<mj-include path="button.mjml" />
+
+<mj-divider border-color="#CDCED9" border-width="1px"></mj-divider>
+
+<mj-text mj-class="subtitle-text" padding-bottom="12px" padding-top="24px">[$NOTIFICATION_MSG_4$]</mj-text>
+
+<mj-text padding="8px 25px">[$NOTIFICATION_MSG_5$]</mj-text>
+
+<mj-text padding="4px 25px"><span class="link-override" style="padding-right: 8px">1.</span> [$NOTIFICATION_MSG_6$]</mj-text>
+
+<mj-text padding="4px 25px"><span class="link-override" style="padding-right: 8px">2.</span> [$NOTIFICATION_MSG_7$]</mj-text>
+
+<mj-text padding="4px 25px 24px"><span class="link-override" style="padding-right: 8px">3.</span> [$NOTIFICATION_MSG_8$]</mj-text>
+
+<mj-include path="help.mjml" />

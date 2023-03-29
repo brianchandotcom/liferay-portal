@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssociatedSegmentsList should render 1`] = `
+<Card
+  className="associated-segments-list-root"
+  pageDisplay={true}
+>
+  <Header>
+    <Title>
+      Associated Segments
+    </Title>
+    <div
+      className="secondary-info"
+    >
+      <b
+        key="SEGMENT_TOTAL"
+      >
+        2
+      </b>
+       Segments
+    </div>
+  </Header>
+  <SearchableEntityTable
+    autoFocusSearch={true}
+    bordered={false}
+    checkDisabled={[Function]}
+    columns={
+      Array [
+        Object {
+          "accessor": "name",
+          "cellRenderer": [Function],
+          "cellRendererProps": Object {
+            "renderIcon": [Function],
+            "routeFn": [Function],
+          },
+          "className": "table-cell-expand",
+          "label": "Name",
+        },
+        Object {
+          "cellRenderer": [Function],
+          "cellRendererProps": Object {
+            "dateFormatter": [Function],
+            "datePath": "individualAddedDate",
+          },
+          "label": "Date Added",
+          "sortable": false,
+        },
+        Object {
+          "accessor": "dateCreated",
+          "cellRenderer": [Function],
+          "label": "Date Created",
+        },
+      ]
+    }
+    dataSourceFn={[Function]}
+    dataSourceParams={
+      Object {
+        "channelId": "123123",
+        "groupId": "23",
+        "id": "test",
+      }
+    }
+    entityLabel="Associated Segments"
+    internalSort={false}
+    nowrap={true}
+    orderByOptions={
+      Array [
+        Object {
+          "label": "Name",
+          "value": "name",
+        },
+        Object {
+          "label": "Date Created",
+          "value": "dateCreated",
+        },
+      ]
+    }
+    overrideLoading={false}
+    rowIdentifier="id"
+    showCheckbox={false}
+  />
+</Card>
+`;

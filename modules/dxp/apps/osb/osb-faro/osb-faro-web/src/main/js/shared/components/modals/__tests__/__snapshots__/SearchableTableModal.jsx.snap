@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchableTableModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Items
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
+        <div
+          class="text-secondary"
+        />
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <div
+                  class="custom-control custom-checkbox"
+                >
+                  <label>
+                    <input
+                      class="custom-control-input"
+                      data-testid="select-all-checkbox"
+                      disabled=""
+                      type="checkbox"
+                      value="false"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
+              </li>
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-search"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="no-results-root flex-grow-1"
+      >
+        <div
+          class="no-results-content"
+        >
+          <h4
+            class="no-results-title"
+          >
+            There are no items found.
+          </h4>
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="button-root btn btn-primary"
+          disabled=""
+          type="button"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

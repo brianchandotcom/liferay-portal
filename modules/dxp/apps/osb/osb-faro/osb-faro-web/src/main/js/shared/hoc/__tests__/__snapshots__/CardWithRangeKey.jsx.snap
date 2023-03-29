@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardWithRangeKey render 1`] = `
+<div>
+  <div
+    class="card card-root"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      />
+      <dropdownrangekey
+        rangeselectors="[object Object]"
+      />
+    </div>
+    <div>
+      foo
+    </div>
+  </div>
+</div>
+`;

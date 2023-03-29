@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryCardDraft should render component 1`] = `
+<div>
+  <div
+    class="card-body"
+  >
+    <div
+      class="w-100 mt-4"
+    >
+      <h3
+        class="font-weight-bold mb-4"
+      >
+        Setup title
+      </h3>
+      <div
+        class="font-size-sm-1x mb-2 text-uppercase"
+      >
+        Setup subtitle
+      </div>
+      <ol
+        class="multi-step-nav multi-step-indicator-label-bottom"
+      >
+        <li
+          class="active multi-step-item multi-step-item-expand"
+        >
+          <div
+            class="multi-step-divider"
+          />
+          <div
+            class="multi-step-indicator"
+          >
+            <a
+              class="multi-step-icon"
+              data-multi-step-icon="1"
+              href="#1"
+            />
+          </div>
+          <div
+            class="card card-root analytics-summary-card-step-content analytics-summary-card-step-content-active"
+          >
+            <div
+              class="card-body"
+            >
+              <h4>
+                Step 1 title
+              </h4>
+              Step 1 Description
+            </div>
+          </div>
+        </li>
+        <li
+          class="wait multi-step-item"
+        >
+          <div
+            class="multi-step-indicator"
+          >
+            <a
+              class="multi-step-icon"
+              data-multi-step-icon="2"
+              href="#2"
+            />
+          </div>
+          <div
+            class="card card-root analytics-summary-card-step-content analytics-summary-card-step-content-wait"
+          >
+            <div
+              class="card-body"
+            >
+              <h4>
+                Step 2 title
+              </h4>
+              Step 2 Description
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <div
+    class="card-footer"
+  >
+    <h3
+      class="font-weight-bold mb-4"
+    >
+      Summary title
+    </h3>
+    <div
+      class="font-size-sm-1x mb-2 text-uppercase"
+    >
+      Summary subtitle
+    </div>
+    <p
+      class="mb-4"
+    >
+      Summary description
+    </p>
+  </div>
+</div>
+`;

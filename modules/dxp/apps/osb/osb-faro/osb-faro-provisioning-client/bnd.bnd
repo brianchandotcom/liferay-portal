@@ -1,0 +1,8 @@
+Bundle-Name: Liferay OSB Faro Provisioning Client
+Bundle-SymbolicName: com.liferay.osb.faro.provisioning.client
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.faro.provisioning.client,\
+	com.liferay.osb.faro.provisioning.client.constants,\
+	com.liferay.osb.faro.provisioning.client.model
+-dsannotations-options: inherit

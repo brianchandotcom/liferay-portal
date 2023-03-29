@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttributeBreakdownSection renders 1`] = `
+<div>
+  <div
+    class="attribute-breakdown-section-root d-flex align-items-center"
+  >
+    <div
+      class="section-header"
+    >
+      Breakdown
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
+<div>
+  <div
+    class="attribute-breakdown-section-root d-flex align-items-center"
+  >
+    <div
+      class="section-header"
+    >
+      Breakdown
+    </div>
+    <div
+      class="attribute-container d-flex align-items-center justify-content-between"
+    >
+      <div
+        class="attribute-list d-flex align-items-center"
+      >
+        <div
+          class="dropdown"
+        >
+          <div
+            class="attribute-chip-container"
+          >
+            <div
+              class="chip-root d-flex align-items-center justify-content-between attribute-chip-root"
+            >
+              <div
+                class="drag-handle"
+                draggable="true"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-drag"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                  />
+                </svg>
+              </div>
+              <button
+                class="button-root btn btn-unstyled edit-attribute-button d-flex"
+                type="button"
+              >
+                <div
+                  class="sticker"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-text"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div
+                    class="attribute-label"
+                  />
+                  <div
+                    class="attribute-value"
+                  >
+                    Article Title
+                  </div>
+                </div>
+              </button>
+              <button
+                class="button-root btn btn-unstyled remove-button"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-times-circle"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="dropdown"
+        >
+          <div
+            class="attribute-chip-container"
+          >
+            <div
+              class="chip-root d-flex align-items-center justify-content-between attribute-chip-root"
+            >
+              <div
+                class="drag-handle"
+                draggable="true"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-drag"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                  />
+                </svg>
+              </div>
+              <button
+                class="button-root btn btn-unstyled edit-attribute-button d-flex"
+                type="button"
+              >
+                <div
+                  class="sticker"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-text"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div
+                    class="attribute-label"
+                  />
+                  <div
+                    class="attribute-value"
+                  >
+                    Job Title
+                  </div>
+                </div>
+              </button>
+              <button
+                class="button-root btn btn-unstyled remove-button"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-times-circle"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="dropdown"
+      >
+        <button
+          class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-plus"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

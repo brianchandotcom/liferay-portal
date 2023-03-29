@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FieldDropDown should render 1`] = `
+<div>
+  <div>
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root searchable-select-root"
+    >
+      <button
+        class="button-root btn btn-secondary dropdown-toggle show-caret"
+        type="button"
+      >
+        
+        
+        <span
+          class="caret-root"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-double"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div
+      class="example-value text-truncate"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubnavTbar should render 1`] = `
+<div>
+  <nav
+    class="subnav-tbar subnav-tbar-root tbar"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        class="tbar-nav"
+      />
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`SubnavTbar.Item should render 1`] = `
+<div>
+  <div
+    class="tbar-item"
+  >
+    <div
+      class="tbar-section text-truncate"
+    />
+  </div>
+</div>
+`;
+
+exports[`SubnavTbar.Section should render 1`] = `
+<div>
+  <div
+    class="tbar-section text-truncate"
+  />
+</div>
+`;

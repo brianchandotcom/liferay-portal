@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RowActions should render 1`] = `
+<div>
+  <td
+    class=""
+  >
+    <div
+      aria-haspopup="true"
+      class="dropdown dropdown-root dropdown-action"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle component-action"
+        type="button"
+      >
+        <span>
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-ellipsis-v"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#ellipsis-v"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </td>
+</div>
+`;

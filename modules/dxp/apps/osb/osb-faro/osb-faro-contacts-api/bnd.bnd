@@ -1,0 +1,9 @@
+Bundle-Name: Liferay OSB Faro Contacts API
+Bundle-SymbolicName: com.liferay.osb.faro.contacts.api
+Bundle-Version: 2.0.0
+Export-Package:\
+	com.liferay.osb.faro.contacts.exception,\
+	com.liferay.osb.faro.contacts.model,\
+	com.liferay.osb.faro.contacts.model.constants,\
+	com.liferay.osb.faro.contacts.service,\
+	com.liferay.osb.faro.contacts.service.persistence

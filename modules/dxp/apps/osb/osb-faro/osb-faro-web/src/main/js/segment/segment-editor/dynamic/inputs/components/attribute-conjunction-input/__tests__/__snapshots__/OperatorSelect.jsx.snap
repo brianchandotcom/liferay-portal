@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OperatorSelect should render 1`] = `
+<div>
+  <div
+    class="form-group-item form-group-item-shrink"
+  >
+    <select
+      class="form-control operator-input"
+    >
+      <option
+        value="gt"
+      >
+        is greater than
+      </option>
+      <option
+        value="lt"
+      >
+        is less than
+      </option>
+      <option
+        value="between"
+      >
+        between
+      </option>
+    </select>
+  </div>
+</div>
+`;

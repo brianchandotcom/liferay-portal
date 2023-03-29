@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataTransformationList should hide mapped fields if hide mapped fields is true 1`] = `
+<div
+  class="form-group data-transformation-item-root hidden form-group-autofit"
+>
+  <div
+    class="form-group-item"
+  >
+    <div>
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root searchable-select-root"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            foo
+          </span>
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-double"
+              viewBox=""
+            >
+              <use
+                href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="example-value text-truncate"
+      />
+    </div>
+  </div>
+  <div
+    class="form-group-item add-on form-group-item-shrink"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
+      viewBox=""
+    >
+      <use
+        href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+      />
+    </svg>
+  </div>
+  <div
+    class="form-group-item"
+  >
+    <div
+      class="suggestion"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root searchable-select-root"
+        name="undefined.1"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            bar
+          </span>
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-double"
+              viewBox=""
+            >
+              <use
+                href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="example-value text-truncate"
+      />
+    </div>
+  </div>
+  <div
+    class="form-group-item add-on form-group-item-shrink"
+  >
+    <span
+      data-tooltip="true"
+      title="Best match selected. There are  other possible matches."
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-info-circle help"
+        viewBox=""
+      >
+        <use
+          href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+        />
+      </svg>
+    </span>
+  </div>
+  <div
+    class="form-group-item add-on form-group-item-shrink"
+  >
+    <button
+      class="button-root btn btn-unstyled"
+      data-tooltip="true"
+      title="Remove Field"
+      type="button"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-times-circle"
+        viewBox=""
+      >
+        <use
+          href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`DataTransformationList should render 1`] = `
+<div
+  className="data-transformation-list-root"
+>
+  <div
+    className="data-transformation-header"
+  >
+    <div
+      className="left"
+    >
+      Source Title
+    </div>
+    <div
+      className="right"
+    >
+      Suggestions Title
+    </div>
+  </div>
+  <Connect(_class)
+    className=""
+    dataSourceFn={[Function]}
+    fieldIMap={
+      Immutable.Map {
+        "source": Immutable.Map {
+          "name": "givenName",
+          "value": "Joe",
+        },
+        "suggestion": Immutable.Map {
+          "name": "name",
+          "value": "Steve",
+        },
+      }
+    }
+    groupId="23"
+    index={0}
+    isDuplicateTargetField={false}
+    key="0"
+    mappingSuggestions={
+      Object {
+        "email": Array [
+          Object {
+            "name": "address",
+            "values": Array [
+              "123",
+            ],
+          },
+        ],
+        "name": Array [],
+      }
+    }
+    onChange={[Function]}
+    onRemove={[Function]}
+    readOnly={false}
+    sourceFields={
+      Object {
+        "email": Array [],
+        "givenName": Array [],
+      }
+    }
+  />
+  <Connect(_class)
+    className=""
+    dataSourceFn={[Function]}
+    fieldIMap={
+      Immutable.Map {
+        "source": Immutable.Map {
+          "name": "email",
+          "value": "test@test.com",
+        },
+        "suggestion": Immutable.Map {
+          "name": "email",
+          "value": "joe@bloggs.com",
+        },
+      }
+    }
+    groupId="23"
+    index={1}
+    isDuplicateTargetField={false}
+    key="1"
+    mappingSuggestions={
+      Object {
+        "email": Array [
+          Object {
+            "name": "address",
+            "values": Array [
+              "123",
+            ],
+          },
+        ],
+        "name": Array [],
+      }
+    }
+    onChange={[Function]}
+    onRemove={[Function]}
+    readOnly={false}
+    sourceFields={
+      Object {
+        "email": Array [],
+        "givenName": Array [],
+      }
+    }
+  />
+</div>
+`;

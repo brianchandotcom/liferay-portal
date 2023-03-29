@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UsageMetric should render 1`] = `
+<div>
+  <div
+    class="overview-usage-metric-root"
+  >
+    <h3
+      class="metric-name"
+    >
+      Page Views
+    </h3>
+    <div
+      class="metric-breakdown"
+    >
+      <div
+        class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-faro-page-views"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+          />
+        </svg>
+      </div>
+      <div
+        class="metric-breakdown-content"
+      >
+        <div>
+          <span>
+            <span
+              class="metric-current"
+            >
+              0
+            </span>
+             of 
+            <span
+              class="metric-limit"
+            >
+              7,000,000
+            </span>
+          </span>
+          <span
+            class="text-secondary usage-since-label semibold"
+          >
+            0% since July 8, 2018
+          </span>
+        </div>
+        <div
+          class="text-muted small semibold"
+        >
+          Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
+        </div>
+      </div>
+    </div>
+    <div
+      class="metric-bar-root"
+    >
+      <div
+        class="bar bar-primary bar-default"
+        style="width: 0%;"
+      />
+    </div>
+    <div
+      class="metric-definition text-secondary"
+    >
+      Non-unique visits to any of the pages synced to Analytics Cloud.
+    </div>
+  </div>
+</div>
+`;

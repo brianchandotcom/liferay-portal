@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shared HOCs Mappers - Devices should map devices information 1`] = `
+Object {
+  "browsers": Array [
+    Object {
+      "value": 2248,
+      "valueKey": "Chrome",
+    },
+    Object {
+      "value": 782,
+      "valueKey": "Firefox",
+    },
+    Object {
+      "value": 137,
+      "valueKey": "Chrome Mobile",
+    },
+    Object {
+      "value": 136,
+      "valueKey": "Safari",
+    },
+    Object {
+      "value": 124,
+      "valueKey": "Mobile Safari",
+    },
+    Object {
+      "value": 109,
+      "valueKey": "Edge",
+    },
+    Object {
+      "value": 39,
+      "valueKey": "Unknown",
+    },
+    Object {
+      "value": 20,
+      "valueKey": "Samsung Browser",
+    },
+    Object {
+      "value": 76,
+      "valueKey": "Others",
+    },
+  ],
+  "devices": Array [
+    Object {
+      "data": Array [
+        Object {
+          "percentage": 0,
+          "type": "Windows",
+          "views": 2065,
+        },
+        Object {
+          "percentage": 0,
+          "type": "macOS",
+          "views": 995,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Linux",
+          "views": 136,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Mac OS X",
+          "views": 107,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Ubuntu",
+          "views": 53,
+        },
+        Object {
+          "percentage": 0,
+          "type": "ChromeOS",
+          "views": 3,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Fedora",
+          "views": 2,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Unknown",
+          "views": 1,
+        },
+      ],
+      "label": "Desktop",
+      "percentageOfTotal": 0,
+      "totalViews": 3362,
+      "type": "Desktop",
+    },
+    Object {
+      "data": Array [
+        Object {
+          "percentage": 0,
+          "type": "Android",
+          "views": 151,
+        },
+        Object {
+          "percentage": 0,
+          "type": "iOS",
+          "views": 61,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Unknown",
+          "views": 9,
+        },
+        Object {
+          "percentage": 0,
+          "type": "FreeBSD",
+          "views": 8,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Windows Phone",
+          "views": 1,
+        },
+      ],
+      "label": "Phone",
+      "percentageOfTotal": 0,
+      "totalViews": 230,
+      "type": "SmartPhone",
+    },
+    Object {
+      "data": Array [
+        Object {
+          "percentage": 0,
+          "type": "iOS",
+          "views": 67,
+        },
+        Object {
+          "percentage": 0,
+          "type": "Android",
+          "views": 12,
+        },
+      ],
+      "label": "Tablet",
+      "percentageOfTotal": 0,
+      "totalViews": 79,
+      "type": "Tablet",
+    },
+  ],
+  "error": null,
+  "loading": false,
+  "refetch": undefined,
+  "total": undefined,
+}
+`;
+
+exports[`Shared HOCs Mappers - Devices should map devices information in correct order 1`] = `
+Object {
+  "browsers": Array [
+    Object {
+      "value": 9,
+      "valueKey": "Chrome",
+    },
+  ],
+  "devices": Array [
+    Object {
+      "data": Array [
+        Object {
+          "percentage": 0,
+          "type": "Windows",
+          "views": 2,
+        },
+        Object {
+          "percentage": 0,
+          "type": "macOS",
+          "views": 1,
+        },
+      ],
+      "label": "Desktop",
+      "percentageOfTotal": 0,
+      "totalViews": 3,
+      "type": "Desktop",
+    },
+    Object {
+      "data": Array [
+        Object {
+          "percentage": 0,
+          "type": "Android",
+          "views": 4,
+        },
+      ],
+      "label": "Phone",
+      "percentageOfTotal": 0,
+      "totalViews": 4,
+      "type": "SmartPhone",
+    },
+    Object {
+      "data": Array [
+        Object {
+          "percentage": 0,
+          "type": "Tizen",
+          "views": 1,
+        },
+      ],
+      "label": "TV",
+      "percentageOfTotal": 0,
+      "totalViews": 1,
+      "type": "Tv",
+    },
+    Object {
+      "data": Array [
+        Object {
+          "type": "Other",
+          "views": 1,
+        },
+      ],
+      "label": "Others",
+      "percentageOfTotal": 0,
+      "type": "Other",
+    },
+  ],
+  "error": null,
+  "loading": false,
+  "refetch": undefined,
+  "total": undefined,
+}
+`;

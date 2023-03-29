@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserRoutes should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root user-list-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              User Management
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Invite new users to Analytics Cloud and/or configure existing users.
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="card card-root page-display"
+      >
+        <ul
+          class="nav-root page-subnav mx-4 my-3 nav nav-underline"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/settings/users"
+              role="tab"
+            >
+              <div
+                class="mb-2"
+              >
+                <b>
+                  Manage Users
+                </b>
+              </div>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/settings/users/requests"
+              role="tab"
+            >
+              <div
+                class="mb-2"
+              >
+                <b>
+                  Requests
+                </b>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;

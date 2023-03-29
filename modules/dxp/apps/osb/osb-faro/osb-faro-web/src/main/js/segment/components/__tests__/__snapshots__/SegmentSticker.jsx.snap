@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentSticker should render 1`] = `
+<div>
+  <div
+    class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-light"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-individual-static-segment"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#individual-static-segment"
+      />
+    </svg>
+  </div>
+</div>
+`;

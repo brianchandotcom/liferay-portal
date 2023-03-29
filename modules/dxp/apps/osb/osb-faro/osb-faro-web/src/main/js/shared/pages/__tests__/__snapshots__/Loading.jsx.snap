@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading should render 1`] = `
+<div>
+  <div
+    class="loading-root"
+  >
+    <div
+      class="spinner-root spinner-fade-in"
+    >
+      <span
+        class="loading-animation loading-animation-dotted"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StagedSubnav should render 1`] = `
+<div>
+  <nav
+    class="subnav-tbar subnav-tbar-root tbar"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        class="tbar-nav"
+      >
+        <div
+          class="tbar-item"
+        >
+          <div
+            class="tbar-section text-truncate"
+          >
+            <div
+              class="label label-root label-success label-lg label-uppercase"
+            >
+              <span
+                class="label-item"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="tbar-item tbar-item-expand"
+        >
+          <div
+            class="tbar-section text-truncate"
+          >
+            <button
+              class="button-root btn btn-unstyled btn-outline-borderless"
+              type="button"
+            >
+              view added items
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+`;

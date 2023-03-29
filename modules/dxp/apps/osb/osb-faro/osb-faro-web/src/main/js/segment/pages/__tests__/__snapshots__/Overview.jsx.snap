@@ -1,0 +1,362 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentOverview should render 1`] = `
+<div>
+  <div
+    class="overview-layout"
+  >
+    <div
+      class="overview-column-main"
+    >
+      <div
+        class="card card-root segment-profile-card-root"
+      >
+        <div
+          class="card-header"
+        >
+          <h5
+            class="card-title"
+          >
+            Segment Membership
+          </h5>
+          <div
+            class="subtitle-segment"
+          >
+            Segment membership processes daily and does not include today's activities.
+          </div>
+        </div>
+        <div
+          class="card-body"
+        >
+          <div
+            class="composed-chart-with-empty-state"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 360px;"
+            >
+              <div
+                style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-footer"
+        >
+          <a
+            class="button-root btn btn-link btn-sm"
+            href="/workspace/23/contacts/segments/test/membership"
+          >
+            View Members
+            <span
+              class="inline-item inline-item-after"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div
+        class="card card-root interests-card-root"
+        style="min-height: 536px;"
+      >
+        <div
+          class="card-header"
+        >
+          <h5
+            class="card-title"
+          >
+            Top Interests
+          </h5>
+        </div>
+        <div
+          class="error-display-root flex-grow-1 error-spacer no-results-root flex-grow-1"
+        >
+          <div
+            class="no-results-content"
+          >
+            <h4
+              class="no-results-title"
+            >
+              An unexpected error occurred.
+            </h4>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Reload
+            </button>
+          </div>
+        </div>
+        <div
+          class="card-footer"
+        >
+          <a
+            class="button-root btn btn-link btn-sm"
+            href="/workspace/23/contacts/segments/test/interests"
+          >
+            View All Interests
+            <span
+              class="inline-item inline-item-after"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div
+        class="card card-root distribution-card-root"
+        style="min-height: 536px;"
+      >
+        <div
+          class="card-header"
+        >
+          <div
+            class="tabs-root d-flex align-items-center justify-content-between"
+          >
+            <div
+              class="scrollable-section-root d-inline-flex"
+            >
+              <div
+                class="scroll-container"
+              >
+                <ul
+                  class="d-flex"
+                >
+                  <li
+                    class="tab-item d-flex align-items-baseline active"
+                  >
+                    <div
+                      class="tab-title active"
+                    >
+                      Tab 1
+                      <button
+                        class="button-root btn btn-unstyled remove-tab btn-sm"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-times icon-monospaced icon-size-sm"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <button
+              class="button-root btn btn-secondary add-tab btn-monospaced btn-outline-borderless btn-sm"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-plus"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="card-body align-center"
+        >
+          <div>
+            <div
+              class="no-results-root flex-grow-1"
+            >
+              <div
+                class="no-results-content"
+              >
+                <h4
+                  class="no-results-title"
+                >
+                  There are no results found.
+                </h4>
+                <div
+                  class="no-results-description"
+                >
+                  Try choosing a different breakdown.
+                  <a
+                    class="d-block"
+                    href="https://learn.liferay.com/analytics-cloud/latest/en/people/segments/segments.html#distribution-tab"
+                    target="_blank"
+                  >
+                    Learn more about distribution.
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-footer"
+        >
+          <a
+            class="button-root btn btn-link btn-sm"
+            href="/workspace/23/contacts/segments/test/distribution"
+          >
+            Explore Breakdown
+            <span
+              class="inline-item inline-item-after"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="overview-column-side"
+    >
+      <div
+        class="card card-root composition-card-root"
+      >
+        <div
+          class="card-header"
+        >
+          <h5
+            class="card-title"
+          >
+            Segment Composition
+          </h5>
+        </div>
+        <div
+          class="card-body"
+        >
+          <div
+            class="composition-chart-root"
+          >
+            <div
+              class="chart-root"
+            >
+              <svg
+                height="120px"
+                width="120px"
+              >
+                <g
+                  transform="translate(60 60)"
+                >
+                  <path
+                    d="M3.67394039744206e-15,-60L2.87791997799628e-15,-47Z"
+                    fill="#50D2A0"
+                  />
+                  <path
+                    d="M3.67394039744206e-15,-60A60,60,0,1,1,-3.67394039744206e-15,60A60,60,0,1,1,3.67394039744206e-15,-60M-8.633759933988839e-15,-47A47,47,0,1,0,8.633759933988839e-15,47A47,47,0,1,0,-8.633759933988839e-15,-47Z"
+                    fill="#F5F5F7"
+                  />
+                </g>
+                <g
+                  transform="translate(60 60)"
+                >
+                  <path
+                    d="M2.6942229581241772e-15,-44L1.8982025386783976e-15,-31Z"
+                    fill="#4B9BFF"
+                  />
+                  <path
+                    d="M2.6942229581241772e-15,-44A44,44,0,1,1,-2.6942229581241772e-15,44A44,44,0,1,1,2.6942229581241772e-15,-44M-5.694607616035192e-15,-31A31,31,0,1,0,5.694607616035192e-15,31A31,31,0,1,0,-5.694607616035192e-15,-31Z"
+                    fill="#F5F5F7"
+                  />
+                </g>
+              </svg>
+            </div>
+            <ul
+              class="legend-template composition-legend-root"
+            >
+              <li
+                class="bb-legend-item three-columns"
+              >
+                <div
+                  class="legend-template-column d-flex align-items-baseline"
+                >
+                  <span
+                    class="circle"
+                    style="background-color: rgb(80, 210, 160);"
+                  />
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    Active Last 30 Days
+                  </span>
+                </div>
+                <div
+                  class="legend-template-column justify-content-end"
+                >
+                  0
+                </div>
+                <div
+                  class="legend-template-column justify-content-end"
+                >
+                  <b>
+                    0%
+                  </b>
+                </div>
+              </li>
+              <li
+                class="bb-legend-item three-columns"
+              >
+                <div
+                  class="legend-template-column d-flex align-items-baseline"
+                >
+                  <span
+                    class="circle"
+                    style="background-color: rgb(75, 155, 255);"
+                  />
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    Known Members
+                  </span>
+                </div>
+                <div
+                  class="legend-template-column justify-content-end"
+                >
+                  0
+                </div>
+                <div
+                  class="legend-template-column justify-content-end"
+                >
+                  <b>
+                    0%
+                  </b>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,1 @@
+<mj-button href="[$BUTTON_URL$]" mj-class="button">[$BUTTON_TEXT$]</mj-button>

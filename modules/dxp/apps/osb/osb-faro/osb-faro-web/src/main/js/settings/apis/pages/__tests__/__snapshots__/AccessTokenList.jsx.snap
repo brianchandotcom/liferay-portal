@@ -1,0 +1,268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccessTokenList should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root access-token-list-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Access Tokens
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Access this workspace's data via API using an access token. A full list of endpoints is available in the 
+          <a
+            href="https://learn.liferay.com/analytics-cloud/latest/en/apis.html"
+            target="_blank"
+          >
+            documentation
+          </a>
+          .
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="card card-root"
+      >
+        <div
+          class="card-body"
+        >
+          <div
+            class="d-flex justify-content-between align-items-center"
+          >
+            <div
+              class="text-secondary"
+            >
+              <strong
+                class="font-weight-bold"
+              >
+                Root Endpoint:
+              </strong>
+              <span
+                class="ml-1"
+              >
+                http://liferay.com/api/reports
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1 mb-0"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="table-head-title"
+                >
+                  Token
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Last Seen
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Date Created
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Expiration
+                </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody
+              class="mb-0"
+            >
+              <tr
+                class=""
+              >
+                <td
+                  class=""
+                >
+                  <span
+                    class="text-secondary mr-1"
+                  >
+                    Token ending in
+                  </span>
+                  <strong
+                    class="font-weight-bold"
+                  >
+                    4ABC
+                  </strong>
+                </td>
+                <td>
+                  Jul 10, 2018
+                </td>
+                <td>
+                  Jul 10, 2018
+                </td>
+                <td>
+                  Aug 9, 2018
+                </td>
+                <td
+                  class="row-inline-actions"
+                >
+                  <span>
+                    <button
+                      aria-label="Click to Copy"
+                      class="button-root btn btn-secondary"
+                      data-clipboard-text="1234ABC"
+                      data-tooltip-response="Copied"
+                      title="Click to Copy"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-paste"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#paste"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      class="button-root btn btn-secondary"
+                      type="button"
+                    >
+                      Revoke
+                    </button>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccessTokenList should show the generated token in a list and the "Generate Token" button should no longer be visible 1`] = `
+<div
+  class="table-responsive table-root flex-grow-1 mb-0"
+>
+  <table
+    class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+  >
+    <thead>
+      <tr>
+        <th
+          class="table-head-title"
+        >
+          Token
+        </th>
+        <th
+          class="table-head-title"
+        >
+          Last Seen
+        </th>
+        <th
+          class="table-head-title"
+        >
+          Date Created
+        </th>
+        <th
+          class="table-head-title"
+        >
+          Expiration
+        </th>
+        <th />
+      </tr>
+    </thead>
+    <tbody
+      class="mb-0"
+    >
+      <tr
+        class=""
+      >
+        <td
+          class=""
+        >
+          <span
+            class="text-secondary mr-1"
+          >
+            Token ending in
+          </span>
+          <strong
+            class="font-weight-bold"
+          >
+            4ABC
+          </strong>
+        </td>
+        <td>
+          Jul 10, 2018
+        </td>
+        <td>
+          Jul 10, 2018
+        </td>
+        <td>
+          Aug 9, 2018
+        </td>
+        <td
+          class="row-inline-actions"
+        >
+          <span>
+            <button
+              aria-label="Click to Copy"
+              class="button-root btn btn-secondary"
+              data-clipboard-text="1234ABC"
+              data-tooltip-response="Copied"
+              title="Click to Copy"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-paste"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#paste"
+                />
+              </svg>
+            </button>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Revoke
+            </button>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

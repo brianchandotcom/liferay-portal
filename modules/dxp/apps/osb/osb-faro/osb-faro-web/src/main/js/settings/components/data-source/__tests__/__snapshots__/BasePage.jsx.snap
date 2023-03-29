@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseDataSourcePage should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-source-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Configure Data Source
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Liferay1 - https://www.faro-1.io
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="page-container"
+      >
+        <div
+          class="content-main"
+        />
+        <div
+          class="content-side"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

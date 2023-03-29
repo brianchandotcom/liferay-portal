@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnboardingModal renders 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog onboarding-modal-root"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="onboarding-base-screen-root d-flex flex-column flex-grow-1 justify-content-between welcome"
+      >
+        <div
+          class="header"
+        >
+          <div
+            class="d-flex justify-content-end"
+          >
+            <button
+              class="button-root btn btn-secondary close"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="modal-body d-flex flex-column align-items-center"
+        >
+          <div
+            class="ac-setup"
+          />
+          <span
+            class="title d-flex justify-content-center"
+          >
+            Welcome to Analytics Cloud
+          </span>
+          <span
+            class="description"
+          >
+            Just a few more steps to set up your workspace.
+          </span>
+        </div>
+        <div
+          class="modal-footer d-flex justify-content-center"
+        >
+          <button
+            class="btn btn-primary"
+            type="button"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

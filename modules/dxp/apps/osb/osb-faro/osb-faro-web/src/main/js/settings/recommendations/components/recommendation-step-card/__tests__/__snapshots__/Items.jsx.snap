@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Items should render 1`] = `
+<div>
+  <form
+    class="form-root"
+  >
+    <div
+      class="items-root"
+    >
+      <div
+        class="title"
+      >
+        Add Items
+      </div>
+      <div
+        class="secondary-info"
+      >
+        Create rules to match your URLs and page metadata. If you do not define rules, the recommendation model will use all URLs from this workspace to train the recommendations model.
+      </div>
+      <button
+        class="button-root btn btn-secondary new-rule-button"
+        type="button"
+      >
+        New Rule
+      </button>
+      <div
+        class="table-responsive table-root flex-grow-1"
+      >
+        <table
+          class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+        >
+          <thead>
+            <tr>
+              <th
+                class="table-head-title rule-cell table-cell-expand"
+              >
+                Rule
+              </th>
+              <th
+                class="table-head-title count-cell table-column-text-end"
+              >
+                Matching Items
+              </th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class=""
+            >
+              <td
+                class="rule-cell table-cell-expand"
+              >
+                <div
+                  class="rule-item-root d-flex align-items-baseline"
+                >
+                  <b>
+                    Include:
+                  </b>
+                  <div
+                    class="label label-root metadata-tag-root label-lg"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      url
+                    </span>
+                  </div>
+                  <span
+                    class="rule-value"
+                  >
+                    .*custom-assets
+                  </span>
+                </div>
+              </td>
+              <td
+                class="count-cell table-column-text-end"
+              >
+                <button
+                  class="button-root btn btn-unstyled matching-pages-modal-button"
+                  type="button"
+                >
+                  0
+                </button>
+              </td>
+              <td
+                class="row-inline-actions"
+              >
+                <span>
+                  <span>
+                    <button
+                      class="button-root btn btn-outline-secondary btn-outline-borderless"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="total-included-pages d-flex justify-content-between"
+      >
+        <div>
+          Total Included Pages
+        </div>
+        <div>
+          <button
+            class="button-root btn btn-unstyled matching-pages-modal-button"
+            type="button"
+          >
+            0
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

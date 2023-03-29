@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`data-sources getDataSourceDisplayObject should return the disconnected state display object if the state is DISCONNECTED 1`] = `
+Object {
+  "display": "secondary",
+  "label": "Disconnected",
+  "message": "The Data Source is disconnected. Data is no longer being synced from DXP, but you can reconnect to resume syncing.",
+}
+`;
+
+exports[`data-sources getDataSourceDisplayObject should return the undefined error state display object if the state is UNDEFINED_ERROR 1`] = `
+Object {
+  "display": "warning",
+  "label": "Inactive",
+  "message": Array [
+    "A server error occurred while connected to your data source. Analytics Cloud will attempt to automatically reconnect during its next regularly scheduled sync.",
+  ],
+}
+`;
+
+exports[`data-sources getServiceAlertConfig should return a service permission related alert props 1`] = `
+Object {
+  "alertType": "WARNING",
+  "message": "Data source credentials invalid, please contact your OAuth administrator.",
+  "timeout": 7000,
+}
+`;
+
+exports[`data-sources getServiceAlertConfig should return a service unresponsive related alert props 1`] = `
+Object {
+  "alertType": "WARNING",
+  "message": "There was an error with the server's connection. Please try again when data source's status is active.",
+  "timeout": 7000,
+}
+`;
+
+exports[`data-sources validateUniqueName should return a failure assertion if the data source name already exists 1`] = `"A Data Source already exists with that name. Please enter a different name."`;

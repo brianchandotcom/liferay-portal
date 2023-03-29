@@ -1,0 +1,1506 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectItemsModal ItemComponent should render 1`] = `
+<div>
+  <div
+    class="autofit-col autofit-col-expand"
+  >
+    test
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal ItemComponent should render with a custom className 1`] = `
+<div>
+  <div
+    class="autofit-col test autofit-col-expand"
+  >
+    test
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render items as an entity list 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with a blank submit 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="no-results-root flex-grow-1"
+        >
+          <div
+            class="no-results-content spacer"
+          >
+            <h4
+              class="no-results-title"
+            >
+              There are no items found.
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <div
+                class="spinner-root"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </span>
+            message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with a custom submit message 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Custom Submit Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with a custom title 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Custom Title
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with a successful submit 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="no-results-root flex-grow-1"
+        >
+          <div
+            class="no-results-content spacer"
+          >
+            <h4
+              class="no-results-title"
+            >
+              There are no items found.
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            type="button"
+          >
+            message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="no-results-root flex-grow-1"
+        >
+          <div
+            class="no-results-content spacer"
+          >
+            <h4
+              class="no-results-title"
+            >
+              There are no items found.
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <div
+                class="spinner-root"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </span>
+            message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with selectedItems 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render with selectedItems with the disable selected datasource 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            >
+              <li
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="no-results-root flex-grow-1"
+        >
+          <div
+            class="no-results-content spacer"
+          >
+            <h4
+              class="no-results-title"
+            >
+              There are no items found.
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render without a toolbar 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectItemsModal should render without the sort button 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog searchable-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Select Fields
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            />
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-times"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="scroll-container"
+      >
+        <div
+          class="spinner-root spinner-spacer"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

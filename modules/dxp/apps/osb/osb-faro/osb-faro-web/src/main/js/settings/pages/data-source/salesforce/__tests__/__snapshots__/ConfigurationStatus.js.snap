@@ -1,0 +1,602 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SalesforceConfigurationStatus should render 1`] = `
+<div class="settings-base-page-root data-source-base-page-root">
+  <div class="settings-header">
+    <div class="section-side">
+      <a href="/workspace/23" class="back-arrow">
+        <span class="icon-wrapper">
+          <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+            <use xlink:href="#angle-left"></use>
+          </svg>
+        </span>Exit Settings</a>
+    </div>
+    <div class="section-main">
+      <h2 class="title">Settings</h2>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <nav class="section-side settings-side-bar">
+      <div>
+        <ul class="nav">
+          <li class="item active">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/data-source">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-faro-data-source" viewBox="">
+                  <use xlink:href="#faro-data-source"></use>
+                </svg>
+              </span>Data Sources</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/users">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-ac-permissions" viewBox="">
+                  <use xlink:href="#ac-permissions"></use>
+                </svg>
+              </span>User Management</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/usage">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-usage" viewBox="">
+                  <use xlink:href="#usage"></use>
+                </svg>
+              </span>Usage</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content section-main">
+      <div class="breadcrumb">
+        <a href="/workspace/23/settings/data-source" class="back-arrow">
+          <span class="icon-wrapper">
+            <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+              <use xlink:href="#angle-left"></use>
+            </svg>
+          </span>Data Sources</a>
+      </div>
+      <div class="content-header">
+        <div>
+          <h3>Configure Salesforce</h3>
+          <p class="description">Liferay23 - https://www.faro-23.io</p>
+        </div>
+        <div>
+          <button class="button-root btn btn-secondary" type="button">Delete Data Source</button>
+        </div>
+      </div>
+      <div>
+        <div class="page-container">
+          <div class="content-main">
+            <div class="sheet page-display data-source-base-tabs-root">
+              <div class="sheet-header">
+                <ul class="nav-root nav nav-underline" role="tablist">
+                  <li role="presentation" class="nav-item">
+                    <a class="nav-link" href="/workspace/23/settings/data-source/23" role="tab">
+                      <h4>Authorization</h4>
+                    </a>
+                  </li>
+                  <li role="presentation" class="nav-item active">
+                    <a class="nav-link active" href="/workspace/23/settings/data-source/salesforce/23/configuration-status" role="tab">
+                      <h4>Configure Data Source</h4>
+                      <div class="sticker sticker-root sticker-static sticker-circle sticker-primary sticker-sm">2</div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sheet-section">
+                <div class="salesforce-configuration-overview-root">
+                  <div class="subtitle">Salesforce Data Objects</div>
+                  <div class="base-configuration-item-root">
+                    <div class="actions">
+                      <button class="button-root btn btn-primary btn-block" type="button">Enable</button>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <b>Accounts</b>
+                      </div>
+                      <div class="text-secondary">
+                        <div class="description">Represents an organization or person involved with your business.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="base-configuration-item-root">
+                    <div class="actions">
+                      <button class="button-root btn btn-primary btn-block" type="button">Enable</button>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <b>Contacts</b>
+                      </div>
+                      <div class="text-secondary">
+                        <div class="description">Represents a contact, which is a person associated with an account.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="base-configuration-item-root">
+                    <div class="actions">
+                      <button class="button-root btn btn-primary btn-block" type="button">Enable</button>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <b>Leads</b>
+                      </div>
+                      <div class="text-secondary">
+                        <div class="description">Represents a prospect or a lead.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-side">
+            <div class="panel-root data-source-status-root">
+              <div class="panel-header" role="button" tabindex="0">
+                <div class="panel-title">
+                  <div>Current Status:</div>
+                </div>
+                <div class="panel-title-label">
+                  <div class="label label-root label-success label-lg label-uppercase">Active</div>
+                </div>
+              </div>
+              <div class="panel-body">All data coming from this data source is up to date. There are no errors to report.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SalesforceConfigurationStatus should render already configured items with the button text "pause" instead of "enable" 1`] = `
+<div class="settings-base-page-root data-source-base-page-root">
+  <div class="settings-header">
+    <div class="section-side">
+      <a href="/workspace/23" class="back-arrow">
+        <span class="icon-wrapper">
+          <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+            <use xlink:href="#angle-left"></use>
+          </svg>
+        </span>Exit Settings</a>
+    </div>
+    <div class="section-main">
+      <h2 class="title">Settings</h2>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <nav class="section-side settings-side-bar">
+      <div>
+        <ul class="nav">
+          <li class="item active">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/data-source">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-faro-data-source" viewBox="">
+                  <use xlink:href="#faro-data-source"></use>
+                </svg>
+              </span>Data Sources</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/users">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-ac-permissions" viewBox="">
+                  <use xlink:href="#ac-permissions"></use>
+                </svg>
+              </span>User Management</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/usage">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-usage" viewBox="">
+                  <use xlink:href="#usage"></use>
+                </svg>
+              </span>Usage</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content section-main">
+      <div class="breadcrumb">
+        <a href="/workspace/23/settings/data-source" class="back-arrow">
+          <span class="icon-wrapper">
+            <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+              <use xlink:href="#angle-left"></use>
+            </svg>
+          </span>Data Sources</a>
+      </div>
+      <div class="content-header">
+        <div>
+          <h3>Configure Salesforce</h3>
+          <p class="description">Liferay23 - https://www.faro-23.io</p>
+        </div>
+        <div>
+          <button class="button-root btn btn-secondary" type="button">Delete Data Source</button>
+        </div>
+      </div>
+      <div>
+        <div class="page-container">
+          <div class="content-main">
+            <div class="sheet page-display data-source-base-tabs-root">
+              <ul class="nav-root nav nav-underline" role="tablist">
+                <li role="presentation" class="nav-item">
+                  <a class="nav-link" href="/workspace/23/settings/data-source/23" role="tab">
+                    <h4>Authorization</h4>
+                  </a>
+                </li>
+                <li role="presentation" class="nav-item active">
+                  <a class="nav-link active" href="/workspace/23/settings/data-source/salesforce/23/configuration-status" role="tab">
+                    <h4>Configure Data Source</h4>
+                  </a>
+                </li>
+              </ul>
+              <div class="salesforce-configuration-overview-root">
+                <div class="subtitle">Salesforce Data Objects
+                  <a class="button-root btn btn-unstyled" href="#">View Mapping</a>
+                </div>
+                <div class="base-configuration-item-root">
+                  <div class="actions">
+                    <button class="button-root btn btn-secondary btn-block" type="button">Pause</button>
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <b>Accounts</b>
+                    </div>
+                    <div class="text-secondary">
+                      <div class="description">Represents an organization or person involved with your business.</div>
+                      <div class="status">Last Sync: 07/10/2018 - 4:01:06 PM</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="base-configuration-item-root">
+                  <div class="actions">
+                    <button class="button-root btn btn-secondary btn-block" type="button">Pause</button>
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <b>Contacts</b>
+                    </div>
+                    <div class="text-secondary">
+                      <div class="description">Represents a contact, which is a person associated with an account.</div>
+                      <div class="status">Last Sync: 07/10/2018 - 4:01:06 PM</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="base-configuration-item-root">
+                  <div class="actions">
+                    <button class="button-root btn btn-secondary btn-block" type="button">Pause</button>
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <b>Leads</b>
+                    </div>
+                    <div class="text-secondary">
+                      <div class="description">Represents a prospect or a lead.</div>
+                      <div class="status">Last Sync: 07/10/2018 - 4:01:06 PM</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-side">
+            <div class="panel-root data-source-status-root">
+              <div class="panel-header" role="button" tabindex="0">
+                <div class="panel-title">
+                  <div>Current Status:</div>
+                </div>
+                <div class="panel-title-label">
+                  <div class="label label-root label-success label-lg label-uppercase">Active</div>
+                </div>
+              </div>
+              <div class="panel-body">All data coming from this data source is up to date. There are no errors to report.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SalesforceConfigurationStatus should render as configuring items with a metric bar instead of a button 1`] = `
+<div class="settings-base-page-root data-source-base-page-root">
+  <div class="settings-header">
+    <div class="section-side">
+      <a href="/workspace/23" class="back-arrow">
+        <span class="icon-wrapper">
+          <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+            <use xlink:href="#angle-left"></use>
+          </svg>
+        </span>Exit Settings</a>
+    </div>
+    <div class="section-main">
+      <h2 class="title">Settings</h2>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <nav class="section-side settings-side-bar">
+      <div>
+        <ul class="nav">
+          <li class="item active">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/data-source">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-faro-data-source" viewBox="">
+                  <use xlink:href="#faro-data-source"></use>
+                </svg>
+              </span>Data Sources</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/users">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-ac-permissions" viewBox="">
+                  <use xlink:href="#ac-permissions"></use>
+                </svg>
+              </span>User Management</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/usage">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-usage" viewBox="">
+                  <use xlink:href="#usage"></use>
+                </svg>
+              </span>Usage</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content section-main">
+      <div class="breadcrumb">
+        <a href="/workspace/23/settings/data-source" class="back-arrow">
+          <span class="icon-wrapper">
+            <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+              <use xlink:href="#angle-left"></use>
+            </svg>
+          </span>Data Sources</a>
+      </div>
+      <div class="content-header">
+        <div>
+          <h3>Configure Salesforce</h3>
+          <p class="description">Liferay23 - https://www.faro-23.io</p>
+        </div>
+        <div>
+          <button class="button-root btn btn-secondary" type="button">Delete Data Source</button>
+        </div>
+      </div>
+      <div>
+        <div class="page-container">
+          <div class="content-main">
+            <div class="sheet page-display data-source-base-tabs-root">
+              <ul class="nav-root nav nav-underline" role="tablist">
+                <li role="presentation" class="nav-item">
+                  <a class="nav-link" href="/workspace/23/settings/data-source/23" role="tab">
+                    <h4>Authorization</h4>
+                  </a>
+                </li>
+                <li role="presentation" class="nav-item active">
+                  <a class="nav-link active" href="/workspace/23/settings/data-source/salesforce/23/configuration-status" role="tab">
+                    <h4>Configure Data Source</h4>
+                    <div class="sticker sticker-root sticker-static sticker-circle sticker-primary sticker-sm">3</div>
+                  </a>
+                </li>
+              </ul>
+              <div class="salesforce-configuration-overview-root">
+                <div class="subtitle">Salesforce Data Objects
+                  <a class="button-root btn btn-unstyled" href="#">View Mapping</a>
+                </div>
+                <div class="base-configuration-item-root">
+                  <div class="actions">
+                    <div class="metric-bar-root">
+                      <div class="bar bar-primary bar-default" style="width: 10%;"></div>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <b>Accounts</b>
+                    </div>
+                    <div class="text-secondary">
+                      <div class="description">Represents an organization or person involved with your business.</div>
+                      <div class="status">Mapping - 123 out of 1,234 fields.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="base-configuration-item-root">
+                  <div class="actions">
+                    <div class="metric-bar-root">
+                      <div class="bar bar-primary bar-default" style="width: 11%;"></div>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <b>Contacts</b>
+                    </div>
+                    <div class="text-secondary">
+                      <div class="description">Represents a contact, which is a person associated with an account.</div>
+                      <div class="status">Mapping - 573 out of 5,433 fields.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="base-configuration-item-root">
+                  <div class="actions">
+                    <div class="metric-bar-root">
+                      <div class="bar bar-primary bar-default" style="width: 11%;"></div>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <b>Leads</b>
+                    </div>
+                    <div class="text-secondary">
+                      <div class="description">Represents a prospect or a lead.</div>
+                      <div class="status">Mapping - 573 out of 5,433 fields.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-side">
+            <div class="panel-root data-source-status-root">
+              <div class="panel-header" role="button" tabindex="0">
+                <div class="panel-title">
+                  <div>Current Status:</div>
+                </div>
+                <div class="panel-title-label">
+                  <div class="label label-root label-success label-lg label-uppercase">Active</div>
+                </div>
+              </div>
+              <div class="panel-body">All data coming from this data source is up to date. There are no errors to report.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SalesforceConfigurationStatus should render as read-only if the user is not authorized to make changes 1`] = `
+<div class="settings-base-page-root data-source-base-page-root">
+  <div class="settings-header">
+    <div class="section-side">
+      <a href="/workspace/23" class="back-arrow">
+        <span class="icon-wrapper">
+          <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+            <use xlink:href="#angle-left"></use>
+          </svg>
+        </span>Exit Settings</a>
+    </div>
+    <div class="section-main">
+      <h2 class="title">Settings</h2>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <nav class="section-side settings-side-bar">
+      <div>
+        <ul class="nav">
+          <li class="item active">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/data-source">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-faro-data-source" viewBox="">
+                  <use xlink:href="#faro-data-source"></use>
+                </svg>
+              </span>Data Sources</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/users">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-ac-permissions" viewBox="">
+                  <use xlink:href="#ac-permissions"></use>
+                </svg>
+              </span>User Management</a>
+          </li>
+          <li class="item">
+            <a class="button-root btn btn-link" href="/workspace/23/settings/usage">
+              <span class="icon-wrapper">
+                <svg class="icon-root lexicon-icon lexicon-icon-usage" viewBox="">
+                  <use xlink:href="#usage"></use>
+                </svg>
+              </span>Usage</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content section-main">
+      <div class="breadcrumb">
+        <a href="/workspace/23/settings/data-source" class="back-arrow">
+          <span class="icon-wrapper">
+            <svg class="icon-root lexicon-icon lexicon-icon-angle-left" viewBox="">
+              <use xlink:href="#angle-left"></use>
+            </svg>
+          </span>Data Sources</a>
+      </div>
+      <div class="content-header">
+        <div>
+          <h3>Configure Salesforce</h3>
+          <p class="description">Liferay23 - https://www.faro-23.io</p>
+        </div>
+        <div></div>
+      </div>
+      <div>
+        <div class="page-container">
+          <div class="content-main">
+            <div class="sheet page-display data-source-base-tabs-root">
+              <div class="sheet-header">
+                <ul class="nav-root nav nav-underline" role="tablist">
+                  <li role="presentation" class="nav-item">
+                    <a class="nav-link" href="/workspace/23/settings/data-source/23" role="tab">
+                      <h4>Authorization</h4>
+                    </a>
+                  </li>
+                  <li role="presentation" class="nav-item active">
+                    <a class="nav-link active" href="/workspace/23/settings/data-source/salesforce/23/configuration-status" role="tab">
+                      <h4>Configure Data Source</h4>
+                      <div class="sticker sticker-root sticker-static sticker-circle sticker-primary sticker-sm">2</div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sheet-section">
+                <div class="salesforce-configuration-overview-root">
+                  <div class="subtitle">Salesforce Data Objects</div>
+                  <div class="base-configuration-item-root">
+                    <div class="actions">
+                      <button class="button-root btn btn-primary btn-block" disabled="" type="button">Enable</button>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <b>Accounts</b>
+                      </div>
+                      <div class="text-secondary">
+                        <div class="description">Represents an organization or person involved with your business.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="base-configuration-item-root">
+                    <div class="actions">
+                      <button class="button-root btn btn-primary btn-block" disabled="" type="button">Enable</button>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <b>Contacts</b>
+                      </div>
+                      <div class="text-secondary">
+                        <div class="description">Represents a contact, which is a person associated with an account.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="base-configuration-item-root">
+                    <div class="actions">
+                      <button class="button-root btn btn-primary btn-block" disabled="" type="button">Enable</button>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <b>Leads</b>
+                      </div>
+                      <div class="text-secondary">
+                        <div class="description">Represents a prospect or a lead.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-side">
+            <div class="panel-root data-source-status-root">
+              <div class="panel-header" role="button" tabindex="0">
+                <div class="panel-title">
+                  <div>Current Status:</div>
+                </div>
+                <div class="panel-title-label">
+                  <div class="label label-root label-success label-lg label-uppercase">Active</div>
+                </div>
+              </div>
+              <div class="panel-body">All data coming from this data source is up to date. There are no errors to report.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithPropertyGroups should pass propertyGroups to the WrappedComponent 1`] = `
+<div>
+  <div>
+    <div>
+      Events
+      <div>
+        Events-0: 8
+      </div>
+    </div>
+    <div>
+      Individual Attributes
+      <div>
+        Individual Attributes-0: 6
+      </div>
+      <div>
+        DXP Custom Fields-1: 1
+      </div>
+    </div>
+    <div>
+      Interests
+      <div>
+        Interests-0: 5
+      </div>
+    </div>
+    <div>
+      Session Attributes
+      <div>
+        Session Attributes-0: 6
+      </div>
+    </div>
+    <div>
+      Organization Attributes
+      <div>
+        Organization Attributes-0: 6
+      </div>
+      <div>
+        DXP Custom Fields-1: 1
+      </div>
+    </div>
+  </div>
+</div>
+`;

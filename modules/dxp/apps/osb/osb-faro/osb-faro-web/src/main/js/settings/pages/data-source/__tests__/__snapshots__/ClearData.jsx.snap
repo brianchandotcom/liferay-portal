@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataSourceClearData should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-source-clear-data-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source"
+        >
+          Data Sources
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source/26"
+        >
+          Liferay1
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Clear Data
+        </span>
+      </li>
+    </ol>
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Confirm Clearing of All Data from "Liferay1"
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          The following data will be impacted and can yield unexpected results. This action will not remove the data source.
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="page-container"
+      >
+        <div
+          class="sheet"
+        >
+          <div
+            class="delete-data-source-root"
+          >
+            <div>
+              <div
+                class="entity-item"
+              >
+                <button
+                  class="button-root btn btn-unstyled title"
+                  type="button"
+                >
+                  <h5>
+                    12 Segments
+                  </h5>
+                </button>
+                <div
+                  class="secondary-info"
+                >
+                  Segments with criteria related to this data source will be disabled until the criteria is updated.
+                </div>
+              </div>
+              <div
+                class="entity-item"
+              >
+                <button
+                  class="button-root btn btn-unstyled title"
+                  type="button"
+                >
+                  <h5>
+                    1 Individuals
+                  </h5>
+                </button>
+                <div
+                  class="secondary-info"
+                >
+                  All attributes related to an Individual from this data source will be removed, which may result in the removal of the Individual.
+                </div>
+              </div>
+            </div>
+            <form
+              class="form-root"
+              data-testid="form"
+            >
+              <div
+                class="sheet-body"
+              >
+                <div>
+                  To complete, copy the following sentence to confirm your intention and click clear data. Once you have deleted This data, you can not undo this operation.
+                </div>
+                <div
+                  class="copy-container"
+                >
+                  <h4>
+                    Copy the following: 
+                    <span
+                      class="copy-text"
+                    >
+                      Clear Liferay1 Data
+                    </span>
+                  </h4>
+                </div>
+                <div
+                  class=""
+                >
+                  <input
+                    class="input-root form-control"
+                    data-testid="confirmation-input"
+                    id="delete"
+                    name="delete"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="sheet-footer"
+              >
+                <button
+                  class="button-root btn btn-warning delete-button"
+                  disabled=""
+                  type="submit"
+                >
+                  Clear Data
+                </button>
+                <a
+                  class="button-root btn btn-secondary"
+                  href="/workspace/23/settings/data-source/26"
+                >
+                  Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

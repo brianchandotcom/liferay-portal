@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistogramChart should render 1`] = `
+<div>
+  <div
+    class="chart-root histogram-chart-root"
+  >
+    <div
+      class="no-results-root flex-grow-1"
+    >
+      <div
+        class="no-results-content"
+      >
+        <h4
+          class="no-results-title"
+        >
+          There are no items found.
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+`;

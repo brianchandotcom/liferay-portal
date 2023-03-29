@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivatingDisplay should render 1`] = `
+<div>
+  <div
+    class="workspaces-base-page-root"
+  >
+    <div
+      class="header-container"
+    >
+      <a
+        href="https://liferay.com"
+        target="_blank"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+          />
+        </svg>
+      </a>
+      <div>
+        <button
+          class="user-menu button-root btn btn-unstyled trigger"
+          type="button"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="sticker sticker-root sticker-static avatar sticker-circle"
+            >
+              TT
+            </div>
+            <span
+              class="user-name"
+            >
+              Test Test
+            </span>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="content-container"
+      >
+        <div
+          class="title-container"
+        >
+          <div
+            class="logo-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              />
+            </svg>
+            <span
+              class="logo-text"
+            >
+              Analytics Cloud
+            </span>
+          </div>
+          <h1
+            class="title"
+          >
+            Activating Workspace
+          </h1>
+          <div
+            class="details-container"
+          />
+        </div>
+        <div
+          class="sheet"
+        >
+          <div
+            class="sheet-header mb-4"
+          >
+            <h3
+              class="title"
+            >
+              Your workspace is being activated.
+            </h3>
+          </div>
+          <div
+            class="sheet-body"
+          >
+            <div
+              class="sheet-section"
+            >
+              <p>
+                This process will take a couple minutes.
+              </p>
+              <p>
+                In the meantime, check out our documentation to get familiar with the features.
+              </p>
+            </div>
+          </div>
+          <div
+            class="sheet-footer"
+          >
+            <a
+              class="button-root btn btn-primary"
+              href="https://learn.liferay.com/analytics-cloud/latest/en/getting-started.html"
+            >
+              Check out docs
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

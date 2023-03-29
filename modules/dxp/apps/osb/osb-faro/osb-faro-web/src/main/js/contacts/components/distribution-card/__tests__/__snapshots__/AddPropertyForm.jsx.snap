@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DistributionCard AddPropertyForm renders 1`] = `
+<div>
+  <div
+    class="card-body add-property-form-root"
+  >
+    <div
+      class="row d-flex flex-column flex-grow-1"
+    >
+      <div
+        class="col-xl-5 d-flex flex-column flex-grow-1"
+      >
+        <div
+          class="description"
+        >
+          <h4>
+            Add a Breakdown by Individual Attribute
+          </h4>
+          <p>
+            Breakdown will display the top 10 results or be divided into a maximum of 10 bins depending on your attribute type.
+          </p>
+        </div>
+        <form
+          class="form-root d-flex flex-column flex-grow-1 justify-content-between"
+        >
+          <div
+            class="form-items"
+          >
+            <div
+              class="form-group form-group-autofit"
+            >
+              <div
+                class="form-group-item form-group-item-shrink"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="form-control-label label-root required"
+                    for="property"
+                  >
+                    <span
+                      class="content-container"
+                    >
+                      Attribute
+                    </span>
+                  </label>
+                  <div
+                    aria-haspopup="true"
+                    class="input-group base-select-input-root select-input-root"
+                  >
+                    <div
+                      class="input-group-item"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="input-root form-control input-group-inset input-group-inset-after"
+                        id="property"
+                        placeholder="Select Field"
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="input-group-inset-item input-group-inset-item-after"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-group form-group-autofit"
+            >
+              <div
+                class="form-group-item"
+              >
+                <div
+                  class=""
+                >
+                  <label
+                    class="form-control-label label-root required"
+                    for="title"
+                  >
+                    <span
+                      class="content-container"
+                    >
+                      Breakdown Name
+                    </span>
+                  </label>
+                  <input
+                    class="input-root form-control"
+                    id="title"
+                    name="title"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-navigation"
+          >
+            <button
+              class="button-root btn btn-primary"
+              disabled=""
+              type="submit"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

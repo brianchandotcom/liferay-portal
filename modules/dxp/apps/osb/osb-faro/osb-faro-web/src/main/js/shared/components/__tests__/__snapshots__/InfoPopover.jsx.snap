@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoPopover should render 1`] = `
+<div>
+  <span
+    class="info-popover-root"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-question-circle-full"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+      />
+    </svg>
+  </span>
+</div>
+`;

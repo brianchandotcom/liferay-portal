@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaSidebar should render 1`] = `
+<div>
+  <div
+    class="criteria-sidebar-root"
+  >
+    <div
+      class="sidebar-header"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-outline-secondary dropdown-toggle show-caret btn-outline-borderless"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            Interests
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="sidebar-search"
+    >
+      <div
+        class="input-group"
+      >
+        <div
+          class="input-group-item"
+        >
+          <div
+            class="input-group"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="input-root form-control input-group-inset input-group-inset-after"
+                placeholder="Search"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-search"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sidebar-collapse"
+    >
+      <ul
+        class="property-subgroups-list active"
+      >
+        <li>
+          
+          <ul
+            class="properties-list"
+          >
+            <li
+              class="criteria-sidebar-item-root color--"
+            >
+              <span
+                class="inline-item"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-drag"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                  />
+                </svg>
+              </span>
+              <span
+                class="criteria-sidebar-item-type sticker"
+              >
+                <span
+                  class="inline-item"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-text"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    />
+                  </svg>
+                </span>
+              </span>
+              Page Views
+            </li>
+          </ul>
+        </li>
+        <li>
+          <div
+            class="property-subgroup-label"
+          >
+            DXP Custom Fields
+          </div>
+          <ul
+            class="properties-list"
+          >
+            <li
+              class="criteria-sidebar-item-root color--"
+            >
+              <span
+                class="inline-item"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-drag"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                  />
+                </svg>
+              </span>
+              <span
+                class="criteria-sidebar-item-type sticker"
+              >
+                <span
+                  class="inline-item"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-text"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    />
+                  </svg>
+                </span>
+              </span>
+              Page Actions
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

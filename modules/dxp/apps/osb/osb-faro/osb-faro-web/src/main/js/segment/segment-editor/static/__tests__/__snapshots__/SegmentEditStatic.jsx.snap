@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentEditStatic should render 1`] = `
+<div>
+  <div
+    class="segment-edit-static-root d-flex flex-column flex-grow-1"
+  >
+    <div
+      class="select-items-header"
+    >
+      <h3 />
+    </div>
+    <div
+      class="toolbar-root d-flex flex-column flex-grow-1"
+    >
+      <nav
+        class="navbar navbar-root management-bar management-bar-light navbar-expand"
+      >
+        <div
+          class="container-fluid"
+        >
+          <ul
+            class="nav-root front-nav navbar-nav"
+            role="tablist"
+          >
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    class="custom-control-input"
+                    data-testid="select-all-checkbox"
+                    disabled=""
+                    type="checkbox"
+                    value="false"
+                  />
+                  <span
+                    class="custom-control-label"
+                  />
+                </label>
+              </div>
+            </li>
+            <li
+              aria-haspopup="true"
+              class="dropdown dropdown-root filter-and-order-root nav-item"
+            >
+              <button
+                class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                data-testid="filter-and-order-button"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Order
+                </span>
+                
+                <span
+                  class="caret-root"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <button
+                class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+          <div
+            class="navbar-form navbar-form-autofit"
+          >
+            <div
+              class="input-group search"
+            >
+              <div
+                class="input-group-item"
+              >
+                <input
+                  class="input-root form-control input-group-inset input-group-inset-after"
+                  placeholder="Search"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="input-group-inset-item input-group-inset-item-after"
+                >
+                  <button
+                    class="button-root btn btn-unstyled"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-search"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="nav-root navbar-nav"
+            role="tablist"
+          >
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <button
+                class="button-root btn btn-primary"
+                type="button"
+              >
+                Add Members
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div
+      class="searchable-table-with-staged-root d-flex flex-column flex-grow-1 d-flex flex-column flex-grow-1"
+    >
+      <div
+        class="loading-root"
+      >
+        <div
+          class="spinner-root spinner-fade-in"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

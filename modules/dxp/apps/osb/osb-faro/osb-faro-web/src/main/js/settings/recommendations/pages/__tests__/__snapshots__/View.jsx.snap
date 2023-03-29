@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View should render 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="col-xl-8"
+    >
+      <div
+        class="settings-base-page-root"
+      >
+        <div
+          class="maintenance-alert-root"
+        />
+        <ol
+          class="breadcrumb breadcrumbs-root"
+        >
+          <li
+            class="breadcrumb-item"
+          >
+            <a
+              class="breadcrumb-link breadcrumb-text-truncate"
+              href="/workspace/123/settings/recommendations"
+            >
+              Recommendations
+            </a>
+          </li>
+          <li
+            class="breadcrumb-item active"
+          >
+            <span
+              class="breadcrumb-text-truncate"
+            >
+              Recommendation Job Name 321
+            </span>
+          </li>
+        </ol>
+        <div
+          class="content-header has-page-actions"
+        >
+          <div
+            class="header-text"
+          >
+            <div
+              class="d-flex"
+            >
+              <h3
+                class="title-text text-truncate"
+              >
+                <span
+                  class="text-truncate"
+                  data-tooltip="false"
+                  title=""
+                >
+                  Recommendation Job Name 321
+                </span>
+              </h3>
+            </div>
+          </div>
+          <div
+            class="page-actions-container"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              disabled=""
+              type="button"
+            >
+              Retrain
+            </button>
+            <a
+              class="button-root btn btn-secondary"
+              href="/workspace/123/settings/recommendations/321/edit"
+            >
+              Edit
+            </a>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+        <div>
+          <div
+            class="card card-root output-versions-card-root"
+          >
+            <div
+              class="card-header d-flex justify-content-between"
+            >
+              <h5
+                class="card-title"
+              >
+                Output Versions
+              </h5>
+              <div
+                class="training-frequency"
+              >
+                Training Frequency
+                <b>
+                  Every 30 days
+                </b>
+                <b>
+                  (Next 5 years ago)
+                </b>
+              </div>
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="spinner-root spinner-center spinner-spacer"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="card card-root training-items-card-root"
+          >
+            <div
+              class="card-header"
+            >
+              <h5
+                class="card-title"
+              >
+                Training Items
+              </h5>
+            </div>
+            <div
+              class="card-body"
+            >
+              <div
+                class="total-training-urls d-flex align-items-center"
+              >
+                <button
+                  class="button-root btn btn-secondary btn-outline-borderless"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-view"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+                    />
+                  </svg>
+                </button>
+                Total Training URLs: 
+                <div
+                  class="spinner-root"
+                >
+                  <span
+                    class="loading-animation loading-animation-dotted loading-animation-sm"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

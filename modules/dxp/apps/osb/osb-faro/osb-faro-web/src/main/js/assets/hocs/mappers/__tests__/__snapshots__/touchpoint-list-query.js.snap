@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TouchpointsListQuery Mappers should extract items from result 1`] = `
+Object {
+  "error": null,
+  "items": Array [
+    Object {
+      "title": "https://www.liferay.com/digital-experience-platform",
+      "touchpoint": "https://www.liferay.com/digital-experience-platform",
+    },
+    Object {
+      "title": "https://www.liferay.com/product/features/assets",
+      "touchpoint": "https://www.liferay.com/product/features/assets",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/company/gartner/thank-you",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=13811&title=Digital+Experience+Platforms+-+Designed+for+Digital+Transformation",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=1645493&title=Advanced+Liferay+Architecture",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=3292406&title=Enterprise+Subscription+Benefits",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=13811&title=Three+Key+Strategies+for+Consistent+Customer+Experiences",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=13811&title=Portal+Best+Practices",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=13811&title=The+Evolving+Value+of+a+Portal",
+    },
+    Object {
+      "title": "https://www.liferay.com/company/gartner/thank-you",
+      "touchpoint": "https://www.liferay.com/resource?folderId=1646951&title=Four+Types+of+Portals+That+Solve+Enterprise+Problems",
+    },
+  ],
+  "loading": false,
+  "refetch": undefined,
+}
+`;

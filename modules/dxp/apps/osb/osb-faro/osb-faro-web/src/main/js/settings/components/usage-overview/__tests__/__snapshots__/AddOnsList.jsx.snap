@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddOnsList should render 1`] = `
+<div>
+  <div
+    class="addons-list-root"
+  >
+    <div
+      class="panel-root"
+    >
+      <div
+        class="panel-body"
+      >
+        <div
+          class="plan-title"
+        >
+          <div
+            class="plan-name"
+          >
+            <span>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-ac-individual"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                />
+              </svg>
+              <span
+                class="limit-amount semibold"
+              >
+                <b
+                  class="text-secondary"
+                >
+                  +
+                </b>
+                5,000
+              </span>
+              <span
+                class="text-secondary"
+              >
+                <b
+                  class="details-label"
+                >
+                  Individuals
+                </b>
+              </span>
+            </span>
+          </div>
+          <div
+            class="label label-root label-primary label-lg label-uppercase"
+          >
+            <span
+              class="label-item"
+            >
+              2X
+            </span>
+          </div>
+          <div
+            class="annual-price"
+          >
+            <div>
+              <strong>
+                500 USD
+              </strong>
+              <span
+                class="text-secondary small"
+              >
+                 / year
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="panel-root"
+    >
+      <div
+        class="panel-body"
+      >
+        <div
+          class="plan-title"
+        >
+          <div
+            class="plan-name"
+          >
+            <span>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-faro-page-views"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                />
+              </svg>
+              <span
+                class="limit-amount semibold"
+              >
+                <b
+                  class="text-secondary"
+                >
+                  +
+                </b>
+                5,000,000
+              </span>
+              <span
+                class="text-secondary"
+              >
+                <b
+                  class="details-label"
+                >
+                  Page Views
+                </b>
+              </span>
+            </span>
+          </div>
+          <div
+            class="label label-root label-primary label-lg label-uppercase"
+          >
+            <span
+              class="label-item"
+            >
+              1X
+            </span>
+          </div>
+          <div
+            class="annual-price"
+          >
+            <div>
+              <strong>
+                250 USD
+              </strong>
+              <span
+                class="text-secondary small"
+              >
+                 / year
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

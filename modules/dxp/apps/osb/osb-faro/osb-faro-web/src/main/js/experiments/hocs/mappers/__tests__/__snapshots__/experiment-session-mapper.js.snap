@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Experiment Session Mapper should render Tooltip 1`] = `
+<div
+  class="bb-tooltip-container position-static"
+>
+  <table
+    class="analytics-tooltip-chart"
+  >
+    <thead
+      class="analytics-tooltip-chart-header"
+    >
+      <tr
+        class="analytics-tooltip-chart-row"
+      >
+        <td>
+          <div
+            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+          >
+            May 17
+          </div>
+        </td>
+        <td>
+          <div
+            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+          >
+            Sessions
+          </div>
+        </td>
+      </tr>
+    </thead>
+    <tbody
+      class="analytics-tooltip-chart-body"
+    >
+      <tr
+        class="analytics-tooltip-chart-row"
+      >
+        <td>
+          <div
+            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+          >
+            <span
+              class="circle"
+              style="background-color:#6B6C7E;height:8px;width:8px"
+            />
+            data1
+          </div>
+        </td>
+        <td>
+          <div
+            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal"
+          >
+            1.5K
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`Experiment Session Mapper should return formatted data 1`] = `
+Object {
+  "Tooltip": [Function],
+  "data": Array [
+    Object {
+      "color": "#4B9BFF",
+      "data": Array [
+        Object {
+          "key": "2018-05-17T00:00",
+          "value": 2884,
+          "valueKey": "2018-05-17T00:00",
+        },
+        Object {
+          "key": "2018-05-18T00:00",
+          "value": 2967,
+          "valueKey": "2018-05-18T00:00",
+        },
+        Object {
+          "key": "2018-05-19T00:00",
+          "value": 1981,
+          "valueKey": "2018-05-19T00:00",
+        },
+        Object {
+          "key": "2018-05-20T00:00",
+          "value": 1502,
+          "valueKey": "2018-05-20T00:00",
+        },
+        Object {
+          "key": "2018-05-21T00:00",
+          "value": 1253,
+          "valueKey": "2018-05-21T00:00",
+        },
+        Object {
+          "key": "2018-05-22T00:00",
+          "value": 3944,
+          "valueKey": "2018-05-22T00:00",
+        },
+      ],
+      "name": "Total",
+    },
+  ],
+  "format": [Function],
+  "intervals": Array [
+    "2018-05-17T00:00",
+    "2018-05-18T00:00",
+    "2018-05-19T00:00",
+    "2018-05-20T00:00",
+    "2018-05-21T00:00",
+    "2018-05-22T00:00",
+  ],
+}
+`;

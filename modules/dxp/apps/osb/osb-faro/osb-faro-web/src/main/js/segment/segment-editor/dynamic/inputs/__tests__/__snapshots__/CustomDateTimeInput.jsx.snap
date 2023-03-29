@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomDateTimeInput should render 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item operator form-group-item-shrink"
+      >
+        <select
+          class="form-control criterion-input operator-input"
+        >
+          <option
+            value="lt"
+          >
+            is before
+          </option>
+          <option
+            value="eq"
+          >
+            is
+          </option>
+          <option
+            value="gt"
+          >
+            is after
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group date-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              data-testid="date-input"
+              placeholder="YYYY-MM-DD HH:MM ZZ"
+              type="text"
+              value="2020-01-17 00:00"
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <button
+                class="button-root btn btn-unstyled"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-calendar"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,267 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OutputVersionsCard should render 1`] = `
+<div>
+  <div
+    class="card card-root output-versions-card-root"
+  >
+    <div
+      class="card-header d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        Output Versions
+      </h5>
+      <div
+        class="training-frequency"
+      >
+        Training Frequency
+        <b>
+          Every 14 days
+        </b>
+        <b>
+          (Next a few seconds ago)
+        </b>
+      </div>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="table-responsive table-root flex-grow-1"
+      >
+        <table
+          class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+        >
+          <thead>
+            <tr>
+              <th
+                class="table-head-title table-cell-expand"
+              >
+                Training Date
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                Events
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                Items
+              </th>
+              <th
+                class="table-head-title"
+              >
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class=""
+            >
+              <td
+                class="table-cell-expand"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  Apr 24, 2020
+                </h4>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                321
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                123
+              </td>
+              <td>
+                <div
+                  class="label label-root status label-success label-lg label-uppercase"
+                >
+                  <span
+                    class="label-item"
+                  >
+                    Completed
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class=""
+            >
+              <td
+                class="table-cell-expand"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  Apr 24, 2020
+                </h4>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                321
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                123
+              </td>
+              <td>
+                <div
+                  class="label label-root status label-danger label-lg label-uppercase"
+                >
+                  <span
+                    class="label-item"
+                  >
+                    Failed
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class=""
+            >
+              <td
+                class="table-cell-expand"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  Apr 24, 2020
+                </h4>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                321
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                123
+              </td>
+              <td>
+                <div
+                  class="label label-root status label-primary label-lg label-uppercase"
+                >
+                  <span
+                    class="label-item"
+                  >
+                    Live Version
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class=""
+            >
+              <td
+                class="table-cell-expand"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  Apr 24, 2020
+                </h4>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                321
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                123
+              </td>
+              <td>
+                <div
+                  class="label label-root status label-warning label-lg label-uppercase"
+                >
+                  <span
+                    class="label-item"
+                  >
+                    Training
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <nav
+        class="navbar navbar-root pagination-bar-root"
+      >
+        <div
+          class="container-fluid"
+        >
+          <div
+            class="pagination-results"
+          >
+            Showing 1 to 4 of 4 entries.
+          </div>
+          <ul
+            class="pagination pagination-root"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <button
+                class="button-root btn btn-unstyled page-link"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-left"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <button
+                class="button-root btn btn-unstyled page-link"
+                type="button"
+              >
+                1
+              </button>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <button
+                class="button-root btn btn-unstyled page-link"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-right"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+`;

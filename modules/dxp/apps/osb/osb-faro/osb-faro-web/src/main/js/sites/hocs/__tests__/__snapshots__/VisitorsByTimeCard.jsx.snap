@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VisitorsByTimeCard render 1`] = `
+<div>
+  <div
+    class="card card-root"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      />
+      <div
+        class="no-results-root flex-grow-1"
+      >
+        <div
+          class="no-results-content"
+        >
+          <h4
+            class="no-results-title"
+          >
+            Sorry, an error occurred.
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="error-display-root flex-grow-1 error-spacer no-results-root flex-grow-1"
+      >
+        <div
+          class="no-results-content"
+        >
+          <h4
+            class="no-results-title"
+          >
+            An unexpected error occurred.
+          </h4>
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Reload
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renderTooltip render 1`] = `
+<div>
+  &lt;table class="analytics-tooltip-chart" data-reactroot=""&gt;&lt;thead class="analytics-tooltip-chart-header"&gt;&lt;tr class="analytics-tooltip-chart-row"&gt;&lt;td&gt;&lt;div class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"&gt;Sunday - 12 PM&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody class="analytics-tooltip-chart-body"&gt;&lt;tr class="analytics-tooltip-chart-row"&gt;&lt;td&gt;&lt;div class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-center font-weight-normal"&gt;98 Visitors&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+</div>
+`;

@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfigureCSV should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root csv-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source"
+        >
+          Data Sources
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source/123"
+        />
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Configure CSV
+        </span>
+      </li>
+    </ol>
+    <div>
+      <div
+        class="sheet wizard"
+      >
+        <div
+          class="data-transformation-root"
+        >
+          <div
+            class="sheet-header"
+          >
+            <h3
+              class="title"
+            >
+              Map "
+              <span
+                class="text-truncate-inline"
+              >
+                <span
+                  class="text-truncate"
+                  data-tooltip="false"
+                  title=""
+                />
+              </span>
+              " CSV Data
+            </h3>
+          </div>
+          <div
+            class="spinner-root spinner-spacer"
+          >
+            <span
+              class="loading-animation loading-animation-dotted"
+            />
+          </div>
+          <div
+            class="sheet-footer"
+          >
+            <div
+              class="form-navigation-root"
+            >
+              <a
+                class="button-root btn btn-secondary cancel"
+                href="/workspace/23/settings/data-source/123"
+              >
+                Cancel
+              </a>
+              <button
+                class="button-root btn btn-primary"
+                disabled=""
+                type="button"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

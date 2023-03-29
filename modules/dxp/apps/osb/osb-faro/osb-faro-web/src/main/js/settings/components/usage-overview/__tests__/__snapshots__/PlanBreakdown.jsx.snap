@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanBreakdown should render 1`] = `
+<div>
+  <div
+    class="plan-breakdown small"
+  >
+    <div
+      class="limits"
+    >
+      <ul>
+        <li>
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-ac-users"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-users"
+            />
+          </svg>
+          <span
+            class="limit-amount semibold"
+          >
+            Unlimited
+          </span>
+          <span
+            class="text-secondary"
+          >
+            Users
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="addons"
+    >
+      <p
+        class="text-secondary semibold addon-list-header"
+      >
+        Add-ons
+      </p>
+      <ul>
+        <li
+          class="extra-small"
+        >
+          <span
+            class="limit-amount semibold"
+          >
+            5,000
+          </span>
+          <span
+            class="text-secondary"
+          >
+            <b
+              class="addon-name"
+            >
+              Individuals
+            </b>
+             for 
+            500
+             USD
+          </span>
+        </li>
+        <li
+          class="extra-small"
+        >
+          <span
+            class="limit-amount semibold"
+          >
+            5,000,000
+          </span>
+          <span
+            class="text-secondary"
+          >
+            <b
+              class="addon-name"
+            >
+              Page Views
+            </b>
+             for 
+            250
+             USD
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

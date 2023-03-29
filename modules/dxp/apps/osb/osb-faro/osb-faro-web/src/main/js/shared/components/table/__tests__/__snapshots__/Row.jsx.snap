@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Row should render 1`] = `
+<div>
+  <tr
+    class=""
+  />
+</div>
+`;
+
+exports[`Row should render with data 1`] = `
+<div>
+  <tr
+    class=""
+  >
+    <td>
+      <h4
+        class="table-title text-truncate"
+      >
+        Foo Bar
+      </h4>
+    </td>
+    <td>
+      50,000
+    </td>
+  </tr>
+</div>
+`;

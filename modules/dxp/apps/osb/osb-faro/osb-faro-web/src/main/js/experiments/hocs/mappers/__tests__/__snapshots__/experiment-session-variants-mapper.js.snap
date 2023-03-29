@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Experiment Session Variants Mapper should render Tooltip 1`] = `
+<div>
+  <div
+    class="bb-tooltip-container position-static"
+  >
+    <table
+      class="analytics-tooltip-chart"
+    >
+      <thead
+        class="analytics-tooltip-chart-header"
+      >
+        <tr
+          class="analytics-tooltip-chart-row"
+        >
+          <td>
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+            >
+              May 17
+            </div>
+          </td>
+          <td>
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+            >
+              Sessions
+            </div>
+          </td>
+        </tr>
+      </thead>
+      <tbody
+        class="analytics-tooltip-chart-body"
+      >
+        <tr
+          class="analytics-tooltip-chart-row"
+        >
+          <td>
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+            >
+              <span
+                class="circle"
+                style="background-color: rgb(107, 108, 126); height: 8px; width: 8px;"
+              />
+              data1
+            </div>
+          </td>
+          <td>
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal"
+            >
+              1.5K
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Experiment Session Variants Mapper should return formatted data 1`] = `
+Object {
+  "Tooltip": [Function],
+  "data": Array [
+    Object {
+      "color": "#6B6C7E",
+      "data": Array [
+        Object {
+          "key": "2018-05-17T00:00",
+          "value": 206,
+          "valueKey": "2018-05-17T00:00",
+        },
+        Object {
+          "key": "2018-05-18T00:00",
+          "value": 91,
+          "valueKey": "2018-05-18T00:00",
+        },
+        Object {
+          "key": "2018-05-19T00:00",
+          "value": 189,
+          "valueKey": "2018-05-19T00:00",
+        },
+      ],
+      "name": "Helen Lamb",
+    },
+    Object {
+      "color": "#4B9BFF",
+      "data": Array [
+        Object {
+          "key": "2018-05-17T00:00",
+          "value": 137,
+          "valueKey": "2018-05-17T00:00",
+        },
+        Object {
+          "key": "2018-05-18T00:00",
+          "value": 234,
+          "valueKey": "2018-05-18T00:00",
+        },
+        Object {
+          "key": "2018-05-19T00:00",
+          "value": 393,
+          "valueKey": "2018-05-19T00:00",
+        },
+      ],
+      "name": "Alma Hale",
+    },
+    Object {
+      "color": "#FFB46E",
+      "data": Array [
+        Object {
+          "key": "2018-05-17T00:00",
+          "value": 428,
+          "valueKey": "2018-05-17T00:00",
+        },
+        Object {
+          "key": "2018-05-18T00:00",
+          "value": 168,
+          "valueKey": "2018-05-18T00:00",
+        },
+        Object {
+          "key": "2018-05-19T00:00",
+          "value": 299,
+          "valueKey": "2018-05-19T00:00",
+        },
+      ],
+      "name": "Beatrice Bowman",
+    },
+    Object {
+      "color": "#FF5F5F",
+      "data": Array [
+        Object {
+          "key": "2018-05-17T00:00",
+          "value": 343,
+          "valueKey": "2018-05-17T00:00",
+        },
+        Object {
+          "key": "2018-05-18T00:00",
+          "value": 67,
+          "valueKey": "2018-05-18T00:00",
+        },
+        Object {
+          "key": "2018-05-19T00:00",
+          "value": 66,
+          "valueKey": "2018-05-19T00:00",
+        },
+      ],
+      "name": "Lottie Newman",
+    },
+  ],
+  "format": [Function],
+  "intervals": Array [
+    "2018-05-17T00:00",
+    "2018-05-18T00:00",
+    "2018-05-19T00:00",
+  ],
+}
+`;

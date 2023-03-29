@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorDisplay should render 1`] = `
+<div>
+  <div
+    class="error-display-root flex-grow-1 no-results-root flex-grow-1"
+  >
+    <div
+      class="no-results-content"
+    >
+      <h4
+        class="no-results-title"
+      >
+        An unexpected error occurred.
+      </h4>
+    </div>
+  </div>
+</div>
+`;

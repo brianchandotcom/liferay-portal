@@ -1,0 +1,51 @@
+.icon-root {
+	font-size: 1rem;
+
+	@each $name, $color in $colors {
+		&.#{$name}-color {
+			fill: $color;
+		}
+	}
+
+	&.icon-size-sm {
+		font-size: 0.5rem;
+	}
+
+	&.icon-size-md {
+		font-size: 2rem;
+	}
+
+	&.icon-size-lg {
+		font-size: 3rem;
+	}
+
+	&.icon-size-xl {
+		font-size: 4.5rem;
+	}
+
+	&.icon-size-xxl {
+		font-size: 8rem;
+	}
+
+	&.icon-size-xxxl {
+		font-size: 12rem;
+	}
+
+	&.failure {
+		stroke: $error;
+	}
+
+	&.failure-invert {
+		fill: $error;
+	}
+
+	&.success {
+		fill: $successLighten63;
+		stroke: $success;
+	}
+
+	&.success-invert {
+		fill: $success;
+		stroke: $successLighten63;
+	}
+}

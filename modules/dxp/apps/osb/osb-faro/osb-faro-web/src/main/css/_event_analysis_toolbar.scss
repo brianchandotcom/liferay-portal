@@ -1,0 +1,11 @@
+.event-analysis-toolbar-root {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+
+	.event-analysis-toolbar-right-content {
+		border-left: 1px solid $mainLighten74;
+		padding-left: 16px;
+	}
+}

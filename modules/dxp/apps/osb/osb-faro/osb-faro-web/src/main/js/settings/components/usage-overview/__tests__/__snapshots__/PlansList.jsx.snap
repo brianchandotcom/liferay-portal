@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlansList should render 1`] = `
+<div>
+  <div
+    class="plans-list-root"
+  />
+</div>
+`;

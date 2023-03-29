@@ -1,0 +1,726 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit should render 1`] = `
+<div>
+  <div
+    class="index-root segment-edit-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <header
+      class="header-root"
+    >
+      <div
+        class="header-container"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/sites"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/contacts/segments"
+              >
+                Segments
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item active"
+            >
+              <span
+                class="breadcrumb-text-truncate"
+              >
+                Create Segment
+              </span>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <div
+            class="header-section title-section"
+          >
+            <span
+              class="align-items-center d-flex"
+            >
+              <h1
+                class="title text-truncate"
+              >
+                <span
+                  class="text-truncate"
+                  data-tooltip="false"
+                  title=""
+                >
+                  Create Individuals Segment
+                </span>
+              </h1>
+              <div
+                class="label label-root label-secondary label-lg label-uppercase"
+              >
+                <span
+                  class="label-item"
+                >
+                  Dynamic Segment
+                </span>
+              </div>
+            </span>
+          </div>
+          <div
+            class="header-section"
+          />
+        </div>
+      </div>
+    </header>
+    <div
+      class="body-root"
+    >
+      <span
+        class="children-wrapper"
+      >
+        <div
+          class="segment-edit-page-root"
+        >
+          <form
+            class="form-root contributor-builder-root editing"
+          >
+            <div
+              class="form-header"
+            >
+              <div
+                class="page-container"
+              >
+                <div
+                  class="container-fluid form-header-container"
+                >
+                  <div
+                    class="form-header-section-left"
+                  >
+                    <div
+                      class="title-editor-root"
+                    >
+                      <input
+                        class="title-input hide"
+                        name="name"
+                        placeholder="Unnamed Segment"
+                        required=""
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="title-display placeholder-display"
+                      >
+                        <span
+                          class="title-value"
+                          role="button"
+                          tabindex="0"
+                        >
+                          Unnamed Segment
+                        </span>
+                        <button
+                          aria-label="Edit"
+                          class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+                          type="button"
+                        >
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-pencil"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-header-section-right"
+                  >
+                    <div
+                      class="btn-group"
+                      role="group"
+                    >
+                      <div
+                        class="btn-group-item"
+                      >
+                        <label
+                          class="toggle-switch toggle-switch-root include-anonymous"
+                          for="includeAnonymousUsers"
+                        >
+                          <input
+                            class="toggle-switch-check"
+                            data-testid="toggle-switch-input"
+                            id="includeAnonymousUsers"
+                            name="includeAnonymousUsers"
+                            type="checkbox"
+                            value="false"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="toggle-switch-bar"
+                          >
+                            <span
+                              class="toggle-switch-handle"
+                              data-label-off="Include Anonymous"
+                              data-label-on="Include Anonymous"
+                            />
+                          </span>
+                        </label>
+                      </div>
+                      <div
+                        class="btn-group-item"
+                      >
+                        <span
+                          class="info-popover-root include-anon-help-icon"
+                        >
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-question-circle-full"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="btn-group"
+                      role="group"
+                    >
+                      <div
+                        class="btn-group-item"
+                      >
+                        <div
+                          class="total-members"
+                        >
+                          Total Members: 
+                          <div
+                            class="total-members-count"
+                          >
+                            <div
+                              class="spinner-root"
+                            >
+                              <span
+                                class="loading-animation loading-animation-dotted loading-animation-sm"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          class="button-root btn btn-secondary preview-criteria btn-outline-borderless btn-sm"
+                          data-testid="preview-criteria-button"
+                          data-tooltip="true"
+                          disabled=""
+                          title="View Members"
+                          type="button"
+                        >
+                          <span
+                            data-tooltip="true"
+                            data-tooltip-align="bottom"
+                            title="Some of your criteria are incomplete or invalid."
+                          >
+                            <svg
+                              class="icon-root lexicon-icon lexicon-icon-view"
+                              viewBox=""
+                            >
+                              <use
+                                xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="btn-group"
+                      role="group"
+                    >
+                      <div
+                        class="btn-group-item save"
+                      >
+                        <button
+                          class="button-root btn btn-primary btn-sm"
+                          disabled=""
+                          type="submit"
+                        >
+                          Save Segment
+                        </button>
+                      </div>
+                      <div
+                        class="btn-group-item cancel"
+                      >
+                        <a
+                          class="button-root btn btn-secondary btn-sm"
+                          href="/workspace/23/contacts/segments"
+                        >
+                          Cancel
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-body"
+            >
+              <div
+                class="criteria-builder-section-sidebar"
+              >
+                <div
+                  class="criteria-sidebar-root"
+                >
+                  <div
+                    class="sidebar-header"
+                  >
+                    <div
+                      aria-haspopup="true"
+                      class="dropdown dropdown-root"
+                    >
+                      <button
+                        class="button-root btn btn-outline-secondary dropdown-toggle show-caret btn-outline-borderless"
+                        type="button"
+                      >
+                        <span
+                          class="text-truncate"
+                        >
+                          Events
+                        </span>
+                        
+                        <span
+                          class="caret-root"
+                        >
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="sidebar-search"
+                  >
+                    <div
+                      class="input-group"
+                    >
+                      <div
+                        class="input-group-item"
+                      >
+                        <div
+                          class="input-group"
+                        >
+                          <div
+                            class="input-group-item"
+                          >
+                            <input
+                              class="input-root form-control input-group-inset input-group-inset-after"
+                              placeholder="Search"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="input-group-inset-item input-group-inset-item-after"
+                            >
+                              <button
+                                class="button-root btn btn-unstyled"
+                                type="button"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-search"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="sidebar-collapse"
+                  >
+                    <ul
+                      class="property-subgroups-list active"
+                    >
+                      <li>
+                        <ul
+                          class="properties-list"
+                        >
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Downloaded Document & Media
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Submitted Form
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Viewed Form
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Viewed Page
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Commented on Blog
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Viewed Blog
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Viewed Document & Media
+                          </li>
+                          <li
+                            class="criteria-sidebar-item-root color--web"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-drag"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-web-content"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#web-content"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            Viewed Web Content
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="criteria-builder-section-main"
+              >
+                <div
+                  class="contributor-container"
+                >
+                  <div
+                    class="container-fluid container-fluid-max-xl"
+                  >
+                    <div
+                      class="content-wrapper"
+                    >
+                      <div
+                        class="sheet"
+                      >
+                        <div
+                          class="criteria-builder-root"
+                        >
+                          <div
+                            class="criteria-group-root criteria-group-item-root"
+                          >
+                            <div
+                              class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
+                            >
+                              <div
+                                class="drop-zone-target p-5"
+                              >
+                                <div
+                                  class="empty-drop-zone-indicator"
+                                />
+                                <div
+                                  class="criteria-message"
+                                >
+                                  <svg
+                                    class="icon-root lexicon-icon lexicon-icon-ac-rule icon-size-md"
+                                    viewBox=""
+                                  >
+                                    <use
+                                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-rule"
+                                    />
+                                  </svg>
+                                  Drag and drop criterion from the right to add rules.
+                                </div>
+                                <div
+                                  class="groups-message"
+                                >
+                                  <svg
+                                    class="icon-root lexicon-icon lexicon-icon-ac-group icon-size-md"
+                                    viewBox=""
+                                  >
+                                    <use
+                                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-group"
+                                    />
+                                  </svg>
+                                  Drag and drop over an existing criteria to form groups.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;

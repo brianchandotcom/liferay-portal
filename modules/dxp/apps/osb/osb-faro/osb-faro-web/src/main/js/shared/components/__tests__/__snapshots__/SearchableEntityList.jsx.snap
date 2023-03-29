@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchableEntityList should render 1`] = `
+<div>
+  <div
+    class="base-results-root d-flex flex-column flex-grow-1"
+  >
+    <div
+      class="toolbar-root"
+    >
+      <nav
+        class="navbar navbar-root management-bar management-bar-light navbar-expand"
+      >
+        <div
+          class="container-fluid"
+        >
+          <ul
+            class="nav-root front-nav navbar-nav"
+            role="tablist"
+          />
+          <div
+            class="navbar-form navbar-form-autofit"
+          >
+            <div
+              class="input-group search"
+            >
+              <div
+                class="input-group-item"
+              >
+                <input
+                  class="input-root form-control input-group-inset input-group-inset-after"
+                  placeholder="Search"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="input-group-inset-item input-group-inset-item-after"
+                >
+                  <button
+                    class="button-root btn btn-unstyled"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-search"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div
+      class="entity-list-root no-items"
+    >
+      <ul
+        class="list-group list-group-root show-quick-actions-on-hover"
+      />
+      <div
+        class="spinner-root spinner-overlay"
+      >
+        <span
+          class="loading-animation loading-animation-dotted"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.osb.faro.service.impl.FaroChannelLocalServiceImpl" id="com.liferay.osb.faro.service.FaroChannelLocalService" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroChannelPersistenceImpl" id="com.liferay.osb.faro.service.persistence.FaroChannelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroChannelFinderImpl" id="com.liferay.osb.faro.service.persistence.FaroChannelFinder" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.impl.FaroEmailLocalServiceImpl" id="com.liferay.osb.faro.service.FaroEmailLocalService" />
+	<bean class="com.liferay.osb.faro.service.impl.FaroNotificationLocalServiceImpl" id="com.liferay.osb.faro.service.FaroNotificationLocalService" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroNotificationPersistenceImpl" id="com.liferay.osb.faro.service.persistence.FaroNotificationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.impl.FaroPreferencesLocalServiceImpl" id="com.liferay.osb.faro.service.FaroPreferencesLocalService" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroPreferencesPersistenceImpl" id="com.liferay.osb.faro.service.persistence.FaroPreferencesPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.impl.FaroProjectLocalServiceImpl" id="com.liferay.osb.faro.service.FaroProjectLocalService" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroProjectPersistenceImpl" id="com.liferay.osb.faro.service.persistence.FaroProjectPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroProjectFinderImpl" id="com.liferay.osb.faro.service.persistence.FaroProjectFinder" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.impl.FaroProjectEmailAddressDomainLocalServiceImpl" id="com.liferay.osb.faro.service.FaroProjectEmailAddressDomainLocalService" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroProjectEmailAddressDomainPersistenceImpl" id="com.liferay.osb.faro.service.persistence.FaroProjectEmailAddressDomainPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.impl.FaroUserLocalServiceImpl" id="com.liferay.osb.faro.service.FaroUserLocalService" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroUserPersistenceImpl" id="com.liferay.osb.faro.service.persistence.FaroUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.faro.service.persistence.impl.FaroUserFinderImpl" id="com.liferay.osb.faro.service.persistence.FaroUserFinder" parent="basePersistence" />
+</beans>

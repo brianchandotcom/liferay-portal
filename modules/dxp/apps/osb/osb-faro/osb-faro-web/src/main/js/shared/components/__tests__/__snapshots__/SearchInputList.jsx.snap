@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchInputList should render 1`] = `
+<div>
+  <div
+    class="search-input-list-root input-group-item"
+  >
+    <div
+      class="form-control form-control-tag-group d-flex"
+    >
+      <div
+        aria-haspopup="true"
+        class="input-group base-select-input-root select-input-root flex-grow-1 inset"
+      >
+        <div
+          class="input-group-item"
+        >
+          <input
+            autocomplete="off"
+            class="input-root form-control input-group-inset input-group-inset-after form-control-sm"
+            placeholder=""
+            type="text"
+            value=""
+          />
+          <div
+            class="input-group-inset-item input-group-inset-item-after"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

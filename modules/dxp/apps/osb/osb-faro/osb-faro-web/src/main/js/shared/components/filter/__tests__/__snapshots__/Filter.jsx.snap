@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter should render 1`] = `
+<div>
+  <div
+    class="analytics-filter"
+  >
+    <div
+      class="analytics-dropdown dropdown btn-group border-0"
+    >
+      <button
+        aria-label="Dropdown Filter"
+        class="button-root btn btn-secondary dropdown-toggle btn-outline-borderless btn-sm"
+        type="button"
+      >
+        Filter
+        <span
+          class="inline-item inline-item-after"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div
+      class="analytics-dropdown-menu dropdown-menu dropdown-menu-indicator-end"
+    >
+      <ul
+        class="list-unstyled"
+      >
+        <li>
+          <button
+            class="dropdown-item "
+            href="javascript:;"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Location
+            </span>
+            <div
+              class="dropdown-item-indicator"
+            >
+              <span
+                class="badge badge-secondary"
+              >
+                <span
+                  class="badge-item badge-item-expand"
+                >
+                  156
+                </span>
+              </span>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right ml-1"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </div>
+          </button>
+        </li>
+        <li>
+          <button
+            class="dropdown-item "
+            href="javascript:;"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Devices
+            </span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="analytics-applied-filters d-inline-flex align-items-center"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseConfigurationItem should render 1`] = `
+<div>
+  <div
+    class="base-configuration-item-root"
+  >
+    <div
+      class="actions"
+    >
+      <button
+        class="button-root btn btn-secondary btn-block"
+        type="button"
+      >
+        Configure
+      </button>
+    </div>
+    <div
+      class="info"
+    >
+      <div
+        class="title"
+      >
+        <b>
+          Test Test
+        </b>
+      </div>
+      <div
+        class="text-secondary"
+      >
+        <div
+          class="description"
+        >
+          Test description
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

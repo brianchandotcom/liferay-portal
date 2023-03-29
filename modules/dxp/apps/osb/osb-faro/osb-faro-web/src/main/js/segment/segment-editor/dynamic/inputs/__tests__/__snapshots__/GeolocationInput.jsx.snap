@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GeolocationInput should render 1`] = `
+<div>
+  <div
+    class="criteria-statement geolocation-input"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      >
+        fooProperty-[object Object]
+      </div>
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control operator-input"
+        >
+          <option
+            value="eq"
+          >
+            was
+          </option>
+          <option
+            value="ne"
+          >
+            was not
+          </option>
+          <option
+            value="contains"
+          >
+            contained
+          </option>
+          <option
+            value="not-contains"
+          >
+            did not contain
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group base-select-input-root select-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              placeholder="Country"
+              type="text"
+              value=""
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Add Region
+        </button>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Add City
+        </button>
+      </div>
+    </div>
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control conjunction-input"
+          data-testid="conjunction-input"
+        >
+          <option
+            value="since"
+          >
+            since
+          </option>
+          <option
+            value="gt"
+          >
+            after
+          </option>
+          <option
+            value="lt"
+          >
+            before
+          </option>
+          <option
+            value="between"
+          >
+            between
+          </option>
+          <option
+            value="ever"
+          >
+            ever
+          </option>
+          <option
+            value="eq"
+          >
+            on
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group date-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              data-testid="date-input"
+              placeholder="YYYY-MM-DD"
+              readonly=""
+              type="text"
+              value="last7Days"
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <button
+                class="button-root btn btn-unstyled"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-calendar"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

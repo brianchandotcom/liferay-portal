@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterOptions should render 1`] = `
+<div>
+  <div
+    class="attribute-options"
+  >
+    <div
+      class="options-header"
+    >
+      <button
+        class="button-root btn btn-unstyled back-to-attributes-button btn-sm"
+        type="button"
+      >
+        <span
+          class="inline-item inline-item-before"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-angle-left"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+            />
+          </svg>
+        </span>
+        Back To Attributes
+      </button>
+      <div
+        class="filter-info-root"
+      >
+        <div
+          class="filter-name d-flex align-items-center justify-content-between"
+        >
+          Filed Ticket
+          <button
+            class="button-root btn btn-secondary btn-outline-borderless btn-sm"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-pencil"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="label label-root label-info label-uppercase"
+        >
+          <span
+            class="label-item"
+          >
+            Date
+          </span>
+        </div>
+      </div>
+    </div>
+    <form
+      class="form-root"
+    >
+      <div
+        class="options-body"
+      >
+        <div
+          class="form-group form-group-autofit"
+        >
+          <div
+            class="form-group-item"
+          >
+            <div
+              class=""
+            >
+              <label
+                class="form-control-label label-root"
+                for="dateGrouping"
+              >
+                <span
+                  class="content-container"
+                >
+                  Group Dates By
+                </span>
+              </label>
+              <select
+                class="form-control select-root"
+                id="dateGrouping"
+                name="dateGrouping"
+                type="string"
+              >
+                <option
+                  value="DAY"
+                >
+                  Date
+                </option>
+                <option
+                  value="MONTH"
+                >
+                  Month
+                </option>
+                <option
+                  value="YEAR"
+                >
+                  Year
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="options-footer"
+      >
+        <button
+          class="button-root btn btn-primary btn-block"
+          type="submit"
+        >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

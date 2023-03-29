@@ -1,0 +1,395 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DistributionCard renders /w AddPropertyForm 1`] = `
+<div>
+  <div
+    class="card card-root distribution-card-root"
+    style="min-height: 536px;"
+  >
+    <div
+      class="card-header"
+    >
+      <div
+        class="tabs-root d-flex align-items-center justify-content-between"
+      >
+        <div
+          class="scrollable-section-root d-inline-flex"
+        >
+          <div
+            class="scroll-container"
+          >
+            <ul
+              class="d-flex"
+            />
+          </div>
+        </div>
+        <button
+          class="button-root btn btn-secondary add-tab active btn-monospaced btn-outline-borderless btn-sm"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-plus"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="card-body add-property-form-root"
+    >
+      <div
+        class="row d-flex flex-column flex-grow-1"
+      >
+        <div
+          class="col-xl-5 d-flex flex-column flex-grow-1"
+        >
+          <div
+            class="description"
+          >
+            <h4>
+              Add a Breakdown by Individual Attribute
+            </h4>
+            <p>
+              Breakdown will display the top 10 results or be divided into a maximum of 10 bins depending on your attribute type.
+            </p>
+          </div>
+          <form
+            class="form-root d-flex flex-column flex-grow-1 justify-content-between"
+          >
+            <div
+              class="form-items"
+            >
+              <div
+                class="form-group form-group-autofit"
+              >
+                <div
+                  class="form-group-item form-group-item-shrink"
+                >
+                  <div
+                    class=""
+                  >
+                    <label
+                      class="form-control-label label-root required"
+                      for="property"
+                    >
+                      <span
+                        class="content-container"
+                      >
+                        Attribute
+                      </span>
+                    </label>
+                    <div
+                      aria-haspopup="true"
+                      class="input-group base-select-input-root select-input-root"
+                    >
+                      <div
+                        class="input-group-item"
+                      >
+                        <input
+                          autocomplete="off"
+                          class="input-root form-control input-group-inset input-group-inset-after"
+                          id="property"
+                          placeholder="Select Field"
+                          type="text"
+                          value=""
+                        />
+                        <div
+                          class="input-group-inset-item input-group-inset-item-after"
+                        >
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group form-group-autofit"
+              >
+                <div
+                  class="form-group-item"
+                >
+                  <div
+                    class=""
+                  >
+                    <label
+                      class="form-control-label label-root required"
+                      for="title"
+                    >
+                      <span
+                        class="content-container"
+                      >
+                        Breakdown Name
+                      </span>
+                    </label>
+                    <input
+                      class="input-root form-control"
+                      id="title"
+                      name="title"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-navigation"
+            >
+              <button
+                class="button-root btn btn-primary"
+                disabled=""
+                type="submit"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DistributionCard renders 1`] = `
+<div>
+  <div
+    class="card card-root distribution-card-root"
+    style="min-height: 536px;"
+  >
+    <div
+      class="card-header"
+    >
+      <div
+        class="tabs-root d-flex align-items-center justify-content-between"
+      >
+        <div
+          class="scrollable-section-root d-inline-flex"
+        >
+          <div
+            class="scroll-container"
+          >
+            <ul
+              class="d-flex"
+            >
+              <li
+                class="tab-item d-flex align-items-baseline active"
+              >
+                <div
+                  class="tab-title active"
+                >
+                  Streets
+                  <button
+                    class="button-root btn btn-unstyled remove-tab btn-sm"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-times icon-monospaced icon-size-sm"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button
+          class="button-root btn btn-secondary add-tab btn-monospaced btn-outline-borderless btn-sm"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-plus"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="card-body align-center"
+    >
+      <div />
+    </div>
+    <div
+      class="card-footer"
+    >
+      <button
+        class="button-root btn btn-link btn-sm"
+        type="button"
+      >
+        Explore Breakdown
+        <span
+          class="inline-item inline-item-after"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-angle-right"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DistributionCard renders empty state via props with noResultsRenderer 1`] = `
+<div>
+  <div
+    class="card card-root distribution-card-root"
+    style="min-height: 536px;"
+  >
+    <div
+      class="card-header"
+    >
+      <div
+        class="tabs-root d-flex align-items-center justify-content-between"
+      >
+        <div
+          class="scrollable-section-root d-inline-flex"
+        >
+          <div
+            class="scroll-container"
+          >
+            <ul
+              class="d-flex"
+            >
+              <li
+                class="tab-item d-flex align-items-baseline active"
+              >
+                <div
+                  class="tab-title active"
+                >
+                  Streets
+                  <button
+                    class="button-root btn btn-unstyled remove-tab btn-sm"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-times icon-monospaced icon-size-sm"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button
+          class="button-root btn btn-secondary add-tab btn-monospaced btn-outline-borderless btn-sm"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-plus"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="card-body align-center"
+    >
+      <div>
+        <div>
+          empty state
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-footer"
+    >
+      <button
+        class="button-root btn btn-link btn-sm"
+        type="button"
+      >
+        Explore Breakdown
+        <span
+          class="inline-item inline-item-after"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-angle-right"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DistributionCard renders w/ showAddDataSource 1`] = `
+<div>
+  <div
+    class="card card-root distribution-card-root"
+    style="min-height: 536px;"
+  >
+    <div
+      class="card-header"
+    >
+      <h5
+        class="card-title"
+      >
+        Distribution
+      </h5>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="no-results-root flex-grow-1 no-results-primary"
+      >
+        <div
+          class="no-results-content"
+        >
+          
+          <div
+            class="no-results-description"
+          >
+            Convert and enrich anonymous individuals to known individuals with attributes from another data source.
+          </div>
+          <a
+            class="button-root btn btn-primary"
+            href="/workspace/123/settings/data-source/add"
+          >
+            Add Data Source
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

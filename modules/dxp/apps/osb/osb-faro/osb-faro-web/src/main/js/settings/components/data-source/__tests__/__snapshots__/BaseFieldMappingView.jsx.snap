@@ -1,0 +1,200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseFieldMappingView should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-source-base-page-root base-field-mapping-view-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Configure Data Source
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Salesforce{seed} - https://login.salesforce.com
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="page-container"
+      >
+        <div
+          class="content-main"
+        >
+          <div
+            class="sheet"
+          >
+            <div
+              class="sheet-header"
+            >
+              <div
+                class="sheet-section"
+              >
+                <h4 />
+                <div
+                  class="sheet-text"
+                />
+              </div>
+            </div>
+            <div
+              class="data-transformation-list-root read-only"
+            >
+              <div
+                class="data-transformation-header"
+              >
+                <div
+                  class="left"
+                >
+                  Salesforce Field
+                </div>
+                <div
+                  class="right"
+                >
+                  Analytics Cloud Field
+                </div>
+              </div>
+              <div
+                class="form-group data-transformation-item-root form-group-autofit"
+              >
+                <div
+                  class="form-group-item"
+                >
+                  <div>
+                    <div
+                      aria-haspopup="true"
+                      class="dropdown dropdown-root searchable-select-root read-only"
+                    >
+                      <button
+                        class="button-root btn btn-secondary dropdown-toggle show-caret"
+                        type="button"
+                      >
+                        <span
+                          class="text-truncate"
+                        >
+                          Test0
+                        </span>
+                        
+                      </button>
+                    </div>
+                    <div
+                      class="example-value text-truncate"
+                    >
+                      value
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="form-group-item add-on form-group-item-shrink"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="form-group-item"
+                >
+                  <div
+                    class="suggestion"
+                  >
+                    <div
+                      aria-haspopup="true"
+                      class="dropdown dropdown-root searchable-select-root read-only"
+                      name="undefined.0"
+                    >
+                      <button
+                        class="button-root btn btn-secondary dropdown-toggle show-caret"
+                        type="button"
+                      >
+                        <span
+                          class="text-truncate"
+                        >
+                          MappingName
+                        </span>
+                        
+                      </button>
+                    </div>
+                    <div
+                      class="example-value text-truncate"
+                    >
+                      mappingValue
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="content-side"
+        >
+          <div
+            class="panel-root data-source-status-root"
+          >
+            <div
+              class="panel-header"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="panel-title"
+              >
+                <div>
+                  Current Status:
+                </div>
+              </div>
+              <div
+                class="panel-title-label"
+              >
+                <div
+                  class="label label-root label-info label-lg label-uppercase"
+                >
+                  <span
+                    class="label-item"
+                  >
+                    Authenticated
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="panel-body"
+            >
+              You have successfully authenticated your client id and secret with you data source. You can now configure your data.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

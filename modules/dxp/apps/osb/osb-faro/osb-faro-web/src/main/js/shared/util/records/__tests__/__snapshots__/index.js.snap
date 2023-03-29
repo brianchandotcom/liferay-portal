@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Records should return a Project Record 1`] = `
+Immutable.Record {
+  "accountKey": null,
+  "accountName": "",
+  "corpProjectName": "",
+  "corpProjectUuid": null,
+  "faroSubscription": Immutable.Map {},
+  "friendlyURL": null,
+  "groupId": null,
+  "incidentReportEmailAddresses": Immutable.List [],
+  "name": "",
+  "ownerEmailAddress": "",
+  "recommendationsEnabled": false,
+  "serverLocation": null,
+  "state": null,
+  "stateStartDate": null,
+  "timeZone": Immutable.Record {
+    "country": "UTC",
+    "displayTimeZone": "(UTC) UTC",
+    "timeZoneId": "UTC",
+  },
+  "userId": null,
+}
+`;
+
+exports[`Records should return a Segment Record 1`] = `
+Immutable.Record {
+  "activeIndividualCount": 0,
+  "activitiesCount": 0,
+  "anonymousIndividualCount": 0,
+  "channelId": null,
+  "criteriaString": "",
+  "dateCreated": null,
+  "dateModified": null,
+  "id": "",
+  "includeAnonymousUsers": false,
+  "individualCount": 0,
+  "knownIndividualCount": 0,
+  "lastActivityDate": null,
+  "name": "",
+  "properties": Immutable.Map {},
+  "referencedObjects": Immutable.Map {
+    "assets": Immutable.Map {},
+    "attributes": Immutable.Map {},
+    "events": Immutable.Map {},
+    "fieldMappings": Immutable.Map {},
+  },
+  "segmentType": null,
+  "state": "",
+  "status": null,
+  "type": 4,
+  "userName": null,
+}
+`;
+
+exports[`Records should return an Account Record 1`] = `
+Immutable.Record {
+  "activitiesCount": 0,
+  "createTime": null,
+  "id": null,
+  "individualCount": 0,
+  "name": "",
+  "photoURL": "",
+  "properties": Immutable.Map {},
+  "status": null,
+  "type": 0,
+}
+`;
+
+exports[`Records should return an EntityLayout Record 1`] = `
+Immutable.Record {
+  "contactsCardTemplatesList": Immutable.List [],
+  "headerContactsCardTemplates": Immutable.List [],
+  "id": null,
+  "name": "",
+  "type": null,
+}
+`;
+
+exports[`Records should return an Individual Record 1`] = `
+Immutable.Record {
+  "accountNames": null,
+  "activitiesCount": 0,
+  "dateCreated": null,
+  "demographics": Immutable.Map {},
+  "id": null,
+  "lastActivityDate": null,
+  "name": "",
+  "properties": Immutable.Map {},
+  "type": 2,
+}
+`;

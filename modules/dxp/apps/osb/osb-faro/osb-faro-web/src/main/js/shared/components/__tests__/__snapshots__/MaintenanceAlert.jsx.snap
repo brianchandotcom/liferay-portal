@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MaintenanceAlert should render 1`] = `
+<div>
+  <div
+    class="maintenance-alert-root"
+  />
+</div>
+`;
+
+exports[`MaintenanceAlert should render w/ maintenance alert 1`] = `
+<div>
+  <div
+    class="maintenance-alert-root"
+  >
+    <div
+      class="alert alert-dismissible alert-warning"
+      role="alert"
+    >
+      <span
+        class="alert-indicator"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-warning-full"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+          />
+        </svg>
+      </span>
+      <strong
+        class="lead"
+      >
+        Scheduled Maintenance:
+      </strong>
+      A system-wide maintenance has been scheduled to take place on Jul 10, 2018 at 11:01 PM.
+      <button
+        class="close"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-times"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`mapState should map store state to props 1`] = `
+Object {
+  "alertDismissed": false,
+  "currentUserId": "23",
+  "groupId": "23",
+  "project": Immutable.Record {
+    "accountKey": "accountKey23",
+    "accountName": "accountName23",
+    "corpProjectName": "corpProjectName23",
+    "corpProjectUuid": "corpProjectUuid23",
+    "faroSubscription": Immutable.Map {},
+    "friendlyURL": null,
+    "groupId": "23",
+    "incidentReportEmailAddresses": Immutable.List [],
+    "name": "project23",
+    "ownerEmailAddress": "test23@liferay.com",
+    "recommendationsEnabled": true,
+    "serverLocation": null,
+    "state": "SCHEDULED",
+    "stateStartDate": 1531263666366,
+    "timeZone": Immutable.Record {
+      "country": "UTC",
+      "displayTimeZone": "(UTC) UTC",
+      "timeZoneId": "UTC",
+    },
+    "userId": "23",
+  },
+}
+`;

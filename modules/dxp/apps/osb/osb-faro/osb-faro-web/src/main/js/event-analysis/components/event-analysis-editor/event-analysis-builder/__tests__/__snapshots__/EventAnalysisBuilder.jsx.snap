@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event Analysis Builder render 1`] = `
+<div>
+  <div
+    class="event-analysis-builder-root d-flex flex-column"
+  >
+    <div
+      class="event-section-root d-flex align-items-center"
+    >
+      <div
+        class="section-header"
+      >
+        Analyze
+      </div>
+      <div
+        class="event-container d-flex justify-content-between"
+      >
+        <div
+          class="event-list"
+        />
+        <div
+          class="dropdown"
+        >
+          <button
+            class="button-root btn btn-primary dropdown-toggle add-event-button btn-sm"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-plus"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="attribute-breakdown-section-root d-flex align-items-center"
+    >
+      <div
+        class="section-header"
+      >
+        Breakdown
+      </div>
+    </div>
+    <div
+      class="attribute-filter-section-root d-flex align-items-center"
+    >
+      <div
+        class="section-header"
+      >
+        Filter
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
+<div>
+  <div
+    class="event-analysis-builder-root d-flex flex-column"
+  >
+    <div
+      class="event-section-root d-flex align-items-center"
+    >
+      <div
+        class="section-header"
+      >
+        Analyze
+      </div>
+      <div
+        class="event-container d-flex justify-content-between"
+      >
+        <div
+          class="event-list"
+        >
+          <div
+            class="dropdown"
+          >
+            <div
+              class="chip-root d-flex align-items-center justify-content-between event-chip-root"
+            >
+              <button
+                class="button-root btn btn-unstyled event-name"
+                type="button"
+              >
+                Article Views
+              </button>
+              <button
+                class="button-root btn btn-unstyled remove-button"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-times-circle"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="attribute-breakdown-section-root d-flex align-items-center"
+    >
+      <div
+        class="section-header"
+      >
+        Breakdown
+      </div>
+      <div
+        class="attribute-container d-flex align-items-center justify-content-between"
+      >
+        <div
+          class="attribute-list d-flex align-items-center"
+        />
+        <div
+          class="dropdown"
+        >
+          <button
+            class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-plus"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="attribute-filter-section-root d-flex align-items-center"
+    >
+      <div
+        class="section-header"
+      >
+        Filter
+      </div>
+      <div
+        class="attribute-container d-flex align-items-center justify-content-between"
+      >
+        <div
+          class="attribute-list d-flex align-items-center"
+        />
+        <div
+          class="dropdown"
+        >
+          <button
+            class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-plus"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

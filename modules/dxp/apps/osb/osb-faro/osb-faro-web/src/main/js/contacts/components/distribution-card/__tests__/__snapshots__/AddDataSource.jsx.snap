@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DistributionCard AddDataSource renders 1`] = `
+<div>
+  <div
+    class="card-header"
+  >
+    <h5
+      class="card-title"
+    >
+      Distribution
+    </h5>
+  </div>
+  <div
+    class="card-body"
+  >
+    <div
+      class="no-results-root flex-grow-1 no-results-primary"
+    >
+      <div
+        class="no-results-content"
+      >
+        
+        <div
+          class="no-results-description"
+        >
+          Convert and enrich anonymous individuals to known individuals with attributes from another data source.
+        </div>
+        <a
+          class="button-root btn btn-primary"
+          href="/workspace/123/settings/data-source/add"
+        >
+          Add Data Source
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

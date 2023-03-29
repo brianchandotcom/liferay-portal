@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummarySection Description should render 1`] = `
+<div>
+  <div
+    class="analytics-summary-section-description"
+  >
+    My Summary Description
+  </div>
+</div>
+`;
+
+exports[`SummarySection Heading should render 1`] = `
+<div>
+  <h2
+    class="analytics-summary-section-heading"
+  >
+    My Summary Heading
+  </h2>
+</div>
+`;
+
+exports[`SummarySection MetricType should render 1`] = `
+<div>
+  <div
+    class="analytics-summary-section-metric-type"
+  >
+    <span
+      class="analytics-summary-section-metric-type-icon"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-web-content"
+        role="presentation"
+      >
+        <use
+          xlink:href="#web-content"
+        />
+      </svg>
+    </span>
+    Click Rate
+  </div>
+</div>
+`;
+
+exports[`SummarySection ProgressBar should render 1`] = `
+<div>
+  <div
+    class="analytics-summary-section-progress complete"
+  >
+    <div
+      class="analytics-summary-section-progress-bar"
+      style="width: 100%;"
+    />
+  </div>
+</div>
+`;
+
+exports[`SummarySection Variant should render 1`] = `
+<div>
+  <div
+    class="analytics-summary-section-variant"
+  >
+    <span
+      class="analytics-summary-section-variant-status analytics-summary-section-variant-status-up"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-caret-top"
+        role="presentation"
+      >
+        <use
+          xlink:href="#caret-top"
+        />
+      </svg>
+       5% lift
+    </span>
+    <span>
+      over control
+    </span>
+  </div>
+</div>
+`;
+
+exports[`SummarySection should render 1`] = `
+<div>
+  <div
+    class="analytics-summary-section"
+  >
+    <div
+      class="analytics-summary-section-title"
+    />
+  </div>
+</div>
+`;

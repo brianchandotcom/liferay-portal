@@ -1,0 +1,6 @@
+dependencies {
+	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-provisioning-client")
+}

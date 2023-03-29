@@ -1,0 +1,13 @@
+Bundle-Name: Liferay OSB Faro Web
+Bundle-SymbolicName: com.liferay.osb.faro.web
+Bundle-Version: 1.0.13
+Import-Package:\
+	!jakarta.xml.bind.*,\
+	\
+	!javax.validation.*,\
+	\
+	!org.yaml.snakeyaml.*,\
+	\
+	*
+Web-ContextPath: /osb-faro-web
+-dsannotations-options: inherit

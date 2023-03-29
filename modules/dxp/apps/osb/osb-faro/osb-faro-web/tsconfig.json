@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": "./src/main/js",
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"jsx": "react",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"target": "ES5"
+	},
+	"include": [
+		"./src/main/js/**/*",
+		"./node_modules/isemail/**/*",
+		"./node_modules/query-string/**/*",
+		"./node_modules/strict-uri-encode/**/*"
+	]
+}

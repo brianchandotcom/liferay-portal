@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectWorkspaceAccount should render 1`] = `
+<div>
+  <div
+    class="select-account-root"
+  >
+    <div
+      class="workspaces-base-page-root"
+    >
+      <div
+        class="header-container"
+      >
+        <a
+          href="https://liferay.com"
+          target="_blank"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            />
+          </svg>
+        </a>
+        <div>
+          <button
+            class="user-menu button-root btn btn-unstyled trigger"
+            type="button"
+          >
+            <div
+              class="text-truncate"
+            >
+              <div
+                class="sticker sticker-root sticker-static avatar sticker-circle"
+              >
+                TT
+              </div>
+              <span
+                class="user-name"
+              >
+                Test Test
+              </span>
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom caret"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div
+        class="content"
+      >
+        <div
+          class="content-container"
+        >
+          <div
+            class="title-container"
+          >
+            <div
+              class="logo-container"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                />
+              </svg>
+              <span
+                class="logo-text"
+              >
+                Analytics Cloud
+              </span>
+            </div>
+            <h1
+              class="title"
+            >
+              Select Account
+            </h1>
+            <div
+              class="details-container"
+            >
+              <p>
+                We have found multiple accounts associated with 
+                <b>
+                  test@liferay.com
+                </b>
+                . You can have one basic tier Workspace of Analytics Cloud per account. Please associate this Analytics Cloud Workspace to an account.
+              </p>
+            </div>
+          </div>
+          <div
+            class="workspace-list-root"
+          >
+            <ul
+              class="list-group"
+            >
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/126"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            Project C
+                          </span>
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName126
+                        </div>
+                        <div
+                          class="workspace-info"
+                        >
+                          Project C
+                        </div>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/corpProjectUuid123/add"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <div
+                            class="info-wrapper configuration-required"
+                          >
+                            Finish Setting Up Workspace
+                          </div>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          />
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName123
+                        </div>
+                        <div
+                          class="workspace-info"
+                        />
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

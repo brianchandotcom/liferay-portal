@@ -1,0 +1,61 @@
+.toolbar-root {
+	/**
+	* Webkit bugfix pseudo elements not always repainted
+	* https://bugs.webkit.org/show_bug.cgi?id=45168
+	*/
+
+	@include browser(Chrome) {
+		.custom-checkbox {
+			.custom-control-input:indeterminate,
+			.custom-control-input:checked {
+				& ~ .custom-control-label::before {
+					transform: translateZ(0);
+				}
+			}
+		}
+	}
+
+	.navbar-root {
+		border-top-left-radius: 0.25rem;
+		border-top-right-radius: 0.25rem;
+		min-height: 60px;
+
+		> .container-fluid {
+			padding: 0 $listPadding;
+		}
+
+		&.disabled {
+			.search {
+				.button-root {
+					color: $mainLighten52;
+					pointer-events: none;
+				}
+
+				.form-control[disabled]::placeholder {
+					color: $mainLighten52;
+				}
+			}
+		}
+
+		.front-nav {
+			margin-right: auto;
+		}
+
+		&.items-selected {
+			.search:not(.disabled) {
+				.form-control,
+				.input-group-inset-item {
+					background-color: white;
+				}
+			}
+		}
+	}
+
+	.subnav-tbar-root {
+		.view-selected-link-container:not(:only-child) {
+			border-right: 1px solid #C4C4C4;
+			margin: 0.5rem 1rem 0.5rem 0;
+			padding-right: 1rem;
+		}
+	}
+}

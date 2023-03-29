@@ -1,0 +1,320 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivitiesChartTimeline should render 1`] = `
+<div>
+  <div
+    class="card-body activities-chart-timeline-root no-padding"
+  >
+    <div
+      class="activities-chart-container"
+    >
+      <div
+        class="composed-chart-with-empty-state"
+      >
+        <div
+          class="recharts-responsive-container"
+          style="width: 100%; height: 340px;"
+        >
+          <div
+            style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="selected-info"
+    >
+      <div
+        class="d-flex align-items-baseline"
+      >
+        <h4>
+          Account's Activities - July 9, 2018 - July 10, 2018
+        </h4>
+      </div>
+      <div
+        class="details"
+      >
+        Activities 
+        <b>
+          0
+        </b>
+      </div>
+    </div>
+    <div
+      class="base-results-root d-flex flex-column flex-grow-1"
+    >
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            />
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-search"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="vertical-timeline-root-deprecated"
+      >
+        <div
+          class="timeline-header"
+        >
+          <div
+            class="header-label"
+          >
+            Time
+          </div>
+          <div
+            class="header-title"
+          >
+            Session
+          </div>
+          <div
+            class="header-count"
+          >
+            Activity Count
+          </div>
+        </div>
+        <ul
+          class="timeline timeline-center"
+        >
+          <li
+            class="timeline-item header"
+          >
+            <div
+              class="timeline-panel"
+            >
+              <div
+                class="timeline-panel-body"
+              >
+                <div
+                  class="timeline-panel-body-content"
+                >
+                  <div
+                    class="timeline-panel-body-content-text"
+                  >
+                    <div>
+                      <span
+                        class="text-truncate"
+                      >
+                        <span
+                          class="title"
+                        >
+                          Jul 10, 2018
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li
+            class="timeline-item"
+          >
+            <div
+              class="timeline-panel"
+            >
+              <div
+                class="timeline-panel-body"
+              >
+                <div
+                  class="timeline-increment"
+                >
+                  <div
+                    class="sticker sticker-root sticker-static sticker-circle sticker-point sticker-lg"
+                  />
+                </div>
+                <div
+                  class="timeline-item-label"
+                >
+                  11:01pm
+                </div>
+                <div
+                  class="timeline-panel-body-content selectable"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div
+                    class="timeline-panel-body-content-text"
+                  >
+                    <div>
+                      <span
+                        class="text-truncate"
+                      >
+                        <span
+                          class="title"
+                        >
+                          Visited www.liferay0.com
+                        </span>
+                      </span>
+                    </div>
+                    <span
+                      class="text-truncate subtitle"
+                      data-tooltip="false"
+                      title=""
+                    >
+                      <span>
+                        3 Visits
+                      </span>
+                    </span>
+                  </div>
+                  <div
+                    class="timeline-panel-body-content-details"
+                  >
+                    <span
+                      class="item-count"
+                    >
+                      3
+                    </span>
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-caret-top"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <nav
+        class="navbar navbar-root pagination-bar-root"
+      >
+        <div
+          class="container-fluid"
+        >
+          <div
+            aria-haspopup="true"
+            class="dropdown dropdown-root pagination-items-per-page"
+          >
+            <button
+              class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+              type="button"
+            >
+              <span
+                class="text-truncate"
+              >
+                2 Items
+              </span>
+              
+              <span
+                class="caret-root"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            class="pagination-results"
+          >
+            Showing 1 to 1 of 1 entry.
+          </div>
+          <ul
+            class="pagination pagination-root"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <button
+                class="button-root btn btn-unstyled page-link"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-left"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <button
+                class="button-root btn btn-unstyled page-link"
+                type="button"
+              >
+                1
+              </button>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <button
+                class="button-root btn btn-unstyled page-link"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-right"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+`;

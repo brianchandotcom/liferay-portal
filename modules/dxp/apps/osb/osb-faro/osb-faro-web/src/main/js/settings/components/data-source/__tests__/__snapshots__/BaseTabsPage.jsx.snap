@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseTabsPage should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-source-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Configure Data Source
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Salesforce{seed} - https://login.salesforce.com
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="page-container"
+      >
+        <div
+          class="content-main"
+        >
+          <div
+            class="sheet data-source-base-tabs-root page-display"
+          >
+            <div
+              class="sheet-body"
+            >
+              <ul
+                class="nav-root nav nav-underline"
+                role="tablist"
+              >
+                <li
+                  class="nav-item active"
+                  role="presentation"
+                >
+                  <a
+                    class="nav-link active"
+                    href="/workspace/23/settings/data-source/test"
+                    role="tab"
+                  >
+                    <h4>
+                      Authorization
+                    </h4>
+                  </a>
+                </li>
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="nav-link"
+                    href="/workspace/23/settings/data-source"
+                    role="tab"
+                  >
+                    <h4>
+                      Configure Data Source
+                    </h4>
+                    <span
+                      class="badge badge-primary ml-2"
+                    >
+                      <span
+                        class="badge-item badge-item-expand"
+                      >
+                        2
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="content-side"
+        >
+          <div
+            class="panel-root data-source-status-root"
+          >
+            <div
+              class="panel-header"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="panel-title"
+              >
+                <div>
+                  Current Status:
+                </div>
+              </div>
+              <div
+                class="panel-title-label"
+              >
+                <div
+                  class="label label-root label-info label-lg label-uppercase"
+                >
+                  <span
+                    class="label-item"
+                  >
+                    Authenticated
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="panel-body"
+            >
+              You have successfully authenticated your client id and secret with you data source. You can now configure your data.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

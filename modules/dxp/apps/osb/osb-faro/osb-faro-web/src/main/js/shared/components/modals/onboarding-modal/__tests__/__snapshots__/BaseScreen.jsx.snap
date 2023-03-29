@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseScreen renders 1`] = `
+<div>
+  <div
+    class="onboarding-base-screen-root d-flex flex-column flex-grow-1 justify-content-between"
+  >
+    <div
+      class="header"
+    >
+      <div
+        class="d-flex justify-content-end"
+      >
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <span
+        class="title d-flex justify-content-center"
+      >
+        Test Title
+      </span>
+    </div>
+    Test Children
+  </div>
+</div>
+`;

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Workspace Empty State - CardEmpty should render CardEmpty 1`] = `
+<div>
+  <div
+    class="empty-card"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-home"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+      />
+    </svg>
+    <p>
+      CardEmpty Description
+    </p>
+    <button
+      class="button-root btn btn-primary"
+      type="button"
+    >
+      CardEmpty Button Label
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Workspace Empty State should render 1`] = `
+<div>
+  <div
+    class="empty-container row"
+  >
+    <div
+      class="col-xl-6"
+    >
+      <div
+        class="empty-card"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-ac-integration"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-integration"
+          />
+        </svg>
+        <p>
+          Do more with our Business & Enterprise Plans
+        </p>
+        <button
+          class="button-root btn btn-primary"
+          type="button"
+        >
+          Contact Sales
+        </button>
+      </div>
+    </div>
+    <div
+      class="col-xl-6"
+    >
+      <div
+        class="empty-card"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-ac-page-analytics"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-page-analytics"
+          />
+        </svg>
+        <p>
+          90 Day Full Feature Trial
+        </p>
+        <a
+          class="button-root btn btn-secondary"
+          href="/workspace/add/trial"
+        >
+          Start Free Trial
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

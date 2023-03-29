@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select renders 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <select
+      class="form-control select-root"
+      id="test"
+      name="test"
+    >
+      <option
+        value="red"
+      >
+        red
+      </option>
+    </select>
+  </div>
+</div>
+`;

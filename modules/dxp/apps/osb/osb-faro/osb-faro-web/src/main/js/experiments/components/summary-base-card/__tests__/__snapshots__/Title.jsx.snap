@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryBaseCard Title should render component 1`] = `
+<div>
+  <h3
+    class="font-weight-bold testing-class"
+  >
+    My Title
+  </h3>
+</div>
+`;

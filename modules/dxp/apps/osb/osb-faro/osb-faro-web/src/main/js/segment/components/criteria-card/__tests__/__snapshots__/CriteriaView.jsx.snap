@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaView should render 1`] = `
+<div>
+  <div
+    class="criteria-view-root"
+  >
+    <div
+      class="criteria-group"
+    >
+      <div
+        class="criteria-row"
+      >
+        Individual
+        <b>
+          firstName
+        </b>
+        <span>
+          is
+        </span>
+        <b>
+          "test"
+        </b>
+      </div>
+    </div>
+  </div>
+</div>
+`;

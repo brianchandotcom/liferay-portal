@@ -1,0 +1,777 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Workspaces should render a list of projects if there is only one project and it is configured 1`] = `
+<div>
+  <div
+    class="workspaces-root"
+  >
+    <div
+      class="workspaces-base-page-root"
+    >
+      <div
+        class="header-container"
+      >
+        <a
+          href="https://liferay.com"
+          target="_blank"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            />
+          </svg>
+        </a>
+        <div>
+          <button
+            class="user-menu button-root btn btn-unstyled trigger"
+            type="button"
+          >
+            <div
+              class="text-truncate"
+            >
+              <div
+                class="sticker sticker-root sticker-static avatar sticker-circle"
+              >
+                TT
+              </div>
+              <span
+                class="user-name"
+              >
+                Test Test
+              </span>
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom caret"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div
+        class="content"
+      >
+        <div
+          class="content-container"
+        >
+          <div
+            class="title-container"
+          >
+            <div
+              class="logo-container"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                />
+              </svg>
+              <span
+                class="logo-text"
+              >
+                Analytics Cloud
+              </span>
+            </div>
+            <h1
+              class="title"
+            >
+              Your Workspaces
+            </h1>
+            <div
+              class="details-container"
+            >
+              <p>
+                Workspaces you have joined
+              </p>
+            </div>
+          </div>
+          <div
+            class="workspace-list-root"
+          >
+            <ul
+              class="list-group"
+            >
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/23"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            project23
+                          </span>
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName23
+                        </div>
+                        <div
+                          class="workspace-info"
+                        >
+                          Basic Plan
+                        </div>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="mt-4"
+          >
+            <button
+              class="button-root btn btn-primary mr-2 btn-sm"
+              type="button"
+            >
+              Buy Paid Tier
+            </button>
+            <a
+              class="button-root btn btn-secondary btn-sm"
+              href="/workspace/add/trial"
+            >
+              Start Free Trial
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Workspaces should render empty state 1`] = `
+<div>
+  <div
+    class="workspaces-root"
+  >
+    <div
+      class="workspaces-base-page-root"
+    >
+      <div
+        class="header-container"
+      >
+        <a
+          href="https://liferay.com"
+          target="_blank"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            />
+          </svg>
+        </a>
+        <div>
+          <button
+            class="user-menu button-root btn btn-unstyled trigger"
+            type="button"
+          >
+            <div
+              class="text-truncate"
+            >
+              <div
+                class="sticker sticker-root sticker-static avatar sticker-circle"
+              >
+                TT
+              </div>
+              <span
+                class="user-name"
+              >
+                Test Test
+              </span>
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom caret"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div
+        class="content"
+      >
+        <div
+          class="content-container"
+        >
+          <div
+            class="title-container"
+          >
+            <div
+              class="logo-container"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                />
+              </svg>
+              <span
+                class="logo-text"
+              >
+                Analytics Cloud
+              </span>
+            </div>
+            <h1
+              class="title"
+            >
+              Your Workspaces
+            </h1>
+            <div
+              class="details-container"
+            >
+              <p>
+                You are not a part of any workspaces, let us create a new one.
+              </p>
+            </div>
+          </div>
+          <div
+            class="empty-container row"
+          >
+            <div
+              class="col-xl-6"
+            >
+              <div
+                class="empty-card"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-ac-integration"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-integration"
+                  />
+                </svg>
+                <p>
+                  Do more with our Business & Enterprise Plans
+                </p>
+                <button
+                  class="button-root btn btn-primary"
+                  type="button"
+                >
+                  Contact Sales
+                </button>
+              </div>
+            </div>
+            <div
+              class="col-xl-6"
+            >
+              <div
+                class="empty-card"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-ac-page-analytics"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-page-analytics"
+                  />
+                </svg>
+                <p>
+                  90 Day Full Feature Trial
+                </p>
+                <a
+                  class="button-root btn btn-secondary"
+                  href="/workspace/add/trial"
+                >
+                  Start Free Trial
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Workspaces should render with a message that all basic tier plans have been configured if all of the basic tier plans have been configured and the allBasicConfigured url prop is true 1`] = `
+<div>
+  <div
+    class="workspaces-root"
+  >
+    <div
+      class="workspaces-base-page-root"
+    >
+      <div
+        class="header-container"
+      >
+        <a
+          href="https://liferay.com"
+          target="_blank"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            />
+          </svg>
+        </a>
+        <div>
+          <button
+            class="user-menu button-root btn btn-unstyled trigger"
+            type="button"
+          >
+            <div
+              class="text-truncate"
+            >
+              <div
+                class="sticker sticker-root sticker-static avatar sticker-circle"
+              >
+                TT
+              </div>
+              <span
+                class="user-name"
+              >
+                Test Test
+              </span>
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom caret"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div
+        class="content"
+      >
+        <div
+          class="content-container"
+        >
+          <div
+            class="title-container"
+          >
+            <div
+              class="logo-container"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                />
+              </svg>
+              <span
+                class="logo-text"
+              >
+                Analytics Cloud
+              </span>
+            </div>
+            <h1
+              class="title"
+            >
+              Your Workspaces
+            </h1>
+            <div
+              class="details-container"
+            >
+              <p>
+                Workspaces you have joined
+              </p>
+            </div>
+          </div>
+          <div
+            class="workspace-list-root"
+          >
+            <ul
+              class="list-group"
+            >
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/123"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            project123
+                          </span>
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName123
+                        </div>
+                        <div
+                          class="workspace-info"
+                        >
+                          Basic Plan
+                        </div>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/124"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            project124
+                          </span>
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName124
+                        </div>
+                        <div
+                          class="workspace-info"
+                        >
+                          Basic Plan
+                        </div>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="mt-4"
+          >
+            <button
+              class="button-root btn btn-primary mr-2 btn-sm"
+              type="button"
+            >
+              Buy Paid Tier
+            </button>
+            <a
+              class="button-root btn btn-secondary btn-sm"
+              href="/workspace/add/trial"
+            >
+              Start Free Trial
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Workspaces should render with a message that one or more basic tier workspaces are available to be configured 1`] = `
+<div>
+  <div
+    class="workspaces-root"
+  >
+    <div
+      class="workspaces-base-page-root"
+    >
+      <div
+        class="header-container"
+      >
+        <a
+          href="https://liferay.com"
+          target="_blank"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            />
+          </svg>
+        </a>
+        <div>
+          <button
+            class="user-menu button-root btn btn-unstyled trigger"
+            type="button"
+          >
+            <div
+              class="text-truncate"
+            >
+              <div
+                class="sticker sticker-root sticker-static avatar sticker-circle"
+              >
+                TT
+              </div>
+              <span
+                class="user-name"
+              >
+                Test Test
+              </span>
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom caret"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div
+        class="content"
+      >
+        <div
+          class="content-container"
+        >
+          <div
+            class="title-container"
+          >
+            <div
+              class="logo-container"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                />
+              </svg>
+              <span
+                class="logo-text"
+              >
+                Analytics Cloud
+              </span>
+            </div>
+            <h1
+              class="title"
+            >
+              Your Workspaces
+            </h1>
+            <div
+              class="details-container"
+            >
+              <p>
+                Workspaces you have joined
+              </p>
+            </div>
+          </div>
+          <div
+            class="workspace-list-root"
+          >
+            <ul
+              class="list-group"
+            >
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/124"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            project124
+                          </span>
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName124
+                        </div>
+                        <div
+                          class="workspace-info"
+                        >
+                          Basic Plan
+                        </div>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="list-group-item list-group-item-action list-group-item-flex"
+              >
+                <a
+                  class="button-root btn btn-unstyled workspace-link border-button"
+                  href="/workspace/123"
+                >
+                  <div
+                    class="autofit-col autofit-col-expand"
+                  >
+                    <div
+                      class="col-content-wrapper"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="workspace-name"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            project123
+                          </span>
+                        </div>
+                        <div
+                          class="info-wrapper corporation-project-name"
+                        >
+                          corpProjectName123
+                        </div>
+                        <div
+                          class="workspace-info"
+                        >
+                          Business Plan
+                        </div>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-angle-right"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="mt-4"
+          >
+            <button
+              class="button-root btn btn-primary mr-2 btn-sm"
+              type="button"
+            >
+              Buy Paid Tier
+            </button>
+            <a
+              class="button-root btn btn-secondary btn-sm"
+              href="/workspace/add/trial"
+            >
+              Start Free Trial
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

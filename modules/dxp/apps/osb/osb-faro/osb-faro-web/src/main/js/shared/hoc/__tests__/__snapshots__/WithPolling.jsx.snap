@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithPolling should pass the data to the WrappedComponent 1`] = `
+Object {
+  "foo": "bar",
+}
+`;
+
+exports[`WithPolling should render the WrappedComponent 1`] = `
+<div
+  class=""
+>
+  component body
+</div>
+`;

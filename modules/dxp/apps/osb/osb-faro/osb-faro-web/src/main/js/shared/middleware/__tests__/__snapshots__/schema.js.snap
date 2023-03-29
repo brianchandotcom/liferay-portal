@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Schema getLayoutSchema should normalize a layout schema with a faroEntity of individual 1`] = `
+Object {
+  "entities": Object {
+    "cardTemplates": Object {
+      "cardTemplate1": Object {
+        "id": "cardTemplate1",
+        "layoutId": "cardTemplate1",
+        "name": "",
+        "size": 2,
+        "type": null,
+      },
+      "cardTemplate2": Object {
+        "id": "cardTemplate2",
+        "layoutId": "cardTemplate2",
+        "name": "",
+        "size": 2,
+        "type": null,
+      },
+      "headerCardTemplate1": Object {
+        "id": "headerCardTemplate1",
+        "layoutId": "headerCardTemplate1",
+        "name": "",
+        "size": 2,
+        "type": null,
+      },
+    },
+    "individuals": Object {
+      "0": Object {
+        "data": Object {
+          "activitiesCount": 1000,
+          "colorId": "0",
+          "dateCreated": 1531090866366,
+          "id": "0",
+          "image": "/path/to/portrait.png",
+          "lastActivityDate": 1531263666366,
+          "name": "Foo Bar",
+          "properties": Object {
+            "familyName": "Bar",
+            "givenName": "Foo",
+            "jobTitle": "Developer",
+            "salary": "50,000",
+            "title": "Developer",
+          },
+          "type": 2,
+        },
+      },
+    },
+    "layouts": Object {
+      "1": Object {
+        "data": Object {
+          "contactsCardTemplatesList": Array [
+            Array [
+              "cardTemplate1",
+            ],
+            Array [
+              "cardTemplate2",
+            ],
+          ],
+          "headerContactsCardTemplates": Array [
+            "headerCardTemplate1",
+          ],
+          "id": 1,
+          "name": "layoutTemplate",
+        },
+      },
+    },
+  },
+  "result": Object {
+    "activitiesCount": 1000,
+    "contactsCardData": Object {
+      "1": Object {
+        "id": "cardData1",
+      },
+      "2": Object {
+        "id": "cardData2",
+      },
+    },
+    "contactsLayoutTemplate": 1,
+    "faroEntity": "0",
+  },
+}
+`;
+
+exports[`Schema getLayoutSchema should normalize a layout schema with a faroEntity of segment 1`] = `
+Object {
+  "entities": Object {
+    "cardTemplates": Object {
+      "cardTemplate1": Object {
+        "id": "cardTemplate1",
+        "layoutId": "cardTemplate1",
+        "name": "",
+        "size": 2,
+        "type": null,
+      },
+      "cardTemplate2": Object {
+        "id": "cardTemplate2",
+        "layoutId": "cardTemplate2",
+        "name": "",
+        "size": 2,
+        "type": null,
+      },
+      "headerCardTemplate1": Object {
+        "id": "headerCardTemplate1",
+        "layoutId": "headerCardTemplate1",
+        "name": "",
+        "size": 2,
+        "type": null,
+      },
+    },
+    "layouts": Object {
+      "2": Object {
+        "data": Object {
+          "contactsCardTemplatesList": Array [
+            Array [
+              "cardTemplate1",
+            ],
+            Array [
+              "cardTemplate2",
+            ],
+          ],
+          "headerContactsCardTemplates": Array [
+            "headerCardTemplate1",
+          ],
+          "id": 2,
+          "name": "layoutTemplate",
+        },
+      },
+    },
+    "segments": Object {
+      "0": Object {
+        "data": Object {
+          "activeIndividualCount": 0,
+          "activitiesCount": 1000,
+          "anonymousIndividualCount": 0,
+          "dateCreated": 1531177266366,
+          "dateModified": 1531263666366,
+          "id": "0",
+          "includeAnonymousUsers": false,
+          "individualCount": 10,
+          "knownIndividualCount": 0,
+          "lastActivityDate": 1531263666366,
+          "name": "Seattle0",
+          "properties": Object {},
+          "state": "READY",
+          "type": 4,
+        },
+      },
+    },
+  },
+  "result": Object {
+    "activitiesCount": 1000,
+    "contactsCardData": Object {
+      "1": Object {
+        "id": "cardData1",
+      },
+      "2": Object {
+        "id": "cardData2",
+      },
+    },
+    "contactsLayoutTemplate": 2,
+    "faroEntity": "0",
+  },
+}
+`;
+
+exports[`Schema should normalize a segment 1`] = `
+Object {
+  "entities": Object {
+    "segments": Object {
+      "foo": Object {
+        "data": Object {
+          "activeIndividualCount": 0,
+          "activitiesCount": 1000,
+          "anonymousIndividualCount": 0,
+          "dateCreated": 1531177266366,
+          "dateModified": 1531263666366,
+          "id": "foo",
+          "includeAnonymousUsers": false,
+          "individualCount": 10,
+          "knownIndividualCount": 0,
+          "lastActivityDate": 1531263666366,
+          "name": "Seattlefoo",
+          "properties": Object {},
+          "state": "READY",
+          "type": 4,
+        },
+      },
+    },
+  },
+  "result": "foo",
+}
+`;
+
+exports[`Schema should normalize an array of individuals 1`] = `
+Object {
+  "entities": Object {
+    "individuals": Object {
+      "bar": Object {
+        "data": Object {
+          "activitiesCount": 1000,
+          "colorId": "bar",
+          "dateCreated": 1531090866366,
+          "id": "bar",
+          "image": "/path/to/portrait.png",
+          "lastActivityDate": 1531263666366,
+          "name": "Foo Bar",
+          "properties": Object {
+            "familyName": "Bar",
+            "givenName": "Foo",
+            "jobTitle": "Developer",
+            "salary": "50,000",
+            "title": "Developer",
+          },
+          "type": 2,
+        },
+      },
+      "foo": Object {
+        "data": Object {
+          "activitiesCount": 1000,
+          "colorId": "foo",
+          "dateCreated": 1531090866366,
+          "id": "foo",
+          "image": "/path/to/portrait.png",
+          "lastActivityDate": 1531263666366,
+          "name": "Foo Bar",
+          "properties": Object {
+            "familyName": "Bar",
+            "givenName": "Foo",
+            "jobTitle": "Developer",
+            "salary": "50,000",
+            "title": "Developer",
+          },
+          "type": 2,
+        },
+      },
+    },
+  },
+  "result": Array [
+    "foo",
+    "bar",
+  ],
+}
+`;
+
+exports[`Schema should normalize an array of segments 1`] = `
+Object {
+  "entities": Object {
+    "segments": Object {
+      "bar": Object {
+        "data": Object {
+          "activeIndividualCount": 0,
+          "activitiesCount": 1000,
+          "anonymousIndividualCount": 0,
+          "dateCreated": 1531177266366,
+          "dateModified": 1531263666366,
+          "id": "bar",
+          "includeAnonymousUsers": false,
+          "individualCount": 10,
+          "knownIndividualCount": 0,
+          "lastActivityDate": 1531263666366,
+          "name": "Seattlebar",
+          "properties": Object {},
+          "state": "READY",
+          "type": 4,
+        },
+      },
+      "foo": Object {
+        "data": Object {
+          "activeIndividualCount": 0,
+          "activitiesCount": 1000,
+          "anonymousIndividualCount": 0,
+          "dateCreated": 1531177266366,
+          "dateModified": 1531263666366,
+          "id": "foo",
+          "includeAnonymousUsers": false,
+          "individualCount": 10,
+          "knownIndividualCount": 0,
+          "lastActivityDate": 1531263666366,
+          "name": "Seattlefoo",
+          "properties": Object {},
+          "state": "READY",
+          "type": 4,
+        },
+      },
+    },
+  },
+  "result": Array [
+    "foo",
+    "bar",
+  ],
+}
+`;
+
+exports[`Schema should normalize an individual 1`] = `
+Object {
+  "entities": Object {
+    "individuals": Object {
+      "foo": Object {
+        "data": Object {
+          "activitiesCount": 1000,
+          "colorId": "foo",
+          "dateCreated": 1531090866366,
+          "id": "foo",
+          "image": "/path/to/portrait.png",
+          "lastActivityDate": 1531263666366,
+          "name": "Foo Bar",
+          "properties": Object {
+            "familyName": "Bar",
+            "givenName": "Foo",
+            "jobTitle": "Developer",
+            "salary": "50,000",
+            "title": "Developer",
+          },
+          "type": 2,
+        },
+      },
+    },
+  },
+  "result": "foo",
+}
+`;

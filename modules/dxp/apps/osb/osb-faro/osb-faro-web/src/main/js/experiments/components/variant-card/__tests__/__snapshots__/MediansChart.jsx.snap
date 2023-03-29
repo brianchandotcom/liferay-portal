@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MediansChart should render 1`] = `
+<div>
+  <div
+    class="analytics-bar-chart-html disable-scroll"
+  >
+    <div
+      class="analytics-bar-chart-html-grid"
+    >
+      <div
+        class="analytics-bar-chart-html-grid-item"
+      >
+        <span>
+          0%
+        </span>
+      </div>
+      <div
+        class="analytics-bar-chart-html-grid-item"
+      >
+        <span>
+          10%
+        </span>
+      </div>
+      <div
+        class="analytics-bar-chart-html-grid-item"
+      >
+        <span>
+          20%
+        </span>
+      </div>
+      <div
+        class="analytics-bar-chart-html-grid-item"
+      >
+        <span>
+          30%
+        </span>
+      </div>
+      <div
+        class="analytics-bar-chart-html-grid-item"
+      >
+        <span>
+          40%
+        </span>
+      </div>
+    </div>
+    <div
+      class="analytics-bar-chart-html-group-items"
+    >
+      <ul
+        class="analytics-bar-chart-html-items"
+      >
+        <li
+          class="analytics-bar-chart-html-item"
+        >
+          <div
+            class="analytics-bar-chart-html-header"
+          >
+            <div
+              class="analytics-bar-chart-html-progress"
+            >
+              <div
+                style="background-color: rgb(107, 108, 126); width: 92.5%;"
+              />
+            </div>
+            <div
+              class="analytics-bar-chart-html-interval"
+            >
+              <div
+                style="margin-left: 90%; width: 2.5%;"
+              />
+            </div>
+          </div>
+        </li>
+        <li
+          class="analytics-bar-chart-html-item"
+        >
+          <div
+            class="analytics-bar-chart-html-header"
+          >
+            <div
+              class="analytics-bar-chart-html-progress"
+            >
+              <div
+                style="background-color: rgb(75, 155, 255); width: 75%;"
+              />
+            </div>
+            <div
+              class="analytics-bar-chart-html-interval"
+            >
+              <div
+                style="margin-left: 70%; width: 7.5%;"
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <ul
+    class="chart-legend"
+  >
+    <li
+      class="chart-legend-item"
+    >
+      <span
+        class="circle"
+        style="background-color: rgb(107, 108, 126); height: 8px; width: 8px;"
+      />
+       
+       Control
+    </li>
+    <li
+      class="chart-legend-item"
+    >
+      <span
+        class="circle"
+        style="background-color: rgb(75, 155, 255); height: 8px; width: 8px;"
+      />
+       
+       Red Button
+    </li>
+  </ul>
+</div>
+`;

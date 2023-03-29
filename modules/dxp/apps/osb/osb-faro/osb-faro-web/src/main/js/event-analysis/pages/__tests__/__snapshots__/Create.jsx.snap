@@ -1,0 +1,315 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event Analysis Create should render 1`] = `
+<div>
+  <div
+    class="index-root create-event-analysis-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <header
+      class="header-root"
+    >
+      <div
+        class="header-container"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/123/456/sites"
+              >
+                Home
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="header-section title-section"
+        >
+          <span
+            class="align-items-center d-flex"
+          >
+            <h1
+              class="title text-truncate"
+            >
+              <span
+                class="text-truncate"
+                data-tooltip="false"
+                title=""
+              >
+                Event Analysis
+              </span>
+            </h1>
+          </span>
+        </div>
+      </div>
+    </header>
+    <form
+      class="form-root"
+    >
+      <div
+        class="sub-header-root"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between header-container"
+        >
+          <div
+            class="event-analysis-toolbar-root"
+          >
+            <div
+              class="event-analysis-toolbar-left-content"
+            >
+              <div
+                class="title-editor-root"
+              >
+                <input
+                  class="title-input hide"
+                  name="name"
+                  placeholder="Unnamed Analysis"
+                  required=""
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="title-display placeholder-display"
+                >
+                  <span
+                    class="title-value"
+                    role="button"
+                    tabindex="0"
+                  >
+                    Unnamed Analysis
+                  </span>
+                  <button
+                    aria-label="Edit"
+                    class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-pencil"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="event-analysis-toolbar-right-content"
+            >
+              <div
+                class="btn-group"
+                role="group"
+              >
+                <div
+                  class="btn-group-item"
+                >
+                  <button
+                    class="button-root btn btn-primary btn-sm"
+                    disabled=""
+                    type="submit"
+                  >
+                    Save Analysis
+                  </button>
+                </div>
+                <div
+                  class="btn-group-item"
+                >
+                  <a
+                    class="button-root btn btn-secondary btn-sm"
+                    href="/workspace/123/456/event-analysis"
+                  >
+                    Cancel
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      class="body-root page-container"
+    >
+      <span
+        class="children-wrapper"
+      >
+        <div
+          class="card card-root event-analysis-editor-root"
+        >
+          <div
+            class="event-analysis-builder-root d-flex flex-column"
+          >
+            <div
+              class="event-section-root d-flex align-items-center"
+            >
+              <div
+                class="section-header"
+              >
+                Analyze
+              </div>
+              <div
+                class="event-container d-flex justify-content-between"
+              >
+                <div
+                  class="event-list"
+                />
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    class="button-root btn btn-primary dropdown-toggle add-event-button btn-sm"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-plus"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="attribute-breakdown-section-root d-flex align-items-center"
+            >
+              <div
+                class="section-header"
+              >
+                Breakdown
+              </div>
+            </div>
+            <div
+              class="attribute-filter-section-root d-flex align-items-center"
+            >
+              <div
+                class="section-header"
+              >
+                Filter
+              </div>
+            </div>
+          </div>
+          <div
+            class="options-container d-flex justify-content-between"
+          >
+            <ul
+              class="card-tabs-root type-selector small"
+            >
+              <li
+                class="card-tab active"
+                data-testid="TOTAL"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Total
+                  </span>
+                  <div />
+                </button>
+              </li>
+              <li
+                class="card-tab"
+                data-testid="UNIQUE"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Unique
+                  </span>
+                  <div />
+                </button>
+              </li>
+              <li
+                class="card-tab"
+                data-testid="AVERAGE"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Average
+                  </span>
+                  <div />
+                </button>
+              </li>
+            </ul>
+            <div
+              class="d-flex align-items-center"
+            >
+              <div
+                class="custom-control custom-checkbox compare-to-previous-checkbox mb-0 mr-4"
+              >
+                <label>
+                  <input
+                    class="custom-control-input"
+                    type="checkbox"
+                    value="false"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      Compare to Previous
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="dropdown dropdown-range-key-root"
+              >
+                <button
+                  class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                  type="button"
+                >
+                  Last 30 days
+                  <svg
+                    class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#caret-bottom"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="breakdown-empty"
+          >
+            Add an event to analyze.
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;

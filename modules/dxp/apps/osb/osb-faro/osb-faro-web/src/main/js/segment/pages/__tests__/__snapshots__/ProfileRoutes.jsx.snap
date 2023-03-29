@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentProfileRoutes should render 1`] = `
+<div>
+  <div
+    class="index-root segment-profile-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <header
+      class="header-root"
+    >
+      <div
+        class="header-container"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/123/sites"
+              >
+                Channel 1
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/123/contacts/segments"
+              >
+                Segments
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item active"
+            >
+              <span
+                class="breadcrumb-text-truncate"
+              >
+                Seattle0
+              </span>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <div
+            class="header-section title-section"
+          >
+            <span
+              class="align-items-center d-flex"
+            >
+              <h1
+                class="title text-truncate"
+              >
+                <span
+                  class="text-truncate"
+                  data-tooltip="false"
+                  title=""
+                >
+                  Seattle0
+                </span>
+              </h1>
+              <div
+                class="label label-root label-secondary label-lg label-uppercase"
+              >
+                <span
+                  class="label-item"
+                >
+                  Static Segment
+                </span>
+              </div>
+            </span>
+          </div>
+          <div
+            class="header-section"
+          >
+            <a
+              class="button-root btn btn-secondary"
+              href="/workspace/23/123/contacts/segments/test/edit"
+            >
+              Edit Segment
+            </a>
+          </div>
+        </div>
+        <ul
+          class="nav-root page-subnav nav nav-underline"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/segments/test"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Overview
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/segments/test/membership"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Membership
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/segments/test/interests"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Interests
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/segments/test/distribution"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Distribution
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <div
+      class="embedded-alert-list-root"
+    />
+    <div
+      class="body-root page-container"
+    >
+      <span
+        class="children-wrapper"
+      />
+    </div>
+  </div>
+</div>
+`;

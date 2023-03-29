@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OccurenceConjunctionInput should render 1`] = `
+<div>
+  <div
+    class="form-group-item form-group-item-shrink"
+  >
+    <select
+      class="form-control operator-input"
+    >
+      <option
+        value="ge"
+      >
+        at least
+      </option>
+      <option
+        value="le"
+      >
+        at most
+      </option>
+    </select>
+  </div>
+  <div
+    class="form-group-item form-group-item-shrink"
+  >
+    <input
+      class="input-root form-control number-input"
+      data-testid="occurence-count-input"
+      min="0"
+      type="number"
+      value="123"
+    />
+  </div>
+  <div
+    class="form-group-item unit form-group-item-label form-group-item-shrink"
+  >
+    time(s)
+  </div>
+</div>
+`;

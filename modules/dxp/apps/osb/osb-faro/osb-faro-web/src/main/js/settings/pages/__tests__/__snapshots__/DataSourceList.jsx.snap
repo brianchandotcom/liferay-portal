@@ -1,0 +1,629 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataSourceList should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="embedded-alert-list-root notification-alert-list-root"
+    />
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Data Sources
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Manage Data Sources that are synced with Analytics Cloud.
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="embedded-alert-list-root"
+      />
+      <div
+        class="card card-root page-display"
+      >
+        <div
+          class="toolbar-root"
+        >
+          <nav
+            class="navbar navbar-root management-bar management-bar-light navbar-expand"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav-root front-nav navbar-nav"
+                role="tablist"
+              >
+                <li
+                  aria-haspopup="true"
+                  class="dropdown dropdown-root filter-and-order-root nav-item"
+                >
+                  <button
+                    class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                    data-testid="filter-and-order-button"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Order
+                    </span>
+                    
+                    <span
+                      class="caret-root"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    href="/?field=name&page=1&sortOrder=DESC"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+              <div
+                class="navbar-form navbar-form-autofit"
+              >
+                <div
+                  class="input-group search"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="button-root btn btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-search"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="nav-root navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="button-root btn btn-primary nav-btn"
+                    href="/workspace/23/settings/data-source/add"
+                  >
+                    Add Data Source
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=name&page=1&sortOrder=DESC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Name
+                    </span>
+                    <span
+                      class="inline-item inline-item-after"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=providerType&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Source
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Contacts
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Analytics
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=createDate&page=1&sortOrder=DESC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Date Added
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+              >
+                <td
+                  class="table-cell-expand"
+                >
+                  <div
+                    class="table-title"
+                  >
+                    <a
+                      class="text-truncate"
+                      href="/workspace/23/settings/data-source/0"
+                    >
+                      CSV0
+                    </a>
+                  </div>
+                </td>
+                <td>
+                  .CSV
+                </td>
+                <td>
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-check"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#check"
+                    />
+                  </svg>
+                </td>
+                <td />
+                <td>
+                  Jul 8, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root label-success label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Active
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav
+          class="navbar navbar-root pagination-bar-root"
+        >
+          <div
+            class="container-fluid"
+          >
+            <div
+              aria-haspopup="true"
+              class="dropdown dropdown-root pagination-items-per-page"
+            >
+              <button
+                class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  2 Items
+                </span>
+                
+                <span
+                  class="caret-root"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="pagination-results"
+            >
+              Showing 1 to 1 of 1 entry.
+            </div>
+            <ul
+              class="pagination pagination-root"
+            >
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link link-disabled"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-angle-left"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li
+                class="page-item active"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link"
+                  href="/?page=1"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link link-disabled"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-angle-right"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render toast for multiple data sources with invalid credentials 1`] = `
+<div
+  class="embedded-alert-list-root"
+>
+  <div
+    class="alert alert-warning"
+    role="alert"
+  >
+    <span
+      class="alert-indicator"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-warning-full"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+        />
+      </svg>
+    </span>
+    <strong
+      class="lead"
+    >
+      Warning:
+    </strong>
+    Some of your authorization tokens have expired. Please reauthorize the account credentials on these data sources to prevent syncing interruptions.
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render toast for multiple data sources with invalid credentials for a member's view 1`] = `
+<div
+  class="embedded-alert-list-root"
+>
+  <div
+    class="alert alert-warning"
+    role="alert"
+  >
+    <span
+      class="alert-indicator"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-warning-full"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+        />
+      </svg>
+    </span>
+    <strong
+      class="lead"
+    >
+      Warning:
+    </strong>
+    Some of your authorization tokens have expired. Please contact your oAuth Administrator to reauthorize.
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render toast for one data source with invalid credentials 1`] = `
+<div
+  class="embedded-alert-list-root"
+>
+  <div
+    class="alert alert-warning"
+    role="alert"
+  >
+    <span
+      class="alert-indicator"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-warning-full"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+        />
+      </svg>
+    </span>
+    <strong
+      class="lead"
+    >
+      Warning:
+    </strong>
+    Your authorization token for 
+    <b>
+      Liferay1
+    </b>
+     has expired. Please 
+    <a
+      href="/workspace/23/settings/data-source/1"
+    >
+      reauthorize
+    </a>
+     your account credentials.
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render toast for one data source with invalid credentials for a member's view 1`] = `
+<div
+  class="embedded-alert-list-root"
+>
+  <div
+    class="alert alert-warning"
+    role="alert"
+  >
+    <span
+      class="alert-indicator"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-warning-full"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+        />
+      </svg>
+    </span>
+    <strong
+      class="lead"
+    >
+      Warning:
+    </strong>
+    Your authorization token for 
+    <b>
+      Liferay1
+    </b>
+     has expired. Please contact your OAuth Administrator, 
+    test@liferay.com
+    , to reauthorize.
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render with a member-specific message to connect datasources if there are none 1`] = `
+<div
+  class="no-results-root flex-grow-1 no-results-primary"
+>
+  <div
+    class="no-results-content"
+  >
+    <div
+      class="no-results-icon"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+        />
+      </svg>
+    </div>
+    <h4
+      class="no-results-title"
+    >
+      No Data Sources Connected
+    </h4>
+    <div
+      class="no-results-description"
+    >
+      Please contact your workspace administrator to add data sources.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render with a message to connect datasources if there are none 1`] = `
+<div
+  class="no-results-root flex-grow-1 no-results-primary"
+>
+  <div
+    class="no-results-content"
+  >
+    <div
+      class="no-results-icon"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+        />
+      </svg>
+    </div>
+    <h4
+      class="no-results-title"
+    >
+      No Data Sources Connected
+    </h4>
+    <div
+      class="no-results-description"
+    >
+      Add a data source to get started.
+      <a
+        class="d-block mb-3"
+        href="https://learn.liferay.com/analytics-cloud/latest/en/getting-started/connecting-liferay-dxp-to-analytics-cloud.html"
+        target="_blank"
+      >
+        Access our documentation to learn more.
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataSourceList should render with an empty state 1`] = `
+<div
+  class="no-results-root flex-grow-1"
+>
+  <div
+    class="no-results-content"
+  >
+    <div
+      class="no-results-icon"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-ac-no-results-found icon-size-xxxl"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-no-results-found"
+        />
+      </svg>
+    </div>
+    <h4
+      class="no-results-title"
+    >
+      There are no results found.
+    </h4>
+    <div
+      class="no-results-description"
+    >
+      Please try a different search term.
+    </div>
+  </div>
+</div>
+`;

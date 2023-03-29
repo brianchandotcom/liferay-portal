@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InterestsCard should render 1`] = `
+<div>
+  <div
+    class="card card-root individual-interests-card-root"
+  >
+    <div
+      class="card-header"
+    >
+      <h5
+        class="card-title"
+      >
+        Current Interests
+      </h5>
+    </div>
+    <ul
+      class="list-group list-group-root results-container no-border show-quick-actions-on-hover"
+    >
+      <li
+        class="interest list-group-item"
+      >
+        <h4
+          class="list-group-title text-truncate"
+        >
+          <a
+            href="/workspace/23/contacts/individuals/known-individuals/15/interests/Bar0"
+          >
+            Bar0
+          </a>
+        </h4>
+      </li>
+    </ul>
+    <div
+      class="card-footer"
+    >
+      <a
+        class="button-root btn btn-link btn-sm"
+        href="/workspace/23/contacts/individuals/known-individuals/15/interests"
+      >
+        View All Interests
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InterestsList should render 1`] = `
+<div>
+  <ul
+    class="list-group list-group-root results-container no-border show-quick-actions-on-hover"
+  >
+    <li
+      class="interest list-group-item"
+    >
+      <h4
+        class="list-group-title text-truncate"
+      >
+        <a
+          href="/workspace/23/contacts/individuals/known-individuals/foo/interests/Bar0"
+        >
+          Bar0
+        </a>
+      </h4>
+    </li>
+  </ul>
+</div>
+`;

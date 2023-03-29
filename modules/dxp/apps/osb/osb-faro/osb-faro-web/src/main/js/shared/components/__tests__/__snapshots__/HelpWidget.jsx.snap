@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelpWidget should render 1`] = `
+<div>
+  <div
+    class="help-widget-root"
+  >
+    <div
+      class="dropdown"
+    >
+      <button
+        aria-label="Help"
+        class="button-root btn btn-defaut dropdown-toggle help-button btn-outline-borderless btn-sm"
+        type="button"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-ac-question-mark"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-question-mark"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,640 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sites Dashboard Overview render 1`] = `
+<div>
+  <div
+    class="sites-dashboard-overview-root overview-root"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-xl-12"
+      >
+        <div
+          class="card card-root analytics-metrics-card"
+          style="min-height: 605px;"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Test Channel Activities
+            </h5>
+            <div
+              class="d-flex"
+            >
+              <div
+                class="interval-selector-root mr-3 btn-group"
+                role="group"
+              >
+                <button
+                  class="interval-option text-uppercase active btn btn-sm btn-secondary"
+                  type="button"
+                >
+                  D
+                </button>
+                <button
+                  class="interval-option text-uppercase btn btn-sm btn-secondary"
+                  type="button"
+                >
+                  W
+                </button>
+                <button
+                  class="interval-option text-uppercase btn btn-sm btn-secondary"
+                  type="button"
+                >
+                  M
+                </button>
+              </div>
+              <div
+                class="spinner-root spinner-inline"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-body analytics-metrics"
+          >
+            <div
+              class="loading-root"
+              style="min-height: 140px;"
+            >
+              <div
+                class="spinner-root spinner-fade-in"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+            <div
+              class="loading-root"
+              style="min-height: 375px;"
+            >
+              <div
+                class="spinner-root spinner-fade-in"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-xl-6"
+      >
+        <div
+          class="card card-root top-pages-card-root table-tabs-root"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Top Pages
+            </h5>
+            <div
+              class="spinner-root spinner-inline"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+          <div
+            class="card-body w-100 d-flex flex-column flex-grow-1 no-padding"
+          >
+            <ul
+              class="card-tabs-root"
+            >
+              <li
+                class="card-tab active"
+                data-testid="visitorsMetric"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Visited Pages
+                  </span>
+                  <div />
+                </button>
+              </li>
+              <li
+                class="card-tab"
+                data-testid="entrancesMetric"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Entrance Pages
+                  </span>
+                  <div />
+                </button>
+              </li>
+              <li
+                class="card-tab"
+                data-testid="exitRateMetric"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Exit Pages
+                  </span>
+                  <div />
+                </button>
+              </li>
+            </ul>
+            <div
+              class="loading-root display-card"
+            >
+              <div
+                class="spinner-root spinner-fade-in"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-footer"
+          >
+            <a
+              class="button-root btn btn-link btn-sm"
+              href="/workspace/23/123123/sites/pages?rangeKey=30"
+            >
+              View Pages
+              <span
+                class="inline-item inline-item-after"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-right"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-xl-6"
+      >
+        <div
+          class="card card-root acquisitions-card-root table-tabs-root"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Acquisitions
+            </h5>
+            <div
+              class="spinner-root spinner-inline"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+          <div
+            class="card-body w-100 d-flex flex-column flex-grow-1 no-padding"
+          >
+            <ul
+              class="card-tabs-root"
+            >
+              <li
+                class="card-tab active"
+                data-testid="CHANNEL"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Channels
+                  </span>
+                  <div />
+                </button>
+              </li>
+              <li
+                class="card-tab"
+                data-testid="SOURCE_MEDIUM"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Source | Medium
+                  </span>
+                  <div />
+                </button>
+              </li>
+              <li
+                class="card-tab"
+                data-testid="REFERRER"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <span
+                    class="title"
+                  >
+                    Referrers
+                  </span>
+                  <div />
+                </button>
+              </li>
+            </ul>
+            <div
+              class="loading-root display-card"
+            >
+              <div
+                class="spinner-root spinner-fade-in"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-xl-4"
+      >
+        <div
+          class="card card-root visitors-by-time-card"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Visitors by Day and Time
+            </h5>
+            <div
+              class="spinner-root spinner-inline"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+          <div
+            class="card-body"
+          >
+            <div
+              class="spinner-root spinner-center spinner-spacer"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-xl-4"
+      >
+        <div
+          class="card card-root search-terms-card-root"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Search Terms
+            </h5>
+            <div
+              class="spinner-root spinner-inline"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+          <div
+            class="table-responsive table-root flex-grow-1"
+          >
+            <table
+              class="table table-autofit table-hover table-heading-nowrap table-nowrap table-row-no-bordered"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="table-head-title table-cell-expand"
+                  >
+                    Search Query | Searches
+                  </th>
+                  <th
+                    class="table-head-title table-column-text-end"
+                  >
+                    % of Searches
+                  </th>
+                </tr>
+              </thead>
+            </table>
+            <div
+              class="spinner-root spinner-overlay"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-xl-4"
+      >
+        <div
+          class="card card-root interests-card-root"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Interests
+            </h5>
+            <div
+              class="spinner-root spinner-inline"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+          <div
+            class="table-responsive table-root flex-grow-1"
+          >
+            <table
+              class="table table-autofit table-hover table-heading-nowrap table-nowrap table-row-no-bordered"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="table-head-title table-cell-expand"
+                  >
+                    Interest Topics | Sessions
+                  </th>
+                  <th
+                    class="table-head-title table-column-text-end"
+                  >
+                    % of Sessions
+                  </th>
+                </tr>
+              </thead>
+            </table>
+            <div
+              class="spinner-root spinner-overlay"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+          <div
+            class="card-footer"
+          >
+            <a
+              class="button-root btn btn-link btn-sm"
+              href="/workspace/23/123123/sites/interests?rangeEnd=null&rangeKey=30&rangeStart=null"
+            >
+              All Interests
+              <span
+                class="inline-item inline-item-after"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-right"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-xl-6"
+      >
+        <div
+          class="card card-root analytics-locations-card"
+          style="min-height: 536px;"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Sessions by Location
+            </h5>
+            <div
+              class="d-flex"
+            >
+              <div
+                class="spinner-root spinner-inline"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-body"
+          >
+            <div
+              class="spinner-root spinner-center spinner-spacer"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-xl-6"
+      >
+        <div
+          class="card card-root analytics-devices-card"
+          style="min-height: 536px;"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <h5
+              class="card-title"
+            >
+              Session Technology
+            </h5>
+            <div
+              class="d-flex"
+            >
+              <div
+                class="spinner-root spinner-inline"
+              >
+                <span
+                  class="loading-animation loading-animation-dotted"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-body"
+          >
+            <div
+              class="spinner-root spinner-center spinner-spacer"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-xl-12"
+      >
+        <div
+          class="card card-root cohort-analysis-card-root"
+        >
+          <div
+            class="card-header"
+          >
+            <h5
+              class="card-title"
+            >
+              Cohort Analysis
+            </h5>
+          </div>
+          <div
+            class="card-body"
+          >
+            <div
+              class="form-group form-group-autofit"
+            >
+              <div
+                class="form-group-item form-group-item-shrink"
+              >
+                <select
+                  class="form-control visitors-type-select"
+                >
+                  <option
+                    value="visitors"
+                  >
+                    All Visitors
+                  </option>
+                  <option
+                    value="anonymousVisitors"
+                  >
+                    Anonymous Visitors
+                  </option>
+                  <option
+                    value="knownVisitors"
+                  >
+                    Known Visitors
+                  </option>
+                </select>
+              </div>
+              <div
+                class="form-group-item form-group-item-label form-group-item-shrink"
+              >
+                Broken Down By
+              </div>
+              <div
+                class="form-group-item form-group-item-shrink"
+              >
+                <select
+                  class="form-control interval-select"
+                >
+                  <option
+                    value="D"
+                  >
+                    Day
+                  </option>
+                  <option
+                    value="W"
+                  >
+                    Week
+                  </option>
+                  <option
+                    value="M"
+                  >
+                    Month
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="spinner-root spinner-center spinner-spacer"
+            >
+              <span
+                class="loading-animation loading-animation-dotted"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

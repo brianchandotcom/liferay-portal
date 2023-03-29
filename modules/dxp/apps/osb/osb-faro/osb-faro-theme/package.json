@@ -1,0 +1,17 @@
+{
+	"devDependencies": {
+		"gulp": "^3.8.10",
+		"liferay-theme-deps-7.1": "8.1.2",
+		"liferay-theme-tasks": "8.1.2"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"version": "7.1"
+	},
+	"main": "package.json",
+	"name": "osb-faro-theme",
+	"version": "1.0.5"
+}

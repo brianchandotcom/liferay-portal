@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeZonePicker should render 1`] = `
+<div>
+  <form
+    class="form-root"
+  >
+    <div
+      class="form-group time-zone-picker-root form-group-autofit"
+    >
+      <div
+        class="form-group-item col-3"
+      >
+        <select
+          class="form-control select-root"
+        >
+          <option
+            value=""
+          >
+            Country
+          </option>
+          <option
+            value="Brazil"
+          >
+            Brazil
+          </option>
+          <option
+            value="Chile"
+          >
+            Chile
+          </option>
+          <option
+            value="UTC"
+          >
+            UTC
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item col-9"
+      >
+        <div
+          class=""
+        >
+          <select
+            class="form-control select-root"
+            id="timezone"
+            name="timezone"
+          >
+            <option />
+            <option
+              value="UTC"
+            >
+              (UTC) UTC
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

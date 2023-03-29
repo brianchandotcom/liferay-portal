@@ -1,0 +1,11 @@
+<mj-spacer height="25px" />
+
+<mj-text mj-class="subtitle-text">[$WELCOME_MSG$]</mj-text>
+
+<mj-text padding-top="0">[$NOTIFICATION_MSG$]</mj-text>
+
+<mj-text>[$INSTRUCTION_MSG$]</mj-text>
+
+<mj-include path="../button.mjml" />
+
+<mj-include path="../help.mjml" />

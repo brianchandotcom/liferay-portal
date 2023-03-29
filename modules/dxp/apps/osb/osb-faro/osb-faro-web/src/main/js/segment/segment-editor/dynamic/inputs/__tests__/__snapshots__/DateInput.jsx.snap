@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateInput should render 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      />
+      <div>
+        operator
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group date-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              data-testid="date-input"
+              placeholder="YYYY-MM-DD"
+              type="text"
+              value="Invalid date"
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <button
+                class="button-root btn btn-unstyled"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-calendar"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DateInput should render with data 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      >
+        Start Date
+      </div>
+      <div>
+        operator
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group date-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              data-testid="date-input"
+              placeholder="YYYY-MM-DD"
+              type="text"
+              value="2012-12-12"
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <button
+                class="button-root btn btn-unstyled"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-calendar"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

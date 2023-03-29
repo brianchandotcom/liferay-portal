@@ -1,0 +1,569 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SuccessDisplayIf should render a scheduled maintenance error page if the project state is "maintenance" 1`] = `
+<div>
+  <div
+    class="workspaces-base-page-root workspaces-error-display-root"
+  >
+    <div
+      class="header-container"
+    >
+      <a
+        href="https://liferay.com"
+        target="_blank"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+          />
+        </svg>
+      </a>
+      <div>
+        <button
+          class="user-menu button-root btn btn-unstyled trigger"
+          type="button"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="sticker sticker-root sticker-static avatar sticker-circle"
+            >
+              TT
+            </div>
+            <span
+              class="user-name"
+            >
+              Test Test
+            </span>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="content-container"
+      >
+        <div
+          class="title-container"
+        >
+          <div
+            class="logo-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              />
+            </svg>
+            <span
+              class="logo-text"
+            >
+              Analytics Cloud
+            </span>
+          </div>
+          <h1
+            class="title"
+          >
+            Scheduled Maintenance
+          </h1>
+          <div
+            class="details-container"
+          >
+            Analytics Cloud is undergoing scheduled maintenance. We expect to be back online in a couple of hours. Thank you for your patience.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SuccessDisplayIf should render activating display if project state is "activating" 1`] = `
+<div>
+  <div
+    class="workspaces-base-page-root"
+  >
+    <div
+      class="header-container"
+    >
+      <a
+        href="https://liferay.com"
+        target="_blank"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+          />
+        </svg>
+      </a>
+      <div>
+        <button
+          class="user-menu button-root btn btn-unstyled trigger"
+          type="button"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="sticker sticker-root sticker-static avatar sticker-circle"
+            >
+              TT
+            </div>
+            <span
+              class="user-name"
+            >
+              Test Test
+            </span>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="content-container"
+      >
+        <div
+          class="title-container"
+        >
+          <div
+            class="logo-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              />
+            </svg>
+            <span
+              class="logo-text"
+            >
+              Analytics Cloud
+            </span>
+          </div>
+          <h1
+            class="title"
+          >
+            Activating Workspace
+          </h1>
+          <div
+            class="details-container"
+          />
+        </div>
+        <div
+          class="sheet"
+        >
+          <div
+            class="sheet-header mb-4"
+          >
+            <h3
+              class="title"
+            >
+              Your workspace is being activated.
+            </h3>
+          </div>
+          <div
+            class="sheet-body"
+          >
+            <div
+              class="sheet-section"
+            >
+              <p>
+                This process will take a couple minutes.
+              </p>
+              <p>
+                In the meantime, check out our documentation to get familiar with the features.
+              </p>
+            </div>
+          </div>
+          <div
+            class="sheet-footer"
+          >
+            <a
+              class="button-root btn btn-primary"
+              href="https://learn.liferay.com/analytics-cloud/latest/en/getting-started.html"
+            >
+              Check out docs
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SuccessDisplayIf should render activating display if project state is "deactivated" 1`] = `
+<div>
+  <div
+    class="workspaces-base-page-root workspaces-error-display-root"
+  >
+    <div
+      class="header-container"
+    >
+      <a
+        href="https://liferay.com"
+        target="_blank"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+          />
+        </svg>
+      </a>
+      <div>
+        <button
+          class="user-menu button-root btn btn-unstyled trigger"
+          type="button"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="sticker sticker-root sticker-static avatar sticker-circle"
+            >
+              TT
+            </div>
+            <span
+              class="user-name"
+            >
+              Test Test
+            </span>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="content-container"
+      >
+        <div
+          class="title-container"
+        >
+          <div
+            class="logo-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              />
+            </svg>
+            <span
+              class="logo-text"
+            >
+              Analytics Cloud
+            </span>
+          </div>
+          <h1
+            class="title"
+          >
+            Inactive Workspace
+          </h1>
+          <div
+            class="details-container"
+          >
+            This workspace is currently inactive.
+          </div>
+        </div>
+        <div
+          class="step-list-root"
+        >
+          <b>
+            Please go to the workspace list to reactivate.
+          </b>
+          <ul />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SuccessDisplayIf should render an error page if there was an error fetching the project 1`] = `
+<div>
+  <div
+    class="workspaces-base-page-root workspace-not-found-root text-center"
+  >
+    <div
+      class="header-container"
+    >
+      <a
+        href="https://liferay.com"
+        target="_blank"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+          />
+        </svg>
+      </a>
+      <div>
+        <button
+          class="user-menu button-root btn btn-unstyled trigger"
+          type="button"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="sticker sticker-root sticker-static avatar sticker-circle"
+            >
+              TT
+            </div>
+            <span
+              class="user-name"
+            >
+              Test Test
+            </span>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="content-container"
+      >
+        <div
+          class="title-container"
+        >
+          <div
+            class="logo-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              />
+            </svg>
+            <span
+              class="logo-text"
+            >
+              Analytics Cloud
+            </span>
+          </div>
+          <h1
+            class="title"
+          />
+          <div
+            class="details-container"
+          />
+        </div>
+        <div
+          class="sheet"
+        >
+          <div
+            class="sheet-header"
+          >
+            <div
+              class="sheet-section title"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-exclamation-circle text-danger"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#exclamation-circle"
+                />
+              </svg>
+               
+              Workspace Error
+            </div>
+            <div
+              class="sheet-section description"
+            >
+              Either this workspace does not exist or you do not have access to it. Make sure you have typed the correct workspace URL or check with the workspace administrator for access.
+            </div>
+            <div
+              class="sheet-section"
+            >
+              <a
+                class="button-root btn btn-primary"
+                href="/workspaces"
+              >
+                Go Back to Your Workspaces
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SuccessDisplayIf should render an unavailable error page if the project state is "scheduled" 1`] = `
+<div>
+  <div>
+    component body
+  </div>
+</div>
+`;
+
+exports[`SuccessDisplayIf should render an unavailable error page if the project state is "unavailable" 1`] = `
+<div>
+  <div
+    class="workspaces-base-page-root workspaces-error-display-root"
+  >
+    <div
+      class="header-container"
+    >
+      <a
+        href="https://liferay.com"
+        target="_blank"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+          />
+        </svg>
+      </a>
+      <div>
+        <button
+          class="user-menu button-root btn btn-unstyled trigger"
+          type="button"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="sticker sticker-root sticker-static avatar sticker-circle"
+            >
+              TT
+            </div>
+            <span
+              class="user-name"
+            >
+              Test Test
+            </span>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="content-container"
+      >
+        <div
+          class="title-container"
+        >
+          <div
+            class="logo-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              />
+            </svg>
+            <span
+              class="logo-text"
+            >
+              Analytics Cloud
+            </span>
+          </div>
+          <h1
+            class="title"
+          >
+            Service Temporarily Unavailable
+          </h1>
+          <div
+            class="details-container"
+          >
+            Analytics Cloud is temporarily unavailable. We apologize for any inconvenience, we plan to be back up shortly.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SuccessDisplayIf should render the SuccessDisplay component if the project is not ready 1`] = `
+<div>
+  SuccessDisplay
+</div>
+`;
+
+exports[`SuccessDisplayIf should render the WrappedComponent 1`] = `
+<div>
+  <div>
+    component body
+  </div>
+</div>
+`;

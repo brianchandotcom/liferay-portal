@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SessionCard should render 1`] = `
+<div>
+  <div
+    class="card card-root analytics-session-card"
+    style="min-height: 405px;"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      />
+      <div
+        class="btn-group"
+        role="group"
+      >
+        <button
+          class="active btn btn-sm btn-secondary"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-session-single-chart mr-2"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#session-single-chart"
+            />
+          </svg>
+          Total
+        </button>
+        <button
+          class="btn btn-sm btn-secondary"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-session-multiple-chart mr-2"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#session-multiple-chart"
+            />
+          </svg>
+          Per Variant
+        </button>
+      </div>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="analytics-experiments-line-chart"
+      >
+        <div
+          class="recharts-responsive-container"
+          style="width: 100%; height: 320px;"
+        >
+          <div
+            style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

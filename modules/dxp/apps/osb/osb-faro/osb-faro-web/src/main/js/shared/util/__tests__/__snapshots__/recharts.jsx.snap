@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Recharts Util RechartsTooltip should render 1`] = `
+<div>
+  <div
+    class="bb-tooltip-container"
+    style="position: static;"
+  >
+    <table
+      class="analytics-tooltip-chart"
+    >
+      <thead
+        class="analytics-tooltip-chart-header"
+      >
+        <tr
+          class="analytics-tooltip-chart-row"
+        >
+          <td
+            style="min-width: 150px;"
+          >
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+            >
+              Test Title
+            </div>
+          </td>
+          <td
+            style="min-width: 55px;"
+          >
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-semibold"
+            >
+              12-12-12
+            </div>
+          </td>
+        </tr>
+      </thead>
+      <tbody
+        class="analytics-tooltip-chart-body"
+      >
+        <tr
+          class="analytics-tooltip-chart-row"
+        >
+          <td>
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+            >
+              test
+            </div>
+          </td>
+          <td>
+            <div
+              class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-semibold"
+            >
+              123
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Recharts Util getAxisTickText should render when returned function is called 1`] = `
+<div>
+  <text
+    class="recharts-text"
+    style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+    text-anchor="middle"
+    x="12"
+    y="12"
+  >
+    <tspan
+      dy="0em"
+      x="12"
+    >
+      4
+    </tspan>
+  </text>
+</div>
+`;
+
+exports[`Recharts Util getYAxisLabel should render when returned function is called 1`] = `
+<div>
+  <text
+    class="recharts-text"
+    fill="#6B6C7E"
+    text-anchor="start"
+    x="8"
+    y="4"
+  >
+    <tspan
+      dy="0em"
+      x="8"
+    >
+      Test
+    </tspan>
+  </text>
+</div>
+`;

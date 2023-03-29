@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unique Visitors Cell should render 1`] = `
+<div>
+  <td>
+    <div
+      class="d-flex flex-column w-100"
+    >
+      <span
+        class="unique-visitors"
+      >
+        123
+      </span>
+      <span
+        class="traffic-quota"
+      >
+        50% Traffic Split
+      </span>
+    </div>
+  </td>
+</div>
+`;

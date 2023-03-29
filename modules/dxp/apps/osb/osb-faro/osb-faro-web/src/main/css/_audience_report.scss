@@ -1,0 +1,31 @@
+$c: '.audience-report-chart';
+$donut: '#{$c}-donut';
+
+#{$c} {
+	.gap {
+		gap: 8px;
+	}
+
+	.title a {
+		color: $secondary;
+	}
+}
+
+#{$donut} {
+	position: relative;
+
+	.bb-tooltip-container {
+		border-width: 0;
+
+		.analytics-tooltip-chart {
+			margin: 0;
+			padding: 12px;
+		}
+	}
+
+	.legend-item {
+		color: $mainLighten28;
+		font-size: $fontSizeMedium;
+		font-weight: $fontWeightSemiBold;
+	}
+}

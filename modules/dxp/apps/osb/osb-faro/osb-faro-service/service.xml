@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_1_0.dtd">
+
+<service-builder auto-import-default-references="false" package-path="com.liferay.osb.faro">
+	<author>Matthew Kong</author>
+	<namespace>OSBFaro</namespace>
+	<entity local-service="true" name="FaroChannel" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroChannelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createTime" type="long" />
+		<column name="modifiedTime" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="channelId" type="String" />
+		<column name="name" type="String" />
+		<column name="permissionType" type="int" />
+		<column name="workspaceGroupId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="WorkspaceGroupId" return-type="Collection">
+			<finder-column name="workspaceGroupId" />
+		</finder>
+		<finder name="G_U" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ChannelId" return-type="FaroChannel" unique="true">
+			<finder-column name="channelId" />
+			<finder-column name="workspaceGroupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Role" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="FaroEmail" persistence-class="false" remote-service="false" />
+	<entity local-service="true" name="FaroNotification" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroNotificationId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="createTime" type="long" />
+		<column name="modifiedTime" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="ownerId" type="long" />
+		<column name="scope" type="String" />
+		<column name="read" type="boolean" />
+		<column name="type" type="String" />
+		<column name="subtype" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="LtCreateTime" return-type="Collection">
+			<finder-column comparator="&lt;" name="createTime" />
+		</finder>
+		<finder name="G_GtC_O_T" return-type="Collection" where="read = [$FALSE$]">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="createTime" />
+			<finder-column arrayable-operator="OR" name="ownerId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="G_GtC_O_T_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="createTime" />
+			<finder-column arrayable-operator="OR" name="ownerId" />
+			<finder-column name="type" />
+			<finder-column name="subtype" />
+		</finder>
+		<finder name="G_GtC_O_R_T_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="createTime" />
+			<finder-column arrayable-operator="OR" name="ownerId" />
+			<finder-column name="read" />
+			<finder-column name="type" />
+			<finder-column name="subtype" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="FaroPreferences" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroPreferencesId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createTime" type="long" />
+		<column name="modifiedTime" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="ownerId" type="long" />
+		<column name="preferences" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_O" return-type="FaroPreferences" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="ownerId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="FaroProject" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroProjectId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createTime" type="long" />
+		<column name="modifiedTime" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="accountKey" type="String" />
+		<column name="accountName" type="String" />
+		<column name="corpProjectName" type="String" />
+		<column name="corpProjectUuid" type="String" />
+		<column name="ipAddresses" type="String" />
+		<column name="incidentReportEmailAddresses" type="String" />
+		<column name="lastAccessTime" type="long" />
+		<column name="recommendationsEnabled" type="boolean" />
+		<column name="serverLocation" type="String" />
+		<column name="services" type="String" />
+		<column name="state" type="String" />
+		<column name="subscription" type="String" />
+		<column name="timeZoneId" type="String" />
+		<column name="weDeployKey" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="FaroProject" unique="true">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="CorpProjectUuid" return-type="FaroProject" unique="true">
+			<finder-column name="corpProjectUuid" />
+		</finder>
+		<finder name="ServerLocation" return-type="Collection">
+			<finder-column name="serverLocation" />
+		</finder>
+		<finder name="WeDeployKey" return-type="FaroProject" unique="true">
+			<finder-column name="weDeployKey" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="FaroChannel" package-path="com.liferay.osb.faro" />
+		<reference entity="FaroPreferences" package-path="com.liferay.osb.faro" />
+		<reference entity="FaroProjectEmailAddressDomain" package-path="com.liferay.osb.faro" />
+		<reference entity="FaroUser" package-path="com.liferay.osb.faro" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="FaroProjectEmailAddressDomain" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroProjectEmailAddressDomainId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="faroProjectId" type="long" />
+		<column name="emailAddressDomain" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="FaroProjectId" return-type="Collection">
+			<finder-column name="faroProjectId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="FaroUser" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroUserId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createTime" type="long" />
+		<column name="modifiedTime" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="liveUserId" type="long" />
+		<column name="roleId" type="long" />
+		<column name="emailAddress" type="String" />
+		<column name="key" type="String" />
+		<column name="status" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="Key" return-type="FaroUser" unique="true">
+			<finder-column name="key" />
+		</finder>
+		<finder name="G_L" return-type="FaroUser">
+			<finder-column name="groupId" />
+			<finder-column name="liveUserId" />
+		</finder>
+		<finder name="G_R" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="roleId" />
+		</finder>
+		<finder name="G_E" return-type="FaroUser" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="emailAddress" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="L_S" return-type="Collection">
+			<finder-column name="liveUserId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="E_S" return-type="Collection">
+			<finder-column name="emailAddress" />
+			<finder-column name="status" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="FaroPreferences" package-path="com.liferay.osb.faro" />
+		<reference entity="FaroProject" package-path="com.liferay.osb.faro" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Role" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
+	</entity>
+</service-builder>

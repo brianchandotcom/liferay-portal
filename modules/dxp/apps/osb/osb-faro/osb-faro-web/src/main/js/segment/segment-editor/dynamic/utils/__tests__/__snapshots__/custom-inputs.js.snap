@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom Inputs Util createCustomValueMap should create an immutable valueIMap from a given param array 1`] = `
+Immutable.Record {
+  "criterionGroup": Immutable.Map {
+    "conjunctionName": "and",
+    "criteriaGroupId": "group_2",
+    "items": Immutable.List [
+      Immutable.Map {
+        "operatorName": "eq",
+        "propertyName": "context/city",
+        "value": "foo",
+      },
+      Immutable.Map {
+        "operatorName": "gt",
+        "propertyName": "completeDate",
+        "value": "last7Days",
+      },
+    ],
+  },
+  "operator": null,
+  "value": null,
+}
+`;

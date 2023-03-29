@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasePage.Header NavBar renders NavBar 1`] = `
+<div>
+  <ul
+    class="nav-root page-subnav nav nav-underline"
+    role="tablist"
+  >
+    <li
+      class="nav-item"
+      role="presentation"
+    >
+      <a
+        class="nav-link"
+        href="/workspace/123/contacts/accounts/321?rangeKey=30"
+        role="tab"
+      >
+        <span
+          class="title"
+        >
+          Test
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`BasePage.Header NavBar renders NavBar w/o routeQueries 1`] = `
+<div>
+  <ul
+    class="nav-root page-subnav nav nav-underline"
+    role="tablist"
+  >
+    <li
+      class="nav-item"
+      role="presentation"
+    >
+      <a
+        class="nav-link"
+        href="/workspace/123/contacts/accounts/321"
+        role="tab"
+      >
+        <span
+          class="title"
+        >
+          Test
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`BasePage.Header PageActions renders PageActions 1`] = `
+<div>
+  <button
+    class="button-root btn btn-secondary"
+    type="button"
+  >
+    Test Action
+  </button>
+</div>
+`;
+
+exports[`BasePage.Header Section renders Section 1`] = `
+<div>
+  <div
+    class="header-section"
+  >
+    Test Test
+  </div>
+</div>
+`;
+
+exports[`BasePage.Header TitleSection renders TitleSection w/ Title 1`] = `
+<div>
+  <div
+    class="header-section title-section"
+  >
+    <span
+      class="align-items-center d-flex"
+    >
+      <h1
+        class="title text-truncate"
+      >
+        <span
+          class="text-truncate"
+          data-tooltip="false"
+          title=""
+        />
+      </h1>
+      Test Test
+    </span>
+  </div>
+</div>
+`;
+
+exports[`BasePage.Header TitleSection renders TitleSection w/ subtitle 1`] = `
+<div>
+  <div
+    class="header-section title-section subtitle"
+  >
+    <span
+      class="align-items-center d-flex"
+    >
+      <h1
+        class="title text-truncate"
+      >
+        <span
+          class="text-truncate"
+          data-tooltip="false"
+          title=""
+        />
+      </h1>
+      Test Test
+    </span>
+    <div
+      class="subtitle"
+    >
+      Test Subtitle
+    </div>
+  </div>
+</div>
+`;
+
+exports[`BasePage.Header TitleSection renders TitleSection w/ title & no children 1`] = `
+<div>
+  <div
+    class="header-section title-section"
+  >
+    <span
+      class="align-items-center d-flex"
+    >
+      <h1
+        class="title text-truncate"
+      >
+        <span
+          class="text-truncate"
+          data-tooltip="false"
+          title=""
+        >
+          Test Title
+        </span>
+      </h1>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`BasePage.Header renders Header 1`] = `
+<div>
+  <header
+    class="header-root"
+  >
+    <div
+      class="header-container"
+    >
+      Test Test
+    </div>
+  </header>
+</div>
+`;
+
+exports[`BasePage.Header renders Header w/ Breadcrumbs 1`] = `
+<div>
+  <header
+    class="header-root"
+  >
+    <div
+      class="header-container"
+    >
+      <div
+        class="row-root align-items-center d-flex justify-content-between"
+      >
+        <ol
+          class="breadcrumb breadcrumbs-root"
+        >
+          <li
+            class="breadcrumb-item"
+          >
+            <button
+              class="button-root btn btn-unstyled breadcrumb-text-truncate"
+              type="button"
+            >
+              Foo
+            </button>
+          </li>
+          <li
+            class="breadcrumb-item active"
+          >
+            <span
+              class="breadcrumb-text-truncate"
+            >
+              Bar
+            </span>
+          </li>
+        </ol>
+      </div>
+      Test Test
+    </div>
+  </header>
+</div>
+`;

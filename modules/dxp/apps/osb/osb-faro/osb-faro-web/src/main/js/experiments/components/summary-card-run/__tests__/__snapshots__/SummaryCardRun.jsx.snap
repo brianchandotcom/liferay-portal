@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryCardRun should render component 1`] = `
+<div>
+  <div
+    class="analytics-summary-card-alert w-100 p-4"
+  >
+    <svg
+      class="lexicon-icon lexicon-icon-home"
+      role="presentation"
+    >
+      <use
+        xlink:href="#home"
+      />
+    </svg>
+    <div>
+      <h3
+        class="font-weight-bold font-weight-bold mb-1"
+      >
+        Alert title
+      </h3>
+      <strong>
+        Alert description
+      </strong>
+    </div>
+  </div>
+  <div
+    class="card-body"
+  >
+    <div
+      class="w-100 mt-4"
+    >
+      <h3
+        class="font-weight-bold mb-4"
+      >
+        Summary title
+      </h3>
+      <div
+        class="font-size-sm-1x mb-2 text-uppercase"
+      >
+        Summary subtitle
+      </div>
+      <p
+        class="font-size-sm mb-0"
+      >
+        Summary description
+      </p>
+      <div
+        class="analytics-summary-card-sections"
+      >
+        <div>
+          Section 01
+        </div>
+        <div>
+          Section 02
+        </div>
+        <div>
+          Section 03
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

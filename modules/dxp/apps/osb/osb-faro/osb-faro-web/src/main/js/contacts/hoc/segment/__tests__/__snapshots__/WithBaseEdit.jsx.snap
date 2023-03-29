@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithBaseEdit should render the wrapped component 1`] = `
+<div
+  class="index-root segment-edit-root editing"
+>
+  <div
+    class="maintenance-alert-root"
+  />
+  <header
+    class="header-root"
+  >
+    <div
+      class="header-container"
+    >
+      <div
+        class="row-root align-items-center d-flex justify-content-between"
+      >
+        <ol
+          class="breadcrumb breadcrumbs-root"
+        >
+          <li
+            aria-haspopup="true"
+            class="dropdown dropdown-root breadcrumb-item"
+          >
+            <button
+              class="button-root btn btn-unstyled dropdown-toggle breadcrumb-link show-caret"
+              type="button"
+            >
+              <span>
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-ellipsis-h"
+                  viewBox=""
+                >
+                  <use
+                    href="/o/osb-faro-web/dist/sprite.svg#ellipsis-h"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            class="breadcrumb-item"
+          >
+            <a
+              class="breadcrumb-link breadcrumb-text-truncate"
+              href="/workspace/23/contacts/segments"
+            >
+              Segments
+            </a>
+          </li>
+          <li
+            class="breadcrumb-item"
+          >
+            <a
+              class="breadcrumb-link breadcrumb-text-truncate"
+              href="/workspace/23/contacts/segments/123"
+            >
+              Seattle0
+            </a>
+          </li>
+          <li
+            class="breadcrumb-item active"
+          >
+            <span
+              class="breadcrumb-text-truncate"
+            >
+              Edit
+            </span>
+          </li>
+        </ol>
+      </div>
+      <div
+        class="row-root align-items-center d-flex justify-content-between"
+      >
+        <div
+          class="header-section title-section"
+        >
+          <span
+            class="align-items-center d-flex"
+          >
+            <h1
+              class="title text-truncate"
+            >
+              <span
+                class="text-truncate"
+                data-tooltip="false"
+                title=""
+              >
+                Edit Individuals Segment
+              </span>
+            </h1>
+            <div
+              class="label label-root label-secondary label-lg label-uppercase"
+            >
+              <span
+                class="label-item"
+              >
+                Dynamic Segment
+              </span>
+            </div>
+          </span>
+        </div>
+        <div
+          class="header-section"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Delete Segment
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div
+    class="body-root"
+  >
+    <span
+      class="children-wrapper"
+    >
+      <div>
+        foobar
+      </div>
+    </span>
+  </div>
+</div>
+`;

@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttributeView should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/definitions"
+        >
+          Definitions
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/definitions/event-attributes/global"
+        >
+          Event Attributes
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          name-0
+        </span>
+      </li>
+    </ol>
+    <div
+      class="content-header has-page-actions"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              name-0
+            </span>
+          </h3>
+          <span
+            class="text-truncate subtitle-text ml-2"
+            data-tooltip="false"
+            title=""
+          >
+            displayName-0
+          </span>
+        </div>
+        <div
+          class="description"
+        >
+          <div
+            class="no-description"
+          >
+            No Description
+          </div>
+          <div
+            class="label label-root label-primary label-uppercase"
+          >
+            <span
+              class="label-item"
+            >
+              STRING
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      >
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Edit
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        class="table-responsive table-root flex-grow-1"
+      >
+        <table
+          class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+        >
+          <thead>
+            <tr>
+              <th
+                class="table-head-title table-cell-expand-small text-truncate"
+              >
+                Sample Raw Data
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                Last Seen
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class=""
+            >
+              <td
+                class="table-cell-expand-small text-truncate"
+              >
+                RecentValue
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                Jul 10, 2018
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;

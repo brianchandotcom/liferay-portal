@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseDropdown should render 1`] = `
+<div>
+  <div
+    class="dropdown"
+  >
+    <button
+      class="dropdown-toggle"
+      data-testid="target"
+      style=""
+    >
+      click me
+    </button>
+  </div>
+</div>
+`;
+
+exports[`BaseDropdown should render 2`] = `undefined`;

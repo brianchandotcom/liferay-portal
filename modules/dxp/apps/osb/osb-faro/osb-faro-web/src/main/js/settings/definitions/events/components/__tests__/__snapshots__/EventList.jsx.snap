@@ -1,0 +1,334 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventList should render 1`] = `
+<div>
+  <div
+    class="toolbar-root"
+  >
+    <nav
+      class="navbar navbar-root management-bar management-bar-light navbar-expand"
+    >
+      <div
+        class="container-fluid"
+      >
+        <ul
+          class="nav-root front-nav navbar-nav"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  data-testid="select-all-checkbox"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="navbar-form navbar-form-autofit"
+        >
+          <div
+            class="input-group search"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="input-root form-control input-group-inset input-group-inset-after"
+                placeholder="Search"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-search"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div
+    class="table-responsive table-root flex-grow-1"
+  >
+    <table
+      class="table table-autofit table-hover show-quick-actions-on-hover table-heading-nowrap table-nowrap"
+    >
+      <thead>
+        <tr>
+          <th />
+          <th
+            class="table-head-title table-cell-expand-small"
+          >
+            <a
+              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <span
+                class="text-truncate"
+              >
+                Event Name
+              </span>
+              <span
+                class="inline-item inline-item-after"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                  />
+                </svg>
+              </span>
+            </a>
+          </th>
+          <th
+            class="table-head-title table-cell-expand-small text-truncate"
+          >
+            <a
+              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              href="/?field=displayName&page=1&sortOrder=ASC"
+            >
+              <span
+                class="text-truncate"
+              >
+                Display Name
+              </span>
+            </a>
+          </th>
+          <th
+            class="table-head-title table-cell-expand text-truncate"
+          >
+            Description
+          </th>
+          <th
+            class="table-head-title"
+          >
+            <a
+              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              href="/?field=hidden&page=1&sortOrder=ASC"
+            >
+              <span
+                class="text-truncate"
+              />
+            </a>
+          </th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class="name-cell-root table-cell-expand-small"
+          >
+            <div
+              class="content-container"
+            >
+              <div
+                class="text-truncate"
+              >
+                <div
+                  class="table-title text-truncate"
+                >
+                  <a
+                    class="text-truncate"
+                    href="/workspace/23/settings/definitions/events/0"
+                  >
+                    name-0
+                  </a>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td
+            class="table-cell-expand-small text-truncate"
+          >
+            displayName-0
+          </td>
+          <td
+            class="table-cell-expand text-truncate"
+          />
+          <td />
+          <td
+            class="row-actions"
+          >
+            <span>
+              <div
+                class="quick-action-menu"
+              >
+                <button
+                  alt="Set to Hide"
+                  aria-label="Set to Hide"
+                  class="button-root btn btn-unstyled component-action quick-action-item"
+                  data-tooltip="true"
+                  title="Set to Hide"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-ac-hidden"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-hidden"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav
+    class="navbar navbar-root pagination-bar-root"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root pagination-items-per-page"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            1 Item
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="pagination-results"
+      >
+        Showing 1 to 1 of 1 entry.
+      </div>
+      <ul
+        class="pagination pagination-root"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link link-disabled"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-left"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+              />
+            </svg>
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link"
+            href="/?page=1"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item disabled"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link link-disabled"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+`;

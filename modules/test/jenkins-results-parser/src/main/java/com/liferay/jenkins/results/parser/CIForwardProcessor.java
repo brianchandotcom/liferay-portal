@@ -473,25 +473,17 @@ public class CIForwardProcessor {
 	}
 
 	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
-		String propertyNamePrefix = "ci.forward";
-
-		if (_force) {
-			propertyNamePrefix += ".force";
-		}
-
 		return _getBuildPropertyAsArray(
-			propertyNamePrefix + ".required.completed.suites");
+			JenkinsResultsParserUtil.combine(
+				"ci.forward", _force ? ".force" : "",
+				".required.completed.suites"));
 	}
 
 	private String[] _getRequiredPassingTestSuiteNames() throws IOException {
-		String propertyNamePrefix = "ci.forward";
-
-		if (_force) {
-			propertyNamePrefix += ".force";
-		}
-
 		return _getBuildPropertyAsArray(
-			propertyNamePrefix + ".required.passing.suites");
+			JenkinsResultsParserUtil.combine(
+				"ci.forward", _force ? ".force" : "",
+				".required.passing.suites"));
 	}
 
 	private String _getRetryCommentBody() {

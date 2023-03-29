@@ -12,8 +12,8 @@
  * details.
  */
 
-import {memo} from 'react';
-import {Link, useOutletContext, useParams} from 'react-router-dom';
+import {memo, useEffect, useState} from 'react';
+import {Link, useOutletContext, useSearchParams} from 'react-router-dom';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
 import StatusBadge from '~/components/StatusBadge';
@@ -26,7 +26,8 @@ import {CaseResultStatuses} from '~/util/statuses';
 
 type RunStatusProps = {
 	caseResults: TestrayCaseResult[];
-	runId: Number;
+	dueStatusApplied?: string | null;
+	run: TestrayRun;
 };
 
 type CompareRunsOutlet = {
@@ -45,14 +46,24 @@ searchParams.set(
 );
 searchParams.set('nestedFieldsDepth', '2');
 
-const RunStatus: React.FC<RunStatusProps> = ({caseResults, runId}) => {
-	const {runs} = useOutletContext<CompareRunsOutlet>();
-
-	const caseResult = caseResults.find(
-		(caseResult) => caseResult?.runId === runId
+const RunStatus: React.FC<RunStatusProps> = ({
+	caseResults,
+	dueStatusApplied,
+	run,
+}) => {
+	let caseResult = caseResults.find(
+		(caseResult) =>
+			caseResult?.runId === run.id &&
+			(dueStatusApplied
+				? caseResult.dueStatus.key === dueStatusApplied
+				: true)
 	);
 
-	const run = runs.find(({id}) => id === runId);
+	if (!caseResult && dueStatusApplied) {
+		caseResult = {
+			dueStatus: {key: dueStatusApplied, name: dueStatusApplied + '?'},
+		} as TestrayCaseResult;
+	}
 
 	const didNotRunStatusKey = caseResult
 		? caseResult?.dueStatus.key
@@ -83,84 +94,147 @@ const RunStatus: React.FC<RunStatusProps> = ({caseResults, runId}) => {
 const RunStatusMemoized = memo(RunStatus);
 
 const CompareRunsCases = () => {
-	const {runA, runB} = useParams();
+	const [mount, setMount] = useState(true);
 
-	const caseResultFilter = useSearchBuilder({useURIEncode: false});
+	const [routeSearchParams] = useSearchParams();
+	let caseResultFilter = useSearchBuilder({useURIEncode: false});
 
-	const filter = caseResultFilter
-		.in('caseToCaseResult/r_runToCaseResult_c_runId', [
-			runA as string,
-			runB as string,
-		])
-		.build();
+	const {
+		runs: [runA, runB],
+	} = useOutletContext<CompareRunsOutlet>();
+
+	const dueStatusA = routeSearchParams.get('dueStatusA');
+	const dueStatusB = routeSearchParams.get('dueStatusB');
+
+	const compareRunFilterInitialContext = {
+		entries: [
+			{
+				label: i18n.translate('status'),
+				name: 'dueStatus',
+				value: dueStatusA as string,
+			},
+			{
+				label: i18n.translate('status'),
+				name: 'dueStatus',
+				value: dueStatusB as string,
+			},
+		],
+		filter: {},
+	};
+
+	if (dueStatusA && dueStatusB) {
+		caseResultFilter = caseResultFilter
+			.group('OPEN')
+			.eq('caseToCaseResult/r_runToCaseResult_c_runId', runA.id)
+			.and()
+			.eq('caseToCaseResult/dueStatus', dueStatusA)
+			.group('CLOSE')
+			.and()
+			.group('OPEN')
+			.eq('caseToCaseResult/r_runToCaseResult_c_runId', runB.id)
+			.and()
+			.eq('caseToCaseResult/dueStatus', dueStatusB)
+			.group('CLOSE');
+	} else {
+		caseResultFilter = caseResultFilter.in(
+			'caseToCaseResult/r_runToCaseResult_c_runId',
+			[runA.id, runB.id]
+		);
+	}
+
+	useEffect(() => {
+		if (dueStatusA && dueStatusB) {
+			setMount(false);
+
+			setTimeout(() => {
+				setMount(true);
+			}, 200);
+		}
+	}, [dueStatusA, dueStatusB]);
+
+	const filter = caseResultFilter.build();
 
 	return (
 		<Container>
-			<ListView
-				initialContext={{pageSize: 100}}
-				managementToolbarProps={{
-					display: {columns: false},
-					filterSchema: 'compareRunsCases',
-					title: i18n.translate('cases'),
-				}}
-				resource={`/${testrayCaseRest.uri}?${searchParams.toString()}`}
-				tableProps={{
-					columns: [
-						{
-							key: 'priority',
-							sorteable: true,
-							value: i18n.translate('priority'),
-							width: '100',
-						},
-						{
-							key: 'component',
-							render: (component) => component?.name,
-							value: i18n.translate('component'),
-						},
-						{
-							key: 'name',
-							size: 'xl',
-							sorteable: true,
-							value: i18n.translate('case'),
-						},
-						{
-							key: 'dueStatus',
-							render: (_, data: TestrayCase) => (
-								<RunStatusMemoized
-									caseResults={
-										data.caseResults as TestrayCaseResult[]
-									}
-									runId={Number(runA)}
-								/>
-							),
-							size: 'md',
-							sorteable: true,
-							value: i18n.sub('status-in-x', 'run-a'),
-						},
-						{
-							key: 'dueStatus',
-							render: (_, data: TestrayCase) => (
-								<RunStatusMemoized
-									caseResults={
-										data.caseResults as TestrayCaseResult[]
-									}
-									runId={Number(runB)}
-								/>
-							),
-							size: 'md',
-							sorteable: true,
-							value: i18n.sub('status-in-x', 'run-b'),
-						},
-					],
-					rowWrap: true,
-				}}
-				transformData={(response) =>
-					testrayCaseRest.transformDataFromList(response)
-				}
-				variables={{
-					filter,
-				}}
-			/>
+			{mount && (
+				<ListView
+					initialContext={{
+						filters: compareRunFilterInitialContext,
+						pageSize: 100,
+					}}
+					managementToolbarProps={{
+						display: {columns: false},
+						filterSchema: 'compareRunsCases',
+					}}
+					resource={`/${
+						testrayCaseRest.uri
+					}?${searchParams.toString()}`}
+					tableProps={{
+						columns: [
+							{
+								key: 'priority',
+								sorteable: true,
+								value: i18n.translate('priority'),
+								width: '100',
+							},
+							{
+								key: 'component',
+								render: (component) => component?.name,
+								value: i18n.translate('component'),
+							},
+							{
+								key: 'name',
+								size: 'xl',
+								sorteable: true,
+								value: i18n.translate('case'),
+							},
+							{
+								key: 'dueStatus',
+								render: (
+									_,
+									data: TestrayCase & {rowIndex: number}
+								) => (
+									<RunStatusMemoized
+										caseResults={
+											data.caseResults as TestrayCaseResult[]
+										}
+										dueStatusApplied={dueStatusA}
+										run={runA}
+									/>
+								),
+								size: 'md',
+								sorteable: true,
+								value: i18n.sub('status-in-x', 'run-a'),
+							},
+							{
+								key: 'dueStatus',
+								render: (
+									_,
+									data: TestrayCase & {rowIndex: number}
+								) => (
+									<RunStatusMemoized
+										caseResults={
+											data.caseResults as TestrayCaseResult[]
+										}
+										dueStatusApplied={dueStatusB}
+										run={runB}
+									/>
+								),
+								size: 'md',
+								sorteable: true,
+								value: i18n.sub('status-in-x', 'run-b'),
+							},
+						],
+						rowWrap: true,
+					}}
+					transformData={(response) =>
+						testrayCaseRest.transformDataFromList(response)
+					}
+					variables={{
+						filter,
+					}}
+				/>
+			)}
 		</Container>
 	);
 };

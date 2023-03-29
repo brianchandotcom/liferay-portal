@@ -90,6 +90,10 @@ private String _filterSanitizer(String line) {
 				|				<literal-list>
 				|					<literal value="{0}" />
 				|					<literal value="{1}" />
+				|					<literal value="{2}" />
+				|					<literal value="{3}" />
+				|					<literal value="mailto:{0}" />
+				|					<literal value="mailto:{1}" />
 				|				</literal-list>
 				|			</attribute>""".stripMargin()
 	}

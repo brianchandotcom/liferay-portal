@@ -3,3 +3,4 @@ build
 dist
 node_modules
 node_modules_cache
+poshi/poshi-ext.properties

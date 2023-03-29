@@ -57,14 +57,18 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	]);
 
 	useEffect(() => {
-		const container = document.querySelector('.testray-page');
+		const container = document.querySelector('.tr-main__body__page');
 
 		const scrollHandler = () => {
 			const screenHeight = (container as any)?.offsetHeight;
 			const buttonRelativePosition =
 				buttonRef?.current?.getBoundingClientRect().bottom ?? 0;
 
-			setPosition(screenHeight - buttonRelativePosition);
+			const calculatePosition = screenHeight - buttonRelativePosition;
+
+			const position = calculatePosition > 0 ? calculatePosition : 1;
+
+			setPosition(position);
 		};
 
 		container?.addEventListener('scroll', scrollHandler);

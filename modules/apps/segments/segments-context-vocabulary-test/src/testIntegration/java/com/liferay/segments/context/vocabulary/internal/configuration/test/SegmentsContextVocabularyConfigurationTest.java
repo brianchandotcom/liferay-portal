@@ -95,6 +95,17 @@ public class SegmentsContextVocabularyConfigurationTest {
 		_assertProperties(_configuration1, _PROPERTIES1);
 	}
 
+	@Test
+	public void testUpdateCompanySegmentsContextVocabularyConfiguration()
+		throws Exception {
+
+		_configuration1 = _createFactoryConfiguration(_PROPERTIES1);
+
+		_configuration1.update(_PROPERTIES2);
+
+		_assertProperties(_configuration1, _PROPERTIES2);
+	}
+
 	private void _assertProperties(
 		Configuration configuration,
 		Dictionary<String, Object> expectedProperties) {

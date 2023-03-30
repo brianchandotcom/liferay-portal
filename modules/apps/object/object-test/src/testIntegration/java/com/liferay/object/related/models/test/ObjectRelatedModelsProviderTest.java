@@ -14,6 +14,9 @@
 
 package com.liferay.object.related.models.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -31,25 +34,30 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -58,6 +66,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -526,6 +535,20 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	@Test
+	public void testObjectEntry1toMObjectUnrelatedModelsProviderImpl()
+		throws Exception {
+
+		_testSystemObjectEntry1toMObjectUnrelatedModels(
+			CompanyThreadLocal.getCompanyId());
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_testSystemObjectEntry1toMObjectUnrelatedModels(company.getCompanyId());
+
+		_companyLocalService.deleteCompany(company);
+	}
+
+	@Test
 	public void testObjectEntryMtoMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
@@ -957,6 +980,112 @@ public class ObjectRelatedModelsProviderTest {
 		}
 	}
 
+	private void _testSystemObjectEntry1toMObjectUnrelatedModels(long companyId)
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(companyId);
+
+		Assert.assertNotNull(user);
+
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			_setUser(user);
+
+			ObjectDefinition objectDefinition = _addObjectDefinition();
+
+			ObjectDefinition systemObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					companyId, AccountEntry.class.getName());
+
+			ObjectRelationship objectRelationship = _addObjectRelationship(
+				objectDefinition.getObjectDefinitionId(),
+				systemObjectDefinition.getObjectDefinitionId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			AccountEntry accountEntry1 = _addAccountEntry(user.getUserId());
+			AccountEntry accountEntry2 = _addAccountEntry(user.getUserId());
+
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+			ObjectField objectRelationshipObjectField2 =
+				_objectFieldLocalService.getObjectField(
+					objectRelationship.getObjectFieldId2());
+
+			_objectEntryLocalService.
+				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+					user.getUserId(), systemObjectDefinition,
+					accountEntry1.getAccountEntryId(),
+					HashMapBuilder.<String, Serializable>put(
+						objectRelationshipObjectField2.getName(),
+						objectEntry.getObjectEntryId()
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			ObjectRelatedModelsProvider<ObjectEntry>
+				objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							systemObjectDefinition.getClassName(),
+							systemObjectDefinition.getCompanyId(),
+							ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			List<ObjectEntry> unrelatedObjectEntries =
+				objectRelatedModelsProvider.getUnrelatedModels(
+					companyId, 0, systemObjectDefinition,
+					objectEntry.getObjectEntryId(),
+					objectRelationship.getObjectRelationshipId());
+
+			Assert.assertEquals(
+				unrelatedObjectEntries.toString(), 1,
+				unrelatedObjectEntries.size());
+
+			_objectEntryLocalService.
+				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+					user.getUserId(), systemObjectDefinition,
+					accountEntry2.getAccountEntryId(),
+					HashMapBuilder.<String, Serializable>put(
+						objectRelationshipObjectField2.getName(),
+						objectEntry.getObjectEntryId()
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			unrelatedObjectEntries =
+				objectRelatedModelsProvider.getUnrelatedModels(
+					companyId, 0, systemObjectDefinition,
+					objectEntry.getObjectEntryId(),
+					objectRelationship.getObjectRelationshipId());
+
+			Assert.assertEquals(
+				unrelatedObjectEntries.toString(), 0,
+				unrelatedObjectEntries.size());
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship.getObjectRelationshipId());
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+
+			_accountEntryLocalService.deleteAccountEntries(
+				new long[] {
+					accountEntry1.getAccountEntryId(),
+					accountEntry2.getAccountEntryId()
+				});
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
 	private void _testSystemObjectEntryMtoMRelatedModelsProviderImpl()
 		throws Exception {
 
@@ -1207,6 +1336,12 @@ public class ObjectRelatedModelsProviderTest {
 	private static PermissionChecker _originalPermissionChecker;
 	private static Role _role;
 	private static User _user;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;

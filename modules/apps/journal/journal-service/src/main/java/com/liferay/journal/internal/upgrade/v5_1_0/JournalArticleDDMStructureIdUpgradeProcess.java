@@ -17,6 +17,7 @@ package com.liferay.journal.internal.upgrade.v5_1_0;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -24,6 +25,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,8 +52,13 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 		Map<String, Map<Long, Long>> ddmStructureKeysMap =
 			new ConcurrentHashMap<>();
 
-		long classNameId = _classNameLocalService.getClassNameId(
+		Map<Long, Long> siteGroupIdsMap = new ConcurrentHashMap<>();
+
+		long journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
+
+		long layoutClassNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
@@ -70,9 +80,18 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 							ddmStructureKey, key -> new ConcurrentHashMap<>());
 
 					if (!groupIdsMap.containsKey(groupId)) {
+						Long siteGroupId = siteGroupIdsMap.get(groupId);
+
+						if (siteGroupId == null) {
+							siteGroupId = _getSiteGroupId(
+								groupId, layoutClassNameId);
+
+							siteGroupIdsMap.put(groupId, siteGroupId);
+						}
+
 						DDMStructure ddmStructure =
 							_ddmStructureLocalService.getStructure(
-								_portal.getSiteGroupId(groupId), classNameId,
+								siteGroupId, journalArticleClassNameId,
 								ddmStructureKey, true);
 
 						groupIdsMap.put(groupId, ddmStructure.getStructureId());
@@ -95,6 +114,26 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 			UpgradeProcessFactory.addColumns(
 				"JournalArticle", "DDMStructureId LONG")
 		};
+	}
+
+	private long _getSiteGroupId(long groupId, long layoutClassNameId)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select parentGroupId from Group_ where groupId = ? and " +
+					"classNameId = ?")) {
+
+			preparedStatement.setLong(1, groupId);
+			preparedStatement.setLong(2, layoutClassNameId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("parentGroupId");
+				}
+			}
+		}
+
+		return groupId;
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

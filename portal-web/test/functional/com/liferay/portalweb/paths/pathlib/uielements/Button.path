@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_WITH_ARIA_LABEL_INDEX</td>
+	<td>xpath=(//button[@aria-label='${ariaLabel}'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_WITH_COLOR</td>
 	<td>//*[contains(@class,'btn-${key_color}')][normalize-space(text())='${key_text}']</td>
 	<td></td>

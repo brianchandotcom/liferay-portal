@@ -20,6 +20,8 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceU
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.admin.web.internal.item.selector.MasterLayoutPageTemplateEntryItemSelectorCriterion;
@@ -271,6 +273,22 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
+	}
+
+	public List<TabsItem> getTabsItems() {
+		return TabsItemListBuilder.add(
+			tabsItem -> {
+				tabsItem.setActive(true);
+				tabsItem.setLabel(LanguageUtil.get(_httpServletRequest, "css"));
+				tabsItem.setPanelId("css");
+			}
+		).add(
+			tabsItem -> {
+				tabsItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "javascript"));
+				tabsItem.setPanelId("javascript");
+			}
+		).build();
 	}
 
 	public Map<String, Object> getThemeSpritemapCETConfigurationProps(

@@ -1,0 +1,7 @@
+{
+	"build": {
+		"options": {
+		},
+		"type": "fdsCellRenderer"
+	}
+}

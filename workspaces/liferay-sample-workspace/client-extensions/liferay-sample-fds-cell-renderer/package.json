@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+		"@liferay/dxp-7.4": "*",
+		"@liferay/js-api": "0.2.0-pre.0"
+	},
+	"description": "Liferay Sample Frontend Data Set Cell Renderer",
+	"main": "./src/index.tsx",
+	"name": "liferay-sample-fds-cell-renderer",
+	"scripts": {
+		"build": "liferay build",
+		"clean": "liferay clean",
+		"deploy": "liferay deploy",
+		"start": "liferay start"
+	},
+	"version": "1.0.0"
+}

@@ -2479,7 +2479,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject287");
 
-		ObjectPortlet.changePagination(itemsPerPage = "4 items");
+		ObjectPortlet.changePagination(itemsPerPage = "4 Items");
 
 		for (var number : list "1,2,3,4") {
 			ObjectPortlet.viewEntry(entry = "Test text ${number}");

@@ -87,6 +87,216 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 	}
 
+	@description = "This is a use case for LPS-174623."
+	test AssertReindexWarningAppearsForCriticalChanges {
+		property custom.properties = "feature.flag.LPS-122920=true";
+		property test.name.skip.portal.instance = "SemanticSearch#AssertReindexWarningAppearsForCriticalChanges";
+
+		task ("When System Settings are using default configurations, assert the warning is not present") {
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When Text Embeddings Enabled is checked and the form is not saved, assert the warning appears") {
+			Check.checkNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When Text Embeddings Enabled is unchecked, assert the warning is removed") {
+			Uncheck.uncheckNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When Text Embeddings Enabled is checked again, assert the warning appears") {
+			Check.checkNotVisible(
+				key_settingFieldName = "Text Embeddings Enabled",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Fill out required fields so that the test can save the form") {
+			PortletEntry.inputText(
+				fieldLabel = "Access Token",
+				text = "original");
+
+			PortletEntry.inputText(
+				fieldLabel = "Model",
+				text = "albert");
+
+			Click(
+				key_itemName = "albert-base-v1",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+		}
+
+		task ("When the form is saved with Text Embeddings Enabled checked, assert the warning is removed") {
+			SemanticSearch.saveAndContinue();
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When the user makes changes to any field within Text Embedding Provider Settings or the Type field and the form is not saved, assert the warning appears. When the user reverts the fields back to their previously saved values, assert the warning is removed") {
+			Select(
+				ariaLabel = "Text Embedding Provider",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = "Hugging Face Inference Endpoint");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Select(
+				ariaLabel = "Text Embedding Provider",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = "txtai");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Select(
+				ariaLabel = "Text Embedding Provider",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = "Hugging Face Inference API");
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			PortletEntry.inputText(
+				fieldLabel = "Access Token",
+				text = "change");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			PortletEntry.inputText(
+				fieldLabel = "Access Token",
+				text = "original");
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			PortletEntry.inputText(
+				fieldLabel = "Model",
+				text = "facebook");
+
+			Click(
+				key_itemName = "facebook/bart-base",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			PortletEntry.inputText(
+				fieldLabel = "Model",
+				text = "albert");
+
+			Click(
+				key_itemName = "albert-base-v1",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			PortletEntry.inputNumber(
+				fieldLabel = "Model Timeout",
+				number = 30);
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			PortletEntry.inputNumber(
+				fieldLabel = "Model Timeout",
+				number = 25);
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Select(
+				ariaLabel = "Embedding Vector Dimensions",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = 384);
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Select(
+				ariaLabel = "Embedding Vector Dimensions",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = 768);
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Select(
+				ariaLabel = "Types",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = "Message Boards Message");
+
+			AssertElementPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When the form is saved with Text Embeddings Enabled checked and there are changes made to any field within Text Embedding Provider Settings or the Type field, assert the warning is removed") {
+			SemanticSearch.saveAndContinue();
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When changes are made to fields that are not within Text Embedding Provider Settings or are not the Type field and the form is not saved, assert the warning does not appear") {
+			PortletEntry.inputNumber(
+				fieldLabel = "Max Character Count",
+				number = 501);
+
+			Select(
+				ariaLabel = "Text Truncation Strategy",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = "End");
+
+			Select(
+				ariaLabel = "Languages",
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = "Finnish (Finland)");
+
+			PortletEntry.inputNumber(
+				fieldLabel = "Text Embedding Cache Timeout",
+				number = 604801);
+
+			AssertElementNotPresent(
+				key_infoMessage = "Changes to this configuration require a reindex",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+	}
+
 	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";

@@ -85,7 +85,6 @@
 		position: fixed;
 		right: 0;
 		top: 121px;
-		visibility: hidden;
 		width: 0;
 		z-index: 10;
 
@@ -156,7 +155,6 @@
 		}
 
 		.criteria-builder-section-sidebar {
-			visibility: visible;
 			width: $sidebarWidth;
 		}
 	}

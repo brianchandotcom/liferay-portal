@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -46,9 +47,11 @@ public class FreeMarkerTemplateResourceLoader
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		init(
-			TemplateConstants.LANG_TYPE_FTL, _templateResourceParsers,
+			bundleContext, TemplateConstants.LANG_TYPE_FTL,
 			_freeMarkerTemplateResourceCache);
 	}
 

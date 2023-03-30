@@ -1036,6 +1036,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			String newLanguageIds = unicodeProperties.getProperty(
 				PropsKeys.LOCALES);
 
+			boolean invalidateLayoutSetTemplates = false;
+
 			if (Validator.isNotNull(newLanguageIds)) {
 				String oldLanguageIds = portletPreferences.getValue(
 					PropsKeys.LOCALES, StringPool.BLANK);
@@ -1048,20 +1050,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					LanguageUtil.resetAvailableLocales(companyId);
 
-					// Invalidate cache of all layout set prototypes that belong
-					// to this company. See LPS-36403.
-
-					Date date = new Date();
-
-					for (LayoutSetPrototype layoutSetPrototype :
-							_layoutSetPrototypeLocalService.
-								getLayoutSetPrototypes(companyId)) {
-
-						layoutSetPrototype.setModifiedDate(date);
-
-						_layoutSetPrototypeLocalService.
-							updateLayoutSetPrototype(layoutSetPrototype);
-					}
+					invalidateLayoutSetTemplates = true;
 				}
 			}
 
@@ -1098,6 +1087,24 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 
 			portletPreferences.store();
+
+			if (invalidateLayoutSetTemplates) {
+
+				// Invalidate cache of all layout set prototypes that belong
+				// to this company. See LPS-36403.
+
+				Date date = new Date();
+
+				for (LayoutSetPrototype layoutSetPrototype :
+						_layoutSetPrototypeLocalService.getLayoutSetPrototypes(
+							companyId)) {
+
+					layoutSetPrototype.setModifiedDate(date);
+
+					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
+						layoutSetPrototype);
+				}
+			}
 		}
 		catch (LocaleException localeException) {
 			throw localeException;

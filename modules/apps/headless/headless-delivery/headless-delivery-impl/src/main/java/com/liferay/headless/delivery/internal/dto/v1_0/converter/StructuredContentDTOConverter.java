@@ -73,7 +73,6 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -232,23 +231,6 @@ public class StructuredContentDTOConverter
 		);
 	}
 
-	private boolean _containRenderedContentValue(UriInfo uriInfo) {
-		MultivaluedMap<String, String> parameters =
-			uriInfo.getQueryParameters();
-
-		if ((parameters == null) || parameters.isEmpty()) {
-			return false;
-		}
-
-		String fields = parameters.getFirst("nestedFields");
-
-		if (fields == null) {
-			return false;
-		}
-
-		return fields.contains("renderedContentValue");
-	}
-
 	private ContentField[] _toContentFields(
 			DLAppService dlAppService, DLURLHelper dlURLHelper,
 			DTOConverterContext dtoConverterContext,
@@ -310,7 +292,9 @@ public class StructuredContentDTOConverter
 						});
 					setRenderedContentValue(
 						() -> {
-							if (!_containRenderedContentValue(uriInfo)) {
+							if (!dtoConverterContext.containValue(
+									uriInfo, "renderedContentValue")) {
+
 								return null;
 							}
 

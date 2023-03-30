@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.internal.scheduler;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -51,7 +51,7 @@ public class CheckGuestCommerceOrdersSchedulerJobConfiguration
 				System.currentTimeMillis() - (deleteInterval * Time.MINUTE));
 
 			_commerceOrderLocalService.deleteCommerceOrdersByAccountId(
-				CommerceAccountConstants.ACCOUNT_ID_GUEST, createDate,
+				AccountConstants.ACCOUNT_ENTRY_ID_GUEST, createDate,
 				CommerceOrderConstants.ORDER_STATUS_OPEN);
 		};
 	}

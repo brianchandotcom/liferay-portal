@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v4_1_0;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.impl.CommerceAddressModelImpl;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
@@ -76,7 +75,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		long commerceAccountClassNameId = _classNameLocalService.getClassNameId(
-			CommerceAccount.class);
+			"com.liferay.commerce.account.model.CommerceAccount");
 
 		PreparedStatement preparedStatement = null;
 

@@ -14,19 +14,26 @@
 
 package com.liferay.commerce.internal.upgrade.v2_2_0;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -41,17 +48,21 @@ import java.util.Objects;
 public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 
 	public CommerceAccountUpgradeProcess(
-		CommerceAccountLocalService commerceAccountLocalService,
-		CommerceAccountOrganizationRelLocalService
-			commerceAccountOrganizationRelLocalService,
+		AccountEntryLocalService accountEntryLocalService,
+		AccountEntryOrganizationRelLocalService
+			accountEntryOrganizationRelLocalService,
+		AccountEntryUserRelLocalService accountEntryUserRelLocalService,
 		EmailAddressLocalService emailAddressLocalService,
-		OrganizationLocalService organizationLocalService) {
+		OrganizationLocalService organizationLocalService,
+		RoleLocalService roleLocalService) {
 
-		_commerceAccountLocalService = commerceAccountLocalService;
-		_commerceAccountOrganizationRelLocalService =
-			commerceAccountOrganizationRelLocalService;
+		_accountEntryLocalService = accountEntryLocalService;
+		_accountEntryOrganizationRelLocalService =
+			accountEntryOrganizationRelLocalService;
+		_accountEntryUserRelLocalService = accountEntryUserRelLocalService;
 		_emailAddressLocalService = emailAddressLocalService;
 		_organizationLocalService = organizationLocalService;
+		_roleLocalService = roleLocalService;
 	}
 
 	@Override
@@ -121,16 +132,31 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 		serviceContext.setCompanyId(organization.getCompanyId());
 		serviceContext.setUserId(organization.getUserId());
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addBusinessCommerceAccount(
-				organization.getName(), parentCommerceAccountId, email,
-				StringPool.BLANK, true, organization.getExternalReferenceCode(),
-				new long[0], new String[0], serviceContext);
+		AccountEntry accountEntry =
+			AccountEntryLocalServiceUtil.addAccountEntry(
+				organization.getUserId(), parentCommerceAccountId,
+				organization.getName(), null, null, email, null,
+				StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		_commerceAccountOrganizationRelLocalService.
-			addCommerceAccountOrganizationRel(
-				commerceAccount.getCommerceAccountId(),
-				organization.getOrganizationId(), serviceContext);
+		if (organization.getExternalReferenceCode() != null) {
+			accountEntry.setExternalReferenceCode(
+				organization.getExternalReferenceCode());
+
+			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry);
+		}
+
+		Role role = _roleLocalService.getRole(
+			serviceContext.getCompanyId(),
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+		_accountEntryUserRelLocalService.inviteUser(
+			accountEntry.getAccountEntryId(), new long[] {role.getRoleId()},
+			email, serviceContext.fetchUser(), serviceContext);
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry.getAccountEntryId(), organization.getOrganizationId());
 	}
 
 	private String _getOrganizationEmailAddress(Organization organization) {
@@ -186,10 +212,13 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAccountUpgradeProcess.class);
 
-	private final CommerceAccountLocalService _commerceAccountLocalService;
-	private final CommerceAccountOrganizationRelLocalService
-		_commerceAccountOrganizationRelLocalService;
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+	private final AccountEntryUserRelLocalService
+		_accountEntryUserRelLocalService;
 	private final EmailAddressLocalService _emailAddressLocalService;
 	private final OrganizationLocalService _organizationLocalService;
+	private final RoleLocalService _roleLocalService;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.commerce.internal.price;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -177,44 +176,37 @@ public abstract class BaseCommerceProductPriceCalculation
 			commerceShippingAddressId = commerceOrder.getShippingAddressId();
 		}
 		else {
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			if (commerceAccount != null) {
-				AccountEntry accountEntry =
-					accountEntryLocalService.fetchAccountEntry(
-						commerceAccount.getCommerceAccountId());
+			if (accountEntry != null) {
+				CommerceChannelAccountEntryRel
+					billingAddressCommerceChannelAccountEntryRel =
+						commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceContext.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_BILLING_ADDRESS);
 
-				if (accountEntry != null) {
-					CommerceChannelAccountEntryRel
-						billingAddressCommerceChannelAccountEntryRel =
-							commerceChannelAccountEntryRelLocalService.
-								fetchCommerceChannelAccountEntryRel(
-									accountEntry.getAccountEntryId(),
-									commerceContext.getCommerceChannelId(),
-									CommerceChannelAccountEntryRelConstants.
-										TYPE_BILLING_ADDRESS);
+				if (billingAddressCommerceChannelAccountEntryRel != null) {
+					commerceBillingAddressId =
+						billingAddressCommerceChannelAccountEntryRel.
+							getClassPK();
+				}
 
-					if (billingAddressCommerceChannelAccountEntryRel != null) {
-						commerceBillingAddressId =
-							billingAddressCommerceChannelAccountEntryRel.
-								getClassPK();
-					}
+				CommerceChannelAccountEntryRel
+					shippingAddressCommerceChannelAccountEntryRel =
+						commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceContext.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_SHIPPING_ADDRESS);
 
-					CommerceChannelAccountEntryRel
-						shippingAddressCommerceChannelAccountEntryRel =
-							commerceChannelAccountEntryRelLocalService.
-								fetchCommerceChannelAccountEntryRel(
-									accountEntry.getAccountEntryId(),
-									commerceContext.getCommerceChannelId(),
-									CommerceChannelAccountEntryRelConstants.
-										TYPE_SHIPPING_ADDRESS);
-
-					if (shippingAddressCommerceChannelAccountEntryRel != null) {
-						commerceShippingAddressId =
-							shippingAddressCommerceChannelAccountEntryRel.
-								getClassPK();
-					}
+				if (shippingAddressCommerceChannelAccountEntryRel != null) {
+					commerceShippingAddressId =
+						shippingAddressCommerceChannelAccountEntryRel.
+							getClassPK();
 				}
 			}
 		}

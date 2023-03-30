@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.internal.workflow;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -44,8 +44,7 @@ public class AccountRoleGroupAwareRoleValidator
 	}
 
 	private boolean _isAccount(Group group) {
-		long classNameId = _portal.getClassNameId(
-			CommerceAccount.class.getName());
+		long classNameId = _portal.getClassNameId(AccountEntry.class.getName());
 
 		if (group.getClassNameId() == classNameId) {
 			return true;

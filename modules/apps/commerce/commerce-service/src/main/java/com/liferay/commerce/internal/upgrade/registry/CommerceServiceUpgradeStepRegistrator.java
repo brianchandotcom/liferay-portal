@@ -15,8 +15,8 @@
 package com.liferay.commerce.internal.upgrade.registry;
 
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
@@ -109,12 +109,14 @@ public class CommerceServiceUpgradeStepRegistrator
 			"2.1.0", "2.2.0",
 			new com.liferay.commerce.internal.upgrade.v2_2_0.
 				CommerceAccountUpgradeProcess(
-					_commerceAccountLocalService,
-					_commerceAccountOrganizationRelLocalService,
-					_emailAddressLocalService, _organizationLocalService),
+					_accountEntryLocalService,
+					_accountEntryOrganizationRelLocalService,
+					_accountEntryUserRelLocalService, _emailAddressLocalService,
+					_organizationLocalService, _roleLocalService),
 			new com.liferay.commerce.internal.upgrade.v2_2_0.
 				CommerceOrderUpgradeProcess(
-					_commerceAccountLocalService, _userLocalService));
+					_accountEntryLocalService, _accountEntryUserRelLocalService,
+					_userLocalService));
 
 		registry.register(
 			"2.2.0", "3.0.0",
@@ -455,17 +457,17 @@ public class CommerceServiceUpgradeStepRegistrator
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
 	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
-
-	@Reference
-	private CommerceAccountOrganizationRelLocalService
-		_commerceAccountOrganizationRelLocalService;
 
 	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;

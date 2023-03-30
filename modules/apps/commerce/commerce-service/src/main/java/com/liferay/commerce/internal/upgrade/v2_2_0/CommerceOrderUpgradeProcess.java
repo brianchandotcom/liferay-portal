@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.internal.upgrade.v2_2_0;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,10 +42,12 @@ import java.sql.Statement;
 public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	public CommerceOrderUpgradeProcess(
-		CommerceAccountLocalService commerceAccountLocalService,
+		AccountEntryLocalService accountEntryLocalService,
+		AccountEntryUserRelLocalService accountEntryUserRelLocalService,
 		UserLocalService userLocalService) {
 
-		_commerceAccountLocalService = commerceAccountLocalService;
+		_accountEntryLocalService = accountEntryLocalService;
+		_accountEntryUserRelLocalService = accountEntryUserRelLocalService;
 		_userLocalService = userLocalService;
 	}
 
@@ -111,13 +116,20 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 					serviceContext.setCompanyId(user.getCompanyId());
 					serviceContext.setUserId(user.getUserId());
 
-					CommerceAccount commerceAccount =
-						_commerceAccountLocalService.addPersonalCommerceAccount(
-							user.getUserId(), StringPool.BLANK,
-							StringPool.BLANK, serviceContext);
+					AccountEntry accountEntry =
+						_accountEntryLocalService.addAccountEntry(
+							user.getUserId(),
+							AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+							user.getFullName(), null, null,
+							user.getEmailAddress(), null, StringPool.BLANK,
+							AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+							WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+					_accountEntryUserRelLocalService.addAccountEntryUserRel(
+						accountEntry.getAccountEntryId(), user.getUserId());
 
 					preparedStatement2.setLong(
-						1, commerceAccount.getCommerceAccountId());
+						1, accountEntry.getAccountEntryId());
 
 					preparedStatement2.setLong(2, orderUserId);
 
@@ -168,7 +180,9 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderUpgradeProcess.class);
 
-	private final CommerceAccountLocalService _commerceAccountLocalService;
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AccountEntryUserRelLocalService
+		_accountEntryUserRelLocalService;
 	private final UserLocalService _userLocalService;
 
 }

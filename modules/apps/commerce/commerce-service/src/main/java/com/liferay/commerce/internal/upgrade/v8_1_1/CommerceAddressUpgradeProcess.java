@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v8_1_1;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -28,7 +27,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		long commerceAccountEntryClassNameId = PortalUtil.getClassNameId(
-			CommerceAccount.class.getName());
+			"com.liferay.commerce.account.model.CommerceAccount");
 		long accountEntryClassNameId = PortalUtil.getClassNameId(
 			AccountEntry.class.getName());
 

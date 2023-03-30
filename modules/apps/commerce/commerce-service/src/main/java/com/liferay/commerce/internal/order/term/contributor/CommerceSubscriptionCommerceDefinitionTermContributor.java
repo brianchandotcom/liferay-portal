@@ -14,8 +14,7 @@
 
 package com.liferay.commerce.internal.order.term.contributor;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionNotificationConstants;
 import com.liferay.commerce.model.CommerceOrder;
@@ -77,19 +76,15 @@ public class CommerceSubscriptionCommerceDefinitionTermContributor
 		if (term.equals(_ORDER_CREATOR)) {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			CommerceAccount commerceAccount =
-				commerceOrder.getCommerceAccount();
+			AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
-			if (commerceAccount.getType() ==
-					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
-
-				User user = _userLocalService.getUser(
-					commerceAccount.getUserId());
+			if (accountEntry.isPersonalAccount()) {
+				User user = _userLocalService.getUser(accountEntry.getUserId());
 
 				return user.getFullName(true, true);
 			}
 
-			return commerceAccount.getName();
+			return accountEntry.getName();
 		}
 
 		if (term.equals(_ORDER_ID)) {

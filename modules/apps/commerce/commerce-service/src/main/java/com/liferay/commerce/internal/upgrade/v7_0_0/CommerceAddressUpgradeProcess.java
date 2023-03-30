@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.upgrade.v7_0_0;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -141,7 +140,9 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 		if (defaultBilling &&
 			(Objects.equals(AccountEntry.class.getName(), className) ||
-			 Objects.equals(CommerceAccount.class.getName(), className))) {
+			 Objects.equals(
+				 className,
+				 "com.liferay.commerce.account.model.CommerceAccount"))) {
 
 			try {
 				_accountEntryLocalService.updateDefaultBillingAddressId(
@@ -158,7 +159,9 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 		if (defaultShipping &&
 			(Objects.equals(AccountEntry.class.getName(), className) ||
-			 Objects.equals(CommerceAccount.class.getName(), className))) {
+			 Objects.equals(
+				 className,
+				 "com.liferay.commerce.account.model.CommerceAccount"))) {
 
 			try {
 				_accountEntryLocalService.updateDefaultShippingAddressId(

@@ -1,0 +1,244 @@
+@component-name = "portal-batch-engine"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Batch Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		BatchEngine.setUpGlobalIds();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogPostingAPI.deleteAllBlogPostings();
+
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@priority = 4
+	test CanProcessJarWithBlogBatchEngineFiles {
+		property portal.acceptance = "true";
+
+		task ("Given an osgi jar file with blogPosting batch engine file and Liferay-Client-Extension-Batch header") {
+			var folderName = "batchEngineFile";
+
+			var projectDir = TestCase.getDependenciesDirPath(fileName = ${folderName});
+
+			var copyFilePath = BatchEngine.copyDependenciesDirToFolder(
+				destinationDir = ${projectDir},
+				file = "blogPosting");
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20097, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20121, ${staticSiteId});
+
+			var arhivedFilePath = BatchEngine.copyDependenciesDirToFolder(file = "batchEngineFile");
+
+			FileUtil.replaceStringInFile("${arhivedFilePath}/META-INF/MANIFEST.MF", "objectDefinition", "blogPosting");
+
+			FileUtil.delete("${projectDir}/blogPosting");
+
+			var moveFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "com.liferay.batchEngineFile.portlet.jar",
+				sourceFilePath = ${arhivedFilePath});
+		}
+
+		task ("When I deploy the jar file to osgi/modules folder") {
+			BatchEngine.moveFileToOSGIModulesFolder(
+				fileName = "com.liferay.batchEngineFile.portlet.jar",
+				fileNameInConsole = "com.liferay.batchEngineFile.portlet_1.0.0",
+				sourceFilePath = ${moveFilePath});
+		}
+
+		task ("Then new blogs are imported") {
+			BatchEngine.waitUntilBlogsVisibleInUI();
+
+			var response = BlogPostingAPI.getBlogPostings();
+
+			var blogTotalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${blogTotalCount},
+				expected = 1);
+		}
+	}
+
+	@priority = 4
+	test CanProcessJarWithMultipleElementsBatchEngineFiles {
+		property portal.acceptance = "true";
+
+		task ("Given an osgi jar file with multiple batch engine files and Liferay-Client-Extension-Batch header") {
+			var folderName = "batchEngineFile";
+
+			var projectDir = TestCase.getDependenciesDirPath(fileName = ${folderName});
+
+			var copyFilePath = BatchEngine.copyDependenciesDirToFolder(
+				destinationDir = ${projectDir},
+				file = "multipleElementsParis");
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20097, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20121, ${staticSiteId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/blog/batch-engine.json", 20097, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/blog/batch-engine.json", 20121, ${staticSiteId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/object/objectDefinition/batch-engine.json", 20097, ${staticCompanyId});
+
+			var arhivedFilePath = BatchEngine.copyDependenciesDirToFolder(file = "batchEngineFile");
+
+			FileUtil.replaceStringInFile("${arhivedFilePath}/META-INF/MANIFEST.MF", "Liferay-Client-Extension-Batch: /objectDefinition", "Liferay-Client-Extension-Batch: /multipleElementsParis");
+
+			FileUtil.replaceStringInFile("${arhivedFilePath}/META-INF/MANIFEST.MF", "Private-Package: objectDefinition", "Private-Package: com.liferay.sample.portlet.portlet,content,multipleElementsParis,multipleElementsParis.blog,multipleElementsParis.object.objectDefinition");
+
+			FileUtil.delete("${projectDir}/multipleElementsParis");
+
+			var moveFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "com.liferay.batchEngineFile.portlet.jar",
+				sourceFilePath = ${arhivedFilePath});
+		}
+
+		task ("When I deploy the jar file to osgi/modules folder") {
+			BatchEngine.moveFileToOSGIModulesFolder(
+				fileName = "com.liferay.batchEngineFile.portlet.jar",
+				fileNameInConsole = "com.liferay.batchEngineFile.portlet_1.0.0",
+				sourceFilePath = ${moveFilePath});
+		}
+
+		task ("Then all elements included in batch engine are imported") {
+			BatchEngine.waitUntilBlogsVisibleInUI();
+
+			var response = BlogPostingAPI.getBlogPostings();
+
+			var blogTotalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${blogTotalCount},
+				expected = 2);
+
+			var testObjectStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "TestObject");
+
+			TestUtils.assertEquals(
+				actual = ${testObjectStatus},
+				expected = "true");
+		}
+	}
+
+	@priority = 4
+	test CanProcessJarWithObjectBatchEngineFiles {
+		property portal.acceptance = "true";
+
+		task ("Given an osgi jar file with object definition batch engine file and Liferay-Client-Extension-Batch header") {
+			var folderName = "batchEngineFile";
+
+			var projectDir = TestCase.getDependenciesDirPath(fileName = ${folderName});
+
+			var copyFilePath = BatchEngine.copyDependenciesDirToFolder(
+				destinationDir = ${projectDir},
+				file = "objectDefinition");
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20097, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20121, ${staticSiteId});
+
+			var arhivedFilePath = BatchEngine.copyDependenciesDirToFolder(file = "batchEngineFile");
+
+			FileUtil.delete("${projectDir}/objectDefinition");
+
+			var moveFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "com.liferay.batchEngineFile.portlet.jar",
+				sourceFilePath = ${arhivedFilePath});
+		}
+
+		task ("When I deploy the jar file to osgi/modules folder") {
+			BatchEngine.moveFileToOSGIModulesFolder(
+				fileName = "com.liferay.batchEngineFile.portlet.jar",
+				fileNameInConsole = "com.liferay.batchEngineFile.portlet_1.0.0",
+				sourceFilePath = ${moveFilePath});
+		}
+
+		task ("Then new object definition is imported") {
+			BatchEngine.waitUntilObjectPresentInUI(labelName = "TestObject");
+
+			var testObjectStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "TestObject");
+			var couponStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "Coupon");
+
+			TestUtils.assertEquals(
+				actual = ${testObjectStatus},
+				expected = "true");
+
+			TestUtils.assertEquals(
+				actual = ${couponStatus},
+				expected = "false");
+		}
+	}
+
+	@priority = 4
+	test CanProcessWarWithMultipleElementsBatchEngineFiles {
+		property portal.acceptance = "true";
+
+		task ("Given a war file with multiple batch file and Liferay-Client-Extension-Batch header") {
+			var projectDir = BatchEngine.copyDependenciesDirToFolder(file = "test-theme.war");
+
+			var copyFilePath = BatchEngine.copyDependenciesDirToFolder(
+				destinationDir = ${projectDir},
+				file = "multipleElementsParis");
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20097, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/batch-engine.json", 20121, ${staticSiteId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/blog/batch-engine.json", 20097, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/blog/batch-engine.json", 20121, ${staticSiteId});
+
+			FileUtil.replaceStringInFile("${copyFilePath}/object/objectDefinition/batch-engine.json", 20097, ${staticCompanyId});
+
+			BatchEngine.copyDependenciesDirToFolder(
+				destinationDir = ${projectDir},
+				file = "META-INF");
+
+			var moveFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "com.liferay.batchEngineFile.portlet.war",
+				sourceFilePath = ${projectDir});
+		}
+
+		task ("When I deploy the war file to osgi/modules folder") {
+			BatchEngine.moveFileToOSGIModulesFolder(
+				fileName = "com.liferay.batchEngineFile.portlet.war",
+				fileNameInConsole = "com.liferay.batchEngineFile.portlet_1.0.0",
+				sourceFilePath = ${moveFilePath});
+		}
+
+		task ("Then all elements included in batch engine are imported") {
+			BatchEngine.waitUntilBlogsVisibleInUI();
+
+			var response = BlogPostingAPI.getBlogPostings();
+
+			var blogTotalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${blogTotalCount},
+				expected = 2);
+
+			var testObjectStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "TestObject");
+
+			TestUtils.assertEquals(
+				actual = ${testObjectStatus},
+				expected = "true");
+		}
+	}
+
+}

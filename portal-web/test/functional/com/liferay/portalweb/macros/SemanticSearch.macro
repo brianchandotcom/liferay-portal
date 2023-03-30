@@ -1,0 +1,13 @@
+definition {
+
+	macro saveAndContinue {
+		Button.clickSave();
+
+		Click(
+			key_text = "Continue to Save",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
+}

@@ -309,13 +309,7 @@ definition {
 				key_itemName = "facebook/bart-base",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
-			Button.clickSave();
-
-			Click(
-				key_text = "Continue to Save",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			Alert.viewSuccessMessage();
+			SemanticSearch.saveAndContinue();
 		}
 
 		task ("Assert txtai field is not present after saving") {
@@ -394,13 +388,7 @@ definition {
 				key_itemName = "albert-base-v1",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
-			Button.clickSave();
-
-			Click(
-				key_text = "Continue to Save",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			Alert.viewSuccessMessage();
+			SemanticSearch.saveAndContinue();
 		}
 
 		task ("Assert txtai field is not present after saving") {
@@ -450,13 +438,7 @@ definition {
 				key_itemName = "facebook/bart-base",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
-			Button.clickSave();
-
-			Click(
-				key_text = "Continue to Save",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			Alert.viewSuccessMessage();
+			SemanticSearch.saveAndContinue();
 		}
 
 		task ("Back in Instance Settings, assert field values remain unchanged after changes were made to System Settings") {
@@ -527,13 +509,7 @@ definition {
 				locator1 = "Select#ANY_ARIA_LABEL",
 				value1 = 384);
 
-			Button.clickSave();
-
-			Click(
-				key_text = "Continue to Save",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			Alert.viewSuccessMessage();
+			SemanticSearch.saveAndContinue();
 
 			Navigator.openURL();
 

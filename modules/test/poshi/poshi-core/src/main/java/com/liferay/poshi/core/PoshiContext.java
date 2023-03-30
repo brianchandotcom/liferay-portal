@@ -552,10 +552,6 @@ public class PoshiContext {
 		return _testCaseDescriptions.get(classCommandName);
 	}
 
-	public static String getTestCaseNamespacedClassCommandName() {
-		return _testCaseNamespacedClassCommandName;
-	}
-
 	public static Element getTestCaseRootElement(
 		String className, String namespace) {
 
@@ -710,13 +706,6 @@ public class PoshiContext {
 
 	public static void setMacroFileNames(String... macroFileNames) {
 		Collections.addAll(_macroFileNames, macroFileNames);
-	}
-
-	public static void setTestCaseNamespacedClassCommandName(
-		String testCaseNamespacedClassCommandName) {
-
-		_testCaseNamespacedClassCommandName =
-			testCaseNamespacedClassCommandName;
 	}
 
 	private static void _executePoshiFileRunnables(
@@ -2024,7 +2013,6 @@ public class PoshiContext {
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, String> _testCaseDescriptions =
 		Collections.synchronizedMap(new HashMap<>());
-	private static String _testCaseNamespacedClassCommandName;
 	private static final List<String> _testCaseNamespacedClassCommandNames =
 		Collections.synchronizedList(new ArrayList<>());
 	private static final List<String> _testCaseNamespacedClassNames =

@@ -20,14 +20,16 @@ import React, {useState} from 'react';
 import sub from '../../utils/language/sub';
 
 function SearchableTypesModal({
+	initialSelectedTypes,
 	observer,
 	onClose,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes,
-	selectedTypes,
 }) {
-	const [modalSelectedTypes, setModalSelectedTypes] = useState(selectedTypes);
+	const [modalSelectedTypes, setModalSelectedTypes] = useState(
+		initialSelectedTypes
+	);
 
 	const searchableTypesClassNames = searchableTypes.map(
 		({className}) => className
@@ -210,31 +212,31 @@ function SearchableTypesModal({
 
 export default function ({
 	children,
+	initialSelectedTypes,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes,
-	selectedTypes,
 }) {
-	const [visible, setVisible] = useState(false);
+	const {observer, onOpenChange, open} = useModal();
 
-	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false),
-	});
+	const _handleClose = () => {
+		onOpenChange(false);
+	};
 
 	return (
 		<>
-			{visible && (
+			{open && (
 				<SearchableTypesModal
+					initialSelectedTypes={initialSelectedTypes}
 					observer={observer}
-					onClose={onClose}
+					onClose={_handleClose}
 					onFetchSearchableTypes={onFetchSearchableTypes}
 					onFrameworkConfigChange={onFrameworkConfigChange}
 					searchableTypes={searchableTypes}
-					selectedTypes={selectedTypes}
 				/>
 			)}
 
-			<span onClick={() => setVisible(!visible)}>{children}</span>
+			<span onClick={() => onOpenChange(!open)}>{children}</span>
 		</>
 	);
 }

@@ -40,10 +40,10 @@ function SelectTypes({
 	return (
 		<>
 			<SearchableTypesModal
+				initialSelectedTypes={selectedTypes}
 				onFetchSearchableTypes={onFetchSearchableTypes}
 				onFrameworkConfigChange={onFrameworkConfigChange}
 				searchableTypes={searchableTypesSorted}
-				selectedTypes={selectedTypes}
 			>
 				<ClayButton
 					className="select-types-button"

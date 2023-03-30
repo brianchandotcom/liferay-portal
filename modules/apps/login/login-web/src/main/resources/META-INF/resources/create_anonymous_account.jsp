@@ -68,16 +68,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
 				%>
 
 				<c:if test='<%= fullNameDefinition.isFieldRequired("last-name") %>'>
-					<aui:input model="<%= User.class %>" name="lastName">
-						<aui:validator name="required" />
-					</aui:input>
+					<aui:input model="<%= User.class %>" name="lastName" required="<%= true %>" />
 				</c:if>
 
-				<aui:input model="<%= User.class %>" name="emailAddress">
-					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED, PropsValues.USERS_EMAIL_ADDRESS_REQUIRED) %>">
-						<aui:validator name="required" />
-					</c:if>
-				</aui:input>
+				<aui:input model="<%= User.class %>" name="emailAddress" required="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED, PropsValues.USERS_EMAIL_ADDRESS_REQUIRED) %>" />
 			</clay:col>
 
 			<clay:col

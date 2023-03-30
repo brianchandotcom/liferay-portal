@@ -151,9 +151,8 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 
 		<div class="form-group-autofit">
 			<c:if test="<%= commerceOrder.isGuestOrder() %>">
-				<aui:input name="email" type="text" wrapperCssClass="form-group-item">
+				<aui:input name="email" required="<%= true %>" type="text" wrapperCssClass="form-group-item">
 					<aui:validator name="email" />
-					<aui:validator name="required" />
 				</aui:input>
 			</c:if>
 		</div>

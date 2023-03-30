@@ -180,11 +180,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 							</aui:input>
 						</c:if>
 
-						<aui:input model="<%= User.class %>" name="emailAddress">
-							<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
-								<aui:validator name="required" />
-							</c:if>
-						</aui:input>
+						<aui:input model="<%= User.class %>" name="emailAddress" required="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>" />
 					</clay:col>
 				</clay:row>
 			</div>

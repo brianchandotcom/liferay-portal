@@ -61,11 +61,7 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 
 		<c:choose>
 			<c:when test="<%= fullNameField.isFreeText() %>">
-				<aui:input bean="<%= bean %>" disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" model="<%= User.class %>" name="<%= fieldName %>">
-					<c:if test="<%= fullNameField.isRequired() %>">
-						<aui:validator name="required" />
-					</c:if>
-				</aui:input>
+				<aui:input bean="<%= bean %>" disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" model="<%= User.class %>" name="<%= fieldName %>" required="<%= fullNameField.isRequired() %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("ListTypeValue") %>' showEmptyOption="<%= true %>">

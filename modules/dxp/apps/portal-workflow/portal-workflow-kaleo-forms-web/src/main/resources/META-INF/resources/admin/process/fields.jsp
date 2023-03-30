@@ -33,9 +33,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 	<aui:input name="ddmStructureId" type="hidden" value="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureId() %>" />
 
-	<aui:input name="ddmStructureName" type="hidden" value="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureName() %>">
-		<aui:validator name="required" />
-	</aui:input>
+	<aui:input name="ddmStructureName" required="<%= true %>" type="hidden" value="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureName() %>" />
 </aui:field-wrapper>
 
 <liferay-ui:error exception="<%= RecordSetDDMStructureIdException.class %>" message="please-enter-a-valid-definition" />

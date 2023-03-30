@@ -58,9 +58,7 @@ KaleoFormsTaskTemplateSearchDisplayContext kaleoFormsTaskTemplateSearchDisplayCo
 				var="taskInputBuffer"
 			>
 				<c:if test="<%= taskFormsPair.equals(kaleoFormsTaskTemplateSearchDisplayContext.getInitialStateKaleoTaskFormPair()) %>">
-					<aui:input name="ddmTemplateId" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>">
-						<aui:validator name="required" />
-					</aui:input>
+					<aui:input name="ddmTemplateId" required="<%= true %>" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>" />
 				</c:if>
 			</liferay-util:buffer>
 

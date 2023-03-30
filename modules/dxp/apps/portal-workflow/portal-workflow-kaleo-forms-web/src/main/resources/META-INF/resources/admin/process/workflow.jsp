@@ -62,9 +62,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 	<span class="badge badge-info" id="<portlet:namespace />workflowDefinitionDisplay"><%= HtmlUtil.escape(workflowDefinitionDisplay) %></span>
 
-	<aui:input name="workflowDefinition" type="hidden" value="<%= workflowDefinition %>">
-		<aui:validator name="required" />
-	</aui:input>
+	<aui:input name="workflowDefinition" required="<%= true %>" type="hidden" value="<%= workflowDefinition %>" />
 
 	<aui:input name="workflowDefinitionName" type="hidden" value="<%= workflowDefinitionName %>" />
 	<aui:input name="workflowDefinitionVersion" type="hidden" value="<%= workflowDefinitionVersion %>" />

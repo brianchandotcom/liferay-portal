@@ -36,9 +36,7 @@
 
 				<aui:model-context model="<%= Company.class %>" />
 
-				<aui:input name="webId">
-					<aui:validator name="required" />
-				</aui:input>
+				<aui:input name="webId" required="<%= true %>" />
 
 				<aui:input fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
 

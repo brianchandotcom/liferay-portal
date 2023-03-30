@@ -16,18 +16,19 @@ import {useEffect, useState} from 'react';
 
 import addImageFallback from '../../../../../../common/utils/addImageFallback';
 import {getWebDavUrl} from '../../../../../../common/utils/webdav';
+import {ClaimComponentsType} from '../../Types';
 
 import './index.scss';
 
 type ClaimTypeJSON = {[keys: string]: string};
 
-const InsuranceInfo = (claimData: ClaimTypeJSON) => {
+const InsuranceInfo = (claimData: ClaimComponentsType) => {
 	const [claimDetails, setClaimDetails] = useState<ClaimTypeJSON>();
 
 	useEffect(() => {
 		try {
 			const dataClaimsJSON = JSON.parse(
-				JSON.stringify(claimData.dataJSON)
+				JSON.stringify(claimData.claimData)
 			);
 			const detailsJSON = JSON.parse(dataClaimsJSON.dataJSON);
 

@@ -129,6 +129,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-179234 - Assert after clicking in a link present on a toast alert, the navigation goes to the link"
+	@priority = 5
+	test ContainerWithLink {
+		task ("When Click 'Disappears After 10 Seconds' button") {
+			Click(
+				key_text = "Disappears After 10 Seconds",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And Click on the link Displayed Clay Toast Alert") {
+			Click(
+				key_type = "info",
+				locator1 = "ClayAlertToast#ALERT_TOAST_HREF");
+		}
+
+		task ("Then navigates to the href") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var baseURL = "${portalURL}/web/guest";
+			var myURL = Navigator.getCurrentURL();
+
+			if (${baseURL} == ${myURL}) {
+				TestUtils.pass(message = "Test passed: Current url is the same as the link present on Disappears After 10 Seconds toast alert");
+			}
+			else {
+				fail("Test failed: Current url isn't the same as the link present on Disappears After 10 Seconds toast alert");
+			}
+		}
+	}
+
 	@description = "LPS-170575 - Verify toast alert with no actions disappears after 5 seconds"
 	@priority = 5
 	test DisappearsAfter5SecsWithoutActions {

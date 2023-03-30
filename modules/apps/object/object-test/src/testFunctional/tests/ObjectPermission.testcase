@@ -1058,14 +1058,14 @@ definition {
 			locator1 = "ObjectPortlet#ANY_PAGE");
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
 		Click(
-			key_labelName = "Item Test",
-			locator1 = "CreateObject#VIEW_OBJECT");
+			key_picklistName = "Item Test",
+			locator1 = "Picklist#VIEW_PICKLIST");
 
 		Picklist.assertDisabledPicklistName();
 
@@ -1574,8 +1574,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Click(
-			key_labelName = "Picklist Test",
-			locator1 = "CreateObject#VIEW_OBJECT");
+			key_picklistName = "Picklist Test",
+			locator1 = "Picklist#VIEW_PICKLIST");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
@@ -1917,8 +1917,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Click(
-			key_labelName = "Custom Picklist 148939",
-			locator1 = "CreateObject#VIEW_OBJECT");
+			key_picklistName = "Custom Picklist 148939",
+			locator1 = "Picklist#VIEW_PICKLIST");
 
 		Picklist.updatePicklistName(picklistName = "Update Custom Picklist");
 
@@ -1977,8 +1977,8 @@ definition {
 		Picklist.assertPicklist(picklistName = "Picklist Test");
 
 		Click(
-			key_labelName = "Picklist Test",
-			locator1 = "CreateObject#VIEW_OBJECT");
+			key_picklistName = "Picklist Test",
+			locator1 = "Picklist#VIEW_PICKLIST");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 

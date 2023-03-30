@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -138,6 +139,17 @@ function Inputs({index, onInputSetItemChange, value}) {
 			<ClayInput.GroupItem>
 				<label htmlFor={`indexedField${index}`}>
 					{Liferay.Language.get('indexed-field')}
+
+					<ClayTooltipProvider>
+						<span
+							className="ml-2"
+							data-title={Liferay.Language.get(
+								'indexed-field-help'
+							)}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</ClayTooltipProvider>
 				</label>
 
 				<ClayInput
@@ -378,11 +390,13 @@ function SortConfigurationOptions({
 										value={relevanceLabel}
 									/>
 
-									<div className="text-secondary">
-										{Liferay.Language.get(
-											'relevance-can-be-turned-on-or-off-but-not-removed'
-										)}
-									</div>
+									<ClayForm.FeedbackGroup>
+										<ClayForm.Text>
+											{Liferay.Language.get(
+												'relevance-can-be-turned-on-or-off-but-not-removed'
+											)}
+										</ClayForm.Text>
+									</ClayForm.FeedbackGroup>
 								</ClayInput.GroupItem>
 
 								<ClayInput.GroupItem shrink>

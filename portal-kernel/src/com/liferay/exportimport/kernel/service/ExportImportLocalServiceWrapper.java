@@ -272,6 +272,17 @@ public class ExportImportLocalServiceWrapper
 	}
 
 	@Override
+	public long mergeLayoutSetPrototypeInBackground(
+			long userId, long groupId,
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				exportImportConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+			userId, groupId, exportImportConfiguration);
+	}
+
+	@Override
 	public com.liferay.exportimport.kernel.lar.MissingReferences
 			validateImportLayoutsFile(
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration

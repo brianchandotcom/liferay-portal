@@ -29,7 +29,7 @@ interface PickListItem {
 	name: string;
 	name_i18n: LocalizedValue<string>;
 }
-interface IProps {
+interface PicklistEntryBaseFieldProps {
 	creationLanguageId?: Liferay.Language.Locale;
 	error?: string;
 	label: string;
@@ -49,7 +49,7 @@ export function PicklistEntryBaseField({
 	placeholder,
 	required,
 	selectedPicklistItemKey,
-}: IProps) {
+}: PicklistEntryBaseFieldProps) {
 	const handleChange = (selectedPicklistOption: SelectedPicklistOption) => {
 		onChange(
 			picklistItems.find(

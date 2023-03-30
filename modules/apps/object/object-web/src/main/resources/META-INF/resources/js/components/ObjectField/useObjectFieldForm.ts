@@ -189,8 +189,24 @@ export function useObjectFieldForm({
 				errors.listTypeDefinitionId = REQUIRED_MSG;
 			}
 
-			if (field.state && !field.defaultValue) {
-				errors.defaultValue = REQUIRED_MSG;
+			const thereIsDefaultValueType = field.objectFieldSettings?.some(
+				(setting) =>
+					setting.name === 'defaultValueType' && setting.value
+			);
+
+			const thereIsDefaultValue = field.objectFieldSettings?.some(
+				(setting) => setting.name === 'defaultValue' && setting.value
+			);
+
+			if (!field.id) {
+				if (field.state && !thereIsDefaultValue) {
+					errors.defaultValue = REQUIRED_MSG;
+				}
+			}
+			else {
+				if (thereIsDefaultValueType && !thereIsDefaultValue) {
+					errors.defaultValue = REQUIRED_MSG;
+				}
 			}
 		}
 

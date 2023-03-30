@@ -57,44 +57,29 @@ public class SegmentsContextVocabularyConfigurationTest {
 			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
 			_configuration1 = _configurationAdmin.createFactoryConfiguration(
-				"com.liferay.segments.context.vocabulary.internal." +
-					"configuration.SegmentsContextVocabularyConfiguration",
+				_SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID,
 				StringPool.QUESTION);
+
+			_configuration1.update(_PROPERTIES1);
 
 			Dictionary<String, Object> properties =
-				HashMapDictionaryBuilder.<String, Object>put(
-					"assetVocabularyName", "assetVocabularyName"
-				).put(
-					"companyId", "987"
-				).put(
-					"entityFieldName", "entityFieldName"
-				).build();
-
-			_configuration1.update(properties);
-
-			properties = _configuration1.getProperties();
+				_configuration1.getProperties();
 
 			Assert.assertEquals(
-				"assetVocabularyName", properties.get("assetVocabularyName"));
+				_PROPERTIES1.get("assetVocabularyName"),
+				properties.get("assetVocabularyName"));
 			Assert.assertEquals(
-				"entityFieldName", properties.get("entityFieldName"));
-			Assert.assertEquals("987", properties.get("companyId"));
+				_PROPERTIES1.get("entityFieldName"),
+				properties.get("entityFieldName"));
+			Assert.assertEquals(
+				_PROPERTIES1.get("companyId"), properties.get("companyId"));
 
 			_configuration2 = _configurationAdmin.createFactoryConfiguration(
-				"com.liferay.segments.context.vocabulary.internal." +
-					"configuration.SegmentsContextVocabularyConfiguration",
+				_SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID,
 				StringPool.QUESTION);
 
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				"assetVocabularyName", "differentAssetVocabularyName"
-			).put(
-				"companyId", "987"
-			).put(
-				"entityFieldName", "entityFieldName"
-			).build();
-
 			try {
-				_configuration2.update(properties);
+				_configuration2.update(_PROPERTIES2);
 
 				Assert.fail();
 			}
@@ -122,6 +107,28 @@ public class SegmentsContextVocabularyConfigurationTest {
 			}
 		}
 	}
+
+	private static final Dictionary<String, Object> _PROPERTIES1 =
+		HashMapDictionaryBuilder.<String, Object>put(
+			"assetVocabularyName", "assetVocabularyName"
+		).put(
+			"companyId", "987"
+		).put(
+			"entityFieldName", "entityFieldName"
+		).build();
+
+	private static final Dictionary<String, Object> _PROPERTIES2 =
+		HashMapDictionaryBuilder.<String, Object>put(
+			"assetVocabularyName", "differentAssetVocabularyName"
+		).put(
+			"companyId", "987"
+		).put(
+			"entityFieldName", "entityFieldName"
+		).build();
+
+	private static final String _SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID =
+		"com.liferay.segments.context.vocabulary.internal.configuration." +
+			"SegmentsContextVocabularyConfiguration";
 
 	private Configuration _configuration1;
 	private Configuration _configuration2;

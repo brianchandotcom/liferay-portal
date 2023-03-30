@@ -2441,7 +2441,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject286");
 
-		ObjectPortlet.changePagination(itemsPerPage = "4 items");
+		ObjectPortlet.changePagination(itemsPerPage = "4 Items");
 
 		ObjectPortlet.checkAnyPage(pageNumber = 2);
 

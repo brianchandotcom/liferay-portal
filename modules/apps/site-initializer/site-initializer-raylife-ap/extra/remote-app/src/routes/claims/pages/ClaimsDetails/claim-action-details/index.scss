@@ -1,0 +1,13 @@
+.action-detail-content {
+	.lexicon-icon {
+		font-size: 12px !important;
+	}
+
+	.cursor-pointer {
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

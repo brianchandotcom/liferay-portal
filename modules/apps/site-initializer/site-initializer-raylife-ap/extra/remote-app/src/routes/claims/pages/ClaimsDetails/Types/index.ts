@@ -54,3 +54,8 @@ export type ClaimActivitiesDataType = {
 	date: string;
 	message: string;
 };
+
+export type ClaimComponentsType = {
+	claimData: ClaimType;
+	isClaimSettled?: boolean;
+};

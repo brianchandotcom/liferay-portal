@@ -15,19 +15,14 @@
 import {useEffect, useState} from 'react';
 
 import ActionDetail from '../../../../common/components/action-detail/action-content';
-import ActivitiesComponent from '../../../../common/components/activities-table-list';
 import MultiSteps from '../../../../common/components/multi-steps';
-import Summary from '../../../../common/components/summary';
 import {getClaimsData} from '../../../../common/services';
 import {setFirstLetterUpperCase} from '../../../../common/utils';
 import {CONSTANTS} from '../../../../common/utils/constants';
-import {currencyFormatter} from '../../../../common/utils/currencyFormatter';
-import {
-	dateFormatter,
-	dateFormatterLocalString,
-} from '../../../../common/utils/dateFormatter';
-import {ClaimActivitiesDataType, ClaimDetailDataType, ClaimType} from './Types';
-import ClaimActionComponent from './claims-action-details';
+import {ClaimType} from './Types';
+import ClaimActionComponent from './claim-action-details';
+import ClaimDetailsActivities from './claim-activities-details';
+import ClaimDetailsSummary from './claim-summary-details';
 
 enum STEP {
 	APPROVED = 3,
@@ -137,169 +132,11 @@ const ClaimDetails = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const applicationData =
-		claimData?.r_policyToClaims_c_raylifePolicy
-			?.r_quoteToPolicies_c_raylifeQuote
-			?.r_applicationToQuotes_c_raylifeApplication;
-
-	const fullName = applicationData?.firstName
-		? `${applicationData?.firstName} ${applicationData?.lastName}`
-		: applicationData?.firstName;
-
 	const claimStatus = claimData?.claimStatus.key;
-
-	const claimDataJSON = claimData?.dataJSON
-		? JSON.parse(claimData?.dataJSON)
-		: {};
-
-	const claimActivityData: ClaimActivitiesDataType[] = claimData?.dataJSON
-		? [
-				{
-					activity: claimDataJSON.Detail.Activity.Desc4,
-					body: true,
-					by: claimDataJSON.Detail.Activity.By4,
-					date: `${dateFormatterLocalString(
-						claimDataJSON.Detail.Activity.Date4
-					)}`,
-					message: 'Insured contacted mechanic and completed repair.',
-				},
-				{
-					activity: claimDataJSON.Detail.Activity.Desc3,
-					by: claimDataJSON.Detail.Activity.By3,
-					date: `${dateFormatterLocalString(
-						claimDataJSON.Detail.Activity.Date3
-					)}`,
-					message:
-						'After reviewing all accident details, estimation has been completed and submitted to insured. Insured is responsible for continuing with repairs.',
-				},
-				{
-					activity: claimDataJSON.Detail.Activity.Desc2,
-					by: claimDataJSON.Detail.Activity.By2,
-					date: `${dateFormatterLocalString(
-						claimDataJSON.Detail.Activity.Date2
-					)}`,
-					message: `I went to insured's residence this morning to assess damage. I also requested police report of accident. Estimation to follow.`,
-				},
-				{
-					activity: claimDataJSON.Detail.Activity.Desc1,
-					by: claimDataJSON.Detail.Activity.By1,
-					date: `${dateFormatterLocalString(
-						claimDataJSON.Detail.Activity.Date1
-					)}`,
-					message:
-						'The insured called me this morning at 10am after getting into an accident. I submitted a claim on behalf of the insured, and the claim is currently waiting for investigation process to begin.',
-				},
-		  ]
-		: [];
-
-	const summaryClaimData: ClaimDetailDataType[] = [
-		{
-			data: dateFormatter(claimData?.claimCreateDate),
-			key: 'submittedOn',
-			text: 'Submitted on',
-		},
-		{
-			data: claimData?.r_policyToClaims_c_raylifePolicyId,
-			icon: true,
-			key: 'entryID',
-			redirectTo: `${'policy-details'}?externalReferenceCode=${
-				claimData?.r_policyToClaims_c_raylifePolicyERC
-			}`,
-			text: 'Policy Number',
-			type: 'link',
-		},
-		{
-			data: fullName,
-			key: 'name',
-			text: 'Name',
-		},
-		{
-			data: applicationData?.email,
-			key: 'email',
-			redirectTo: applicationData?.email,
-			text: 'Email',
-			type: 'link',
-		},
-		{data: applicationData?.phone, key: 'phone', text: 'Phone'},
-	];
-
-	const summaryClaimDataSettled: ClaimDetailDataType[] = [
-		{
-			data: claimData?.claimStatus?.name,
-			greenColor: true,
-			key: 'status',
-			text: `Status`,
-		},
-		{
-			data: dateFormatter(claimData?.settledDate),
-			key: 'settledOn',
-			text: `Settled on`,
-		},
-		{
-			data: currencyFormatter(claimData?.claimAmount),
-			key: 'settlementAmount',
-			text: `Settlement Amount`,
-		},
-		...summaryClaimData,
-	];
-
-	const BodyElement = () => (
-		<div className="ml-3">
-			<div className="font-weight-bold"> Detail below:</div>
-
-			<div className="claim-activities-body-element">
-				<div className="d-flex justify-content-between">
-					<div>
-						<div className="mt-3 text-neutral-6">Mechanic</div>
-
-						<div>
-							{claimDataJSON.Detail.VehicleRepair.MechanicName}
-						</div>
-
-						<div>
-							{claimDataJSON.Detail.VehicleRepair.MechanicPhone}
-						</div>
-					</div>
-
-					<div>
-						<div className="mt-3 text-neutral-6">Order #</div>
-
-						<div className="text-uppercase">
-							{
-								claimDataJSON.Detail.VehicleRepair
-									.MechanicOrderNum
-							}
-						</div>
-					</div>
-
-					<div className="mr-10">
-						<div className="mt-3 text-neutral-6"> Completed on</div>
-
-						<div>
-							{dateFormatter(
-								claimDataJSON.Detail.VehicleRepair
-									.MechanicCompleteDate
-							)}
-						</div>
-					</div>
-				</div>
-
-				<div>
-					<div className="mt-5 text-neutral-6">Cost</div>
-
-					<div>
-						{currencyFormatter(
-							claimDataJSON.Detail.VehicleRepair.MechanicCost
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
 
 	return (
 		<div className="claim-details-container">
-			{claimData && claimActivityData && (
+			{claimData && (
 				<>
 					{!isClaimSettled && (
 						<div className="align-items-center bg-neutral-0 d-flex justify-content-center multi-steps-content">
@@ -312,12 +149,9 @@ const ClaimDetails = () => {
 					<div className="claim-detail-content">
 						<div className="d-flex py-4 row">
 							<div className="col-xl-3 d-flex mb-4">
-								<Summary
-									dataSummary={
-										isClaimSettled
-											? summaryClaimDataSettled
-											: summaryClaimData
-									}
+								<ClaimDetailsSummary
+									claimData={claimData}
+									isClaimSettled={isClaimSettled}
 								/>
 							</div>
 
@@ -332,10 +166,7 @@ const ClaimDetails = () => {
 							)}
 						</div>
 
-						<ActivitiesComponent
-							BodyElement={BodyElement}
-							activitiesData={claimActivityData}
-						/>
+						<ClaimDetailsActivities claimData={claimData} />
 					</div>
 				</>
 			)}

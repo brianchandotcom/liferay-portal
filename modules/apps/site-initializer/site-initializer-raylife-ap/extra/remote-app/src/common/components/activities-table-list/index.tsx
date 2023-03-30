@@ -45,7 +45,7 @@ const HEADERSMOBILE: TableListHeaders[] = [
 ];
 
 type ActivitieDataType = {
-	BodyElement?: any;
+	BodyElement?: () => void;
 	activitiesData: {[keys: string]: string | boolean}[];
 };
 

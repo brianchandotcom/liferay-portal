@@ -34,7 +34,6 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -148,8 +147,10 @@ public class RedirectProviderImpl
 			PatternUtil.parse(redirectPatternConfiguration.patternStrings()));
 	}
 
-	protected void setCrawlerUserAgents(Set<String> crawlerUserAgents) {
-		_crawlerUserAgents = crawlerUserAgents;
+	protected void setCrawlerUserAgentsProvider(
+		CrawlerUserAgentsProvider crawlerUserAgentsProvider) {
+
+		_crawlerUserAgentsProvider = crawlerUserAgentsProvider;
 	}
 
 	protected void setRedirectEntryLocalService(
@@ -162,12 +163,6 @@ public class RedirectProviderImpl
 		Map<Long, List<RedirectPatternEntry>> redirectPatternEntries) {
 
 		_redirectPatternEntries = redirectPatternEntries;
-	}
-
-	private Set<String> _getCrawlerUserAgents() {
-		_crawlerUserAgents = _crawlerUserAgentsProvider.getCrawlerUserAgents();
-
-		return _crawlerUserAgents;
 	}
 
 	private boolean _isUserAgentMatch(
@@ -212,8 +207,6 @@ public class RedirectProviderImpl
 			_redirectPatternEntries.remove(groupId);
 		}
 	}
-
-	private Set<String> _crawlerUserAgents;
 
 	@Reference
 	private CrawlerUserAgentsProvider _crawlerUserAgentsProvider;

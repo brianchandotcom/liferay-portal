@@ -27,7 +27,12 @@
 </tr>
 <tr>
 	<td>ALERT_TOAST</td>
-	<td>//*[@id='ToastAlertContainer']//*[contains(@class, 'alert-${key_type}')]</td>
+	<td>//*[@id='ToastAlertContainer']//*[contains(@class, 'alert-${key_type}')][contains(@class,'alert-dismissible')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_TOAST_HREF</td>
+	<td>//*[@id='ToastAlertContainer']//*[contains(@class, 'alert-${key_type}')][contains(@class,'alert-dismissible')]//a</td>
 	<td></td>
 </tr>
 </tbody>

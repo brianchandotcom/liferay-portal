@@ -79,6 +79,10 @@ public class UserAgentMatcherImpl implements UserAgentMatcher {
 		_crawlerUserAgents = crawlerUserAgents;
 	}
 
+	protected void setCrawlerUserAgents(Set<String> crawlerUserAgents) {
+		_crawlerUserAgents = crawlerUserAgents;
+	}
+
 	private volatile Set<String> _crawlerUserAgents;
 
 }

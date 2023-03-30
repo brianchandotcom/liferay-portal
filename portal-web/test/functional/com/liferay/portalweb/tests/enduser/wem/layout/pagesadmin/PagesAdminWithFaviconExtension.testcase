@@ -72,6 +72,8 @@ definition {
 				menuItem = "Configure",
 				pageName = "Widget Page Name");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(

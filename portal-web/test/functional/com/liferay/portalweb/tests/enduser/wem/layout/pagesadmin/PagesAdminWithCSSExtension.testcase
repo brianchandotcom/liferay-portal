@@ -83,6 +83,8 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
@@ -512,6 +514,8 @@ definition {
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Test Page Name 2");
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 

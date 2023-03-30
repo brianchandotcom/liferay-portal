@@ -83,6 +83,8 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertAttributeValue(
@@ -414,6 +416,8 @@ definition {
 		}
 
 		task ("Then the site designer could change the theme CSS extension of widget page") {
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertAttributeValue(

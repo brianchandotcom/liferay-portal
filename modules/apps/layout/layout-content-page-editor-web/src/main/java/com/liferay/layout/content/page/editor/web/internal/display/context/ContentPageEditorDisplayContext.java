@@ -623,8 +623,6 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/restore_collection_display_config")
 			).put(
-				"restrictedItemIds", _getRestrictedItemIds()
-			).put(
 				"saveVariantSegmentsExperienceURL",
 				getSaveVariantSegmentsExperienceURL()
 			).put(
@@ -808,6 +806,8 @@ public class ContentPageEditorDisplayContext {
 						}
 					).build();
 				}
+			).put(
+				"restrictedItemIds", _getRestrictedItemIds()
 			).put(
 				"segmentsExperienceId", getSegmentsExperienceId()
 			).build()

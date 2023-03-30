@@ -145,13 +145,27 @@ else {
 >
 	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="customization" /></h3>
 
+	<%
+	List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
+	%>
 
+	<clay:tabs
+		tabsItems="<%= tabsItems %>"
+	>
 
+		<%
+		for (TabsItem tabsItem : tabsItems) {
+		%>
 
 			<div>
+				<liferay-util:include page='<%= "/layout/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
 			</div>
 
+		<%
+		}
+		%>
 
+	</clay:tabs>
 </clay:sheet-section>
 
 <aui:script sandbox="<%= true %>">

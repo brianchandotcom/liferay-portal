@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,7 +25,7 @@ import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Set;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Tina Tian
@@ -43,6 +45,7 @@ public abstract class BaseTemplateResourceLoader
 
 	@Override
 	public void destroy() {
+		_serviceTrackerList.close();
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public abstract class BaseTemplateResourceLoader
 	}
 
 	protected void init(
-		String name, Set<TemplateResourceParser> templateResourceParsers,
+		BundleContext bundleContext, String name,
 		TemplateResourceCache templateResourceCache) {
 
 		if (Validator.isNull(name)) {
@@ -96,13 +99,16 @@ public abstract class BaseTemplateResourceLoader
 
 		_name = name;
 
-		_templateResourceParsers = templateResourceParsers;
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, TemplateResourceParser.class,
+			"(lang.type=" + _name + ")");
+
 		_templateResourceCache = templateResourceCache;
 	}
 
 	private TemplateResource _loadFromParser(String templateId) {
 		for (TemplateResourceParser templateResourceParser :
-				_templateResourceParsers) {
+				_serviceTrackerList) {
 
 			try {
 				if (!templateResourceParser.isTemplateResourceValid(
@@ -136,7 +142,7 @@ public abstract class BaseTemplateResourceLoader
 		BaseTemplateResourceLoader.class);
 
 	private String _name;
+	private ServiceTrackerList<TemplateResourceParser> _serviceTrackerList;
 	private TemplateResourceCache _templateResourceCache;
-	private Set<TemplateResourceParser> _templateResourceParsers;
 
 }

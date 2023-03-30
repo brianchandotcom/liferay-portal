@@ -72,6 +72,8 @@ public class SegmentsContextVocabularyConfigurationTest {
 
 			_configuration1.update(properties);
 
+			properties = _configuration1.getProperties();
+
 			Assert.assertEquals(
 				"assetVocabularyName", properties.get("assetVocabularyName"));
 			Assert.assertEquals(

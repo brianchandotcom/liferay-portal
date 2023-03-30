@@ -108,7 +108,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -128,12 +127,11 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -493,16 +491,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		Category[] categories = product.getCategories();
 
 		if (categories != null) {
-			List<Long> assetCategoryIds = new ArrayList<>();
-
-			for (Category category : categories) {
-				if (category.getId() != null) {
-					assetCategoryIds.add(category.getId());
-				}
-			}
-
 			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toLongArray(assetCategoryIds));
+				transformToLongArray(
+					Arrays.asList(categories), Category::getId));
 		}
 		else if (cpDefinition != null) {
 			serviceContext.setAssetCategoryIds(
@@ -1166,16 +1157,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getCPDefinitionId()));
 		}
 		else {
-			List<Long> assetCategoryIds = new ArrayList<>();
-
-			for (Category category : categories) {
-				if (category.getId() != null) {
-					assetCategoryIds.add(category.getId());
-				}
-			}
-
 			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toLongArray(assetCategoryIds));
+				transformToLongArray(
+					Arrays.asList(categories), Category::getId));
 		}
 
 		Map<String, String> nameMap = product.getName();

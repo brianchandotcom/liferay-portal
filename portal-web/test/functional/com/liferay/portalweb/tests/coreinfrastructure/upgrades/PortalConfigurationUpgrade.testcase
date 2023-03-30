@@ -5,7 +5,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Upgrades User and System Management";
+	property testray.main.component.name = "Portal Configuration";
 
 	setUp {
 		var portalURL = PropsUtil.get("portal.url");

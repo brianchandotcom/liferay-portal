@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Index;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.IndexUtil;
@@ -39,13 +40,11 @@ import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetric
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,17 +92,17 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 
 		_searchEngineAdapter.execute(
 			new RefreshIndexRequest(
-				Stream.of(
-					indexEntityNames
-				).map(
-					_workflowMetricsIndexNameBuilderMap::get
-				).map(
-					workflowMetricsIndexNameBuilder ->
-						workflowMetricsIndexNameBuilder.getIndexName(
-							contextCompany.getCompanyId())
-				).toArray(
-					String[]::new
-				)));
+				transform(
+					indexEntityNames,
+					indexEntityName -> {
+						IndexNameBuilder indexNameBuilder =
+							_workflowMetricsIndexNameBuilderMap.get(
+								indexEntityName);
+
+						return indexNameBuilder.getIndexName(
+							contextCompany.getCompanyId());
+					},
+					String.class)));
 	}
 
 	@Override
@@ -210,26 +209,14 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 		else if (Objects.equals(
 					index.getKey(), Index.Group.METRIC.getValue())) {
 
-			return Stream.of(
-				_indexEntityNameSet
-			).flatMap(
-				Collection::stream
-			).filter(
-				value -> !value.startsWith("sla")
-			).toArray(
-				String[]::new
-			);
+			return ArrayUtil.filter(
+				_indexEntityNameSet.toArray(new String[0]),
+				value -> !value.startsWith("sla"));
 		}
 		else if (Objects.equals(index.getKey(), Index.Group.SLA.getValue())) {
-			return Stream.of(
-				_indexEntityNameSet
-			).flatMap(
-				Collection::stream
-			).filter(
-				value -> value.startsWith("sla")
-			).toArray(
-				String[]::new
-			);
+			return ArrayUtil.filter(
+				_indexEntityNameSet.toArray(new String[0]),
+				value -> value.startsWith("sla"));
 		}
 		else if (_indexEntityNameSet.contains(index.getKey())) {
 			return new String[] {index.getKey()};

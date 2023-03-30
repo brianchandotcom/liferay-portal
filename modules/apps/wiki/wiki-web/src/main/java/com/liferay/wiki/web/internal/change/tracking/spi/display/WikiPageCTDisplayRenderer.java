@@ -16,17 +16,26 @@ package com.liferay.wiki.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.web.internal.util.WikiUtil;
 
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,21 +52,7 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 	public String getEditURL(
 		HttpServletRequest httpServletRequest, WikiPage wikiPage) {
 
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/wiki/edit_page"
-		).setRedirect(
-			_portal.getCurrentURL(httpServletRequest)
-		).setBackURL(
-			ParamUtil.getString(httpServletRequest, "backURL")
-		).setParameter(
-			"nodeId", wikiPage.getNodeId()
-		).setParameter(
-			"title", wikiPage.getTitle()
-		).buildString();
+		return String.valueOf(_getEditURL(httpServletRequest, wikiPage));
 	}
 
 	@Override
@@ -69,6 +64,41 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 	public String getTitle(Locale locale, WikiPage wikiPage) {
 		return StringBundler.concat(
 			wikiPage.getTitle(), " (", wikiPage.getVersion(), ")");
+	}
+
+	@Override
+	public String renderPreview(DisplayContext<WikiPage> displayContext)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL viewPageURL = PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(portletResponse)
+		).setMVCRenderCommandName(
+			"/wiki/view_page"
+		).buildPortletURL();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		WikiPage wikiPage = displayContext.getModel();
+
+		return _wikiEngineRenderer.convert(
+			wikiPage, viewPageURL, _getEditURL(httpServletRequest, wikiPage),
+			WikiUtil.getAttachmentURLPrefix(
+				themeDisplay.getPathMain(), themeDisplay.getPlid(),
+				wikiPage.getNodeId(), wikiPage.getTitle()));
+	}
+
+	@Override
+	public boolean showPreviewDiff() {
+		return true;
 	}
 
 	@Override
@@ -95,7 +125,33 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 		);
 	}
 
+	private PortletURL _getEditURL(
+		HttpServletRequest httpServletRequest, WikiPage wikiPage) {
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/wiki/edit_page"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setBackURL(
+			ParamUtil.getString(httpServletRequest, "backURL")
+		).setParameter(
+			"nodeId", wikiPage.getNodeId()
+		).setParameter(
+			"title", wikiPage.getTitle()
+		).buildPortletURL();
+	}
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

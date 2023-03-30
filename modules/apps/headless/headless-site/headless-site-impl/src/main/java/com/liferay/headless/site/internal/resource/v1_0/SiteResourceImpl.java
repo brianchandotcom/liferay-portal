@@ -118,7 +118,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 			if (layoutSetPrototype == null) {
 				throw new IllegalArgumentException(
-					"No site template found for site template key " +
+					"No site template was found for site template key " +
 						site.getTemplateKey());
 			}
 

@@ -15,6 +15,7 @@
 import {Card, Input, InputLocalized} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
+import PicklistDefaultValueSelect from '../../../../components/ObjectField/DefaultValueFields/PicklistDefaultValueSelect';
 import {updateFieldSettings} from '../../../../utils/fieldSettings';
 import ObjectFieldFormBase, {
 	ObjectFieldErrors,
@@ -42,6 +43,7 @@ interface AggregationFilters {
 }
 
 interface BasicInfoProps {
+	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -58,6 +60,7 @@ interface BasicInfoProps {
 }
 
 export function BasicInfo({
+	creationLanguageId,
 	errors,
 	filterOperators,
 	handleChange,
@@ -156,6 +159,18 @@ export function BasicInfo({
 						/>
 					)}
 				</ObjectFieldFormBase>
+
+				{!Liferay.FeatureFlags['LPS-163716'] && values.state && (
+					<PicklistDefaultValueSelect
+						creationLanguageId={creationLanguageId}
+						defaultValue={values.defaultValue}
+						error={errors.defaultValue}
+						label={Liferay.Language.get('default-value')}
+						required
+						setValues={setValues}
+						values={values}
+					/>
+				)}
 			</Card>
 
 			{values.businessType === 'Aggregation' && (

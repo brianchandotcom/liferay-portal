@@ -51,21 +51,22 @@ export function AdvancedTab({
 				/>
 			)}
 
-			{values.businessType === 'Picklist' && (
-				<DefaultValueContainer
-					creationLanguageId={creationLanguageId}
-					errors={errors}
-					objectFieldBusinessType={
-						values.businessType as ObjectFieldBusinessType
-					}
-					objectFieldSettings={
-						values.objectFieldSettings as ObjectFieldSetting[]
-					}
-					setValues={setValues}
-					sidebarElements={sidebarElements}
-					values={values}
-				/>
-			)}
+			{Liferay.FeatureFlags['LPS-163716'] &&
+				values.businessType === 'Picklist' && (
+					<DefaultValueContainer
+						creationLanguageId={creationLanguageId}
+						errors={errors}
+						objectFieldBusinessType={
+							values.businessType as ObjectFieldBusinessType
+						}
+						objectFieldSettings={
+							values.objectFieldSettings as ObjectFieldSetting[]
+						}
+						setValues={setValues}
+						sidebarElements={sidebarElements}
+						values={values}
+					/>
+				)}
 		</>
 	);
 }

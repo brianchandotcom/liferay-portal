@@ -14,8 +14,10 @@
 
 /// <reference types="react" />
 
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import './EditObjectField.scss';
 interface EditObjectFieldProps {
+	creationLanguageId: Liferay.Language.Locale;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
@@ -28,9 +30,11 @@ interface EditObjectFieldProps {
 	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
+	sidebarElements: SidebarCategory[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
 export default function EditObjectField({
+	creationLanguageId,
 	filterOperators,
 	forbiddenChars,
 	forbiddenLastChars,
@@ -43,6 +47,7 @@ export default function EditObjectField({
 	objectName,
 	objectRelationshipId,
 	readOnly,
+	sidebarElements,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps): JSX.Element;
 export {};

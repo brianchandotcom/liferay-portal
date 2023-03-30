@@ -12,28 +12,60 @@
  * details.
  */
 
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
 
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
+import {DefaultValueContainer} from './DefaultValueContainer';
 import {ReadOnlyContainer} from './ReadOnlyContainer';
 
 interface AdvancedTabProps {
+	creationLanguageId: Liferay.Language.Locale;
+	errors: ObjectFieldErrors;
 	setValues: (value: Partial<ObjectField>) => void;
+	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
 }
 
-export function AdvancedTab({setValues, values}: AdvancedTabProps) {
+export function AdvancedTab({
+	creationLanguageId,
+	errors,
+	setValues,
+	sidebarElements,
+	values,
+}: AdvancedTabProps) {
 	return (
-		<ReadOnlyContainer
-			disabled={
-				values.system ||
-				values.businessType === 'Aggregation' ||
-				values.businessType === 'Formula'
-			}
-			objectFieldSettings={
-				values.objectFieldSettings as ObjectFieldSetting[]
-			}
-			requiredField={values.required as boolean}
-			setValues={setValues}
-		/>
+		<>
+			{Liferay.FeatureFlags['LPS-159913'] && (
+				<ReadOnlyContainer
+					disabled={
+						values.system ||
+						values.businessType === 'Aggregation' ||
+						values.businessType === 'Formula'
+					}
+					objectFieldSettings={
+						values.objectFieldSettings as ObjectFieldSetting[]
+					}
+					requiredField={values.required as boolean}
+					setValues={setValues}
+				/>
+			)}
+
+			{values.businessType === 'Picklist' && (
+				<DefaultValueContainer
+					creationLanguageId={creationLanguageId}
+					errors={errors}
+					objectFieldBusinessType={
+						values.businessType as ObjectFieldBusinessType
+					}
+					objectFieldSettings={
+						values.objectFieldSettings as ObjectFieldSetting[]
+					}
+					setValues={setValues}
+					sidebarElements={sidebarElements}
+					values={values}
+				/>
+			)}
+		</>
 	);
 }

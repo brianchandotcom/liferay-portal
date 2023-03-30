@@ -16,6 +16,7 @@ import ClayTabs from '@clayui/tabs';
 import {
 	API,
 	SidePanelForm,
+	SidebarCategory,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
@@ -27,6 +28,7 @@ import {BasicInfo} from './Tabs/BasicInfo/BasicInfo';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 interface EditObjectFieldProps {
+	creationLanguageId: Liferay.Language.Locale;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
@@ -39,12 +41,14 @@ interface EditObjectFieldProps {
 	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
+	sidebarElements: SidebarCategory[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
 const TABS = [Liferay.Language.get('basic-info')];
 
 export default function EditObjectField({
+	creationLanguageId,
 	filterOperators,
 	forbiddenChars,
 	forbiddenLastChars,
@@ -57,11 +61,13 @@ export default function EditObjectField({
 	objectName,
 	objectRelationshipId,
 	readOnly,
+	sidebarElements,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps) {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
+		delete objectField.defaultValue;
 		delete objectField.listTypeDefinitionId;
 		delete objectField.system;
 
@@ -97,7 +103,11 @@ export default function EditObjectField({
 		onSubmit,
 	});
 
-	if (Liferay.FeatureFlags['LPS-159913'] && TABS.length < 2) {
+	if (
+		(Liferay.FeatureFlags['LPS-159913'] ||
+			values.businessType === 'Picklist') &&
+		TABS.length < 2
+	) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}
 
@@ -141,12 +151,17 @@ export default function EditObjectField({
 					/>
 				</ClayTabs.TabPane>
 
-				{Liferay.FeatureFlags['LPS-159913'] ? (
+				{(Liferay.FeatureFlags['LPS-159913'] ||
+					values.businessType === 'Picklist') && (
 					<ClayTabs.TabPane>
-						<AdvancedTab setValues={setValues} values={values} />
+						<AdvancedTab
+							creationLanguageId={creationLanguageId}
+							errors={errors}
+							setValues={setValues}
+							sidebarElements={sidebarElements}
+							values={values}
+						/>
 					</ClayTabs.TabPane>
-				) : (
-					<></>
 				)}
 			</ClayTabs.Content>
 		</SidePanelForm>

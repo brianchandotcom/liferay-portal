@@ -94,6 +94,8 @@ export default function PageStructureSidebar() {
 		(state) => state.masterLayout?.masterLayoutData
 	);
 
+	const restrictedItemIds = useSelector((state) => state.restrictedItemIds);
+
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -127,6 +129,7 @@ export default function PageStructureSidebar() {
 				masterLayoutData,
 				onHoverNode,
 				pageContents,
+				restrictedItemIds,
 				selectedViewportSize,
 			}).children,
 		[
@@ -143,6 +146,7 @@ export default function PageStructureSidebar() {
 			mappingFields,
 			masterLayoutData,
 			pageContents,
+			restrictedItemIds,
 			onHoverNode,
 			selectedViewportSize,
 		]
@@ -374,6 +378,7 @@ function visit(
 		masterLayoutData,
 		onHoverNode,
 		pageContents,
+		restrictedItemIds,
 		selectedViewportSize,
 	}
 ) {
@@ -479,6 +484,7 @@ function visit(
 						masterLayoutData,
 						onHoverNode,
 						pageContents,
+						restrictedItemIds,
 						selectedViewportSize,
 					}),
 
@@ -494,7 +500,7 @@ function visit(
 				(item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 					(!item.config.collection ||
 						(Liferay.FeatureFlags['LPS-169923'] &&
-							config.restrictedItemIds.has(item.itemId)))) ||
+							restrictedItemIds.has(item.itemId)))) ||
 				(item.type === LAYOUT_DATA_ITEM_TYPES.form &&
 					(!formIsMapped(item) ||
 						(Liferay.FeatureFlags['LPS-169923'] &&
@@ -526,6 +532,7 @@ function visit(
 						masterLayoutData,
 						onHoverNode,
 						pageContents,
+						restrictedItemIds,
 						selectedViewportSize,
 					}
 				).children;
@@ -547,6 +554,7 @@ function visit(
 					masterLayoutData,
 					onHoverNode,
 					pageContents,
+					restrictedItemIds,
 					selectedViewportSize,
 				});
 

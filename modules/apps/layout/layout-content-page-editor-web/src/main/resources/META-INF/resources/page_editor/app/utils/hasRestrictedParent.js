@@ -13,16 +13,15 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {config} from '../config/index';
 import {formIsRestricted} from './formIsRestricted';
 
-export function hasRestrictedParent(item, layoutData) {
+export function hasRestrictedParent(item, layoutData, restrictedItemIds) {
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
 		return formIsRestricted(item);
 	}
 
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-		return config.restrictedItemIds.has(item.itemId);
+		return restrictedItemIds.has(item.itemId);
 	}
 
 	const parent = layoutData?.items?.[item.parentId];
@@ -31,5 +30,5 @@ export function hasRestrictedParent(item, layoutData) {
 		return false;
 	}
 
-	return hasRestrictedParent(parent, layoutData);
+	return hasRestrictedParent(parent, layoutData, restrictedItemIds);
 }

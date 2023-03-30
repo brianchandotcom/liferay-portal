@@ -19,7 +19,6 @@ import React, {useCallback} from 'react';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -36,6 +35,8 @@ import {FieldSet} from './FieldSet';
 
 export function FragmentGeneralPanel({item}) {
 	const dispatch = useDispatch();
+
+	const restrictedItemIds = useSelector((state) => state.restrictedItemIds);
 
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -80,7 +81,7 @@ export function FragmentGeneralPanel({item}) {
 
 	if (
 		Liferay.FeatureFlags['LPS-169923'] &&
-		config.restrictedItemIds.has(item.itemId)
+		restrictedItemIds.has(item.itemId)
 	) {
 		return (
 			<ClayAlert displayType="secondary" role={null}>

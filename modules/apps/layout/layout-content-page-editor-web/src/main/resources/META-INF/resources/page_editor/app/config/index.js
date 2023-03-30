@@ -41,7 +41,6 @@ export function initializeConfig(backendConfig) {
 		layoutType,
 		pluginsRootPath,
 		portletNamespace,
-		restrictedItemIds,
 		sidebarPanels,
 	} = backendConfig;
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
@@ -54,7 +53,6 @@ export function initializeConfig(backendConfig) {
 		commonStyles: getCommonStyles(commonStyles),
 		commonStylesFields: getCommonStylesFields(commonStyles),
 		panels: generatePanels(augmentedPanels),
-		restrictedItemIds: new Set(restrictedItemIds),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
 		toolbarPlugins: getToolbarPlugins(

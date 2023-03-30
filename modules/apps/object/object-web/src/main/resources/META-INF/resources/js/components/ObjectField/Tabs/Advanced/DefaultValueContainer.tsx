@@ -26,7 +26,7 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import {
-	filterSettingsOut,
+	filterSettings,
 	getDefaultValueFieldSettings,
 	getUpdatedDefaultValueFieldSettings,
 	getUpdatedDefaultValueType,
@@ -95,13 +95,13 @@ export function DefaultValueContainer({
 	const handleToggle = (toggled: boolean) => {
 		if (!toggled) {
 			setValues({
-				objectFieldSettings: filterSettingsOut(
+				objectFieldSettings: filterSettings(
 					['defaultValueType', 'defaultValue'],
 					values
 				),
 			});
 		}
-		if (toggled) {
+		else {
 			setValues({
 				objectFieldSettings: getUpdatedDefaultValueType(
 					values,

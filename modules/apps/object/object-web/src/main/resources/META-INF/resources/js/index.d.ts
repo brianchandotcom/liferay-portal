@@ -153,12 +153,12 @@ interface ObjectDefinition {
 }
 
 type ObjectFieldSettingValue =
-	| string
-	| number
-	| boolean
 	| NameValueObject[]
 	| ObjectFieldFilterSetting[]
-	| ObjectFieldPicklistSetting;
+	| ObjectFieldPicklistSetting
+	| boolean
+	| number
+	| string;
 
 interface ObjectFieldSetting {
 	name: ObjectFieldSettingName;

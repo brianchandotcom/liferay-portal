@@ -31,7 +31,7 @@ import React, {
 
 import {defaultLanguageId} from '../../utils/constants';
 import {
-	filterSettingsOut,
+	filterSettings,
 	getDefaultValueFieldSettings,
 	getUpdatedDefaultValueType,
 } from '../../utils/defaultValues';
@@ -422,7 +422,7 @@ export default function ObjectFieldFormBase({
 							listTypeDefinitionExternalReferenceCode:
 								item.externalReferenceCode,
 							listTypeDefinitionId: item.id,
-							objectFieldSettings: filterSettingsOut(
+							objectFieldSettings: filterSettings(
 								['defaultValue', 'stateFlow'],
 								values
 							),

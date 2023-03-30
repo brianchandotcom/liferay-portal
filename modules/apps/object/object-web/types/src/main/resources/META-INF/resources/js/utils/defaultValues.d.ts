@@ -12,7 +12,7 @@
  * details.
  */
 
-export declare function filterSettingsOut(
+export declare function filterSettings(
 	settingsToFilter: string[],
 	values: Partial<ObjectField>
 ): ObjectFieldSetting[];

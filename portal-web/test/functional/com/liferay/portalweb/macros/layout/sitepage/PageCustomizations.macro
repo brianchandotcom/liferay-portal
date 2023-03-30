@@ -29,9 +29,9 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
-		Navigator.gotoNavTab(navTab = "Advanced");
+		Navigator.gotoNavTab(navTab = "Design");
 
-		Panel.expandPanel(panel = "Customization Settings");
+		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Check.checkToggleSwitch(
 			key_fieldLabel = "customizable",

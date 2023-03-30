@@ -53,6 +53,8 @@ definition {
 		}
 		else if (${sitePageType} == "Link to URL") {
 			if (isSet(targetType)) {
+				Navigator.gotoNavTab(navTab = "Design");
+
 				Navigator.gotoNavTab(navTab = "Advanced");
 
 				Select(
@@ -62,6 +64,8 @@ definition {
 			}
 
 			if (isSet(target)) {
+				Navigator.gotoNavTab(navTab = "Design");
+
 				Navigator.gotoNavTab(navTab = "Advanced");
 
 				Type(
@@ -70,7 +74,7 @@ definition {
 					value1 = ${target});
 			}
 
-			Navigator.gotoNavUnderline(navUnderline = "General");
+			Navigator.gotoNavTab(navUnderline = "General");
 
 			Type(
 				locator1 = "TextInput#URL",
@@ -86,7 +90,7 @@ definition {
 			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
 		}
 
-		Navigator.gotoNavUnderline(navUnderline = "General");
+		Navigator.gotoNavTab(navUnderline = "General");
 
 		AssertVisible(locator1 = "TextInput#NAME");
 
@@ -272,9 +276,9 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
-		Navigator.gotoNavTab(navTab = "Advanced");
+		Navigator.gotoNavTab(navTab = "Design");
 
-		Panel.expandPanel(panel = "JavaScript");
+		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		AssertElementPresent(
 			key_fieldLabel = "Paste JavaScript code that is executed at the bottom of the page.",
@@ -683,6 +687,8 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
+		Navigator.gotoNavTab(navTab = "Design");
+
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		PagesAdmin.uploadLogo(logoFile = ${logoFile});
@@ -717,6 +723,8 @@ definition {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = ${pageName});
+
+		Navigator.gotoNavTab(navTab = "Design");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
@@ -814,6 +822,8 @@ definition {
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = ${pageName});
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "Advanced");
 		}
@@ -1638,6 +1648,8 @@ definition {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = ${pageName});
+
+		Navigator.gotoNavTab(navTab = "Design");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 

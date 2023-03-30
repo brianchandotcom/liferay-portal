@@ -59,6 +59,7 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectLayoutTabLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -355,10 +356,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				"item.class.name", objectDefinition.getClassName()
 			).build());
 
-		long oldCompanyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			CompanyThreadLocal.setCompanyId(objectDefinition.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					objectDefinition.getCompanyId())) {
 
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {
 				String languageId = LocaleUtil.toLanguageId(locale);
@@ -379,9 +379,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(oldCompanyId);
 		}
 
 		ObjectLayout objectLayout =

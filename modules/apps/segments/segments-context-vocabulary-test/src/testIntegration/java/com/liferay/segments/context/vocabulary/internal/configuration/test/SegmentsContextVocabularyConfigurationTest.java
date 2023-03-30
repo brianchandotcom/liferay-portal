@@ -63,10 +63,6 @@ public class SegmentsContextVocabularyConfigurationTest {
 		if (_configuration1 != null) {
 			_configuration1.delete();
 		}
-
-		if (_configuration2 != null) {
-			_configuration2.delete();
-		}
 	}
 
 	@Test
@@ -75,8 +71,10 @@ public class SegmentsContextVocabularyConfigurationTest {
 
 		_configuration1 = _createFactoryConfiguration(_PROPERTIES1);
 
+		Configuration configuration2 = null;
+
 		try {
-			_configuration2 = _createFactoryConfiguration(_PROPERTIES2);
+			configuration2 = _createFactoryConfiguration(_PROPERTIES2);
 
 			Assert.fail();
 		}
@@ -90,6 +88,11 @@ public class SegmentsContextVocabularyConfigurationTest {
 					"it to a new one, or choose another session property ",
 					"name."),
 				configurationModelListenerException.causeMessage);
+		}
+		finally {
+			if (configuration2 != null) {
+				configuration2.delete();
+			}
 		}
 
 		_assertProperties(_configuration1, _PROPERTIES1);
@@ -161,7 +164,6 @@ public class SegmentsContextVocabularyConfigurationTest {
 			"SegmentsContextVocabularyConfiguration";
 
 	private Configuration _configuration1;
-	private Configuration _configuration2;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

@@ -60,14 +60,12 @@ public class SkuHelper {
 
 		List<CPInstance> cpInstances =
 			_cpInstanceService.getCPDefinitionInstances(
-				cpDefinition.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED,
+				cpDefinition.getCPDefinitionId(), WorkflowConstants.STATUS_ANY,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
 		int totalItems = _cpInstanceService.getCPDefinitionInstancesCount(
-			cpDefinition.getCPDefinitionId(),
-			WorkflowConstants.STATUS_APPROVED);
+			cpDefinition.getCPDefinitionId(), WorkflowConstants.STATUS_ANY);
 
 		return Page.of(toSKUs(cpInstances, locale), pagination, totalItems);
 	}
@@ -88,6 +86,8 @@ public class SkuHelper {
 				public void accept(Object object) throws Exception {
 					SearchContext searchContext = (SearchContext)object;
 
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_ANY);
 					searchContext.setCompanyId(companyId);
 				}
 

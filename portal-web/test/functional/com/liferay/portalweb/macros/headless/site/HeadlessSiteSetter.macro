@@ -4,6 +4,7 @@ definition {
 		var parentSiteKey = JSONGroupAPI._getGroupKeyByName(
 			groupName = ${parentSiteName},
 			parentGroupName = ${grandParentSiteName},
+			portalURL = ${portalURL},
 			site = "true");
 
 		return ${parentSiteKey};

@@ -9,11 +9,13 @@ definition {
 		if (isSet(parentSiteName)) {
 			var parentSiteKey = HeadlessSiteSetter.setParentSiteKey(
 				grandParentSiteName = ${grandParentSiteName},
-				parentSiteName = ${parentSiteName});
+				parentSiteName = ${parentSiteName},
+				portalURL = ${portalURL});
 		}
 
 		if (isSet(templateName)) {
 			var templateKey = HeadlessSiteSetter.setTemplateKey(
+				portalURL = ${portalURL},
 				templateName = ${templateName},
 				templateType = ${templateType});
 			var templateType = StringUtil.replace(${templateType}, " ", "-");
@@ -24,6 +26,7 @@ definition {
 		var siteId = HeadlessSiteAPI._addSite(
 			membershipType = ${membershipType},
 			parentSiteKey = ${parentSiteKey},
+			portalURL = ${portalURL},
 			siteName = ${siteName},
 			templateKey = ${templateKey},
 			templateType = ${templateType},

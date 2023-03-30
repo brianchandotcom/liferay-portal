@@ -2,7 +2,9 @@ definition {
 
 	@summary = "Helper function to add a site via Headless"
 	macro _addSite {
-		var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";

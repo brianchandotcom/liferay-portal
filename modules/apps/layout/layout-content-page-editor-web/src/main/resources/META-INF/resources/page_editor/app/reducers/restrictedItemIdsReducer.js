@@ -24,6 +24,9 @@ export default function restrictedItemIdsReducer(
 		case TYPES.INIT:
 			return new Set(restrictedItemIds);
 
+		case TYPES.DUPLICATE_ITEM:
+			return new Set(action.restrictedItemIds);
+
 		default:
 			return restrictedItemIds;
 	}

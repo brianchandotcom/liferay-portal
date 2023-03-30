@@ -22,12 +22,18 @@ export default function duplicateItem({itemId, selectItem = () => {}}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then(
-			({duplicatedFragmentEntryLinks, duplicatedItemId, layoutData}) => {
+			({
+				duplicatedFragmentEntryLinks,
+				duplicatedItemId,
+				layoutData,
+				restrictedItemIds,
+			}) => {
 				dispatch(
 					duplicateItemAction({
 						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
 						itemId: duplicatedItemId,
 						layoutData,
+						restrictedItemIds,
 					})
 				);
 

@@ -19,7 +19,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,24 +63,11 @@ public class GetObjectDefinitionsRelationshipsMVCResourceCommand
 			_objectRelationshipLocalService.getObjectRelationships(
 				ParamUtil.getLong(resourceRequest, "objectDefinitionId"));
 
-		List<ObjectDefinition> objectDefinitions = new ArrayList<>();
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				_portal.getCompanyId(resourceRequest), "LPS-173537")) {
-
-			objectDefinitions =
+		for (ObjectDefinition objectDefinition :
 				_objectDefinitionLocalService.getObjectDefinitions(
 					_portal.getCompanyId(resourceRequest), true,
-					WorkflowConstants.STATUS_APPROVED);
-		}
-		else {
-			objectDefinitions =
-				_objectDefinitionLocalService.getObjectDefinitions(
-					_portal.getCompanyId(resourceRequest), true, false,
-					WorkflowConstants.STATUS_APPROVED);
-		}
+					WorkflowConstants.STATUS_APPROVED)) {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			objectDefinitionsJSONArray.put(
 				JSONUtil.put(
 					"externalReferenceCode",

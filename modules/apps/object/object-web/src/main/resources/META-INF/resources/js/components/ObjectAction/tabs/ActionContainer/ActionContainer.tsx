@@ -83,7 +83,7 @@ export function ActionContainer({
 			return true;
 		}
 
-		return Liferay.FeatureFlags['LPS-173537'] && isObjectActionSystem
+		return isObjectActionSystem
 			? businessType !== 'Aggregation' &&
 					businessType !== 'Formula' &&
 					businessType !== 'Relationship' &&

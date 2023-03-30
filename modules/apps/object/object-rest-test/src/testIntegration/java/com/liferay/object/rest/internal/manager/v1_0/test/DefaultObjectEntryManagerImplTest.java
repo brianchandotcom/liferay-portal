@@ -1066,6 +1066,13 @@ public class DefaultObjectEntryManagerImplTest {
 			).build(),
 			childObjectEntry1);
 
+		// Contains expression
+
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter", _buildContainsExpressionFilterString("id", "aaaa")
+			).build());
+
 		// Equals expression
 
 		_testGetObjectEntries(
@@ -1982,6 +1989,12 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			user.getUserId(), group.getGroupId(), role.getRoleId());
+	}
+
+	private String _buildContainsExpressionFilterString(
+		String fieldName, String value) {
+
+		return StringBundler.concat("contains( ", fieldName, ",'", value, "')");
 	}
 
 	private String _buildEqualsExpressionFilterString(

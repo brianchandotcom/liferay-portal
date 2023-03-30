@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.punchout.helper;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.headless.commerce.punchout.dto.v1_0.PunchOutSession;
@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.model.User;
 public class PunchOutContext {
 
 	public PunchOutContext(
-		CommerceAccount businessCommerceAccount, Group buyerGroup,
+		AccountEntry businessAccountEntry, Group buyerGroup,
 		User buyerLiferayUser, CommerceChannel commerceChannel,
 		CommerceOrder editCartCommerceOrder, PunchOutSession punchOutSession) {
 
-		_businessCommerceAccount = businessCommerceAccount;
+		_businessAccountEntry = businessAccountEntry;
 		_buyerGroup = buyerGroup;
 		_buyerLiferayUser = buyerLiferayUser;
 		_commerceChannel = commerceChannel;
@@ -39,8 +39,8 @@ public class PunchOutContext {
 		_punchOutSession = punchOutSession;
 	}
 
-	public CommerceAccount getBusinessCommerceAccount() {
-		return _businessCommerceAccount;
+	public AccountEntry getBusinessAccountEntry() {
+		return _businessAccountEntry;
 	}
 
 	public Group getBuyerGroup() {
@@ -63,10 +63,8 @@ public class PunchOutContext {
 		return _punchOutSession;
 	}
 
-	public void setBusinessCommerceAccount(
-		CommerceAccount businessCommerceAccount) {
-
-		_businessCommerceAccount = businessCommerceAccount;
+	public void setBusinessAccountEntry(AccountEntry businessAccountEntry) {
+		_businessAccountEntry = businessAccountEntry;
 	}
 
 	public void setBuyerGroup(Group buyerGroup) {
@@ -89,7 +87,7 @@ public class PunchOutContext {
 		_punchOutSession = punchOutSession;
 	}
 
-	private CommerceAccount _businessCommerceAccount;
+	private AccountEntry _businessAccountEntry;
 	private Group _buyerGroup;
 	private User _buyerLiferayUser;
 	private CommerceChannel _commerceChannel;

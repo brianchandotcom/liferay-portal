@@ -49,6 +49,16 @@ import org.osgi.service.component.annotations.Reference;
 public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 
 	@Override
+	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties(
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return _getSubscriptionUnicodeProperties(
+			"deliveryYearlyMode", "deliveryMonth", "deliveryMonthDay",
+			subscriptionTypeSettingsUnicodeProperties);
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "year");
 	}
@@ -129,21 +139,11 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	}
 
 	@Override
-	public UnicodeProperties validateDeliverySubscriptionTypeSettingsProperties(
+	public UnicodeProperties getSubscriptionTypeSettingsProperties(
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _validateSubscriptionProperties(
-			"deliveryYearlyMode", "deliveryMonth", "deliveryMonthDay",
-			subscriptionTypeSettingsUnicodeProperties);
-	}
-
-	@Override
-	public UnicodeProperties validateSubscriptionTypeSettingsProperties(
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
-		throws PortalException {
-
-		return _validateSubscriptionProperties(
+		return _getSubscriptionUnicodeProperties(
 			"yearlyMode", "month", "monthDay",
 			subscriptionTypeSettingsUnicodeProperties);
 	}
@@ -170,7 +170,7 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		return calendar.get(Calendar.DAY_OF_YEAR);
 	}
 
-	private UnicodeProperties _validateSubscriptionProperties(
+	private UnicodeProperties _getSubscriptionUnicodeProperties(
 			String yearlyModeKey, String monthKey, String monthDayKey,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws CPSubscriptionTypeSettingsException {

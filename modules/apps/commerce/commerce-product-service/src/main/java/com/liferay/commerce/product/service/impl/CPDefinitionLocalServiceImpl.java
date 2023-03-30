@@ -3196,7 +3196,7 @@ public class CPDefinitionLocalServiceImpl
 
 		if (deliveryCPSubscriptionType != null) {
 			return deliveryCPSubscriptionType.
-				validateDeliverySubscriptionTypeSettingsProperties(
+				getDeliverySubscriptionTypeSettingsProperties(
 					deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 
@@ -3225,9 +3225,8 @@ public class CPDefinitionLocalServiceImpl
 			_cpSubscriptionTypeRegistry.getCPSubscriptionType(subscriptionType);
 
 		if (cpSubscriptionType != null) {
-			return cpSubscriptionType.
-				validateSubscriptionTypeSettingsProperties(
-					subscriptionTypeSettingsUnicodeProperties);
+			return cpSubscriptionType.getSubscriptionTypeSettingsProperties(
+				subscriptionTypeSettingsUnicodeProperties);
 		}
 
 		return null;

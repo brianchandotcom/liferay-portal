@@ -48,6 +48,15 @@ import org.osgi.service.component.annotations.Reference;
 public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 
 	@Override
+	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties(
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return _getSubscriptionUnicodeProperties(
+			"deliveryWeekDay", subscriptionTypeSettingsUnicodeProperties);
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "week");
 	}
@@ -116,24 +125,15 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	}
 
 	@Override
-	public UnicodeProperties validateDeliverySubscriptionTypeSettingsProperties(
+	public UnicodeProperties getSubscriptionTypeSettingsProperties(
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _validateSubscriptionProperties(
-			"deliveryWeekDay", subscriptionTypeSettingsUnicodeProperties);
-	}
-
-	@Override
-	public UnicodeProperties validateSubscriptionTypeSettingsProperties(
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
-		throws PortalException {
-
-		return _validateSubscriptionProperties(
+		return _getSubscriptionUnicodeProperties(
 			"weekDay", subscriptionTypeSettingsUnicodeProperties);
 	}
 
-	private UnicodeProperties _validateSubscriptionProperties(
+	private UnicodeProperties _getSubscriptionUnicodeProperties(
 			String weekDayKey,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws CPSubscriptionTypeSettingsException {

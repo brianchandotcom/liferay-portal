@@ -15,8 +15,19 @@
 package com.liferay.layout.taglib.internal.util;
 
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +42,9 @@ public class SegmentsExperienceUtil {
 		long selectedSegmentsExperienceId = ParamUtil.getLong(
 			httpServletRequest, "segmentsExperienceId", -1);
 
-		if (selectedSegmentsExperienceId != -1) {
+		if (_isValidSegmentsExperienceId(
+				_getLayout(httpServletRequest), selectedSegmentsExperienceId)) {
+
 			return selectedSegmentsExperienceId;
 		}
 
@@ -41,6 +54,46 @@ public class SegmentsExperienceUtil {
 
 		return segmentsExperienceManager.getSegmentsExperienceId(
 			httpServletRequest);
+	}
+
+	private static Layout _getLayout(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			return themeDisplay.getLayout();
+		}
+
+		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
+			httpServletRequest.getQueryString());
+
+		String[] plids = parameterMap.get("plid");
+
+		return LayoutLocalServiceUtil.fetchLayout(GetterUtil.getLong(plids[0]));
+	}
+
+	private static boolean _isValidSegmentsExperienceId(
+		Layout layout, long segmentsExperienceId) {
+
+		if ((segmentsExperienceId == -1) || (layout == null)) {
+			return false;
+		}
+
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		if ((segmentsExperience != null) &&
+			(PortalUtil.getClassNameId(Layout.class.getName()) ==
+				segmentsExperience.getClassNameId()) &&
+			((layout.getPlid() == segmentsExperience.getClassPK()) ||
+			 (layout.getClassPK() == segmentsExperience.getClassPK()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

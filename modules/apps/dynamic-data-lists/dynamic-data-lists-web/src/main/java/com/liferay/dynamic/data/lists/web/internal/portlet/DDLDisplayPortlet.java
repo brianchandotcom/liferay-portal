@@ -131,12 +131,12 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"dynamic-data-list", DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY);
+			_ALIAS, DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("dynamic-data-list");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
 
 	@Override
@@ -207,6 +207,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 
 		_ddlWebConfigurationActivator = null;
 	}
+
+	private static final String _ALIAS = "dynamic-data-list";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayPortlet.class);

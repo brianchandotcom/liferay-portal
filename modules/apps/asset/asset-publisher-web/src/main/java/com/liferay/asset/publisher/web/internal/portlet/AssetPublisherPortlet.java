@@ -373,12 +373,12 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			AssetPublisherWebConfiguration.class, properties);
 
 		portletRegistry.registerAlias(
-			"asset-list", AssetPublisherPortletKeys.ASSET_PUBLISHER);
+			_ALIAS, AssetPublisherPortletKeys.ASSET_PUBLISHER);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		portletRegistry.unregisterAlias("asset-list");
+		portletRegistry.unregisterAlias(_ALIAS);
 	}
 
 	@Override
@@ -533,6 +533,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 		return fieldValue;
 	}
+
+	private static final String _ALIAS = "asset-list";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortlet.class);

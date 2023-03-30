@@ -271,13 +271,15 @@ public class JournalContentPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"web-content", JournalContentPortletKeys.JOURNAL_CONTENT);
+			_ALIAS, JournalContentPortletKeys.JOURNAL_CONTENT);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("web-content");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
+
+	private static final String _ALIAS = "web-content";
 
 	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
 		DDMStructure.class);

@@ -96,12 +96,12 @@ public class IFramePortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate() {
-		_portletRegistry.registerAlias("iframe", IFramePortletKeys.IFRAME);
+		_portletRegistry.registerAlias(_ALIAS, IFramePortletKeys.IFRAME);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("iframe");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
 
 	private String _transformSrc(
@@ -133,6 +133,8 @@ public class IFramePortlet extends MVCPortlet {
 
 		return src;
 	}
+
+	private static final String _ALIAS = "iframe";
 
 	private static final Log _log = LogFactoryUtil.getLog(IFramePortlet.class);
 

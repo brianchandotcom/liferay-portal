@@ -37,7 +37,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -52,6 +51,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -209,12 +209,12 @@ public class DDMFormPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"form", DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+			_ALIAS, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("form");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
 
 	@Override
@@ -275,6 +275,8 @@ public class DDMFormPortlet extends MVCPortlet {
 				DDMFormWebKeys.REFERER_GROUP_ID, ddmFormInstance.getGroupId());
 		}
 	}
+
+	private static final String _ALIAS = "form";
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMFormPortlet.class);
 

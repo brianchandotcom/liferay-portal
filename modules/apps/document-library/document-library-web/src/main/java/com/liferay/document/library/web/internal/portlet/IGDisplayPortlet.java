@@ -82,13 +82,15 @@ public class IGDisplayPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"media-gallery", DLPortletKeys.MEDIA_GALLERY_DISPLAY);
+			_ALIAS, DLPortletKeys.MEDIA_GALLERY_DISPLAY);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("media-gallery");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
+
+	private static final String _ALIAS = "media-gallery";
 
 	@Reference
 	private ItemSelector _itemSelector;

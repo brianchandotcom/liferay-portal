@@ -58,14 +58,15 @@ public class SiteNavigationSiteMapPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"site-map",
-			SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP);
+			_ALIAS, SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("site-map");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
+
+	private static final String _ALIAS = "site-map";
 
 	@Reference
 	private PortletRegistry _portletRegistry;

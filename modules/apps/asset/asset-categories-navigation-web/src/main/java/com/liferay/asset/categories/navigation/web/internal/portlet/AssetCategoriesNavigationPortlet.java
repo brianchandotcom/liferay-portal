@@ -58,14 +58,16 @@ public class AssetCategoriesNavigationPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"categories-nav",
+			_ALIAS,
 			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("categories-nav");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
+
+	private static final String _ALIAS = "categories-nav";
 
 	@Reference
 	private PortletRegistry _portletRegistry;

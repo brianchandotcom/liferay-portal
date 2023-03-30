@@ -45,15 +45,17 @@ public class FragmentEntryLinkNoninstanceableTestPortlet extends MVCPortlet {
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
-			"fragment-entry-link-noninstanceable",
+			_ALIAS,
 			FragmentEntryLinkPortletKeys.
 				FRAGMENT_ENTRY_LINK_NONINSTANCEABLE_TEST_PORTLET);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletRegistry.unregisterAlias("fragment-entry-link-noninstanceable");
+		_portletRegistry.unregisterAlias(_ALIAS);
 	}
+
+	private static final String _ALIAS = "fragment-entry-link-noninstanceable";
 
 	@Reference
 	private PortletRegistry _portletRegistry;

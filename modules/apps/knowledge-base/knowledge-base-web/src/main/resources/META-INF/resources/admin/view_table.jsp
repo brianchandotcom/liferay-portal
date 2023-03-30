@@ -112,8 +112,8 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					name="Status"
-					value=""
+					name="status"
+					value="--"
 				/>
 
 				<liferay-ui:search-container-column-text

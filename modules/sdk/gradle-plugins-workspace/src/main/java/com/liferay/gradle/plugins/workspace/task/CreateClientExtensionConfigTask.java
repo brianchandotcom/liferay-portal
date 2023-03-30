@@ -78,8 +78,20 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			_PLUGIN_PACKAGE_PROPERTIES_PATH);
 	}
 
-	public void addClientExtension(ClientExtension clientExtension) {
-		_clientExtensions.add(clientExtension);
+	public void addClientExtensionProfile(
+		String profileName, ClientExtension clientExtension) {
+
+		_clientExtensionsMap.compute(
+			profileName,
+			(key, value) -> {
+				if (value == null) {
+					value = new LinkedHashSet<>();
+				}
+
+				value.add(clientExtension);
+
+				return value;
+			});
 	}
 
 	public void addClientExtensionProperties(
@@ -92,45 +104,48 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	public void createClientExtensionConfig() {
 		Properties pluginPackageProperties = _getPluginPackageProperties();
 
+		Set<ClientExtension> clientExtensions = _clientExtensionsMap.get(
+			GradleUtil.getProperty(getProject(), "profileName", "default"));
+
+		if (clientExtensions == null) {
+			clientExtensions = _clientExtensionsMap.get("default");
+		}
+
 		String classificationGrouping = _validateAndGetClassificationGrouping(
-			_clientExtensions);
+			clientExtensions);
 
 		Map<String, Object> jsonMap = new HashMap<>();
 
 		jsonMap.put(":configurator:policy", "force");
 
-		_clientExtensions.forEach(
-			clientExtension -> {
-				String pid = _clientExtensionProperties.getProperty(
-					clientExtension.type + ".pid");
+		for (ClientExtension clientExtension : clientExtensions) {
+			String pid = _clientExtensionProperties.getProperty(
+				clientExtension.type + ".pid");
 
-				if (Objects.equals(clientExtension.type, "instanceSettings")) {
-					pid =
-						clientExtension.typeSettings.remove("pid") + ".scoped";
-				}
+			if (Objects.equals(clientExtension.type, "instanceSettings")) {
+				pid = clientExtension.typeSettings.remove("pid") + ".scoped";
+			}
 
-				if (pid != null) {
-					jsonMap.putAll(clientExtension.toJSONMap(pid));
-				}
+			if (pid != null) {
+				jsonMap.putAll(clientExtension.toJSONMap(pid));
+			}
 
-				if (Objects.equals(clientExtension.classification, "batch")) {
-					pluginPackageProperties.put(
-						"Liferay-Client-Extension-Batch", "batch/");
-				}
+			if (Objects.equals(clientExtension.classification, "batch")) {
+				pluginPackageProperties.put(
+					"Liferay-Client-Extension-Batch", "batch/");
+			}
 
-				if (Objects.equals(
-						clientExtension.classification, "frontend")) {
-
-					pluginPackageProperties.put(
-						"Liferay-Client-Extension-Frontend", "static/");
-				}
-			});
+			if (Objects.equals(clientExtension.classification, "frontend")) {
+				pluginPackageProperties.put(
+					"Liferay-Client-Extension-Frontend", "static/");
+			}
+		}
 
 		_storePluginPackageProperties(pluginPackageProperties);
 
 		Project project = getProject();
 
-		Stream<ClientExtension> stream = _clientExtensions.stream();
+		Stream<ClientExtension> stream = clientExtensions.stream();
 
 		Map<String, String> substitutionMap = stream.flatMap(
 			clientExtension -> {
@@ -164,10 +179,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	public File getClientExtensionConfigFile() {
 		return GradleUtil.toFile(getProject(), _clientExtensionConfigFile);
-	}
-
-	public Set<ClientExtension> getClientExtensions() {
-		return _clientExtensions;
 	}
 
 	public File getDockerFile() {
@@ -460,8 +471,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	private final Object _clientExtensionConfigFile;
 	private Properties _clientExtensionProperties;
-	private final Set<ClientExtension> _clientExtensions =
-		new LinkedHashSet<>();
+	private final Map<String, Set<ClientExtension>> _clientExtensionsMap =
+		new HashMap<>();
 	private Object _dockerFile;
 	private Object _lcpJsonFile;
 	private final Object _pluginPackagePropertiesFile;

@@ -121,7 +121,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 		sb.append("/api/1.0/pages/search-keywords?counts=");
 		sb.append(_count);
 
-		if (Validator.isBlank(_displayLanguageId)) {
+		if (!Validator.isBlank(_displayLanguageId)) {
 			sb.append("&displayLanguageId=");
 			sb.append(_displayLanguageId);
 		}

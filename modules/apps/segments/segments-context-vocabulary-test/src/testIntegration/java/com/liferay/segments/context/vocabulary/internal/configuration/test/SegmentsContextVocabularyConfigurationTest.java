@@ -48,7 +48,9 @@ public class SegmentsContextVocabularyConfigurationTest {
 	public static final TestRule testRule = new LiferayIntegrationTestRule();
 
 	@Test
-	public void testUpdate() throws Exception {
+	public void testAddDuplicatedCompanySegmentsContextVocabularyConfiguration()
+		throws Exception {
+
 		Locale themeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		try {

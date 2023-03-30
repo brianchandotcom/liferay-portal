@@ -176,9 +176,12 @@ function ItemConfigurationContent({
 						active={panels.findIndex(
 							(panel) => panel.panelId === activePanel.id
 						)}
-						className={classNames('flex-nowrap px-3', {
-							'pt-2': activeItemType !== ITEM_TYPES.editable,
-						})}
+						className={classNames(
+							'flex-nowrap flex-shrink-0 px-3',
+							{
+								'pt-2': activeItemType !== ITEM_TYPES.editable,
+							}
+						)}
 						onActiveChange={(activeIndex) => {
 							const panel = panels[activeIndex];
 

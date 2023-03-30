@@ -238,9 +238,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							</div>
 
 							<div class="entry-description form-group">
-								<aui:input disabled="<%= !blogsEditEntryDisplayContext.isCustomAbstract() %>" label="description" name="description" type="text" value="<%= blogsEditEntryDisplayContext.getDescription() %>">
-									<aui:validator name="required" />
-								</aui:input>
+								<aui:input disabled="<%= !blogsEditEntryDisplayContext.isCustomAbstract() %>" label="description" name="description" required="<%= true %>" type="text" value="<%= blogsEditEntryDisplayContext.getDescription() %>" />
 							</div>
 
 							<div class="clearfix">

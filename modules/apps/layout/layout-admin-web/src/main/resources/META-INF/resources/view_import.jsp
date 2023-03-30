@@ -40,9 +40,7 @@ LayoutUtilityPageEntryImportDisplayContext layoutUtilityPageEntryImportDisplayCo
 		<br /><br />
 
 		<liferay-frontend:fieldset>
-			<aui:input label="file" name="file" type="file">
-				<aui:validator name="required" />
-
+			<aui:input label="file" name="file" required="<%= true %>" type="file">
 				<aui:validator name="acceptFiles">
 					'zip'
 				</aui:validator>

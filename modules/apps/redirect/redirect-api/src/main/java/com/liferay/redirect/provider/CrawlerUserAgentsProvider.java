@@ -14,14 +14,10 @@
 
 package com.liferay.redirect.provider;
 
-import java.util.Set;
-
 /**
  * @author Alicia García
  */
 public interface CrawlerUserAgentsProvider {
-
-	public Set<String> getCrawlerUserAgents();
 
 	public boolean isCrawlerUserAgent(String userAgent);
 

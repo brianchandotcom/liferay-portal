@@ -40,11 +40,6 @@ public class CrawlerUserAgentsProviderImpl
 	implements CrawlerUserAgentsProvider {
 
 	@Override
-	public Set<String> getCrawlerUserAgents() {
-		return _crawlerUserAgents;
-	}
-
-	@Override
 	public boolean isCrawlerUserAgent(String userAgent) {
 		if (Validator.isNull(userAgent) ||
 			SetUtil.isEmpty(_crawlerUserAgents)) {

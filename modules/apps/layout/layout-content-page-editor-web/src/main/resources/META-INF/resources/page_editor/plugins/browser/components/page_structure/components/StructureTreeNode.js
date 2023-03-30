@@ -36,8 +36,6 @@ import {config} from '../../../../../app/config/index';
 import {
 	useActivationOrigin,
 	useActiveItemId,
-	useHoverItem,
-	useHoveredItemId,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
 import {
@@ -113,7 +111,6 @@ export default function StructureTreeNode({node, setEditingNodeId}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
-	const hoveredItemId = useHoveredItemId();
 	const isSelected = node.id === fromControlsId(activeItemId);
 
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
@@ -161,8 +158,10 @@ export default function StructureTreeNode({node, setEditingNodeId}) {
 		<MemoizedStructureTreeNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			isActive={node.activable && isSelected}
-			isHovered={node.id === fromControlsId(hoveredItemId)}
 			isMapped={node.mapped}
+
+			// isSelected={isSelected}
+
 			node={node}
 			setEditingNodeId={setEditingNodeId}
 		/>
@@ -185,14 +184,15 @@ const MemoizedStructureTreeNodeContent = React.memo(
 function StructureTreeNodeContent({
 	activationOrigin,
 	isActive,
-	isHovered,
 	isMapped,
+
+	// isSelected,
+
 	node,
 	setEditingNodeId,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
-	const hoverItem = useHoverItem();
 	const nodeRef = useRef();
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -348,31 +348,16 @@ function StructureTreeNodeContent({
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,
-				'page-editor__page-structure__tree-node--hovered': isHovered,
 				'page-editor__page-structure__tree-node--mapped': isMapped,
 				'page-editor__page-structure__tree-node--master-item':
 					node.isMasterItem,
 			})}
-			onMouseLeave={(event) => {
-				if (!isDraggingSource && isHovered) {
-					event.stopPropagation();
-					hoverItem(null);
-				}
-			}}
-			onMouseOver={(event) => {
-				if (!isDraggingSource) {
-					event.stopPropagation();
-					hoverItem(node.id);
-				}
-			}}
 			ref={targetRef}
 		>
 			<div
 				aria-label={sub(Liferay.Language.get('select-x'), [node.name])}
 				className="lfr-portal-tooltip page-editor__page-structure__tree-node__mask"
 				data-item-id={node.id}
-				data-title={node.tooltipTitle}
-				data-tooltip-align="right"
 				onClick={(event) => {
 					event.stopPropagation();
 					const itemId = getFirstControlsId({

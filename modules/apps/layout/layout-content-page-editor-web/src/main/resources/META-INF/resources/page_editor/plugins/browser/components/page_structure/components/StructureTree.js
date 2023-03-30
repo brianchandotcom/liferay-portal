@@ -108,6 +108,7 @@ export default function PageStructureSidebar() {
 	const layoutData = useSelector((state) => state.layoutData);
 	const pageContents = useSelector(selectPageContents);
 	const hoverItem = useHoverItem();
+	const hoveredItemId = useHoveredItemId();
 
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const masterLayoutData = useSelector(
@@ -288,7 +289,31 @@ export default function PageStructureSidebar() {
 							<ClayTreeView.Item
 								actions={<ItemActions item={item} />}
 							>
-								<ClayTreeView.ItemStack>
+								<ClayTreeView.ItemStack
+									data-title={
+										item.isMasterItem || !item.activable
+											? ''
+											: item.tooltipTitle
+									}
+									data-tooltip-align={
+										item.isMasterItem || !item.activable
+											? ''
+											: 'right'
+									}
+									onMouseLeave={(event) => {
+										if (
+											item.id ===
+											fromControlsId(hoveredItemId)
+										) {
+											event.stopPropagation();
+											hoverItem(null);
+										}
+									}}
+									onMouseOver={(event) => {
+										event.stopPropagation();
+										hoverItem(item.id);
+									}}
+								>
 									<StructureTreeNode
 										node={item}
 										setEditingNodeId={setEditingNodeId}

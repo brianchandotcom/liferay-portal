@@ -112,8 +112,14 @@ public class SegmentsContextVocabularyConfigurationTest {
 		}
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
-			_configuration1.delete();
-			_configuration2.delete();
+
+			if (_configuration1 != null) {
+				_configuration1.delete();
+			}
+
+			if (_configuration2 != null) {
+				_configuration2.delete();
+			}
 		}
 	}
 

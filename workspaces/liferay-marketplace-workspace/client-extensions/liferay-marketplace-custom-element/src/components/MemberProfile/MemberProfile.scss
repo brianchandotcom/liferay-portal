@@ -3,18 +3,22 @@
 		vertical-align: top;
 
 		.member-profile-subheading {
-			color: #54555F;
+			color: #54555f;
 		}
 	}
 
-	.member-profile-card, .member-roles-card, .member-account-card {
-		border: 1px solid #E2E2E4;
+	.member-profile-card,
+	.member-roles-card,
+	.member-account-card {
+		border: 1px solid #e2e2e4;
 		border-radius: 10px;
 		min-width: 524px;
 		padding: 34px 24px;
 	}
 
-	.member-profile-card-icon, .member-roles-card-icon, .member-account-card-icon {
+	.member-profile-card-icon,
+	.member-roles-card-icon,
+	.member-account-card-icon {
 		float: right;
 	}
 
@@ -28,7 +32,8 @@
 		width: 100%;
 
 		table {
-			th, td {
+			th,
+			td {
 				font-size: 13px;
 			}
 
@@ -37,7 +42,7 @@
 			}
 
 			td {
-				color: #54555F;
+				color: #54555f;
 				padding-left: 6rem;
 			}
 		}
@@ -58,7 +63,8 @@
 			margin-top: 1px;
 		}
 
-		&-text, svg {
+		&-text,
+		svg {
 			color: #000;
 		}
 

@@ -312,10 +312,15 @@ export function PublishedAppsDashboardPage() {
 							}
 						>
 							{selectedMember ? (
-								<MemberProfile member={selectedMember} setSelectedMember={setSelectedMember}></MemberProfile>
+								<MemberProfile
+									member={selectedMember}
+									setSelectedMember={setSelectedMember}
+								></MemberProfile>
 							) : (
 								<DashboardTable<MemberProps>
-									emptyStateMessage={memberMessages.emptyStateMessage}
+									emptyStateMessage={
+										memberMessages.emptyStateMessage
+									}
 									items={members}
 									tableHeaders={memberTableHeaders}
 								>
@@ -323,7 +328,9 @@ export function PublishedAppsDashboardPage() {
 										<DashboardMemberTableRow
 											item={item}
 											key={item.name}
-											onSelectedMemberChange={setSelectedMember}
+											onSelectedMemberChange={
+												setSelectedMember
+											}
 										/>
 									)}
 								</DashboardTable>

@@ -8,13 +8,19 @@ interface DashboardMemberTableRowProps {
 	onSelectedMemberChange: (value: MemberProps | undefined) => void;
 }
 
-export function DashboardMemberTableRow({item, onSelectedMemberChange}: DashboardMemberTableRowProps) {
+export function DashboardMemberTableRow({
+	item,
+	onSelectedMemberChange,
+}: DashboardMemberTableRowProps) {
 	const {email, image, name, role} = item;
 
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell>
-				<div className="dashboard-table-row-name-container" onClick={() => onSelectedMemberChange(item)}>
+				<div
+					className="dashboard-table-row-name-container"
+					onClick={() => onSelectedMemberChange(item)}
+				>
 					<img
 						alt="Member Image"
 						className="dashboard-table-row-name-logo"

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bnd-LastModified: 1679552093702
 Bundle-ManifestVersion: 2
-Bundle-Name: com.liferay.batchEngineFile.portlet
-Bundle-SymbolicName: com.liferay.batchEngineFile.portlet
+Bundle-Name: test.portlet
+Bundle-SymbolicName: test.portlet
 Bundle-Version: 1.0.0
 Created-By: 1.8.0_301 (Oracle Corporation)
 Export-Package: com.liferay.sample.portlet.constants;version="1.0.0"

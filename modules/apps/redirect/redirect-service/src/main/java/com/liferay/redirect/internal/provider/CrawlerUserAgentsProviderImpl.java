@@ -15,7 +15,9 @@
 package com.liferay.redirect.internal.provider;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration;
 import com.liferay.redirect.provider.CrawlerUserAgentsProvider;
 
@@ -40,6 +42,29 @@ public class CrawlerUserAgentsProviderImpl
 	@Override
 	public Set<String> getCrawlerUserAgents() {
 		return _crawlerUserAgents;
+	}
+
+	@Override
+	public boolean isCrawlerUserAgent(String userAgent) {
+		if (Validator.isNull(userAgent) ||
+			SetUtil.isEmpty(_crawlerUserAgents)) {
+
+			return false;
+		}
+
+		userAgent = StringUtil.toLowerCase(userAgent);
+
+		if (_crawlerUserAgents.contains(userAgent)) {
+			return true;
+		}
+
+		for (String crawlerUserAgent : _crawlerUserAgents) {
+			if (userAgent.contains(crawlerUserAgent)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Activate

@@ -23,4 +23,6 @@ public interface CrawlerUserAgentsProvider {
 
 	public Set<String> getCrawlerUserAgents();
 
+	public boolean isCrawlerUserAgent(String userAgent);
+
 }

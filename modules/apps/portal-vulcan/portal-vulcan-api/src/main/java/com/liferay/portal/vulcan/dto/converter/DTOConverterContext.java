@@ -23,7 +23,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,13 +63,7 @@ public interface DTOConverterContext {
 	}
 
 	public default UriInfo getUriInfo() {
-		Optional<UriInfo> uriInfoOptional = getUriInfoOptional();
-
-		return uriInfoOptional.orElse(null);
-	}
-
-	public default Optional<UriInfo> getUriInfoOptional() {
-		return Optional.empty();
+		return null;
 	}
 
 	public default User getUser() {

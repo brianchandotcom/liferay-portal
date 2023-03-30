@@ -173,9 +173,6 @@ public class PoshiRunner {
 		System.out.println("###");
 		System.out.println();
 
-		PoshiContext.setTestCaseNamespacedClassCommandName(
-			_testNamespacedClassCommandName);
-
 		FileUtil.delete(new File(PropsValues.OUTPUT_DIR_NAME));
 
 		try {

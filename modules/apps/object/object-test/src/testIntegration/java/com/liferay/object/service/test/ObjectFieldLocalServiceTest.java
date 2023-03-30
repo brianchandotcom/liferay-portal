@@ -92,6 +92,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -1352,6 +1353,29 @@ public class ObjectFieldLocalServiceTest {
 				).objectFieldSettings(
 					Collections.emptyList()
 				).build()));
+
+		// Object field label needs to be replicated when there is an update
+		// with another default language
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		LocaleUtil.setDefault(
+			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
+			LocaleUtil.GERMANY.getVariant());
+
+		objectField = _objectFieldLocalService.updateCustomObjectField(
+			StringPool.BLANK, objectField.getObjectFieldId(), 0,
+			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER, false, true, StringPool.BLANK,
+			objectField.getLabelMap(), false, objectField.getName(), false,
+			false, objectField.getObjectFieldSettings());
+
+		Assert.assertNotNull(objectField);
+
+		Map<Locale, String> labelMap = objectField.getLabelMap();
+
+		Assert.assertEquals(
+			labelMap.get(LocaleUtil.GERMANY), labelMap.get(defaultLocale));
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

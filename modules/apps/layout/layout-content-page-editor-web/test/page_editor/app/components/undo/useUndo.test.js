@@ -50,6 +50,7 @@ describe('useUndo', () => {
 		Actions.UPDATE_PAGE_CONTENTS,
 		Actions.UPDATE_REDO_ACTIONS,
 		Actions.UPDATE_REDO_ACTIONS,
+		Actions.UPDATE_RESTRICTED_ITEM_IDS,
 		Actions.UPDATE_PREVIEW_IMAGE,
 		Actions.UPDATE_WIDGETS,
 		ExperienceActions.CREATE_SEGMENTS_EXPERIENCE,

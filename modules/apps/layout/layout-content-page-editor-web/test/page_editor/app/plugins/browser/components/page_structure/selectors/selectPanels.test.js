@@ -28,7 +28,6 @@ jest.mock(
 					value: '11111',
 				},
 			],
-			restrictedItemIds: new Set(),
 		},
 	})
 );
@@ -73,7 +72,7 @@ const STATE = {
 		},
 		version: 1,
 	},
-
+	restrictedItemIds: new Set(),
 	selectedViewportSize: VIEWPORT_SIZES.desktop,
 };
 

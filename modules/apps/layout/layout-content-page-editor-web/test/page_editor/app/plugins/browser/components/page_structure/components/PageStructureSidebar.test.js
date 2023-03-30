@@ -54,7 +54,6 @@ jest.mock(
 					value: '22222',
 				},
 			],
-			restrictedItemIds: new Set(),
 		},
 	})
 );
@@ -250,6 +249,8 @@ const renderComponent = ({
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
 							UPDATE: hasUpdatePermissions,
 						},
+
+						restrictedItemIds: new Set(),
 
 						selectedViewportSize: viewportSize,
 					})}

@@ -26,7 +26,6 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
@@ -84,19 +83,36 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 						Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 						null);
 
+				// Try to use the first instance registered from the UI that is found
+
 				for (FDSCellRendererCET fdsCellRendererCET :
 						fdsCellRendererCETs) {
 
-					if (Objects.equals(
-							fdsCellRendererCET.getName(LocaleUtil.ENGLISH),
-							"fds-cell-renderer")) {
-
+					if (!fdsCellRendererCET.isReadOnly()) {
 						moduleName =
 							"default from " + fdsCellRendererCET.getURL();
 
 						break;
 					}
 				}
+
+				// Try to use the sample-workspace instance if none created from the UI was found
+
+				if (moduleName == null) {
+					for (FDSCellRendererCET fdsCellRendererCET :
+							fdsCellRendererCETs) {
+
+						if (Objects.equals(
+								fdsCellRendererCET.getExternalReferenceCode(),
+								"LXC:liferay-sample-fds-cell-renderer")) {
+
+							moduleName =
+								"default from " + fdsCellRendererCET.getURL();
+						}
+					}
+				}
+
+				// Use the built-in AMD provided sample as a last resort
 
 				if (moduleName == null) {
 					moduleName = _npmResolver.resolveModuleName(

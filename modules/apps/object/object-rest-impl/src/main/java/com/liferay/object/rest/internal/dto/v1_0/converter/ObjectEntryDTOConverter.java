@@ -79,12 +79,12 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,24 +117,9 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		UriInfo uriInfo = dtoConverterContext.getUriInfo();
-
-		if (uriInfo == null) {
-			return _toDTO(
-				dtoConverterContext,
-				Math.min(1, PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
-				objectEntry);
-		}
-
-		MultivaluedMap<String, String> queryParameters =
-			uriInfo.getQueryParameters();
-
 		return _toDTO(
 			dtoConverterContext,
-			Math.min(
-				GetterUtil.getInteger(
-					queryParameters.getFirst("nestedFieldsDepth"), 1),
-				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+			_getNestedFieldsDepth(dtoConverterContext.getUriInfo()),
 			objectEntry);
 	}
 
@@ -144,20 +129,14 @@ public class ObjectEntryDTOConverter
 			ObjectRelationship objectRelationship, long primaryKey)
 		throws Exception {
 
-		UriInfo uriInfo = dtoConverterContext.getUriInfo();
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-		if (uriInfo == null) {
+		if (nestedFieldsContext == null) {
 			return;
 		}
 
-		MultivaluedMap<String, String> queryParameters =
-			uriInfo.getQueryParameters();
-
-		String nestedFields = queryParameters.getFirst("nestedFields");
-
-		if (nestedFields == null) {
-			return;
-		}
+		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
 
 		Object value = null;
 
@@ -198,14 +177,14 @@ public class ObjectEntryDTOConverter
 				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
 			"Id", "");
 
-		for (String nestedField : nestedFields.split(",")) {
-			if (nestedField.contains(objectFieldNameNestedField)) {
+		for (String nestedFieldName : nestedFieldNames) {
+			if (nestedFieldName.contains(objectFieldNameNestedField)) {
 				map.put(
 					StringUtil.replaceLast(objectFieldName, "Id", ""), value);
 			}
 
-			if (nestedField.equals(objectRelationship.getName())) {
-				map.put(nestedField, value);
+			if (nestedFieldName.equals(objectRelationship.getName())) {
+				map.put(nestedFieldName, value);
 			}
 		}
 	}
@@ -294,6 +273,21 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
+	private int _getNestedFieldsDepth(UriInfo uriInfo) {
+		if (uriInfo == null) {
+			return _NESTED_FIELDS_DEFAULT_DEPTH;
+		}
+
+		MultivaluedMap<String, String> queryParameters =
+			uriInfo.getQueryParameters();
+
+		return Math.min(
+			GetterUtil.getInteger(
+				queryParameters.getFirst("nestedFieldsDepth"),
+				_NESTED_FIELDS_DEFAULT_DEPTH),
+			PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH);
+	}
+
 	private ObjectDefinition _getObjectDefinition(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.object.model.ObjectEntry objectEntry)
@@ -367,18 +361,16 @@ public class ObjectEntryDTOConverter
 			return null;
 		}
 
-		UriInfo uriInfo = dtoConverterContext.getUriInfo();
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-		if (uriInfo == null) {
+		if (nestedFieldsContext == null) {
 			return null;
 		}
 
-		MultivaluedMap<String, String> queryParameters =
-			uriInfo.getQueryParameters();
+		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
 
-		String nestedFields = queryParameters.getFirst("nestedFields");
-
-		if ((nestedFields == null) || !nestedFields.contains("auditEvents") ||
+		if (!nestedFieldNames.contains("auditEvents") ||
 			!_objectEntryService.hasModelResourcePermission(
 				objectDefinition.getObjectDefinitionId(),
 				objectEntry.getObjectEntryId(),
@@ -545,45 +537,42 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getObjectDefinitionId(), false);
 
 		for (ObjectField objectField : objectFields) {
-			long listTypeDefinitionId = objectField.getListTypeDefinitionId();
-
 			String objectFieldName = objectField.getName();
 
 			Serializable serializable = values.get(objectFieldName);
 
-			if (listTypeDefinitionId != 0) {
-				if (StringUtil.equals(
+			if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				if (objectField.getListTypeDefinitionId() == 0) {
+					continue;
+				}
+
+				map.put(
+					objectFieldName,
+					TransformUtil.transformToList(
+						StringUtil.split(
+							(String)serializable, StringPool.COMMA_AND_SPACE),
+						key -> _getListEntry(
+							dtoConverterContext, key,
+							objectField.getListTypeDefinitionId())));
+			}
+			else if (StringUtil.equals(
 						objectField.getBusinessType(),
-						ObjectFieldConstants.
-							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-					List<ListEntry> listEntries = new ArrayList<>();
-
-					for (String key :
-							StringUtil.split(
-								(String)serializable,
-								StringPool.COMMA_AND_SPACE)) {
-
-						listEntries.add(
-							_getListEntry(
-								dtoConverterContext, key,
-								listTypeDefinitionId));
-					}
-
-					map.put(objectFieldName, listEntries);
-
+				if (objectField.getListTypeDefinitionId() == 0) {
 					continue;
 				}
 
 				ListEntry listEntry = _getListEntry(
 					dtoConverterContext, (String)serializable,
-					listTypeDefinitionId);
+					objectField.getListTypeDefinitionId());
 
-				if (listEntry == null) {
-					continue;
+				if (listEntry != null) {
+					map.put(objectFieldName, listEntry);
 				}
-
-				map.put(objectFieldName, listEntry);
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),
@@ -599,24 +588,19 @@ public class ObjectEntryDTOConverter
 				DLFileEntry dlFileEntry =
 					_dLFileEntryLocalService.fetchDLFileEntry(fileEntryId);
 
+				FileEntry fileEntry = new FileEntry();
+
 				if (dlFileEntry != null) {
-					map.put(
-						objectFieldName,
-						new FileEntry() {
-							{
-								id = dlFileEntry.getFileEntryId();
-								link = LinkUtil.toLink(
-									_dlAppService, dlFileEntry, _dlURLHelper,
-									objectDefinition.getExternalReferenceCode(),
-									objectEntry.getExternalReferenceCode(),
-									_portal);
-								name = dlFileEntry.getFileName();
-							}
-						});
+					fileEntry.setId(dlFileEntry.getFileEntryId());
+					fileEntry.setLink(
+						LinkUtil.toLink(
+							_dlAppService, dlFileEntry, _dlURLHelper,
+							objectDefinition.getExternalReferenceCode(),
+							objectEntry.getExternalReferenceCode(), _portal));
+					fileEntry.setName(dlFileEntry.getFileName());
 				}
-				else {
-					map.put(objectFieldName, new FileEntry());
-				}
+
+				map.put(objectFieldName, fileEntry);
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),
@@ -627,104 +611,82 @@ public class ObjectEntryDTOConverter
 					objectFieldName + "RawText",
 					ObjectEntryValuesUtil.getValueString(objectField, values));
 			}
-			else if ((nestedFieldsDepth > 0) &&
-					 Objects.equals(
-						 objectField.getRelationshipType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+			else if (Objects.equals(
+						objectField.getRelationshipType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				long primaryKey = GetterUtil.getLong(serializable);
+				if (nestedFieldsDepth >= 0) {
+					long primaryKey = GetterUtil.getLong(serializable);
 
-				ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.
-						fetchObjectRelationshipByObjectFieldId2(
-							objectField.getObjectFieldId());
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectFieldId2(
+								objectField.getObjectFieldId());
 
-				if (primaryKey > 0) {
-					_addNestedFields(
-						dtoConverterContext, map, nestedFieldsDepth,
-						objectFieldName, objectRelationship, primaryKey);
+					if ((nestedFieldsDepth > 0) && (primaryKey > 0)) {
+						_addNestedFields(
+							dtoConverterContext, map, nestedFieldsDepth,
+							objectFieldName, objectRelationship, primaryKey);
+					}
+
+					_addObjectRelationshipNames(
+						map, objectField, objectFieldName, objectRelationship,
+						primaryKey, values);
 				}
-
-				_addObjectRelationshipNames(
-					map, objectField, objectFieldName, objectRelationship,
-					primaryKey, values);
-			}
-			else if ((nestedFieldsDepth == 0) &&
-					 Objects.equals(
-						 objectField.getRelationshipType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-				ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.
-						fetchObjectRelationshipByObjectFieldId2(
-							objectField.getObjectFieldId());
-
-				_addObjectRelationshipNames(
-					map, objectField, objectFieldName, objectRelationship,
-					(long)serializable, values);
 			}
 			else {
 				map.put(objectFieldName, serializable);
 			}
 		}
 
-		if (nestedFieldsDepth > 0) {
-			UriInfo uriInfo = dtoConverterContext.getUriInfo();
+		values.remove(objectDefinition.getPKObjectFieldName());
 
-			if (uriInfo != null) {
-				MultivaluedMap<String, String> queryParameters =
-					uriInfo.getQueryParameters();
+		if ((nestedFieldsDepth <= 0) ||
+			(NestedFieldsContextThreadLocal.getNestedFieldsContext() == null)) {
 
-				String nestedFields = queryParameters.getFirst("nestedFields");
+			return map;
+		}
 
-				if (nestedFields == null) {
-					values.remove(objectDefinition.getPKObjectFieldName());
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-					return map;
-				}
+		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
 
-				List<ObjectRelationship> objectRelationships =
-					_objectRelationshipLocalService.getObjectRelationships(
-						objectDefinition.getObjectDefinitionId());
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
 
-				for (ObjectRelationship objectRelationship :
-						objectRelationships) {
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!nestedFieldNames.contains(objectRelationship.getName())) {
+				continue;
+			}
 
-					List<String> strings = Arrays.asList(
-						nestedFields.split(","));
+			if (Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					if (!strings.contains(objectRelationship.getName())) {
-						continue;
-					}
+				map.put(
+					objectRelationship.getName(),
+					_getManyToManyRelationshipObjectEntries(
+						dtoConverterContext, nestedFieldsDepth, objectEntry,
+						objectRelationship));
+			}
+			else if (Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					ObjectEntry[] objectEntries = new ObjectEntry[0];
-
-					if (Objects.equals(
-							objectRelationship.getType(),
-							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
-
-						objectEntries = _getManyToManyRelationshipObjectEntries(
-							dtoConverterContext, nestedFieldsDepth, objectEntry,
-							objectRelationship);
-					}
-					else if (Objects.equals(
-								objectRelationship.getType(),
-								ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-						objectEntries = _getOneToManyRelationshipObjectEntries(
-							dtoConverterContext, nestedFieldsDepth, objectEntry,
-							objectRelationship);
-					}
-
-					map.put(objectRelationship.getName(), objectEntries);
-				}
+				map.put(
+					objectRelationship.getName(),
+					_getOneToManyRelationshipObjectEntries(
+						dtoConverterContext, nestedFieldsDepth, objectEntry,
+						objectRelationship));
 			}
 		}
 
-		values.remove(objectDefinition.getPKObjectFieldName());
-
 		return map;
 	}
+
+	private static final int _NESTED_FIELDS_DEFAULT_DEPTH = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryDTOConverter.class);

@@ -20,16 +20,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 /**
  * @author Jürgen Kappler
  */
 public class CreatorUtil {
 
-	public static Creator toCreator(Portal portal, UriInfo uriInfo, User user) {
+	public static Creator toCreator(
+		Portal portal, DTOConverterContext dtoConverterContext, User user) {
+
 		if ((user == null) || user.isGuestUser()) {
 			return null;
 		}
@@ -59,7 +59,10 @@ public class CreatorUtil {
 					});
 				setProfileURL(
 					() -> {
-						if (!_containProfileURL(uriInfo)) {
+						if (!dtoConverterContext.containValue(
+								dtoConverterContext.getUriInfo(),
+								"profileURL")) {
+
 							return null;
 						}
 
@@ -76,27 +79,6 @@ public class CreatorUtil {
 					});
 			}
 		};
-	}
-
-	private static boolean _containProfileURL(UriInfo uriInfo) {
-		if (uriInfo == null) {
-			return false;
-		}
-
-		MultivaluedMap<String, String> parameters =
-			uriInfo.getQueryParameters();
-
-		if ((parameters == null) || parameters.isEmpty()) {
-			return false;
-		}
-
-		String fields = parameters.getFirst("nestedFields");
-
-		if (fields == null) {
-			return false;
-		}
-
-		return fields.contains("profileURL");
 	}
 
 }

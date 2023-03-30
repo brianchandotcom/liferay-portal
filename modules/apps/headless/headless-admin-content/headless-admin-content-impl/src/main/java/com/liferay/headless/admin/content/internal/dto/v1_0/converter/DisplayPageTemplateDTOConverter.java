@@ -66,7 +66,7 @@ public class DisplayPageTemplateDTOConverter
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					layout.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(),
+					_portal, dtoConverterContext,
 					_userLocalService.fetchUser(
 						layoutPageTemplateEntry.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(

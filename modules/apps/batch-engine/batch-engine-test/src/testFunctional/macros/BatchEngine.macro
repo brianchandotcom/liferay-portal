@@ -32,6 +32,21 @@ definition {
 		return ${destinationFilePath};
 	}
 
+	macro deleteFileInModulesFolder {
+		Variables.assertDefined(parameterList = ${file});
+
+		var homeDir = PropsUtil.get("liferay.home.dir.name");
+
+		var fileExists = FileUtil.exists("${homeDir}/osgi/modules/${file}");
+
+		if (${fileExists} == "true") {
+			FileUtil.delete("${homeDir}/osgi/modules/${file}");
+		}
+		else {
+			echo("The file ${file} doesn't exist in osgi modules folder.");
+		}
+	}
+
 	macro moveFileToDeployFolder {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName}");
 
@@ -49,7 +64,7 @@ definition {
 	}
 
 	macro moveFileToOSGIModulesFolder {
-		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName},${fileNameInConsole}");
+		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName},${appName}");
 
 		if (!(isSet(destinationPath))) {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -61,7 +76,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "move-file -Dfile=${sourceFilePath} -Dtofile=${deployFolder}/${fileName}");
 
-		WaitForConsoleTextPresent(value1 = "STARTED ${fileNameInConsole}");
+		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 	}
 
 	macro setUpGlobalIds {

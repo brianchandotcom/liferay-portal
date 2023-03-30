@@ -48,6 +48,22 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Processing ${fileName}");
 	}
 
+	macro moveFileToOSGIModulesFolder {
+		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName},${fileNameInConsole}");
+
+		if (!(isSet(destinationPath))) {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var deployFolder = "${liferayHome}/osgi/modules";
+		}
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "move-file -Dfile=${sourceFilePath} -Dtofile=${deployFolder}/${fileName}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED ${fileNameInConsole}");
+	}
+
 	macro setUpGlobalIds {
 		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");

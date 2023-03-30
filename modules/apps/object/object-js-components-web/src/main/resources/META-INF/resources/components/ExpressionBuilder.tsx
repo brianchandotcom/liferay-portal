@@ -87,6 +87,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 	const [
 		{
 			error,
+			eventSidebarElements,
 			header,
 			onSave,
 			placeholder,
@@ -97,6 +98,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 		setState,
 	] = useState<{
 		error?: string;
+		eventSidebarElements?: SidebarCategory[];
 		header?: string;
 		onSave?: Callback;
 		placeholder?: string;
@@ -111,6 +113,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 
 	useEffect(() => {
 		const openModal = (params: {
+			eventSidebarElements: SidebarCategory[];
 			header: string;
 			onSave: Callback;
 			placeholder: string;
@@ -196,7 +199,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 						)} -->`
 					}
 					ref={editorRef}
-					sidebarElements={sidebarElements}
+					sidebarElements={eventSidebarElements || sidebarElements}
 					value={source}
 				/>
 			</ClayModal.Body>

@@ -64,7 +64,7 @@ export function getUpdatedDefaultValueFieldSettings(
 	];
 
 	const filteredObjectFieldSettings = filterSettingsOut(
-		['defaultValueType', 'defaultValue', 'stateFlow'],
+		['defaultValueType', 'defaultValue'],
 		values
 	);
 

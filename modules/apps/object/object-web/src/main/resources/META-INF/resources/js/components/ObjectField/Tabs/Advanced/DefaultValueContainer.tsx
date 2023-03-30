@@ -96,7 +96,7 @@ export function DefaultValueContainer({
 		if (!toggled) {
 			setValues({
 				objectFieldSettings: filterSettingsOut(
-					['defaultValueType', 'defaultValue', 'stateFlow'],
+					['defaultValueType', 'defaultValue'],
 					values
 				),
 			});

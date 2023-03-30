@@ -157,12 +157,12 @@ export function MenuItem({item, onMenuItemRemoved}) {
 					parentId: keyboardDragLayer.parentSiteNavigationMenuItemId,
 					portletNamespace,
 				}).then(({siteNavigationMenuItems}) => {
-					setKeyboardDragLayer(null);
+					setKeyboardDragLayer(items, null);
 					setItems(getFlatItems(siteNavigationMenuItems));
 				});
 			}
 			else {
-				setKeyboardDragLayer({
+				setKeyboardDragLayer(items, {
 					eventKey: 'ArrowDown',
 					menuItemTitle: title,
 					menuItemType: type,
@@ -175,7 +175,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 		}
 
 		if (event.key === 'Escape') {
-			setKeyboardDragLayer(null);
+			setKeyboardDragLayer(items, null);
 		}
 
 		if (!isKeyboardDragging) {
@@ -211,7 +211,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 
 			event.preventDefault();
 
-			setKeyboardDragLayer({
+			setKeyboardDragLayer(filteredItems, {
 				eventKey,
 				menuItemTitle: title,
 				menuItemType: type,

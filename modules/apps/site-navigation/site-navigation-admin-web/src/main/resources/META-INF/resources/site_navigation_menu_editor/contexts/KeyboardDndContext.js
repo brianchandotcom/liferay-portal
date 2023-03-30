@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 
 import {NESTING_MARGIN} from '../constants/nestingMargin';
 
@@ -40,7 +40,7 @@ export function useSetDragLayer() {
 	const {setDragLayer} = useContext(KeyboardDndContext);
 
 	return useCallback(
-		(nextDragLayer) => {
+		(items, nextDragLayer) => {
 			if (!nextDragLayer) {
 				setDragLayer(null);
 
@@ -59,24 +59,46 @@ export function useSetDragLayer() {
 
 			const parentElementRect = parentElement.getBoundingClientRect();
 
-			const currentOffset = {
-				x:
-					parentElementRect.x +
-					(nextDragLayer.parentSiteNavigationMenuItemId === '0'
-						? ROOT_ITEM_OFFSET_WIDTH
-						: NESTING_MARGIN),
-				y:
-					parentElementRect.y +
-					(nextDragLayer.parentSiteNavigationMenuItemId === '0' &&
-					nextDragLayer.order === 0
-						? 0
-						: (nextDragLayer.order + 1) * ITEM_CARD_HEIGHT),
-			};
+			const offset =
+				parentElementRect.x +
+				(nextDragLayer.parentSiteNavigationMenuItemId === '0'
+					? ROOT_ITEM_OFFSET_WIDTH
+					: NESTING_MARGIN);
 
-			setDragLayer({
-				...nextDragLayer,
-				currentOffset,
-			});
+			if (nextDragLayer.order) {
+				const parent = items.find(
+					(item) =>
+						item.siteNavigationMenuItemId ===
+						nextDragLayer.parentSiteNavigationMenuItemId
+				);
+
+				const child = parent
+					? parent.children[nextDragLayer.order]
+					: items[nextDragLayer.order];
+
+				const childElement = document.querySelector(
+					`[data-item-id="${child.siteNavigationMenuItemId}"]`
+				);
+
+				const childElementRect = childElement.getBoundingClientRect();
+
+				setDragLayer({
+					...nextDragLayer,
+					currentOffset: {
+						x: offset,
+						y: childElementRect.y,
+					},
+				});
+			}
+			else {
+				setDragLayer({
+					...nextDragLayer,
+					currentOffset: {
+						x: offset,
+						y: parentElementRect.y + ITEM_CARD_HEIGHT,
+					},
+				});
+			}
 		},
 		[setDragLayer]
 	);

@@ -368,10 +368,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		cpAttachmentFileEntryPersistence.remove(cpAttachmentFileEntry);
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			cpAttachmentFileEntry.getFileEntryId());
+		FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
-		if (fileEntry.getGroupId() == cpAttachmentFileEntry.getGroupId()) {
+		if ((fileEntry != null) &&
+			(fileEntry.getGroupId() == cpAttachmentFileEntry.getGroupId())) {
+
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 				cpAttachmentFileEntryPersistence.findByG_C_F(
 					cpAttachmentFileEntry.getGroupId(), cpDefinitionClassNameId,

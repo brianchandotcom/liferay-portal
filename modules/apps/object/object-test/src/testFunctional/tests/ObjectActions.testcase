@@ -1297,6 +1297,8 @@ definition {
 	@description = "LPS-173537 - Verify it's possible to update an object entry with the trigger On Order Status Update"
 	@priority = 4
 	test CanCreateActionUpdateAnObjectEntryWithOnOrderStatusUpdate {
+		property custom.properties = "feature.flag.LPS-173537=true";
+
 		task ("Given: An action in the Commerce Order object") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -1378,6 +1380,8 @@ definition {
 	@description = "LPS-173537 - Verify it's possible to update an object entry with the trigger On Payment Status Update"
 	@priority = 4
 	test CanCreateActionUpdateAnObjectEntryWithOnPaymentStatusUpdate {
+		property custom.properties = "feature.flag.LPS-173537=true";
+
 		task ("Given: An action in the Commerce Order object") {
 			ObjectAdmin.openObjectAdmin();
 

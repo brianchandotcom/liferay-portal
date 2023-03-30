@@ -152,17 +152,6 @@ public class PoshiRunner {
 			PoshiGetterUtil.
 				getNamespacedClassNameFromNamespacedClassCommandName(
 					_testNamespacedClassCommandName);
-
-		_poshiLogger = new PoshiLogger(namespacedClassCommandName);
-
-		_summaryLogger = SummaryLogger.getSummaryLogger(
-			namespacedClassCommandName);
-
-		_poshiRunnerExecutor = new PoshiRunnerExecutor(
-			_poshiLogger, _summaryLogger);
-
-		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
-			namespacedClassCommandName);
 	}
 
 	@Before
@@ -172,6 +161,17 @@ public class PoshiRunner {
 		System.out.println("### " + _testNamespacedClassCommandName);
 		System.out.println("###");
 		System.out.println();
+
+		_poshiLogger = new PoshiLogger(_testNamespacedClassCommandName);
+
+		_summaryLogger = SummaryLogger.getSummaryLogger(
+			_testNamespacedClassCommandName);
+
+		_poshiRunnerExecutor = new PoshiRunnerExecutor(
+			_poshiLogger, _summaryLogger);
+
+		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
+			_testNamespacedClassCommandName);
 
 		FileUtil.delete(new File(PropsValues.OUTPUT_DIR_NAME));
 
@@ -355,10 +355,10 @@ public class PoshiRunner {
 	private static final Map<String, List<String>> _testResults =
 		new HashMap<>();
 
-	private final PoshiLogger _poshiLogger;
-	private final PoshiRunnerExecutor _poshiRunnerExecutor;
-	private final PoshiStackTrace _poshiStackTrace;
-	private final SummaryLogger _summaryLogger;
+	private PoshiLogger _poshiLogger;
+	private PoshiRunnerExecutor _poshiRunnerExecutor;
+	private PoshiStackTrace _poshiStackTrace;
+	private SummaryLogger _summaryLogger;
 	private final String _testNamespacedClassCommandName;
 	private final String _testNamespacedClassName;
 

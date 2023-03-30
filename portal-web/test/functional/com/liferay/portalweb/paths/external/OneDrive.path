@@ -46,6 +46,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_ITEM</td>
+	<td>//li[contains(@class,'Menu-item')]//div//*[normalize-space(text())="${key_menuItem}"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MORE_OPTIONS</td>
+	<td>//div[contains(@class,'CommandBar')]//button[@aria-label='More']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TITLE</td>
 	<td>title=Documents - OneDrive</td>
 	<td></td>

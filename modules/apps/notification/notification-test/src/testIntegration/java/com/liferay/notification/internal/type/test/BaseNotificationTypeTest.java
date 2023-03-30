@@ -119,7 +119,7 @@ public class BaseNotificationTypeTest {
 	public void setUp() throws Exception {
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user1.getUserId(), false,
+				user1.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

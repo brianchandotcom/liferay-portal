@@ -158,6 +158,8 @@ public class CustomFieldsUtil {
 					name,
 					(Serializable)LocalizedMapUtil.getLocalizedMap(
 						locale, (String)data, customValue.getData_i18n()));
+
+				continue;
 			}
 
 			map.put(name, (Serializable)data);

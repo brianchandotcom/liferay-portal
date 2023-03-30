@@ -114,6 +114,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -4075,6 +4076,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
+			List<Group> oldGroups = new ArrayList<>();
+
 			int j = 0;
 			long userId = 0;
 
@@ -4111,7 +4114,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				userId = existingUserAccount.getUserId();
+
+				oldGroups = existingUserAccount.getSiteGroups();
 			}
+
+			oldGroups.add(serviceContext.getScopeGroup());
+
+			_userLocalService.updateGroups(
+				userId,
+				ListUtil.toLongArray(oldGroups, GroupModel::getGroupId),
+				serviceContext);
 
 			if (jsonObject.has("organizationBriefs")) {
 				_addOrganizationUser(

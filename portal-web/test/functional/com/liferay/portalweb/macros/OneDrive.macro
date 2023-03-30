@@ -59,7 +59,16 @@ definition {
 			while (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
 				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
 
-				Click(locator1 = "OneDrive#DELETE");
+				if (IsElementNotPresent(locator1 = "OneDrive#DELETE")) {
+					Click(locator1 = "OneDrive#MORE_OPTIONS");
+
+					Click(
+						key_menuItem = "Delete",
+						locator1 = "OneDrive#MENU_ITEM");
+				}
+				else {
+					Click(locator1 = "OneDrive#DELETE");
+				}
 
 				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
@@ -76,7 +85,16 @@ definition {
 			while (IsElementPresent(locator1 = "OneDrive#FILES_CHECKBOX")) {
 				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
 
-				Click(locator1 = "OneDrive#DELETE");
+				if (IsElementNotPresent(locator1 = "OneDrive#DELETE")) {
+					Click(locator1 = "OneDrive#MORE_OPTIONS");
+
+					Click(
+						key_menuItem = "Delete",
+						locator1 = "OneDrive#MENU_ITEM");
+				}
+				else {
+					Click(locator1 = "OneDrive#DELETE");
+				}
 
 				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
@@ -88,7 +106,16 @@ definition {
 			while (IsElementPresent(locator1 = "OneDrive#FILES_CHECKBOX")) {
 				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
 
-				Click(locator1 = "OneDrive#DELETE");
+				if (IsElementNotPresent(locator1 = "OneDrive#DELETE")) {
+					Click(locator1 = "OneDrive#MORE_OPTIONS");
+
+					Click(
+						key_menuItem = "Delete",
+						locator1 = "OneDrive#MENU_ITEM");
+				}
+				else {
+					Click(locator1 = "OneDrive#DELETE");
+				}
 
 				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 

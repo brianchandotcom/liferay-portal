@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.punchout.internal.resource.v1_0;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
@@ -129,10 +129,10 @@ public class PunchOutSessionResourceImpl
 				"Buyer user does not belong to group");
 		}
 
-		CommerceAccount businessCommerceAccount = _fetchBusinessCommerceAccount(
+		AccountEntry businessAccountEntry = _fetchBusinessAccountEntry(
 			punchOutSession.getBuyerAccountReferenceCode());
 
-		if (businessCommerceAccount == null) {
+		if (businessAccountEntry == null) {
 			_log.error(
 				"Business commerce account not found with external reference" +
 					"code: " + punchOutSession.getBuyerAccountReferenceCode());
@@ -142,7 +142,7 @@ public class PunchOutSessionResourceImpl
 		}
 
 		_addBuyerUserToAccount(
-			businessCommerceAccount, buyerLiferayUser.getUserId(),
+			businessAccountEntry, buyerLiferayUser.getUserId(),
 			buyerGroup.getGroupId());
 
 		String punchOutSessionType = punchOutSession.getPunchOutSessionType();
@@ -181,13 +181,13 @@ public class PunchOutSessionResourceImpl
 			commerceChannel.getGroupId());
 
 		PunchOutContext punchOutContext = new PunchOutContext(
-			businessCommerceAccount, buyerGroup, buyerLiferayUser,
-			commerceChannel, editCartCommerceOrder, punchOutSession);
+			businessAccountEntry, buyerGroup, buyerLiferayUser, commerceChannel,
+			editCartCommerceOrder, punchOutSession);
 
 		PunchOutAccessToken punchOutAccessToken =
 			_punchOutAccessTokenProvider.generatePunchOutAccessToken(
 				buyerGroup.getGroupId(),
-				businessCommerceAccount.getCommerceAccountId(),
+				businessAccountEntry.getAccountEntryId(),
 				cart.getCurrencyCode(), buyerLiferayUser.getEmailAddress(),
 				commerceOrderUuid,
 				_punchOutSessionContributor.getPunchOutSessionAttributes(
@@ -255,7 +255,7 @@ public class PunchOutSessionResourceImpl
 	}
 
 	private void _addBuyerUserToAccount(
-			CommerceAccount commerceAccount, long userId, long groupId)
+			AccountEntry accountEntry, long userId, long groupId)
 		throws Exception {
 
 		Role role = _roleLocalService.fetchRole(
@@ -272,8 +272,8 @@ public class PunchOutSessionResourceImpl
 			throw new InternalServerErrorException(logMessage);
 		}
 
-		_commerceAccountUserRelLocalService.addCommerceAccountUserRels(
-			commerceAccount.getCommerceAccountId(), new long[] {userId}, null,
+		_accountEntryUserRelLocalService.addAccountEntryUserRels(
+			accountEntry.getAccountEntryId(), new long[] {userId}, null,
 			new long[] {role.getRoleId()},
 			_serviceContextHelper.getServiceContext(groupId));
 	}
@@ -296,11 +296,12 @@ public class PunchOutSessionResourceImpl
 		}
 	}
 
-	private CommerceAccount _fetchBusinessCommerceAccount(
+	private AccountEntry _fetchBusinessAccountEntry(
 		String externalReferenceCode) {
 
-		return _commerceAccountLocalService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+		return _accountEntryLocalService.
+			fetchAccountEntryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 	}
 
 	private CommerceChannel _fetchChannel(long groupId) {
@@ -480,11 +481,10 @@ public class PunchOutSessionResourceImpl
 		PunchOutSessionResourceImpl.class);
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private CommerceAccountUserRelLocalService
-		_commerceAccountUserRelLocalService;
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

@@ -19,6 +19,7 @@ import com.deque.html.axecore.results.Rule;
 import com.deque.html.axecore.selenium.AxeBuilder;
 import com.deque.html.axecore.selenium.AxeReporter;
 
+import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.FileUtil;
@@ -1737,6 +1738,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isTestName(String testName) {
+		if (testName.equals(getTestName())) {
+			return true;
+		}
+
+		testName =
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				testName);
+
 		if (testName.equals(getTestName())) {
 			return true;
 		}

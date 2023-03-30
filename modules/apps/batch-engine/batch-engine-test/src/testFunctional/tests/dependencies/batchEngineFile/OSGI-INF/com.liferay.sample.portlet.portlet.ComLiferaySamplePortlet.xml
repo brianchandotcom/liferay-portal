@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<scr:component immediate="true" name="com.liferay.sample.portlet.portlet.ComLiferaySamplePortlet" xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0">
+	<property name="com.liferay.portlet.display-category" type="String" value="category.sample" />
+	<property name="com.liferay.portlet.header-portlet-css" type="String" value="/css/main.css" />
+	<property name="com.liferay.portlet.instanceable" type="String" value="true" />
+	<property name="javax.portlet.display-name" type="String" value="ComLiferaySample" />
+	<property name="javax.portlet.init-param.template-path" type="String" value="/" />
+	<property name="javax.portlet.init-param.view-template" type="String" value="/view.jsp" />
+	<property name="javax.portlet.name" type="String" value="com_liferay_sample_portlet_ComLiferaySamplePortlet" />
+	<property name="javax.portlet.resource-bundle" type="String" value="content.Language" />
+	<property name="javax.portlet.security-role-ref" type="String" value="power-user,user" />
+	<service>
+		<provide interface="javax.portlet.Portlet" />
+	</service>
+	<implementation class="com.liferay.sample.portlet.portlet.ComLiferaySamplePortlet" />
+</scr:component>

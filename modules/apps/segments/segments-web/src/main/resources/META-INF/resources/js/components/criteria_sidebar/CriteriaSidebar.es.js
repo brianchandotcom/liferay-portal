@@ -40,7 +40,12 @@ class CriteriaSidebar extends Component {
 		const {searchValue} = this.state;
 
 		return (
-			<div className="criteria-sidebar-root">
+			<div
+				aria-label={Liferay.Language.get('segments-contributors-panel')}
+				className="criteria-sidebar-root"
+				role="tabpanel"
+				tabIndex={-1}
+			>
 				<div className="sidebar-header">
 					{Liferay.Language.get('properties')}
 				</div>

@@ -116,6 +116,10 @@ class SegmentEdit extends Component {
 	}
 
 	_handleCriteriaEdit = () => {
+		if (!this.state.editing) {
+			document.querySelector('.criteria-sidebar-root')?.focus();
+		}
+
 		this.setState({
 			editing: !this.state.editing,
 		});
@@ -465,6 +469,10 @@ class SegmentEdit extends Component {
 		const showDisabledSegmentationAlert =
 			!isSegmentationEnabled && !isSegmentationDisabledAlertDismissed;
 
+		const editButtonTitle = editing
+			? Liferay.Language.get('enter-view-mode')
+			: Liferay.Language.get('enter-edit-mode');
+
 		return (
 			<div
 				className={classNames('segment-edit-page-root', {
@@ -530,17 +538,15 @@ class SegmentEdit extends Component {
 
 									<div className="btn-group-item">
 										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'edit-segment'
-											)}
+											aria-label={editButtonTitle}
 											borderless={true}
 											displayType="secondary"
 											onClick={this._handleCriteriaEdit}
 											outline={true}
+											role="tab"
+											size="sm"
 											symbol="cog"
-											title={Liferay.Language.get(
-												'edit-segment'
-											)}
+											title={editButtonTitle}
 										/>
 									</div>
 								</div>

@@ -500,7 +500,7 @@ public class ObjectEntryInfoItemFormProvider
 
 					unsafeConsumer.accept(
 						_getObjectDefinitionInfoFieldSet(
-							objectDefinition.getLabelMap(),
+							true, objectDefinition.getLabelMap(),
 							objectDefinition.getName(),
 							ObjectField.class.getSimpleName(),
 							objectDefinition));
@@ -565,8 +565,8 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
-		Map<Locale, String> labelMap, String name, String namespace,
-		ObjectDefinition objectDefinition) {
+		boolean editable, Map<Locale, String> labelMap, String name,
+		String namespace, ObjectDefinition objectDefinition) {
 
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
@@ -605,7 +605,7 @@ public class ObjectEntryInfoItemFormProvider
 							).name(
 								objectField.getName()
 							).editable(
-								true
+								editable
 							).labelInfoLocalizedValue(
 								InfoLocalizedValue.<String>builder(
 								).values(
@@ -701,7 +701,7 @@ public class ObjectEntryInfoItemFormProvider
 
 			infoFieldSetEntries.add(
 				_getObjectDefinitionInfoFieldSet(
-					fieldSetLabelMap, objectRelationship.getName(),
+					false, fieldSetLabelMap, objectRelationship.getName(),
 					StringBundler.concat(
 						ObjectRelationship.class.getSimpleName(),
 						StringPool.POUND, objectDefinition1.getName(),

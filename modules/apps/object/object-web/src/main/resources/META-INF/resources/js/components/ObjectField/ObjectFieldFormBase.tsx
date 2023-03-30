@@ -30,6 +30,11 @@ import React, {
 } from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
+import {
+	filterSettingsOut,
+	getDefaultValueFieldSettings,
+	getUpdatedDefaultValueType,
+} from '../../utils/defaultValues';
 import {toCamelCase} from '../../utils/string';
 import {AggregationFormBase} from './AggregationFormBase';
 import {AttachmentFormBase} from './AttachmentFormBase';
@@ -106,45 +111,16 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 async function getFieldSettingsByBusinessType(
 	objectRelationshipId: number,
 	setOneToManyRelationship: (value: TObjectRelationship) => void,
-	setPickListItems: (value: PickListItem[]) => void,
 	setPickLists: (value: PickList[]) => void,
 	setSelectedOutput: (value: string) => void,
-	setValues: (values: Partial<ObjectField>) => void,
 	values: Partial<ObjectField>
 ) {
-	const {
-		businessType,
-		defaultValue,
-		listTypeDefinitionExternalReferenceCode,
-		listTypeDefinitionId,
-		objectFieldSettings,
-		state,
-	} = values;
+	const {businessType, objectFieldSettings} = values;
 
 	if (businessType === 'Picklist' || businessType === 'MultiselectPicklist') {
 		const picklistData = await API.getPickLists();
 
 		setPickLists(picklistData);
-
-		if (state && listTypeDefinitionExternalReferenceCode) {
-			const picklistItemsData = await API.getPickListItems(
-				listTypeDefinitionId!
-			);
-
-			setPickListItems(picklistItemsData);
-		}
-
-		if (businessType === 'Picklist' && objectFieldSettings?.length) {
-			const [{value}] = objectFieldSettings;
-			const {objectStates} = value as ObjectFieldPicklistSetting;
-			const defaultPicklistValue = objectStates.find(
-				({key}) => key === defaultValue
-			);
-
-			if (!defaultPicklistValue && defaultValue) {
-				setValues({defaultValue: undefined});
-			}
-		}
 	}
 
 	if (businessType === 'Formula') {
@@ -198,12 +174,9 @@ export default function ObjectFieldFormBase({
 		return businessTypeMap;
 	}, [objectFieldTypes]);
 
-	const [picklistDefaultValueQuery, setPicklistDefaultValueQuery] = useState<
-		string
-	>('');
 	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
 	const [picklistQuery, setPicklistQuery] = useState<string>('');
-	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
+
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
 		TObjectRelationship
 	>();
@@ -215,12 +188,6 @@ export default function ObjectFieldFormBase({
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
 		values.listTypeDefinitionId !== 0;
-
-	const filteredPicklistItems = useMemo(() => {
-		return pickListItems.filter(({name}) => {
-			return stringIncludesQuery(name, picklistDefaultValueQuery);
-		});
-	}, [picklistDefaultValueQuery, pickListItems]);
 
 	const filteredPicklist = useMemo(() => {
 		return pickLists.filter(({name}) => {
@@ -251,7 +218,6 @@ export default function ObjectFieldFormBase({
 		setValues({
 			DBType: option.dbType,
 			businessType: option.businessType,
-			defaultValue: '',
 			indexedAsKeyword,
 			indexedLanguageId,
 			listTypeDefinitionExternalReferenceCode: '',
@@ -302,10 +268,8 @@ export default function ObjectFieldFormBase({
 			await getFieldSettingsByBusinessType(
 				objectRelationshipId as number,
 				setOneToManyRelationship,
-				setPickListItems,
 				setPickLists,
 				setSelectedOutput,
-				setValues,
 				values
 			);
 		};
@@ -313,6 +277,41 @@ export default function ObjectFieldFormBase({
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode, values.businessType]);
+
+	const handleStateToggleChange = (toggled: boolean) => {
+		let defaultValue;
+		let defaultValueType;
+
+		if (values.id) {
+			const currentDefaultValueSettings = getDefaultValueFieldSettings(
+				values
+			);
+			defaultValue = currentDefaultValueSettings.defaultValue;
+			defaultValueType = currentDefaultValueSettings.defaultValueType;
+		}
+
+		if (toggled) {
+			if (defaultValueType && defaultValue) {
+				setValues({required: toggled, state: toggled});
+			}
+			else if (!defaultValueType || !defaultValue) {
+				setValues({
+					objectFieldSettings: getUpdatedDefaultValueType(
+						values,
+						'inputAsValue'
+					),
+					required: toggled,
+					state: toggled,
+				});
+			}
+		}
+		else {
+			setValues({
+				required: toggled,
+				state: toggled,
+			});
+		}
+	};
 
 	return (
 		<>
@@ -420,11 +419,13 @@ export default function ObjectFieldFormBase({
 					onChangeQuery={setPicklistQuery}
 					onSelectItem={(item) => {
 						setValues({
-							defaultValue: '',
 							listTypeDefinitionExternalReferenceCode:
 								item.externalReferenceCode,
 							listTypeDefinitionId: item.id,
-							state: false,
+							objectFieldSettings: filterSettingsOut(
+								['defaultValue', 'stateFlow'],
+								values
+							),
 						});
 					}}
 					query={picklistQuery}
@@ -459,58 +460,12 @@ export default function ObjectFieldFormBase({
 							label={Liferay.Language.get('mark-as-state')}
 							name="state"
 							onToggle={async (state) => {
-								if (state) {
-									setValues({required: state, state});
-									setPickListItems(
-										await API.getPickListItems(
-											values.listTypeDefinitionId!
-										)
-									);
-								}
-								else {
-									setValues({
-										defaultValue: '',
-										required: state,
-										state,
-									});
-								}
+								handleStateToggleChange(state);
 							}}
 							toggled={values.state}
 						/>
 					)}
 			</ClayForm.Group>
-
-			{values.state && (
-				<AutoComplete<PickListItem>
-					creationLanguageId={
-						creationLanguageId2 as Liferay.Language.Locale
-					}
-					emptyStateMessage={Liferay.Language.get('option-not-found')}
-					error={errors.defaultValue}
-					items={filteredPicklistItems}
-					label={Liferay.Language.get('default-value')}
-					onChangeQuery={setPicklistDefaultValueQuery}
-					onSelectItem={(item) => {
-						setValues({
-							defaultValue: item.key,
-						});
-					}}
-					placeholder={Liferay.Language.get('choose-an-option')}
-					query={picklistDefaultValueQuery}
-					required
-					value={
-						filteredPicklistItems.find(
-							({key}) => key === values.defaultValue
-						)?.name
-					}
-				>
-					{({name}) => (
-						<div className="d-flex justify-content-between">
-							<div>{name}</div>
-						</div>
-					)}
-				</AutoComplete>
-			)}
 		</>
 	);
 }

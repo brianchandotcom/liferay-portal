@@ -195,7 +195,25 @@ definition {
 		return ${staticObjectId};
 	}
 
-	macro updateObjectEntry {
+	macro updateObjectEntryByPatch {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId},${fieldName},${fieldValue}");
+
+		var curl = CustomObjectAPI._curlObjectEntries(
+			en_US_plural_label = ${en_US_plural_label},
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue},
+			nestedField = ${nestedField},
+			numberOfRelatedObjectEntries = ${numberOfRelatedObjectEntries},
+			objectEntryId = ${objectEntryId},
+			relatedEntryExternalReferenceCode = ${relatedEntryExternalReferenceCode},
+			relatedEntryFieldName = ${relatedEntryFieldName});
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		return ${response};
+	}
+
+	macro updateObjectEntryByPut {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId},${fieldName},${fieldValue}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(

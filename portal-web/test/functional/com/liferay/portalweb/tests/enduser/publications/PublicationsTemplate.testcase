@@ -216,4 +216,49 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test UsePublicationNameSetInSelectedPublicationTemplate {
+		PublicationsTemplate.gotoPublicationTemplate();
+
+		PublicationsTemplate.addPublicationTemplate(
+			publicationDescription = "Publications Description ${CURRENT_USERNAME} 1",
+			publicationName = "Publication Name ${CURRENT_USERNAME} 1",
+			templateDescription = "Template Description 1",
+			templateName = "Template Name 1");
+
+		PublicationsTemplate.addPublicationTemplate(
+			publicationDescription = "Publications Description ${CURRENT_USERNAME} 2",
+			publicationName = "Publication Name ${CURRENT_USERNAME} 2",
+			templateDescription = "Template Description 2",
+			templateName = "Template Name 2");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		Click(locator1 = "Button#PLUS");
+
+		Select(
+			locator1 = "Publications#TEMPLATE_OPTION",
+			value1 = "Template Name 1");
+
+		AssertTextEquals(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "Publication Name test 1");
+
+		AssertTextEquals(
+			locator1 = "Publications#PUBLICATION_DESCRIPTION",
+			value1 = "Publications Description test 1");
+
+		Select(
+			locator1 = "Publications#TEMPLATE_OPTION",
+			value1 = "Template Name 2");
+
+		AssertTextEquals(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "Publication Name test 2");
+
+		AssertTextEquals(
+			locator1 = "Publications#PUBLICATION_DESCRIPTION",
+			value1 = "Publications Description test 2");
+	}
+
 }

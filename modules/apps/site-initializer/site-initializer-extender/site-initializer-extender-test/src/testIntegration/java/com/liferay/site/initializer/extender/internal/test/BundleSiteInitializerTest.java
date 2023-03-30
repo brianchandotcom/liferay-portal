@@ -61,7 +61,9 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
@@ -355,22 +357,12 @@ public class BundleSiteInitializerTest {
 			_serviceContext.fetchUser()
 		).build();
 
-		UserAccountResource.Builder userAccountResourceBuilder =
-			_userAccountResourceFactory.create();
-
-		UserAccountResource userAccountResource =
-			userAccountResourceBuilder.user(
-				_serviceContext.fetchUser()
-			).build();
-
 		Account account1 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0001");
 
 		Assert.assertNotNull(account1);
 		Assert.assertEquals("Test Account 1", account1.getName());
 		Assert.assertEquals("business", account1.getTypeAsString());
-
-		_assertUserAccounts(account1.getId(), 1, userAccountResource);
 
 		Account account2 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0002");
@@ -379,16 +371,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account 2", account2.getName());
 		Assert.assertEquals("guest", account2.getTypeAsString());
 
-		_assertUserAccounts(account2.getId(), 1, userAccountResource);
-
 		Account account3 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0003");
 
 		Assert.assertNotNull(account3);
 		Assert.assertEquals("Test Account 3", account3.getName());
 		Assert.assertEquals("person", account3.getTypeAsString());
-
-		_assertUserAccounts(account3.getId(), 0, userAccountResource);
 	}
 
 	private void _assertAccounts2() throws Exception {
@@ -399,22 +387,12 @@ public class BundleSiteInitializerTest {
 			_serviceContext.fetchUser()
 		).build();
 
-		UserAccountResource.Builder userAccountResourceBuilder =
-			_userAccountResourceFactory.create();
-
-		UserAccountResource userAccountResource =
-			userAccountResourceBuilder.user(
-				_serviceContext.fetchUser()
-			).build();
-
 		Account account1 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0001");
 
 		Assert.assertNotNull(account1);
 		Assert.assertEquals("Test Account 1", account1.getName());
 		Assert.assertEquals("business", account1.getTypeAsString());
-
-		_assertUserAccounts(account1.getId(), 1, userAccountResource);
 
 		Account account2 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0002");
@@ -423,8 +401,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account Guest", account2.getName());
 		Assert.assertEquals("guest", account2.getTypeAsString());
 
-		_assertUserAccounts(account2.getId(), 1, userAccountResource);
-
 		Account account3 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0003");
 
@@ -432,16 +408,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account 3", account3.getName());
 		Assert.assertEquals("person", account3.getTypeAsString());
 
-		_assertUserAccounts(account3.getId(), 0, userAccountResource);
-
 		Account account4 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0004");
 
 		Assert.assertNotNull(account4);
 		Assert.assertEquals("Test Account 4", account4.getName());
 		Assert.assertEquals("person", account4.getTypeAsString());
-
-		_assertUserAccounts(account4.getId(), 0, userAccountResource);
 	}
 
 	private void _assertAssetCategories() throws Exception {
@@ -1733,16 +1705,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(organization1);
 
-		UserAccountResource.Builder userAccountResourceBuilder =
-			_userAccountResourceFactory.create();
-
-		UserAccountResource userAccountResource =
-			userAccountResourceBuilder.user(
-				_serviceContext.fetchUser()
-			).build();
-
-		_assertUserOrganizations(organization1.getId(), 1, userAccountResource);
-
 		Page<Organization> organizationsPage2 =
 			organizationResource.getOrganizationsPage(
 				null, null,
@@ -1755,8 +1717,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(1, organizationsPage2.getTotalCount());
 
-		_assertUserOrganizations(organization2.getId(), 1, userAccountResource);
-
 		Page<Organization> organizationsPage3 =
 			organizationResource.getOrganizationChildOrganizationsPage(
 				organization2.getId(), null, null, null, null, null);
@@ -1765,8 +1725,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(organization3);
 		Assert.assertEquals("Test Organization 3", organization3.getName());
-
-		_assertUserOrganizations(organization3.getId(), 0, userAccountResource);
 	}
 
 	private void _assertPermissions() throws Exception {
@@ -2359,16 +2317,59 @@ public class BundleSiteInitializerTest {
 			frontendTokensValues.contains("blockquote-small-color"));
 	}
 
-	private void _assertUserAccounts(
-			Long accountId, int totalCount,
-			UserAccountResource userAccountResource)
-		throws Exception {
+	private void _assertUserAccounts1() throws Exception {
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
 
-		Page<UserAccount> page = userAccountResource.getAccountUserAccountsPage(
-			accountId, null, null, null, null);
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
 
-		Assert.assertNotNull(page);
-		Assert.assertEquals(totalCount, page.getTotalCount());
+		UserAccount userAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode("USER-1");
+
+		Assert.assertNotNull(userAccount);
+
+		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
+
+		AccountBrief accountBrief = accountBriefs[0];
+
+		Assert.assertEquals(
+			"TESTACC0001", accountBrief.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			"test.user1@liferay.com", userAccount.getEmailAddress());
+		Assert.assertEquals("Test User 1", userAccount.getName());
+
+		OrganizationBrief[] organizationBriefs =
+			userAccount.getOrganizationBriefs();
+
+		OrganizationBrief organizationBrief = organizationBriefs[0];
+
+		Assert.assertEquals("Test Organization 1", organizationBrief.getName());
+
+		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
+			"USER-2");
+
+		Assert.assertNotNull(userAccount);
+
+		accountBriefs = userAccount.getAccountBriefs();
+
+		accountBrief = accountBriefs[0];
+
+		Assert.assertEquals(
+			"TESTACC0002", accountBrief.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			"test.user2@liferay.com", userAccount.getEmailAddress());
+		Assert.assertEquals("Test User 2", userAccount.getName());
+
+		organizationBriefs = userAccount.getOrganizationBriefs();
+
+		organizationBrief = organizationBriefs[0];
+
+		Assert.assertEquals("Test Organization 2", organizationBrief.getName());
 	}
 
 	private void _assertUserGroups() {
@@ -2390,19 +2391,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(userGroup2);
 		Assert.assertTrue(userGroups.contains(userGroup2));
-	}
-
-	private void _assertUserOrganizations(
-			String organizationId, int totalCount,
-			UserAccountResource userAccountResource)
-		throws Exception {
-
-		Page<UserAccount> page =
-			userAccountResource.getOrganizationUserAccountsPage(
-				organizationId, null, null, null, null);
-
-		Assert.assertNotNull(page);
-		Assert.assertEquals(totalCount, page.getTotalCount());
 	}
 
 	private void _assertUserRoles() throws Exception {
@@ -2586,6 +2574,7 @@ public class BundleSiteInitializerTest {
 		_assertOrganizations();
 		_assertPermissions();
 		_assertPortletSettings();
+		_assertUserAccounts1();
 		_assertSAPEntries();
 		_assertSegmentsEntries();
 		_assertSiteConfiguration();

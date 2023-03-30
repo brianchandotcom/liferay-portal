@@ -194,9 +194,9 @@ export async function createSpecification({body}: {body: Object}) {
 	return await response.json();
 }
 
-export async function getAccount() {
+export async function getAccountInfo({accountId}: {accountId: number}) {
 	const response = await fetch(
-		'/o/headless-admin-user/v1.0/my-user-account',
+		`/o/headless-admin-user/v1.0/accounts/${accountId}?nestedFields=image`,
 		{headers, method: 'GET'}
 	);
 
@@ -248,6 +248,25 @@ export async function getChannels() {
 	const response = await channelsResponse.json();
 
 	return response.items as Channel[];
+}
+
+export async function getDeliveryProduct({
+	appId,
+	channelId,
+}: {
+	appId: number;
+	channelId: number;
+}) {
+	const response = await fetch(
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${appId}?nestedFields=skus
+		`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
 }
 
 export async function getOrders(
@@ -370,6 +389,15 @@ export async function getSpecifications() {
 	);
 
 	return await response.json();
+}
+
+export async function getUserAccount() {
+	const response = await fetch(
+		'/o/headless-admin-user/v1.0/my-user-account',
+		{headers, method: 'GET'}
+	);
+
+	return response.json();
 }
 
 export async function getUserAccounts() {

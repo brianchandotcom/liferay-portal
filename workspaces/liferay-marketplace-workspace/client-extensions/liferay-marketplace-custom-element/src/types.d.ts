@@ -1,6 +1,7 @@
 type AccountBrief = {
 	externalReferenceCode: string;
 	id: number;
+	image?: string;
 	name: string;
 };
 

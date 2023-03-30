@@ -4,14 +4,10 @@ import {useEffect, useState} from 'react';
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
-import {
-	getAccount,
-	getChannels,
-	getOrders,
-	getUserAccountsById,
-} from '../../utils/api';
+import {getChannels, getOrders, getUserAccountsById} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
+
 export interface PurchasedAppProps {
 	image: string;
 	name: string;
@@ -79,7 +75,7 @@ export function PurchasedAppsDashboardPage() {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const account = await getAccount();
+			const userAccounts = await getUserAccountsById();
 
 			const channels = await getChannels();
 
@@ -89,7 +85,7 @@ export function PurchasedAppsDashboardPage() {
 				) || channels[0];
 
 			const placedOrders = await getOrders(
-				account.accountBriefs[0]?.id || 50307,
+				userAccounts.accountBriefs[0]?.id || 50307,
 				channel.id,
 				page,
 				purchasedAppTable.pageSize

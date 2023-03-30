@@ -1,10 +1,15 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {useEffect, useState} from 'react';
 
 import {
-	getChannelById,
+	getAccountInfo,
+	getChannels,
+	getDeliveryProduct,
 	getProductSKU,
+	getUserAccount,
+	getUserAccountsById,
 	patchOrderByERC,
 	postCartByChannelId,
 	postCheckoutCart,
@@ -12,52 +17,110 @@ import {
 
 import './GetAppModal.scss';
 
+interface App {
+	createdBy: string;
+	id: number;
+	image: string;
+	name: {en_US: string};
+	price: number;
+	version: string;
+}
+
 interface GetAppModalProps {
-	account: {
-		email: string;
-		id?: number;
-		image: string;
-		name: string;
-	};
-	app: {
-		createdBy: string;
-		externalReferenceCode?: string;
-		id: number;
-		image: string;
-		name: string;
-		price: number;
-		version: string;
-	};
-	channelId: number;
+	appId: number;
 	handleClose: () => void;
 }
 
-export function GetAppModal({
-	account,
-	app,
-	channelId,
-	handleClose,
-}: GetAppModalProps) {
+export function GetAppModal({appId, handleClose}: GetAppModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: handleClose,
 	});
+	const [account, setAccount] = useState<AccountBrief>();
+	const [app, setApp] = useState<App>({
+		createdBy: '',
+		id: 0,
+		image: '',
+		name: {en_US: ''},
+		price: 0,
+		version: '',
+	});
+	const [channel, setChannel] = useState<Channel>({
+		currencyCode: '',
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+		siteGroupId: 0,
+		type: '',
+	});
+	const [currentUser, setCurrentUser] = useState<{email: string}>();
+	const [sku, setSku] = useState<SKU>({
+		cost: 0,
+		externalReferenceCode: '',
+		id: 0,
+		price: 0,
+		sku: '',
+		skuOptions: [],
+	});
+
+	useEffect(() => {
+		const getModalInfo = async () => {
+			const channels = await getChannels();
+
+			const channel =
+				channels.find(
+					(channel) => channel.name === 'Marketplace Channel'
+				) || channels[0];
+
+			setChannel(channel);
+
+			const app = await getDeliveryProduct({
+				appId,
+				channelId: channel.id,
+			});
+
+			setApp(app);
+
+			const currentUser = await getUserAccount();
+
+			setCurrentUser(currentUser);
+
+			const accounts = await getUserAccountsById();
+
+			let accountId;
+
+			if (accounts.accountBriefs.length) {
+				accountId = accounts.accountBriefs[0].id;
+			}
+			else {
+				accountId = 50307;
+			}
+
+			const currentAccount = await getAccountInfo({
+				accountId,
+			});
+
+			setAccount(currentAccount);
+
+			const skuResponse = await getProductSKU({appProductId: appId});
+
+			const sku = skuResponse.items[0];
+
+			setSku(sku);
+		};
+
+		getModalInfo();
+	}, []);
 
 	async function handleGetApp() {
-		const channel = await getChannelById(channelId);
-
-		const skuResponse = await getProductSKU({appProductId: app.id});
-
-		const sku = skuResponse.items[0];
-
 		const newCart: Partial<Cart> = {
-			accountId: account.id as number,
+			accountId: account?.id || 50307,
 			cartItems: [
 				{
 					price: {
 						currency: channel.currencyCode,
 						discount: 0,
-						finalPrice: app.price,
-						price: app.price,
+						finalPrice: sku.price,
+						price: sku.price,
 					},
 					productId: app.id,
 					quantity: 1,
@@ -72,7 +135,7 @@ export function GetAppModal({
 
 		const cartResponse = await postCartByChannelId({
 			cartBody: newCart,
-			channelId,
+			channelId: channel.id,
 		});
 
 		const cartCheckoutResponse = await postCheckoutCart({
@@ -84,9 +147,11 @@ export function GetAppModal({
 		};
 
 		await patchOrderByERC(cartCheckoutResponse.orderUUID, newOrderStatus);
+
+		onClose();
 	}
 
-	const freeApp = Number(app.price) === 0;
+	const freeApp = Number(sku.price) === 0;
 
 	return (
 		<ClayModal observer={observer}>
@@ -116,18 +181,18 @@ export function GetAppModal({
 						<div className="get-app-modal-body-card-header-right-content-container">
 							<div className="get-app-modal-body-card-header-right-content-account-info">
 								<span className="get-app-modal-body-card-header-right-content-account-info-name">
-									{account.name}
+									{account?.name}
 								</span>
 
 								<span className="get-app-modal-body-card-header-right-content-account-info-email">
-									{account.email}
+									{currentUser?.email}
 								</span>
 							</div>
 
 							<img
 								alt="Account icon"
 								className="get-app-modal-body-card-header-right-content-account-info-icon"
-								src={account.image}
+								src={account?.image}
 							/>
 						</div>
 					</div>
@@ -143,7 +208,7 @@ export function GetAppModal({
 
 								<div className="get-app-modal-body-content-app-info-container">
 									<span className="get-app-modal-body-content-app-info-name">
-										{app.name}
+										{app.name['en_US']}
 									</span>
 
 									<span className="get-app-modal-body-content-app-info-version">
@@ -158,7 +223,7 @@ export function GetAppModal({
 								</span>
 
 								<span className="get-app-modal-body-content-right-value">
-									{freeApp ? 'Free' : `$ ${app.price}`}
+									{freeApp ? 'Free' : `$ ${sku.price}`}
 								</span>
 
 								{!freeApp && (

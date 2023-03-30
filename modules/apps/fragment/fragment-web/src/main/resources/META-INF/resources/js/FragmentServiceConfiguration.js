@@ -54,7 +54,9 @@ export default function FragmentServiceConfiguration({
 		propagateChanges
 	);
 
-	const [feedbackMessage, setFeedbackMessage] = useState(null);
+	const [feedbackMessage, setFeedbackMessage] = useState(
+		disablePropagateChangesButton ? FEEDBACK_MESSAGES.success : null
+	);
 
 	const [warningModalVisible, setWarningModalVisible] = useState(false);
 
@@ -63,6 +65,8 @@ export default function FragmentServiceConfiguration({
 	});
 
 	const handleSubmit = () => {
+		setFeedbackMessage(null);
+
 		fetch(propagateContributedFragmentEntriesChangesURL, {
 			body: objectToFormData({
 				[`${namespace}propagateChanges`]: propagateChangesChecked,

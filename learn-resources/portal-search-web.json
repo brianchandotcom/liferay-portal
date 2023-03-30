@@ -1,4 +1,10 @@
 {
+	"custom-facet": {
+		"en_US": {
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-facets/custom-facet.html"
+		}
+	},
 	"search-bar-suggestions": {
 		"en_US": {
 			"message": "Learn more.",

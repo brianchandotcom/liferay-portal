@@ -50,7 +50,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.jsoup.Jsoup;
@@ -98,7 +97,9 @@ public class DisplayPageRendererUtil {
 
 					setRenderedContentValue(
 						() -> {
-							if (!_containRenderedContentValue(uriInfo)) {
+							if (!dtoConverterContext.containValue(
+									uriInfo, "renderedContentValue")) {
+
 								return null;
 							}
 
@@ -236,23 +237,6 @@ public class DisplayPageRendererUtil {
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 
 		return themeDisplay;
-	}
-
-	private static boolean _containRenderedContentValue(UriInfo uriInfo) {
-		MultivaluedMap<String, String> parameters =
-			uriInfo.getQueryParameters();
-
-		if ((parameters == null) || parameters.isEmpty()) {
-			return false;
-		}
-
-		String fields = parameters.getFirst("nestedFields");
-
-		if (fields == null) {
-			return false;
-		}
-
-		return fields.contains("renderedContentValue");
 	}
 
 }

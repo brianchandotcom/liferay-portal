@@ -546,7 +546,7 @@ definition {
 			}
 		}
 
-		WebContent.removeDuplicatedFieldsGroup(index = 3);
+		WebContent.removeDuplicatedFieldsGroup(index = 1);
 
 		PortletEntry.publish();
 

@@ -47,6 +47,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import java.util.Objects;
 
@@ -132,6 +133,11 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 				DDMStructureTestUtil.getSampleStructuredContent(),
 				_companyGroupDDMStructure.getStructureKey(), StringPool.BLANK);
 
+		_setDDMStructureKey(
+			_companyGroupJournalArticle, group1JournalArticle,
+			group1LayoutGroupJournalArticle, group2JournalArticle,
+			group2CompanyGroupDDMStructureJournalArticle);
+
 		_unsetDDMStructureId(
 			_companyGroupJournalArticle, group1JournalArticle,
 			group1LayoutGroupJournalArticle, group2JournalArticle,
@@ -209,6 +215,30 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 
 			_multiVMPool.clear();
 		}
+	}
+
+	private void _setDDMStructureKey(JournalArticle... journalArticles)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"update JournalArticle set DDMStructureKey = ? where id_ = " +
+					"?")) {
+
+			for (JournalArticle journalArticle : journalArticles) {
+				DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+				preparedStatement.setString(1, ddmStructure.getStructureKey());
+
+				preparedStatement.setLong(2, journalArticle.getId());
+
+				preparedStatement.addBatch();
+			}
+
+			preparedStatement.executeBatch();
+		}
+
+		_multiVMPool.clear();
 	}
 
 	private void _unsetDDMStructureId(JournalArticle... journalArticles) {

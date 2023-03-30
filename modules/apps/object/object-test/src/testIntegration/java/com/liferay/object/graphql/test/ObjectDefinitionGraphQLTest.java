@@ -23,8 +23,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
@@ -106,22 +104,23 @@ public class ObjectDefinitionGraphQLTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			false, _listFieldName, true, false, Collections.emptyList());
 
+		_parentObjectDefinitionName = _parentObjectDefinition.getShortName();
+		_parentObjectDefinitionPrimaryKeyName = StringUtil.removeFirst(
+			_parentObjectDefinition.getPKObjectFieldName(), "c_");
+
 		ObjectDefinition childObjectDefinition = _addObjectDefinition();
 
-		ObjectField objectField = ObjectFieldLocalServiceUtil.getObjectField(
+		_childObjectDefinitionName = childObjectDefinition.getShortName();
+
+		_relationshipName = "parent";
+
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			TestPropsValues.getUserId(),
 			_parentObjectDefinition.getObjectDefinitionId(),
-			_parentObjectDefinitionPrimaryKeyName);
-
-		String relationshipName = "parent";
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_parentObjectDefinition.getObjectDefinitionId(),
-				childObjectDefinition.getObjectDefinitionId(),
-				objectField.getObjectFieldId(),
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				relationshipName, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			childObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			_relationshipName, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_parentObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -132,10 +131,6 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				childObjectDefinition.getObjectDefinitionId());
-
-		_parentObjectDefinitionName = _parentObjectDefinition.getShortName();
-		_parentObjectDefinitionPrimaryKeyName = StringUtil.removeFirst(
-			_parentObjectDefinition.getPKObjectFieldName(), "c_");
 
 		_parentObjectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -151,8 +146,9 @@ public class ObjectDefinitionGraphQLTest {
 			TestPropsValues.getUserId(), 0,
 			childObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				"r_" + relationshipName +
-					_parentObjectDefinition.getPKObjectFieldName(),
+				StringBundler.concat(
+					"r_", _relationshipName, "_",
+					_parentObjectDefinition.getPKObjectFieldName()),
 				_parentObjectEntry.getObjectEntryId()
 			).put(
 				_objectFieldName, "igor@liferay.com"
@@ -365,6 +361,29 @@ public class ObjectDefinitionGraphQLTest {
 	}
 
 	@Test
+	public void testGetObjectEntryRelatedParentObjectEntry() throws Exception {
+		String key = TextFormatter.formatPlural(
+			StringUtil.lowerCaseFirstLetter(_childObjectDefinitionName));
+
+		Assert.assertEquals(
+			"peter@liferay.com",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"query",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								key,
+								new GraphQLField(
+									"items",
+									new GraphQLField(_relationshipName)))))),
+				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
+				"Object/items", "Object/0", "Object/" + _relationshipName,
+				"Object/" + _objectFieldName));
+	}
+
+	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		String value = RandomTestUtil.randomString();
 
@@ -449,13 +468,15 @@ public class ObjectDefinitionGraphQLTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 
-		return ObjectFieldLocalServiceUtil.addCustomObjectField(
+		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			false, _objectFieldName, false, false, Collections.emptyList());
+
+		return objectDefinition;
 	}
 
 	private JSONObject _invoke(GraphQLField queryGraphQLField)
@@ -479,9 +500,9 @@ public class ObjectDefinitionGraphQLTest {
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
 
+	private String _childObjectDefinitionName;
 	private String _listFieldName;
 	private String _listFieldValueKey;
-
 	private String _objectFieldName;
 
 	@DeleteAfterTestRun
@@ -490,6 +511,7 @@ public class ObjectDefinitionGraphQLTest {
 	private String _parentObjectDefinitionName;
 	private String _parentObjectDefinitionPrimaryKeyName;
 	private ObjectEntry _parentObjectEntry;
+	private String _relationshipName;
 
 	private static class GraphQLField {
 

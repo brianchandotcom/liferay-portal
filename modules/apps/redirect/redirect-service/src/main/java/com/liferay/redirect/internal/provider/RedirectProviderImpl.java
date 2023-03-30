@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
@@ -88,8 +87,6 @@ public class RedirectProviderImpl
 			return new RedirectImpl(
 				redirectEntry.getDestinationURL(), redirectEntry.isPermanent());
 		}
-
-		userAgent = StringUtil.toLowerCase(userAgent);
 
 		List<RedirectPatternEntry> redirectPatternEntries =
 			_redirectPatternEntries.getOrDefault(
@@ -173,20 +170,6 @@ public class RedirectProviderImpl
 		return _crawlerUserAgents;
 	}
 
-	private boolean _isCrawlerUserAgent(String userAgent) {
-		if (Validator.isNull(userAgent)) {
-			return false;
-		}
-
-		for (String crawlerUserAgent : _getCrawlerUserAgents()) {
-			if (userAgent.contains(crawlerUserAgent)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isUserAgentMatch(
 		RedirectPatternEntry redirectPatternEntry, String userAgent) {
 
@@ -200,7 +183,8 @@ public class RedirectProviderImpl
 			return true;
 		}
 
-		boolean crawlerUserAgent = _isCrawlerUserAgent(userAgent);
+		boolean crawlerUserAgent =
+			_crawlerUserAgentsProvider.isCrawlerUserAgent(userAgent);
 
 		if (crawlerUserAgent &&
 			Objects.equals(

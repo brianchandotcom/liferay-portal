@@ -52,7 +52,8 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
-				"select distinct groupId, DDMStructureKey from JournalArticle",
+				"select distinct groupId, DDMStructureKey from " +
+					"JournalArticle where DDMStructureKey is not null",
 				"update JournalArticle set DDMStructureId = ? where groupId " +
 					"= ? and DDMStructureKey = ?",
 				resultSet -> new Object[] {

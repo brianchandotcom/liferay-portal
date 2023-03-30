@@ -16,6 +16,7 @@ package com.liferay.osgi.util.service;
 
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -61,11 +62,27 @@ public class Snapshot<T> {
 				new DCLSingleton<>();
 
 			Supplier<ServiceTracker<T, T>> serviceTrackerSupplier = () -> {
-				ServiceTracker<T, T> serviceTracker = new ServiceTracker<>(
-					bundleContext,
-					_getServiceReference(
-						bundleContext, serviceClass, filterString),
-					null);
+				ServiceTracker<T, T> serviceTracker;
+
+				if (filterString == null) {
+					serviceTracker = new ServiceTracker<>(
+						bundleContext, serviceClass, null);
+				}
+				else {
+					try {
+						serviceTracker = new ServiceTracker<>(
+							bundleContext,
+							bundleContext.createFilter(
+								StringBundler.concat(
+									"(&(objectClass=", serviceClass.getName(),
+									")", filterString, ")")),
+							null);
+					}
+					catch (InvalidSyntaxException invalidSyntaxException) {
+						return ReflectionUtil.throwException(
+							invalidSyntaxException);
+					}
+				}
 
 				serviceTracker.open();
 
@@ -81,21 +98,24 @@ public class Snapshot<T> {
 			};
 		}
 		else {
-			_serivceSupplier = () -> {
-				ServiceReference<T> serviceReference = _getServiceReference(
-					bundleContext, serviceClass, filterString);
+			DCLSingleton<T> serviceDCLSingleton = new DCLSingleton<>();
 
-				if (serviceReference == null) {
-					return null;
-				}
+			_serivceSupplier = () -> serviceDCLSingleton.getSingleton(
+				() -> {
+					ServiceReference<T> serviceReference = _getServiceReference(
+						bundleContext, serviceClass, filterString);
 
-				return bundleContext.getService(serviceReference);
-			};
+					if (serviceReference == null) {
+						return null;
+					}
+
+					return bundleContext.getService(serviceReference);
+				});
 		}
 	}
 
 	public T get() {
-		return _serviceDCLSingleton.getSingleton(_serivceSupplier);
+		return _serivceSupplier.get();
 	}
 
 	private ServiceReference<T> _getServiceReference(
@@ -125,6 +145,5 @@ public class Snapshot<T> {
 	}
 
 	private final Supplier<T> _serivceSupplier;
-	private final DCLSingleton<T> _serviceDCLSingleton = new DCLSingleton<>();
 
 }

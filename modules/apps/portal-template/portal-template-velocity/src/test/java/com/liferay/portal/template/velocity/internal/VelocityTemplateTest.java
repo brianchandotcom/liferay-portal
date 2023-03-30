@@ -16,15 +16,19 @@ package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.ClassLoaderResourceParser;
+import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -46,11 +50,15 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.runtime.RuntimeConstants;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tina Tian
@@ -79,10 +87,27 @@ public class VelocityTemplateTest {
 			_velocityTemplateResourceLoader, "_velocityTemplateResourceCache",
 			_templateResourceCache);
 
-		_velocityTemplateResourceLoader.setTemplateResourceParser(
-			new ClassLoaderResourceParser());
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		_velocityTemplateResourceLoader.activate(Collections.emptyMap());
+		_templateResourceParserServiceRegistration =
+			bundleContext.registerService(
+				TemplateResourceParser.class, new ClassLoaderResourceParser(),
+				MapUtil.singletonDictionary(
+					"lang.type", TemplateConstants.LANG_TYPE_VM));
+
+		_velocityTemplateResourceLoader.activate(
+			bundleContext, Collections.emptyMap());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_templateResourceParserServiceRegistration != null) {
+			_templateResourceParserServiceRegistration.unregister();
+		}
+
+		if (_velocityTemplateResourceLoader != null) {
+			_velocityTemplateResourceLoader.deactivate();
+		}
 	}
 
 	@Before
@@ -377,6 +402,8 @@ public class VelocityTemplateTest {
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
 	private static TemplateResourceCache _templateResourceCache;
+	private static ServiceRegistration<TemplateResourceParser>
+		_templateResourceParserServiceRegistration;
 	private static VelocityTemplateResourceLoader
 		_velocityTemplateResourceLoader;
 

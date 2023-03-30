@@ -654,16 +654,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		List<String> companyIds = _restContextPathCompanyIds.get(
 			restContextPath);
 
-		if ((companyIds != null) && ListUtil.isNotEmpty(companyIds)) {
+		if (ListUtil.isNotEmpty(companyIds)) {
 			return false;
 		}
 
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			_scopedServiceRegistrationsMap.get(restContextPath);
 
-		if ((serviceRegistrationsMap != null) &&
-			MapUtil.isNotEmpty(serviceRegistrationsMap)) {
-
+		if (MapUtil.isNotEmpty(serviceRegistrationsMap)) {
 			return false;
 		}
 
@@ -680,11 +678,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_undeployRestContextPathCompanyIds(companyId, restContextPath);
 		_undeployScopedServiceRegistrationsMap(restContextPath, companyId);
 
-		boolean unregisterApplication = _shouldUnregisterApplication(
-			restContextPath);
-
-		if (unregisterApplication) {
-			_unregisterApplication(unregisterApplication, restContextPath);
+		if (_shouldUnregisterApplication(restContextPath)) {
+			_unregisterApplication(restContextPath);
 		}
 	}
 
@@ -769,13 +764,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			restContextPath, objectDefinition.getCompanyId());
 	}
 
-	private void _unregisterApplication(
-		boolean shouldUnregisterApplication, String restContextPath) {
-
-		if (!shouldUnregisterApplication) {
-			return;
-		}
-
+	private void _unregisterApplication(String restContextPath) {
 		ServiceRegistration<?> serviceRegistration1 =
 			_applicationServiceRegistrations.remove(restContextPath);
 

@@ -38,18 +38,16 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -176,25 +174,6 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 		}
 	}
 
-	private UpgradeProcess _getUpgradeProcess() {
-		UpgradeProcess[] upgradeProcesses = new UpgradeProcess[1];
-
-		_upgradeStepRegistrator.register(
-			(fromSchemaVersionString, toSchemaVersionString, upgradeSteps) -> {
-				for (UpgradeStep upgradeStep : upgradeSteps) {
-					Class<? extends UpgradeStep> clazz = upgradeStep.getClass();
-
-					if (Objects.equals(clazz.getName(), _CLASS_NAME)) {
-						upgradeProcesses[0] = (UpgradeProcess)upgradeStep;
-
-						break;
-					}
-				}
-			});
-
-		return upgradeProcesses[0];
-	}
-
 	private boolean _hasColumn(String tableName, String columnName)
 		throws Exception {
 
@@ -209,7 +188,8 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
-			UpgradeProcess upgradeProcess = _getUpgradeProcess();
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
 
 			upgradeProcess.upgrade();
 

@@ -2663,7 +2663,7 @@ definition {
 			locator1 = "Pagination#PAGINATION_ITEMS_PER_PAGE",
 			value1 = "10 items");
 
-		Pagination.viewResults(results = "Showing 11 to 20 of 50");
+		Pagination.viewResults(results = "Showing 11 to 20 of 50 entries.");
 
 		CommerceProducts.searchProduct(search = "U-Joint");
 
@@ -2671,7 +2671,7 @@ definition {
 
 		AssertElementPresent(locator1 = "//a[contains(text(),'U-Joint')]");
 
-		Pagination.viewResults(results = "Showing 1 to 2 of 2");
+		Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
 	}
 
 	@description = "This is a test for COMMERCE-5801. UseSkuSearchBarAndPagination"
@@ -2689,7 +2689,7 @@ definition {
 
 		Click(locator1 = "ACUtils#NEXT_PAGES");
 
-		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54");
+		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54 entries.");
 
 		CommerceProducts.searchProduct(search = "MIN55861");
 

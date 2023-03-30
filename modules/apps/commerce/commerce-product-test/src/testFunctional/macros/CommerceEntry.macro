@@ -948,7 +948,9 @@ definition {
 
 		var paginationResults = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
 
-		var numberOfEntries = StringUtil.extractLast(${paginationResults}, " ");
+		var listOfStrings = ListUtil.newListFromString(${paginationResults}, " ");
+
+		var numberOfEntries = ListUtil.get(${listOfStrings}, 5);
 
 		var numberOfEntriesAfterDeletion = ${numberOfEntries} - 1;
 
@@ -973,9 +975,7 @@ definition {
 				value1 = ${paginationResults});
 		}
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro deleteTaxCategory {

@@ -18,7 +18,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedDDMTemplates = () => {
 		openDeleteTemplateModal({
 			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
+				'some-of-these-templates-are-being-used-in-pages.-are-you-sure-you-want-to-delete-this'
 			),
 			multiple: true,
 			onDelete: () => {

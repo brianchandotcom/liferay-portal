@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>INPUT_WITH_LABEL</td>
-	<td>//*[contains(@class,'modal-body')] //label[text()='${key_fieldLabel}']/input</td>
+	<td>//*[contains(@class,'modal-body')]//label[text()='${key_fieldLabel}']//following-sibling::input</td>
 	<td></td>
 </tr>
 <tr>

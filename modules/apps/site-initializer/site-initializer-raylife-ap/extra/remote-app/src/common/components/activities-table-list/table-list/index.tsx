@@ -25,7 +25,7 @@ export type TableListHeaders = {
 };
 
 export type Props = {
-	BodyElement?: any;
+	BodyElement?: () => void;
 	headers: TableListHeaders[];
 	rows: InfoRowContent[];
 };
@@ -129,7 +129,7 @@ const TableListComponent: React.FC<Props> = ({
 								{selectedRow.message}
 							</p>
 
-							{selectedRow.body && <BodyElement />}
+							{selectedRow.body && BodyElement()}
 						</div>
 					</li>
 				</div>

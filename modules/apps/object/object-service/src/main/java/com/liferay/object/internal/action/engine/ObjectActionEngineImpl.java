@@ -21,6 +21,7 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
@@ -40,6 +41,9 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -181,18 +185,43 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			Map<String, Object> variables)
 		throws Exception {
 
-		Set<Long> objectActionIds =
+		Map<Long, Set<Long>> objectActionIds =
 			ObjectActionThreadLocal.getObjectActionIds();
 
+		if (!StringUtil.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE) &&
+			objectActionIds.containsKey(objectAction.getObjectActionId())) {
+
+			return;
+		}
+
+		long objectEntryId = _getObjectEntryId(
+			objectDefinition, payloadJSONObject);
+
+		if (StringUtil.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE)) {
+
+			Set<Long> objectEntryIds = objectActionIds.get(
+				objectAction.getObjectActionId());
+
+			if (SetUtil.isNotEmpty(objectEntryIds) &&
+				objectEntryIds.contains(objectEntryId)) {
+
+				return;
+			}
+		}
+
 		try {
-			if (objectActionIds.contains(objectAction.getObjectActionId()) ||
-				!_evaluateConditionExpression(
+			if (!_evaluateConditionExpression(
 					objectAction.getConditionExpression(), variables)) {
 
 				return;
 			}
 
-			objectActionIds.add(objectAction.getObjectActionId());
+			ObjectActionThreadLocal.addObjectActionId(
+				objectAction.getObjectActionId(), objectEntryId);
 
 			ObjectActionExecutor objectActionExecutor =
 				_objectActionExecutorRegistry.getObjectActionExecutor(
@@ -214,6 +243,24 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 			throw exception;
 		}
+	}
+
+	private long _getObjectEntryId(
+		ObjectDefinition objectDefinition, JSONObject payloadJSONObject) {
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			Map<String, Object> map =
+				(Map<String, Object>)payloadJSONObject.get(
+					"model" + objectDefinition.getName());
+
+			return (long)map.get(objectDefinition.getPKObjectFieldName());
+		}
+
+		Map<String, Object> map = (Map<String, Object>)payloadJSONObject.get(
+			"objectEntry");
+
+		return GetterUtil.getLong(
+			map.get("id"), (long)map.get("objectEntryId"));
 	}
 
 	private void _updatePayloadJSONObject(

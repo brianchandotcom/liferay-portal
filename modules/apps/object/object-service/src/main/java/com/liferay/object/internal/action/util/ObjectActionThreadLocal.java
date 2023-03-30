@@ -16,7 +16,9 @@ package com.liferay.object.internal.action.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,30 +26,42 @@ import java.util.Set;
  */
 public class ObjectActionThreadLocal {
 
-	public static void addObjectActionId(long objectActionId) {
-		Set<Long> objectActionIds = getObjectActionIds();
+	public static void addObjectActionId(
+		long objectActionId, long objectEntryId) {
 
-		objectActionIds.add(objectActionId);
+		Map<Long, Set<Long>> objectActionIds = getObjectActionIds();
+
+		Set<Long> objectEntryIds = objectActionIds.get(objectActionId);
+
+		if (objectEntryIds == null) {
+			objectEntryIds = new HashSet<>();
+
+			objectActionIds.put(objectActionId, objectEntryIds);
+		}
+
+		objectEntryIds.add(objectEntryId);
 	}
 
 	public static void clearObjectActionIds() {
-		Set<Long> objectActionIds = getObjectActionIds();
+		Map<Long, Set<Long>> objectActionIds = getObjectActionIds();
 
 		objectActionIds.clear();
 	}
 
-	public static Set<Long> getObjectActionIds() {
+	public static Map<Long, Set<Long>> getObjectActionIds() {
 		return _objectActionIdsThreadLocal.get();
 	}
 
-	public static void setObjectActionIds(Set<Long> objectActionIds) {
+	public static void setObjectActionIds(
+		Map<Long, Set<Long>> objectActionIds) {
+
 		_objectActionIdsThreadLocal.set(objectActionIds);
 	}
 
-	private static final ThreadLocal<Set<Long>> _objectActionIdsThreadLocal =
-		new CentralizedThreadLocal<>(
+	private static final ThreadLocal<Map<Long, Set<Long>>>
+		_objectActionIdsThreadLocal = new CentralizedThreadLocal<>(
 			ObjectActionThreadLocal.class.getName() +
 				"._objectActionIdsThreadLocal",
-			HashSet::new);
+			HashMap::new);
 
 }

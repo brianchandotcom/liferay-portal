@@ -115,6 +115,13 @@ definition {
 			value1 = ${name});
 	}
 
+	macro inputNumber {
+		Type(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = ${number});
+	}
+
 	macro inputStructureKeyTextInput {
 		Type(
 			locator1 = "TextInput#STRUCTURE_KEY_FIELD",

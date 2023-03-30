@@ -254,10 +254,9 @@ definition {
 			key_itemName = "facebook/bart-base",
 			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
-		Type(
-			key_fieldLabel = "Model Timeout",
-			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = "");
+		PortletEntry.inputNumber(
+			fieldLabel = "Model Timeout",
+			number = "");
 
 		AssertElementPresent(
 			key_text = "Test Configuration",
@@ -269,10 +268,9 @@ definition {
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
 
-		Type(
-			key_fieldLabel = "Model Timeout",
-			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = 25);
+		PortletEntry.inputNumber(
+			fieldLabel = "Model Timeout",
+			number = 25);
 
 		AssertElementNotPresent(
 			key_text = "Test Configuration",
@@ -483,10 +481,9 @@ definition {
 		task ("Assert the warning doesn't appear when connection is successful and changes persist when configuration is saved") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
 
-			Type(
-				key_fieldLabel = "Max Character Count",
-				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = 501);
+			PortletEntry.inputNumber(
+				fieldLabel = "Max Character Count",
+				number = 501);
 
 			SystemSettings.saveConfiguration();
 

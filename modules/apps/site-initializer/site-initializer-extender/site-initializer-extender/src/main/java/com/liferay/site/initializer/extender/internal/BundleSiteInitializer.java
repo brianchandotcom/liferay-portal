@@ -4084,12 +4084,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			UserAccount userAccount = UserAccount.toDTO(
 				String.valueOf(jsonObject));
 
-			User existingUserAccount =
+			User user =
 				_userLocalService.fetchUserByEmailAddress(
 					serviceContext.getCompanyId(),
 					userAccount.getEmailAddress());
 
-			if (existingUserAccount == null) {
+			if (user == null) {
 				JSONObject accountBriefsJSONObject =
 					accountBriefsJSONArray.getJSONObject(j);
 
@@ -4113,9 +4113,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				userId = userAccount.getId();
 			}
 			else {
-				userId = existingUserAccount.getUserId();
+				userId = user.getUserId();
 
-				oldGroups = existingUserAccount.getSiteGroups();
+				oldGroups = user.getSiteGroups();
 			}
 
 			oldGroups.add(serviceContext.getScopeGroup());

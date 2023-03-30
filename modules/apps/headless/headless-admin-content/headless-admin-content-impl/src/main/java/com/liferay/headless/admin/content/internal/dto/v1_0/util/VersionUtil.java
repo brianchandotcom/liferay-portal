@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Luis Miguel Barcos
@@ -37,8 +37,6 @@ public class VersionUtil {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			journalArticle.getGroupId());
-
-		Stream<Locale> availableLocalesStream = availableLocales.stream();
 
 		String statusLabel = WorkflowConstants.getStatusLabel(
 			journalArticle.getStatus());
@@ -53,15 +51,19 @@ public class VersionUtil {
 
 						setLabel_i18n(
 							() -> {
-								if (acceptLanguage.isAcceptAllLanguages()) {
-									return availableLocalesStream.collect(
-										Collectors.toMap(
-											LocaleUtil::toBCP47LanguageId,
-											locale -> LanguageUtil.get(
-												locale, statusLabel)));
+								if (!acceptLanguage.isAcceptAllLanguages()) {
+									return null;
 								}
 
-								return null;
+								Map<String, String> stringMap = new HashMap<>();
+
+								for (Locale locale : availableLocales) {
+									stringMap.put(
+										LocaleUtil.toBCP47LanguageId(locale),
+										LanguageUtil.get(locale, statusLabel));
+								}
+
+								return stringMap;
 							});
 					}
 				};

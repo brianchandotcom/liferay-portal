@@ -135,6 +135,12 @@
 			<finder-column name="active" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_A_M_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="modifiable" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_A_S_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="active" />

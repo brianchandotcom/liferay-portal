@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
@@ -764,7 +765,8 @@ public class PredicateExpressionVisitorImpl
 
 			if (Objects.equals(
 					objectFieldBusinessType.getDBType(),
-					ObjectFieldConstants.DB_TYPE_LONG)) {
+					ObjectFieldConstants.DB_TYPE_LONG) &&
+				Validator.isNumber(String.valueOf(value))) {
 
 				return GetterUtil.getLong(value);
 			}

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.helper.v1_0;
 
-import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +40,7 @@ public class CommerceAccountPermissionHelper {
 
 	private boolean _contains(long commerceAccountId) {
 		try {
-			return _commerceAccountPermission.contains(
+			return _accountEntryModelResourcePermission.contains(
 				_getPermissionChecker(), commerceAccountId, ActionKeys.VIEW);
 		}
 		catch (PortalException portalException) {
@@ -70,6 +69,7 @@ public class CommerceAccountPermissionHelper {
 		CommerceAccountPermissionHelper.class);
 
 	@Reference
-	private CommerceAccountPermission _commerceAccountPermission;
+	private AccountEntryModelResourcePermission
+		_accountEntryModelResourcePermission;
 
 }

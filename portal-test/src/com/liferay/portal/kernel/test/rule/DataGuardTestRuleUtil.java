@@ -374,7 +374,8 @@ public class DataGuardTestRuleUtil {
 						}
 					}
 
-					Class<?> leftoverBaseModelModelClass = leftoverBaseModel.getModelClass();
+					Class<?> leftoverBaseModelModelClass =
+						leftoverBaseModel.getModelClass();
 
 					smartDelete(
 						persistedModelLocalServices.get(

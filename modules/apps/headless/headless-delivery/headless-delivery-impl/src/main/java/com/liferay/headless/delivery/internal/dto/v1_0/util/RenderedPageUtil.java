@@ -29,7 +29,6 @@ import com.liferay.segments.model.SegmentsExperience;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -100,14 +99,11 @@ public class RenderedPageUtil {
 			DTOConverterContext dtoConverterContext, Layout layout)
 		throws PortalException {
 
-		Optional<UriInfo> uriInfoOptional =
-			dtoConverterContext.getUriInfoOptional();
+		UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-		if (!uriInfoOptional.isPresent()) {
+		if (uriInfo == null) {
 			return null;
 		}
-
-		UriInfo uriInfo = uriInfoOptional.get();
 
 		List<Object> arguments = new ArrayList<>();
 

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.test.util.context;
 
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.BaseCommerceContextHttp;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -37,7 +36,6 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 	public TestCustomCommerceContextHttp(
 		HttpServletRequest httpServletRequest,
 		CommerceAccountHelper commerceAccountHelper,
-		CommerceAccountLocalService commerceAccountLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
@@ -47,7 +45,6 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 
 		super(
 			httpServletRequest, commerceAccountHelper,
-			commerceAccountLocalService,
 			commerceChannelAccountEntryRelLocalService,
 			commerceChannelLocalService, commerceCurrencyLocalService,
 			commerceOrderHttpHelper, configurationProvider, portal);

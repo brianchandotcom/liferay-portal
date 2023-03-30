@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,9 +27,9 @@ import java.io.Serializable;
  */
 public interface CommerceContext extends Serializable {
 
-	public String[] getAccountEntryAllowedTypes() throws PortalException;
+	public AccountEntry getAccountEntry() throws PortalException;
 
-	public CommerceAccount getCommerceAccount() throws PortalException;
+	public String[] getAccountEntryAllowedTypes() throws PortalException;
 
 	public long[] getCommerceAccountGroupIds() throws PortalException;
 

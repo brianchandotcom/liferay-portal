@@ -18,9 +18,11 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration" %><%@
@@ -76,7 +78,20 @@ CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPor
 			collapsible="<%= true %>"
 			label="advanced-configuration"
 		>
-			<aui:input helpMessage="aggregation-field-help" label="aggregation-field" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD) %>" value="<%= customFacetPortletPreferences.getAggregationFieldString() %>" />
+			<div class="form-group">
+				<aui:input helpMessage="aggregation-field-help" label="aggregation-field" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD) %>" value="<%= customFacetPortletPreferences.getAggregationFieldString() %>" wrapperCssClass="c-mb-0" />
+
+				<div class="form-feedback-group">
+					<div class="form-text">
+						<liferay-ui:message key="aggregation-field-input-help" />
+
+						<liferay-learn:message
+							key="custom-facet"
+							resource="portal-search-web"
+						/>
+					</div>
+				</div>
+			</div>
 
 			<aui:input helpMessage="custom-heading-help" label="custom-heading" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING) %>" value="<%= customFacetPortletPreferences.getCustomHeadingString() %>" />
 

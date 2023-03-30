@@ -27,7 +27,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Dictionary;
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,65 +49,80 @@ public class SegmentsContextVocabularyConfigurationTest {
 	@Rule
 	public static final TestRule testRule = new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_themeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		LocaleThreadLocal.setThemeDisplayLocale(_themeDisplayLocale);
+
+		if (_configuration1 != null) {
+			_configuration1.delete();
+		}
+
+		if (_configuration2 != null) {
+			_configuration2.delete();
+		}
+	}
+
 	@Test
 	public void testAddDuplicatedCompanySegmentsContextVocabularyConfiguration()
 		throws Exception {
 
-		Locale themeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+		_configuration1 = _createFactoryConfiguration(_PROPERTIES1);
 
 		try {
-			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+			_configuration2 = _createFactoryConfiguration(_PROPERTIES2);
 
-			_configuration1 = _configurationAdmin.createFactoryConfiguration(
+			Assert.fail();
+		}
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException) {
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"This session property is already linked to one ",
+					"vocabulary. Remove the linked vocabulary before linking ",
+					"it to a new one, or choose another session property ",
+					"name."),
+				configurationModelListenerException.causeMessage);
+		}
+	}
+
+	private void _assertProperties(
+		Configuration configuration,
+		Dictionary<String, Object> expectedProperties) {
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		Assert.assertEquals(
+			expectedProperties.get("assetVocabularyName"),
+			properties.get("assetVocabularyName"));
+		Assert.assertEquals(
+			expectedProperties.get("entityFieldName"),
+			properties.get("entityFieldName"));
+		Assert.assertEquals(
+			expectedProperties.get("companyId"), properties.get("companyId"));
+	}
+
+	private Configuration _createFactoryConfiguration(
+			Dictionary<String, Object> properties)
+		throws Exception {
+
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
 				_SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID,
 				StringPool.QUESTION);
 
-			_configuration1.update(_PROPERTIES1);
+		configuration.update(properties);
 
-			Dictionary<String, Object> properties =
-				_configuration1.getProperties();
+		_assertProperties(configuration, properties);
 
-			Assert.assertEquals(
-				_PROPERTIES1.get("assetVocabularyName"),
-				properties.get("assetVocabularyName"));
-			Assert.assertEquals(
-				_PROPERTIES1.get("entityFieldName"),
-				properties.get("entityFieldName"));
-			Assert.assertEquals(
-				_PROPERTIES1.get("companyId"), properties.get("companyId"));
-
-			_configuration2 = _configurationAdmin.createFactoryConfiguration(
-				_SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID,
-				StringPool.QUESTION);
-
-			try {
-				_configuration2.update(_PROPERTIES2);
-
-				Assert.fail();
-			}
-			catch (ConfigurationModelListenerException
-						configurationModelListenerException) {
-
-				Assert.assertEquals(
-					StringBundler.concat(
-						"This session property is already linked to one ",
-						"vocabulary. Remove the linked vocabulary before ",
-						"linking it to a new one, or choose another session ",
-						"property name."),
-					configurationModelListenerException.causeMessage);
-			}
-		}
-		finally {
-			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
-
-			if (_configuration1 != null) {
-				_configuration1.delete();
-			}
-
-			if (_configuration2 != null) {
-				_configuration2.delete();
-			}
-		}
+		return configuration;
 	}
 
 	private static final Dictionary<String, Object> _PROPERTIES1 =
@@ -135,5 +152,7 @@ public class SegmentsContextVocabularyConfigurationTest {
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
+
+	private Locale _themeDisplayLocale;
 
 }

@@ -33,9 +33,26 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 <liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 
+<%
+List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
+%>
 
 <div class="mt-5">
+	<clay:tabs
+		tabsItems="<%= tabsItems %>"
+	>
 
+		<%
+		for (TabsItem tabsItem : tabsItems) {
+		%>
 
+			<div>
+				<liferay-util:include page='<%= "/layout_set/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
+			</div>
 
+		<%
+		}
+		%>
 
+	</clay:tabs>
+</div>

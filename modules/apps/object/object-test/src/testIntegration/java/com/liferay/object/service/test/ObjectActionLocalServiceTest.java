@@ -15,8 +15,18 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -43,6 +53,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -57,6 +69,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,6 +77,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -84,12 +98,14 @@ import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
 
@@ -564,14 +580,202 @@ public class ObjectActionLocalServiceTest {
 
 	@Test
 	public void testAddObjectActionWithSystemObject() throws Exception {
-		ObjectDefinition systemObjectDefinition =
+
+		// Commerce order system object
+
+		ObjectDefinition commerceOrderObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
+
+		Set<String> objectActionTriggerKeys = new HashSet<>();
+
+		ListUtil.isNotEmptyForEach(
+			_objectActionTriggerRegistry.getObjectActionTriggers(
+				commerceOrderObjectDefinition.getClassName()),
+			objectActionTrigger -> objectActionTriggerKeys.add(
+				objectActionTrigger.getKey()));
+
+		Assert.assertTrue(
+			objectActionTriggerKeys.contains(
+				DestinationNames.COMMERCE_ORDER_STATUS));
+		Assert.assertTrue(
+			objectActionTriggerKeys.contains(
+				DestinationNames.COMMERCE_PAYMENT_STATUS));
+
+		// Add object action to update commerce order status to processing after
+		// updating payment status
+
+		ObjectAction objectAction1 = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			DestinationNames.COMMERCE_PAYMENT_STATUS,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId",
+				commerceOrderObjectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "orderStatus"
+					).put(
+						"value", CommerceOrderConstants.ORDER_STATUS_PROCESSING
+					)
+				).toString()
+			).build());
+
+		// Add object action to create commerce order after updating order
+		// status to processing (orderStatus == 10)
+
+		Group group = GroupTestUtil.addGroup();
+
+		CommerceAccount commerceAccount = CommerceTestUtil.addAccount(
+			group.getGroupId(), TestPropsValues.getUserId());
+
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyTestUtil.addCommerceCurrency(
+				TestPropsValues.getCompanyId());
+
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			group.getGroupId(), commerceCurrency.getCode());
+
+		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
+			"orderStatus == 10", RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			DestinationNames.COMMERCE_ORDER_STATUS,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId",
+				commerceOrderObjectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "accountId"
+					).put(
+						"value", commerceAccount.getCommerceAccountId()
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "channelId"
+					).put(
+						"value", commerceChannel.getCommerceChannelId()
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "currencyCode"
+					).put(
+						"value", commerceCurrency.getCode()
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "externalReferenceCode"
+					).put(
+						"value", "newCommerceOrder"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "orderStatus"
+					).put(
+						"value", CommerceOrderConstants.ORDER_STATUS_OPEN
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "shippingAmount"
+					).put(
+						"value", "10"
+					)
+				).toString()
+			).build());
+
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PrincipalThreadLocal.setName(_user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+
+			CommerceOrder commerceOrder1 = CommerceTestUtil.addB2CCommerceOrder(
+				_user.getUserId(), commerceChannel.getGroupId(),
+				commerceCurrency);
+
+			commerceOrder1 = _commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder1, _user.getUserId());
+
+			Assert.assertEquals(
+				CommerceOrderConstants.ORDER_STATUS_PENDING,
+				commerceOrder1.getOrderStatus());
+
+			// Update payment status
+
+			_commerceOrderLocalService.updatePaymentStatus(
+				commerceOrder1.getUserId(), commerceOrder1.getCommerceOrderId(),
+				CommerceOrderConstants.PAYMENT_STATUS_PAID);
+
+			// On after payment status update
+
+			// Update order status to processing
+
+			commerceOrder1 = _commerceOrderLocalService.getCommerceOrder(
+				commerceOrder1.getCommerceOrderId());
+
+			Assert.assertEquals(
+				CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+				commerceOrder1.getOrderStatus());
+
+			// Create new commerce order
+
+			CommerceOrder commerceOrder2 =
+				_commerceOrderLocalService.fetchByExternalReferenceCode(
+					"newCommerceOrder", TestPropsValues.getCompanyId());
+
+			Assert.assertNotNull(commerceOrder2);
+
+			Assert.assertEquals(
+				commerceAccount.getCommerceAccountId(),
+				commerceOrder2.getCommerceAccountId());
+			Assert.assertEquals(
+				commerceCurrency.getCommerceCurrencyId(),
+				commerceOrder2.getCommerceCurrencyId());
+			Assert.assertEquals(
+				CommerceOrderConstants.ORDER_STATUS_OPEN,
+				commerceOrder2.getOrderStatus());
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
+		// User system object
+
+		ObjectDefinition userObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), User.class.getName());
 
 		ObjectField objectField1 =
 			_objectFieldLocalService.addCustomObjectField(
 				null, TestPropsValues.getUserId(), 0,
-				systemObjectDefinition.getObjectDefinitionId(),
+				userObjectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -580,7 +784,7 @@ public class ObjectActionLocalServiceTest {
 		ObjectField objectField2 =
 			_objectFieldLocalService.addCustomObjectField(
 				null, TestPropsValues.getUserId(), 0,
-				systemObjectDefinition.getObjectDefinitionId(),
+				userObjectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -589,13 +793,13 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to create user after adding an object entry
 
-		ObjectAction objectAction1 = _addObjectAction(
+		ObjectAction objectAction3 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"objectDefinitionId",
-				systemObjectDefinition.getObjectDefinitionId()
+				userObjectDefinition.getObjectDefinitionId()
 			).put(
 				"predefinedValues",
 				JSONUtil.putAll(
@@ -639,9 +843,9 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to update user after adding an user
 
-		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			systemObjectDefinition.getObjectDefinitionId(), true,
+			userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -650,7 +854,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"objectDefinitionId",
-				systemObjectDefinition.getObjectDefinitionId()
+				userObjectDefinition.getObjectDefinitionId()
 			).put(
 				"predefinedValues",
 				JSONUtil.putAll(
@@ -672,10 +876,6 @@ public class ObjectActionLocalServiceTest {
 			).build());
 
 		_publishCustomObjectDefinition();
-
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
 
 		try {
 			PrincipalThreadLocal.setName(_user.getUserId());
@@ -705,7 +905,7 @@ public class ObjectActionLocalServiceTest {
 			Map<String, Serializable> values =
 				_objectEntryLocalService.
 					getExtensionDynamicObjectDefinitionTableValues(
-						systemObjectDefinition, user.getUserId());
+						userObjectDefinition, user.getUserId());
 
 			Assert.assertEquals("John", values.get(objectField1.getName()));
 			Assert.assertEquals("Peter", values.get(objectField2.getName()));
@@ -720,6 +920,8 @@ public class ObjectActionLocalServiceTest {
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 		_objectActionLocalService.deleteObjectAction(objectAction2);
+		_objectActionLocalService.deleteObjectAction(objectAction3);
+		_objectActionLocalService.deleteObjectAction(objectAction4);
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
 	}
@@ -1053,6 +1255,12 @@ public class ObjectActionLocalServiceTest {
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 
 	@Inject
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -1066,6 +1274,9 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;
+
+	@Inject
+	private ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

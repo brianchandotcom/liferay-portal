@@ -7,6 +7,10 @@ export function getIconSpriteMap() {
 	return spritemap;
 }
 
-export const getCompanyId = () => Liferay.ThemeDisplay.getCompanyId();
+export function getCompanyId() {
+	Liferay.ThemeDisplay.getCompanyId();
+}
 
-export const Service = () => Liferay.Service();
+export function Service() {
+	Liferay.Service();
+}

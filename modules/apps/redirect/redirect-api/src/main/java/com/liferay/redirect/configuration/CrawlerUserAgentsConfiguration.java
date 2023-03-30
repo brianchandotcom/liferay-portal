@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alicia García
  */
-@ExtendedObjectClassDefinition(category = "pages")
+@ExtendedObjectClassDefinition(category = "pages", generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration",
 	localization = "content/Language",

@@ -12,9 +12,9 @@
  * details.
  */
 
-import {PolicyDetailsType} from '../..';
+import {PolicyDetailsType} from '../index';
 
-import '../../index.scss';
+import '../index.scss';
 
 function calculatedAge(dateOfBirth: string) {
 	return Math.floor(

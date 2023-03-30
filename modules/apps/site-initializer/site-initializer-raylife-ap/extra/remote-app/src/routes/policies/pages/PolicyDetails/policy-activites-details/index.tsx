@@ -12,6 +12,7 @@
  * details.
  */
 
+import ActivitiesComponent from '../../../../../common/components/activities-table-list';
 import sortedDateByDescOrder from '../../../../../common/utils/sortedDateByDescOrder';
 
 const policyDataActivities = [
@@ -52,4 +53,8 @@ const policyDataActivities = [
 	},
 ].sort(sortedDateByDescOrder);
 
-export default policyDataActivities;
+const PolicyDetailsActivities = () => {
+	return <ActivitiesComponent activitiesData={policyDataActivities} />;
+};
+
+export default PolicyDetailsActivities;

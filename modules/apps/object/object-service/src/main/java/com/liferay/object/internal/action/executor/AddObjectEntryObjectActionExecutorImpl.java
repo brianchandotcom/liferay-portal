@@ -29,7 +29,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -119,12 +118,6 @@ public class AddObjectEntryObjectActionExecutorImpl
 		throws Exception {
 
 		if (objectDefinition.isSystem()) {
-			if (!FeatureFlagManagerUtil.isEnabled(
-					objectDefinition.getCompanyId(), "LPS-173537")) {
-
-				throw new UnsupportedOperationException();
-			}
-
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(

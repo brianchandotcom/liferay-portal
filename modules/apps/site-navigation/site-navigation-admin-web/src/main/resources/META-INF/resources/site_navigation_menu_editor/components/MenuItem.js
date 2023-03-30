@@ -331,10 +331,12 @@ export function MenuItem({
 									</div>
 								</ClayLayout.ContentCol>
 
-								<div
-									onClick={(event) => event.stopPropagation()}
-								>
-									{Liferay.FeatureFlags['LPS-134527'] && (
+								{Liferay.FeatureFlags['LPS-134527'] && (
+									<div
+										onClick={(event) =>
+											event.stopPropagation()
+										}
+									>
 										<AddItemDropDown
 											className="position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown top-button"
 											order={order}
@@ -371,9 +373,7 @@ export function MenuItem({
 												/>
 											}
 										/>
-									)}
 
-									{Liferay.FeatureFlags['LPS-134527'] && (
 										<AddItemDropDown
 											className="bottom-button position-absolute site_navigation_menu_editor_MenuItem-add-button-dropdown"
 											order={order + 1}
@@ -410,8 +410,8 @@ export function MenuItem({
 												/>
 											}
 										/>
-									)}
-								</div>
+									</div>
+								)}
 
 								<ClayLayout.ContentCol
 									gutters

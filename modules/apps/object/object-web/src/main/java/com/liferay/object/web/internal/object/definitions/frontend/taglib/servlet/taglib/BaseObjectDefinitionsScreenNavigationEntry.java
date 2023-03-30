@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 
 import java.io.IOException;
 
@@ -31,15 +30,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 public abstract class BaseObjectDefinitionsScreenNavigationEntry
+	extends BaseObjectDefinitionsScreenNavigationCategory
 	implements ScreenNavigationEntry<ObjectDefinition> {
 
-	public abstract String getJspPath();
-
 	@Override
-	public String getScreenNavigationKey() {
-		return ObjectDefinitionsScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION;
+	public String getEntryKey() {
+		return getCategoryKey();
 	}
+
+	public abstract String getJspPath();
 
 	@Override
 	public void render(

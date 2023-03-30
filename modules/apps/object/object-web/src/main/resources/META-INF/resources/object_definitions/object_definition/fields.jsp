@@ -46,6 +46,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
 			).put(
+				"creationLanguageId", objectDefinition.getDefaultLanguageId()
+			).put(
 				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
 			).put(
 				"forbiddenLastChars", objectDefinitionsFieldsDisplayContext.getForbiddenLastCharacters()

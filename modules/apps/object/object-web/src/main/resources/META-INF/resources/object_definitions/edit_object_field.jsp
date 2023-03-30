@@ -26,6 +26,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 	module="js/components/ObjectField/EditObjectField"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"creationLanguageId", objectDefinition.getDefaultLanguageId()
+		).put(
 			"filterOperators", LocalizedJSONArrayUtil.getFilterOperatorsJSONObject(locale)
 		).put(
 			"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)

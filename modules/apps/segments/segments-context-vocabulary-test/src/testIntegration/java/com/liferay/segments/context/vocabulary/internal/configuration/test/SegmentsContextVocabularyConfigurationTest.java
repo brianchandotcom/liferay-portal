@@ -60,8 +60,8 @@ public class SegmentsContextVocabularyConfigurationTest {
 	public void tearDown() throws Exception {
 		LocaleThreadLocal.setThemeDisplayLocale(_themeDisplayLocale);
 
-		if (_configuration1 != null) {
-			_configuration1.delete();
+		if (_configuration != null) {
+			_configuration.delete();
 		}
 	}
 
@@ -69,7 +69,7 @@ public class SegmentsContextVocabularyConfigurationTest {
 	public void testAddDuplicatedCompanySegmentsContextVocabularyConfiguration()
 		throws Exception {
 
-		_configuration1 = _createFactoryConfiguration(_PROPERTIES1);
+		_configuration = _createFactoryConfiguration(_PROPERTIES1);
 
 		Configuration configuration2 = null;
 
@@ -95,18 +95,18 @@ public class SegmentsContextVocabularyConfigurationTest {
 			}
 		}
 
-		_assertProperties(_configuration1, _PROPERTIES1);
+		_assertProperties(_configuration, _PROPERTIES1);
 	}
 
 	@Test
 	public void testUpdateCompanySegmentsContextVocabularyConfiguration()
 		throws Exception {
 
-		_configuration1 = _createFactoryConfiguration(_PROPERTIES1);
+		_configuration = _createFactoryConfiguration(_PROPERTIES1);
 
-		_configuration1.update(_PROPERTIES2);
+		_configuration.update(_PROPERTIES2);
 
-		_assertProperties(_configuration1, _PROPERTIES2);
+		_assertProperties(_configuration, _PROPERTIES2);
 	}
 
 	private void _assertProperties(
@@ -163,7 +163,7 @@ public class SegmentsContextVocabularyConfigurationTest {
 		"com.liferay.segments.context.vocabulary.internal.configuration." +
 			"SegmentsContextVocabularyConfiguration";
 
-	private Configuration _configuration1;
+	private Configuration _configuration;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

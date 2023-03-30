@@ -179,7 +179,12 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("INTERNAL_SERVER_ERROR", problem.getStatus());
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+
+			Assert.assertEquals(
+				"Site template with site template key " +
+					randomSite.getTemplateKey() + " is inactive",
+				problem.getTitle());
 		}
 	}
 

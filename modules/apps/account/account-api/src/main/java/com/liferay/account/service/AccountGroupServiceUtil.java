@@ -58,6 +58,12 @@ public class AccountGroupServiceUtil {
 		getService().deleteAccountGroups(accountGroupIds);
 	}
 
+	public static AccountGroup getAccountGroup(long accountGroupId)
+		throws PortalException {
+
+		return getService().getAccountGroup(accountGroupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

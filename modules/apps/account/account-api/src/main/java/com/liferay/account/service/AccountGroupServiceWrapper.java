@@ -59,6 +59,14 @@ public class AccountGroupServiceWrapper
 		_accountGroupService.deleteAccountGroups(accountGroupIds);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroup getAccountGroup(
+			long accountGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.getAccountGroup(accountGroupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

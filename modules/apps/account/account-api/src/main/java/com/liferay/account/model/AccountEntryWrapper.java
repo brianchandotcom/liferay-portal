@@ -582,6 +582,11 @@ public class AccountEntryWrapper
 		return model.isApproved();
 	}
 
+	@Override
+	public boolean isBusinessAccount() {
+		return model.isBusinessAccount();
+	}
+
 	/**
 	 * Returns <code>true</code> if this account entry is denied.
 	 *
@@ -612,6 +617,11 @@ public class AccountEntryWrapper
 		return model.isExpired();
 	}
 
+	@Override
+	public boolean isGuestAccount() {
+		return model.isGuestAccount();
+	}
+
 	/**
 	 * Returns <code>true</code> if this account entry is inactive.
 	 *
@@ -640,6 +650,11 @@ public class AccountEntryWrapper
 	@Override
 	public boolean isPending() {
 		return model.isPending();
+	}
+
+	@Override
+	public boolean isPersonalAccount() {
+		return model.isPersonalAccount();
 	}
 
 	/**

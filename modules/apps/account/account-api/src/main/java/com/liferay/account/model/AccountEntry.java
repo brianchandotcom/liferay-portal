@@ -71,4 +71,10 @@ public interface AccountEntry extends AccountEntryModel, PersistedModel {
 
 	public String[] getDomainsArray();
 
+	public boolean isBusinessAccount();
+
+	public boolean isGuestAccount();
+
+	public boolean isPersonalAccount();
+
 }

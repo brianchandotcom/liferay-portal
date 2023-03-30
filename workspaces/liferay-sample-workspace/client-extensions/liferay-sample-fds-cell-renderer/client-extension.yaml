@@ -1,5 +1,6 @@
 assemble:
     - from: build
+      include: index.js
       into: static
 liferay-sample-fds-cell-renderer:
     name: Liferay Sample Frontend Data Set Cell Renderer

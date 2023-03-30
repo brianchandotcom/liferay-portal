@@ -25,6 +25,7 @@ import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
 import com.liferay.redirect.internal.util.PatternUtil;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.model.RedirectPatternEntry;
+import com.liferay.redirect.provider.CrawlerUserAgentsProvider;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
@@ -34,6 +35,7 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -149,7 +151,7 @@ public class RedirectProviderImpl
 			PatternUtil.parse(redirectPatternConfiguration.patternStrings()));
 	}
 
-	protected void setCrawlerUserAgents(String[] crawlerUserAgents) {
+	protected void setCrawlerUserAgents(Set<String> crawlerUserAgents) {
 		_crawlerUserAgents = crawlerUserAgents;
 	}
 
@@ -165,10 +167,8 @@ public class RedirectProviderImpl
 		_redirectPatternEntries = redirectPatternEntries;
 	}
 
-	private String[] _getCrawlerUserAgents() {
-		if (_crawlerUserAgents == null) {
-			return new String[0];
-		}
+	private Set<String> _getCrawlerUserAgents() {
+		_crawlerUserAgents = _crawlerUserAgentsProvider.getCrawlerUserAgents();
 
 		return _crawlerUserAgents;
 	}
@@ -229,7 +229,11 @@ public class RedirectProviderImpl
 		}
 	}
 
-	private String[] _crawlerUserAgents;
+	private Set<String> _crawlerUserAgents;
+
+	@Reference
+	private CrawlerUserAgentsProvider _crawlerUserAgentsProvider;
+
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
 
 	@Reference

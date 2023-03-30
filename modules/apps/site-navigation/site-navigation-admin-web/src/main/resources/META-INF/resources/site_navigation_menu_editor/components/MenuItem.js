@@ -187,11 +187,18 @@ export function MenuItem({item, onMenuItemRemoved}) {
 		const eventKey = event.key;
 
 		if (eventKey === 'ArrowDown' || eventKey === 'ArrowUp') {
-			const computeFunction =
+			const getNextPosition =
 				eventKey === 'ArrowDown' ? getDownPosition : getUpPosition;
 
-			const result = computeFunction({
-				items,
+			const filteredItems = items.filter(
+				(item) =>
+					!getItemPath(item.siteNavigationMenuItemId, items).includes(
+						siteNavigationMenuItemId
+					)
+			);
+
+			const result = getNextPosition({
+				items: filteredItems,
 				order: keyboardDragLayer ? keyboardDragLayer.order : order,
 				parentSiteNavigationMenuItemId: keyboardDragLayer
 					? keyboardDragLayer.parentSiteNavigationMenuItemId

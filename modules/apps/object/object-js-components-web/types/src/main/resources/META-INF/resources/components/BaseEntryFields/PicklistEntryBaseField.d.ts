@@ -14,6 +14,13 @@
 
 /// <reference types="react" />
 
+interface PickListItem {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
 interface IProps {
 	creationLanguageId?: Liferay.Language.Locale;
 	error?: string;

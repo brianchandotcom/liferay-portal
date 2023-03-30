@@ -191,29 +191,26 @@
 		<aui:script sandbox="<%= true %>">
 			var form = AUI.$(document.<portlet:namespace /><%= formName %>);
 
-			form.on(
-				'submit',
-				function(event) {
-					<c:if test="<%= Validator.isNotNull(redirect) %>">
-						var redirect = form.fm('redirect');
+			form.on('submit', (event) => {
+				<c:if test="<%= Validator.isNotNull(redirect) %>">
+					var redirect = form.fm('redirect');
 
-						if (redirect) {
-							var redirectVal = redirect.val();
+					if (redirect) {
+						var redirectVal = redirect.val();
 
-							redirect.val(redirectVal + window.location.hash);
-						}
-					</c:if>
+						redirect.val(redirectVal + window.location.hash);
+					}
+				</c:if>
 
-					submitForm(form);
-				}
-			);
+				submitForm(form);
+			});
 
-			form.fm('password').on(
-				'keypress',
-				function(event) {
-					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
-				}
-			);
+			form.fm('password').on('keypress', (event) => {
+				Liferay.Util.showCapsLock(
+					event,
+					'<portlet:namespace />passwordCapsLockSpan'
+				);
+			});
 		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -30,8 +30,8 @@
  *
  * \see https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
  */
-var DndSimulatorDataTransfer = function() {
-    this.data = {};
+var DndSimulatorDataTransfer = function () {
+	this.data = {};
 };
 
 /*!
@@ -48,7 +48,7 @@ var DndSimulatorDataTransfer = function() {
  *
  * \see https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect
  */
-DndSimulatorDataTransfer.prototype.dropEffect = "move";
+DndSimulatorDataTransfer.prototype.dropEffect = 'move';
 
 /*!
  * \brief Controls which kind of drag/drop operatins are allowed.
@@ -69,7 +69,7 @@ DndSimulatorDataTransfer.prototype.dropEffect = "move";
  *
  * \see https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/effectAllowed
  */
-DndSimulatorDataTransfer.prototype.effectAllowed = "all";
+DndSimulatorDataTransfer.prototype.effectAllowed = 'all';
 
 /*!
  * \brief List of files being dragged.
@@ -110,16 +110,17 @@ DndSimulatorDataTransfer.prototype.types = [];
  *
  * \see https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/clearData
  */
-DndSimulatorDataTransfer.prototype.clearData = function(format) {
-    if(format) {
-        delete this.data[format];
+DndSimulatorDataTransfer.prototype.clearData = function (format) {
+	if (format) {
+		delete this.data[format];
 
-        var index = this.types.indexOf(format);
-        delete this.types[index];
-        delete this.data[index];
-    } else {
-        this.data = {};
-    }
+		var index = this.types.indexOf(format);
+		delete this.types[index];
+		delete this.data[index];
+	}
+	else {
+		this.data = {};
+	}
 };
 
 /*!
@@ -132,10 +133,10 @@ DndSimulatorDataTransfer.prototype.clearData = function(format) {
  *
  * \see https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/setData
  */
-DndSimulatorDataTransfer.prototype.setData = function(format, data) {
-    this.data[format] = data;
-    this.items.push(data);
-    this.types.push(format);
+DndSimulatorDataTransfer.prototype.setData = function (format, data) {
+	this.data[format] = data;
+	this.items.push(data);
+	this.types.push(format);
 };
 
 /*!
@@ -147,12 +148,12 @@ DndSimulatorDataTransfer.prototype.setData = function(format, data) {
  *
  * \see https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
  */
-DndSimulatorDataTransfer.prototype.getData = function(format) {
-    if(format in this.data) {
-        return this.data[format];
-    }
+DndSimulatorDataTransfer.prototype.getData = function (format) {
+	if (format in this.data) {
+		return this.data[format];
+	}
 
-    return "";
+	return '';
 };
 
 /*!
@@ -162,166 +163,149 @@ DndSimulatorDataTransfer.prototype.getData = function(format) {
  * \param xOffset    A long indicating the horizontal offset within the image.
  * \param yOffset   A long indicating the veritcal offset within the image.
  */
-DndSimulatorDataTransfer.prototype.setDragImage = function(img, xOffset, yOffset) {
-    /* since simulation doesn"t replicate the visual effects, there is
+DndSimulatorDataTransfer.prototype.setDragImage = function (
+	img,
+	xOffset,
+	yOffset
+) {
+
+	/* since simulation doesn"t replicate the visual effects, there is
     no point in implementing this */
 };
 
 DndSimulator = {
-    /*!
-     * \brief Simulates dragging one element on top of the other.
-     *
-     * Specified elements can be CSS selectors.
-     *
-     * \param sourceElement The element to drag to the target element.
-     * \param targetElement The element the source element should be
-     *                        dragged to.
-     */
-    simulate: function(sourceElement, targetElement) {
-        /* if strings are specified, assume they are CSS selectors */
-        if(typeof sourceElement == "string") {
-            sourceElement = document.querySelector(sourceElement);
-        }
 
-        if(typeof targetElement == "string") {
-            targetElement = document.querySelector(targetElement);
-        }
+	/*!
+	 * \brief Simulates dragging one element on top of the other.
+	 *
+	 * Specified elements can be CSS selectors.
+	 *
+	 * \param sourceElement The element to drag to the target element.
+	 * \param targetElement The element the source element should be
+	 *                        dragged to.
+	 */
+	simulate: function (sourceElement, targetElement) {
 
-        /* get the coordinates of both elements, note that
+		/* if strings are specified, assume they are CSS selectors */
+		if (typeof sourceElement == 'string') {
+			sourceElement = document.querySelector(sourceElement);
+		}
+
+		if (typeof targetElement == 'string') {
+			targetElement = document.querySelector(targetElement);
+		}
+
+		/* get the coordinates of both elements, note that
         left refers to X, and top to Y */
-        var sourceCoordinates = sourceElement.getBoundingClientRect();
-        var targetCoordinates = targetElement.getBoundingClientRect();
+		var sourceCoordinates = sourceElement.getBoundingClientRect();
+		var targetCoordinates = targetElement.getBoundingClientRect();
 
-        /* simulate a mouse down event on the coordinates
+		/* simulate a mouse down event on the coordinates
         of the source element */
-        var mouseDownEvent = this.createEvent(
-            "mousedown",
-            {
-                clientX: sourceCoordinates.left,
-                clientY: sourceCoordinates.top
-            }
-        );
+		var mouseDownEvent = this.createEvent('mousedown', {
+			clientX: sourceCoordinates.left,
+			clientY: sourceCoordinates.top,
+		});
 
-        sourceElement.dispatchEvent(mouseDownEvent);
+		sourceElement.dispatchEvent(mouseDownEvent);
 
-        /* simulate a drag start event on the source element */
-        var dragStartEvent = this.createEvent(
-            "dragstart",
-            {
-                clientX: sourceCoordinates.left,
-                clientY: sourceCoordinates.top,
-                dataTransfer: new DndSimulatorDataTransfer()
-            }
-        );
+		/* simulate a drag start event on the source element */
+		var dragStartEvent = this.createEvent('dragstart', {
+			clientX: sourceCoordinates.left,
+			clientY: sourceCoordinates.top,
+			dataTransfer: new DndSimulatorDataTransfer(),
+		});
 
-        sourceElement.dispatchEvent(dragStartEvent);
+		sourceElement.dispatchEvent(dragStartEvent);
 
-        /* simulate a drag event on the source element */
-        var dragEvent = this.createEvent(
-            "drag",
-            {
-                clientX: sourceCoordinates.left,
-                clientY: sourceCoordinates.top
-            }
-        );
+		/* simulate a drag event on the source element */
+		var dragEvent = this.createEvent('drag', {
+			clientX: sourceCoordinates.left,
+			clientY: sourceCoordinates.top,
+		});
 
-        sourceElement.dispatchEvent(dragEvent);
+		sourceElement.dispatchEvent(dragEvent);
 
-        /* simulate a drag enter event on the target element */
-        var dragEnterEvent = this.createEvent(
-            "dragenter",
-            {
-                clientX: targetCoordinates.left,
-                clientY: targetCoordinates.top,
-                dataTransfer: dragStartEvent.dataTransfer
-            }
-        );
+		/* simulate a drag enter event on the target element */
+		var dragEnterEvent = this.createEvent('dragenter', {
+			clientX: targetCoordinates.left,
+			clientY: targetCoordinates.top,
+			dataTransfer: dragStartEvent.dataTransfer,
+		});
 
-        targetElement.dispatchEvent(dragEnterEvent);
+		targetElement.dispatchEvent(dragEnterEvent);
 
-        /* simulate a drag over event on the target element */
-        var dragOverEvent = this.createEvent(
-            "dragover",
-            {
-                clientX: targetCoordinates.left,
-                clientY: targetCoordinates.top,
-                dataTransfer: dragStartEvent.dataTransfer
-            }
-        );
+		/* simulate a drag over event on the target element */
+		var dragOverEvent = this.createEvent('dragover', {
+			clientX: targetCoordinates.left,
+			clientY: targetCoordinates.top,
+			dataTransfer: dragStartEvent.dataTransfer,
+		});
 
-        targetElement.dispatchEvent(dragOverEvent);
+		targetElement.dispatchEvent(dragOverEvent);
 
-        /* simulate a drop event on the target element */
-        var dropEvent = this.createEvent(
-            "drop",
-            {
-                clientX: targetCoordinates.left,
-                clientY: targetCoordinates.top,
-                dataTransfer: dragStartEvent.dataTransfer
-            }
-        );
+		/* simulate a drop event on the target element */
+		var dropEvent = this.createEvent('drop', {
+			clientX: targetCoordinates.left,
+			clientY: targetCoordinates.top,
+			dataTransfer: dragStartEvent.dataTransfer,
+		});
 
-        targetElement.dispatchEvent(dropEvent);
+		targetElement.dispatchEvent(dropEvent);
 
-        /* simulate a drag end event on the source element */
-        var dragEndEvent = this.createEvent(
-            "dragend",
-            {
-                clientX: targetCoordinates.left,
-                clientY: targetCoordinates.top,
-                dataTransfer: dragStartEvent.dataTransfer
-            }
-        );
+		/* simulate a drag end event on the source element */
+		var dragEndEvent = this.createEvent('dragend', {
+			clientX: targetCoordinates.left,
+			clientY: targetCoordinates.top,
+			dataTransfer: dragStartEvent.dataTransfer,
+		});
 
-        sourceElement.dispatchEvent(dragEndEvent);
+		sourceElement.dispatchEvent(dragEndEvent);
 
-        /* simulate a mouseup event on the target element */
-        var mouseUpEvent = this.createEvent(
-            "mouseup",
-            {
-                clientX: targetCoordinates.left,
-                clientY: targetCoordinates.top
-            }
-        );
+		/* simulate a mouseup event on the target element */
+		var mouseUpEvent = this.createEvent('mouseup', {
+			clientX: targetCoordinates.left,
+			clientY: targetCoordinates.top,
+		});
 
-        targetElement.dispatchEvent(mouseUpEvent);
-    },
+		targetElement.dispatchEvent(mouseUpEvent);
+	},
 
-    /*!
-     * \brief Creates a new fake event ready to be dispatched.
-     *
-     * \param eventName The type of event to create.
-     *                    For example: "mousedown".
-     * \param options    Dictionary of options for this event.
-     *
-     * \returns An event ready for dispatching.
-     */
-    createEvent: function(eventName, options) {
-        var event = document.createEvent("CustomEvent");
-        event.initCustomEvent(eventName, true, true, null);
+	/*!
+	 * \brief Creates a new fake event ready to be dispatched.
+	 *
+	 * \param eventName The type of event to create.
+	 *                    For example: "mousedown".
+	 * \param options    Dictionary of options for this event.
+	 *
+	 * \returns An event ready for dispatching.
+	 */
+	createEvent: function (eventName, options) {
+		var event = document.createEvent('CustomEvent');
+		event.initCustomEvent(eventName, true, true, null);
 
-        event.view = window;
-        event.detail = 0;
-        event.ctlrKey = false;
-        event.altKey = false;
-        event.shiftKey = false;
-        event.metaKey = false;
-        event.button = 0;
-        event.relatedTarget = null;
+		event.view = window;
+		event.detail = 0;
+		event.ctlrKey = false;
+		event.altKey = false;
+		event.shiftKey = false;
+		event.metaKey = false;
+		event.button = 0;
+		event.relatedTarget = null;
 
-        /* if the clientX and clientY options are specified,
+		/* if the clientX and clientY options are specified,
         also calculated the desired screenX and screenY values */
-        if(options.clientX && options.clientY) {
-            event.screenX = window.screenX + options.clientX;
-            event.screenY = window.screenY + options.clientY;
-        }
+		if (options.clientX && options.clientY) {
+			event.screenX = window.screenX + options.clientX;
+			event.screenY = window.screenY + options.clientY;
+		}
 
-        /* copy the rest of the options into
+		/* copy the rest of the options into
         the event object */
-        for (var prop in options) {
-            event[prop] = options[prop];
-        }
+		for (var prop in options) {
+			event[prop] = options[prop];
+		}
 
-        return event;
-    }
+		return event;
+	},
 };

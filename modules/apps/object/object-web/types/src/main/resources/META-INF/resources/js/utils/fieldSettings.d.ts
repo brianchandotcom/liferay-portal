@@ -31,6 +31,22 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	defaultValue?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	defaultValueType?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
 	fileSource?:
 		| string
 		| number

@@ -32,6 +32,8 @@ export declare function useObjectFieldForm({
 		ObjectField & {
 			function: unknown;
 			acceptedFileExtensions: unknown;
+			defaultValue: unknown;
+			defaultValueType: unknown;
 			fileSource: unknown;
 			filters: unknown;
 			maxLength: unknown;

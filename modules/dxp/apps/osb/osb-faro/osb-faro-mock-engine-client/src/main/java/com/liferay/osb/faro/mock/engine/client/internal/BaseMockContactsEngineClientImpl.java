@@ -874,13 +874,14 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<PageVisited> getPagesVisited(
-		FaroProject faroProject, String ownerId, String ownerType, String query,
-		String interestName, Date startDate, Date endDate, boolean visitedPages,
-		int cur, int delta, List<OrderByField> orderByFields) {
+		FaroProject faroProject, String channelId, String ownerId,
+		String ownerType, String query, String interestName, Date startDate,
+		Date endDate, boolean visitedPages, int cur, int delta,
+		List<OrderByField> orderByFields) {
 
 		return contactsEngineClient.getPagesVisited(
-			faroProject, ownerId, ownerType, query, interestName, startDate,
-			endDate, visitedPages, cur, delta, orderByFields);
+			faroProject, channelId, ownerId, ownerType, query, interestName,
+			startDate, endDate, visitedPages, cur, delta, orderByFields);
 	}
 
 	@Override

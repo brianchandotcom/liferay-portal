@@ -2247,12 +2247,15 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<PageVisited> getPagesVisited(
-		FaroProject faroProject, String ownerId, String ownerType, String query,
-		String interestName, Date startDate, Date endDate, boolean visitedPages,
-		int cur, int delta, List<OrderByField> orderByFields) {
+		FaroProject faroProject, String channelId, String ownerId,
+		String ownerType, String query, String interestName, Date startDate,
+		Date endDate, boolean visitedPages, int cur, int delta,
+		List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields);
+
+		uriVariables.put("channelId", channelId);
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 

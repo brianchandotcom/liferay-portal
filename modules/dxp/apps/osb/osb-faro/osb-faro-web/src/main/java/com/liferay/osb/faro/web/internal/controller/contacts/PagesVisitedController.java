@@ -64,6 +64,7 @@ public class PagesVisitedController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay search(
 			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") String channelId,
 			@QueryParam("contactsEntityId") String contactsEntityId,
 			@QueryParam("contactsEntityType") int contactEntityType,
 			@QueryParam("query") String query,
@@ -79,7 +80,7 @@ public class PagesVisitedController extends BaseFaroController {
 		throws Exception {
 
 		Results<PageVisited> results = contactsEngineClient.getPagesVisited(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), channelId,
 			contactsEntityId, contactsHelper.getOwnerType(contactEntityType),
 			query, interestName, startDateFaroParam.getValue(),
 			endDateFaroParam.getValue(), active, cur, delta,
@@ -93,6 +94,7 @@ public class PagesVisitedController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay searchByForm(
 			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") String channelId,
 			@FormParam("contactsEntityId") String contactsEntityId,
 			@FormParam("contactsEntityType") int contactsEntityType,
 			@FormParam("query") String query,
@@ -108,9 +110,9 @@ public class PagesVisitedController extends BaseFaroController {
 		throws Exception {
 
 		return search(
-			groupId, contactsEntityId, contactsEntityType, query, interestName,
-			startDateFaroParam, endDateFaroParam, active, cur, delta,
-			orderByFieldsFaroParam);
+			groupId, channelId, contactsEntityId, contactsEntityType, query,
+			interestName, startDateFaroParam, endDateFaroParam, active, cur,
+			delta, orderByFieldsFaroParam);
 	}
 
 }

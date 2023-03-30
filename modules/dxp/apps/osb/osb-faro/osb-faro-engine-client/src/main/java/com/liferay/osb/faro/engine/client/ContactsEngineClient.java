@@ -416,9 +416,10 @@ public interface ContactsEngineClient {
 		int cur, int delta, List<OrderByField> orderByFields);
 
 	public Results<PageVisited> getPagesVisited(
-		FaroProject faroProject, String ownerId, String ownerType, String query,
-		String interestName, Date startDate, Date endDate, boolean visitedPages,
-		int cur, int delta, List<OrderByField> orderByFields);
+		FaroProject faroProject, String channelId, String ownerId,
+		String ownerType, String query, String interestName, Date startDate,
+		Date endDate, boolean visitedPages, int cur, int delta,
+		List<OrderByField> orderByFields);
 
 	public PageVisited getPageVisited(FaroProject faroProject, String id);
 

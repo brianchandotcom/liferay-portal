@@ -4,10 +4,6 @@ $treeNodeNameMappedColor: #954cff;
 
 html#{$cadmin-selector} {
 	.cadmin {
-		.lfr-treeview-node-list-item__node {
-			max-width: 100%;
-		}
-
 		.page-editor__page-structure__tree-node {
 			align-items: center;
 			display: flex;

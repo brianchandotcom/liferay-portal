@@ -74,9 +74,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 
 		</aui:select>
 
-		<aui:input id="file" label="file-upload" name="file" type="file">
-			<aui:validator name="required" />
-
+		<aui:input id="file" label="file-upload" name="file" required="<%= true %>" type="file">
 			<aui:validator name="acceptFiles">
 				'properties'
 			</aui:validator>

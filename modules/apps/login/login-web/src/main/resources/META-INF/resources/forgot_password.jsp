@@ -104,9 +104,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 					</c:if>
 
-					<aui:input label="<%= loginLabel %>" name="login" size="30" type="text" value="<%= login %>">
-						<aui:validator name="required" />
-					</aui:input>
+					<aui:input label="<%= loginLabel %>" name="login" required="<%= true %>" size="30" type="text" value="<%= login %>" />
 
 					<c:if test="<%= captchaConfiguration.sendPasswordCaptchaEnabled() %>">
 						<liferay-captcha:captcha />

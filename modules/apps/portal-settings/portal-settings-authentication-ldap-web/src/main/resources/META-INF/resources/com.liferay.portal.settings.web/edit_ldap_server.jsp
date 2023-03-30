@@ -157,9 +157,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' type="text" value="<%= ldapServerName %>">
-					<aui:validator name="required" />
-				</aui:input>
+				<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' required="<%= true %>" type="text" value="<%= ldapServerName %>" />
 			</aui:fieldset>
 
 			<aui:fieldset>

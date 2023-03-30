@@ -70,9 +70,7 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 		</c:if>
 
 		<liferay-frontend:fieldset>
-			<aui:input label="select-file" name="file" type="file">
-				<aui:validator name="required" />
-
+			<aui:input label="select-file" name="file" required="<%= true %>" type="file">
 				<aui:validator name="acceptFiles">
 					'zip'
 				</aui:validator>

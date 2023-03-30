@@ -152,16 +152,12 @@ portletDisplay.setURLBack(backURL);
 						<clay:col
 							md="6"
 						>
-							<aui:input label="password" name="password1" size="30" type="password" value="">
-								<aui:validator name="required" />
-							</aui:input>
+							<aui:input label="password" name="password1" required="<%= true %>" size="30" type="password" value="" />
 
-							<aui:input label="enter-again" name="password2" size="30" type="password" value="">
+							<aui:input label="enter-again" name="password2" required="<%= true %>" size="30" type="password" value="">
 								<aui:validator name="equalTo">
 									'#<portlet:namespace />password1'
 								</aui:validator>
-
-								<aui:validator name="required" />
 							</aui:input>
 						</clay:col>
 					</clay:row>

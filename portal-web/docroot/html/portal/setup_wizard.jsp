@@ -62,9 +62,7 @@
 									<liferay-ui:message key="portal" />
 								</h3>
 
-								<aui:input label="portal-name" name="companyName" value="<%= PropsValues.COMPANY_DEFAULT_NAME %>">
-									<aui:validator name="required" />
-								</aui:input>
+								<aui:input label="portal-name" name="companyName" required="<%= true %>" value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 								<aui:field-wrapper label="default-language" name="companyLocale">
 									<div class="form-group-autofit">
@@ -98,17 +96,12 @@
 									<liferay-ui:message key="administrator-user" />
 								</h3>
 
-								<aui:input label="first-name" name="adminFirstName" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>">
-									<aui:validator name="required" />
-								</aui:input>
+								<aui:input label="first-name" name="adminFirstName" required="<%= true %>" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
 
-								<aui:input label="last-name" name="adminLastName" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>">
-									<aui:validator name="required" />
-								</aui:input>
+								<aui:input label="last-name" name="adminLastName" required="<%= true %>" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
 
-								<aui:input label="email" name="adminEmailAddress">
+								<aui:input label="email" name="adminEmailAddress" required="<%= true %>">
 									<aui:validator name="email" />
-									<aui:validator name="required" />
 								</aui:input>
 							</aui:fieldset>
 						</div>
@@ -220,13 +213,9 @@
 
 									</aui:select>
 
-									<aui:input id="jdbcDefaultURL" label="jdbc-url" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_URL + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_URL %>">
-										<aui:validator name="required" />
-									</aui:input>
+									<aui:input id="jdbcDefaultURL" label="jdbc-url" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_URL + "--" %>' required="<%= true %>" value="<%= PropsValues.JDBC_DEFAULT_URL %>" />
 
-									<aui:input id="jdbcDefaultDriverName" label="jdbc-driver-class-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>">
-										<aui:validator name="required" />
-									</aui:input>
+									<aui:input id="jdbcDefaultDriverName" label="jdbc-driver-class-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME + "--" %>' required="<%= true %>" value="<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>" />
 
 									<aui:input id="jdbcDefaultUserName" label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>" />
 

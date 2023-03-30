@@ -55,9 +55,7 @@ if ((commerceTermEntry != null) && (commerceTermEntry.getExpirationDate() != nul
 			>
 				<div class="row">
 					<div class="col">
-						<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" label="title" localized="<%= true %>" name="labelMapAsXML" type="text">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" label="title" localized="<%= true %>" name="labelMapAsXML" required="<%= true %>" type="text" />
 
 						<aui:input name="priority" />
 

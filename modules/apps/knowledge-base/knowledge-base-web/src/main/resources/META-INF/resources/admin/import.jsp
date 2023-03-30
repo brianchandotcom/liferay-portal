@@ -62,9 +62,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 						</div>
 					</aui:field-wrapper>
 
-					<aui:input id="file" label="upload-your-zip-file" name="file" type="file">
-						<aui:validator name="required" />
-
+					<aui:input id="file" label="upload-your-zip-file" name="file" required="<%= true %>" type="file">
 						<aui:validator name="acceptFiles">
 							'zip'
 						</aui:validator>

@@ -36,9 +36,7 @@ if (siteNavigationMenuItem != null) {
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://" value="<%= url %>">
-	<aui:validator name="required" />
-
+<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://" required="<%= true %>" value="<%= url %>">
 	<aui:validator name="urlAllowRelative" />
 </aui:input>
 

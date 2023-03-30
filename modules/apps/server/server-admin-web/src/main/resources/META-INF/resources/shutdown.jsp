@@ -25,10 +25,9 @@
 	<c:otherwise>
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
-				<aui:input label="number-of-minutes" name="minutes" size="3" type="text">
+				<aui:input label="number-of-minutes" name="minutes" required="<%= true %>" size="3" type="text">
 					<aui:validator name="digits" />
 					<aui:validator name="min">1</aui:validator>
-					<aui:validator name="required" />
 				</aui:input>
 
 				<aui:input cssClass="lfr-textarea-container" label="custom-message" name="message" type="textarea" />

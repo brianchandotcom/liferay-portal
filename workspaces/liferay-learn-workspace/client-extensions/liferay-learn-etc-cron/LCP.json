@@ -21,7 +21,7 @@
 				"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://resources.learn.liferay.com",
 				"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-prd"
 			},
-			"schedule": "0 17 * * *"
+			"schedule": "0 7 * * *"
 		},
 		"infra": {
 			"deploy": false
@@ -31,7 +31,7 @@
 	"kind": "CronJob",
 	"memory": 3000,
 	"scale": 1,
-	"schedule": "0 15 * * *",
+	"schedule": "0 6 * * *",
 	"volumes": {
 		"publicHtml": "/public_html"
 	}

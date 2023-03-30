@@ -26,6 +26,10 @@ import java.util.TimeZone;
  */
 public interface CPSubscriptionType {
 
+	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties(
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException;
+
 	public String getLabel(Locale locale);
 
 	public String getName();
@@ -39,11 +43,7 @@ public interface CPSubscriptionType {
 		TimeZone timeZone,
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties);
 
-	public UnicodeProperties validateDeliverySubscriptionTypeSettingsProperties(
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
-		throws PortalException;
-
-	public UnicodeProperties validateSubscriptionTypeSettingsProperties(
+	public UnicodeProperties getSubscriptionTypeSettingsProperties(
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException;
 

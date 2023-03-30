@@ -1741,7 +1741,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		if (deliveryCPSubscriptionType != null) {
 			return deliveryCPSubscriptionType.
-				validateDeliverySubscriptionTypeSettingsProperties(
+				getDeliverySubscriptionTypeSettingsProperties(
 					deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 
@@ -1833,9 +1833,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			_cpSubscriptionTypeRegistry.getCPSubscriptionType(subscriptionType);
 
 		if (cpSubscriptionType != null) {
-			return cpSubscriptionType.
-				validateSubscriptionTypeSettingsProperties(
-					subscriptionTypeSettingsUnicodeProperties);
+			return cpSubscriptionType.getSubscriptionTypeSettingsProperties(
+				subscriptionTypeSettingsUnicodeProperties);
 		}
 
 		return null;

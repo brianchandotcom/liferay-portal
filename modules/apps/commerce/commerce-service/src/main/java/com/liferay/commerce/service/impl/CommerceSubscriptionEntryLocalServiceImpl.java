@@ -155,7 +155,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 					user.getTimeZone(),
 					subscriptionTypeSettingsUnicodeProperties));
 			commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-				cpSubscriptionType.validateSubscriptionTypeSettingsProperties(
+				cpSubscriptionType.getSubscriptionTypeSettingsProperties(
 					subscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
@@ -184,7 +184,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			commerceSubscriptionEntry.
 				setDeliverySubscriptionTypeSettingsProperties(
 					deliveryCPSubscriptionType.
-						validateDeliverySubscriptionTypeSettingsProperties(
+						getDeliverySubscriptionTypeSettingsProperties(
 							deliverySubscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
@@ -531,7 +531,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		if (cpSubscriptionType != null) {
 			subscriptionTypeSettingsUnicodeProperties =
-				cpSubscriptionType.validateSubscriptionTypeSettingsProperties(
+				cpSubscriptionType.getSubscriptionTypeSettingsProperties(
 					subscriptionTypeSettingsUnicodeProperties);
 		}
 
@@ -542,7 +542,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		if (deliveryCPSubscriptionType != null) {
 			deliverySubscriptionTypeSettingsUnicodeProperties =
 				deliveryCPSubscriptionType.
-					validateDeliverySubscriptionTypeSettingsProperties(
+					getDeliverySubscriptionTypeSettingsProperties(
 						deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 

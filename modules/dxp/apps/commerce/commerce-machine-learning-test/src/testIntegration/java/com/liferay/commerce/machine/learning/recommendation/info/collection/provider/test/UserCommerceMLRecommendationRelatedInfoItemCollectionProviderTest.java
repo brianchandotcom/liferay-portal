@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.machine.learning.recommendation.info.collection.provider.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -189,8 +189,8 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 			new ArrayList<>();
 
 		for (int i = 0; i < _ACCOUNT_COUNT; i++) {
-			CommerceAccount commerceAccount =
-				CommerceAccountTestUtil.addBusinessCommerceAccount(
+			AccountEntry accountEntry =
+				CommerceAccountTestUtil.addBusinessAccountEntry(
 					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 					RandomTestUtil.randomString() + "@liferay.com",
 					RandomTestUtil.randomString(), _serviceContext);
@@ -221,7 +221,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 						_userCommerceMLRecommendationManager.create();
 
 					userCommerceMLRecommendation.setEntryClassPK(
-						commerceAccount.getCommerceAccountId());
+						accountEntry.getAccountEntryId());
 					userCommerceMLRecommendation.setScore(1.0F - (k / 10.0F));
 					userCommerceMLRecommendation.setRecommendedEntryClassPK(
 						recommendedCPDefinition.getCPDefinitionId());

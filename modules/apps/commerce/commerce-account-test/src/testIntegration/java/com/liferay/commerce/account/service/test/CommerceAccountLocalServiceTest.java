@@ -14,11 +14,15 @@
 
 package com.liferay.commerce.account.service.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,17 +88,20 @@ public class CommerceAccountLocalServiceTest {
 			"That Commerce Account matches the one created before."
 		);
 
-		CommerceAccount businessCommerceAccount =
-			CommerceAccountTestUtil.addBusinessCommerceAccount(
+		AccountEntry businessAccountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
 				_user.getUserId(), "Business Account", "example@email.com",
 				_getServiceContext());
 
-		List<CommerceAccount> commerceAccounts =
-			_commerceAccountLocalService.getUserCommerceAccounts(
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
 				_user.getUserId(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				StringPool.BLANK,
+				_commerceAccountHelper.toAccountEntryTypes(
+					CommerceAccountConstants.SITE_TYPE_B2B),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		int commerceAccountsCount =
 			_commerceAccountLocalService.getUserCommerceAccountsCount(
@@ -103,19 +110,19 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
 
 		Assert.assertEquals(
-			_user.toString(), commerceAccounts.size(), commerceAccountsCount);
+			_user.toString(), accountEntries.size(), commerceAccountsCount);
 
 		Assert.assertEquals(_user.toString(), 1, commerceAccountsCount);
 
-		CommerceAccount commerceAccount = commerceAccounts.get(0);
+		AccountEntry accountEntry = accountEntries.get(0);
 
 		Assert.assertEquals(
-			businessCommerceAccount.getCommerceAccountId(),
-			commerceAccount.getCommerceAccountId());
+			businessAccountEntry.getAccountEntryId(),
+			accountEntry.getAccountEntryId());
 		Assert.assertEquals(
-			businessCommerceAccount.getType(), commerceAccount.getType());
+			businessAccountEntry.getType(), accountEntry.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, commerceAccount.getStatus());
+			WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus());
 	}
 
 	@Test
@@ -132,19 +139,22 @@ public class CommerceAccountLocalServiceTest {
 			"That Commerce Account matches the one created before."
 		);
 
-		CommerceAccount personalCommerceAccount =
-			CommerceAccountTestUtil.addPersonalCommerceAccount(
+		AccountEntry businessAccountEntry =
+			CommerceAccountTestUtil.addPersonAccountEntry(
 				_user.getUserId(), _getServiceContext());
 
 		Assert.assertEquals(
-			personalCommerceAccount.getName(), _user.getFullName());
+			businessAccountEntry.getName(), _user.getFullName());
 
-		List<CommerceAccount> commerceAccounts =
-			_commerceAccountLocalService.getUserCommerceAccounts(
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
 				_user.getUserId(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				CommerceAccountConstants.SITE_TYPE_B2C, StringPool.BLANK, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				StringPool.BLANK,
+				_commerceAccountHelper.toAccountEntryTypes(
+					CommerceAccountConstants.SITE_TYPE_B2C),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		int commerceAccountsCount =
 			_commerceAccountLocalService.getUserCommerceAccountsCount(
@@ -153,24 +163,24 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2C, StringPool.BLANK, null);
 
 		Assert.assertEquals(
-			_user.toString(), commerceAccounts.size(), commerceAccountsCount);
+			_user.toString(), accountEntries.size(), commerceAccountsCount);
 
 		Assert.assertEquals(_user.toString(), 1, commerceAccountsCount);
 
 		Assert.assertEquals(
-			commerceAccounts.toString(), 1, commerceAccounts.size());
+			accountEntries.toString(), 1, accountEntries.size());
 
-		CommerceAccount commerceAccount = commerceAccounts.get(0);
+		AccountEntry accountEntry = accountEntries.get(0);
 
 		Assert.assertEquals(
-			personalCommerceAccount.getCommerceAccountId(),
-			commerceAccount.getCommerceAccountId());
+			businessAccountEntry.getAccountEntryId(),
+			accountEntry.getAccountEntryId());
 		Assert.assertEquals(
-			personalCommerceAccount.getName(), commerceAccount.getName());
+			businessAccountEntry.getName(), accountEntry.getName());
 		Assert.assertEquals(
-			personalCommerceAccount.getType(), commerceAccount.getType());
+			businessAccountEntry.getType(), accountEntry.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, commerceAccount.getStatus());
+			WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus());
 	}
 
 	@Test
@@ -209,7 +219,7 @@ public class CommerceAccountLocalServiceTest {
 			_organizationLocalService.addUserOrganization(
 				user.getUserId(), organization);
 
-			CommerceAccountTestUtil.addBusinessCommerceAccount(
+			CommerceAccountTestUtil.addBusinessAccountEntry(
 				_user.getUserId(), "businessOrganizationAccount" + i,
 				"example@example.com", StringPool.BLANK, null,
 				new long[] {organization.getOrganizationId()}, serviceContext);
@@ -306,7 +316,7 @@ public class CommerceAccountLocalServiceTest {
 				RandomTestUtil.randomString(),
 				new long[] {serviceContext.getScopeGroupId()}, serviceContext);
 
-			CommerceAccountTestUtil.addBusinessCommerceAccount(
+			CommerceAccountTestUtil.addBusinessAccountEntry(
 				_user.getUserId(), "businessUserAccount" + i,
 				"example@example.com", StringPool.BLANK,
 				new long[] {user.getUserId()}, null, serviceContext);
@@ -397,14 +407,14 @@ public class CommerceAccountLocalServiceTest {
 				RandomTestUtil.randomString(), null, serviceContext);
 
 			if (i == 1) {
-				CommerceAccountTestUtil.addBusinessCommerceAccount(
+				CommerceAccountTestUtil.addBusinessAccountEntry(
 					user.getUserId(), "account" + i, "example@test.com",
 					externalReferenceCodes.get(i - 1), serviceContext);
 
 				continue;
 			}
 
-			CommerceAccountTestUtil.addBusinessCommerceAccount(
+			CommerceAccountTestUtil.addBusinessAccountEntry(
 				_user.getUserId(), "account" + i, "example@test.com",
 				externalReferenceCodes.get(i - 1), serviceContext);
 		}
@@ -481,25 +491,25 @@ public class CommerceAccountLocalServiceTest {
 
 		Assert.assertNotNull(commerceAccount5);
 
-		CommerceAccountTestUtil.addCommerceAccountUserRels(
+		CommerceAccountTestUtil.addAccountEntryUserRels(
 			commerceAccount2.getCommerceAccountId(),
 			new long[] {user2.getUserId()}, serviceContext);
-		CommerceAccountTestUtil.addCommerceAccountUserRels(
+		CommerceAccountTestUtil.addAccountEntryUserRels(
 			commerceAccount3.getCommerceAccountId(),
 			new long[] {user3.getUserId()}, serviceContext);
 
-		CommerceAccountTestUtil.addCommerceAccountOrganizationRels(
+		CommerceAccountTestUtil.addAccountEntryOrganizationRels(
 			commerceAccount2.getCommerceAccountId(),
 			new long[] {italyOrganization.getOrganizationId()}, serviceContext);
-		CommerceAccountTestUtil.addCommerceAccountOrganizationRels(
+		CommerceAccountTestUtil.addAccountEntryOrganizationRels(
 			commerceAccount3.getCommerceAccountId(),
 			new long[] {chicagoOrganization.getOrganizationId()},
 			serviceContext);
-		CommerceAccountTestUtil.addCommerceAccountOrganizationRels(
+		CommerceAccountTestUtil.addAccountEntryOrganizationRels(
 			commerceAccount4.getCommerceAccountId(),
 			new long[] {losAngelesOrganization.getOrganizationId()},
 			serviceContext);
-		CommerceAccountTestUtil.addCommerceAccountOrganizationRels(
+		CommerceAccountTestUtil.addAccountEntryOrganizationRels(
 			commerceAccount5.getCommerceAccountId(),
 			new long[] {losAngelesOrganization.getOrganizationId()},
 			serviceContext);
@@ -714,6 +724,12 @@ public class CommerceAccountLocalServiceTest {
 	}
 
 	private static User _user;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Inject
 	private CommerceAccountLocalService _commerceAccountLocalService;

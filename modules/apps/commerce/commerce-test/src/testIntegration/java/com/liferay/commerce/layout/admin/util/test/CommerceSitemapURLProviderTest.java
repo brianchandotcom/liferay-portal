@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.layout.admin.util.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -129,8 +129,8 @@ public class CommerceSitemapURLProviderTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
-		CommerceAccount commerceAccount =
-			CommerceAccountTestUtil.addBusinessCommerceAccount(
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
 				_user.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + "@liferay.com",
 				RandomTestUtil.randomString(), _serviceContext);
@@ -138,7 +138,7 @@ public class CommerceSitemapURLProviderTest {
 		_httpServletRequest.setAttribute(
 			"LIFERAY_SHARED_CURRENT_COMMERCE_ACCOUNT_ID_" +
 				commerceChannel.getGroupId(),
-			commerceAccount.getCommerceAccountId());
+			accountEntry.getAccountEntryId());
 
 		_themeDisplay.setRequest(_httpServletRequest);
 

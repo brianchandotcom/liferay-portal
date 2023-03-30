@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.media.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
@@ -121,9 +121,9 @@ public class CommerceMediaResolverTest {
 		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
 			_accountEntry.getAccountEntryId());
 
-		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
+		CommerceAccountTestUtil.addAccountGroupAndAccountRel(
 			_user.getCompanyId(), RandomTestUtil.randomString(),
-			CommerceAccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
+			AccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
 			_commerceAccount.getCommerceAccountId(), _serviceContext);
 
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(

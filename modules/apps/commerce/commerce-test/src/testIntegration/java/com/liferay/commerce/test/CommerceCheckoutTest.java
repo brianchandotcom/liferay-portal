@@ -140,11 +140,14 @@ public class CommerceCheckoutTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
+		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
 			_serviceContext);
+
+		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
+			_accountEntry.getAccountEntryId());
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -840,6 +843,7 @@ public class CommerceCheckoutTest {
 	private static Company _company;
 	private static User _user;
 
+	private AccountEntry _accountEntry;
 	private CommerceAccount _commerceAccount;
 
 	@Inject

@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.notification.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -123,7 +123,7 @@ public class CommerceNotificationTest {
 
 		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
 			_group.getGroupId(), _user.getUserId(),
-			_commerceAccount.getCommerceAccountId(),
+			_accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceNotificationHelper.sendNotifications(
@@ -223,7 +223,7 @@ public class CommerceNotificationTest {
 
 		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
 			_group.getGroupId(), _user.getUserId(),
-			_commerceAccount.getCommerceAccountId(),
+			_accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceNotificationHelper.sendNotifications(
@@ -305,7 +305,7 @@ public class CommerceNotificationTest {
 			RandomTestUtil.randomString(),
 			new long[] {_serviceContext.getScopeGroupId()}, _serviceContext);
 
-		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
+		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
 			_accountAdmin.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
@@ -330,11 +330,10 @@ public class CommerceNotificationTest {
 
 		_userGroupRoleLocalService.deleteUserGroupRoles(
 			_accountAdmin.getUserId(),
-			new long[] {_commerceAccount.getCommerceAccountGroupId()});
+			new long[] {_accountEntry.getAccountEntryGroupId()});
 
 		_userGroupRoleLocalService.addUserGroupRoles(
-			_accountAdmin.getUserId(),
-			_commerceAccount.getCommerceAccountGroupId(),
+			_accountAdmin.getUserId(), _accountEntry.getAccountEntryGroupId(),
 			new long[] {_accountAdminRole.getRoleId()});
 	}
 
@@ -361,11 +360,10 @@ public class CommerceNotificationTest {
 
 		_userGroupRoleLocalService.deleteUserGroupRoles(
 			_orderManager.getUserId(),
-			new long[] {_commerceAccount.getCommerceAccountGroupId()});
+			new long[] {_accountEntry.getAccountEntryGroupId()});
 
 		_userGroupRoleLocalService.addUserGroupRoles(
-			_orderManager.getUserId(),
-			_commerceAccount.getCommerceAccountGroupId(),
+			_orderManager.getUserId(), _accountEntry.getAccountEntryGroupId(),
 			new long[] {_orderManagerRole.getRoleId()});
 	}
 
@@ -390,7 +388,7 @@ public class CommerceNotificationTest {
 	private User _accountAdmin;
 
 	private Role _accountAdminRole;
-	private CommerceAccount _commerceAccount;
+	private AccountEntry _accountEntry;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;

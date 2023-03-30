@@ -9,6 +9,11 @@ definition {
 	@description = "Check the temp folder after portal shutdown."
 	@priority = 4
 	test TempDirShouldBeEmptyAfterPortalShutdown {
+
+		// Blacklist geocoder module due to LRQA-79521
+
+		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.ip.geocoder.impl\",\"com.liferay.ip.geocoder.sample.web\" ]";
 		property test.name.skip.portal.instance = "PortalTempDir#TempDirShouldBeEmptyAfterPortalShutdown";
 
 		var tempDir = PropsUtil.get("app.server.temp.dir");

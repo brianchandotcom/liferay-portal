@@ -89,12 +89,20 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 							siteGroupIdsMap.put(groupId, siteGroupId);
 						}
 
-						DDMStructure ddmStructure =
-							_ddmStructureLocalService.getStructure(
-								siteGroupId, journalArticleClassNameId,
-								ddmStructureKey, true);
+						Long ddmStructureId = groupIdsMap.get(siteGroupId);
 
-						groupIdsMap.put(groupId, ddmStructure.getStructureId());
+						if (ddmStructureId == null) {
+							DDMStructure ddmStructure =
+								_ddmStructureLocalService.getStructure(
+									siteGroupId, journalArticleClassNameId,
+									ddmStructureKey, true);
+
+							ddmStructureId = ddmStructure.getStructureId();
+
+							groupIdsMap.put(siteGroupId, ddmStructureId);
+						}
+
+						groupIdsMap.put(groupId, ddmStructureId);
 					}
 
 					preparedStatement.setLong(1, groupIdsMap.get(groupId));

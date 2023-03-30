@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -144,17 +146,27 @@ public abstract class BaseSystemObjectDefinitionMetadata
 			return;
 		}
 
-		Map<String, Serializable> extendedProperties = new HashMap<>();
-
-		for (Map.Entry<String, Object> entry : values.entrySet()) {
-			extendedProperties.put(
-				entry.getKey(), (Serializable)entry.getValue());
-		}
-
 		for (ExtensionProvider extensionProvider : extensionProviders) {
-			extensionProvider.setExtendedProperties(
-				user.getCompanyId(), user.getUserId(), className, entity,
-				extendedProperties);
+			Map<String, PropertyDefinition> propertyDefinitions =
+				extensionProvider.getExtendedPropertyDefinitions(
+					user.getCompanyId(), className);
+
+			Map<String, Serializable> extendedProperties = new HashMap<>();
+
+			for (Map.Entry<String, Object> entry : values.entrySet()) {
+				String propertyKey = entry.getKey();
+
+				if (propertyDefinitions.containsKey(propertyKey)) {
+					extendedProperties.put(
+						propertyKey, (Serializable)entry.getValue());
+				}
+			}
+
+			if (MapUtil.isNotEmpty(extendedProperties)) {
+				extensionProvider.setExtendedProperties(
+					user.getCompanyId(), user.getUserId(), className, entity,
+					extendedProperties);
+			}
 		}
 	}
 

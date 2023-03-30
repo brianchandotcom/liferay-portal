@@ -91,6 +91,8 @@ public class SegmentsContextVocabularyConfigurationTest {
 					"name."),
 				configurationModelListenerException.causeMessage);
 		}
+
+		_assertProperties(_configuration1, _PROPERTIES1);
 	}
 
 	private void _assertProperties(

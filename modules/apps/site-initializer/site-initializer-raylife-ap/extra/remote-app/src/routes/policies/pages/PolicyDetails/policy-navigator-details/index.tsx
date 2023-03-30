@@ -73,7 +73,8 @@ const PolicyDetail = ({
 		try {
 			const newDataJSON = JSON.parse(dataJSON);
 			setApplicationData(newDataJSON);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	}, [dataJSON, email, phone]);

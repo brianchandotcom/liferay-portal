@@ -25,12 +25,10 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -68,26 +66,25 @@ public class ProcessUtil {
 	}
 
 	private static Map<String, String> _createTitleMap(Document document) {
-		return Stream.of(
-			document.getFields()
-		).map(
-			Map::entrySet
-		).flatMap(
-			Collection::stream
-		).filter(
-			entry ->
-				StringUtil.startsWith(entry.getKey(), "title_") &&
-				!StringUtil.endsWith(entry.getKey(), "_sortable")
-		).collect(
-			Collectors.toMap(
-				entry -> _toLanguageTag(
-					StringUtil.removeSubstring(entry.getKey(), "title_")),
-				entry -> {
-					Field field = entry.getValue();
+		Map<String, String> titleMap = new HashMap<>();
 
-					return String.valueOf(field.getValue());
-				})
-		);
+		Map<String, Field> fields = document.getFields();
+
+		for (Map.Entry<String, Field> entry : fields.entrySet()) {
+			String key = entry.getKey();
+
+			if (StringUtil.startsWith(key, "title_") &&
+				!StringUtil.endsWith(key, "_sortable")) {
+
+				Field field = entry.getValue();
+
+				titleMap.put(
+					_toLanguageTag(StringUtil.removeSubstring(key, "title_")),
+					String.valueOf(field.getValue()));
+			}
+		}
+
+		return titleMap;
 	}
 
 	private static Date _parseDate(String dateString) {

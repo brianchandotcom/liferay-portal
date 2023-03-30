@@ -67,13 +67,13 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -232,6 +232,23 @@ public class StructuredContentDTOConverter
 		);
 	}
 
+	private boolean _containRenderedContentValue(UriInfo uriInfo) {
+		MultivaluedMap<String, String> parameters =
+			uriInfo.getQueryParameters();
+
+		if ((parameters == null) || parameters.isEmpty()) {
+			return false;
+		}
+
+		String fields = parameters.getFirst("nestedFields");
+
+		if (fields == null) {
+			return false;
+		}
+
+		return fields.contains("renderedContentValue");
+	}
+
 	private ContentField[] _toContentFields(
 			DLAppService dlAppService, DLURLHelper dlURLHelper,
 			DTOConverterContext dtoConverterContext,
@@ -254,10 +271,9 @@ public class StructuredContentDTOConverter
 		DDMStructure ddmStructure, DTOConverterContext dtoConverterContext,
 		JournalArticle journalArticle) {
 
-		Optional<UriInfo> uriInfoOptional =
-			dtoConverterContext.getUriInfoOptional();
+		UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-		if (!uriInfoOptional.isPresent()) {
+		if (uriInfo == null) {
 			return null;
 		}
 
@@ -265,7 +281,6 @@ public class StructuredContentDTOConverter
 		HttpServletRequest httpServletRequest =
 			dtoConverterContext.getHttpServletRequest();
 		Locale locale = dtoConverterContext.getLocale();
-		UriInfo uriInfo = uriInfoOptional.get();
 
 		RenderedContent[] renderedContents = TransformUtil.transformToArray(
 			ddmStructure.getTemplates(),
@@ -295,18 +310,7 @@ public class StructuredContentDTOConverter
 						});
 					setRenderedContentValue(
 						() -> {
-							if (!uriInfoOptional.map(
-									UriInfo::getQueryParameters
-								).map(
-									parameters -> parameters.getFirst(
-										"nestedFields")
-								).map(
-									fields -> fields.contains(
-										"renderedContentValue")
-								).orElse(
-									false
-								)) {
-
+							if (!_containRenderedContentValue(uriInfo)) {
 								return null;
 							}
 

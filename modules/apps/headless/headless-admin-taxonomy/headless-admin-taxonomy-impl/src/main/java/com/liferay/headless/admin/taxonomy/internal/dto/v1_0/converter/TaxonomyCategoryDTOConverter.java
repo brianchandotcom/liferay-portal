@@ -37,8 +37,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Optional;
-
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -171,12 +169,9 @@ public class TaxonomyCategoryDTOConverter
 					});
 				setTaxonomyCategoryUsageCount(
 					() -> {
-						Optional<UriInfo> uriInfoOptional =
-							dtoConverterContext.getUriInfoOptional();
+						UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-						if (uriInfoOptional.isPresent()) {
-							UriInfo uriInfo = uriInfoOptional.get();
-
+						if (uriInfo != null) {
 							MultivaluedMap<String, String> queryParameters =
 								uriInfo.getQueryParameters();
 

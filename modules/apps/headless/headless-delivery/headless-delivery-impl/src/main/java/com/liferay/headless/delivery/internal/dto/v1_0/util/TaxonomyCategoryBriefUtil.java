@@ -23,8 +23,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
-import java.util.Optional;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -51,47 +51,56 @@ public class TaxonomyCategoryBriefUtil {
 		};
 	}
 
+	private static boolean _containEmbeddedTaxonomyCategory(UriInfo uriInfo) {
+		if (uriInfo == null) {
+			return false;
+		}
+
+		MultivaluedMap<String, String> parameters =
+			uriInfo.getQueryParameters();
+
+		if ((parameters == null) || parameters.isEmpty()) {
+			return false;
+		}
+
+		String fields = parameters.getFirst("nestedFields");
+
+		if (fields == null) {
+			return false;
+		}
+
+		return fields.contains("embeddedTaxonomyCategory");
+	}
+
 	private static Object _toTaxonomyCategory(
 			long categoryId, DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		Optional<UriInfo> uriInfoOptional =
-			dtoConverterContext.getUriInfoOptional();
+		UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-		if (uriInfoOptional.map(
-				UriInfo::getQueryParameters
-			).map(
-				queryParameters -> queryParameters.getFirst("nestedFields")
-			).map(
-				nestedFields -> nestedFields.contains(
-					"embeddedTaxonomyCategory")
-			).orElse(
-				false
-			)) {
-
-			DTOConverterRegistry dtoConverterRegistry =
-				dtoConverterContext.getDTOConverterRegistry();
-
-			DTOConverter<?, ?> dtoConverter =
-				dtoConverterRegistry.getDTOConverter(
-					"Liferay.Headless.Admin.Taxonomy",
-					AssetCategory.class.getName(), "v1.0");
-
-			if (dtoConverter == null) {
-				return null;
-			}
-
-			return dtoConverter.toDTO(
-				new DefaultDTOConverterContext(
-					dtoConverterContext.isAcceptAllLanguages(),
-					Collections.emptyMap(), dtoConverterRegistry,
-					dtoConverterContext.getHttpServletRequest(), categoryId,
-					dtoConverterContext.getLocale(),
-					uriInfoOptional.orElse(null),
-					dtoConverterContext.getUser()));
+		if (!_containEmbeddedTaxonomyCategory(uriInfo)) {
+			return null;
 		}
 
-		return null;
+		DTOConverterRegistry dtoConverterRegistry =
+				dtoConverterContext.getDTOConverterRegistry();
+
+		DTOConverter<?, ?> dtoConverter =
+				dtoConverterRegistry.getDTOConverter(
+						"Liferay.Headless.Admin.Taxonomy",
+						AssetCategory.class.getName(), "v1.0");
+
+		if (dtoConverter == null) {
+			return null;
+		}
+
+		return dtoConverter.toDTO(
+				new DefaultDTOConverterContext(
+						dtoConverterContext.isAcceptAllLanguages(),
+						Collections.emptyMap(), dtoConverterRegistry,
+						dtoConverterContext.getHttpServletRequest(), categoryId,
+						dtoConverterContext.getLocale(), uriInfo,
+						dtoConverterContext.getUser()));
 	}
 
 }

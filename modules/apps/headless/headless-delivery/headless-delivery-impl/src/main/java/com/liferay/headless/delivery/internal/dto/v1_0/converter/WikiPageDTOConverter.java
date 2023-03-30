@@ -41,9 +41,6 @@ import com.liferay.wiki.service.WikiPageService;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
-import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,9 +66,6 @@ public class WikiPageDTOConverter
 
 		com.liferay.wiki.model.WikiPage wikiPage = _wikiPageService.getPage(
 			(Long)dtoConverterContext.getId());
-
-		Optional<UriInfo> uriInfoOptional =
-			dtoConverterContext.getUriInfoOptional();
 
 		return new WikiPage() {
 			{
@@ -124,7 +118,7 @@ public class WikiPageDTOConverter
 								dtoConverterContext.getHttpServletRequest(),
 								assetCategory.getCategoryId(),
 								dtoConverterContext.getLocale(),
-								uriInfoOptional.orElse(null),
+								dtoConverterContext.getUriInfo(),
 								dtoConverterContext.getUser())),
 					TaxonomyCategoryBrief.class);
 				wikiNodeId = wikiPage.getNodeId();

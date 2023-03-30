@@ -49,10 +49,7 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
-
-import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -157,13 +154,10 @@ public class MessageBoardThreadDTOConverter
 							return null;
 						}
 
-						Optional<UriInfo> uriInfoOptional =
-							dtoConverterContext.getUriInfoOptional();
-
 						return CreatorStatisticsUtil.toCreatorStatistics(
 							mbMessage.getGroupId(), languageId,
 							_mbStatsUserLocalService,
-							uriInfoOptional.orElse(null), user);
+							dtoConverterContext.getUriInfo(), user);
 					});
 			}
 		};

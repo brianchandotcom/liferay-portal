@@ -16,7 +16,7 @@ package com.liferay.commerce.shop.by.diagram.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +38,7 @@ public interface CSDiagramCPTypeHelper {
 		throws Exception;
 
 	public CSDiagramSetting getCSDiagramSetting(
-			CommerceAccount commerceAccount, long cpDefinitionId,
+			AccountEntry accountEntry, long cpDefinitionId,
 			PermissionChecker permissionChecker)
 		throws PortalException;
 

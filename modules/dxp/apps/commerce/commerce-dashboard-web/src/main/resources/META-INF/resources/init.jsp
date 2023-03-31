@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
+<%@ page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.context.CommerceContext" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastDisplayContext" %><%@

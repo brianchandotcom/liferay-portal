@@ -61,7 +61,7 @@ public class CommerceDashboardForecastDisplayContext {
 		try {
 			return _commerceAccountPermission.contains(
 				permissionChecker,
-				_commerceDashboardForecastRequestHelper.getCommerceAccountId(),
+				_commerceDashboardForecastRequestHelper.getAccountEntryId(),
 				ActionKeys.VIEW);
 		}
 		catch (PortalException portalException) {

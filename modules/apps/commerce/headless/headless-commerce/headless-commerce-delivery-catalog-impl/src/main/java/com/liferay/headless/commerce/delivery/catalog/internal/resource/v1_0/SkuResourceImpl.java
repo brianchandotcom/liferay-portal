@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
@@ -153,12 +154,12 @@ public class SkuResourceImpl
 		CommerceContext commerceContext = _getCommerceContext(
 			accountId, commerceChannel);
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		_commerceProductViewPermission.check(
 			PermissionCheckerFactoryUtil.create(contextUser),
-			commerceAccount.getCommerceAccountId(),
-			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
+			accountEntry.getAccountEntryId(), commerceChannel.getGroupId(),
+			cpDefinition.getCPDefinitionId());
 
 		JSONArray jsonArray = JSONUtil.toJSONArray(
 			ddmOptions,

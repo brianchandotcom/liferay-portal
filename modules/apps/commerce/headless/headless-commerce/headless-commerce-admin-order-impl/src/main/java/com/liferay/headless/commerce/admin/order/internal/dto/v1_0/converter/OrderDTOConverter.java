@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -153,10 +153,10 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 				setAccountExternalReferenceCode(
 					() -> {
-						CommerceAccount commerceAccount =
-							commerceOrder.getCommerceAccount();
+						AccountEntry accountEntry =
+							commerceOrder.getAccountEntry();
 
-						return commerceAccount.getExternalReferenceCode();
+						return accountEntry.getExternalReferenceCode();
 					});
 				setCreatorEmailAddress(
 					() -> {

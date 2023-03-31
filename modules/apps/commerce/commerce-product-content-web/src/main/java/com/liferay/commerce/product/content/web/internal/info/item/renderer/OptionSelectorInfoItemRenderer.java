@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
@@ -74,22 +74,20 @@ public class OptionSelectorInfoItemRenderer
 			httpServletRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 
-			long commerceAccountId = 0;
+			long accountEntryId = 0;
 
 			CommerceContext commerceContext =
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			if (commerceAccount != null) {
-				commerceAccountId = commerceAccount.getCommerceAccountId();
+			if (accountEntry != null) {
+				accountEntryId = accountEntry.getAccountEntryId();
 			}
 
 			httpServletRequest.setAttribute(
-				"liferay-commerce:option-selector:accountId",
-				commerceAccountId);
+				"liferay-commerce:option-selector:accountId", accountEntryId);
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:option-selector:channelId",

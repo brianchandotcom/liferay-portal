@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.subscription.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.model.CommerceOrder;
@@ -101,7 +101,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
@@ -109,13 +109,12 @@ public class CommerceSubscriptionEntryDisplayContext {
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/organization_logo?img_id=");
-		sb.append(commerceAccount.getLogoId());
+		sb.append(accountEntry.getLogoId());
 
-		if (commerceAccount.getLogoId() > 0) {
+		if (accountEntry.getLogoId() > 0) {
 			sb.append("&t=");
 			sb.append(
-				WebServerServletTokenUtil.getToken(
-					commerceAccount.getLogoId()));
+				WebServerServletTokenUtil.getToken(accountEntry.getLogoId()));
 		}
 
 		return sb.toString();

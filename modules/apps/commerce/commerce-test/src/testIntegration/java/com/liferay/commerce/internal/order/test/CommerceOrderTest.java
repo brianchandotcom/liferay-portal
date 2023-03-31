@@ -251,11 +251,15 @@ public class CommerceOrderTest {
 
 		CommerceOrder actualCommerceOrder = commerceOrders.get(0);
 
+		AccountEntry accountEntry = actualcommerceOrder.getAccountEntry();
+
+		CommerceAccount actualCommerceAccount =
+			_commerceAccountLocalService.getCommerceAccount(
+				accountEntry.getAccountEntryId());
+
 		Assert.assertEquals(commerceOrder, actualCommerceOrder);
-		Assert.assertEquals(
-			commerceAccount, actualCommerceOrder.getCommerceAccount());
-		Assert.assertNotEquals(
-			secondCommerceAccount, actualCommerceOrder.getCommerceAccount());
+		Assert.assertEquals(commerceAccount, actualCommerceAccount);
+		Assert.assertNotEquals(secondCommerceAccount, actualCommerceAccount);
 		Assert.assertNotEquals(secondCommerceOrder, actualCommerceOrder);
 
 		// Add the user to the second account and they should see 2 orders
@@ -358,11 +362,15 @@ public class CommerceOrderTest {
 
 		CommerceOrder actualCommerceOrder = commerceOrders.get(0);
 
+		AccountEntry accountEntry = actualcommerceOrder.getAccountEntry();
+
+		CommerceAccount actualCommerceAccount =
+			_commerceAccountLocalService.getCommerceAccount(
+				accountEntry.getAccountEntryId());
+
 		Assert.assertEquals(commerceOrder, actualCommerceOrder);
-		Assert.assertEquals(
-			commerceAccount, actualCommerceOrder.getCommerceAccount());
-		Assert.assertNotEquals(
-			secondCommerceAccount, actualCommerceOrder.getCommerceAccount());
+		Assert.assertEquals(commerceAccount, actualCommerceAccount);
+		Assert.assertNotEquals(secondCommerceAccount, actualCommerceAccount);
 		Assert.assertNotEquals(secondCommerceOrder, actualCommerceOrder);
 
 		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);

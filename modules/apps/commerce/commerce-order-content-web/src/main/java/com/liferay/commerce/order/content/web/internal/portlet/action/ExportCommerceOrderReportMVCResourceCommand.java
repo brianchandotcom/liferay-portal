@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.content.web.internal.portlet.action;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceAddress;
@@ -88,7 +88,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			new HashMapBuilder.HashMapWrapper<>();
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		if (billingAddress != null) {
 			hashMapWrapper.put(
@@ -134,7 +134,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			commerceOrder.getCommerceOrderItems();
 
 		hashMapWrapper.put(
-			"commerceAccountName", commerceAccount.getName()
+			"commerceAccountName", accountEntry.getName()
 		).put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
@@ -153,7 +153,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				return commerceOrderType.getName(themeDisplay.getLanguageId());
 			}
 		).put(
-			"companyId", commerceAccount.getCompanyId()
+			"companyId", accountEntry.getCompanyId()
 		).put(
 			"externalReferenceCode",
 			(commerceOrder.getExternalReferenceCode() != null) ?

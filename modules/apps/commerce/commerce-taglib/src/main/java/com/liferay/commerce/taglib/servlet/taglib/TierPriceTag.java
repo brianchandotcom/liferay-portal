@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.taglib.servlet.taglib;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -175,9 +175,9 @@ public class TierPriceTag extends IncludeTag {
 			long cpInstanceId, CommerceContext commerceContext)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			return null;
 		}
 
@@ -185,7 +185,7 @@ public class TierPriceTag extends IncludeTag {
 			cpInstanceId);
 
 		return _commercePriceListLocalService.getCommercePriceList(
-			cpInstance.getGroupId(), commerceAccount.getCommerceAccountId(),
+			cpInstance.getGroupId(), accountEntry.getAccountEntryId(),
 			commerceContext.getCommerceAccountGroupIds());
 	}
 

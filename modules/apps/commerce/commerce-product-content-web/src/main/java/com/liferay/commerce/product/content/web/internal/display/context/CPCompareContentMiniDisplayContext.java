@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -85,16 +85,16 @@ public class CPCompareContentMiniDisplayContext {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-		if (commerceAccount != null) {
+		if (accountEntry != null) {
 			HttpServletRequest originalHttpServletRequest =
 				PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 			_cpDefinitionIds = new ArrayList<>(
 				cpCompareHelper.getCPDefinitionIds(
 					commerceContext.getCommerceChannelGroupId(),
-					commerceAccount.getCommerceAccountId(),
+					accountEntry.getAccountEntryId(),
 					CookiesManagerUtil.getCookieValue(
 						cpCompareHelper.getCPDefinitionIdsCookieKey(
 							commerceContext.getCommerceChannelGroupId()),

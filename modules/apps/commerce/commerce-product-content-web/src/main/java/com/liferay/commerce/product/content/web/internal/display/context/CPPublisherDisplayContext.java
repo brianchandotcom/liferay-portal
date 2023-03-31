@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
@@ -320,10 +320,10 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 						(CommerceContext)httpServletRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT);
 
-					CommerceAccount commerceAccount =
-						commerceContext.getCommerceAccount();
+					AccountEntry accountEntry =
+						commerceContext.getAccountEntry();
 
-					if (commerceAccount == null) {
+					if (accountEntry == null) {
 						return null;
 					}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
@@ -46,13 +46,10 @@ public class SearchResultsTag extends ComponentRendererTag {
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			if (commerceAccount != null) {
-				putValue(
-					"commerceAccountId",
-					commerceAccount.getCommerceAccountId());
+			if (accountEntry != null) {
+				putValue("commerceAccountId", accountEntry.getAccountEntryId());
 			}
 		}
 		catch (PortalException portalException) {

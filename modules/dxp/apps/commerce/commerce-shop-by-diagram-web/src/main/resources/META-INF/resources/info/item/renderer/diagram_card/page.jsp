@@ -17,7 +17,7 @@
 <%@ include file="/info/item/renderer/diagram_card/init.jsp" %>
 
 <%
-CSDiagramSetting csDiagramSetting = csDiagramCPTypeHelper.getCSDiagramSetting(commerceContext.getCommerceAccount(), cpCatalogEntry.getCPDefinitionId(), themeDisplay.getPermissionChecker());
+CSDiagramSetting csDiagramSetting = csDiagramCPTypeHelper.getCSDiagramSetting(commerceContext.getAccountEntry(), cpCatalogEntry.getCPDefinitionId(), themeDisplay.getPermissionChecker());
 
 String url = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
 %>

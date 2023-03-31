@@ -41,9 +41,9 @@ if (commerceOrder.isGuestOrder()) {
 
 CommerceAddress currentCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
-CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.MANAGE_ADDRESSES);
+boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.MANAGE_ADDRESSES);
 %>
 
 <liferay-ui:error exception="<%= CommerceOrderDefaultBillingAddressException.class %>" message="no-default-billing-address" />
@@ -51,7 +51,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 <c:if test="<%= !GetterUtil.getBoolean(request.getAttribute(CommerceCheckoutWebKeys.SHOW_ERROR_NO_BILLING_ADDRESS)) %>">
 	<div class="form-group-autofit">
 		<c:if test="<%= !commerceOrder.isGuestOrder() %>">
-			<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.VIEW_ADDRESSES) %>">
+			<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.VIEW_ADDRESSES) %>">
 				<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
 					<c:choose>
 						<c:when test="<%= hasManageAddressesPermission %>">
@@ -159,7 +159,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 		</div>
 	</div>
 
-	<c:if test="<%= Objects.equals(CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME, paramName) && baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, commerceAccount, AccountActionKeys.MANAGE_ADDRESSES) && baseAddressCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) %>">
+	<c:if test="<%= Objects.equals(CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME, paramName) && baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.MANAGE_ADDRESSES) && baseAddressCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, accountEntry) %>">
 		<div class="shipping-as-billing">
 			<aui:input checked="<%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() || (commerceAddressId == 0) %>" disabled="<%= false %>" label="use-shipping-address-as-billing-address" name="use-as-billing" type="checkbox" />
 		</div>

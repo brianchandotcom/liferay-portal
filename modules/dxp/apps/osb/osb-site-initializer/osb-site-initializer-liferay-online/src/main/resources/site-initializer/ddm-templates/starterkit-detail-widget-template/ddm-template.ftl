@@ -8,11 +8,11 @@
 
 		commerceChannelId = commerceContext.getCommerceChannelId()
 
-		commerceAccount = commerceContext.getCommerceAccount()
+		accountEntry = commerceContext.getAccountEntry()
 
-		commerceAccountId = commerceAccount.getCommerceAccountId()
+		accountEntryId = accountEntry.getAccountEntryId()
 
-		image = cpContentHelper.getDefaultImageFileURL(commerceAccountId, cpCatalogEntry.getCPDefinitionId())
+		image = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpCatalogEntry.getCPDefinitionId())
 
 		itemID = cpCatalogEntry.CPDefinitionId
 
@@ -43,7 +43,7 @@
 		</div>
 
 		<div>
-			<a class="btn btn-primary" href="javascript:openItem('${user.getEmailAddress()}','${user.getFirstName()}','${user.getLastName()}',${commerceChannelId},${commerceAccountId},${cpInstanceId},${group_id},'${publicFriendlyURL}/my-site', '${cpSku.getSku()}')">
+			<a class="btn btn-primary" href="javascript:openItem('${user.getEmailAddress()}','${user.getFirstName()}','${user.getLastName()}',${commerceChannelId},${accountEntryId},${cpInstanceId},${group_id},'${publicFriendlyURL}/my-site', '${cpSku.getSku()}')">
 				Start with this starterkit
 			</a>
 		</div>

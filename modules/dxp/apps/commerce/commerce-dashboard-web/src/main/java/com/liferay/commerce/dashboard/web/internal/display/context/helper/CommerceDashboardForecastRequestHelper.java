@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.dashboard.web.internal.display.context.helper;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.portal.kernel.display.context.helper.BaseRequestHelper;
@@ -37,12 +37,11 @@ public class CommerceDashboardForecastRequestHelper extends BaseRequestHelper {
 			CommerceWebKeys.COMMERCE_CONTEXT);
 	}
 
-	public long getCommerceAccountId() {
+	public long getAccountEntryId() {
 		try {
-			CommerceAccount commerceAccount =
-				_commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = _commerceContext.getAccountEntry();
 
-			return commerceAccount.getCommerceAccountId();
+			return accountEntry.getAccountEntryId();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

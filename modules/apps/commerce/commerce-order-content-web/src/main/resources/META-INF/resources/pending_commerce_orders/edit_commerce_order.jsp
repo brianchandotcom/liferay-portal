@@ -46,14 +46,14 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 	totalOrderCommerceMoney = commerceOrderPrice.getTotalWithTaxAmount();
 }
 
-CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
+AccountEntry accountEntry = commerceOrderContentDisplayContext.getAccountEntry();
 
 if (commerceOrder != null) {
-	commerceAccount = commerceOrder.getCommerceAccount();
+	accountEntry = commerceOrder.getAccountEntry();
 }
 
-List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.getShippingCommerceAddresses(commerceAccount.getCommerceAccountId());
-List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(commerceAccount.getCommerceAccountId());
+List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.getShippingCommerceAddresses(accountEntry.getAccountEntryId());
+List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(accountEntry.getAccountEntryId());
 
 List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES);
 
@@ -165,7 +165,7 @@ if (backURL != null) {
 			<div class="align-items-center row">
 				<div class="col-md-3">
 					<div class="commerce-order-title">
-						<%= HtmlUtil.escape(commerceAccount.getName()) %>
+						<%= HtmlUtil.escape(accountEntry.getName()) %>
 					</div>
 				</div>
 
@@ -198,7 +198,7 @@ if (backURL != null) {
 				<div class="col-md-3">
 					<dl class="commerce-list">
 						<dt><liferay-ui:message key="account-id" /></dt>
-						<dd><%= commerceAccount.getCommerceAccountId() %></dd>
+						<dd><%= accountEntry.getAccountEntryId() %></dd>
 					</dl>
 				</div>
 
@@ -262,7 +262,7 @@ if (backURL != null) {
 				<div class="commerce-panel__content">
 					<div class="row">
 						<div class="col-md-12">
-							<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) %>">
+							<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, accountEntry) %>">
 								<c:choose>
 									<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 										<dl class="commerce-list">

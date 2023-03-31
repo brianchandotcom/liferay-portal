@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.internal.validator;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -62,7 +62,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 			Locale locale, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
@@ -72,7 +72,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 			_corEntryLocalService.
 				getAccountEntryAndCommerceChannelAndCommerceOrderTypeCOREntries(
 					commerceOrder.getCompanyId(),
-					commerceAccount.getCommerceAccountId(),
+					accountEntry.getAccountEntryId(),
 					commerceChannel.getCommerceChannelId(),
 					commerceOrder.getCommerceOrderTypeId());
 
@@ -88,8 +88,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 
 		corEntries =
 			_corEntryLocalService.getAccountEntryAndCommerceOrderTypeCOREntries(
-				commerceOrder.getCompanyId(),
-				commerceAccount.getCommerceAccountId(),
+				commerceOrder.getCompanyId(), accountEntry.getAccountEntryId(),
 				commerceOrder.getCommerceOrderTypeId());
 
 		if (!corEntries.isEmpty()) {
@@ -104,8 +103,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 
 		corEntries =
 			_corEntryLocalService.getAccountEntryAndCommerceChannelCOREntries(
-				commerceOrder.getCompanyId(),
-				commerceAccount.getCommerceAccountId(),
+				commerceOrder.getCompanyId(), accountEntry.getAccountEntryId(),
 				commerceChannel.getCommerceChannelId());
 
 		if (!corEntries.isEmpty()) {
@@ -119,8 +117,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 		}
 
 		corEntries = _corEntryLocalService.getAccountEntryCOREntries(
-			commerceOrder.getCompanyId(),
-			commerceAccount.getCommerceAccountId());
+			commerceOrder.getCompanyId(), accountEntry.getAccountEntryId());
 
 		if (!corEntries.isEmpty()) {
 			String errorMessage = _validate(commerceOrder, corEntries, locale);
@@ -134,7 +131,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 
 		long[] commerceAccountGroupIds =
 			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccount.getCommerceAccountId());
+				accountEntry.getAccountEntryId());
 
 		corEntries =
 			_corEntryLocalService.

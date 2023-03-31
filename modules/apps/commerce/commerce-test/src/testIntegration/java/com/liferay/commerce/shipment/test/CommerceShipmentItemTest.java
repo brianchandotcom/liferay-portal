@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipment.test;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
@@ -98,8 +99,8 @@ public class CommerceShipmentItemTest {
 			_group.getGroupId(), _commerceOrder.getCommerceOrderId());
 
 		_commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group,
-			_commerceOrder.getCommerceAccount(), _commerceOrder);
+			_commerceOrder.getAccountEntry(), _commerceCurrency,
+			_commerceChannel, _user, _group, _commerceOrder);
 
 		_commerceShipmentItem =
 			CommerceShipmentTestUtil.addCommerceShipmentItem(
@@ -370,6 +371,9 @@ public class CommerceShipmentItemTest {
 	}
 
 	private static User _user;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;

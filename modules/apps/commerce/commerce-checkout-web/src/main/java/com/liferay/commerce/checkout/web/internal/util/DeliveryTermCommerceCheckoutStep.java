@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.TermCommerceCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
@@ -97,12 +97,11 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(themeDisplay.getUser());
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
-		if (commerceOrder.isGuestOrder() ||
-			commerceAccount.isPersonalAccount() ||
+		if (commerceOrder.isGuestOrder() || accountEntry.isPersonalAccount() ||
 			_portletResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				permissionChecker, accountEntry.getAccountEntryGroup(),
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_DELIVERY_TERMS)) {
 
 			return activeDeliveryTermCommerceCheckoutStep;

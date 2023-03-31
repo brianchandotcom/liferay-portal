@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.account.constants.AccountActionKeys" %><%@
-page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
+page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.BaseAddressCheckoutStepDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.OrderConfirmationCheckoutStepDisplayContext" %><%@

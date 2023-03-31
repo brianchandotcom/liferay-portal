@@ -24,16 +24,16 @@
 
 		commerceChannelId = commerceContext.getCommerceChannelId()
 
-		commerceAccount = commerceContext.getCommerceAccount()
+		accountEntry = commerceContext.getAccountEntry()
 
-		commerceAccountId = commerceAccount.getCommerceAccountId()
+		accountEntryId = accountEntry.getAccountEntryId()
 	/>
 
 	<div class="container">
 		<div class="liferay-online-list row">
 			<#list entries as curCPCatalogEntry>
 				<#assign
-					image = cpContentHelper.getDefaultImageFileURL(commerceAccountId, curCPCatalogEntry.getCPDefinitionId())
+					image = cpContentHelper.getDefaultImageFileURL(accountEntryId, curCPCatalogEntry.getCPDefinitionId())
 
 					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 
@@ -69,7 +69,7 @@
 								</div>
 
 								<div class="mt-1">
-									<a class="btn btn-primary" href="javascript:openItem('${user.getEmailAddress()}','${user.getFirstName()}','${user.getLastName()}',${commerceChannelId},${commerceAccountId},${cpInstanceId},${group_id},'${publicFriendlyURL}/my-site', '${cpSku.getSku()}')">
+									<a class="btn btn-primary" href="javascript:openItem('${user.getEmailAddress()}','${user.getFirstName()}','${user.getLastName()}',${commerceChannelId},${accountEntryId},${cpInstanceId},${group_id},'${publicFriendlyURL}/my-site', '${cpSku.getSku()}')">
 										Select
 									</a>
 								</div>

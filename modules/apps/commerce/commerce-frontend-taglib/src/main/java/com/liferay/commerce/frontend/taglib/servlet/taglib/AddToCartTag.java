@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -128,11 +128,10 @@ public class AddToCartTag extends IncludeTag {
 				}
 			}
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			if (commerceAccount != null) {
-				if (commerceAccount.isBusinessAccount()) {
+			if (accountEntry != null) {
+				if (accountEntry.isBusinessAccount()) {
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
@@ -141,13 +140,13 @@ public class AddToCartTag extends IncludeTag {
 						_disabled ||
 						!_commerceOrderPortletResourcePermission.contains(
 							themeDisplay.getPermissionChecker(),
-							commerceAccount.getCommerceAccountGroupId(),
+							accountEntry.getAccountEntryGroupId(),
 							CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
 				}
 				else {
 					_disabled =
 						_disabled ||
-						(commerceAccount.isGuestAccount() &&
+						(accountEntry.isGuestAccount() &&
 						 (CommerceAccountConstants.SITE_TYPE_B2B ==
 							 commerceContext.getCommerceSiteType()));
 				}

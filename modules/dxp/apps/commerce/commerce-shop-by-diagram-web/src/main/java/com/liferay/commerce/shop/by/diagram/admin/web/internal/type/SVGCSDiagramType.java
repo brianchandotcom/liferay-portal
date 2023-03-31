@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.type;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -177,13 +177,11 @@ public class SVGCSDiagramType implements CSDiagramType {
 			hashMapWrapper.put(
 				"channelId", commerceContext.getCommerceChannelId());
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			if (commerceAccount != null) {
+			if (accountEntry != null) {
 				hashMapWrapper.put(
-					"commerceAccountId",
-					commerceAccount.getCommerceAccountId());
+					"commerceAccountId", accountEntry.getAccountEntryId());
 			}
 
 			CommerceCurrency commerceCurrency =

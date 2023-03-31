@@ -268,7 +268,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -357,8 +357,9 @@ public class CommerceShipmentTest {
 		int orderedQuantity = 1;
 
 		CommerceContext commerceContext = new TestCommerceContext(
+			commerceOrder.getAccountEntry(),
 			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
-			commerceOrder.getCommerceAccount(), commerceOrder);
+			commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
@@ -423,8 +424,9 @@ public class CommerceShipmentTest {
 		int orderedQuantity = 1;
 
 		CommerceContext commerceContext = new TestCommerceContext(
+			commerceOrder.getAccountEntry(),
 			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
-			commerceOrder.getCommerceAccount(), commerceOrder);
+			commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
@@ -487,7 +489,7 @@ public class CommerceShipmentTest {
 				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -574,7 +576,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -629,7 +631,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -701,7 +703,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -820,8 +822,9 @@ public class CommerceShipmentTest {
 		int orderedQuantity = 1;
 
 		CommerceContext commerceContext = new TestCommerceContext(
+			commerceOrder.getAccountEntry(),
 			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
-			commerceOrder.getCommerceAccount(), commerceOrder);
+			commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
@@ -877,7 +880,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -941,7 +944,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -1008,7 +1011,7 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder.getCommerceCurrency(), _commerceChannel, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =

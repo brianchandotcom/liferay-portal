@@ -14,8 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.cart.content.web.internal.display.context.helper.CommerceCartContentRequestHelper;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentPortletInstanceConfiguration;
 import com.liferay.commerce.context.CommerceContext;
@@ -337,16 +336,12 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public boolean hasViewPricePermission() throws PortalException {
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-		if ((commerceAccount != null) &&
-			(commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS)) {
-
+		if ((accountEntry != null) && accountEntry.isBusinessAccount()) {
 			return _commerceProductPortletResourcePermission.contains(
 				commerceCartContentRequestHelper.getPermissionChecker(),
-				commerceAccount.getCommerceAccountGroupId(),
-				CPActionKeys.VIEW_PRICE);
+				accountEntry.getAccountEntryGroupId(), CPActionKeys.VIEW_PRICE);
 		}
 
 		return _commerceProductPortletResourcePermission.contains(

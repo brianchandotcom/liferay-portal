@@ -19,7 +19,7 @@
 <%
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
-CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+AccountEntry accountEntry = commerceContext.getAccountEntry();
 CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
@@ -385,7 +385,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
-						"commerceAccountId", (commerceAccount == null) ? "0" : String.valueOf(commerceAccount.getCommerceAccountId())
+						"commerceAccountId", (accountEntry == null) ? "0" : String.valueOf(accountEntry.getAccountEntryId())
 					).put(
 						"commerceChannelGroupId", String.valueOf(commerceContext.getCommerceChannelGroupId())
 					).put(

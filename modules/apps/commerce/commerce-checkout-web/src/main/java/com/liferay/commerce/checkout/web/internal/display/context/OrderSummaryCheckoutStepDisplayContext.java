@@ -14,8 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -297,15 +296,12 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public boolean hasViewBillingAddressPermission(
-			PermissionChecker permissionChecker,
-			CommerceAccount commerceAccount)
+			PermissionChecker permissionChecker, AccountEntry accountEntry)
 		throws PortalException {
 
-		if ((commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
-			commerceAccount.isPersonalAccount() ||
+		if (accountEntry.isGuestAccount() || accountEntry.isPersonalAccount() ||
 			_portletResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				permissionChecker, accountEntry.getAccountEntryGroup(),
 				CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
 
 			return true;

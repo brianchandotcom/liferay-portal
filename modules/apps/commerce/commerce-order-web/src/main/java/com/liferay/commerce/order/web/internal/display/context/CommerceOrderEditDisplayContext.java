@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfiguration;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -158,7 +158,7 @@ public class CommerceOrderEditDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		CommerceAccount commerceAccount = _commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = _commerceOrder.getAccountEntry();
 
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
@@ -167,13 +167,12 @@ public class CommerceOrderEditDisplayContext {
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/organization_logo?img_id=");
-		sb.append(commerceAccount.getLogoId());
+		sb.append(accountEntry.getLogoId());
 
-		if (commerceAccount.getLogoId() > 0) {
+		if (accountEntry.getLogoId() > 0) {
 			sb.append("&t=");
 			sb.append(
-				WebServerServletTokenUtil.getToken(
-					commerceAccount.getLogoId()));
+				WebServerServletTokenUtil.getToken(accountEntry.getLogoId()));
 		}
 
 		return sb.toString();

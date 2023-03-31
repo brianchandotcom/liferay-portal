@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -83,7 +83,7 @@ public class AccountSelectorTag extends IncludeTag {
 			_addCommerceOrderURL = _getAddCommerceOrderURL(
 				_themeDisplay, httpServletRequest);
 
-			_commerceAccount = commerceContext.getCommerceAccount();
+			_accountEntry = commerceContext.getAccountEntry();
 			_commerceOrder = commerceContext.getCommerceOrder();
 			_editOrderURL = _getEditOrderURL(_themeDisplay);
 			_setCurrentAccountURL =
@@ -98,9 +98,9 @@ public class AccountSelectorTag extends IncludeTag {
 		catch (Exception exception) {
 			_log.error(exception);
 
+			_accountEntry = null;
 			_accountEntryAllowedTypes = null;
 			_addCommerceOrderURL = null;
-			_commerceAccount = null;
 			_commerceChannelId = 0;
 			_commerceOrder = null;
 			_editOrderURL = null;
@@ -134,9 +134,9 @@ public class AccountSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_accountEntry = null;
 		_accountEntryAllowedTypes = null;
 		_addCommerceOrderURL = null;
-		_commerceAccount = null;
 		_commerceChannelId = 0;
 		_commerceOrder = null;
 		_commerceOrderTypeLocalService = null;
@@ -160,10 +160,10 @@ public class AccountSelectorTag extends IncludeTag {
 			"liferay-commerce:account-selector:commerceChannelId",
 			_commerceChannelId);
 
-		if (_commerceAccount != null) {
+		if (_accountEntry != null) {
 			String thumbnailUrl = null;
 
-			if (_commerceAccount.getLogoId() == 0) {
+			if (_accountEntry.getLogoId() == 0) {
 				thumbnailUrl =
 					_themeDisplay.getPathImage() +
 						"/organization_logo?img_id=0";
@@ -171,15 +171,15 @@ public class AccountSelectorTag extends IncludeTag {
 			else {
 				thumbnailUrl = StringBundler.concat(
 					_themeDisplay.getPathImage(), "/organization_logo?img_id=",
-					_commerceAccount.getLogoId(), "&t=",
+					_accountEntry.getLogoId(), "&t=",
 					WebServerServletTokenUtil.getToken(
-						_commerceAccount.getLogoId()));
+						_accountEntry.getLogoId()));
 			}
 
 			CurrentCommerceAccountModel currentCommerceAccountModel =
 				new CurrentCommerceAccountModel(
-					_commerceAccount.getCommerceAccountId(), thumbnailUrl,
-					_commerceAccount.getName());
+					_accountEntry.getAccountEntryId(), thumbnailUrl,
+					_accountEntry.getName());
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:currentCommerceAccount",
@@ -310,9 +310,9 @@ public class AccountSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountSelectorTag.class);
 
+	private AccountEntry _accountEntry;
 	private String[] _accountEntryAllowedTypes;
 	private String _addCommerceOrderURL;
-	private CommerceAccount _commerceAccount;
 	private long _commerceChannelId;
 	private CommerceOrder _commerceOrder;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;

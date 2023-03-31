@@ -17,8 +17,6 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -110,15 +108,13 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 	public abstract String getTitle();
 
 	public boolean hasPermission(
-			PermissionChecker permissionChecker,
-			CommerceAccount commerceAccount, String actionId)
+			PermissionChecker permissionChecker, AccountEntry accountEntry,
+			String actionId)
 		throws PortalException {
 
-		if ((commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
-			commerceAccount.isPersonalAccount() ||
+		if (accountEntry.isGuestAccount() || accountEntry.isPersonalAccount() ||
 			accountEntryModelResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountId(),
+				permissionChecker, accountEntry.getAccountEntryId(),
 				actionId)) {
 
 			return true;
@@ -128,15 +124,12 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 	}
 
 	public boolean hasViewBillingAddressPermission(
-			PermissionChecker permissionChecker,
-			CommerceAccount commerceAccount)
+			PermissionChecker permissionChecker, AccountEntry accountEntry)
 		throws PortalException {
 
-		if ((commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
-			commerceAccount.isPersonalAccount() ||
+		if (accountEntry.isGuestAccount() || accountEntry.isPersonalAccount() ||
 			portletResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				permissionChecker, accountEntry.getAccountEntryGroup(),
 				CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
 
 			return true;
@@ -146,53 +139,46 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 	}
 
 	public boolean isShippingUsedAsBilling() throws PortalException {
-		CommerceAccount commerceAccount = _commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = _commerceOrder.getAccountEntry();
 
 		CommerceAddress defaultBillingCommerceAddress = null;
 		CommerceAddress defaultShippingCommerceAddress = null;
 
-		if (commerceAccount != null) {
-			AccountEntry accountEntry =
-				accountEntryLocalService.fetchAccountEntry(
-					commerceAccount.getCommerceAccountId());
+		if (accountEntry != null) {
+			CommerceChannel commerceChannel =
+				commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+					_commerceOrder.getGroupId());
 
-			if (accountEntry != null) {
-				CommerceChannel commerceChannel =
-					commerceChannelLocalService.
-						getCommerceChannelByOrderGroupId(
-							_commerceOrder.getGroupId());
+			CommerceChannelAccountEntryRel
+				billingAddressCommerceChannelAccountEntryRel =
+					commerceChannelAccountEntryRelLocalService.
+						fetchCommerceChannelAccountEntryRel(
+							accountEntry.getAccountEntryId(),
+							commerceChannel.getCommerceChannelId(),
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_BILLING_ADDRESS);
 
-				CommerceChannelAccountEntryRel
-					billingAddressCommerceChannelAccountEntryRel =
-						commerceChannelAccountEntryRelLocalService.
-							fetchCommerceChannelAccountEntryRel(
-								accountEntry.getAccountEntryId(),
-								commerceChannel.getCommerceChannelId(),
-								CommerceChannelAccountEntryRelConstants.
-									TYPE_BILLING_ADDRESS);
+			if (billingAddressCommerceChannelAccountEntryRel != null) {
+				defaultBillingCommerceAddress =
+					commerceAddressService.getCommerceAddress(
+						billingAddressCommerceChannelAccountEntryRel.
+							getClassPK());
+			}
 
-				if (billingAddressCommerceChannelAccountEntryRel != null) {
-					defaultBillingCommerceAddress =
-						commerceAddressService.getCommerceAddress(
-							billingAddressCommerceChannelAccountEntryRel.
-								getClassPK());
-				}
+			CommerceChannelAccountEntryRel
+				shippingAddressCommerceChannelAccountEntryRel =
+					commerceChannelAccountEntryRelLocalService.
+						fetchCommerceChannelAccountEntryRel(
+							accountEntry.getAccountEntryId(),
+							commerceChannel.getCommerceChannelId(),
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_SHIPPING_ADDRESS);
 
-				CommerceChannelAccountEntryRel
-					shippingAddressCommerceChannelAccountEntryRel =
-						commerceChannelAccountEntryRelLocalService.
-							fetchCommerceChannelAccountEntryRel(
-								accountEntry.getAccountEntryId(),
-								commerceChannel.getCommerceChannelId(),
-								CommerceChannelAccountEntryRelConstants.
-									TYPE_SHIPPING_ADDRESS);
-
-				if (shippingAddressCommerceChannelAccountEntryRel != null) {
-					defaultShippingCommerceAddress =
-						commerceAddressService.getCommerceAddress(
-							shippingAddressCommerceChannelAccountEntryRel.
-								getClassPK());
-				}
+			if (shippingAddressCommerceChannelAccountEntryRel != null) {
+				defaultShippingCommerceAddress =
+					commerceAddressService.getCommerceAddress(
+						shippingAddressCommerceChannelAccountEntryRel.
+							getClassPK());
 			}
 		}
 
@@ -212,7 +198,7 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
 		CommerceAddress billingAddress = _commerceOrder.getBillingAddress();
 
-		if (((commerceAccount != null) &&
+		if (((accountEntry != null) &&
 			 (defaultBillingCommerceAddressId ==
 				 defaultShippingCommerceAddressId) &&
 			 (billingAddress == null) && (shippingAddress == null)) ||

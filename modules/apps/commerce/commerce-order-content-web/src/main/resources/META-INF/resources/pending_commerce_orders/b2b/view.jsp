@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
+AccountEntry accountEntry = commerceOrderContentDisplayContext.getAccountEntry();
 %>
 
 <liferay-ui:error exception="<%= CommerceOrderAccountLimitException.class %>" message="unable-to-create-a-new-order-as-the-open-order-limit-has-been-reached" />
@@ -43,7 +43,7 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 	<portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderURL" />
 
 	<div class="commerce-cta is-visible">
-		<c:if test="<%= commerceOrderContentDisplayContext.hasPermission(commerceAccount, CommerceOrderActionKeys.ADD_COMMERCE_ORDER) %>">
+		<c:if test="<%= commerceOrderContentDisplayContext.hasPermission(accountEntry, CommerceOrderActionKeys.ADD_COMMERCE_ORDER) %>">
 			<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -51,7 +51,7 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 
 				<clay:button
 					cssClass="btn-fixed btn-lg btn-primary"
-					disabled="<%= commerceAccount == null %>"
+					disabled="<%= accountEntry == null %>"
 					displayType="primary"
 					id="add-order"
 					label='<%= LanguageUtil.get(request, "add-order") %>'

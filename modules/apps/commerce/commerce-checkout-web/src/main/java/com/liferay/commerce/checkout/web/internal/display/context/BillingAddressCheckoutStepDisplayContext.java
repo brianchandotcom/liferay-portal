@@ -17,7 +17,6 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
@@ -96,10 +95,7 @@ public class BillingAddressCheckoutStepDisplayContext
 			return billingAddressId;
 		}
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
-
-		AccountEntry accountEntry = accountEntryLocalService.fetchAccountEntry(
-			commerceAccount.getCommerceAccountId());
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		if (accountEntry == null) {
 			return billingAddressId;

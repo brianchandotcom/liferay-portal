@@ -32,10 +32,10 @@ if (Validator.isNotNull(assetCategoryIdsString)) {
 
 String accountIds = "[]";
 
-CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-if (commerceAccount != null) {
-	accountIds = jsonSerializer.serializeDeep(new Long[] {commerceAccount.getCommerceAccountId()});
+if (accountEntry != null) {
+	accountIds = jsonSerializer.serializeDeep(new Long[] {accountEntry.getAccountEntryId()});
 }
 %>
 

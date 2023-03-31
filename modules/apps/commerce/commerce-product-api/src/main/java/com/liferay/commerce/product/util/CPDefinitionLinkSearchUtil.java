@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.util;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -29,9 +29,8 @@ import java.io.Serializable;
 public class CPDefinitionLinkSearchUtil {
 
 	public static SearchContext getCPDefinitionLinkSearchContext(
-		CommerceAccount commerceAccount,
-		CommerceAccountHelper commerceAccountHelper, long companyId,
-		long cpDefinitionId, String definitionLinkType) {
+		AccountEntry accountEntry, CommerceAccountHelper commerceAccountHelper,
+		long companyId, long cpDefinitionId, String definitionLinkType) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -41,12 +40,12 @@ public class CPDefinitionLinkSearchUtil {
 			).put(
 				"commerceAccountGroupIds",
 				() -> {
-					if (commerceAccount == null) {
+					if (accountEntry == null) {
 						return null;
 					}
 
 					return commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId());
+						accountEntry.getAccountEntryId());
 				}
 			).put(
 				"definitionLinkCPDefinitionId", cpDefinitionId

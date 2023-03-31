@@ -15,7 +15,7 @@
 package com.liferay.commerce.subscription.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -87,11 +87,10 @@ public class CommerceSubscriptionEntryFDSDataProvider
 
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			CommerceAccount commerceAccount =
-				commerceOrder.getCommerceAccount();
+			AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 			String commerceAccountIdString = String.valueOf(
-				commerceAccount.getCommerceAccountId());
+				accountEntry.getAccountEntryId());
 
 			SubscriptionEntry subscriptionEntry = new SubscriptionEntry(
 				commerceSubscriptionEntry.getCommerceSubscriptionEntryId(),
@@ -103,10 +102,9 @@ public class CommerceSubscriptionEntryFDSDataProvider
 				new Link(
 					commerceAccountIdString,
 					_getEditAccountURL(
-						commerceAccount.getCommerceAccountId(),
-						httpServletRequest)),
+						accountEntry.getAccountEntryId(), httpServletRequest)),
 				_getSubscriptionStatus(commerceSubscriptionEntry),
-				commerceAccount.getName());
+				accountEntry.getName());
 
 			subscriptionEntries.add(subscriptionEntry);
 		}

@@ -21,7 +21,7 @@ String statusChartRootElementId = liferayPortletResponse.getNamespace() + "-stat
 
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
-CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+AccountEntry accountEntry = commerceContext.getAccountEntry();
 %>
 
 <div id="<%= statusChartRootElementId %>">
@@ -32,7 +32,7 @@ CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 	chart.default('<%= statusChartRootElementId %>', {
 		APIBaseUrl: '/o/----',
 		accountIdParamName: '----',
-		commerceAccountId: '<%= commerceAccount.getCommerceAccountId() %>',
+		commerceAccountId: '<%= accountEntry.getAccountEntryId() %>',
 		noAccountErrorMessage: Liferay.Language.get('no-account-selected'),
 		noDataErrorMessage: Liferay.Language.get('no-data-available'),
 		portletId: '<%= portletDisplay.getId() %>',

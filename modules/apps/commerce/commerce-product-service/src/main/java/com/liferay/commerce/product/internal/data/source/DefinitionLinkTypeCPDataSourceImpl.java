@@ -82,7 +82,7 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 
 		SearchContext searchContext =
 			CPDefinitionLinkSearchUtil.getCPDefinitionLinkSearchContext(
-				commerceContext.getCommerceAccount(), _commerceAccountHelper,
+				commerceContext.getAccountEntry(), _commerceAccountHelper,
 				_portal.getCompanyId(httpServletRequest),
 				cpCatalogEntry.getCPDefinitionId(),
 				_cpDefinitionLinkTypeConfiguration.type());

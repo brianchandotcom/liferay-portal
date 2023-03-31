@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.collection.provider;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
@@ -68,12 +68,12 @@ public class CPDefinitionLinkInfoItemCollectionProvider
 		}
 
 		try {
-			CommerceAccount commerceAccount = null;
+			AccountEntry accountEntry = null;
 
 			CommerceContext commerceContext = CommerceContextThreadLocal.get();
 
 			if (commerceContext != null) {
-				commerceAccount = commerceContext.getCommerceAccount();
+				accountEntry = commerceContext.getAccountEntry();
 			}
 
 			CPDefinition cpDefinition = (CPDefinition)relatedItem;
@@ -83,7 +83,7 @@ public class CPDefinitionLinkInfoItemCollectionProvider
 
 			SearchContext searchContext =
 				CPDefinitionLinkSearchUtil.getCPDefinitionLinkSearchContext(
-					commerceAccount, _commerceAccountHelper,
+					accountEntry, _commerceAccountHelper,
 					serviceContext.getCompanyId(),
 					cpDefinition.getCPDefinitionId(),
 					_cpDefinitionLinkTypeConfiguration.type());

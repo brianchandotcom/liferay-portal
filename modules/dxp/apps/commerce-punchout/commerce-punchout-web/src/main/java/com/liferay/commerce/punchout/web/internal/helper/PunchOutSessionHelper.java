@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.punchout.web.internal.helper;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
@@ -78,12 +78,10 @@ public class PunchOutSessionHelper {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 			return _punchOutAccountRoleHelper.hasPunchOutRole(
-				commerceOrder.getUserId(),
-				commerceAccount.getCommerceAccountId());
+				commerceOrder.getUserId(), accountEntry.getAccountEntryId());
 		}
 		catch (Exception exception) {
 			_log.error(

@@ -16,7 +16,6 @@ package com.liferay.commerce.order.content.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
@@ -192,7 +191,7 @@ public class CommerceOrderContentDisplayContext {
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
 
-		_commerceAccount = _commerceContext.getCommerceAccount();
+		_accountEntry = _commerceContext.getAccountEntry();
 
 		_commerceOrderNoteId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderNoteId");
@@ -211,6 +210,10 @@ public class CommerceOrderContentDisplayContext {
 		return _commerceOrderDateFormatDate.format(date);
 	}
 
+	public AccountEntry getAccountEntry() {
+		return _accountEntry;
+	}
+
 	public List<CommerceAddress> getBillingCommerceAddresses(
 			long commerceAccountId)
 		throws PortalException {
@@ -221,18 +224,14 @@ public class CommerceOrderContentDisplayContext {
 			QueryUtil.ALL_POS);
 	}
 
-	public CommerceAccount getCommerceAccount() {
-		return _commerceAccount;
-	}
-
 	public long getCommerceAccountId() {
-		long commerceAccountId = 0;
+		long accountEntryId = 0;
 
-		if (_commerceAccount != null) {
-			commerceAccountId = _commerceAccount.getCommerceAccountId();
+		if (_accountEntry != null) {
+			accountEntryId = _accountEntry.getAccountEntryId();
 		}
 
-		return commerceAccountId;
+		return accountEntryId;
 	}
 
 	public String getCommerceAccountThumbnailURL() throws PortalException {
@@ -242,7 +241,7 @@ public class CommerceOrderContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
@@ -250,13 +249,12 @@ public class CommerceOrderContentDisplayContext {
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/organization_logo?img_id=");
-		sb.append(commerceAccount.getLogoId());
+		sb.append(accountEntry.getLogoId());
 
-		if (commerceAccount.getLogoId() > 0) {
+		if (accountEntry.getLogoId() > 0) {
 			sb.append("&t=");
 			sb.append(
-				WebServerServletTokenUtil.getToken(
-					commerceAccount.getLogoId()));
+				WebServerServletTokenUtil.getToken(accountEntry.getLogoId()));
 		}
 
 		return sb.toString();
@@ -1028,17 +1026,16 @@ public class CommerceOrderContentDisplayContext {
 			_cpRequestHelper.getPermissionChecker(), commerceOrderId, actionId);
 	}
 
-	public boolean hasPermission(
-			CommerceAccount commerceAccount, String actionId)
+	public boolean hasPermission(AccountEntry accountEntry, String actionId)
 		throws PortalException {
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			return false;
 		}
 
 		return _portletResourcePermission.contains(
 			_cpRequestHelper.getPermissionChecker(),
-			commerceAccount.getCommerceAccountGroupId(), actionId);
+			_accountEntry.getAccountEntryGroupId(), actionId);
 	}
 
 	public boolean hasPermission(String actionId) {
@@ -1048,15 +1045,12 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public boolean hasViewBillingAddressPermission(
-			PermissionChecker permissionChecker,
-			CommerceAccount commerceAccount)
+			PermissionChecker permissionChecker, AccountEntry accountEntry)
 		throws PortalException {
 
-		if ((commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
-			commerceAccount.isPersonalAccount() ||
+		if (accountEntry.isGuestAccount() || accountEntry.isPersonalAccount() ||
 			_portletResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				permissionChecker, accountEntry.getAccountEntryGroup(),
 				CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
 
 			return true;
@@ -1242,7 +1236,7 @@ public class CommerceOrderContentDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderContentDisplayContext.class);
 
-	private final CommerceAccount _commerceAccount;
+	private final AccountEntry _accountEntry;
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceContext _commerceContext;

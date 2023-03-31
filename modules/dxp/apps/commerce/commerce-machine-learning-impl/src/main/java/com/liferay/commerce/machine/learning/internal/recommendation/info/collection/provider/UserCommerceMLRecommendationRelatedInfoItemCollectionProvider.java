@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.machine.learning.internal.recommendation.info.collection.provider;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendation;
@@ -83,10 +83,9 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProvider
 					0);
 			}
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			if (commerceAccount == null) {
+			if (accountEntry == null) {
 				return InfoPage.of(
 					Collections.emptyList(), collectionQuery.getPagination(),
 					0);
@@ -107,8 +106,8 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProvider
 			List<UserCommerceMLRecommendation> userCommerceMLRecommendations =
 				_userCommerceMLRecommendationManager.
 					getUserCommerceMLRecommendations(
-						commerceAccount.getCompanyId(),
-						commerceAccount.getCommerceAccountId(), categoryIds);
+						accountEntry.getCompanyId(),
+						accountEntry.getAccountEntryId(), categoryIds);
 
 			if (userCommerceMLRecommendations.isEmpty()) {
 				return InfoPage.of(

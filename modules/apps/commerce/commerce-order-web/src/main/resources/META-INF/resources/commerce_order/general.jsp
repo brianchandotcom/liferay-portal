@@ -138,7 +138,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 				<div class="col-xl-3">
 
 					<%
-					CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+					AccountEntry accountEntry = commerceOrder.getAccountEntry();
 					%>
 
 					<commerce-ui:info-box
@@ -146,14 +146,14 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 						title='<%= LanguageUtil.get(request, "account-info") %>'
 					>
 						<c:choose>
-							<c:when test="<%= Validator.isNull(commerceAccount) %>">
+							<c:when test="<%= Validator.isNull(accountEntry) %>">
 								<span class="text-muted">
 									<%= StringPool.BLANK %>
 								</span>
 							</c:when>
 							<c:otherwise>
-								<p class="mb-0"><%= commerceAccount.getName() %></p>
-								<p class="mb-0">#<%= commerceAccount.getCommerceAccountId() %></p>
+								<p class="mb-0"><%= accountEntry.getName() %></p>
+								<p class="mb-0">#<%= accountEntry.getAccountEntryId() %></p>
 							</c:otherwise>
 						</c:choose>
 					</commerce-ui:info-box>

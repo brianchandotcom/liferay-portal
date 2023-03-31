@@ -25,7 +25,7 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 
 CSDiagramCPTypeHelper csDiagramCPTypeHelper = (CSDiagramCPTypeHelper)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_HELPER);
 
-CSDiagramSetting csDiagramSetting = csDiagramCPTypeHelper.getCSDiagramSetting(commerceContext.getCommerceAccount(), cpCatalogEntry.getCPDefinitionId(), themeDisplay.getPermissionChecker());
+CSDiagramSetting csDiagramSetting = csDiagramCPTypeHelper.getCSDiagramSetting(commerceContext.getAccountEntry(), cpCatalogEntry.getCPDefinitionId(), themeDisplay.getPermissionChecker());
 %>
 
 <div class="col my-4 p-0">

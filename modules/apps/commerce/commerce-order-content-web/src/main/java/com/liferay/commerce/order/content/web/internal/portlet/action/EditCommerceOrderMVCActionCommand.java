@@ -16,7 +16,6 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -262,9 +261,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			(CommerceContext)actionRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			throw new NoSuchAccountException();
 		}
 
@@ -308,7 +307,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			return _commerceOrderService.addCommerceOrder(
-				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+				commerceChannelGroupId, accountEntry.getAccountEntryId(),
 				commerceCurrencyId, commerceOrderTypeId);
 		}
 		catch (Exception exception) {

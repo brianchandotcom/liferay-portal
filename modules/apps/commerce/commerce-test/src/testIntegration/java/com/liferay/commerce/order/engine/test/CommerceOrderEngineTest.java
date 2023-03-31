@@ -148,8 +148,8 @@ public class CommerceOrderEngineTest {
 			_commerceOrder.getCommerceOrderId(), _serviceContext);
 
 		_commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group,
-			_commerceOrder.getCommerceAccount(), _commerceOrder);
+			_commerceOrder.getAccountEntry(), _commerceCurrency,
+			_commerceChannel, _user, _group, _commerceOrder);
 	}
 
 	@After

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.util;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
@@ -67,18 +67,18 @@ public class CSDiagramCPTypeHelperImpl implements CSDiagramCPTypeHelper {
 
 	@Override
 	public CSDiagramSetting getCSDiagramSetting(
-			CommerceAccount commerceAccount, long cpDefinitionId,
+			AccountEntry accountEntry, long cpDefinitionId,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		long commerceAccountId = 0;
+		long accountEntryId = 0;
 
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
+		if (accountEntry != null) {
+			accountEntryId = accountEntry.getAccountEntryId();
 		}
 
 		_commerceProductViewPermission.check(
-			permissionChecker, commerceAccountId, cpDefinitionId);
+			permissionChecker, accountEntryId, cpDefinitionId);
 
 		return _csDiagramSettingLocalService.
 			fetchCSDiagramSettingByCPDefinitionId(cpDefinitionId);

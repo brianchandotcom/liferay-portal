@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.frontend.js.internal.servlet.taglib;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -88,17 +88,17 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 			JSONUtil.put(
 				"account",
 				() -> {
-					CommerceAccount commerceAccount =
-						commerceContext.getCommerceAccount();
+					AccountEntry accountEntry =
+						commerceContext.getAccountEntry();
 
-					if (commerceAccount == null) {
+					if (accountEntry == null) {
 						return null;
 					}
 
 					return JSONUtil.put(
-						"accountId", commerceAccount.getCommerceAccountId()
+						"accountId", accountEntry.getAccountEntryId()
 					).put(
-						"accountName", commerceAccount.getName()
+						"accountName", accountEntry.getName()
 					);
 				}
 			).put(

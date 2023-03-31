@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -113,11 +113,11 @@ public class WishListItemDTOConverter
 						CPDefinition cpDefinition =
 							commerceWishListItem.getCPDefinition();
 
-						CommerceAccount commerceAccount =
-							commerceContext.getCommerceAccount();
+						AccountEntry accountEntry =
+							commerceContext.getAccountEntry();
 
 						return cpDefinition.getDefaultImageThumbnailSrc(
-							commerceAccount.getCommerceAccountId());
+							accountEntry.getAccountEntryId());
 					});
 				setProductName(
 					() -> {

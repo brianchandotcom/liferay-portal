@@ -22,13 +22,17 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,15 +46,11 @@ import com.liferay.portal.search.searcher.Searcher;
 
 import java.io.IOException;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -133,28 +133,18 @@ public class ContentDashboardFileExtensionItemSelectorView
 		List<String> existingFileExtensions = _getExistingFileExtensions(
 			themeDisplay.getRequest());
 
-		Stream<String> stream = existingFileExtensions.stream();
+		Set<String> otherFileExtensions = SetUtil.fromList(
+			ListUtil.filter(
+				existingFileExtensions, _fileExtensionGroupsProvider::isOther));
 
-		Set<String> otherFileExtension = stream.filter(
-			_fileExtensionGroupsProvider::isOther
-		).collect(
-			Collectors.toSet()
-		);
-
-		Stream<FileExtensionGroupsProvider.FileExtensionGroup>
-			fileExtensionGroupsStream = fileExtensionGroups.stream();
-
-		return JSONUtil.putAll(
-			fileExtensionGroupsStream.map(
-				fileExtensionGroup -> fileExtensionGroup.toJSONObject(
-					SetUtil.fromArray(
-						servletRequest.getParameterValues(
-							"checkedFileExtensions")),
-					existingFileExtensions, _dlMimeTypeDisplayContext,
-					_language, themeDisplay.getLocale(), otherFileExtension)
-			).filter(
-				Objects::nonNull
-			).toArray());
+		return JSONUtil.toJSONArray(
+			fileExtensionGroups,
+			fileExtensionGroup -> fileExtensionGroup.toJSONObject(
+				SetUtil.fromArray(
+					servletRequest.getParameterValues("checkedFileExtensions")),
+				existingFileExtensions, _dlMimeTypeDisplayContext, _language,
+				themeDisplay.getLocale(), otherFileExtensions),
+			_log);
 	}
 
 	private List<String> _getExistingFileExtensions(
@@ -189,16 +179,12 @@ public class ContentDashboardFileExtensionItemSelectorView
 			(TermsAggregationResult)searchResponse.getAggregationResult(
 				"extensions");
 
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-		Stream<Bucket> stream = buckets.stream();
-
-		return stream.map(
-			bucket -> bucket.getKey()
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			termsAggregationResult.getBuckets(), Bucket::getKey);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentDashboardFileExtensionItemSelectorView.class);
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(

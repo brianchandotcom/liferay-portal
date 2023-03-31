@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This test ensure that the max number of pages generated as preview for PDFs in Instance Setting can limit by the configuration in System Setting."
-	@priority = 3
+	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInInstanceSettingsByTheConfigurationInSystemSetting {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
@@ -94,10 +94,71 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting {
-		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting";
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "large_file.pdf");
 
-		// Test content
+		DMNavigator.openToConfigInInstanceSettings(portlet = "PDF Preview");
 
+		Type(
+			key_fieldLabel = "Maximum Number of Pages",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = 60);
+
+		SystemSettings.saveConfiguration();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+		DMNavigator.openToConfigInSiteSettings(
+			portlet = "PDF Preview",
+			siteURLKey = "guest");
+
+		Type(
+			key_fieldLabel = "Maximum Number of Pages",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = 100);
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL_TEXT",
+			value1 = "This limit is higher than the Instance Settings limit. Please enter a maximum number of pages no larger than 60.");
+
+		SystemSettings.saveConfiguration();
+
+		Alert.viewErrorMessage(errorMessage = "Maximum number of pages limit is not valid.");
+
+		Type(
+			key_fieldLabel = "Maximum Number of Pages",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = 30);
+
+		SystemSettings.saveConfiguration();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Reset preview and thumbnail files for documents and media");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		while (IsElementPresent(key_infoMessage = "Generating preview will take a few minutes.", locator1 = "Message#INFO_SPECIFIC")) {
+			WaitForElementPresent.waitForLastScript();
+
+			Refresh();
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_title = "Click to jump to a page.",
+			locator1 = "Button#ANY_TITLE",
+			value1 = 30);
 	}
 
 	@description = "This test ensures that a user can configure the max number of pages generated as preview for PDFs in System Setting."

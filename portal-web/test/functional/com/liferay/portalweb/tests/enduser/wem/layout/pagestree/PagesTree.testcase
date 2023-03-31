@@ -1016,7 +1016,7 @@ definition {
 					locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 				AssertElementPresent(
-					key_card = "Button",
+					key_card = "Account Selector",
 					locator1 = "Card#CARD_TITLE");
 
 				PagesFinder.navigateToPage(pageName = "P2");

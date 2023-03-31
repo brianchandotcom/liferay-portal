@@ -33,9 +33,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -93,17 +95,31 @@ public class ConfigurationModelRetrieverImpl
 		Serializable scopePK) {
 
 		try {
-			String pidFilter = _getPidFilterString(pid, scope, scopePK);
+			String pidFilter = _getPidFilterString(pid, scope);
 
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(pidFilter);
 
 			if (configurations != null) {
-				return configurations[0];
-			}
-			else if (scope.equals(
-						ExtendedObjectClassDefinition.Scope.COMPANY)) {
+				for (Configuration configuration : configurations) {
+					if (scope.equals(
+							ExtendedObjectClassDefinition.Scope.SYSTEM)) {
 
+						return configuration;
+					}
+
+					Dictionary<String, Object> properties =
+						configuration.getProcessedProperties(null);
+
+					if (Objects.equals(
+							properties.get(scope.getPropertyKey()), scopePK)) {
+
+						return configuration;
+					}
+				}
+			}
+
+			if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
 				return getConfiguration(
 					pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 			}
@@ -374,19 +390,15 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	private String _getPidFilterString(
-		String pid, ExtendedObjectClassDefinition.Scope scope,
-		Serializable scopePK) {
+		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
 			return _getPropertyFilterString(Constants.SERVICE_PID, pid);
 		}
 
-		return _getAndFilterString(
-			_getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID,
-				_getUnscopedPid(pid) + ".scoped"),
-			_getPropertyFilterString(
-				scope.getPropertyKey(), String.valueOf(scopePK)));
+		return _getPropertyFilterString(
+			ConfigurationAdmin.SERVICE_FACTORYPID,
+			_getUnscopedPid(pid) + ".scoped");
 	}
 
 	private String _getPropertyFilterString(String key, String value) {

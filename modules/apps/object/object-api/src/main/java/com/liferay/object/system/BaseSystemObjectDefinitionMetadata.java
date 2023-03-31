@@ -18,6 +18,8 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -131,9 +133,14 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		}
 
 		for (ExtensionProvider extensionProvider : extensionProviders) {
-			extensionProvider.setExtendedProperties(
-				user.getCompanyId(), user.getUserId(), className, entity,
-				extendedProperties);
+			try {
+				extensionProvider.setExtendedProperties(
+					user.getCompanyId(), user.getUserId(), className, entity,
+					extendedProperties);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 	}
 
@@ -143,5 +150,8 @@ public abstract class BaseSystemObjectDefinitionMetadata
 	private String _translate(String labelKey) {
 		return LanguageUtil.get(LocaleUtil.getDefault(), labelKey);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSystemObjectDefinitionMetadata.class);
 
 }

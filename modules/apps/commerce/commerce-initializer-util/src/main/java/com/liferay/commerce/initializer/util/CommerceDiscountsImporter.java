@@ -116,8 +116,6 @@ public class CommerceDiscountsImporter {
 							commerceDiscount.getCommerceDiscountId(),
 							AssetCategory.class.getName(),
 							assetCategory.getPrimaryKey(), serviceContext);
-
-						break;
 					}
 				}
 			}

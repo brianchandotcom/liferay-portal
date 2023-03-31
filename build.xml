@@ -370,28 +370,7 @@ message.
 
 		<touch file="${liferay.home}/.liferay-home" />
 
-		<parallel failonany="true" threadcount="${parallel.thread.count}">
-			<sequential>
-				<ant dir="sql" inheritAll="false" target="build-db" />
-				<if>
-					<contains string="${database.types}" substring="hypersonic" />
-					<then>
-						<ant dir="sql" inheritAll="false" target="rebuild-hypersonic" />
-					</then>
-				</if>
-			</sequential>
-		</parallel>
-
-		<copy
-			todir="${liferay.home}/data/hypersonic"
-		>
-			<fileset
-				dir="sql"
-			>
-				<include name="${database.name}.properties" />
-				<include name="${database.name}.script" />
-			</fileset>
-		</copy>
+		<ant dir="sql" inheritAll="false" target="build-db" />
 
 		<deploy-properties />
 

@@ -1652,7 +1652,7 @@ definition {
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
+			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");

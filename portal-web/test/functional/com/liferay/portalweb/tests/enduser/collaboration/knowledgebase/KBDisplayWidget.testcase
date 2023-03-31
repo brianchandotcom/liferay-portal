@@ -389,6 +389,8 @@ definition {
 			portlet = "Knowledge Base",
 			scope = "Knowledge Base Display Page");
 
+		WaitForElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
+
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title for Page");
@@ -399,6 +401,8 @@ definition {
 			category = "Content & Data",
 			portlet = "Knowledge Base",
 			scope = "Knowledge Base Display Page 2");
+
+		WaitForElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",

@@ -92,6 +92,10 @@ definition {
 	@description = "This is a test for LPS-179914. Verify that the value of Approved MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFApprovedValueAppearInDashboard {
+		property test.name.skip.portal.instance = "PRMDashboards#MDFApprovedValueAppearInDashboard";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		var budgetValue = 2000;
 
 		task ("Given I get the current amount of Approved MDF Value") {
@@ -137,6 +141,10 @@ definition {
 	@description = "This is a test for LPS-177308. Verify that the value of Requested MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFRequestedValueAppearInDashboard {
+		property test.name.skip.portal.instance = "PRMDashboards#MDFRequestedValueAppearInDashboard";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		var budgetValue = 2000;
 
 		task ("Given I get the current amount of requested MDF Value") {

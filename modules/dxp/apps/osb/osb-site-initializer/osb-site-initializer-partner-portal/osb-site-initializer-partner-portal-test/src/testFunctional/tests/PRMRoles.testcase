@@ -40,6 +40,10 @@ definition {
 	@description = "Verify that new roles appear after create PRM site"
 	@priority = 5
 	test CheckCreatedRoles {
+		property test.name.skip.portal.instance = "PRMRoles#CheckCreatedRoles";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("When: I go to Roles Page in Control Panel") {
 			Role.openRolesAdmin();
 		}

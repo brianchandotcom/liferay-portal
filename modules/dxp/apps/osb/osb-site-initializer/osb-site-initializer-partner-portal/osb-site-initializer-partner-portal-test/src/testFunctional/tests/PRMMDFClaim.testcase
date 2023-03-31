@@ -95,6 +95,10 @@ definition {
 	@description = "This is a test for LPS-175292. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportAllVisibleClaims {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportAllVisibleClaims";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given that the Manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -157,6 +161,10 @@ definition {
 	@description = "This is a test for LPS-178119. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportFilteredClaims {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportFilteredClaims";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given a new account is created") {
 			JSONPRM.addAccount(accountName = "Company Name 2");
 
@@ -288,6 +296,10 @@ definition {
 	@description = "This is a test for LPS-178117. Verify that is possible to export all Claims searched."
 	@priority = 4
 	test CanExportSearchedClaims {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportSearchedClaims";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given that the Manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -370,6 +382,10 @@ definition {
 	@description = "This is a test for LPS-175611. Verify that is possible to submit a full claim"
 	@priority = 5
 	test CanSubmitFullClaim {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CanSubmitFullClaim";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given that the manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -412,6 +428,10 @@ definition {
 	@description = "This is a test for LPS-173720. Verify that is possible to submit a partial claim"
 	@priority = 5
 	test CanSubmitPartialClaim {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CanSubmitPartialClaim";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given that the manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",

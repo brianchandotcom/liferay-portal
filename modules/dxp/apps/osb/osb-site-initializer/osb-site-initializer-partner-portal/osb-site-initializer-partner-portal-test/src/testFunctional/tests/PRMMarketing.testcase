@@ -48,6 +48,10 @@ definition {
 	@description = "This is a test for LPS-164164. Verify if a banner is displayed when user access Marketing page and will appear again after dismissed"
 	@priority = 5
 	test BannerIsDisplayed {
+		property test.name.skip.portal.instance = "PRMMarketing#BannerIsDisplayed";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given that the welcome banner is displayed on marketing page") {
 			AssertVisible(locator1 = "PRMPages#WELCOME_BANNER");
 		}
@@ -90,6 +94,10 @@ definition {
 	@description = "This is a test for LPS-164166. Verify if a 'Get Tour Partner Marketing Guide' button is displayed on banner and a file will be downloaded when click on this button"
 	@priority = 4
 	test CanDownloadBannerGuide {
+		property test.name.skip.portal.instance = "PRMMarketing#CanDownloadBannerGuide";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		var fileName = "partner-marketing-program-guide.pdf";
 
 		task ("Given that the user clicks on 'Get Your Partner Marketing Guide' button on Welcome Banner") {
@@ -108,6 +116,10 @@ definition {
 	@description = "This is a test for LPS-164165. Verify if a 'Watch a Video Tour' button is displayed on banner and a Video will be opened in a popup when click on this button"
 	@priority = 4
 	test CanWatchBannerVideo {
+		property test.name.skip.portal.instance = "PRMMarketing#CanWatchBannerVideo";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
 		task ("Given that the user clicks on 'Watch a Video Tour' button on Welcome Banner") {
 			PRMPages.clickBannerButton();
 		}

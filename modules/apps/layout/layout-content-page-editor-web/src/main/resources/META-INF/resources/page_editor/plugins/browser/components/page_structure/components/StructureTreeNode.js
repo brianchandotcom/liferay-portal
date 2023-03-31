@@ -347,7 +347,6 @@ function StructureTreeNodeContent({
 				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
-				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--mapped': isMapped,
 				'page-editor__page-structure__tree-node--master-item':
 					node.isMasterItem,
@@ -454,7 +453,6 @@ const NameLabel = React.forwardRef(
 				className={classNames(
 					'page-editor__page-structure__tree-node__name d-flex flex-grow-1 align-items-center',
 					{
-						'page-editor__page-structure__tree-node__name--active': isActive,
 						'page-editor__page-structure__tree-node__name--hidden': hidden,
 						'page-editor__page-structure__tree-node__name--mapped': isMapped,
 						'page-editor__page-structure__tree-node__name--master-item': isMasterItem,

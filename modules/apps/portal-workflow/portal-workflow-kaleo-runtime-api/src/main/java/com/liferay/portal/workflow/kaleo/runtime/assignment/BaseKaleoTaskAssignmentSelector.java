@@ -40,17 +40,17 @@ public abstract class BaseKaleoTaskAssignmentSelector
 
 		List<KaleoTaskAssignment> kaleoTaskAssignments = new ArrayList<>();
 
-		if (results.get(USER_ASSIGNMENT) != null) {
-			kaleoTaskAssignments.add(
-				getUserKaleoTaskAssignment((User)results.get(USER_ASSIGNMENT)));
-
-			return kaleoTaskAssignments;
-		}
-
 		if (results.get(ROLES_ASSIGNMENT) != null) {
 			getRoleKaleoTaskAssignments(
 				(List<Role>)results.get(ROLES_ASSIGNMENT),
 				kaleoTaskAssignments);
+
+			return kaleoTaskAssignments;
+		}
+
+		if (results.get(USER_ASSIGNMENT) != null) {
+			kaleoTaskAssignments.add(
+				getUserKaleoTaskAssignment((User)results.get(USER_ASSIGNMENT)));
 
 			return kaleoTaskAssignments;
 		}

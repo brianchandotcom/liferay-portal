@@ -140,7 +140,7 @@ definition {
 
 			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Panel.expandPanel(panel = "Look and Feel");
 

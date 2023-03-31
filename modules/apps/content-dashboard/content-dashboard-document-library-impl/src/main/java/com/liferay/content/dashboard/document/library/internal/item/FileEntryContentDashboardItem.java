@@ -36,6 +36,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -73,9 +75,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletResponse;
 
@@ -149,11 +148,8 @@ public class FileEntryContentDashboardItem
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		Stream<FileVersion> stream = _fileEntry.getFileVersions(
-			status
-		).stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			_fileEntry.getFileVersions(status),
 			fileVersion -> new ContentDashboardItemVersion(
 				fileVersion.getChangeLog(),
 				_getContentDashboardItemVersionActions(
@@ -165,10 +161,7 @@ public class FileEntryContentDashboardItem
 				themeDisplay.getLocale(),
 				WorkflowConstants.getStatusStyle(fileVersion.getStatus()),
 				fileVersion.getUserName(),
-				String.valueOf(fileVersion.getVersion()))
-		).collect(
-			Collectors.toList()
-		);
+				String.valueOf(fileVersion.getVersion())));
 	}
 
 	@Override
@@ -178,14 +171,10 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public List<AssetCategory> getAssetCategories(long assetVocabularyId) {
-		Stream<AssetCategory> stream = _assetCategories.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			ListUtil.copy(_assetCategories),
 			assetCategory ->
-				assetCategory.getVocabularyId() == assetVocabularyId
-		).collect(
-			Collectors.toList()
-		);
+				assetCategory.getVocabularyId() == assetVocabularyId);
 	}
 
 	@Override
@@ -203,22 +192,15 @@ public class FileEntryContentDashboardItem
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types) {
 
-		List<ContentDashboardItemActionProvider>
-			contentDashboardItemActionProviders =
-				_contentDashboardItemActionProviderRegistry.
-					getContentDashboardItemActionProviders(
-						FileEntry.class.getName(), types);
-
-		Stream<ContentDashboardItemActionProvider> stream =
-			contentDashboardItemActionProviders.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			_contentDashboardItemActionProviderRegistry.
+				getContentDashboardItemActionProviders(
+					FileEntry.class.getName(), types),
 			contentDashboardItemActionProvider -> {
 				try {
-					return Optional.ofNullable(
-						contentDashboardItemActionProvider.
-							getContentDashboardItemAction(
-								_fileEntry, httpServletRequest));
+					return contentDashboardItemActionProvider.
+						getContentDashboardItemAction(
+							_fileEntry, httpServletRequest);
 				}
 				catch (ContentDashboardItemActionException
 							contentDashboardItemActionException) {
@@ -226,15 +208,8 @@ public class FileEntryContentDashboardItem
 					_log.error(contentDashboardItemActionException);
 				}
 
-				return Optional.<ContentDashboardItemAction>empty();
-			}
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).collect(
-			Collectors.toList()
-		);
+				return null;
+			});
 	}
 
 	@Override
@@ -355,19 +330,15 @@ public class FileEntryContentDashboardItem
 				fileVersions.add(latestFileVersion);
 			}
 
-			Stream<FileVersion> stream = fileVersions.stream();
+			List<ContentDashboardItemVersion> contentDashboardItemVersions =
+				TransformUtil.transform(
+					fileVersions,
+					fileVersion -> _toVersion(fileVersion, locale));
 
-			return stream.map(
-				fileVersion -> _toVersionOptional(fileVersion, locale)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).sorted(
-				Comparator.comparing(ContentDashboardItemVersion::getVersion)
-			).collect(
-				Collectors.toList()
-			);
+			contentDashboardItemVersions.sort(
+				Comparator.comparing(ContentDashboardItemVersion::getVersion));
+
+			return contentDashboardItemVersions;
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -383,26 +354,24 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public String getScopeName(Locale locale) {
-		return Optional.ofNullable(
-			_group
-		).map(
-			group -> {
-				try {
-					return Optional.ofNullable(
-						group.getDescriptiveName(locale)
-					).orElseGet(
-						() -> group.getName(locale)
-					);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
+		if (_group == null) {
+			return StringPool.BLANK;
+		}
 
-					return group.getName(locale);
-				}
-			}
-		).orElse(
-			StringPool.BLANK
-		);
+		String scopeName = null;
+
+		try {
+			scopeName = _group.getDescriptiveName(locale);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		if (scopeName == null) {
+			scopeName = _group.getName(locale);
+		}
+
+		return scopeName;
 	}
 
 	@Override
@@ -605,36 +574,38 @@ public class FileEntryContentDashboardItem
 	}
 
 	private URL _getLatestVersionURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				List<ContentDashboardItemAction> contentDashboardItemActions =
-					getContentDashboardItemActions(
-						_portal.getHttpServletRequest(portletRequest),
-						ContentDashboardItemAction.Type.PREVIEW);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-				if (!contentDashboardItemActions.isEmpty()) {
-					ContentDashboardItemAction contentDashboardItemAction =
-						contentDashboardItemActions.get(0);
+		if (serviceContext == null) {
+			return null;
+		}
 
-					try {
-						return new URL(contentDashboardItemAction.getURL());
-					}
-					catch (MalformedURLException malformedURLException) {
-						_log.error(malformedURLException);
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
 
-						return null;
-					}
-				}
+		if (liferayPortletRequest == null) {
+			return null;
+		}
 
-				return null;
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			getContentDashboardItemActions(
+				_portal.getHttpServletRequest(liferayPortletRequest),
+				ContentDashboardItemAction.Type.PREVIEW);
+
+		if (!contentDashboardItemActions.isEmpty()) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			try {
+				return new URL(contentDashboardItemAction.getURL());
 			}
-		).orElse(
-			null
-		);
+			catch (MalformedURLException malformedURLException) {
+				_log.error(malformedURLException);
+			}
+		}
+
+		return null;
 	}
 
 	private String _getSize(Locale locale) {
@@ -645,38 +616,49 @@ public class FileEntryContentDashboardItem
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
-		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue(infoFieldName)
-		).map(
-			InfoFieldValue::getValue
-		).orElse(
-			StringPool.BLANK
-		).toString();
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(infoFieldName);
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
+		return value.toString();
 	}
 
 	private URL _getWebDAVURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				try {
-					return new URL(
-						_dlURLHelper.getWebDavURL(
-							(ThemeDisplay)portletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY),
-							_fileEntry.getFolder(), _fileEntry));
-				}
-				catch (Exception exception) {
-					_log.error(exception);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-					return null;
-				}
-			}
-		).orElse(
-			null
-		);
+		if (serviceContext == null) {
+			return null;
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
+
+		if (liferayPortletRequest == null) {
+			return null;
+		}
+
+		try {
+			return new URL(
+				_dlURLHelper.getWebDavURL(
+					(ThemeDisplay)liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY),
+					_fileEntry.getFolder(), _fileEntry));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
 	}
 
 	private ContentDashboardItemAction _toContentDashboardItemAction(
@@ -696,23 +678,20 @@ public class FileEntryContentDashboardItem
 		}
 	}
 
-	private Optional<ContentDashboardItemVersion> _toVersionOptional(
+	private ContentDashboardItemVersion _toVersion(
 		FileVersion fileVersion, Locale locale) {
 
-		return Optional.ofNullable(
-			fileVersion
-		).map(
-			curFileVersion -> new ContentDashboardItemVersion(
-				curFileVersion.getChangeLog(), null,
-				curFileVersion.getCreateDate(),
-				_language.get(
-					locale,
-					WorkflowConstants.getStatusLabel(
-						curFileVersion.getStatus())),
-				null,
-				WorkflowConstants.getStatusStyle(curFileVersion.getStatus()),
-				curFileVersion.getUserName(), curFileVersion.getVersion())
-		);
+		if (fileVersion == null) {
+			return null;
+		}
+
+		return new ContentDashboardItemVersion(
+			fileVersion.getChangeLog(), null, fileVersion.getCreateDate(),
+			_language.get(
+				locale,
+				WorkflowConstants.getStatusLabel(fileVersion.getStatus())),
+			null, WorkflowConstants.getStatusStyle(fileVersion.getStatus()),
+			fileVersion.getUserName(), fileVersion.getVersion());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

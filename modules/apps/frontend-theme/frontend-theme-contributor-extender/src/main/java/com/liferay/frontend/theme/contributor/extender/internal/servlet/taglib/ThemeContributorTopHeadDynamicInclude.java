@@ -16,6 +16,7 @@ package com.liferay.frontend.theme.contributor.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.theme.contributor.extender.internal.BundleWebResources;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -68,9 +69,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			portalCDNURL = themeDisplay.getPortalURL();
 		}
 
-		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
-
-		if (resourceURLsBag._cssResourceURLs.length > 0) {
+		if (_cssResourceURLs.length > 0) {
 			if (themeDisplay.isThemeCssFastLoad()) {
 				_renderComboCSS(
 					themeLastModified, httpServletRequest, portalCDNURL,
@@ -79,12 +78,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			else {
 				_renderSimpleCSS(
 					themeLastModified, httpServletRequest, portalCDNURL,
-					httpServletResponse.getWriter(),
-					resourceURLsBag._cssResourceURLs);
+					httpServletResponse.getWriter(), _cssResourceURLs);
 			}
 		}
 
-		if (resourceURLsBag._jsResourceURLs.length == 0) {
+		if (_jsResourceURLs.length == 0) {
 			return;
 		}
 
@@ -96,8 +94,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		else {
 			_renderSimpleJS(
 				themeLastModified, httpServletRequest, portalCDNURL,
-				httpServletResponse.getWriter(),
-				resourceURLsBag._jsResourceURLs);
+				httpServletResponse.getWriter(), _jsResourceURLs);
 		}
 	}
 
@@ -182,28 +179,31 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			}
 		}
 
-		StringBundler sb1 = new StringBundler((cssResourceURLs.size() * 2) + 1);
+		_cssResourceURLs = cssResourceURLs.toArray(new String[0]);
+
+		StringBundler sb = new StringBundler((cssResourceURLs.size() * 2) + 1);
 
 		for (String cssResourceURL : cssResourceURLs) {
-			sb1.append("&");
-			sb1.append(cssResourceURL);
+			sb.append("&");
+			sb.append(cssResourceURL);
 		}
 
-		sb1.append("\" rel=\"stylesheet\" type = \"text/css\" />\n");
+		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />\n");
 
-		StringBundler sb2 = new StringBundler((jsResourceURLs.size() * 2) + 1);
+		_mergedCSSResourceURLs = sb.toString();
+
+		_jsResourceURLs = jsResourceURLs.toArray(new String[0]);
+
+		sb = new StringBundler((jsResourceURLs.size() * 2) + 1);
 
 		for (String jsResourceURL : jsResourceURLs) {
-			sb2.append("&");
-			sb2.append(jsResourceURL);
+			sb.append("&");
+			sb.append(jsResourceURL);
 		}
 
-		sb2.append("\" type = \"text/javascript\"></script>\n");
+		sb.append("\" type = \"text/javascript\"></script>\n");
 
-		_resourceURLsBag = new ResourceURLsBag(
-			cssResourceURLs.toArray(new String[0]),
-			jsResourceURLs.toArray(new String[0]), sb1.toString(),
-			sb2.toString());
+		_mergedJSResourceURLs = sb.toString();
 	}
 
 	private void _renderComboCSS(
@@ -218,9 +218,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write(portalURL + staticResourceURL);
 
-		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
-
-		printWriter.write(resourceURLsBag._mergedCSSResourceURLs);
+		printWriter.write(_mergedCSSResourceURLs);
 	}
 
 	private void _renderComboJS(
@@ -235,9 +233,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write(portalURL + staticResourceURL);
 
-		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
-
-		printWriter.write(resourceURLsBag._mergedJSResourceURLs);
+		printWriter.write(_mergedJSResourceURLs);
 	}
 
 	private void _renderSimpleCSS(
@@ -276,29 +272,12 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 	private final Collection<ServiceReference<BundleWebResources>>
 		_bundleWebResourcesServiceReferences = new TreeSet<>();
 	private String _comboContextPath;
+	private volatile String[] _cssResourceURLs = StringPool.EMPTY_ARRAY;
+	private volatile String[] _jsResourceURLs = StringPool.EMPTY_ARRAY;
+	private volatile String _mergedCSSResourceURLs;
+	private volatile String _mergedJSResourceURLs;
 
 	@Reference
 	private Portal _portal;
-
-	private volatile ResourceURLsBag _resourceURLsBag;
-
-	private static class ResourceURLsBag {
-
-		public ResourceURLsBag(
-			String[] cssResourceURLs, String[] jsResourceURLs,
-			String mergedCSSResourceURLs, String mergedJSResourceURLs) {
-
-			_cssResourceURLs = cssResourceURLs;
-			_jsResourceURLs = jsResourceURLs;
-			_mergedCSSResourceURLs = mergedCSSResourceURLs;
-			_mergedJSResourceURLs = mergedJSResourceURLs;
-		}
-
-		private final String[] _cssResourceURLs;
-		private final String[] _jsResourceURLs;
-		private final String _mergedCSSResourceURLs;
-		private final String _mergedJSResourceURLs;
-
-	}
 
 }

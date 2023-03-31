@@ -89,6 +89,8 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitSizeOnlyInCurrentSite";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		DMDocument.updateMaximumFileSize(

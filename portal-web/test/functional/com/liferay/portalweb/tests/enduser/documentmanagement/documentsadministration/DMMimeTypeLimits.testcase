@@ -67,6 +67,8 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanLimitSizeOnlyInCurrentSite";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		DMDocument.updateMimeTypeSizeLimit(
@@ -168,7 +170,7 @@ definition {
 	@description = "This test ensures that users can not save the size limits settings when one of the fields is empty."
 	@priority = 3
 	test CannotSaveFileSizeLimitsWithEmptyValue {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CannotSaveFileSizeLimitsWithEmptyValue";
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#CannotSaveFileSizeLimitsWithEmptyValue";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
@@ -202,7 +204,7 @@ definition {
 	@description = "This test ensures that an error alert will be displayed when saving a new file size limits settings with an invalid value."
 	@priority = 3
 	test CannotSaveFileSizeLimitsWithInvalidValue {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CannotSaveFileSizeLimitsWithInvalidValue";
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#CannotSaveFileSizeLimitsWithInvalidValue";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 10240,
@@ -235,7 +237,7 @@ definition {
 	@description = "This test ensures that an error alert will be displayed when updating an existing file size limits settings with an invalid value."
 	@priority = 3
 	test CannotUpdateFileSizeLimitsWithInvalidValue {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CannotUpdateFileSizeLimitsWithInvalidValue";
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#CannotUpdateFileSizeLimitsWithInvalidValue";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
@@ -281,7 +283,7 @@ definition {
 	@description = "This test ensures that the configured file size limites can be removed."
 	@priority = 3
 	test CanRemoveConfiguredFileSizeLimits {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CanRemoveConfiguredFileSizeLimits";
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanRemoveConfiguredFileSizeLimits";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 10240,
@@ -335,6 +337,8 @@ definition {
 	@description = "This test ensures that when setting the multiple mime type size limit at site and instance levels, the lower limit from the site will take effect."
 	@priority = 3
 	test SiteSizeLimitTakesEffectOverInstanceSettingsWithMultipleLimits {
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesEffectOverInstanceSettingsWithMultipleLimits";
+
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
 			maximumFileSizeValue = 40960,

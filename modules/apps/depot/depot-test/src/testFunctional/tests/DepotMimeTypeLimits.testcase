@@ -36,6 +36,7 @@ definition {
 	@priority = 4
 	test ALTakesEffectOverInstanceLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
+		property test.name.skip.portal.instance = "DepotMimeTypeLimits#ALTakesEffectOverInstanceLimit";
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
@@ -65,6 +66,7 @@ definition {
 	@priority = 4
 	test CanLimitMultipleMimeTypesSize {
 		property custom.properties = "feature.flag.LPS-114786=true";
+		property test.name.skip.portal.instance = "DepotMimeTypeLimits#CanLimitMultipleMimeTypesSize";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			depotName = "Test Depot Name",
@@ -99,6 +101,7 @@ definition {
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentDepot {
 		property custom.properties = "feature.flag.LPS-114786=true";
+		property test.name.skip.portal.instance = "DepotMimeTypeLimits#CanLimitSizeOnlyInCurrentDepot";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

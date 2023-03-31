@@ -28,7 +28,6 @@ import com.liferay.portal.servlet.DynamicServletRequestUtil;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -86,11 +85,14 @@ public class EditJournalArticleContentDashboardItemAction
 				true);
 
 		try {
-			return Optional.ofNullable(
-				_infoEditURLProvider.getURL(_journalArticle, httpServletRequest)
-			).orElse(
-				StringPool.BLANK
-			);
+			String url = _infoEditURLProvider.getURL(
+				_journalArticle, httpServletRequest);
+
+			if (url == null) {
+				return StringPool.BLANK;
+			}
+
+			return url;
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -405,6 +405,8 @@ definition {
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			PortletEntry.save();
+
+			Navigator.gotoBack();
 		}
 
 		task ("When the site designer adds a widget page") {

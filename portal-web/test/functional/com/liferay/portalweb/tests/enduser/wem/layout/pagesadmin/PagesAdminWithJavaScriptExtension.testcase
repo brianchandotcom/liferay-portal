@@ -789,6 +789,8 @@ definition {
 
 			PortletEntry.save();
 
+			Navigator.gotoBack();
+
 			ContentPages.addPage(pageName = "Content Page Name");
 
 			AssertCssValue(

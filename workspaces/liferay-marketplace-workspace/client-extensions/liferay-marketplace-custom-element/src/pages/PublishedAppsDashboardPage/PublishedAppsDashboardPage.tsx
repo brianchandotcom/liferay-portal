@@ -22,6 +22,8 @@ import {
 import {
 	MemberProps,
 	initialDashboardNavigationItems,
+	AccountBriefProps,
+	UserAccountProps,
 } from './PublishedDashboardPageUtil';
 
 declare let Liferay: {ThemeDisplay: any; authToken: string};
@@ -289,7 +291,7 @@ export function PublishedAppsDashboardPage() {
 				const accountsListResponse = await getUserAccounts();
 
 				const membersList = accountsListResponse.items.map(
-					(member: any) => {
+					(member: UserAccountProps) => {
 						return {
 							accountBriefs: member.accountBriefs,
 							dateCreated: member.dateCreated,
@@ -305,8 +307,8 @@ export function PublishedAppsDashboardPage() {
 
 				var filteredMembersList : MemberProps[] = [];
 
-				filteredMembersList = membersList.filter((member: any) => {
-					if (member.accountBriefs.find((accountBrief: { externalReferenceCode: string; }) =>
+				filteredMembersList = membersList.filter((member: MemberProps) => {
+					if (member.accountBriefs.find((accountBrief: AccountBriefProps) =>
 						accountBrief.externalReferenceCode === selectedAccount.externalReferenceCode)) {
 							return true;
 						}

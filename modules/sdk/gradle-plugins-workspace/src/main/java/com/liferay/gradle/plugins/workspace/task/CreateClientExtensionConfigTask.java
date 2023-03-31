@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.google.common.collect.Sets;
 
+import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
@@ -32,6 +33,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import java.util.AbstractMap;
@@ -203,8 +206,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		DirectoryProperty buildDirectoryProperty =
 			projectLayout.getBuildDirectory();
 
-		Provider<RegularFile> buildFileProvider = buildDirectoryProperty.file(
+		Path buildFilePath = Paths.get(
+			ClientExtensionProjectConfigurator.CLIENT_EXTENSION_BUILD_DIR,
 			path);
+
+		Provider<RegularFile> buildFileProvider = buildDirectoryProperty.file(
+			buildFilePath.toString());
 
 		TaskOutputs taskOutputs = getOutputs();
 

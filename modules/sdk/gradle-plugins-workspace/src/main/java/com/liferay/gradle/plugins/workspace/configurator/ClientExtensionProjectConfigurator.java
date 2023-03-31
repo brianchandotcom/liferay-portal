@@ -73,7 +73,6 @@ import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
-import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
@@ -99,6 +98,9 @@ public class ClientExtensionProjectConfigurator
 
 	public static final String BUILD_CLIENT_EXTENSION_ZIP_TASK_NAME =
 		"buildClientExtensionZip";
+
+	public static final String CLIENT_EXTENSION_BUILD_DIR =
+		"liferay-client-extension-build";
 
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
@@ -477,6 +479,8 @@ public class ClientExtensionProjectConfigurator
 								}
 							}
 
+							copySpec.exclude(CLIENT_EXTENSION_BUILD_DIR);
+
 							if (intoJsonNode != null) {
 								copySpec.into(intoJsonNode.asText());
 							}
@@ -505,24 +509,10 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
-				copy.from(
-					createClientExtensionConfigTaskProvider,
-					spec -> spec.eachFile(
-						fileCopyDetails -> {
-							File buildDir = project.getBuildDir();
-
-							File file = fileCopyDetails.getFile();
-
-							Path buildPath = buildDir.toPath();
-
-							Path relativePath = buildPath.relativize(
-								file.toPath());
-
-							fileCopyDetails.setRelativePath(
-								new RelativePath(
-									false, relativePath.toString()));
-						}));
-				copy.into(new File(project.getBuildDir(), "clientExtension"));
+				copy.dependsOn(CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME);
+				copy.into(
+					new File(
+						project.getBuildDir(), CLIENT_EXTENSION_BUILD_DIR));
 			});
 
 		buildClientExtensionZipTaskProvider.configure(

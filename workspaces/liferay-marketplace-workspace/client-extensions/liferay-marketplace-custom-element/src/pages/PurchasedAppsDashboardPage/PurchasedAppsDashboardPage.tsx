@@ -4,7 +4,12 @@ import {useEffect, useState} from 'react';
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
-import {getChannels, getOrders, getUserAccountsById} from '../../utils/api';
+import {
+	getAccounts,
+	getChannels,
+	getOrders,
+	getUserAccountsById,
+} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
 
@@ -47,13 +52,22 @@ const tableHeaders = [
 	},
 ];
 
-const initialUserAccountState: UserAccount = {
-	accountBriefs: [],
-};
+const initialAccountState: Account[] = [{
+	externalReferenceCode: "",
+	id: 0,
+	name: ""
+}];
 
 export function PurchasedAppsDashboardPage() {
-	const [userAccounts, setUserAccounts] = useState<UserAccount>(
-		initialUserAccountState
+	const [accounts, setAccounts] = useState<Account[]>(
+		initialAccountState
+	);
+	const [selectedAccount, setSelectedAccount] = useState<Account>(
+		{
+			externalReferenceCode: "",
+			id: 0,
+			name: ""
+		}
 	);
 	const [purchasedAppTable, setPurchasedAppTable] =
 		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
@@ -121,9 +135,17 @@ export function PurchasedAppsDashboardPage() {
 				totalCount: placedOrders.totalCount,
 			});
 
-			const userAccountsResponse = await getUserAccountsById();
+			const accountsResponse = await getAccounts();
 
-			setUserAccounts(userAccountsResponse);
+			const accountsList = accountsResponse.items.map((account: any, index:number) => {
+				return {
+					externalReferenceCode: account.externalReferenceCode,
+					id: account.id,
+					name: account.name,
+				}
+			});
+
+			setAccounts(accountsList);
 		};
 		makeFetch();
 	}, [page]);
@@ -132,11 +154,13 @@ export function PurchasedAppsDashboardPage() {
 		<DashboardPage
 			accountAppsNumber="0"
 			accountLogo={accountLogo}
-			accounts={userAccounts.accountBriefs}
+			accounts={accounts}
 			buttonMessage="Add Apps"
+			currentAccount={selectedAccount}
 			dashboardNavigationItems={dashboardNavigationItems}
 			messages={messages}
 			setDashboardNavigationItems={setDashboardNavigationItems}
+			setSelectedAccount={setSelectedAccount}
 		>
 			<DashboardTable<PurchasedAppProps>
 				emptyStateMessage={messages.emptyStateMessage}

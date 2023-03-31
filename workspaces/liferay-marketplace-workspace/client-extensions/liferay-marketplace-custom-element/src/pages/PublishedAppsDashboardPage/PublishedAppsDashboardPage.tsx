@@ -12,7 +12,8 @@ import {
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
-	getUserAccountsById,
+	getAccounts,
+	getCatalogByExternalReferenceCode,
 } from '../../utils/api';
 import {
 	DashboardListItems,
@@ -57,13 +58,15 @@ const memberTableHeaders = [
 	},
 ];
 
-const initialUserAccountState: UserAccount = {
-	accountBriefs: [],
-};
+const initialAccountsState: Account[] = [{
+	externalReferenceCode: "",
+	id: 0,
+	name: ""
+}];
 
 export function PublishedAppsDashboardPage() {
-	const [userAccounts, setUserAccounts] = useState<UserAccount>(
-		initialUserAccountState
+	const [accounts, setAccounts] = useState<Account[]>(
+		initialAccountsState
 	);
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
@@ -73,6 +76,13 @@ export function PublishedAppsDashboardPage() {
 		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
+	const [selectedAccount, setSelectedAccount] = useState<Account>(
+		{
+			externalReferenceCode: "",
+			id: 0,
+			name: ""
+		}
+	);
 
 	const appMessages = {
 		description: 'Manage and publish apps on the Marketplace',
@@ -177,43 +187,80 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		(async () => {
-			const appList = await getProducts();
+			const accountsResponse = await getAccounts();
 
-			const appListProductIds: number[] = getAppListProductIds(appList);
+			const accountsList = accountsResponse.items.map((account: Account) => {
+				return {
+					externalReferenceCode: account.externalReferenceCode,
+					id: account.id,
+					name: account.name,
+				} as Account
+			});
 
-			const appListProductSpecifications =
-				await getAppListProductSpecifications(appListProductIds);
+			setAccounts(accountsList)
+			setSelectedAccount(accountsList[0]);
+		})();
+	}, []);
 
-			const newAppList = appList.items.map(
-				(product: any, index: number) => {
-					return {
-						externalReferenceCode: product.externalReferenceCode,
-						lastUpdatedBy: product.lastUpdatedBy,
-						name: product.name.en_US,
-						productId: product.productId,
-						status: product.workflowStatusInfo.label.replace(
-							/(^\w|\s\w)/g,
-							(m: string) => m.toUpperCase()
-						),
-						thumbnail: product.thumbnail,
-						type: getProductTypeFromSpecifications(
-							appListProductSpecifications[index]
-						),
-						updatedDate: formatDate(product.modifiedDate),
-						version: getProductVersionFromSpecifications(
-							appListProductSpecifications[index]
-						),
-					};
+	useEffect(() => {
+		(async () => {
+			const accountERC = selectedAccount.externalReferenceCode;
+
+			if (accountERC) {
+				const currentCatalog = await getCatalogByExternalReferenceCode(selectedAccount.externalReferenceCode);
+
+				const currentCatalogId = currentCatalog.id;
+
+				if (currentCatalogId !== 0) {
+					const appList = await getProducts();
+
+					const appListProductIds: number[] = getAppListProductIds(appList);
+
+					const appListProductSpecifications =
+						await getAppListProductSpecifications(appListProductIds);
+
+					const newAppList : any[] = [];
+
+					appList.items.forEach(
+						(product: any, index: number) => {
+							if (product.catalogId === currentCatalogId) {
+								newAppList.push({
+									externalReferenceCode: product.externalReferenceCode,
+									lastUpdatedBy: product.lastUpdatedBy,
+									name: product.name.en_US,
+									productId: product.productId,
+									status: product.workflowStatusInfo.label.replace(
+										/(^\w|\s\w)/g,
+										(m: string) => m.toUpperCase()
+									),
+									thumbnail: product.thumbnail,
+									type: getProductTypeFromSpecifications(
+										appListProductSpecifications[index]
+									),
+									updatedDate: formatDate(product.modifiedDate),
+									version: getProductVersionFromSpecifications(
+										appListProductSpecifications[index]
+									),
+								});
+							}
+						}
+					);
+
+					setApps(newAppList);
 				}
-			);
+			}
+		})();
+	}, [selectedAccount]);
 
+	useEffect(() => {
+		(() => {
 			const currentAppNavigationItem = dashboardNavigationItems.find(
 				(navigationItem) => navigationItem.itemName === 'apps'
 			) as DashboardListItems;
 
 			const newAppNavigationItem = {
 				...currentAppNavigationItem,
-				items: newAppList,
+				items: apps,
 			};
 
 			setDashboardNavigationItems([
@@ -222,14 +269,8 @@ export function PublishedAppsDashboardPage() {
 					(navigationItem) => navigationItem.itemName !== 'apps'
 				),
 			]);
-
-			const accounts = await getUserAccountsById();
-
-			setUserAccounts(accounts);
-
-			setApps(newAppList);
 		})();
-	}, []);
+	}, [apps]);
 
 	useEffect(() => {
 		(() => {
@@ -274,13 +315,15 @@ export function PublishedAppsDashboardPage() {
 						<DashboardPage
 							accountAppsNumber="4"
 							accountLogo={accountLogo}
-							accounts={userAccounts.accountBriefs}
+							accounts={accounts}
 							buttonMessage="+ New App"
+							currentAccount={selectedAccount}
 							dashboardNavigationItems={dashboardNavigationItems}
 							messages={appMessages}
 							setDashboardNavigationItems={
 								setDashboardNavigationItems
 							}
+							setSelectedAccount={setSelectedAccount}
 						>
 							<DashboardTable<AppProps>
 								emptyStateMessage={
@@ -304,12 +347,14 @@ export function PublishedAppsDashboardPage() {
 						<DashboardPage
 							accountAppsNumber="4"
 							accountLogo={accountLogo}
-							accounts={userAccounts.accountBriefs}
+							accounts={accounts}
+							currentAccount={selectedAccount}
 							dashboardNavigationItems={dashboardNavigationItems}
 							messages={memberMessages}
 							setDashboardNavigationItems={
 								setDashboardNavigationItems
 							}
+							setSelectedAccount={setSelectedAccount}
 						>
 							{selectedMember ? (
 								<MemberProfile

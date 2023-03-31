@@ -20,9 +20,10 @@ export interface DashboardListItems {
 type DashBoardPageProps = {
 	accountAppsNumber: string;
 	accountLogo: string;
-	accounts: AccountBrief[];
+	accounts: Account[];
 	buttonMessage?: string;
 	children: ReactNode;
+	currentAccount: Account;
 	dashboardNavigationItems: DashboardListItems[];
 	messages: {
 		description: string;
@@ -34,6 +35,7 @@ type DashBoardPageProps = {
 		title: string;
 	};
 	setDashboardNavigationItems: Dispatch<SetStateAction<DashboardListItems[]>>;
+	setSelectedAccount: Dispatch<React.SetStateAction<Account>>;
 };
 
 export function DashboardPage({
@@ -42,9 +44,11 @@ export function DashboardPage({
 	accounts,
 	buttonMessage,
 	children,
+	currentAccount,
 	dashboardNavigationItems,
 	messages,
 	setDashboardNavigationItems,
+	setSelectedAccount
 }: DashBoardPageProps) {
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 
@@ -56,11 +60,13 @@ export function DashboardPage({
 						accountAppsNumber={accountAppsNumber}
 						accountIcon={accountLogo}
 						accounts={accounts}
+						currentAccount={currentAccount}
 						dashboardNavigationItems={dashboardNavigationItems}
 						onSelectAppChange={setSelectedApp}
 						setDashboardNavigationItems={
 							setDashboardNavigationItems
 						}
+						setSelectedAccount={setSelectedAccount}
 					/>
 
 					{selectedApp ? (

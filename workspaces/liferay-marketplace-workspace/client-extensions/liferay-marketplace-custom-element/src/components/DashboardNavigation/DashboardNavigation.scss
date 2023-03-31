@@ -8,6 +8,7 @@
 	&-header {
 		align-items: center;
 		background-color: #f7f7f8;
+		cursor: pointer;
 		border-radius: 0.625rem;
 		display: flex;
 		height: 4.5rem;
@@ -47,10 +48,18 @@
 		}
 
 		&-arrow-down {
+			display: none;
 			height: 1rem;
 			width: 1rem;
-			filter: invert(65%) sepia(4%) saturate(515%) hue-rotate(196deg)
-				brightness(95%) contrast(84%);
+		}
+
+		&:hover, &[aria-expanded=true] {
+			background: #EDF3FE;
+
+			.dashboard-navigation-header-arrow-down {
+				display: block;
+				fill: #0053F0;
+			}
 		}
 	}
 

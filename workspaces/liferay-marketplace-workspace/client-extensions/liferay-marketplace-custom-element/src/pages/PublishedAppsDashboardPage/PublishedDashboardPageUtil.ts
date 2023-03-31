@@ -16,6 +16,12 @@ export type MemberProps = {
 	userId: number;
 };
 
+export type CatalogProps = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -70,6 +72,10 @@ public class SkuUtil {
 
 		long replacementCProductId = 0;
 		String replacementCPInstanceUuid = null;
+
+		int discontinuedDateMonth = 0;
+		int discontinuedDateDay = 0;
+		int discontinuedDateYear = 0;
 
 		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
 			CPInstance discontinuedCPInstance = null;
@@ -101,18 +107,23 @@ public class SkuUtil {
 				replacementCPInstanceUuid =
 					discontinuedCPInstance.getCPInstanceUuid();
 			}
+
+			if (sku.getDiscontinuedDate() != null) {
+				Date discontinuedDate = GetterUtil.getDate(
+					sku.getDiscontinuedDate(),
+					DateFormatFactoryUtil.getSimpleDateFormat("MM/dd/yyyy"),
+					null);
+
+				Calendar discontinuedCalendar = CalendarFactoryUtil.getCalendar(
+					discontinuedDate.getTime());
+
+				discontinuedDateDay = discontinuedCalendar.get(
+					Calendar.DAY_OF_MONTH);
+				discontinuedDateMonth = discontinuedCalendar.get(
+					Calendar.MONTH);
+				discontinuedDateYear = discontinuedCalendar.get(Calendar.YEAR);
+			}
 		}
-
-		Calendar discontinuedCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (sku.getDiscontinuedDate() != null) {
-			discontinuedCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDiscontinuedDate());
-		}
-
-		DateConfig discontinuedDateConfig = new DateConfig(
-			discontinuedCalendar);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -246,8 +257,8 @@ public class SkuUtil {
 			deliverySubscriptionMaxSubscriptionCycles, sku.getUnspsc(),
 			GetterUtil.get(sku.getDiscontinued(), false),
 			replacementCPInstanceUuid, replacementCProductId,
-			discontinuedDateConfig.getMonth(), discontinuedDateConfig.getDay(),
-			discontinuedDateConfig.getYear(), serviceContext);
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
+			serviceContext);
 	}
 
 	public static void updateCommercePriceEntries(

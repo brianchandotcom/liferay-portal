@@ -12,14 +12,6 @@
  * details.
  */
 
-import {
-	currentDate,
-	currentYear,
-	lastYear,
-	lastYearSixMonthsAgoPeriod,
-	oneYearAgoDate,
-	sixMonthsAgoDate,
-} from '../utils/dateFormatter';
 import {axios} from './liferay/api';
 
 const DeliveryAPI = 'o/c/raylifepolicies';
@@ -37,27 +29,15 @@ export function getActivePolicies() {
 	);
 }
 
-export function getSixMonthsAgoPolicies() {
+export function getPoliciesByPeriod(
+	currentYear,
+	currentMonth,
+	currentDay,
+	periodYear,
+	periodMonth
+) {
 	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${currentDate} and startDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01)&pageSize=200`
-	);
-}
-
-export function getLastYearSixMonthsPolicies() {
-	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${oneYearAgoDate} and startDate ge ${lastYearSixMonthsAgoPeriod[0]}-${lastYearSixMonthsAgoPeriod[1]}-01)&pageSize=200`
-	);
-}
-
-export function getPoliciesUntilCurrentMonth() {
-	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${currentDate} and startDate ge ${currentYear}-01-01)&pageSize=200`
-	);
-}
-
-export function getPoliciesUntilCurrentMonthLastYear() {
-	return axios.get(
-		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and (startDate le ${oneYearAgoDate} and startDate ge ${lastYear}-01-01)&pageSize=200`
+		`${DeliveryAPI}/?filter=policyStatus ne 'declined' and userId eq '${userId}' and startDate le ${currentYear}-${currentMonth}-${currentDay} and startDate ge ${periodYear}-${periodMonth}-01&pageSize=200`
 	);
 }
 

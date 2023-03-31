@@ -25,7 +25,7 @@ export function getApplicationsStatusTotal() {
 }
 
 export function getApplications() {
-	return axios.get(`${DeliveryAPI}/`);
+	return axios.get(`${DeliveryAPI}/?pageSize=300`);
 }
 
 export function getNewSubmissions(

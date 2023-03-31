@@ -18,13 +18,14 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import LineChart from '../../../common/components/line-chart';
-import {
-	getLastYearSixMonthsPolicies,
-	getPoliciesUntilCurrentMonth,
-	getPoliciesUntilCurrentMonthLastYear,
-	getSixMonthsAgoPolicies,
-} from '../../../common/services';
+import {getPoliciesByPeriod} from '../../../common/services';
 import {CONSTANTS} from '../../../common/utils/constants';
+import {
+	currentDate,
+	lastYearSixMonthsAgoPeriod,
+	oneYearAgoDate,
+	sixMonthsAgoDate,
+} from '../../../common/utils/dateFormatter';
 
 const PERIOD = {
 	SIX_MONTH: '2',
@@ -60,6 +61,10 @@ export default function () {
 	const sixMonthsAgoFilter = getArrayOfFormatDate(getTime(new Date(), -5));
 	const dateSixMonthsAgo = `${sixMonthsAgoFilter[0]} ${sixMonthsAgoFilter[2]}`;
 	const dateCurrentDate = `${currentDateFilter[0]} ${currentDateFilter[2]}`;
+
+	const currentDateArray = currentDate.split('-');
+
+	const oneYearAgoArray = oneYearAgoDate.split('-');
 
 	function populateCommissions(policiesResult, policiesArray) {
 		policiesResult.forEach((policy) => {
@@ -178,7 +183,14 @@ export default function () {
 		}
 
 		if (selectedFilterDate === PERIOD.THIS_MONTH) {
-			getSixMonthsAgoPolicies().then((response) => {
+			getPoliciesByPeriod(
+				currentDateArray[0],
+				currentDateArray[1],
+				currentDateArray[2],
+				sixMonthsAgoDate[0],
+				sixMonthsAgoDate[1],
+				sixMonthsAgoDate[2]
+			).then((response) => {
 				const sixMonthsCommission = getSixMonthsCommission(
 					response,
 					sixMonthsAgoArray
@@ -204,7 +216,14 @@ export default function () {
 		}
 
 		if (selectedFilterDate === PERIOD.SIX_MONTH) {
-			getLastYearSixMonthsPolicies().then((response) => {
+			getPoliciesByPeriod(
+				oneYearAgoArray[0],
+				oneYearAgoArray[1],
+				oneYearAgoArray[2],
+				lastYearSixMonthsAgoPeriod[0],
+				lastYearSixMonthsAgoPeriod[1],
+				lastYearSixMonthsAgoPeriod[2]
+			).then((response) => {
 				const lastYearSixMonthsResult = response?.data?.items;
 
 				const lastSixMonthsAgo = populateCommissions(
@@ -218,7 +237,14 @@ export default function () {
 
 				setLastYearSixMonthCommission(lastYearSixMonthsCommission);
 
-				getSixMonthsAgoPolicies().then((response) => {
+				getPoliciesByPeriod(
+					currentDateArray[0],
+					currentDateArray[1],
+					currentDateArray[2],
+					sixMonthsAgoDate[0],
+					sixMonthsAgoDate[1],
+					sixMonthsAgoDate[2]
+				).then((response) => {
 					const totalSixMonthsCommissionValue = sumCommissionsPerMonth(
 						getSixMonthsCommission(response, sixMonthsAgoArray)
 					);
@@ -229,7 +255,14 @@ export default function () {
 		}
 
 		if (selectedFilterDate === PERIOD.YTD) {
-			getPoliciesUntilCurrentMonth().then((response) => {
+			getPoliciesByPeriod(
+				currentDateArray[0],
+				currentDateArray[1],
+				currentDateArray[2],
+				currentDateArray[0],
+				'01',
+				'01'
+			).then((response) => {
 				const firstUntilCurrentResult = response?.data?.items;
 
 				const firstUntilCurrent = populateCommissions(
@@ -249,7 +282,14 @@ export default function () {
 				setFirstUntilCurrentData(firstUntilCurrentCommission);
 				setYoyTotalCommission(totalFirstCurrentCommissionValue);
 
-				getPoliciesUntilCurrentMonthLastYear().then((response) => {
+				getPoliciesByPeriod(
+					oneYearAgoArray[0],
+					oneYearAgoArray[1],
+					oneYearAgoArray[2],
+					oneYearAgoArray[0],
+					'01',
+					'01'
+				).then((response) => {
 					const firstUntilCurrentLastYearResult =
 						response?.data?.items;
 

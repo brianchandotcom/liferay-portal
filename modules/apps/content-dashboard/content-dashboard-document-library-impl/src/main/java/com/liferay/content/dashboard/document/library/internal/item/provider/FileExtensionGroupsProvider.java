@@ -62,15 +62,9 @@ public class FileExtensionGroupsProvider {
 			return _OTHER;
 		}
 
-		String key = null;
-
 		for (FileExtensionGroup fileExtensionGroup : _fileExtensionGroups) {
 			if (fileExtensionGroup.containsExtension(extension)) {
-				key = fileExtensionGroup.getKey();
-
-				if (key != null) {
-					return key;
-				}
+				return fileExtensionGroup.getKey();
 			}
 		}
 

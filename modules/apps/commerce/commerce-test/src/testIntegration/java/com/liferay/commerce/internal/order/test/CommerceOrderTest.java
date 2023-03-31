@@ -964,7 +964,6 @@ public class CommerceOrderTest {
 
 		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
 		_commerceAccountLocalService.deleteCommerceAccount(commerceAccount);
-		_commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
 	}
 
 	@Test

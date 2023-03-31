@@ -204,17 +204,14 @@ public class FileExtensionGroupsProvider {
 				mimeType);
 
 			for (String extensionsMimeType : extensionsMimeTypes) {
-				_extensionMimeTypes.put(
-					extensionsMimeType.replaceAll("^\\.", StringPool.BLANK),
-					mimeType);
+				String extension = extensionsMimeType.replaceAll(
+					"^\\.", StringPool.BLANK);
+
+				_extensionMimeTypes.put(extension, mimeType);
+
+				extensions.add(extension);
 			}
-
-			extensions.addAll(extensionsMimeTypes);
 		}
-
-		extensions = TransformUtil.transform(
-			extensions,
-			extension -> extension.replaceAll("^\\.", StringPool.BLANK));
 
 		extensions.sort(Comparator.naturalOrder());
 

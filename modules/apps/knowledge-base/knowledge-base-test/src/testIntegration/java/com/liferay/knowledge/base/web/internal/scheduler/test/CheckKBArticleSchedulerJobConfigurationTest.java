@@ -86,7 +86,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 
 		kbArticle = _kbArticleLocalService.updateKBArticle(kbArticle);
 
-		_kbArticleLocalService.checkKBArticles();
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
 
 		kbArticle = _kbArticleLocalService.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);

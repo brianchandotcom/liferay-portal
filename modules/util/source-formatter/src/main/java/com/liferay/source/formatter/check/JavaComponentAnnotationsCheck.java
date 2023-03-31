@@ -509,9 +509,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			_ALLOWED_IMMEDIATE_CLASS_NAMES_KEY, absolutePath);
 
 		for (String allowedImmediateClassName : allowedImmediateClassNames) {
-			if (absolutePath.endsWith(allowedImmediateClassName) ||
-				absolutePath.contains(allowedImmediateClassName)) {
-
+			if (absolutePath.contains(allowedImmediateClassName)) {
 				return;
 			}
 		}

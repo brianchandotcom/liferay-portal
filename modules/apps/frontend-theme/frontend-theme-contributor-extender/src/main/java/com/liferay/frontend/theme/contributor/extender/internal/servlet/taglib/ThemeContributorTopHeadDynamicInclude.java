@@ -68,7 +68,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			portalCDNURL = themeDisplay.getPortalURL();
 		}
 
-		ResourceURLsBag resourceURLsBag = _getResourceURLsBag();
+		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
 
 		if (resourceURLsBag._cssResourceURLs.length > 0) {
 			if (themeDisplay.isThemeCssFastLoad()) {
@@ -111,6 +111,8 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
+		_rebuild();
+
 		_comboContextPath = _portal.getPathContext() + "/combo";
 	}
 
@@ -126,7 +128,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			_bundleWebResourcesServiceReferences.add(
 				bundleWebResourcesServiceReference);
 
-			_resourceURLsBag = null;
+			_rebuild();
 		}
 	}
 
@@ -138,31 +140,13 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			_bundleWebResourcesServiceReferences.remove(
 				bundleWebResourcesServiceReference);
 
-			_resourceURLsBag = null;
+			_rebuild();
 		}
 	}
 
-	private ResourceURLsBag _getResourceURLsBag() {
-		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
-
-		if (resourceURLsBag != null) {
-			return resourceURLsBag;
-		}
-
-		synchronized (_bundleWebResourcesServiceReferences) {
-			if (_resourceURLsBag != null) {
-				return _resourceURLsBag;
-			}
-
-			_resourceURLsBag = _rebuild();
-
-			return _resourceURLsBag;
-		}
-	}
-
-	private ResourceURLsBag _rebuild() {
+	private void _rebuild() {
 		if (_bundleContext == null) {
-			return null;
+			return;
 		}
 
 		Collection<String> cssResourceURLs = new ArrayList<>();
@@ -216,7 +200,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		sb2.append("\" type = \"text/javascript\"></script>\n");
 
-		return new ResourceURLsBag(
+		_resourceURLsBag = new ResourceURLsBag(
 			cssResourceURLs.toArray(new String[0]),
 			jsResourceURLs.toArray(new String[0]), sb1.toString(),
 			sb2.toString());
@@ -234,7 +218,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write(portalURL + staticResourceURL);
 
-		ResourceURLsBag resourceURLsBag = _getResourceURLsBag();
+		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
 
 		printWriter.write(resourceURLsBag._mergedCSSResourceURLs);
 	}
@@ -251,7 +235,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write(portalURL + staticResourceURL);
 
-		ResourceURLsBag resourceURLsBag = _getResourceURLsBag();
+		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
 
 		printWriter.write(resourceURLsBag._mergedJSResourceURLs);
 	}

@@ -19,11 +19,14 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.document.DefaultElasticsearchDocumentFactory;
@@ -31,6 +34,8 @@ import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchD
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResult;
@@ -150,6 +155,30 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 	}
 
 	@Test
+	public void testDeepPaginationWithScroll() throws Exception {
+		_indexSuggestKeyword(RandomTestUtil.randomString());
+		_indexSuggestKeyword(RandomTestUtil.randomString());
+		_indexSuggestKeyword(RandomTestUtil.randomString());
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(_INDEX_NAME);
+		searchSearchRequest.setScrollKeepAliveMinutes(1);
+		searchSearchRequest.setQuery(new MatchAllQuery());
+		searchSearchRequest.setStart(0);
+		searchSearchRequest.setSize(1);
+
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
+
+		Assert.assertEquals(1, _getLength(searchSearchResponse));
+
+		_assertScroll(searchSearchRequest, searchSearchResponse, 1);
+		_assertScroll(searchSearchRequest, searchSearchResponse, 1);
+		_assertScroll(searchSearchRequest, searchSearchResponse, 0);
+	}
+
+	@Test
 	public void testGlobalText() throws IOException {
 		_indexSuggestKeyword("search");
 
@@ -258,6 +287,20 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		return searchEngineAdapter;
 	}
 
+	private void _assertScroll(
+		SearchSearchRequest searchSearchRequest,
+		SearchSearchResponse searchSearchResponse, int expected) {
+
+		searchSearchRequest.setScrollId(searchSearchResponse.getScrollId());
+
+		searchSearchResponse = _searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		Assert.assertEquals(expected, _getLength(searchSearchResponse));
+		Assert.assertEquals(
+			expected, _getLength(searchSearchResponse));
+	}
+
 	private void _assertSuggestion(
 		Map<String, SuggestSearchResult> suggestSearchResultMap, int size,
 		String... expectedSuggestionsString) {
@@ -356,6 +399,14 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private int _getLength(SearchSearchResponse searchSearchResponse) {
+		Hits hits = searchSearchResponse.getHits();
+
+		Document[] documents = hits.getDocs();
+
+		return documents.length;
 	}
 
 	private String _getUID(String value) {

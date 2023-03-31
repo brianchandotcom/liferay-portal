@@ -482,9 +482,9 @@ definition {
 
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
 
-		Click(locator1 = "ProcessBuilderListView#CLEAR_BUTTON_PROCESS_BUILDER");
+		Click(locator1 = "ManagementBar#CLEAR_FILTER");
 
-		AssertElementNotPresent(locator1 = "ProcessBuilderListView#CLEAR_BUTTON_PROCESS_BUILDER");
+		AssertElementNotPresent(locator1 = "ManagementBar#CLEAR_FILTER");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}

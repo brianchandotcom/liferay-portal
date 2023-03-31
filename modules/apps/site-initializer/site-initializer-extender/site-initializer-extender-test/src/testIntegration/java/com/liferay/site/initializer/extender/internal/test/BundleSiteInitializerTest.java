@@ -190,6 +190,7 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -2333,20 +2334,19 @@ public class BundleSiteInitializerTest {
 
 		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
 
-		AccountBrief accountBrief = accountBriefs[0];
+		Assert.assertEquals(
+			Arrays.toString(accountBriefs), 1, accountBriefs.length);
 
 		Assert.assertEquals(
-			"TESTACC0001", accountBrief.getExternalReferenceCode());
-
+			"testalternatename1", userAccount.getAlternateName());
 		Assert.assertEquals(
 			"test.user1@liferay.com", userAccount.getEmailAddress());
 
 		OrganizationBrief[] organizationBriefs =
 			userAccount.getOrganizationBriefs();
 
-		OrganizationBrief organizationBrief = organizationBriefs[0];
-
-		Assert.assertEquals("Test Organization 1", organizationBrief.getName());
+		Assert.assertEquals(
+			Arrays.toString(organizationBriefs), 1, organizationBriefs.length);
 
 		_assertUserSiteGroups(userAccount.getId());
 
@@ -2357,19 +2357,95 @@ public class BundleSiteInitializerTest {
 
 		accountBriefs = userAccount.getAccountBriefs();
 
-		accountBrief = accountBriefs[0];
+		Assert.assertEquals(
+			Arrays.toString(accountBriefs), 1, accountBriefs.length);
 
 		Assert.assertEquals(
-			"TESTACC0002", accountBrief.getExternalReferenceCode());
-
+			"testalternatename2", userAccount.getAlternateName());
 		Assert.assertEquals(
 			"test.user2@liferay.com", userAccount.getEmailAddress());
 
 		organizationBriefs = userAccount.getOrganizationBriefs();
 
-		organizationBrief = organizationBriefs[0];
+		Assert.assertEquals(
+			Arrays.toString(organizationBriefs), 1, organizationBriefs.length);
 
-		Assert.assertEquals("Test Organization 2", organizationBrief.getName());
+		_assertUserSiteGroups(userAccount.getId());
+	}
+
+	private void _assertUserAccounts2() throws Exception {
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		UserAccount userAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode("USER-1");
+
+		Assert.assertNotNull(userAccount);
+
+		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(accountBriefs), 1, accountBriefs.length);
+
+		Assert.assertEquals(
+			"testalternatename1", userAccount.getAlternateName());
+		Assert.assertEquals(
+			"test.user1@liferay.com", userAccount.getEmailAddress());
+
+		OrganizationBrief[] organizationBriefs =
+			userAccount.getOrganizationBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(organizationBriefs), 1, organizationBriefs.length);
+
+		_assertUserSiteGroups(userAccount.getId());
+
+		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
+			"USER-2");
+
+		Assert.assertNotNull(userAccount);
+
+		accountBriefs = userAccount.getAccountBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(accountBriefs), 2, accountBriefs.length);
+
+		Assert.assertEquals(
+			"testalternatename2update", userAccount.getAlternateName());
+		Assert.assertEquals(
+			"test.user2.update@liferay.com", userAccount.getEmailAddress());
+
+		organizationBriefs = userAccount.getOrganizationBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(organizationBriefs), 2, organizationBriefs.length);
+
+		_assertUserSiteGroups(userAccount.getId());
+
+		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
+			"USER-3");
+
+		Assert.assertNotNull(userAccount);
+
+		accountBriefs = userAccount.getAccountBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(accountBriefs), 2, accountBriefs.length);
+
+		Assert.assertEquals(
+			"testalternatename3", userAccount.getAlternateName());
+		Assert.assertEquals(
+			"test.user3@liferay.com", userAccount.getEmailAddress());
+
+		organizationBriefs = userAccount.getOrganizationBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(organizationBriefs), 0, organizationBriefs.length);
 
 		_assertUserSiteGroups(userAccount.getId());
 	}
@@ -2588,13 +2664,13 @@ public class BundleSiteInitializerTest {
 		_assertOrganizations();
 		_assertPermissions();
 		_assertPortletSettings();
-		_assertUserAccounts1();
 		_assertSAPEntries();
 		_assertSegmentsEntries();
 		_assertSiteConfiguration();
 		_assertSiteSettings();
 		_assertSiteNavigationMenu();
 		_assertStyleBookEntry();
+		_assertUserAccounts1();
 		_assertUserGroups();
 		_assertUserRoles();
 		_assertWorkflowDefinitions();
@@ -2608,6 +2684,7 @@ public class BundleSiteInitializerTest {
 		_assertListTypeDefinitions2();
 		_assertObjectDefinitions2();
 		_assertResourcePermission2();
+		_assertUserAccounts2();
 	}
 
 	@Inject

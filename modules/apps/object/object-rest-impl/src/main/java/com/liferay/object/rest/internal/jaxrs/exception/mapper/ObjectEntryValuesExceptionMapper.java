@@ -56,11 +56,6 @@ public class ObjectEntryValuesExceptionMapper
 
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 	@Context
 	private AcceptLanguage _acceptLanguage;
 

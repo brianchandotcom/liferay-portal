@@ -84,6 +84,9 @@ export const getSafeDisplayValue = (
 	defaultValue: string | number = '-'
 ): string | number => (isBlank(value) ? defaultValue : value);
 
+export const getSafeTouchpoint = (touchpoint: string) =>
+	touchpoint !== 'Any' ? decodeURIComponent(touchpoint) : null;
+
 /**
  * Create a Blob object from data string and temporarily attach
  * an anchor element to the DOM to click on and trigger download.

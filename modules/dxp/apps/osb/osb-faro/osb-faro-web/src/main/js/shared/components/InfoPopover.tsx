@@ -4,7 +4,7 @@ import Popover from 'shared/components/Popover';
 import React, {useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 
-interface IInfoPopoverProps extends React.HTMLAttributes<HTMLElement> {
+export interface IInfoPopoverProps extends React.HTMLAttributes<HTMLElement> {
 	content?: React.ReactText;
 	popOverAttr?: {className: string};
 	title?: string;

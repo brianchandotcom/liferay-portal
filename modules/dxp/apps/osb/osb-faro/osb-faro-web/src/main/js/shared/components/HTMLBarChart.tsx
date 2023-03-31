@@ -18,10 +18,10 @@ type Column = {
 };
 
 export type Grid = {
-	formatter: (value: number | string) => React.ReactNode;
+	formatter?: (value: number | string) => React.ReactNode;
 	maxValue: number;
 	minValue: number;
-	precision: number;
+	precision?: number;
 	show: boolean;
 	type: 'number' | 'percentage';
 };
@@ -53,7 +53,7 @@ type Progress = {
 	value: string | number;
 };
 
-interface IHTMLBarChartProps {
+export interface IHTMLBarChartProps {
 	disableScroll: boolean;
 	formatSpacement: boolean;
 	grid: Grid;

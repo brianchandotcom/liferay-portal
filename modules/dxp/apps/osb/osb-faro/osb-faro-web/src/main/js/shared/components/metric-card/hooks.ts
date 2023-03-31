@@ -1,7 +1,7 @@
 import {DocumentNode} from 'graphql';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {Filters, getFilters, RawFilters} from 'shared/util/filter';
-import {getSafeRangeSelectors} from 'shared/util/util';
+import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
 import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
@@ -17,8 +17,7 @@ export const useAssetVariables = (commonVariables: ICommonVariables) => {
 		assetId: decodeURIComponent(assetId),
 		channelId,
 		title: decodeURIComponent(title),
-		touchpoint:
-			touchpoint !== 'Any' ? decodeURIComponent(touchpoint) : null,
+		touchpoint: getSafeTouchpoint(touchpoint),
 		...commonVariables
 	};
 };

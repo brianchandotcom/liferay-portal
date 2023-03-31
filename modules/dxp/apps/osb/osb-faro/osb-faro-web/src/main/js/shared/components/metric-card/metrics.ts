@@ -1,29 +1,10 @@
+import {MetricName} from 'shared/types/MetricName';
+
 export enum MetricType {
 	Number = 'number',
 	Percentage = 'percentage',
 	Ratings = 'ratings',
 	Time = 'time'
-}
-
-export enum MetricName {
-	Abandonments = 'abandonmentsMetric',
-	AnonymousVisitors = 'anonymousVisitorsMetric',
-	AvgTimeOnPage = 'avgTimeOnPageMetric',
-	BounceRate = 'bounceRateMetric',
-	Comments = 'commentsMetric',
-	CompletionTime = 'completionTimeMetric',
-	Downloads = 'downloadsMetric',
-	Entrances = 'entrancesMetric',
-	ExitRate = 'exitRateMetric',
-	KnownVisitors = 'knownVisitorsMetric',
-	Previews = 'previewsMetric',
-	Ratings = 'ratingsMetric',
-	ReadingTime = 'readingTimeMetric',
-	SessionsDuration = 'sessionDurationMetric',
-	SessionsPerVisitor = 'sessionsPerVisitorMetric',
-	Submissions = 'submissionsMetric',
-	Views = 'viewsMetric',
-	Visitors = 'visitorsMetric'
 }
 
 export type Metric = {

@@ -783,11 +783,13 @@ definition {
 			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Google Slide");
+
 		GoogleDoc.saveAndExit();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled");
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Google Slide");
 
 		AssertTextEquals(
 			key_fieldLabel = "Title",
@@ -802,7 +804,7 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		GoogleDoc.gotoEdit(
-			dmDocumentTitle = "Untitled",
+			dmDocumentTitle = "Google Slide",
 			dmDocumentTypeName = "Google Slides");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Slide");

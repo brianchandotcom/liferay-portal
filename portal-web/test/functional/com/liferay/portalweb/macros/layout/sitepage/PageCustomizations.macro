@@ -33,6 +33,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
+		Panel.expandPanel(panel = "Customization Settings");
+
 		Check.checkToggleSwitch(
 			key_fieldLabel = "customizable",
 			key_fieldsetLabel = "Customization Settings",

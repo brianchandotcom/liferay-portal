@@ -7,6 +7,7 @@ import membersIcon from '../../assets/icons/person-fill.svg';
 export const appList: AppProps[] = [];
 
 export type MemberProps = {
+	accountBriefs: AccountBriefProps[];
 	dateCreated: string;
 	email: string;
 	image: string;
@@ -15,6 +16,12 @@ export type MemberProps = {
 	role: string;
 	userId: number;
 };
+
+export type AccountBriefProps = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+}
 
 export type CatalogProps = {
 	externalReferenceCode: string;

@@ -289,23 +289,34 @@ export function PublishedAppsDashboardPage() {
 				const accountsListResponse = await getUserAccounts();
 
 				const membersList = accountsListResponse.items.map(
-					(account: any) => {
+					(member: any) => {
 						return {
-							dateCreated: account.dateCreated,
-							email: account.emailAddress,
-							image: account.image,
-							lastLoginDate: account.lastLoginDate,
-							name: account.name,
-							role: getRolesList(account.roleBriefs),
-							userId: account.id,
-						};
+							accountBriefs: member.accountBriefs,
+							dateCreated: member.dateCreated,
+							email: member.emailAddress,
+							image: member.image,
+							lastLoginDate: member.lastLoginDate,
+							name: member.name,
+							role: getRolesList(member.roleBriefs),
+							userId: member.id,
+						} as MemberProps;
 					}
 				);
 
-				setMembers(membersList);
+				var filteredMembersList : MemberProps[] = [];
+
+				filteredMembersList = membersList.filter((member: any) => {
+					if (member.accountBriefs.find((accountBrief: { externalReferenceCode: string; }) =>
+						accountBrief.externalReferenceCode === selectedAccount.externalReferenceCode)) {
+							return true;
+						}
+					return false;
+				})
+
+				setMembers(filteredMembersList);
 			}
 		})();
-	}, [selectedNavigationItem]);
+	}, [selectedNavigationItem, selectedAccount]);
 
 	return (
 		<div>

@@ -1,6 +1,8 @@
 assemble:
     - fromTask: bootJar
 liferay-sample-etc-cron:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
     name: Liferay Sample Etc Cron
     scopes:
         - Liferay.Headless.Admin.User.everything.read

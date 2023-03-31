@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
@@ -33,12 +34,17 @@ import com.liferay.portal.search.elasticsearch7.internal.document.DefaultElastic
 import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeRequest;
+import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResult;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -171,11 +177,41 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		Assert.assertEquals(1, _getLength(searchSearchResponse));
+		Assert.assertEquals(1, _getDocumentsLength(searchSearchResponse));
 
 		_assertScroll(searchSearchRequest, searchSearchResponse, 1);
 		_assertScroll(searchSearchRequest, searchSearchResponse, 1);
 		_assertScroll(searchSearchRequest, searchSearchResponse, 0);
+	}
+
+	@Test
+	public void testDeepPaginationWithSearchAfter() throws IOException {
+		_indexSuggestKeyword(RandomTestUtil.randomString());
+		_indexSuggestKeyword(RandomTestUtil.randomString());
+		_indexSuggestKeyword(RandomTestUtil.randomString());
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(_INDEX_NAME);
+		searchSearchRequest.setPointInTime(_getPointInTime());
+		searchSearchRequest.setQuery(new MatchAllQuery());
+		searchSearchRequest.setSize(1);
+		searchSearchRequest.setSorts(new Sort[] {new Sort("_count", true)});
+		searchSearchRequest.setStart(0);
+
+		SearchSearchResponse searchSearchResponse = null;
+
+		for (int i = 0; i < 3; i++) {
+			searchSearchResponse = _searchEngineAdapter.execute(
+				searchSearchRequest);
+
+			Assert.assertEquals(1, _getDocumentsLength(searchSearchResponse));
+
+			searchSearchResponse = _searchAfter(
+				searchSearchRequest, _getLastSearchHit(searchSearchResponse));
+		}
+
+		Assert.assertEquals(0, _getDocumentsLength(searchSearchResponse));
 	}
 
 	@Test
@@ -296,9 +332,8 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		searchSearchResponse = _searchEngineAdapter.execute(
 			searchSearchRequest);
 
-		Assert.assertEquals(expected, _getLength(searchSearchResponse));
 		Assert.assertEquals(
-			expected, _getLength(searchSearchResponse));
+			expected, _getDocumentsLength(searchSearchResponse));
 	}
 
 	private void _assertSuggestion(
@@ -401,12 +436,34 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		}
 	}
 
-	private int _getLength(SearchSearchResponse searchSearchResponse) {
+	private int _getDocumentsLength(SearchSearchResponse searchSearchResponse) {
 		Hits hits = searchSearchResponse.getHits();
 
 		Document[] documents = hits.getDocs();
 
 		return documents.length;
+	}
+
+	private SearchHit _getLastSearchHit(
+		SearchSearchResponse searchSearchResponse) {
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		return searchHitList.get(searchHitList.size() - 1);
+	}
+
+	private PointInTime _getPointInTime() {
+		OpenPointInTimeRequest openPointInTimeRequest =
+			new OpenPointInTimeRequest(1);
+
+		openPointInTimeRequest.setIndices(_INDEX_NAME);
+
+		OpenPointInTimeResponse openPointInTimeResponse =
+			_searchEngineAdapter.execute(openPointInTimeRequest);
+
+		return new PointInTime(openPointInTimeResponse.pitId());
 	}
 
 	private String _getUID(String value) {
@@ -469,6 +526,14 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private SearchSearchResponse _searchAfter(
+		SearchSearchRequest searchSearchRequest, SearchHit lastSearchHit) {
+
+		searchSearchRequest.setSearchAfter(lastSearchHit.getSortValues());
+
+		return _searchEngineAdapter.execute(searchSearchRequest);
 	}
 
 	private List<String> _toList(

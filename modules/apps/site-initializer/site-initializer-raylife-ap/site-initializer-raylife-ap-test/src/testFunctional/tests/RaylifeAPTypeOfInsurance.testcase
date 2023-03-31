@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Then Assert the modal is open") {
-			RaylifeApApplication.assertModalOption(description = "What type of insurance does this customer need?");
+			RaylifeApplicationModal.assertModalOption(description = "What type of insurance does this customer need?");
 		}
 	}
 
@@ -72,11 +72,11 @@ definition {
 		}
 
 		task ("Then Assert if the user can switch between the cards") {
-			RaylifeApApplication.assertModalOption(option = "Personal");
+			RaylifeApplicationModal.assertModalOption(option = "Personal");
 
-			RaylifeApApplication.selectModalOption(option = "Business");
+			RaylifeApplicationModal.selectModalOption(option = "Business");
 
-			RaylifeApApplication.assertModalOption(option = "Business");
+			RaylifeApplicationModal.assertModalOption(option = "Business");
 		}
 	}
 
@@ -88,13 +88,13 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("When the user clicks the previous button") {
-			RaylifeApApplication.openNewApplicationFlow(
+			RaylifeApplicationModal.openNewApplicationFlow(
 				button = "Previous",
 				insurance = "Busines");
 		}
 
 		task ("Then the Insurance option is still active") {
-			RaylifeApApplication.assertModalOption(option = "Busines");
+			RaylifeApplicationModal.assertModalOption(option = "Busines");
 		}
 	}
 

@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Then Assert that the number in the center of graph is equals to the value of items in list") {
-			RaylifeAPApplications.getValueFromApplicationsPage(legendItem = "Quoted,Open,Incomplete,Underwriting,Rejected,Reviewed,Bound");
+			RaylifeAPApplications.getValue(legendItem = "Quoted,Open,Incomplete,Underwriting,Rejected,Reviewed,Bound");
 
 			RaylifeAPApplications.assertGraphValue(number = ${number});
 		}

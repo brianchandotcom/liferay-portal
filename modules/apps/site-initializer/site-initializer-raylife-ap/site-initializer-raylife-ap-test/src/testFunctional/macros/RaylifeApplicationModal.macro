@@ -1,0 +1,220 @@
+definition {
+
+	macro assertModalOption {
+		if (isSet(option)) {
+			AssertElementPresent(
+				key_text = ${option},
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
+		}
+
+		if (isSet(description)) {
+			AssertElementPresent(
+				key_text = ${description},
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+	}
+
+	macro birthDate {
+		Type(
+			key_placeHolder = "__/__/____",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = ${nextDayDate});
+	}
+
+	macro openNewApplicationFlow {
+		Button.click(button = "Application");
+
+		RaylifeApplicationModal.selectModalOption(key_text = ${insurance});
+
+		Button.click(button = "Next");
+
+		if (isSet(button)) {
+			Button.click(button = ${button});
+		}
+
+		if (isSet(product)) {
+			RaylifeApplicationModal.selectModalOption(key_text = ${product});
+
+			Button.click(button = "Next");
+		}
+	}
+
+	macro selectModalOption {
+		Click(
+			key_text = ${option},
+			locator1 = "RaylifeApplicationModal#MODAL_OPTION");
+	}
+
+	macro selectOptionInDropdownByName {
+		Click(locator1 = "RaylifeApplicationModal#OPEN_DROPDOWN");
+
+		Click(
+			key_text = ${text},
+			locator1 = "RaylifeApplicationModal#SELECT_DROPDOWN_OPTION");
+	}
+
+	macro selectOptionInModalByID {
+		Select(
+			locator1 = "RaylifeApplicationModal#SELECT_OPTION",
+			value1 = ${value});
+	}
+
+	macro typeAllNewApplicationContactInfoFields {
+		var nextDayDate = DateUtil.getFormattedDate("+1", "MM/dd/yyyy");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "firstName",
+			value = "Testing");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "lastName",
+			value = "Model");
+
+		RaylifeApplicationModal.birthDate(nextDayDate = ${nextDayDate});
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "phone",
+			value = 0123456789);
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "email",
+			value = "test@liferay.com");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "streetAddress",
+			value = "Address");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "apt",
+			value = 0000);
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "city",
+			value = "New York");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "mySelectId",
+			value = "NY");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "zipCode",
+			value = 12345);
+
+		DoubleClick(
+			key_option = "Own",
+			locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
+
+		Button.click(button = "Next");
+	}
+
+	macro typeAllNewApplicationCoverageInfoFields {
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "mySelectId",
+			value = "$30,000 / $60,000");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "propertyDamage",
+			value = "$25,000");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "uninsuredOrUnderinsuredMBI",
+			value = "$30,000 / $60,000");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "uninsuredOrUnderinsuredMPD",
+			value = "$150,000");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "Medical",
+			value = "$1,000");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "comprehensive",
+			value = "$750");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "collision",
+			value = "$2,000");
+
+		Button.click(button = "Review quote");
+	}
+
+	macro typeAllNewApplicationDriverInfoFields {
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "firstName",
+			value = "Testing");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "lastName",
+			value = "Model");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "relationToContact",
+			value = "Spouse");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "gender",
+			value = "Female");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "maritalStatus",
+			value = "Single");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "ageFirstLicenced",
+			value = 18);
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "occupation",
+			value = "Engineer");
+
+		RaylifeApplicationModal.selectOptionInModalByID(
+			label = "highestEducation",
+			value = "Masters");
+
+		RaylifeApplicationModal.selectOptionInDropdownByName(
+			field = "millitary-affiliation",
+			text = "None");
+
+		DoubleClick(
+			key_option = "No",
+			locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
+
+		Button.click(button = "Next");
+	}
+
+	macro typeAllNewApplicationVehicleInfoFields {
+		RaylifeApplicationModal.selectOptionInDropdownByName(
+			field = "years",
+			text = 2019);
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "make",
+			value = "Volvo");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "model",
+			value = "v90 cross country");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "primary-usage",
+			value = "Business");
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "annual-mileage",
+			value = 50000);
+
+		RaylifeApplicationModal.typeNewApplicationInfoFields(
+			label = "ownership",
+			value = "Own");
+
+		Button.click(button = "Next");
+	}
+
+	macro typeNewApplicationInfoFields {
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = ${value});
+	}
+
+}

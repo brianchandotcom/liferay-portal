@@ -17,6 +17,9 @@ package com.liferay.journal.internal.upgrade.v5_1_0;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -30,6 +33,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -142,6 +146,19 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 									break;
 								}
+
+								if (_log.isWarnEnabled() &&
+									(ddmStructureId == 0L)) {
+
+									_log.warn(
+										StringBundler.concat(
+											"Unable to find structure for ",
+											"ddmStructureKey ", ddmStructureKey,
+											" siteGroupId ", siteGroupId,
+											" ancestorSiteAndDepotGroupIds ",
+											Arrays.toString(
+												ancestorSiteAndDepotGroupIds)));
+								}
 							}
 
 							groupIdsMap.put(siteGroupId, ddmStructureId);
@@ -211,6 +228,9 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 		return groupId;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleDDMStructureIdUpgradeProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

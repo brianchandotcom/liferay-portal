@@ -3,7 +3,10 @@
 exports[`CriteriaSidebar renders 1`] = `
 <DocumentFragment>
   <div
+    aria-label="segments-contributors-panel"
     class="criteria-sidebar-root"
+    role="tabpanel"
+    tabindex="-1"
   >
     <div
       class="sidebar-header"

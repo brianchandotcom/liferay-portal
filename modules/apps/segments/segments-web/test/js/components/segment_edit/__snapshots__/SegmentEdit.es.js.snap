@@ -188,59 +188,6 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
             class="btn-group"
           >
             <div
-              class="btn-group-item mr-2"
-            >
-              <label
-                aria-label="edit-segment"
-                class="toggle-switch toggle-editing"
-                title="edit-segment"
-              >
-                <input
-                  class="toggle-switch-check"
-                  type="checkbox"
-                />
-                <span
-                  aria-hidden="true"
-                  class="toggle-switch-bar"
-                >
-                  <span
-                    class="toggle-switch-handle"
-                    data-label-off=""
-                    data-label-on=""
-                  >
-                    <span
-                      class="button-icon button-icon-off toggle-switch-icon"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-pencil"
-                        role="presentation"
-                      >
-                        <use
-                          xlink:href="#pencil"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      class="button-icon button-icon-on toggle-switch-icon"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-pencil"
-                        role="presentation"
-                      >
-                        <use
-                          xlink:href="#pencil"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </div>
-          <div
-            class="btn-group"
-          >
-            <div
               class="btn-group-item"
             >
               <button
@@ -259,6 +206,26 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
                 type="submit"
               >
                 save
+              </button>
+            </div>
+            <div
+              class="btn-group-item"
+            >
+              <button
+                aria-label="enter-edit-mode"
+                class="btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                role="tab"
+                title="enter-edit-mode"
+                type="button"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-cog"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#cog"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -364,60 +331,6 @@ exports[`SegmentEdit renders with given values 1`] = `
             class="btn-group"
           >
             <div
-              class="btn-group-item mr-2"
-            >
-              <label
-                aria-label="edit-segment"
-                class="toggle-switch toggle-editing"
-                title="edit-segment"
-              >
-                <input
-                  checked=""
-                  class="toggle-switch-check"
-                  type="checkbox"
-                />
-                <span
-                  aria-hidden="true"
-                  class="toggle-switch-bar"
-                >
-                  <span
-                    class="toggle-switch-handle"
-                    data-label-off=""
-                    data-label-on=""
-                  >
-                    <span
-                      class="button-icon button-icon-off toggle-switch-icon"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-pencil"
-                        role="presentation"
-                      >
-                        <use
-                          xlink:href="#pencil"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      class="button-icon button-icon-on toggle-switch-icon"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-pencil"
-                        role="presentation"
-                      >
-                        <use
-                          xlink:href="#pencil"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </div>
-          <div
-            class="btn-group"
-          >
-            <div
               class="btn-group-item"
             >
               <button
@@ -435,6 +348,26 @@ exports[`SegmentEdit renders with given values 1`] = `
                 type="submit"
               >
                 save
+              </button>
+            </div>
+            <div
+              class="btn-group-item"
+            >
+              <button
+                aria-label="enter-view-mode"
+                class="btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                role="tab"
+                title="enter-view-mode"
+                type="button"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-cog"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#cog"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -512,7 +445,10 @@ exports[`SegmentEdit renders with given values 1`] = `
           class="criteria-builder-section-sidebar criteria-builder-section-sidebar--with-warning"
         >
           <div
+            aria-label="segments-contributors-panel"
             class="criteria-sidebar-root"
+            role="tabpanel"
+            tabindex="-1"
           >
             <div
               class="sidebar-header"

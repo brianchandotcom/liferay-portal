@@ -9,7 +9,10 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
       class="criteria-builder-section-sidebar criteria-builder-section-sidebar--with-warning"
     >
       <div
+        aria-label="segments-contributors-panel"
         class="criteria-sidebar-root"
+        role="tabpanel"
+        tabindex="-1"
       >
         <div
           class="sidebar-header"
@@ -819,7 +822,10 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
       class="criteria-builder-section-sidebar criteria-builder-section-sidebar--with-warning"
     >
       <div
+        aria-label="segments-contributors-panel"
         class="criteria-sidebar-root"
+        role="tabpanel"
+        tabindex="-1"
       >
         <div
           class="sidebar-header"

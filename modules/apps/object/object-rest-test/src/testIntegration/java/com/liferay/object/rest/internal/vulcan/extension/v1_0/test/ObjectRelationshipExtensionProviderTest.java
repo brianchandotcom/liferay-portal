@@ -201,7 +201,7 @@ public class ObjectRelationshipExtensionProviderTest {
 
 	private NestedFieldsContext _getNestedFieldsContext() {
 		return new NestedFieldsContext(
-			Collections.singletonList(_objectRelationship.getName()), null,
+			1, Collections.singletonList(_objectRelationship.getName()), null,
 			null, null, null);
 	}
 

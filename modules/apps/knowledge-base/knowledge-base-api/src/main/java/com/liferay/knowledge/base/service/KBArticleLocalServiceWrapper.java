@@ -136,10 +136,10 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
-	public void checkKBArticles()
+	public void checkKBArticles(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_kbArticleLocalService.checkKBArticles();
+		_kbArticleLocalService.checkKBArticles(companyId);
 	}
 
 	/**

@@ -1,0 +1,105 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+		Raylife.createRaylifeSite(siteName = "Raylife AP");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Story ID: LPS-146254 | Test Summary: Verify that the number in the center of the graph is equal the total number of active Policies"
+	@priority = 5
+	test AssertTheTotalNumberOfActivePolicies {
+		property test.name.skip.portal.instance = "RaylifeAPPoliceTotalActive#AssertTheTotalNumberOfActivePolicies";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that I go to Raylife AP") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+		}
+
+		task ("When I go to the Policies page") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
+		}
+
+		task ("Then I should be able to assert that the number in the center of the graph is equal to the value of the items in the list") {
+			RaylifeAPApplications.getValue(legendItem = "BOP,WC,Health,Life,Property,Home,Auto,PL,GL");
+
+			RaylifeAPPolicies.assertGraphValue(number = ${number});
+		}
+	}
+
+	@description = "Story ID: LPS-146254 | Test Summary: Check if adding a new application increases the number of Policies"
+	@priority = 5
+	test CanViewIfTheNumberOfPoliciesHasIncreased {
+		property test.name.skip.portal.instance = "RaylifeAPPoliceTotalActive#CanViewIfTheNumberOfPoliciesHasIncreased";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that I go to the Policies page and state the total number of active Policies") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
+
+			RaylifeAPApplications.getValue(legendItem = "BOP,WC,Health,Life,Property,Home,Auto,PL,GL");
+
+			RaylifeAPPolicies.assertGraphValue(number = ${number});
+		}
+
+		task ("And I go to the Dashboard page and generate a quote") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields();
+
+			Button.click(button = "Generate Quote");
+		}
+
+		task ("When I go back to the Policies page") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
+		}
+
+		task ("Then I should be able to assert that the number in the center of the graph has increased") {
+			RaylifeAPApplications.getValue(legendItem = "BOP,WC,Health,Life,Property,Home,Auto,PL,GL");
+
+			RaylifeAPPolicies.assertGraphValue(number = ${number});
+		}
+	}
+
+}

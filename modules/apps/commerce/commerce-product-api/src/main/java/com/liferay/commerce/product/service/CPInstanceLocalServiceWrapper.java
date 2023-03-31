@@ -770,6 +770,15 @@ public class CPInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public CPInstance updateExternalReferenceCode(
+			long cpInstanceId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceLocalService.updateExternalReferenceCode(
+			cpInstanceId, externalReferenceCode);
+	}
+
+	@Override
 	public CPInstance updatePricingInfo(
 			long cpInstanceId, java.math.BigDecimal price,
 			java.math.BigDecimal promoPrice, java.math.BigDecimal cost,

@@ -928,6 +928,48 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance
+			updateExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long cpInstanceId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceServiceUtil.class, "updateExternalReferenceCode",
+				_updateExternalReferenceCodeParameterTypes18);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPInstance)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstance
 			updatePricingInfo(
 				HttpPrincipal httpPrincipal, long cpInstanceId,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
@@ -938,7 +980,7 @@ public class CPInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceServiceUtil.class, "updatePricingInfo",
-				_updatePricingInfoParameterTypes18);
+				_updatePricingInfoParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, price, promoPrice, cost,
@@ -982,7 +1024,7 @@ public class CPInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceServiceUtil.class, "updateShippingInfo",
-				_updateShippingInfoParameterTypes19);
+				_updateShippingInfoParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, width, height, depth, weight,
@@ -1033,7 +1075,7 @@ public class CPInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceServiceUtil.class, "updateSubscriptionInfo",
-				_updateSubscriptionInfoParameterTypes20);
+				_updateSubscriptionInfoParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, overrideSubscriptionInfo,
@@ -1180,18 +1222,22 @@ public class CPInstanceServiceHttp {
 			int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updatePricingInfoParameterTypes18 =
+	private static final Class<?>[]
+		_updateExternalReferenceCodeParameterTypes18 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _updatePricingInfoParameterTypes19 =
 		new Class[] {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateShippingInfoParameterTypes19 =
+	private static final Class<?>[] _updateShippingInfoParameterTypes20 =
 		new Class[] {
 			long.class, double.class, double.class, double.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateSubscriptionInfoParameterTypes20 =
+	private static final Class<?>[] _updateSubscriptionInfoParameterTypes21 =
 		new Class[] {
 			long.class, boolean.class, boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,

@@ -212,6 +212,10 @@ public interface CPInstanceService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPInstance updateExternalReferenceCode(
+			long cpInstanceId, String externalReferenceCode)
+		throws PortalException;
+
 	public CPInstance updatePricingInfo(
 			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
 			BigDecimal cost, ServiceContext serviceContext)

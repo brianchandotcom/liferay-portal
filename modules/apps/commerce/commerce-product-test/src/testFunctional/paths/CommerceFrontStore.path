@@ -276,6 +276,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_STATUS_LABEL</td>
+	<td>//a[contains(@href,'${key_productName}')]//span[contains(@class,'m-0')]//*[text()='${key_status}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUANTITY_SELECTOR_POPOVER_LIST_ITEM</td>
 	<td>//div[contains(@class,'quantity-selector-popover')]//small[text()='${key_quantityConfigurationText}']/b[text()='${key_quantity}']</td>
 	<td></td>

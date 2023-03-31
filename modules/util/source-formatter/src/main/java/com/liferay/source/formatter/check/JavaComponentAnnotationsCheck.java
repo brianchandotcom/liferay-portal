@@ -312,11 +312,13 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
-		List<String> allowedImmediateClassNames = getAttributeValues(
-			_ALLOWED_IMMEDIATE_CLASS_NAMES_KEY, absolutePath);
+		List<String> allowedImmediateAttributeClassNames = getAttributeValues(
+			_ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY, absolutePath);
 
-		for (String allowedImmediateClassName : allowedImmediateClassNames) {
-			if (absolutePath.contains(allowedImmediateClassName)) {
+		for (String allowedImmediateAttributeClassName :
+				allowedImmediateAttributeClassNames) {
+
+			if (absolutePath.contains(allowedImmediateAttributeClassName)) {
 				return annotation;
 			}
 		}
@@ -532,8 +534,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return javaMethods;
 	}
 
-	private static final String _ALLOWED_IMMEDIATE_CLASS_NAMES_KEY =
-		"allowedImmediateClassNames";
+	private static final String _ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY =
+		"allowedImmediateAttributeClassNames";
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
 		"checkConfigurationPolicyAttribute";

@@ -545,7 +545,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
 	private static final Pattern _unnecessaryAttributePattern = Pattern.compile(
-		"(\\(| |\n\t*)(\\bimmediate = true\\b,?)([ \n)])");
+		"\\bimmediate = true\\b");
 
 	private class AnnotationParameterPropertyComparator
 		extends NaturalOrderStringComparator {

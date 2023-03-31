@@ -1034,6 +1034,120 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByGroupingOperatorsObjectEntriesByRelatesObjectEntriesFields()
+		throws Exception {
+
+		// 1 to many relationship, custom object field
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"(%s/%s le '%s') and (%s/%s gt '%s')",
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_2,
+					_OBJECT_FIELD_VALUE_2, _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
+			_objectDefinition1);
+
+		// 1 to many relationship, system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"(%s/id le '%s') and (%s/id gt '%s')",
+					_objectRelationship1.getName(),
+					_objectEntry2.getObjectEntryId(),
+					_objectRelationship1.getName(),
+					_objectEntry2.getObjectEntryId() - 1)),
+			_objectDefinition1);
+
+		// 1 to many relationship (other side), custom object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"(%s/%s le '%s') and (%s/%s gt '%s')",
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_1,
+					_OBJECT_FIELD_VALUE_1, _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
+			_objectDefinition2);
+
+		// 1 to many relationship (other side), system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"(%s/id le '%s') and (%s/id gt '%s')",
+					_objectRelationship1.getName(),
+					_objectEntry1.getObjectEntryId(),
+					_objectRelationship1.getName(),
+					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition2);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+
+		// Many to many relationship, custom object field
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"(%s/%s le '%s') and (%s/%s gt '%s')",
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_2,
+					_OBJECT_FIELD_VALUE_2, _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
+			_objectDefinition1);
+
+		// Many to many relationship, system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"(%s/id le '%s') and (%s/id gt '%s')",
+					_objectRelationship1.getName(),
+					_objectEntry2.getObjectEntryId(),
+					_objectRelationship1.getName(),
+					_objectEntry2.getObjectEntryId() - 1)),
+			_objectDefinition1);
+
+		// Many to many relationship (other side), custom object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"(%s/%s le '%s') and (%s/%s gt '%s')",
+					_objectRelationship1.getName(), _OBJECT_FIELD_NAME_1,
+					_OBJECT_FIELD_VALUE_1, _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
+			_objectDefinition2);
+
+		// Many to many relationship (other side), system object field
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"(%s/id le '%s') and (%s/id gt '%s')",
+					_objectRelationship1.getName(),
+					_objectEntry1.getObjectEntryId(),
+					_objectRelationship1.getName(),
+					_objectEntry1.getObjectEntryId() - 1)),
+			_objectDefinition2);
+	}
+
+	@Test
 	public void testFilterByListOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 

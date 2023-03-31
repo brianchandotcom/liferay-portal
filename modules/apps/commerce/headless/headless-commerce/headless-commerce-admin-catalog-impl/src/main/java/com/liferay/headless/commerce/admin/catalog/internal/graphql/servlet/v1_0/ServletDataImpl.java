@@ -834,6 +834,11 @@ public class ServletDataImpl implements ServletData {
 							SkuResourceImpl.class,
 							"patchSkuByExternalReferenceCode"));
 					put(
+						"mutation#updateSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"putSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode"));
+					put(
 						"mutation#deleteSku",
 						new ObjectValuePair<>(
 							SkuResourceImpl.class, "deleteSku"));

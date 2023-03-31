@@ -906,6 +906,57 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode()
+		throws Exception {
+
+		Sku postSku =
+			testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_addSku();
+
+		Sku randomSku = randomSku();
+
+		Sku putSku =
+			skuResource.
+				putSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode(
+					postSku.getExternalReferenceCode(),
+					testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_getNewExternalReferenceCode());
+
+		assertEquals(randomSku, putSku);
+		assertValid(putSku);
+
+		Sku getSku =
+			testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_getSku(
+				putSku.getExternalReferenceCode(),
+				testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_getNewExternalReferenceCode());
+
+		assertEquals(randomSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku
+		testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_getSku(
+			String externalReferenceCode, String newExternalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_getNewExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Sku
+			testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode_addSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSku() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku = testDeleteSku_addSku();

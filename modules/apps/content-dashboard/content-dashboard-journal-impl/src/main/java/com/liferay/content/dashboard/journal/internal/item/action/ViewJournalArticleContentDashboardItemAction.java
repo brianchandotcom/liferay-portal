@@ -23,6 +23,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringPool;
@@ -46,7 +47,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -111,6 +111,28 @@ public class ViewJournalArticleContentDashboardItemAction
 		return _getViewURL(locale, themeDisplay);
 	}
 
+	private Layout _getLayout(
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return null;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+				layoutDisplayPageObjectProvider.getGroupId(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId());
+
+		if (layoutPageTemplateEntry == null) {
+			return null;
+		}
+
+		return _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+	}
+
 	private LayoutDisplayPageObjectProvider<JournalArticle>
 		_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle) {
 
@@ -128,28 +150,6 @@ public class ViewJournalArticleContentDashboardItemAction
 				new InfoItemReference(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey()));
-	}
-
-	private Optional<Layout> _getLayoutOptional(
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
-
-		return Optional.ofNullable(
-			layoutDisplayPageObjectProvider
-		).filter(
-			currentLayoutDisplayPageObjectProvider ->
-				currentLayoutDisplayPageObjectProvider.getDisplayObject() !=
-					null
-		).map(
-			currentLayoutDisplayPageObjectProvider ->
-				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-					layoutDisplayPageObjectProvider.getGroupId(),
-					layoutDisplayPageObjectProvider.getClassNameId(),
-					layoutDisplayPageObjectProvider.getClassPK(),
-					layoutDisplayPageObjectProvider.getClassTypeId())
-		).map(
-			layoutPageTemplateEntry -> _layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid())
-		);
 	}
 
 	private String _getLocalizedURL(
@@ -172,70 +172,64 @@ public class ViewJournalArticleContentDashboardItemAction
 			return StringPool.BLANK;
 		}
 
-		Optional<Layout> layoutOptional = _getLayoutOptional(
+		Layout layout = _getLayout(
 			_getLayoutDisplayPageObjectProvider(_journalArticle));
 
-		return layoutOptional.map(
-			layout -> {
-				HttpServletRequest httpServletRequest =
-					themeDisplay.getRequest();
+		if (layout == null) {
+			return StringPool.BLANK;
+		}
 
-				LayoutDisplayPageObjectProvider<?>
-					initialLayoutDisplayPageObjectProvider =
-						(LayoutDisplayPageObjectProvider<?>)
-							httpServletRequest.getAttribute(
-								LayoutDisplayPageWebKeys.
-									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+		String url = null;
 
-				httpServletRequest.setAttribute(
-					LayoutDisplayPageWebKeys.
-						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-					_getLayoutDisplayPageObjectProvider(_journalArticle));
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-				String completeURL = _portal.getCurrentCompleteURL(
-					httpServletRequest);
-
-				try {
-					List<LayoutSEOLink> localizedLayoutSEOLinks =
-						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							layout,
-							_portal.getSiteDefaultLocale(
-								_portal.getScopeGroupId(_httpServletRequest)),
-							_portal.getCanonicalURL(
-								completeURL, themeDisplay, layout, false,
-								false),
-							Collections.singleton(locale));
-
-					return _getLocalizedURL(locale, localizedLayoutSEOLinks);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-
-					return StringPool.BLANK;
-				}
-				finally {
-					httpServletRequest.setAttribute(
+		LayoutDisplayPageObjectProvider<?>
+			initialLayoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
 						LayoutDisplayPageWebKeys.
-							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-						initialLayoutDisplayPageObjectProvider);
-				}
-			}
-		).map(
-			url -> {
-				String backURL = ParamUtil.getString(
-					_httpServletRequest, "backURL");
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-				if (Validator.isNotNull(backURL)) {
-					return HttpComponentsUtil.setParameter(
-						url, "p_l_back_url", backURL);
-				}
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			_getLayoutDisplayPageObjectProvider(_journalArticle));
 
-				return HttpComponentsUtil.setParameter(
-					url, "p_l_back_url", themeDisplay.getURLCurrent());
-			}
-		).orElse(
-			StringPool.BLANK
-		);
+		String completeURL = _portal.getCurrentCompleteURL(httpServletRequest);
+
+		try {
+			List<LayoutSEOLink> localizedLayoutSEOLinks =
+				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+					layout,
+					_portal.getSiteDefaultLocale(
+						_portal.getScopeGroupId(_httpServletRequest)),
+					_portal.getCanonicalURL(
+						completeURL, themeDisplay, layout, false, false),
+					Collections.singleton(locale));
+
+			url = _getLocalizedURL(locale, localizedLayoutSEOLinks);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+		finally {
+			httpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				initialLayoutDisplayPageObjectProvider);
+		}
+
+		if (url == null) {
+			return StringPool.BLANK;
+		}
+
+		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return HttpComponentsUtil.setParameter(
+				url, "p_l_back_url", backURL);
+		}
+
+		return HttpComponentsUtil.setParameter(
+			url, "p_l_back_url", themeDisplay.getURLCurrent());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

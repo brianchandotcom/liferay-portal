@@ -83,7 +83,8 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 						Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 						null);
 
-				// Try to use the first instance registered from the UI that is found
+				// Try to use the first instance registered from the UI that is
+				// found
 
 				for (FDSCellRendererCET fdsCellRendererCET :
 						fdsCellRendererCETs) {
@@ -96,7 +97,8 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 					}
 				}
 
-				// Try to use the sample-workspace instance if none created from the UI was found
+				// Try to use the sample-workspace instance if none created from
+				// the UI was found
 
 				if (moduleName == null) {
 					for (FDSCellRendererCET fdsCellRendererCET :

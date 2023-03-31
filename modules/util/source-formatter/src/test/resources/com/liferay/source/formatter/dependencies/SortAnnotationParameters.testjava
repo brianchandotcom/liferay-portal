@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Hugo Huijser
  */
-@Component(service = SortAnnotationParameters.class, enabled = false)
+@Component(service = SortAnnotationParameters.class)
 public class SortAnnotationParameters {
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)

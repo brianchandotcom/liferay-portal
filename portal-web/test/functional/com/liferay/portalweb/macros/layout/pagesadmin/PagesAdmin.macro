@@ -74,7 +74,7 @@ definition {
 					value1 = ${target});
 			}
 
-			Navigator.gotoNavTab(navUnderline = "General");
+			Navigator.gotoNavTab(navTab = "General");
 
 			Type(
 				locator1 = "TextInput#URL",
@@ -90,7 +90,7 @@ definition {
 			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
 		}
 
-		Navigator.gotoNavTab(navUnderline = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		AssertVisible(locator1 = "TextInput#NAME");
 

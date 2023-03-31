@@ -161,7 +161,7 @@ public class TLDFormatter {
 	}
 
 	private SAXReader _getSAXReader() {
-		return SAXReaderFactory.getSAXReader(null, false, false);
+		return SAXReaderFactory.getSAXReader(null, false, true);
 	}
 
 	private void _sortElements(

@@ -63,7 +63,7 @@ const MDFRequestList = () => {
 	const isPartnerManagerRole = useMemo(() => {
 		if (companiesEntries) {
 			const roles = accountRoleEntries(
-				companiesEntries[0].value as number
+				companiesEntries[0]?.value as number
 			);
 
 			return roles && isPartnerManager(roles);

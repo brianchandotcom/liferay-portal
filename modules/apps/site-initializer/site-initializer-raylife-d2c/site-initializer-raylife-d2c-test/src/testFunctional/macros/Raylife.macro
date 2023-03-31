@@ -64,6 +64,10 @@ definition {
 		Click(locator1 = "Raylife#ANY_BUTTON");
 	}
 
+	macro clickBackToEditInfo {
+		Click(locator1 = "Raylife#BACK_TO_EDIT_INFO");
+	}
+
 	macro commerceApisTearDowm {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 

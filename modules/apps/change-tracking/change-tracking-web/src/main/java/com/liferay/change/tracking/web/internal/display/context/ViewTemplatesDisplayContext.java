@@ -150,21 +150,23 @@ public class ViewTemplatesDisplayContext
 		return _searchContainer;
 	}
 
-	public boolean isDefaultSandboxTemplate(
+	public boolean isDefaultCTCollectionTemplate(
 			CTCollectionTemplate ctCollectionTemplate)
 		throws PortalException {
 
-		return _ctSettingsConfigurationHelper.isDefaultSandboxTemplate(
+		return _ctSettingsConfigurationHelper.isDefaultCTCollectionTemplate(
 			ctCollectionTemplate.getCompanyId(),
 			ctCollectionTemplate.getCtCollectionTemplateId());
 	}
 
-	public boolean isDefaultTemplate(CTCollectionTemplate ctCollectionTemplate)
+	public boolean isDefaultSandboxCTCollectionTemplate(
+			CTCollectionTemplate ctCollectionTemplate)
 		throws PortalException {
 
-		return _ctSettingsConfigurationHelper.isDefaultTemplate(
-			ctCollectionTemplate.getCompanyId(),
-			ctCollectionTemplate.getCtCollectionTemplateId());
+		return _ctSettingsConfigurationHelper.
+			isDefaultSandboxCTCollectionTemplate(
+				ctCollectionTemplate.getCompanyId(),
+				ctCollectionTemplate.getCtCollectionTemplateId());
 	}
 
 	@Override

@@ -59,10 +59,10 @@ public class EditCTCollectionTemplateMVCActionCommand
 			actionRequest, "ctCollectionTemplateId");
 
 		String description = ParamUtil.getString(actionRequest, "description");
-		boolean defaultSandboxTemplate = ParamUtil.getBoolean(
-			actionRequest, "defaultSandboxTemplate");
-		boolean defaultTemplate = ParamUtil.getBoolean(
-			actionRequest, "defaultTemplate");
+		boolean defaultSandboxCTCollectionTemplate = ParamUtil.getBoolean(
+			actionRequest, "defaultSandboxCTCollectionTemplate");
+		boolean defaultCTCollectionTemplate = ParamUtil.getBoolean(
+			actionRequest, "defaultCTCollectionTemplate");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String json = JSONUtil.put(
 			"description",
@@ -106,14 +106,14 @@ public class EditCTCollectionTemplateMVCActionCommand
 			long defaultSandboxCTCollectionTemplateId =
 				ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId();
 
-			if (defaultTemplate) {
+			if (defaultCTCollectionTemplate) {
 				defaultCTCollectionTemplateId = ctCollectionTemplateId;
 			}
 			else if (defaultCTCollectionTemplateId == ctCollectionTemplateId) {
 				defaultCTCollectionTemplateId = 0;
 			}
 
-			if (defaultSandboxTemplate) {
+			if (defaultSandboxCTCollectionTemplate) {
 				defaultSandboxCTCollectionTemplateId = ctCollectionTemplateId;
 			}
 			else if (defaultSandboxCTCollectionTemplateId ==

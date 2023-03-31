@@ -89,7 +89,7 @@ portletDisplay.setShowBackIcon(true);
 						cssClass="table-cell-expand-smaller table-column-text-center"
 						name="default-template"
 					>
-						<c:if test="<%= viewTemplatesDisplayContext.isDefaultTemplate(ctCollectionTemplate) %>">
+						<c:if test="<%= viewTemplatesDisplayContext.isDefaultCTCollectionTemplate(ctCollectionTemplate) %>">
 							<clay:icon
 								symbol="check"
 							/>
@@ -100,7 +100,7 @@ portletDisplay.setShowBackIcon(true);
 						cssClass="table-cell-expand-smaller table-column-text-center"
 						name="default-sandbox-template"
 					>
-						<c:if test="<%= viewTemplatesDisplayContext.isDefaultSandboxTemplate(ctCollectionTemplate) %>">
+						<c:if test="<%= viewTemplatesDisplayContext.isDefaultSandboxCTCollectionTemplate(ctCollectionTemplate) %>">
 							<clay:icon
 								symbol="check"
 							/>

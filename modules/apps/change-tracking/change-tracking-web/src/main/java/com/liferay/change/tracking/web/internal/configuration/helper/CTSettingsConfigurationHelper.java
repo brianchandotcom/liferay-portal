@@ -57,13 +57,13 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId();
 	}
 
-	public boolean isDefaultSandboxTemplate(
+	public boolean isDefaultCTCollectionTemplate(
 		long companyId, long ctCollectionTemplateId) {
 
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
 
-		if (ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId() ==
+		if (ctSettingsConfiguration.defaultCTCollectionTemplateId() ==
 				ctCollectionTemplateId) {
 
 			return true;
@@ -72,13 +72,13 @@ public class CTSettingsConfigurationHelper {
 		return false;
 	}
 
-	public boolean isDefaultTemplate(
+	public boolean isDefaultSandboxCTCollectionTemplate(
 		long companyId, long ctCollectionTemplateId) {
 
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
 
-		if (ctSettingsConfiguration.defaultCTCollectionTemplateId() ==
+		if (ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId() ==
 				ctCollectionTemplateId) {
 
 			return true;

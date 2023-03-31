@@ -27,8 +27,8 @@ export default function PublicationTemplateEditView({
 	actionUrl,
 	collaboratorsProps,
 	ctCollectionTemplateId,
-	defaultSandboxTemplate,
-	defaultTemplate,
+	defaultCTCollectionTemplate,
+	defaultSandboxCTCollectionTemplate,
 	description,
 	getTemplateCollaboratorsURL,
 	name,
@@ -40,13 +40,14 @@ export default function PublicationTemplateEditView({
 	tokens,
 }) {
 	const [collaboratorData, setCollaboratorData] = useState(null);
-	const [defaultTemplateField, setDefaultTemplateField] = useState(
-		defaultTemplate
-	);
 	const [
-		defaultSandboxTemplateField,
-		setDefaultSandboxTemplateField,
-	] = useState(defaultSandboxTemplate);
+		defaultCTCollectionTemplateField,
+		setDefaultCTCollectionTemplateField,
+	] = useState(defaultCTCollectionTemplate);
+	const [
+		defaultSandboxCTCollectionTemplateField,
+		setDefaultSandboxCTCollectionTemplateField,
+	] = useState(defaultSandboxCTCollectionTemplate);
 	const [descriptionField, setDescriptionField] = useState(description);
 	const [nameField, setNameField] = useState(name);
 	const [
@@ -80,8 +81,8 @@ export default function PublicationTemplateEditView({
 			[`${namespace}userIds`]: collaboratorData
 				? collaboratorData['userIds']
 				: null,
-			[`${namespace}defaultTemplate`]: defaultTemplateField,
-			[`${namespace}defaultSandboxTemplate`]: defaultSandboxTemplateField,
+			[`${namespace}defaultCTCollectionTemplate`]: defaultCTCollectionTemplateField,
+			[`${namespace}defaultSandboxCTCollectionTemplate`]: defaultSandboxCTCollectionTemplateField,
 		});
 
 		fetch(actionUrl, {
@@ -163,16 +164,22 @@ export default function PublicationTemplateEditView({
 			/>
 
 			<ClayCheckbox
-				checked={defaultTemplateField}
+				checked={defaultCTCollectionTemplateField}
 				label={Liferay.Language.get('default-template')}
-				onChange={() => setDefaultTemplateField(!defaultTemplateField)}
+				onChange={() =>
+					setDefaultCTCollectionTemplateField(
+						!defaultCTCollectionTemplateField
+					)
+				}
 			/>
 
 			<ClayCheckbox
-				checked={defaultSandboxTemplateField}
+				checked={defaultSandboxCTCollectionTemplateField}
 				label={Liferay.Language.get('default-sandbox-template')}
 				onChange={() =>
-					setDefaultSandboxTemplateField(!defaultSandboxTemplateField)
+					setDefaultSandboxCTCollectionTemplateField(
+						!defaultSandboxCTCollectionTemplateField
+					)
 				}
 			/>
 

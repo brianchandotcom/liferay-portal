@@ -16,11 +16,13 @@ package com.liferay.knowledge.base.internal.scheduler;
 
 import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Map;
 
@@ -39,8 +41,16 @@ public class CheckKBArticleSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
+	public UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
+		return companyId -> _kbArticleLocalService.checkKBArticles(companyId);
+	}
+
+	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return _kbArticleLocalService::checkKBArticles;
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> _kbArticleLocalService.checkKBArticles(companyId));
 	}
 
 	@Override
@@ -54,6 +64,9 @@ public class CheckKBArticleSchedulerJobConfiguration
 		_kbServiceConfiguration = ConfigurableUtil.createConfigurable(
 			KBServiceConfiguration.class, properties);
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;

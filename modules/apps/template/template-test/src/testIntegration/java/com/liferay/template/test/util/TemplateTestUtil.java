@@ -165,25 +165,23 @@ public class TemplateTestUtil {
 					InfoItemFormVariationsProvider.class,
 					infoItemClassDetails.getClassName());
 
-			if (infoItemFormVariationsProvider != null) {
-				Collection<InfoItemFormVariation> infoItemFormVariations =
-					infoItemFormVariationsProvider.getInfoItemFormVariations(
-						groupId);
-
-				for (InfoItemFormVariation curInfoItemFormVariation :
-						infoItemFormVariations) {
-
-					if (curInfoItemFormVariation == null) {
-						continue;
-					}
-
-					return infoItemClassDetails;
-				}
-
+			if (infoItemFormVariationsProvider == null) {
 				continue;
 			}
 
-			return infoItemClassDetails;
+			Collection<InfoItemFormVariation> infoItemFormVariations =
+				infoItemFormVariationsProvider.getInfoItemFormVariations(
+					groupId);
+
+			for (InfoItemFormVariation curInfoItemFormVariation :
+					infoItemFormVariations) {
+
+				if (curInfoItemFormVariation == null) {
+					continue;
+				}
+
+				return infoItemClassDetails;
+			}
 		}
 
 		return null;

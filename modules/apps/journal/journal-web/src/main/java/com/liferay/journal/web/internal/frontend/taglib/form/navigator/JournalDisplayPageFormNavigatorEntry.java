@@ -17,7 +17,6 @@ package com.liferay.journal.web.internal.frontend.taglib.form.navigator;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -138,14 +137,13 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)"
+	)
+	private ServletContext _itemSelectorWebServletContext;
+
 	@Reference
 	private Portal _portal;
-
-	@Reference(target = "(view=private)")
-	private ItemSelectorView<?> _privateLayoutsItemSelectorView;
-
-	@Reference(target = "(view=public)")
-	private ItemSelectorView<?> _publicLayoutsItemSelectorView;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
 	private ServletContext _servletContext;

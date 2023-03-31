@@ -1221,6 +1221,50 @@ definition {
 			status = "Scheduled");
 	}
 
+	@description = "This is a test for bug COMMERCE-11209. As the Admin I can delete a product image when the image is set via headless API."
+	@priority = 5
+	test CanDeleteProductImageUploadedViaAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an image for ABS Sensor is uploaded via API") {
+			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
+				cdnEnabled = "true",
+				cdnURL = "http://mirrors.lax.liferay.com/github.com/liferay/liferay-portal/portal-web/test/functional/com/liferay/portalweb/dependencies/Commerce_Black.jpg",
+				imageTitle = "title2",
+				productERC = "MIN93015minium-initializer");
+		}
+
+		task ("And the image is successfully uploaded") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementPresent(
+				key_entryName = "title2",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("When the Admin tries to delete the image") {
+			Click(
+				key_value = "title2",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+		}
+
+		task ("Then the item is successfully removed") {
+			AssertElementNotPresent(
+				key_entryName = "title2",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+	}
+
 	@description = "This is a test for the COMMERCE-10763, to verify that a buyer user can download the virtual product by the URL retrieved using API"
 	@priority = 4
 	test CanDownloadConfiguredVirtualProduct {

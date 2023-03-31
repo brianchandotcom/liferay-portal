@@ -33,7 +33,7 @@ const TableListMobileComponent: React.FC<Props> = ({headers, rows}) => {
 		columnTwo: string;
 	}) => (
 		<div className="d-flex ml-3 my-3 w-100">
-			<div className="d-flex font-table ml-2 text-nowrap w-50">
+			<div className="d-flex font-table ml-2 mr-5 text-nowrap w-50">
 				{columnOne}
 			</div>
 
@@ -58,8 +58,7 @@ const TableListMobileComponent: React.FC<Props> = ({headers, rows}) => {
 		if (isRowSelected === isPanelExpanded[index]) {
 			supportArray[index] = !supportArray[index];
 			setIsPanelExpanded(supportArray);
-		}
-		else {
+		} else {
 			resetExpandedPanel[index] = !resetExpandedPanel[index];
 			setIsPanelExpanded(resetExpandedPanel);
 		}

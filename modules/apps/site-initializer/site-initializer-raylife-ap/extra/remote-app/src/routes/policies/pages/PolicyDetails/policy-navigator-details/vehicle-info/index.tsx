@@ -27,7 +27,7 @@ const VehicleInfo = (applicationDataJSON: any) => {
 			{applicationData?.vehicleInfo?.form.map(
 				(currentVehicle: PolicyDetailsType, indexVehicle: number) => (
 					<div
-						className="bg-neutral-0 h-100 pl-6 policy-detail-border pr-6 pt-6"
+						className="bg-neutral-0 h-100 pl-6 policy-detail-border pr-6 py-6"
 						key={indexVehicle}
 					>
 						<div className="d-flex flex-row flex-wrap justify-content-between">

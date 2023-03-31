@@ -12,9 +12,7 @@
  * details.
  */
 
-import './index.scss';
-
-import classnames from 'classnames';
+import Summary from '../../../../../common/components/summary';
 
 const PolicySummary = ({application, policy}: any) => {
 	const {data} = policy;
@@ -55,108 +53,55 @@ const PolicySummary = ({application, policy}: any) => {
 		return dollarValue.format(value);
 	}
 
-	const handleRedirectToGmail = (email: string) => {
-		window.location.href = `mailto:${email}`;
-	};
+	const summaryPolicyData = [
+		{
+			data: `${dateFormatter(data?.boundDate)} - ${dateFormatter(
+				data?.endDate
+			)}`,
+			key: 'currentPeriod',
+			text: 'Current Period',
+		},
+		{
+			data: renewalDue,
+			key: 'renewalDue',
+			text: 'Renewal Due',
+		},
+		{
+			data: `${valueFormatter(data?.termPremium?.toFixed(2))}`,
+			key: 'totalPremium',
+			text: 'Total Premium',
+		},
+		{
+			data: `${valueFormatter(data?.commission?.toFixed(2))}`,
+			key: 'commission',
+			text: 'Commission',
+		},
+		{
+			data: `${valueFormatter(totalClaimAmount)}`,
+			key: 'totalClaimAmount',
+			text: 'Total Claim Amount',
+		},
+		{
+			data: coverageLimit,
+			key: 'coverageLimit',
+			text: 'Coverage Limit (Used/Available)',
+		},
+		{
+			data: `${driverInfo?.form[0]?.firstName} ${driverInfo?.form[0]?.lastName}`,
+			key: 'primaryHolder',
+			text: 'Primary Holder',
+		},
+		{data: application?.phone, key: 'phone', text: 'Phone'},
+		{
+			data: application?.email,
+			key: 'email',
+			redirectTo: application?.email,
+			text: 'Email',
+			type: 'link',
+		},
+	];
 
-	return (
-		<div className="bg-neutral-0 h-100 rounded summary-policy-container">
-			<div className="policy-summary-title pt-3 px-5">
-				<h5 className="m-0">Summary</h5>
-			</div>
-
-			<hr />
-
-			<div className="d-flex flex-column pb-5 policy-summary-container px-5">
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">Current Period</div>
-
-					{data?.boundDate ? (
-						`${dateFormatter(data.boundDate)} - ${dateFormatter(
-							data?.endDate
-						)}`
-					) : (
-						<i>No data</i>
-					)}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">Renewal Due</div>
-
-					{renewalDue ? `${renewalDue} Days` : <i>No data</i>}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">Total Premium</div>
-
-					{data?.termPremium ? (
-						`${valueFormatter(data.termPremium.toFixed(2))}`
-					) : (
-						<i>No data</i>
-					)}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">Commission</div>
-
-					{data?.commission ? (
-						`${valueFormatter(data.commission.toFixed(2))}`
-					) : (
-						<i>No data</i>
-					)}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">
-						Total Claim Amount
-					</div>
-
-					{`${valueFormatter(totalClaimAmount)}`}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">
-						Coverage Limit (Used/Available)
-					</div>
-
-					{coverageLimit}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">Primary Holder </div>
-
-					{driverInfo?.form[0]?.firstName ? (
-						`${driverInfo.form[0].firstName} ${driverInfo.form[0].lastName}`
-					) : (
-						<i>No data</i>
-					)}
-				</div>
-
-				<div className="d-flex flex-column mb-4">
-					<div className="mb-2 text-neutral-7">Email</div>
-
-					<span
-						className={classnames('', {
-							'cursor-pointer text-primary': application,
-						})}
-						onClick={() => handleRedirectToGmail(application.email)}
-					>
-						{application?.email ? (
-							application.email
-						) : (
-							<i>No data</i>
-						)}
-					</span>
-				</div>
-
-				<div className="d-flex flex-column">
-					<div className="mb-2 text-neutral-7">Phone</div>
-
-					{application?.phone ? application.phone : <i>No data</i>}
-				</div>
-			</div>
-		</div>
-	);
+	return <Summary dataSummary={summaryPolicyData} />;
 };
 
 export default PolicySummary;

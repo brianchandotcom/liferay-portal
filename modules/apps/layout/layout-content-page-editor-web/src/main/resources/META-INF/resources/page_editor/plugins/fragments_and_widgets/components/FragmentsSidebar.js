@@ -209,8 +209,11 @@ export default function FragmentsSidebar() {
 		() =>
 			isNullOrUndefined(searchValue)
 				? null
-				: filteredTabs.flatMap((tab) => tab.collections).length,
-
+				: filteredTabs.flatMap((tab) =>
+						tab.collections.flatMap(
+							(collection) => collection.children
+						)
+				  ).length,
 		[filteredTabs, searchValue]
 	);
 

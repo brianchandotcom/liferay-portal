@@ -9,163 +9,205 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import classNames from 'classnames';
-import React from 'react';
+import ClayAlert from '@clayui/alert';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useEffect, useState} from 'react';
 
+import PartnershipLevel from '../../common/components/PartnershipLevel';
 import Container from '../../common/components/container';
-import PartenerIcon from '../../common/components/icons/partenerIcon';
-import {level} from '../../common/mock/mock';
-import {naNToZero} from '../../common/utils';
+import {PartnerRoles} from '../../common/enums/partnerRoles';
+import {PartnershipLevels} from '../../common/enums/partnershipLevels';
+import {partnerLevelProperties} from '../../common/mock/mock';
+import ClayIconProvider from '../../common/utils/ClayIconProvider';
 
 import './index.css';
 
-const label = {
-	sales: "Sales Revenue QSP's",
-	suplemental: "Supplemental QSP's",
-};
-
-const LevelProgressBar = ({
-	items,
-	total,
-	taskbarClassNames = {
-		achieved: 'achieved',
-		remaining: 'remaining ',
-		supplemental: 'supplemental',
-	},
-}) => (
-	<div className="progress-bar-border">
-		<div className="level-progress-bar">
-			{items.map(([label, value], index) => {
-				const percent = naNToZero(value.qtd / total) * 100;
-
-				return (
-					<div
-						className={classNames(
-							'progress-bar-item',
-							taskbarClassNames[label],
-							{
-								achievedItem: index === 0,
-							}
-						)}
-						key={index}
-						style={{width: `${percent}%`}}
-						title={`${value.qtd} ${label}`}
-					/>
-				);
-			})}
-		</div>
-	</div>
-);
-
-const Legend = () => (
-	<div className="d-flex level-progress-bar">
-		<div className="d-flex flex-row">
-			<div className="align-items-center d-flex">
-				<div className="achieved legend-bar-item" />
-			</div>
-
-			<span className="legend-item-label ml-1 mr-2 mt-1 text-neutral-6">
-				{label.sales}
-			</span>
-		</div>
-
-		<div className="d-flex flex-row">
-			<div className="align-items-center d-flex">
-				<div className="legend-bar-item supplemental" />
-			</div>
-
-			<span className="legend-item-label ml-1 mr-2 mt-1 text-neutral-6">
-				{label.suplemental}
-			</span>
-		</div>
-	</div>
-);
-
 export default function () {
-	return (
-		<Container
-			className="level-chart-card-height"
-			footer={
-				<ClayButton className="mr-1 mt-2" displayType="primary">
-					Request level change
-				</ClayButton>
+	const [data, setData] = useState();
+	const [headcount, setHeadcount] = useState();
+	const [completed, setCompleted] = useState();
+	const [loading, setLoading] = useState(false);
+
+	const getAccountInformation = async () => {
+		setLoading(true);
+
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const myUserAccountsRequest = await fetch(
+			'/o/headless-admin-user/v1.0/my-user-account',
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
 			}
-			title="Level"
-		>
-			<div className="flex-row mb-4">
-				<div>
-					<span className="label-gold mt-1">
-						<PartenerIcon />
-						Gold
-					</span>
+		);
 
-					<span className="font-weight-lighter h3 ml-2 mt-1">
-						Partner
-					</span>
-				</div>
-			</div>
+		if (myUserAccountsRequest.ok) {
+			const {accountBriefs} = await myUserAccountsRequest.json();
 
-			<div>
-				<div className="mb-4">
-					<div className="d-flex flex-row justify-content-between">
-						<div className="font-weight-bold h5">New Business</div>
+			if (accountBriefs.length) {
+				// eslint-disable-next-line @liferay/portal/no-global-fetch
+				const accountRequest = await fetch(
+					`/o/headless-admin-user/v1.0/accounts/${accountBriefs[0].id}`,
+					{
+						headers: {
+							'accept': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+					}
+				);
 
-						<div>
-							<span className="font-weight-bold text-neutral-9">
-								350
-							</span>
+				// eslint-disable-next-line @liferay/portal/no-global-fetch
+				const accountUsersRequest = await fetch(
+					`/o/headless-admin-user/v1.0/accounts/${accountBriefs[0].id}/user-accounts`,
+					{
+						headers: {
+							'accept': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+					}
+				);
 
-							<span className="text-neutral-5"> / 450 </span>
-						</div>
-					</div>
+				const checkedProperties = {};
 
-					<LevelProgressBar
-						items={level.progressNewMoc}
-						total={level.totalLevel.newBusiness}
-					/>
+				if (accountRequest.ok) {
+					const accountData = await accountRequest.json();
 
-					<div className="d-flex flex-row label-progress text-neutral-7">
-						<span className="font-weight-bold mr-1 number">
-							100
-						</span>
-						more points for Platinum
-					</div>
-				</div>
+					if (
+						accountData.partnerLevel !==
+						PartnershipLevels.AUTHORIZED
+					) {
+						checkedProperties['solutionDeliveryCertification'] =
+							accountData.solutionDeliveryCertification;
 
-				<div className="mb-2">
-					<div className="d-flex flex-row justify-content-between">
-						<div className="font-weight-bold h5">
-							Total Business
-						</div>
+						checkedProperties['marketingPlan'] =
+							accountData.marketingPlan;
 
-						<div>
-							<span className="font-weight-bold">420</span>
+						checkedProperties['marketingPerformance'] = Boolean(
+							accountData.marketingPerformance
+						);
 
-							<span className="text-neutral-5"> / 600 </span>
-						</div>
-					</div>
+						if (
+							accountData.partnerLevel === PartnershipLevels.GOLD
+						) {
+							const hasMatchingARR =
+								accountData.aRRAmount ===
+								partnerLevelProperties[accountData.partnerLevel]
+									.growthARR;
 
-					<LevelProgressBar
-						items={level.progressTotalMoc}
-						total={level.totalLevel.business}
-					/>
+							const hastMatchingNPOrNB =
+								accountData.newProjectExistingBusiness ===
+								partnerLevelProperties[accountData.partnerLevel]
+									.newProjectExistingBusiness;
 
-					<div className="d-flex flex-row label-progress text-neutral-7">
-						<span className="font-weight-bold mr-1 number">
-							180
-						</span>
+							checkedProperties['arr'] =
+								hasMatchingARR || hastMatchingNPOrNB;
+						}
 
-						<span className="font-family-source-sans-pro text-neutral-7">
-							more points for Platinum
-						</span>
-					</div>
-				</div>
-			</div>
+						const growthRenewalARRTotal =
+							accountData.growthARR + accountData.renewalARR;
 
-			<div className="mt-4">
-				<Legend />
-			</div>
-		</Container>
+						if (
+							accountData.partnerLevel ===
+								PartnershipLevels.PLATINUM &&
+							growthRenewalARRTotal > 0 &&
+							accountData.aRRAmount >= growthRenewalARRTotal
+						) {
+							checkedProperties['arr'] = true;
+						}
+
+						if (accountUsersRequest.ok) {
+							const {
+								items: accountUsers,
+							} = await accountUsersRequest.json();
+
+							const countHeadcount = {
+								partnerMarketingUser: 0,
+								partnerSalesUsers: 0,
+							};
+
+							accountUsers.forEach((user) => {
+								if (
+									user.accountBriefs[0].roleBriefs.find(
+										(role) =>
+											role.name ===
+											PartnerRoles.MARKETING_USER
+									)
+								) {
+									countHeadcount['partnerMarketingUser'] += 1;
+								}
+
+								if (
+									user.accountBriefs[0].roleBriefs.find(
+										(role) =>
+											role.name ===
+											PartnerRoles.SALES_USERS
+									)
+								) {
+									countHeadcount['partnerSalesUsers'] += 1;
+								}
+							});
+
+							if (
+								countHeadcount.partnerMarketingUser >=
+									partnerLevelProperties[
+										accountData.partnerLevel
+									].partnerMarketingUser &&
+								countHeadcount.partnerSalesUsers >=
+									partnerLevelProperties[
+										accountData.partnerLevel
+									].partnerSalesUsers
+							) {
+								checkedProperties['headcount'] = true;
+							}
+
+							setHeadcount(countHeadcount);
+						}
+					}
+
+					setData(accountData);
+					setCompleted(checkedProperties);
+				}
+			}
+		}
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		getAccountInformation();
+	}, []);
+
+	const BuildPartnershipLevel = () => {
+		if (loading) {
+			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
+		}
+
+		if (!data && !loading) {
+			return (
+				<ClayAlert
+					className="mb-8 mt-8 mx-auto text-center w-50"
+					displayType="info"
+					title="Info:"
+				>
+					No Data Available
+				</ClayAlert>
+			);
+		}
+
+		return (
+			<PartnershipLevel
+				completed={completed}
+				data={data}
+				headcount={headcount}
+			/>
+		);
+	};
+
+	return (
+		<ClayIconProvider>
+			<Container title="Partnership Level">
+				<BuildPartnershipLevel />
+			</Container>
+		</ClayIconProvider>
 	);
 }

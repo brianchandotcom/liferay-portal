@@ -11,7 +11,7 @@
 
 import React from 'react';
 
-function PartenerIcon() {
+function GoldPartnerIcon() {
 	return (
 		<svg
 			fill="none"
@@ -76,4 +76,4 @@ function PartenerIcon() {
 	);
 }
 
-export default PartenerIcon;
+export default GoldPartnerIcon;

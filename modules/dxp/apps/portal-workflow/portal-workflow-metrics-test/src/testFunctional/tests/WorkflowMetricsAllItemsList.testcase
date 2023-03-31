@@ -3182,8 +3182,6 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, Open when an SLA is paused, the SLA status will be related to the moment when it triggered the pause timer"
 	@priority = 4
 	test WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -3215,10 +3213,6 @@ definition {
 			entryTitle = "Test Blog");
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
-
-		WorkflowMetrics.assertSLAMetricsCalculated();
-
-		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 

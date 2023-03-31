@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ANY_BUTTON</td>
-	<td>//*[contains(@type, 'button') and text()='${key_text}'] | //*[contains(@type, 'button')]//*[text()='${key_text}']</td>
+	<td>//*[contains(@type, 'button') and text()='${key_text}'] | //*[contains(@type, 'button')]//*[text()='${key_text}'] | //*[contains(@class, 'button')]//*[text()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>FORMS_FIELDS</td>
-	<td>//input[contains(@name,'${label}')]</td>
+	<td>//*[contains(@name,'${label}')]</td>
 	<td></td>
 </tr>
 <tr>

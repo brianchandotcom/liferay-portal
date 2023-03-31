@@ -19,11 +19,11 @@ definition {
 			locator1 = "RaylifeProduct#SELECT_PRODUCT",
 			selectProduct = "Business Owners Policy");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.clickAtButton(text = "Continue");
 
 		RaylifeIndustry.typeIndustry();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.clickAtButton(text = "Continue");
 	}
 
 }

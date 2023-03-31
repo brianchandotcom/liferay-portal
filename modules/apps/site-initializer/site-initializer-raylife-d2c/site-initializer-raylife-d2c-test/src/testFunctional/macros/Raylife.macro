@@ -112,25 +112,33 @@ definition {
 	}
 
 	macro formsFlow {
+		if (!(isSet(policy))) {
+			var policy = "standard";
+		}
+
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.clickAtButton(text = "Continue");
 
 		RaylifeBusiness.typeAllBusinessInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.clickAtButton(text = "Continue");
 
 		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.clickAtButton(text = "Continue");
 
 		RaylifeProperty.typeAllPropertyInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.clickAtButton(text = "Continue");
+
+		WaitForElementPresent(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = ${policy});
 
 		Click(
 			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
-			policy = "standard");
+			policy = ${policy});
 	}
 
 	macro selectTheQuote {

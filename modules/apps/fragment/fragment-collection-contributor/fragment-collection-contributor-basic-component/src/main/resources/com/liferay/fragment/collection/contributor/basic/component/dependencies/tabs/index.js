@@ -123,7 +123,7 @@ function openTabPanel(event, i) {
 		activeTabPanel(tabPanelItems[i]);
 		persistedTab.setId(i);
 
-		window.dispatchEvent(new Event('resize'));
+		Liferay.fire('tabsFragment:activePanel', {panel: tabPanelItems[i]});
 	}
 }
 

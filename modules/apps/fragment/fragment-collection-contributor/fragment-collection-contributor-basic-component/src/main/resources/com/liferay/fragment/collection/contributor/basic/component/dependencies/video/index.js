@@ -185,6 +185,12 @@ function main() {
 
 	window.removeEventListener('resize', resize);
 
+	Liferay.on('tabsFragment:activePanel', (event) => {
+		if (event.panel && event.panel.contains(fragmentElement)) {
+			resize();
+		}
+	});
+
 	try {
 		let matched = false;
 		const url = new URL(configuration.url, window.location.origin);

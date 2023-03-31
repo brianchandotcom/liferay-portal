@@ -1,9 +1,11 @@
-import AudienceReportCard from 'assets/document-and-media/hocs/AudienceReportCard';
+import AudienceReportCard from 'shared/components/audience-report/AudienceReportBaseCard';
 import DevicesCard from 'assets/document-and-media/hocs/DevicesCard';
 import DocumentsAndMediaMetricCard from 'assets/document-and-media/components/DocumentsAndMediaMetricCard';
 import LocationsCard from 'assets/document-and-media/hocs/LocationsCard';
 import React from 'react';
 import TouchpointsListCard from 'assets/hocs/TouchpointsListCard';
+import {MetricName} from 'shared/types/MetricName';
+import {Name} from 'shared/components/audience-report/types';
 
 const Overview = () => (
 	<>
@@ -21,11 +23,11 @@ const Overview = () => (
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-downloads'
 					)}
-					label={Liferay.Language.get('audience')}
-					legacyDropdownRangeKey={false}
-					metricAction={Liferay.Language.get(
-						'download'
-					).toLowerCase()}
+					metricAction={Liferay.Language.get('download')}
+					query={{
+						metricName: MetricName.Downloads,
+						name: Name.Document
+					}}
 					segmentsTitle={Liferay.Language.get('downloaded-segments')}
 					uniqueVisitorsTitle={Liferay.Language.get('downloads')}
 				/>

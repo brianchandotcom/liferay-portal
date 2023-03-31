@@ -1,17 +1,18 @@
+import AssetsListCard from 'sites/touchpoints/hocs/AssetsListCard';
 import AudienceReportCard from 'shared/components/audience-report/AudienceReportBaseCard';
-import DevicesCard from 'assets/web-content/hocs/DevicesCard';
-import LocationsCard from 'assets/web-content/hocs/LocationsCard';
+import DevicesCard from 'sites/touchpoints/hocs/DevicesCard';
+import LocationsCard from 'sites/touchpoints/hocs/LocationsCard';
+import PageMetricCard from 'sites/touchpoints/components/PageMetricCard';
 import React from 'react';
-import TouchpointsListCard from 'assets/hocs/TouchpointsListCard';
-import WebContentMetricCard from 'assets/web-content/components/WebContentMetricCard';
+import {ENABLE_ASSET_CARD} from 'shared/util/constants';
 import {MetricName} from 'shared/types/MetricName';
 import {Name} from 'shared/components/audience-report/types';
 
-const Overview = () => (
+const TouchpointOverviewPage = () => (
 	<>
 		<div className='row'>
 			<div className='col-sm-12'>
-				<WebContentMetricCard
+				<PageMetricCard
 					label={Liferay.Language.get('visitors-behavior')}
 				/>
 			</div>
@@ -21,14 +22,15 @@ const Overview = () => (
 			<div className='col-sm-12'>
 				<AudienceReportCard
 					knownIndividualsTitle={Liferay.Language.get(
-						'segmented-views'
+						'segmented-viewers'
 					)}
 					metricAction={Liferay.Language.get('view')}
 					query={{
 						metricName: MetricName.Views,
-						name: Name.Journal
+						name: Name.Page
 					}}
-					uniqueVisitorsTitle={Liferay.Language.get('views')}
+					segmentsTitle={Liferay.Language.get('viewer-segments')}
+					uniqueVisitorsTitle={Liferay.Language.get('visitors')}
 				/>
 			</div>
 		</div>
@@ -40,6 +42,7 @@ const Overview = () => (
 					legacyDropdownRangeKey={false}
 				/>
 			</div>
+
 			<div className='col-lg-6 col-md-12'>
 				<DevicesCard
 					label={Liferay.Language.get('views-by-technology')}
@@ -48,16 +51,16 @@ const Overview = () => (
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-sm-12'>
-				<TouchpointsListCard
-					assetType='JOURNAL'
-					label={Liferay.Language.get('asset-appears-on')}
-					legacyDropdownRangeKey={false}
-				/>
+		{ENABLE_ASSET_CARD && (
+			<div className='row'>
+				<div className='col-lg-6 col-md-12'>
+					<AssetsListCard
+						label={Liferay.Language.get('displayed-assets')}
+					/>
+				</div>
 			</div>
-		</div>
+		)}
 	</>
 );
 
-export default Overview;
+export default TouchpointOverviewPage;

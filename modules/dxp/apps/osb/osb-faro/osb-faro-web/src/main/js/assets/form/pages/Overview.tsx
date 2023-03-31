@@ -1,4 +1,4 @@
-import AudienceReportCard from 'assets/form/hocs/AudienceReportCard';
+import AudienceReportCard from 'shared/components/audience-report/AudienceReportBaseCard';
 import DevicesCard from 'assets/form/hocs/DevicesCard';
 import FormAbandonmentCard from 'assets/form/hocs/FormAbandonmentCard';
 import FormMetricCard from 'assets/form/components/FormMetricCard';
@@ -6,6 +6,8 @@ import LocationsCard from 'assets/form/hocs/LocationsCard';
 import React from 'react';
 import TouchpointsListCard from 'assets/hocs/TouchpointsListCard';
 import {ENABLE_FORM_ABANDONMENT} from 'shared/util/constants';
+import {MetricName} from 'shared/types/MetricName';
+import {Name} from 'shared/components/audience-report/types';
 
 const Overview = () => (
 	<>
@@ -24,11 +26,11 @@ const Overview = () => (
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-submissions'
 					)}
-					label={Liferay.Language.get('audience')}
-					legacyDropdownRangeKey={false}
-					metricAction={Liferay.Language.get(
-						'submission'
-					).toLowerCase()}
+					metricAction={Liferay.Language.get('submission')}
+					query={{
+						metricName: MetricName.Submissions,
+						name: Name.Form
+					}}
 					segmentsTitle={Liferay.Language.get('submitter-segments')}
 					uniqueVisitorsTitle={Liferay.Language.get('submissions')}
 				/>

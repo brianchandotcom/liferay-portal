@@ -244,12 +244,13 @@ const TeamMembersTable = ({
 								/>
 							),
 							supportSeat: userAccount.selectedAccountSummary
-								.hasSupportSeatRole && (
-								<ClayIcon
-									className="text-brand-primary-darken-2"
-									symbol="check-circle-full"
-								/>
-							),
+								.hasSupportSeatRole &&
+								!userAccount.isLiferayStaff && (
+									<ClayIcon
+										className="text-brand-primary-darken-2"
+										symbol="check-circle-full"
+									/>
+								),
 						}))}
 					/>
 				)}

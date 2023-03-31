@@ -528,7 +528,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testRemoveComponentAnnotationsUncessaryAttribute() throws Exception {
-		test("RemoveComponentAnnotationsUnnecessaryAttribute.testjava");
+		test("RemoveComponentAnnotationsUnnecessaryAttribute.testjava",
+			 "Get rid of 'immediate = true' usages");
 	}
 
 	@Test

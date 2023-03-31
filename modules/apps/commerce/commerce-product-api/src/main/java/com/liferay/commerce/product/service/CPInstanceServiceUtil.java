@@ -306,6 +306,14 @@ public class CPInstanceServiceUtil {
 			serviceContext);
 	}
 
+	public static CPInstance updateExternalReferenceCode(
+			String externalReferenceCode, long cpInstanceId)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			externalReferenceCode, cpInstanceId);
+	}
+
 	public static CPInstance updatePricingInfo(
 			long cpInstanceId, java.math.BigDecimal price,
 			java.math.BigDecimal promoPrice, java.math.BigDecimal cost,

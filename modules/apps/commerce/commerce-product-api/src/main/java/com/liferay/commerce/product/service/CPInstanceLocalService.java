@@ -533,6 +533,10 @@ public interface CPInstanceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPInstance updateExternalReferenceCode(
+			String externalReferenceCode, long cpInstanceId)
+		throws PortalException;
+
 	public CPInstance updatePricingInfo(
 			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
 			BigDecimal cost, ServiceContext serviceContext)

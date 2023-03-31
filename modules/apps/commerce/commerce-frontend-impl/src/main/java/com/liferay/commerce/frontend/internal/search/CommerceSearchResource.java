@@ -337,19 +337,19 @@ public class CommerceSearchResource {
 				"commerceChannelGroupId", commerceChannel.getGroupId());
 		}
 
-		long commerceAccountId = 0;
+		long accountEntryId = 0;
 
 		AccountEntry accountEntry =
 			_commerceAccountHelper.getCurrentAccountEntry(
 				commerceChannel.getGroupId(), themeDisplay.getRequest());
 
 		if (accountEntry != null) {
-			commerceAccountId = accountEntry.getAccountEntryId();
+			accountEntryId = accountEntry.getAccountEntryId();
 
 			attributes.put(
 				"commerceAccountGroupIds",
 				_commerceAccountHelper.getCommerceAccountGroupIds(
-					commerceAccountId));
+					accountEntryId));
 		}
 
 		searchContext.setAttributes(attributes);
@@ -377,7 +377,7 @@ public class CommerceSearchResource {
 
 			searchItemModels.add(
 				_getSearchItemModel(
-					commerceAccountId, cpCatalogEntry, themeDisplay));
+					accountEntryId, cpCatalogEntry, themeDisplay));
 		}
 
 		String url = _commerceSearchUtil.getCatalogFriendlyURL(themeDisplay);

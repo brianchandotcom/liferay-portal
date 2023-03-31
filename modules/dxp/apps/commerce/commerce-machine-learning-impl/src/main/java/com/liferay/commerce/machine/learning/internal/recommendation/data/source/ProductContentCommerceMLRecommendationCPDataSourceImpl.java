@@ -21,6 +21,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -71,7 +72,9 @@ public class ProductContentCommerceMLRecommendationCPDataSourceImpl
 
 		AccountEntry accountEntry =
 			commerceAccountHelper.getCurrentAccountEntry(
-				groupId, httpServletRequest);
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
+				httpServletRequest);
 
 		if (accountEntry == null) {
 			return new CPDataSourceResult(Collections.emptyList(), 0);
@@ -142,6 +145,9 @@ public class ProductContentCommerceMLRecommendationCPDataSourceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductContentCommerceMLRecommendationCPDataSourceImpl.class);
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private Language _language;

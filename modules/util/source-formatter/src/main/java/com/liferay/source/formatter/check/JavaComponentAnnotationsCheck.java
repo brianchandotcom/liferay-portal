@@ -520,7 +520,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		if ((immediateAttributeValue != null) &&
 			immediateAttributeValue.equals("true")) {
 
-			addMessage(fileName, "Get rid of 'immediate = true' usages");
+			addMessage(fileName, "Do not use 'immediate = true' in @Component");
 		}
 	}
 

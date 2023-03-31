@@ -14,7 +14,9 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 
@@ -54,9 +56,16 @@ public class NestedFieldsContainerRequestFilter
 			List<String> fieldNames = Arrays.asList(
 				nestedFields.split("\\s*,\\s*"));
 
+			int depth = Math.max(
+				Math.min(
+					GetterUtil.getInteger(
+						queryParameters.getFirst("nestedFieldsDepth"), 1),
+					PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+				1);
+
 			NestedFieldsContextThreadLocal.setNestedFieldsContext(
 				new NestedFieldsContext(
-					fieldNames, JAXRSUtils.getCurrentMessage(),
+					depth, fieldNames, JAXRSUtils.getCurrentMessage(),
 					uriInfo.getPathParameters(),
 					_getResourceVersion(uriInfo.getPathSegments()),
 					queryParameters));

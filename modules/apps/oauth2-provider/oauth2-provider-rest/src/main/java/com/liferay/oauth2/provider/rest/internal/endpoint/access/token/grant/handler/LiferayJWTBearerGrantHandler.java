@@ -61,7 +61,7 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 	@Override
 	public List<String> getSupportedGrantTypes() {
 		AccessTokenGrantHandler accessTokenGrantHandler =
-			getAccessTokenGrantHandler();
+			_getAccessTokenGrantHandler();
 
 		return accessTokenGrantHandler.getSupportedGrantTypes();
 	}
@@ -77,18 +77,9 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 		Client client, MultivaluedMap<String, String> params) {
 
 		AccessTokenGrantHandler accessTokenGrantHandler =
-			getAccessTokenGrantHandler();
+			_getAccessTokenGrantHandler();
 
 		return accessTokenGrantHandler.createAccessToken(client, params);
-	}
-
-	protected AccessTokenGrantHandler getAccessTokenGrantHandler() {
-		CustomJWTBearerGrantHandler customJWTBearerGrantHandler =
-			new CustomJWTBearerGrantHandler();
-
-		customJWTBearerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
-
-		return customJWTBearerGrantHandler;
 	}
 
 	@Override
@@ -107,6 +98,15 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 	@Override
 	protected boolean isGrantHandlerEnabled() {
 		return _oAuth2ProviderConfiguration.allowJWTBearerGrant();
+	}
+
+	private AccessTokenGrantHandler _getAccessTokenGrantHandler() {
+		CustomJWTBearerGrantHandler customJWTBearerGrantHandler =
+			new CustomJWTBearerGrantHandler();
+
+		customJWTBearerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
+
+		return customJWTBearerGrantHandler;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1,0 +1,151 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+		Raylife.createRaylifeSite(siteName = "Raylife AP");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Story ID: LPS-146333 | Test Summary: Verify if after user clicks on 'Save' button the center status change to All Changes Saved"
+	@ignore = "true"
+	@priority = 3
+	test IfCenterStatusChangeAfterSaveButtonClicked {
+	}
+
+	@description = "Story ID: LPS-146333 | Test Summary: Verify if the center status No Changes Made change to Unsaved Changes after any part of the form is modified"
+	@ignore = "true"
+	@priority = 3
+	test IfCenterStatusChangeToUnsavedChanges {
+	}
+
+	@description = "Story ID: LPS-146333 | Test Summary: Verify if Date picker works"
+	@priority = 4
+	test IfDatePickerWorks {
+		property test.name.skip.portal.instance = "RaylifeAPContactInfo#IfDatePickerWorks";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that I go to Raylife AP") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+		}
+
+		task ("When I go to the Contact Info form") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+		}
+
+		task ("Then I should be able to assert that the Date of Birth field works") {
+			var nextDayDate = DateUtil.getFormattedDate("+1", "MM/dd/yyyy");
+
+			RaylifeApplicationModal.birthDate(nextDayDate = ${nextDayDate});
+		}
+	}
+
+	@description = "Story ID: LPS-146333 | Test Summary: Verify if message You must enter first name, last name, phone number, and email address to save this quote. is present when user passes the mouse over Save button"
+	@ignore = "true"
+	@priority = 3
+	test IfMessageFromSaveButtonShowsUp {
+	}
+
+	@description = "Story ID: LPS-146333 | Test Summary: Verify after user fill out all required fields the NEXT button permits them to go to the next step"
+	@priority = 4
+	test NextButtonWorksWhenFieldsAreFilled {
+		property test.name.skip.portal.instance = "RaylifeAPContactInfo#NextButtonWorksWhenFieldsAreFilled";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that I go to the Contact Info form") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+		}
+
+		task ("When I go to the Contact Info form") {
+			var nextDayDate = DateUtil.getFormattedDate("+1", "MM/dd/yyyy");
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "firstName",
+				value = "Testing");
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "lastName",
+				value = "Model");
+
+			RaylifeApplicationModal.birthDate(nextDayDate = ${nextDayDate});
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "phone",
+				value = 0123456789);
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "email",
+				value = "test@liferay.com");
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "streetAddress",
+				value = "Address");
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "apt",
+				value = 0000);
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "city",
+				value = "New York");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "mySelectId",
+				value = "NY");
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "zipCode",
+				value = 12345);
+
+			DoubleClick(
+				key_option = "Own",
+				locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
+		}
+
+		task ("Then I should be able to assert that after filling in all required fields, the Next button is enabled") {
+			Button.viewPresent(button = "Next");
+
+			Button.click(button = "Next");
+		}
+	}
+
+}

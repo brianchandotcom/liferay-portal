@@ -3,6 +3,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
 
+import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountInfo,
 	getChannels,

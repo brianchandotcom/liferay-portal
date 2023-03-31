@@ -71,7 +71,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		annotation = _formatServiceAttribute(
 			fileName, absolutePath, javaClass.getName(), annotation,
 			javaClass.getImplementedClassNames());
-		annotation = _removeUnnecessaryAttribute(absolutePath, annotation);
+
+		_removeUnnecessaryAttribute(fileName, absolutePath, annotation);
 
 		List<String> extendedClassNames = javaClass.getExtendedClassNames(
 			false);
@@ -501,8 +502,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return javaMethods;
 	}
 
-	private String _removeUnnecessaryAttribute(
-		String absolutePath, String annotation) {
+	private void _removeUnnecessaryAttribute(
+		String fileName, String absolutePath, String annotation) {
 
 		List<String> unNeedRemoveClasses = getAttributeValues(
 			_UN_NEED_REMOVE_CLASSES, absolutePath);
@@ -511,49 +512,15 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			if (absolutePath.endsWith(unNeedRemoveClass) ||
 				absolutePath.contains(unNeedRemoveClass)) {
 
-				return annotation;
+				return;
 			}
 		}
 
 		Matcher matcher = _unnecessaryAttributePattern.matcher(annotation);
 
 		if (matcher.find()) {
-			int startPos = matcher.start();
-			int endPos = matcher.end();
-
-			String preString = matcher.group(1);
-			String afterString = matcher.group(3);
-
-			if ((StringUtil.equals(preString, StringPool.OPEN_PARENTHESIS) &&
-				 !StringUtil.equals(
-					 afterString, StringPool.CLOSE_PARENTHESIS)) ||
-				(preString.matches("\n\t*") && !afterString.matches("\n") &&
-				 !StringUtil.equals(
-					 afterString, StringPool.CLOSE_PARENTHESIS))) {
-
-				startPos = matcher.start(2);
-			}
-
-			if ((!StringUtil.equals(preString, StringPool.OPEN_PARENTHESIS) &&
-				 StringUtil.equals(
-					 afterString, StringPool.CLOSE_PARENTHESIS)) ||
-				afterString.matches("\n")) {
-
-				endPos = matcher.end(2);
-			}
-
-			annotation = StringUtil.replaceFirst(
-				annotation, annotation.substring(startPos, endPos),
-				StringPool.BLANK, startPos);
-
-			if (annotation.matches("@Component\\(\n\t*\\)")) {
-				return "@Component";
-			}
-
-			return annotation;
+			addMessage(fileName, "Get rid of 'immediate = true' usages");
 		}
-
-		return annotation;
 	}
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =

@@ -505,12 +505,12 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private void _removeUnnecessaryAttribute(
 		String fileName, String absolutePath, String annotation) {
 
-		List<String> unNeedRemoveClasses = getAttributeValues(
-			_UN_NEED_REMOVE_CLASSES, absolutePath);
+		List<String> allowedImmediateClassNames = getAttributeValues(
+			_ALLOWED_IMMEDIATE_CLASS_NAMES_KEY, absolutePath);
 
-		for (String unNeedRemoveClass : unNeedRemoveClasses) {
-			if (absolutePath.endsWith(unNeedRemoveClass) ||
-				absolutePath.contains(unNeedRemoveClass)) {
+		for (String allowedImmediateClassName : allowedImmediateClassNames) {
+			if (absolutePath.endsWith(allowedImmediateClassName) ||
+				absolutePath.contains(allowedImmediateClassName)) {
 
 				return;
 			}
@@ -522,6 +522,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			addMessage(fileName, "Get rid of 'immediate = true' usages");
 		}
 	}
+
+	private static final String _ALLOWED_IMMEDIATE_CLASS_NAMES_KEY =
+		"allowedImmediateClassNames";
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
 		"checkConfigurationPolicyAttribute";
@@ -537,8 +540,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _ENTERPRISE_APP_MODULE_PATH_NAMES_KEY =
 		"enterpriseAppModulePathNames";
-
-	private static final String _UN_NEED_REMOVE_CLASSES = "unNeedRemoveClasses";
 
 	private static final Pattern _annotationParameterPropertyPattern =
 		Pattern.compile("\\s(\\w+) = \\{");

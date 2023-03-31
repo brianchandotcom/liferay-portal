@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v5_1_0;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Layout;
@@ -40,16 +40,21 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 	public JournalArticleDDMStructureIdUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
-		DDMStructureLocalService ddmStructureLocalService, Portal portal) {
+		DDMStructureLocalService ddmStructureLocalService, Portal portal,
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider) {
 
 		_classNameLocalService = classNameLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_portal = portal;
+		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		Map<String, Map<Long, Long>> ddmStructureKeysMap =
+			new ConcurrentHashMap<>();
+
+		Map<Long, long[]> ancestorSiteAndDepotGroupIdsMap =
 			new ConcurrentHashMap<>();
 
 		Map<Long, Long> siteGroupIdsMap = new ConcurrentHashMap<>();
@@ -92,12 +97,52 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 						Long ddmStructureId = groupIdsMap.get(siteGroupId);
 
 						if (ddmStructureId == null) {
-							DDMStructure ddmStructure =
-								_ddmStructureLocalService.getStructure(
-									siteGroupId, journalArticleClassNameId,
-									ddmStructureKey, true);
+							ddmStructureId = _getDDMStructureId(
+								ddmStructureKey, siteGroupId,
+								journalArticleClassNameId);
 
-							ddmStructureId = ddmStructure.getStructureId();
+							if (ddmStructureId == 0L) {
+								long[] ancestorSiteAndDepotGroupIds =
+									ancestorSiteAndDepotGroupIdsMap.get(
+										siteGroupId);
+
+								if (ancestorSiteAndDepotGroupIds == null) {
+									ancestorSiteAndDepotGroupIds =
+										_siteConnectedGroupGroupProvider.
+											getAncestorSiteAndDepotGroupIds(
+												siteGroupId, true);
+
+									ancestorSiteAndDepotGroupIdsMap.put(
+										siteGroupId,
+										ancestorSiteAndDepotGroupIds);
+								}
+
+								for (long ancestorSiteAndDepotGroupId :
+										ancestorSiteAndDepotGroupIds) {
+
+									ddmStructureId = groupIdsMap.get(
+										ancestorSiteAndDepotGroupId);
+
+									if (ddmStructureId != null) {
+										break;
+									}
+
+									ddmStructureId = _getDDMStructureId(
+										ddmStructureKey,
+										ancestorSiteAndDepotGroupId,
+										journalArticleClassNameId);
+
+									if (ddmStructureId == 0L) {
+										continue;
+									}
+
+									groupIdsMap.put(
+										ancestorSiteAndDepotGroupId,
+										ddmStructureId);
+
+									break;
+								}
+							}
 
 							groupIdsMap.put(siteGroupId, ddmStructureId);
 						}
@@ -124,6 +169,29 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 		};
 	}
 
+	private long _getDDMStructureId(
+			String ddmStructureKey, long groupId,
+			long journalArticleClassNameId)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select structureId from DDMStructure where groupId = ? and " +
+					"classNameId = ? and structureKey = ?")) {
+
+			preparedStatement.setLong(1, groupId);
+			preparedStatement.setLong(2, journalArticleClassNameId);
+			preparedStatement.setString(3, ddmStructureKey);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("structureId");
+				}
+			}
+		}
+
+		return 0;
+	}
+
 	private long _getSiteGroupId(long groupId, long layoutClassNameId)
 		throws SQLException {
 
@@ -147,5 +215,7 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final Portal _portal;
+	private final SiteConnectedGroupGroupProvider
+		_siteConnectedGroupGroupProvider;
 
 }

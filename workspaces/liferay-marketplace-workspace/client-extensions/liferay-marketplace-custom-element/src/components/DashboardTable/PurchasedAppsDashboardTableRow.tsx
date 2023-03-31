@@ -129,7 +129,7 @@ export function PurchasedAppsDashboardTableRow({
 						<DropDown.Item
 							onClick={() => {
 								window.location.href =
-									'https://console.liferay.cloud/*';
+									'https://console.liferay.cloud/';
 							}}
 						>
 							Access Console

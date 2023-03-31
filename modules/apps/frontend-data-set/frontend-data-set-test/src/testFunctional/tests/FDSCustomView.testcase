@@ -113,7 +113,7 @@ definition {
 				key_field = "ID",
 				locator1 = "FrontendDataSet#SORT_FIELD");
 
-			Pagination.changePagination(itemsPerPage = "4 items");
+			Pagination.changePagination(itemsPerPage = "4 Items");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 

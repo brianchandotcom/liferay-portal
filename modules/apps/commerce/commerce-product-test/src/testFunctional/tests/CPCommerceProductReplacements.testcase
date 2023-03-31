@@ -121,6 +121,59 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9093. As a buyer, I want to be able to view a discontinued product's information on the product card."
+	@priority = 3
+	test CanViewDiscontinuedProductInformationOnProductCard {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued'") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861");
+		}
+
+		task ("When the buyer navigates to the Catalog Page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the Discontinued label is shown on the U-Joint's product card") {
+			AssertElementPresent(
+				key_productName = "u-joint",
+				key_status = "Discontinued",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_STATUS_LABEL");
+		}
+
+		task ("And the Discontinued label is not visible on another product card") {
+			AssertElementNotPresent(
+				key_productName = "torque converters",
+				key_status = "Discontinued",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_STATUS_LABEL");
+		}
+	}
+
 	@description = "COMMERCE-8160. Verify a product can be marked as 'discontinued' when adding a new SKU"
 	@priority = 5
 	test CreateNewSKUWithReplacement {

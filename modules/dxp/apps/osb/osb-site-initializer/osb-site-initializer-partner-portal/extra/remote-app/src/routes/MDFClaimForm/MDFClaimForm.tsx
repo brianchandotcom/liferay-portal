@@ -12,7 +12,6 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import PRMFormik from '../../common/components/PRMFormik';
-import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFClaimDTO from '../../common/interfaces/dto/mdfClaimDTO';
 import {Liferay} from '../../common/services/liferay';
@@ -54,7 +53,9 @@ const MDFClaimForm = () => {
 	const siteURL = useLiferayNavigate();
 
 	const onCancel = () =>
-		Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
+		mdfRequestId &&
+		siteURL &&
+		Liferay.Util.navigate(`${siteURL}/l/${mdfRequestId}`);
 
 	const mdfClaim =
 		mdfClaimDTO && getMDFClaimFromDTO(mdfClaimDTO as MDFClaimDTO);

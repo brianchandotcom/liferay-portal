@@ -22,20 +22,46 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
-		<a
-			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
-			href="<%= escapedHREF %>"
-			id="<%= id %>"
+		<c:choose>
+			<c:when test='<%= Validator.isNull(onClick) && type.equals("cancel") %>'>
+				<button
+					class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 
-			<c:if test="<%= Validator.isNotNull(onClick) %>">
-				onClick="<%= onClick %>"
-			</c:if>
+					<c:if test="<%= disabled %>">
+						disabled
+					</c:if>
 
-			role="button"
+					id="<%= id %>"
 
-			<%= AUIUtil.buildData(data) %>
-			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
-		>
+					<c:if test="<%= Validator.isNotNull(name) %>">
+						name="<%= namespace %><%= name %>"
+					</c:if>
+
+					onClick="<%= "Liferay.Util.navigate('" + escapedHREF + "')" %>"
+
+					type="button"
+
+					<%= AUIUtil.buildData(data) %>
+					<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
+				>
+			</c:when>
+			<c:otherwise>
+				<a
+					class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
+					href="<%= escapedHREF %>"
+					id="<%= id %>"
+
+					<c:if test="<%= Validator.isNotNull(onClick) %>">
+						onClick="<%= onClick %>"
+					</c:if>
+
+					role="button"
+
+					<%= AUIUtil.buildData(data) %>
+					<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
+				>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<button

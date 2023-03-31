@@ -346,17 +346,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void checkKBArticles() throws PortalException {
+	public void checkKBArticles(long companyId) throws PortalException {
 		Date date = new Date();
 
-		_checkKBArticlesByExpirationDate(date);
+		_checkKBArticlesByExpirationDate(companyId, date);
 
 		if (_previousCheckDate == null) {
 			_previousCheckDate = new Date(
 				date.getTime() - _getKBArticleCheckInterval());
 		}
 
-		_checkKBArticlesByReviewDate(date);
+		_checkKBArticlesByReviewDate(companyId, date);
 
 		_previousCheckDate = date;
 	}
@@ -1600,31 +1600,34 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
-	private void _checkKBArticlesByExpirationDate(Date expirationDate)
+	private void _checkKBArticlesByExpirationDate(
+			long companyId, Date expirationDate)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Expiring file entries with expiration date previous to " +
-					expirationDate);
+				StringBundler.concat(
+					"Expiring file entries with expiration date previous to " ,
+						expirationDate,
+					" for companyId ", companyId));
 		}
 
-		_companyLocalService.forEachCompany(
-			company -> _expireKBArticlesByCompany(company, expirationDate));
+		_expireKBArticlesByCompany(_companyLocalService.getCompany(companyId), expirationDate);
 	}
 
-	private void _checkKBArticlesByReviewDate(Date reviewDate)
+	private void _checkKBArticlesByReviewDate(long companyId, Date reviewDate)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
 					"Sending review notification for articles with review ",
-					"date between ", _previousCheckDate, " and ", reviewDate));
+					"date between ", _previousCheckDate, " and ", reviewDate
+					, " for companyId ", companyId));
 		}
 
-		_companyLocalService.forEachCompany(
-			company -> _notifyReviewKBArticlesByCompany(company, reviewDate));
+		_notifyReviewKBArticlesByCompany(
+			_companyLocalService.getCompany(companyId), reviewDate);
 	}
 
 	private void _deleteAssets(KBArticle kbArticle) throws PortalException {

@@ -400,7 +400,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		throws Exception {
 
 		InputStream inputStream = getResourceInputStream(
-			"single-approver-scripted-assignment-workflow-definition.xml");
+			"single-approver-scripted-assignment-1-workflow-definition.xml");
 
 		_assertValid(inputStream);
 	}

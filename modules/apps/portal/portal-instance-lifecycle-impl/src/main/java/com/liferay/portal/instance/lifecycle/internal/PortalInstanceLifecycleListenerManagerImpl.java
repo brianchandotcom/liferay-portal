@@ -184,6 +184,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 			company.getCompanyId(), portalInstanceLifecycleListener, true,
 			() -> {
 				Long companyId = CompanyThreadLocal.getCompanyId();
+				Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 				Locale siteDefaultLocale =
 					LocaleThreadLocal.getSiteDefaultLocale();
 
@@ -192,6 +193,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 							true)) {
 
 					CompanyThreadLocal.setCompanyId(company.getCompanyId());
+					LocaleThreadLocal.setDefaultLocale(company.getLocale());
 					LocaleThreadLocal.setSiteDefaultLocale(null);
 
 					portalInstanceLifecycleListener.portalInstanceRegistered(
@@ -206,6 +208,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 				}
 				finally {
 					CompanyThreadLocal.setCompanyId(companyId);
+					LocaleThreadLocal.setDefaultLocale(defaultLocale);
 					LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
 				}
 			});

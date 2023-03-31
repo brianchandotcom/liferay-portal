@@ -306,7 +306,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private String _formatImmediateAttribute(
 		String fileName, String absolutePath, String annotation) {
 
-		if (absolutePath.contains("/modules/apps/archived/")) {
+		if (absolutePath.contains("/modules/apps/archived/") ||
+			!isAttributeValue(_CHECK_IMMEDIATE_ATTRIBUTE_KEY, absolutePath)) {
+
 			return annotation;
 		}
 
@@ -535,6 +537,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
 		"checkConfigurationPolicyAttribute";
+
+	private static final String _CHECK_IMMEDIATE_ATTRIBUTE_KEY =
+		"checkImmediateAttribute";
 
 	private static final String _CHECK_MISMATCHED_SERVICE_ATTRIBUTE_KEY =
 		"checkMismatchedServiceAttribute";

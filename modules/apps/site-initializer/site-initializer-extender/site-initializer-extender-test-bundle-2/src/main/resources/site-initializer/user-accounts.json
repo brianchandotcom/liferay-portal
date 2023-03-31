@@ -23,8 +23,8 @@
 				"externalReferenceCode": "TESTACC0002"
 			},
 			{
-            	"externalReferenceCode": "TESTACC0004"
-            }
+				"externalReferenceCode": "TESTACC0004"
+			}
 		],
 		"alternateName": "testAlternateName2Update",
 		"emailAddress": "test.user2.update@liferay.com",
@@ -34,8 +34,8 @@
 		"name": "Test User 2",
 		"organizationBriefs": [
 			{
-            	"name": "Test Organization 1"
-            },
+				"name": "Test Organization 1"
+			},
 			{
 				"name": "Test Organization 2"
 			}
@@ -55,6 +55,6 @@
 		"externalReferenceCode": "USER-3",
 		"familyName": "User3",
 		"givenName": "Test",
-		"name": "Test User 3",
-	},
+		"name": "Test User 3"
+	}
 ]

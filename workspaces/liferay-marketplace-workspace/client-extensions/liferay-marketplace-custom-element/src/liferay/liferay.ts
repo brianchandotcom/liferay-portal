@@ -1,4 +1,5 @@
 interface ILiferay {
+	MarketplaceCustomerFlow: {appId: number};
 	Service: Function;
 	ThemeDisplay: {
 		getCompanyId: () => string;
@@ -14,6 +15,7 @@ declare global {
 }
 
 export const Liferay = window.Liferay || {
+	MarketplaceCustomerFlow: 0,
 	Service: {},
 	ThemeDisplay: {
 		getCompanyId: () => '',

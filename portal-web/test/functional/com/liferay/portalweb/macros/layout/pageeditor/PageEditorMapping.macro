@@ -70,7 +70,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		MenuBar.click(menuBar = ${navItem});
+		if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+			MenuBar.click(menuBar = ${navItem});
+		}
+		else {
+			Navigator.gotoNavTab(navTab = ${navItem});
+		}
 
 		if (isSet(uploadFileName)) {
 			WaitForEditable(locator1 = "TextInput#FILE");

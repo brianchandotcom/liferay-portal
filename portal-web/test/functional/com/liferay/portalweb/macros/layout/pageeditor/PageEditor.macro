@@ -2493,7 +2493,12 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			if (isSet(documentandmedia)) {
-				MenuBar.click(menuBar = "Documents and Media");
+				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+					MenuBar.click(menuBar = "Documents and Media");
+				}
+				else {
+					Navigator.gotoNavTab(navTab = "Documents and Media");
+				}
 
 				LexiconCard.clickCard(card = ${imageFileName});
 
@@ -2509,7 +2514,12 @@ definition {
 			}
 
 			if (isSet(blogs)) {
-				MenuBar.click(menuBar = "Blogs");
+				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+					MenuBar.click(menuBar = "Blogs");
+				}
+				else {
+					Navigator.gotoNavTab(navTab = "Blogs");
+				}
 
 				LexiconCard.clickCard(card = ${entryTitle});
 
@@ -2528,7 +2538,12 @@ definition {
 			}
 
 			if (isSet(categories)) {
-				MenuBar.click(menuBar = "Categories");
+				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+					MenuBar.click(menuBar = "Categories");
+				}
+				else {
+					Navigator.gotoNavTab(navTab = "Categories");
+				}
 
 				Portlet.expandTree();
 
@@ -2546,7 +2561,12 @@ definition {
 			}
 
 			if (isSet(knowledgeBase)) {
-				MenuBar.click(menuBar = "Knowledge Base Articles");
+				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+					MenuBar.click(menuBar = "Knowledge Base Articles");
+				}
+				else {
+					Navigator.gotoNavTab(navTab = "Knowledge Base Articles");
+				}
 
 				Click(
 					key_kbArticleTitle = ${entryTitle},
@@ -2567,7 +2587,12 @@ definition {
 			}
 
 			if (isSet(webcontent)) {
-				MenuBar.click(menuBar = "Web Content");
+				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+					MenuBar.click(menuBar = "Web Content");
+				}
+				else {
+					Navigator.gotoNavTab(navTab = "Web Content");
+				}
 
 				if (isSet(depotName)) {
 					var key_contentName = ${webContentTitle};

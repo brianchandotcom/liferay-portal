@@ -62,6 +62,12 @@ public class DockerfileInstructionCheck extends BaseFileCheck {
 			return StringPool.BLANK;
 		}
 
+		String trimmedLine = StringUtil.trimLeading(line);
+
+		if (trimmedLine.startsWith(StringPool.POUND)) {
+			return line;
+		}
+
 		String instruction = DockerfileSourceUtil.getInstruction(
 			line, previousLine);
 

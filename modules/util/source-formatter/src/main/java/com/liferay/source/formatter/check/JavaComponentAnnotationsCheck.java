@@ -505,6 +505,10 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private void _removeUnnecessaryAttribute(
 		String fileName, String absolutePath, String annotation) {
 
+		if (absolutePath.contains("/modules/apps/archived/")) {
+			return;
+		}
+
 		List<String> allowedImmediateClassNames = getAttributeValues(
 			_ALLOWED_IMMEDIATE_CLASS_NAMES_KEY, absolutePath);
 

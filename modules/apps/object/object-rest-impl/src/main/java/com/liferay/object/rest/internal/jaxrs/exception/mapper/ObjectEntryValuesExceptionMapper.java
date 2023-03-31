@@ -52,11 +52,6 @@ public class ObjectEntryValuesExceptionMapper
 				objectEntryValuesException.getArguments()));
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 	@Context
 	private AcceptLanguage _acceptLanguage;
 

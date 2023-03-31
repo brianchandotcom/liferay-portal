@@ -2,7 +2,10 @@
 	"compilerOptions": {
 		"esModuleInterop": true,
 		"jsx": "react",
-		"lib": ["DOM", "ES2020"],
+		"lib": [
+			"DOM",
+			"ES2020"
+		],
 		"module": "ES2020",
 		"moduleResolution": "node",
 		"outDir": "./build",
@@ -10,6 +13,7 @@
 		"sourceMap": false,
 		"target": "ES2020"
 	},
-	"include": ["./src/**/*"]
+	"include": [
+		"./src/**/*"
+	]
 }
-

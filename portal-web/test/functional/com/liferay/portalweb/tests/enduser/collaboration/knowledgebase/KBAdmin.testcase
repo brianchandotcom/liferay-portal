@@ -261,7 +261,7 @@ definition {
 
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "KB Folder",
-			tableColumnContents = "KB Folder,,0,0,--,Seconds Ago,",
+			tableColumnContents = "KB Folder,--,0,0,--,Seconds Ago,",
 			tableColumnNames = "title,status,num-of-kb-folders,num-of-kb-articles,views,modified-date");
 
 		JSONKnowledgeBase.addkBArticle(

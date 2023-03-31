@@ -199,11 +199,7 @@ const AddPanel = ({
 	);
 
 	return (
-		<div
-			className={classNames('sidebar-body__add-panel', {
-				rtl,
-			})}
-		>
+		<div className={classNames('sidebar-body__add-panel p-0', {rtl})}>
 			<AddPanelContextProvider
 				value={{
 					addContentsURLs,

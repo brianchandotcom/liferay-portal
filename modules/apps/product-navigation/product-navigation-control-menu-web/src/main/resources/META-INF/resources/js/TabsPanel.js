@@ -33,7 +33,7 @@ const TabsPanel = ({tabs}) => {
 
 	return (
 		<>
-			<ClayTabs className="sidebar-body__add-panel__tabs">
+			<ClayTabs className="mb-0 pl-3 sidebar-body__add-panel__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={activeTabId === index}
@@ -56,6 +56,7 @@ const TabsPanel = ({tabs}) => {
 				{tabs.map((tab, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(index)}
+						className="p-3"
 						id={getTabPanelId(index)}
 						key={index}
 					>

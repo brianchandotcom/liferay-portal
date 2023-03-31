@@ -12,6 +12,11 @@
 <tbody>
 
 <tr>
+	<td>CHOOSE_OPTION</td>
+	<td>//input[contains(@class, 'custom-control-input')]/following-sibling::span//*[text()='${key_option}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_OPTION</td>
 	<td>//div[contains(@class,'modal-body')]//section//*[contains(.,'${key_text}')]</td>
 	<td></td>
@@ -24,6 +29,26 @@
 <tr>
 	<td>MODAL_INSURANCE</td>
 	<td>//div[contains(@class,'application-card') and contains(@class,'active')]//*[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_DROPDOWN</td>
+	<td>//div[contains(@class, 'select-${field}')]/descendant::select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_OPTION</td>
+	<td>//select[contains(@id, '${label}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_DROPDOWN_OPTION</td>
+	<td>//button[contains(@class, 'dropdown-item') and text()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ELEMENT_BY_POSITION</td>
+	<td>//*[contains(@class, 'review-responsive-table')]/tbody/tr[${key_linePosition}]/td[${key_colunmPosition}]//*[contains(@class, 'text-secondary') and text()='${key_text}']</td>
 	<td></td>
 </tr>
 </tbody>

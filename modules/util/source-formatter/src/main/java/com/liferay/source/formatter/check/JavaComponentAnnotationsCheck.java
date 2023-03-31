@@ -514,9 +514,12 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			}
 		}
 
-		Matcher matcher = _immediatePattern.matcher(annotation);
+		String immediateAttributeValue = _getAttributeValue(
+			annotation, "immediate");
 
-		if (matcher.find()) {
+		if ((immediateAttributeValue != null) &&
+			immediateAttributeValue.equals("true")) {
+
 			addMessage(fileName, "Get rid of 'immediate = true' usages");
 		}
 	}
@@ -543,8 +546,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		Pattern.compile("\\s(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
-	private static final Pattern _immediatePattern = Pattern.compile(
-		"\\bimmediate = true\\b");
 
 	private class AnnotationParameterPropertyComparator
 		extends NaturalOrderStringComparator {

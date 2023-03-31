@@ -64,12 +64,12 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
+		_checkImmediateAttribute(fileName, absolutePath, annotation);
+
 		annotation = _formatAnnotationParameterProperties(annotation);
 		annotation = _formatConfigurationAttributes(
 			fileName, absolutePath, javaClass, annotation);
 		annotation = _formatEnabledAttribute(absolutePath, annotation);
-		annotation = _formatImmediateAttribute(
-			fileName, absolutePath, annotation);
 		annotation = _formatServiceAttribute(
 			fileName, absolutePath, javaClass.getName(), annotation,
 			javaClass.getImplementedClassNames());
@@ -138,6 +138,36 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		return newProperties + properties;
+	}
+
+	private void _checkImmediateAttribute(
+		String fileName, String absolutePath, String annotation) {
+
+		if (absolutePath.contains("/modules/apps/archived/") ||
+			!isAttributeValue(_CHECK_IMMEDIATE_ATTRIBUTE_KEY, absolutePath)) {
+
+			return;
+		}
+
+		List<String> allowedImmediateAttributeClassNames = getAttributeValues(
+			_ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY, absolutePath);
+
+		for (String allowedImmediateAttributeClassName :
+				allowedImmediateAttributeClassNames) {
+
+			if (absolutePath.contains(allowedImmediateAttributeClassName)) {
+				return;
+			}
+		}
+
+		String immediateAttributeValue = _getAttributeValue(
+			annotation, "immediate");
+
+		if ((immediateAttributeValue != null) &&
+			immediateAttributeValue.equals("true")) {
+
+			addMessage(fileName, "Do not use 'immediate = true' in @Component");
+		}
 	}
 
 	private String _formatAnnotationParameterProperties(String annotation) {
@@ -298,38 +328,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			if (enabledAttributeValue == null) {
 				return _addAttribute(annotation, "enabled", "false");
 			}
-		}
-
-		return annotation;
-	}
-
-	private String _formatImmediateAttribute(
-		String fileName, String absolutePath, String annotation) {
-
-		if (absolutePath.contains("/modules/apps/archived/") ||
-			!isAttributeValue(_CHECK_IMMEDIATE_ATTRIBUTE_KEY, absolutePath)) {
-
-			return annotation;
-		}
-
-		List<String> allowedImmediateAttributeClassNames = getAttributeValues(
-			_ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY, absolutePath);
-
-		for (String allowedImmediateAttributeClassName :
-				allowedImmediateAttributeClassNames) {
-
-			if (absolutePath.contains(allowedImmediateAttributeClassName)) {
-				return annotation;
-			}
-		}
-
-		String immediateAttributeValue = _getAttributeValue(
-			annotation, "immediate");
-
-		if ((immediateAttributeValue != null) &&
-			immediateAttributeValue.equals("true")) {
-
-			addMessage(fileName, "Do not use 'immediate = true' in @Component");
 		}
 
 		return annotation;

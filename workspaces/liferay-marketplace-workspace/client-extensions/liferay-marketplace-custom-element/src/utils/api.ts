@@ -238,7 +238,7 @@ export async function getChannelById(channelId: number) {
 
 export async function getChannels() {
 	const channelsResponse = await fetch(
-		'/o/headless-commerce-admin-channel/v1.0/channels',
+		'/o/headless-commerce-delivery-catalog/v1.0/channels',
 		{
 			headers,
 			method: 'GET',
@@ -377,6 +377,34 @@ export async function getSKUById(skuId: number) {
 	);
 
 	return await response.json();
+}
+
+export async function getSKUCustomFieldExpandoValue({
+	companyId,
+	customFieldName,
+	skuId,
+}: {
+	companyId: number;
+	customFieldName: string;
+	skuId: number;
+}) {
+	let response = '';
+
+	await Liferay.Service(
+		'/expandovalue/get-data',
+		{
+			columnName: customFieldName,
+			className: 'com.liferay.commerce.product.model.CPInstance',
+			classPK: skuId,
+			companyId,
+			tableName: 'CUSTOM_FIELDS',
+		},
+		(obj: any) => {
+			response = obj;
+		}
+	);
+
+	return response as string;
 }
 
 export async function getSpecifications() {

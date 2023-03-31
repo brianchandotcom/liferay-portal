@@ -5,7 +5,7 @@
 			flex-direction: column;
 			gap: 0.625rem;
 			padding: 1.063rem;
-			width: 34.5rem;
+			width: 100%;
 		}
 
 		&-content {
@@ -117,7 +117,7 @@
 			border: 1px solid #e2e2e4;
 			border-radius: 0.625rem;
 			height: 12.875rem;
-			width: 34.5rem;
+			width: 100%;
 		}
 
 		&-card-header {
@@ -128,7 +128,7 @@
 			height: 3.5rem;
 			justify-content: space-between;
 			padding: 1.25rem 1rem;
-			width: 34.5rem;
+			width: 100%;
 
 			&-left-content {
 				color: #54555f;

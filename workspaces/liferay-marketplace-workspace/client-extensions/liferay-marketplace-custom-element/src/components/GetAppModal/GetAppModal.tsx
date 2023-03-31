@@ -2,6 +2,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
+import {getCompanyId} from '../../liferay/constants';
 
 import {Liferay} from '../../liferay/liferay';
 import {
@@ -9,6 +10,7 @@ import {
 	getChannels,
 	getDeliveryProduct,
 	getProductSKU,
+	getSKUCustomFieldExpandoValue,
 	getUserAccount,
 	getUserAccountsById,
 	patchOrderByERC,
@@ -21,10 +23,9 @@ import './GetAppModal.scss';
 interface App {
 	createdBy: string;
 	id: number;
-	image: string;
-	name: {en_US: string};
+	name: {en_US: string} | string;
 	price: number;
-	version: string;
+	urlImage: string;
 }
 
 interface GetAppModalProps {
@@ -39,11 +40,11 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	const [app, setApp] = useState<App>({
 		createdBy: '',
 		id: 0,
-		image: '',
-		name: {en_US: ''},
+		name: '',
 		price: 0,
-		version: '',
+		urlImage: '',
 	});
+	const [appVersion, setAppVersion] = useState<string>();
 	const [channel, setChannel] = useState<Channel>({
 		currencyCode: '',
 		externalReferenceCode: '',
@@ -52,7 +53,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		siteGroupId: 0,
 		type: '',
 	});
-	const [currentUser, setCurrentUser] = useState<{email: string}>();
+	const [currentUser, setCurrentUser] = useState<{emailAddress: string}>();
 	const [sku, setSku] = useState<SKU>({
 		cost: 0,
 		externalReferenceCode: '',
@@ -101,11 +102,21 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			setAccount(currentAccount);
 
-			const skuResponse = await getProductSKU({appProductId: Liferay.MarketplaceCustomerFlow.appId});
+			const skuResponse = await getProductSKU({
+				appProductId: Liferay.MarketplaceCustomerFlow.appId,
+			});
 
 			const sku = skuResponse.items[0];
 
 			setSku(sku);
+
+			const version = await getSKUCustomFieldExpandoValue({
+				companyId: parseInt(getCompanyId()),
+				customFieldName: 'version',
+				skuId: sku.id,
+			});
+
+			setAppVersion(version);
 		};
 
 		getModalInfo();
@@ -185,7 +196,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 								</span>
 
 								<span className="get-app-modal-body-card-header-right-content-account-info-email">
-									{currentUser?.email}
+									{currentUser?.emailAddress}
 								</span>
 							</div>
 
@@ -203,16 +214,18 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 								<img
 									alt="App Image"
 									className="get-app-modal-body-content-image"
-									src={app.image}
+									src={app.urlImage.replace(':8080', '')}
 								/>
 
 								<div className="get-app-modal-body-content-app-info-container">
 									<span className="get-app-modal-body-content-app-info-name">
-										{app.name['en_US']}
+										{typeof app.name === 'string'
+											? app.name
+											: app.name.en_US}
 									</span>
 
 									<span className="get-app-modal-body-content-app-info-version">
-										{app.version} by {app.createdBy}.
+										{appVersion} by {app.createdBy}.
 									</span>
 								</div>
 							</div>

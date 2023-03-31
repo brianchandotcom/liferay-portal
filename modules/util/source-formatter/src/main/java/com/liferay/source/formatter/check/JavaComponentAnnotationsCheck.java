@@ -28,8 +28,6 @@ import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,16 +41,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	@Override
 	public boolean isLiferaySourceCheck() {
 		return true;
-	}
-
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm,
-			String fileContent)
-		throws IOException {
-
-		return formatAnnotations(
-			fileName, absolutePath, (JavaClass)javaTerm, fileContent);
 	}
 
 	@Override

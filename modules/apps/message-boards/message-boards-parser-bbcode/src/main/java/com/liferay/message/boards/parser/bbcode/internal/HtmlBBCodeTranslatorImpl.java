@@ -487,7 +487,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		Matcher matcher = _imagePattern.matcher(src);
 
-		if (matcher.matches() || src.startsWith("data:image/")) {
+		if (src.startsWith("data:image/") || matcher.matches()) {
 			sb.append(HtmlUtil.escapeAttribute(src));
 		}
 

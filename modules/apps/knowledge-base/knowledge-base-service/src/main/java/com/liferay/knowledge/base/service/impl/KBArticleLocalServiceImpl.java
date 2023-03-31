@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -141,6 +142,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -351,14 +353,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_checkKBArticlesByExpirationDate(companyId, date);
 
-		if (_previousCheckDate == null) {
-			_previousCheckDate = new Date(
-				date.getTime() - _getKBArticleCheckInterval());
-		}
+		_dates.computeIfAbsent(
+			companyId,
+			key -> new Date(
+				date.getTime() - (_getKBArticleCheckInterval() * Time.MINUTE)));
 
 		_checkKBArticlesByReviewDate(companyId, date);
 
-		_previousCheckDate = date;
+		_dates.put(companyId, date);
 	}
 
 	@Override
@@ -1607,12 +1609,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Expiring file entries with expiration date previous to " ,
-						expirationDate,
-					" for companyId ", companyId));
+					"Expiring file entries with expiration date previous to ",
+					expirationDate, " for companyId ", companyId));
 		}
 
-		_expireKBArticlesByCompany(_companyLocalService.getCompany(companyId), expirationDate);
+		_expireKBArticlesByCompany(
+			_companyLocalService.getCompany(companyId), expirationDate);
 	}
 
 	private void _checkKBArticlesByReviewDate(long companyId, Date reviewDate)
@@ -1622,8 +1624,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			_log.debug(
 				StringBundler.concat(
 					"Sending review notification for articles with review ",
-					"date between ", _previousCheckDate, " and ", reviewDate
-					, " for companyId ", companyId));
+					"date between ", _dates.get(companyId), " and ", reviewDate,
+					" for companyId ", companyId));
 		}
 
 		_notifyReviewKBArticlesByCompany(
@@ -2193,7 +2195,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
-			company.getCompanyId(), _previousCheckDate, reviewDate);
+			company.getCompanyId(), _dates.get(company.getCompanyId()),
+			reviewDate);
 
 		for (KBArticle kbArticle : kbArticles) {
 			if (_log.isDebugEnabled()) {
@@ -2513,6 +2516,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	private final Map<Long, Date> _dates = new ConcurrentHashMap<>();
+
 	@Reference
 	private DiffHtml _diffHtml;
 
@@ -2551,8 +2556,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	private Date _previousCheckDate;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

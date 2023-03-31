@@ -32,27 +32,28 @@
 
 [#if mdfClaimId?has_content]
 	[#assign myUserAccount = restClient.get("/headless-admin-user/v1.0/my-user-account") /]
-	[#assign claim = restClient.get("/c/mdfclaims/${mdfClaimId}?nestedField=r_mdfReqToMDFClms_c_mdfRequestId") /]
-	[#assign accountEntryId = claim.r_mdfReqToMDFClms_c_mdfRequest.r_accToMDFReqs_accountEntryId /]
-
+	[#assign mdfClaim = restClient.get("/c/mdfclaims/${mdfClaimId}") /]
+	[#assign accountEntryId = (mdfClaim.r_accToMDFClms_accountEntryId)! /]
+	[#assign mdfRequestId = (mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId)! /]
+	[#assign site_url = (themeDisplay.getURLCurrent()?keep_before("/l/${mdfClaimId}"))! /]
 	[#assign userRoles = userRoles + (myUserAccount.accountBriefs?filter(account_brief -> account_brief.id == accountEntryId)?first.roleBriefs)! /]
 
 	[#list userRoles as userRole]
 		[#if approvedRoles?seq_contains(userRole.name)]
-			<button class="btn btn-primary d-flex mr-2 mt-2" id="edit-button-manager">
+			<a class="btn btn-primary d-flex mr-2 mt-2" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdfRequestId}/mdfclaim/${mdfClaimId}" id="edit-button-manager">
 				<div>
 					[@clay["icon"] symbol="pencil"/]
 					Edit
 				</div>
-			</button>
+			</a>
 
 			[#break]
 		[/#if]
 	[/#list]
-	<button class="btn btn-primary d-none mr-2 mt-2" id="edit-button-user">
+	<a class="btn btn-primary d-none mr-2 mt-2" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdfRequestId}/mdfclaim/${mdfClaimId}" id="edit-button-user">
 		<div>
 			[@clay["icon"] symbol="pencil"/]
 			Edit
 		</div>
-	</button>
+	</a>
 [/#if]

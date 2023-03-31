@@ -80,46 +80,11 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "back-button"
+										"key": "back-button-mdf-claim"
 									},
 									"fragmentConfig": {
-										"buttonSize": "",
-										"inverted": false,
-										"style": "neutral",
-										"type": "ghost",
-										"uppercase": false
 									},
 									"fragmentFields": [
-										{
-											"id": "link",
-											"value": {
-												"fragmentLink": {
-													"value": {
-														"href": {
-															"mapping": {
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.model.Layout",
-																	"fields": [
-																		{
-																			"fieldName": "friendlyURL",
-																			"fieldValue": "/marketing/mdf-claim"
-																		},
-																		{
-																			"fieldName": "privatePage",
-																			"fieldValue": "false"
-																		},
-																		{
-																			"fieldName": "siteKey",
-																			"fieldValue": "[$GROUP_KEY$]"
-																		}
-																	]
-																}
-															}
-														}
-													}
-												}
-											}
-										}
 									],
 									"indexed": true
 								},
@@ -534,6 +499,26 @@
 																				"channelGlobalMarketingManager": true,
 																				"channelRegionalMarketingManager": true,
 																				"user": true
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "edit-button-mdf-claim"
+																			},
+																			"fragmentConfig": {
+																				"channelAccountManager": true,
+																				"channelFinanceManager": true,
+																				"channelGeneralManager": true,
+																				"channelGlobalMarketingManager": true,
+																				"channelRegionalMarketingManager": true,
+																				"partnerManager": true,
+																				"user": false
 																			},
 																			"fragmentFields": [
 																			],

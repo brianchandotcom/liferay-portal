@@ -105,12 +105,20 @@ public class DBUpgradeStatus {
 		ServletSchemaVersions servletSchemaVersions =
 			_servletSchemaVersionsMap.get(servletContextName);
 
+		if (servletSchemaVersions == null) {
+			return null;
+		}
+
 		return servletSchemaVersions.getFinal();
 	}
 
 	public static String getInitialSchemaVersion(String servletContextName) {
 		ServletSchemaVersions servletSchemaVersions =
 			_servletSchemaVersionsMap.get(servletContextName);
+
+		if (servletSchemaVersions == null) {
+			return null;
+		}
 
 		return servletSchemaVersions.getInitial();
 	}

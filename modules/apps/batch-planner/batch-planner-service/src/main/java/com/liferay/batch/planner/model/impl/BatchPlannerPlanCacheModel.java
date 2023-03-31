@@ -78,10 +78,12 @@ public class BatchPlannerPlanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", batchPlannerPlanId=");
 		sb.append(batchPlannerPlanId);
 		sb.append(", companyId=");
@@ -126,6 +128,15 @@ public class BatchPlannerPlanCacheModel
 		BatchPlannerPlanImpl batchPlannerPlanImpl = new BatchPlannerPlanImpl();
 
 		batchPlannerPlanImpl.setMvccVersion(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			batchPlannerPlanImpl.setExternalReferenceCode("");
+		}
+		else {
+			batchPlannerPlanImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		batchPlannerPlanImpl.setBatchPlannerPlanId(batchPlannerPlanId);
 		batchPlannerPlanImpl.setCompanyId(companyId);
 		batchPlannerPlanImpl.setUserId(userId);
@@ -203,6 +214,7 @@ public class BatchPlannerPlanCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		batchPlannerPlanId = objectInput.readLong();
 
@@ -234,6 +246,13 @@ public class BatchPlannerPlanCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(batchPlannerPlanId);
 
@@ -300,6 +319,7 @@ public class BatchPlannerPlanCacheModel
 	}
 
 	public long mvccVersion;
+	public String externalReferenceCode;
 	public long batchPlannerPlanId;
 	public long companyId;
 	public long userId;

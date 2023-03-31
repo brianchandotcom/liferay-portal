@@ -130,6 +130,8 @@ public class BatchPlannerPolicyPersistenceTest {
 
 		newBatchPlannerPolicy.setCompanyId(RandomTestUtil.nextLong());
 
+		newBatchPlannerPolicy.setGroupId(RandomTestUtil.nextLong());
+
 		newBatchPlannerPolicy.setUserId(RandomTestUtil.nextLong());
 
 		newBatchPlannerPolicy.setUserName(RandomTestUtil.randomString());
@@ -159,6 +161,9 @@ public class BatchPlannerPolicyPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerPolicy.getCompanyId(),
 			newBatchPlannerPolicy.getCompanyId());
+		Assert.assertEquals(
+			existingBatchPlannerPolicy.getGroupId(),
+			newBatchPlannerPolicy.getGroupId());
 		Assert.assertEquals(
 			existingBatchPlannerPolicy.getUserId(),
 			newBatchPlannerPolicy.getUserId());
@@ -226,9 +231,9 @@ public class BatchPlannerPolicyPersistenceTest {
 	protected OrderByComparator<BatchPlannerPolicy> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"BatchPlannerPolicy", "mvccVersion", true, "batchPlannerPolicyId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "batchPlannerPlanId",
-			true, "name", true, "value", true);
+			true, "companyId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"batchPlannerPlanId", true, "name", true, "value", true);
 	}
 
 	@Test
@@ -527,6 +532,8 @@ public class BatchPlannerPolicyPersistenceTest {
 		batchPlannerPolicy.setMvccVersion(RandomTestUtil.nextLong());
 
 		batchPlannerPolicy.setCompanyId(RandomTestUtil.nextLong());
+
+		batchPlannerPolicy.setGroupId(RandomTestUtil.nextLong());
 
 		batchPlannerPolicy.setUserId(RandomTestUtil.nextLong());
 

@@ -43,6 +43,8 @@ public class BatchPlannerPolicyTable
 			Column.FLAG_PRIMARY);
 	public final Column<BatchPlannerPolicyTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerPolicyTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPolicyTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPolicyTable, String> userName =

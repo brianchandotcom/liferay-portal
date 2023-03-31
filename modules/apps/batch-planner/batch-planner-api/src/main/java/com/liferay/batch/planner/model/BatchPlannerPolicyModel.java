@@ -15,8 +15,8 @@
 package com.liferay.batch.planner.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
@@ -37,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BatchPlannerPolicyModel
-	extends AuditedModel, BaseModel<BatchPlannerPolicy>, MVCCModel,
+	extends BaseModel<BatchPlannerPolicy>, GroupedModel, MVCCModel,
 			ShardedModel {
 
 	/*
@@ -105,6 +105,22 @@ public interface BatchPlannerPolicyModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the group ID of this batch planner policy.
+	 *
+	 * @return the group ID of this batch planner policy
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this batch planner policy.
+	 *
+	 * @param groupId the group ID of this batch planner policy
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the user ID of this batch planner policy.

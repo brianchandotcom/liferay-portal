@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanExternalReferenceCodeException;
 import com.liferay.batch.planner.exception.NoSuchPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanLocalServiceUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -124,6 +127,9 @@ public class BatchPlannerPlanPersistenceTest {
 
 		newBatchPlannerPlan.setMvccVersion(RandomTestUtil.nextLong());
 
+		newBatchPlannerPlan.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newBatchPlannerPlan.setCompanyId(RandomTestUtil.nextLong());
 
 		newBatchPlannerPlan.setUserId(RandomTestUtil.nextLong());
@@ -165,6 +171,9 @@ public class BatchPlannerPlanPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerPlan.getMvccVersion(),
 			newBatchPlannerPlan.getMvccVersion());
+		Assert.assertEquals(
+			existingBatchPlannerPlan.getExternalReferenceCode(),
+			newBatchPlannerPlan.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingBatchPlannerPlan.getBatchPlannerPlanId(),
 			newBatchPlannerPlan.getBatchPlannerPlanId());
@@ -214,6 +223,28 @@ public class BatchPlannerPlanPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerPlan.getStatus(),
 			newBatchPlannerPlan.getStatus());
+	}
+
+	@Test(
+		expected = DuplicateBatchPlannerPlanExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		BatchPlannerPlan batchPlannerPlan = addBatchPlannerPlan();
+
+		BatchPlannerPlan newBatchPlannerPlan = addBatchPlannerPlan();
+
+		newBatchPlannerPlan.setCompanyId(batchPlannerPlan.getCompanyId());
+
+		newBatchPlannerPlan = _persistence.update(newBatchPlannerPlan);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newBatchPlannerPlan);
+
+		newBatchPlannerPlan.setExternalReferenceCode(
+			batchPlannerPlan.getExternalReferenceCode());
+
+		_persistence.update(newBatchPlannerPlan);
 	}
 
 	@Test
@@ -267,6 +298,15 @@ public class BatchPlannerPlanPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BatchPlannerPlan newBatchPlannerPlan = addBatchPlannerPlan();
 
@@ -291,12 +331,13 @@ public class BatchPlannerPlanPersistenceTest {
 
 	protected OrderByComparator<BatchPlannerPlan> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BatchPlannerPlan", "mvccVersion", true, "batchPlannerPlanId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "active", true, "export", true,
-			"externalType", true, "externalURL", true, "internalClassName",
-			true, "name", true, "size", true, "taskItemDelegateName", true,
-			"total", true, "template", true, "status", true);
+			"BatchPlannerPlan", "mvccVersion", true, "externalReferenceCode",
+			true, "batchPlannerPlanId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"active", true, "export", true, "externalType", true, "externalURL",
+			true, "internalClassName", true, "name", true, "size", true,
+			"taskItemDelegateName", true, "total", true, "template", true,
+			"status", true);
 	}
 
 	@Test
@@ -516,12 +557,79 @@ public class BatchPlannerPlanPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		BatchPlannerPlan newBatchPlannerPlan = addBatchPlannerPlan();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newBatchPlannerPlan.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		BatchPlannerPlan newBatchPlannerPlan = addBatchPlannerPlan();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BatchPlannerPlan.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"batchPlannerPlanId",
+				newBatchPlannerPlan.getBatchPlannerPlanId()));
+
+		List<BatchPlannerPlan> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(BatchPlannerPlan batchPlannerPlan) {
+		Assert.assertEquals(
+			batchPlannerPlan.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				batchPlannerPlan, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(batchPlannerPlan.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				batchPlannerPlan, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+	}
+
 	protected BatchPlannerPlan addBatchPlannerPlan() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		BatchPlannerPlan batchPlannerPlan = _persistence.create(pk);
 
 		batchPlannerPlan.setMvccVersion(RandomTestUtil.nextLong());
+
+		batchPlannerPlan.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		batchPlannerPlan.setCompanyId(RandomTestUtil.nextLong());
 

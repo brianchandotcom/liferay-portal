@@ -78,7 +78,7 @@ public class BatchPlannerPolicyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,6 +86,8 @@ public class BatchPlannerPolicyCacheModel
 		sb.append(batchPlannerPolicyId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,6 +115,7 @@ public class BatchPlannerPolicyCacheModel
 		batchPlannerPolicyImpl.setMvccVersion(mvccVersion);
 		batchPlannerPolicyImpl.setBatchPlannerPolicyId(batchPlannerPolicyId);
 		batchPlannerPolicyImpl.setCompanyId(companyId);
+		batchPlannerPolicyImpl.setGroupId(groupId);
 		batchPlannerPolicyImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -165,6 +168,8 @@ public class BatchPlannerPolicyCacheModel
 
 		companyId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -182,6 +187,8 @@ public class BatchPlannerPolicyCacheModel
 		objectOutput.writeLong(batchPlannerPolicyId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(userId);
 
@@ -215,6 +222,7 @@ public class BatchPlannerPolicyCacheModel
 	public long mvccVersion;
 	public long batchPlannerPolicyId;
 	public long companyId;
+	public long groupId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -72,15 +72,16 @@ public class BatchPlannerPlanModelImpl
 	public static final String TABLE_NAME = "BatchPlannerPlan";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"batchPlannerPlanId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
-		{"export", Types.BOOLEAN}, {"externalType", Types.VARCHAR},
-		{"externalURL", Types.VARCHAR}, {"internalClassName", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"size_", Types.INTEGER},
-		{"taskItemDelegateName", Types.VARCHAR}, {"total", Types.INTEGER},
-		{"template", Types.BOOLEAN}, {"status", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"batchPlannerPlanId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"active_", Types.BOOLEAN}, {"export", Types.BOOLEAN},
+		{"externalType", Types.VARCHAR}, {"externalURL", Types.VARCHAR},
+		{"internalClassName", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"size_", Types.INTEGER}, {"taskItemDelegateName", Types.VARCHAR},
+		{"total", Types.INTEGER}, {"template", Types.BOOLEAN},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +89,7 @@ public class BatchPlannerPlanModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("batchPlannerPlanId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -108,7 +110,7 @@ public class BatchPlannerPlanModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,size_ INTEGER,taskItemDelegateName VARCHAR(75) null,total INTEGER,template BOOLEAN,status INTEGER)";
+		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,size_ INTEGER,taskItemDelegateName VARCHAR(75) null,total INTEGER,template BOOLEAN,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPlan";
 
@@ -140,26 +142,32 @@ public class BatchPlannerPlanModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TEMPLATE_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long TEMPLATE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long USERID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -274,6 +282,9 @@ public class BatchPlannerPlanModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", BatchPlannerPlan::getMvccVersion);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				BatchPlannerPlan::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"batchPlannerPlanId", BatchPlannerPlan::getBatchPlannerPlanId);
 			attributeGetterFunctions.put(
 				"companyId", BatchPlannerPlan::getCompanyId);
@@ -323,6 +334,10 @@ public class BatchPlannerPlanModelImpl
 				"mvccVersion",
 				(BiConsumer<BatchPlannerPlan, Long>)
 					BatchPlannerPlan::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"batchPlannerPlanId",
 				(BiConsumer<BatchPlannerPlan, Long>)
@@ -411,6 +426,35 @@ public class BatchPlannerPlanModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -843,6 +887,8 @@ public class BatchPlannerPlanModelImpl
 		BatchPlannerPlanImpl batchPlannerPlanImpl = new BatchPlannerPlanImpl();
 
 		batchPlannerPlanImpl.setMvccVersion(getMvccVersion());
+		batchPlannerPlanImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		batchPlannerPlanImpl.setBatchPlannerPlanId(getBatchPlannerPlanId());
 		batchPlannerPlanImpl.setCompanyId(getCompanyId());
 		batchPlannerPlanImpl.setUserId(getUserId());
@@ -872,6 +918,8 @@ public class BatchPlannerPlanModelImpl
 
 		batchPlannerPlanImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerPlanImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		batchPlannerPlanImpl.setBatchPlannerPlanId(
 			this.<Long>getColumnOriginalValue("batchPlannerPlanId"));
 		batchPlannerPlanImpl.setCompanyId(
@@ -986,6 +1034,18 @@ public class BatchPlannerPlanModelImpl
 			new BatchPlannerPlanCacheModel();
 
 		batchPlannerPlanCacheModel.mvccVersion = getMvccVersion();
+
+		batchPlannerPlanCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			batchPlannerPlanCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			batchPlannerPlanCacheModel.externalReferenceCode = null;
+		}
 
 		batchPlannerPlanCacheModel.batchPlannerPlanId = getBatchPlannerPlanId();
 
@@ -1138,6 +1198,7 @@ public class BatchPlannerPlanModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _externalReferenceCode;
 	private long _batchPlannerPlanId;
 	private long _companyId;
 	private long _userId;
@@ -1188,6 +1249,8 @@ public class BatchPlannerPlanModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("batchPlannerPlanId", _batchPlannerPlanId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1232,39 +1295,41 @@ public class BatchPlannerPlanModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("batchPlannerPlanId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("batchPlannerPlanId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("active_", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("export", 256L);
+		columnBitmasks.put("active_", 256L);
 
-		columnBitmasks.put("externalType", 512L);
+		columnBitmasks.put("export", 512L);
 
-		columnBitmasks.put("externalURL", 1024L);
+		columnBitmasks.put("externalType", 1024L);
 
-		columnBitmasks.put("internalClassName", 2048L);
+		columnBitmasks.put("externalURL", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("internalClassName", 4096L);
 
-		columnBitmasks.put("size_", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("taskItemDelegateName", 16384L);
+		columnBitmasks.put("size_", 16384L);
 
-		columnBitmasks.put("total", 32768L);
+		columnBitmasks.put("taskItemDelegateName", 32768L);
 
-		columnBitmasks.put("template", 65536L);
+		columnBitmasks.put("total", 65536L);
 
-		columnBitmasks.put("status", 131072L);
+		columnBitmasks.put("template", 131072L);
+
+		columnBitmasks.put("status", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

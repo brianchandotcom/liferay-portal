@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("When changing the page to 4 entries") {
-			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 items");
+			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
@@ -77,7 +77,7 @@ definition {
 					locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 			}
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 6");
+			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
 
 		task ("When to switch to page 2") {
@@ -91,7 +91,7 @@ definition {
 					locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 			}
 
-			Pagination.viewResults(results = "Showing 5 to 6 of 6");
+			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
 	}
 

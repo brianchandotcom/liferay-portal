@@ -196,6 +196,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 										linkCssClass="btn btn-monospaced btn-outline-secondary"
 										markupView="lexicon"
 										message="view[action]"
+										target="_blank"
 										toolTip="<%= true %>"
 										url="<%= assetRenderer.isPreviewInContext() ? workflowHandler.getURLViewInContext(assetRenderer.getClassPK(), liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
 									/>

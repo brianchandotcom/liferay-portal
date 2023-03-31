@@ -35,7 +35,7 @@ if (!linkCssClass.contains("keep-aria-attributes") && (useDialog || (urlIsNotNul
 		<li class="<%= cssClass %>" role="<%= listItemAriaRole %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a aria-haspopup="<%= listItemAnchorAriaHasPopup %>" ariaRole="<%= listItemAnchorAriaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
+					<aui:a aria-haspopup="<%= listItemAnchorAriaHasPopup %>" ariaRole="<%= listItemAnchorAriaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" icon="<%= icon %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 					</aui:a>
 				</c:when>
@@ -49,7 +49,7 @@ if (!linkCssClass.contains("keep-aria-attributes") && (useDialog || (urlIsNotNul
 		<li class="<%= cssClass %>" role="<%= listItemAriaRole %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a aria-haspopup="<%= listItemAnchorAriaHasPopup %>" ariaRole="<%= listItemAnchorAriaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
+					<aui:a aria-haspopup="<%= listItemAnchorAriaHasPopup %>" ariaRole="<%= listItemAnchorAriaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" icon="<%= icon %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 					</aui:a>
 				</c:when>
@@ -75,7 +75,7 @@ if (!linkCssClass.contains("keep-aria-attributes") && (useDialog || (urlIsNotNul
 		>
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a ariaRole="<%= ariaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
+					<aui:a ariaRole="<%= ariaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" icon="<%= icon %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 					</aui:a>
 				</c:when>

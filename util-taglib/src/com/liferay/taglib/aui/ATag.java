@@ -46,7 +46,9 @@ public class ATag extends BaseATag {
 		JspWriter jspWriter = pageContext.getOut();
 
 		if (Validator.isNotNull(getHref())) {
-			if (AUIUtil.isOpensNewWindow(getTarget())) {
+			if (AUIUtil.isOpensNewWindow(getTarget()) &&
+				Validator.isNull(getIcon())) {
+
 				HttpServletRequest httpServletRequest = getRequest();
 
 				ThemeDisplay themeDisplay =

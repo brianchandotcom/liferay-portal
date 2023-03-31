@@ -56,6 +56,10 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 		return _iconCssClass;
 	}
 
+	public java.lang.String getIcon() {
+		return _icon;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -106,6 +110,10 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 
 	public void setIconCssClass(java.lang.String iconCssClass) {
 		_iconCssClass = iconCssClass;
+	}
+
+	public void setIcon(java.lang.String icon) {
+		_icon = icon;
 	}
 
 	public void setId(java.lang.String id) {
@@ -179,6 +187,7 @@ public abstract class BaseATag extends com.liferay.taglib.util.IncludeTag {
 	private java.util.Map<java.lang.String, java.lang.Object> _data = null;
 	private java.lang.String _href = null;
 	private java.lang.String _iconCssClass = null;
+	private java.lang.String _icon = null;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
 	private java.lang.String _lang = null;

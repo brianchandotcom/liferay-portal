@@ -444,6 +444,13 @@ public class DDMFormTemplateContextFactoryImpl
 				evaluableDDMFormFieldName);
 
 			ddmFormField.setProperty("evaluable", true);
+
+			if (GetterUtil.getBoolean(
+					ddmFormField.getProperty(
+						"accountEntryRestrictedObjectField"))) {
+
+				ddmFormField.setReadOnly(true);
+			}
 		}
 	}
 

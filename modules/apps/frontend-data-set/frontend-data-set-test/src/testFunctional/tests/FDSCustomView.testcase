@@ -100,7 +100,6 @@ definition {
 	}
 
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
-	@ignore = "Test fix"
 	@priority = 4
 	test CanBeSaved {
 		task ("When Make some changes to dataset display") {

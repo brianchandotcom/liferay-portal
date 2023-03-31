@@ -2340,7 +2340,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"test.user1@liferay.com", userAccount.getEmailAddress());
-		Assert.assertEquals("Test User 1", userAccount.getName());
 
 		OrganizationBrief[] organizationBriefs =
 			userAccount.getOrganizationBriefs();
@@ -2348,6 +2347,8 @@ public class BundleSiteInitializerTest {
 		OrganizationBrief organizationBrief = organizationBriefs[0];
 
 		Assert.assertEquals("Test Organization 1", organizationBrief.getName());
+
+		_assertUserSiteGroups(userAccount.getId());
 
 		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
 			"USER-2");
@@ -2363,13 +2364,14 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"test.user2@liferay.com", userAccount.getEmailAddress());
-		Assert.assertEquals("Test User 2", userAccount.getName());
 
 		organizationBriefs = userAccount.getOrganizationBriefs();
 
 		organizationBrief = organizationBriefs[0];
 
 		Assert.assertEquals("Test Organization 2", organizationBrief.getName());
+
+		_assertUserSiteGroups(userAccount.getId());
 	}
 
 	private void _assertUserGroups() {
@@ -2427,6 +2429,18 @@ public class BundleSiteInitializerTest {
 		role = roles.get(1);
 
 		Assert.assertEquals("Test Role 3", role.getName());
+	}
+
+	private void _assertUserSiteGroups(long userId) throws Exception {
+		User user = _userLocalService.getUser(userId);
+
+		List<Group> groups = user.getSiteGroups();
+
+		Assert.assertEquals(groups.toString(), 1, groups.size());
+
+		Group group = groups.get(0);
+
+		Assert.assertEquals(_group.getGroupId(), group.getGroupId());
 	}
 
 	private void _assertWorkflowDefinitions() throws Exception {

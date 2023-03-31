@@ -516,7 +516,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			}
 		}
 
-		Matcher matcher = _unnecessaryAttributePattern.matcher(annotation);
+		Matcher matcher = _immediatePattern.matcher(annotation);
 
 		if (matcher.find()) {
 			addMessage(fileName, "Get rid of 'immediate = true' usages");
@@ -544,7 +544,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		Pattern.compile("\\s(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
-	private static final Pattern _unnecessaryAttributePattern = Pattern.compile(
+	private static final Pattern _immediatePattern = Pattern.compile(
 		"\\bimmediate = true\\b");
 
 	private class AnnotationParameterPropertyComparator

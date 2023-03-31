@@ -291,6 +291,15 @@ public class WabProcessor {
 			batchPathString += "/";
 		}
 
+		boolean frontendDetected = false;
+
+		String frontendPathString = pluginPackageProperties.getProperty(
+			_LIFERAY_CLIENT_EXTENSION_FRONTEND, "static/");
+
+		if (!frontendPathString.endsWith("/")) {
+			frontendPathString += "/";
+		}
+
 		boolean siteInitializerDetected = false;
 
 		String siteInitializerPathString = pluginPackageProperties.getProperty(
@@ -298,15 +307,6 @@ public class WabProcessor {
 
 		if (!siteInitializerPathString.endsWith("/")) {
 			siteInitializerPathString += "/";
-		}
-
-		boolean staticDetected = false;
-
-		String staticPathString = pluginPackageProperties.getProperty(
-			_LIFERAY_CLIENT_EXTENSION_STATIC, "static/");
-
-		if (!staticPathString.endsWith("/")) {
-			staticPathString += "/";
 		}
 
 		try (ZipFile zipFile = new ZipFile(_file)) {
@@ -339,6 +339,14 @@ public class WabProcessor {
 
 						batchDetected = true;
 					}
+					else if (name.startsWith(frontendPathString)) {
+						Files.createDirectories(
+							metatInfResourcesPath.resolve(
+								name.replaceFirst(
+									"^" + frontendPathString, "")));
+
+						frontendDetected = true;
+					}
 					else if (name.startsWith(siteInitializerPathString)) {
 						Files.createDirectories(
 							siteInitializerPath.resolve(
@@ -346,13 +354,6 @@ public class WabProcessor {
 									"^" + siteInitializerPathString, "")));
 
 						siteInitializerDetected = true;
-					}
-					else if (name.startsWith(staticPathString)) {
-						Files.createDirectories(
-							metatInfResourcesPath.resolve(
-								name.replaceFirst("^" + staticPathString, "")));
-
-						staticDetected = true;
 					}
 
 					continue;
@@ -396,6 +397,14 @@ public class WabProcessor {
 
 					batchDetected = true;
 				}
+				else if (name.startsWith(frontendPathString)) {
+					Files.copy(
+						zipFile.getInputStream(zipEntry),
+						metatInfResourcesPath.resolve(
+							name.replaceFirst("^" + frontendPathString, "")));
+
+					frontendDetected = true;
+				}
 				else if (name.startsWith(siteInitializerPathString)) {
 					Files.copy(
 						zipFile.getInputStream(zipEntry),
@@ -405,14 +414,6 @@ public class WabProcessor {
 
 					siteInitializerDetected = true;
 				}
-				else if (name.startsWith(staticPathString)) {
-					Files.copy(
-						zipFile.getInputStream(zipEntry),
-						metatInfResourcesPath.resolve(
-							name.replaceFirst("^" + staticPathString, "")));
-
-					staticDetected = true;
-				}
 			}
 
 			if (batchDetected) {
@@ -421,6 +422,15 @@ public class WabProcessor {
 			}
 			else {
 				pluginPackageProperties.remove(_LIFERAY_CLIENT_EXTENSION_BATCH);
+			}
+
+			if (frontendDetected) {
+				pluginPackageProperties.setProperty(
+					_LIFERAY_CLIENT_EXTENSION_FRONTEND, "META-INF/resources");
+			}
+			else {
+				pluginPackageProperties.remove(
+					_LIFERAY_CLIENT_EXTENSION_FRONTEND);
 			}
 
 			if (siteInitializerDetected) {
@@ -449,15 +459,6 @@ public class WabProcessor {
 			else {
 				pluginPackageProperties.remove(
 					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER);
-			}
-
-			if (staticDetected) {
-				pluginPackageProperties.setProperty(
-					_LIFERAY_CLIENT_EXTENSION_STATIC, "META-INF/resources");
-			}
-			else {
-				pluginPackageProperties.remove(
-					_LIFERAY_CLIENT_EXTENSION_STATIC);
 			}
 		}
 		catch (Exception exception) {
@@ -1717,11 +1718,11 @@ public class WabProcessor {
 	private static final String _LIFERAY_CLIENT_EXTENSION_BATCH =
 		"Liferay-Client-Extension-Batch";
 
+	private static final String _LIFERAY_CLIENT_EXTENSION_FRONTEND =
+		"Liferay-Client-Extension-Frontend";
+
 	private static final String _LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER =
 		"Liferay-Client-Extension-Site-Initializer";
-
-	private static final String _LIFERAY_CLIENT_EXTENSION_STATIC =
-		"Liferay-Client-Extension-Static";
 
 	private static final String _REQUIRE_CAPABILITY_CDI = StringBundler.concat(
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.http)',",

@@ -43,35 +43,34 @@ import org.apache.logging.log4j.ThreadContext;
 public class DBUpgradeStatus {
 
 	public static void addErrorMessage(String loggerName, String message) {
-		Map<String, Integer> errorMessages = _errorMessages.computeIfAbsent(
+		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentHashMap<>());
 
-		int occurrences = errorMessages.computeIfAbsent(message, key -> 0);
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
 
 		occurrences++;
 
-		errorMessages.put(message, occurrences);
+		messages.put(message, occurrences);
 	}
 
 	public static void addUpgradeProcessMessage(
 		String loggerName, String message) {
 
-		List<String> upgradeProcessMessages =
-			_upgradeProcessMessages.computeIfAbsent(
-				loggerName, key -> new ArrayList<>());
+		List<String> messages = _upgradeProcessMessages.computeIfAbsent(
+			loggerName, key -> new ArrayList<>());
 
-		upgradeProcessMessages.add(message);
+		messages.add(message);
 	}
 
 	public static void addWarningMessage(String loggerName, String message) {
-		Map<String, Integer> warningMessages = _warningMessages.computeIfAbsent(
+		Map<String, Integer> messages = _warningMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentHashMap<>());
 
-		int count = warningMessages.computeIfAbsent(message, key -> 0);
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
 
-		count++;
+		occurrences++;
 
-		warningMessages.put(message, count);
+		messages.put(message, occurrences);
 	}
 
 	public static void finish(DBUpgradeChecker dbUpgradeChecker) {
@@ -106,14 +105,14 @@ public class DBUpgradeStatus {
 		ServletSchemaVersions servletSchemaVersions =
 			_servletSchemaVersionsMap.get(servletContextName);
 
-		return servletSchemaVersions.getFinalSchemaVersion();
+		return servletSchemaVersions.getFinal();
 	}
 
 	public static String getInitialSchemaVersion(String servletContextName) {
 		ServletSchemaVersions servletSchemaVersions =
 			_servletSchemaVersionsMap.get(servletContextName);
 
-		return servletSchemaVersions.getInitialSchemaVersion();
+		return servletSchemaVersions.getInitial();
 	}
 
 	public static String getStatus() {
@@ -144,7 +143,7 @@ public class DBUpgradeStatus {
 
 		_browseReleaseTable(
 			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setInitialSchemaVersion(schemaVersion));
+				moduleSchemaVersions.setInitial(schemaVersion));
 	}
 
 	private static void _browseReleaseTable(
@@ -203,7 +202,7 @@ public class DBUpgradeStatus {
 	private static void _setFinalSchemaVersion() {
 		_browseReleaseTable(
 			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setFinalSchemaVersion(schemaVersion));
+				moduleSchemaVersions.setFinal(schemaVersion));
 	}
 
 	private static void _setFinalStatus(DBUpgradeChecker dbUpgradeChecker) {
@@ -240,14 +239,14 @@ public class DBUpgradeStatus {
 
 			ServletSchemaVersions schemaVersions = servlet.getValue();
 
-			if (schemaVersions.getInitialSchemaVersion() == null) {
+			if (schemaVersions.getInitial() == null) {
 				continue;
 			}
 
 			Version initialVersion = Version.parseVersion(
-				schemaVersions.getInitialSchemaVersion());
+				schemaVersions.getInitial());
 			Version finalVersion = Version.parseVersion(
-				schemaVersions.getFinalSchemaVersion());
+				schemaVersions.getFinal());
 
 			if (initialVersion.getMajor() < finalVersion.getMajor()) {
 				upgradeType = "Major";
@@ -305,33 +304,33 @@ public class DBUpgradeStatus {
 	private static class ServletSchemaVersions {
 
 		public ServletSchemaVersions(String initialSchemaVersion) {
-			_initialSchemaVersion = initialSchemaVersion;
+			_initial = initialSchemaVersion;
 		}
 
-		public String getFinalSchemaVersion() {
-			return _finalSchemaVersion;
+		public String getFinal() {
+			return _final;
 		}
 
-		public String getInitialSchemaVersion() {
-			return _initialSchemaVersion;
+		public String getInitial() {
+			return _initial;
 		}
 
-		public void setFinalSchemaVersion(String finalSchemaVersion) {
-			_finalSchemaVersion = finalSchemaVersion;
+		public void setFinal(String aFinal) {
+			_final = aFinal;
 		}
 
-		public void setInitialSchemaVersion(String initialSchemaVersion) {
-			if (initialSchemaVersion == null) {
-				_initialSchemaVersion = "0.0.0";
+		public void setInitial(String initial) {
+			if (initial == null) {
+				_initial = "0.0.0";
 
 				return;
 			}
 
-			_initialSchemaVersion = initialSchemaVersion;
+			_initial = initial;
 		}
 
-		private String _finalSchemaVersion;
-		private String _initialSchemaVersion;
+		private String _final;
+		private String _initial;
 
 	}
 

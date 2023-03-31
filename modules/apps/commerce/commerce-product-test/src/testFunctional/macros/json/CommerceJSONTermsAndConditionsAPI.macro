@@ -93,6 +93,33 @@ definition {
 		return ${termsAndConditionsCount};
 	}
 
+	macro _getCommerceTermsAndConditionsIdByName {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(termsAndConditionsCount)) {
+			var termsAndConditionsCount = ${termsAndConditionsCount};
+		}
+		else {
+			var termsAndConditionsCount = 100;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/terms?pageSize=${termsAndConditionsCount} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
+
+		var termsAndConditionsId = JSONCurlUtil.get(${curl}, "$..items[?(@.name == '${termsAndConditionsName}')].['id']");
+
+		echo("terms and condition ID: ${termsAndConditionsId}");
+
+		return ${termsAndConditionsId};
+	}
+
 	macro _getCommerceTermsAndConditionsIds {
 		var baseURL = ${baseURL};
 

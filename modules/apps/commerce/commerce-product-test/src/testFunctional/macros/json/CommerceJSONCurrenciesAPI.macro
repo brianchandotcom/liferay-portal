@@ -54,4 +54,29 @@ definition {
 		return ${commerceCurrencies};
 	}
 
+	macro _getCommerceCurrencyIdByCode {
+		Variables.assertDefined(parameterList = ${code});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			${baseURL}/api/jsonws/commerce.commercecurrency/get-commerce-currency \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d code=${code}
+		''';
+
+		var commerceCurrencyId = JSONCurlUtil.post(${curl}, "$..['commerceCurrencyId']");
+
+		echo("commerceCurrencyId: ${commerceCurrencyId}");
+
+		return ${commerceCurrencyId};
+	}
+
 }

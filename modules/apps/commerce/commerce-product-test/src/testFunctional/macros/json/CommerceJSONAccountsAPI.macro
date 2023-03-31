@@ -1,5 +1,382 @@
 definition {
 
+	macro _addChannelDefaultsBillingAddress {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${billingAddressName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var billingAddressId = CommerceJSONAccountsAPI._getAccountAddressIdByAddressName(
+			accountEntryId = ${accountEntryId},
+			addressName = ${billingAddressName});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-billing-addresses \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${billingAddressId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsChannelAccountManager {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${userEmailAddress}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-users \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${userId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsCurrency {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${currencyCode}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var commerceCurrencyId = CommerceJSONCurrenciesAPI._getCommerceCurrencyIdByCode(code = ${currencyCode});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-currencies \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${commerceCurrencyId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsDeliveryTerm {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${termsAndConditionsName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var termId = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIdByName(termsAndConditionsName = ${termsAndConditionsName});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-delivery-terms \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${termId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsDiscount {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${discountTitle}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var commerceDiscountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-discounts \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${commerceDiscountId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsPaymentTerm {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${termsAndConditionsName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var termId = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIdByName(termsAndConditionsName = ${termsAndConditionsName});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-payment-terms \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${termId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsPriceList {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${priceListName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-price-lists \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${priceListId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addChannelDefaultsShippingAddress {
+		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${shippingAddressName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var shippingAddressId = CommerceJSONAccountsAPI._getAccountAddressIdByAddressName(
+			accountEntryId = ${accountEntryId},
+			addressName = ${shippingAddressName});
+
+		if (!(isSet(overrideEligibility))) {
+			var overrideEligibility = "false";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/account-channel-shipping-addresses \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"channelId": ${commerceChannelId},
+					"classPK": ${shippingAddressId},
+					"overrideEligibility": ${overrideEligibility},
+					"priority": ${priority}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _addCommerceAccountAddress {
+		Variables.assertDefined(parameterList = "${accountEntryName},${countryISOCode},${name},${street1},${city},${zip}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+
+		if (!(isSet(defaultBilling))) {
+			var defaultBilling = "true";
+		}
+
+		if (!(isSet(defaultShipping))) {
+			var defaultShipping = "true";
+		}
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(latitude))) {
+			var latitude = "0.0";
+		}
+
+		if (!(isSet(longitude))) {
+			var longitude = "0.0";
+		}
+
+		if (!(isSet(phoneNumber))) {
+			var phoneNumber = "";
+		}
+
+		if (!(isSet(regionISOCode))) {
+			var regionISOCode = "";
+		}
+
+		if (!(isSet(street2))) {
+			var street2 = "";
+		}
+
+		if (!(isSet(street3))) {
+			var street3 = "";
+		}
+
+		if (!(isSet(type))) {
+			var type = 2;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/accountAddresses \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"city": "${city}",
+					"countryISOCode": "${countryISOCode}",
+					"defaultBilling": "${defaultBilling}",
+					"defaultShipping": "${defaultShipping}",
+					"description": "${description}",
+					"latitude": "${latitude}",
+					"longitude": "${longitude}",
+					"name": "${name}",
+					"regionISOCode": "${regionISOCode}",
+					"street1": "${street1}",
+					"street2": "${street2}",
+					"street3": "${street3}",
+					"type": ${type},
+					"zip": "${zip}"
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro _deleteAllCommerceAccounts {
 		var baseURL = ${baseURL};
 

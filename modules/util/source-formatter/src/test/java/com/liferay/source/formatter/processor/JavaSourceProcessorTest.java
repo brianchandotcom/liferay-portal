@@ -211,6 +211,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testImmediateAttribute() throws Exception {
+		test("ImmediateAttribute.testjava",
+			 "Do not use 'immediate = true' in @Component");
+	}
+
+	@Test
 	public void testIncorrectClose() throws Exception {
 		test("IncorrectClose.testjava");
 	}
@@ -524,12 +530,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testRedundantLog() throws Exception {
 		test("RedundantLog.testjava",
 			 "Redundant log between line '26' and line '31'.", 26);
-	}
-
-	@Test
-	public void testRemoveComponentAnnotationsUncessaryAttribute() throws Exception {
-		test("RemoveComponentAnnotationsUnnecessaryAttribute.testjava",
-			 "Do not use 'immediate = true' in @Component");
 	}
 
 	@Test

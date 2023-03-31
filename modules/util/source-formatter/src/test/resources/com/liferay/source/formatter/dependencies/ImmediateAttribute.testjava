@@ -20,5 +20,5 @@ import org.osgi.service.component.annotations.Component;
  * @author Qi Zhang
  */
 @Component(enabled = false, immediate = true, service = {})
-public class RemoveComponentAnnotationsUnnecessaryAttribute {
+public class ImmediateAttribute {
 }

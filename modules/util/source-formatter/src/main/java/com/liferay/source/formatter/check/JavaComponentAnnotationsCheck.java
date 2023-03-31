@@ -516,8 +516,15 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private String _removeUnnecessaryAttribute(
 		String absolutePath, String annotation) {
 
-		if (absolutePath.contains("/modules/apps/archived/")) {
-			return annotation;
+		List<String> unNeedRemoveClasses = getAttributeValues(
+			_UN_NEED_REMOVE_CLASSES, absolutePath);
+
+		for (String unNeedRemoveClass : unNeedRemoveClasses) {
+			if (absolutePath.endsWith(unNeedRemoveClass) ||
+				absolutePath.contains(unNeedRemoveClass)) {
+
+				return annotation;
+			}
 		}
 
 		Matcher matcher = _unnecessaryAttributePattern.matcher(annotation);
@@ -575,6 +582,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _ENTERPRISE_APP_MODULE_PATH_NAMES_KEY =
 		"enterpriseAppModulePathNames";
+
+	private static final String _UN_NEED_REMOVE_CLASSES = "unNeedRemoveClasses";
 
 	private static final Pattern _annotationParameterPropertyPattern =
 		Pattern.compile("\\s(\\w+) = \\{");

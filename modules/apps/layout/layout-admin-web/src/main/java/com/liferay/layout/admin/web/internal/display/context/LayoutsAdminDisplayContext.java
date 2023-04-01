@@ -382,7 +382,7 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getCopyLayoutURL(boolean copyPermissions, long sourcePlid) {
+	public String getCopyLayoutActionURL(boolean copyPermissions, long sourcePlid) {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(

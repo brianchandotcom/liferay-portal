@@ -18,6 +18,7 @@ import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -102,64 +103,9 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 						if (ddmStructureId == null) {
 							ddmStructureId = _getDDMStructureId(
-								ddmStructureKey, siteGroupId,
-								journalArticleClassNameId);
-
-							if (ddmStructureId == 0L) {
-								long[] ancestorSiteAndDepotGroupIds =
-									ancestorSiteAndDepotGroupIdsMap.get(
-										siteGroupId);
-
-								if (ancestorSiteAndDepotGroupIds == null) {
-									ancestorSiteAndDepotGroupIds =
-										_siteConnectedGroupGroupProvider.
-											getAncestorSiteAndDepotGroupIds(
-												siteGroupId, true);
-
-									ancestorSiteAndDepotGroupIdsMap.put(
-										siteGroupId,
-										ancestorSiteAndDepotGroupIds);
-								}
-
-								for (long ancestorSiteAndDepotGroupId :
-										ancestorSiteAndDepotGroupIds) {
-
-									ddmStructureId = groupIdsMap.get(
-										ancestorSiteAndDepotGroupId);
-
-									if (ddmStructureId != null) {
-										break;
-									}
-
-									ddmStructureId = _getDDMStructureId(
-										ddmStructureKey,
-										ancestorSiteAndDepotGroupId,
-										journalArticleClassNameId);
-
-									if (ddmStructureId == 0L) {
-										continue;
-									}
-
-									groupIdsMap.put(
-										ancestorSiteAndDepotGroupId,
-										ddmStructureId);
-
-									break;
-								}
-
-								if (_log.isWarnEnabled() &&
-									(ddmStructureId == 0L)) {
-
-									_log.warn(
-										StringBundler.concat(
-											"Unable to find structure for ",
-											"ddmStructureKey ", ddmStructureKey,
-											" siteGroupId ", siteGroupId,
-											" ancestorSiteAndDepotGroupIds ",
-											Arrays.toString(
-												ancestorSiteAndDepotGroupIds)));
-								}
-							}
+								ancestorSiteAndDepotGroupIdsMap,
+								ddmStructureKey, groupIdsMap,
+								journalArticleClassNameId, siteGroupId);
 
 							groupIdsMap.put(siteGroupId, ddmStructureId);
 						}
@@ -184,6 +130,61 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 			UpgradeProcessFactory.addColumns(
 				"JournalArticle", "DDMStructureId LONG")
 		};
+	}
+
+	private Long _getDDMStructureId(
+			Map<Long, long[]> ancestorSiteAndDepotGroupIdsMap,
+			String ddmStructureKey, Map<Long, Long> groupIdsMap,
+			long journalArticleClassNameId, Long siteGroupId)
+		throws PortalException, SQLException {
+
+		Long ddmStructureId = _getDDMStructureId(
+			ddmStructureKey, siteGroupId, journalArticleClassNameId);
+
+		if (ddmStructureId != 0L) {
+			return ddmStructureId;
+		}
+
+		long[] ancestorSiteAndDepotGroupIds =
+			ancestorSiteAndDepotGroupIdsMap.get(siteGroupId);
+
+		if (ancestorSiteAndDepotGroupIds == null) {
+			ancestorSiteAndDepotGroupIds =
+				_siteConnectedGroupGroupProvider.
+					getAncestorSiteAndDepotGroupIds(siteGroupId, true);
+
+			ancestorSiteAndDepotGroupIdsMap.put(
+				siteGroupId, ancestorSiteAndDepotGroupIds);
+		}
+
+		for (long ancestorSiteAndDepotGroupId : ancestorSiteAndDepotGroupIds) {
+			ddmStructureId = groupIdsMap.get(ancestorSiteAndDepotGroupId);
+
+			if (ddmStructureId == null) {
+				ddmStructureId = _getDDMStructureId(
+					ddmStructureKey, ancestorSiteAndDepotGroupId,
+					journalArticleClassNameId);
+			}
+
+			if (ddmStructureId == 0L) {
+				continue;
+			}
+
+			groupIdsMap.put(ancestorSiteAndDepotGroupId, ddmStructureId);
+
+			return ddmStructureId;
+		}
+
+		if ((ddmStructureId == 0L) && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Unable to find structure for ddmStructureKey ",
+					ddmStructureKey, " siteGroupId ", siteGroupId,
+					" ancestorSiteAndDepotGroupIds ",
+					Arrays.toString(ancestorSiteAndDepotGroupIds)));
+		}
+
+		return ddmStructureId;
 	}
 
 	private long _getDDMStructureId(

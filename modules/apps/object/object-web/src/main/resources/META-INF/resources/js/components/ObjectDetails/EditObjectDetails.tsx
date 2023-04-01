@@ -281,7 +281,6 @@ export default function EditObjectDetails({
 						hasUpdateObjectDefinitionPermission={
 							hasUpdateObjectDefinitionPermission
 						}
-						isApproved={isApproved}
 						setValues={setValues}
 						values={values}
 					/>

@@ -364,25 +364,9 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getCopyLayoutRenderURL(boolean copyPermissions, Layout layout)
-		throws Exception {
+	public String getCopyLayoutActionURL(
+		boolean copyPermissions, long sourcePlid) {
 
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCRenderCommandName(
-			"/layout_admin/add_layout"
-		).setParameter(
-			"copyPermissions", copyPermissions
-		).setParameter(
-			"privateLayout", isPrivateLayout()
-		).setParameter(
-			"sourcePlid", layout.getPlid()
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
-	}
-
-	public String getCopyLayoutActionURL(boolean copyPermissions, long sourcePlid) {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
@@ -403,6 +387,24 @@ public class LayoutsAdminDisplayContext {
 			"sourcePlid", sourcePlid
 		).setParameter(
 			"stagingGroupId", getStagingGroupId()
+		).buildString();
+	}
+
+	public String getCopyLayoutRenderURL(boolean copyPermissions, Layout layout)
+		throws Exception {
+
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/add_layout"
+		).setParameter(
+			"copyPermissions", copyPermissions
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).setParameter(
+			"sourcePlid", layout.getPlid()
+		).setWindowState(
+			LiferayWindowState.POP_UP
 		).buildString();
 	}
 

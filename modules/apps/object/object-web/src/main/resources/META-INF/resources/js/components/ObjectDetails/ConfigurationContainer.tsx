@@ -18,14 +18,12 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
-	isApproved: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
-	isApproved,
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
@@ -81,7 +79,7 @@ export function ConfigurationContainer({
 					/>
 
 					<ClayToggle
-						disabled={isReadOnly || isApproved}
+						disabled={isReadOnly}
 						label={Liferay.Language.get('enable-entry-history')}
 						name="enableEntryHistory"
 						onToggle={() =>

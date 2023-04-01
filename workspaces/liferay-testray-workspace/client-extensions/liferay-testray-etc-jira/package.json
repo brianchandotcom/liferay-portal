@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "name": "testray-lxc-jira-integration",
+  "module": "src/index.ts",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --hot src/index.ts"
+  },
+  "version": "1.0.0"
+}

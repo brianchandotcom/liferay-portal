@@ -112,7 +112,9 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 							groupIdsMap.put(siteGroupId, ddmStructureId);
 						}
 
-						groupIdsMap.put(groupId, ddmStructureId);
+						if (groupId != siteGroupId) {
+							groupIdsMap.put(groupId, ddmStructureId);
+						}
 					}
 
 					if (ddmStructureId == 0L) {

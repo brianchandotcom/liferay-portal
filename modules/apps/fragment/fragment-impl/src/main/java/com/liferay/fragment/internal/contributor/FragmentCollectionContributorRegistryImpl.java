@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -1000,7 +1001,7 @@ public class FragmentCollectionContributorRegistryImpl
 
 			if (_originalServiceContext == null) {
 				_httpServletRequest = new MockHttpServletRequest();
-				_httpServletResponse = null;
+				_httpServletResponse = new DummyHttpServletResponse();
 			}
 			else {
 				ThemeDisplay themeDisplay =

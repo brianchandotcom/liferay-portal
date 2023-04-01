@@ -745,7 +745,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout sourceLayout = layoutLocalService.getLayout(sourcePlid);
 
-		UnicodeProperties sourceTypeSettingsUnicodeProperties =
+		UnicodeProperties sourceUnicodeProperties =
 			sourceLayout.getTypeSettingsProperties();
 
 		Layout targetLayout = layoutLocalService.addLayout(
@@ -754,7 +754,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			sourceLayout.getTitleMap(), sourceLayout.getDescriptionMap(),
 			sourceLayout.getKeywordsMap(), sourceLayout.getRobotsMap(),
 			sourceLayout.getType(),
-			sourceTypeSettingsUnicodeProperties.toString(), hidden, system,
+			sourceUnicodeProperties.toString(), hidden, system,
 			new HashMap<>(), sourceLayout.getMasterLayoutPlid(),
 			serviceContext);
 
@@ -767,10 +767,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				sourceLayout.getPlid(), targetLayout.getPlid());
 		}
 
-		UnicodeProperties unicodeProperties =
+		UnicodeProperties targetUnicodeProperties =
 			targetLayout.getTypeSettingsProperties();
 
-		unicodeProperties.put("published", Boolean.FALSE.toString());
+		targetUnicodeProperties.put("published", Boolean.FALSE.toString());
 
 		return layoutLocalService.updateLayout(targetLayout);
 	}

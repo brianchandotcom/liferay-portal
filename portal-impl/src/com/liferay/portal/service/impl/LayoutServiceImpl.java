@@ -354,7 +354,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Copy a layout from source layout.
+	 * Copies a layout from source layout.
 	 *
 	 * <p>
 	 * This method handles the copy of the layout including its resources,
@@ -368,8 +368,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  localeNamesMap the layout's locales and localized names
 	 * @param  hidden whether the layout is hidden
 	 * @param  system whether the layout is system
-	 * @param  copyPermissions whether copy permissions
-	 * @param  sourcePlid the plid from the source layout
+	 * @param  copyPermissions whether to copy permissions
+	 * @param  sourcePlid the plid of the source layout
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts

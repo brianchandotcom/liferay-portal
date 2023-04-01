@@ -710,7 +710,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Copy a layout from source layout.
+	 * Copies a layout from source layout.
 	 *
 	 * <p>
 	 * This method handles the copy of the layout including its resources,
@@ -719,13 +719,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * etc.
 	 * </p>
 	 *
+	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  nameMap the layout's locales and localized names
 	 * @param  hidden whether the layout is hidden
 	 * @param  system whether the layout is system
-	 * @param  copyPermissions whether copy permissions
-	 * @param  sourcePlid the plid from the source layout
+	 * @param  copyPermissions whether to copy permissions
+	 * @param  sourcePlid the plid of the source layout
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts

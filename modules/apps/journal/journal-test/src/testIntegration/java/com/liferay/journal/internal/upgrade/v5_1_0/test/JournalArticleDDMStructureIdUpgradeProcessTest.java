@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,6 +49,8 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -141,7 +144,9 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 			group1LayoutGroupJournalArticle, group2JournalArticle,
 			group2CompanyGroupDDMStructureJournalArticle);
 
-		_runUpgrade();
+		List<LogEntry> logEntries = _runUpgrade();
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
 		_assertDDMStructureId(
 			_companyGroupJournalArticle, group1JournalArticle,
@@ -184,9 +189,9 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 		}
 	}
 
-	private void _runUpgrade() throws Exception {
+	private List<LogEntry> _runUpgrade() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
+				_CLASS_NAME, LoggerTestUtil.WARN)) {
 
 			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 				_upgradeStepRegistrator, _CLASS_NAME);
@@ -194,6 +199,8 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 			upgradeProcess.upgrade();
 
 			_multiVMPool.clear();
+
+			return logCapture.getLogEntries();
 		}
 	}
 

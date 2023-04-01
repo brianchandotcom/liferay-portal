@@ -1293,7 +1293,6 @@ public class ObjectDefinitionLocalServiceImpl
 			enableComments, objectDefinition.isModifiable(),
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateEnableObjectEntryHistory(
-			objectDefinition.isApproved(),
 			objectDefinition.isEnableObjectEntryHistory() !=
 				enableObjectEntryHistory,
 			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
@@ -1538,8 +1537,8 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateEnableObjectEntryHistory(
-			boolean approved, boolean enableObjectEntryHistoryChanged,
-			boolean modifiable, String storageType, boolean system)
+			boolean enableObjectEntryHistoryChanged, boolean modifiable,
+			String storageType, boolean system)
 		throws PortalException {
 
 		if (!enableObjectEntryHistoryChanged) {
@@ -1558,12 +1557,6 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
 				"Enable object entry history is only allowed for object " +
 					"definitions with the default storage type");
-		}
-
-		if (approved) {
-			throw new ObjectDefinitionEnableObjectEntryHistoryException(
-				"Enable object entry history cannot be updated when the " +
-					"object definition is published");
 		}
 	}
 

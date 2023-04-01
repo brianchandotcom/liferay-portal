@@ -16,9 +16,10 @@
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<a class="<%= variable1 %>a">
-<a class="b<%= variable2 %>">
-<a class="<%= variable3 %>c<%= variable4 %>d">
-<a class="e<%= variable5 %>c<%= variable6 %>">
-<a class="f<%= variable7++ %>g<%= variable8++ %>">
-<a class=data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="javascript:void(0);" onclick="<%= liferayPortletResponse.getNamespace() %>selectRevision(<%= curLayoutRevision.getLayoutRevisionId() %>, <%= curLayoutRevision.getLayoutSetBranchId() %>);" title="<liferay-ui:message key="go-to-this-version" />">
+<a class="<%= variable1 %>a"></a>
+<a class="b<%= variable2 %>"></a>
+<a class="<%= variable3 %>c<%= variable4 %>d"></a>
+<a class="e<%= variable5 %>c<%= variable6 %>"></a>
+<a class="f<%= variable7++ %>g<%= variable8++ %>"></a>
+<a class=data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="javascript:void(0);" onclick="<%= liferayPortletResponse.getNamespace() %>selectRevision(<%= curLayoutRevision.getLayoutRevisionId() %>, <%= curLayoutRevision.getLayoutSetBranchId() %>);" title="<liferay-ui:message key="go-to-this-version" />"></a>
+<a class="info-box<%= Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK %>"></a>

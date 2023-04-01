@@ -998,28 +998,35 @@ public class FragmentCollectionContributorRegistryImpl
 			_originalServiceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			ThemeDisplay themeDisplay =
-				_originalServiceContext.getThemeDisplay();
-
-			if (_originalServiceContext.getRequest() != null) {
-				_httpServletRequest = _originalServiceContext.getRequest();
-			}
-			else if ((themeDisplay != null) &&
-					 (themeDisplay.getRequest() != null)) {
-
-				_httpServletRequest = themeDisplay.getRequest();
-			}
-			else {
+			if (_originalServiceContext == null) {
 				_httpServletRequest = new MockHttpServletRequest();
-			}
-
-			if ((_originalServiceContext.getResponse() == null) &&
-				(themeDisplay != null)) {
-
-				_httpServletResponse = themeDisplay.getResponse();
+				_httpServletResponse = null;
 			}
 			else {
-				_httpServletResponse = _originalServiceContext.getResponse();
+				ThemeDisplay themeDisplay =
+					_originalServiceContext.getThemeDisplay();
+
+				if (_originalServiceContext.getRequest() != null) {
+					_httpServletRequest = _originalServiceContext.getRequest();
+				}
+				else if ((themeDisplay != null) &&
+						 (themeDisplay.getRequest() != null)) {
+
+					_httpServletRequest = themeDisplay.getRequest();
+				}
+				else {
+					_httpServletRequest = new MockHttpServletRequest();
+				}
+
+				if ((_originalServiceContext.getResponse() == null) &&
+					(themeDisplay != null)) {
+
+					_httpServletResponse = themeDisplay.getResponse();
+				}
+				else {
+					_httpServletResponse =
+						_originalServiceContext.getResponse();
+				}
 			}
 
 			_setCompanyServiceContext();

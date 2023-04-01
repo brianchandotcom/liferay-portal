@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
@@ -79,7 +80,7 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 
 		JournalArticle[] journalArticles = _addJournalArticles();
 
-		_setDDMStructureKey(journalArticles);
+		_setDDMStructureKey(false, journalArticles);
 
 		_unsetDDMStructureId(journalArticles);
 
@@ -88,6 +89,32 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
 		_assertDDMStructureId(journalArticles);
+	}
+
+	@Test
+	public void testUpgradeProcessDDMStructureNotFound() throws Exception {
+		if (!_hasColumn("JournalArticle", "DDMStructureKey")) {
+			return;
+		}
+
+		JournalArticle[] journalArticles = _addJournalArticles();
+
+		_setDDMStructureKey(true, journalArticles);
+
+		_unsetDDMStructureId(journalArticles);
+
+		List<LogEntry> logEntries = _runUpgrade();
+
+		Assert.assertEquals(
+			logEntries.toString(), journalArticles.length, logEntries.size());
+
+		for (JournalArticle journalArticle : journalArticles) {
+			JournalArticle updatedJournalArticle =
+				_journalArticleLocalService.getJournalArticle(
+					journalArticle.getId());
+
+			Assert.assertEquals(0, updatedJournalArticle.getDDMStructureId());
+		}
 	}
 
 	private JournalArticle[] _addJournalArticles() throws Exception {
@@ -205,7 +232,8 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 		}
 	}
 
-	private void _setDDMStructureKey(JournalArticle... journalArticles)
+	private void _setDDMStructureKey(
+			boolean randomDDMStructureKey, JournalArticle... journalArticles)
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
@@ -214,9 +242,16 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 					"?")) {
 
 			for (JournalArticle journalArticle : journalArticles) {
-				DDMStructure ddmStructure = journalArticle.getDDMStructure();
+				String ddmStructureKey = RandomTestUtil.randomString();
 
-				preparedStatement.setString(1, ddmStructure.getStructureKey());
+				if (!randomDDMStructureKey) {
+					DDMStructure ddmStructure =
+						journalArticle.getDDMStructure();
+
+					ddmStructureKey = ddmStructure.getStructureKey();
+				}
+
+				preparedStatement.setString(1, ddmStructureKey);
 
 				preparedStatement.setLong(2, journalArticle.getId());
 

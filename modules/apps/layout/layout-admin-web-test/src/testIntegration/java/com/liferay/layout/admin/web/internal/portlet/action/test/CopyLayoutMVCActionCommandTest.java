@@ -270,12 +270,12 @@ public class CopyLayoutMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
-		String html = "<div data-lfr-styles><span>Test</span>Fragment</div>";
 
 		_fragmentEntry = _fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry-key",
-			RandomTestUtil.randomString(), StringPool.BLANK, html,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			"<div data-lfr-styles><span>Test</span>Fragment</div>",
 			StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);

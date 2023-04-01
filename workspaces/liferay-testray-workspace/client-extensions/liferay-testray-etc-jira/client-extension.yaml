@@ -1,0 +1,26 @@
+assemble:  
+- include: ".env"  
+- include: "Dockerfile"  
+- include: "LCP.json"
+- include: "package.json"  
+- include: "src/index.ts"  
+- include: "src/lib/*"  
+- include: "src/services/*"  
+
+jira-action:  
+  name: Jira Action Service  
+  oAuth2ApplicationExternalReferenceCode: jira-user-agent
+  resourcePath: /jira  
+  type: objectAction
+
+jira-user-agent:  
+  homePageURL: https://solutions-uat.lxc.liferay.com
+  type: oAuthApplicationUserAgent  
+
+jira-server:  
+  homePageURL: https://solutions-uat.lxc.liferay.com
+  scopes:
+    - Liferay.Object.Admin.REST.everything.read
+    - liferay-json-web-services.everything.read
+  type: oAuthApplicationHeadlessServer
+  userAccountScreenName: test@liferay.com

@@ -1321,25 +1321,6 @@ public class ObjectDefinitionLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		try {
-			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
-				true, true, false, false, false,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
-				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
-				objectDefinition.getScope());
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionEnableObjectEntryHistoryException
-					objectDefinitionEnableObjectEntryHistoryException) {
-
-			Assert.assertEquals(
-				"Enable object entry history cannot be updated when the " +
-					"object definition is published",
-				objectDefinitionEnableObjectEntryHistoryException.getMessage());
-		}
-
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,

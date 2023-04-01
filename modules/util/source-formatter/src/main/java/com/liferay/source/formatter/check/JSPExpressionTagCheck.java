@@ -42,10 +42,18 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String jspExpressionTag = matcher.group();
 
-			if ((jspExpressionTag.contains(StringPool.COLON) &&
-				 jspExpressionTag.contains(StringPool.QUESTION)) ||
-				(getLevel(jspExpressionTag, "(", ")") != 0)) {
+			String replacement = jspExpressionTag.replaceFirst(
+				"<%= \"([^\"()]+?)\" \\+(.+)", "$1<%=$2");
 
+			replacement = replacement.replaceFirst(
+				"(.+ )\\+ \"([^\"()]+?)\" %>", "$1%>$2");
+
+			if (!jspExpressionTag.equals(replacement)) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(), replacement);
+			}
+
+			if (getLevel(jspExpressionTag, "(", ")") != 0) {
 				continue;
 			}
 
@@ -106,7 +114,9 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 
 			String operand = expression.substring(startPosition, x);
 
-			if (getLevel(operand, "(", ")") != 0) {
+			if ((getLevel(operand, "(", ")") != 0) || operand.contains("?") ||
+				operand.contains(":")) {
+
 				x = x + 1;
 
 				continue;

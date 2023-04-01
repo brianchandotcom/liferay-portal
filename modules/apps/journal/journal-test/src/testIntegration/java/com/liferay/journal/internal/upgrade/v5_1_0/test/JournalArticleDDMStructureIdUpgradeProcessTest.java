@@ -77,6 +77,20 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 			return;
 		}
 
+		JournalArticle[] journalArticles = _addJournalArticles();
+
+		_setDDMStructureKey(journalArticles);
+
+		_unsetDDMStructureId(journalArticles);
+
+		List<LogEntry> logEntries = _runUpgrade();
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		_assertDDMStructureId(journalArticles);
+	}
+
+	private JournalArticle[] _addJournalArticles() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -134,24 +148,11 @@ public class JournalArticleDDMStructureIdUpgradeProcessTest {
 				DDMStructureTestUtil.getSampleStructuredContent(),
 				_companyGroupDDMStructure.getStructureKey(), StringPool.BLANK);
 
-		_setDDMStructureKey(
+		return new JournalArticle[] {
 			_companyGroupJournalArticle, group1JournalArticle,
 			group1LayoutGroupJournalArticle, group2JournalArticle,
-			group2CompanyGroupDDMStructureJournalArticle);
-
-		_unsetDDMStructureId(
-			_companyGroupJournalArticle, group1JournalArticle,
-			group1LayoutGroupJournalArticle, group2JournalArticle,
-			group2CompanyGroupDDMStructureJournalArticle);
-
-		List<LogEntry> logEntries = _runUpgrade();
-
-		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-		_assertDDMStructureId(
-			_companyGroupJournalArticle, group1JournalArticle,
-			group1LayoutGroupJournalArticle, group2JournalArticle,
-			group2CompanyGroupDDMStructureJournalArticle);
+			group2CompanyGroupDDMStructureJournalArticle
+		};
 	}
 
 	private void _assertDDMStructureId(JournalArticle... journalArticles)

@@ -89,7 +89,9 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 						ddmStructureKeysMap.computeIfAbsent(
 							ddmStructureKey, key -> new ConcurrentHashMap<>());
 
-					if (!groupIdsMap.containsKey(groupId)) {
+					Long ddmStructureId = groupIdsMap.get(groupId);
+
+					if (ddmStructureId == null) {
 						Long siteGroupId = siteGroupIdsMap.get(groupId);
 
 						if (siteGroupId == null) {
@@ -99,7 +101,7 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 							siteGroupIdsMap.put(groupId, siteGroupId);
 						}
 
-						Long ddmStructureId = groupIdsMap.get(siteGroupId);
+						ddmStructureId = groupIdsMap.get(siteGroupId);
 
 						if (ddmStructureId == null) {
 							ddmStructureId = _getDDMStructureId(
@@ -113,7 +115,11 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 						groupIdsMap.put(groupId, ddmStructureId);
 					}
 
-					preparedStatement.setLong(1, groupIdsMap.get(groupId));
+					if (ddmStructureId == 0L) {
+						return;
+					}
+
+					preparedStatement.setLong(1, ddmStructureId);
 
 					preparedStatement.setLong(2, groupId);
 					preparedStatement.setString(3, ddmStructureKey);

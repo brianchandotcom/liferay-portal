@@ -188,11 +188,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 				serviceReference);
 
 			try {
-				if (Validator.isNotNull(_portlet.getFriendlyURLMapping())) {
-					friendlyURLMapper.setMapping(
-						_portlet.getFriendlyURLMapping());
-				}
-
 				friendlyURLMapper.setPortletId(_portlet.getPortletId());
 				friendlyURLMapper.setPortletInstanceable(
 					_portlet.isInstanceable());

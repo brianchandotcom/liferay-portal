@@ -406,7 +406,7 @@ public class PortletImpl extends PortletBaseImpl {
 			getPortletName(), getDisplayName(), getPortletClass(),
 			getConfigurationActionClass(), getIndexerClasses(),
 			getOpenSearchClass(), getSchedulerEntries(), getPortletURLClass(),
-			getFriendlyURLMapperClass(), getFriendlyURLMapping(),
+			getFriendlyURLMapperClass(), _friendlyURLMapping,
 			getFriendlyURLRoutes(), getURLEncoderClass(),
 			getPortletDataHandlerClass(), getStagedModelDataHandlerClasses(),
 			getTemplateHandlerClass(), getPortletConfigurationListenerClass(),

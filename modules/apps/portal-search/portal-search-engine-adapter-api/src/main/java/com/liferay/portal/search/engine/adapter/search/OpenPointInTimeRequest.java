@@ -23,7 +23,9 @@ public class OpenPointInTimeRequest
 	extends CrossClusterRequest
 	implements SearchRequest<OpenPointInTimeResponse> {
 
-	public OpenPointInTimeRequest() {
+	public OpenPointInTimeRequest(long keepAliveMinutes) {
+		_keepAliveMinutes = keepAliveMinutes;
+
 		setPreferLocalCluster(true);
 	}
 
@@ -46,11 +48,7 @@ public class OpenPointInTimeRequest
 		_indices = indices;
 	}
 
-	public void setKeepAliveMinutes(long keepAliveMinutes) {
-		_keepAliveMinutes = keepAliveMinutes;
-	}
-
 	private String[] _indices;
-	private long _keepAliveMinutes;
+	private final long _keepAliveMinutes;
 
 }

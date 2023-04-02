@@ -23,9 +23,9 @@ public class ClearScrollRequest
 	extends CrossClusterRequest implements SearchRequest<ClearScrollResponse> {
 
 	public ClearScrollRequest(String scrollId) {
-		setPreferLocalCluster(true);
-
 		_scrollId = scrollId;
+
+		setPreferLocalCluster(true);
 	}
 
 	@Override

@@ -53,9 +53,9 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 					"AssetEntry.classTypeId, JournalArticle.DDMStructureId ",
 					"from AssetEntry, JournalArticle where ",
 					"AssetEntry.classNameId = ", classNameId,
-					" and AssetEntry.classPK in ",
-					"(JournalArticle.resourcePrimKey, JournalArticle.id_) and ",
-					" AssetEntry.classTypeId != JournalArticle.DDMStructureId"),
+					" and (AssetEntry.classPK = JournalArticle.id_ or ",
+					"AssetEntry.classPK = JournalArticle.resourcePrimKey) and ",
+					"AssetEntry.classTypeId != JournalArticle.DDMStructureId"),
 				"update AssetEntry set classTypeId = ? where entryId = ?",
 				resultSet -> new Object[] {
 					resultSet.getLong(1), resultSet.getLong(2),

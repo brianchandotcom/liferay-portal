@@ -50,7 +50,7 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 					content, matcher.group(), replacement);
 			}
 
-			if (getLevel(jspExpressionTag, "(", ")") != 0) {
+			if (getLevel(jspExpressionTag) != 0) {
 				continue;
 			}
 
@@ -105,7 +105,7 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 
 			String operand = expression.substring(startPosition, x);
 
-			if ((getLevel(operand, "(", ")") != 0) || operand.contains("?") ||
+			if ((getLevel(operand) != 0) || operand.contains("?") ||
 				operand.contains(":")) {
 
 				continue;

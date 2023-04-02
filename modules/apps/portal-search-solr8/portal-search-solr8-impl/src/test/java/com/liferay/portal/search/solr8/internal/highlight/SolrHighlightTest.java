@@ -23,8 +23,6 @@ import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Arrays;
-
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,10 +44,9 @@ public class SolrHighlightTest extends BaseHighlightTestCase {
 
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(fieldName, value),
-			Arrays.asList(
-				"alpha", "alpha beta", "alpha beta alpha",
-				"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
-				"alpha beta gamma delta epsilon zeta eta theta iota alpha"));
+			"alpha", "alpha beta", "alpha beta alpha",
+			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
+			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
 
 		Query query = new StringQuery(fieldName.concat(":alpha"));
 

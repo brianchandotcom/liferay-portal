@@ -19,14 +19,14 @@ package com.liferay.portal.search.engine.adapter.search;
  */
 public class OpenPointInTimeResponse implements SearchResponse {
 
-	public OpenPointInTimeResponse(String pitId) {
-		_pitId = pitId;
+	public OpenPointInTimeResponse(String pointInTimeId) {
+		_pointInTimeId = pointInTimeId;
 	}
 
 	public String pitId() {
-		return _pitId;
+		return _pointInTimeId;
 	}
 
-	private final String _pitId;
+	private final String _pointInTimeId;
 
 }

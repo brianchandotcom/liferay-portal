@@ -27,7 +27,45 @@ definition {
 
 			JSONUser.tearDownNonAdminUsers();
 
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Coupon");
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@priority = 4
+	test CanDownloadJsonTFormatFileAsJson {
+		property portal.acceptance = "true";
+
+		task ("Given in Import/Export center") {
+			BatchEngine.setUpGlobalIds();
+
+			ImportExport.openImportExportAdmin();
+		}
+
+		task ("When Exporting File with JSONT format") {
+			ImportExport.exportFile(
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				exportFields = "name",
+				exportFileFormat = "JSONT");
+		}
+
+		task ("Then the downloaded zip file contain *.json file") {
+			DownloadTempFile();
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "account_import_jsont.txt");
+
+			FileUtil.replaceStringInFile(${filePath}, 20096, ${staticCompanyId});
+
+			FileUtil.replaceStringInFile(${filePath}, 20123, ${staticUserId});
+
+			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+
+			ImportExport.assertFileContent(
+				comparisonFileName = "account_import_jsont.txt",
+				fileName = "export.batch-engine-data.json");
 		}
 	}
 

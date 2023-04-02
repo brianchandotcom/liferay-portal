@@ -49,7 +49,7 @@ definition {
 	}
 
 	macro setUpGlobalIds {
-		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
+		var companyId = JSONCompany.getCompanyId(portalURL = ${portalURL});
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 		static var staticCompanyId = ${companyId};

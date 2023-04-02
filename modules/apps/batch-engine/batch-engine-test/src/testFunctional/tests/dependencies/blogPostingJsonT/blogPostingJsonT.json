@@ -1,0 +1,40 @@
+{
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.delivery.dto.v1_0.BlogPosting",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"callbackURL": null,
+		"className": "com.liferay.headless.delivery.dto.v1_0.BlogPosting",
+		"companyId": 20096,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "INSERT",
+			"onErrorFail": "false",
+			"siteId": "20119",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 20123,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"articleBody": "<p>my blog posting one/p>",
+			"friendlyUrlPath": "my-blog-posting-one",
+			"headline": "my blog posting one"
+		},
+		{
+			"articleBody": "<p>my blog posting two</p>",
+			"friendlyUrlPath": "my-blog-posting-two",
+			"headline": "my blog posting two"
+		},
+		{
+			"articleBody": "<p>my blog posting three</p>",
+			"friendlyUrlPath": "my-blog-posting-three",
+			"headline": "my blog posting three"
+		}
+	]
+}

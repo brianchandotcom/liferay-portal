@@ -45,9 +45,6 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 			String replacement = jspExpressionTag.replaceFirst(
 				"<%= \"([^\"]+?)\" \\+(.+)", "$1<%=$2");
 
-			replacement = replacement.replaceFirst(
-				"(.+\\)) *\\+ *\"([^\"()]+?)\" %>", "$1%>$2");
-
 			if (!jspExpressionTag.equals(replacement)) {
 				return StringUtil.replaceFirst(
 					content, matcher.group(), replacement);

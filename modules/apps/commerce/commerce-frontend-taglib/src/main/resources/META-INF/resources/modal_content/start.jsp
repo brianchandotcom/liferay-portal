@@ -29,4 +29,4 @@
 		</header>
 	</c:if>
 
-	<div class="<%= "modal-iframe-content" + (Validator.isNotNull(contentCssClasses) ? StringPool.SPACE + HtmlUtil.escapeAttribute(contentCssClasses) : StringPool.BLANK) %>">
+	<div class="modal-iframe-content<%= (Validator.isNotNull(contentCssClasses) ? StringPool.SPACE + HtmlUtil.escapeAttribute(contentCssClasses) : StringPool.BLANK) %>">

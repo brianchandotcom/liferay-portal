@@ -399,7 +399,7 @@ public class DefaultObjectEntryManagerImplTest {
 	@Test
 	public void testAddObjectEntry() throws Exception {
 
-		// Aggregation field without filters
+		// Aggregation field with filters
 
 		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
@@ -414,72 +414,7 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		String listTypeEntryKey = _addListTypeEntry();
-
-		ObjectEntry childObjectEntry1 = new ObjectEntry() {
-			{
-				properties = HashMapBuilder.<String, Object>put(
-					_objectRelationshipERCObjectFieldName,
-					"newExternalReferenceCode"
-				).put(
-					"attachmentObjectFieldName",
-					_getAttachmentObjectFieldValue()
-				).put(
-					"dateObjectFieldName", "2022-01-01"
-				).put(
-					"decimalObjectFieldName", 15.5
-				).put(
-					"integerObjectFieldName", 10
-				).put(
-					"longIntegerObjectFieldName", 50000L
-				).put(
-					"picklistObjectFieldName", listTypeEntryKey
-				).put(
-					"precisionDecimalObjectFieldName",
-					new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
-				).put(
-					"richTextObjectFieldName",
-					StringBundler.concat(
-						"<i>", RandomTestUtil.randomString(), "</i>")
-				).put(
-					"textObjectFieldName", RandomTestUtil.randomString()
-				).build();
-			}
-		};
-
-		_assertEquals(
-			childObjectEntry1,
-			_objectEntryManager.addObjectEntry(
-				_dtoConverterContext, _objectDefinition2, childObjectEntry1,
-				ObjectDefinitionConstants.SCOPE_COMPANY));
-
-		_assertEquals(
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"averageAggregationObjectFieldName",
-						"0.12345678912345670000"
-					).put(
-						"countAggregationObjectFieldName", "1"
-					).put(
-						"maxAggregationObjectFieldName", "10"
-					).put(
-						"minAggregationObjectFieldName", "50000"
-					).put(
-						"sumAggregationObjectFieldName", "15.5"
-					).put(
-						"textObjectFieldName",
-						MapUtil.getString(
-							parentObjectEntry1.getProperties(),
-							"textObjectFieldName")
-					).build();
-				}
-			},
-			_objectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				parentObjectEntry1.getId()));
-
-		_objectEntryManager.addObjectEntry(
+		ObjectEntry childObjectEntry1 = _objectEntryManager.addObjectEntry(
 			_dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
@@ -505,31 +440,42 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_assertEquals(
+		String listTypeEntryKey = _addListTypeEntry();
+
+		ObjectEntry childObjectEntry2 = _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						"averageAggregationObjectFieldName",
-						"0.55555555544444440000"
+						_objectRelationshipERCObjectFieldName,
+						"newExternalReferenceCode"
 					).put(
-						"countAggregationObjectFieldName", "2"
+						"attachmentObjectFieldName",
+						_getAttachmentObjectFieldValue()
 					).put(
-						"maxAggregationObjectFieldName", "15"
+						"dateObjectFieldName", "2022-01-01"
 					).put(
-						"minAggregationObjectFieldName", "100"
+						"decimalObjectFieldName", 15.5
 					).put(
-						"sumAggregationObjectFieldName", "31.2"
+						"integerObjectFieldName", 10
 					).put(
-						"textObjectFieldName",
-						MapUtil.getString(
-							parentObjectEntry1.getProperties(),
-							"textObjectFieldName")
+						"longIntegerObjectFieldName", 50000L
+					).put(
+						"picklistObjectFieldName", listTypeEntryKey
+					).put(
+						"precisionDecimalObjectFieldName",
+						new BigDecimal(
+							0.1234567891234567, MathContext.DECIMAL64)
+					).put(
+						"richTextObjectFieldName",
+						StringBundler.concat(
+							"<i>", RandomTestUtil.randomString(), "</i>")
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
 					).build();
 				}
 			},
-			_objectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				parentObjectEntry1.getId()));
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		// Aggregation field with filter (date range with date and time)
 
@@ -566,7 +512,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
-		// Aggregation field with filter (Equals and not equals)
+		// Aggregation field with filter (equals and not equals)
 
 		_objectFilterLocalService.addObjectFilter(
 			_adminUser.getUserId(), objectField.getObjectFieldId(),
@@ -625,6 +571,91 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
 			objectField.getObjectFieldId());
+
+		// Aggregation field without filters
+
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"averageAggregationObjectFieldName",
+						"0.55555555544444440000"
+					).put(
+						"countAggregationObjectFieldName", "2"
+					).put(
+						"maxAggregationObjectFieldName", "15"
+					).put(
+						"minAggregationObjectFieldName", "100"
+					).put(
+						"sumAggregationObjectFieldName", "31.2"
+					).put(
+						"textObjectFieldName",
+						MapUtil.getString(
+							parentObjectEntry1.getProperties(),
+							"textObjectFieldName")
+					).build();
+				}
+			},
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry1.getId()));
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition2, childObjectEntry1.getId());
+
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"averageAggregationObjectFieldName",
+						"0.12345678912345670000"
+					).put(
+						"countAggregationObjectFieldName", "1"
+					).put(
+						"maxAggregationObjectFieldName", "10"
+					).put(
+						"minAggregationObjectFieldName", "50000"
+					).put(
+						"sumAggregationObjectFieldName", "15.5"
+					).put(
+						"textObjectFieldName",
+						MapUtil.getString(
+							parentObjectEntry1.getProperties(),
+							"textObjectFieldName")
+					).build();
+				}
+			},
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry1.getId()));
+
+		_objectEntryManager.deleteObjectEntry(
+			_objectDefinition2, childObjectEntry2.getId());
+
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"averageAggregationObjectFieldName", "0"
+					).put(
+						"countAggregationObjectFieldName", "0"
+					).put(
+						"maxAggregationObjectFieldName", "0"
+					).put(
+						"minAggregationObjectFieldName", "0"
+					).put(
+						"sumAggregationObjectFieldName", "0"
+					).put(
+						"textObjectFieldName",
+						MapUtil.getString(
+							parentObjectEntry1.getProperties(),
+							"textObjectFieldName")
+					).build();
+				}
+			},
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry1.getId()));
 
 		// Make sure ListEntry key will be accepted as a property for Picklist
 

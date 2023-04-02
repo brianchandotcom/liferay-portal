@@ -3820,7 +3820,8 @@ public class ServiceBuilder {
 			if (entity.hasExternalReferenceCode() &&
 				_updateServiceImplMethodSignatureWithERC) {
 
-				_updateServiceImplMethodSignatureWithERC(entity, file);
+				_updateServiceImplMethodSignatureWithERC(
+					entity, file, sessionType);
 			}
 
 			return;
@@ -5552,6 +5553,16 @@ public class ServiceBuilder {
 		}
 
 		return mappingPKEntityColumnDBNames;
+	}
+
+	private String _getExternalReferenceCodeExpression(
+		Entity entity, int sessionType) {
+
+		if (sessionType == _SESSION_TYPE_LOCAL) {
+			return ".setExternalReferenceCode(";
+		}
+
+		return "LocalService.add" + entity.getName() + "(";
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws Exception {
@@ -8047,16 +8058,8 @@ public class ServiceBuilder {
 		Files.createFile(file.toPath());
 	}
 
-	private String _updateBody(String line, Entity entity, Scanner scanner)
-		throws Exception {
-
-		StringBuilder stringBuilder = new StringBuilder(line);
-
-		String setExternalReferenceCode = ".setExternalReferenceCode(";
-		String entityVariableName = StringUtil.lowerCaseFirstLetter(
-			entity.getName());
-		boolean setExternalReferenceCodePresent = false;
-		int pos = -1;
+	private String _updateBody(
+		String line, Entity entity, Scanner scanner, int sessionType) {
 
 		CharacterCounter openCurlyBraceCharacterCounter = new CharacterCounter(
 			CharPool.OPEN_CURLY_BRACE);
@@ -8067,41 +8070,58 @@ public class ServiceBuilder {
 
 		openCurlyBraceCharacterCounter.count(line);
 
+		String targetExpression = _getExternalReferenceCodeExpression(
+			entity, sessionType);
+
+		boolean targetExpressionPresent = false;
+
+		StringBuilder stringBuilder = new StringBuilder(line);
+
+		stringBuilder.append(StringPool.NEW_LINE);
+
 		while (closeCurlyBraceCharacterCounter._count <=
 					openCurlyBraceCharacterCounter._count) {
 
-			if (line.contains(setExternalReferenceCode)) {
-				setExternalReferenceCodePresent = true;
+			if (line.contains(targetExpression)) {
+				targetExpressionPresent = true;
+
+				if (sessionType == _SESSION_TYPE_REMOTE) {
+					stringBuilder.append(StringPool.NEW_LINE);
+					stringBuilder.append("\t\t\texternalReferenceCode,");
+				}
 			}
 
-			if ((pos < 0) && line.contains(entityVariableName + ".set")) {
-				pos = stringBuilder.length() - (line.length() + 1);
+			if (!targetExpressionPresent &&
+				line.contains(entity.getVariableName() + ".set")) {
+
+				stringBuilder.insert(
+					stringBuilder.length() - (line.length() + 1),
+					StringBundler.concat(
+						StringPool.TAB, StringPool.TAB,
+						entity.getVariableName(), targetExpression,
+						"externalReferenceCode);\n"));
+
+				targetExpressionPresent = true;
 			}
 
 			line = scanner.nextLine();
 
 			stringBuilder.append(line);
 
-			stringBuilder.append(StringPool.NEW_LINE);
-
 			openCurlyBraceCharacterCounter.count(line);
-		}
 
-		if (setExternalReferenceCodePresent || (pos < 0)) {
-			return stringBuilder.toString();
-		}
+			if (closeCurlyBraceCharacterCounter._count <=
+					openCurlyBraceCharacterCounter._count) {
 
-		stringBuilder.insert(
-			pos,
-			StringBundler.concat(
-				StringPool.TAB, StringPool.TAB, entityVariableName,
-				setExternalReferenceCode, "externalReferenceCode);\n"));
+				stringBuilder.append(StringPool.NEW_LINE);
+			}
+		}
 
 		return stringBuilder.toString();
 	}
 
 	private void _updateServiceImplMethodSignatureWithERC(
-			Entity entity, File file)
+			Entity entity, File file, int sessionType)
 		throws Exception {
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -8123,7 +8143,8 @@ public class ServiceBuilder {
 
 				byteArrayOutputStream.write(line.getBytes());
 
-				line = _updateBody(scanner.nextLine(), entity, scanner);
+				line = _updateBody(
+					scanner.nextLine(), entity, scanner, sessionType);
 			}
 
 			byteArrayOutputStream.write(line.getBytes());
@@ -8140,6 +8161,8 @@ public class ServiceBuilder {
 
 	private String _updateSignature(String line, Scanner scanner) {
 		StringBuilder stringBuilder = new StringBuilder(line);
+
+		stringBuilder.append(StringPool.NEW_LINE);
 
 		while (!line.contains(StringPool.OPEN_CURLY_BRACE)) {
 			line = scanner.nextLine();
@@ -8170,6 +8193,8 @@ public class ServiceBuilder {
 			stringBuilder.indexOf(StringPool.OPEN_PARENTHESIS) + 1,
 			StringPool.OPEN_PARENTHESIS +
 				externalReferenceCodeArgumentExpression);
+
+		stringBuilder.append(StringPool.NEW_LINE);
 
 		return stringBuilder.toString();
 	}

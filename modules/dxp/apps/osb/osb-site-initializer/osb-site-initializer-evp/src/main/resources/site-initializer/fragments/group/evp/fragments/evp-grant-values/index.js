@@ -39,8 +39,6 @@ const getGrantLimit = async () => {
 	grantLimit.push(data);
 };
 
-getGrantLimit();
-
 const getFundsLimit = async () => {
 	await getGrantLimit();
 
@@ -69,8 +67,6 @@ const getRequests = async () => {
 	requests.push(data);
 };
 
-getRequests();
-
 const getFundsRequestByUserId = async () => {
 	await getRequests();
 
@@ -84,7 +80,7 @@ const getFundsRequestByUserId = async () => {
 	);
 
 	totalFundsRequestedById.push(
-		fundsRequestsByUserId.reduce((total, quantity) => total + quantity)
+		fundsRequestsByUserId.reduce((total, quantity) => total + quantity, 0)
 	);
 };
 
@@ -102,7 +98,8 @@ const getServiceHoursByUserId = async () => {
 
 	totalHoursRequestedByUserId.push(
 		serviceHoursRequestsByUserId.reduce(
-			(total, quantity) => total + quantity
+			(total, quantity) => total + quantity,
+			0
 		)
 	);
 };
@@ -118,12 +115,7 @@ const getAvailableFunds = async () => {
 	}
 
 	availableFunds.push(fundsLimit[0] - totalFundsRequestedById[0]);
-
-	document.querySelector('#available-funds').innerHTML =
-		' R$ ' + availableFunds[0];
 };
-
-getAvailableFunds();
 
 const getAvailableHours = async () => {
 	await Promise.all([getServiceHoursByUserId(), getServiceHoursLimit()]);
@@ -135,14 +127,9 @@ const getAvailableHours = async () => {
 	availableServiceHours.push(
 		serviceHoursLimit[0] - totalHoursRequestedByUserId[0]
 	);
-
-	document.querySelector('#available-hours').innerHTML =
-		availableServiceHours[0] + 'h';
 };
 
-getAvailableHours();
-
-const getUser = async () => {
+const getUserAccount = async () => {
 	const response = await fetch(`/o/c/evpuseraccounts`, {
 		headers: {
 			'content-type': 'application/json',
@@ -152,14 +139,20 @@ const getUser = async () => {
 	});
 
 	const data = await response.json();
-	const filteredUser = data.items.filter(
+
+	const filteredUserAccount = data.items.filter(
 		(item) => item.creator.id === userId
 	);
-	userAccountId.push(filteredUser[0].id);
+
+	userAccountId.push(filteredUserAccount[0].id);
 };
 
-const updateUser = async () => {
-	await Promise.all([getAvailableFunds(), getAvailableHours(), getUser()]);
+const updateUserAccount = async () => {
+	await Promise.all([
+		getAvailableFunds(),
+		getAvailableHours(),
+		getUserAccount(),
+	]);
 
 	const userAccountFields = {
 		fundsAvailable: availableFunds[0],
@@ -182,7 +175,27 @@ const updateUser = async () => {
 const updateAvailableValues = async () => {
 	await Promise.all([getAvailableHours(), getAvailableFunds()]);
 
-	updateUser();
+	await updateUserAccount();
 };
 
-updateAvailableValues();
+const getUserAccountAvailableValues = async () => {
+	await Promise.all([getUserAccount(), updateAvailableValues()]);
+
+	const response = await fetch(`/o/c/evpuseraccounts/${userAccountId[0]}`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	});
+
+	const data = await response.json();
+
+	document.querySelector('#available-funds').innerHTML =
+		' R$ ' + data.fundsAvailable;
+
+	document.querySelector('#available-hours').innerHTML =
+		data.serviceHoursAvailable + 'h';
+};
+
+getUserAccountAvailableValues();

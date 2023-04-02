@@ -125,8 +125,6 @@
 
 							roles.add(role);
 						}
-
-						user = null;
 					]]>
 				</script>
 				<script-language>groovy</script-language>

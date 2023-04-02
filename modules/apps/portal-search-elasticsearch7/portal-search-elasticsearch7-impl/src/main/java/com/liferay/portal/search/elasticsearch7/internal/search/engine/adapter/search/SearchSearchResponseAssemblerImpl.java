@@ -169,12 +169,11 @@ public class SearchSearchResponseAssemblerImpl
 			_documentBuilderFactory, _highlightFieldBuilderFactory,
 			_geoBuilders);
 
-		SearchHits elasticsearchSearchHits = searchResponse.getHits();
+		SearchHits searchHits = searchResponse.getHits();
 
 		searchSearchResponse.setSearchHits(
 			searchHitsTranslator.translate(
-				elasticsearchSearchHits,
-				searchSearchRequest.getAlternateUidFieldName()));
+				searchHits, searchSearchRequest.getAlternateUidFieldName()));
 	}
 
 	private void _setSearchTimeValue(

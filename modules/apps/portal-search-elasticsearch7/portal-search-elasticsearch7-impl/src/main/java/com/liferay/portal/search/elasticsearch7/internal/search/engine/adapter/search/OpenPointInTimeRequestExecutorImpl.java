@@ -63,15 +63,9 @@ public class OpenPointInTimeRequestExecutorImpl
 				openPointInTimeRequest.getIndices());
 		}
 
-		if (openPointInTimeRequest.getKeepAliveMinutes() > 0) {
-			elasticsearchOpenPointInTimeRequest.keepAlive(
-				TimeValue.timeValueMinutes(
-					openPointInTimeRequest.getKeepAliveMinutes()));
-		}
-		else {
-			elasticsearchOpenPointInTimeRequest.keepAlive(
-				TimeValue.timeValueMinutes(1));
-		}
+		elasticsearchOpenPointInTimeRequest.keepAlive(
+			TimeValue.timeValueMinutes(
+				openPointInTimeRequest.getKeepAliveMinutes()));
 
 		return elasticsearchOpenPointInTimeRequest;
 	}

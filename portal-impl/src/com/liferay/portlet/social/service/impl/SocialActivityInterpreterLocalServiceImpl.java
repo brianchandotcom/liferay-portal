@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,7 +38,6 @@ import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.social.kernel.service.SocialActivitySetLocalService;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +46,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -71,28 +72,79 @@ public class SocialActivityInterpreterLocalServiceImpl
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext,
-			SystemBundleUtil.createFilter(
-				"(&(javax.portlet.name=*)(objectClass=" +
-					SocialActivityInterpreter.class.getName() + "))"),
-			new SocialActivityInterpreterServiceTrackerCustomizer());
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			_bundleContext, SocialActivityInterpreter.class,
+			"(javax.portlet.name=*)",
+			ServiceReferenceMapperFactory.createFromFunction(
+				_bundleContext, SocialActivityInterpreter::getSelector),
+			new ServiceTrackerCustomizer
+				<SocialActivityInterpreter, SocialActivityInterpreter>() {
 
-		_serviceTracker.open();
+				@Override
+				public SocialActivityInterpreter addingService(
+					ServiceReference<SocialActivityInterpreter>
+						serviceReference) {
+
+					SocialActivityInterpreter activityInterpreter =
+						_bundleContext.getService(serviceReference);
+
+					if (!(activityInterpreter instanceof
+							SocialRequestInterpreterImpl)) {
+
+						String portletId = (String)serviceReference.getProperty(
+							"javax.portlet.name");
+
+						activityInterpreter = new SocialActivityInterpreterImpl(
+							portletId, activityInterpreter);
+					}
+
+					return activityInterpreter;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<SocialActivityInterpreter>
+						serviceReference,
+					SocialActivityInterpreter socialActivityInterpreter) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<SocialActivityInterpreter>
+						serviceReference,
+					SocialActivityInterpreter socialActivityInterpreter) {
+
+					_bundleContext.ungetService(serviceReference);
+				}
+
+			});
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTrackerMap.close();
 	}
 
 	@Override
 	public Map<String, List<SocialActivityInterpreter>>
 		getActivityInterpreters() {
 
-		return _activityInterpreters;
+		Map<String, List<SocialActivityInterpreter>> map = new HashMap<>();
+
+		for (String selector : _serviceTrackerMap.keySet()) {
+			map.put(selector, _serviceTrackerMap.getService(selector));
+		}
+
+		return map;
 	}
 
 	@Override
 	public List<SocialActivityInterpreter> getActivityInterpreters(
 		String selector) {
 
-		return _activityInterpreters.get(selector);
+		return _serviceTrackerMap.getService(selector);
 	}
 
 	/**
@@ -155,7 +207,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 		}
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			_activityInterpreters.get(selector);
+			_serviceTrackerMap.getService(selector);
 
 		if (activityInterpreters == null) {
 			return null;
@@ -211,7 +263,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 		}
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			_activityInterpreters.get(selector);
+			_serviceTrackerMap.getService(selector);
 
 		if (activityInterpreters == null) {
 			return null;
@@ -252,7 +304,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 		}
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			_activityInterpreters.get(
+			_serviceTrackerMap.getService(
 				PropsValues.SOCIAL_ACTIVITY_SETS_SELECTOR);
 
 		if (activityInterpreters != null) {
@@ -280,12 +332,10 @@ public class SocialActivityInterpreterLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialActivityInterpreterLocalServiceImpl.class);
 
-	private final Map<String, List<SocialActivityInterpreter>>
-		_activityInterpreters = new HashMap<>();
 	private final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private ServiceTracker<SocialActivityInterpreter, SocialActivityInterpreter>
-		_serviceTracker;
+	private ServiceTrackerMap<String, List<SocialActivityInterpreter>>
+		_serviceTrackerMap;
 
 	@BeanReference(type = SocialActivityLocalService.class)
 	private SocialActivityLocalService _socialActivityLocalService;
@@ -295,66 +345,5 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 	@BeanReference(type = SocialActivitySetLocalService.class)
 	private SocialActivitySetLocalService _socialActivitySetLocalService;
-
-	private class SocialActivityInterpreterServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<SocialActivityInterpreter, SocialActivityInterpreter> {
-
-		@Override
-		public SocialActivityInterpreter addingService(
-			ServiceReference<SocialActivityInterpreter> serviceReference) {
-
-			SocialActivityInterpreter activityInterpreter =
-				_bundleContext.getService(serviceReference);
-
-			if (!(activityInterpreter instanceof
-					SocialRequestInterpreterImpl)) {
-
-				String portletId = (String)serviceReference.getProperty(
-					"javax.portlet.name");
-
-				activityInterpreter = new SocialActivityInterpreterImpl(
-					portletId, activityInterpreter);
-			}
-
-			List<SocialActivityInterpreter> activityInterpreters =
-				_activityInterpreters.get(activityInterpreter.getSelector());
-
-			if (activityInterpreters == null) {
-				activityInterpreters = new ArrayList<>();
-			}
-
-			activityInterpreters.add(activityInterpreter);
-
-			_activityInterpreters.put(
-				activityInterpreter.getSelector(), activityInterpreters);
-
-			return activityInterpreter;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<SocialActivityInterpreter> serviceReference,
-			SocialActivityInterpreter activityInterpreter) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<SocialActivityInterpreter> serviceReference,
-			SocialActivityInterpreter activityInterpreter) {
-
-			_bundleContext.ungetService(serviceReference);
-
-			List<SocialActivityInterpreter> activityInterpreters =
-				_activityInterpreters.get(activityInterpreter.getSelector());
-
-			if (activityInterpreters == null) {
-				return;
-			}
-
-			activityInterpreters.remove(activityInterpreter);
-		}
-
-	}
 
 }

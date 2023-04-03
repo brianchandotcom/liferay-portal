@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.contacts.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.contacts.exception.NoSuchContactsCardTemplateException;
 import com.liferay.osb.faro.contacts.model.ContactsCardTemplate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the contacts card template service.
@@ -45,9 +40,6 @@ public interface ContactsCardTemplatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ContactsCardTemplateUtil} to access the contacts card template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, ContactsCardTemplate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the contacts card templates where groupId = &#63;.
@@ -313,8 +305,5 @@ public interface ContactsCardTemplatePersistence
 	 * @return the number of contacts card templates
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

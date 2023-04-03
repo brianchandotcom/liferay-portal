@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.exception.NoSuchFaroPreferencesException;
 import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the faro preferences service.
@@ -45,9 +40,6 @@ public interface FaroPreferencesPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FaroPreferencesUtil} to access the faro preferences persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FaroPreferences> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the faro preferenceses where groupId = &#63;.

@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.model.FaroProjectEmailAddressDomain;
 import com.liferay.osb.faro.model.FaroProjectEmailAddressDomainModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -25,12 +26,10 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -41,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -101,25 +101,41 @@ public class FaroProjectEmailAddressDomainModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.model.FaroProjectEmailAddressDomain"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.model.FaroProjectEmailAddressDomain"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.model.FaroProjectEmailAddressDomain"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long FAROPROJECTID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long FAROPROJECTEMAILADDRESSDOMAINID_COLUMN_BITMASK =
 		4L;
 
@@ -180,9 +196,6 @@ public class FaroProjectEmailAddressDomainModelImpl
 					(FaroProjectEmailAddressDomain)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -208,176 +221,82 @@ public class FaroProjectEmailAddressDomainModelImpl
 	public Map<String, Function<FaroProjectEmailAddressDomain, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<FaroProjectEmailAddressDomain, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, FaroProjectEmailAddressDomain>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			FaroProjectEmailAddressDomain.class.getClassLoader(),
-			FaroProjectEmailAddressDomain.class, ModelWrapper.class);
+		private static final Map
+			<String, Function<FaroProjectEmailAddressDomain, Object>>
+				_attributeGetterFunctions;
 
-		try {
-			Constructor<FaroProjectEmailAddressDomain> constructor =
-				(Constructor<FaroProjectEmailAddressDomain>)
-					proxyClass.getConstructor(InvocationHandler.class);
+		static {
+			Map<String, Function<FaroProjectEmailAddressDomain, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<FaroProjectEmailAddressDomain, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"faroProjectEmailAddressDomainId",
+				FaroProjectEmailAddressDomain::
+					getFaroProjectEmailAddressDomainId);
+			attributeGetterFunctions.put(
+				"groupId", FaroProjectEmailAddressDomain::getGroupId);
+			attributeGetterFunctions.put(
+				"faroProjectId",
+				FaroProjectEmailAddressDomain::getFaroProjectId);
+			attributeGetterFunctions.put(
+				"emailAddressDomain",
+				FaroProjectEmailAddressDomain::getEmailAddressDomain);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map
-		<String, Function<FaroProjectEmailAddressDomain, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<FaroProjectEmailAddressDomain, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<FaroProjectEmailAddressDomain, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<FaroProjectEmailAddressDomain, Object>>();
-		Map<String, BiConsumer<FaroProjectEmailAddressDomain, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<FaroProjectEmailAddressDomain, ?>>();
+		private static final Map
+			<String, BiConsumer<FaroProjectEmailAddressDomain, Object>>
+				_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"faroProjectEmailAddressDomainId",
-			new Function<FaroProjectEmailAddressDomain, Object>() {
+		static {
+			Map<String, BiConsumer<FaroProjectEmailAddressDomain, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<FaroProjectEmailAddressDomain, ?>>();
 
-				@Override
-				public Object apply(
-					FaroProjectEmailAddressDomain
-						faroProjectEmailAddressDomain) {
+			attributeSetterBiConsumers.put(
+				"faroProjectEmailAddressDomainId",
+				(BiConsumer<FaroProjectEmailAddressDomain, Long>)
+					FaroProjectEmailAddressDomain::
+						setFaroProjectEmailAddressDomainId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<FaroProjectEmailAddressDomain, Long>)
+					FaroProjectEmailAddressDomain::setGroupId);
+			attributeSetterBiConsumers.put(
+				"faroProjectId",
+				(BiConsumer<FaroProjectEmailAddressDomain, Long>)
+					FaroProjectEmailAddressDomain::setFaroProjectId);
+			attributeSetterBiConsumers.put(
+				"emailAddressDomain",
+				(BiConsumer<FaroProjectEmailAddressDomain, String>)
+					FaroProjectEmailAddressDomain::setEmailAddressDomain);
 
-					return faroProjectEmailAddressDomain.
-						getFaroProjectEmailAddressDomainId();
-				}
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-			});
-		attributeSetterBiConsumers.put(
-			"faroProjectEmailAddressDomainId",
-			new BiConsumer<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public void accept(
-					FaroProjectEmailAddressDomain faroProjectEmailAddressDomain,
-					Object faroProjectEmailAddressDomainIdObject) {
-
-					faroProjectEmailAddressDomain.
-						setFaroProjectEmailAddressDomainId(
-							(Long)faroProjectEmailAddressDomainIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public Object apply(
-					FaroProjectEmailAddressDomain
-						faroProjectEmailAddressDomain) {
-
-					return faroProjectEmailAddressDomain.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public void accept(
-					FaroProjectEmailAddressDomain faroProjectEmailAddressDomain,
-					Object groupIdObject) {
-
-					faroProjectEmailAddressDomain.setGroupId(
-						(Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"faroProjectId",
-			new Function<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public Object apply(
-					FaroProjectEmailAddressDomain
-						faroProjectEmailAddressDomain) {
-
-					return faroProjectEmailAddressDomain.getFaroProjectId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"faroProjectId",
-			new BiConsumer<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public void accept(
-					FaroProjectEmailAddressDomain faroProjectEmailAddressDomain,
-					Object faroProjectIdObject) {
-
-					faroProjectEmailAddressDomain.setFaroProjectId(
-						(Long)faroProjectIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"emailAddressDomain",
-			new Function<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public Object apply(
-					FaroProjectEmailAddressDomain
-						faroProjectEmailAddressDomain) {
-
-					return faroProjectEmailAddressDomain.
-						getEmailAddressDomain();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"emailAddressDomain",
-			new BiConsumer<FaroProjectEmailAddressDomain, Object>() {
-
-				@Override
-				public void accept(
-					FaroProjectEmailAddressDomain faroProjectEmailAddressDomain,
-					Object emailAddressDomainObject) {
-
-					faroProjectEmailAddressDomain.setEmailAddressDomain(
-						(String)emailAddressDomainObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -389,6 +308,10 @@ public class FaroProjectEmailAddressDomainModelImpl
 	public void setFaroProjectEmailAddressDomainId(
 		long faroProjectEmailAddressDomainId) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_faroProjectEmailAddressDomainId = faroProjectEmailAddressDomainId;
 	}
 
@@ -399,19 +322,20 @@ public class FaroProjectEmailAddressDomainModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -421,19 +345,21 @@ public class FaroProjectEmailAddressDomainModelImpl
 
 	@Override
 	public void setFaroProjectId(long faroProjectId) {
-		_columnBitmask |= FAROPROJECTID_COLUMN_BITMASK;
-
-		if (!_setOriginalFaroProjectId) {
-			_setOriginalFaroProjectId = true;
-
-			_originalFaroProjectId = _faroProjectId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_faroProjectId = faroProjectId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalFaroProjectId() {
-		return _originalFaroProjectId;
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("faroProjectId"));
 	}
 
 	@Override
@@ -448,10 +374,34 @@ public class FaroProjectEmailAddressDomainModelImpl
 
 	@Override
 	public void setEmailAddressDomain(String emailAddressDomain) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_emailAddressDomain = emailAddressDomain;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -501,6 +451,24 @@ public class FaroProjectEmailAddressDomainModelImpl
 	}
 
 	@Override
+	public FaroProjectEmailAddressDomain cloneWithOriginalValues() {
+		FaroProjectEmailAddressDomainImpl faroProjectEmailAddressDomainImpl =
+			new FaroProjectEmailAddressDomainImpl();
+
+		faroProjectEmailAddressDomainImpl.setFaroProjectEmailAddressDomainId(
+			this.<Long>getColumnOriginalValue(
+				"faroProjectEmailAddressDomainId"));
+		faroProjectEmailAddressDomainImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		faroProjectEmailAddressDomainImpl.setFaroProjectId(
+			this.<Long>getColumnOriginalValue("faroProjectId"));
+		faroProjectEmailAddressDomainImpl.setEmailAddressDomain(
+			this.<String>getColumnOriginalValue("emailAddressDomain"));
+
+		return faroProjectEmailAddressDomainImpl;
+	}
+
+	@Override
 	public int compareTo(
 		FaroProjectEmailAddressDomain faroProjectEmailAddressDomain) {
 
@@ -545,11 +513,19 @@ public class FaroProjectEmailAddressDomainModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -557,13 +533,7 @@ public class FaroProjectEmailAddressDomainModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalFaroProjectId = _faroProjectId;
-
-		_setOriginalFaroProjectId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -648,56 +618,80 @@ public class FaroProjectEmailAddressDomainModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<FaroProjectEmailAddressDomain, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<FaroProjectEmailAddressDomain, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<FaroProjectEmailAddressDomain, Object>
-				attributeGetterFunction = entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply(
-					(FaroProjectEmailAddressDomain)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function
 			<InvocationHandler, FaroProjectEmailAddressDomain>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						FaroProjectEmailAddressDomain.class,
+						ModelWrapper.class);
 
 	}
 
 	private long _faroProjectEmailAddressDomainId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _faroProjectId;
-	private long _originalFaroProjectId;
-	private boolean _setOriginalFaroProjectId;
 	private String _emailAddressDomain;
+
+	public <T> T getColumnValue(String columnName) {
+		Function<FaroProjectEmailAddressDomain, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((FaroProjectEmailAddressDomain)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"faroProjectEmailAddressDomainId",
+			_faroProjectEmailAddressDomainId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("faroProjectId", _faroProjectId);
+		_columnOriginalValues.put("emailAddressDomain", _emailAddressDomain);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("faroProjectEmailAddressDomainId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("faroProjectId", 4L);
+
+		columnBitmasks.put("emailAddressDomain", 8L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private FaroProjectEmailAddressDomain _escapedModel;
 

@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.model.FaroNotification;
 import com.liferay.osb.faro.model.FaroNotificationModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,12 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -110,33 +110,65 @@ public class FaroNotificationModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.model.FaroNotification"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.model.FaroNotification"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.model.FaroNotification"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long CREATETIME_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long OWNERID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long READ_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long SUBTYPE_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long TYPE_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long FARONOTIFICATIONID_COLUMN_BITMASK = 64L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -195,9 +227,6 @@ public class FaroNotificationModelImpl
 				attributeGetterFunction.apply((FaroNotification)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -222,285 +251,105 @@ public class FaroNotificationModelImpl
 	public Map<String, Function<FaroNotification, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<FaroNotification, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, FaroNotification>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			FaroNotification.class.getClassLoader(), FaroNotification.class,
-			ModelWrapper.class);
+		private static final Map<String, Function<FaroNotification, Object>>
+			_attributeGetterFunctions;
 
-		try {
-			Constructor<FaroNotification> constructor =
-				(Constructor<FaroNotification>)proxyClass.getConstructor(
-					InvocationHandler.class);
+		static {
+			Map<String, Function<FaroNotification, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<FaroNotification, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"faroNotificationId", FaroNotification::getFaroNotificationId);
+			attributeGetterFunctions.put(
+				"groupId", FaroNotification::getGroupId);
+			attributeGetterFunctions.put("userId", FaroNotification::getUserId);
+			attributeGetterFunctions.put(
+				"createTime", FaroNotification::getCreateTime);
+			attributeGetterFunctions.put(
+				"modifiedTime", FaroNotification::getModifiedTime);
+			attributeGetterFunctions.put(
+				"ownerId", FaroNotification::getOwnerId);
+			attributeGetterFunctions.put("scope", FaroNotification::getScope);
+			attributeGetterFunctions.put("read", FaroNotification::getRead);
+			attributeGetterFunctions.put("type", FaroNotification::getType);
+			attributeGetterFunctions.put(
+				"subtype", FaroNotification::getSubtype);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map<String, Function<FaroNotification, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<FaroNotification, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<FaroNotification, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<FaroNotification, Object>>();
-		Map<String, BiConsumer<FaroNotification, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<FaroNotification, ?>>();
+		private static final Map<String, BiConsumer<FaroNotification, Object>>
+			_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"faroNotificationId",
-			new Function<FaroNotification, Object>() {
+		static {
+			Map<String, BiConsumer<FaroNotification, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<FaroNotification, ?>>();
 
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getFaroNotificationId();
-				}
+			attributeSetterBiConsumers.put(
+				"faroNotificationId",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setFaroNotificationId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setGroupId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setUserId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"modifiedTime",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setModifiedTime);
+			attributeSetterBiConsumers.put(
+				"ownerId",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setOwnerId);
+			attributeSetterBiConsumers.put(
+				"scope",
+				(BiConsumer<FaroNotification, String>)
+					FaroNotification::setScope);
+			attributeSetterBiConsumers.put(
+				"read",
+				(BiConsumer<FaroNotification, Boolean>)
+					FaroNotification::setRead);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<FaroNotification, String>)
+					FaroNotification::setType);
+			attributeSetterBiConsumers.put(
+				"subtype",
+				(BiConsumer<FaroNotification, String>)
+					FaroNotification::setSubtype);
 
-			});
-		attributeSetterBiConsumers.put(
-			"faroNotificationId",
-			new BiConsumer<FaroNotification, Object>() {
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-				@Override
-				public void accept(
-					FaroNotification faroNotification,
-					Object faroNotificationIdObject) {
-
-					faroNotification.setFaroNotificationId(
-						(Long)faroNotificationIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object groupIdObject) {
-
-					faroNotification.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object userIdObject) {
-
-					faroNotification.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createTime",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getCreateTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createTime",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification,
-					Object createTimeObject) {
-
-					faroNotification.setCreateTime((Long)createTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedTime",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getModifiedTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification,
-					Object modifiedTimeObject) {
-
-					faroNotification.setModifiedTime((Long)modifiedTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"ownerId",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getOwnerId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"ownerId",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object ownerIdObject) {
-
-					faroNotification.setOwnerId((Long)ownerIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"scope",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getScope();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"scope",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object scopeObject) {
-
-					faroNotification.setScope((String)scopeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"read",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getRead();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"read",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object readObject) {
-
-					faroNotification.setRead((Boolean)readObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getType();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"type",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object typeObject) {
-
-					faroNotification.setType((String)typeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"subtype",
-			new Function<FaroNotification, Object>() {
-
-				@Override
-				public Object apply(FaroNotification faroNotification) {
-					return faroNotification.getSubtype();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"subtype",
-			new BiConsumer<FaroNotification, Object>() {
-
-				@Override
-				public void accept(
-					FaroNotification faroNotification, Object subtypeObject) {
-
-					faroNotification.setSubtype((String)subtypeObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -510,6 +359,10 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setFaroNotificationId(long faroNotificationId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_faroNotificationId = faroNotificationId;
 	}
 
@@ -520,19 +373,20 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -542,6 +396,10 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -568,19 +426,21 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setCreateTime(long createTime) {
-		_columnBitmask |= CREATETIME_COLUMN_BITMASK;
-
-		if (!_setOriginalCreateTime) {
-			_setOriginalCreateTime = true;
-
-			_originalCreateTime = _createTime;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createTime = createTime;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCreateTime() {
-		return _originalCreateTime;
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("createTime"));
 	}
 
 	@Override
@@ -590,6 +450,10 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedTime = modifiedTime;
 	}
 
@@ -600,19 +464,20 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setOwnerId(long ownerId) {
-		_columnBitmask |= OWNERID_COLUMN_BITMASK;
-
-		if (!_setOriginalOwnerId) {
-			_setOriginalOwnerId = true;
-
-			_originalOwnerId = _ownerId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ownerId = ownerId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalOwnerId() {
-		return _originalOwnerId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("ownerId"));
 	}
 
 	@Override
@@ -627,6 +492,10 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setScope(String scope) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_scope = scope;
 	}
 
@@ -642,19 +511,21 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setRead(boolean read) {
-		_columnBitmask |= READ_COLUMN_BITMASK;
-
-		if (!_setOriginalRead) {
-			_setOriginalRead = true;
-
-			_originalRead = _read;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_read = read;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalRead() {
-		return _originalRead;
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("read_"));
 	}
 
 	@Override
@@ -669,17 +540,20 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_type = type;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		return getColumnOriginalValue("type_");
 	}
 
 	@Override
@@ -694,20 +568,43 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setSubtype(String subtype) {
-		_columnBitmask |= SUBTYPE_COLUMN_BITMASK;
-
-		if (_originalSubtype == null) {
-			_originalSubtype = _subtype;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_subtype = subtype;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalSubtype() {
-		return GetterUtil.getString(_originalSubtype);
+		return getColumnOriginalValue("subtype");
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -760,6 +657,34 @@ public class FaroNotificationModelImpl
 	}
 
 	@Override
+	public FaroNotification cloneWithOriginalValues() {
+		FaroNotificationImpl faroNotificationImpl = new FaroNotificationImpl();
+
+		faroNotificationImpl.setFaroNotificationId(
+			this.<Long>getColumnOriginalValue("faroNotificationId"));
+		faroNotificationImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		faroNotificationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		faroNotificationImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		faroNotificationImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		faroNotificationImpl.setOwnerId(
+			this.<Long>getColumnOriginalValue("ownerId"));
+		faroNotificationImpl.setScope(
+			this.<String>getColumnOriginalValue("scope"));
+		faroNotificationImpl.setRead(
+			this.<Boolean>getColumnOriginalValue("read_"));
+		faroNotificationImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		faroNotificationImpl.setSubtype(
+			this.<String>getColumnOriginalValue("subtype"));
+
+		return faroNotificationImpl;
+	}
+
+	@Override
 	public int compareTo(FaroNotification faroNotification) {
 		long primaryKey = faroNotification.getPrimaryKey();
 
@@ -801,11 +726,19 @@ public class FaroNotificationModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -813,25 +746,7 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalCreateTime = _createTime;
-
-		_setOriginalCreateTime = false;
-
-		_originalOwnerId = _ownerId;
-
-		_setOriginalOwnerId = false;
-
-		_originalRead = _read;
-
-		_setOriginalRead = false;
-
-		_originalType = _type;
-
-		_originalSubtype = _subtype;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -932,64 +847,113 @@ public class FaroNotificationModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<FaroNotification, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<FaroNotification, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<FaroNotification, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((FaroNotification)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, FaroNotification>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					FaroNotification.class, ModelWrapper.class);
 
 	}
 
 	private long _faroNotificationId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _userId;
 	private long _createTime;
-	private long _originalCreateTime;
-	private boolean _setOriginalCreateTime;
 	private long _modifiedTime;
 	private long _ownerId;
-	private long _originalOwnerId;
-	private boolean _setOriginalOwnerId;
 	private String _scope;
 	private boolean _read;
-	private boolean _originalRead;
-	private boolean _setOriginalRead;
 	private String _type;
-	private String _originalType;
 	private String _subtype;
-	private String _originalSubtype;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<FaroNotification, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((FaroNotification)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("faroNotificationId", _faroNotificationId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("modifiedTime", _modifiedTime);
+		_columnOriginalValues.put("ownerId", _ownerId);
+		_columnOriginalValues.put("scope", _scope);
+		_columnOriginalValues.put("read_", _read);
+		_columnOriginalValues.put("type_", _type);
+		_columnOriginalValues.put("subtype", _subtype);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("read_", "read");
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("faroNotificationId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("createTime", 8L);
+
+		columnBitmasks.put("modifiedTime", 16L);
+
+		columnBitmasks.put("ownerId", 32L);
+
+		columnBitmasks.put("scope", 64L);
+
+		columnBitmasks.put("read_", 128L);
+
+		columnBitmasks.put("type_", 256L);
+
+		columnBitmasks.put("subtype", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private FaroNotification _escapedModel;
 

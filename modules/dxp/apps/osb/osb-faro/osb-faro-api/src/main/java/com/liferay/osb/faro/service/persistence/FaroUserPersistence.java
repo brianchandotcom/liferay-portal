@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.exception.NoSuchFaroUserException;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the faro user service.
@@ -44,9 +39,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FaroUserUtil} to access the faro user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FaroUser> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the faro users where groupId = &#63;.
@@ -1067,8 +1059,5 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	 * @return the number of faro users
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

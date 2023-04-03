@@ -16,10 +16,12 @@ package com.liferay.osb.faro.contacts.service.persistence.impl;
 
 import com.liferay.osb.faro.contacts.exception.NoSuchContactsCardTemplateException;
 import com.liferay.osb.faro.contacts.model.ContactsCardTemplate;
+import com.liferay.osb.faro.contacts.model.ContactsCardTemplateTable;
 import com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateImpl;
 import com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateModelImpl;
 import com.liferay.osb.faro.contacts.service.persistence.ContactsCardTemplatePersistence;
 import com.liferay.osb.faro.contacts.service.persistence.ContactsCardTemplateUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,7 +38,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -44,10 +45,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -238,10 +236,6 @@ public class ContactsCardTemplatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -577,8 +571,6 @@ public class ContactsCardTemplatePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -598,21 +590,14 @@ public class ContactsCardTemplatePersistenceImpl
 		dbColumnNames.put("settings", "settings_");
 		dbColumnNames.put("type", "type_");
 
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		setDBColumnNames(dbColumnNames);
 
 		setModelClass(ContactsCardTemplate.class);
+
+		setModelImplClass(ContactsCardTemplateImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(ContactsCardTemplateTable.INSTANCE);
 	}
 
 	/**
@@ -623,11 +608,8 @@ public class ContactsCardTemplatePersistenceImpl
 	@Override
 	public void cacheResult(ContactsCardTemplate contactsCardTemplate) {
 		entityCache.putResult(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			ContactsCardTemplateImpl.class,
 			contactsCardTemplate.getPrimaryKey(), contactsCardTemplate);
-
-		contactsCardTemplate.resetOriginalValues();
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -651,14 +633,10 @@ public class ContactsCardTemplatePersistenceImpl
 				contactsCardTemplates) {
 
 			if (entityCache.getResult(
-					ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
 					ContactsCardTemplateImpl.class,
 					contactsCardTemplate.getPrimaryKey()) == null) {
 
 				cacheResult(contactsCardTemplate);
-			}
-			else {
-				contactsCardTemplate.resetOriginalValues();
 			}
 		}
 	}
@@ -674,9 +652,7 @@ public class ContactsCardTemplatePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(ContactsCardTemplateImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(ContactsCardTemplateImpl.class);
 	}
 
 	/**
@@ -689,37 +665,25 @@ public class ContactsCardTemplatePersistenceImpl
 	@Override
 	public void clearCache(ContactsCardTemplate contactsCardTemplate) {
 		entityCache.removeResult(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class,
-			contactsCardTemplate.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			ContactsCardTemplateImpl.class, contactsCardTemplate);
 	}
 
 	@Override
 	public void clearCache(List<ContactsCardTemplate> contactsCardTemplates) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (ContactsCardTemplate contactsCardTemplate :
 				contactsCardTemplates) {
 
 			entityCache.removeResult(
-				ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				ContactsCardTemplateImpl.class,
-				contactsCardTemplate.getPrimaryKey());
+				ContactsCardTemplateImpl.class, contactsCardTemplate);
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(ContactsCardTemplateImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
 				ContactsCardTemplateImpl.class, primaryKey);
 		}
 	}
@@ -863,8 +827,6 @@ public class ContactsCardTemplatePersistenceImpl
 
 			if (isNew) {
 				session.save(contactsCardTemplate);
-
-				contactsCardTemplate.setNew(false);
 			}
 			else {
 				contactsCardTemplate = (ContactsCardTemplate)session.merge(
@@ -878,51 +840,13 @@ public class ContactsCardTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (!ContactsCardTemplateModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
-			Object[] args = new Object[] {
-				contactsCardTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByGroupId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((contactsCardTemplateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					contactsCardTemplateModelImpl.getOriginalGroupId()
-				};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-
-				args = new Object[] {
-					contactsCardTemplateModelImpl.getGroupId()
-				};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-			}
-		}
-
 		entityCache.putResult(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class,
-			contactsCardTemplate.getPrimaryKey(), contactsCardTemplate, false);
+			ContactsCardTemplateImpl.class, contactsCardTemplateModelImpl,
+			false, true);
+
+		if (isNew) {
+			contactsCardTemplate.setNew(false);
+		}
 
 		contactsCardTemplate.resetOriginalValues();
 
@@ -972,188 +896,12 @@ public class ContactsCardTemplatePersistenceImpl
 	/**
 	 * Returns the contacts card template with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the contacts card template
-	 * @return the contacts card template, or <code>null</code> if a contacts card template with the primary key could not be found
-	 */
-	@Override
-	public ContactsCardTemplate fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ContactsCardTemplate contactsCardTemplate =
-			(ContactsCardTemplate)serializable;
-
-		if (contactsCardTemplate == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				contactsCardTemplate = (ContactsCardTemplate)session.get(
-					ContactsCardTemplateImpl.class, primaryKey);
-
-				if (contactsCardTemplate != null) {
-					cacheResult(contactsCardTemplate);
-				}
-				else {
-					entityCache.putResult(
-						ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						ContactsCardTemplateImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					ContactsCardTemplateImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return contactsCardTemplate;
-	}
-
-	/**
-	 * Returns the contacts card template with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param contactsCardTemplateId the primary key of the contacts card template
 	 * @return the contacts card template, or <code>null</code> if a contacts card template with the primary key could not be found
 	 */
 	@Override
 	public ContactsCardTemplate fetchByPrimaryKey(long contactsCardTemplateId) {
 		return fetchByPrimaryKey((Serializable)contactsCardTemplateId);
-	}
-
-	@Override
-	public Map<Serializable, ContactsCardTemplate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ContactsCardTemplate> map =
-			new HashMap<Serializable, ContactsCardTemplate>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ContactsCardTemplate contactsCardTemplate = fetchByPrimaryKey(
-				primaryKey);
-
-			if (contactsCardTemplate != null) {
-				map.put(primaryKey, contactsCardTemplate);
-			}
-
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				ContactsCardTemplateImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ContactsCardTemplate)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			(uncachedPrimaryKeys.size() * 2) + 1);
-
-		sb.append(_SQL_SELECT_CONTACTSCARDTEMPLATE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (ContactsCardTemplate contactsCardTemplate :
-					(List<ContactsCardTemplate>)query.list()) {
-
-				map.put(
-					contactsCardTemplate.getPrimaryKeyObj(),
-					contactsCardTemplate);
-
-				cacheResult(contactsCardTemplate);
-
-				uncachedPrimaryKeys.remove(
-					contactsCardTemplate.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					ContactsCardTemplateImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1282,10 +1030,6 @@ public class ContactsCardTemplatePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1332,9 +1076,6 @@ public class ContactsCardTemplatePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1351,6 +1092,21 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "contactsCardTemplateId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CONTACTSCARDTEMPLATE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ContactsCardTemplateModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1363,47 +1119,34 @@ public class ContactsCardTemplatePersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateModelImpl.FINDER_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateModelImpl.FINDER_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateModelImpl.FINDER_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId"}, true);
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateModelImpl.FINDER_CACHE_ENABLED,
-			ContactsCardTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()},
-			ContactsCardTemplateModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
 
 		_finderPathCountByGroupId = new FinderPath(
-			ContactsCardTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			ContactsCardTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
 
 		_setContactsCardTemplateUtilPersistence(this);
 	}
@@ -1412,10 +1155,6 @@ public class ContactsCardTemplatePersistenceImpl
 		_setContactsCardTemplateUtilPersistence(null);
 
 		entityCache.removeCache(ContactsCardTemplateImpl.class.getName());
-
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private void _setContactsCardTemplateUtilPersistence(
@@ -1443,9 +1182,6 @@ public class ContactsCardTemplatePersistenceImpl
 	private static final String _SQL_SELECT_CONTACTSCARDTEMPLATE =
 		"SELECT contactsCardTemplate FROM ContactsCardTemplate contactsCardTemplate";
 
-	private static final String _SQL_SELECT_CONTACTSCARDTEMPLATE_WHERE_PKS_IN =
-		"SELECT contactsCardTemplate FROM ContactsCardTemplate contactsCardTemplate WHERE contactsCardTemplateId IN (";
-
 	private static final String _SQL_SELECT_CONTACTSCARDTEMPLATE_WHERE =
 		"SELECT contactsCardTemplate FROM ContactsCardTemplate contactsCardTemplate WHERE ";
 
@@ -1469,5 +1205,10 @@ public class ContactsCardTemplatePersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"settings", "type"});
+
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
+	}
 
 }

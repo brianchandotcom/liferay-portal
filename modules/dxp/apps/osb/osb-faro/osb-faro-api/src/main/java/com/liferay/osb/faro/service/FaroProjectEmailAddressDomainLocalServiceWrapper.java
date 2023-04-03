@@ -27,6 +27,10 @@ public class FaroProjectEmailAddressDomainLocalServiceWrapper
 	implements FaroProjectEmailAddressDomainLocalService,
 			   ServiceWrapper<FaroProjectEmailAddressDomainLocalService> {
 
+	public FaroProjectEmailAddressDomainLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FaroProjectEmailAddressDomainLocalServiceWrapper(
 		FaroProjectEmailAddressDomainLocalService
 			faroProjectEmailAddressDomainLocalService) {
@@ -92,6 +96,18 @@ public class FaroProjectEmailAddressDomainLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroProjectEmailAddressDomainLocalService.createPersistedModel(
+			primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the faro project email address domain from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -143,6 +159,19 @@ public class FaroProjectEmailAddressDomainLocalServiceWrapper
 
 		return _faroProjectEmailAddressDomainLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _faroProjectEmailAddressDomainLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _faroProjectEmailAddressDomainLocalService.dslQueryCount(
+			dslQuery);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate;
 import com.liferay.osb.faro.contacts.model.ContactsLayoutTemplateModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,12 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -112,25 +112,41 @@ public class ContactsLayoutTemplateModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long TYPE_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long CONTACTSLAYOUTTEMPLATEID_COLUMN_BITMASK = 4L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -189,9 +205,6 @@ public class ContactsLayoutTemplateModelImpl
 				attributeGetterFunction.apply((ContactsLayoutTemplate)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -217,318 +230,113 @@ public class ContactsLayoutTemplateModelImpl
 	public Map<String, Function<ContactsLayoutTemplate, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ContactsLayoutTemplate, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, ContactsLayoutTemplate>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			ContactsLayoutTemplate.class.getClassLoader(),
-			ContactsLayoutTemplate.class, ModelWrapper.class);
+		private static final Map
+			<String, Function<ContactsLayoutTemplate, Object>>
+				_attributeGetterFunctions;
 
-		try {
-			Constructor<ContactsLayoutTemplate> constructor =
-				(Constructor<ContactsLayoutTemplate>)proxyClass.getConstructor(
-					InvocationHandler.class);
+		static {
+			Map<String, Function<ContactsLayoutTemplate, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ContactsLayoutTemplate, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"contactsLayoutTemplateId",
+				ContactsLayoutTemplate::getContactsLayoutTemplateId);
+			attributeGetterFunctions.put(
+				"groupId", ContactsLayoutTemplate::getGroupId);
+			attributeGetterFunctions.put(
+				"userId", ContactsLayoutTemplate::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ContactsLayoutTemplate::getUserName);
+			attributeGetterFunctions.put(
+				"createTime", ContactsLayoutTemplate::getCreateTime);
+			attributeGetterFunctions.put(
+				"modifiedTime", ContactsLayoutTemplate::getModifiedTime);
+			attributeGetterFunctions.put(
+				"headerContactsCardTemplateIds",
+				ContactsLayoutTemplate::getHeaderContactsCardTemplateIds);
+			attributeGetterFunctions.put(
+				"name", ContactsLayoutTemplate::getName);
+			attributeGetterFunctions.put(
+				"settings", ContactsLayoutTemplate::getSettings);
+			attributeGetterFunctions.put(
+				"type", ContactsLayoutTemplate::getType);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map<String, Function<ContactsLayoutTemplate, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ContactsLayoutTemplate, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<ContactsLayoutTemplate, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ContactsLayoutTemplate, Object>>();
-		Map<String, BiConsumer<ContactsLayoutTemplate, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ContactsLayoutTemplate, ?>>();
+		private static final Map
+			<String, BiConsumer<ContactsLayoutTemplate, Object>>
+				_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"contactsLayoutTemplateId",
-			new Function<ContactsLayoutTemplate, Object>() {
+		static {
+			Map<String, BiConsumer<ContactsLayoutTemplate, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ContactsLayoutTemplate, ?>>();
 
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
+			attributeSetterBiConsumers.put(
+				"contactsLayoutTemplateId",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setContactsLayoutTemplateId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setGroupId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ContactsLayoutTemplate, String>)
+					ContactsLayoutTemplate::setUserName);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"modifiedTime",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setModifiedTime);
+			attributeSetterBiConsumers.put(
+				"headerContactsCardTemplateIds",
+				(BiConsumer<ContactsLayoutTemplate, String>)
+					ContactsLayoutTemplate::setHeaderContactsCardTemplateIds);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ContactsLayoutTemplate, String>)
+					ContactsLayoutTemplate::setName);
+			attributeSetterBiConsumers.put(
+				"settings",
+				(BiConsumer<ContactsLayoutTemplate, String>)
+					ContactsLayoutTemplate::setSettings);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<ContactsLayoutTemplate, Integer>)
+					ContactsLayoutTemplate::setType);
 
-					return contactsLayoutTemplate.getContactsLayoutTemplateId();
-				}
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-			});
-		attributeSetterBiConsumers.put(
-			"contactsLayoutTemplateId",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object contactsLayoutTemplateIdObject) {
-
-					contactsLayoutTemplate.setContactsLayoutTemplateId(
-						(Long)contactsLayoutTemplateIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object groupIdObject) {
-
-					contactsLayoutTemplate.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object userIdObject) {
-
-					contactsLayoutTemplate.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getUserName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object userNameObject) {
-
-					contactsLayoutTemplate.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createTime",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getCreateTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createTime",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object createTimeObject) {
-
-					contactsLayoutTemplate.setCreateTime(
-						(Long)createTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedTime",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getModifiedTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object modifiedTimeObject) {
-
-					contactsLayoutTemplate.setModifiedTime(
-						(Long)modifiedTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"headerContactsCardTemplateIds",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.
-						getHeaderContactsCardTemplateIds();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"headerContactsCardTemplateIds",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object headerContactsCardTemplateIdsObject) {
-
-					contactsLayoutTemplate.setHeaderContactsCardTemplateIds(
-						(String)headerContactsCardTemplateIdsObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"name",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object nameObject) {
-
-					contactsLayoutTemplate.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"settings",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getSettings();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"settings",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object settingsObject) {
-
-					contactsLayoutTemplate.setSettings((String)settingsObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public Object apply(
-					ContactsLayoutTemplate contactsLayoutTemplate) {
-
-					return contactsLayoutTemplate.getType();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"type",
-			new BiConsumer<ContactsLayoutTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsLayoutTemplate contactsLayoutTemplate,
-					Object typeObject) {
-
-					contactsLayoutTemplate.setType((Integer)typeObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -538,6 +346,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setContactsLayoutTemplateId(long contactsLayoutTemplateId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_contactsLayoutTemplateId = contactsLayoutTemplateId;
 	}
 
@@ -548,19 +360,20 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -570,6 +383,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -601,6 +418,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -611,6 +432,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createTime = createTime;
 	}
 
@@ -621,6 +446,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedTime = modifiedTime;
 	}
 
@@ -638,6 +467,10 @@ public class ContactsLayoutTemplateModelImpl
 	public void setHeaderContactsCardTemplateIds(
 		String headerContactsCardTemplateIds) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_headerContactsCardTemplateIds = headerContactsCardTemplateIds;
 	}
 
@@ -653,6 +486,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_name = name;
 	}
 
@@ -668,6 +505,10 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setSettings(String settings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_settings = settings;
 	}
 
@@ -678,22 +519,44 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_type = type;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalType() {
-		return _originalType;
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -749,6 +612,36 @@ public class ContactsLayoutTemplateModelImpl
 	}
 
 	@Override
+	public ContactsLayoutTemplate cloneWithOriginalValues() {
+		ContactsLayoutTemplateImpl contactsLayoutTemplateImpl =
+			new ContactsLayoutTemplateImpl();
+
+		contactsLayoutTemplateImpl.setContactsLayoutTemplateId(
+			this.<Long>getColumnOriginalValue("contactsLayoutTemplateId"));
+		contactsLayoutTemplateImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		contactsLayoutTemplateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		contactsLayoutTemplateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		contactsLayoutTemplateImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		contactsLayoutTemplateImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		contactsLayoutTemplateImpl.setHeaderContactsCardTemplateIds(
+			this.<String>getColumnOriginalValue(
+				"headerContactsCardTemplateIds"));
+		contactsLayoutTemplateImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		contactsLayoutTemplateImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		contactsLayoutTemplateImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+
+		return contactsLayoutTemplateImpl;
+	}
+
+	@Override
 	public int compareTo(ContactsLayoutTemplate contactsLayoutTemplate) {
 		long primaryKey = contactsLayoutTemplate.getPrimaryKey();
 
@@ -791,11 +684,19 @@ public class ContactsLayoutTemplateModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -803,13 +704,7 @@ public class ContactsLayoutTemplateModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalType = _type;
-
-		_setOriginalType = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -922,49 +817,17 @@ public class ContactsLayoutTemplateModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<ContactsLayoutTemplate, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<ContactsLayoutTemplate, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<ContactsLayoutTemplate, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply((ContactsLayoutTemplate)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, ContactsLayoutTemplate>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					ContactsLayoutTemplate.class, ModelWrapper.class);
 
 	}
 
 	private long _contactsLayoutTemplateId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _userId;
 	private String _userName;
 	private long _createTime;
@@ -973,8 +836,96 @@ public class ContactsLayoutTemplateModelImpl
 	private String _name;
 	private String _settings;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<ContactsLayoutTemplate, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((ContactsLayoutTemplate)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"contactsLayoutTemplateId", _contactsLayoutTemplateId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("modifiedTime", _modifiedTime);
+		_columnOriginalValues.put(
+			"headerContactsCardTemplateIds", _headerContactsCardTemplateIds);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("settings_", _settings);
+		_columnOriginalValues.put("type_", _type);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("settings_", "settings");
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("contactsLayoutTemplateId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createTime", 16L);
+
+		columnBitmasks.put("modifiedTime", 32L);
+
+		columnBitmasks.put("headerContactsCardTemplateIds", 64L);
+
+		columnBitmasks.put("name", 128L);
+
+		columnBitmasks.put("settings_", 256L);
+
+		columnBitmasks.put("type_", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private ContactsLayoutTemplate _escapedModel;
 

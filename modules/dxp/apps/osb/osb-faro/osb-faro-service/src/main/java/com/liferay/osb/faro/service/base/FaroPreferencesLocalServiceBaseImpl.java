@@ -18,6 +18,7 @@ import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.osb.faro.service.FaroPreferencesLocalService;
 import com.liferay.osb.faro.service.FaroPreferencesLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroPreferencesPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -140,6 +141,18 @@ public abstract class FaroPreferencesLocalServiceBaseImpl
 		FaroPreferences faroPreferences) {
 
 		return faroPreferencesPersistence.remove(faroPreferences);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return faroPreferencesPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -294,13 +307,30 @@ public abstract class FaroPreferencesLocalServiceBaseImpl
 	 * @throws PortalException
 	 */
 	@Override
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return faroPreferencesPersistence.create(
+			((Long)primaryKeyObj).longValue());
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Implement FaroPreferencesLocalServiceImpl#deleteFaroPreferences(FaroPreferences) to avoid orphaned data");
+		}
 
 		return faroPreferencesLocalService.deleteFaroPreferences(
 			(FaroPreferences)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<FaroPreferences> getBasePersistence() {
 		return faroPreferencesPersistence;
 	}

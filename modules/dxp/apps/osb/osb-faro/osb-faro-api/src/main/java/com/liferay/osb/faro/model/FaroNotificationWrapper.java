@@ -14,15 +14,11 @@
 
 package com.liferay.osb.faro.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,20 +30,11 @@ import java.util.Objects;
  * @generated
  */
 public class FaroNotificationWrapper
+	extends BaseModelWrapper<FaroNotification>
 	implements FaroNotification, ModelWrapper<FaroNotification> {
 
 	public FaroNotificationWrapper(FaroNotification faroNotification) {
-		_faroNotification = faroNotification;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FaroNotification.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FaroNotification.class.getName();
+		super(faroNotification);
 	}
 
 	@Override
@@ -132,14 +119,8 @@ public class FaroNotificationWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new FaroNotificationWrapper(
-			(FaroNotification)_faroNotification.clone());
-	}
-
-	@Override
-	public int compareTo(FaroNotification faroNotification) {
-		return _faroNotification.compareTo(faroNotification);
+	public FaroNotification cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**
@@ -149,12 +130,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getCreateTime() {
-		return _faroNotification.getCreateTime();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _faroNotification.getExpandoBridge();
+		return model.getCreateTime();
 	}
 
 	/**
@@ -164,7 +140,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getFaroNotificationId() {
-		return _faroNotification.getFaroNotificationId();
+		return model.getFaroNotificationId();
 	}
 
 	/**
@@ -174,7 +150,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _faroNotification.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -184,7 +160,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getModifiedTime() {
-		return _faroNotification.getModifiedTime();
+		return model.getModifiedTime();
 	}
 
 	/**
@@ -194,7 +170,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getOwnerId() {
-		return _faroNotification.getOwnerId();
+		return model.getOwnerId();
 	}
 
 	/**
@@ -204,12 +180,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _faroNotification.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _faroNotification.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -219,7 +190,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public boolean getRead() {
-		return _faroNotification.getRead();
+		return model.getRead();
 	}
 
 	/**
@@ -229,7 +200,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public String getScope() {
-		return _faroNotification.getScope();
+		return model.getScope();
 	}
 
 	/**
@@ -239,7 +210,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public String getSubtype() {
-		return _faroNotification.getSubtype();
+		return model.getSubtype();
 	}
 
 	/**
@@ -249,7 +220,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public String getType() {
-		return _faroNotification.getType();
+		return model.getType();
 	}
 
 	/**
@@ -259,7 +230,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _faroNotification.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -269,27 +240,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _faroNotification.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _faroNotification.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _faroNotification.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _faroNotification.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _faroNotification.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -299,17 +250,12 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public boolean isRead() {
-		return _faroNotification.isRead();
+		return model.isRead();
 	}
 
 	@Override
 	public void persist() {
-		_faroNotification.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_faroNotification.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -319,24 +265,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setCreateTime(long createTime) {
-		_faroNotification.setCreateTime(createTime);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_faroNotification.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_faroNotification.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_faroNotification.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateTime(createTime);
 	}
 
 	/**
@@ -346,7 +275,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setFaroNotificationId(long faroNotificationId) {
-		_faroNotification.setFaroNotificationId(faroNotificationId);
+		model.setFaroNotificationId(faroNotificationId);
 	}
 
 	/**
@@ -356,7 +285,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_faroNotification.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -366,12 +295,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_faroNotification.setModifiedTime(modifiedTime);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_faroNotification.setNew(n);
+		model.setModifiedTime(modifiedTime);
 	}
 
 	/**
@@ -381,7 +305,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setOwnerId(long ownerId) {
-		_faroNotification.setOwnerId(ownerId);
+		model.setOwnerId(ownerId);
 	}
 
 	/**
@@ -391,12 +315,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_faroNotification.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_faroNotification.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -406,7 +325,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setRead(boolean read) {
-		_faroNotification.setRead(read);
+		model.setRead(read);
 	}
 
 	/**
@@ -416,7 +335,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setScope(String scope) {
-		_faroNotification.setScope(scope);
+		model.setScope(scope);
 	}
 
 	/**
@@ -426,7 +345,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setSubtype(String subtype) {
-		_faroNotification.setSubtype(subtype);
+		model.setSubtype(subtype);
 	}
 
 	/**
@@ -436,7 +355,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setType(String type) {
-		_faroNotification.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -446,7 +365,7 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_faroNotification.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -456,79 +375,17 @@ public class FaroNotificationWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_faroNotification.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FaroNotification>
-		toCacheModel() {
-
-		return _faroNotification.toCacheModel();
-	}
-
-	@Override
-	public FaroNotification toEscapedModel() {
-		return new FaroNotificationWrapper(_faroNotification.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _faroNotification.toString();
-	}
-
-	@Override
-	public FaroNotification toUnescapedModel() {
-		return new FaroNotificationWrapper(
-			_faroNotification.toUnescapedModel());
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
 	public String toXmlString() {
-		return _faroNotification.toXmlString();
+		return model.toXmlString();
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof FaroNotificationWrapper)) {
-			return false;
-		}
-
-		FaroNotificationWrapper faroNotificationWrapper =
-			(FaroNotificationWrapper)object;
-
-		if (Objects.equals(
-				_faroNotification, faroNotificationWrapper._faroNotification)) {
-
-			return true;
-		}
-
-		return false;
+	protected FaroNotificationWrapper wrap(FaroNotification faroNotification) {
+		return new FaroNotificationWrapper(faroNotification);
 	}
-
-	@Override
-	public FaroNotification getWrappedModel() {
-		return _faroNotification;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _faroNotification.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _faroNotification.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_faroNotification.resetOriginalValues();
-	}
-
-	private final FaroNotification _faroNotification;
 
 }

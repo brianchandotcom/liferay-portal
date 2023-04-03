@@ -16,10 +16,12 @@ package com.liferay.osb.faro.service.persistence.impl;
 
 import com.liferay.osb.faro.exception.NoSuchFaroPreferencesException;
 import com.liferay.osb.faro.model.FaroPreferences;
+import com.liferay.osb.faro.model.FaroPreferencesTable;
 import com.liferay.osb.faro.model.impl.FaroPreferencesImpl;
 import com.liferay.osb.faro.model.impl.FaroPreferencesModelImpl;
 import com.liferay.osb.faro.service.persistence.FaroPreferencesPersistence;
 import com.liferay.osb.faro.service.persistence.FaroPreferencesUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -43,10 +44,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -237,10 +234,6 @@ public class FaroPreferencesPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -569,8 +562,6 @@ public class FaroPreferencesPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -712,10 +703,6 @@ public class FaroPreferencesPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByG_O, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -791,8 +778,6 @@ public class FaroPreferencesPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -811,6 +796,11 @@ public class FaroPreferencesPersistenceImpl
 
 	public FaroPreferencesPersistenceImpl() {
 		setModelClass(FaroPreferences.class);
+
+		setModelImplClass(FaroPreferencesImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(FaroPreferencesTable.INSTANCE);
 	}
 
 	/**
@@ -821,7 +811,6 @@ public class FaroPreferencesPersistenceImpl
 	@Override
 	public void cacheResult(FaroPreferences faroPreferences) {
 		entityCache.putResult(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			FaroPreferencesImpl.class, faroPreferences.getPrimaryKey(),
 			faroPreferences);
 
@@ -831,8 +820,6 @@ public class FaroPreferencesPersistenceImpl
 				faroPreferences.getGroupId(), faroPreferences.getOwnerId()
 			},
 			faroPreferences);
-
-		faroPreferences.resetOriginalValues();
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -854,14 +841,10 @@ public class FaroPreferencesPersistenceImpl
 
 		for (FaroPreferences faroPreferences : faroPreferenceses) {
 			if (entityCache.getResult(
-					FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 					FaroPreferencesImpl.class,
 					faroPreferences.getPrimaryKey()) == null) {
 
 				cacheResult(faroPreferences);
-			}
-			else {
-				faroPreferences.resetOriginalValues();
 			}
 		}
 	}
@@ -877,9 +860,7 @@ public class FaroPreferencesPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(FaroPreferencesImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FaroPreferencesImpl.class);
 	}
 
 	/**
@@ -891,41 +872,23 @@ public class FaroPreferencesPersistenceImpl
 	 */
 	@Override
 	public void clearCache(FaroPreferences faroPreferences) {
-		entityCache.removeResult(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesImpl.class, faroPreferences.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(FaroPreferencesModelImpl)faroPreferences, true);
+		entityCache.removeResult(FaroPreferencesImpl.class, faroPreferences);
 	}
 
 	@Override
 	public void clearCache(List<FaroPreferences> faroPreferenceses) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (FaroPreferences faroPreferences : faroPreferenceses) {
 			entityCache.removeResult(
-				FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				FaroPreferencesImpl.class, faroPreferences.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(FaroPreferencesModelImpl)faroPreferences, true);
+				FaroPreferencesImpl.class, faroPreferences);
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FaroPreferencesImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				FaroPreferencesImpl.class, primaryKey);
+			entityCache.removeResult(FaroPreferencesImpl.class, primaryKey);
 		}
 	}
 
@@ -937,37 +900,9 @@ public class FaroPreferencesPersistenceImpl
 			faroPreferencesModelImpl.getOwnerId()
 		};
 
+		finderCache.putResult(_finderPathCountByG_O, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByG_O, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByG_O, args, faroPreferencesModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		FaroPreferencesModelImpl faroPreferencesModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				faroPreferencesModelImpl.getGroupId(),
-				faroPreferencesModelImpl.getOwnerId()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_O, args);
-			finderCache.removeResult(_finderPathFetchByG_O, args);
-		}
-
-		if ((faroPreferencesModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_O.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				faroPreferencesModelImpl.getOriginalGroupId(),
-				faroPreferencesModelImpl.getOriginalOwnerId()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_O, args);
-			finderCache.removeResult(_finderPathFetchByG_O, args);
-		}
+			_finderPathFetchByG_O, args, faroPreferencesModelImpl);
 	}
 
 	/**
@@ -1103,8 +1038,6 @@ public class FaroPreferencesPersistenceImpl
 
 			if (isNew) {
 				session.save(faroPreferences);
-
-				faroPreferences.setNew(false);
 			}
 			else {
 				faroPreferences = (FaroPreferences)session.merge(
@@ -1118,52 +1051,14 @@ public class FaroPreferencesPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (!FaroPreferencesModelImpl.COLUMN_BITMASK_ENABLED) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
-			Object[] args = new Object[] {
-				faroPreferencesModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByGroupId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((faroPreferencesModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					faroPreferencesModelImpl.getOriginalGroupId()
-				};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-
-				args = new Object[] {faroPreferencesModelImpl.getGroupId()};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-			}
-		}
-
 		entityCache.putResult(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesImpl.class, faroPreferences.getPrimaryKey(),
-			faroPreferences, false);
+			FaroPreferencesImpl.class, faroPreferencesModelImpl, false, true);
 
-		clearUniqueFindersCache(faroPreferencesModelImpl, false);
 		cacheUniqueFindersCache(faroPreferencesModelImpl);
+
+		if (isNew) {
+			faroPreferences.setNew(false);
+		}
 
 		faroPreferences.resetOriginalValues();
 
@@ -1212,183 +1107,12 @@ public class FaroPreferencesPersistenceImpl
 	/**
 	 * Returns the faro preferences with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the faro preferences
-	 * @return the faro preferences, or <code>null</code> if a faro preferences with the primary key could not be found
-	 */
-	@Override
-	public FaroPreferences fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		FaroPreferences faroPreferences = (FaroPreferences)serializable;
-
-		if (faroPreferences == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				faroPreferences = (FaroPreferences)session.get(
-					FaroPreferencesImpl.class, primaryKey);
-
-				if (faroPreferences != null) {
-					cacheResult(faroPreferences);
-				}
-				else {
-					entityCache.putResult(
-						FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-						FaroPreferencesImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception exception) {
-				entityCache.removeResult(
-					FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					FaroPreferencesImpl.class, primaryKey);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return faroPreferences;
-	}
-
-	/**
-	 * Returns the faro preferences with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param faroPreferencesId the primary key of the faro preferences
 	 * @return the faro preferences, or <code>null</code> if a faro preferences with the primary key could not be found
 	 */
 	@Override
 	public FaroPreferences fetchByPrimaryKey(long faroPreferencesId) {
 		return fetchByPrimaryKey((Serializable)faroPreferencesId);
-	}
-
-	@Override
-	public Map<Serializable, FaroPreferences> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FaroPreferences> map =
-			new HashMap<Serializable, FaroPreferences>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FaroPreferences faroPreferences = fetchByPrimaryKey(primaryKey);
-
-			if (faroPreferences != null) {
-				map.put(primaryKey, faroPreferences);
-			}
-
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				FaroPreferencesImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (FaroPreferences)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			(uncachedPrimaryKeys.size() * 2) + 1);
-
-		sb.append(_SQL_SELECT_FAROPREFERENCES_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (FaroPreferences faroPreferences :
-					(List<FaroPreferences>)query.list()) {
-
-				map.put(faroPreferences.getPrimaryKeyObj(), faroPreferences);
-
-				cacheResult(faroPreferences);
-
-				uncachedPrimaryKeys.remove(faroPreferences.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					FaroPreferencesImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1517,10 +1241,6 @@ public class FaroPreferencesPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1566,9 +1286,6 @@ public class FaroPreferencesPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1577,6 +1294,21 @@ public class FaroPreferencesPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "faroPreferencesId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FAROPREFERENCES;
 	}
 
 	@Override
@@ -1592,61 +1324,44 @@ public class FaroPreferencesPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FaroPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FaroPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FaroPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGroupId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId"}, true);
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FaroPreferencesImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()},
-			FaroPreferencesModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
 
 		_finderPathCountByGroupId = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
 
 		_finderPathFetchByG_O = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FaroPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			FaroPreferencesModelImpl.GROUPID_COLUMN_BITMASK |
-			FaroPreferencesModelImpl.OWNERID_COLUMN_BITMASK);
+			new String[] {"groupId", "ownerId"}, true);
 
 		_finderPathCountByG_O = new FinderPath(
-			FaroPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			FaroPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_O",
-			new String[] {Long.class.getName(), Long.class.getName()});
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"groupId", "ownerId"}, false);
 
 		_setFaroPreferencesUtilPersistence(this);
 	}
@@ -1655,10 +1370,6 @@ public class FaroPreferencesPersistenceImpl
 		_setFaroPreferencesUtilPersistence(null);
 
 		entityCache.removeCache(FaroPreferencesImpl.class.getName());
-
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private void _setFaroPreferencesUtilPersistence(
@@ -1686,9 +1397,6 @@ public class FaroPreferencesPersistenceImpl
 	private static final String _SQL_SELECT_FAROPREFERENCES =
 		"SELECT faroPreferences FROM FaroPreferences faroPreferences";
 
-	private static final String _SQL_SELECT_FAROPREFERENCES_WHERE_PKS_IN =
-		"SELECT faroPreferences FROM FaroPreferences faroPreferences WHERE faroPreferencesId IN (";
-
 	private static final String _SQL_SELECT_FAROPREFERENCES_WHERE =
 		"SELECT faroPreferences FROM FaroPreferences faroPreferences WHERE ";
 
@@ -1708,5 +1416,10 @@ public class FaroPreferencesPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroPreferencesPersistenceImpl.class);
+
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
+	}
 
 }

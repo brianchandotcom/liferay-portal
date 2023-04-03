@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class FaroEmailLocalServiceWrapper
 	implements FaroEmailLocalService, ServiceWrapper<FaroEmailLocalService> {
 
+	public FaroEmailLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FaroEmailLocalServiceWrapper(
 		FaroEmailLocalService faroEmailLocalService) {
 

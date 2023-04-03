@@ -14,8 +14,6 @@
 
 package com.liferay.osb.faro.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -25,6 +23,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for FaroEmail. Methods of this

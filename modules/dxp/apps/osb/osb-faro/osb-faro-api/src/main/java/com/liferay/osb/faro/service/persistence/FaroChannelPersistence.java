@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.exception.NoSuchFaroChannelException;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the faro channel service.
@@ -44,9 +39,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FaroChannelUtil} to access the faro channel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FaroChannel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the faro channels where groupId = &#63;.

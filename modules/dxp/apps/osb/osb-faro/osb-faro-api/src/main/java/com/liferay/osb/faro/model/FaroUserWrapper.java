@@ -14,15 +14,11 @@
 
 package com.liferay.osb.faro.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -33,20 +29,12 @@ import java.util.Objects;
  * @see FaroUser
  * @generated
  */
-public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
+public class FaroUserWrapper
+	extends BaseModelWrapper<FaroUser>
+	implements FaroUser, ModelWrapper<FaroUser> {
 
 	public FaroUserWrapper(FaroUser faroUser) {
-		_faroUser = faroUser;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FaroUser.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FaroUser.class.getName();
+		super(faroUser);
 	}
 
 	@Override
@@ -138,13 +126,8 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	}
 
 	@Override
-	public Object clone() {
-		return new FaroUserWrapper((FaroUser)_faroUser.clone());
-	}
-
-	@Override
-	public int compareTo(FaroUser faroUser) {
-		return _faroUser.compareTo(faroUser);
+	public FaroUser cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**
@@ -154,7 +137,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getCreateTime() {
-		return _faroUser.getCreateTime();
+		return model.getCreateTime();
 	}
 
 	/**
@@ -164,12 +147,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public String getEmailAddress() {
-		return _faroUser.getEmailAddress();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _faroUser.getExpandoBridge();
+		return model.getEmailAddress();
 	}
 
 	/**
@@ -179,7 +157,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getFaroUserId() {
-		return _faroUser.getFaroUserId();
+		return model.getFaroUserId();
 	}
 
 	/**
@@ -189,7 +167,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public String getFaroUserUuid() {
-		return _faroUser.getFaroUserUuid();
+		return model.getFaroUserUuid();
 	}
 
 	/**
@@ -199,7 +177,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getGroupId() {
-		return _faroUser.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -209,7 +187,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public String getKey() {
-		return _faroUser.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -219,7 +197,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getLiveUserId() {
-		return _faroUser.getLiveUserId();
+		return model.getLiveUserId();
 	}
 
 	/**
@@ -229,7 +207,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public String getLiveUserUuid() {
-		return _faroUser.getLiveUserUuid();
+		return model.getLiveUserUuid();
 	}
 
 	/**
@@ -239,7 +217,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getModifiedTime() {
-		return _faroUser.getModifiedTime();
+		return model.getModifiedTime();
 	}
 
 	/**
@@ -249,12 +227,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _faroUser.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _faroUser.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -264,7 +237,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getRoleId() {
-		return _faroUser.getRoleId();
+		return model.getRoleId();
 	}
 
 	/**
@@ -274,7 +247,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public int getStatus() {
-		return _faroUser.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -284,7 +257,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public long getUserId() {
-		return _faroUser.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -294,7 +267,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public String getUserName() {
-		return _faroUser.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -304,37 +277,12 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public String getUserUuid() {
-		return _faroUser.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _faroUser.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _faroUser.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _faroUser.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _faroUser.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_faroUser.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_faroUser.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -344,7 +292,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setCreateTime(long createTime) {
-		_faroUser.setCreateTime(createTime);
+		model.setCreateTime(createTime);
 	}
 
 	/**
@@ -354,24 +302,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setEmailAddress(String emailAddress) {
-		_faroUser.setEmailAddress(emailAddress);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_faroUser.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_faroUser.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_faroUser.setExpandoBridgeAttributes(serviceContext);
+		model.setEmailAddress(emailAddress);
 	}
 
 	/**
@@ -381,7 +312,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setFaroUserId(long faroUserId) {
-		_faroUser.setFaroUserId(faroUserId);
+		model.setFaroUserId(faroUserId);
 	}
 
 	/**
@@ -391,7 +322,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setFaroUserUuid(String faroUserUuid) {
-		_faroUser.setFaroUserUuid(faroUserUuid);
+		model.setFaroUserUuid(faroUserUuid);
 	}
 
 	/**
@@ -401,7 +332,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_faroUser.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -411,7 +342,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setKey(String key) {
-		_faroUser.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -421,7 +352,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setLiveUserId(long liveUserId) {
-		_faroUser.setLiveUserId(liveUserId);
+		model.setLiveUserId(liveUserId);
 	}
 
 	/**
@@ -431,7 +362,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setLiveUserUuid(String liveUserUuid) {
-		_faroUser.setLiveUserUuid(liveUserUuid);
+		model.setLiveUserUuid(liveUserUuid);
 	}
 
 	/**
@@ -441,12 +372,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_faroUser.setModifiedTime(modifiedTime);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_faroUser.setNew(n);
+		model.setModifiedTime(modifiedTime);
 	}
 
 	/**
@@ -456,12 +382,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_faroUser.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_faroUser.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -471,7 +392,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setRoleId(long roleId) {
-		_faroUser.setRoleId(roleId);
+		model.setRoleId(roleId);
 	}
 
 	/**
@@ -481,7 +402,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setStatus(int status) {
-		_faroUser.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -491,7 +412,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_faroUser.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -501,7 +422,7 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_faroUser.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -511,73 +432,17 @@ public class FaroUserWrapper implements FaroUser, ModelWrapper<FaroUser> {
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_faroUser.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FaroUser> toCacheModel() {
-		return _faroUser.toCacheModel();
-	}
-
-	@Override
-	public FaroUser toEscapedModel() {
-		return new FaroUserWrapper(_faroUser.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _faroUser.toString();
-	}
-
-	@Override
-	public FaroUser toUnescapedModel() {
-		return new FaroUserWrapper(_faroUser.toUnescapedModel());
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
 	public String toXmlString() {
-		return _faroUser.toXmlString();
+		return model.toXmlString();
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof FaroUserWrapper)) {
-			return false;
-		}
-
-		FaroUserWrapper faroUserWrapper = (FaroUserWrapper)object;
-
-		if (Objects.equals(_faroUser, faroUserWrapper._faroUser)) {
-			return true;
-		}
-
-		return false;
+	protected FaroUserWrapper wrap(FaroUser faroUser) {
+		return new FaroUserWrapper(faroUser);
 	}
-
-	@Override
-	public FaroUser getWrappedModel() {
-		return _faroUser;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _faroUser.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _faroUser.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_faroUser.resetOriginalValues();
-	}
-
-	private final FaroUser _faroUser;
 
 }

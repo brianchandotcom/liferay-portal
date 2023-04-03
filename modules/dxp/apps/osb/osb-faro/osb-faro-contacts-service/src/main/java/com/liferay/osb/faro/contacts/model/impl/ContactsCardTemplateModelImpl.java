@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.contacts.model.ContactsCardTemplate;
 import com.liferay.osb.faro.contacts.model.ContactsCardTemplateModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,12 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -110,23 +110,35 @@ public class ContactsCardTemplateModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.contacts.model.ContactsCardTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.contacts.model.ContactsCardTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.contacts.model.ContactsCardTemplate"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long CONTACTSCARDTEMPLATEID_COLUMN_BITMASK = 2L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -185,9 +197,6 @@ public class ContactsCardTemplateModelImpl
 				attributeGetterFunction.apply((ContactsCardTemplate)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -212,272 +221,103 @@ public class ContactsCardTemplateModelImpl
 	public Map<String, Function<ContactsCardTemplate, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ContactsCardTemplate, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, ContactsCardTemplate>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			ContactsCardTemplate.class.getClassLoader(),
-			ContactsCardTemplate.class, ModelWrapper.class);
+		private static final Map<String, Function<ContactsCardTemplate, Object>>
+			_attributeGetterFunctions;
 
-		try {
-			Constructor<ContactsCardTemplate> constructor =
-				(Constructor<ContactsCardTemplate>)proxyClass.getConstructor(
-					InvocationHandler.class);
+		static {
+			Map<String, Function<ContactsCardTemplate, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ContactsCardTemplate, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"contactsCardTemplateId",
+				ContactsCardTemplate::getContactsCardTemplateId);
+			attributeGetterFunctions.put(
+				"groupId", ContactsCardTemplate::getGroupId);
+			attributeGetterFunctions.put(
+				"userId", ContactsCardTemplate::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ContactsCardTemplate::getUserName);
+			attributeGetterFunctions.put(
+				"createTime", ContactsCardTemplate::getCreateTime);
+			attributeGetterFunctions.put(
+				"modifiedTime", ContactsCardTemplate::getModifiedTime);
+			attributeGetterFunctions.put("name", ContactsCardTemplate::getName);
+			attributeGetterFunctions.put(
+				"settings", ContactsCardTemplate::getSettings);
+			attributeGetterFunctions.put("type", ContactsCardTemplate::getType);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map<String, Function<ContactsCardTemplate, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ContactsCardTemplate, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<ContactsCardTemplate, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ContactsCardTemplate, Object>>();
-		Map<String, BiConsumer<ContactsCardTemplate, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ContactsCardTemplate, ?>>();
+		private static final Map
+			<String, BiConsumer<ContactsCardTemplate, Object>>
+				_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"contactsCardTemplateId",
-			new Function<ContactsCardTemplate, Object>() {
+		static {
+			Map<String, BiConsumer<ContactsCardTemplate, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ContactsCardTemplate, ?>>();
 
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getContactsCardTemplateId();
-				}
+			attributeSetterBiConsumers.put(
+				"contactsCardTemplateId",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setContactsCardTemplateId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setGroupId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ContactsCardTemplate, String>)
+					ContactsCardTemplate::setUserName);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"modifiedTime",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setModifiedTime);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ContactsCardTemplate, String>)
+					ContactsCardTemplate::setName);
+			attributeSetterBiConsumers.put(
+				"settings",
+				(BiConsumer<ContactsCardTemplate, String>)
+					ContactsCardTemplate::setSettings);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<ContactsCardTemplate, Integer>)
+					ContactsCardTemplate::setType);
 
-			});
-		attributeSetterBiConsumers.put(
-			"contactsCardTemplateId",
-			new BiConsumer<ContactsCardTemplate, Object>() {
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object contactsCardTemplateIdObject) {
-
-					contactsCardTemplate.setContactsCardTemplateId(
-						(Long)contactsCardTemplateIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object groupIdObject) {
-
-					contactsCardTemplate.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object userIdObject) {
-
-					contactsCardTemplate.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getUserName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object userNameObject) {
-
-					contactsCardTemplate.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createTime",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getCreateTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createTime",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object createTimeObject) {
-
-					contactsCardTemplate.setCreateTime((Long)createTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedTime",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getModifiedTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object modifiedTimeObject) {
-
-					contactsCardTemplate.setModifiedTime(
-						(Long)modifiedTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"name",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object nameObject) {
-
-					contactsCardTemplate.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"settings",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getSettings();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"settings",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object settingsObject) {
-
-					contactsCardTemplate.setSettings((String)settingsObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"type",
-			new Function<ContactsCardTemplate, Object>() {
-
-				@Override
-				public Object apply(ContactsCardTemplate contactsCardTemplate) {
-					return contactsCardTemplate.getType();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"type",
-			new BiConsumer<ContactsCardTemplate, Object>() {
-
-				@Override
-				public void accept(
-					ContactsCardTemplate contactsCardTemplate,
-					Object typeObject) {
-
-					contactsCardTemplate.setType((Integer)typeObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -487,6 +327,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setContactsCardTemplateId(long contactsCardTemplateId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_contactsCardTemplateId = contactsCardTemplateId;
 	}
 
@@ -497,19 +341,20 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -519,6 +364,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -550,6 +399,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -560,6 +413,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createTime = createTime;
 	}
 
@@ -570,6 +427,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedTime = modifiedTime;
 	}
 
@@ -585,6 +446,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_name = name;
 	}
 
@@ -600,6 +465,10 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setSettings(String settings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_settings = settings;
 	}
 
@@ -610,10 +479,34 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_type = type;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -667,6 +560,33 @@ public class ContactsCardTemplateModelImpl
 	}
 
 	@Override
+	public ContactsCardTemplate cloneWithOriginalValues() {
+		ContactsCardTemplateImpl contactsCardTemplateImpl =
+			new ContactsCardTemplateImpl();
+
+		contactsCardTemplateImpl.setContactsCardTemplateId(
+			this.<Long>getColumnOriginalValue("contactsCardTemplateId"));
+		contactsCardTemplateImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		contactsCardTemplateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		contactsCardTemplateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		contactsCardTemplateImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		contactsCardTemplateImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		contactsCardTemplateImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		contactsCardTemplateImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		contactsCardTemplateImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+
+		return contactsCardTemplateImpl;
+	}
+
+	@Override
 	public int compareTo(ContactsCardTemplate contactsCardTemplate) {
 		long primaryKey = contactsCardTemplate.getPrimaryKey();
 
@@ -709,11 +629,19 @@ public class ContactsCardTemplateModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -721,9 +649,7 @@ public class ContactsCardTemplateModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -823,49 +749,17 @@ public class ContactsCardTemplateModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<ContactsCardTemplate, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<ContactsCardTemplate, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<ContactsCardTemplate, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply((ContactsCardTemplate)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, ContactsCardTemplate>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					ContactsCardTemplate.class, ModelWrapper.class);
 
 	}
 
 	private long _contactsCardTemplateId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _userId;
 	private String _userName;
 	private long _createTime;
@@ -873,6 +767,92 @@ public class ContactsCardTemplateModelImpl
 	private String _name;
 	private String _settings;
 	private int _type;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<ContactsCardTemplate, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((ContactsCardTemplate)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"contactsCardTemplateId", _contactsCardTemplateId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("modifiedTime", _modifiedTime);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("settings_", _settings);
+		_columnOriginalValues.put("type_", _type);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("settings_", "settings");
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("contactsCardTemplateId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createTime", 16L);
+
+		columnBitmasks.put("modifiedTime", 32L);
+
+		columnBitmasks.put("name", 64L);
+
+		columnBitmasks.put("settings_", 128L);
+
+		columnBitmasks.put("type_", 256L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private ContactsCardTemplate _escapedModel;
 

@@ -19,6 +19,7 @@ import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroChannelLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroChannelFinder;
 import com.liferay.osb.faro.service.persistence.FaroChannelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -145,6 +146,18 @@ public abstract class FaroChannelLocalServiceBaseImpl
 		throws PortalException {
 
 		return faroChannelPersistence.remove(faroChannel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return faroChannelPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -299,13 +312,29 @@ public abstract class FaroChannelLocalServiceBaseImpl
 	 * @throws PortalException
 	 */
 	@Override
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return faroChannelPersistence.create(((Long)primaryKeyObj).longValue());
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Implement FaroChannelLocalServiceImpl#deleteFaroChannel(FaroChannel) to avoid orphaned data");
+		}
 
 		return faroChannelLocalService.deleteFaroChannel(
 			(FaroChannel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<FaroChannel> getBasePersistence() {
 		return faroChannelPersistence;
 	}

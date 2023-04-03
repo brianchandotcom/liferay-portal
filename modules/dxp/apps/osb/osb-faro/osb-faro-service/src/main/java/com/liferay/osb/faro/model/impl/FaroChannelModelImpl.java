@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroChannelModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,12 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -110,29 +110,53 @@ public class FaroChannelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.model.FaroChannel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.model.FaroChannel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.model.FaroChannel"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long CHANNELID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long USERID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long WORKSPACEGROUPID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long FAROCHANNELID_COLUMN_BITMASK = 16L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -191,9 +215,6 @@ public class FaroChannelModelImpl
 				attributeGetterFunction.apply((FaroChannel)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -218,279 +239,93 @@ public class FaroChannelModelImpl
 	public Map<String, Function<FaroChannel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<FaroChannel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, FaroChannel>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			FaroChannel.class.getClassLoader(), FaroChannel.class,
-			ModelWrapper.class);
+		private static final Map<String, Function<FaroChannel, Object>>
+			_attributeGetterFunctions;
 
-		try {
-			Constructor<FaroChannel> constructor =
-				(Constructor<FaroChannel>)proxyClass.getConstructor(
-					InvocationHandler.class);
+		static {
+			Map<String, Function<FaroChannel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<FaroChannel, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"faroChannelId", FaroChannel::getFaroChannelId);
+			attributeGetterFunctions.put("groupId", FaroChannel::getGroupId);
+			attributeGetterFunctions.put("userId", FaroChannel::getUserId);
+			attributeGetterFunctions.put("userName", FaroChannel::getUserName);
+			attributeGetterFunctions.put(
+				"createTime", FaroChannel::getCreateTime);
+			attributeGetterFunctions.put(
+				"modifiedTime", FaroChannel::getModifiedTime);
+			attributeGetterFunctions.put(
+				"channelId", FaroChannel::getChannelId);
+			attributeGetterFunctions.put("name", FaroChannel::getName);
+			attributeGetterFunctions.put(
+				"permissionType", FaroChannel::getPermissionType);
+			attributeGetterFunctions.put(
+				"workspaceGroupId", FaroChannel::getWorkspaceGroupId);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map<String, Function<FaroChannel, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<FaroChannel, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<FaroChannel, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<FaroChannel, Object>>();
-		Map<String, BiConsumer<FaroChannel, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<FaroChannel, ?>>();
+		private static final Map<String, BiConsumer<FaroChannel, Object>>
+			_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"faroChannelId",
-			new Function<FaroChannel, Object>() {
+		static {
+			Map<String, BiConsumer<FaroChannel, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<FaroChannel, ?>>();
 
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getFaroChannelId();
-				}
+			attributeSetterBiConsumers.put(
+				"faroChannelId",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setFaroChannelId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setGroupId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<FaroChannel, String>)FaroChannel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"modifiedTime",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setModifiedTime);
+			attributeSetterBiConsumers.put(
+				"channelId",
+				(BiConsumer<FaroChannel, String>)FaroChannel::setChannelId);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<FaroChannel, String>)FaroChannel::setName);
+			attributeSetterBiConsumers.put(
+				"permissionType",
+				(BiConsumer<FaroChannel, Integer>)
+					FaroChannel::setPermissionType);
+			attributeSetterBiConsumers.put(
+				"workspaceGroupId",
+				(BiConsumer<FaroChannel, Long>)
+					FaroChannel::setWorkspaceGroupId);
 
-			});
-		attributeSetterBiConsumers.put(
-			"faroChannelId",
-			new BiConsumer<FaroChannel, Object>() {
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object faroChannelIdObject) {
-
-					faroChannel.setFaroChannelId((Long)faroChannelIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object groupIdObject) {
-
-					faroChannel.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object userIdObject) {
-
-					faroChannel.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getUserName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object userNameObject) {
-
-					faroChannel.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createTime",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getCreateTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createTime",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object createTimeObject) {
-
-					faroChannel.setCreateTime((Long)createTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedTime",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getModifiedTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object modifiedTimeObject) {
-
-					faroChannel.setModifiedTime((Long)modifiedTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"channelId",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getChannelId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"channelId",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object channelIdObject) {
-
-					faroChannel.setChannelId((String)channelIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"name",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"name",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(FaroChannel faroChannel, Object nameObject) {
-					faroChannel.setName((String)nameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"permissionType",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getPermissionType();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"permissionType",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object permissionTypeObject) {
-
-					faroChannel.setPermissionType(
-						(Integer)permissionTypeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"workspaceGroupId",
-			new Function<FaroChannel, Object>() {
-
-				@Override
-				public Object apply(FaroChannel faroChannel) {
-					return faroChannel.getWorkspaceGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"workspaceGroupId",
-			new BiConsumer<FaroChannel, Object>() {
-
-				@Override
-				public void accept(
-					FaroChannel faroChannel, Object workspaceGroupIdObject) {
-
-					faroChannel.setWorkspaceGroupId(
-						(Long)workspaceGroupIdObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -500,6 +335,10 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setFaroChannelId(long faroChannelId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_faroChannelId = faroChannelId;
 	}
 
@@ -510,19 +349,20 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -532,12 +372,8 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -559,8 +395,13 @@ public class FaroChannelModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalUserId() {
-		return _originalUserId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -575,6 +416,10 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -585,6 +430,10 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createTime = createTime;
 	}
 
@@ -595,6 +444,10 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedTime = modifiedTime;
 	}
 
@@ -610,17 +463,20 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setChannelId(String channelId) {
-		_columnBitmask |= CHANNELID_COLUMN_BITMASK;
-
-		if (_originalChannelId == null) {
-			_originalChannelId = _channelId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_channelId = channelId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalChannelId() {
-		return GetterUtil.getString(_originalChannelId);
+		return getColumnOriginalValue("channelId");
 	}
 
 	@Override
@@ -635,6 +491,10 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_name = name;
 	}
 
@@ -645,6 +505,10 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setPermissionType(int permissionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_permissionType = permissionType;
 	}
 
@@ -655,22 +519,44 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void setWorkspaceGroupId(long workspaceGroupId) {
-		_columnBitmask |= WORKSPACEGROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalWorkspaceGroupId) {
-			_setOriginalWorkspaceGroupId = true;
-
-			_originalWorkspaceGroupId = _workspaceGroupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_workspaceGroupId = workspaceGroupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalWorkspaceGroupId() {
-		return _originalWorkspaceGroupId;
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("workspaceGroupId"));
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -723,6 +609,32 @@ public class FaroChannelModelImpl
 	}
 
 	@Override
+	public FaroChannel cloneWithOriginalValues() {
+		FaroChannelImpl faroChannelImpl = new FaroChannelImpl();
+
+		faroChannelImpl.setFaroChannelId(
+			this.<Long>getColumnOriginalValue("faroChannelId"));
+		faroChannelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		faroChannelImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		faroChannelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		faroChannelImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		faroChannelImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		faroChannelImpl.setChannelId(
+			this.<String>getColumnOriginalValue("channelId"));
+		faroChannelImpl.setName(this.<String>getColumnOriginalValue("name"));
+		faroChannelImpl.setPermissionType(
+			this.<Integer>getColumnOriginalValue("permissionType"));
+		faroChannelImpl.setWorkspaceGroupId(
+			this.<Long>getColumnOriginalValue("workspaceGroupId"));
+
+		return faroChannelImpl;
+	}
+
+	@Override
 	public int compareTo(FaroChannel faroChannel) {
 		long primaryKey = faroChannel.getPrimaryKey();
 
@@ -764,11 +676,19 @@ public class FaroChannelModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;
@@ -776,19 +696,7 @@ public class FaroChannelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalUserId = _userId;
-
-		_setOriginalUserId = false;
-
-		_originalChannelId = _channelId;
-
-		_originalWorkspaceGroupId = _workspaceGroupId;
-
-		_setOriginalWorkspaceGroupId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -888,61 +796,100 @@ public class FaroChannelModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<FaroChannel, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<FaroChannel, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<FaroChannel, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((FaroChannel)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, FaroChannel>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					FaroChannel.class, ModelWrapper.class);
 
 	}
 
 	private long _faroChannelId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private long _createTime;
 	private long _modifiedTime;
 	private String _channelId;
-	private String _originalChannelId;
 	private String _name;
 	private int _permissionType;
 	private long _workspaceGroupId;
-	private long _originalWorkspaceGroupId;
-	private boolean _setOriginalWorkspaceGroupId;
+
+	public <T> T getColumnValue(String columnName) {
+		Function<FaroChannel, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((FaroChannel)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("faroChannelId", _faroChannelId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("modifiedTime", _modifiedTime);
+		_columnOriginalValues.put("channelId", _channelId);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("permissionType", _permissionType);
+		_columnOriginalValues.put("workspaceGroupId", _workspaceGroupId);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("faroChannelId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createTime", 16L);
+
+		columnBitmasks.put("modifiedTime", 32L);
+
+		columnBitmasks.put("channelId", 64L);
+
+		columnBitmasks.put("name", 128L);
+
+		columnBitmasks.put("permissionType", 256L);
+
+		columnBitmasks.put("workspaceGroupId", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private FaroChannel _escapedModel;
 

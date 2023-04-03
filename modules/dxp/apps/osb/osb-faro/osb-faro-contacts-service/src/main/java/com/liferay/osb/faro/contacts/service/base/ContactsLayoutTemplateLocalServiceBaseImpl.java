@@ -18,6 +18,7 @@ import com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalService;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalServiceUtil;
 import com.liferay.osb.faro.contacts.service.persistence.ContactsLayoutTemplatePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -146,6 +147,18 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		ContactsLayoutTemplate contactsLayoutTemplate) {
 
 		return contactsLayoutTemplatePersistence.remove(contactsLayoutTemplate);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return contactsLayoutTemplatePersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -312,13 +325,30 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 	 * @throws PortalException
 	 */
 	@Override
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return contactsLayoutTemplatePersistence.create(
+			((Long)primaryKeyObj).longValue());
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Implement ContactsLayoutTemplateLocalServiceImpl#deleteContactsLayoutTemplate(ContactsLayoutTemplate) to avoid orphaned data");
+		}
 
 		return contactsLayoutTemplateLocalService.deleteContactsLayoutTemplate(
 			(ContactsLayoutTemplate)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ContactsLayoutTemplate> getBasePersistence() {
 		return contactsLayoutTemplatePersistence;
 	}

@@ -3376,6 +3376,8 @@ definition {
 			ContentDashboard.clickMenuOfVersion(
 				menuItem = "Download",
 				versionName = "Version 1.0");
+
+			DownloadTempFile();
 		}
 
 		task ("Then the version of that document is downloaded") {

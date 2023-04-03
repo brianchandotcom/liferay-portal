@@ -4,8 +4,8 @@
 	}
 
 	&-cards {
-		margin-left: 15rem;
-		margin-right: 15rem;
+		margin-left: 35vw;
+		margin-right: 35vw;
 	}
 
 	&-card {
@@ -34,7 +34,7 @@
 	}
 }
 
-@include responsiveCards(3840px, 80rem);
+@include responsiveCards(3840px, 40rem);
 @include responsiveCards(2160px, 29rem);
 @include responsiveCards(1920px, 21rem);
 @include responsiveCards(1600px, 11rem);

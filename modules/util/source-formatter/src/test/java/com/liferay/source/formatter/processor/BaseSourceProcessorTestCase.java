@@ -83,12 +83,6 @@ public abstract class BaseSourceProcessorTestCase {
 		test(fileName, new String[0]);
 	}
 
-	protected void test(String fileName, List<String> relatedFilesNames)
-		throws Exception {
-
-		test(fileName, new String[0], null, relatedFilesNames);
-	}
-
 	protected void test(String fileName, String expectedErrorMessage)
 		throws Exception {
 
@@ -119,7 +113,7 @@ public abstract class BaseSourceProcessorTestCase {
 
 	protected void test(
 			String fileName, String[] expectedMessages, Integer[] lineNumbers,
-			List<String> relatedFilesNames)
+			String[] relatedFilesNames)
 		throws Exception {
 
 		File newFile = _generateTempFile(fileName);
@@ -205,6 +199,14 @@ public abstract class BaseSourceProcessorTestCase {
 			Assert.assertEquals(
 				expectedFormattedContent, actualFormattedContent);
 		}
+	}
+
+	protected void test(
+			String fileName, String[] expectedMessages,
+			String[] relatedFilesNames)
+		throws Exception {
+
+		test(fileName, expectedMessages, null, relatedFilesNames);
 	}
 
 	protected final ClassLoader classLoader =

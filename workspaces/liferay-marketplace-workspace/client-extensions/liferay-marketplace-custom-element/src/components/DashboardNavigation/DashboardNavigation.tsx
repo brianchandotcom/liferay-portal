@@ -21,7 +21,6 @@ interface DashboardNavigationProps {
 	currentAccount: Account;
 	dashboardNavigationItems: DashboardListItems[];
 	onSelectAppChange?: (value: AppProps) => void;
-	selectedApp?: AppProps;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 	setSelectedAccount: Dispatch<React.SetStateAction<Account>>;
 }

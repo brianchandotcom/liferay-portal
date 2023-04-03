@@ -485,7 +485,12 @@ export default function ObjectFieldFormBase({
 				{values.businessType === 'Picklist' &&
 					validListTypeDefinitionId && (
 						<ClayToggle
-							disabled={disabled || !objectDefinition?.modifiable}
+							disabled={
+								disabled ||
+								(Liferay.FeatureFlags['LPS-167253']
+									? !objectDefinition?.modifiable
+									: objectDefinition?.system)
+							}
 							label={Liferay.Language.get('mark-as-state')}
 							name="state"
 							onToggle={async (state) => {

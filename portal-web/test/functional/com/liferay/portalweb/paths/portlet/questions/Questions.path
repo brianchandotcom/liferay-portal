@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_LIST_VOTED_COUNT</td>
-	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-caret-${key_text}')]]//span[contains(.,'${key_count}')]</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-caret-${key_text}')]][contains(.,'${key_count}')]</td>
 	<td></td>
 </tr>
 <tr>

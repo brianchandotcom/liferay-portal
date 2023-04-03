@@ -131,9 +131,7 @@ definition {
 
 		Form.editName(formName = "Form1");
 
-		Form.gotoAddField(
-			fieldPositionNumber = 0,
-			fieldType = "Text");
+		Form.gotoAddField(fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 

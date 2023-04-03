@@ -2150,18 +2150,6 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro viewTransltaionNotDuplicated {
-		AssertElementPresent(
-			key_language = ${key_language1},
-			key_position = ${key_position1},
-			locator1 = "FormFields#TRANSLATION_LIST");
-
-		AssertElementNotPresent(
-			key_language = ${key_language2},
-			key_position = ${key_position2},
-			locator1 = "FormFields#TRANSLATION_LIST");
-	}
-
 	macro viewUploadField {
 		FormFields.viewUploadLabel(
 			fieldLabel = ${fieldLabel},

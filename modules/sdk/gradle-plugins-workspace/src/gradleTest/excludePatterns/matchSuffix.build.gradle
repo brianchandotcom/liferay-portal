@@ -1,8 +1,0 @@
-apply from: "./base.build.gradle"
-
-ext.expectedExcludedProjects = [
-	":modules:bar:bar-service",
-	":modules:baz:baz-service",
-	":modules:foo:foo-service",
-]
-gradle.liferayWorkspace.dirExcludesGlobs = ["**/*-service"]

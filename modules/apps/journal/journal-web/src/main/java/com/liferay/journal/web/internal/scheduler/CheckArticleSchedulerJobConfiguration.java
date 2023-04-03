@@ -16,11 +16,13 @@ package com.liferay.journal.web.internal.scheduler;
 
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Map;
 
@@ -41,8 +43,17 @@ public class CheckArticleSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
+	public UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
+		return companyId -> _journalArticleLocalService.checkArticles(
+			companyId);
+	}
+
+	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return _journalArticleLocalService::checkArticles;
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> _journalArticleLocalService.checkArticles(companyId));
 	}
 
 	@Override
@@ -56,6 +67,9 @@ public class CheckArticleSchedulerJobConfiguration
 		_journalServiceConfiguration = ConfigurableUtil.createConfigurable(
 			JournalServiceConfiguration.class, properties);
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

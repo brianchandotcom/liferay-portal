@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -131,14 +132,24 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
-		if ((serviceContext.getRequest() != null) &&
-			(serviceContext.getResponse() != null)) {
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+		HttpServletResponse httpServletResponse = serviceContext.getResponse();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+		if ((httpServletRequest == null) && (themeDisplay != null)) {
+			httpServletRequest = themeDisplay.getRequest();
+		}
+
+		if ((httpServletResponse == null) && (themeDisplay != null)) {
+			httpServletResponse = themeDisplay.getResponse();
+		}
+
+		if ((httpServletRequest != null) && (httpServletResponse != null)) {
 			layout = _layoutLocalService.getLayout(layout.getPlid());
 
 			_updateLayoutContent(
-				serviceContext.getRequest(), serviceContext.getResponse(),
-				layout, serviceContext);
+				httpServletRequest, httpServletResponse, layout,
+				serviceContext);
 		}
 
 		return _layoutLocalService.updateStatus(

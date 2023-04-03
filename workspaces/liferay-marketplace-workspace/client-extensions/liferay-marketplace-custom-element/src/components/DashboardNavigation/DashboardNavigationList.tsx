@@ -9,7 +9,7 @@ interface DashboardNavigationListProps {
 	dashboardNavigationItems: DashboardListItems[];
 	navigationItemMock: DashboardListItems;
 	navigationItemsMock: DashboardListItems[];
-	onSelectAppChange: (value: AppProps) => void;
+	onSelectAppChange?: (value: AppProps) => void;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 

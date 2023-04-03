@@ -15,6 +15,7 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
+import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {
 	DashboardListItems,
 	DashboardPage,
@@ -297,15 +298,13 @@ export function PublishedAppsDashboardPage() {
 	}, [apps]);
 
 	useEffect(() => {
-		(() => {
-			const clickedNavigationItem =
-				dashboardNavigationItems.find(
-					(dashboardNavigationItem) =>
-						dashboardNavigationItem.itemSelected
-				) || dashboardNavigationItems[0];
+		const clickedNavigationItem =
+			dashboardNavigationItems.find(
+				(dashboardNavigationItem) =>
+					dashboardNavigationItem.itemSelected
+			) || dashboardNavigationItems[0];
 
-			setSelectedNavigationItem(clickedNavigationItem.itemTitle);
-		})();
+		setSelectedNavigationItem(clickedNavigationItem?.itemTitle as string);
 	}, [dashboardNavigationItems]);
 
 	useEffect(() => {
@@ -352,82 +351,77 @@ export function PublishedAppsDashboardPage() {
 	}, [selectedNavigationItem, selectedAccount]);
 
 	return (
-		<div>
-			{(() => {
-				if (selectedNavigationItem === 'Apps') {
-					return (
-						<DashboardPage
-							accountAppsNumber="4"
-							accountLogo={accountLogo}
-							accounts={accounts}
-							buttonMessage="+ New App"
+		<>
+			{selectedNavigationItem === 'Apps' && (
+				<DashboardPage
+					accountAppsNumber="4"
+					accountLogo={accountLogo}
+					accounts={accounts}
+					buttonMessage="+ New App"
 							currentAccount={selectedAccount}
-							dashboardNavigationItems={dashboardNavigationItems}
-							messages={appMessages}
-							setDashboardNavigationItems={
-								setDashboardNavigationItems
-							}
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={appMessages}
+					setDashboardNavigationItems={setDashboardNavigationItems}
 							setSelectedAccount={setSelectedAccount}
-						>
-							<DashboardTable<AppProps>
-								emptyStateMessage={
-									appMessages.emptyStateMessage
-								}
-								items={apps}
-								tableHeaders={appTableHeaders}
-							>
-								{(item) => (
-									<PublishedAppsDashboardTableRow
-										item={item}
-										key={item.name}
-									/>
-								)}
-							</DashboardTable>
-						</DashboardPage>
-					);
-				}
-				else if (selectedNavigationItem === 'Members') {
-					return (
-						<DashboardPage
-							accountAppsNumber="4"
-							accountLogo={accountLogo}
-							accounts={accounts}
+				>
+					<DashboardTable<AppProps>
+						emptyStateMessage={appMessages.emptyStateMessage}
+						items={apps}
+						tableHeaders={appTableHeaders}
+					>
+						{(item) => (
+							<PublishedAppsDashboardTableRow
+								item={item}
+								key={item.name}
+							/>
+						)}
+					</DashboardTable>
+				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Members' && (
+				<DashboardPage
+					accountAppsNumber="4"
+					accountLogo={accountLogo}
+					accounts={accounts}
 							currentAccount={selectedAccount}
-							dashboardNavigationItems={dashboardNavigationItems}
-							messages={memberMessages}
-							setDashboardNavigationItems={
-								setDashboardNavigationItems
-							}
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={memberMessages}
+					setDashboardNavigationItems={setDashboardNavigationItems}
 							setSelectedAccount={setSelectedAccount}
+				>
+					{selectedMember ? (
+						<MemberProfile
+							member={selectedMember}
+							setSelectedMember={setSelectedMember}
+						></MemberProfile>
+					) : (
+						<DashboardTable<MemberProps>
+							emptyStateMessage={memberMessages.emptyStateMessage}
+							items={members}
+							tableHeaders={memberTableHeaders}
 						>
-							{selectedMember ? (
-								<MemberProfile
-									member={selectedMember}
-									setSelectedMember={setSelectedMember}
-								></MemberProfile>
-							) : (
-								<DashboardTable<MemberProps>
-									emptyStateMessage={
-										memberMessages.emptyStateMessage
-									}
-									items={members}
-									tableHeaders={memberTableHeaders}
-								>
-									{(item) => (
-										<DashboardMemberTableRow
-											item={item}
-											key={item.name}
-											onSelectedMemberChange={
-												setSelectedMember
-											}
-										/>
-									)}
-								</DashboardTable>
+							{(item) => (
+								<DashboardMemberTableRow
+									item={item}
+									key={item.name}
+									onSelectedMemberChange={setSelectedMember}
+								/>
 							)}
-						</DashboardPage>
-					);
-				}
-			})()}
-		</div>
+						</DashboardTable>
+					)}
+				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Account' && (
+				<AccountDetailsPage
+					accountAppsNumber="4"
+					accountIcon={accountLogo}
+					accounts={userAccounts.accountBriefs}
+					dashboardNavigationItems={dashboardNavigationItems}
+					setDashboardNavigationItems={setDashboardNavigationItems}
+				/>
+			)}
+		</>
 	);
 }

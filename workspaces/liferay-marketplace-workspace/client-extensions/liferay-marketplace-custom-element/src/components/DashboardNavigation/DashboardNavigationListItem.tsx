@@ -11,7 +11,7 @@ interface DashboardNavigationListItem {
 	item: AppProps;
 	items: AppProps[];
 	listName: string;
-	onSelectAppChange: (value: AppProps) => void;
+	onSelectAppChange?: (value: AppProps) => void;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 
@@ -59,7 +59,9 @@ export function DashboardNavigationListItem({
 
 				setDashboardNavigationItems(newDashboardNavigationItems);
 
-				onSelectAppChange(item);
+				if (onSelectAppChange) {
+					onSelectAppChange(item);
+				}
 			}}
 		>
 			<div>

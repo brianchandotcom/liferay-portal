@@ -41,9 +41,10 @@ public class RedirectPatternConfigurationUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format("(%s=%s*)", Constants.SERVICE_PID,
-			"com.liferay.redirect.internal.configuration." +
-				"RedirectPatternConfiguration"));
+			String.format(
+				"(%s=%s*)", Constants.SERVICE_PID,
+				"com.liferay.redirect.internal.configuration." +
+					"RedirectPatternConfiguration"));
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			return;

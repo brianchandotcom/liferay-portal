@@ -484,6 +484,15 @@ public class ObjectDefinitionLocalServiceWrapper
 			companyId, active, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getObjectDefinitionsByModifiable(
+			long companyId, boolean active, boolean modifiable, int status) {
+
+		return _objectDefinitionLocalService.getObjectDefinitionsByModifiable(
+			companyId, active, modifiable, status);
+	}
+
 	/**
 	 * Returns the number of object definitions.
 	 *

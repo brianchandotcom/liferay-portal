@@ -194,19 +194,17 @@ public class ViewJournalArticleContentDashboardItemAction
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_getLayoutDisplayPageObjectProvider(_journalArticle));
 
-		String completeURL = _portal.getCurrentCompleteURL(httpServletRequest);
-
 		try {
-			List<LayoutSEOLink> localizedLayoutSEOLinks =
+			url = _getLocalizedURL(
+				locale,
 				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
 					layout,
 					_portal.getSiteDefaultLocale(
 						_portal.getScopeGroupId(_httpServletRequest)),
 					_portal.getCanonicalURL(
-						completeURL, themeDisplay, layout, false, false),
-					Collections.singleton(locale));
-
-			url = _getLocalizedURL(locale, localizedLayoutSEOLinks);
+						_portal.getCurrentCompleteURL(httpServletRequest),
+						themeDisplay, layout, false, false),
+					Collections.singleton(locale)));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

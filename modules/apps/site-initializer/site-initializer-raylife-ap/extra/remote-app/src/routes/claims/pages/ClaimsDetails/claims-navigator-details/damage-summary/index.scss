@@ -1,0 +1,25 @@
+.damage-summary-container {
+	.list-title {
+		color: rgba(39, 40, 51, 0.5);
+		font-size: 0.875rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+	}
+
+	.list-text {
+		color: #272833;
+		font-size: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.vehicle-link-active {
+		border-left: 5px solid red;
+		// 	background-color: var(--primary);
+		// 	content: '';
+		// 	display: block;
+		// 	height: 5px;
+		// 	margin-top: 6px;
+		// 	position: absolute;
+		// 	width: 25px;
+	}
+}

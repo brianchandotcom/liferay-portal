@@ -62,6 +62,8 @@ public class CompanyWrapper
 		attributes.put("industry", getIndustry());
 		attributes.put("type", getType());
 		attributes.put("size", getSize());
+		attributes.put("indexNameCur", getIndexNameCur());
+		attributes.put("indexNameNext", getIndexNameNext());
 
 		return attributes;
 	}
@@ -193,6 +195,18 @@ public class CompanyWrapper
 		if (size != null) {
 			setSize(size);
 		}
+
+		String indexNameCur = (String)attributes.get("indexNameCur");
+
+		if (indexNameCur != null) {
+			setIndexNameCur(indexNameCur);
+		}
+
+		String indexNameNext = (String)attributes.get("indexNameNext");
+
+		if (indexNameNext != null) {
+			setIndexNameNext(indexNameNext);
+		}
 	}
 
 	@Override
@@ -300,6 +314,26 @@ public class CompanyWrapper
 	@Override
 	public String getHomeURL() {
 		return model.getHomeURL();
+	}
+
+	/**
+	 * Returns the index name cur of this company.
+	 *
+	 * @return the index name cur of this company
+	 */
+	@Override
+	public String getIndexNameCur() {
+		return model.getIndexNameCur();
+	}
+
+	/**
+	 * Returns the index name next of this company.
+	 *
+	 * @return the index name next of this company
+	 */
+	@Override
+	public String getIndexNameNext() {
+		return model.getIndexNameNext();
 	}
 
 	/**
@@ -635,6 +669,26 @@ public class CompanyWrapper
 	@Override
 	public void setHomeURL(String homeURL) {
 		model.setHomeURL(homeURL);
+	}
+
+	/**
+	 * Sets the index name cur of this company.
+	 *
+	 * @param indexNameCur the index name cur of this company
+	 */
+	@Override
+	public void setIndexNameCur(String indexNameCur) {
+		model.setIndexNameCur(indexNameCur);
+	}
+
+	/**
+	 * Sets the index name next of this company.
+	 *
+	 * @param indexNameNext the index name next of this company
+	 */
+	@Override
+	public void setIndexNameNext(String indexNameNext) {
+		model.setIndexNameNext(indexNameNext);
 	}
 
 	/**

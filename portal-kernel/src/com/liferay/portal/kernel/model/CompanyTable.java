@@ -74,6 +74,10 @@ public class CompanyTable extends BaseTable<CompanyTable> {
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, String> size = createColumn(
 		"size_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> indexNameCur = createColumn(
+		"indexNameCur", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> indexNameNext = createColumn(
+		"indexNameNext", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CompanyTable() {
 		super("Company", CompanyTable::new);

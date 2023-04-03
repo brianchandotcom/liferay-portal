@@ -207,7 +207,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -572,11 +571,36 @@ public class GraphQLServletExtender {
 					"GraphQL"
 				).build());
 
-		_servletDataServiceTracker = new ServiceTracker<>(
-			bundleContext, ServletData.class,
-			new ServletDataServiceTrackerCustomizer());
+		_servletDataServiceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, ServletData.class, null,
+			new ServiceTrackerCustomizer<ServletData, ServletData>() {
 
-		_servletDataServiceTracker.open();
+				@Override
+				public ServletData addingService(
+					ServiceReference<ServletData> serviceReference) {
+
+					_servlets.clear();
+
+					return bundleContext.getService(serviceReference);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletData> serviceReference,
+					ServletData servletData) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletData> serviceReference,
+					ServletData servletData) {
+
+					bundleContext.ungetService(serviceReference);
+
+					_servlets.clear();
+				}
+
+			});
 
 		_servletServiceRegistration = _bundleContext.registerService(
 			Servlet.class,
@@ -664,7 +688,7 @@ public class GraphQLServletExtender {
 
 		_servletContextHelperServiceRegistration.unregister();
 
-		_servletDataServiceTracker.close();
+		_servletDataServiceTrackerList.close();
 
 		_servletServiceRegistration.unregister();
 	}
@@ -806,7 +830,7 @@ public class GraphQLServletExtender {
 			return servlet;
 		}
 
-		synchronized (_servletDataList) {
+		synchronized (_servletDataServiceTrackerList) {
 			if (_servlets.containsKey(companyId)) {
 				return _servlets.get(companyId);
 			}
@@ -831,7 +855,7 @@ public class GraphQLServletExtender {
 
 			List<ServletData> servletDatas = new ArrayList<>();
 
-			for (ServletData servletData : _servletDataList) {
+			for (ServletData servletData : _servletDataServiceTrackerList) {
 				if (_isGraphQLEnabled(servletData.getPath())) {
 					servletDatas.add(servletData);
 				}
@@ -1861,9 +1885,8 @@ public class GraphQLServletExtender {
 	private final Map<String, String> _registeredClassNames = new HashMap<>();
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
-	private final List<ServletData> _servletDataList = new ArrayList<>();
 	private final Map<Method, ServletData> _servletDataMap = new HashMap<>();
-	private ServiceTracker<ServletData, ServletData> _servletDataServiceTracker;
+	private ServiceTrackerList<ServletData> _servletDataServiceTrackerList;
 	private final Map<Long, Servlet> _servlets = new ConcurrentHashMap<>();
 	private ServiceRegistration<Servlet> _servletServiceRegistration;
 
@@ -2493,47 +2516,6 @@ public class GraphQLServletExtender {
 		}
 
 		private final GraphQLInterfaceType _graphQLInterfaceType;
-
-	}
-
-	private class ServletDataServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<ServletData, ServletData> {
-
-		@Override
-		public ServletData addingService(
-			ServiceReference<ServletData> serviceReference) {
-
-			ServletData servletData = _bundleContext.getService(
-				serviceReference);
-
-			synchronized (_servletDataList) {
-				_servletDataList.add(servletData);
-
-				_servlets.clear();
-			}
-
-			return servletData;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ServletData> serviceReference,
-			ServletData servletData) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ServletData> serviceReference,
-			ServletData servletData) {
-
-			synchronized (_servletDataList) {
-				_servletDataList.remove(servletData);
-
-				_servlets.clear();
-			}
-
-			_bundleContext.ungetService(serviceReference);
-		}
 
 	}
 

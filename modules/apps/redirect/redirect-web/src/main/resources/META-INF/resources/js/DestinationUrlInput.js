@@ -83,6 +83,7 @@ const DestinationUrlInput = ({
 
 				<ClayInput.GroupItem append shrink>
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('check-url')}
 						disabled={
 							destinationUrl === STR_BLANK ||
 							!isAbsoluteUrl(destinationUrl)

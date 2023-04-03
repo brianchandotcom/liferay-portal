@@ -28,7 +28,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface RSSWebCacheConfiguration {
 
-	@Meta.AD(deflt = "20", name = "feed-time", required = false)
+	@Meta.AD(
+		deflt = "20", description = "feed-time-help", name = "feed-time",
+		required = false
+	)
 	public int feedTime();
 
 }

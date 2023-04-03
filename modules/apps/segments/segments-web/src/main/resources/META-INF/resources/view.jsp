@@ -136,10 +136,6 @@ request.setAttribute("view.jsp-eventName", eventName);
 				value="<%= segmentsEntry.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/segments_entry_action.jsp"
-			/>
 			<liferay-ui:search-container-column-text>
 
 				<%
@@ -168,48 +164,3 @@ request.setAttribute("view.jsp-eventName", eventName);
 	<aui:input name="segmentsEntryId" type="hidden" />
 	<aui:input name="siteRoleIds" type="hidden" />
 </aui:form>
-
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
-	var form = document.getElementById(
-		'<portlet:namespace />updateSegmentsEntrySiteRolesFm'
-	);
-
-	var delegateHandler = delegate(
-		document,
-		'click',
-		'.assign-site-roles-link',
-		(event) => {
-			var link = event.target.closest('.assign-site-roles-link');
-
-			var itemSelectorURL = link.dataset.itemselectorurl;
-			var segmentsEntryId = link.dataset.segmentsentryid;
-
-			Liferay.Util.openSelectionModal({
-				eventName: '<%= eventName %>',
-				multiple: true,
-				onSelect: function (selectedItems) {
-					if (selectedItems) {
-						var data = {
-							segmentsEntryId: segmentsEntryId,
-							siteRoleIds: selectedItems.map((item) => item.value),
-						};
-
-						Liferay.Util.postForm(form, {data: data});
-					}
-				},
-				title: '<liferay-ui:message key="assign-site-roles" />',
-				url: itemSelectorURL,
-			});
-		}
-	);
-
-	var onDestroyPortlet = function () {
-		delegateHandler.dispose();
-
-		Liferay.detach('destroyPortlet', onDestroyPortlet);
-	};
-
-	Liferay.on('destroyPortlet', onDestroyPortlet);
-</aui:script>

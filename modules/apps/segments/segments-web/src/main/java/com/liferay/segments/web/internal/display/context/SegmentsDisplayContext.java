@@ -149,16 +149,6 @@ public class SegmentsDisplayContext {
 		).build();
 	}
 
-	public String getAssignUserRolesLinkCss(SegmentsEntry segmentsEntry) {
-		StringBuilder sb = new StringBuilder(_ASSIGN_USER_ROLES_LINK_CSS);
-
-		if (!isRoleSegmentationEnabled(segmentsEntry.getCompanyId())) {
-			sb.append(" action disabled");
-		}
-
-		return sb.toString();
-	}
-
 	public String getAvailableActions(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
@@ -694,9 +684,6 @@ public class SegmentsDisplayContext {
 
 		return false;
 	}
-
-	private static final String _ASSIGN_USER_ROLES_LINK_CSS =
-		"assign-site-roles-link dropdown-item";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsDisplayContext.class);

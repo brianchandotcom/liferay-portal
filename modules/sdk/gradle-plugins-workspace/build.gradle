@@ -92,24 +92,17 @@ copyRepo {
 
 copyWorkspacesSamples {
 	doLast {
-		copy {
-			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-workspace/client-extensions/sample-custom-element-1")
-			into "src/gradleTest/clientExtensionSamples/sample-custom-element-1"
-		}
-
-		copy {
-			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-workspace/client-extensions/sample-iframe-1")
-			into "src/gradleTest/clientExtensionSamples/sample-iframe-1"
-		}
-
-		copy {
-			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-workspace/client-extensions/sample-theme-css")
-			into "src/gradleTest/clientExtensionSamples/sample-theme-css"
-		}
-
-		copy {
-			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-workspace/client-extensions/sample-theme-favicon")
-			into "src/gradleTest/clientExtensionSamples/sample-theme-favicon"
+		[
+			"sample-custom-element-1",
+			"sample-iframe-1",
+			"sample-theme-css",
+			"sample-theme-favicon",
+		].each {
+			sampleName ->
+			copy {
+				from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/liferay-sample-workspace/client-extensions/liferay-${sampleName}")
+				into "src/gradleTest/clientExtensionSamples/${sampleName}"
+			}
 		}
 	}
 }

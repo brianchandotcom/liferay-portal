@@ -53,12 +53,12 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatu
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -421,18 +421,17 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 				completed, dateEnd, dateStart, processId,
 				nodeMetrics.keySet()));
 
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("taskName")
-		).map(
-			TermsAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).map(
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResultsMap.get("taskName");
+
+		return transform(
+			termsAggregationResult.getBuckets(),
 			bucket -> {
 				NodeMetric nodeMetric = nodeMetrics.remove(bucket.getKey());
 
@@ -442,15 +441,14 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 				_setInstanceCount(bucket, nodeMetric);
 
 				return nodeMetric;
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 	}
 
 	private Map<String, NodeMetric> _getNodeMetrics(
 		String key, String latestProcessVersion, long processId,
 		String processVersion, Set<String> taskNames) {
+
+		Map<String, NodeMetric> nodeMetricsMap = new LinkedHashMap<>();
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -469,44 +467,50 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 				key, latestProcessVersion, processId, processVersion,
 				taskNames));
 
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("name")
-		).map(
-			TermsAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).map(
-			Bucket::getKey
-		).map(
-			this::_createNodeMetric
-		).sorted(
-			(nodeMetric1, nodeMetric2) -> {
-				Node node1 = nodeMetric1.getNode();
-				Node node2 = nodeMetric2.getNode();
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 
-				String nodeName1 = node1.getName();
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
 
-				return nodeName1.compareTo(node2.getName());
-			}
-		).collect(
-			LinkedHashMap::new,
-			(map, nodeMetric) -> {
-				Node node = nodeMetric.getNode();
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResultsMap.get("name");
 
-				map.put(node.getName(), nodeMetric);
-			},
-			Map::putAll
-		);
+		List<NodeMetric> nodeMetrics = transform(
+			termsAggregationResult.getBuckets(),
+			bucket -> _createNodeMetric(bucket.getKey()));
+
+		nodeMetrics.sort(
+			new Comparator<NodeMetric>() {
+
+				@Override
+				public int compare(
+					NodeMetric nodeMetric1, NodeMetric nodeMetric2) {
+
+					Node node1 = nodeMetric1.getNode();
+					Node node2 = nodeMetric2.getNode();
+
+					String nodeName1 = node1.getName();
+
+					return nodeName1.compareTo(node2.getName());
+				}
+
+			});
+
+		for (NodeMetric nodeMetric : nodeMetrics) {
+			Node node = nodeMetric.getNode();
+
+			nodeMetricsMap.put(node.getName(), nodeMetric);
+		}
+
+		return nodeMetricsMap;
 	}
 
 	private Map<String, Bucket> _getTaskBuckets(
 		boolean completed, String key, String latestProcessVersion,
 		long processId, String processVersion) {
+
+		Map<String, Bucket> taskBucketsMap = new LinkedHashMap<>();
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -534,13 +538,11 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)aggregationResultsMap.get("name");
 
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+		for (Bucket bucket : termsAggregationResult.getBuckets()) {
+			taskBucketsMap.put(bucket.getKey(), bucket);
+		}
 
-		Stream<Bucket> stream = buckets.stream();
-
-		return stream.collect(
-			LinkedHashMap::new,
-			(map, bucket) -> map.put(bucket.getKey(), bucket), Map::putAll);
+		return taskBucketsMap;
 	}
 
 	private boolean _isOrderByDurationAvg(String fieldName) {

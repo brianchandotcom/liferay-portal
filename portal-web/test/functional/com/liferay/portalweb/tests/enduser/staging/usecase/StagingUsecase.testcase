@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1906,9 +1906,9 @@ definition {
 		}
 
 		task ("When: User add a child site with a page and an AP widget on it") {
-			JSONGroup.addChildGroup(
-				groupName = "Child Site",
-				parentGroupName = "Site Name");
+			HeadlessSite.addSite(
+				parentSiteName = "Site Name",
+				siteName = "Child Site");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child Site",
@@ -2139,7 +2139,7 @@ definition {
 	@priority = 3
 	test SubscribeWebContentWithStaging {
 		task ("Given: User add a new site and a new role") {
-			JSONGroup.addGroup(groupName = "Test Site");
+			HeadlessSite.addSite(siteName = "Test Site");
 
 			JSONRole.addRegularRole(
 				roleKey = "Web Content Subscriber Role",

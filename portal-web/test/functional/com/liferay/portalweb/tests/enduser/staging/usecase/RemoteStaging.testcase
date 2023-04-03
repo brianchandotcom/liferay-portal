@@ -15,7 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -169,9 +169,9 @@ definition {
 	test AssertTemplatesTitleOfScheduledStagingPublishes {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertTemplatesTitleOfScheduledStagingPublishes";
 
-		JSONGroup.addGroup(
-			groupName = "Remote Site 2",
-			portalURL = "http://localhost:9080");
+		HeadlessSite.addSite(
+			portalURL = "http://localhost:9080",
+			siteName = "Remote Site 2");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 

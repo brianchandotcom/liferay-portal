@@ -753,9 +753,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			sourceLayout.getClassNameId(), sourceLayout.getClassPK(), nameMap,
 			sourceLayout.getTitleMap(), sourceLayout.getDescriptionMap(),
 			sourceLayout.getKeywordsMap(), sourceLayout.getRobotsMap(),
-			sourceLayout.getType(),
-			sourceUnicodeProperties.toString(), hidden, system,
-			new HashMap<>(), sourceLayout.getMasterLayoutPlid(),
+			sourceLayout.getType(), sourceUnicodeProperties.toString(), hidden,
+			system, new HashMap<>(), sourceLayout.getMasterLayoutPlid(),
 			serviceContext);
 
 		if (copyPermissions) {

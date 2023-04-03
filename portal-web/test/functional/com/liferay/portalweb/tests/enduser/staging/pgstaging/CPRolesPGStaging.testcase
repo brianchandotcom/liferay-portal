@@ -17,7 +17,7 @@ definition {
 		}
 
 		task ("Setup: add a group with the name Site Name") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Setup: add a public layout to the group") {

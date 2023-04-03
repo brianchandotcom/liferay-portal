@@ -147,7 +147,7 @@ definition {
 
 			LAR.downloadLar();
 
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -217,7 +217,7 @@ definition {
 
 			LAR.downloadLar();
 
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -287,7 +287,7 @@ definition {
 
 			LAR.downloadLar();
 
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -357,7 +357,7 @@ definition {
 
 			LAR.downloadLar();
 
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},

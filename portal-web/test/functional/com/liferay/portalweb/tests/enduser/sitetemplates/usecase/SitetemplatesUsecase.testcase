@@ -652,7 +652,7 @@ definition {
 		task ("Given: User add a new Site and 1 page to it, then verify that it has correct friendly URL") {
 			Site.openSitesAdmin();
 
-			JSONGroup.addGroup(groupName = "Export");
+			HeadlessSite.addSite(siteName = "Export");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Export",
@@ -792,7 +792,7 @@ definition {
 
 			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
-			JSONGroup.addGroup(groupName = "Site B");
+			HeadlessSite.addSite(siteName = "Site B");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},

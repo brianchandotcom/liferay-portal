@@ -1282,6 +1282,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172780. View the new behaviors of navigation menu item creation."
+	@priority = 3
+	test ViewBehaviorsOfNavigationMenuItemCreation {
+		task ("Given a site designer has a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var list = ListUtil.newList();
+			var i = 0;
+
+			while (${i} != 10) {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${i}",
+					vocabularyName = "Vocabulary Name");
+
+				ListUtil.add(${list}, "Category Name ${i}");
+
+				var i = ${i} + 1;
+			}
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When the site designer adds 10 Category type items at one time") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			var assetTitleList = ListUtil.toString(${list});
+
+			NavigationMenusAdmin.addItem(
+				assetTitleList = ${assetTitleList},
+				item = "Category");
+		}
+
+		task ("Then the site designer sees the specific success message") {
+			Alert.viewSuccessMessageText(successMessage = "10 Categories were added to this menu.");
+
+			var scrollTopFirst = Css.getElementPropertyValue(
+				element = "//div[contains(@class,'AppLayout-content')]",
+				property = "scrollTop");
+		}
+
+		task ("When the site designer adds one more Web Content Article type item") {
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Web Content Title",
+				item = "Web Content Article");
+		}
+
+		task ("Then the site designer sees the specific success message and viewport scrolled down to the bottom of list") {
+			Alert.viewSuccessMessageText(successMessage = "1 Web Content Article was added to this menu.");
+
+			var scrollTopSecond = Css.getElementPropertyValue(
+				element = "//div[contains(@class,'AppLayout-content')]",
+				property = "scrollTop");
+
+			TestUtils.isGreaterThan(
+				actual = ${scrollTopSecond},
+				expected = ${scrollTopFirst});
+		}
+	}
+
 	@description = "This is a test for LPS-137577. The category should be added under the nearest ancestor selected."
 	@priority = 4
 	test ViewCategoryAddedToNearestAncestor {

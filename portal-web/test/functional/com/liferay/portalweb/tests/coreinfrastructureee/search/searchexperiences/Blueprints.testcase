@@ -4921,89 +4921,115 @@ definition {
 	}
 
 	test ViewSelectedAssetTypesUI {
-		Blueprints.openBlueprintsAdmin();
+		task ("Create a test blueprint and navigate to the 'Query Settings' tab") {
+			Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createBlueprint(title = "Test Blueprint");
+			Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+			Navigator.gotoNavNested(navNested = "Query Settings");
+		}
 
-		Check.checkNotVisible(
-			locator1 = "Radio#ANY",
-			radioLabel = "Selected Types");
+		task ("Open the 'Select Types' modal") {
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Selected Types");
 
-		Button.click(button = "Select Asset Types");
+			Button.click(button = "Select Asset Types");
+		}
 
-		Check.checkNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
+		task ("Check the select all checkbox and assert the 'Select All' button doesn't appear") {
+			Check.checkNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
+			AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING");
+		}
 
-		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING");
+		task ("Assert at least one asset type is checked and no unchecked asset types are present") {
+			AssertChecked.assertCheckedNotVisible(
+				key_assetType = "Blogs Entry",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 
-		AssertChecked.assertCheckedNotVisible(
-			key_assetType = "Blogs Entry",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+			AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_UNCHECKED");
+		}
 
-		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_UNCHECKED");
+		task ("Uncheck the select all checkbox and assert no checked asset type is present") {
+			Uncheck.uncheckNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
 
-		Uncheck.uncheckNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
+			AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_CHECKED");
+		}
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
+		task ("Assert the 'Select All' button appears when at least one, but not all asset types are checked") {
+			Check.checkNotVisible(
+				key_assetType = "Web Content Article",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 
-		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_CHECKED");
+			Click(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING");
+		}
 
-		Check.checkNotVisible(
-			key_assetType = "Web Content Article",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+		task ("Assert clicking the 'Select All' button causes the rest of the remaining unchecked asset types to become checked") {
+			AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_UNCHECKED");
+		}
 
-		Click(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING");
+		task ("Save the modal and assert at least one of the checked asset types appears on the main page") {
+			Button.clickDone();
 
-		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX_UNCHECKED");
+			AssertElementPresent(
+				key_assetType = "Web Content Article",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+		}
 
-		Button.clickDone();
+		task ("Click the remove button for one of the asset types and assert that is removed from the main page") {
+			Click(
+				key_assetType = "Wiki Page",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_REMOVE_SELECTED");
 
-		AssertElementPresent(
-			key_assetType = "Web Content Article",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+			AssertElementNotPresent(
+				key_assetType = "Wiki Page",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+		}
 
-		Click(
-			key_assetType = "Wiki Page",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_REMOVE_SELECTED");
+		task ("Assert the removed asset type is also immediately removed from the 'Select Types' modal. This covers the bug in LPS-179782.") {
+			Button.click(button = "Select Asset Types");
 
-		AssertElementNotPresent(
-			key_assetType = "Wiki Page",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_assetType = "Wiki Page",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+		}
 
-		Button.click(button = "Select Asset Types");
+		task ("Save the blueprint, open it again, and navigate back to the 'Query Settings' tab") {
+			PortletEntry.save();
 
-		AssertChecked.assertCheckedNotVisible(
-			key_assetType = "Wiki Page",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+			Blueprints.gotoBlueprint(title = "Test Blueprint");
 
-		PortletEntry.save();
+			Navigator.gotoNavNested(navNested = "Query Settings");
+		}
 
-		Blueprints.gotoBlueprint(title = "Test Blueprint");
+		task ("Assert that at least one asset type is selected on the main page") {
+			AssertElementPresent(
+				key_assetType = "Web Content Article",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+		}
 
-		Navigator.gotoNavNested(navNested = "Query Settings");
+		task ("Assert the previously removed asset type is not selected on the main page") {
+			AssertElementNotPresent(
+				key_assetType = "Wiki Page",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+		}
 
-		AssertElementPresent(
-			key_assetType = "Web Content Article",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+		task ("Open the 'Select Types' modal and assert the select all checkbox is checked in indeterminate state when some but not all asset types are checked") {
+			Button.click(button = "Select Asset Types");
 
-		AssertElementNotPresent(
-			key_assetType = "Wiki Page",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+			AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
+		}
 
-		Button.click(button = "Select Asset Types");
+		task ("Assert at least one of the asset types are checked and the previously removed asset type is not checked") {
+			AssertChecked.assertCheckedNotVisible(
+				key_assetType = "Web Content Article",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			key_assetType = "Web Content Article",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
-
-		AssertNotChecked.assertNotCheckedNotVisible(
-			key_assetType = "Wiki Page",
-			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_assetType = "Wiki Page",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+		}
 	}
 
 	test ViewUnsavedChangesAlertForBlueprints {

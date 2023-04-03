@@ -31,7 +31,6 @@ import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsInde
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,26 +69,24 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 
 		searchSearchRequest.setSize(1);
 
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).findFirst(
-		).map(
-			document -> SLAResultUtil.toSLAResult(
-				document,
-				_workflowMetricsSLADefinitionLocalService::
-					fetchWorkflowMetricsSLADefinition)
-		).orElseThrow(
-			() -> new NoSuchSLAResultException(
-				"No SLA result exists with process ID " + processId)
-		);
+		SearchSearchResponse searchSearchResponses =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponses.getSearchHits();
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		if (searchHitList.isEmpty()) {
+			throw new NoSuchSLAResultException(
+				"No SLA result exists with process ID " + processId);
+		}
+
+		SearchHit searchHit = searchHitList.get(0);
+
+		return SLAResultUtil.toSLAResult(
+			searchHit.getDocument(),
+			_workflowMetricsSLADefinitionLocalService::
+				fetchWorkflowMetricsSLADefinition);
 	}
 
 	@Reference

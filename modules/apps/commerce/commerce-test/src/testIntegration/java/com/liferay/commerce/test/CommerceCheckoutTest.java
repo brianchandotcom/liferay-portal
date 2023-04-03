@@ -696,14 +696,16 @@ public class CommerceCheckoutTest {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 				_user.getUserId(), cpDefinition.getCPDefinitionId(), "default",
-				"default", false, false, 1, false, 0,
+				"default", false, false, 1, false,
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
 				1);
 		}
 		else {
 			_cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(), "default",
-				"default", false, false, 1, false, 0,
+				"default", false, false, 1, false,
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
 				1);
 		}

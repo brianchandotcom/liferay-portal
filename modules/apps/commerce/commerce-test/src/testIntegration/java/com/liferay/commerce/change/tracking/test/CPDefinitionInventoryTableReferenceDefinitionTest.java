@@ -71,7 +71,8 @@ public class CPDefinitionInventoryTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 			TestPropsValues.getUserId(), _cpDefinition.getCPDefinitionId(),
-			"default", "default", false, false, 1, false, 0,
+			"default", "default", false, false, 1, false,
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null, 1);
 	}
 

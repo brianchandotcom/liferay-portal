@@ -394,6 +394,7 @@ public class PunchOutSessionResourceImpl
 						found = true;
 
 						_commerceOrderItemLocalService.updateCommerceOrderItem(
+							commerceOrder.getUserId(),
 							commerceOrderItem.getCommerceOrderItemId(),
 							cartItem.getQuantity(), commerceContext,
 							_serviceContextHelper.getServiceContext(groupId));
@@ -408,9 +409,9 @@ public class PunchOutSessionResourceImpl
 			}
 
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(), null,
-				cartItem.getQuantity(), cartItem.getShippedQuantity(),
-				commerceContext,
+				commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
+				cartItem.getSkuId(), null, cartItem.getQuantity(),
+				cartItem.getShippedQuantity(), commerceContext,
 				_serviceContextHelper.getServiceContext(groupId));
 		}
 
@@ -434,6 +435,7 @@ public class PunchOutSessionResourceImpl
 			}
 
 			_commerceOrderItemLocalService.deleteCommerceOrderItem(
+				commerceOrder.getUserId(),
 				commerceOrderItem.getCommerceOrderItemId());
 		}
 	}

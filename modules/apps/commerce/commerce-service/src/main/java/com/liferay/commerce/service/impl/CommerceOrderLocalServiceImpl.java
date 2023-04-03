@@ -476,7 +476,7 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order items
 
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(
-			commerceOrder.getCommerceOrderId());
+			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId());
 
 		// Commerce order notes
 
@@ -799,7 +799,7 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public void mergeGuestCommerceOrder(
-			long guestCommerceOrderId, long userCommerceOrderId,
+			long userId, long guestCommerceOrderId, long userCommerceOrderId,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -837,7 +837,8 @@ public class CommerceOrderLocalServiceImpl
 			}
 
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				userCommerceOrderId, guestCommerceOrderItem.getCPInstanceId(),
+				userId, userCommerceOrderId,
+				guestCommerceOrderItem.getCPInstanceId(),
 				guestCommerceOrderItem.getJson(),
 				guestCommerceOrderItem.getQuantity(),
 				guestCommerceOrderItem.getShippedQuantity(), commerceContext,
@@ -1000,7 +1001,7 @@ public class CommerceOrderLocalServiceImpl
 			}
 
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				newCommerceOrder.getCommerceOrderId(),
+				userId, newCommerceOrder.getCommerceOrderId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(), 0,
 				commerceContext, serviceContext);
@@ -1645,16 +1646,10 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public CommerceOrder updateStatus(
 			long userId, long commerceOrderId, int status,
-			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		if (userId == 0) {
-			userId = serviceContext.getUserId();
-		}
-
 		User user = _userLocalService.getUser(userId);
-		Date date = new Date();
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
@@ -1662,7 +1657,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setStatus(status);
 		commerceOrder.setStatusByUserId(user.getUserId());
 		commerceOrder.setStatusByUserName(user.getFullName());
-		commerceOrder.setStatusDate(serviceContext.getModifiedDate(date));
+		commerceOrder.setStatusDate(new Date());
 
 		return commerceOrderPersistence.update(commerceOrder);
 	}

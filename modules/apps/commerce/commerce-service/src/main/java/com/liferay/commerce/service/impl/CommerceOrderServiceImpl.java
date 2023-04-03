@@ -592,8 +592,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			getPermissionChecker(), userCommerceOrderId, ActionKeys.UPDATE);
 
 		commerceOrderLocalService.mergeGuestCommerceOrder(
-			guestCommerceOrderId, userCommerceOrderId, commerceContext,
-			serviceContext);
+			getUserId(), guestCommerceOrderId, userCommerceOrderId,
+			commerceContext, serviceContext);
 	}
 
 	@Override

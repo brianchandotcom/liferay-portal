@@ -141,7 +141,7 @@ public class LoginPostAction extends Action {
 					_portal.getUser(httpServletRequest)));
 
 			_commerceOrderLocalService.mergeGuestCommerceOrder(
-				commerceOrder.getCommerceOrderId(),
+				userId, commerceOrder.getCommerceOrderId(),
 				userCommerceOrder.getCommerceOrderId(), commerceContext,
 				serviceContext);
 		}

@@ -70,8 +70,8 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
-			commerceContext, serviceContext);
+			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
+			shippedQuantity, commerceContext, serviceContext);
 	}
 
 	@Override
@@ -97,8 +97,8 @@ public class CommerceOrderItemServiceImpl
 			cpInstance.getCPDefinitionId());
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
-			commerceContext, serviceContext);
+			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
+			shippedQuantity, commerceContext, serviceContext);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		commerceOrderItemLocalService.deleteCommerceOrderItem(
-			commerceOrderItem);
+			getUserId(), commerceOrderItem);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		commerceOrderItemLocalService.deleteCommerceOrderItem(
-			commerceOrderItem, commerceContext);
+			getUserId(), commerceOrderItem, commerceContext);
 	}
 
 	@Override
@@ -152,7 +152,8 @@ public class CommerceOrderItemServiceImpl
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
-		commerceOrderItemLocalService.deleteCommerceOrderItems(commerceOrderId);
+		commerceOrderItemLocalService.deleteCommerceOrderItems(
+			getUserId(), commerceOrderId);
 	}
 
 	@Override
@@ -165,7 +166,8 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		commerceOrderItemLocalService.deleteMissingCommerceOrderItems(
-			commerceOrderId, commerceOrderItemIds, externalReferenceCodes);
+			getUserId(), commerceOrderId, commerceOrderItemIds,
+			externalReferenceCodes);
 	}
 
 	@Override
@@ -350,9 +352,9 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.importCommerceOrderItem(
-			externalReferenceCode, commerceOrderItemId, commerceOrderId,
-			cpInstanceId, cpMeasurementUnitKey, decimalQuantity, quantity,
-			shippedQuantity, serviceContext);
+			getUserId(), externalReferenceCode, commerceOrderItemId,
+			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
+			decimalQuantity, quantity, shippedQuantity, serviceContext);
 	}
 
 	@Override
@@ -410,7 +412,8 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, quantity, commerceContext, serviceContext);
+			getUserId(), commerceOrderItemId, quantity, commerceContext,
+			serviceContext);
 	}
 
 	@Override
@@ -428,8 +431,8 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId, quantity, commerceContext,
-			serviceContext);
+			getUserId(), commerceOrderItemId, cpMeasurementUnitId, quantity,
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -447,7 +450,8 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext);
+			getUserId(), commerceOrderItemId, cpMeasurementUnitId, quantity,
+			serviceContext);
 	}
 
 	@Override
@@ -465,8 +469,8 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItem.getCommerceOrderItemId(), json, quantity,
-			commerceContext, serviceContext);
+			getUserId(), commerceOrderItem.getCommerceOrderItemId(), json,
+			quantity, commerceContext, serviceContext);
 	}
 
 	@Override

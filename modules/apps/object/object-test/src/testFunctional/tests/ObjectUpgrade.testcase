@@ -27,15 +27,67 @@ definition {
 
 	}
 
-	@ignore = "Test Stub"
 	@priority = 5
-	test ViewObjectDefinitionAfterUpgrade7413U33 {
+	test ViewObjectDefinitionDetailsAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
 
-		// TODO LPS-174662 ViewObjectDefinitionAfterUpgrade7413U33
+		task ("View an Object Definition Details after Upgrade") {
+			ObjectAdmin.openObjectAdmin();
 
+			ObjectPortlet.selectCustomObject(label = "Custom Object1");
+
+			CreateObject.assertObjectLabel(labelName = "Custom Object1");
+
+			CreateObject.assertObjectPluralLabel(pluralLabelName = "Custom Objects1");
+
+			CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field Text");
+
+			AssertTextEquals(
+				locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
+				value1 = "Site");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				value1 = "Site Administration > Content & Data");
+
+			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		}
+
+		task ("Edit an Object Definition Details after Upgrade") {
+			ObjectAdmin.goToDetailsTab();
+
+			CreateObject.editLabel(labelName = "Custom Object1 Edit After Upgrade");
+
+			CreateObject.editPluralLabel(pluralLabelName = "Custom Objects1 Edit After Upgrade");
+
+			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Delete an Object Definition after Upgrade") {
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "MTM - Custom Object",
+				relationshipName = "mTMCustomObject");
+
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "OTM - System Object",
+				relationshipName = "oTMSystemObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.deleteCustomObjectViaUI(
+				labelName = "Custom Object1 Edit After Upgrade",
+				objectName = "CustomObject1");
+
+			AssertElementNotPresent(
+				locator1 = "ObjectAdmin#OBJECT_LABEL",
+				value1 = "Custom Object1 Edit After Upgrade");
+		}
 	}
 
 	@ignore = "Test Stub"

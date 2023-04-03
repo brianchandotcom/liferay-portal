@@ -50,7 +50,8 @@ export default function VisibilityButton({
 			)}
 			disabled={node.isMasterItem || node.hiddenAncestor}
 			displayType="unstyled"
-			onClick={() => {
+			onClick={(event) => {
+				event.stopPropagation();
 				updateItemStyle({
 					dispatch,
 					itemId: node.id,

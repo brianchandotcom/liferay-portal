@@ -81,7 +81,10 @@ export default function StructureClayTreeNodeActions({
 					}
 				)}
 				displayType="unstyled"
-				onClick={() => updateActive(!active)}
+				onClick={(event) => {
+					event.stopPropagation();
+					updateActive(!active);
+				}}
 				ref={alignElementRef}
 				size="sm"
 				title={Liferay.Language.get('options')}

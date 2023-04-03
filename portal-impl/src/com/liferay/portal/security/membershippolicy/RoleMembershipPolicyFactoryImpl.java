@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,12 +37,30 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class RoleMembershipPolicyFactoryImpl
 	implements RoleMembershipPolicyFactory {
 
-	@Override
-	public RoleMembershipPolicy getRoleMembershipPolicy() {
-		return _serviceTracker.getService();
+	public void destroy() {
+		_serviceTrackerDCLSingleton.destroy(ServiceTracker::close);
 	}
 
-	private RoleMembershipPolicyFactoryImpl() {
+	@Override
+	public RoleMembershipPolicy getRoleMembershipPolicy() {
+		ServiceTracker<RoleMembershipPolicy, RoleMembershipPolicy>
+			serviceTracker = _serviceTrackerDCLSingleton.getSingleton(
+				RoleMembershipPolicyFactoryImpl::_createServiceTracker);
+
+		return serviceTracker.getService();
+	}
+
+	private static ServiceTracker<RoleMembershipPolicy, RoleMembershipPolicy>
+		_createServiceTracker() {
+
+		ServiceTracker<RoleMembershipPolicy, RoleMembershipPolicy>
+			serviceTracker = new ServiceTracker<>(
+				_bundleContext, RoleMembershipPolicy.class,
+				new RoleMembershipPolicyTrackerCustomizer());
+
+		serviceTracker.open();
+
+		return serviceTracker;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -49,8 +68,9 @@ public class RoleMembershipPolicyFactoryImpl
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static final ServiceTracker<?, RoleMembershipPolicy>
-		_serviceTracker;
+	private static final DCLSingleton
+		<ServiceTracker<RoleMembershipPolicy, RoleMembershipPolicy>>
+			_serviceTrackerDCLSingleton = new DCLSingleton<>();
 
 	private static class RoleMembershipPolicyTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -89,14 +109,6 @@ public class RoleMembershipPolicyFactoryImpl
 			_bundleContext.ungetService(serviceReference);
 		}
 
-	}
-
-	static {
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, RoleMembershipPolicy.class,
-			new RoleMembershipPolicyTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 }

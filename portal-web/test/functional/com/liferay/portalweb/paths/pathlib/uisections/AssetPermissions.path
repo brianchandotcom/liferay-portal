@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>MORE_OPTIONS_LINK</td>
-	<td>//a[contains(@class,'btn')][normalize-space(text())='More Options']</td>
+	<td>//button[contains(@class,'btn')][normalize-space(text())='More Options']</td>
 	<td></td>
 </tr>
 <tr>

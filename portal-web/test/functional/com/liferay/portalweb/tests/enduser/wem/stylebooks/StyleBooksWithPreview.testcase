@@ -1526,9 +1526,11 @@ definition {
 				AppManager.deactivateApp(appName = "Liferay Fragment Collection Contributor ${collectionName}");
 			}
 
-			Search.searchCP(searchTerm = "Fragment Collection Contributor");
+			for (var collectionName : list "Account,Cart") {
+				Search.searchCP(searchTerm = "Fragment Collection Contributor");
 
-			AppManager.deactivateApp(appName = "Liferay Commerce Fragment Collection Contributor Cart");
+				AppManager.deactivateApp(appName = "Liferay Commerce Fragment Collection Contributor ${collectionName}");
+			}
 		}
 
 		task ("Add a style book") {

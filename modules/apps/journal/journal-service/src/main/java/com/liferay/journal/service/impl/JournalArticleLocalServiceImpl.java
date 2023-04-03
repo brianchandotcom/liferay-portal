@@ -225,6 +225,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -6115,6 +6116,15 @@ public class JournalArticleLocalServiceImpl
 			Date expirationDate, long checkInterval)
 		throws PortalException {
 
+		_companyLocalService.forEachCompanyId(
+			companyId -> checkArticlesByExpirationDate(
+				companyId, expirationDate, checkInterval));
+	}
+
+	protected void checkArticlesByExpirationDate(
+			long companyId, Date expirationDate, long checkInterval)
+		throws PortalException {
+
 		Date nextExpirationDate = new Date(
 			expirationDate.getTime() + checkInterval);
 
@@ -6126,14 +6136,12 @@ public class JournalArticleLocalServiceImpl
 					WorkflowConstants.STATUS_APPROVED));
 		}
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> checkArticlesByCompanyIdAndExpirationDate(
-				companyId, expirationDate, nextExpirationDate));
+		checkArticlesByCompanyIdAndExpirationDate(
+			companyId, expirationDate, nextExpirationDate);
 
-		if (_previousCheckDate == null) {
-			_previousCheckDate = new Date(
-				expirationDate.getTime() - checkInterval);
-		}
+		_companyPreviousCheckDate.computeIfAbsent(
+			companyId,
+			key -> new Date(expirationDate.getTime() - checkInterval));
 	}
 
 	protected void checkArticlesByReviewDate(Date reviewDate)
@@ -8045,6 +8053,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private final Map<Long, Date> _companyPreviousCheckDate =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private DDMFieldLocalService _ddmFieldLocalService;

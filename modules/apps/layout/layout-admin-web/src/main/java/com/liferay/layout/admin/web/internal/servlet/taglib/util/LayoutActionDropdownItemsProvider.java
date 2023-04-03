@@ -274,9 +274,9 @@ public class LayoutActionDropdownItemsProvider {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.addContextual(
-						dropdownContextualItem -> {
-							dropdownContextualItem.setDropdownItems(
+					DropdownItemListBuilder.addContext(
+						dropdownContextItem -> {
+							dropdownContextItem.setDropdownItems(
 								DropdownItemListBuilder.add(
 									dropdownItem -> {
 										dropdownItem.putData(
@@ -322,9 +322,9 @@ public class LayoutActionDropdownItemsProvider {
 												"page-with-permissions"));
 									}
 								).build());
-							dropdownContextualItem.setLabel(
+							dropdownContextItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "copy"));
-							dropdownContextualItem.setIcon("copy");
+							dropdownContextItem.setIcon("copy");
 						}
 					).add(
 						() ->

@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * @author Mikel Lorza
  */
-public class DropdownContextualItem extends DropdownItem {
+public class DropdownContextItem extends DropdownItem {
 
-	public DropdownContextualItem() {
+	public DropdownContextItem() {
 		put("type", "contextual");
 	}
 

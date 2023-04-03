@@ -89,23 +89,23 @@ public class DropdownItemListBuilder {
 			unsafeSupplier, unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper addContextual(
-		UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+	public static DropdownItemListWrapper addContext(
+		UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.addContextual(unsafeConsumer);
+		return dropdownItemListWrapper.addContext(unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper addContextual(
+	public static DropdownItemListWrapper addContext(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
-		UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+		UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.addContextual(
+		return dropdownItemListWrapper.addContext(
 			unsafeSupplier, unsafeConsumer);
 	}
 
@@ -251,21 +251,21 @@ public class DropdownItemListBuilder {
 			return this;
 		}
 
-		public DropdownItemListWrapper addContextual(
-			UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+		public DropdownItemListWrapper addContext(
+			UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer) {
 
-			_dropdownItemList.addContextual(unsafeConsumer);
+			_dropdownItemList.addContext(unsafeConsumer);
 
 			return this;
 		}
 
-		public DropdownItemListWrapper addContextual(
+		public DropdownItemListWrapper addContext(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
-			UnsafeConsumer<DropdownContextualItem, Exception> unsafeConsumer) {
+			UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer) {
 
 			try {
 				if (unsafeSupplier.get()) {
-					_dropdownItemList.addContextual(unsafeConsumer);
+					_dropdownItemList.addContext(unsafeConsumer);
 				}
 			}
 			catch (Exception exception) {

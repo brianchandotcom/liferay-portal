@@ -83,25 +83,24 @@ public abstract class BaseSourceProcessorTestCase {
 		test(fileName, new String[0]);
 	}
 
-	protected void test(String fileName, String expectedErrorMessage)
+	protected void test(String fileName, String expectedMessage)
 		throws Exception {
 
-		test(fileName, new String[] {expectedErrorMessage});
+		test(fileName, new String[] {expectedMessage});
 	}
 
-	protected void test(
-			String fileName, String expectedErrorMessage, int lineNumber)
+	protected void test(String fileName, String expectedMessage, int lineNumber)
 		throws Exception {
 
 		test(
-			fileName, new String[] {expectedErrorMessage},
+			fileName, new String[] {expectedMessage},
 			new Integer[] {lineNumber}, null);
 	}
 
-	protected void test(String fileName, String[] expectedErrorMessages)
+	protected void test(String fileName, String[] expectedMessages)
 		throws Exception {
 
-		test(fileName, expectedErrorMessages, null, null);
+		test(fileName, expectedMessages, null, null);
 	}
 
 	protected void test(
@@ -113,14 +112,14 @@ public abstract class BaseSourceProcessorTestCase {
 
 	protected void test(
 			String fileName, String[] expectedMessages, Integer[] lineNumbers,
-			String[] relatedFilesNames)
+			String[] dependentFileNames)
 		throws Exception {
 
 		File newFile = _generateTempFile(fileName);
 
-		if (relatedFilesNames != null) {
-			for (String relatedFileName : relatedFilesNames) {
-				_generateTempFile(relatedFileName);
+		if (dependentFileNames != null) {
+			for (String dependentFileName : dependentFileNames) {
+				_generateTempFile(dependentFileName);
 			}
 		}
 
@@ -203,10 +202,10 @@ public abstract class BaseSourceProcessorTestCase {
 
 	protected void test(
 			String fileName, String[] expectedMessages,
-			String[] relatedFilesNames)
+			String[] dependentFileNames)
 		throws Exception {
 
-		test(fileName, expectedMessages, null, relatedFilesNames);
+		test(fileName, expectedMessages, null, dependentFileNames);
 	}
 
 	protected final ClassLoader classLoader =

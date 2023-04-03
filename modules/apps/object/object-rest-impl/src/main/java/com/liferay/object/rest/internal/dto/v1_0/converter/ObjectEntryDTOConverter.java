@@ -462,7 +462,9 @@ public class ObjectEntryDTOConverter
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 
-				if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+				if (objectDefinition.isEnableCategorization() &&
+					FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
 					keywords = ListUtil.toArray(
 						_assetTagLocalService.getTags(
 							objectDefinition.getClassName(),
@@ -487,7 +489,9 @@ public class ObjectEntryDTOConverter
 					}
 				};
 
-				if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+				if (objectDefinition.isEnableCategorization() &&
+					FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
 					taxonomyCategoryBriefs = TransformUtil.transformToArray(
 						_assetCategoryLocalService.getCategories(
 							objectDefinition.getClassName(),

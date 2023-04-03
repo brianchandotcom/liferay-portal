@@ -15,7 +15,13 @@
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
@@ -61,6 +67,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 
@@ -2771,6 +2778,59 @@ public class ObjectEntryResourceTest {
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(1),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
+	}
+
+	@Test
+	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationDisabled()
+		throws Exception {
+
+		_objectDefinition1.setEnableCategorization(false);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		try {
+			TaxonomyCategory taxonomyCategory = _addTaxonomyCategory();
+
+			JSONObject jsonObject = HTTPTestUtil.invoke(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"keywords", JSONUtil.putAll("tag")
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.putAll(taxonomyCategory.getId())
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+			Assert.assertFalse(jsonObject.has("keywords"));
+			Assert.assertFalse(jsonObject.has("taxonomyCategoryBriefs"));
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				_objectDefinition1.getClassName(), jsonObject.getInt("id"));
+
+			List<AssetTag> assetEntryAssetTags =
+				AssetTagLocalServiceUtil.getAssetEntryAssetTags(
+					assetEntry.getEntryId());
+
+			Assert.assertEquals(
+				assetEntryAssetTags.toString(), 0, assetEntryAssetTags.size());
+
+			List<AssetCategory> assetCategories =
+				AssetCategoryLocalServiceUtil.getCategories(
+					_objectDefinition1.getClassName(), jsonObject.getInt("id"));
+
+			Assert.assertEquals(
+				assetCategories.toString(), 0, assetCategories.size());
+		}
+		finally {
+			_objectDefinition1.setEnableCategorization(true);
+
+			_objectDefinition1 =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition1);
+		}
 	}
 
 	@Test

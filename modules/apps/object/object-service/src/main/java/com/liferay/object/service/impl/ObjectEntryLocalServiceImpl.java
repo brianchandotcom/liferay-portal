@@ -1159,6 +1159,11 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
+		if (!objectDefinition.isEnableCategorization()) {
+			assetCategoryIds = null;
+			assetTagNames = null;
+		}
+
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
 			userId, objectEntry.getNonzeroGroupId(),
 			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),

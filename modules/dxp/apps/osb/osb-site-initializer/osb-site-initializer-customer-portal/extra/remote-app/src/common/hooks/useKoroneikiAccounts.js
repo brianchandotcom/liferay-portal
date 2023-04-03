@@ -20,7 +20,9 @@ export default function useKoroneikiAccounts() {
 
 	const search = useSearchTerm((searchTerm) =>
 		refetch({
-			filter: searchTerm && `contains(name, '${searchTerm}')`,
+			filter:
+				searchTerm &&
+				`contains(name, '${searchTerm}') or contains(code, '${searchTerm}')`,
 			page: 1,
 		})
 	);

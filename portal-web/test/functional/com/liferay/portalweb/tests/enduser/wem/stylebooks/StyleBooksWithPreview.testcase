@@ -413,7 +413,7 @@ definition {
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertElementPresent(
-				key_caption = "Showing 4 of 9 Items",
+				key_caption = "Showing 4 of 10 Items",
 				locator1 = "Dropdown#CAPTION");
 		}
 
@@ -467,13 +467,13 @@ definition {
 			StyleBooks.viewCurrentPreviewType(previewType = "Fragments");
 		}
 
-		task ("View the Basic Components set is selected in the preview item selector") {
-			StyleBooks.viewCurrentPreviewItem(previewItem = "Basic Components");
+		task ("View the Account set is selected in the preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Account");
 		}
 
 		task ("Select the Navigation Bars from Default fragment set in the preview item selector") {
 			StyleBooks.selectPreviewItem(
-				caption = "Showing 4 of 8 Items",
+				caption = "Showing 4 of 9 Items",
 				previewItem = "Navigation Bars",
 				scope = "Default");
 
@@ -572,7 +572,7 @@ definition {
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertElementPresent(
-				key_caption = "Showing 4 of 9 Items",
+				key_caption = "Showing 4 of 10 Items",
 				locator1 = "Dropdown#CAPTION");
 		}
 

@@ -61,10 +61,9 @@ definition {
 		if (isSet(permissionDefinitionKey)) {
 			Panel.expandPanel(panel = "Permissions");
 
-			if (IsNotVisible(key_text = "Hide Options", locator1 = "Button#ANY")) {
-				AssertClick(
-					key_text = "More Options",
-					locator1 = "Button#ANY",
+			if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
+				AssertClick.assertPartialTextClickAt(
+					locator1 = "AssetPermissions#MORE_OPTIONS_LINK",
 					value1 = "More Options");
 			}
 

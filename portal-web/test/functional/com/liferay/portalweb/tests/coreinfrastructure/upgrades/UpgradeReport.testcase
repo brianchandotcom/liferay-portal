@@ -96,7 +96,7 @@ definition {
 		}
 
 		task ("Read the size of document library storage") {
-			if (!(contains(${fileContent}, "Document library storage size: 750.03 KB"))) {
+			if (!(contains(${fileContent}, "Document library storage size: 750 KB"))) {
 				echo(${fileContent});
 
 				fail("Size of document library storage is not present in upgrade report.");

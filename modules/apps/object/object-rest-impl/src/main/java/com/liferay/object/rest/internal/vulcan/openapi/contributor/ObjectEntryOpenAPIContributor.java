@@ -173,6 +173,24 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			paths.remove(key);
 		}
+
+		if (!_objectDefinition.isEnableCategorization()) {
+			Components components = openAPI.getComponents();
+
+			Map<String, Schema> schemas = components.getSchemas();
+
+			schemas.remove("TaxonomyCategoryBrief");
+
+			Schema objectDefinitionSchema = schemas.get(
+				_objectDefinition.getShortName());
+
+			Map<String, Schema> properties =
+				objectDefinitionSchema.getProperties();
+
+			properties.remove("keywords");
+			properties.remove("taxonomyCategoryBriefs");
+			properties.remove("taxonomyCategoryIds");
+		}
 	}
 
 	private void _addObjectActionPathItem(

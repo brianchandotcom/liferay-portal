@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -113,11 +115,77 @@ public class OpenAPIResourceTest {
 		Assert.assertNull(
 			jsonObject.getJSONArray(_objectDefinition2.getRESTContextPath()));
 
+		JSONObject schemasJSONObject = jsonObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		);
+
+		Assert.assertNotNull(
+			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
+
+		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
+			_objectDefinition1.getShortName()
+		).getJSONObject(
+			"properties"
+		);
+
+		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
+
 		jsonObject = HTTPTestUtil.invoke(
 			null, _objectDefinition2.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+	}
+
+	@Test
+	public void testGetOpenAPIWithCategorizationDisabled() throws Exception {
+		_objectDefinition1.setEnableCategorization(false);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		try {
+			_user = UserTestUtil.addUser(_company);
+
+			JSONObject jsonObject = HTTPTestUtil.invoke(
+				null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
+				Http.Method.GET);
+
+			JSONObject schemasJSONObject = jsonObject.getJSONObject(
+				"components"
+			).getJSONObject(
+				"schemas"
+			);
+
+			Assert.assertNull(
+				schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
+
+			JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
+				_objectDefinition1.getShortName()
+			).getJSONObject(
+				"properties"
+			);
+
+			Assert.assertNull(propertiesJSONObject.getJSONObject("keywords"));
+			Assert.assertNull(
+				propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
+			Assert.assertNull(
+				propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
+		}
+		finally {
+			_objectDefinition1.setEnableCategorization(true);
+
+			_objectDefinition1 =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition1);
+		}
 	}
 
 	private String _getNestedEntitySchema(
@@ -207,6 +275,9 @@ public class OpenAPIResourceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -132,9 +132,9 @@ public class UpgradeReport {
 
 	private int _getBuildNumber() {
 		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement(
-				 "select buildNumber from Release_ where releaseId = " +
-				 ReleaseConstants.DEFAULT_ID)) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select buildNumber from Release_ where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -271,18 +271,18 @@ public class UpgradeReport {
 			"property",
 			() -> {
 				if (StringUtil.equals(
-					PropsValues.DL_STORE_IMPL,
-					"com.liferay.portal.store.file.system." +
-					"AdvancedFileSystemStore")) {
+						PropsValues.DL_STORE_IMPL,
+						"com.liferay.portal.store.file.system." +
+							"AdvancedFileSystemStore")) {
 
 					_rootDir = _getRootDir(
 						_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE,
 						persistenceManager);
 				}
 				else if (StringUtil.equals(
-					PropsValues.DL_STORE_IMPL,
-					"com.liferay.portal.store.file.system." +
-					"FileSystemStore")) {
+							PropsValues.DL_STORE_IMPL,
+							"com.liferay.portal.store.file.system." +
+								"FileSystemStore")) {
 
 					_rootDir = _getRootDir(
 						_CONFIGURATION_PID_FILE_SYSTEM_STORE,
@@ -311,14 +311,14 @@ public class UpgradeReport {
 			"document.library.storage.size",
 			() -> {
 				if (!StringUtil.endsWith(
-					PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
+						PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 
 					return "Check externally";
 				}
 
 				if (_rootDir == null) {
 					return "Unable to determine. Document library " +
-						   "\"rootDir\" was not set";
+						"\"rootDir\" was not set";
 				}
 
 				_documentLibrarySize = 0;
@@ -333,13 +333,16 @@ public class UpgradeReport {
 				}
 
 				if (_documentLibrarySizeThread.isAlive()) {
-					return
-						"Unable to determine the document library storage size" +
-						" because it is too large. You can check it manually";
+					return "Unable to determine the document library storage " +
+						"size because it is too large. You can check it " +
+							"manually";
 				}
 
+				String formattedStorageSize = LanguageUtil.formatStorageSize(
+					_documentLibrarySize, LocaleUtil.US);
+
 				return "The document library storage size is " +
-					   LanguageUtil.formatStorageSize(_documentLibrarySize, LocaleUtil.US);
+					formattedStorageSize;
 			}
 		).put(
 			"tables.initial.final.rows",
@@ -388,10 +391,10 @@ public class UpgradeReport {
 						new TablePrinter(
 							(finalTableCount >= 0) ?
 								String.valueOf(finalTableCount) :
-								StringPool.DASH,
+									StringPool.DASH,
 							(initialTableCount >= 0) ?
 								String.valueOf(initialTableCount) :
-								StringPool.DASH,
+									StringPool.DASH,
 							tableName));
 				}
 
@@ -418,7 +421,7 @@ public class UpgradeReport {
 					String className = message.substring(startIndex, endIndex);
 
 					if (className.equals(
-						PortalUpgradeProcess.class.getName())) {
+							PortalUpgradeProcess.class.getName())) {
 
 						continue;
 					}
@@ -441,11 +444,11 @@ public class UpgradeReport {
 				int count = 0;
 
 				for (Map.Entry<String, Integer> entry :
-					ListUtil.sort(
-						new ArrayList<>(upgradeProcessDurations.entrySet()),
-						Collections.reverseOrder(
-							Map.Entry.comparingByValue(
-								Integer::compare)))) {
+						ListUtil.sort(
+							new ArrayList<>(upgradeProcessDurations.entrySet()),
+							Collections.reverseOrder(
+								Map.Entry.comparingByValue(
+									Integer::compare)))) {
 
 					longestRunningUpgradeProcesses.add(
 						new RunningUpgradeProcess(
@@ -558,9 +561,9 @@ public class UpgradeReport {
 
 	private String _getSchemaVersion() {
 		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement(
-				 "select schemaVersion from Release_ where releaseId = " +
-				 ReleaseConstants.DEFAULT_ID)) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select schemaVersion from Release_ where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -584,8 +587,8 @@ public class UpgradeReport {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			try (ResultSet resultSet1 = databaseMetaData.getTables(
-				dbInspector.getCatalog(), dbInspector.getSchema(), null,
-				new String[] {"TABLE"})) {
+					dbInspector.getCatalog(), dbInspector.getSchema(), null,
+					new String[] {"TABLE"})) {
 
 				Map<String, Integer> tableCounts = new HashMap<>();
 
@@ -593,10 +596,10 @@ public class UpgradeReport {
 					String tableName = resultSet1.getString("TABLE_NAME");
 
 					try (PreparedStatement preparedStatement =
-							 connection.prepareStatement(
-								 "select count(*) from " + tableName);
-						 ResultSet resultSet2 =
-							 preparedStatement.executeQuery()) {
+							connection.prepareStatement(
+								"select count(*) from " + tableName);
+						ResultSet resultSet2 =
+							preparedStatement.executeQuery()) {
 
 						if (resultSet2.next()) {
 							tableCounts.put(tableName, resultSet2.getInt(1));
@@ -722,13 +725,13 @@ public class UpgradeReport {
 				_log.info("Completed upgrade report generation");
 				_log.info(
 					"Upgrade report generated in " +
-					reportFile.getAbsolutePath());
+						reportFile.getAbsolutePath());
 			}
 		}
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to generate the upgrade report in " +
-				reportFile.getAbsolutePath(),
+					reportFile.getAbsolutePath(),
 				ioException);
 		}
 		finally {
@@ -740,21 +743,22 @@ public class UpgradeReport {
 
 	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
-		"AdvancedFileSystemStoreConfiguration";
+			"AdvancedFileSystemStoreConfiguration";
 
 	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
-		"FileSystemStoreConfiguration";
+			"FileSystemStoreConfiguration";
 
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
-		"SidecarManager"
+			"SidecarManager"
 	};
 
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
+	private double _documentLibrarySize;
 	private final Thread _documentLibrarySizeThread = new DLSizeThread();
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
@@ -763,7 +767,6 @@ public class UpgradeReport {
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
 	private final Map<String, Integer> _initialTableCounts;
-	private double _documentLibrarySize;
 	private boolean _logContext;
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
@@ -773,8 +776,10 @@ public class UpgradeReport {
 
 		@Override
 		public void run() {
-			_documentLibrarySize = FileUtils.sizeOfDirectory(new File(_rootDir));
+			_documentLibrarySize = FileUtils.sizeOfDirectory(
+				new File(_rootDir));
 		}
+
 	}
 
 	private class MessagesPrinter {
@@ -791,7 +796,7 @@ public class UpgradeReport {
 		public String toString() {
 			if (_logContext) {
 				return _className + StringPool.COLON +
-					   _messagePrinters.toString();
+					_messagePrinters.toString();
 			}
 
 			StringBundler sb = new StringBundler();

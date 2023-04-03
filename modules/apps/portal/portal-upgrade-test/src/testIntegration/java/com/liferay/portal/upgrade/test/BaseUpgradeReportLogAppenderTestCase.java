@@ -180,7 +180,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				Assert.assertEquals(1, finalTableCount);
 			}
 			else if (StringUtil.equalsIgnoreCase(
-				tableName, "UpgradeReportTable2")) {
+						tableName, "UpgradeReportTable2")) {
 
 				table2Exists = true;
 
@@ -221,7 +221,8 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				public void run() {
 					try {
 						long timeout = ReflectionTestUtil.getFieldValue(
-							PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT");
+							PropsValues.class,
+							"UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT");
 
 						sleep(timeout + 5);
 					}
@@ -236,7 +237,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertReport(
 			"Unable to determine the document library storage size because " +
-			"it is too large. You can check it manually");
+				"it is too large. You can check it manually");
 	}
 
 	@Test
@@ -265,7 +266,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertReport(
 			"The document library storage size is " +
-			LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
+				LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
 	}
 
 	@Test
@@ -294,7 +295,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertReport(
 			"The document library storage size is " +
-			LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
+				LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
 	}
 
 	@Test
@@ -308,14 +309,14 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process " + fasterUpgradeProcessName +
-			" in 10 ms");
+				" in 10 ms");
 
 		String slowerUpgradeProcessName =
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			"Completed upgrade process " + slowerUpgradeProcessName +
-			" in 20401 ms");
+				" in 20401 ms");
 
 		_appender.stop();
 
@@ -323,14 +324,14 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		Assert.assertTrue(
 			reportContent.indexOf(slowerUpgradeProcessName) <
-			reportContent.indexOf(fasterUpgradeProcessName));
+				reportContent.indexOf(fasterUpgradeProcessName));
 
 		String longestUpgradeProcessesValue = _getLogContextValue(
 			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertTrue(
 			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
-			longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
+				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
 	}
 
 	@Test
@@ -347,7 +348,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process com.liferay.portal.UpgradeTest in " +
-			"20401 ms");
+				"20401 ms");
 
 		_appender.stop();
 
@@ -568,7 +569,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		Pattern pattern = Pattern.compile(
 			"(?s)INFO - Upgrade report generated in " + file.getAbsolutePath() +
-			"\\n\\s+\\{(.+)\\}");
+				"\\n\\s+\\{(.+)\\}");
 
 		Matcher matcher = pattern.matcher(_getLogContextContent());
 

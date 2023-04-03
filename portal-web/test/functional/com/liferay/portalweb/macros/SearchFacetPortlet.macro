@@ -311,13 +311,25 @@ definition {
 	macro viewFacetItemsSpecificOrder {
 		var resultOrder = 0;
 
-		for (var facetItem : list ${facetList}) {
-			var resultOrder = ${resultOrder} + 1;
+		if (${portletName} == "Modified Facet") {
+			for (var facetItem : list ${facetList}) {
+				var resultOrder = ${resultOrder} + 1;
 
-			AssertElementPresent(
-				key_facetItem = ${facetItem},
-				key_resultOrder = ${resultOrder},
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER");
+				AssertTextEquals.assertPartialText(
+					locator1 = "Search#MODIFIED_FACET_SPECIFIC_ORDER",
+					resultOrder = ${resultOrder},
+					value1 = ${facetItem});
+			}
+		}
+		else {
+			for (var facetItem : list ${facetList}) {
+				var resultOrder = ${resultOrder} + 1;
+
+				AssertElementPresent(
+					key_facetItem = ${facetItem},
+					key_resultOrder = ${resultOrder},
+					locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER");
+			}
 		}
 	}
 

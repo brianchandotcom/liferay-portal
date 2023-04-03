@@ -8,90 +8,10 @@
 		"type": "string"
 	},
 	{
-		"key": "liferayPortal51SP1",
-		"name": "Liferay Portal 5.1 SP1",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.1 SP1"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal51SP2",
-		"name": "Liferay Portal 5.1 SP2",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.1 SP2"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal51SP3",
-		"name": "Liferay Portal 5.1 SP3",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.1 SP3"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal51SP4",
-		"name": "Liferay Portal 5.1 SP4",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.1 SP4"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal51SP5",
-		"name": "Liferay Portal 5.1 SP5",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.1 SP5"
-		},
-		"type": "string"
-	},
-	{
 		"key": "liferayPortal52",
 		"name": "Liferay Portal 5.2",
 		"name_i18n": {
 			"en-US": "Liferay Portal 5.2"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal52SP1",
-		"name": "Liferay Portal 5.2 SP1",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.2 SP1"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal52SP2",
-		"name": "Liferay Portal 5.2 SP2",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.2 SP2"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal52SP3",
-		"name": "Liferay Portal 5.2 SP3",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.2 SP3"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal52SP4",
-		"name": "Liferay Portal 5.2 SP4",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.2 SP4"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal52SP5",
-		"name": "Liferay Portal 5.2 SP5",
-		"name_i18n": {
-			"en-US": "Liferay Portal 5.2 SP5"
 		},
 		"type": "string"
 	},
@@ -104,50 +24,18 @@
 		"type": "string"
 	},
 	{
-		"key": "liferayPortal60SP1",
-		"name": "Liferay Portal 6.0 SP1",
+		"key": "liferayPortal61",
+		"name": "Liferay Portal 6.1",
 		"name_i18n": {
-			"en-US": "Liferay Portal 6.0 SP1"
+			"en-US": "Liferay Portal 6.1"
 		},
 		"type": "string"
 	},
 	{
-		"key": "liferayPortal60SP2",
-		"name": "Liferay Portal 6.0 SP2",
+		"key": "liferayPortal62",
+		"name": "Liferay Portal 6.2",
 		"name_i18n": {
-			"en-US": "Liferay Portal 6.0 SP2"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal61GA1",
-		"name": "Liferay Portal 6.1 GA1",
-		"name_i18n": {
-			"en-US": "Liferay Portal 6.1 GA1"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal61GA2",
-		"name": "Liferay Portal 6.1 GA2",
-		"name_i18n": {
-			"en-US": "Liferay Portal 6.1 GA2"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal61GA3",
-		"name": "Liferay Portal 6.1 GA3",
-		"name_i18n": {
-			"en-US": "Liferay Portal 6.1 GA3"
-		},
-		"type": "string"
-	},
-	{
-		"key": "liferayPortal62EE",
-		"name": "Liferay Portal 6.2 EE",
-		"name_i18n": {
-			"en-US": "Liferay Portal 6.2 EE"
+			"en-US": "Liferay Portal 6.2"
 		},
 		"type": "string"
 	},

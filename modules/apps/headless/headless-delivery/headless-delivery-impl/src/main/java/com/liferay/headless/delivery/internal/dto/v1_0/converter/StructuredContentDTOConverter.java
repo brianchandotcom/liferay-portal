@@ -292,7 +292,7 @@ public class StructuredContentDTOConverter
 						});
 					setRenderedContentValue(
 						() -> {
-							if (!dtoConverterContext.containValue(
+							if (!dtoConverterContext.containsValue(
 									uriInfo, "renderedContentValue")) {
 
 								return null;

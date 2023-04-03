@@ -9,7 +9,7 @@ runGradleTest {
 	doLast {
 		Project sampleCustomElement1Project = project(":sample-custom-element-1")
 
-		File clientExtensionConfigFile = new File(sampleCustomElement1Project.buildDir, "sample-custom-element-1.client-extension-config.json")
+		File clientExtensionConfigFile = new File(sampleCustomElement1Project.buildDir, "liferay-client-extension-build/sample-custom-element-1.client-extension-config.json")
 
 		assert clientExtensionConfigFile.exists()
 
@@ -32,7 +32,7 @@ runGradleTest {
 
 		Project sampleThemeFaviconProject = project(":sample-theme-favicon")
 
-		File sampleConfigFile = new File(sampleThemeFaviconProject.buildDir, "sample-theme-favicon.client-extension-config.json")
+		File sampleConfigFile = new File(sampleThemeFaviconProject.buildDir, "liferay-client-extension-build/sample-theme-favicon.client-extension-config.json")
 
 		assert sampleConfigFile.exists()
 

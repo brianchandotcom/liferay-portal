@@ -226,6 +226,8 @@ definition {
 			templateDescription = "Template Description 1",
 			templateName = "Template Name 1");
 
+		PublicationsTemplate.gotoPublicationTemplate();
+
 		PublicationsTemplate.addPublicationTemplate(
 			publicationDescription = "Publications Description ${CURRENT_USERNAME} 2",
 			publicationName = "Publication Name ${CURRENT_USERNAME} 2",

@@ -1,0 +1,20 @@
+task runGradleTest
+
+runGradleTest {
+	doLast {
+		subprojects.each {
+			Project subProject ->
+
+			boolean enabledTasks = subProject.tasks.any {
+				it.enabled
+			}
+
+			if (subProject.path.endsWith("-service") || subProject.path.startsWith(":themes:")) {
+				assert enabledTasks == false
+			}
+			else {
+				assert enabledTasks == true
+			}
+		}
+	}
+}

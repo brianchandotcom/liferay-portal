@@ -32,9 +32,18 @@ public class LiferayOAuth2Util {
 
 		while (true) {
 			try {
-				return WebClient.create(
+				String baseURL =
 					lxcServerProtocol + "://" + lxcMainDomain +
-						"/o/oauth2/application"
+						"/o/oauth2/application";
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Obtaining a clientId from " + baseURL + " using " +
+							externalReferenceCode);
+				}
+
+				return WebClient.create(
+					baseURL
 				).get(
 				).uri(
 					uriBuilder -> uriBuilder.queryParam(

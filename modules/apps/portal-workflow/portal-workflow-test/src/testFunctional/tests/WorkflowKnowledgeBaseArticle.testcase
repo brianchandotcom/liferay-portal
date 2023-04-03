@@ -42,12 +42,7 @@ definition {
 	@description = "Verify that the Basic Article status is Pending after Submit for Workflow"
 	@priority = 4
 	test ArticleStatusIsPendingAfterSubmitForWorkflow {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -67,12 +62,7 @@ definition {
 	@description = "Verify that the user can Approve a Basic Article"
 	@priority = 5
 	test CanApproveBasicArticle {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -91,12 +81,7 @@ definition {
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -111,12 +96,7 @@ definition {
 	@description = "Verify that the user can Approve a Basic Article when the Child Article is Pending"
 	@priority = 4
 	test CanApproveBasicArticleWhenChildPending {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -141,12 +121,7 @@ definition {
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -171,12 +146,7 @@ definition {
 	@description = "Verify that the user can Approve a Basic Child Article"
 	@priority = 5
 	test CanApproveBasicChildArticle {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -211,12 +181,7 @@ definition {
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -237,12 +202,7 @@ definition {
 	test CanApproveBasicChildArticleWhenParentPending {
 		property portal.upstream = "quarantine";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -267,12 +227,7 @@ definition {
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -296,12 +251,7 @@ definition {
 	@description = "Verify that when the user Edit an approved Basic Article it's status comes to Pending"
 	@priority = 4
 	test CanEditApprovedBasicArticle {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -320,12 +270,7 @@ definition {
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -337,12 +282,7 @@ definition {
 			key_kbArticleTitle = "Knowledge Base Article Title",
 			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		WorkflowKnowledgeBaseArticle.editKBArticle(
 			kbArticleContentEdit = "Knowledge Base Article Content Edit",
@@ -364,12 +304,7 @@ definition {
 	@description = "Verify that the user can Reject a Basic Article"
 	@priority = 5
 	test CanRejectBasicArticle {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -388,12 +323,7 @@ definition {
 			workflowAssetType = "Knowledge Base Article",
 			workflowTask = "Review");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -409,12 +339,7 @@ definition {
 	@description = "Verify that when the Basic Article is saved as Draft it's status is Draft"
 	@priority = 3
 	test CanSaveAsDraft {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -439,12 +364,7 @@ definition {
 	test ChildArticleStatusIsPendingAfterSubmitForWorkflow {
 		property portal.upstream = "quarantine";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -474,12 +394,7 @@ definition {
 	@description = "Verify that when the Basic Article is saved as Draft the Submit for Workflow button still available"
 	@priority = 3
 	test SubmitForWorkflowButtonIsAvaliable {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",

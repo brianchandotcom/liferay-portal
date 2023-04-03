@@ -55,15 +55,15 @@ public class VersionUtil {
 									return null;
 								}
 
-								Map<String, String> stringMap = new HashMap<>();
+								Map<String, String> map = new HashMap<>();
 
 								for (Locale locale : availableLocales) {
-									stringMap.put(
+									map.put(
 										LocaleUtil.toBCP47LanguageId(locale),
 										LanguageUtil.get(locale, statusLabel));
 								}
 
-								return stringMap;
+								return map;
 							});
 					}
 				};

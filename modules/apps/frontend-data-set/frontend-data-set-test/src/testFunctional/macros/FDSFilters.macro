@@ -93,7 +93,7 @@ definition {
 	}
 
 	macro removeFilter {
-		Click(
+		Click.clickNoMouseOver(
 			locator1 = "FrontendDataSet#REMOVE_FILTER",
 			value1 = ${key_filter});
 	}

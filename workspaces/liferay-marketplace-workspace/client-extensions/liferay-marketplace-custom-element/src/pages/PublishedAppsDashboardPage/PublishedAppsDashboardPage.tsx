@@ -16,10 +16,12 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
+import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {
 	DashboardListItems,
 	DashboardPage,
 } from '../DashBoardPage/DashboardPage';
+
 import {
 	AccountBriefProps,
 	MemberProps,
@@ -317,15 +319,13 @@ export function PublishedAppsDashboardPage() {
 	}, [apps]);
 
 	useEffect(() => {
-		(() => {
-			const clickedNavigationItem =
-				dashboardNavigationItems.find(
-					(dashboardNavigationItem) =>
-						dashboardNavigationItem.itemSelected
-				) || dashboardNavigationItems[0];
+		const clickedNavigationItem =
+			dashboardNavigationItems.find(
+				(dashboardNavigationItem) =>
+					dashboardNavigationItem.itemSelected
+			) || dashboardNavigationItems[0];
 
-			setSelectedNavigationItem(clickedNavigationItem.itemTitle);
-		})();
+		setSelectedNavigationItem(clickedNavigationItem?.itemTitle as string);
 	}, [dashboardNavigationItems]);
 
 	useEffect(() => {
@@ -372,100 +372,95 @@ export function PublishedAppsDashboardPage() {
 	}, [selectedNavigationItem, selectedAccount]);
 
 	return (
-		<div>
-			{(() => {
-				if (selectedNavigationItem === 'Apps') {
-					return (
-						<DashboardPage
-							accountAppsNumber={apps.length.toString()}
-							accountLogo={accountLogo}
-							accounts={accounts}
-							buttonMessage="+ New App"
+		<>
+			{selectedNavigationItem === 'Apps' && (
+				<DashboardPage
+					accountAppsNumber={apps.length.toString()}
+					accountLogo={accountLogo}
+					accounts={accounts}
+					buttonMessage="+ New App"
 							currentAccount={selectedAccount}
-							dashboardNavigationItems={dashboardNavigationItems}
-							messages={appMessages}
-							setDashboardNavigationItems={
-								setDashboardNavigationItems
-							}
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={appMessages}
+					setDashboardNavigationItems={setDashboardNavigationItems}
 							setSelectedAccount={setSelectedAccount}
-						>
-							<DashboardTable<AppProps>
-								emptyStateMessage={
-									appMessages.emptyStateMessage
-								}
-								items={publishedAppTable.items}
-								tableHeaders={appTableHeaders}
-							>
-								{(item) => (
-									<PublishedAppsDashboardTableRow
-										item={item}
-										key={item.name}
-									/>
-								)}
-							</DashboardTable>
+				>
+					<DashboardTable<AppProps>
+						emptyStateMessage={appMessages.emptyStateMessage}
+						items={publishedAppTable.items}
+						tableHeaders={appTableHeaders}
+					>
+						{(item) => (
+							<PublishedAppsDashboardTableRow
+								item={item}
+								key={item.name}
+							/>
+						)}
+					</DashboardTable>
 
-							{publishedAppTable.items.length ? (
-								<ClayPaginationBarWithBasicItems
-									active={page}
-									activeDelta={publishedAppTable.pageSize}
-									defaultActive={1}
-									ellipsisBuffer={3}
-									ellipsisProps={{
-										'aria-label': 'More',
-										'title': 'More',
-									}}
-									onActiveChange={setPage}
-									showDeltasDropDown={false}
-									totalItems={publishedAppTable.totalCount}
-								/>
-							) : (
-								<></>
-							)}
-						</DashboardPage>
-					);
-				}
-				else if (selectedNavigationItem === 'Members') {
-					return (
-						<DashboardPage
-							accountAppsNumber={apps.length.toString()}
-							accountLogo={accountLogo}
-							accounts={accounts}
-							currentAccount={selectedAccount}
-							dashboardNavigationItems={dashboardNavigationItems}
-							messages={memberMessages}
-							setDashboardNavigationItems={
-								setDashboardNavigationItems
-							}
+					{publishedAppTable.items.length ? (
+						<ClayPaginationBarWithBasicItems
+							active={page}
+							activeDelta={publishedAppTable.pageSize}
+							defaultActive={1}
+							ellipsisBuffer={3}
+							ellipsisProps={{
+								'aria-label': 'More',
+								'title': 'More',
+							}}
+							onActiveChange={setPage}
+							showDeltasDropDown={false}
+							totalItems={publishedAppTable.totalCount}
+						/>
+					) : (
+						<></>
+					)}
+				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Members' && (
+				<DashboardPage
+					accountAppsNumber={apps.length.toString()}
+					accountLogo={accountLogo}
+					accounts={accounts}
+					currentAccount={selectedAccount}
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={memberMessages}
+					setDashboardNavigationItems={setDashboardNavigationItems}
 							setSelectedAccount={setSelectedAccount}
+				>
+					{selectedMember ? (
+						<MemberProfile
+							member={selectedMember}
+							setSelectedMember={setSelectedMember}
+						></MemberProfile>
+					) : (
+						<DashboardTable<MemberProps>
+							emptyStateMessage={memberMessages.emptyStateMessage}
+							items={members}
+							tableHeaders={memberTableHeaders}
 						>
-							{selectedMember ? (
-								<MemberProfile
-									member={selectedMember}
-									setSelectedMember={setSelectedMember}
-								></MemberProfile>
-							) : (
-								<DashboardTable<MemberProps>
-									emptyStateMessage={
-										memberMessages.emptyStateMessage
-									}
-									items={members}
-									tableHeaders={memberTableHeaders}
-								>
-									{(item) => (
-										<DashboardMemberTableRow
-											item={item}
-											key={item.name}
-											onSelectedMemberChange={
-												setSelectedMember
-											}
-										/>
-									)}
-								</DashboardTable>
+							{(item) => (
+								<DashboardMemberTableRow
+									item={item}
+									key={item.name}
+									onSelectedMemberChange={setSelectedMember}
+								/>
 							)}
-						</DashboardPage>
-					);
-				}
-			})()}
-		</div>
+						</DashboardTable>
+					)}
+				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Account' && (
+				<AccountDetailsPage
+					accountAppsNumber={apps.length.toString()}
+					accountIcon={accountLogo}
+					accounts={accounts}
+					dashboardNavigationItems={dashboardNavigationItems}
+					setDashboardNavigationItems={setDashboardNavigationItems}
+				/>
+			)}
+		</>
 	);
 }

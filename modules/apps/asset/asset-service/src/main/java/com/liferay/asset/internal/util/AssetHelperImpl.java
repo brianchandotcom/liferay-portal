@@ -806,6 +806,8 @@ public class AssetHelperImpl implements AssetHelper {
 
 		_searchRequestBuilderFactory.builder(
 			searchContext
+		).emptySearchEnabled(
+			true
 		).sorts(
 			_getSearchSorts(assetEntryQuery, searchContext.getLocale())
 		);

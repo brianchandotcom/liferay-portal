@@ -45,6 +45,8 @@ public class JournalSearcherUtil {
 
 		return _searcher.search(
 			_searchRequestBuilderFactory.builder(
+			).emptySearchEnabled(
+				true
 			).modelIndexerClasses(
 				JournalArticle.class, JournalFolder.class
 			).withSearchContext(
@@ -57,6 +59,8 @@ public class JournalSearcherUtil {
 
 		return _searcher.search(
 			_searchRequestBuilderFactory.builder(
+			).emptySearchEnabled(
+				true
 			).modelIndexerClasses(
 				JournalArticle.class
 			).withSearchContext(

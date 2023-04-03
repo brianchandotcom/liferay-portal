@@ -34,7 +34,7 @@ public class TLDSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use CDATA to warp each '<code>' in the description",
 				"Missing CDATA after 'replaced by' in the description"
 			},
-			new Integer[] {14, 19}, null);
+			new Integer[] {14, 19});
 	}
 
 	@Test

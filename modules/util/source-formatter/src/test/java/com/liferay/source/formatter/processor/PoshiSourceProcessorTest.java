@@ -45,7 +45,7 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing a required JIRA project in comment before using " +
 					"'Pause'"
 			},
-			new Integer[] {6, 10}, null);
+			new Integer[] {6, 10});
 	}
 
 	@Test

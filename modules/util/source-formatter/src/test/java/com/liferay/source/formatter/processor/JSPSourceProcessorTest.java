@@ -89,7 +89,7 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use type 'LiferayPortletResponse' to call 'getNamespace()'",
 				"Use type 'LiferayPortletResponse' to call 'getNamespace()'"
 			},
-			new Integer[] {21, 28}, null);
+			new Integer[] {21, 28});
 	}
 
 	@Test

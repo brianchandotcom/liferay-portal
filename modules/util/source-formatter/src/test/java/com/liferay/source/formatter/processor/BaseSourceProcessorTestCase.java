@@ -111,6 +111,13 @@ public abstract class BaseSourceProcessorTestCase {
 	}
 
 	protected void test(
+			String fileName, String[] expectedMessages, Integer[] lineNumbers)
+		throws Exception {
+
+		test(fileName, expectedMessages, lineNumbers, null);
+	}
+
+	protected void test(
 			String fileName, String[] expectedMessages, Integer[] lineNumbers,
 			List<String> relatedFilesNames)
 		throws Exception {

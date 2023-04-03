@@ -898,7 +898,7 @@ public class JournalArticleLocalServiceImpl
 
 		checkArticlesByDisplayDate(date, checkInterval);
 
-		_previousCheckDate = date;
+		_companyPreviousCheckDate.put(CompanyThreadLocal.getCompanyId(), date);
 	}
 
 	/**
@@ -6147,16 +6147,25 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByReviewDate(Date reviewDate)
 		throws PortalException {
 
+		checkArticlesByReviewDate(
+			CompanyThreadLocal.getCompanyId(), reviewDate);
+	}
+
+	protected void checkArticlesByReviewDate(long companyId, Date reviewDate)
+		throws PortalException {
+
+		Date previousCheckDate = _companyPreviousCheckDate.get(companyId);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
 					"Sending review notification for articles with reviewDate ",
-					"between ", _previousCheckDate, " and ", reviewDate));
+					"between ", previousCheckDate, " and ", reviewDate));
 		}
 
 		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, reviewDate,
-			_previousCheckDate);
+			previousCheckDate);
 
 		for (JournalArticle article : articles) {
 			if (article.isInTrash() ||
@@ -8146,8 +8155,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	private Date _previousCheckDate;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

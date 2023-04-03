@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
@@ -59,14 +60,13 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricReso
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -139,14 +139,8 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 		TermsQuery termsQuery = _queries.terms(
 			completed ? "completionUserId" : "assigneeIds");
 
-		Stream<Long> stream = userIds.stream();
-
 		termsQuery.addValues(
-			stream.map(
-				String::valueOf
-			).toArray(
-				Object[]::new
-			));
+			transformToArray(userIds, String::valueOf, Object.class));
 
 		return termsQuery;
 	}
@@ -195,15 +189,16 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 			TermsQuery termsQuery = _queries.terms("instanceId");
 
 			termsQuery.addValues(
-				Stream.of(
-					instanceIds
-				).filter(
-					instanceId -> instanceId > 0
-				).map(
-					String::valueOf
-				).toArray(
-					Object[]::new
-				));
+				transform(
+					instanceIds,
+					instanceId -> {
+						if (instanceId <= 0) {
+							return null;
+						}
+
+						return String.valueOf(instanceId);
+					},
+					Object.class));
 
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
@@ -381,22 +376,17 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 				completed, dateEnd, dateStart, instanceIds, processId,
 				taskNames, userIds));
 
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("assigneeId")
-		).map(
-			TermsAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).map(
-			this::_toAssigneeMetric
-		).collect(
-			Collectors.toList()
-		);
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResultsMap.get("assigneeId");
+
+		return transform(
+			termsAggregationResult.getBuckets(), this::_toAssigneeMetric);
 	}
 
 	private long _getAssigneeMetricsCount(
@@ -417,20 +407,21 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 				completed, dateEnd, dateStart, instanceIds, processId,
 				taskNames, userIds));
 
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(CardinalityAggregationResult)aggregationResultsMap.get(
-					"assigneeId")
-		).map(
-			CardinalityAggregationResult::getValue
-		).findFirst(
-		).orElseGet(
-			() -> 0L
-		);
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
+
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)aggregationResultsMap.get(
+				"assigneeId");
+
+		if (cardinalityAggregationResult == null) {
+			return 0L;
+		}
+
+		return cardinalityAggregationResult.getValue();
 	}
 
 	private long _getDurationTaskAvg(Bucket bucket) {
@@ -479,19 +470,14 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 			params.put("usersRoles", roleIds);
 		}
 
-		return Stream.of(
-			_userLocalService.search(
-				contextCompany.getCompanyId(), keywords, keywords, keywords,
-				null, null, WorkflowConstants.STATUS_ANY, params, false,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				(OrderByComparator<User>)null)
-		).flatMap(
-			List::parallelStream
-		).map(
-			User::getUserId
-		).collect(
-			Collectors.toSet()
-		);
+		return new HashSet<>(
+			transform(
+				_userLocalService.search(
+					contextCompany.getCompanyId(), keywords, keywords, keywords,
+					null, null, WorkflowConstants.STATUS_ANY, params, false,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					(OrderByComparator<User>)null),
+				User::getUserId));
 	}
 
 	private boolean _isOrderByDurationTaskAvg(String fieldName) {

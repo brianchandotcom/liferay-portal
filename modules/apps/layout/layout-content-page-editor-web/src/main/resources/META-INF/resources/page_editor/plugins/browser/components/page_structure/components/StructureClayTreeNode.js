@@ -399,7 +399,6 @@ function StructureTreeNodeContent({
 				editingName={node.editingName}
 				hidden={node.hidden || node.hiddenAncestor}
 				icon={node.icon}
-				isActive={isActive}
 				isMapped={isMapped}
 				isMasterItem={node.isMasterItem}
 				name={node.name}
@@ -427,7 +426,6 @@ const NameLabel = React.forwardRef(
 			editingName,
 			hidden,
 			icon,
-			isActive,
 			isMapped,
 			isMasterItem,
 			name: defaultName,

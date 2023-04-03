@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-165493=true";
-	property osgi.modules.includes = "site-initializer-raylife-d2c";
 	property osgi.modules.includes = "site-initializer-raylife-ap";
 	property portal.release = "false";
 	property portal.upstream = "true";

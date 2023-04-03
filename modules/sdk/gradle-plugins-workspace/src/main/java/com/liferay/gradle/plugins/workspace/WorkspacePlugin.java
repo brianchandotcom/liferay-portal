@@ -29,6 +29,7 @@ import java.nio.file.PathMatcher;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Plugin;
@@ -154,8 +155,12 @@ public class WorkspacePlugin implements Plugin<Settings> {
 							project.getPath(), glob);
 					}
 
-					for (Task task : project.getTasks()) {
-						task.setEnabled(false);
+					Map<Project, Set<Task>> map = project.getAllTasks(false);
+
+					for (Map.Entry<Project, Set<Task>> entry : map.entrySet()) {
+						for (Task task : entry.getValue()) {
+							task.setEnabled(false);
+						}
 					}
 
 					return;

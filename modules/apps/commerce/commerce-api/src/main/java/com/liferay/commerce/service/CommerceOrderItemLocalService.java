@@ -88,20 +88,20 @@ public interface CommerceOrderItemLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
+			long userId, long commerceOrderId, long cpInstanceId, String json,
+			int quantity, int shippedQuantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrderItem addOrUpdateCommerceOrderItem(
+			long userId, long commerceOrderId, long cpInstanceId, int quantity,
 			int shippedQuantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceOrderItem addOrUpdateCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
+			long userId, long commerceOrderId, long cpInstanceId, String json,
+			int quantity, int shippedQuantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -131,18 +131,10 @@ public interface CommerceOrderItemLocalService
 	 *
 	 * @param commerceOrderItem the commerce order item
 	 * @return the commerce order item that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderItem deleteCommerceOrderItem(
-			CommerceOrderItem commerceOrderItem)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.DELETE)
-	public CommerceOrderItem deleteCommerceOrderItem(
-			CommerceOrderItem commerceOrderItem,
-			CommerceContext commerceContext)
-		throws PortalException;
+		CommerceOrderItem commerceOrderItem);
 
 	/**
 	 * Deletes the commerce order item with the primary key from the database. Also notifies the appropriate model listeners.
@@ -159,14 +151,30 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem deleteCommerceOrderItem(long commerceOrderItemId)
 		throws PortalException;
 
-	public void deleteCommerceOrderItems(long commerceOrderId)
+	@Indexable(type = IndexableType.DELETE)
+	public CommerceOrderItem deleteCommerceOrderItem(
+			long userId, CommerceOrderItem commerceOrderItem)
 		throws PortalException;
 
-	public void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
+	@Indexable(type = IndexableType.DELETE)
+	public CommerceOrderItem deleteCommerceOrderItem(
+			long userId, CommerceOrderItem commerceOrderItem,
+			CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommerceOrderItem deleteCommerceOrderItem(
+			long userId, long commerceOrderItemId)
+		throws PortalException;
+
+	public void deleteCommerceOrderItems(long userId, long commerceOrderId)
+		throws PortalException;
+
+	public void deleteCommerceOrderItemsByCPInstanceId(
+			long userId, long cpInstanceId)
 		throws PortalException;
 
 	public void deleteMissingCommerceOrderItems(
-			long commerceOrderId, Long[] commerceOrderItemIds,
+			long userId, long commerceOrderId, Long[] commerceOrderItemIds,
 			String[] externalReferenceCodes)
 		throws PortalException;
 
@@ -433,7 +441,7 @@ public interface CommerceOrderItemLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem importCommerceOrderItem(
-			String externalReferenceCode, long commerceOrderItemId,
+			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
 			int quantity, int shippedQuantity, ServiceContext serviceContext)
@@ -476,33 +484,34 @@ public interface CommerceOrderItemLocalService
 		CommerceOrderItem commerceOrderItem);
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long bookedQuantityId)
 		throws NoSuchOrderItemException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			long userId, long commerceOrderItemId, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			long userId, long commerceOrderItemId, long cpMeasurementUnitId,
+			int quantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderItem updateCommerceOrderItem(
+			long userId, long commerceOrderItemId, long cpMeasurementUnitId,
+			int quantity, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, int quantity,
+			long userId, long commerceOrderItemId, String json, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, int quantity,
+			long userId, long commerceOrderItemId, String json, int quantity,
 			ServiceContext serviceContext)
 		throws PortalException;
 

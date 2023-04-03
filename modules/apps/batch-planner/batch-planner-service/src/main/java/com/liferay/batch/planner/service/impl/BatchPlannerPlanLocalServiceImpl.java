@@ -59,9 +59,10 @@ public class BatchPlannerPlanLocalServiceImpl
 
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
-			long userId, boolean export, String externalType,
-			String externalURL, String internalClassName, String name, int size,
-			String taskItemDelegateName, boolean template)
+			String externalReferenceCode, long userId, boolean export,
+			String externalType, String externalURL, String internalClassName,
+			String name, int size, String taskItemDelegateName,
+			boolean template)
 		throws PortalException {
 
 		_validateExternalType(externalType);
@@ -78,6 +79,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.create(
 			counterLocalService.increment());
 
+		batchPlannerPlan.setExternalReferenceCode(externalReferenceCode);
 		batchPlannerPlan.setCompanyId(user.getCompanyId());
 		batchPlannerPlan.setUserId(userId);
 		batchPlannerPlan.setUserName(user.getFullName());

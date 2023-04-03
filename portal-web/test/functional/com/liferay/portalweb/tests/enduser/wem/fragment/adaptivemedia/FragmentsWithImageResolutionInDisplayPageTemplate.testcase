@@ -107,6 +107,8 @@ definition {
 			WaitForElementPresent(
 				key_deviceType = "Tablet",
 				locator1 = "PageEditor#DEVICE_TYPE_ACTIVE");
+
+			WaitForElementNotPresent(locator1 = "PageEditor#VIEWPORT_LOADING_ANIMATION");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Tablet viewport") {
@@ -269,6 +271,8 @@ definition {
 			WaitForElementPresent(
 				key_deviceType = "Portrait Phone",
 				locator1 = "PageEditor#DEVICE_TYPE_ACTIVE");
+
+			WaitForElementNotPresent(locator1 = "PageEditor#VIEWPORT_LOADING_ANIMATION");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Portrait Phone viewport") {

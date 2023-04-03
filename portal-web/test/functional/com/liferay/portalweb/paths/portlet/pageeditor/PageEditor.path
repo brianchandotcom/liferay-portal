@@ -305,6 +305,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEWPORT_LOADING_ANIMATION</td>
+	<td>//div[contains(@class,'layout-viewport')]//span[contains(@class,'loading-animation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEWPORT_HANDLE</td>
 	<td>//div[contains(@class,'page-editor__layout-viewport__handle')]</td>
 	<td></td>

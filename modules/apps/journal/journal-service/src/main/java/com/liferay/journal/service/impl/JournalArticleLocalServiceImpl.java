@@ -890,17 +890,26 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public void checkArticles() throws PortalException {
+		checkArticles(CompanyThreadLocal.getCompanyId());
+	}
+
+	/**
+	 * Checks all web content articles by handling their expirations and sending
+	 * review notifications based on their current workflow.
+	 */
+	@Override
+	public void checkArticles(long companyId) throws PortalException {
 		Date date = new Date();
 
-		long checkInterval = getArticleCheckInterval();
+		long checkInterval = getArticleCheckInterval(companyId);
 
-		checkArticlesByExpirationDate(date, checkInterval);
+		checkArticlesByExpirationDate(companyId, date, checkInterval);
 
-		checkArticlesByReviewDate(date);
+		checkArticlesByReviewDate(companyId, date);
 
 		checkArticlesByDisplayDate(date, checkInterval);
 
-		_companyPreviousCheckDate.put(CompanyThreadLocal.getCompanyId(), date);
+		_companyPreviousCheckDate.put(companyId, date);
 	}
 
 	/**
@@ -6456,12 +6465,11 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected long getArticleCheckInterval() {
+	protected long getArticleCheckInterval(long companyId) {
 		try {
 			JournalServiceConfiguration journalServiceConfiguration =
 				configurationProvider.getCompanyConfiguration(
-					JournalServiceConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
+					JournalServiceConfiguration.class, companyId);
 
 			return journalServiceConfiguration.checkInterval() * Time.MINUTE;
 		}

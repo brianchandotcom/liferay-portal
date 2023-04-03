@@ -52,6 +52,7 @@ page import="com.liferay.segments.web.internal.display.context.SegmentsCompanyCo
 page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SegmentsExperienceSelectorDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryDisplayContext" %><%@
+page import="com.liferay.segments.web.internal.util.SegmentsEntryActionDropdownItemsProvider" %><%@
 page import="com.liferay.segments.web.internal.util.SegmentsSourceDetailsProviderUtil" %>
 
 <liferay-frontend:defineObjects />

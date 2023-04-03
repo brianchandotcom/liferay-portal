@@ -140,6 +140,18 @@ request.setAttribute("view.jsp-eventName", eventName);
 				cssClass="entry-action-column"
 				path="/segments_entry_action.jsp"
 			/>
+			<liferay-ui:search-container-column-text>
+
+				<%
+				SegmentsEntryActionDropdownItemsProvider segmentsEntryActionDropdownItemsProvider = new SegmentsEntryActionDropdownItemsProvider(request, segmentsDisplayContext, segmentsEntry);
+				%>
+
+				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.format(request, "show-more-options-for-x", HtmlUtil.escape(segmentsEntry.getName(locale))) %>'
+					dropdownItems="<%= segmentsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/SegmentsEntryDropdownDefaultPropsTransformer"
+				/>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

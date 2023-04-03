@@ -4973,6 +4973,12 @@ definition {
 			key_assetType = "Wiki Page",
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
 
+		Button.click(button = "Select Asset Types");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_assetType = "Wiki Page",
+			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+
 		PortletEntry.save();
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");

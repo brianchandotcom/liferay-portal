@@ -156,7 +156,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_SELECT_TOPIC");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		AssertVisible(
 			key_categoryItem = "Questions Test Category",
@@ -198,7 +198,7 @@ definition {
 
 		AssertVisible(locator1 = "Questions#QUESTIONS_SELECT_TOPIC");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		AssertVisible(
 			key_categoryItem = "Questions Test Category",
@@ -516,7 +516,7 @@ definition {
 		Questions.deleteQuestion();
 	}
 
-	@description = "Validate if the user can delete a thread through My Activity, it also covers LPS-137639."
+	@description = "Validate if the user can delete a thread through Activity, it also covers LPS-137639."
 	@priority = 4
 	test CanDeleteThreadThroughMyActivity {
 		JSONMBMessage.addMessage(
@@ -526,7 +526,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		Questions.gotoDetails(questionTitle = "MB Thread Message Subject");
 
@@ -1216,7 +1216,7 @@ definition {
 		Questions.viewSelectFilter();
 	}
 
-	@description = "Validate if the user can view the my activity default after delete all the responses."
+	@description = "Validate if the user can view the activity default after delete all the responses."
 	@priority = 4
 	@refactordone
 	test CanViewMyActivityDeletions {
@@ -1250,7 +1250,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		AssertElementNotPresent(
 			key_articleBodyContent = "Body AddCommentText",
@@ -1266,7 +1266,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		AssertElementNotPresent(
 			key_articleBodyContent = "Body AddAnswerText",
@@ -1282,12 +1282,12 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		Questions.viewMyActivityDefault();
 	}
 
-	@description = "Validate if the user can view the edited responses from my activity."
+	@description = "Validate if the user can view the edited responses from activity."
 	@priority = 4
 	@refactordone
 	test CanViewMyActivityEditedResponses {
@@ -1332,7 +1332,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		for (var articleBodyContent : list "Body AddQuestionTextEdit,Body AddAnswerTextEdit") {
 			AssertElementPresent(
@@ -1347,7 +1347,7 @@ definition {
 		Questions.viewDetailsTitle(questionTitle = "Title AddQuestionEdit");
 	}
 
-	@description = "Validate if the user can view the responses from my activity."
+	@description = "Validate if the user can view the responses from activity."
 	@priority = 4
 	@refactordone
 	test CanViewMyActivityResponses {
@@ -1382,7 +1382,7 @@ definition {
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
 
-		Questions.gotoTab(questionTabField = "My Activity");
+		Questions.gotoTab(questionTabField = "Activity");
 
 		for (var articleBodyContent : list "Body AddQuestionText,Body AddAnswerText,Body AddCommentText") {
 			AssertElementPresent(
@@ -1961,7 +1961,7 @@ definition {
 		AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
 	}
 
-	@description = "Validate if the My Activity tab appears"
+	@description = "Validate if the Activity tab appears"
 	@priority = 4
 	@refactordone
 	test MyActivityCanBeViewedInTopic {
@@ -1976,7 +1976,7 @@ definition {
 			topicName = "questions-test-category");
 
 		AssertElementPresent(
-			key_questionTabField = "My Activity",
+			key_questionTabField = "Activity",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 

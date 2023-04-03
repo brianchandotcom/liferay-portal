@@ -168,8 +168,6 @@ definition {
 
 			Navigator._gotoPage(pageName = "Test Fragment Content Page");
 
-			Pause(locator1 = 5000);
-
 			Refresh();
 
 			WaitForPageLoad();

@@ -72,7 +72,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		subscribeToContainer();
 
-		_journalArticleLocalService.checkArticles();
+		_journalArticleLocalService.checkArticles(group.getCompanyId());
 
 		_assertExpiredJournalArticleNotifications(expiredArticle);
 	}

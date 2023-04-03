@@ -159,7 +159,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 		_journalArticleLocalService.updateJournalArticle(updatedArticle);
 
-		_journalArticleLocalService.checkArticles();
+		_journalArticleLocalService.checkArticles(_group.getCompanyId());
 
 		article = _journalArticleLocalService.getArticle(article.getId());
 
@@ -267,7 +267,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 		_journalArticleLocalService.updateJournalArticle(article);
 
-		_journalArticleLocalService.checkArticles();
+		_journalArticleLocalService.checkArticles(_group.getCompanyId());
 
 		article = _journalArticleLocalService.getArticle(article.getId());
 
@@ -342,7 +342,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		Assert.assertEquals(displayDate, journalArticle.getDisplayDate());
 		Assert.assertEquals(expirationDate, journalArticle.getExpirationDate());
 
-		_journalArticleLocalService.checkArticles();
+		_journalArticleLocalService.checkArticles(_group.getCompanyId());
 
 		journalArticle = _journalArticleLocalService.getArticle(
 			journalArticle.getId());

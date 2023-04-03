@@ -923,6 +923,99 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-8970. As admin, when I try to delete orders one by one, a pop-up confirmation message will appear before removing the order."
+	@priority = 3
+	test CanDeleteSingleOrderUponConfirmation {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		var orderIds = ListUtil.newList();
+
+		task ("Given a Minium Site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And there are 2 placed orders") {
+			for (var productSKU : list "MIN55858,MIN55855") {
+				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+					accountEntryName = "Commerce Account",
+					orderItems = "${productSKU}:1",
+					orderStatus = 1,
+					paymentMethod = "money-order",
+					paymentStatus = 2);
+
+				ListUtil.add(${orderIds}, ${orderId});
+			}
+		}
+
+		task ("When buyer user creates an open order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			WaitForVisible(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			var openOrderId = selenium.getText("CommerceOrders#PENDING_ORDERS_ORDER_ID");
+		}
+
+		task ("Then the admin can verify that the Trash icon is not present in the header of the Orders page") {
+			User.logoutAndLoginPG();
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+		}
+
+		task ("And the admin can delete orders one by one by clicking on the delete button upon confirmation of the pop-up message") {
+			var firstPlacedOrderId = ListUtil.get(${orderIds}, 0);
+			var secondPlacedOrderId = ListUtil.get(${orderIds}, 1);
+
+			for (var orderId : list "${firstPlacedOrderId},${secondPlacedOrderId},${openOrderId}") {
+				Click(
+					key_value = ${orderId},
+					locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+				AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+
+				MenuItem.clickNoError(menuItem = "Delete");
+
+				AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete order #${orderId}?");
+
+				CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+				AssertElementNotPresent(
+					key_entryName = ${orderId},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-9467"
 	@priority = 5
 	test CanEditAddressOfAnOpenOrderWithAddressAlreadySet {

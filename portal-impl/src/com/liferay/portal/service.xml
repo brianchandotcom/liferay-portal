@@ -153,6 +153,8 @@
 		<column name="industry" type="String" />
 		<column name="type" type="String" />
 		<column name="size" type="String" />
+		<column name="indexNameCur" type="String" />
+		<column name="indexNameNext" type="String" />
 
 		<!-- Finder methods -->
 

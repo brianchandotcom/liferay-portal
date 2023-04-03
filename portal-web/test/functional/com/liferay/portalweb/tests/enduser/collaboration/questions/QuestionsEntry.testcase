@@ -77,7 +77,7 @@ definition {
 			questionTabField = "Questions",
 			questionTitle = "Title AddQuestionWithTheALImage");
 
-		Questions.viewImageInQuestion(imageFileName = "Document_2.jpeg");
+		Questions.viewImageInQuestion(imageFileName = "document_2-jpeg");
 	}
 
 	@description = "Validate if the user can create a question with an image."
@@ -112,7 +112,7 @@ definition {
 			questionTabField = "Questions",
 			questionTitle = "Title AddQuestionWithTheImage");
 
-		Questions.viewImageInQuestion(imageFileName = "Document_1.svg");
+		Questions.viewImageInQuestion(imageFileName = "document_1-svg");
 	}
 
 	@description = "Validate if the user can view the topic selector and category label."

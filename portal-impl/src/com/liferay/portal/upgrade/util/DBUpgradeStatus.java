@@ -141,11 +141,6 @@ public class DBUpgradeStatus {
 		return _warningMessages;
 	}
 
-	public static void setNoUpgradesEnabled() {
-		_status = "Not enabled";
-		_type = "Not enabled";
-	}
-
 	public static void start() {
 		_status = "Running";
 
@@ -302,8 +297,11 @@ public class DBUpgradeStatus {
 	private static boolean _filtered;
 	private static final Map<String, ServletSchemaVersions>
 		_servletSchemaVersionsMap = new ConcurrentHashMap<>();
-	private static String _status = "Pending";
-	private static String _type = "Not calculated";
+	private static String _status =
+		PropsValues.UPGRADE_DATABASE_AUTO_RUN ? "Pending" : "Not enabled";
+	private static String _type =
+		PropsValues.UPGRADE_DATABASE_AUTO_RUN ? "Not calculated" :
+			"Not enabled";
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
 	private static final Map<String, Map<String, Integer>> _warningMessages =

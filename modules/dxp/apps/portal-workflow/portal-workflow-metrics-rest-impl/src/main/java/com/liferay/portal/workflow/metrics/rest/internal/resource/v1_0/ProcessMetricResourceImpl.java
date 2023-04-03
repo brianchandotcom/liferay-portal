@@ -63,7 +63,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -92,35 +91,31 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 			Long processId, Boolean completed, Date dateEnd, Date dateStart)
 		throws Exception {
 
-		return Stream.of(
-			_getProcessMetricsSearchSearchResponse(null, null, processId, null)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).findFirst(
-		).map(
-			document -> {
-				ProcessMetric processMetric = _createProcessMetric(document);
+		SearchSearchResponse searchSearchResponse =
+			_getProcessMetricsSearchSearchResponse(null, null, processId, null);
 
-				Bucket bucket = _getProcessBucket(
-					GetterUtil.getBoolean(completed), dateEnd, dateStart,
-					processId);
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-				_populateProcessWithSLAMetrics(bucket, processMetric);
-				_setInstanceCount(bucket, processMetric);
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
 
-				_setUntrackedInstanceCount(processMetric);
+		if (searchHitList.isEmpty()) {
+			return new ProcessMetric();
+		}
 
-				return processMetric;
-			}
-		).orElseGet(
-			ProcessMetric::new
-		);
+		SearchHit searchHit = searchHitList.get(0);
+
+		ProcessMetric processMetric = _createProcessMetric(
+			searchHit.getDocument());
+
+		Bucket bucket = _getProcessBucket(
+			GetterUtil.getBoolean(completed), dateEnd, dateStart, processId);
+
+		_populateProcessWithSLAMetrics(bucket, processMetric);
+		_setInstanceCount(bucket, processMetric);
+
+		_setUntrackedInstanceCount(processMetric);
+
+		return processMetric;
 	}
 
 	@Override
@@ -261,14 +256,8 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 	private TermsQuery _createProcessIdTermsQuery(Set<Long> processIds) {
 		TermsQuery termsQuery = _queries.terms("processId");
 
-		Stream<Long> stream = processIds.stream();
-
 		termsQuery.addValues(
-			stream.map(
-				String::valueOf
-			).toArray(
-				Object[]::new
-			));
+			transformToArray(processIds, String::valueOf, Object.class));
 
 		return termsQuery;
 	}
@@ -436,23 +425,16 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 
 		List<ProcessMetric> processMetrics = new LinkedList<>();
 
-		Map<Long, ProcessMetric> processMetricsMap = Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			this::_createProcessMetric
-		).collect(
-			LinkedHashMap::new,
-			(map, processMetric) -> {
-				Process process = processMetric.getProcess();
+		Map<Long, ProcessMetric> processMetricsMap = new LinkedHashMap<>();
 
-				map.put(process.getId(), processMetric);
-			},
-			Map::putAll
-		);
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			ProcessMetric processMetric = _createProcessMetric(
+				searchHit.getDocument());
+
+			Process process = processMetric.getProcess();
+
+			processMetricsMap.put(process.getId(), processMetric);
+		}
 
 		TermsAggregationResult instanceTermsAggregationResult =
 			_getInstanceTermsAggregationResult(

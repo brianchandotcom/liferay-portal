@@ -236,7 +236,6 @@ definition {
 	}
 
 	@description = "LPS-155308. Assert one filter can be removed."
-	@ignore = "true"
 	@priority = 4
 	test OneFilterCanBeRemoved {
 		task ("When there are several filters already established") {

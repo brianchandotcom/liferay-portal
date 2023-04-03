@@ -397,6 +397,36 @@ public interface CompanyModel
 	 */
 	public void setSize(String size);
 
+	/**
+	 * Returns the index name cur of this company.
+	 *
+	 * @return the index name cur of this company
+	 */
+	@AutoEscape
+	public String getIndexNameCur();
+
+	/**
+	 * Sets the index name cur of this company.
+	 *
+	 * @param indexNameCur the index name cur of this company
+	 */
+	public void setIndexNameCur(String indexNameCur);
+
+	/**
+	 * Returns the index name next of this company.
+	 *
+	 * @return the index name next of this company
+	 */
+	@AutoEscape
+	public String getIndexNameNext();
+
+	/**
+	 * Sets the index name next of this company.
+	 *
+	 * @param indexNameNext the index name next of this company
+	 */
+	public void setIndexNameNext(String indexNameNext);
+
 	@Override
 	public Company cloneWithOriginalValues();
 

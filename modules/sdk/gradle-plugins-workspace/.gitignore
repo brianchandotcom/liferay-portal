@@ -3,3 +3,4 @@
 !/lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar
 /src/gradleTest/clientExtensionSamples/*/
 /src/gradleTest/distBundleZip/plugins-sdk
+/src/gradleTest/excludePatterns/*/

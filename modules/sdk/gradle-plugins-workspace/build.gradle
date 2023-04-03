@@ -10,6 +10,7 @@ apply plugin: "org.ysb33r.gradletest"
 task copyBundle(type: Copy)
 task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
+task copyGradleTestProjects(type: Copy)
 task copyHotFixZip(type: Copy)
 task copyRepo(type: Copy)
 task copyWorkspacesSamples
@@ -83,6 +84,15 @@ copyGradleTestDependencies {
 	from configurations.compile
 	from jar
 	into gradleTestDependenciesDir
+}
+
+copyGradleTestProjects {
+	from("src/gradleTest/flexibleLayoutWildcard") {
+		include "modules/**"
+		include "themes/**"
+		include "wars/**"
+	}
+	into "src/gradleTest/excludePatterns"
 }
 
 copyRepo {
@@ -183,6 +193,7 @@ gradleTest {
 	dependsOn copyBundle
 	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
+	dependsOn copyGradleTestProjects
 	dependsOn copyHotFixZip
 	dependsOn copyRepo
 	dependsOn copyWorkspacesSamples

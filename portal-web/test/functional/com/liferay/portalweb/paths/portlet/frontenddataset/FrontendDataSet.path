@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>REMOVE_FILTER</td>
-	<td>//span[contains(@class,'label dropdown-toggle') and contains(.,'${key_filter}')]//button[@class='filter-resume-close close']</td>
+	<td>//div[contains(@class,"btn") and contains(.,'${key_filter}')]//button[@title="Remove Filter"]</td>
 	<td></td>
 </tr>
 <tr>

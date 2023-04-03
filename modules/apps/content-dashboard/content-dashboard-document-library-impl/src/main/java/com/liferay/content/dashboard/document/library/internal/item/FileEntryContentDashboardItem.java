@@ -172,7 +172,7 @@ public class FileEntryContentDashboardItem
 	@Override
 	public List<AssetCategory> getAssetCategories(long assetVocabularyId) {
 		return ListUtil.filter(
-			ListUtil.copy(_assetCategories),
+			_assetCategories,
 			assetCategory ->
 				assetCategory.getVocabularyId() == assetVocabularyId);
 	}

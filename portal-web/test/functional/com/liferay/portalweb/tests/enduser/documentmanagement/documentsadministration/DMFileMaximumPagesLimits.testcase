@@ -27,6 +27,8 @@ definition {
 	@description = "This test ensure that the max number of pages generated as preview for PDFs in Instance Setting can limit by the configuration in System Setting."
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInInstanceSettingsByTheConfigurationInSystemSetting {
+		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInInstanceSettingsByTheConfigurationInSystemSetting";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
 			groupName = "Guest",
@@ -94,6 +96,8 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting {
+		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
 			groupName = "Guest",
@@ -164,6 +168,8 @@ definition {
 	@description = "This test ensures that a user can configure the max number of pages generated as preview for PDFs in System Setting."
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSystemSettings {
+		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInSystemSettings";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
 			groupName = "Guest",

@@ -73,6 +73,7 @@
 <tr>
 	<td>DETAIL_FIELD</td>
 	<td>//td/*[contains(text(),'${key_fieldName}')]//ancestor::tr//*[contains(text(),'${key_nameValue}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>APPLY_BUTTON</td>

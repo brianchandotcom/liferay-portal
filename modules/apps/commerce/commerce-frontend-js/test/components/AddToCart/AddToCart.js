@@ -44,6 +44,7 @@ const props = {
 			multipleOrderQuantity: 1,
 		},
 	},
+	showOrderTypeModal: false,
 	size: 'sm',
 };
 
@@ -75,6 +76,13 @@ describe('Add to Cart', () => {
 		fetchMock.mock(
 			/\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\?nestedFields=cartItems/,
 			{cartItems: []}
+		);
+
+		fetchMock.mock(
+			/\/o\/headless-commerce-delivery-cart\/v1.0\/channels\/[0-9]+\/account\/[0-9]+\/carts/,
+			() => {
+				return {items: []};
+			}
 		);
 
 		addToCart = render(<AddToCart {...defaultProps} />);
@@ -140,6 +148,7 @@ describe('Add to Cart', () => {
 		input.addEventListener('focus', focusHandler);
 
 		act(() => {
+			fireEvent.focus(input);
 			fireEvent.click(button);
 		});
 

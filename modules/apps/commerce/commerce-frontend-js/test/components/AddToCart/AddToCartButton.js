@@ -40,6 +40,7 @@ const props = {
 			multipleOrderQuantity: 1,
 		},
 	},
+	showOrderTypeModal: false,
 	size: 'sm',
 };
 
@@ -78,6 +79,13 @@ describe('Add to Cart Button', () => {
 				}
 
 				return {cartItems: []};
+			}
+		);
+
+		fetchMock.mock(
+			/\/o\/headless-commerce-delivery-cart\/v1.0\/channels\/[0-9]+\/account\/[0-9]+\/carts/,
+			() => {
+				return {items: []};
 			}
 		);
 

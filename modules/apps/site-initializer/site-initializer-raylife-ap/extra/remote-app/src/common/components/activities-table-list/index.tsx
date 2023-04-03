@@ -63,7 +63,7 @@ const ActivitiesComponent = ({
 		<div>
 			{!isMobile ? (
 				<div className="activities-detail-content d-flex rounded-top">
-					<div className="bg-neutral-0 d-flex w-100">
+					<div className="bg-neutral-0 d-flex rounded rounded-top w-100">
 						<TableListComponent
 							BodyElement={BodyElement}
 							headers={HEADERS}

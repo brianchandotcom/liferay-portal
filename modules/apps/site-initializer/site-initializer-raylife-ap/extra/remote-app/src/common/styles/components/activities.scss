@@ -5,7 +5,7 @@
 		display: block;
 		height: 1px;
 		margin-bottom: 20px;
-		margin-left: 25px;
+		margin-left: 27px;
 		position: absolute;
 		width: 25px;
 	}
@@ -99,6 +99,8 @@
 
 		&.border-header {
 			border-top: 1px solid #ccdae8;
+			border-left: 0 !important;
+			border-right: 0 !important;
 		}
 		&.border-bottom {
 			border-bottom: 1px solid #ccdae8;

@@ -45,9 +45,11 @@ const TableListComponent: React.FC<Props> = ({
 
 	return (
 		<div className="table-list-container w-100">
-			<div className="bg-neutral-0 d-flex w-100">
+			<div className="bg-neutral-0 d-flex rounded rounded-top w-100">
 				<div className="align-items-center box-activites col d-flex py-2">
-					<h2 className="border-link-active font mt-2">Activities</h2>
+					<h2 className="border-link-active font ml-3 mt-2">
+						Activities
+					</h2>
 				</div>
 
 				<div className="align-items-center blue-line-activites border border-bottom box-activites col d-flex position-relative py-2">

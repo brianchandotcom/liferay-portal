@@ -119,8 +119,8 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 	return (
 		<div>
 			{isLoading && (
-				<div className="bg-neutral p-6 policy-active-claims-container policy-detail-content rounded w-100">
-					<div className="bg-neutral-0 policy-active-claims-title pt-3 px-5 rounded-top w-100">
+				<div className="bg-neutral policy-active-claims-container rounded w-100">
+					<div className="bg-neutral-0 p-4 policy-active-claims-title pt-3 px-5 rounded-top w-100">
 						<h5 className="m-0">Active Claims</h5>
 					</div>
 
@@ -129,7 +129,7 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 					<ClayTable
 						borderedColumns={false}
 						borderless
-						className="table w-100"
+						className="rounded table w-100"
 						hover={false}
 					>
 						<ClayTable.Head>

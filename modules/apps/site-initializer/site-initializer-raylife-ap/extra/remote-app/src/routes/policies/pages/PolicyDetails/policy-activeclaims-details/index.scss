@@ -1,9 +1,4 @@
 .policy-active-claims-container {
-	padding: 0 200px;
-
-	@media screen and (max-width: 1500px) {
-		padding: 0 50px;
-	}
 	.policy-active-claims-title::after {
 		background-color: var(--primary);
 		content: '';

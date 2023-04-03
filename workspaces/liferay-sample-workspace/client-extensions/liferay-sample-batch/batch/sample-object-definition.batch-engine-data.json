@@ -36,7 +36,7 @@
 						"en_US": "Sample Update 1"
 					},
 					"name": "SampleUpdate1",
-					"objectActionExecutorKey": "function#sample-object-action-1",
+					"objectActionExecutorKey": "function#liferay-sample-object-action-1",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					},
@@ -56,7 +56,7 @@
 						"en_US": "Sample Update 2"
 					},
 					"name": "SampleUpdate2",
-					"objectActionExecutorKey": "function#sample-object-action-2",
+					"objectActionExecutorKey": "function#liferay-sample-object-action-2",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					},

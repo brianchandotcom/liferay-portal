@@ -49,9 +49,9 @@ definition {
 		task ("Edit the segment with a select input") {
 			Segmentation.editSegment(entry = "EditSegment Test");
 
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+			AssertVisible(
+				ariaLabel = "Enter View Mode",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			Segmentation.deleteProperty();
 
@@ -79,9 +79,9 @@ definition {
 
 			Segmentation.editSegment(entry = "EditSegmentIfHaveASelectInput Test");
 
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+			AssertVisible(
+				ariaLabel = "Enter View Mode",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
@@ -89,13 +89,13 @@ definition {
 		}
 
 		task ("Assert the segment cannot be edited with the toggle off") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+			Click(
+				key_text = "cog",
+				locator1 = "Icon#ANY");
 
-			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+			AssertVisible(
+				ariaLabel = "Enter Edit Mode",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			AssertElementNotPresent(locator1 = "Button#SELECT");
 		}

@@ -1227,7 +1227,8 @@ public class ObjectEntryLocalServiceImpl
 		_startWorkflowInstance(userId, objectEntry, serviceContext);
 
 		_deleteFileEntries(
-			values, objectEntry.getObjectDefinitionId(), transientValues);
+			objectEntry.getValues(), objectEntry.getObjectDefinitionId(),
+			transientValues);
 
 		_reindex(objectEntry);
 

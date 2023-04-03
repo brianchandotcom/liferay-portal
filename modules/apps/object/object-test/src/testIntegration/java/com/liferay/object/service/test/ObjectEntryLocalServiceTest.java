@@ -2079,6 +2079,15 @@ public class ObjectEntryLocalServiceTest {
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 20, values.size());
 
+		// LPS-180587 Partial updates should not delete existing files
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"state", "listTypeEntryKey3"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
 		long persistedFileEntryId = GetterUtil.getLong(values.get("upload"));
 
 		Assert.assertNotNull(

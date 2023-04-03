@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.staging.internal.activator.StagingImplBundleActivator
 Bundle-Name: Liferay Staging Implementation
 Bundle-SymbolicName: com.liferay.staging.impl
 Bundle-Version: 4.0.15

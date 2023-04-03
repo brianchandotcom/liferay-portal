@@ -58,7 +58,8 @@ const TableListMobileComponent: React.FC<Props> = ({headers, rows}) => {
 		if (isRowSelected === isPanelExpanded[index]) {
 			supportArray[index] = !supportArray[index];
 			setIsPanelExpanded(supportArray);
-		} else {
+		}
+		else {
 			resetExpandedPanel[index] = !resetExpandedPanel[index];
 			setIsPanelExpanded(resetExpandedPanel);
 		}

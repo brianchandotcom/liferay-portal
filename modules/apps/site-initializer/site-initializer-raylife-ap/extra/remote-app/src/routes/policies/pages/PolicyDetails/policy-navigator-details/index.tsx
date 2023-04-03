@@ -22,31 +22,8 @@ import sortedByDate from '../../../../../common/utils/sortedByDate';
 import DriverInfo from './driver-info';
 import HistoryInfo from './history-info';
 import arrayOfHistory from './policyNavigatorDataHistory';
+import {ApplicationPolicyDetailsType, dataJSONType} from './types';
 import VehicleInfo from './vehicle-info';
-
-type ApplicationPolicyDetailsType = {
-	dataJSON: string;
-	email: string;
-	phone: string;
-};
-
-export type PolicyDetailsType = {
-	annualMileage: number;
-	creditRating: string;
-	features: string;
-	firstName: string;
-	gender: string;
-	highestEducation: string;
-	make: string;
-	maritalStatus: string;
-	model: string;
-	occupation: string;
-	ownership: string;
-	primaryUsage: string;
-	year: string;
-};
-
-export type InfoPanelType = {[keys: string]: string};
 
 enum NavBarLabel {
 	Drivers = 'Drivers',
@@ -65,15 +42,15 @@ const PolicyDetail = ({
 		NavBarLabel.History,
 	];
 	const [active, setActive] = useState(navbarLabel[0]);
-	const [applicationData, setApplicationData] = useState<any>();
-
+	const [applicationData, setApplicationData] = useState<dataJSONType>();
 	const [showPanel, setShowPanel] = useState<boolean[]>([]);
 
 	useEffect(() => {
 		try {
 			const newDataJSON = JSON.parse(dataJSON);
 			setApplicationData(newDataJSON);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	}, [dataJSON, email, phone]);

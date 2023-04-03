@@ -12,20 +12,13 @@
  * details.
  */
 
-import {PolicyDetailsType} from '../index';
+import calculatedAge from '../../../../../../common/utils/calculatedAge';
 
 import '../index.scss';
-
-function calculatedAge(dateOfBirth: string) {
-	return Math.floor(
-		Math.ceil(
-			Math.abs(Date.parse(dateOfBirth) - Date.now()) / (1000 * 3600 * 24)
-		) / 365.25
-	);
-}
+import {PolicyDetailsType, dataJSONType} from '../types';
 
 type ApplicationPolicyDetailsType = {
-	dataJSON: any;
+	dataJSON: dataJSONType;
 	email: string;
 	phone: string;
 };
@@ -51,10 +44,13 @@ const DriverInfo = ({dataJSON, email, phone}: ApplicationPolicyDetailsType) => {
 									{`${
 										curentDriver?.firstName ?? 'No data'
 									}, ${
-										calculatedAge(
-											applicationData?.contactInfo
-												?.dateOfBirth
-										) ?? 'No data'
+										applicationData?.contactInfo
+											?.dateOfBirth
+											? calculatedAge(
+													applicationData?.contactInfo
+														?.dateOfBirth
+											  )
+											: 'No data'
 									}`}
 								</h5>
 							</div>

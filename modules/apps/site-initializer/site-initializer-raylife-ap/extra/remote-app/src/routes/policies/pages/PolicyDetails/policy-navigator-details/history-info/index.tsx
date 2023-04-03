@@ -12,14 +12,13 @@
  * details.
  */
 
-import {InfoPanelType} from '..';
-
 import PanelComponent from '../../../../../../common/components/panel';
+import {InfoPanelType} from '../types';
 
 type HistoryInfoType = {
-	arraySortedByDate: any;
-	setShowPanel: any;
-	showPanel: any;
+	arraySortedByDate: InfoPanelType[];
+	setShowPanel: (panel: boolean[]) => void;
+	showPanel: boolean[];
 };
 
 const HistoryInfo = ({

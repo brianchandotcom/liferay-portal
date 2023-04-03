@@ -12,12 +12,11 @@
  * details.
  */
 
-import {PolicyDetailsType} from '..';
-
 import addImageFallback from '../../../../../../common/utils/addImageFallback';
 import {getWebDavUrl} from '../../../../../../common/utils/webdav';
 
 import '../index.scss';
+import {PolicyDetailsType} from '../types';
 
 const VehicleInfo = (applicationDataJSON: any) => {
 	const applicationData = applicationDataJSON?.dataJSON;

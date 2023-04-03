@@ -20,7 +20,6 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -102,11 +101,8 @@ public class CommerceOrderWorkflowHandler
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-			"serviceContext");
-
 		return _commerceOrderLocalService.updateStatus(
-			userId, classPK, status, serviceContext, workflowContext);
+			userId, classPK, status, workflowContext);
 	}
 
 	private static final boolean _VISIBLE = false;

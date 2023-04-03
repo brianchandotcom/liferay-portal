@@ -163,7 +163,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		for (CommerceOrderItem commerceOrderItem : _commerceOrderItems) {
 			_commerceOrderItemLocalService.deleteCommerceOrderItem(
-				commerceOrderItem);
+				_user.getUserId(), commerceOrderItem);
 		}
 	}
 
@@ -214,7 +214,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null, 1, 0, _commerceContext,
 				_serviceContext);
 
@@ -287,7 +287,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null, 1, 0, _commerceContext,
 				_serviceContext);
 
@@ -345,7 +345,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null, 1, 0, _commerceContext,
 				_serviceContext);
 
@@ -548,7 +548,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				bundleCPInstance.getCPInstanceId(), null, quantity, 0,
 				_commerceContext, _serviceContext);
 
@@ -685,7 +685,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		_commerceOrderItems.add(
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null, 1, 0, _commerceContext,
 				_serviceContext));
 
@@ -696,7 +696,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem3 =
 			_commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), "[]", 1, 0, _commerceContext,
 				_serviceContext);
 
@@ -713,7 +713,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertEquals(2, commerceOrderItem3.getQuantity());
 
 		_commerceOrderItemLocalService.deleteCommerceOrderItem(
-			commerceOrderItem3.getCommerceOrderItemId());
+			_user.getUserId(), commerceOrderItem3.getCommerceOrderItemId());
 
 		commerceOrderItems = commerceOrder.getCommerceOrderItems();
 
@@ -1090,7 +1090,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				bundleCPInstance.getCPInstanceId(),
 				"[" + testCommerceOptionValue.toJSON() + "]", quantity, 0,
 				_commerceContext, _serviceContext);
@@ -1250,7 +1250,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		_commerceOrderItems.add(
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				bundleCPInstanceWithUnavailableChildSKU.getCPInstanceId(), null,
 				1, 1, _commerceContext, _serviceContext));
 
@@ -1327,7 +1327,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		_commerceOrderItems.add(
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				optionSKU1.getCPInstanceId(), null, nonbundleQuantity, 0,
 				_commerceContext, _serviceContext));
 
@@ -1413,7 +1413,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
 				bundleCPInstance.getCPInstanceId(), null, quantity, 0,
 				_commerceContext, _serviceContext);
 
@@ -1477,7 +1477,8 @@ public class CommerceOrderItemLocalServiceTest {
 
 		long commerceOrderId = bundleOrderItem.getCommerceOrderId();
 
-		_commerceOrderItemLocalService.deleteCommerceOrderItem(bundleOrderItem);
+		_commerceOrderItemLocalService.deleteCommerceOrderItem(
+			_user.getUserId(), bundleOrderItem);
 
 		CommerceOrder retrieveOrder =
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
@@ -1498,7 +1499,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		bundleOrderItem =
 			_commerceOrderItemLocalService.updateCommerceOrderItem(
-				bundleOrderItem.getCommerceOrderItemId(),
+				_user.getUserId(), bundleOrderItem.getCommerceOrderItemId(),
 				originalBundleQuantity * factor, _commerceContext,
 				_serviceContext);
 

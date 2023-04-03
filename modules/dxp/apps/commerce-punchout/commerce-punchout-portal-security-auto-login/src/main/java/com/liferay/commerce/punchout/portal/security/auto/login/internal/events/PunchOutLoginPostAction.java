@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -144,8 +143,7 @@ public class PunchOutLoginPostAction extends Action {
 
 			commerceOrder = _commerceOrderLocalService.updateStatus(
 				punchOutUserId, commerceOrder.getCommerceOrderId(),
-				WorkflowConstants.STATUS_APPROVED, new ServiceContext(),
-				Collections.emptyMap());
+				WorkflowConstants.STATUS_APPROVED, Collections.emptyMap());
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(

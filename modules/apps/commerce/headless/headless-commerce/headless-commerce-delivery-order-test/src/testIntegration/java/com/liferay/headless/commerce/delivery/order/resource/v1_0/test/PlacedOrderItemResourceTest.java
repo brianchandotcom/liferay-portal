@@ -194,8 +194,8 @@ public class PlacedOrderItemResourceTest
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				_commerceOrder.getCommerceOrderId(), placedOrderItem.getSkuId(),
-				null, placedOrderItem.getQuantity(),
+				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
+				placedOrderItem.getSkuId(), null, placedOrderItem.getQuantity(),
 				placedOrderItem.getQuantity(),
 				new TestCommerceContext(
 					_commerceCurrency, _commerceChannel, _user, testGroup,

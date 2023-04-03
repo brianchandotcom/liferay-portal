@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -52,8 +51,7 @@ public class CommerceOrderModelListener
 
 			_commerceOrderLocalService.updateStatus(
 				commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-				WorkflowConstants.STATUS_APPROVED, new ServiceContext(),
-				Collections.emptyMap());
+				WorkflowConstants.STATUS_APPROVED, Collections.emptyMap());
 		}
 		catch (PortalException portalException) {
 			_log.error(

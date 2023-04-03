@@ -280,6 +280,7 @@ public class CommerceOrderGenerator {
 					maxOrderQuantity);
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(
+					commerceOrder.getUserId(),
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(), null, quantity, 0,
 					commerceContext, serviceContext);

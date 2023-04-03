@@ -123,7 +123,7 @@ public class PlacedOrderItemShipmentResourceTest
 
 		_commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
-				_commerceOrder.getCommerceOrderId(),
+				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				_cpInstance.getCPInstanceId(), null,
 				RandomTestUtil.randomInt(1, 10),
 				RandomTestUtil.randomInt(1, 10),

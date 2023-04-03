@@ -545,7 +545,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		try {
 			_commerceOrderLocalService.mergeGuestCommerceOrder(
-				commerceOrder.getCommerceOrderId(),
+				user.getUserId(), commerceOrder.getCommerceOrderId(),
 				userCommerceOrder.getCommerceOrderId(),
 				_getCommerceContext(httpServletRequest), serviceContext);
 		}

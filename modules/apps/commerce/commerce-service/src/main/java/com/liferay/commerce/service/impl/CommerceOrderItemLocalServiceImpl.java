@@ -84,7 +84,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -125,8 +124,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
+			long userId, long commerceOrderId, long cpInstanceId, String json,
+			int quantity, int shippedQuantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -140,9 +139,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_updateWorkflow(commerceOrder, serviceContext);
+		User user = _userLocalService.getUser(userId);
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
+		_updateWorkflow(user.getUserId(), commerceOrder);
 
 		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
 			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
@@ -212,7 +211,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity,
+			long userId, long commerceOrderId, long cpInstanceId, int quantity,
 			int shippedQuantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -221,14 +220,15 @@ public class CommerceOrderItemLocalServiceImpl
 			_getCPInstanceOptionValueRelsJSONString(cpInstanceId);
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
-			commerceOrderId, cpInstanceId, cpInstanceOptionValueRelJSONString,
-			quantity, 0, commerceContext, serviceContext);
+			userId, commerceOrderId, cpInstanceId,
+			cpInstanceOptionValueRelJSONString, quantity, 0, commerceContext,
+			serviceContext);
 	}
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
+			long userId, long commerceOrderId, long cpInstanceId, String json,
+			int quantity, int shippedQuantity, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -241,7 +241,7 @@ public class CommerceOrderItemLocalServiceImpl
 				_jsonMatches(json, commerceOrderItem.getJson())) {
 
 				return commerceOrderItemLocalService.updateCommerceOrderItem(
-					commerceOrderItem.getCommerceOrderItemId(),
+					userId, commerceOrderItem.getCommerceOrderItemId(),
 					commerceOrderItem.getJson(),
 					commerceOrderItem.getQuantity() + quantity, commerceContext,
 					serviceContext);
@@ -249,8 +249,8 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, 0, commerceContext,
-			serviceContext);
+			userId, commerceOrderId, cpInstanceId, json, quantity, 0,
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -261,25 +261,25 @@ public class CommerceOrderItemLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceOrderItem deleteCommerceOrderItem(
-			CommerceOrderItem commerceOrderItem)
+			long userId, CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
 		_validateParentCommerceOrderId(commerceOrderItem);
 
-		return _deleteCommerceOrderItem(commerceOrderItem);
+		return _deleteCommerceOrderItem(userId, commerceOrderItem);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceOrderItem deleteCommerceOrderItem(
-			CommerceOrderItem commerceOrderItem,
+			long userId, CommerceOrderItem commerceOrderItem,
 			CommerceContext commerceContext)
 		throws PortalException {
 
 		// Commerce order item
 
 		commerceOrderItemLocalService.deleteCommerceOrderItem(
-			commerceOrderItem);
+			userId, commerceOrderItem);
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
@@ -296,18 +296,19 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrderItem deleteCommerceOrderItem(long commerceOrderItemId)
+	public CommerceOrderItem deleteCommerceOrderItem(
+			long userId, long commerceOrderItemId)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
 		return commerceOrderItemLocalService.deleteCommerceOrderItem(
-			commerceOrderItem);
+			userId, commerceOrderItem);
 	}
 
 	@Override
-	public void deleteCommerceOrderItems(long commerceOrderId)
+	public void deleteCommerceOrderItems(long userId, long commerceOrderId)
 		throws PortalException {
 
 		List<CommerceOrderItem> commerceOrderItems =
@@ -320,25 +321,26 @@ public class CommerceOrderItemLocalServiceImpl
 			}
 
 			commerceOrderItemLocalService.deleteCommerceOrderItem(
-				commerceOrderItem);
+				userId, commerceOrderItem);
 		}
 	}
 
 	@Override
-	public void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
+	public void deleteCommerceOrderItemsByCPInstanceId(
+			long userId, long cpInstanceId)
 		throws PortalException {
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrderItemPersistence.findByCPInstanceId(cpInstanceId);
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			deleteCommerceOrderItem(commerceOrderItem);
+			deleteCommerceOrderItem(userId, commerceOrderItem);
 		}
 	}
 
 	@Override
 	public void deleteMissingCommerceOrderItems(
-			long commerceOrderId, Long[] commerceOrderItemIds,
+			long userId, long commerceOrderId, Long[] commerceOrderItemIds,
 			String[] externalReferenceCodes)
 		throws PortalException {
 
@@ -366,7 +368,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		for (long commerceOrderItemId : commerceOrderItemIdsList) {
 			commerceOrderItemLocalService.deleteCommerceOrderItem(
-				commerceOrderItemId);
+				userId, commerceOrderItemId);
 		}
 	}
 
@@ -506,7 +508,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem importCommerceOrderItem(
-			String externalReferenceCode, long commerceOrderItemId,
+			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
 			int quantity, int shippedQuantity, ServiceContext serviceContext)
@@ -518,9 +520,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_updateWorkflow(commerceOrder, serviceContext);
+		User user = _userLocalService.getUser(userId);
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
+		_updateWorkflow(user.getUserId(), commerceOrder);
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.fetchByPrimaryKey(commerceOrderItemId);
@@ -623,20 +625,6 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
-
-		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, commerceOrderItem.getJson(), quantity,
-			commerceContext, serviceContext);
-	}
-
-	@Override
-	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long bookedQuantityId)
 		throws NoSuchOrderItemException {
 
@@ -659,8 +647,23 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			long userId, long commerceOrderItemId, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			userId, commerceOrderItemId, commerceOrderItem.getJson(), quantity,
+			commerceContext, serviceContext);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long userId, long commerceOrderItemId, long cpMeasurementUnitId,
+			int quantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -668,8 +671,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem =
 			commerceOrderItemLocalService.updateCommerceOrderItem(
-				commerceOrderItemId, commerceOrderItem.getJson(), quantity,
-				commerceContext, serviceContext);
+				userId, commerceOrderItemId, commerceOrderItem.getJson(),
+				quantity, commerceContext, serviceContext);
 
 		commerceOrderItem.setCPMeasurementUnitId(cpMeasurementUnitId);
 
@@ -679,8 +682,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
-			ServiceContext serviceContext)
+			long userId, long commerceOrderItemId, long cpMeasurementUnitId,
+			int quantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -688,8 +691,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem =
 			commerceOrderItemLocalService.updateCommerceOrderItem(
-				commerceOrderItemId, commerceOrderItem.getJson(), quantity,
-				serviceContext);
+				userId, commerceOrderItemId, commerceOrderItem.getJson(),
+				quantity, serviceContext);
 
 		commerceOrderItem.setCPMeasurementUnitId(cpMeasurementUnitId);
 
@@ -700,7 +703,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, int quantity,
+			long userId, long commerceOrderItemId, String json, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -715,8 +718,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (childCommerceOrderItems.isEmpty()) {
 			return _updateCommerceOrderItem(
-				commerceOrderItemId, quantity, json, null, commerceContext,
-				serviceContext);
+				userId, commerceOrderItemId, quantity, json, null,
+				commerceContext, serviceContext);
 		}
 
 		List<CommerceOptionValue> commerceOptionValues =
@@ -741,7 +744,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				_updateCommerceOrderItem(
-					childCommerceOrderItem.getCommerceOrderItemId(),
+					userId, childCommerceOrderItem.getCommerceOrderItemId(),
 					currentQuantity, childCommerceOrderItem.getJson(), null,
 					commerceContext, serviceContext);
 
@@ -756,20 +759,20 @@ public class CommerceOrderItemLocalServiceImpl
 					commerceContext.getCommerceCurrency());
 
 			_updateCommerceOrderItem(
-				childCommerceOrderItem.getCommerceOrderItemId(),
+				userId, childCommerceOrderItem.getCommerceOrderItemId(),
 				currentQuantity, childCommerceOrderItem.getJson(),
 				staticCommerceProductPrice, commerceContext, serviceContext);
 		}
 
 		return _updateCommerceOrderItem(
-			commerceOrderItemId, quantity, json, null, commerceContext,
+			userId, commerceOrderItemId, quantity, json, null, commerceContext,
 			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, int quantity,
+			long userId, long commerceOrderItemId, String json, int quantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -784,7 +787,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (childCommerceOrderItems.isEmpty()) {
 			return _updateCommerceOrderItem(
-				commerceOrderItemId, quantity, json, serviceContext);
+				userId, commerceOrderItemId, quantity, json, serviceContext);
 		}
 
 		List<CommerceOptionValue> commerceOptionValues =
@@ -808,13 +811,13 @@ public class CommerceOrderItemLocalServiceImpl
 			int currentQuantity = quantity * commerceOptionValue.getQuantity();
 
 			_updateCommerceOrderItem(
-				childCommerceOrderItem.getCommerceOrderItemId(),
+				userId, childCommerceOrderItem.getCommerceOrderItemId(),
 				currentQuantity, childCommerceOrderItem.getJson(),
 				serviceContext);
 		}
 
 		return _updateCommerceOrderItem(
-			commerceOrderItemId, quantity, json, serviceContext);
+			userId, commerceOrderItemId, quantity, json, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1310,7 +1313,8 @@ public class CommerceOrderItemLocalServiceImpl
 		return commerceOrderItem;
 	}
 
-	private void _deleteBundleChildrenOrderItems(long commerceOrderItemId)
+	private void _deleteBundleChildrenOrderItems(
+			long userId, long commerceOrderItemId)
 		throws PortalException {
 
 		List<CommerceOrderItem> childCommerceOrderItems =
@@ -1323,18 +1327,18 @@ public class CommerceOrderItemLocalServiceImpl
 			childCommerceOrderItem.setParentCommerceOrderItemId(0);
 
 			commerceOrderItemLocalService.deleteCommerceOrderItem(
-				childCommerceOrderItem);
+				userId, childCommerceOrderItem);
 		}
 	}
 
 	private CommerceOrderItem _deleteCommerceOrderItem(
-			CommerceOrderItem commerceOrderItem)
+			long userId, CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
 		// Bundle order items
 
 		_deleteBundleChildrenOrderItems(
-			commerceOrderItem.getCommerceOrderItemId());
+			userId, commerceOrderItem.getCommerceOrderItemId());
 
 		// Commerce order item
 
@@ -1360,9 +1364,7 @@ public class CommerceOrderItemLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			commerceOrderItem.getCommerceOrderItemId());
 
-		_updateWorkflow(
-			commerceOrderItem.getCommerceOrder(),
-			ServiceContextThreadLocal.getServiceContext());
+		_updateWorkflow(userId, commerceOrderItem.getCommerceOrder());
 
 		return commerceOrderItem;
 	}
@@ -2142,7 +2144,7 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private CommerceOrderItem _updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity, String json,
+			long userId, long commerceOrderItemId, int quantity, String json,
 			CommerceProductPrice commerceProductPrice,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
@@ -2160,11 +2162,10 @@ public class CommerceOrderItemLocalServiceImpl
 				serviceContext.getAttribute("validateOrder"), true));
 
 		_updateBookedQuantity(
-			serviceContext.getUserId(), commerceOrderItem,
-			commerceOrderItem.getBookedQuantityId(), quantity,
-			commerceOrderItem.getQuantity());
+			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
+			quantity, commerceOrderItem.getQuantity());
 
-		commerceOrder = _updateWorkflow(commerceOrder, serviceContext);
+		commerceOrder = _updateWorkflow(userId, commerceOrder);
 
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setQuantity(quantity);
@@ -2202,7 +2203,7 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private CommerceOrderItem _updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity, String json,
+			long userId, long commerceOrderItemId, int quantity, String json,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2219,11 +2220,10 @@ public class CommerceOrderItemLocalServiceImpl
 				serviceContext.getAttribute("validateOrder"), true));
 
 		_updateBookedQuantity(
-			serviceContext.getUserId(), commerceOrderItem,
-			commerceOrderItem.getBookedQuantityId(), quantity,
-			commerceOrderItem.getQuantity());
+			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
+			quantity, commerceOrderItem.getQuantity());
 
-		_updateWorkflow(commerceOrder, serviceContext);
+		_updateWorkflow(userId, commerceOrder);
 
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setQuantity(quantity);
@@ -2233,7 +2233,7 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private CommerceOrder _updateWorkflow(
-			CommerceOrder commerceOrder, ServiceContext serviceContext)
+			long userId, CommerceOrder commerceOrder)
 		throws PortalException {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
@@ -2244,9 +2244,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if ((workflowDefinitionLink != null) && commerceOrder.isApproved()) {
 			return _commerceOrderLocalService.updateStatus(
-				serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext,
-				Collections.emptyMap());
+				userId, commerceOrder.getCommerceOrderId(),
+				WorkflowConstants.STATUS_DRAFT, Collections.emptyMap());
 		}
 
 		return commerceOrder;

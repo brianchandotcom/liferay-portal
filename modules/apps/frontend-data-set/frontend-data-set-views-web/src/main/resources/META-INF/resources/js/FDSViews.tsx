@@ -302,7 +302,7 @@ const FDSViews = ({
 
 	return (
 		<FrontendDataSet
-			apiURL={`${fdsEntriesAPIURL}/${fdsEntryId}/${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
+			apiURL={`${fdsViewsAPIURL}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 			creationMenu={creationMenu}
 			id={`${namespace}FDSViews`}
 			itemsActions={[

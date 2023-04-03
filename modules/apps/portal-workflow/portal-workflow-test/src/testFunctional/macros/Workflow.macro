@@ -23,20 +23,22 @@ definition {
 		}
 
 		for (var workflowResourceValue : list "Blogs Entry,Calendar Event,Comment,Content Page,Knowledge Base Article,Message Boards Message,Page Revision,Web Content Article,Wiki Page") {
-			AssertClick.pauseAssertTextClickAt(
-				key_rowEntry = ${workflowResourceValue},
-				locator1 = "Button#EDIT_ROW",
-				value1 = "Edit");
+			if (IsElementNotPresent(assetType = ${workflowResourceValue}, locator1 = "WorkflowConfiguration#ASSET_TYPE_WORKFLOW_ASSIGNED", workflowAssigned = "No Workflow")) {
+				AssertClick.pauseAssertTextClickAt(
+					key_rowEntry = ${workflowResourceValue},
+					locator1 = "Button#EDIT_ROW",
+					value1 = "Edit");
 
-			var key_workflowResourceValue = ${workflowResourceValue};
+				var key_workflowResourceValue = ${workflowResourceValue};
 
-			Select(
-				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
-				value1 = ${noWorkflow});
+				Select(
+					locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
+					value1 = ${noWorkflow});
 
-			AssertClick(
-				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SAVE",
-				value1 = "Save");
+				AssertClick(
+					locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SAVE",
+					value1 = "Save");
+			}
 		}
 	}
 

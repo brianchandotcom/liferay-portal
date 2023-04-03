@@ -16,6 +16,9 @@ package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -29,7 +32,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -87,7 +89,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +100,6 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -108,7 +108,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -369,13 +368,34 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		Filter filter = bundleContext.createFilter(
-			"(" + JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true)");
+		_entityClassNameServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, null,
+				"(" + JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true)",
+				new PropertyServiceReferenceMapper<>("component.name"),
+				new ServiceTrackerCustomizer<Object, String>() {
 
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, filter, new JaxRsResourceTrackerCustomizer());
+					@Override
+					public String addingService(
+						ServiceReference<Object> serviceReference) {
 
-		_serviceTracker.open();
+						return (String)serviceReference.getProperty(
+							"entity.class.name");
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<Object> serviceReference,
+						String entityClassName) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<Object> serviceReference,
+						String entityClassName) {
+					}
+
+				});
 
 		_trackedOpenAPIContributors = ServiceTrackerListFactory.open(
 			bundleContext, OpenAPIContributor.class);
@@ -383,8 +403,9 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
 		_trackedOpenAPIContributors.close();
+
+		_entityClassNameServiceTrackerMap.close();
 	}
 
 	private static String _getUpdatedReference(
@@ -533,8 +554,9 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		Set<String> classNames = new HashSet<>();
 
 		for (Class<?> resourceClass : resourceClasses) {
-			String entryClassName = _entityClassNames.get(
-				resourceClass.getName());
+			String entryClassName =
+				_entityClassNameServiceTrackerMap.getService(
+					resourceClass.getName());
 
 			if (entryClassName != null) {
 				classNames.add(entryClassName);
@@ -1397,8 +1419,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	private final Map<String, String> _entityClassNames =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, String> _entityClassNameServiceTrackerMap;
 
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
@@ -1406,42 +1427,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private Portal _portal;
 
-	private ServiceTracker<?, ?> _serviceTracker;
 	private ServiceTrackerList<OpenAPIContributor> _trackedOpenAPIContributors;
-
-	private class JaxRsResourceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, String> {
-
-		@Override
-		public String addingService(ServiceReference<Object> serviceReference) {
-			String componentName = (String)serviceReference.getProperty(
-				"component.name");
-			String entityClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
-
-			if (Validator.isNull(componentName) ||
-				Validator.isNull(entityClassName)) {
-
-				return null;
-			}
-
-			_entityClassNames.put(componentName, entityClassName);
-
-			return componentName;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Object> serviceReference, String componentName) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Object> serviceReference, String componentName) {
-
-			_entityClassNames.remove(componentName);
-		}
-
-	}
 
 }

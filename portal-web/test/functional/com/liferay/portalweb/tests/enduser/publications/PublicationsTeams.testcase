@@ -5,6 +5,7 @@ definition {
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testray.component.names = "Site Teams";
 	property testray.main.component.name = "Publications";
 
 	setUp {

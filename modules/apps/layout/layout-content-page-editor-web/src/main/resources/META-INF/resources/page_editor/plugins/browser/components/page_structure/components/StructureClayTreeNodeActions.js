@@ -43,9 +43,9 @@ import {
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
-export default function StructureTreeNodeActions({
+export default function StructureClayTreeNodeActions({
 	item,
-	setEditingName,
+	setEditingNodeId,
 	visible,
 }) {
 	const [active, setActive] = useState(false);
@@ -102,7 +102,7 @@ export default function StructureTreeNodeActions({
 					<ActionList
 						item={item}
 						setActive={updateActive}
-						setEditingName={setEditingName}
+						setEditingNodeId={setEditingNodeId}
 						setOpenSaveModal={setOpenSaveModal}
 					/>
 				)}
@@ -110,7 +110,7 @@ export default function StructureTreeNodeActions({
 
 			{openSaveModal && (
 				<SaveFragmentCompositionModal
-					itemId={item.itemId}
+					itemId={item.id}
 					onCloseModal={() => setOpenSaveModal(false)}
 				/>
 			)}
@@ -118,9 +118,9 @@ export default function StructureTreeNodeActions({
 	);
 }
 
-const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
+const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
-	const hasRequiredChild = useHasRequiredChild(item.itemId);
+	const hasRequiredChild = useHasRequiredChild(item.id);
 	const selectItem = useSelectItem();
 	const widgets = useSelector((state) => state.widgets);
 
@@ -147,7 +147,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 				action: () => {
 					updateItemStyle({
 						dispatch,
-						itemId: item.itemId,
+						itemId: item.id,
 						selectedViewportSize,
 						styleName: 'display',
 						styleValue: isHidden ? 'block' : 'none',
@@ -190,7 +190,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 				action: () =>
 					dispatch(
 						duplicateItem({
-							itemId: item.itemId,
+							itemId: item.id,
 							selectItem,
 						})
 					),
@@ -202,7 +202,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 		if (canBeRenamed(item)) {
 			items.push({
 				action: () => {
-					setEditingName(true);
+					setEditingNodeId(item.id);
 				},
 				label: Liferay.Language.get('rename'),
 			});
@@ -217,7 +217,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 				action: () =>
 					dispatch(
 						deleteItem({
-							itemId: item.itemId,
+							itemId: item.id,
 							selectItem,
 						})
 					),
@@ -239,7 +239,7 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 		widgets,
 		setOpenSaveModal,
 		isHidden,
-		setEditingName,
+		setEditingNodeId,
 	]);
 
 	return (

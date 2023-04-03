@@ -156,9 +156,9 @@ patterns start relative to the workspace root directory.
 Examples:
 ```
 liferay.workspace.dir.excludes.globs=\
-	modules/**/*-test,\
+	**/some-wip-project,\
 	dependencies/**,\
-	**/some-wip-project
+	modules/**/*-test
 ```
 
 $h4 liferay.workspace.docker.local.registry.address

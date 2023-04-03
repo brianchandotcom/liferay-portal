@@ -1,4 +1,5 @@
 liferay-jethr0-oauth-application-headless-server:
+    homePageURL: http://localhost:58081
     name: Liferay Jethr0 OAuth Application Headless Server
     scopes:
         - C_Build.everything

@@ -23,7 +23,6 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 
@@ -112,7 +111,17 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 			});
 
-		FileSystem fileSystem = FileSystems.getDefault();
+		String absolutePath = rootDir.getAbsolutePath();
+
+		if (File.separatorChar == '\\') {
+			absolutePath = absolutePath.replace('\\', '/');
+		}
+
+		String rootAbsolutePath = absolutePath;
+
+		Path rootDirPath = rootDir.toPath();
+
+		FileSystem fileSystem = rootDirPath.getFileSystem();
 
 		gradle.afterProject(
 			project -> {
@@ -130,7 +139,7 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 				for (String glob : workspaceExtension.getDirExcludesGlobs()) {
 					PathMatcher pathMatcher = fileSystem.getPathMatcher(
-						String.format("glob:%s/%s", rootDir.getPath(), glob));
+						"glob:" + rootAbsolutePath + '/' + glob);
 
 					if (!pathMatcher.matches(path)) {
 						continue;

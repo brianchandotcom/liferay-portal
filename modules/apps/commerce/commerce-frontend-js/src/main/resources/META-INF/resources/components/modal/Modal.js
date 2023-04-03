@@ -35,6 +35,7 @@ function Modal(props) {
 	const [title, setTitle] = useState(props.title);
 	const [url, setUrl] = useState(props.url);
 	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
+	const [addToCart, setAddToCart] = useState(false);
 
 	const {observer, onClose: close} = useModal({
 		onClose: (notification) => {
@@ -68,8 +69,12 @@ function Modal(props) {
 				setTitle(data.title);
 			}
 
-			if (!data.size) {
-				setSize(INITIAL_MODAL_SIZE);
+			if (data.size) {
+				setSize(data.size);
+			}
+
+			if (data.addToCart) {
+				setAddToCart(true);
 			}
 		}
 
@@ -86,6 +91,10 @@ function Modal(props) {
 			}
 			else {
 				close(successNotification);
+			}
+
+			if (addToCart) {
+				setAddToCart(false);
 			}
 		}
 
@@ -110,7 +119,7 @@ function Modal(props) {
 		}
 
 		return () => cleanUpListeners();
-	}, [close, props.id, visible]);
+	}, [addToCart, close, props.id, visible]);
 
 	useEffect(() => {
 		setOnClose(() => props.onClose);
@@ -134,7 +143,11 @@ function Modal(props) {
 							maxHeight: '100%',
 						}}
 					>
-						<iframe src={url} title={title} />
+						<iframe
+							data-add-to-cart={addToCart}
+							src={url}
+							title={title}
+						/>
 
 						{loading && (
 							<div className="loader-container">

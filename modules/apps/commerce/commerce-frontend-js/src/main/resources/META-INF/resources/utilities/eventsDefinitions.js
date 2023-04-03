@@ -12,6 +12,7 @@
  * details.
  */
 
+export const ADD_ITEM_TO_CART = 'add-new-item-to-cart';
 export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
 export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
 export const CLOSE_MODAL = 'close-modal';

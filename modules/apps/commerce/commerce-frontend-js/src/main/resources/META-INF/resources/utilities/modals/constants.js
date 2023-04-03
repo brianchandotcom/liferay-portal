@@ -13,6 +13,7 @@
  */
 
 const LARGE = 'lg';
+const MEDIUM = 'md';
 const SMALL = 'sm';
 
 export const CLAY_MODAL_SIZES_MAP = {
@@ -29,3 +30,5 @@ export const MODAL_HEIGHT_MAP = {
 };
 
 export const INITIAL_MODAL_SIZE = LARGE;
+export const MEDIUM_MODAL_SIZE = MEDIUM;
+export const SMALL_MODAL_SIZE = SMALL;

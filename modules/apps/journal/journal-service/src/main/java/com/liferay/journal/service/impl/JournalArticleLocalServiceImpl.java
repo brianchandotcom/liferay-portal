@@ -6122,15 +6122,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void checkArticlesByExpirationDate(
-			Date expirationDate, long checkInterval)
-		throws PortalException {
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> checkArticlesByExpirationDate(
-				companyId, expirationDate, checkInterval));
-	}
-
-	protected void checkArticlesByExpirationDate(
 			long companyId, Date expirationDate, long checkInterval)
 		throws PortalException {
 
@@ -6151,13 +6142,6 @@ public class JournalArticleLocalServiceImpl
 		_companyPreviousCheckDate.computeIfAbsent(
 			companyId,
 			key -> new Date(expirationDate.getTime() - checkInterval));
-	}
-
-	protected void checkArticlesByReviewDate(Date reviewDate)
-		throws PortalException {
-
-		checkArticlesByReviewDate(
-			CompanyThreadLocal.getCompanyId(), reviewDate);
 	}
 
 	protected void checkArticlesByReviewDate(long companyId, Date reviewDate)

@@ -158,7 +158,8 @@ public class DLViewEntryHistoryDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_renderRequest, "redirect");
+		_redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(_renderRequest, "redirect"));
 
 		return _redirect;
 	}

@@ -234,7 +234,8 @@ public class DLViewFileEntryDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_renderRequest, "redirect");
+		_redirect = _portal.escapeRedirect(
+			ParamUtil.getString(_renderRequest, "redirect"));
 
 		if (Validator.isNotNull(_redirect)) {
 			return _redirect;

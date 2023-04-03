@@ -136,12 +136,14 @@ public class WorkspacePlugin implements Plugin<Settings> {
 						continue;
 					}
 
-					Logger projectLogger = project.getLogger();
+					Logger logger = project.getLogger();
 
-					projectLogger.info(
-						"Disabling tasks for project {} because it matches " +
-							"the exclude pattern {}.",
-						project.getPath(), glob);
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Disabling tasks for {} because it matches the " +
+								"exclude pattern {}.",
+							project.getPath(), glob);
+					}
 
 					for (Task task : project.getTasks()) {
 						task.setEnabled(false);

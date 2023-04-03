@@ -14,7 +14,6 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.util.LiferayOAuthConfiguration;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.jethr0.util.ThreadUtil;
 
@@ -31,6 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -57,8 +60,7 @@ public class BaseRelationshipDALO {
 				).contentType(
 					MediaType.APPLICATION_JSON
 				).header(
-					"Authorization",
-					_liferayOAuthConfiguration.getAuthorization()
+					"Authorization", _getAuthorization()
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -112,8 +114,7 @@ public class BaseRelationshipDALO {
 				).accept(
 					MediaType.APPLICATION_JSON
 				).header(
-					"Authorization",
-					_liferayOAuthConfiguration.getAuthorization()
+					"Authorization", _getAuthorization()
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -172,8 +173,7 @@ public class BaseRelationshipDALO {
 					).accept(
 						MediaType.APPLICATION_JSON
 					).header(
-						"Authorization",
-						_liferayOAuthConfiguration.getAuthorization()
+						"Authorization", _getAuthorization()
 					).retrieve(
 					).bodyToMono(
 						String.class
@@ -229,6 +229,38 @@ public class BaseRelationshipDALO {
 		return jsonObjects;
 	}
 
+	private String _getAuthorization() {
+		Class<?> clazz = getClass();
+
+		OAuth2AuthorizeRequest.Builder oAuth2AuthorizeRequestBuilder =
+			OAuth2AuthorizeRequest.withClientRegistrationId(
+				_liferayOAuthApplicationExternalReferenceCodes
+			).principal(
+				clazz.getName()
+			);
+
+		OAuth2AuthorizedClient oAuth2AuthorizedClient =
+			_authorizedClientServiceOAuth2AuthorizedClientManager.authorize(
+				oAuth2AuthorizeRequestBuilder.build());
+
+		if (oAuth2AuthorizedClient == null) {
+			_log.error("Unable to get OAuth 2 authorized client");
+
+			return null;
+		}
+
+		OAuth2AccessToken oAuth2AccessToken =
+			oAuth2AuthorizedClient.getAccessToken();
+
+		if (oAuth2AccessToken == null) {
+			_log.error("Unable to get OAuth 2 access token");
+
+			return null;
+		}
+
+		return "Bearer " + oAuth2AccessToken.getTokenValue();
+	}
+
 	private static final long _RETRY_COUNT = 3;
 
 	private static final long _RETRY_DELAY_DURATION = 1000;
@@ -237,7 +269,11 @@ public class BaseRelationshipDALO {
 		BaseRelationshipDALO.class);
 
 	@Autowired
-	private LiferayOAuthConfiguration _liferayOAuthConfiguration;
+	private AuthorizedClientServiceOAuth2AuthorizedClientManager
+		_authorizedClientServiceOAuth2AuthorizedClientManager;
+
+	@Value("${liferay.oauth.application.external.reference.codes}")
+	private String _liferayOAuthApplicationExternalReferenceCodes;
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;

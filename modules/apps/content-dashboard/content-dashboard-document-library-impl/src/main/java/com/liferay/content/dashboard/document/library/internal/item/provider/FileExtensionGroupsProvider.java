@@ -200,10 +200,9 @@ public class FileExtensionGroupsProvider {
 		List<String> extensions = new ArrayList<>();
 
 		for (String mimeType : mimeTypes) {
-			Set<String> extensionsMimeTypes = _mimeTypes.getExtensions(
-				mimeType);
+			for (String extensionsMimeType :
+					_mimeTypes.getExtensions(mimeType)) {
 
-			for (String extensionsMimeType : extensionsMimeTypes) {
 				String extension = extensionsMimeType.replaceAll(
 					"^\\.", StringPool.BLANK);
 

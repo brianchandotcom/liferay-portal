@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODIFIED_FACET_SPECIFIC_ORDER</td>
+	<td>//div[contains(@id,'ModifiedFacet')]//li[${resultOrder}]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_BAR_WIDGET</td>
 	<td>//input[not(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
 	<td></td>

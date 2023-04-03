@@ -276,7 +276,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
-	public void testGetRelatedCustomObjectsWhenRelationExists()
+	public void testGetRelatedCustomObjectEntriesWhenRelationExists()
 		throws Exception {
 
 		// Many to many relationships
@@ -318,7 +318,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
-	public void testGetRelatedCustomObjectsWithPagination() throws Exception {
+	public void testGetRelatedCustomObjectEntriesWithPagination()
+		throws Exception {
 
 		// Many to many relationships
 
@@ -359,7 +360,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
-	public void testGetRelatedObjectsWhenRelationDoesNotExist()
+	public void testGetRelatedObjectEntriesWhenRelationDoesNotExist()
 		throws Exception {
 
 		Assert.assertEquals(

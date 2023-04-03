@@ -183,7 +183,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testDeleteManyToManySystemObjectRelatedObjectNotFound()
+	public void testDeleteManyToManySystemObjectRelatedObjectEntryNotFound()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -348,7 +348,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testDeleteOneToManySystemObjectRelatedObjectNotFound()
+	public void testDeleteOneToManySystemObjectRelatedObjectEntryNotFound()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -411,7 +411,9 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetSystemObjectNotFoundRelatedObjects() throws Exception {
+	public void testGetNotFoundSystemObjectRelatedObjectEntries()
+		throws Exception {
+
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 		Long irrelevantUserId = RandomTestUtil.randomLong();
@@ -436,7 +438,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetSystemObjectRelatedObjects() throws Exception {
+	public void testGetSystemObjectRelatedObjectEntries() throws Exception {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
@@ -467,7 +469,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetSystemObjectRelatedObjectsWithPagination()
+	public void testGetSystemObjectRelatedObjectEntriesWithPagination()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =

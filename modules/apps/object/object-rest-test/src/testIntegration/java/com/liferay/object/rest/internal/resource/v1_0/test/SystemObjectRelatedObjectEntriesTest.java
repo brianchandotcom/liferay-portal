@@ -73,7 +73,7 @@ import org.springframework.http.HttpStatus;
  * @author Carlos Correa
  */
 @RunWith(Arquillian.class)
-public class SystemObjectRelatedObjectsTest {
+public class SystemObjectRelatedObjectEntriesTest {
 
 	@ClassRule
 	@Rule
@@ -135,7 +135,9 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	@Test
-	public void testGetManyToManySystemObjectRelatedObjects() throws Exception {
+	public void testGetManyToManySystemObjectRelatedObjectEntries()
+		throws Exception {
+
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
@@ -163,7 +165,9 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	@Test
-	public void testGetManyToOneSystemObjectRelatedObjects() throws Exception {
+	public void testGetManyToOneSystemObjectRelatedObjectEntries()
+		throws Exception {
+
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
@@ -176,7 +180,9 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	@Test
-	public void testGetNotFoundSystemObjectRelatedObjects() throws Exception {
+	public void testGetNotFoundSystemObjectRelatedObjectEntries()
+		throws Exception {
+
 		String name = StringUtil.randomId();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
@@ -186,7 +192,9 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	@Test
-	public void testGetOneToManySystemObjectRelatedObjects() throws Exception {
+	public void testGetOneToManySystemObjectRelatedObjectEntries()
+		throws Exception {
+
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
 			_objectEntry.getPrimaryKey(),

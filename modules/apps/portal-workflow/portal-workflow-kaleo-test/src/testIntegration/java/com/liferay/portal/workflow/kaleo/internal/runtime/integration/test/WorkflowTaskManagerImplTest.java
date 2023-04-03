@@ -645,8 +645,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	}
 
 	@Test
-	public void testApproveScriptAssignmentOrganizationAndSiteReviewer()
-		throws Exception {
+	public void testScriptedAssignment() throws Exception {
+
+		// Roles Scripted Assignment
 
 		Organization organization = _createOrganization(true);
 
@@ -688,6 +689,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 
+		// User Scripted Assignment
+
 		_activateWorkflow(
 			0, BlogsEntry.class.getName(), 0, 0, _SCRIPTED_SINGLE_APPROVER_2,
 			1);
@@ -713,6 +716,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			WorkflowConstants.STATUS_APPROVED, blogsEntry.getStatus());
 
 		_deactivateWorkflow(0, BlogsEntry.class.getName(), 0, 0);
+
+		// Users Scripted Assignment
 
 		_activateWorkflow(
 			0, BlogsEntry.class.getName(), 0, 0, _SCRIPTED_SINGLE_APPROVER_2,

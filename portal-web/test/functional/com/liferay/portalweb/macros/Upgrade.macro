@@ -5791,6 +5791,28 @@ definition {
 			value1 = "emailAddress");
 	}
 
+	macro ViewSearchBarWidgetTemplate {
+		Navigator.openURL();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "//label[@class='control-label']",
+			value1 = "Start filtering");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		NavigationMenusAdmin.viewDisplayTemplate(displayTemplate = "Search Bar Test ADT");
+
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_tableEntry = "Search Bar Test ADT",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+	}
+
 	macro viewSearchPortletsConfiguration {
 		Navigator.gotoSitePage(
 			pageName = "Site Page",

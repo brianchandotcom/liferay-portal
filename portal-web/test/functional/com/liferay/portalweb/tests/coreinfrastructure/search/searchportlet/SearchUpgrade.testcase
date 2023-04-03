@@ -256,6 +256,15 @@ definition {
 	}
 
 	@priority = 5
+	test ViewSearchBarWidgetTemplateArchive7310 {
+		property data.archive.type = "data-archive-search-bar-widget-template";
+		property portal.version = "7.3.10";
+		property test.run.environment = "EE";
+
+		Upgrade.ViewSearchBarWidgetTemplate();
+	}
+
+	@priority = 5
 	test ViewSearchPortletsConfigurationArchive713 {
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";

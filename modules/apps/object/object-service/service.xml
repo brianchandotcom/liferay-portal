@@ -843,6 +843,7 @@
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionParameters</exception>
 		<exception>ObjectActionTriggerKey</exception>
+		<exception>ObjectDefinition</exception>
 		<exception>ObjectDefinitionAccountEntryRestricted</exception>
 		<exception>ObjectDefinitionAccountEntryRestrictedObjectFieldId</exception>
 		<exception>ObjectDefinitionActive</exception>

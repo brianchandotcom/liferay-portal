@@ -25,12 +25,19 @@ function formatCartItem(cpInstance) {
 	};
 }
 
-export async function addToCart(cpInstances, cartId, channel, accountId) {
+export async function addToCart(
+	cpInstances,
+	cartId,
+	channel,
+	accountId,
+	orderTypeId
+) {
 	if (!cartId) {
 		const newCart = await CartResource.createCartByChannelId(channel.id, {
 			accountId,
 			cartItems: cpInstances.map(formatCartItem),
 			currencyCode: channel.currencyCode,
+			orderTypeId,
 		});
 
 		Liferay.fire(CURRENT_ORDER_UPDATED, {order: newCart});

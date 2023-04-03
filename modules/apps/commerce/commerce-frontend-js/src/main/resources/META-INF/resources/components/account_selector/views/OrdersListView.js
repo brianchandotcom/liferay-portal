@@ -19,6 +19,7 @@ import React, {useMemo, useRef} from 'react';
 import ServiceProvider from '../../../ServiceProvider/index';
 import {OPEN_MODAL} from '../../../utilities/eventsDefinitions';
 import {liferayNavigate} from '../../../utilities/index';
+import {MEDIUM_MODAL_SIZE} from '../../../utilities/modals/constants';
 import Modal from '../../modal/Modal';
 import OrdersTable from '../OrdersTable';
 import {VIEWS} from '../util/constants';
@@ -103,6 +104,7 @@ function OrdersListView({
 						showOrderTypeModal
 							? Liferay.fire(OPEN_MODAL, {
 									id: `${namespace}add-order-modal`,
+									size: MEDIUM_MODAL_SIZE,
 							  })
 							: liferayNavigate(createOrderURL)
 					}

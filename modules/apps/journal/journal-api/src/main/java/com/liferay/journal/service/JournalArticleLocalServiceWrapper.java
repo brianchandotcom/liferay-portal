@@ -353,6 +353,17 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
+	 * Checks all web content articles by handling their expirations and sending
+	 * review notifications based on their current workflow.
+	 */
+	@Override
+	public void checkArticles(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_journalArticleLocalService.checkArticles(companyId);
+	}
+
+	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values
 	 * from the old one and updating its article ID.

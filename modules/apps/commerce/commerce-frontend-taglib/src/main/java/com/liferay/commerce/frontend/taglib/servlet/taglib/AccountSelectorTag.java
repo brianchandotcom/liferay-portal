@@ -23,6 +23,7 @@ import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderM
 import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -120,10 +121,23 @@ public class AccountSelectorTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		_commerceOrderTypeLocalService =
-			ServletContextUtil.getCommerceOrderTypeLocalService();
+		try {
+			HttpServletRequest httpServletRequest = getRequest();
 
-		setServletContext(ServletContextUtil.getServletContext());
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
+			_commerceOrderTypeLocalService =
+				ServletContextUtil.getCommerceOrderTypeLocalService();
+
+			_commerceChannelId = commerceContext.getCommerceChannelId();
+
+			setServletContext(ServletContextUtil.getServletContext());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	public void setSpritemap(String spritemap) {
@@ -222,7 +236,8 @@ public class AccountSelectorTag extends IncludeTag {
 
 		int commerceOrderTypesCount =
 			_commerceOrderTypeLocalService.getCommerceOrderTypesCount(
-				themeDisplay.getCompanyId(), true);
+				PortalUtil.getCompanyId(httpServletRequest),
+				CommerceChannel.class.getName(), _commerceChannelId, true);
 
 		if (commerceOrderTypesCount > 1) {
 			httpServletRequest.setAttribute(

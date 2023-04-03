@@ -92,7 +92,7 @@ definition {
 		}
 		else if (isSet(kbDescription)) {
 			Type(
-				locator1 = "TextInput#DESCRIPTION",
+				locator1 = "TextArea#DESCRIPTION",
 				value1 = ${kbDescription});
 		}
 		else {

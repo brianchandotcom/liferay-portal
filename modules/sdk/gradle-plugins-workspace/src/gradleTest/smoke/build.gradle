@@ -3,6 +3,7 @@ import com.liferay.gradle.plugins.gulp.ExecuteGulpTask
 apply plugin: "com.liferay.gulp"
 
 node {
+	nodeVersion = "8.9.0"
 	useNpm = true
 }
 

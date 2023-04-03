@@ -23,6 +23,11 @@
 	<td>//span[contains(text(),'${changeAppLanguageTo}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TRANSLATED_TAB_INDEX</td>
+	<td>xpath=(//*[@id='translationManager']//button[span[text()='${key_language}']])[${key_index}]</td>
+	<td></td>
+</tr>
 
 <!--FIELDS_SIDEBAR-->
 

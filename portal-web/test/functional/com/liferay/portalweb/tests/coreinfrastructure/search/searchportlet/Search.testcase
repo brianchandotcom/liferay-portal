@@ -1378,6 +1378,67 @@ definition {
 	}
 
 	@priority = 3
+	test CanOrderModifiedFacetRanges {
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		task ("Add and enable a new modified facet label to have no assets") {
+			Portlet.gotoPortletOptions(
+				portletName = "Modified Facet",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			Click(locator1 = "Button#ADD_ROW");
+
+			Type(
+				key_fieldLabel = "Label",
+				locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+				value1 = "Past 23 Hours");
+
+			Type(
+				key_fieldLabel = "Range",
+				locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+				value1 = "[past-24-hours TO past-hour]");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+
+			Refresh();
+		}
+
+		task ("Assert the order of modified facet by Ranges Configuration by default") {
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(
+				facetList = "Past Hour,Past 23 Hours,Past 24 Hours,Past Week,Past Month,Past Year,Custom Range…",
+				portletName = "Modified Facet");
+		}
+
+		task ("Assert the order of modified facet by Term Frequency Descending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Modified Facet",
+				sortOption = "Term Frequency Descending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(
+				facetList = "Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Past 23 Hours,Custom Range…",
+				portletName = "Modified Facet");
+		}
+
+		task ("Assert the order of modified facet by Term Frequency Ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Modified Facet",
+				sortOption = "Term Frequency Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(
+				facetList = "Past 23 Hours,Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Custom Range…",
+				portletName = "Modified Facet");
+		}
+	}
+
+	@priority = 3
 	test CanOrderSiteFacetTerms {
 		task ("Add Sites") {
 			for (var siteName : list "Sales,Community,Product,Engineering") {

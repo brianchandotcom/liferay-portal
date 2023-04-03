@@ -98,7 +98,7 @@ public class DisplayPageRendererUtil {
 					setRenderedContentValue(
 						() -> {
 							if (!dtoConverterContext.containsValue(
-									uriInfo, "renderedContentValue")) {
+									"renderedContentValue")) {
 
 								return null;
 							}

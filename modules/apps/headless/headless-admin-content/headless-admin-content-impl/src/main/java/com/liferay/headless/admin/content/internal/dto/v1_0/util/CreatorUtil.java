@@ -59,10 +59,7 @@ public class CreatorUtil {
 					});
 				setProfileURL(
 					() -> {
-						if (!dtoConverterContext.containsValue(
-								dtoConverterContext.getUriInfo(),
-								"profileURL")) {
-
+						if (!dtoConverterContext.containsValue("profileURL")) {
 							return null;
 						}
 

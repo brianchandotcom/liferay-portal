@@ -24,6 +24,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.exception.ObjectDefinitionException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -725,9 +726,7 @@ public class DefaultObjectEntryManagerImpl
 					objectDefinition, objectRelationship);
 
 			if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-				throw new UnsupportedOperationException(
-					"Nested object entries require a custom object " +
-						"definition or a modifiable system object definition");
+				throw new ObjectDefinitionException.MustBeModifiable();
 			}
 
 			ObjectEntryManager objectEntryManager =

@@ -159,7 +159,7 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationDateModified Test");
 
-			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd");
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd", "UTC");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
@@ -1283,7 +1283,7 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserDateModified Test");
 
-			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd");
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd", "UTC");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",

@@ -56,9 +56,7 @@ public class TaxonomyCategoryBriefUtil {
 
 		UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-		if (!dtoConverterContext.containsValue(
-				uriInfo, "embeddedTaxonomyCategory")) {
-
+		if (!dtoConverterContext.containsValue("embeddedTaxonomyCategory")) {
 			return null;
 		}
 

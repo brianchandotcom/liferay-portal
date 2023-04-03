@@ -35,7 +35,9 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface DTOConverterContext {
 
-	public default boolean containsValue(UriInfo uriInfo, String key) {
+	public default boolean containsValue(String key) {
+		UriInfo uriInfo = getUriInfo();
+
 		if (uriInfo == null) {
 			return false;
 		}

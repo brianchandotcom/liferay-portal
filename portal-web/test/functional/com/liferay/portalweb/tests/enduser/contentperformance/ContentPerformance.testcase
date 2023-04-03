@@ -1276,7 +1276,7 @@ definition {
 		task ("Check the value of engagement data") {
 			for (var channel : list "Referral,Social,Paid,Direct,Organic") {
 				ContentPerformance.viewTrafficViews(
-					key_numberViews = 0,
+					key_numberViews = "-",
 					trafficChannel = ${channel});
 			}
 		}

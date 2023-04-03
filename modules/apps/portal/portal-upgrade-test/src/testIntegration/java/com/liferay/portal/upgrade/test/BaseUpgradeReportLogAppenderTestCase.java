@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +44,7 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,6 +84,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED",
 			_originalUpgradeLogContextEnabled);
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT",
+			_originalDLStorageTimeout);
 	}
 
 	@Before
@@ -173,7 +180,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				Assert.assertEquals(1, finalTableCount);
 			}
 			else if (StringUtil.equalsIgnoreCase(
-						tableName, "UpgradeReportTable2")) {
+				tableName, "UpgradeReportTable2")) {
 
 				table2Exists = true;
 
@@ -197,6 +204,100 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	}
 
 	@Test
+	public void testGetDLStorageInfoAfterTimeout() throws Exception {
+		_appender.start();
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT", 1);
+
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
+
+				@Override
+				public void run() {
+					try {
+						long timeout = ReflectionTestUtil.getFieldValue(
+							PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT");
+
+						sleep(timeout + 5);
+					}
+					catch (InterruptedException interruptedException) {
+						throw new RuntimeException(interruptedException);
+					}
+				}
+
+			});
+
+		_appender.stop();
+
+		_assertReport(
+			"Unable to determine the document library storage size because " +
+			"it is too large. You can check it manually");
+	}
+
+	@Test
+	public void testGetDLStorageInfoInGbBeforeTimeout() throws Exception {
+		_appender.start();
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT", 10);
+
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
+
+				@Override
+				public void run() {
+					ReflectionTestUtil.setFieldValue(
+						upgradeReport, "_documentLibrarySize", 1073742000);
+				}
+
+			});
+
+		_appender.stop();
+
+		_assertReport(
+			"The document library storage size is " +
+			LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetDLStorageInfoInMbBeforeTimeout() throws Exception {
+		_appender.start();
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT", 10);
+
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
+
+				@Override
+				public void run() {
+					ReflectionTestUtil.setFieldValue(
+						upgradeReport, "_documentLibrarySize", 1048576);
+				}
+
+			});
+
+		_appender.stop();
+
+		_assertReport(
+			"The document library storage size is " +
+			LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
+	}
+
+	@Test
 	public void testInfoEventsInOrder() throws Exception {
 		_appender.start();
 
@@ -207,14 +308,14 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process " + fasterUpgradeProcessName +
-				" in 10 ms");
+			" in 10 ms");
 
 		String slowerUpgradeProcessName =
 			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			"Completed upgrade process " + slowerUpgradeProcessName +
-				" in 20401 ms");
+			" in 20401 ms");
 
 		_appender.stop();
 
@@ -222,14 +323,14 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		Assert.assertTrue(
 			reportContent.indexOf(slowerUpgradeProcessName) <
-				reportContent.indexOf(fasterUpgradeProcessName));
+			reportContent.indexOf(fasterUpgradeProcessName));
 
 		String longestUpgradeProcessesValue = _getLogContextValue(
 			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertTrue(
 			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
-				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
+			longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
 	}
 
 	@Test
@@ -246,7 +347,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		log.info(
 			"Completed upgrade process com.liferay.portal.UpgradeTest in " +
-				"20401 ms");
+			"20401 ms");
 
 		_appender.stop();
 
@@ -413,6 +514,9 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
+
+		_originalDLStorageTimeout = ReflectionTestUtil.getFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT");
 	}
 
 	protected abstract String getFilePath();
@@ -464,7 +568,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		Pattern pattern = Pattern.compile(
 			"(?s)INFO - Upgrade report generated in " + file.getAbsolutePath() +
-				"\\n\\s+\\{(.+)\\}");
+			"\\n\\s+\\{(.+)\\}");
 
 		Matcher matcher = pattern.matcher(_getLogContextContent());
 
@@ -508,6 +612,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
+	private static long _originalDLStorageTimeout;
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static final Pattern _pattern = Pattern.compile(

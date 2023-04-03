@@ -1607,4 +1607,28 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172780. View the new styles of navigation menu management bar."
+	@priority = 3
+	test ViewStylesOfNavigationMenuManagementBar {
+		task ("Given a site designer has a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("When the site designer navigates to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Then the site designer sees the styles of navigation menu management bar") {
+			for (var text : list "Preview,Add") {
+				AssertVisible(locator1 = "//div[contains(@class,'component-tbar')]//button[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "xpath=(//li[contains(@class,'tbar-item')])[last()]//button[.//*[name()='svg'][contains(@class,'icon-cog')]]");
+		}
+	}
+
 }

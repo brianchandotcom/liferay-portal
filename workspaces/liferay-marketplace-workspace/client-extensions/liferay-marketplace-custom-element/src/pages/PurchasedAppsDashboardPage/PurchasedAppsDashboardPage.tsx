@@ -2,7 +2,11 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
-import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
+import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
+import {
+	AppProps,
+	DashboardTable,
+} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
 import {getCompanyId} from '../../liferay/constants';
 import {
@@ -12,6 +16,8 @@ import {
 	getSKUCustomFieldExpandoValue,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
+
+import './PurchasedAppsDashboardPage.scss';
 import {
 	initialAccountState,
 	initialDashboardNavigationItems,
@@ -67,6 +73,7 @@ export function PurchasedAppsDashboardPage() {
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
 	);
+	const [selectedApp, setSelectedApp] = useState<AppProps>();
 
 	const messages = {
 		description: 'Manage apps purchase from the Marketplace',
@@ -176,44 +183,52 @@ export function PurchasedAppsDashboardPage() {
 	}, [page, purchasedAppTable.pageSize, selectedAccount]);
 
 	return (
-		<DashboardPage
-			accountAppsNumber="0"
-			accountLogo={accountLogo}
-			accounts={accounts}
-			buttonMessage="Add Apps"
-			currentAccount={selectedAccount}
-			dashboardNavigationItems={dashboardNavigationItems}
-			messages={messages}
-			setDashboardNavigationItems={setDashboardNavigationItems}
-			setSelectedAccount={setSelectedAccount}
-		>
-			<DashboardTable<PurchasedAppProps>
-				emptyStateMessage={messages.emptyStateMessage}
-				items={purchasedAppTable.items}
-				tableHeaders={tableHeaders}
-			>
-				{(item) => (
-					<PurchasedAppsDashboardTableRow
-						item={item}
-						key={item.name}
-					/>
-				)}
-			</DashboardTable>
+		<div className="purchased-apps-dashboard-page-container">
+			<DashboardNavigation
+				accountAppsNumber="0"
+				accountIcon={accountLogo}
+				accounts={accounts}
+				currentAccount={selectedAccount}
+				dashboardNavigationItems={dashboardNavigationItems}
+				onSelectAppChange={setSelectedApp}
+				selectedApp={selectedApp}
+				setDashboardNavigationItems={setDashboardNavigationItems}
+				setSelectedAccount={setSelectedAccount}
+			/>
 
-			{purchasedAppTable.items.length ? (
-				<ClayPaginationBarWithBasicItems
-					active={page}
-					activeDelta={purchasedAppTable.pageSize}
-					defaultActive={1}
-					ellipsisBuffer={3}
-					ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
-					onActiveChange={setPage}
-					showDeltasDropDown={false}
-					totalItems={purchasedAppTable?.totalCount}
-				/>
-			) : (
-				<></>
-			)}
-		</DashboardPage>
+			<DashboardPage
+				buttonMessage="Add Apps"
+				dashboardNavigationItems={dashboardNavigationItems}
+				messages={messages}
+			>
+				<DashboardTable<PurchasedAppProps>
+					emptyStateMessage={messages.emptyStateMessage}
+					items={purchasedAppTable.items}
+					tableHeaders={tableHeaders}
+				>
+					{(item) => (
+						<PurchasedAppsDashboardTableRow
+							item={item}
+							key={item.name}
+						/>
+					)}
+				</DashboardTable>
+
+				{purchasedAppTable.items.length ? (
+					<ClayPaginationBarWithBasicItems
+						active={page}
+						activeDelta={purchasedAppTable.pageSize}
+						defaultActive={1}
+						ellipsisBuffer={3}
+						ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
+						onActiveChange={setPage}
+						showDeltasDropDown={false}
+						totalItems={purchasedAppTable?.totalCount}
+					/>
+				) : (
+					<></>
+				)}
+			</DashboardPage>
+		</div>
 	);
 }

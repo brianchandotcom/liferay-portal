@@ -1,6 +1,5 @@
-import {Dispatch, ReactNode, SetStateAction, useState} from 'react';
+import {Dispatch, ReactNode} from 'react';
 
-import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
@@ -16,13 +15,9 @@ export interface DashboardListItems {
 	items?: AppProps[];
 }
 
-type DashBoardPageProps = {
-	accountAppsNumber: string;
-	accountLogo: string;
-	accounts: Account[];
+interface DashBoardPageProps {
 	buttonMessage?: string;
 	children: ReactNode;
-	currentAccount: Account;
 	dashboardNavigationItems: DashboardListItems[];
 	messages: {
 		description: string;
@@ -33,41 +28,22 @@ type DashBoardPageProps = {
 		};
 		title: string;
 	};
-	setDashboardNavigationItems: Dispatch<SetStateAction<DashboardListItems[]>>;
-	setSelectedAccount: Dispatch<React.SetStateAction<Account>>;
-};
+	setSelectedApp?: (value: AppProps | undefined) => void;
+	selectedApp?: AppProps;
+}
 
 export function DashboardPage({
-	accountAppsNumber,
-	accountLogo,
-	accounts,
 	buttonMessage,
 	children,
-	currentAccount,
 	dashboardNavigationItems,
 	messages,
-	setDashboardNavigationItems,
-	setSelectedAccount,
+	selectedApp,
+	setSelectedApp,
 }: DashBoardPageProps) {
-	const [selectedApp, setSelectedApp] = useState<AppProps>();
-
 	return (
 		<div className="dashboard-page-container">
 			<div>
 				<div className="dashboard-page-body-container">
-					<DashboardNavigation
-						accountAppsNumber={accountAppsNumber}
-						accountIcon={accountLogo}
-						accounts={accounts}
-						currentAccount={currentAccount}
-						dashboardNavigationItems={dashboardNavigationItems}
-						onSelectAppChange={setSelectedApp}
-						setDashboardNavigationItems={
-							setDashboardNavigationItems
-						}
-						setSelectedAccount={setSelectedAccount}
-					/>
-
 					{selectedApp ? (
 						<AppDetailsPage
 							dashboardNavigationItems={dashboardNavigationItems}

@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.util.v1_0;
 
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 public class DiscountAccountGroupUtil {
 
 	public static CommerceDiscountCommerceAccountGroupRel
-			addCommerceDiscountCommerceAccountGroupRel(
-				CommerceAccountGroupService commerceAccountGroupService,
+			addCommerceDiscountAccountGroupRel(
+				AccountGroupService accountGroupService,
 				CommerceDiscountCommerceAccountGroupRelService
 					commerceDiscountCommerceAccountGroupRelService,
 				DiscountAccountGroup discountAccountGroup,
@@ -40,23 +40,20 @@ public class DiscountAccountGroupUtil {
 				ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceAccountGroup commerceAccountGroup;
+		AccountGroup accountGroup;
 
 		if (Validator.isNull(
 				discountAccountGroup.getAccountGroupExternalReferenceCode())) {
 
-			commerceAccountGroup =
-				commerceAccountGroupService.getCommerceAccountGroup(
-					discountAccountGroup.getAccountGroupId());
+			accountGroup = accountGroupService.getAccountGroup(
+				discountAccountGroup.getAccountGroupId());
 		}
 		else {
-			commerceAccountGroup =
-				commerceAccountGroupService.fetchByExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					discountAccountGroup.
-						getAccountGroupExternalReferenceCode());
+			accountGroup = accountGroupService.fetchByExternalReferenceCode(
+				serviceContext.getCompanyId(),
+				discountAccountGroup.getAccountGroupExternalReferenceCode());
 
-			if (commerceAccountGroup == null) {
+			if (accountGroup == null) {
 				String accountGroupExternalReferenceCode =
 					discountAccountGroup.getAccountGroupExternalReferenceCode();
 
@@ -69,8 +66,7 @@ public class DiscountAccountGroupUtil {
 		return commerceDiscountCommerceAccountGroupRelService.
 			addCommerceDiscountCommerceAccountGroupRel(
 				commerceDiscount.getCommerceDiscountId(),
-				commerceAccountGroup.getCommerceAccountGroupId(),
-				serviceContext);
+				accountGroup.getAccountGroupId(), serviceContext);
 	}
 
 }

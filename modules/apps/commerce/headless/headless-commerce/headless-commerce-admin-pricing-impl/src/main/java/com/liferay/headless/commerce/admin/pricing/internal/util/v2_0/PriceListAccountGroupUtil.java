@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.util.v2_0;
 
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.util.Validator;
 public class PriceListAccountGroupUtil {
 
 	public static CommercePriceListCommerceAccountGroupRel
-			addCommercePriceListCommerceAccountGroupRel(
-				CommerceAccountGroupService commerceAccountGroupService,
+			addCommercePriceListAccountGroupRel(
+				AccountGroupService accountGroupService,
 				CommercePriceListCommerceAccountGroupRelService
 					commercePriceListCommerceAccountGroupRelService,
 				PriceListAccountGroup priceListAccountGroup,
@@ -45,23 +45,20 @@ public class PriceListAccountGroupUtil {
 		ServiceContext serviceContext = serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());
 
-		CommerceAccountGroup commerceAccountGroup;
+		AccountGroup accountGroup;
 
 		if (Validator.isNull(
 				priceListAccountGroup.getAccountGroupExternalReferenceCode())) {
 
-			commerceAccountGroup =
-				commerceAccountGroupService.getCommerceAccountGroup(
-					priceListAccountGroup.getAccountGroupId());
+			accountGroup = accountGroupService.getAccountGroup(
+				priceListAccountGroup.getAccountGroupId());
 		}
 		else {
-			commerceAccountGroup =
-				commerceAccountGroupService.fetchByExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					priceListAccountGroup.
-						getAccountGroupExternalReferenceCode());
+			accountGroup = accountGroupService.fetchByExternalReferenceCode(
+				serviceContext.getCompanyId(),
+				priceListAccountGroup.getAccountGroupExternalReferenceCode());
 
-			if (commerceAccountGroup == null) {
+			if (accountGroup == null) {
 				String accountGroupExternalReferenceCode =
 					priceListAccountGroup.
 						getAccountGroupExternalReferenceCode();
@@ -75,7 +72,7 @@ public class PriceListAccountGroupUtil {
 		return commercePriceListCommerceAccountGroupRelService.
 			addCommercePriceListCommerceAccountGroupRel(
 				commercePriceList.getCommercePriceListId(),
-				commerceAccountGroup.getCommerceAccountGroupId(),
+				accountGroup.getAccountGroupId(),
 				GetterUtil.get(priceListAccountGroup.getOrder(), 0),
 				serviceContext);
 	}

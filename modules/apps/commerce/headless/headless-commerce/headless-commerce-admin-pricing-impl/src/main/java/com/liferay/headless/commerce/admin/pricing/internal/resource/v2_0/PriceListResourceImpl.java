@@ -15,8 +15,8 @@
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
@@ -349,12 +349,11 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 					continue;
 				}
 
-				PriceListAccountGroupUtil.
-					addCommercePriceListCommerceAccountGroupRel(
-						_commerceAccountGroupService,
-						_commercePriceListCommerceAccountGroupRelService,
-						priceListAccountGroup, commercePriceList,
-						_serviceContextHelper);
+				PriceListAccountGroupUtil.addCommercePriceListAccountGroupRel(
+					_accountGroupService,
+					_commercePriceListCommerceAccountGroupRelService,
+					priceListAccountGroup, commercePriceList,
+					_serviceContextHelper);
 			}
 		}
 
@@ -616,10 +615,10 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 	private AccountEntryService _accountEntryService;
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;

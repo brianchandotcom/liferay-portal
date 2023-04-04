@@ -14,7 +14,6 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
-import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
@@ -84,8 +83,7 @@ public class AccountGroupResourceImpl
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.AccountGroupDTOConverter)"
 	)
-	private DTOConverter<CommerceAccountGroup, AccountGroup>
-		_accountGroupDTOConverter;
+	private DTOConverter<AccountGroup, AccountGroup> _accountGroupDTOConverter;
 
 	@Reference
 	private CommerceDiscountCommerceAccountGroupRelService

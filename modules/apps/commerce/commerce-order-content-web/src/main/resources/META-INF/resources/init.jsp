@@ -31,8 +31,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.account.model.AccountEntry" %><%@
-page import="com.liferay.commerce.account.exception.NoSuchAccountException" %><%@
+<%@ page import="com.liferay.account.exception.NoSuchEntryException" %><%@
+page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
 page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@

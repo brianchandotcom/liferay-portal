@@ -462,16 +462,16 @@ definition {
 			PageEditor.reorderSets(
 				action = "Move Up",
 				navTab = "Fragments",
-				setName = "Cookie Banner");
+				setName = "Content Display");
 
 			PageEditor.reorderSets(
 				action = "Move Up",
 				navTab = "Fragments",
-				setName = "Cookie Banner");
+				setName = "Content Display");
 
 			AssertVisible(
 				index = 1,
-				key_panel = "Cookie Banner",
+				key_panel = "Content Display",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 
@@ -487,7 +487,7 @@ definition {
 
 			AssertVisible(
 				index = 2,
-				key_panel = "Cookie Banner",
+				key_panel = "Content Display",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}
@@ -522,7 +522,7 @@ definition {
 		task ("When the page creator makes interactions with the Fragments and Widgets panel") {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
@@ -562,7 +562,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Fragments");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
@@ -606,7 +606,7 @@ definition {
 		task ("When the page creator makes interactions with the Fragments and Widgets panel") {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
@@ -646,7 +646,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Fragments");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");

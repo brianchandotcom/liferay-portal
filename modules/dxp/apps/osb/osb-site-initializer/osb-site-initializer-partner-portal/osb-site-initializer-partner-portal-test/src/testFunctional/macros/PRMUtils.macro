@@ -1,11 +1,30 @@
 definition {
 
-	macro addPRMSite {
+	macro addSite {
+		var siteTemplateName = "Liferay OSB Site Initializer Partner Portal";
+		var siteName = "Partner Portal";
+
 		Site.openSitesAdmin();
 
-		TeamExtranet.addSiteTemplateCP(
-			siteName = "Partner Portal",
-			siteTemplateName = "Liferay OSB Site Initializer Partner Portal");
+		if (IsElementPresent(key_tableEntry = "Partner Portal", locator1 = "LexiconTable#TABLE_ENTRY")) {
+			PRMUtils.tearDown();
+
+			Site.openSitesAdmin();
+		}
+
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = ${siteTemplateName});
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = ${siteName});
+
+		Button.clickAdd();
+
+		SelectFrameTop();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro assertPageTitle {
@@ -110,6 +129,10 @@ definition {
 
 	macro gotoPRM {
 		Navigator.openSiteURL(siteName = "Partner Portal");
+
+		while ((IsElementPresent(fragmentName = "paragraph", id = "element-text", index = 1, locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT")) && (maxIterations = "10")) {
+			Refresh();
+		}
 
 		if (IsElementPresent(locator1 = "PRMUtils#SIGN_IN")) {
 			Click(locator1 = "PRMUtils#SIGN_IN");

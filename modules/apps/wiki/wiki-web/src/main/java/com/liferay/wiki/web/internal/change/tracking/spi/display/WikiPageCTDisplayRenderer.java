@@ -17,8 +17,11 @@ package com.liferay.wiki.web.internal.change.tracking.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCardTag;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,8 +33,10 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.web.internal.frontend.taglib.clay.servlet.taglib.WikiPageAttachmentHorizontalCard;
 import com.liferay.wiki.web.internal.util.WikiUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -101,11 +106,44 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 
 		WikiPage wikiPage = displayContext.getModel();
 
-		return _wikiEngineRenderer.convert(
+		String content = _wikiEngineRenderer.convert(
 			wikiPage, viewPageURL, _getEditURL(httpServletRequest, wikiPage),
 			WikiUtil.getAttachmentURLPrefix(
 				themeDisplay.getPathMain(), themeDisplay.getPlid(),
 				wikiPage.getNodeId(), wikiPage.getTitle()));
+
+		List<FileEntry> fileEntries = wikiPage.getAttachmentsFileEntries();
+
+		if (fileEntries.isEmpty()) {
+			return content;
+		}
+
+		StringBundler sb = new StringBundler(content);
+
+		sb.append("<div class=\"page-attachments\"><h5>");
+		sb.append(_language.get(httpServletRequest, "attachments"));
+		sb.append("</h5><div class=\"row\">");
+
+		for (FileEntry fileEntry : fileEntries) {
+			sb.append("<div class=\"col-md-4\">");
+
+			HorizontalCardTag horizontalCardTag = new HorizontalCardTag();
+
+			horizontalCardTag.setHorizontalCard(
+				new WikiPageAttachmentHorizontalCard(
+					fileEntry, httpServletRequest));
+
+			sb.append(
+				horizontalCardTag.doTagAsString(
+					httpServletRequest,
+					displayContext.getHttpServletResponse()));
+
+			sb.append("</div>");
+		}
+
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	@Override
@@ -156,6 +194,9 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 			"title", wikiPage.getTitle()
 		).buildPortletURL();
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -69,7 +69,7 @@ public class SkuSubscriptionConfigurationResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find Sku with external reference code: " +
+				"Unable to find sku with external reference code: " +
 					externalReferenceCode);
 		}
 

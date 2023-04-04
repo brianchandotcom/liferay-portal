@@ -14,7 +14,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Open Segmentation Admin") {
@@ -1772,7 +1772,7 @@ definition {
 		}
 
 		task ("Add group and assign to the user") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			JSONGroup.assignUserToGroup(
 				groupName = "Test Site Name",
@@ -1820,7 +1820,7 @@ definition {
 		}
 
 		task ("Add group and assign to the user") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			JSONGroup.assignUserToGroup(
 				groupName = "Test Site Name",
@@ -1918,7 +1918,7 @@ definition {
 		}
 
 		task ("Add group and assign to the user") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			JSONGroup.assignUserToGroup(
 				groupName = "Test Site Name",
@@ -3177,7 +3177,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 		}

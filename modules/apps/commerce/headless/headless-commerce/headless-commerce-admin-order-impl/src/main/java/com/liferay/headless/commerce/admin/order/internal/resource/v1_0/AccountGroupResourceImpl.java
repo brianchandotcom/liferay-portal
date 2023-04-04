@@ -14,8 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.AccountGroup;
@@ -50,31 +49,25 @@ public class AccountGroupResourceImpl
 
 		COREntryRel corEntryRel = _corEntryRelService.getCOREntryRel(id);
 
-		CommerceAccountGroup commerceAccountGroup =
-			_commerceAccountGroupService.getCommerceAccountGroup(
-				corEntryRel.getClassPK());
+		AccountGroup accountGroup = _accountGroupService.getAccountGroup(
+			corEntryRel.getClassPK());
 
-		return _toAccountGroup(
-			commerceAccountGroup.getCommerceAccountGroupId());
+		return _toAccountGroup(accountGroup.getAccountGroupId());
 	}
 
-	private AccountGroup _toAccountGroup(long commerceAccountGroupId)
-		throws Exception {
-
+	private AccountGroup _toAccountGroup(long accountGroupId) throws Exception {
 		return _accountGroupDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				commerceAccountGroupId,
-				contextAcceptLanguage.getPreferredLocale()));
+				accountGroupId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.AccountGroupDTOConverter)"
 	)
-	private DTOConverter<CommerceAccountGroup, AccountGroup>
-		_accountGroupDTOConverter;
+	private DTOConverter<AccountGroup, AccountGroup> _accountGroupDTOConverter;
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference
 	private COREntryRelService _corEntryRelService;

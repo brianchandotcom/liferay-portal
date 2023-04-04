@@ -15,9 +15,8 @@
 package com.liferay.headless.commerce.admin.order.internal.util.v1_0;
 
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelService;
@@ -30,29 +29,26 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class OrderRuleAccountGroupUtil {
 
-	public static COREntryRel addCOREntryCommerceAccountGroupRel(
-			CommerceAccountGroupService commerceAccountGroupService,
+	public static COREntryRel addCOREntryAccountGroupRel(
+			AccountGroupService accountGroupService,
 			COREntryRelService corEntryRelService, COREntry corEntry,
 			OrderRuleAccountGroup orderRuleAccountGroup)
 		throws PortalException {
 
-		CommerceAccountGroup commerceAccountGroup = null;
+		AccountGroup accountGroup = null;
 
 		if (Validator.isNull(
 				orderRuleAccountGroup.getAccountGroupExternalReferenceCode())) {
 
-			commerceAccountGroup =
-				commerceAccountGroupService.getCommerceAccountGroup(
-					orderRuleAccountGroup.getAccountGroupId());
+			accountGroup = accountGroupService.getAccountGroup(
+				orderRuleAccountGroup.getAccountGroupId());
 		}
 		else {
-			commerceAccountGroup =
-				commerceAccountGroupService.fetchByExternalReferenceCode(
-					corEntry.getCompanyId(),
-					orderRuleAccountGroup.
-						getAccountGroupExternalReferenceCode());
+			accountGroup = accountGroupService.fetchByExternalReferenceCode(
+				corEntry.getCompanyId(),
+				orderRuleAccountGroup.getAccountGroupExternalReferenceCode());
 
-			if (commerceAccountGroup == null) {
+			if (accountGroup == null) {
 				String accountGroupExternalReferenceCode =
 					orderRuleAccountGroup.
 						getAccountGroupExternalReferenceCode();
@@ -64,8 +60,7 @@ public class OrderRuleAccountGroupUtil {
 		}
 
 		return corEntryRelService.addCOREntryRel(
-			AccountGroup.class.getName(),
-			commerceAccountGroup.getCommerceAccountGroupId(),
+			AccountGroup.class.getName(), accountGroup.getAccountGroupId(),
 			corEntry.getCOREntryId());
 	}
 

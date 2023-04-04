@@ -182,7 +182,7 @@ public abstract class BaseProcessorImpl
 					long[] longArray = new long[value.length];
 
 					for (int i = 0; i < longArray.length; i++) {
-						longArray[i] = GetterUtil.getLong(value[i]);
+						longArray[i] = Long.parseLong(value[i]);
 					}
 
 					biConsumer.accept(object, longArray);

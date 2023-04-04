@@ -2283,8 +2283,6 @@ definition {
 					}
 				}
 				else if (${listEntries} == 8) {
-					Click(locator1 = "Pagination#NEXT_LINK");
-
 					if (IsElementPresent(key_rowEntry = "com.liferay.portal.tools.service.builder.test.uad", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
 						Pagination.viewResults(results = "Showing 9 to 10 of 10 entries.");
 

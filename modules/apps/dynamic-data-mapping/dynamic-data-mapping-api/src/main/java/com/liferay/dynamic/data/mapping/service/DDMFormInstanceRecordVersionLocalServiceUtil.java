@@ -97,7 +97,7 @@ public class DDMFormInstanceRecordVersionLocalServiceUtil {
 	 */
 	public static DDMFormInstanceRecordVersion
 		deleteDDMFormInstanceRecordVersion(
-			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) throws PortalException {
 
 		return getService().deleteDDMFormInstanceRecordVersion(
 			ddmFormInstanceRecordVersion);

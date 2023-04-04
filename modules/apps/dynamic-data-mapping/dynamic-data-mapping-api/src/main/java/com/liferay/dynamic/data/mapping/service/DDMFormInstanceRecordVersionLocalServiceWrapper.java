@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -98,7 +99,7 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 */
 	@Override
 	public DDMFormInstanceRecordVersion deleteDDMFormInstanceRecordVersion(
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) throws PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			deleteDDMFormInstanceRecordVersion(ddmFormInstanceRecordVersion);

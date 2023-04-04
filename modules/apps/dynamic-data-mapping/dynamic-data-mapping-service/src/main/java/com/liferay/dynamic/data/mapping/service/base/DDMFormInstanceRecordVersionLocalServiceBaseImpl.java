@@ -151,7 +151,7 @@ public abstract class DDMFormInstanceRecordVersionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DDMFormInstanceRecordVersion deleteDDMFormInstanceRecordVersion(
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) throws PortalException {
 
 		return ddmFormInstanceRecordVersionPersistence.remove(
 			ddmFormInstanceRecordVersion);

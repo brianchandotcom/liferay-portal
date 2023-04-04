@@ -167,13 +167,13 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>MANAGE_ALL_ACCOUNTS</action-key>
+				<action-key>MANAGE_ACCOUNTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 			</supports>
 			<site-member-defaults/>
 			<guest-defaults/>
 			<guest-unsupported>
-				<action-key>MANAGE_ALL_ACCOUNTS</action-key>
+				<action-key>MANAGE_ACCOUNTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 			</guest-unsupported>
 		</permissions>

@@ -3,7 +3,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-BLOCKED",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-BLOCKED",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -13,7 +13,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -39,7 +39,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-DID-NOT-RUN",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-DID-NOT-RUN",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -49,7 +49,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -75,7 +75,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-FAILED",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-FAILED",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -85,7 +85,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -111,7 +111,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-IN-PROGRESS",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-IN-PROGRESS",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -121,7 +121,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -147,7 +147,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-INCOMPLETE",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-INCOMPLETE",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -157,7 +157,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -183,7 +183,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-PASSED",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-PASSED",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -193,7 +193,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -219,7 +219,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
-			"externalReferenceCode": "CASE-RESULTS-TEST-FIX",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-TEST-FIX",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -229,7 +229,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -253,5 +253,5 @@
 			"system": false
 		}
 	],
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Build$]"
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Component$]"
 }

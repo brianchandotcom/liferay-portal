@@ -126,6 +126,8 @@ definition {
 
 	@priority = 3
 	test AssertCategoryFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
 			title = "Vocabulary");
@@ -223,6 +225,8 @@ definition {
 
 	@priority = 3
 	test AssertCustomFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		for (var count : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "dm title ${count}",
@@ -334,6 +338,8 @@ definition {
 	@description = "This is a use case for LPS-170111. When configuring the Folder Facet, facet terms are present with different display templates"
 	@priority = 3
 	test AssertFolderFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		task ("Add the folders and populate them with files") {
 			for (var folder : list "Product,Engineering,Company") {
 				JSONFolder.addFolder(
@@ -453,6 +459,8 @@ definition {
 
 	@priority = 3
 	test AssertModifiedFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		task ("Create the Web Contents") {
 			for (var count : list "1,2,3") {
 				JSONWebcontent.addWebContent(
@@ -758,6 +766,8 @@ definition {
 
 	@priority = 3
 	test AssertSiteFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		for (var siteName : list "Community,Engineering,Product") {
 			JSONGroup.addGroup(groupName = ${siteName});
 
@@ -886,6 +896,8 @@ definition {
 
 	@priority = 3
 	test AssertTagFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		for (var tagName : list "engineering,product,2021,2022") {
 			JSONAssettag.addTag(
 				groupName = "Guest",
@@ -942,6 +954,8 @@ definition {
 
 	@priority = 3
 	test AssertTypeFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
@@ -988,6 +1002,8 @@ definition {
 
 	@priority = 3
 	test AssertUserFacetTermsWithDifferentDisplayTemplates {
+		property portal.acceptance = "true";
+
 		for (var count : list "1,2,3") {
 			JSONUser.addUser(
 				userEmailAddress = "userea${count}@liferay.com",

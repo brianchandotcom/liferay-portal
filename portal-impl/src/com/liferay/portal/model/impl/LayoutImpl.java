@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -83,6 +84,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -621,8 +623,20 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public String getFriendlyURLsXML() {
+		Map<Locale, String> friendlyURLMap = getFriendlyURLMap();
+
+		if (MapUtil.isNotEmpty(friendlyURLMap) &&
+			!friendlyURLMap.containsKey(LocaleUtil.getSiteDefault())) {
+
+			Collection<String> values = friendlyURLMap.values();
+
+			Iterator<String> iterator = values.iterator();
+
+			friendlyURLMap.put(LocaleUtil.getSiteDefault(), iterator.next());
+		}
+
 		return LocalizationUtil.updateLocalization(
-			getFriendlyURLMap(), StringPool.BLANK, "FriendlyURL",
+			friendlyURLMap, StringPool.BLANK, "FriendlyURL",
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 	}
 

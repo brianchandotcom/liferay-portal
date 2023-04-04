@@ -839,6 +839,7 @@
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>ObjectActionConditionExpression</exception>
 		<exception>ObjectActionErrorMessage</exception>
+		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionLabel</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionParameters</exception>

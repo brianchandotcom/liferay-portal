@@ -18,7 +18,9 @@ export default function useSupportSeatsCount(userAccounts, searching) {
 		if (!searching) {
 			setSupportSeatsCount(
 				userAccounts?.items.filter(
-					(item) => item.selectedAccountSummary.hasSupportSeatRole && !item.isLiferayStaff
+					(item) =>
+						item.selectedAccountSummary.hasSupportSeatRole &&
+						!item.isLiferayStaff
 				).length
 			);
 		}

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"display.index:Integer=200", "prefix=membership",
 		"processing.index:Integer=200"
 	},
-	service = UserFieldExpressionHandler.class
+	service = MembershipsUserFieldExpressionHandler.class
 )
 public class MembershipsUserFieldExpressionHandler
 	implements UserFieldExpressionHandler {

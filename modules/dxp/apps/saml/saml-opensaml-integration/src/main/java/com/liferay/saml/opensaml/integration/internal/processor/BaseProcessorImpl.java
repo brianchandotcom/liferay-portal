@@ -143,15 +143,8 @@ public abstract class BaseProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(object, value) -> {
-					boolean[] booleanArray = new boolean[value.length];
-
-					for (int i = 0; i < booleanArray.length; i++) {
-						booleanArray[i] = GetterUtil.getBoolean(value[i]);
-					}
-
-					biConsumer.accept(object, booleanArray);
-				});
+				(object, value) -> biConsumer.accept(
+					object, GetterUtil.getBooleanValues(value)));
 		}
 
 		@Override
@@ -202,9 +195,7 @@ public abstract class BaseProcessorImpl
 		public void mapStringArray(
 			String fieldExpression, BiConsumer<T, String[]> biConsumer) {
 
-			handleUnsafeStringArray(
-				fieldExpression,
-				(object, values) -> biConsumer.accept(object, values));
+			handleUnsafeStringArray(fieldExpression, biConsumer::accept);
 		}
 
 		@Override

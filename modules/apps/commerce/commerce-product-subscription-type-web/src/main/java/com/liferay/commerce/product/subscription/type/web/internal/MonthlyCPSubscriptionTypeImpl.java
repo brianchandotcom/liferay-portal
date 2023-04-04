@@ -49,6 +49,17 @@ import org.osgi.service.component.annotations.Reference;
 public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 
 	@Override
+	public UnicodeProperties
+			getDeliverySubscriptionTypeSettingsUnicodeProperties(
+				UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return _getSubscriptionUnicodeProperties(
+			"deliveryMonthlyMode", "deliveryMonthDay",
+			subscriptionTypeSettingsUnicodeProperties);
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "month");
 	}
@@ -149,26 +160,16 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	}
 
 	@Override
-	public UnicodeProperties validateDeliverySubscriptionTypeSettingsProperties(
+	public UnicodeProperties getSubscriptionTypeSettingsUnicodeProperties(
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _validateSubscriptionProperties(
-			"deliveryMonthlyMode", "deliveryMonthDay",
-			subscriptionTypeSettingsUnicodeProperties);
-	}
-
-	@Override
-	public UnicodeProperties validateSubscriptionTypeSettingsProperties(
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
-		throws PortalException {
-
-		return _validateSubscriptionProperties(
+		return _getSubscriptionUnicodeProperties(
 			"monthlyMode", "monthDay",
 			subscriptionTypeSettingsUnicodeProperties);
 	}
 
-	private UnicodeProperties _validateSubscriptionProperties(
+	private UnicodeProperties _getSubscriptionUnicodeProperties(
 			String monthlyModeKey, String monthDayKey,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws CPSubscriptionTypeSettingsException {
@@ -197,7 +198,7 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		}
 
 		HashMapBuilder.HashMapWrapper<String, String>
-			subscriptionTypeSettingsProperties = HashMapBuilder.put(
+			newSubscriptionTypeSettingsUnicodeProperties = HashMapBuilder.put(
 				monthlyModeKey, String.valueOf(monthlyMode));
 
 		if (monthlyMode ==
@@ -219,12 +220,12 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 						"Invalid ", monthDayKey, " ", monthDayValue));
 			}
 
-			subscriptionTypeSettingsProperties.put(
+			newSubscriptionTypeSettingsUnicodeProperties.put(
 				monthDayKey, String.valueOf(monthDay));
 		}
 
 		return UnicodePropertiesBuilder.create(
-			subscriptionTypeSettingsProperties.build(), true
+			newSubscriptionTypeSettingsUnicodeProperties.build(), true
 		).build();
 	}
 

@@ -192,7 +192,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 				commerceTaxIncludedChannel.getSiteGroupId(),
 				commerceTaxIncludedChannel.getName(),
 				commerceTaxIncludedChannel.getType(),
-				commerceTaxIncludedChannel.getTypeSettingsProperties(),
+				commerceTaxIncludedChannel.getTypeSettingsUnicodeProperties(),
 				commerceTaxIncludedChannel.getCommerceCurrencyCode(),
 				CommercePricingConstants.TAX_INCLUDED_IN_PRICE,
 				commerceTaxIncludedChannel.isDiscountsTargetNetPrice());

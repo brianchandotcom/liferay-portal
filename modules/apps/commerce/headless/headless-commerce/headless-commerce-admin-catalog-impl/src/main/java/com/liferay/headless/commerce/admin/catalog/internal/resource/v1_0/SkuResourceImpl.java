@@ -389,7 +389,7 @@ public class SkuResourceImpl
 		long deliverySubscriptionMaxSubscriptionCycles =
 			cpInstance.getDeliveryMaxSubscriptionCycles();
 		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
-			cpInstance.getDeliverySubscriptionTypeSettingsProperties();
+			cpInstance.getDeliverySubscriptionTypeSettingsUnicodeProperties();
 		String deliverySubscriptionTypeValue =
 			cpInstance.getDeliverySubscriptionType();
 		boolean overrideSubscriptionInfo =
@@ -399,7 +399,7 @@ public class SkuResourceImpl
 		long subscriptionMaxSubscriptionCycles =
 			cpInstance.getMaxSubscriptionCycles();
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
-			cpInstance.getSubscriptionTypeSettingsProperties();
+			cpInstance.getSubscriptionTypeSettingsUnicodeProperties();
 		String subscriptionTypeValue = cpInstance.getSubscriptionType();
 
 		if (skuSubscriptionConfiguration != null) {

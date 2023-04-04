@@ -213,13 +213,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSubscriptionEnabled(subscriptionEnabled);
 		cpInstance.setSubscriptionLength(subscriptionLength);
 		cpInstance.setSubscriptionType(subscriptionType);
-		cpInstance.setSubscriptionTypeSettingsProperties(
+		cpInstance.setSubscriptionTypeSettingsUnicodeProperties(
 			subscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpInstance.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 		cpInstance.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpInstance.setDeliverySubscriptionType(deliverySubscriptionType);
-		cpInstance.setDeliverySubscriptionTypeSettingsProperties(
+		cpInstance.setDeliverySubscriptionTypeSettingsUnicodeProperties(
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
@@ -965,13 +965,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSubscriptionEnabled(subscriptionEnabled);
 		cpInstance.setSubscriptionLength(subscriptionLength);
 		cpInstance.setSubscriptionType(subscriptionType);
-		cpInstance.setSubscriptionTypeSettingsProperties(
+		cpInstance.setSubscriptionTypeSettingsUnicodeProperties(
 			subscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpInstance.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 		cpInstance.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpInstance.setDeliverySubscriptionType(deliverySubscriptionType);
-		cpInstance.setDeliverySubscriptionTypeSettingsProperties(
+		cpInstance.setDeliverySubscriptionTypeSettingsUnicodeProperties(
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
@@ -1215,13 +1215,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSubscriptionEnabled(subscriptionEnabled);
 		cpInstance.setSubscriptionLength(subscriptionLength);
 		cpInstance.setSubscriptionType(subscriptionType);
-		cpInstance.setSubscriptionTypeSettingsProperties(
+		cpInstance.setSubscriptionTypeSettingsUnicodeProperties(
 			subscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setMaxSubscriptionCycles(maxSubscriptionCycles);
 		cpInstance.setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
 		cpInstance.setDeliverySubscriptionLength(deliverySubscriptionLength);
 		cpInstance.setDeliverySubscriptionType(deliverySubscriptionType);
-		cpInstance.setDeliverySubscriptionTypeSettingsProperties(
+		cpInstance.setDeliverySubscriptionTypeSettingsUnicodeProperties(
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
@@ -1741,7 +1741,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		if (deliveryCPSubscriptionType != null) {
 			return deliveryCPSubscriptionType.
-				validateDeliverySubscriptionTypeSettingsProperties(
+				getDeliverySubscriptionTypeSettingsUnicodeProperties(
 					deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 
@@ -1834,7 +1834,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		if (cpSubscriptionType != null) {
 			return cpSubscriptionType.
-				validateSubscriptionTypeSettingsProperties(
+				getSubscriptionTypeSettingsUnicodeProperties(
 					subscriptionTypeSettingsUnicodeProperties);
 		}
 

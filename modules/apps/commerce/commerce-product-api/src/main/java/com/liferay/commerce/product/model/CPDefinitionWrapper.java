@@ -646,9 +646,9 @@ public class CPDefinitionWrapper
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getDeliverySubscriptionTypeSettingsProperties() {
+		getDeliverySubscriptionTypeSettingsUnicodeProperties() {
 
-		return model.getDeliverySubscriptionTypeSettingsProperties();
+		return model.getDeliverySubscriptionTypeSettingsUnicodeProperties();
 	}
 
 	/**
@@ -1098,9 +1098,9 @@ public class CPDefinitionWrapper
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSubscriptionTypeSettingsProperties() {
+		getSubscriptionTypeSettingsUnicodeProperties() {
 
-		return model.getSubscriptionTypeSettingsProperties();
+		return model.getSubscriptionTypeSettingsUnicodeProperties();
 	}
 
 	/**
@@ -1583,11 +1583,11 @@ public class CPDefinitionWrapper
 	}
 
 	@Override
-	public void setDeliverySubscriptionTypeSettingsProperties(
+	public void setDeliverySubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			deliverySubscriptionTypeSettingsUnicodeProperties) {
 
-		model.setDeliverySubscriptionTypeSettingsProperties(
+		model.setDeliverySubscriptionTypeSettingsUnicodeProperties(
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 	}
 
@@ -1871,11 +1871,11 @@ public class CPDefinitionWrapper
 	}
 
 	@Override
-	public void setSubscriptionTypeSettingsProperties(
+	public void setSubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			subscriptionTypeSettingsUnicodeProperties) {
 
-		model.setSubscriptionTypeSettingsProperties(
+		model.setSubscriptionTypeSettingsUnicodeProperties(
 			subscriptionTypeSettingsUnicodeProperties);
 	}
 

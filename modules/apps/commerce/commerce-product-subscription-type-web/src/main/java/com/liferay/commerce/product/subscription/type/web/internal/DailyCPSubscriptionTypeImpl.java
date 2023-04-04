@@ -42,6 +42,15 @@ import org.osgi.service.component.annotations.Reference;
 public class DailyCPSubscriptionTypeImpl implements CPSubscriptionType {
 
 	@Override
+	public UnicodeProperties
+			getDeliverySubscriptionTypeSettingsUnicodeProperties(
+				UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "day");
 	}
@@ -80,15 +89,7 @@ public class DailyCPSubscriptionTypeImpl implements CPSubscriptionType {
 	}
 
 	@Override
-	public UnicodeProperties validateDeliverySubscriptionTypeSettingsProperties(
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
-		throws PortalException {
-
-		return null;
-	}
-
-	@Override
-	public UnicodeProperties validateSubscriptionTypeSettingsProperties(
+	public UnicodeProperties getSubscriptionTypeSettingsUnicodeProperties(
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 

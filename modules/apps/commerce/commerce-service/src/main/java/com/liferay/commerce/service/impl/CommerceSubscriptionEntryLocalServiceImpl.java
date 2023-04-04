@@ -154,16 +154,19 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				cpSubscriptionType.getSubscriptionStartDate(
 					user.getTimeZone(),
 					subscriptionTypeSettingsUnicodeProperties));
-			commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-				cpSubscriptionType.validateSubscriptionTypeSettingsProperties(
-					subscriptionTypeSettingsUnicodeProperties));
+			commerceSubscriptionEntry.
+				setSubscriptionTypeSettingsUnicodeProperties(
+					cpSubscriptionType.
+						getSubscriptionTypeSettingsUnicodeProperties(
+							subscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
 			commerceSubscriptionEntry.setSubscriptionStatus(
 				CommerceSubscriptionEntryConstants.
 					SUBSCRIPTION_STATUS_INACTIVE);
-			commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-				subscriptionTypeSettingsUnicodeProperties);
+			commerceSubscriptionEntry.
+				setSubscriptionTypeSettingsUnicodeProperties(
+					subscriptionTypeSettingsUnicodeProperties);
 		}
 
 		CPSubscriptionType deliveryCPSubscriptionType =
@@ -182,9 +185,9 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 					user.getTimeZone(),
 					deliverySubscriptionTypeSettingsUnicodeProperties));
 			commerceSubscriptionEntry.
-				setDeliverySubscriptionTypeSettingsProperties(
+				setDeliverySubscriptionTypeSettingsUnicodeProperties(
 					deliveryCPSubscriptionType.
-						validateDeliverySubscriptionTypeSettingsProperties(
+						getDeliverySubscriptionTypeSettingsUnicodeProperties(
 							deliverySubscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
@@ -192,7 +195,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				CommerceSubscriptionEntryConstants.
 					SUBSCRIPTION_STATUS_INACTIVE);
 			commerceSubscriptionEntry.
-				setDeliverySubscriptionTypeSettingsProperties(
+				setDeliverySubscriptionTypeSettingsUnicodeProperties(
 					deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 
@@ -338,7 +341,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				user.getTimeZone(),
 				commerceSubscriptionEntry.getDeliverySubscriptionLength(),
 				commerceSubscriptionEntry.
-					getDeliverySubscriptionTypeSettingsProperties(),
+					getDeliverySubscriptionTypeSettingsUnicodeProperties(),
 				commerceSubscriptionEntry.getDeliveryNextIterationDate());
 
 		commerceSubscriptionEntry.setDeliveryNextIterationDate(
@@ -404,7 +407,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				user.getTimeZone(),
 				commerceSubscriptionEntry.getSubscriptionLength(),
 				commerceSubscriptionEntry.
-					getSubscriptionTypeSettingsProperties(),
+					getSubscriptionTypeSettingsUnicodeProperties(),
 				commerceSubscriptionEntry.getNextIterationDate());
 
 		commerceSubscriptionEntry.setNextIterationDate(
@@ -531,7 +534,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		if (cpSubscriptionType != null) {
 			subscriptionTypeSettingsUnicodeProperties =
-				cpSubscriptionType.validateSubscriptionTypeSettingsProperties(
+				cpSubscriptionType.getSubscriptionTypeSettingsUnicodeProperties(
 					subscriptionTypeSettingsUnicodeProperties);
 		}
 
@@ -542,13 +545,13 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		if (deliveryCPSubscriptionType != null) {
 			deliverySubscriptionTypeSettingsUnicodeProperties =
 				deliveryCPSubscriptionType.
-					validateDeliverySubscriptionTypeSettingsProperties(
+					getDeliverySubscriptionTypeSettingsUnicodeProperties(
 						deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 
 		commerceSubscriptionEntry.setSubscriptionLength(subscriptionLength);
 		commerceSubscriptionEntry.setSubscriptionType(subscriptionType);
-		commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
+		commerceSubscriptionEntry.setSubscriptionTypeSettingsUnicodeProperties(
 			subscriptionTypeSettingsUnicodeProperties);
 		commerceSubscriptionEntry.setMaxSubscriptionCycles(
 			maxSubscriptionCycles);
@@ -570,8 +573,9 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			deliverySubscriptionLength);
 		commerceSubscriptionEntry.setDeliverySubscriptionType(
 			deliverySubscriptionType);
-		commerceSubscriptionEntry.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsUnicodeProperties);
+		commerceSubscriptionEntry.
+			setDeliverySubscriptionTypeSettingsUnicodeProperties(
+				deliverySubscriptionTypeSettingsUnicodeProperties);
 		commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
 		commerceSubscriptionEntry.setDeliverySubscriptionStatus(
@@ -622,7 +626,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				user.getTimeZone(),
 				commerceSubscriptionEntry.getSubscriptionLength(),
 				commerceSubscriptionEntry.
-					getSubscriptionTypeSettingsProperties(),
+					getSubscriptionTypeSettingsUnicodeProperties(),
 				lastIterationDate);
 
 		commerceSubscriptionEntry.setNextIterationDate(

@@ -119,7 +119,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(
+		commerceChannel.setTypeSettingsUnicodeProperties(
 			typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(
@@ -415,7 +415,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(
+		commerceChannel.setTypeSettingsUnicodeProperties(
 			typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 
@@ -449,7 +449,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsProperties(
+		commerceChannel.setTypeSettingsUnicodeProperties(
 			typeSettingsUnicodeProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(priceDisplayType);

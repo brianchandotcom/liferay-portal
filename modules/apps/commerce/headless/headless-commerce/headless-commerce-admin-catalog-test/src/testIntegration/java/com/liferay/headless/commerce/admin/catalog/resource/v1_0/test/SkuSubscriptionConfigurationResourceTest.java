@@ -167,7 +167,8 @@ public class SkuSubscriptionConfigurationResourceTest
 					SkuSubscriptionConfiguration.DeliverySubscriptionType.
 						create(_cpInstance.getSubscriptionType());
 				deliverySubscriptionTypeSettings =
-					_cpInstance.getDeliverySubscriptionTypeSettingsProperties();
+					_cpInstance.
+						getDeliverySubscriptionTypeSettingsUnicodeProperties();
 				enable = _cpInstance.isSubscriptionEnabled();
 				length = _cpInstance.getSubscriptionLength();
 				numberOfLength = _cpInstance.getMaxSubscriptionCycles();
@@ -176,7 +177,7 @@ public class SkuSubscriptionConfigurationResourceTest
 				subscriptionType = SubscriptionType.create(
 					_cpInstance.getSubscriptionType());
 				subscriptionTypeSettings =
-					_cpInstance.getSubscriptionTypeSettingsProperties();
+					_cpInstance.getSubscriptionTypeSettingsUnicodeProperties();
 			}
 		};
 	}

@@ -59,7 +59,8 @@ public class SkuSubscriptionConfigurationDTOConverter
 				deliverySubscriptionType = DeliverySubscriptionType.create(
 					cpInstance.getDeliverySubscriptionType());
 				deliverySubscriptionTypeSettings =
-					cpInstance.getDeliverySubscriptionTypeSettingsProperties();
+					cpInstance.
+						getDeliverySubscriptionTypeSettingsUnicodeProperties();
 				enable = cpInstance.isSubscriptionEnabled();
 				length = cpInstance.getSubscriptionLength();
 				numberOfLength = cpInstance.getMaxSubscriptionCycles();
@@ -68,7 +69,7 @@ public class SkuSubscriptionConfigurationDTOConverter
 				subscriptionType = SubscriptionType.create(
 					cpInstance.getSubscriptionType());
 				subscriptionTypeSettings =
-					cpInstance.getSubscriptionTypeSettingsProperties();
+					cpInstance.getSubscriptionTypeSettingsUnicodeProperties();
 			}
 		};
 	}

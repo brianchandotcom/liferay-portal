@@ -43,7 +43,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecor
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
@@ -76,7 +75,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -255,26 +253,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			_ddmFormInstanceRecordVersionPersistence.findByFormInstanceRecordId(
 				ddmFormInstanceRecord.getFormInstanceRecordId());
 
-		String storageType = ddmFormInstanceRecord.getStorageType();
-
 		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
 				ddmFormInstanceRecordVersions) {
 
-			_ddmFormInstanceRecordVersionPersistence.remove(
-				ddmFormInstanceRecordVersion);
-
-			long storageId = ddmFormInstanceRecordVersion.getStorageId();
-
-			if (!StringUtil.equals(storageType, "object")) {
-				_deleteStorage(storageId, storageType);
-			}
-
-			_ddmStorageLinkLocalService.deleteClassStorageLink(storageId);
-
-			_deleteWorkflowInstanceLink(
-				ddmFormInstanceRecord.getCompanyId(),
-				ddmFormInstanceRecord.getGroupId(),
-				ddmFormInstanceRecordVersion.getPrimaryKey());
+			_ddmFormInstanceRecordVersionLocalService.
+				deleteDDMFormInstanceRecordVersion(
+					ddmFormInstanceRecordVersion);
 		}
 
 		_assetEntryLocalService.deleteEntry(
@@ -539,12 +523,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormInstanceRecord.getFormInstanceRecordVersion(),
 				ddmFormInstanceRecordVersion, serviceContext)) {
 
-			_ddmFormInstanceRecordVersionPersistence.remove(
-				ddmFormInstanceRecordVersion);
-
-			_deleteStorage(
-				ddmFormInstanceRecordVersion.getStorageId(),
-				ddmFormInstance.getStorageType());
+			_ddmFormInstanceRecordVersionLocalService.
+				deleteDDMFormInstanceRecordVersion(
+					ddmFormInstanceRecordVersion);
 
 			return ddmFormInstanceRecord;
 		}
@@ -772,27 +753,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmStructureVersion.getStructureVersionId(), serviceContext);
 
 		return primaryKey;
-	}
-
-	private void _deleteStorage(long storageId, String storageType)
-		throws StorageException {
-
-		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter(
-			storageType);
-
-		ddmStorageAdapter.delete(
-			DDMStorageAdapterDeleteRequest.Builder.newBuilder(
-				storageId
-			).build());
-	}
-
-	private void _deleteWorkflowInstanceLink(
-			long companyId, long groupId, long ddmFormInstanceRecordVersionId)
-		throws PortalException {
-
-		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			companyId, groupId, DDMFormInstanceRecord.class.getName(),
-			ddmFormInstanceRecordVersionId);
 	}
 
 	private Indexer<DDMFormInstanceRecord> _getDDMFormInstanceRecordIndexer() {
@@ -1120,8 +1080,5 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

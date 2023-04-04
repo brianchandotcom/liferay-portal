@@ -15,18 +15,32 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordVersionException;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordVersionLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceRecordVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,6 +53,32 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DDMFormInstanceRecordVersionLocalServiceImpl
 	extends DDMFormInstanceRecordVersionLocalServiceBaseImpl {
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public DDMFormInstanceRecordVersion deleteDDMFormInstanceRecordVersion(
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
+		throws PortalException {
+
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecordVersion.getFormInstance();
+
+		_deleteStorage(
+			ddmFormInstanceRecordVersion.getStorageId(),
+			ddmFormInstance.getStorageType());
+
+		_ddmStorageLinkLocalService.deleteClassStorageLink(
+			ddmFormInstanceRecordVersion.getStorageId());
+
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			ddmFormInstanceRecordVersion.getCompanyId(),
+			ddmFormInstanceRecordVersion.getGroupId(),
+			DDMFormInstanceRecord.class.getName(),
+			ddmFormInstanceRecordVersion.getPrimaryKey());
+
+		return super.deleteDDMFormInstanceRecordVersion(
+			ddmFormInstanceRecordVersion);
+	}
 
 	@Override
 	public DDMFormInstanceRecordVersion fetchLatestFormInstanceRecordVersion(
@@ -143,5 +183,32 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 
 		return ddmFormInstanceRecordVersions.get(0);
 	}
+
+	private void _deleteStorage(long storageId, String storageType)
+		throws StorageException {
+
+		if (StringUtil.equals(storageType, "object")) {
+			return;
+		}
+
+		DDMStorageAdapter ddmStorageAdapter =
+			_ddmStorageAdapterRegistry.getDDMStorageAdapter(
+				GetterUtil.getString(
+					storageType, StorageType.DEFAULT.toString()));
+
+		ddmStorageAdapter.delete(
+			DDMStorageAdapterDeleteRequest.Builder.newBuilder(
+				storageId
+			).build());
+	}
+
+	@Reference
+	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
+
+	@Reference
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

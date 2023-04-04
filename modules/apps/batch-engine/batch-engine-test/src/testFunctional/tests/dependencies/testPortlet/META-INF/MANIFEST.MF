@@ -12,12 +12,7 @@ Javac-Debug: on
 Javac-Deprecation: off
 Javac-Encoding: UTF-8
 Liferay-Client-Extension-Batch: /objectDefinition
-Private-Package: objectDefinition,com.liferay.sample.portlet.portlet,conten
- t
-Provide-Capability: osgi.service;objectClass:List<String>="javax.portl
- et.Portlet";uses:="javax.portlet",liferay.resource.bundle;bundle.symb
- olic.name="com.liferay.sample.portlet";resource.bundle.base.name="con
- tent.Language"
+Private-Package: objectDefinition
 Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib
  )(uri=http://java.sun.com/portlet_2_0))",osgi.extender;filter:="(&(os
  gi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",osgi.extend
@@ -27,6 +22,4 @@ Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib
  jsp.taglib)(uri=http://liferay.com/tld/ui))",osgi.extender;filter:="(
  &(osgi.extender=osgi.component)(version>=1.4.0)(!(version>=2.0.0)))",
  osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
-Service-Component: OSGI-INF/com.liferay.sample.portlet.portlet.ComLife
- raySamplePortlet.xml
 Tool: Bnd-5.2.0.202010142003

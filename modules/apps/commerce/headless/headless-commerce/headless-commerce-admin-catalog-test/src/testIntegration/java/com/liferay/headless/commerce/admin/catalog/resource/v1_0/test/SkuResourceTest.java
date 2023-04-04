@@ -22,7 +22,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
@@ -353,13 +352,11 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	}
 
 	private void _deleteAllCPInstances() throws Exception {
-		List<CPDefinition> cpDefinitions =
-			_cpDefinitionLocalService.getCPDefinitions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<CPInstance> cpInstances = _cpInstanceLocalService.getCPInstances(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			_cpInstanceLocalService.deleteCPInstances(
-				cpDefinition.getCPDefinitionId());
+		for (CPInstance cpInstance : cpInstances) {
+			_cpInstanceLocalService.deleteCPInstance(cpInstance);
 		}
 	}
 
@@ -387,9 +384,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 	@DeleteAfterTestRun
 	private CPDefinition _cpDefinition;
-
-	@Inject
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;

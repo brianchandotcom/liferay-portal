@@ -133,9 +133,11 @@ public class FilterUtil {
 		FilterBuilder filterBuilder = new FilterBuilder();
 
 		filterBuilder.addFilter(
-			"name", FilterConstants.COMPARISON_OPERATOR_EQUALS, interestName);
+			"name", FilterConstants.COMPARISON_OPERATOR_EQUALS, interestName,
+			false, true, true);
 		filterBuilder.addFilter(
-			"score", FilterConstants.COMPARISON_OPERATOR_EQUALS, interested);
+			"score", FilterConstants.COMPARISON_OPERATOR_EQUALS, interested,
+			false, true, true);
 
 		sb.append(filterBuilder.build());
 

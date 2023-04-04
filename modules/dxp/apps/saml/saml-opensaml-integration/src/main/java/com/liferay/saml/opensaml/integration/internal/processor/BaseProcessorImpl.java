@@ -130,11 +130,8 @@ public abstract class BaseProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(object, values) -> {
-					for (String value : values) {
-						biConsumer.accept(object, GetterUtil.getBoolean(value));
-					}
-				});
+				(object, values) -> biConsumer.accept(
+					object, GetterUtil.getBoolean(values[0])));
 		}
 
 		@Override
@@ -154,13 +151,11 @@ public abstract class BaseProcessorImpl
 			handleUnsafeStringArray(
 				fieldExpression,
 				(object, values) -> {
-					for (String value : values) {
-						try {
-							biConsumer.accept(object, Long.parseLong(value));
-						}
-						catch (NumberFormatException numberFormatException) {
-							throw numberFormatException;
-						}
+					try {
+						biConsumer.accept(object, Long.parseLong(values[0]));
+					}
+					catch (NumberFormatException numberFormatException) {
+						throw numberFormatException;
 					}
 				});
 		}

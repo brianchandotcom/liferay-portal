@@ -346,6 +346,229 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11201. Can display related diagram using Diagram Card list item style"
+	@priority = 5
+	test CanDisplayRelatedDiagramsWithDiagramCardListItemStyle {
+		property portal.acceptance = "true";
+		property test.run.environment = "EE";
+
+		task ("Given a diagram product is created and 2 products are pinned to it") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Diagram T-Shirt",
+				productType = "diagram");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			CommerceJSONProductsAPI._addDiagramPin(
+				diagram = "Diagram T-Shirt",
+				linkedSKU = "MIN55859",
+				pinType = "Linked to a SKU",
+				position = 1,
+				positionX = 40,
+				positionY = 40,
+				quantity = 1);
+
+			CommerceJSONProductsAPI._addDiagramPin(
+				diagram = "Diagram T-Shirt",
+				linkedSKU = "MIN55861",
+				pinType = "Linked to a SKU",
+				position = 2,
+				positionX = 20,
+				positionY = 25,
+				quantity = 1);
+		}
+
+		task ("And a new Commerce Product type Display Page Template is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the Collection Display fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Content Display",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Collection Display",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("And Related Diagrams is selected, Style Display is set to Bordered List") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Related Diagrams",
+				listItemStyle = "Diagram Card",
+				styleDisplay = "Bordered List");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the buyer can see the Diagram T-Shirt link mapped to the products by navigating the pinned products' details page") {
+			for (var productName : list "U-Joint,Torque Converters") {
+				var productNameLowerCase = CommerceUtilities.convertStringToKey(string = ${productName});
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/${productNameLowerCase}");
+
+				AssertElementPresent(
+					key_index = 1,
+					key_productName = "Diagram T-Shirt",
+					locator1 = "CommerceFrontStore#COLLECTION_DISPLAY_PRODUCT_CARD_N");
+
+				Click(
+					key_index = 1,
+					key_productName = "Diagram T-Shirt",
+					locator1 = "CommerceFrontStore#COLLECTION_DISPLAY_PRODUCT_CARD_N");
+
+				AssertLocation.assertPartialLocation(value1 = "web/minium/p/diagram-t-shirt");
+
+				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			}
+		}
+
+		task ("And by navigating to a product that is not pinned to the diagram, No Results Found alert is shown") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/mount");
+
+			AssertElementNotPresent(
+				key_toPageLink = "Diagram T-Shirt",
+				locator1 = "BridgeIssues#TO_PAGE_LINK");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "No Results Found");
+		}
+	}
+
+	@description = "COMMERCE-11200. Can display related products using Product Card list item style"
+	@priority = 5
+	test CanDisplayRelatedProductsWithProductCardListItemStyle {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration_custom-relation.config";
+		property osgi.module.configurations = "type=\"Custom-Relation\"";
+		property portal.acceptance = "true";
+
+		task ("Given the admin establishes all the possible relations between 'ABS Sensor' and other products") {
+			CommerceJSONProductsAPI._patchCommerceProductRelations(
+				baseProductName = "ABS Sensor",
+				productRelations = "Wear Sensors:spare,Brake Pads:accessories,Brake Rotors:up-sell,Calipers:related,Hoses:Custom-Relation,Timing Belt:cross-sell");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Product DPT",
+				groupName = "Minium");
+		}
+
+		task ("And six Collection Display fragments are deployed on the page for each relation with the Style Display set to Generic List for all the fragments") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Product DPT");
+
+			var index = 1;
+
+			for (var relation : list "Spare,Accessories,Up-Sell,Related,Custom-Relation,Cross-Sell") {
+				CommerceDisplayPageTemplates.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display",
+					index = ${index});
+
+				CommerceDisplayPageTemplates.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					index = ${index},
+					infoItemRelatedListProviderName = ${relation},
+					listItemStyle = "Product Card",
+					styleDisplay = "Bordered List");
+
+				var index = ${index} + 1;
+			}
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Product DPT");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the ABS Sensor product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then the buyer will see all the relations that ABS Sensor has (one card for each fragment)") {
+			var index = 1;
+
+			for (var productName : list "Wear Sensors,Brake Pads,Brake Rotors,Calipers,Hoses,Timing Belt") {
+				AssertElementPresent(
+					key_index = ${index},
+					key_productName = ${productName},
+					locator1 = "CommerceFrontStore#COLLECTION_DISPLAY_PRODUCT_CARD_N");
+
+				task ("And once it's clicked") {
+					Click(
+						key_index = ${index},
+						key_productName = ${productName},
+						locator1 = "CommerceFrontStore#COLLECTION_DISPLAY_PRODUCT_CARD_N");
+				}
+
+				task ("Then the buyer is redirected to the product page of the related product") {
+					var productNameLowerCase = CommerceUtilities.convertStringToKey(string = ${productName});
+
+					AssertLocation.assertPartialLocation(value1 = "web/minium/p/${productNameLowerCase}");
+				}
+
+				var index = ${index} + 1;
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7277 Verify mapped Basic Information fields to fragments are visible in Store Front"
 	@priority = 5
 	test CanMapBasicInformationFieldsToFragments {

@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -183,12 +183,12 @@ public class WishListItemResourceImpl
 					contextUser.getUserId(), commerceChannel.getGroupId());
 
 			if (commerceAccountIds.length == 0) {
-				CommerceAccount commerceAccount =
-					_commerceAccountLocalService.getGuestCommerceAccount(
+				AccountEntry accountEntry =
+					_accountEntryLocalService.getGuestCommerceAccount(
 						contextUser.getCompanyId());
 
 				commerceAccountIds = new long[] {
-					commerceAccount.getCommerceAccountId()
+					accountEntry.getAccountEntryId()
 				};
 			}
 
@@ -213,10 +213,10 @@ public class WishListItemResourceImpl
 	}
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

@@ -27,7 +27,8 @@ public interface ObjectActionExecutorRegistry {
 	public ObjectActionExecutor getObjectActionExecutor(
 		String objectActionExecutorKey);
 
-	public List<ObjectActionExecutor> getObjectActionExecutors();
+	public List<ObjectActionExecutor> getObjectActionExecutors(
+		String objectDefinitionName);
 
 	public boolean hasObjectActionExecutor(String objectActionExecutorKey);
 

@@ -18,11 +18,14 @@ import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -53,7 +56,9 @@ public class ObjectActionExecutorRegistryImpl
 	}
 
 	@Override
-	public List<ObjectActionExecutor> getObjectActionExecutors() {
+	public List<ObjectActionExecutor> getObjectActionExecutors(
+		String objectDefinitionName) {
+
 		Collection<ObjectActionExecutor> objectActionExecutorsCollection =
 			_serviceTrackerMap.values();
 
@@ -61,10 +66,24 @@ public class ObjectActionExecutorRegistryImpl
 			return Collections.<ObjectActionExecutor>emptyList();
 		}
 
-		List<ObjectActionExecutor> objectActionExecutors = new ArrayList<>(
-			objectActionExecutorsCollection);
+		return ListUtil.sort(
+			ListUtil.filter(
+				new ArrayList<>(objectActionExecutorsCollection),
+				objectActionExecutor -> {
+					if ((objectActionExecutor.getCompanyId() != 0) &&
+						(objectActionExecutor.getCompanyId() !=
+							CompanyThreadLocal.getCompanyId())) {
 
-		objectActionExecutors.sort(
+						return false;
+					}
+
+					Set<String> allowedObjectDefinitionNames =
+						objectActionExecutor.getAllowedObjectDefinitionNames();
+
+					return allowedObjectDefinitionNames.isEmpty() ||
+						   allowedObjectDefinitionNames.contains(
+							   objectDefinitionName);
+				}),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {
 
@@ -73,8 +92,6 @@ public class ObjectActionExecutorRegistryImpl
 
 				return key1.compareTo(key2);
 			});
-
-		return objectActionExecutors;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import {
 	APPLICATION_STATUS,
 	AVAILABLE_STEPS,
 	CONTACT_INFORMATION_STEP,
+	OBJECT_MESSAGE,
 } from '../utils/constants';
 import {verifyInputAgentPage} from '../utils/contact-agent';
 import {useStepWizard} from './useStepWizard';
@@ -150,22 +151,35 @@ const useFormActions = ({
 
 		const response = await createOrUpdateRaylifeApplication(form, status);
 
-		setApplicationId(response.data.id);
+		if (response) {
+			setApplicationId(response.data.id);
 
-		const validated = _onValidation();
+			const validated = _onValidation();
 
-		if (validated) {
-			if (nextSection) {
-				setSection(nextSection);
+			if (validated) {
+				if (nextSection) {
+					setSection(nextSection);
 
-				return smoothScroll();
+					return smoothScroll();
+				}
+
+				redirectTo(RAYLIFE_PAGES.HANG_TIGHT);
 			}
 
-			redirectTo(RAYLIFE_PAGES.HANG_TIGHT);
+			return response;
 		}
 
-		return response;
-	}, [selectedStep.index, form, _onValidation, nextSection, setSection]);
+		setError('applicationObject', {
+			message: OBJECT_MESSAGE.APPLICATION.DISABLED,
+		});
+	}, [
+		selectedStep.index,
+		form,
+		setError,
+		_onValidation,
+		nextSection,
+		setSection,
+	]);
 
 	return {onNext, onPrevious, onSave};
 };

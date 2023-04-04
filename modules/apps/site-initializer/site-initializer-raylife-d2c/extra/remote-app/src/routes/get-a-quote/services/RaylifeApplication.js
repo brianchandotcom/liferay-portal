@@ -56,7 +56,9 @@ export function createOrUpdateRaylifeApplication(form, status) {
 		return updateRaylifeApplication(applicationId, payload);
 	}
 
-	return axios.post(`${RaylifeApplicationAPI}/`, payload);
+	return axios.post(`${RaylifeApplicationAPI}/`, payload).catch((error) => {
+		console.error(error);
+	});
 }
 
 export function updateRaylifeApplicationStatus(applicationId, status) {

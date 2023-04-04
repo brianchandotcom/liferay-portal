@@ -570,8 +570,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, CREATE_DOCKER_CONTAINER_TASK_NAME,
 			DockerCreateContainer.class);
 
-		dockerCreateContainer.dependsOn(
-			verifyProductTask, dockerBuildImage, dockerRemoveContainer);
+		dockerCreateContainer.dependsOn(verifyProductTask, dockerBuildImage);
 		dockerCreateContainer.mustRunAfter(
 			verifyProductTask, dockerRemoveContainer);
 
@@ -605,6 +604,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		DockerCreateContainer.HostConfig hostConfig =
 			dockerCreateContainer.getHostConfig();
+
+		Property<Boolean> autoRemove = hostConfig.getAutoRemove();
+
+		autoRemove.set(true);
 
 		MapProperty<String, String> binds = hostConfig.getBinds();
 

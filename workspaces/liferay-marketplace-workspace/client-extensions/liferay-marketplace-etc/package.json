@@ -1,0 +1,15 @@
+{
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		}
+	},
+	"license": "LGPL",
+	"name": "liferay-marketplace-etc",
+	"private": true,
+	"scripts": {
+		"format": "liferay-npm-scripts format --experimental-standalone",
+		"lint": "liferay-npm-scripts lint:fix --experimental-standalone"
+	},
+	"version": "1.0.0"
+}

@@ -1,0 +1,20 @@
+assemble:
+    - from: src
+liferay-marketplace-oauth-application-user-agent:
+    #.serviceAddress: host.docker.internal:58081
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    #homePageURL: http://localhost:58081
+    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    name: Liferay Marketplace OAuth Application User Agent
+    scopes:
+        - C_Test.everything
+        - Liferay.Headless.Commerce.Delivery.Order.everything.read
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Commerce.Admin.Order.everything
+    type: oAuthApplicationUserAgent
+liferay-marketplace-object-action-trial-add:
+    name: Liferay Marketplace Object Action Trial Add
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-oauth-application-user-agent
+    resourcePath: /marketplace/trial
+    type: objectAction

@@ -57,7 +57,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 				value="seo"
 			/>
 
-			<h3 class="sheet-subtitle"><liferay-ui:message key="general-settings" /></h3>
+			<h3 class="sheet-title"><liferay-ui:message key="settings" /></h3>
 
 			<clay:alert
 				cssClass="mb-4"
@@ -196,7 +196,9 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 			<aui:input name="robots" placeholder="robots" />
 
 			<c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
-				<h3 class="sheet-subtitle"><liferay-ui:message key="sitemap" /></h3>
+				<hr class="mt-4 separator" />
+
+				<h3 class="sheet-title"><liferay-ui:message key="sitemap" /></h3>
 
 				<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" />

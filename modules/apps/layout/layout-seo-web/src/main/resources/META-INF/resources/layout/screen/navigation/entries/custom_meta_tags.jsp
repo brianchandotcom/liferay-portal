@@ -38,39 +38,43 @@ if (Validator.isNull(backURL)) {
 	<clay:sheet>
 		<clay:sheet-header>
 			<h2 class="sheet-title"><liferay-ui:message key="custom-meta-tags" /></h2>
+		</clay:sheet-header>
+
+		<clay:sheet-section>
+			<h3 class="sheet-title"><liferay-ui:message key="settings" /></h3>
 
 			<p class="text-secondary">
 				<liferay-ui:message key="custom-meta-tags-description" />
 			</p>
-		</clay:sheet-header>
 
-		<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
+			<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
-		<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
+			<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
 
-			<%
-			DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
+				<%
+				DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 
-			String fieldLabelValue = rv.getFieldLabelValue(themeDisplay.getLocale());
+				String fieldLabelValue = rv.getFieldLabelValue(themeDisplay.getLocale());
 
-			if (Validator.isNull(fieldLabelValue)) {
-				fieldLabelValue = rv.getFieldName();
-			}
-			%>
+				if (Validator.isNull(fieldLabelValue)) {
+					fieldLabelValue = rv.getFieldName();
+				}
+				%>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-		<liferay-ddm:html
-			classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-			classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
-			ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
-			defaultEditLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
-			defaultLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
-			fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
-			groupId="<%= layoutsSEODisplayContext.getGroupId() %>"
-			requestedLocale="<%= locale %>"
-		/>
+			<liferay-ddm:html
+				classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+				classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
+				ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
+				defaultEditLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
+				defaultLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
+				fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
+				groupId="<%= layoutsSEODisplayContext.getGroupId() %>"
+				requestedLocale="<%= locale %>"
+			/>
+		</clay:sheet-section>
 
 		<clay:sheet-footer>
 			<clay:button

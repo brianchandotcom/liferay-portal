@@ -54,6 +54,8 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				value="open-graph"
 			/>
 
+			<h3 class="sheet-title"><liferay-ui:message key="settings" /></h3>
+
 			<p class="text-secondary">
 				<liferay-ui:message key="open-graph-description" />
 			</p>

@@ -14,6 +14,14 @@
 
 export default function getFlatItems(items) {
 	return items.reduce((acc, item) => {
-		return [...acc, item, ...getFlatItems(item.children)];
+		return [
+			...acc.filter(
+				(menuItem) =>
+					menuItem.siteNavigationMenuItemId !==
+					item.siteNavigationMenuItemId
+			),
+			item,
+			...getFlatItems(item.children),
+		];
 	}, []);
 }

@@ -15,7 +15,7 @@
 package com.liferay.dispatch.talend.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.dispatch.constants.DispatchConstants;
-import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
+import com.liferay.dispatch.talend.web.internal.constants.DispatchTalendScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -38,7 +38,7 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return TalendDispatchTaskExecutor.TALEND;
+		return DispatchTalendScreenNavigationConstants.CATEGORY_KEY_TALEND;
 	}
 
 	@Override

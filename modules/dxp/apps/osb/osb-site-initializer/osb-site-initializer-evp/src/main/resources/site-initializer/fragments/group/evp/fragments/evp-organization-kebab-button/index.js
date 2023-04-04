@@ -55,7 +55,20 @@ const openModal = () => {
 			'<div id="messageDanger" class="alert alert-danger" role="alert" hidden>This field is mandatory, please fill it in.</div>',
 		buttons: [
 			{
-				displayType: 'danger',
+				displayType: 'secondary',
+				label: 'Request more Info',
+				async onClick() {
+					await layerForDendingUpdateStatus(
+						getMessage(),
+						getAttributeHidden(),
+						'awaitingMoreInfoFromEmployee',
+						'Awaiting More Info From Employee'
+					);
+				},
+				type: 'submit',
+			},
+			{
+				displayType: 'secondary',
 				label: 'Reject',
 				async onClick() {
 					await layerForDendingUpdateStatus(
@@ -68,7 +81,6 @@ const openModal = () => {
 				type: 'submit',
 			},
 			{
-				displayType: 'success',
 				label: 'Approve',
 				async onClick() {
 					await layerForDendingUpdateStatus(
@@ -82,7 +94,7 @@ const openModal = () => {
 			},
 		],
 		center: true,
-		headerHTML: `<p class="headerTextModal">Approve or Reject the organization ${organizationName} </p>`,
+		headerHTML: `<p class="headerTextModal">Review Organization:</p><p id="organization-name"> ${organizationName} </p>`,
 		size: 'md',
 	});
 };

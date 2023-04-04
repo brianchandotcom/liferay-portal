@@ -8,6 +8,14 @@
 		"type": "string"
 	},
 	{
+		"key": "awaitingMoreInfoFromEmployee",
+		"name": "Awaiting More Info From Employee",
+		"name_i18n": {
+			"en-US": "Awaiting More Info From Employee"
+		},
+		"type": "string"
+	},
+	{
 		"key": "awaitingFinanceApproval",
 		"name": "Awaiting Finance Approval",
 		"name_i18n": {

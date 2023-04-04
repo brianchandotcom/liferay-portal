@@ -1,52 +1,38 @@
-[#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())! /]
-[#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))! /]
-[#assign organizationId = objectRequest.classPK! /]
-[#assign URL = (layoutURL?substring(0,layoutURL?lastIndexOf('/')))! /]
-[#assign approvedRoles =["Administrator", "Finance User"]/]
-[#assign approvedRolesForOrganization =["Administrator", "EVP Manager"]/]
-[#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#assign layoutURL = (themeDisplay.getPortalURL() +
+themeDisplay.getURLCurrent())! /] [#assign objectRequest =
+(request.getAttribute("INFO_ITEM_REFERENCE"))! /] [#assign organizationId =
+objectRequest.classPK! /] [#assign URL =
+(layoutURL?substring(0,layoutURL?lastIndexOf('/')))! /] [#assign approvedRoles
+=["Administrator", "Finance User"]/] [#assign approvedRolesForOrganization
+=["Administrator", "EVP Manager"]/] [#assign userRoles =
+permissionChecker.getUserBag().getRoles()/] [#if organizationId?? &&
+organizationId?hasContent] [#assign organizationStatus =
+(restClient.get("/c/evporganizations/" + organizationId).organizationStatus.key)
+! /] [#assign organizationName = (restClient.get("/c/evporganizations/" +
+organizationId).organizationName)! /] [#assign organizationStatusListing =
+["rejected","awaitingMoreInfoFromEmployee", "verified"] /]
 
-[#if organizationId?? && organizationId?hasContent]
-	[#assign organizationStatus = (restClient.get("/c/evporganizations/" + organizationId).organizationStatus.key) ! /]
-	[#assign organizationName = (restClient.get("/c/evporganizations/" + organizationId).organizationName)! /]
-	[#assign organizationStatusListing = ["rejected","awaitingFinanceApproval","verified"] /]
+<input
+	class="organizationID"
+	id="${organizationId}"
+	type="hidden"
+	value="${organizationId}"
+/>
+<span class="organizationName" hidden>${organizationName}</span>
 
-	<input class="organizationID" id="${organizationId}" type="hidden" value="${organizationId}" />
-	<span class="organizationName" hidden>${organizationName}</span>
-
-	<div id="evp-organization-kebab-button">
-		[@liferay_ui["icon-menu"]
-			direction="left-side"
-			markupView="lexicon"
-			showWhenSingleIcon=true
-		]
-
-			[@liferay_ui["icon"]
-				message="Details"
-				url=URL + "/l/" + organizationId
-			/]
-
-			[#list userRoles as role]
-				[#if role.name == "Administrator" || role.name == "EVP Manager" && organizationStatus == "verified" ||
-					role.name == "Finance User" && organizationStatus == "awaitingFinanceApproval"
-				]
-
-					[@liferay_ui["icon"]
-						message="Edit"
-						url=URL + "/edit-organization-form?id=" + organizationId
-					/]
-
-				[/#if]
-
-				[#if approvedRolesForOrganization?seqContains(role.name) && !organizationStatusListing?seqContains(organizationStatus)]
-					<div class="btnOpenModal">
-						[@liferay_ui["icon"]
-							message="Approve or Reject"
-							url="#${organizationId}"
-						/]
-					</div>
-				[/#if]
-			[/#list]
-		[/@]
+<div id="evp-organization-kebab-button">
+	[@liferay_ui["icon-menu"] direction="left-side" markupView="lexicon"
+	showWhenSingleIcon=true ] [@liferay_ui["icon"] message="Details" url=URL +
+	"/l/" + organizationId /] [#list userRoles as role] [#if role.name ==
+	"Administrator" || role.name == "EVP Manager" && organizationStatus ==
+	"verified" || role.name == "Finance User" && organizationStatus ==
+	"awaitingFinanceApproval" ] [@liferay_ui["icon"] message="Edit" url=URL +
+	"/edit-organization-form?id=" + organizationId /] [/#if] [#if
+	approvedRolesForOrganization?seqContains(role.name) &&
+	!organizationStatusListing?seqContains(organizationStatus)]
+	<div class="btnOpenModal">
+		[@liferay_ui["icon"] message="Review" url="#${organizationId}" /]
 	</div>
+	[/#if] [/#list] [/@]
+</div>
 [/#if]

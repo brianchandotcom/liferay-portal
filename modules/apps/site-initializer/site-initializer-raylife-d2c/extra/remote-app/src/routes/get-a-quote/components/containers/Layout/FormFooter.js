@@ -53,7 +53,11 @@ const FormFooterDesktop = ({
 			})}
 		>
 			<WarningMessage
-				displayError={errors?.continueButton?.message || errorModal}
+				displayError={
+					errors?.continueButton?.message ||
+					errorModal ||
+					errors?.applicationObject?.message
+				}
 				isMobileDevice={isMobileDevice}
 			/>
 

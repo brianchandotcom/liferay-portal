@@ -1,9 +1,0 @@
-{
-	"object-entries": [
-		{
-			"fundsAvailable": 1000,
-			"serviceHoursAvailable": 40
-		}
-	],
-	"objectDefinitionName": "EVPUserAccount"
-}

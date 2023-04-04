@@ -1,9 +1,0 @@
-{
-	"object-entries": [
-		{
-			"fundsLimit": 1000,
-			"serviceHoursLimit": 40
-		}
-	],
-	"objectDefinitionName": "EVPGrantLimit"
-}

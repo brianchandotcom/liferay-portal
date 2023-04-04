@@ -11,10 +11,98 @@
  * distribution rights of the Software.
  */
 
+const requests = [];
 const userId = parseInt(
 	document.getElementById('user-id-container').textContent
 );
-const userInformation = [];
+
+const fundsLimit = 1000;
+const serviceHoursLimit = 40;
+const fundsRequestsByUserId = [];
+const totalFundsRequestedById = [];
+const serviceHoursRequestsByUserId = [];
+const totalHoursRequestedByUserId = [];
+const availableFunds = [];
+const availableServiceHours = [];
+
+const getRequests = async () => {
+	const response = await fetch(`/o/c/evprequests`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	});
+
+	const data = await response.json();
+	requests.push(data);
+};
+
+const getFundsRequestByUserId = async () => {
+	await getRequests();
+
+	const filteredRequests = requests[0].items.filter(
+		(item) =>
+			item.creator.id === userId && item.requestStatus.key !== 'rejected'
+	);
+
+	filteredRequests.map((item) =>
+		fundsRequestsByUserId.push(item.grantAmount)
+	);
+
+	totalFundsRequestedById.push(
+		fundsRequestsByUserId.reduce((total, quantity) => total + quantity, 0)
+	);
+};
+
+const getServiceHoursByUserId = async () => {
+	await getRequests();
+
+	const filteredRequests = requests[0].items.filter(
+		(item) =>
+			item.creator.id === userId && item.requestStatus.key !== 'rejected'
+	);
+
+	filteredRequests.map((item) =>
+		serviceHoursRequestsByUserId.push(item.totalHoursRequested)
+	);
+
+	totalHoursRequestedByUserId.push(
+		serviceHoursRequestsByUserId.reduce(
+			(total, quantity) => total + quantity,
+			0
+		)
+	);
+};
+
+getFundsRequestByUserId();
+getServiceHoursByUserId();
+
+const getAvailableFunds = async () => {
+	await Promise.all([getFundsRequestByUserId()]);
+
+	availableFunds.push(fundsLimit - totalFundsRequestedById[0]);
+};
+
+const getAvailableHours = async () => {
+	await Promise.all([getServiceHoursByUserId()]);
+
+	availableServiceHours.push(
+		serviceHoursLimit - totalHoursRequestedByUserId[0]
+	);
+};
+
+const displayAvailableValues = async () => {
+	await Promise.all([getAvailableFunds(), getAvailableHours()]);
+
+	document.querySelector('#available-funds').innerHTML =
+		' R$ ' + availableFunds[0];
+
+	document.querySelector('#available-hours').innerHTML =
+		availableServiceHours[0] + 'h';
+};
+
+displayAvailableValues();
 
 function main() {
 	const requestType = document.querySelector('[name="requestType"]');
@@ -94,8 +182,7 @@ function toggleServiceRequired(service) {
 		service.querySelector('[name="totalHoursRequested"]').required = false;
 		service.querySelector('[name="startDate"]').required = false;
 		service.querySelector('[name="endDate"]').required = false;
-	}
-	else {
+	} else {
 		service.querySelector('[name="managerEmailAddress"]').required = true;
 		service.querySelector('[name="totalHoursRequested"]').required = true;
 		service.querySelector('[name="startDate"]').required = true;
@@ -106,8 +193,7 @@ function toggleServiceRequired(service) {
 function toggleGrantRequired(grant) {
 	if (grant.querySelector('[name="grantAmount"]').required) {
 		grant.querySelector('[name="grantAmount"]').required = false;
-	}
-	else {
+	} else {
 		grant.querySelector('[name="grantAmount"]').required = true;
 	}
 }
@@ -115,26 +201,6 @@ function toggleGrantRequired(grant) {
 function handleDocumentClick(requestType) {
 	updateValue(requestType);
 }
-
-const getUser = async () => {
-	try {
-		const response = await fetch(`/o/c/evpuseraccounts`, {
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		});
-		const data = await response.json();
-		const filteredUser = data.items.filter(
-			(item) => item.creator.id === userId
-		);
-		userInformation.push(filteredUser);
-	}
-	catch (error) {
-		console.error(error);
-	}
-};
 
 const grantInput = document.querySelector('input[name="grantAmount"]');
 const hoursInput = document.querySelector('input[name="totalHoursRequested"]');
@@ -152,9 +218,9 @@ const compareGrants = async () => {
 	const grantInputValue = grantInput.value;
 
 	try {
-		await getUser();
+		await getAvailableFunds();
 
-		if (grantInputValue > userInformation[0][0].fundsAvailable) {
+		if (grantInputValue > availableFunds[0]) {
 			grantInputDiv.appendChild(newParagraph);
 			newParagraph.style.position = 'absolute';
 
@@ -165,16 +231,14 @@ const compareGrants = async () => {
 				errorMsg.style.display = 'block';
 			}
 			document.querySelector('button[type="submit"]').disabled = true;
-		}
-		else {
+		} else {
 			const errorMsg = document.querySelector('.error-msg');
 			if (errorMsg) {
 				errorMsg.style.display = 'none';
 			}
 			document.querySelector('button[type="submit"]').disabled = false;
 		}
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error);
 	}
 };
@@ -184,9 +248,9 @@ grantInput.addEventListener('change', compareGrants);
 const compareHours = async () => {
 	const hoursInputValue = hoursInput.value;
 
-	await getUser();
+	await getAvailableHours();
 
-	if (hoursInputValue > userInformation[0][0].serviceHoursAvailable) {
+	if (hoursInputValue > availableServiceHours[0]) {
 		hoursInputDiv.appendChild(newParagraph);
 
 		const errorMsg = document.querySelector('.error-msg');
@@ -197,8 +261,7 @@ const compareHours = async () => {
 			errorMsg.style.position = 'absolute';
 		}
 		document.querySelector('button[type="submit"]').disabled = true;
-	}
-	else {
+	} else {
 		const errorMsg = document.querySelector('.error-msg');
 		if (errorMsg) {
 			errorMsg.style.display = 'none';

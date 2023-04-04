@@ -778,6 +778,21 @@ definition {
 		Click(locator1 = "Icon#BACK");
 	}
 
+	macro changePagination {
+		Click(
+			key_id = ${key_id},
+			locator1 = "CommerceEntry#PAGINATION_ITEMS_PER_PAGE_SELECT");
+
+		Click(
+			key_menuItem = ${itemsPerPage},
+			locator1 = "CommerceEntry#ANY_MENU_ITEM");
+
+		AssertTextEquals(
+			key_id = ${key_id},
+			locator1 = "CommerceEntry#PAGINATION_ITEMS_PER_PAGE_SELECT",
+			value1 = ${itemsPerPage});
+	}
+
 	macro changePinColor {
 		Type(
 			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",

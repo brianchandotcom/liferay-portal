@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -273,125 +274,224 @@ public class LayoutActionDropdownItemsProvider {
 			}
 		).addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.addContext(
-						dropdownContextItem -> {
-							dropdownContextItem.setDropdownItems(
-								DropdownItemListBuilder.add(
-									dropdownItem -> {
-										dropdownItem.putData(
-											"action", "copyLayout");
-										dropdownItem.putData(
-											"copyLayoutURL",
-											_layoutsAdminDisplayContext.
-												getCopyLayoutRenderURL(
-													false, layout));
+				if (FeatureFlagManagerUtil.isEnabled("LPS-177031")) {
+					dropdownGroupItem.setDropdownItems(
+						DropdownItemListBuilder.addContext(
+							dropdownContextItem -> {
+								dropdownContextItem.setDropdownItems(
+									DropdownItemListBuilder.add(
+										dropdownItem -> {
+											dropdownItem.putData(
+												"action", "copyLayout");
+											dropdownItem.putData(
+												"copyLayoutURL",
+												_layoutsAdminDisplayContext.
+													getCopyLayoutRenderURL(
+														false, layout));
 
-										if (!_layoutsAdminDisplayContext.
-												isShowCopyLayoutAction(
-													layout)) {
+											if (!_layoutsAdminDisplayContext.
+													isShowCopyLayoutAction(
+														layout)) {
 
-											dropdownItem.setDisabled(true);
+												dropdownItem.setDisabled(true);
+											}
+
+											dropdownItem.setLabel(
+												LanguageUtil.get(
+													_httpServletRequest,
+													"page"));
 										}
+									).add(
+										dropdownItem -> {
+											dropdownItem.putData(
+												"action",
+												"copyLayoutWithPermissions");
+											dropdownItem.putData(
+												"copyLayoutURL",
+												_layoutsAdminDisplayContext.
+													getCopyLayoutRenderURL(
+														true, layout));
 
-										dropdownItem.setLabel(
-											LanguageUtil.get(
-												_httpServletRequest, "page"));
-									}
-								).add(
-									dropdownItem -> {
-										dropdownItem.putData(
-											"action",
-											"copyLayoutWithPermissions");
-										dropdownItem.putData(
-											"copyLayoutURL",
-											_layoutsAdminDisplayContext.
-												getCopyLayoutRenderURL(
-													true, layout));
+											if (!_layoutsAdminDisplayContext.
+													isShowCopyLayoutAction(
+														layout)) {
 
-										if (!_layoutsAdminDisplayContext.
-												isShowCopyLayoutAction(
-													layout)) {
+												dropdownItem.setDisabled(true);
+											}
 
-											dropdownItem.setDisabled(true);
+											dropdownItem.setLabel(
+												LanguageUtil.get(
+													_httpServletRequest,
+													"page-with-permissions"));
 										}
+									).build());
+								dropdownContextItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest, "copy"));
+								dropdownContextItem.setIcon("copy");
+							}
+						).add(
+							() ->
+								_layoutsAdminDisplayContext.
+									isShowExportTranslationAction(layout),
+							dropdownItem -> {
+								dropdownItem.setHref(
+									PortletURLBuilder.create(
+										_translationURLProvider.
+											getExportTranslationURL(
+												layout.getGroupId(),
+												PortalUtil.getClassNameId(
+													Layout.class.getName()),
+												BeanPropertiesUtil.getLong(
+													draftLayout, "plid",
+													layout.getPlid()),
+												RequestBackedPortletURLFactoryUtil.
+													create(_httpServletRequest))
+									).setRedirect(
+										PortalUtil.getCurrentURL(
+											_httpServletRequest)
+									).setPortletResource(
+										() -> {
+											PortletDisplay portletDisplay =
+												_themeDisplay.
+													getPortletDisplay();
 
-										dropdownItem.setLabel(
-											LanguageUtil.get(
-												_httpServletRequest,
-												"page-with-permissions"));
-									}
-								).build());
-							dropdownContextItem.setLabel(
-								LanguageUtil.get(_httpServletRequest, "copy"));
-							dropdownContextItem.setIcon("copy");
-						}
-					).add(
-						() ->
-							_layoutsAdminDisplayContext.
-								isShowExportTranslationAction(layout),
-						dropdownItem -> {
-							dropdownItem.setHref(
-								PortletURLBuilder.create(
-									_translationURLProvider.
-										getExportTranslationURL(
-											layout.getGroupId(),
-											PortalUtil.getClassNameId(
-												Layout.class.getName()),
-											BeanPropertiesUtil.getLong(
-												draftLayout, "plid",
-												layout.getPlid()),
-											RequestBackedPortletURLFactoryUtil.
-												create(_httpServletRequest))
-								).setRedirect(
-									PortalUtil.getCurrentURL(
-										_httpServletRequest)
-								).setPortletResource(
-									() -> {
-										PortletDisplay portletDisplay =
-											_themeDisplay.getPortletDisplay();
+											return portletDisplay.getId();
+										}
+									).buildString());
+								dropdownItem.setIcon("upload");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest,
+										"export-for-translation"));
+							}
+						).add(
+							() -> _isShowImportTranslationAction(layout),
+							dropdownItem -> {
+								dropdownItem.setHref(
+									PortletURLBuilder.create(
+										_translationURLProvider.
+											getImportTranslationURL(
+												layout.getGroupId(),
+												PortalUtil.getClassNameId(
+													Layout.class.getName()),
+												BeanPropertiesUtil.getLong(
+													draftLayout, "plid",
+													layout.getPlid()),
+												RequestBackedPortletURLFactoryUtil.
+													create(_httpServletRequest))
+									).setRedirect(
+										PortalUtil.getCurrentURL(
+											_httpServletRequest)
+									).setPortletResource(
+										() -> {
+											PortletDisplay portletDisplay =
+												_themeDisplay.
+													getPortletDisplay();
 
-										return portletDisplay.getId();
-									}
-								).buildString());
-							dropdownItem.setIcon("upload");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest,
-									"export-for-translation"));
-						}
-					).add(
-						() -> _isShowImportTranslationAction(layout),
-						dropdownItem -> {
-							dropdownItem.setHref(
-								PortletURLBuilder.create(
-									_translationURLProvider.
-										getImportTranslationURL(
-											layout.getGroupId(),
-											PortalUtil.getClassNameId(
-												Layout.class.getName()),
-											BeanPropertiesUtil.getLong(
-												draftLayout, "plid",
-												layout.getPlid()),
-											RequestBackedPortletURLFactoryUtil.
-												create(_httpServletRequest))
-								).setRedirect(
-									PortalUtil.getCurrentURL(
-										_httpServletRequest)
-								).setPortletResource(
-									() -> {
-										PortletDisplay portletDisplay =
-											_themeDisplay.getPortletDisplay();
+											return portletDisplay.getId();
+										}
+									).buildString());
+								dropdownItem.setIcon("download");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest,
+										"import-translation"));
+							}
+						).build());
+				}
+				else {
+					dropdownGroupItem.setDropdownItems(
+						DropdownItemListBuilder.add(
+							dropdownItem -> {
+								dropdownItem.putData("action", "copyLayout");
+								dropdownItem.putData(
+									"copyLayoutURL",
+									_layoutsAdminDisplayContext.
+										getCopyLayoutRenderURL(false, layout));
 
-										return portletDisplay.getId();
-									}
-								).buildString());
-							dropdownItem.setIcon("download");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "import-translation"));
-						}
-					).build());
+								if (!_layoutsAdminDisplayContext.
+										isShowCopyLayoutAction(layout)) {
+
+									dropdownItem.setDisabled(true);
+								}
+
+								dropdownItem.setIcon("copy");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest, "copy-page"));
+							}
+						).add(
+							() ->
+								_layoutsAdminDisplayContext.
+									isShowExportTranslationAction(layout),
+							dropdownItem -> {
+								dropdownItem.setHref(
+									PortletURLBuilder.create(
+										_translationURLProvider.
+											getExportTranslationURL(
+												layout.getGroupId(),
+												PortalUtil.getClassNameId(
+													Layout.class.getName()),
+												BeanPropertiesUtil.getLong(
+													draftLayout, "plid",
+													layout.getPlid()),
+												RequestBackedPortletURLFactoryUtil.
+													create(_httpServletRequest))
+									).setRedirect(
+										PortalUtil.getCurrentURL(
+											_httpServletRequest)
+									).setPortletResource(
+										() -> {
+											PortletDisplay portletDisplay =
+												_themeDisplay.
+													getPortletDisplay();
+
+											return portletDisplay.getId();
+										}
+									).buildString());
+								dropdownItem.setIcon("upload");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest,
+										"export-for-translation"));
+							}
+						).add(
+							() -> _isShowImportTranslationAction(layout),
+							dropdownItem -> {
+								dropdownItem.setHref(
+									PortletURLBuilder.create(
+										_translationURLProvider.
+											getImportTranslationURL(
+												layout.getGroupId(),
+												PortalUtil.getClassNameId(
+													Layout.class.getName()),
+												BeanPropertiesUtil.getLong(
+													draftLayout, "plid",
+													layout.getPlid()),
+												RequestBackedPortletURLFactoryUtil.
+													create(_httpServletRequest))
+									).setRedirect(
+										PortalUtil.getCurrentURL(
+											_httpServletRequest)
+									).setPortletResource(
+										() -> {
+											PortletDisplay portletDisplay =
+												_themeDisplay.
+													getPortletDisplay();
+
+											return portletDisplay.getId();
+										}
+									).buildString());
+								dropdownItem.setIcon("download");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest,
+										"import-translation"));
+							}
+						).build());
+				}
+
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(

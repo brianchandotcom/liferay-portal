@@ -52,78 +52,83 @@ const claimSchema = object({
 					then: (schema) =>
 						schema.of(
 							object({
-								invoice: mixed().when('selected', {
-									is: (selected: boolean) => selected,
-									then: (schema) =>
-										schema
-											.test(
-												'fileSize',
-												validateDocument.fileSize
-													.message,
-												(invoice) => {
-													if (
-														invoice &&
-														!invoice.id
-													) {
-														return invoice
-															? Math.ceil(
-																	invoice.size /
-																		1000
-															  ) <=
-																	validateDocument
-																		.fileSize
-																		.maxSize
-															: false;
+								invoice: mixed()
+									.required()
+									.when('selected', {
+										is: (selected: boolean) => selected,
+										then: (schema) =>
+											schema
+												.test(
+													'fileSize',
+													validateDocument.fileSize
+														.message,
+													(invoice) => {
+														if (
+															invoice &&
+															!invoice.id
+														) {
+															return invoice
+																? Math.ceil(
+																		invoice.size /
+																			1000
+																  ) <=
+																		validateDocument
+																			.fileSize
+																			.maxSize
+																: false;
+														}
+
+														return true;
 													}
+												)
+												.test(
+													'fileType',
+													validateDocument
+														.imageDocument.message,
+													(invoice) => {
+														if (
+															invoice &&
+															!invoice.id
+														) {
+															return invoice
+																? validateDocument.imageDocument.types.includes(
+																		invoice.type
+																  )
+																: false;
+														}
 
-													return true;
-												}
-											)
-											.test(
-												'fileType',
-												validateDocument.imageDocument
-													.message,
-												(invoice) => {
-													if (
-														invoice &&
-														!invoice.id
-													) {
-														return invoice
-															? validateDocument.imageDocument.types.includes(
-																	invoice.type
-															  )
-															: false;
+														return true;
 													}
-
-													return true;
-												}
-											),
-								}),
-								invoiceAmount: number().when('selected', {
-									is: (selected: boolean) => selected,
-									then: (schema) =>
-										schema
-											.moreThan(
-												0,
-												'Need be bigger than 0'
-											)
-											.test(
-												'biggerAmount',
-												'Invoice amount is larger than the MDF requested amount',
-												(invoiceAmount, testContext) =>
-													Number(invoiceAmount) <=
-													Number(
-														testContext.parent
-															.requestAmount
-													)
-											),
-								}),
-
+												),
+									}),
+								invoiceAmount: number()
+									.required()
+									.when('selected', {
+										is: (selected: boolean) => selected,
+										then: (schema) =>
+											schema
+												.moreThan(
+													0,
+													'Need be bigger than 0'
+												)
+												.test(
+													'biggerAmount',
+													'Invoice amount is larger than the MDF requested amount',
+													(
+														invoiceAmount,
+														testContext
+													) =>
+														Number(invoiceAmount) <=
+														Number(
+															testContext.parent
+																.requestAmount
+														)
+												),
+									}),
 								requestAmount: number(),
 							})
 						),
 				}),
-
 				listOfQualifiedLeads: mixed().when('selected', {
 					is: (selected: boolean) => selected,
 					then: (schema) =>

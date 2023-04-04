@@ -1126,6 +1126,14 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_groupId=${groupId}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&p_r_p_selPlid=${plid}");
 	}
 
+	macro previewPageTemplate {
+		Click(
+			key_cardTitle = ${pageTemplateName},
+			locator1 = "Icon#EYE_PREVIEW_SPECIFIC");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro removeOldFriendlyURL {
 		AssertVisible(
 			key_oldFriendlyURL = ${oldFriendlyURL},

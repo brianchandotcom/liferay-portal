@@ -90,7 +90,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
-	public String getCommerceAccountThumbnailURL() throws PortalException {
+	public String getAccountEntryThumbnailURL() throws PortalException {
 		if (_commerceSubscriptionEntry == null) {
 			return StringPool.BLANK;
 		}

@@ -229,6 +229,14 @@ public class CPDefinitionLocalServiceImpl
 		_validate(
 			groupId, ddmStructureKey, metaTitleMap, metaDescriptionMap,
 			metaKeywordsMap, displayDate, expirationDate, productTypeName);
+		_validateSubscriptionLength(subscriptionLength, "length");
+		_validateSubscriptionTypeSettingsUnicodeProperties(
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties);
+		_validateSubscriptionLength(
+			deliverySubscriptionLength, "deliverySubscriptionLength");
+		_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsUnicodeProperties);
 
 		long cpDefinitionId = counterLocalService.increment();
 
@@ -237,16 +245,6 @@ public class CPDefinitionLocalServiceImpl
 
 		CProduct cProduct = _cProductLocalService.addCProduct(
 			externalReferenceCode, groupId, userId, new ServiceContext());
-
-		_validateSubscriptionLength(subscriptionLength, "length");
-		_validateSubscriptionTypeSettingsUnicodeProperties(
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties);
-
-		_validateSubscriptionLength(
-			deliverySubscriptionLength, "deliverySubscriptionLength");
-		_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
-			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsUnicodeProperties);
 
 		cpDefinition.setGroupId(groupId);
 		cpDefinition.setCompanyId(user.getCompanyId());

@@ -190,8 +190,31 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			const getNextPosition =
 				eventKey === 'ArrowDown' ? getDownPosition : getUpPosition;
 
-			const result = getNextPosition({
-				items,
+			const findNextPosition = (previousResult) => {
+				const nextResult = getNextPosition({
+					items,
+					order: previousResult.order,
+					parentSiteNavigationMenuItemId:
+						previousResult.parentSiteNavigationMenuItemId,
+				});
+
+				if (!nextResult) {
+					return nextResult;
+				}
+
+				const resultPath = getItemPath(
+					nextResult.parentSiteNavigationMenuItemId,
+					items
+				);
+
+				if (resultPath.includes(siteNavigationMenuItemId)) {
+					return findNextPosition(nextResult);
+				}
+
+				return nextResult;
+			};
+
+			const result = findNextPosition({
 				order: keyboardDragLayer ? keyboardDragLayer.order : order,
 				parentSiteNavigationMenuItemId: keyboardDragLayer
 					? keyboardDragLayer.parentSiteNavigationMenuItemId

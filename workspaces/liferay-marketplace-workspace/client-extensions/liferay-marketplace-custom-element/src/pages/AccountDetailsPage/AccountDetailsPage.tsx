@@ -1,31 +1,7 @@
-import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {DashboardListItems} from '../DashBoardPage/DashboardPage';
-
-interface AccountDetailsPageProps {
-	accountIcon: string;
-	accountAppsNumber: string;
-	accounts: AccountBrief[];
-	dashboardNavigationItems: DashboardListItems[];
-	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
-}
-
-export function AccountDetailsPage({
-	accountAppsNumber,
-	accountIcon,
-	accounts,
-	dashboardNavigationItems,
-	setDashboardNavigationItems,
-}: AccountDetailsPageProps) {
+export function AccountDetailsPage() {
 	return (
 		<>
-			<DashboardNavigation
-				accountAppsNumber={accountAppsNumber}
-				accountIcon={accountIcon}
-				accounts={accounts}
-				dashboardNavigationItems={dashboardNavigationItems}
-				setDashboardNavigationItems={setDashboardNavigationItems}
-			/>
-
+			<h1>Account Details Page</h1>
 			{/* TODO AccountDetails Component */}
 		</>
 	);

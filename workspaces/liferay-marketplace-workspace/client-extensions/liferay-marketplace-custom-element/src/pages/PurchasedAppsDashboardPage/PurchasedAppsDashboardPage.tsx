@@ -23,6 +23,8 @@ import {
 	initialDashboardNavigationItems,
 } from './PurchasedDashboardPageUtil';
 
+import './PurchasedAppsDashboardPage.scss';
+
 export interface PurchasedAppProps {
 	image: string;
 	name: string;

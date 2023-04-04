@@ -7,6 +7,17 @@
 		<suppress checks="GradleTestDependencyVersionCheck" files=".*" />
 		<suppress checks="GradleVersionCheck" files=".*" />
 		<suppress checks="JavaModuleTestCheck" files=".*/src/testIntegration/java/com/liferay/osb/faro/functional/test/steps/FaroHooks.java" />
+		
+		<!-- TEMP - Ignoring checkSourceFormatting
+		tasks because master format asks us to use liferay-npm-scripts
+		and osb-faro-theme and osb-faro-web are not ready to use that yet. So let's
+		remove this code snippet when we implement this task LRAC-13201 -->
+
+		<suppress checks="JSONPackageJSONCheck" files="osb-faro-theme/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="osb-faro-web/package\.json" />
+
+		<!-- TEMP -->
+
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />
 		<suppress checks="SQLLongNamesCheck" files=".*" />

@@ -586,9 +586,19 @@ definition {
 			key_textButton = "Activity Name 1",
 			locator1 = "PRMMDFRequest#TEXT_BUTTON");
 
+		ScrollWebElementIntoView(
+			key_fieldName = "Activity name",
+			key_nameValue = ${activityName},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
 		AssertElementPresent(
 			key_fieldName = "Activity name",
 			key_nameValue = ${activityName},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Type of Activity",
+			key_nameValue = ${typeOfActivity},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(
@@ -596,14 +606,29 @@ definition {
 			key_nameValue = ${typeOfActivity},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
-		AssertElementPresent(
+		ScrollWebElementIntoView(
 			key_fieldName = "Tactic",
 			key_nameValue = ${tactic},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(
+			key_fieldName = "Tactic",
+			key_nameValue = ${tactic},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
 			key_fieldName = "Marketing activity",
 			key_nameValue = ${activityDescription},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Marketing activity",
+			key_nameValue = ${activityDescription},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Start Date",
+			key_nameValue = ${startDate},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertTextEquals.assertPartialText(
@@ -612,15 +637,30 @@ definition {
 			locator1 = "PRMMDFRequest#DETAIL_FIELD",
 			value1 = ${startDate});
 
+		ScrollWebElementIntoView(
+			key_fieldName = "End Date",
+			key_nameValue = ${endDate},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
 		AssertTextEquals.assertPartialText(
 			key_fieldName = "End Date",
 			key_nameValue = ${endDate},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD",
 			value1 = ${endDate});
 
+		ScrollWebElementIntoView(
+			key_fieldName = ${expenseOption},
+			key_nameValue = ${bugdetValue},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
 		AssertElementPresent(
-			key_fieldName = ${expense},
-			key_nameValue = ${budget},
+			key_fieldName = ${expenseOption},
+			key_nameValue = ${bugdetValue},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Is a lead list an outcome of this activity?",
+			key_nameValue = ${leadList},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(
@@ -631,9 +671,19 @@ definition {
 
 	@summary = "Verify the activity fills made by the user after submited"
 	macro viewMDFCompanyDetails {
+		ScrollWebElementIntoView(
+			key_fieldName = "Company Name",
+			key_nameValue = ${accountName},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
 		AssertElementPresent(
 			key_fieldName = "Company Name",
 			key_nameValue = ${accountName},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Region",
+			key_nameValue = ${countryName},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(
@@ -641,9 +691,19 @@ definition {
 			key_nameValue = ${countryName},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
+		ScrollWebElementIntoView(
+			key_fieldName = "Name of the overall campaign",
+			key_nameValue = ${campaignName},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
 		AssertElementPresent(
 			key_fieldName = "Name of the overall campaign",
 			key_nameValue = ${campaignName},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Short description of the overall campaign",
+			key_nameValue = "Campaign Description",
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(
@@ -651,14 +711,29 @@ definition {
 			key_nameValue = "Campaign Description",
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
-		AssertElementPresent(
+		ScrollWebElementIntoView(
 			key_fieldName = "Liferay business/sales goals",
 			key_nameValue = ${goalsOptions},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(
+			key_fieldName = "Liferay business/sales goals",
+			key_nameValue = ${goalsOptions},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
 			key_fieldName = "Target Market(s)",
 			key_nameValue = ${targetMarketOptions},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Target Market(s)",
+			key_nameValue = ${targetMarketOptions},
+			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Target Audience/Role",
+			key_nameValue = ${targetRolesOptions},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 
 		AssertElementPresent(

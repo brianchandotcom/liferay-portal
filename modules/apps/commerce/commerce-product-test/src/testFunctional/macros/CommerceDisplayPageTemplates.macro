@@ -84,6 +84,34 @@ definition {
 		}
 	}
 
+	macro configureProductCardFragment {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		PageEditor.clickConfigurableField(
+			fragmentName = ${fragmentName},
+			index = ${index});
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		if (isSet(checkList)) {
+			for (var element : list ${checkList}) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "Show ${element}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(uncheckList)) {
+			for (var element : list ${uncheckList}) {
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "Show ${element}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+	}
+
 	macro editCollectionDisplay {
 		if (!(isSet(index))) {
 			var index = 1;

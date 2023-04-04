@@ -150,4 +150,28 @@ definition {
 		CreateObject.saveObject();
 	}
 
+	macro tearDown {
+		Site.openSitesAdmin();
+
+		if (IsElementPresent(key_tableEntry = "Partner Portal", locator1 = "LexiconTable#TABLE_ENTRY")) {
+			Site.openSitesAdmin();
+
+			PortletEntry.selectAll();
+
+			Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			Click(locator1 = "Button#MODAL_DELETE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		Account.openAccountsAdmin();
+
+		if (IsElementPresent(key_tableEntry = "Company Name", locator1 = "LexiconTable#TABLE_ENTRY")) {
+			Account.tearDownCP();
+		}
+	}
+
 }

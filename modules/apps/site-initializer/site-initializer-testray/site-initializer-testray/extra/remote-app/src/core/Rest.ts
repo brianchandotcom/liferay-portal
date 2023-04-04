@@ -129,7 +129,7 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 
 	protected async beforeCreate(_data: YupModel) {}
 	protected async beforeUpdate(_id: number, _data: YupModel) {}
-	protected async beforeRemove(_id: number) {}
+	protected async beforeRemove(_id: number | string) {}
 
 	public async create(data: YupModel): Promise<ObjectModel> {
 		await this.beforeCreate(data);
@@ -208,7 +208,7 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return `/${this.uri}/${id}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
 	}
 
-	public async remove(id: number): Promise<void> {
+	public async remove(id: number | string): Promise<void> {
 		await this.beforeRemove(id);
 
 		await fetcher.delete(`/${this.uri}/${id}`);

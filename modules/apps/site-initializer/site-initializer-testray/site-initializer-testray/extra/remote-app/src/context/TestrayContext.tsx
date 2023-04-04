@@ -136,6 +136,7 @@ const TestrayContextProvider: React.FC<{
 
 	const {data: myUserAccount, mutate} = useFetch('/my-user-account', {
 		transformData: (user: UserAccount) => ({
+			actions: user?.actions,
 			additionalName: user?.additionalName,
 			alternateName: user?.alternateName,
 			emailAddress: user?.emailAddress,

@@ -148,6 +148,7 @@ export default {
 	'delete-requirement': 'Delete Requirement',
 	'delete-routine': 'Delete Routine',
 	'delete-suite': 'Delete Suite',
+	'delete-user': 'Delete User',
 	'delete-x': 'Delete {0}',
 	'demote': 'Demote',
 	'description': 'Description',

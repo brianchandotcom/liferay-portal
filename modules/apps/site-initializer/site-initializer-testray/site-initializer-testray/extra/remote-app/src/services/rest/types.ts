@@ -53,8 +53,19 @@ export type UserGroup = {
 	id: number;
 	name: string;
 };
+export type ActionPermissionProperties = {
+	href: string;
+	method: string;
+};
+export type UserActions = {
+	'delete-user-account': ActionPermissionProperties;
+	'get-my-user-account': ActionPermissionProperties;
+	'patch-user-account': ActionPermissionProperties;
+	'put-user-account': ActionPermissionProperties;
+};
 
 export type UserAccount = {
+	actions: UserActions;
 	additionalName: string;
 	alternateName: string;
 	emailAddress: string;

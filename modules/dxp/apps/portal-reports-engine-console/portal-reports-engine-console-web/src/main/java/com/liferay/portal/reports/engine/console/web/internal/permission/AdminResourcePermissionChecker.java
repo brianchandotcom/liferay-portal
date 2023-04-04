@@ -14,18 +14,15 @@
 
 package com.liferay.portal.reports.engine.console.web.internal.permission;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leon Chi
  */
-@Component(service = {})
 public class AdminResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
@@ -35,26 +32,27 @@ public class AdminResourcePermissionChecker {
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissionSnapshot.get();
+
+		portletResourcePermission.check(permissionChecker, groupId, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return _portletResourcePermission.contains(
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissionSnapshot.get();
+
+		return portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
 	}
 
-	@Reference(
-		target = "(resource.name=" + ReportsEngineConsoleConstants.RESOURCE_NAME + ")",
-		unbind = "-"
-	)
-	protected void setPortletResourcePermission(
-		PortletResourcePermission portletResourcePermission) {
-
-		_portletResourcePermission = portletResourcePermission;
-	}
-
-	private static PortletResourcePermission _portletResourcePermission;
+	private static final Snapshot<PortletResourcePermission>
+		_portletResourcePermissionSnapshot = new Snapshot<>(
+			AdminResourcePermissionChecker.class,
+			PortletResourcePermission.class,
+			"(resource.name=" + ReportsEngineConsoleConstants.RESOURCE_NAME +
+				")");
 
 }

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
@@ -49,6 +50,12 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 
 	@Override
+	public WikiPage fetchLatestVersionedModel(WikiPage wikiPage) {
+		return _wikiPageLocalService.fetchLatestPage(
+			wikiPage.getResourcePrimKey(), WorkflowConstants.STATUS_ANY, false);
+	}
+
+	@Override
 	public String getEditURL(
 		HttpServletRequest httpServletRequest, WikiPage wikiPage) {
 
@@ -64,6 +71,11 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 	public String getTitle(Locale locale, WikiPage wikiPage) {
 		return StringBundler.concat(
 			wikiPage.getTitle(), " (", wikiPage.getVersion(), ")");
+	}
+
+	@Override
+	public String getVersionName(WikiPage wikiPage) {
+		return String.valueOf(wikiPage.getVersion());
 	}
 
 	@Override

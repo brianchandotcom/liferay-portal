@@ -91,6 +91,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -112,7 +115,9 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -828,6 +833,28 @@ public class LayoutsAdminDisplayContext {
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).buildString();
+	}
+
+	public String getNameMapAsXML() {
+		Layout layout = getSelLayout();
+
+		Map<Locale, String> nameMap = layout.getNameMap();
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		if (MapUtil.isNotEmpty(nameMap) &&
+			!nameMap.containsKey(siteDefaultLocale)) {
+
+			Collection<String> values = nameMap.values();
+
+			Iterator<String> iterator = values.iterator();
+
+			nameMap.put(siteDefaultLocale, iterator.next());
+		}
+
+		return LocalizationUtil.updateLocalization(
+			nameMap, StringPool.BLANK, "Name",
+			LocaleUtil.toLanguageId(siteDefaultLocale));
 	}
 
 	public List<NavigationItem> getNavigationItems() {

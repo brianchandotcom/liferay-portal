@@ -27,8 +27,6 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsEntryLabel"));
 	module="js/FDSViews"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"fdsEntriesAPIURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
-		).put(
 			"fdsEntryId", ParamUtil.getString(request, "fdsEntryId")
 		).put(
 			"fdsEntryLabel", ParamUtil.getString(request, "fdsEntryLabel")

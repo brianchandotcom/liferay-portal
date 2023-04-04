@@ -183,7 +183,6 @@ const AddFDSViewModalContent = ({
 };
 
 interface IFDSViewsProps {
-	fdsEntriesAPIURL: string;
 	fdsEntryId: string;
 	fdsEntryLabel: string;
 	fdsViewURL: string;
@@ -192,7 +191,6 @@ interface IFDSViewsProps {
 }
 
 const FDSViews = ({
-	fdsEntriesAPIURL,
 	fdsEntryId,
 	fdsEntryLabel,
 	fdsViewURL,

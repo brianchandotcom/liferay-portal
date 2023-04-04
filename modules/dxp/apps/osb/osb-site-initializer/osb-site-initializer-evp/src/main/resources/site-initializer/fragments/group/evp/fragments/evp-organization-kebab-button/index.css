@@ -41,8 +41,8 @@ html:not(#__):not(#___) .cadmin.modal-header {
 }
 
 html:not(#__):not(#___) .cadmin textarea {
-	padding: 8px;
 	overflow: auto;
+	padding: 8px;
 }
 
 #organization-name {

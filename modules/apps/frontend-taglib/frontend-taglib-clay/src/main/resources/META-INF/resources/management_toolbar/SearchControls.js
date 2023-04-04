@@ -47,7 +47,7 @@ const SearchControls = ({
 							disabled={disabled}
 							name={searchInputName}
 							placeholder={Liferay.Language.get('search-for')}
-							type="text"
+							type="search"
 						/>
 
 						<ClayInput.GroupInsetItem after tag="span">

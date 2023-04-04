@@ -16,12 +16,14 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.db.DBManagerImpl;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LogAssertionTestRule;
-import com.liferay.portal.tools.HypersonicLoader;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
@@ -30,6 +32,7 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -37,6 +40,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -193,13 +197,36 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.VIRTUAL_HOST_NAME, "localhost");
 	}
 
+	private void _loadHypersonic(Connection connection, String fileName)
+		throws Exception {
+
+		DBManager dbManager = new DBManagerImpl();
+
+		DB db = dbManager.getDB(DBType.HYPERSONIC, null);
+
+		List<String> lines = Files.readAllLines(
+			Paths.get(fileName), StandardCharsets.UTF_8);
+
+		StringBundler sb = new StringBundler(lines.size() * 2);
+
+		for (String line : lines) {
+			if (line.isEmpty() || line.startsWith(StringPool.DOUBLE_SLASH)) {
+				continue;
+			}
+
+			sb.append(line);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		db.runSQLTemplateString(connection, sb.toString(), true);
+	}
+
 	private void _loadHypersonic(String outputDir) throws Exception {
 		try (Connection connection = DriverManager.getConnection(
 				"jdbc:hsqldb:mem:testSampleSQLBuilderDB;shutdown=true", "sa",
 				"")) {
 
-			HypersonicLoader.loadHypersonic(
-				connection, outputDir + "/sample-hypersonic.sql");
+			_loadHypersonic(connection, outputDir + "/sample-hypersonic.sql");
 
 			try (Statement statement = connection.createStatement()) {
 				statement.execute("SHUTDOWN COMPACT");

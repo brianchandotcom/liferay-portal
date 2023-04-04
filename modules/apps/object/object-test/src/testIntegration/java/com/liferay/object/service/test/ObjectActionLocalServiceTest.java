@@ -602,8 +602,9 @@ public class ObjectActionLocalServiceTest {
 			objectActionTriggerKeys.contains(
 				DestinationNames.COMMERCE_PAYMENT_STATUS));
 
-		// Add object action to update commerce order status to processing after
-		// updating payment status
+		// Add object action to update commerce order status to
+		// CommerceOrderConstants#ORDER_STATUS_PROCESSING after updating payment
+		// status
 
 		ObjectAction objectAction1 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -631,7 +632,7 @@ public class ObjectActionLocalServiceTest {
 			).build());
 
 		// Add object action to create commerce order after updating order
-		// status to processing (orderStatus == 10)
+		// status to CommerceOrderConstants#ORDER_STATUS_PROCESSING
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -725,15 +726,9 @@ public class ObjectActionLocalServiceTest {
 				CommerceOrderConstants.ORDER_STATUS_PENDING,
 				commerceOrder1.getOrderStatus());
 
-			// Update payment status
-
 			_commerceOrderLocalService.updatePaymentStatus(
 				commerceOrder1.getUserId(), commerceOrder1.getCommerceOrderId(),
 				CommerceOrderConstants.PAYMENT_STATUS_PAID);
-
-			// On after payment status update
-
-			// Update order status to processing
 
 			commerceOrder1 = _commerceOrderLocalService.getCommerceOrder(
 				commerceOrder1.getCommerceOrderId());
@@ -741,8 +736,6 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 				commerceOrder1.getOrderStatus());
-
-			// Create new commerce order
 
 			CommerceOrder commerceOrder2 =
 				_commerceOrderLocalService.fetchByExternalReferenceCode(
@@ -841,7 +834,7 @@ public class ObjectActionLocalServiceTest {
 				).toString()
 			).build());
 
-		// Add object action to update user after adding an user
+		// Add object action to update user after adding a user
 
 		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -882,8 +875,6 @@ public class ObjectActionLocalServiceTest {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(_user));
 
-			// Add object entry
-
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
 				_objectDefinition.getObjectDefinitionId(),
@@ -891,8 +882,6 @@ public class ObjectActionLocalServiceTest {
 					"firstName", "John"
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
-
-			// On after create
 
 			User user = _userLocalService.getUserByScreenName(
 				TestPropsValues.getCompanyId(), "ScreenName");

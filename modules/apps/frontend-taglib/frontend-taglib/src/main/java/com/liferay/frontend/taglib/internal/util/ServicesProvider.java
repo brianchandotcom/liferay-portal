@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.internal.util;
 
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.Map;
@@ -28,7 +29,6 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -41,7 +41,7 @@ public class ServicesProvider {
 	public static AbsolutePortalURLBuilderFactory
 		getAbsolutePortalURLBuilderFactory() {
 
-		return _absolutePortalURLBuilderFactory;
+		return _absolutePortalURLBuilderFactorySnapshot.get();
 	}
 
 	public static Map<String, Bundle> getBundleMap() {
@@ -49,28 +49,11 @@ public class ServicesProvider {
 	}
 
 	public static JSModuleLauncher getJSModuleLauncher() {
-		return _jsModuleLauncher;
+		return _jsModuleLauncherSnapshot.get();
 	}
 
 	public static JSModuleResolver getJSModuleResolver() {
-		return _jsModuleResolver;
-	}
-
-	@Reference(unbind = "-")
-	public void setAbsolutePortalURLBuilderFactory(
-		AbsolutePortalURLBuilderFactory absolutePortalURLBuilderFactory) {
-
-		_absolutePortalURLBuilderFactory = absolutePortalURLBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	public void setJsModuleLauncher(JSModuleLauncher jsModuleLauncher) {
-		_jsModuleLauncher = jsModuleLauncher;
-	}
-
-	@Reference(unbind = "-")
-	public void setJSModuleResolver(JSModuleResolver jsModuleResolver) {
-		_jsModuleResolver = jsModuleResolver;
+		return _jsModuleResolverSnapshot.get();
 	}
 
 	@Activate
@@ -118,11 +101,14 @@ public class ServicesProvider {
 		_bundleConcurrentMap = null;
 	}
 
-	private static AbsolutePortalURLBuilderFactory
-		_absolutePortalURLBuilderFactory;
+	private static final Snapshot<AbsolutePortalURLBuilderFactory>
+		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
+			ServicesProvider.class, AbsolutePortalURLBuilderFactory.class);
 	private static ConcurrentMap<String, Bundle> _bundleConcurrentMap;
 	private static BundleTracker<String> _bundleTracker;
-	private static JSModuleLauncher _jsModuleLauncher;
-	private static JSModuleResolver _jsModuleResolver;
+	private static final Snapshot<JSModuleLauncher> _jsModuleLauncherSnapshot =
+		new Snapshot<>(ServicesProvider.class, JSModuleLauncher.class);
+	private static final Snapshot<JSModuleResolver> _jsModuleResolverSnapshot =
+		new Snapshot<>(ServicesProvider.class, JSModuleResolver.class);
 
 }

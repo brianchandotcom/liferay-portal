@@ -15,36 +15,25 @@
 package com.liferay.frontend.taglib.clay.internal.util;
 
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Chema Balsas
  */
-@Component(service = {})
 public class ServicesProvider {
 
 	public static JSModuleResolver getJSModuleResolver() {
-		return _jsModuleResolver;
+		return _jsModuleResolverSnapshot.get();
 	}
 
 	public static ReactRenderer getReactRenderer() {
-		return _reactRenderer;
+		return _reactRendererSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	public void setJSModuleResolver(JSModuleResolver jsModuleResolver) {
-		_jsModuleResolver = jsModuleResolver;
-	}
-
-	@Reference(unbind = "-")
-	public void setReactRenderer(ReactRenderer reactRenderer) {
-		_reactRenderer = reactRenderer;
-	}
-
-	private static JSModuleResolver _jsModuleResolver;
-	private static ReactRenderer _reactRenderer;
+	private static final Snapshot<JSModuleResolver> _jsModuleResolverSnapshot =
+		new Snapshot<>(ServicesProvider.class, JSModuleResolver.class);
+	private static final Snapshot<ReactRenderer> _reactRendererSnapshot =
+		new Snapshot<>(ServicesProvider.class, ReactRenderer.class);
 
 }

@@ -24,6 +24,7 @@ const serviceHoursRequestsByUserId = [];
 const totalHoursRequestedByUserId = [];
 const availableFunds = [];
 const availableServiceHours = [];
+const userInformation = [];
 
 const getRequests = async () => {
 	const response = await fetch(`/o/c/evprequests`, {
@@ -203,6 +204,53 @@ function toggleGrantRequired(grant) {
 function handleDocumentClick(requestType) {
 	updateValue(requestType);
 }
+
+const getUser = async () => {
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/user-accounts/${userId}`,
+		{
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'GET',
+		}
+	);
+
+	const data = await response.json();
+	userInformation.push(data);
+};
+
+const setDefaultUserInfo = async () => {
+	await getUser();
+
+	const fullNameInput = document.querySelector('[name="fullName"]');
+	fullNameInput.readOnly = true;
+	fullNameInput.value = userInformation[0]?.name;
+	fullNameInput.style.cursor = 'not-allowed';
+	fullNameInput.style.color = '#b1b2b8';
+
+	const emailAddressInput = document.querySelector('[name="emailAddress"]');
+	emailAddressInput.readOnly = true;
+	emailAddressInput.style.cursor = 'not-allowed';
+	emailAddressInput.style.color = '#b1b2b8';
+	emailAddressInput.value = userInformation[0]?.emailAddress;
+
+	const phoneNumber =
+		userInformation[0]?.userAccountContactInformation?.telephones[0]
+			?.phoneNumber;
+	const phoneInput = document.querySelector('[name="phoneNumber"]');
+
+	if (phoneNumber) {
+		phoneInput.readOnly = true;
+		phoneInput.value = phoneNumber;
+		phoneInput.style.cursor = 'not-allowed';
+		phoneInput.style.color = '#b1b2b8';
+	}
+};
+
+getUser();
+setDefaultUserInfo();
 
 const grantInput = document.querySelector('input[name="grantAmount"]');
 const hoursInput = document.querySelector('input[name="totalHoursRequested"]');

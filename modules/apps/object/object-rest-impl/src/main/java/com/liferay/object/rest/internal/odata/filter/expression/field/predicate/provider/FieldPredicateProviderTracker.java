@@ -17,7 +17,6 @@ package com.liferay.object.rest.internal.odata.filter.expression.field.predicate
 import com.liferay.object.odata.filter.expression.field.predicate.provider.FieldPredicateProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -30,16 +29,7 @@ import org.osgi.service.component.annotations.Component;
 public class FieldPredicateProviderTracker {
 
 	public FieldPredicateProvider getFieldPredicateProvider(String key) {
-		FieldPredicateProvider fieldPredicateProvider =
-			_serviceTrackerMap.getService(key);
-
-		if ((fieldPredicateProvider != null) &&
-			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
-
-			return fieldPredicateProvider;
-		}
-
-		return null;
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Activate

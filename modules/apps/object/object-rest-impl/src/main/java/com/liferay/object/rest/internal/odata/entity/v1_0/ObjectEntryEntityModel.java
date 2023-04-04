@@ -243,15 +243,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
 				"keywords",
-				() -> {
-					if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
-						return new CollectionEntityField(
-							new StringEntityField(
-								"keywords", locale -> "assetTagNames.raw"));
-					}
-
-					return null;
-				}
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw"))
 			).put(
 				"objectDefinitionId",
 				new IntegerEntityField(
@@ -265,16 +259,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 					new IntegerEntityField("status", locale -> Field.STATUS))
 			).put(
 				"taxonomyCategoryIds",
-				() -> {
-					if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
-						return new CollectionEntityField(
-							new IntegerEntityField(
-								"taxonomyCategoryIds",
-								locale -> "assetCategoryIds"));
-					}
-
-					return null;
-				}
+				new CollectionEntityField(
+					new IntegerEntityField(
+						"taxonomyCategoryIds", locale -> "assetCategoryIds"))
 			).put(
 				"userId",
 				new IntegerEntityField("userId", locale -> Field.USER_ID)

@@ -22,9 +22,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Stian Sigvartsen
  */
+@ProviderType
 public interface ProcessorContext<M extends BaseModel<M>> {
 
 	public <T extends BaseModel<T>> Bind<T> bind(

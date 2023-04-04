@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = BlogsEntryAssetEntryUtil.class)
 public class BlogsEntryAssetEntryUtil {
 
 	public static AssetEntry getAssetEntry(

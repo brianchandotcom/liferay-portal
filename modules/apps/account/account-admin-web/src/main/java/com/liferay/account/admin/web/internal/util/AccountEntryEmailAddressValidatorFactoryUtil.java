@@ -16,33 +16,27 @@ package com.liferay.account.admin.web.internal.util;
 
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Drew Brokke
  */
-@Component(service = {})
 public class AccountEntryEmailAddressValidatorFactoryUtil {
 
 	public static AccountEntryEmailAddressValidator create(
 		long companyId, String[] validDomains) {
 
-		return _accountEntryEmailAddressValidatorFactory.create(
+		AccountEntryEmailAddressValidatorFactory
+			accountEntryEmailAddressValidatorFactory =
+				_accountEntryEmailAddressValidatorFactorySnapshot.get();
+
+		return accountEntryEmailAddressValidatorFactory.create(
 			companyId, validDomains);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAccountEntryEmailAddressValidatorFactory(
-		AccountEntryEmailAddressValidatorFactory
-			accountEntryEmailAddressValidatorFactory) {
-
-		_accountEntryEmailAddressValidatorFactory =
-			accountEntryEmailAddressValidatorFactory;
-	}
-
-	private static AccountEntryEmailAddressValidatorFactory
-		_accountEntryEmailAddressValidatorFactory;
+	private static final Snapshot<AccountEntryEmailAddressValidatorFactory>
+		_accountEntryEmailAddressValidatorFactorySnapshot = new Snapshot<>(
+			AccountEntryEmailAddressValidatorFactoryUtil.class,
+			AccountEntryEmailAddressValidatorFactory.class);
 
 }

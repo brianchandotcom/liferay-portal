@@ -621,8 +621,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_ITEMS_PER_PAGE_SELECT</td>
+	<td>//div[contains(@id,'${key_id}')]//../button[contains(@class,'dropdown-toggle btn btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_RESULTS</td>
 	<td>//div[@class='pagination-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_RESULTS_BY_TABLE</td>
+	<td>//div[contains(@id,'${key_id}')]//../div[@class='pagination-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT_PAGES_BY_TABLE</td>
+	<td>//div[contains(@id,'${key_id}')]//a[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS_PAGES_BY_TABLE</td>
+	<td>//div[contains(@id,'${key_id}')]//a[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_EXACT_PAGE_BY_TABLE</td>
+	<td>//div[contains(@id,'${key_id}')]//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -567,7 +567,13 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			"(?s)INFO - Upgrade report generated in " + file.getAbsolutePath() +
 				"\\n\\s+\\{(.+)\\}");
 
-		Matcher matcher = pattern.matcher(_getLogContextContent());
+		int index = _getLogContextContent().indexOf(
+			"INFO - Upgrade report generated in " + file.getAbsolutePath());
+
+		String substringLogContextContent = _getLogContextContent().substring(
+			index);
+
+		Matcher matcher = pattern.matcher(substringLogContextContent);
 
 		Assert.assertTrue(matcher.matches());
 

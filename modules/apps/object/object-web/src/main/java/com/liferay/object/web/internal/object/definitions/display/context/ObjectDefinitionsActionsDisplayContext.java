@@ -122,8 +122,11 @@ public class ObjectDefinitionsActionsDisplayContext
 		JSONArray objectActionExecutorsJSONArray =
 			_jsonFactory.createJSONArray();
 
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		for (ObjectActionExecutor objectActionExecutor :
-				_objectActionExecutorRegistry.getObjectActionExecutors()) {
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					objectDefinition.getName())) {
 
 			objectActionExecutorsJSONArray.put(
 				JSONUtil.put(

@@ -6,6 +6,7 @@ import './MemberProfile.scss';
 import catalogIcon from '../../assets/icons/catalog-icon.svg';
 import shieldCheckIcon from '../../assets/icons/shield-check-icon.svg';
 import userIcon from '../../assets/icons/user-icon.svg';
+import {DetailedCard} from '../DetailedCard/DetailedCard';
 
 interface MemberProfileProps {
 	member: MemberProps;
@@ -16,22 +17,19 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 	return (
 		<div className="member-profile-view-container">
 			<a
-				className="mb-4 member-profile-back-button"
+				className="member-profile-back-button"
 				onClick={() => {
 					setSelectedMember(undefined);
 				}}
 			>
-				<ClayIcon
-					className="d-inline-block"
-					symbol="order-arrow-left"
-				/>
+				<ClayIcon symbol="order-arrow-left" />
 
-				<div className="d-inline-block member-profile-back-button-text">
+				<div className="member-profile-back-button-text">
 					&nbsp;Back to Members
 				</div>
 			</a>
 
-			<div className="d-inline-block member-profile-image mr-4">
+			<div className="d-inline-block member-profile-image">
 				<img alt="Member Image" src={member.image}></img>
 			</div>
 
@@ -55,16 +53,12 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 				)}
 			</div>
 
-			<div className="member-profile-row mt-5">
-				<div className="member-profile-card">
-					<h2 className="d-inline-block member-profile-card-heading">
-						Profile
-					</h2>
-
-					<div className="d-inline-block member-profile-card-icon">
-						<img alt="Member Card Icon" src={userIcon}></img>
-					</div>
-
+			<div className="member-profile-row">
+				<DetailedCard
+					cardIcon={userIcon}
+					cardIconAltText="Member Card Icon"
+					cardTitle="Profile"
+				>
 					<table className="member-profile-information mt-4">
 						<tr className="member-profile-name">
 							<th className="member-profile-name-heading">
@@ -86,20 +80,13 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 							<td>{member.userId}</td>
 						</tr>
 					</table>
-				</div>
+				</DetailedCard>
 
-				<div className="member-roles-card">
-					<h2 className="d-inline-block member-roles-card-heading">
-						Roles
-					</h2>
-
-					<div className="d-inline-block member-roles-card-icon">
-						<img
-							alt="Member Roles Icon"
-							src={shieldCheckIcon}
-						></img>
-					</div>
-
+				<DetailedCard
+					cardIcon={shieldCheckIcon}
+					cardIconAltText="Member Roles Icon"
+					cardTitle="Roles"
+				>
 					<table className="member-roles-information mt-4">
 						<tr>
 							<th className="member-roles-permissions-heading">
@@ -109,19 +96,15 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 							<td>{member.role}</td>
 						</tr>
 					</table>
-				</div>
+				</DetailedCard>
 			</div>
 
 			<div className="member-profile-row">
-				<div className="member-account-card">
-					<h2 className="d-inline-block member-account-card-heading">
-						Account
-					</h2>
-
-					<div className="d-inline-block member-account-card-icon">
-						<img alt="Member Account Icon" src={catalogIcon}></img>
-					</div>
-
+				<DetailedCard
+					cardIcon={catalogIcon}
+					cardIconAltText="Member Account Icon"
+					cardTitle="Account"
+				>
 					<table className="member-account-information mt-4">
 						<tr>
 							<th className="member-account-membership-heading">
@@ -151,7 +134,7 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 							</td>
 						</tr>
 					</table>
-				</div>
+				</DetailedCard>
 			</div>
 		</div>
 	);

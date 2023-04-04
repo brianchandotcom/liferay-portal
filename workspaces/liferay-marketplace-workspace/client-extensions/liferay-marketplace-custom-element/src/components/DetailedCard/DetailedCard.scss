@@ -1,0 +1,15 @@
+.detailed-card {
+	&-container {
+		border: 1px solid #e2e2e4;
+		border-radius: 0.625rem;
+		padding: 2.125rem 1.5rem;
+		width: 32.75rem;
+	}
+
+	&-header {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}

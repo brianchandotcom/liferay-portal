@@ -16,22 +16,22 @@ package com.liferay.account.admin.web.internal.util;
 
 import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
 public class CurrentAccountEntryManagerUtil {
 
 	public static long getCurrentAccountEntryId(long groupId, long userId)
 		throws PortalException {
 
+		CurrentAccountEntryManager currentAccountEntryManager =
+			_currentAccountEntryManagerSnapshot.get();
+
 		AccountEntry accountEntry =
-			_currentAccountEntryManager.getCurrentAccountEntry(groupId, userId);
+			currentAccountEntryManager.getCurrentAccountEntry(groupId, userId);
 
 		if (accountEntry != null) {
 			return accountEntry.getAccountEntryId();
@@ -44,17 +44,16 @@ public class CurrentAccountEntryManagerUtil {
 			long accountEntryId, long groupId, long userId)
 		throws PortalException {
 
-		_currentAccountEntryManager.setCurrentAccountEntry(
+		CurrentAccountEntryManager currentAccountEntryManager =
+			_currentAccountEntryManagerSnapshot.get();
+
+		currentAccountEntryManager.setCurrentAccountEntry(
 			accountEntryId, groupId, userId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCurrentAccountEntryManager(
-		CurrentAccountEntryManager currentAccountEntryManager) {
-
-		_currentAccountEntryManager = currentAccountEntryManager;
-	}
-
-	private static CurrentAccountEntryManager _currentAccountEntryManager;
+	private static final Snapshot<CurrentAccountEntryManager>
+		_currentAccountEntryManagerSnapshot = new Snapshot<>(
+			CurrentAccountEntryManagerUtil.class,
+			CurrentAccountEntryManager.class);
 
 }

@@ -774,7 +774,8 @@ definition {
 				targetMarketOptions = ${targetMarketOptions},
 				targetRolesOptions = ${targetRolesOptions});
 
-			PRMMarketing.viewMDFActivity(
+			var startDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
+			var endDate = DateUtil.getFormattedDate("+3", "M/d/yyyy");
 				activityDescription = ${activityDescription},
 				activityName = ${activityName},
 				budget = ${budget},

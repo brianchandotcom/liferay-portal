@@ -213,10 +213,10 @@ definition {
 
 	@summary = "Format the date that will be inputed on start and end date"
 	macro formatDate {
-		var nextDayDate = DateUtil.getFormattedDate("+1", "MMddyyyy");
+		var nextDayDate = DateUtil.getFormattedDate("+2", "MMddyyyy");
 
 		if (isSet(endDate)) {
-			var nextDayDate = DateUtil.getFormattedDate("+2", "MMddyyyy");
+			var nextDayDate = DateUtil.getFormattedDate("+3", "MMddyyyy");
 		}
 
 		return ${nextDayDate};
@@ -333,14 +333,18 @@ definition {
 				value1 = ${followUpStrategy});
 		}
 
-		var startDate = PRMMDFRequest.formatDate();
+		if (!(isSet(startDate))) {
+			var startDate = PRMMDFRequest.formatDate();
+		}
 
 		Type.sendKeys(
 			key_fieldName = "activities[${activityIndex}].startDate",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
 			value1 = ${startDate});
 
-		var endDate = PRMMDFRequest.formatDate(endDate = "true");
+		if (!(isSet(endDate))) {
+			var endDate = PRMMDFRequest.formatDate(endDate = "true");
+		}
 
 		Type.sendKeys(
 			key_fieldName = "activities[${activityIndex}].endDate",

@@ -29,11 +29,11 @@ definition {
 		}
 
 		if (!(isSet(startDate))) {
-			var startDate = DateUtil.getFormattedDate("+1", "yyyy-MM-dd");
+			var startDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
 		}
 
 		if (!(isSet(endDate))) {
-			var endDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
+			var endDate = DateUtil.getFormattedDate("+3", "yyyy-MM-dd");
 		}
 
 		if (!(isSet(campaignName))) {

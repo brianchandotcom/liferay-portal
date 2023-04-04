@@ -14,25 +14,25 @@
 
 package com.liferay.portal.reports.engine.console.web.internal.permission;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Source;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leon Chi
  */
-@Component(service = {})
 public class SourcePermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long sourceId, String actionId)
 		throws PortalException {
 
-		return _sourceModelResourcePermission.contains(
+		ModelResourcePermission<Source> modelResourcePermission =
+			_sourceModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, sourceId, actionId);
 	}
 
@@ -40,21 +40,18 @@ public class SourcePermissionChecker {
 			PermissionChecker permissionChecker, Source source, String actionId)
 		throws PortalException {
 
-		return _sourceModelResourcePermission.contains(
+		ModelResourcePermission<Source> modelResourcePermission =
+			_sourceModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, source, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.reports.engine.console.model.Source)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<Source> modelResourcePermission) {
-
-		_sourceModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<Source>
-		_sourceModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<Source>>
+		_sourceModelResourcePermissionSnapshot = new Snapshot<>(
+			SourcePermissionChecker.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.portal.reports.engine.console." +
+				"model.Source)");
 
 }

@@ -630,6 +630,65 @@ public class ObjectActionLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED);
 
 		_objectActionLocalService.deleteObjectAction(objectAction2);
+
+		// On after update
+
+		ObjectAction objectAction3 = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"secret", "onafterupdate"
+			).put(
+				"url", "https://onafterupdate.com"
+			).build());
+
+		ObjectEntry objectEntry5 = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "Peter"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+		ObjectEntry objectEntry6 = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "Peter"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry5 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry5.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "John"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertWebhookObjectAction(
+			"John", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, "Peter",
+			WorkflowConstants.STATUS_APPROVED);
+
+		objectEntry6 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "João"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertWebhookObjectAction(
+			"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, "Peter",
+			WorkflowConstants.STATUS_APPROVED);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry5);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry6);
+
+		_objectActionLocalService.deleteObjectAction(objectAction3);
 	}
 
 	@Test

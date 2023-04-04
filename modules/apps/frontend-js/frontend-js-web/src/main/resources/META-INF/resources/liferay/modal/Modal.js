@@ -228,6 +228,12 @@ const Modal = ({
 									) : (
 										title
 									)}
+
+									{loading && (
+										<span className="sr-only">
+											- {Liferay.Language.get('loading')}
+										</span>
+									)}
 								</ClayModal.Header>
 							)}
 
@@ -241,7 +247,11 @@ const Modal = ({
 							>
 								{url && (
 									<>
-										{loading && <ClayLoadingIndicator />}
+										{loading ? (
+											<ClayLoadingIndicator />
+										) : (
+											<StatusMessage />
+										)}
 
 										<Iframe
 											iframeBodyCssClass={
@@ -321,6 +331,20 @@ const Modal = ({
 			)}
 		</>
 	);
+};
+
+const StatusMessage = () => {
+	const [showMessage, setShowMessage] = useState(true);
+
+	useEffect(() => {
+		setTimeout(() => setShowMessage(false), 1000);
+	});
+
+	return showMessage ? (
+		<span className="sr-only" role="status">
+			{Liferay.Language.get('loaded')}
+		</span>
+	) : null;
 };
 
 const openModal = (props) => {

@@ -14,21 +14,19 @@
 
 package com.liferay.portal.vulcan.internal.dto.converter;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOMapper;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -39,117 +37,104 @@ public class DTOMapperImpl implements DTOMapper {
 
 	@Override
 	public String toInternalDTOClassName(String externalDTOClassName) {
-		return _internalDTOClassNames.get(externalDTOClassName);
+		return _serviceTrackerMap.getService(externalDTOClassName);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext,
-			(Class<DTOConverter<?, ?>>)(Class<?>)DTOConverter.class,
-			new DTOConverterServiceTrackerCustomizer());
+			(Class<DTOConverter<?, ?>>)(Class<?>)DTOConverter.class, null,
+			(serviceReference, emitter) -> {
+				String externalDTOClassName =
+					(String)serviceReference.getProperty(
+						"external.dto.class.name");
 
-		_serviceTracker.open();
+				if (externalDTOClassName == null) {
+					DTOConverter<?, ?> dtoConverter = bundleContext.getService(
+						serviceReference);
+
+					externalDTOClassName = _getDTOConverterGenericType(
+						dtoConverter, 1);
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+				if (externalDTOClassName != null) {
+					emitter.emit(externalDTOClassName);
+				}
+			},
+			new ServiceTrackerCustomizer<DTOConverter<?, ?>, String>() {
+
+				@Override
+				public String addingService(
+					ServiceReference<DTOConverter<?, ?>> serviceReference) {
+
+					String internalDTOClassName =
+						(String)serviceReference.getProperty("dto.class.name");
+
+					if (internalDTOClassName == null) {
+						DTOConverter<?, ?> dtoConverter =
+							bundleContext.getService(serviceReference);
+
+						internalDTOClassName = _getDTOConverterGenericType(
+							dtoConverter, 0);
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+					return internalDTOClassName;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<DTOConverter<?, ?>> serviceReference,
+					String internalDTOClassName) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<DTOConverter<?, ?>> serviceReference,
+					String internalDTOClassName) {
+				}
+
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_serviceTrackerMap.close();
 	}
 
-	private BundleContext _bundleContext;
-	private final Map<String, String> _internalDTOClassNames = new HashMap<>();
-	private ServiceTracker<DTOConverter<?, ?>, String> _serviceTracker;
+	private String _getDTOConverterGenericType(
+		DTOConverter<?, ?> dtoConverter, int genericTypeIndex) {
 
-	private class DTOConverterServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<DTOConverter<?, ?>, String> {
+		Class<?> dtoConverterClass = dtoConverter.getClass();
 
-		@Override
-		public String addingService(
-			ServiceReference<DTOConverter<?, ?>> serviceReference) {
+		Type[] genericInterfaceTypes = dtoConverterClass.getGenericInterfaces();
 
-			DTOConverter<?, ?> dtoConverter = _bundleContext.getService(
-				serviceReference);
+		for (Type genericInterfaceType : genericInterfaceTypes) {
+			if (genericInterfaceType instanceof ParameterizedType) {
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericInterfaceType;
 
-			String internalDTOClassName = (String)serviceReference.getProperty(
-				"dto.class.name");
-
-			if (internalDTOClassName == null) {
-				internalDTOClassName = _getDTOConverterGenericType(
-					dtoConverter, 0);
-			}
-
-			String externalDTOClassName = (String)serviceReference.getProperty(
-				"external.dto.class.name");
-
-			if (externalDTOClassName == null) {
-				externalDTOClassName = _getDTOConverterGenericType(
-					dtoConverter, 1);
-			}
-
-			if ((externalDTOClassName == null) &&
-				(internalDTOClassName == null)) {
-
-				_bundleContext.ungetService(serviceReference);
-
-				return null;
-			}
-
-			_internalDTOClassNames.put(
-				externalDTOClassName, internalDTOClassName);
-
-			_bundleContext.ungetService(serviceReference);
-
-			return externalDTOClassName;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<DTOConverter<?, ?>> serviceReference,
-			String externalDTOClassName) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<DTOConverter<?, ?>> serviceReference,
-			String externalDTOClassName) {
-
-			_internalDTOClassNames.remove(externalDTOClassName);
-		}
-
-		private String _getDTOConverterGenericType(
-			DTOConverter<?, ?> dtoConverter, int genericTypeIndex) {
-
-			Class<?> dtoConverterClass = dtoConverter.getClass();
-
-			Type[] genericInterfaceTypes =
-				dtoConverterClass.getGenericInterfaces();
-
-			for (Type genericInterfaceType : genericInterfaceTypes) {
-				if (genericInterfaceType instanceof ParameterizedType) {
-					ParameterizedType parameterizedType =
-						(ParameterizedType)genericInterfaceType;
-
-					if (parameterizedType.getRawType() != DTOConverter.class) {
-						continue;
-					}
-
-					Type[] genericTypes =
-						parameterizedType.getActualTypeArguments();
-
-					Class<DTOConverter<?, ?>> resourceGenericType =
-						(Class<DTOConverter<?, ?>>)
-							genericTypes[genericTypeIndex];
-
-					return resourceGenericType.getName();
+				if (parameterizedType.getRawType() != DTOConverter.class) {
+					continue;
 				}
-			}
 
-			return null;
+				Type[] genericTypes =
+					parameterizedType.getActualTypeArguments();
+
+				Class<DTOConverter<?, ?>> resourceGenericType =
+					(Class<DTOConverter<?, ?>>)genericTypes[genericTypeIndex];
+
+				return resourceGenericType.getName();
+			}
 		}
 
+		return null;
 	}
+
+	private ServiceTrackerMap<String, String> _serviceTrackerMap;
 
 }

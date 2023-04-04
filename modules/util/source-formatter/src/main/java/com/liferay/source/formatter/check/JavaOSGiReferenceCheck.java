@@ -198,8 +198,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 						String codeBlock = sb.toString();
 
 						if (codeBlock.matches(
-								"\\s*@Reference[\\s\\S]*?(protected|public) " +
-									"void \\w+?\\([\\s\\S]*")) {
+								"\\t+@Reference[\\s\\S]*?(protected|public) " +
+									"void \\w+?\\([\\s\\S]*?")) {
 
 							addMessage(
 								fileName, "Do not use @Reference on methods");
@@ -221,8 +221,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				String codeBlock = sb.toString();
 
 				if (codeBlock.matches(
-						"\\s*@Reference[\\s\\S]*?(protected|public) " +
-							"void \\w+?\\([\\s\\S]*")) {
+						"\\t+@Reference[\\s\\S]*?(protected|public) " +
+							"void \\w+?\\([\\s\\S]*?")) {
 
 					addMessage(fileName, "Do not use @Reference on methods");
 				}

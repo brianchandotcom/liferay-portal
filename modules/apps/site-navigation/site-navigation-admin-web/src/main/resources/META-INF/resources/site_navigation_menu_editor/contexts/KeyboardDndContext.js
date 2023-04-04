@@ -12,13 +12,12 @@
  * details.
  */
 
-import React, {useCallback, useContext, useRef, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import {NESTING_MARGIN} from '../constants/nestingMargin';
+import getFlatItems from '../utils/getFlatItems';
 
 const KeyboardDndContext = React.createContext();
-
-const ITEM_CARD_HEIGHT = 87;
 
 const ROOT_ITEM_OFFSET_WIDTH = NESTING_MARGIN / 2;
 
@@ -47,6 +46,36 @@ export function useSetDragLayer() {
 				return;
 			}
 
+			// Try to put the placeholder next to the corresponding sibling
+
+			const siblingsItems = getFlatItems(items).filter(
+				(item) =>
+					item.parentSiteNavigationMenuItemId ===
+					nextDragLayer.parentSiteNavigationMenuItemId
+			);
+
+			const siblingItem = siblingsItems[nextDragLayer.order];
+
+			if (siblingItem) {
+				const siblingElement = document.querySelector(
+					`[data-item-id="${siblingItem.siteNavigationMenuItemId}"]`
+				);
+
+				const siblingElementRect = siblingElement.getBoundingClientRect();
+
+				setDragLayer({
+					...nextDragLayer,
+					currentOffset: {
+						x: siblingElementRect.x,
+						y: siblingElementRect.y,
+					},
+				});
+
+				return;
+			}
+
+			// Otherwise place it at the very end of it's parent
+
 			const parentElement = document.querySelector(
 				`[data-item-id="${nextDragLayer.parentSiteNavigationMenuItemId}"]`
 			);
@@ -59,46 +88,41 @@ export function useSetDragLayer() {
 
 			const parentElementRect = parentElement.getBoundingClientRect();
 
-			const offset =
-				parentElementRect.x +
-				(nextDragLayer.parentSiteNavigationMenuItemId === '0'
-					? ROOT_ITEM_OFFSET_WIDTH
-					: NESTING_MARGIN);
+			const parentElementAriaLevel = parseInt(
+				parentElement.getAttribute('aria-level'),
+				10
+			);
 
-			if (nextDragLayer.order) {
-				const parent = items.find(
-					(item) =>
-						item.siteNavigationMenuItemId ===
-						nextDragLayer.parentSiteNavigationMenuItemId
+			// Traverse the DOM until we find and element with same or less
+			// aria-level than our parent.
+
+			let nextChildNode = parentElement.nextElementSibling;
+
+			while (nextChildNode) {
+				const childNodeAriaLevel = parseInt(
+					nextChildNode.getAttribute('aria-level'),
+					10
 				);
 
-				const child = parent
-					? parent.children[nextDragLayer.order]
-					: items[nextDragLayer.order];
+				if (childNodeAriaLevel <= parentElementAriaLevel) {
+					break;
+				}
 
-				const childElement = document.querySelector(
-					`[data-item-id="${child.siteNavigationMenuItemId}"]`
-				);
-
-				const childElementRect = childElement.getBoundingClientRect();
-
-				setDragLayer({
-					...nextDragLayer,
-					currentOffset: {
-						x: offset,
-						y: childElementRect.y,
-					},
-				});
+				nextChildNode = nextChildNode.nextElementSibling;
 			}
-			else {
-				setDragLayer({
-					...nextDragLayer,
-					currentOffset: {
-						x: offset,
-						y: parentElementRect.y + ITEM_CARD_HEIGHT,
-					},
-				});
-			}
+
+			setDragLayer({
+				...nextDragLayer,
+				currentOffset: {
+					x:
+						nextDragLayer.parentSiteNavigationMenuItemId === '0'
+							? parentElementRect.x + ROOT_ITEM_OFFSET_WIDTH
+							: parentElementRect.x + NESTING_MARGIN,
+					y: nextChildNode
+						? nextChildNode.getBoundingClientRect().y
+						: parentElementRect.bottom,
+				},
+			});
 		},
 		[setDragLayer]
 	);

@@ -209,12 +209,12 @@
 		</assignments>
 		<transitions>
 			<transition>
-				<name>approve</name>
+				<name>Approve</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>reject</name>
+				<name>Reject</name>
 				<target>updateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdate</target>
 				<default>false</default>
 			</transition>

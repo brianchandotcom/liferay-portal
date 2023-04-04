@@ -605,26 +605,28 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerCreateContainer.HostConfig hostConfig =
 			dockerCreateContainer.getHostConfig();
 
-		Property<Boolean> autoRemove = hostConfig.getAutoRemove();
+		Property<Boolean> autoRemoveProperty = hostConfig.getAutoRemove();
 
-		autoRemove.set(true);
+		autoRemoveProperty.set(true);
 
-		MapProperty<String, String> binds = hostConfig.getBinds();
+		MapProperty<String, String> bindsMapProperty = hostConfig.getBinds();
 
-		binds.put(clientExtensionsPath, "/opt/liferay/osgi/client-extensions");
-		binds.put(deployPath, "/mnt/liferay/deploy");
-		binds.put(workPath, "/opt/liferay/work");
+		bindsMapProperty.put(
+			clientExtensionsPath, "/opt/liferay/osgi/client-extensions");
+		bindsMapProperty.put(deployPath, "/mnt/liferay/deploy");
+		bindsMapProperty.put(workPath, "/opt/liferay/work");
 
 		dockerCreateContainer.setDescription(
 			"Creates a Docker container from your built image and mounts " +
 				dockerPath + " to /mnt/liferay.");
 		dockerCreateContainer.setGroup(DOCKER_GROUP);
 
-		ListProperty<String> portBindings = hostConfig.getPortBindings();
+		ListProperty<String> portBindingsListProperty =
+			hostConfig.getPortBindings();
 
-		portBindings.add("8000:8000");
-		portBindings.add("8080:8080");
-		portBindings.add("11311:11311");
+		portBindingsListProperty.add("8000:8000");
+		portBindingsListProperty.add("8080:8080");
+		portBindingsListProperty.add("11311:11311");
 
 		dockerCreateContainer.targetImageId(
 			new Callable<String>() {

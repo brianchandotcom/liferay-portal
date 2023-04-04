@@ -21,6 +21,9 @@ import {useFormState} from '../../hooks/useForm.es';
 const DDM_FORM_ADMIN_PORTLET_NAMESPACE =
 	'com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet';
 
+const JOURNAL_WEB_PORTLET_NAMESPACE =
+	'com_liferay_journal_web_portlet_JournalPortlet';
+
 export function Container({activePage, children, isBuilder = true, pageIndex}) {
 	return (
 		<div
@@ -146,10 +149,15 @@ export function Page({
 Page.displayName = 'DefaultVariant.Page';
 
 export function PageHeader({description, title}) {
+	const {portletId} = useFormState();
+	const isWebContentPortlet = portletId.includes(
+		JOURNAL_WEB_PORTLET_NAMESPACE
+	);
+
 	return (
 		<>
 			{title && <h2 className="lfr-ddm-form-page-title">{title}</h2>}
-			{description && (
+			{!isWebContentPortlet && description && (
 				<h3 className="lfr-ddm-form-page-description">{description}</h3>
 			)}
 		</>

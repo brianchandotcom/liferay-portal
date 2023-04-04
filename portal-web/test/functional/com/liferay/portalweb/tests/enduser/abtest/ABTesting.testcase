@@ -22,7 +22,7 @@ definition {
 
 			Navigator.openURL();
 
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Connect and synchronyze with Analytics Cloud") {
@@ -511,7 +511,7 @@ definition {
 	@priority = 3
 	test CheckABTestPanelInfoNotSyncAC {
 		task ("Create a new Site and Page") {
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
+			HeadlessSite.addSite(siteName = "Test Site Name 2");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name 2",

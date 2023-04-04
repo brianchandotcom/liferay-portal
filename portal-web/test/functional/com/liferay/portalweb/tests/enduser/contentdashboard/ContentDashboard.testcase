@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		Navigator.openURL();
 
@@ -543,7 +543,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create another site") {
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
+			HeadlessSite.addSite(siteName = "Test Site Name 2");
 		}
 
 		task ("Create a blog in the first site") {
@@ -1535,7 +1535,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create new Group") {
-			JSONGroup.addGroup(groupName = "Second Test Site Name");
+			HeadlessSite.addSite(siteName = "Second Test Site Name");
 		}
 
 		task ("Create a Web Content for each group") {
@@ -2751,9 +2751,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add two different sites") {
-			JSONGroup.addGroup(groupName = "Site Name 1");
+			HeadlessSite.addSite(siteName = "Site Name 1");
 
-			JSONGroup.addGroup(groupName = "Site Name 2");
+			HeadlessSite.addSite(siteName = "Site Name 2");
 		}
 
 		task ("Add a document for each site") {
@@ -4909,7 +4909,7 @@ definition {
 		}
 
 		task ("Create the second site") {
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
+			HeadlessSite.addSite(siteName = "Test Site Name 2");
 		}
 
 		task ("Add web content with tag to the second site") {

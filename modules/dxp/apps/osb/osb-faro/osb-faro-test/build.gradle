@@ -1,9 +1,6 @@
 configurations.portalTestSnapshot.exclude group: "com.liferay.portal", module: "com.liferay.portal.impl"
 
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "default"
-	testCompile group: "com.liferay", name: "com.liferay.petra.reflect", version: "default"
-	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "3.59.9"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.117.2"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "3.0.0"
@@ -15,6 +12,9 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-bean", version: "3.6.4"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-reflect")
+	testCompile project(":core:petra:petra-string")
 	testCompile project(":dxp:apps:osb:osb-faro:osb-faro-api")
 	testCompile project(":dxp:apps:osb:osb-faro:osb-faro-service")
 }

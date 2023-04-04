@@ -13,9 +13,6 @@ copyTestModules {
 
 dependencies {
 	testIntegrationCompile group: "com.github.cukespace", name: "cukespace-core", version: "1.6.3"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "2.1.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.poshi.runner", version: "1.0.273"
 	testIntegrationCompile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 	testIntegrationCompile group: "com.vimalselvam", name: "cucumber-extentsreport", version: "1.1.1"
@@ -24,6 +21,9 @@ dependencies {
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.5"
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.5"
+	testIntegrationCompile project(":core:petra:petra-lang")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:poshi:poshi-runner")
 }
 
 deploy {

@@ -20,12 +20,11 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.15"
-
-	compileOnly group: "com.liferay", name: "com.liferay.ip.geocoder.api", version: "1.0.5"
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 	compileOnly group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.2.14"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.14"
+	compileOnly project(":apps:ip-geocoder:ip-geocoder-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-contacts-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-engine-client")

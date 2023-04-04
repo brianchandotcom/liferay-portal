@@ -44,7 +44,7 @@ export default function RelationshipSection({
 	) => {
 		const response = await fetch(
 			createResourceURL(baseResourceURL, {
-				objectRelationshipId: relationshipSection.relationshipId,
+				objectRelationshipId: relationshipSection.objectRelationshipId,
 				p_p_resource_id:
 					'/notification_templates/get_parent_object_field_notification_template_terms',
 			}).toString()
@@ -65,7 +65,7 @@ export default function RelationshipSection({
 			defaultExpanded={false}
 			displayTitle={relationshipSection.sectionLabel}
 			displayType="unstyled"
-			key={relationshipSection.relationshipId}
+			key={relationshipSection.objectRelationshipId}
 			onClick={(event) => {
 				const element = event.target as HTMLButtonElement;
 

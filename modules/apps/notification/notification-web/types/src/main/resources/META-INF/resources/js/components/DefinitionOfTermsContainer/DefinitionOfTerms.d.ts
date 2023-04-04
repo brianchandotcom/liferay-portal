@@ -19,7 +19,7 @@ interface DefinitionOfTermsProps {
 	objectDefinitions: ObjectDefinition[];
 }
 export interface RelationshipSections {
-	relationshipId: number;
+	objectRelationshipId: number;
 	sectionLabel: string;
 	terms?: Item[];
 }

@@ -31,7 +31,7 @@ interface DefinitionOfTermsProps {
 	objectDefinitions: ObjectDefinition[];
 }
 export interface RelationshipSections {
-	relationshipId: number;
+	objectRelationshipId: number;
 	sectionLabel: string;
 	terms?: Item[];
 }
@@ -289,7 +289,7 @@ export function DefinitionOfTerms({
 				<RelationshipSection
 					baseResourceURL={baseResourceURL}
 					currentRelationshipSectionIndex={index}
-					key={relationshipSection.relationshipId}
+					key={relationshipSection.objectRelationshipId}
 					relationshipSection={relationshipSection}
 					relationshipSections={relationshipSections}
 					setRelationshipSections={setRelationshipSections}

@@ -17,6 +17,9 @@ package com.liferay.object.action.executor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Collections;
+import java.util.Set;
+
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
@@ -27,6 +30,10 @@ public interface ObjectActionExecutor {
 			long companyId, UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
 		throws Exception;
+
+	public default Set<String> getAllowedObjectDefinitionNames() {
+		return Collections.emptySet();
+	}
 
 	public String getKey();
 

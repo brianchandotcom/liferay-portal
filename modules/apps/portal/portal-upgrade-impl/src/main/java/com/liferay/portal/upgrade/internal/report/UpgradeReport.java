@@ -722,7 +722,6 @@ public class UpgradeReport {
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Completed upgrade report generation");
 				_log.info(
 					"Upgrade report generated in " +
 						reportFile.getAbsolutePath());

@@ -384,6 +384,19 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	@summary = "Search for an MDF Request"
+	macro searchMDF {
+		Type(
+			key_placeHolder = "Search",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = ${campaignName});
+
+		KeyPress(
+			key_placeHolder = "Search",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = "\RETURN");
+	}
+
 	@summary = "View the activity information on MDF Review Page"
 	macro viewActivityInReviewPage {
 		Click(

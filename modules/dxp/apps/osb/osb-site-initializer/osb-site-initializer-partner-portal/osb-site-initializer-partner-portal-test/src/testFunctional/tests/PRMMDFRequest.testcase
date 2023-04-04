@@ -297,6 +297,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-173731. Verify that is possible to export filtered MDFs"
+	@priority = 4
+	test CanExportSearchedMDFs {
+		property test.name.skip.portal.instance = "PRMMDFRequest#CanExportSearchedMDFs";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given a new account is created") {
+			JSONPRM.addAccount(accountName = "Company Name 2");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 2",
+				userEmailAddress = "partner@liferay.com");
+		}
+
+		task ("And I add two different MDF's") {
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				campaignName = "Campaign Name 1");
+
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 2",
+				campaignName = "Campaign Name 2");
+		}
+
+		task ("And I go to MDF Listing Page") {
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf",
+				buttonText = "MDF");
+		}
+
+		task ("When I search for the first MDF") {
+			PRMMDFRequest.SearchMDF(campaignName = "Campaign Name 1");
+		}
+
+		task ("And I click on the 'Export MDF Report' button") {
+			Button.click(button = "Export MDF Report");
+		}
+
+		task ("Then the information of the searched MDF will be inside the exported file") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Campaign Name 1",
+				fileName = "MDF Requests.csv");
+		}
+
+		task ("When I search for the second MDF") {
+			PRMMDFRequest.SearchMDF(campaignName = "Campaign Name 2");
+		}
+
+		task ("And I click on the 'Export MDF Report' button") {
+			Button.click(button = "Export MDF Report");
+		}
+
+		task ("Then the information of the searched MDF will be inside the exported file") {
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Campaign Name 2",
+				fileName = "MDF Requests.csv");
+		}
+	}
+
 	@description = "This is a test for LPS-171637. Verify that an alert will appear when user don't fill a mandatory* field and that “Continue” button only will be clickable after fill all mandatory fields"
 	@priority = 5
 	test CannotContinueWithoutFillRequiredField {

@@ -14,9 +14,10 @@
 
 package com.liferay.account.admin.web.internal.display;
 
-import com.liferay.account.admin.web.internal.util.CurrentAccountEntryManagerUtil;
+import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryWrapper;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
@@ -65,9 +66,17 @@ public class AccountEntryDisplay extends AccountEntryWrapper {
 			return false;
 		}
 
-		long currentAccountEntryId =
-			CurrentAccountEntryManagerUtil.getCurrentAccountEntryId(
-				groupId, userId);
+		long currentAccountEntryId = 0L;
+
+		CurrentAccountEntryManager currentAccountEntryManager =
+			_currentAccountEntryManagerSnapshot.get();
+
+		AccountEntry accountEntry =
+			currentAccountEntryManager.getCurrentAccountEntry(groupId, userId);
+
+		if (accountEntry != null) {
+			currentAccountEntryId = accountEntry.getAccountEntryId();
+		}
 
 		if (currentAccountEntryId == getAccountEntryId()) {
 			return true;
@@ -114,6 +123,10 @@ public class AccountEntryDisplay extends AccountEntryWrapper {
 	public void setValidateUserEmailAddress(boolean validateUserEmailAddress) {
 		_validateUserEmailAddress = validateUserEmailAddress;
 	}
+
+	private static final Snapshot<CurrentAccountEntryManager>
+		_currentAccountEntryManagerSnapshot = new Snapshot<>(
+			AccountEntryDisplay.class, CurrentAccountEntryManager.class);
 
 	private String _defaultLogoURL;
 	private boolean _emailAddressDomainValidationEnabled = true;

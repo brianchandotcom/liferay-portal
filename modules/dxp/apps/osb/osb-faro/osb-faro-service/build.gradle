@@ -4,8 +4,8 @@ buildService {
 }
 
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "3.0.1"
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 	compileOnly group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
+	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-api")
 }

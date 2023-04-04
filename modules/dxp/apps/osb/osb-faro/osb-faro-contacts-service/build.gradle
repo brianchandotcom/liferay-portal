@@ -3,7 +3,7 @@ buildService {
 }
 
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "3.0.1"
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-contacts-api")
 }

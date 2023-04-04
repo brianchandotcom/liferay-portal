@@ -48,6 +48,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172658. The page creator could preview page template in a new tab."
+	@priority = 4
+	test PreviewPageTemplateInNewTab {
+		task ("Given a page creator has a page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator backs to the Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the page creator could preview page template in a new tab") {
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Preview",
+				pageTemplateName = "Page Template Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+	}
+
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page template."
 	@priority = 4
 	test ViewDropdownMenuIconsInPageTemplatesAdmin {

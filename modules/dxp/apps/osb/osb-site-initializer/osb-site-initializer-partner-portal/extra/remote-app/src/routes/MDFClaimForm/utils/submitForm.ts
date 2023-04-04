@@ -185,48 +185,46 @@ export default async function submitForm(
 
 					if (activity.budgets?.length && dtoMDFClaimActivity.id) {
 						await Promise.all(
-							activity.budgets
-								.filter((budget) => budget.selected)
-								.map(async (budget) => {
-									const dtoMDFClaimBudget = budget.id
-										? await updateMDFClaimActivityBudget(
-												budget,
-												dtoMDFClaimActivity.id,
-												budget.id
-										  )
-										: await createMDFClaimActivityBudget(
-												budget,
-												dtoMDFClaimActivity.id
-										  );
+							activity.budgets.map(async (budget) => {
+								const dtoMDFClaimBudget = budget.id
+									? await updateMDFClaimActivityBudget(
+											budget,
+											dtoMDFClaimActivity.id,
+											budget.id
+									  )
+									: await createMDFClaimActivityBudget(
+											budget,
+											dtoMDFClaimActivity.id
+									  );
 
-									if (
-										budget.invoice &&
-										!budget.invoice.id &&
-										dtoMDFClaimBudget.id
-									) {
-										const budgetInvoiceRenamed = renameFileKeepingExtention(
-											budget.invoice,
-											`${budget.invoice.name}#${dtoMDFClaimBudget.id}`
+								if (
+									budget.invoice &&
+									!budget.invoice.id &&
+									dtoMDFClaimBudget.id
+								) {
+									const budgetInvoiceRenamed = renameFileKeepingExtention(
+										budget.invoice,
+										`${budget.invoice.name}#${dtoMDFClaimBudget.id}`
+									);
+
+									if (budgetInvoiceRenamed) {
+										const dtoBudgetInvoice = await createDocumentFolderDocument(
+											claimParentFolderId,
+											budgetInvoiceRenamed
 										);
 
-										if (budgetInvoiceRenamed) {
-											const dtoBudgetInvoice = await createDocumentFolderDocument(
-												claimParentFolderId,
-												budgetInvoiceRenamed
+										if (dtoBudgetInvoice.id) {
+											updateMDFClaimActivityBudget(
+												budget,
+												dtoMDFClaimActivity.id,
+												dtoMDFClaimBudget.id,
+												dtoBudgetInvoice.id as LiferayFile &
+													number
 											);
-
-											if (dtoBudgetInvoice.id) {
-												updateMDFClaimActivityBudget(
-													budget,
-													dtoMDFClaimActivity.id,
-													dtoMDFClaimBudget.id,
-													dtoBudgetInvoice.id as LiferayFile &
-														number
-												);
-											}
 										}
 									}
-								})
+								}
+							})
 						);
 					}
 				})

@@ -69,6 +69,11 @@ public class SampleRestController {
 		return new ResponseEntity<>(dadJoke, HttpStatus.OK);
 	}
 
+	@GetMapping("/")
+	public String getReady() {
+		return "READY";
+	}
+
 	@PostMapping("/sample/notification/type/1")
 	public ResponseEntity<String> postSampleNotificationType(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {

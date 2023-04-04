@@ -7,9 +7,21 @@
 	},
 	"id": "liferaysampleetcspringboot",
 	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 58081
+		}
+	},
 	"loadBalancer": {
 		"targetPort": 58081
 	},
 	"memory": 512,
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 58081
+		}
+	},
 	"scale": 1
 }

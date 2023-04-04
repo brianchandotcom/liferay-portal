@@ -54,11 +54,11 @@ public class CommerceSubscriptionEntryTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"link")
 		).add(
-			"commerceAccountId", "account-id",
+			"accountEntryId", "account-id",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"link")
 		).add(
-			"commerceAccountName", "account-name"
+			"accountEntryName", "account-name"
 		).build();
 	}
 

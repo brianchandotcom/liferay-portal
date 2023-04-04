@@ -20,22 +20,22 @@ package com.liferay.commerce.subscription.web.internal.model;
 public class SubscriptionEntry {
 
 	public SubscriptionEntry(
-		long subscriptionId, Link orderId, Link commerceAccountId,
-		Label subscriptionStatus, String commerceAccountName) {
+		long subscriptionId, Link orderId, Link accountEntryId,
+		Label subscriptionStatus, String accountEntryName) {
 
 		_subscriptionId = subscriptionId;
 		_orderId = orderId;
-		_commerceAccountId = commerceAccountId;
+		_accountEntryId = accountEntryId;
 		_subscriptionStatus = subscriptionStatus;
-		_commerceAccountName = commerceAccountName;
+		_accountEntryName = accountEntryName;
 	}
 
-	public Link getCommerceAccountId() {
-		return _commerceAccountId;
+	public Link getAccountEntryId() {
+		return _accountEntryId;
 	}
 
-	public String getCommerceAccountName() {
-		return _commerceAccountName;
+	public String getAccountEntryName() {
+		return _accountEntryName;
 	}
 
 	public Link getOrderId() {
@@ -50,8 +50,8 @@ public class SubscriptionEntry {
 		return _subscriptionStatus;
 	}
 
-	private final Link _commerceAccountId;
-	private final String _commerceAccountName;
+	private final Link _accountEntryId;
+	private final String _accountEntryName;
 	private final Link _orderId;
 	private final long _subscriptionId;
 	private final Label _subscriptionStatus;

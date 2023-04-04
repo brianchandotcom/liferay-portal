@@ -89,7 +89,7 @@ public class CommerceSubscriptionEntryFDSDataProvider
 
 			AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
-			String commerceAccountIdString = String.valueOf(
+			String accountEntryIdString = String.valueOf(
 				accountEntry.getAccountEntryId());
 
 			SubscriptionEntry subscriptionEntry = new SubscriptionEntry(
@@ -100,7 +100,7 @@ public class CommerceSubscriptionEntryFDSDataProvider
 						commerceOrder.getCommerceOrderId(),
 						httpServletRequest)),
 				new Link(
-					commerceAccountIdString,
+					accountEntryIdString,
 					_getEditAccountURL(
 						accountEntry.getAccountEntryId(), httpServletRequest)),
 				_getSubscriptionStatus(commerceSubscriptionEntry),
@@ -145,7 +145,7 @@ public class CommerceSubscriptionEntryFDSDataProvider
 	}
 
 	private String _getEditAccountURL(
-			long commerceAccountId, HttpServletRequest httpServletRequest)
+			long accountEntryId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return PortletURLBuilder.create(
@@ -159,7 +159,7 @@ public class CommerceSubscriptionEntryFDSDataProvider
 				httpServletRequest, "currentUrl",
 				_portal.getCurrentURL(httpServletRequest))
 		).setParameter(
-			"accountEntryId", commerceAccountId
+			"accountEntryId", accountEntryId
 		).buildString();
 	}
 

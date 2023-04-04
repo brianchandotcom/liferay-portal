@@ -4,7 +4,6 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
@@ -242,6 +241,32 @@ definition {
 			key_productName = "Brake Pads",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 			value1 = "$ 18.90");
+	}
+
+	@description = "This is a functional test for COMMERCE-11068 - Can change the current theme to a Minium theme"
+	@priority = 5
+	test CanApplyMiniumThemeToSite {
+		property portal.acceptance = "true";
+
+		task ("Given the Admin added a site via JSON") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("When a public page is created and change it's theme to Minium") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Public Page");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.changeSiteCurrentTheme(themeName = "Minium");
+		}
+
+		task ("Then there are no errors messages appearing in the log") {
+			AssertConsoleTextNotPresent(value1 = "commerce.product.exception.NoSuchChannelException");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
 	}
 
 	@description = "This is for COMMERCE-10054. Account users without roles should not be able to add products to cart"

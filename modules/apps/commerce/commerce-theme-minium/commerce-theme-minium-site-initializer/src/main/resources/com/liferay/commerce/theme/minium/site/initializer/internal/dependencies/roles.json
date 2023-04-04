@@ -213,9 +213,9 @@
 			},
 			{
 				"actionIds": [
-					"MANAGE_ALL_ACCOUNTS"
+					"MANAGE_ACCOUNTS"
 				],
-				"resource": "com.liferay.commerce.account"
+				"resource": "com.liferay.commerce.shipment"
 			},
 			{
 				"actionIds": [

@@ -37,11 +37,11 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				"ObjectField.dbTableName from ObjectField inner join ",
 				"ObjectDefinition on ObjectDefinition.objectDefinitionId = ",
 				"ObjectField.objectDefinitionId where ",
-				"ObjectField.businessType = \"",
+				"ObjectField.businessType = '",
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
-				"\" and ObjectField.relationshipType = \"",
+				"' and ObjectField.relationshipType = '",
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
-				"\" and ObjectDefinition.system_ = [$TRUE$]"));
+				"' and ObjectDefinition.system_ = [$TRUE$]"));
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				selectSQL);

@@ -25,8 +25,8 @@ public class BucketDisplayContext {
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
 	 */
 	@Deprecated
-	public String getAssetCategoryId() {
-		return _filterValue;
+	public long getAssetCategoryId() {
+		return GetterUtil.getLong(_filterValue);
 	}
 
 	/**

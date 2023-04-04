@@ -18,7 +18,7 @@ definition {
 		PRMUtils.connectWithSalesforce();
 
 		task ("Create a new Partner Portal Site") {
-			PRMUtils.addPRMSite();
+			PRMUtils.addSite();
 		}
 
 		task ("Add a Partner user") {
@@ -49,9 +49,7 @@ definition {
 		}
 
 		task ("Add a new account and assign the created users to the account") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Company Name 1",
-				accountEntryType = "Business");
+			JSONPRM.addAccount();
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 1",
@@ -60,10 +58,6 @@ definition {
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 1",
 				userEmailAddress = "manager@liferay.com");
-		}
-
-		task ("Add a currency to the created account") {
-			JSONPRM.addCurrency();
 		}
 
 		task ("Login with the Partner user and go to Partner Portal") {
@@ -94,9 +88,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
-
-			Account.tearDownCP();
+			PRMUtils.tearDown();
 		}
 	}
 
@@ -166,9 +158,7 @@ definition {
 	@priority = 4
 	test CanExportFilteredClaims {
 		task ("Given a new account is created") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Company Name 2",
-				accountEntryType = "Business");
+			JSONPRM.addAccount(accountName = "Company Name 2");
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
@@ -396,8 +386,8 @@ definition {
 
 		task ("And the partner logs in") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
 		}
 
 		task ("And go to the approved MDF") {
@@ -438,8 +428,8 @@ definition {
 
 		task ("And the partner logs in") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
 		}
 
 		task ("And go to the approved MDF") {

@@ -29,7 +29,7 @@ definition {
 		}
 
 		task ("Create a new Partner Portal Site") {
-			PRMUtils.addPRMSite();
+			PRMUtils.addSite();
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
@@ -48,7 +48,11 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			PRMUtils.tearDown();
 		}
 	}
 

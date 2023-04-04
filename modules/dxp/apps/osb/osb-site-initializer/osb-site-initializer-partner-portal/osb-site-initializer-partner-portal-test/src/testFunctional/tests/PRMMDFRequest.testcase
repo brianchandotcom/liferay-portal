@@ -18,7 +18,7 @@ definition {
 		PRMUtils.connectWithSalesforce();
 
 		task ("Create a new Partner Portal Site") {
-			PRMUtils.addPRMSite();
+			PRMUtils.addSite();
 		}
 
 		task ("Add a partner user") {
@@ -49,17 +49,11 @@ definition {
 		}
 
 		task ("Add a new account and assign the created user to the account") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Company Name 1",
-				accountEntryType = "Business");
+			JSONPRM.addAccount();
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 1",
 				userEmailAddress = "partner@liferay.com");
-		}
-
-		task ("Add a currency to the created account") {
-			JSONPRM.addCurrency();
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
@@ -86,9 +80,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
-
-			Account.tearDownCP();
+			PRMUtils.tearDown();
 		}
 	}
 
@@ -231,13 +223,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-174679. Verify that is possible to export filtered MDF’s"
+	@description = "This is a test for LPS-174679. Verify that is possible to export filtered MDFs"
 	@priority = 4
 	test CanExportFilteredMDFs {
 		task ("Given a new account is created") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Company Name 2",
-				accountEntryType = "Business");
+			JSONPRM.addAccount(accountName = "Company Name 2");
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
@@ -302,10 +292,6 @@ definition {
 	@description = "This is a test for LPS-173731. Verify that is possible to export filtered MDFs"
 	@priority = 4
 	test CanExportSearchedMDFs {
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanExportSearchedMDFs";
-
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-
 		task ("Given a new account is created") {
 			JSONPRM.addAccount(accountName = "Company Name 2");
 
@@ -496,37 +482,35 @@ definition {
 			var accountName = "Company Name 1";
 			var campaignName = "Campaign Name";
 			var countryName = "Global";
+			var campaignDescription = "Campaign Description";
 			var goalsOptions = "Lead generation";
 			var targetMarketOptions = "Education";
 			var targetRolesOptions = "Administrator";
 			var activityName = "Activity Name 1";
 			var activityDescription = "Activity Description";
-			var budgetList = "Sponsorship Fee-2000";
-			var followUpStrategy = "test";
 			var leadFollowUpList = "Other";
-			var leadList = "No";
 			var tactic = "Other";
 			var targetOfLeads = "test";
 			var typeOfActivity = "Miscellaneous Marketing";
-			var startDate = DateUtil.getFormattedDate("+1", "M/d/yyyy");
-			var endDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
-			var expense = "Sponsorship Fee";
-			var budget = "$2,000.00";
+			var startDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
+			var endDate = DateUtil.getFormattedDate("+3", "yyyy-MM-dd");
+			var expenseOption = "Content Creation";
+			var budgetValueList = 2000;
+			var leadList = "No";
 
-			PRMMarketing.gotoAddNewMDF();
-
-			PRMMDFRequest.createNewRequest(
+			JSONPRM.createMDFRequest(
 				accountName = ${accountName},
 				activityDescription = ${activityDescription},
 				activityName = ${activityName},
-				budgetList = ${budgetList},
-				campaignDescription = "Campaign Description",
+				budgetValueList = ${budgetValueList},
+				campaignDescription = ${campaignDescription},
 				campaignName = ${campaignName},
 				countryName = ${countryName},
-				followUpStrategy = ${followUpStrategy},
+				endDate = ${endDate},
+				expenseOption = ${expenseOption},
 				goalsOptions = ${goalsOptions},
 				leadFollowUpList = ${leadFollowUpList},
-				leadList = ${leadList},
+				startDate = ${startDate},
 				tactic = ${tactic},
 				targetMarketOptions = ${targetMarketOptions},
 				targetOfLeads = ${targetOfLeads},
@@ -535,16 +519,22 @@ definition {
 		}
 
 		task ("When I go to View MDF details page") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 		}
 
 		task ("Then verify that all the filled in fields are present") {
+			var startDate = DateUtil.getFormattedDate("+2", "M/d/yy");
+			var endDate = DateUtil.getFormattedDate("+3", "M/d/yy");
+			var bugdetValue = "2,000";
+
 			PRMMDFRequest.viewMDFActivityDetails(
 				activityDescription = ${activityDescription},
 				activityName = ${activityName},
-				budget = ${budget},
+				bugdetValue = ${bugdetValue},
 				endDate = ${endDate},
-				expense = ${expense},
+				expenseOption = ${expenseOption},
 				leadList = ${leadList},
 				startDate = ${startDate},
 				tactic = ${tactic},
@@ -587,14 +577,14 @@ definition {
 		task ("When a date is set on 'Start date' field") {
 			PRMMDFRequest.insertDate(
 				dateFormat = "MMddYYYY",
-				dateRange = "+1",
+				dateRange = "+2",
 				fieldName = "startDate");
 		}
 
 		task ("And a date that exceed 6 months is set on 'End date' field") {
 			PRMMDFRequest.insertDate(
 				dateFormat = "MMddYYYY",
-				dateRange = "+1851",
+				dateRange = "+700",
 				fieldName = "endDate");
 		}
 
@@ -724,12 +714,11 @@ definition {
 		var activityName = "Activity Name 1";
 		var budgetList = "Sponsorship Fee-2000";
 		var expense = "Sponsorship Fee";
-		var budget = "$2,000.00";
 		var leadList = "No";
 		var tactic = "Other";
 		var typeOfActivity = "Miscellaneous Marketing";
-		var startDate = DateUtil.getFormattedDate("+1", "M/d/yyyy");
-		var endDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
+		var startDate = DateUtil.getFormattedDate("+2", "MMddyyyy");
+		var endDate = DateUtil.getFormattedDate("+3", "MMddyyyy");
 
 		task ("Given I go to add a new MDF Request") {
 			PRMMarketing.gotoAddNewMDF();
@@ -765,7 +754,7 @@ definition {
 		}
 
 		task ("Then all inputted information are displayed on Review Page") {
-			PRMMarketing.viewMDFGoals(
+			PRMMDFRequest.viewGoalsInReviewPage(
 				accountName = ${accountName},
 				campaignDescription = "Campaign Description",
 				campaignName = ${campaignName},
@@ -776,12 +765,14 @@ definition {
 
 			var startDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
 			var endDate = DateUtil.getFormattedDate("+3", "M/d/yyyy");
+			var budgetValue = "2,000";
+
+			PRMMDFRequest.viewActivityInReviewPage(
 				activityDescription = ${activityDescription},
 				activityName = ${activityName},
-				budget = ${budget},
-				budgetList = ${budgetList},
+				bugdetValue = ${budgetValue},
 				endDate = ${endDate},
-				expense = ${expense},
+				expenseOption = ${expense},
 				leadList = ${leadList},
 				startDate = ${startDate},
 				tactic = ${tactic},
@@ -869,6 +860,8 @@ definition {
 		}
 
 		task ("Then the MDF appears on listing page") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
 			PRMMDFListing.viewOnList(campaignName = "Campaign Name");
 		}
 	}

@@ -18,7 +18,7 @@ definition {
 		PRMUtils.connectWithSalesforce();
 
 		task ("Create a new Partner Portal Site") {
-			PRMUtils.addPRMSite();
+			PRMUtils.addSite();
 		}
 
 		task ("Add a partner user") {
@@ -49,17 +49,11 @@ definition {
 		}
 
 		task ("Add a new account and assign the created user to the account") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Company Name 1",
-				accountEntryType = "Business");
+			JSONPRM.addAccount();
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 1",
 				userEmailAddress = "partner@liferay.com");
-		}
-
-		task ("Add a currency to the created account") {
-			JSONPRM.addCurrency();
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
@@ -91,9 +85,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
-
-			Account.tearDownCP();
+			PRMUtils.tearDown();
 		}
 	}
 

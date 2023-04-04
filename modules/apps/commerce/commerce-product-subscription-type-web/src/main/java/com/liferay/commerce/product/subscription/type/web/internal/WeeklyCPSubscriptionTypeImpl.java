@@ -53,7 +53,7 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 				UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _getSubscriptionUnicodeProperties(
+		return _getSubscriptionTypeSettingsUnicodeProperties(
 			"deliveryWeekDay", subscriptionTypeSettingsUnicodeProperties);
 	}
 
@@ -130,11 +130,11 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _getSubscriptionUnicodeProperties(
+		return _getSubscriptionTypeSettingsUnicodeProperties(
 			"weekDay", subscriptionTypeSettingsUnicodeProperties);
 	}
 
-	private UnicodeProperties _getSubscriptionUnicodeProperties(
+	private UnicodeProperties _getSubscriptionTypeSettingsUnicodeProperties(
 			String weekDayKey,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws CPSubscriptionTypeSettingsException {

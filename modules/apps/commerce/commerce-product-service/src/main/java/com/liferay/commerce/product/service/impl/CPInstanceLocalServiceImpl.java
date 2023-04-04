@@ -138,10 +138,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateSku(cpDefinitionId, 0, sku);
-
 		_validateExternalReferenceCode(
 			0, serviceContext.getCompanyId(), externalReferenceCode);
+		_validateSku(cpDefinitionId, 0, sku);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
@@ -160,20 +159,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				CPInstanceExpirationDateException.class);
 		}
 
-		long cpInstanceId = counterLocalService.increment();
-
-		CPInstance cpInstance = cpInstancePersistence.create(cpInstanceId);
-
-		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
-				cpDefinitionId)) {
-
-			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionId);
-
-			cpDefinitionId = newCPDefinition.getCPDefinitionId();
-		}
-
 		_validateSubscriptionLength(subscriptionLength, "length");
 
 		subscriptionTypeSettingsUnicodeProperties =
@@ -187,6 +172,20 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
 				deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties);
+
+		long cpInstanceId = counterLocalService.increment();
+
+		CPInstance cpInstance = cpInstancePersistence.create(cpInstanceId);
+
+		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
+				cpDefinitionId)) {
+
+			CPDefinition newCPDefinition =
+				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
+					cpDefinitionId);
+
+			cpDefinitionId = newCPDefinition.getCPDefinitionId();
+		}
 
 		cpInstance.setExternalReferenceCode(externalReferenceCode);
 		cpInstance.setGroupId(groupId);
@@ -1166,21 +1165,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException {
 
-		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
-			cpInstanceId);
-
-		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
-				cpInstance.getCPDefinitionId())) {
-
-			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpInstance.getCPDefinitionId());
-
-			cpInstance = cpInstancePersistence.findByC_C(
-				newCPDefinition.getCPDefinitionId(),
-				cpInstance.getCPInstanceUuid());
-		}
-
 		if (!subscriptionEnabled) {
 			subscriptionLength = 1;
 			subscriptionType = null;
@@ -1209,6 +1193,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
 					deliverySubscriptionType,
 					deliverySubscriptionTypeSettingsUnicodeProperties);
+		}
+
+		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
+			cpInstanceId);
+
+		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
+				cpInstance.getCPDefinitionId())) {
+
+			CPDefinition newCPDefinition =
+				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
+					cpInstance.getCPDefinitionId());
+
+			cpInstance = cpInstancePersistence.findByC_C(
+				newCPDefinition.getCPDefinitionId(),
+				cpInstance.getCPInstanceUuid());
 		}
 
 		cpInstance.setOverrideSubscriptionInfo(overrideSubscriptionInfo);

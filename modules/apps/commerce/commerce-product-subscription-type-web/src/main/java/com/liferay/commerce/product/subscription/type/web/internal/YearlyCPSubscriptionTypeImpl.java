@@ -54,7 +54,7 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 				UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _getSubscriptionUnicodeProperties(
+		return _getSubscriptionTypeSettingsUnicodeProperties(
 			"deliveryYearlyMode", "deliveryMonth", "deliveryMonthDay",
 			subscriptionTypeSettingsUnicodeProperties);
 	}
@@ -144,7 +144,7 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _getSubscriptionUnicodeProperties(
+		return _getSubscriptionTypeSettingsUnicodeProperties(
 			"yearlyMode", "month", "monthDay",
 			subscriptionTypeSettingsUnicodeProperties);
 	}
@@ -171,7 +171,7 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		return calendar.get(Calendar.DAY_OF_YEAR);
 	}
 
-	private UnicodeProperties _getSubscriptionUnicodeProperties(
+	private UnicodeProperties _getSubscriptionTypeSettingsUnicodeProperties(
 			String yearlyModeKey, String monthKey, String monthDayKey,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws CPSubscriptionTypeSettingsException {

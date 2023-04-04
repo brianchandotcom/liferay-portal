@@ -54,7 +54,7 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 				UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _getSubscriptionUnicodeProperties(
+		return _getSubscriptionTypeSettingsUnicodeProperties(
 			"deliveryMonthlyMode", "deliveryMonthDay",
 			subscriptionTypeSettingsUnicodeProperties);
 	}
@@ -164,12 +164,12 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		return _getSubscriptionUnicodeProperties(
+		return _getSubscriptionTypeSettingsUnicodeProperties(
 			"monthlyMode", "monthDay",
 			subscriptionTypeSettingsUnicodeProperties);
 	}
 
-	private UnicodeProperties _getSubscriptionUnicodeProperties(
+	private UnicodeProperties _getSubscriptionTypeSettingsUnicodeProperties(
 			String monthlyModeKey, String monthDayKey,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
 		throws CPSubscriptionTypeSettingsException {

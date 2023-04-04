@@ -329,6 +329,12 @@ public interface JournalArticleLocalService
 	public void checkArticles() throws PortalException;
 
 	/**
+	 * Checks all web content articles by handling their expirations and sending
+	 * review notifications based on their current workflow.
+	 */
+	public void checkArticles(long companyId) throws PortalException;
+
+	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values
 	 * from the old one and updating its article ID.

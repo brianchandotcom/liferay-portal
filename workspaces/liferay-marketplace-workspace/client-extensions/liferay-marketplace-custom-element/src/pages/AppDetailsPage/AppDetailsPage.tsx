@@ -19,7 +19,7 @@ import './AppDetailsPage.scss';
 interface AppDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
 	selectedApp: AppProps;
-	setSelectedApp: (value: AppProps | undefined) => void;
+	setSelectedApp?: (value: AppProps | undefined) => void;
 }
 
 export function AppDetailsPage({
@@ -59,7 +59,9 @@ export function AppDetailsPage({
 						}
 					});
 
-					setSelectedApp(undefined);
+					if (setSelectedApp) {
+						setSelectedApp(undefined);
+					}
 				}}
 			>
 				<div>

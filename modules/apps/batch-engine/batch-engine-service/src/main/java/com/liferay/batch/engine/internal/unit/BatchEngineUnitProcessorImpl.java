@@ -27,11 +27,15 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -82,10 +86,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		String contentType = null;
 
 		if (batchEngineUnit.isValid()) {
-			batchEngineUnitConfiguration =
-				_batchEngineUnitConfigurationHelper.
-					updateBatchEngineUnitConfiguration(
-						batchEngineUnit.getBatchEngineUnitConfiguration());
+			batchEngineUnitConfiguration = _updateBatchEngineUnitConfiguration(
+				batchEngineUnit.getBatchEngineUnitConfiguration());
 
 			UnsyncByteArrayOutputStream compressedUnsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
@@ -146,6 +148,45 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			});
 	}
 
+	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
+
+		if (batchEngineUnitConfiguration.getCompanyId() == 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Using default company ID for this batch process");
+			}
+
+			try {
+				Company company = _companyLocalService.getCompanyByWebId(
+					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+
+				batchEngineUnitConfiguration.setCompanyId(
+					company.getCompanyId());
+			}
+			catch (PortalException portalException) {
+				_log.error("Unable to get default company ID", portalException);
+			}
+		}
+
+		if (batchEngineUnitConfiguration.getUserId() == 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Using default user ID for this batch process");
+			}
+
+			try {
+				batchEngineUnitConfiguration.setUserId(
+					_userLocalService.getUserIdByScreenName(
+						batchEngineUnitConfiguration.getCompanyId(),
+						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)));
+			}
+			catch (PortalException portalException) {
+				_log.error("Unable to get default user ID", portalException);
+			}
+		}
+
+		return batchEngineUnitConfiguration;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineUnitProcessorImpl.class);
 
@@ -155,10 +196,6 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	@Reference
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
-
-	@Reference
-	private BatchEngineUnitConfigurationHelper
-		_batchEngineUnitConfigurationHelper;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

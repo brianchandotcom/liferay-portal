@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.notification.test;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -313,15 +313,16 @@ public class CommerceNotificationTest {
 
 		_accountAdminRole = _roleLocalService.fetchRole(
 			_group.getCompanyId(),
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
 		if (_accountAdminRole == null) {
 			_accountAdminRole = _roleLocalService.addRole(
 				_serviceContext.getUserId(), null, 0,
-				CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
 				Collections.singletonMap(
 					_serviceContext.getLocale(),
-					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR),
+					AccountRoleConstants.
+						REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
 				Collections.emptyMap(), RoleConstants.TYPE_SITE,
 				StringPool.BLANK, _serviceContext);
 

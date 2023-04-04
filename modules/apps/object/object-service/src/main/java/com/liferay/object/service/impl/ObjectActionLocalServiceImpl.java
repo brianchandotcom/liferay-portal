@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -26,6 +27,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.DuplicateObjectActionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
+import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -72,6 +75,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,7 +111,8 @@ public class ObjectActionLocalServiceImpl
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateLabel(labelMap);
 		_validateName(0, objectDefinitionId, name);
-		_validateObjectActionExecutorKey(objectActionExecutorKey);
+		_validateObjectActionExecutorKey(
+			objectActionExecutorKey, objectDefinition.getName());
 		_validateObjectActionTriggerKey(
 			conditionExpression, objectActionTriggerKey, objectDefinition);
 
@@ -296,7 +301,13 @@ public class ObjectActionLocalServiceImpl
 
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateLabel(labelMap);
-		_validateObjectActionExecutorKey(objectActionExecutorKey);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectAction.getObjectDefinitionId());
+
+		_validateObjectActionExecutorKey(
+			objectActionExecutorKey, objectDefinition.getName());
 
 		_validateParametersUnicodeProperties(
 			objectAction.getCompanyId(), objectAction.getUserId(),
@@ -316,10 +327,6 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
 		objectAction.setParameters(parametersUnicodeProperties.toString());
 		objectAction.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectAction.getObjectDefinitionId());
 
 		if (objectDefinition.isApproved()) {
 			return objectActionPersistence.update(objectAction);
@@ -428,7 +435,7 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	private void _validateObjectActionExecutorKey(
-			String objectActionExecutorKey)
+			String objectActionExecutorKey, String objectDefinitionName)
 		throws PortalException {
 
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
@@ -439,7 +446,35 @@ public class ObjectActionLocalServiceImpl
 					"No object action executor is registered with " +
 						objectActionExecutorKey);
 			}
+
+			return;
 		}
+
+		ObjectActionExecutor objectActionExecutor =
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				objectActionExecutorKey);
+
+		if ((objectActionExecutor.getCompanyId() != 0) &&
+			(objectActionExecutor.getCompanyId() !=
+				CompanyThreadLocal.getCompanyId())) {
+
+			return;
+		}
+
+		Set<String> allowedObjectDefinitionNames =
+			objectActionExecutor.getAllowedObjectDefinitionNames();
+
+		if (allowedObjectDefinitionNames.isEmpty() ||
+			allowedObjectDefinitionNames.contains(objectDefinitionName)) {
+
+			return;
+		}
+
+		throw new ObjectActionExecutorKeyException(
+			StringBundler.concat(
+				"The object action executor key ", objectActionExecutorKey,
+				" is not allowed for object definition ",
+				objectDefinitionName));
 	}
 
 	private void _validateObjectActionTriggerKey(

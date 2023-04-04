@@ -14,10 +14,12 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupRelService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
@@ -1015,7 +1017,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			product.getProductAccountGroups();
 
 		if (productAccountGroups != null) {
-			_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
+			_accountGroupRelService.deleteAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
 			for (ProductAccountGroup productAccountGroup :
@@ -1029,24 +1031,22 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 						productAccountGroup.getAccountGroupId();
 
 					if (accountGroupId != null) {
-						_commerceAccountGroupRelService.
-							addCommerceAccountGroupRel(
-								CPDefinition.class.getName(),
-								cpDefinition.getCPDefinitionId(),
-								accountGroupId, serviceContext);
+						_accountGroupRelService.addAccountGroupRel(
+							CPDefinition.class.getName(),
+							cpDefinition.getCPDefinitionId(), accountGroupId,
+							serviceContext);
 					}
 
 					continue;
 				}
 
-				CommerceAccountGroup commerceAccountGroup = null;
+				AccountGroup accountGroup = null;
 
 				try {
-					commerceAccountGroup =
-						_commerceAccountGroupService.
-							fetchByExternalReferenceCode(
-								contextCompany.getCompanyId(),
-								productAccountGroup.getExternalReferenceCode());
+					accountGroup =
+						_accountGroupService.fetchByExternalReferenceCode(
+							contextCompany.getCompanyId(),
+							productAccountGroup.getExternalReferenceCode());
 				}
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
@@ -1054,15 +1054,14 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					}
 				}
 
-				if (commerceAccountGroup == null) {
+				if (accountGroup == null) {
 					continue;
 				}
 
-				_commerceAccountGroupRelService.addCommerceAccountGroupRel(
+				_accountGroupRelService.addAccountGroupRel(
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId(),
-					commerceAccountGroup.getCommerceAccountGroupId(),
-					serviceContext);
+					accountGroup.getAccountGroupId(), serviceContext);
 			}
 		}
 
@@ -1291,6 +1290,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductResourceImpl.class);
+
+	@Reference
+	private AccountGroupRelService _accountGroupRelService;
+
+	@Reference
+	private AccountGroupService _accountGroupService;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

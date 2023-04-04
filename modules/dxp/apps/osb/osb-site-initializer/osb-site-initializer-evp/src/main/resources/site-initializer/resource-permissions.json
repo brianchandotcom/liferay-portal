@@ -1,132 +1,180 @@
 [
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["UPDATE", "VIEW"],
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["UPDATE", "VIEW"],
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["UPDATE", "VIEW"],
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPHomepageData$]",
 		"roleName": "Guest",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["ADD_OBJECT_ENTRY"],
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPUserAccount$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW", "UPDATE"],
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPUserAccount$]",
 		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
-		"actionIds": ["VIEW"],
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantLimit$]",
 		"roleName": "EVP Manager",
 		"scope": "1"

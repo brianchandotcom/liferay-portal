@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.order.content.web.internal.portlet.action;
 
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -168,7 +168,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchAccountException ||
+			if (exception instanceof NoSuchEntryException ||
 				exception instanceof NoSuchOrderException ||
 				exception instanceof PrincipalException) {
 
@@ -264,7 +264,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		if (accountEntry == null) {
-			throw new NoSuchAccountException();
+			throw new NoSuchEntryException();
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

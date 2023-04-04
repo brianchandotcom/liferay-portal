@@ -133,7 +133,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 						finalPrice: sku.price,
 						price: sku.price,
 					},
-					productId: app.id,
+					productId: app?.id,
 					quantity: 1,
 					settings: {
 						maxQuantity: 1,
@@ -214,18 +214,18 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 								<img
 									alt="App Image"
 									className="get-app-modal-body-content-image"
-									src={app.urlImage.replace(':8080', '')}
+									src={app?.urlImage.replace(':8080', '')}
 								/>
 
 								<div className="get-app-modal-body-content-app-info-container">
 									<span className="get-app-modal-body-content-app-info-name">
-										{typeof app.name === 'string'
-											? app.name
-											: app.name.en_US}
+										{typeof app?.name === 'string'
+											? app?.name
+											: app?.name.en_US}
 									</span>
 
 									<span className="get-app-modal-body-content-app-info-version">
-										{appVersion} by {app.createdBy}.
+										{appVersion} by {app?.createdBy}.
 									</span>
 								</div>
 							</div>

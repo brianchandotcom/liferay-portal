@@ -14,18 +14,15 @@
 
 package com.liferay.portal.reports.engine.console.web.internal.permission;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Definition;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leon Chi
  */
-@Component(service = {})
 public class DefinitionPermissionChecker {
 
 	public static boolean contains(
@@ -33,7 +30,10 @@ public class DefinitionPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return _definitionModelResourcePermission.contains(
+		ModelResourcePermission<Definition> modelResourcePermission =
+			_definitionModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, definition, actionId);
 	}
 
@@ -42,21 +42,18 @@ public class DefinitionPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return _definitionModelResourcePermission.contains(
+		ModelResourcePermission<Definition> modelResourcePermission =
+			_definitionModelResourcePermissionSnapshot.get();
+
+		return modelResourcePermission.contains(
 			permissionChecker, definitionId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.reports.engine.console.model.Definition)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<Definition> modelResourcePermission) {
-
-		_definitionModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<Definition>
-		_definitionModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<Definition>>
+		_definitionModelResourcePermissionSnapshot = new Snapshot<>(
+			DefinitionPermissionChecker.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.portal.reports.engine.console." +
+				"model.Definition)");
 
 }

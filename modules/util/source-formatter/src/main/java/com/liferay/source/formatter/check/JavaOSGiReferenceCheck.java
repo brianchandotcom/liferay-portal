@@ -19,16 +19,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.ParseException;
+import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +55,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException, ParseException {
+		throws Exception {
+
+		_checkNewReferenceAnnotation(fileName, absolutePath);
 
 		if (!content.contains("@Component")) {
 			return content;
@@ -100,6 +103,25 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private synchronized boolean _checkIsModifyFile(
+			String fileName, SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchFileNames == null) {
+			_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getGitWorkingBranchName(), false);
+		}
+
+		for (String currentBranchFileName : _currentBranchFileNames) {
+			if (fileName.endsWith(currentBranchFileName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _checkMissingReference(String fileName, String content) {
 		String moduleServicePackageName = null;
 
@@ -134,9 +156,83 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 	}
 
+	private void _checkNewReferenceAnnotation(
+			String fileName, String absolutePath)
+		throws Exception {
+
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		if (sourceFormatterArgs.isFormatCurrentBranch()) {
+			if (!_checkIsModifyFile(fileName, sourceFormatterArgs)) {
+				return;
+			}
+
+			boolean addReference = false;
+			StringBundler sb = new StringBundler();
+
+			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+
+			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
+				if (line.startsWith(StringPool.DASH)) {
+					continue;
+				}
+				else if (line.startsWith(StringPool.PLUS)) {
+					line = line.substring(1);
+
+					String trimmedLine = StringUtil.trimLeading(line);
+
+					if (trimmedLine.startsWith("@Reference")) {
+						addReference = true;
+						sb.append(line);
+						sb.append(StringPool.NEW_LINE);
+					}
+				}
+
+				if (addReference) {
+					if (line.startsWith(StringPool.AT)) {
+						String codeBlock = sb.toString();
+
+						if (codeBlock.matches(
+								"\\s*@Reference[\\s\\S]*?(protected|public) " +
+									"void \\w+?\\([\\s\\S]*")) {
+
+							addMessage(
+								fileName, "Do not use @Reference on methods");
+
+							return;
+						}
+
+						sb = new StringBundler();
+						addReference = false;
+					}
+					else {
+						sb.append(line);
+						sb.append(StringPool.NEW_LINE);
+					}
+				}
+			}
+
+			if (sb.index() > 0) {
+				String codeBlock = sb.toString();
+
+				if (codeBlock.matches(
+						"\\s*@Reference[\\s\\S]*?(protected|public) " +
+							"void \\w+?\\([\\s\\S]*")) {
+
+					addMessage(fileName, "Do not use @Reference on methods");
+				}
+			}
+		}
+	}
+
 	private void _checkUnnecessaryVariableInjection(
 			String fileName, String absolutePath, String content)
-		throws IOException, ParseException {
+		throws Exception {
 
 		if (!absolutePath.contains("-service/") ||
 			!absolutePath.contains("/service/impl/") ||
@@ -214,7 +310,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			String fileName, String content,
 			String serviceReferenceUtilClassName,
 			String moduleSuperClassContent)
-		throws IOException, ParseException {
+		throws Exception {
 
 		if (!content.contains(serviceReferenceUtilClassName) ||
 			(Validator.isNotNull(moduleSuperClassContent) &&
@@ -254,7 +350,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 	private String _formatDuplicateReferenceMethods(
 			String fileName, String content, String moduleSuperClassContent)
-		throws IOException {
+		throws Exception {
 
 		if (Validator.isNull(moduleSuperClassContent) ||
 			!moduleSuperClassContent.contains("@Component") ||
@@ -386,7 +482,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private String _getModuleClassContent(String fullClassName)
-		throws IOException {
+		throws Exception {
 
 		String classContent = _moduleFileContentsMap.get(fullClassName);
 
@@ -416,7 +512,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private synchronized Map<String, String> _getModuleFileNamesMap()
-		throws IOException {
+		throws Exception {
 
 		if (_moduleFileNamesMap != null) {
 			return _moduleFileNamesMap;
@@ -499,7 +595,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 	private String _getModuleSuperClassContent(
 			String content, String className, String packageName)
-		throws IOException {
+		throws Exception {
 
 		Pattern pattern = Pattern.compile(
 			" class " + className + "\\s+extends\\s+([\\w.]+) ");
@@ -541,7 +637,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private synchronized List<String> _getServiceProxyFactoryUtilClassNames()
-		throws IOException {
+		throws Exception {
 
 		if (_serviceProxyFactoryUtilClassNames != null) {
 			return _serviceProxyFactoryUtilClassNames;
@@ -605,6 +701,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
+	private List<String> _currentBranchFileNames;
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;

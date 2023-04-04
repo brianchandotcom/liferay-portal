@@ -57,8 +57,7 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 		throws Exception {
 
 		if ((_ipGeocoder != null) &&
-			(_isBlockedCountry(httpServletRequest.getParameter("debugIP")) ||
-			 _isBlockedCountry(httpServletRequest.getRemoteHost()))) {
+			(_isBlockedCountry(httpServletRequest))) {
 
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_FORBIDDEN,
@@ -70,12 +69,8 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}
 
-	private boolean _isBlockedCountry(String ipAddress) {
-		if (ipAddress == null) {
-			return false;
-		}
-
-		IPInfo ipInfo = _ipGeocoder.getIPInfo(ipAddress);
+	private boolean _isBlockedCountry(HttpServletRequest httpServletRequest) {
+		IPInfo ipInfo = _ipGeocoder.getIPInfo(httpServletRequest);
 
 		return _blockedCountryCodes.contains(ipInfo.getCountryCode());
 	}

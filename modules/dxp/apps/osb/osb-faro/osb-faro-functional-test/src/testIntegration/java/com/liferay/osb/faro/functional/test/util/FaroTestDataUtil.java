@@ -17,7 +17,7 @@ package com.liferay.osb.faro.functional.test.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.poshi.runner.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -14,11 +14,11 @@
 
 package com.liferay.osb.faro.functional.test.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.poshi.runner.util.CharPool;
-import com.liferay.poshi.runner.util.PropsUtil;
+import com.liferay.portal.util.PropsUtil;
 
 import java.lang.reflect.Field;
 

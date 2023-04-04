@@ -12,9 +12,11 @@ copyTestModules {
 }
 
 dependencies {
+	
 	testIntegrationCompile group: "com.github.cukespace", name: "cukespace-core", version: "1.6.3"
 	testIntegrationCompile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.vimalselvam", name: "cucumber-extentsreport", version: "1.1.1"
 	testIntegrationCompile group: "io.github.bonigarcia", name: "webdrivermanager", version: "2.1.0"
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "fluent-hc", version: "4.5.5"

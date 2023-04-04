@@ -120,7 +120,7 @@ public class ClickSteps {
 			WebElement webElement = _faroSelenium.findElement(xpath);
 
 			JavascriptExecutor jsExecutor =
-				(JavascriptExecutor)WebDriverUtil.getWebDriver();
+				(JavascriptExecutor)WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			jsExecutor.executeScript("arguments[0].click()", webElement);
 		}

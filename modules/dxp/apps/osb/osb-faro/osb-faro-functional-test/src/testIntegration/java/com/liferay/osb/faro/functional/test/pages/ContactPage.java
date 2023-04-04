@@ -20,7 +20,7 @@ import com.liferay.osb.faro.functional.test.util.FaroTestDataUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTransformer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
+import com.liferay.portal.kernel.util.Validator;
 
 import cucumber.api.DataTable;
 import cucumber.api.Transform;

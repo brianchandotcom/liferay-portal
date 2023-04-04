@@ -21,9 +21,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.selenium.BaseWebDriverImpl;
 import com.liferay.poshi.runner.selenium.WebDriverUtil;
-import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RuntimeVariables;
 
 import java.awt.Rectangle;
@@ -57,6 +57,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -136,7 +137,7 @@ public class FaroWebDriverImpl
 		throws Exception {
 
 		JavascriptExecutor jse =
-			(JavascriptExecutor)WebDriverUtil.getWebDriver();
+			(JavascriptExecutor)WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		try (BufferedReader bufferedReader = Files.newBufferedReader(
 				Paths.get(
@@ -174,7 +175,7 @@ public class FaroWebDriverImpl
 	public void forceWindowFocus() {
 		String windowHandle = getWindowHandle();
 
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
 
@@ -286,7 +287,7 @@ public class FaroWebDriverImpl
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
 
-			WebDriver webDriver = WebDriverUtil.getWebDriver();
+			WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			Navigation navigation = webDriver.navigate();
 
@@ -334,7 +335,7 @@ public class FaroWebDriverImpl
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
 
-			WebDriver webDriver = WebDriverUtil.getWebDriver();
+			WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			Navigation navigation = webDriver.navigate();
 
@@ -379,7 +380,7 @@ public class FaroWebDriverImpl
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
 
-			WebDriver webDriver = WebDriverUtil.getWebDriver();
+			WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			Navigation navigation = webDriver.navigate();
 
@@ -408,7 +409,6 @@ public class FaroWebDriverImpl
 	 *
 	 * @throws Exception if an exception occurred
 	 */
-	@Override
 	public void saveScreenshot() throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;
@@ -463,9 +463,15 @@ public class FaroWebDriverImpl
 		for (int i = 0; i < value.length(); i++) {
 			webElement.sendKeys(String.valueOf(value.charAt(i)));
 
-			webDriverWait.until(
-				ExpectedConditions.attributeContains(
-					webElement, "value", value.substring(0, i)));
+			String substring = value.substring(0, i);
+
+			webDriverWait.until(driver -> { 
+				ExpectedCondition<Boolean> attributeContains = 
+					ExpectedConditions.attributeContains(
+						webElement, "value", substring);
+				
+				return attributeContains.apply(driver);
+			});
 		}
 	}
 
@@ -565,7 +571,7 @@ public class FaroWebDriverImpl
 	@Override
 	public void waitForPageLoadingComplete() {
 		WebDriverWait waitDriverWait = new WebDriverWait(
-			WebDriverUtil.getWebDriver(), 30);
+			WebDriverUtil.getWebDriver(StringPool.BLANK), 30);
 
 		waitDriverWait.until(
 			webDriver -> {

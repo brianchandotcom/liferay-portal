@@ -19,10 +19,11 @@ import com.liferay.osb.faro.functional.test.util.FaroPagePool;
 import com.liferay.osb.faro.functional.test.util.FaroRestUtil;
 import com.liferay.osb.faro.functional.test.util.FaroSeleniumUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTransformer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.poshi.runner.selenium.WebDriverUtil;
-import com.liferay.poshi.runner.util.PropsUtil;
+import com.liferay.portal.util.PropsUtil;
 
 import cucumber.api.Transform;
 import cucumber.api.java.en.And;
@@ -42,7 +43,7 @@ public class NavigationSteps {
 	 */
 	@When("^I go back one page$")
 	public static void browserBack() {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		WebDriver.Navigation navigation = webDriver.navigate();
 
@@ -55,7 +56,7 @@ public class NavigationSteps {
 	 */
 	@When("^I go forward one page$")
 	public static void browserForward() {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		WebDriver.Navigation navigation = webDriver.navigate();
 
@@ -119,7 +120,7 @@ public class NavigationSteps {
 	public static void refreshPage() {
 		FaroRestUtil.clearCache();
 
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		WebDriver.Navigation navigation = webDriver.navigate();
 
@@ -133,7 +134,7 @@ public class NavigationSteps {
 	public static void switchToFocusedModal() throws Exception {
 		_faroSelenium.waitForElementPresent("//iframe");
 
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		WebElement modalWebElement = _faroSelenium.findElement("//iframe");
 
@@ -149,7 +150,7 @@ public class NavigationSteps {
 	 */
 	@When("^I switch to the main frame$")
 	public static void switchToMainFrame() {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 

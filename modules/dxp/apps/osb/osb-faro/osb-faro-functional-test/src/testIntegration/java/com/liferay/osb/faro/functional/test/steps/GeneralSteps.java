@@ -17,8 +17,9 @@ package com.liferay.osb.faro.functional.test.steps;
 import com.liferay.osb.faro.functional.test.driver.FaroSelenium;
 import com.liferay.osb.faro.functional.test.util.FaroSeleniumUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTransformer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.poshi.runner.selenium.WebDriverUtil;
-import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import cucumber.api.Transform;
 import cucumber.api.java.en.And;
@@ -49,7 +50,7 @@ public class GeneralSteps {
 	 */
 	@When("I (accept|dismiss) the alert")
 	public static void handleAlert(String action) {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 

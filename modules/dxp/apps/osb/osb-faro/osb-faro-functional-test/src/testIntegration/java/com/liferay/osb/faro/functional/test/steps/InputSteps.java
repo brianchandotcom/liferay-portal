@@ -17,7 +17,7 @@ package com.liferay.osb.faro.functional.test.steps;
 import com.liferay.osb.faro.functional.test.driver.FaroSelenium;
 import com.liferay.osb.faro.functional.test.util.FaroSeleniumUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTransformer;
-import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -63,7 +63,7 @@ public class InputSteps {
 		sb.append(targetName);
 		sb.append("')]/");
 
-		fieldType = StringUtil.strip(fieldType, CharPool.SPACE);
+		fieldType = StringUtil.replace(fieldType, StringPool.SPACE, StringPool.BLANK);
 
 		sb.append(fieldType);
 

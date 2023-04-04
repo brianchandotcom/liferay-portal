@@ -1443,6 +1443,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172658. The page creator could switch page templates on preview page template modal."
+	@priority = 4
+	test SwitchPageTemplatesOnPreviewPageTemplateModal {
+		property testray.component.names = "Echo Accessibility,Page Administration";
+
+		task ("Given a page creator has page templates") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set",
+				layoutPageTemplateEntryName = "Widget Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Widget Page Template Name");
+
+			Portlet.addPG(portletName = "Web Content Display");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set",
+				layoutPageTemplateEntryName = "Content Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator opens the preview page template modal") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+
+			Navigator.gotoNavNested(navNested = "Page Template Set");
+
+			PagesAdmin.previewPageTemplate(pageTemplateName = "Widget Page Template Name");
+		}
+
+		task ("Then the page creator could switch page templates") {
+			Portlet.viewPG(
+				portletBody = "Configure this application and place it where desired on the page.",
+				portletName = "Web Content Display");
+
+			SelectFrameTop();
+
+			Click(
+				key_text = "angle-left",
+				locator1 = "Modal#MODAL_ICON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+
+			SelectFrameTop();
+
+			KeyPress(
+				key_text = "angle-left",
+				locator1 = "Modal#MODAL_ICON",
+				value1 = "\ENTER");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Portlet.viewPG(
+				portletBody = "Configure this application and place it where desired on the page.",
+				portletName = "Web Content Display");
+		}
+	}
+
 	@description = "This is a test for LPS-144559. The breadcrumb should be unavailable to Link to a Page of This Site."
 	@priority = 4
 	test ViewBreadcrumbUnavailableToLinkToAPageOfThisSite {

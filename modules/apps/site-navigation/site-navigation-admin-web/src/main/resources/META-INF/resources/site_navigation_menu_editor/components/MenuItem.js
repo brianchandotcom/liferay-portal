@@ -190,15 +190,8 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			const getNextPosition =
 				eventKey === 'ArrowDown' ? getDownPosition : getUpPosition;
 
-			const filteredItems = items.filter(
-				(item) =>
-					!getItemPath(item.siteNavigationMenuItemId, items).includes(
-						siteNavigationMenuItemId
-					)
-			);
-
 			const result = getNextPosition({
-				items: filteredItems,
+				items,
 				order: keyboardDragLayer ? keyboardDragLayer.order : order,
 				parentSiteNavigationMenuItemId: keyboardDragLayer
 					? keyboardDragLayer.parentSiteNavigationMenuItemId
@@ -211,7 +204,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 
 			event.preventDefault();
 
-			setKeyboardDragLayer(filteredItems, {
+			setKeyboardDragLayer(items, {
 				eventKey,
 				menuItemTitle: title,
 				menuItemType: type,
@@ -480,48 +473,53 @@ function updateMenuItem({
 		});
 }
 
-	const parent = items.find(
 export function getDownPosition({
 	items,
 	order,
 	parentSiteNavigationMenuItemId,
 }) {
+	const flatItems = getFlatItems(items);
+
+	const parentItem = flatItems.find(
 		(item) =>
 			item.siteNavigationMenuItemId === parentSiteNavigationMenuItemId
 	);
 
-	const siblings = parent
-		? parent.children
-		: items.filter(
-				(item) =>
-					item.parentSiteNavigationMenuItemId ===
-					parentSiteNavigationMenuItemId
-		  );
+	const siblingsItems = flatItems.filter(
+		(item) =>
+			item.parentSiteNavigationMenuItemId ===
+			parentSiteNavigationMenuItemId
+	);
 
-	const sibling = siblings[order + 1];
+	const siblingItem = siblingsItems[order];
 
 	// If there aren't any sibling, the menu is placed as the sibling of the parent.
 
-	if (!sibling) {
+	if (!siblingItem) {
 
 		// If there aren't any sibling and the parentSiteNavigationMenuItemId is 0,
 		// there is no movement possible.
 
-		if (parentSiteNavigationMenuItemId === '0') {
-			return;
+		if (!parentItem) {
+			return null;
 		}
 
-		const parentOrder = getOrder({
-			items,
-			parentSiteNavigationMenuItemId:
-				parent.parentSiteNavigationMenuItemId,
-			siteNavigationMenuItemId: parent.siteNavigationMenuItemId,
-		});
+		const parentSiblings = flatItems.filter(
+			(item) =>
+				item.parentSiteNavigationMenuItemId ===
+				parentItem.parentSiteNavigationMenuItemId
+		);
+
+		const parentOrder = parentSiblings.findIndex(
+			(item) =>
+				item.siteNavigationMenuItemId ===
+				parentItem.siteNavigationMenuItemId
+		);
 
 		return {
 			order: parentOrder + 1,
 			parentSiteNavigationMenuItemId:
-				parent.parentSiteNavigationMenuItemId,
+				parentItem.parentSiteNavigationMenuItemId,
 		};
 	}
 
@@ -529,7 +527,7 @@ export function getDownPosition({
 
 	return {
 		order: 0,
-		parentSiteNavigationMenuItemId: sibling.siteNavigationMenuItemId,
+		parentSiteNavigationMenuItemId: siblingItem.siteNavigationMenuItemId,
 	};
 }
 
@@ -541,65 +539,51 @@ export function getUpPosition({items, order, parentSiteNavigationMenuItemId}) {
 		return null;
 	}
 
-	const parent = items.find(
+	const flatItems = getFlatItems(items);
+
+	const parentItem = flatItems.find(
 		(item) =>
 			item.siteNavigationMenuItemId === parentSiteNavigationMenuItemId
 	);
 
-	const siblings = parent
-		? parent.children
-		: items.filter(
-				(item) =>
-					item.parentSiteNavigationMenuItemId ===
-					parentSiteNavigationMenuItemId
-		  );
+	const siblingsItems = flatItems.filter(
+		(item) =>
+			item.parentSiteNavigationMenuItemId ===
+			parentSiteNavigationMenuItemId
+	);
 
 	// When the menu is the first child, the menu is placed as the sibling of the parent.
 
 	if (order === 0) {
-		const nextOrder = getOrder({
-			items,
-			parentSiteNavigationMenuItemId:
-				parent.parentSiteNavigationMenuItemId,
-			siteNavigationMenuItemId: parent.siteNavigationMenuItemId,
-		});
+		const parentSiblings = flatItems.filter(
+			(item) =>
+				item.parentSiteNavigationMenuItemId ===
+				parentItem.parentSiteNavigationMenuItemId
+		);
+
+		const parentOrder = parentSiblings.findIndex(
+			(item) =>
+				item.siteNavigationMenuItemId ===
+				parentItem.siteNavigationMenuItemId
+		);
 
 		return {
-			order: nextOrder,
+			order: parentOrder,
 			parentSiteNavigationMenuItemId:
-				parent.parentSiteNavigationMenuItemId,
+				parentItem.parentSiteNavigationMenuItemId,
 		};
 	}
 
-	// If the previous sibling doesn't have children, place it inside.
+	const siblingItem = siblingsItems[order - 1];
 
-	const sibling = siblings[order - 1];
+	const siblingItemChildren = flatItems.filter(
+		(item) =>
+			item.parentSiteNavigationMenuItemId ===
+			siblingItem.siteNavigationMenuItemId
+	);
 
-	// If the previous sibling has children,
-	// get the deeper child and place the menu as a child of it.
-
-	const getDeeperChild = (item) => {
-		if (!item.children.length) {
-			return item;
-		}
-
-		return getDeeperChild(item.children.at(-1));
+	return {
+		order: siblingItemChildren.length,
+		parentSiteNavigationMenuItemId: siblingItem.siteNavigationMenuItemId,
 	};
-
-	const deeperChild = getDeeperChild(sibling);
-
-	if (deeperChild.children.length) {
-		return {
-			order: deeperChild.children.length,
-			parentSiteNavigationMenuItemId:
-				deeperChild.siteNavigationMenuItemId,
-		};
-	}
-	else {
-		return {
-			order: 0,
-			parentSiteNavigationMenuItemId:
-				deeperChild.siteNavigationMenuItemId,
-		};
-	}
 }

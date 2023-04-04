@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
@@ -105,31 +105,29 @@ public class AttachmentResourceImpl
 	private Long _getAccountId(Long accountId, CommerceChannel commerceChannel)
 		throws Exception {
 
-		int countUserCommerceAccounts =
+		int countUserAccounts =
 			_commerceAccountHelper.countUserCommerceAccounts(
 				contextUser.getUserId(), commerceChannel.getGroupId());
 
-		if (countUserCommerceAccounts > 1) {
+		if (countUserAccounts > 1) {
 			if (accountId == null) {
 				throw new NoSuchAccountException();
 			}
 		}
 		else {
-			long[] commerceAccountIds =
+			long[] accountIds =
 				_commerceAccountHelper.getUserCommerceAccountIds(
 					contextUser.getUserId(), commerceChannel.getGroupId());
 
-			if (commerceAccountIds.length == 0) {
-				CommerceAccount commerceAccount =
-					_commerceAccountLocalService.getGuestCommerceAccount(
+			if (accountIds.length == 0) {
+				AccountEntry accountEntry =
+					_accountEntryLocalService.getGuestCommerceAccount(
 						contextCompany.getCompanyId());
 
-				commerceAccountIds = new long[] {
-					commerceAccount.getCommerceAccountId()
-				};
+				accountIds = new long[] {accountEntry.getAccountEntryId()};
 			}
 
-			return commerceAccountIds[0];
+			return accountIds[0];
 		}
 
 		return accountId;
@@ -168,6 +166,9 @@ public class AttachmentResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), accountId));
 	}
 
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.AttachmentDTOConverter)"
 	)
@@ -179,9 +180,6 @@ public class AttachmentResourceImpl
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
-
-	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

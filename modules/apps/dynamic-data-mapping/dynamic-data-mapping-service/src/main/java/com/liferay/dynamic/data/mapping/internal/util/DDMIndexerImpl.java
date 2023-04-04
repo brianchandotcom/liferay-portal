@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -70,6 +72,7 @@ import java.math.BigDecimal;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -134,7 +137,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							ddmStructure.getStructureId(),
 							ddmFormField.getFieldReference(), locale,
 							indexType);
-						value = field.getValue(locale);
+						value = _getValue(ddmFormField, field, locale);
 
 						if (legacyDDMIndexFieldsEnabled) {
 							_addToDocument(
@@ -152,7 +155,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 					name = encodeName(
 						ddmStructure.getStructureId(),
 						ddmFormField.getFieldReference(), null, indexType);
-					value = field.getValue(ddmFormValues.getDefaultLocale());
+					value = _getValue(
+						ddmFormField, field, ddmFormValues.getDefaultLocale());
 
 					if (legacyDDMIndexFieldsEnabled) {
 						_addToDocument(document, field, indexType, name, value);
@@ -842,6 +846,68 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return sortableValue;
+	}
+
+	private Serializable _getValue(
+		DDMFormField ddmFormField, Field field, Locale locale) {
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		if ((ddmFormFieldOptions == null) ||
+			MapUtil.isEmpty(ddmFormFieldOptions.getOptions())) {
+
+			return field.getValue(locale);
+		}
+
+		try {
+			List<Serializable> values = new ArrayList<>();
+
+			for (Serializable value : field.getValues(locale)) {
+				if (StringUtil.equals(
+						ddmFormField.getType(),
+						DDMFormFieldTypeConstants.RADIO)) {
+
+					LocalizedValue localizedValue =
+						ddmFormFieldOptions.getOptionLabels(
+							String.valueOf(value));
+
+					values.add(localizedValue.getString(locale));
+
+					continue;
+				}
+
+				JSONArray optionValuesJSONArray = _jsonFactory.createJSONArray(
+					String.valueOf(value));
+
+				JSONArray optionLabelsJSONArray =
+					_jsonFactory.createJSONArray();
+
+				for (int i = 0; i < optionValuesJSONArray.length(); i++) {
+					LocalizedValue localizedValue =
+						ddmFormFieldOptions.getOptionLabels(
+							optionValuesJSONArray.getString(i));
+
+					optionLabelsJSONArray.put(localizedValue.getString(locale));
+				}
+
+				values.add(optionLabelsJSONArray.toString());
+			}
+
+			if (ddmFormField.isRepeatable() || (values.size() > 1)) {
+				return FieldConstants.getSerializable(
+					ddmFormField.getDataType(), values);
+			}
+
+			return values.get(0);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return field.getValue(locale);
+		}
 	}
 
 	private Fields _toFields(

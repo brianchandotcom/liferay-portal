@@ -48,11 +48,11 @@ definition {
 		task ("When the display page template makes interactions with the Fragments and Widgets panel") {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
-			Panel.expandPanel(panel = "Content Display");
+			Panel.expandPanel(panel = "Account");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -84,14 +84,14 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Fragments");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
 			AssertElementPresent(
-				key_panel = "Content Display",
+				key_panel = "Account",
 				locator1 = "Panel#PANEL_EXPANDED");
 		}
 	}
@@ -116,11 +116,11 @@ definition {
 		task ("When the display page template makes interactions with the Fragments and Widgets panel") {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
-			Panel.expandPanel(panel = "Content Display");
+			Panel.expandPanel(panel = "Account");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -152,14 +152,14 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Fragments");
 
-			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+			for (var sectionName : list "Layout Elements,Basic Components,Content Display") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
 			AssertElementPresent(
-				key_panel = "Content Display",
+				key_panel = "Account",
 				locator1 = "Panel#PANEL_EXPANDED");
 		}
 	}

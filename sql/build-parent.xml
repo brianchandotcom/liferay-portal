@@ -87,7 +87,6 @@
 
 	<target name="rebuild-all">
 		<antcall target="rebuild-db2" />
-		<antcall target="rebuild-hypersonic" />
 		<antcall target="rebuild-mysql" />
 		<antcall target="rebuild-oracle" />
 		<antcall target="rebuild-postgresql" />
@@ -107,30 +106,6 @@
 			<param name="arg.line" value="${db2.arg.line}" />
 			<param name="log" value="${db2.log}" />
 		</antcall>
-	</target>
-
-	<target name="rebuild-hypersonic">
-		<delete failonerror="false" file="${database.name}.lck" />
-		<delete failonerror="false" file="${database.name}.log" />
-		<delete failonerror="false" file="${database.name}.properties" />
-		<delete failonerror="false" file="${database.name}.script" />
-
-		<java
-			classname="com.liferay.portal.tools.HypersonicLoader"
-			classpathref="project.classpath"
-			fork="${fork.mode}"
-		>
-			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
-			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="-Dfile.encoding=UTF-8" />
-			<arg value="db.database.name=${database.name}" />
-			<arg value="db.database.password=" />
-			<arg value="db.database.username=sa" />
-			<arg value="db.file.name=portal${database.create.suffix}/portal${database.create.suffix}-hypersonic.sql,indexes.sql" />
-			<arg value="db.sql.dir=${basedir}" />
-		</java>
-
-		<delete dir="${database.name}.tmp" failonerror="false" />
 	</target>
 
 	<target name="rebuild-mysql">

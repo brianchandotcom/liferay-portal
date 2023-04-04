@@ -877,10 +877,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</for>
 	</target>
 
-	<target name="rebuild-hypersonic">
-		<ant dir="../sql" target="rebuild-hypersonic" />
-	</target>
-
 	<target name="sanitize-lang">
 		<if>
 			<available file="${project.dir}/modules/util/lang-sanitizer" />

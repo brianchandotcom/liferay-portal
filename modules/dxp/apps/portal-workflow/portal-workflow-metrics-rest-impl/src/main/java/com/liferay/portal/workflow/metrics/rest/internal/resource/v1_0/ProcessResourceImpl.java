@@ -92,16 +92,9 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 		SearchHit searchHit = searchHitList.get(0);
 
-		Process process = ProcessUtil.toProcess(
+		return ProcessUtil.toProcess(
 			searchHit.getDocument(),
 			contextAcceptLanguage.getPreferredLocale());
-
-		if (process == null) {
-			throw new NoSuchProcessException(
-				"No process exists with the process ID " + processId);
-		}
-
-		return process;
 	}
 
 	@Override

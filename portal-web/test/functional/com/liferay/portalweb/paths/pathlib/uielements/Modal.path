@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_ICON</td>
+	<td>//div[contains(@class,'modal-content')]//*[*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLUS</td>
 	<td>//div[contains(@class, 'modal-dialog')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>

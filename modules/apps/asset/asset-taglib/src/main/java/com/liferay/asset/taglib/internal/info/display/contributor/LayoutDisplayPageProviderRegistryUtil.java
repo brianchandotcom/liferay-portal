@@ -15,30 +15,22 @@
 package com.liferay.asset.taglib.internal.info.display.contributor;
 
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class LayoutDisplayPageProviderRegistryUtil {
 
 	public static LayoutDisplayPageProviderRegistry
 		getLayoutDisplayPageProviderRegistry() {
 
-		return _layoutDisplayPageProviderRegistry;
+		return _layoutDisplayPageProviderRegistrySnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setServletContext(
-		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
-
-		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
-	}
-
-	private static LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
+	private static final Snapshot<LayoutDisplayPageProviderRegistry>
+		_layoutDisplayPageProviderRegistrySnapshot = new Snapshot<>(
+			LayoutDisplayPageProviderRegistryUtil.class,
+			LayoutDisplayPageProviderRegistry.class);
 
 }

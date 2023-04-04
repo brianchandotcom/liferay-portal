@@ -18,6 +18,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.NotifiedAssetEntryThreadLocal;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
@@ -25,6 +29,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -62,6 +67,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -249,6 +257,13 @@ public class AssetEntriesCheckerHelper {
 			return _getManuallySelectedAssetEntries(
 				portletPreferences, layout.getGroupId());
 		}
+		else if (Objects.equals(
+					selectionStyle,
+					AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
+
+			return _getAssetListEntryAssetEntries(
+				layout.getGroupId(), portletPreferences);
+		}
 
 		AssetPublisherWebConfiguration assetPublisherWebConfiguration =
 			_configurationProvider.getCompanyConfiguration(
@@ -289,6 +304,69 @@ public class AssetEntriesCheckerHelper {
 
 			return Collections.emptyList();
 		}
+	}
+
+	private List<AssetEntry> _getAssetListEntryAssetEntries(
+		long groupId, PortletPreferences portletPreferences) {
+
+		long assetListEntryId = GetterUtil.getLong(
+			portletPreferences.getValue("assetListEntryId", null));
+
+		if (assetListEntryId <= 0) {
+			return Collections.emptyList();
+		}
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		try {
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(
+					assetListEntryId);
+
+			if (assetListEntry == null) {
+				return Collections.emptyList();
+			}
+
+			long[] segmentsEntryIds = {SegmentsEntryConstants.ID_DEFAULT};
+
+			try {
+				if (_segmentsConfigurationProvider.isSegmentationEnabled(
+						groupId)) {
+
+					segmentsEntryIds = ArrayUtil.toLongArray(
+						TransformUtil.transform(
+							_assetListEntrySegmentsEntryRelLocalService.
+								getAssetListEntrySegmentsEntryRels(
+									assetListEntryId, QueryUtil.ALL_POS,
+									QueryUtil.ALL_POS),
+							assetListEntrySegmentsEntryRel ->
+								assetListEntrySegmentsEntryRel.
+									getSegmentsEntryId()));
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to retrieve segmentsEntryIds for " +
+							"assetListEntryId" + assetListEntryId);
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+
+			assetEntries = _assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
+				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return assetEntries;
 	}
 
 	private List<AssetEntry> _getManuallySelectedAssetEntries(
@@ -447,6 +525,16 @@ public class AssetEntriesCheckerHelper {
 	private AssetHelper _assetHelper;
 
 	@Reference
+	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
@@ -467,6 +555,12 @@ public class AssetEntriesCheckerHelper {
 	@Reference
 	private PortletPreferenceValueLocalService
 		_portletPreferenceValueLocalService;
+
+	@Reference
+	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

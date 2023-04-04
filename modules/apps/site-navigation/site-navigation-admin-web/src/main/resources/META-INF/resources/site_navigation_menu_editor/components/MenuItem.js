@@ -480,8 +480,12 @@ function updateMenuItem({
 		});
 }
 
-function getDownPosition({items, order, parentSiteNavigationMenuItemId}) {
 	const parent = items.find(
+export function getDownPosition({
+	items,
+	order,
+	parentSiteNavigationMenuItemId,
+}) {
 		(item) =>
 			item.siteNavigationMenuItemId === parentSiteNavigationMenuItemId
 	);
@@ -529,7 +533,7 @@ function getDownPosition({items, order, parentSiteNavigationMenuItemId}) {
 	};
 }
 
-function getUpPosition({items, order, parentSiteNavigationMenuItemId}) {
+export function getUpPosition({items, order, parentSiteNavigationMenuItemId}) {
 
 	// The first menu cannot be moved upwards
 

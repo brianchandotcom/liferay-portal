@@ -55,7 +55,7 @@ public class UsersTemplateContextContributor
 
 		User user1 = themeDisplay.getUser();
 
-		contextObjects.put("is_guest_user", user1.isGuestUser());
+		contextObjects.put("is_default_user", user1.isDefaultUser());
 
 		try {
 			Contact contact = user1.getContact();
@@ -68,6 +68,7 @@ public class UsersTemplateContextContributor
 			_log.error(portalException);
 		}
 
+		contextObjects.put("is_guest_user", user1.isGuestUser());
 		contextObjects.put("is_setup_complete", user1.isSetupComplete());
 		contextObjects.put("language", themeDisplay.getLanguageId());
 		contextObjects.put("language_id", user1.getLanguageId());

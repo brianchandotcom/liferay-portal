@@ -58,6 +58,7 @@
 
 <#if !user_initialized??>
 	<#assign
+		is_default_user = user.isDefaultUser()
 		is_female = user.isFemale()
 		is_guest_user = user.isGuestUser()
 		is_male = user.isMale()

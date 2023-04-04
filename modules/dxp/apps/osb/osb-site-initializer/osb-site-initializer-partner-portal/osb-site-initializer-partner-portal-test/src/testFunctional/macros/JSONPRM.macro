@@ -1,22 +1,11 @@
 definition {
 
-	macro addCurrency {
-		if (!(isSet(currency))) {
-			var currency = "USD";
+	macro addAccount {
+		if (!(isSet(accountName))) {
+			var accountName = "Company Name 1";
 		}
 
-		if (!(isSet(country))) {
-			var country = "global";
-		}
-
-		if (!(isSet(accountEntryName))) {
-			var accountEntryName = "Company Name 1";
-		}
-
-		JSONPRMAPI.addCurrency(
-			accountEntryName = ${accountEntryName},
-			country = ${country},
-			currency = ${currency});
+		JSONPRMAPI.addAccountEntry(accountName = ${accountName});
 	}
 
 	macro changeMDFStatus {

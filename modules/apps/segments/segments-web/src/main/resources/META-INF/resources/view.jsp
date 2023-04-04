@@ -114,10 +114,11 @@ request.setAttribute("view.jsp-eventName", eventName);
 					%>
 
 					<c:if test="<%= segmentsSourceDetailsProvider != null %>">
-						<liferay-ui:icon
-							message="<%= segmentsSourceDetailsProvider.getLabel(locale) %>"
-							src="<%= segmentsSourceDetailsProvider.getIconSrc() %>"
-						/>
+						<span class="lfr-portal-tooltip" tabindex="0" title="<%= segmentsSourceDetailsProvider.getLabel(locale) %>">
+							<img alt="<%= segmentsSourceDetailsProvider.getLabel(locale) %>" src="<%= segmentsSourceDetailsProvider.getIconSrc() %>" title="<%= segmentsSourceDetailsProvider.getLabel(locale) %>" />
+
+							<span class="sr-only"><%= segmentsSourceDetailsProvider.getLabel(locale) %></span>
+						</span>
 					</c:if>
 				</liferay-ui:search-container-column-text>
 			</c:if>

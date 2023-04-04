@@ -71,8 +71,8 @@ public class BatchPlannerPlanHelper {
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, externalType, StringPool.SLASH, internalClassName, name,
-				0, taskItemDelegateName, template);
+				null, true, externalType, StringPool.SLASH, internalClassName,
+				name, 0, taskItemDelegateName, template);
 
 		_addBatchPlannerPolicies(
 			batchPlannerPlan.getBatchPlannerPlanId(), portletRequest);
@@ -113,8 +113,8 @@ public class BatchPlannerPlanHelper {
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				false, externalType, importFileURI, internalClassName, name,
-				size, taskItemDelegateName, template);
+				null, false, externalType, importFileURI, internalClassName,
+				name, size, taskItemDelegateName, template);
 
 		_addBatchPlannerPolicies(
 			batchPlannerPlan.getBatchPlannerPlanId(), portletRequest);
@@ -217,7 +217,7 @@ public class BatchPlannerPlanHelper {
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				templateBatchPlannerPlan.isExport(),
+				null, templateBatchPlannerPlan.isExport(),
 				templateBatchPlannerPlan.getExternalType(), externalURL,
 				templateBatchPlannerPlan.getInternalClassName(), name,
 				(int)file.length(),

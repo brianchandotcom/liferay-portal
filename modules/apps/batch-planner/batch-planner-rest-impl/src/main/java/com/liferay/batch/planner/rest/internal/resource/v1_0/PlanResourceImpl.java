@@ -114,9 +114,10 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 	public Plan postPlan(Plan plan) throws Exception {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				plan.getExport(), plan.getExternalType(), plan.getExternalURL(),
-				plan.getInternalClassName(), plan.getName(), 0,
-				plan.getTaskItemDelegateName(), plan.getTemplate());
+				null, plan.getExport(), plan.getExternalType(),
+				plan.getExternalURL(), plan.getInternalClassName(),
+				plan.getName(), 0, plan.getTaskItemDelegateName(),
+				plan.getTemplate());
 
 		Mapping[] mappings = plan.getMappings();
 

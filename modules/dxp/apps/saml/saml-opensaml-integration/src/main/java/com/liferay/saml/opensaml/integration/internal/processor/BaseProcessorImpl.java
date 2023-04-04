@@ -172,13 +172,18 @@ public abstract class BaseProcessorImpl
 			handleUnsafeStringArray(
 				fieldExpression,
 				(object, value) -> {
-					long[] longArray = new long[value.length];
+					try {
+						long[] longArray = new long[value.length];
 
-					for (int i = 0; i < longArray.length; i++) {
-						longArray[i] = Long.parseLong(value[i]);
+						for (int i = 0; i < longArray.length; i++) {
+							longArray[i] = Long.parseLong(value[i]);
+						}
+
+						biConsumer.accept(object, longArray);
 					}
-
-					biConsumer.accept(object, longArray);
+					catch (NumberFormatException numberFormatException) {
+						throw numberFormatException;
+					}
 				});
 		}
 

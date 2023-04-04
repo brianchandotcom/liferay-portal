@@ -42,11 +42,6 @@ allprojects {
 		incrementalAnalysis = false
 		toolVersion = "5.8.1"
 	}
-
-	node {
-		nodeVersion = "10.15.3"
-		npmVersion = "6.4.1"
-	}
 }
 
 appDocker {

@@ -40,24 +40,18 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		<liferay-ui:message key="segments-service-company-configuration-name" />
 
 		<c:if test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
-			<liferay-ui:icon-menu
-				cssClass="float-right"
-				direction="right"
-				markupView="lexicon"
-				showWhenSingleIcon="<%= true %>"
-			>
-				<liferay-ui:icon
-					message="reset-default-values"
-					method="post"
-					url="<%= segmentsCompanyConfigurationDisplayContext.getDeleteConfigurationActionURL() %>"
-				/>
 
-				<liferay-ui:icon
-					message="export"
-					method="get"
-					url="<%= segmentsCompanyConfigurationDisplayContext.getExportConfigurationActionURL() %>"
-				/>
-			</liferay-ui:icon-menu>
+				<%
+				SegmentsCompanyConfigurationActionDropdownItemsProvider segmentsCompanyConfigurationActionDropdownItemsProvider = new SegmentsCompanyConfigurationActionDropdownItemsProvider(request, segmentsCompanyConfigurationDisplayContext);
+				%>
+
+				<div class="float-right">
+					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+						dropdownItems="<%= segmentsCompanyConfigurationActionDropdownItemsProvider.getActionDropdownItems() %>"
+					/>
+				</div>
+
 		</c:if>
 	</h2>
 

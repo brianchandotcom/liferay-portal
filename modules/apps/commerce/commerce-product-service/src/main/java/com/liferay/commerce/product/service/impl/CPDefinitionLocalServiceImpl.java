@@ -2553,14 +2553,6 @@ public class CPDefinitionLocalServiceImpl
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
-			cpDefinitionId);
-
-		if (cpDefinitionLocalService.isVersionable(cpDefinition)) {
-			cpDefinition = cpDefinitionLocalService.copyCPDefinition(
-				cpDefinitionId);
-		}
-
 		if (!subscriptionEnabled) {
 			subscriptionLength = 1;
 			subscriptionType = null;
@@ -2585,6 +2577,14 @@ public class CPDefinitionLocalServiceImpl
 			_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
 				deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties);
+		}
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		if (cpDefinitionLocalService.isVersionable(cpDefinition)) {
+			cpDefinition = cpDefinitionLocalService.copyCPDefinition(
+				cpDefinitionId);
 		}
 
 		cpDefinition.setSubscriptionEnabled(subscriptionEnabled);

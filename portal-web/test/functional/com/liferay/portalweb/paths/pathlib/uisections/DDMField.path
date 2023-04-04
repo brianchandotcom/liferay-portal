@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_REPEATED_FIELD_N</td>
+	<td>xpath=(//div[contains(@data-field-name,'${key_fieldName}')]//button[@*='Remove'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE_SPECIFIC_REPEATED_FIELD</td>
 	<td>//div[@class='ddm-field' and contains(.,'${key_fieldValue}')]//button[@class= 'ddm-form-field-repeatable-delete-button p-0 btn btn-sm btn-primary']</td>
 	<td></td>

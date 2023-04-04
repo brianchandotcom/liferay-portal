@@ -486,7 +486,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
-			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,ItemPais,Estado") {
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {
 				FormFields.addRepeatableField(
 					fieldName = ${fieldName},
 					index = 1,
@@ -506,10 +506,16 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
-			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {
+			Click(
+				key_fieldName = "ItemPais",
+				key_index = 4,
+				locator1 = "DDMField#REMOVE_REPEATED_FIELD_N");
+
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado") {
 				Click(
 					key_fieldName = ${fieldName},
-					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
+					key_index = 2,
+					locator1 = "DDMField#REMOVE_REPEATED_FIELD_N");
 			}
 
 			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {

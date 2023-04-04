@@ -9,8 +9,10 @@
  * distribution rights of the Software.
  */
 
+import {sessionStorage} from 'frontend-js-web';
+
 const getJsonItem = (storage, key) => {
-	const item = storage.getItem(key) || '{}';
+	const item = storage.getItem(key, storage.TYPES.FUNCTIONAL) || '{}';
 	let jsonItem;
 
 	try {
@@ -33,7 +35,7 @@ const setJsonItem = (storage, key, json = {}) => {
 		jsonString = json;
 	}
 
-	storage.setItem(key, jsonString);
+	storage.setItem(key, jsonString, storage.TYPES.FUNCTIONAL);
 };
 
 const jsonStorage = (storage) => {
@@ -45,6 +47,5 @@ const jsonStorage = (storage) => {
 };
 
 const jsonSessionStorage = jsonStorage(sessionStorage);
-const jsonLocalStorage = jsonStorage(localStorage);
 
-export {jsonLocalStorage, jsonSessionStorage, jsonStorage};
+export {jsonSessionStorage, jsonStorage};

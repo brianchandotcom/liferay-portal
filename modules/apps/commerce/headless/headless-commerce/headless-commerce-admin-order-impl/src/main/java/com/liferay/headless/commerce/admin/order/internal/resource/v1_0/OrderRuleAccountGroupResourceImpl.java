@@ -15,8 +15,7 @@
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountGroup;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -128,13 +127,11 @@ public class OrderRuleAccountGroupResourceImpl
 					externalReferenceCode);
 		}
 
-		CommerceAccountGroup commerceAccountGroup = _getCommerceAccountGroup(
-			orderRuleAccountGroup);
+		AccountGroup accountGroup = _getAccountGroup(orderRuleAccountGroup);
 
 		return _toOrderRuleAccountGroup(
 			_corEntryRelService.addCOREntryRel(
-				AccountGroup.class.getName(),
-				commerceAccountGroup.getCommerceAccountGroupId(),
+				AccountGroup.class.getName(), accountGroup.getAccountGroupId(),
 				corEntry.getCOREntryId()));
 	}
 
@@ -143,13 +140,31 @@ public class OrderRuleAccountGroupResourceImpl
 			Long id, OrderRuleAccountGroup orderRuleAccountGroup)
 		throws Exception {
 
-		CommerceAccountGroup commerceAccountGroup = _getCommerceAccountGroup(
-			orderRuleAccountGroup);
+		AccountGroup accountGroup = _getAccountGroup(orderRuleAccountGroup);
 
 		return _toOrderRuleAccountGroup(
 			_corEntryRelService.addCOREntryRel(
-				AccountGroup.class.getName(),
-				commerceAccountGroup.getCommerceAccountGroupId(), id));
+				AccountGroup.class.getName(), accountGroup.getAccountGroupId(),
+				id));
+	}
+
+	private AccountGroup _getAccountGroup(
+			OrderRuleAccountGroup orderRuleAccountGroup)
+		throws Exception {
+
+		AccountGroup accountGroup = null;
+
+		if (orderRuleAccountGroup.getAccountGroupId() > 0) {
+			accountGroup = _accountGroupService.getAccountGroup(
+				orderRuleAccountGroup.getAccountGroupId());
+		}
+		else {
+			accountGroup = _accountGroupService.fetchByExternalReferenceCode(
+				contextCompany.getCompanyId(),
+				orderRuleAccountGroup.getAccountGroupExternalReferenceCode());
+		}
+
+		return accountGroup;
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -163,28 +178,6 @@ public class OrderRuleAccountGroupResourceImpl
 				"deleteOrderRuleAccountGroup",
 				_corEntryRelModelResourcePermission)
 		).build();
-	}
-
-	private CommerceAccountGroup _getCommerceAccountGroup(
-			OrderRuleAccountGroup orderRuleAccountGroup)
-		throws Exception {
-
-		CommerceAccountGroup commerceAccountGroup = null;
-
-		if (orderRuleAccountGroup.getAccountGroupId() > 0) {
-			commerceAccountGroup =
-				_commerceAccountGroupService.getCommerceAccountGroup(
-					orderRuleAccountGroup.getAccountGroupId());
-		}
-		else {
-			commerceAccountGroup =
-				_commerceAccountGroupService.fetchByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					orderRuleAccountGroup.
-						getAccountGroupExternalReferenceCode());
-		}
-
-		return commerceAccountGroup;
 	}
 
 	private OrderRuleAccountGroup _toOrderRuleAccountGroup(
@@ -201,7 +194,7 @@ public class OrderRuleAccountGroupResourceImpl
 	}
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.order.rule.model.COREntryRel)"

@@ -17,7 +17,7 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
@@ -264,8 +264,8 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 					continue;
 				}
 
-				OrderRuleAccountGroupUtil.addCOREntryCommerceAccountGroupRel(
-					_commerceAccountGroupService, _corEntryRelService, corEntry,
+				OrderRuleAccountGroupUtil.addCOREntryAccountGroupRel(
+					_accountGroupService, _corEntryRelService, corEntry,
 					orderRuleAccountGroup);
 			}
 		}
@@ -284,7 +284,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 					continue;
 				}
 
-				OrderRuleAccountUtil.addCOREntryCommerceAccountRel(
+				OrderRuleAccountUtil.addCOREntryAccountRel(
 					_accountEntryService, _corEntryRelService, corEntry,
 					orderRuleAccount);
 			}
@@ -373,7 +373,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	private AccountEntryService _accountEntryService;
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class OrderRuleAccountUtil {
 
-	public static COREntryRel addCOREntryCommerceAccountRel(
+	public static COREntryRel addCOREntryAccountRel(
 			AccountEntryService accountEntryService,
 			COREntryRelService corEntryRelService, COREntry corEntry,
 			OrderRuleAccount orderRuleAccount)

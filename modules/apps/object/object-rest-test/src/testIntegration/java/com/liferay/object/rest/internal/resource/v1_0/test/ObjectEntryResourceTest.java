@@ -2429,7 +2429,7 @@ public class ObjectEntryResourceTest {
 				objectDefinition.getClassName(), objectEntryId,
 				user.getUserId());
 
-			// Get object entry with null contextUriInfo
+			// Get object entry with null context URI info
 
 			ObjectEntryResource objectEntryResource = _getObjectEntryResource(
 				objectDefinition, user);
@@ -2439,7 +2439,7 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertNull(objectEntry.getAuditEvents());
 
-			// Get object entry with empty nestedFields parameter
+			// Get object entry with no nested fields
 
 			objectEntryResource.setContextUriInfo(
 				_getContextUriInfo(StringPool.BLANK));
@@ -2448,7 +2448,7 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertNull(objectEntry.getAuditEvents());
 
-			// Get object entry with auditEvents value in nestedFields parameter
+			// Get object entry with "auditEvents" nested fields
 
 			objectEntryResource.setContextUriInfo(
 				_getContextUriInfo("auditEvents"));

@@ -2672,8 +2672,8 @@ public class DLFileEntryLocalServiceImpl
 		catch (NoSuchFileException noSuchFileException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Falling back to version label as file name for file " +
-						"version " + dlFileVersion,
+					"Using version label as file name for file version " +
+						dlFileVersion,
 					noSuchFileException);
 			}
 

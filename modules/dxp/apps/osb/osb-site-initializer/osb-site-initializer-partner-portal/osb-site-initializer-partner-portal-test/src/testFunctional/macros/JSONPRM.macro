@@ -84,7 +84,7 @@ definition {
 
 		var totalMDFRequestAmount = ${totalCostOfExpense} / 2;
 
-		var requestId = JSONPRMAPI.addMDF(
+		var mdfExternalReferenceCode = JSONPRMAPI.addMDFSf(
 			accountEntryName = ${accountEntryName},
 			campaignDescription = ${campaignDescription},
 			campaignName = ${campaignName},
@@ -94,16 +94,44 @@ definition {
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions},
 			totalCostOfExpense = ${totalCostOfExpense},
+			totalMDFRequestAmount = ${totalMDFRequestAmount});
+
+		var requestId = JSONPRMAPI.addMDF(
+			accountEntryName = ${accountEntryName},
+			campaignDescription = ${campaignDescription},
+			campaignName = ${campaignName},
+			endDate = ${endDate},
+			goalsOptions = ${goalsOptions},
+			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
+			startDate = ${startDate},
+			targetMarketOptions = ${targetMarketOptions},
+			targetRolesOptions = ${targetRolesOptions},
+			totalCostOfExpense = ${totalCostOfExpense},
 			totalMDFRequestAmount = ${totalMDFRequestAmount},
 			userEmailAddress = ${userEmailAddress});
 
-		var activityId = JSONPRMAPI.addActivity(
+		var activityExternalReferenceCode = JSONPRMAPI.addActivitySf(
 			accountEntryName = ${accountEntryName},
 			activityDescription = ${activityDescription},
 			activityName = ${activityName},
 			budgetValue = ${totalCostOfExpense},
 			endDate = ${endDate},
 			expenseOption = ${expenseOption},
+			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
+			requestId = ${requestId},
+			startDate = ${startDate},
+			totalMDFRequestAmount = ${totalMDFRequestAmount});
+
+		var activityId = JSONPRMAPI.addActivity(
+			accountEntryName = ${accountEntryName},
+			activityDescription = ${activityDescription},
+			activityExternalReferenceCode = ${activityExternalReferenceCode},
+			activityName = ${activityName},
+			budgetValue = ${totalCostOfExpense},
+			endDate = ${endDate},
+			expenseOption = ${expenseOption},
+			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
+			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
 			requestId = ${requestId},
 			startDate = ${startDate},
 			totalMDFRequestAmount = ${totalMDFRequestAmount});

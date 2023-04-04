@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
@@ -31,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -59,13 +59,9 @@ public class MembershipsUserFieldExpressionHandler
 		UserProcessorContext.UserBind<User> bind = userProcessorContext.bind(
 			_processingIndex,
 			(currentUser, newUser, serviceContext) -> {
-				Stream<Long> stream = userGroupIds.stream();
-
 				_userGroupLocalService.setUserUserGroups(
 					newUser.getUserId(),
-					stream.mapToLong(
-						Long::longValue
-					).toArray());
+					ArrayUtil.toArray(userGroupIds.toArray(new Long[0])));
 
 				return newUser;
 			});

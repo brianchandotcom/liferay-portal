@@ -18,13 +18,13 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.constants.BlogsWebConstants;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -44,7 +44,10 @@ public class BlogsEntryAssetEntryUtil {
 			key);
 
 		if (assetEntry == null) {
-			assetEntry = _assetEntryLocalService.getEntry(
+			AssetEntryLocalService assetEntryLocalService =
+				_assetEntryLocalServiceSnapshot.get();
+
+			assetEntry = assetEntryLocalService.getEntry(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 			httpServletRequest.setAttribute(key, assetEntry);
@@ -53,13 +56,8 @@ public class BlogsEntryAssetEntryUtil {
 		return assetEntry;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	private static AssetEntryLocalService _assetEntryLocalService;
+	private static final Snapshot<AssetEntryLocalService>
+		_assetEntryLocalServiceSnapshot = new Snapshot<>(
+			BlogsEntryAssetEntryUtil.class, AssetEntryLocalService.class);
 
 }

@@ -21,7 +21,6 @@ export declare type TFDSView = {
 	label: string;
 };
 interface IFDSViewsProps {
-	fdsEntriesAPIURL: string;
 	fdsEntryId: string;
 	fdsEntryLabel: string;
 	fdsViewURL: string;
@@ -29,7 +28,6 @@ interface IFDSViewsProps {
 	namespace: string;
 }
 declare const FDSViews: ({
-	fdsEntriesAPIURL,
 	fdsEntryId,
 	fdsEntryLabel,
 	fdsViewURL,

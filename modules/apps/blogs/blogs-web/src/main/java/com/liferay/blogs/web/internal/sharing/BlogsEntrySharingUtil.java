@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.sharing;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -31,13 +32,9 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class BlogsEntrySharingUtil {
 
 	public static boolean containsManageCollaboratorsPermission(
@@ -46,14 +43,20 @@ public class BlogsEntrySharingUtil {
 		try {
 			long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
 
-			int count = _sharingEntryLocalService.getSharingEntriesCount(
+			SharingEntryLocalService sharingEntryLocalService =
+				_sharingEntryLocalServiceSnapshot.get();
+
+			int count = sharingEntryLocalService.getSharingEntriesCount(
 				classNameId, blogsEntry.getEntryId());
 
 			if (count == 0) {
 				return false;
 			}
 
-			return _sharingPermission.containsManageCollaboratorsPermission(
+			SharingPermission sharingPermission =
+				_sharingPermissionSnapshot.get();
+
+			return sharingPermission.containsManageCollaboratorsPermission(
 				permissionChecker, classNameId, blogsEntry.getEntryId(),
 				blogsEntry.getGroupId());
 		}
@@ -66,7 +69,10 @@ public class BlogsEntrySharingUtil {
 		PermissionChecker permissionChecker, BlogsEntry blogsEntry) {
 
 		try {
-			return _sharingPermission.containsSharePermission(
+			SharingPermission sharingPermission =
+				_sharingPermissionSnapshot.get();
+
+			return sharingPermission.containsSharePermission(
 				permissionChecker, PortalUtil.getClassNameId(BlogsEntry.class),
 				blogsEntry.getEntryId(), blogsEntry.getGroupId());
 		}
@@ -79,7 +85,10 @@ public class BlogsEntrySharingUtil {
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
 		try {
-			return _sharingDropdownItemFactory.
+			SharingDropdownItemFactory sharingDropdownItemFactory =
+				_sharingDropdownItemFactorySnapshot.get();
+
+			return sharingDropdownItemFactory.
 				createManageCollaboratorsDropdownItem(
 					BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 					httpServletRequest);
@@ -93,7 +102,10 @@ public class BlogsEntrySharingUtil {
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
 		try {
-			return _sharingMenuItemFactory.createManageCollaboratorsMenuItem(
+			SharingMenuItemFactory sharingMenuItemFactory =
+				_sharingMenuItemFactorySnapshot.get();
+
+			return sharingMenuItemFactory.createManageCollaboratorsMenuItem(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
@@ -106,7 +118,10 @@ public class BlogsEntrySharingUtil {
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
 		try {
-			return _sharingDropdownItemFactory.createShareDropdownItem(
+			SharingDropdownItemFactory sharingDropdownItemFactory =
+				_sharingDropdownItemFactorySnapshot.get();
+
+			return sharingDropdownItemFactory.createShareDropdownItem(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
@@ -119,7 +134,10 @@ public class BlogsEntrySharingUtil {
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
 		try {
-			return _sharingMenuItemFactory.createShareMenuItem(
+			SharingMenuItemFactory sharingMenuItemFactory =
+				_sharingMenuItemFactorySnapshot.get();
+
+			return sharingMenuItemFactory.createShareMenuItem(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
@@ -131,56 +149,35 @@ public class BlogsEntrySharingUtil {
 	public static boolean isSharingEnabled(long groupId)
 		throws PortalException {
 
+		SharingConfigurationFactory sharingConfigurationFactory =
+			_sharingConfigurationFactorySnapshot.get();
+
+		GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();
+
 		SharingConfiguration groupSharingConfiguration =
-			_sharingConfigurationFactory.getGroupSharingConfiguration(
-				_groupLocalService.getGroup(groupId));
+			sharingConfigurationFactory.getGroupSharingConfiguration(
+				groupLocalService.getGroup(groupId));
 
 		return groupSharingConfiguration.isEnabled();
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSharingConfigurationFactory(
-		SharingConfigurationFactory sharingConfigurationFactory) {
-
-		_sharingConfigurationFactory = sharingConfigurationFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSharingDropdownItemFactory(
-		SharingDropdownItemFactory sharingDropdownItemFactory) {
-
-		_sharingDropdownItemFactory = sharingDropdownItemFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSharingEntryLocalService(
-		SharingEntryLocalService sharingEntryLocalService) {
-
-		_sharingEntryLocalService = sharingEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSharingMenuItemFactory(
-		SharingMenuItemFactory sharingMenuItemFactory) {
-
-		_sharingMenuItemFactory = sharingMenuItemFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSharingPermission(SharingPermission sharingPermission) {
-		_sharingPermission = sharingPermission;
-	}
-
-	private static GroupLocalService _groupLocalService;
-	private static SharingConfigurationFactory _sharingConfigurationFactory;
-	private static SharingDropdownItemFactory _sharingDropdownItemFactory;
-	private static SharingEntryLocalService _sharingEntryLocalService;
-	private static SharingMenuItemFactory _sharingMenuItemFactory;
-	private static SharingPermission _sharingPermission;
+	private static final Snapshot<GroupLocalService>
+		_groupLocalServiceSnapshot = new Snapshot<>(
+			BlogsEntrySharingUtil.class, GroupLocalService.class);
+	private static final Snapshot<SharingConfigurationFactory>
+		_sharingConfigurationFactorySnapshot = new Snapshot<>(
+			BlogsEntrySharingUtil.class, SharingConfigurationFactory.class);
+	private static final Snapshot<SharingDropdownItemFactory>
+		_sharingDropdownItemFactorySnapshot = new Snapshot<>(
+			BlogsEntrySharingUtil.class, SharingDropdownItemFactory.class);
+	private static final Snapshot<SharingEntryLocalService>
+		_sharingEntryLocalServiceSnapshot = new Snapshot<>(
+			BlogsEntrySharingUtil.class, SharingEntryLocalService.class);
+	private static final Snapshot<SharingMenuItemFactory>
+		_sharingMenuItemFactorySnapshot = new Snapshot<>(
+			BlogsEntrySharingUtil.class, SharingMenuItemFactory.class);
+	private static final Snapshot<SharingPermission>
+		_sharingPermissionSnapshot = new Snapshot<>(
+			BlogsEntrySharingUtil.class, SharingPermission.class);
 
 }

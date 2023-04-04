@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v1_0;
 
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
@@ -132,12 +132,11 @@ public class DiscountAccountGroupResourceImpl
 
 		CommerceDiscountCommerceAccountGroupRel
 			commerceDiscountCommerceAccountGroupRel =
-				DiscountAccountGroupUtil.
-					addCommerceDiscountCommerceAccountGroupRel(
-						_commerceAccountGroupService,
-						_commerceDiscountCommerceAccountGroupRelService,
-						discountAccountGroup, commerceDiscount,
-						_serviceContextHelper.getServiceContext());
+				DiscountAccountGroupUtil.addCommerceDiscountAccountGroupRel(
+					_accountGroupService,
+					_commerceDiscountCommerceAccountGroupRelService,
+					discountAccountGroup, commerceDiscount,
+					_serviceContextHelper.getServiceContext());
 
 		return _toDiscountAccountGroup(
 			commerceDiscountCommerceAccountGroupRel.
@@ -151,13 +150,12 @@ public class DiscountAccountGroupResourceImpl
 
 		CommerceDiscountCommerceAccountGroupRel
 			commerceDiscountCommerceAccountGroupRel =
-				DiscountAccountGroupUtil.
-					addCommerceDiscountCommerceAccountGroupRel(
-						_commerceAccountGroupService,
-						_commerceDiscountCommerceAccountGroupRelService,
-						discountAccountGroup,
-						_commerceDiscountService.getCommerceDiscount(id),
-						_serviceContextHelper.getServiceContext());
+				DiscountAccountGroupUtil.addCommerceDiscountAccountGroupRel(
+					_accountGroupService,
+					_commerceDiscountCommerceAccountGroupRelService,
+					discountAccountGroup,
+					_commerceDiscountService.getCommerceDiscount(id),
+					_serviceContextHelper.getServiceContext());
 
 		return _toDiscountAccountGroup(
 			commerceDiscountCommerceAccountGroupRel.
@@ -195,7 +193,7 @@ public class DiscountAccountGroupResourceImpl
 	}
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference
 	private CommerceDiscountCommerceAccountGroupRelService

@@ -97,7 +97,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "privateLayout");
 			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 			Map<Locale, String> nameMap = _localization.getLocalizationMap(
-				actionRequest, "name");
+				actionRequest, "nameMapAsXML");
 			String type = ParamUtil.getString(uploadPortletRequest, "type");
 			boolean hidden = ParamUtil.getBoolean(
 				uploadPortletRequest, "hidden");

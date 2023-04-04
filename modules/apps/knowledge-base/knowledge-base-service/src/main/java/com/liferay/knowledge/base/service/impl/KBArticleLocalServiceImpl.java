@@ -1610,7 +1610,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			_log.debug(
 				StringBundler.concat(
 					"Expiring file entries with expiration date previous to ",
-					expirationDate, " for companyId ", companyId));
+					expirationDate, " for company ", companyId));
 		}
 
 		_expireKBArticlesByCompany(
@@ -1625,7 +1625,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				StringBundler.concat(
 					"Sending review notification for articles with review ",
 					"date between ", _dates.get(companyId), " and ", reviewDate,
-					" for companyId ", companyId));
+					" for company ", companyId));
 		}
 
 		_notifyReviewKBArticlesByCompany(

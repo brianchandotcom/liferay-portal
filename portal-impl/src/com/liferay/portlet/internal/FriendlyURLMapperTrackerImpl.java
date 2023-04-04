@@ -136,11 +136,13 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 	private ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
 		_openServiceTracker() {
 
-		String filterString = null;
+		String filterString;
 
 		String portletId = _portlet.getPortletId();
 
-		if (portletId.equals(_portlet.getPortletName())) {
+		String portletName = _portlet.getPortletName();
+
+		if (portletId.equals(portletName)) {
 			filterString = StringBundler.concat(
 				"(&(javax.portlet.name=", portletId, ")(objectClass=",
 				FriendlyURLMapper.class.getName(), "))");
@@ -148,7 +150,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		else {
 			filterString = StringBundler.concat(
 				"(&(|(javax.portlet.name=", portletId, ")(javax.portlet.name=",
-				_portlet.getPortletName(), "))(objectClass=",
+				portletName, "))(objectClass=",
 				FriendlyURLMapper.class.getName(), "))");
 		}
 

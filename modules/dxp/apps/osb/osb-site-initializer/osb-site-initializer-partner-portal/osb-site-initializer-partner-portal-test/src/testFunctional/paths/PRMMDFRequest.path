@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>REQUEST_ID</td>
-	<td>//thead//th/p[text()='Name']//ancestor::table//tbody//th//span[text()='${key_campaignName}']//ancestor::tr//th[1]</td>
+	<td>//thead//th/*[text()='Name']//ancestor::table//tbody//th[text()='${key_campaignName}']//ancestor::tr//th[1]</td>
 	<td></td>
 </tr>
 <tr>

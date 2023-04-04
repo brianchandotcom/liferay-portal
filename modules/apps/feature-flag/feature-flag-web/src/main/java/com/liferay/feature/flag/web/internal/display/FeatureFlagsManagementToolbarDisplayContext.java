@@ -46,7 +46,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 
 	public static final Filter[] FILTERS = {
 		new Filter(
-			"enabled", new String[] {"enabled", "disabled"},
+			"status", new String[] {"enabled", "disabled"},
 			(featureFlag, currentValue) -> {
 				if ((currentValue == null) ||
 					Objects.equals(currentValue, "all")) {

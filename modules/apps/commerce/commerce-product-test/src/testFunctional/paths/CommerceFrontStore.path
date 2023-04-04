@@ -303,6 +303,11 @@
 	<td>xpath=(//div[@class='dynamic-field'])[${key_index}]//${key_element}[@class='node-${key_node}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLLECTION_DISPLAY_PRODUCT_CARD_N</td>
+	<td>//div[contains(@class,'lfr-layout-structure-item-collection')]//following::div[contains(@class,'cp-renderer')][${key_index}]//p[@class='card-title' and @title='${key_productName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

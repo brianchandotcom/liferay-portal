@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_KGIAsGehK6oU" root-portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet" scope-group-id="42784" private-layout="false" self-path="/group/42784/portlet/com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_KGIAsGehK6oU/17/portlet.xml">
+	<portlet-preferences path="/group/42784/portlet/com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_KGIAsGehK6oU/preferences/layout/0/17/portlet-preferences.xml">
+		<preference-data>
+			<JournalArticle>
+				<staged-model group-id="42784" uuid="71f3093e-0e3f-6179-967b-c74c0ba0d481" article-resource-uuid="9136b059-87e5-4851-15c2-1abafd331840" cached="true" path="/group/42784/com.liferay.journal.model.JournalArticle/43005.xml" attached-class-name="" user-uuid="5a494b64-0093-df27-5fee-00f7cff41683" asset-entry-priority="0.0">
+					<references>
+						<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="42148" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="20121" group-key="20096" live-group-id="20121" type="dependency" uuid="3dcb4a10-358d-50a7-2708-4def23e030f2" company-id="20096" preloaded="true" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="BASIC-WEB-CONTENT" missing="true"/>
+						<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="42152" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" group-id="20121" group-key="20096" live-group-id="20121" type="dependency" uuid="15342a48-9b12-6115-2385-becb5cfdd622" company-id="20096" preloaded="true" referenced-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" template-key="BASIC-WEB-CONTENT" missing="true"/>
+						<reference class-name="com.liferay.asset.display.page.model.AssetDisplayPageEntry" class-pk="43012" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="42784" group-key="Site Name" live-group-id="42784" type="dependency" uuid="1ed99f60-0b47-3b28-3314-10e80f8f2b9e" company-id="20096" missing="false"/>
+						<reference class-name="com.liferay.friendly.url.model.FriendlyURLEntry" class-pk="43014" attached-class-name="com.liferay.journal.model.JournalArticle" type="dependency" uuid="b9356fe8-db0f-547e-62dd-3e4b4d3d41bc" company-id="20096" missing="false"/>
+					</references>
+				</staged-model>
+			</JournalArticle>
+			<AssetDisplayPageEntry>
+				<staged-model group-id="42784" uuid="1ed99f60-0b47-3b28-3314-10e80f8f2b9e" path="/company/20096/com.liferay.asset.display.page.model.AssetDisplayPageEntry/43012.xml" attached-class-name="com.liferay.journal.model.JournalArticle" user-uuid="5a494b64-0093-df27-5fee-00f7cff41683" asset-entry-priority="0.0">
+					<references>
+						<reference class-name="com.liferay.journal.model.JournalArticle" class-pk="43005" attached-class-name="" group-id="42784" group-key="Site Name" live-group-id="42784" type="dependency" uuid="71f3093e-0e3f-6179-967b-c74c0ba0d481" company-id="20096" article-id="35870" preloaded="false" resource-prim-key="43006" article-resource-uuid="9136b059-87e5-4851-15c2-1abafd331840" missing="false"/>
+					</references>
+				</staged-model>
+			</AssetDisplayPageEntry>
+			<FriendlyURLEntry>
+				<staged-model uuid="b9356fe8-db0f-547e-62dd-3e4b4d3d41bc" resource-class-name="com.liferay.journal.model.JournalArticle" mainEntry="true" path="/company/20096/com.liferay.friendly.url.model.FriendlyURLEntry/43014.xml" attached-class-name="com.liferay.journal.model.JournalArticle" asset-entry-priority="0.0"/>
+			</FriendlyURLEntry>
+			<references>
+				<reference class-name="com.liferay.journal.model.JournalArticle" class-pk="43005" attached-class-name="" group-id="42784" group-key="Site Name" live-group-id="42784" type="dependency" uuid="71f3093e-0e3f-6179-967b-c74c0ba0d481" company-id="20096" article-id="35870" preloaded="false" resource-prim-key="43006" article-resource-uuid="9136b059-87e5-4851-15c2-1abafd331840" missing="false"/>
+			</references>
+		</preference-data>
+	</portlet-preferences>
+</portlet>

@@ -2347,7 +2347,7 @@ definition {
 				roleTitle = "Administrator",
 				userEmailAddress = "userea@liferay.com");
 
-			UserNotificationAPI.createNotificationTemplate(
+			UserNotificationAPI.postNotificationTemplate(
 				en_US = "Subject Test",
 				externalReferenceCode = "test",
 				name = "User Notification Template",

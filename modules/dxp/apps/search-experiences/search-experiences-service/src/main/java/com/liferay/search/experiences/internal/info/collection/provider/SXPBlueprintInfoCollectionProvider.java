@@ -80,6 +80,8 @@ public class SXPBlueprintInfoCollectionProvider
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
+		// TODO Better null check for configuration and SXPBlueprint
+
 		if (configuration != null) {
 			String[] sxpBlueprintIds = configuration.get("sxpBlueprintId");
 
@@ -112,6 +114,9 @@ public class SXPBlueprintInfoCollectionProvider
 									collectionQuery.getInfoFilter(
 										CategoriesInfoFilter.class);
 
+								// TODO Added isEmpty check for consistency
+								// with TagsInfoFilter
+
 								if ((categoriesInfoFilter != null) &&
 									!ArrayUtil.isEmpty(
 										categoriesInfoFilter.
@@ -129,6 +134,9 @@ public class SXPBlueprintInfoCollectionProvider
 								TagsInfoFilter tagsInfoFilter =
 									collectionQuery.getInfoFilter(
 										TagsInfoFilter.class);
+
+								// TODO Added isEmpty check, otherwise getting
+								// ArrayIndexOutOfBoundsException
 
 								if ((tagsInfoFilter != null) &&
 									!ArrayUtil.isEmpty(
@@ -188,6 +196,8 @@ public class SXPBlueprintInfoCollectionProvider
 			Collections.emptyList(), collectionQuery.getPagination(), 0);
 	}
 
+	// TODO Implement SXPBlueprntsOptionsPortlet Selector screen
+
 	@Override
 	public InfoForm getConfigurationInfoForm() {
 		return InfoForm.builder(
@@ -207,10 +217,14 @@ public class SXPBlueprintInfoCollectionProvider
 		).build();
 	}
 
+	// TODO Better name?
+
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "blueprint");
 	}
+
+	// TODO Check why the Tags filter does not show up on screen.
 
 	@Override
 	public List<InfoFilter> getSupportedInfoFilters() {
@@ -226,6 +240,8 @@ public class SXPBlueprintInfoCollectionProvider
 
 	@Reference
 	protected AssetEntryService assetEntryService;
+
+	// TODO Revisit and maybe implement differently?
 
 	private List<AssetEntry> _getAssetEntries(SearchHits searchHits) {
 		List<AssetEntry> assetEntries = new ArrayList<>();
@@ -252,6 +268,8 @@ public class SXPBlueprintInfoCollectionProvider
 
 		return assetEntries;
 	}
+
+	// TODO Add more logging
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintInfoCollectionProvider.class);

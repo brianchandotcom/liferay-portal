@@ -23,3 +23,4 @@ export {
 	StyleErrorsContextProvider,
 } from '../page_editor/app/contexts/StyleErrorsContext';
 export {useId} from '../page_editor/common/hooks/useId';
+export {default as SearchResultsMessage} from '../page_editor/common/components/SearchResultsMessage';

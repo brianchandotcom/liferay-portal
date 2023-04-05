@@ -142,6 +142,7 @@ export function InformLicensingTermsPage({
 								...skuJSON,
 								neverExpire: true,
 								price: 0,
+								published: true,
 								purchasable: true,
 
 								// skuOptions: [
@@ -173,6 +174,7 @@ export function InformLicensingTermsPage({
 								...skuJSON,
 								neverExpire: appLicense === 'perpetual',
 								price: 0,
+								published: true,
 								purchasable: true,
 
 								// skuOptions: [
@@ -216,6 +218,7 @@ export function InformLicensingTermsPage({
 									body: {
 										neverExpire: false,
 										price: 0,
+										published: true,
 										purchasable: true,
 										sku: createSkuName(
 											appProductId,

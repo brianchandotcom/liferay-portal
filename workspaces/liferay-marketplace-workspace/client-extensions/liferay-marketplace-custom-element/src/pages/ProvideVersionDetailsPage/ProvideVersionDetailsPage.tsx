@@ -162,6 +162,8 @@ export function ProvideVersionDetailsPage({
 							appProductId,
 							body: {
 								sku: createSkuName(appProductId, appVersion),
+								published: true,
+								purchasable: true,
 
 								// skuOptions: [
 								// 	{

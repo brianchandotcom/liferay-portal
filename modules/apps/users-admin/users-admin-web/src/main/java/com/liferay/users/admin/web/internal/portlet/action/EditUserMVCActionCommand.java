@@ -66,6 +66,8 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -335,6 +337,14 @@ public class EditUserMVCActionCommand
 		String oldScreenName = user.getScreenName();
 		String screenName = BeanParamUtil.getString(
 			user, actionRequest, "screenName");
+
+		if (PrefsPropsUtil.getBoolean(
+				user.getCompanyId(),
+				PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
+
+			screenName = oldScreenName;
+		}
+
 		String oldEmailAddress = user.getEmailAddress();
 		String emailAddress = BeanParamUtil.getString(
 			user, actionRequest, "emailAddress");

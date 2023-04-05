@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -228,7 +229,12 @@ public class ObjectDefinitionNotificationTermEvaluator
 					_objectEntry.getValues(),
 					StringUtil.removeSubstrings(
 						termName,
-						objectRelationshipNameUpperCase + StringPool.UNDERLINE,
+						StringBundler.concat(
+							objectRelationshipNameUpperCase,
+							StringPool.UNDERLINE,
+							StringUtil.toUpperCase(
+								objectDefinition.getShortName()),
+							StringPool.UNDERLINE),
 						"[%", "%]"));
 			}
 
@@ -238,7 +244,10 @@ public class ObjectDefinitionNotificationTermEvaluator
 					GetterUtil.getLong(termValues.get(objectField.getName()))),
 				StringUtil.removeSubstrings(
 					termName,
-					objectRelationshipNameUpperCase + StringPool.UNDERLINE,
+					StringBundler.concat(
+						objectRelationshipNameUpperCase, StringPool.UNDERLINE,
+						StringUtil.toUpperCase(objectDefinition.getShortName()),
+						StringPool.UNDERLINE),
 					"[%", "%]"));
 		}
 

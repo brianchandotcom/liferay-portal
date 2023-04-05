@@ -20,7 +20,7 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './EditObjectField.scss';
 import {AdvancedTab} from './Tabs/Advanced/AdvancedTab';
@@ -37,6 +37,7 @@ interface EditObjectFieldProps {
 	isDefaultStorageType: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: ObjectField;
+	objectFieldId: number;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
@@ -47,6 +48,24 @@ interface EditObjectFieldProps {
 
 const TABS = [Liferay.Language.get('basic-info')];
 
+const initialValues: Partial<ObjectField> = {
+	DBType: '',
+	businessType: 'Text',
+	externalReferenceCode: '',
+	id: 0,
+	indexed: true,
+	indexedAsKeyword: false,
+	indexedLanguageId: 'en_US',
+	label: {en_US: ''},
+	listTypeDefinitionId: 0,
+	name: '',
+	objectFieldSettings: [],
+	relationshipType: '',
+	required: false,
+	state: false,
+	system: false,
+};
+
 export default function EditObjectField({
 	creationLanguageId,
 	filterOperators,
@@ -56,7 +75,7 @@ export default function EditObjectField({
 	isApproved,
 	isDefaultStorageType,
 	objectDefinitionExternalReferenceCode,
-	objectField,
+	objectFieldId,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
@@ -102,7 +121,7 @@ export default function EditObjectField({
 		forbiddenChars,
 		forbiddenLastChars,
 		forbiddenNames,
-		initialValues: objectField,
+		initialValues,
 		onSubmit,
 	});
 
@@ -114,6 +133,17 @@ export default function EditObjectField({
 	) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectFieldResponse = await API.getObjectField(objectFieldId);
+
+			setValues(objectFieldResponse);
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectFieldId]);
 
 	return (
 		<SidePanelForm

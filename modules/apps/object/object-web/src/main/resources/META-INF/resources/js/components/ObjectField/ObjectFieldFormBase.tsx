@@ -42,13 +42,14 @@ import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
 
-interface IProps {
+interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
 	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
+	objectDefinition?: ObjectDefinition;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
@@ -155,6 +156,7 @@ export default function ObjectFieldFormBase({
 	editingField,
 	errors,
 	handleChange,
+	objectDefinition,
 	objectDefinitionExternalReferenceCode,
 	objectField: values,
 	objectFieldTypes,
@@ -163,7 +165,7 @@ export default function ObjectFieldFormBase({
 	onAggregationFilterChange,
 	onRelationshipChange,
 	setValues,
-}: IProps) {
+}: ObjectFieldFormBaseProps) {
 	const businessTypeMap = useMemo(() => {
 		const businessTypeMap = new Map<string, ObjectFieldType>();
 
@@ -181,9 +183,6 @@ export default function ObjectFieldFormBase({
 		TObjectRelationship
 	>();
 	const [selectedOutput, setSelectedOutput] = useState<string>('');
-	const [objectDefinition, setObjectDefinition] = useState<
-		ObjectDefinition
-	>();
 
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
@@ -259,12 +258,6 @@ export default function ObjectFieldFormBase({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
-
-			setObjectDefinition(objectDefinitionResponse);
-
 			await getFieldSettingsByBusinessType(
 				objectRelationshipId as number,
 				setOneToManyRelationship,
@@ -276,7 +269,7 @@ export default function ObjectFieldFormBase({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [objectDefinitionExternalReferenceCode, values.businessType]);
+	}, [values.businessType]);
 
 	const handleStateToggleChange = (toggled: boolean) => {
 		if (Liferay.FeatureFlags['LPS-163716']) {

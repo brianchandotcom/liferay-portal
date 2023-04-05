@@ -26,6 +26,7 @@ interface EditObjectFieldProps {
 	isDefaultStorageType: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: ObjectField;
+	objectFieldId: number;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
@@ -42,7 +43,7 @@ export default function EditObjectField({
 	isApproved,
 	isDefaultStorageType,
 	objectDefinitionExternalReferenceCode,
-	objectField,
+	objectFieldId,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,

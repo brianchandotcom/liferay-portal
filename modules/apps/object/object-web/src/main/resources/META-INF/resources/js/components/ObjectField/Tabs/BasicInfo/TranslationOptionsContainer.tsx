@@ -59,12 +59,13 @@ export function TranslationOptionsContainer({
 			<div className="lfr__objects-translation-options-container">
 				<ClayToggle
 					disabled={published || !translatableField}
-					label={Liferay.Language.get('enable-entry-translation')}
+					label={Liferay.Language.get('enable-entry-translations')}
 					onToggle={() =>
 						setValues({
 							localized: !values.localized,
 						})
 					}
+					toggled={values.localized}
 				/>
 
 				<ClayTooltipProvider>

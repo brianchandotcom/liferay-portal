@@ -53,6 +53,9 @@ function ModalAddObjectField({
 	onClose,
 }: IModal) {
 	const [error, setError] = useState<string>('');
+	const [objectDefinition, setObjectDefinition] = useState<
+		ObjectDefinition
+	>();
 
 	const initialValues: Partial<ObjectField> = {
 		indexed: true,
@@ -102,6 +105,40 @@ function ModalAddObjectField({
 		values.businessType === 'RichText' ||
 		values.businessType === 'Text';
 
+	useEffect(() => {
+		if (!objectDefinition) {
+			const makeFetch = async () => {
+				const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
+
+				setObjectDefinition(objectDefinitionResponse);
+			};
+
+			makeFetch();
+		}
+
+		if (Liferay.FeatureFlags['LPS-146755']) {
+			if (
+				objectDefinition?.enableLocalization &&
+				showEnableTranslationToggle
+			) {
+				setValues({
+					localized: true,
+				});
+
+				return;
+			}
+
+			setValues({
+				localized: false,
+			});
+
+			return;
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.businessType]);
+
 	return (
 		<ClayModal observer={observer}>
 			<ClayForm onSubmit={handleSubmit}>
@@ -128,6 +165,7 @@ function ModalAddObjectField({
 					<ObjectFieldFormBase
 						errors={errors}
 						handleChange={handleChange}
+						objectDefinition={objectDefinition}
 						objectDefinitionExternalReferenceCode={
 							objectDefinitionExternalReferenceCode
 						}

@@ -53,6 +53,7 @@ interface ObjectField {
 	indexedLanguageId: Liferay.Language.Locale | null;
 	label: LocalizedValue<string>;
 	listTypeDefinitionId: number;
+	localized: boolean;
 	name: string;
 	objectFieldSettings?: ObjectFieldSetting[];
 	relationshipType?: unknown;

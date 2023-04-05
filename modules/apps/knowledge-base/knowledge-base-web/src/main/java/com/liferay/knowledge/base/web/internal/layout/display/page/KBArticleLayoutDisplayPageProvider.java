@@ -87,6 +87,14 @@ public class KBArticleLayoutDisplayPageProvider
 				return null;
 			}
 
+			KBArticle latestKBArticle =
+				_kbArticleLocalService.fetchLatestKBArticle(
+					kbArticle.getResourcePrimKey(), kbArticle.getGroupId());
+
+			if ((latestKBArticle == null) || latestKBArticle.isExpired()) {
+				return null;
+			}
+
 			return new KBArticleLayoutDisplayPageObjectProvider(
 				kbArticle, _assetHelper);
 		}

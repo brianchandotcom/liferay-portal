@@ -7,8 +7,10 @@ import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountInfo,
+	getAccounts,
 	getChannels,
 	getDeliveryProduct,
+	getProduct,
 	getProductSKU,
 	getSKUCustomFieldExpandoValue,
 	getUserAccount,
@@ -37,6 +39,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		onClose: handleClose,
 	});
 	const [account, setAccount] = useState<AccountBrief>();
+	const [accountPublisher, setAccountPublisher] = useState<AccountBrief>();
 	const [app, setApp] = useState<App>({
 		createdBy: '',
 		id: 0,
@@ -85,12 +88,12 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			setCurrentUser(currentUser);
 
-			const accounts = await getUserAccountsById();
+			const userAccounts = await getUserAccountsById();
 
 			let accountId;
 
-			if (accounts.accountBriefs.length) {
-				accountId = accounts.accountBriefs[0].id;
+			if (userAccounts.accountBriefs.length) {
+				accountId = userAccounts.accountBriefs[0].id;
 			}
 			else {
 				accountId = 50307;
@@ -117,6 +120,21 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			});
 
 			setAppVersion(version);
+
+			const adminProduct = await getProduct({
+				appERC: app?.externalReferenceCode,
+			});
+
+			const catalogID = adminProduct?.catalogId;
+			const accounts = await getAccounts();
+
+			const accountPublisher = accounts?.items.find(
+				({customFields}: AccountBrief) => {
+					return customFields?.CatalogID == catalogID;
+				}
+			);
+
+			setAccountPublisher(accountPublisher);
 		};
 
 		getModalInfo();
@@ -203,7 +221,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 							<img
 								alt="Account icon"
 								className="get-app-modal-body-card-header-right-content-account-info-icon"
-								src={account?.image}
+								src={account?.logoURL}
 							/>
 						</div>
 					</div>
@@ -225,7 +243,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									</span>
 
 									<span className="get-app-modal-body-content-app-info-version">
-										{appVersion} by {app?.createdBy}.
+										{appVersion} by {accountPublisher?.name}
 									</span>
 								</div>
 							</div>

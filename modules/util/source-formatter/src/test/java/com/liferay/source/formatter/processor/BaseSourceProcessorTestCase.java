@@ -94,25 +94,25 @@ public abstract class BaseSourceProcessorTestCase {
 
 		test(
 			fileName, new String[] {expectedMessage},
-			new Integer[] {lineNumber}, null);
+			new Integer[] {lineNumber}, null, null);
 	}
 
 	protected void test(String fileName, String[] expectedMessages)
 		throws Exception {
 
-		test(fileName, expectedMessages, null, null);
+		test(fileName, expectedMessages, null, null, null);
 	}
 
 	protected void test(
 			String fileName, String[] expectedMessages, Integer[] lineNumbers)
 		throws Exception {
 
-		test(fileName, expectedMessages, lineNumbers, null);
+		test(fileName, expectedMessages, lineNumbers, null, null);
 	}
 
 	protected void test(
 			String fileName, String[] expectedMessages, Integer[] lineNumbers,
-			String[] dependentFileNames)
+			String[] dependentFileNames, String expectedFileName)
 		throws Exception {
 
 		File newFile = _generateTempFile(fileName);
@@ -179,8 +179,19 @@ public abstract class BaseSourceProcessorTestCase {
 			String actualFormattedContent = FileUtil.read(
 				new File(modifiedFileNames.get(0)));
 
-			String expectedFileName = StringBundler.concat(
-				_DIR_NAME, "/expected/", fileName);
+			if (expectedFileName != null) {
+				actualFormattedContent = FileUtil.read(
+					new File(
+						_temporaryFolder,
+						StringUtil.replace(expectedFileName, ".test", ".")));
+
+				expectedFileName = StringBundler.concat(
+					_DIR_NAME, "/expected/", expectedFileName);
+			}
+			else {
+				expectedFileName = StringBundler.concat(
+					_DIR_NAME, "/expected/", fileName);
+			}
 
 			URL expectedURL = classLoader.getResource(expectedFileName);
 
@@ -205,7 +216,13 @@ public abstract class BaseSourceProcessorTestCase {
 			String[] dependentFileNames)
 		throws Exception {
 
-		test(fileName, expectedMessages, null, dependentFileNames);
+		test(fileName, expectedMessages, null, dependentFileNames, null);
+	}
+
+	protected void testMigration(String fileName, String expectedFileName)
+		throws Exception {
+
+		test(fileName, new String[0], null, null, expectedFileName);
 	}
 
 	protected final ClassLoader classLoader =

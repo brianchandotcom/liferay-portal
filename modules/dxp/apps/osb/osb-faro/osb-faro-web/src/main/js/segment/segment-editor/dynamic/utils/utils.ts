@@ -283,7 +283,7 @@ export const convertFieldMappingToAccountProperty = (
 		entityName: Liferay.Language.get('account'),
 		id,
 		label: displayName || name,
-		name: context ? `${context}/${name}/value` : name,
+		name: context ? `${context}/${id}/value` : id,
 		propertyKey: FieldOwnerTypes.Account,
 		type: CUSTOM_REGEX.test(type)
 			? type.toLowerCase()
@@ -359,7 +359,7 @@ export const convertFieldMappingToOrganizationProperty = (
 		entityName: Liferay.Language.get('organization'),
 		id,
 		label: displayName || name,
-		name: context ? `${context}/${name}/value` : name,
+		name: context ? `${context}/${id}/value` : id,
 		propertyKey: FieldOwnerTypes.Organization,
 		type: `organization-${type.toLowerCase()}` as PropertyTypes
 	});

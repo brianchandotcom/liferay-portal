@@ -54,15 +54,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-149145 | Test Summary: Verify if when a Liferay Staff fills out the activation form before the first client admin, it will not go through the form in the integration flow"
-	@ignore = "true"
-	@priority = 3
-	test CannotSeeTheFormInTheIntegrationFlow {
-
-		// TODO LPS-149145 CannotSeeTheFormInTheIntegrationFlow pending implementation
-
-	}
-
 	@description = "Automation ID: LPS-149144 | Test Summary: Verify if after a user submits the DXP Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
 	@priority = 4
 	test AssertThatTheLXCSMActivationFormHasAlreadyBeenSent {
@@ -121,6 +112,15 @@ definition {
 				entry = "test@liferay.com",
 				portlet = "Admins DXP Cloud");
 		}
+	}
+
+	@description = "Automation ID: LPS-149145 | Test Summary: Verify if when a Liferay Staff fills out the activation form before the first client admin, it will not go through the form in the integration flow"
+	@ignore = "true"
+	@priority = 3
+	test CannotSeeTheFormInTheIntegrationFlow {
+
+		// TODO LPS-149145 CannotSeeTheFormInTheIntegrationFlow pending implementation
+
 	}
 
 }

@@ -155,30 +155,7 @@ public class JournalArticleLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		_themeDisplay = new ThemeDisplay();
-
-		_themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
-		_themeDisplay.setLayout(layout);
-		_themeDisplay.setLookAndFeel(
-			layout.getTheme(), layout.getColorScheme());
-
-		User user = _userLocalService.getUser(_group.getCreatorUserId());
-
-		_themeDisplay.setRealUser(user);
-
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
-
-		_themeDisplay.setRequest(httpServletRequest);
-
-		_themeDisplay.setResponse(new MockHttpServletResponse());
-		_themeDisplay.setScopeGroupId(_group.getGroupId());
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
-		_themeDisplay.setUser(user);
+		_themeDisplay = _getThemeDisplay();
 	}
 
 	@Test
@@ -693,8 +670,7 @@ public class JournalArticleLocalServiceTest {
 			journalArticleDisplay =
 				_journalArticleLocalService.getArticleDisplay(
 					journalArticle.getGroupId(), journalArticle.getArticleId(),
-					ddmTemplate.getTemplateKey(), null, null,
-					_getThemeDisplay());
+					ddmTemplate.getTemplateKey(), null, null, _themeDisplay);
 		}
 
 		String content = journalArticleDisplay.getContent();
@@ -711,7 +687,7 @@ public class JournalArticleLocalServiceTest {
 		JournalArticleDisplay journalArticleDisplay =
 			_journalArticleLocalService.getArticleDisplay(
 				journalArticle.getGroupId(), journalArticle.getArticleId(),
-				null, null, _getThemeDisplay());
+				null, null, _themeDisplay);
 
 		String content = journalArticleDisplay.getContent();
 

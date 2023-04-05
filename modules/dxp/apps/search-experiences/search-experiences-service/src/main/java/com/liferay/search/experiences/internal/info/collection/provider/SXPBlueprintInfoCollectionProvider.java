@@ -32,6 +32,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -216,6 +217,11 @@ public class SXPBlueprintInfoCollectionProvider
 		return Arrays.asList(
 			new CategoriesInfoFilter(), new KeywordsInfoFilter(),
 			new TagsInfoFilter());
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return FeatureFlagManagerUtil.isEnabled("LPS-129412");
 	}
 
 	@Reference

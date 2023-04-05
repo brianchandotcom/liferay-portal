@@ -18,17 +18,14 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorCreator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceObjects;
@@ -36,7 +33,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -53,22 +49,14 @@ public class BatchEngineTaskMethodRegistryImpl
 		getBatchEngineTaskItemDelegateExecutorCreator(
 			String itemClassName, String taskItemDelegateName) {
 
-		if (Validator.isNull(taskItemDelegateName)) {
-			taskItemDelegateName = "DEFAULT";
-		}
-
-		Map<String, BatchEngineTaskItemDelegateExecutorCreator>
-			batchEngineTaskItemDelegateExecutorCreatorMap =
-				_batchEngineTaskItemDelegateExecutorCreators.get(
-					getItemClass(itemClassName));
-
-		return batchEngineTaskItemDelegateExecutorCreatorMap.get(
-			taskItemDelegateName);
+		return _batchEngineTaskItemDelegateExecutorCreatorServiceTrackerMap.
+			getService(_encodeKey(itemClassName, taskItemDelegateName));
 	}
 
 	@Override
 	public Class<?> getItemClass(String itemClassName) {
-		Class<?> itemClass = _itemClasses.get(itemClassName);
+		Class<?> itemClass = _itemClassServiceTrackerMap.getService(
+			itemClassName);
 
 		if (itemClass == null) {
 			throw new IllegalStateException("Unknown class: " + itemClassName);
@@ -79,204 +67,206 @@ public class BatchEngineTaskMethodRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, BatchEngineTaskItemDelegate.class.getName(),
-			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
+		_itemClassServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<BatchEngineTaskItemDelegate<Object>>)
+					(Class<?>)BatchEngineTaskItemDelegate.class,
+				null,
+				(serviceReference, emitter) -> {
+					Class<?> itemClass = _getItemClass(
+						bundleContext, serviceReference);
 
-		_serviceTracker.open();
+					emitter.emit(itemClass.getName());
+				},
+				new ServiceTrackerCustomizer
+					<BatchEngineTaskItemDelegate<Object>, Class<?>>() {
+
+					@Override
+					public Class<?> addingService(
+						ServiceReference<BatchEngineTaskItemDelegate<Object>>
+							serviceReference) {
+
+						return _getItemClass(bundleContext, serviceReference);
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<BatchEngineTaskItemDelegate<Object>>
+							serviceReference,
+						Class<?> itemClass) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<BatchEngineTaskItemDelegate<Object>>
+							serviceReference,
+						Class<?> itemClass) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
+
+		_batchEngineTaskItemDelegateExecutorCreatorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<BatchEngineTaskItemDelegate<Object>>)
+					(Class<?>)BatchEngineTaskItemDelegate.class,
+				null,
+				(serviceReference, emitter) -> {
+					Class<?> itemClass = _getItemClass(
+						bundleContext, serviceReference);
+
+					emitter.emit(
+						_encodeKey(
+							itemClass.getName(),
+							(String)serviceReference.getProperty(
+								"batch.engine.task.item.delegate.name")));
+				},
+				new ServiceTrackerCustomizer
+					<BatchEngineTaskItemDelegate<Object>,
+					 BatchEngineTaskItemDelegateExecutorCreator>() {
+
+					@Override
+					public BatchEngineTaskItemDelegateExecutorCreator
+						addingService(
+							ServiceReference
+								<BatchEngineTaskItemDelegate<Object>>
+									serviceReference) {
+
+						ServiceObjects<BatchEngineTaskItemDelegate<Object>>
+							serviceObjects = bundleContext.getServiceObjects(
+								serviceReference);
+
+						return (company, expressionConvert,
+								filterParserProvider, parameters,
+								sortParserProvider, user) ->
+									new BatchEngineTaskItemDelegateExecutor(
+										company, expressionConvert,
+										filterParserProvider, parameters,
+										serviceObjects, sortParserProvider,
+										user);
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<BatchEngineTaskItemDelegate<Object>>
+							serviceReference,
+						BatchEngineTaskItemDelegateExecutorCreator
+							batchEngineTaskItemDelegateExecutorCreator) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<BatchEngineTaskItemDelegate<Object>>
+							serviceReference,
+						BatchEngineTaskItemDelegateExecutorCreator
+							batchEngineTaskItemDelegateExecutorCreator) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_batchEngineTaskItemDelegateExecutorCreatorServiceTrackerMap.close();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineTaskMethodRegistryImpl.class);
+	private String _encodeKey(
+		String itemClassName, String taskItemDelegateName) {
 
-	private final Map
-		<Class<?>, Map<String, BatchEngineTaskItemDelegateExecutorCreator>>
-			_batchEngineTaskItemDelegateExecutorCreators =
-				new ConcurrentHashMap<>();
-	private final Map<String, Class<?>> _itemClasses =
-		new ConcurrentHashMap<>();
-	private ServiceTracker<BatchEngineTaskItemDelegate<Object>, Class<?>>
-		_serviceTracker;
+		if (Validator.isNull(taskItemDelegateName)) {
+			taskItemDelegateName = "DEFAULT";
+		}
 
-	private class BatchEngineTaskMethodServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<BatchEngineTaskItemDelegate<Object>, Class<?>> {
+		return StringBundler.concat(
+			itemClassName, StringPool.POUND, taskItemDelegateName);
+	}
 
-		@Override
-		public Class<?> addingService(
-			ServiceReference<BatchEngineTaskItemDelegate<Object>>
-				serviceReference) {
+	private Class<?> _getItemClass(
+		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate) {
 
-			BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate =
-				_bundleContext.getService(serviceReference);
+		Class<?> itemClass = batchEngineTaskItemDelegate.getItemClass();
 
-			Class<?> itemClass = _getItemClass(batchEngineTaskItemDelegate);
-
-			Map<String, BatchEngineTaskItemDelegateExecutorCreator>
-				batchEngineTaskItemDelegateExecutorCreatorMap =
-					_batchEngineTaskItemDelegateExecutorCreators.
-						computeIfAbsent(
-							itemClass, key -> new ConcurrentHashMap<>());
-
-			String batchEngineTaskItemDelegateName =
-				_getBatchEngineTaskItemDelegateName(serviceReference);
-
-			if (batchEngineTaskItemDelegateExecutorCreatorMap.containsKey(
-					batchEngineTaskItemDelegateName)) {
-
-				throw new IllegalStateException(
-					batchEngineTaskItemDelegateName + " is already registered");
-			}
-
-			ServiceObjects<BatchEngineTaskItemDelegate<Object>> serviceObjects =
-				_bundleContext.getServiceObjects(serviceReference);
-
-			batchEngineTaskItemDelegateExecutorCreatorMap.put(
-				batchEngineTaskItemDelegateName,
-				(company, expressionConvert, filterParserProvider, parameters,
-				 sortParserProvider, user) ->
-					new BatchEngineTaskItemDelegateExecutor(
-						company, expressionConvert, filterParserProvider,
-						parameters, serviceObjects, sortParserProvider, user));
-
-			_itemClasses.put(itemClass.getName(), itemClass);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Batch engine task item delegate registered for item ",
-						"class ", itemClass, " and delegate name ",
-						batchEngineTaskItemDelegateName));
-			}
-
+		if (itemClass != null) {
 			return itemClass;
 		}
 
-		@Override
-		public void modifiedService(
-			ServiceReference<BatchEngineTaskItemDelegate<Object>>
-				serviceReference,
-			Class<?> itemClass) {
+		Class<?> batchEngineTaskItemDelegateClass =
+			batchEngineTaskItemDelegate.getClass();
+
+		itemClass = _getItemClassFromGenericInterfaces(
+			batchEngineTaskItemDelegateClass.getGenericInterfaces());
+
+		if (itemClass == null) {
+			itemClass = _getItemClassFromGenericSuperclass(
+				batchEngineTaskItemDelegateClass.getGenericSuperclass());
 		}
 
-		@Override
-		public void removedService(
-			ServiceReference<BatchEngineTaskItemDelegate<Object>>
-				serviceReference,
-			Class<?> itemClass) {
-
-			Map<String, BatchEngineTaskItemDelegateExecutorCreator>
-				batchEngineTaskItemDelegateExecutorCreatorMap =
-					_batchEngineTaskItemDelegateExecutorCreators.get(itemClass);
-
-			batchEngineTaskItemDelegateExecutorCreatorMap.remove(
-				_getBatchEngineTaskItemDelegateName(serviceReference));
-
-			if (batchEngineTaskItemDelegateExecutorCreatorMap.isEmpty()) {
-				_batchEngineTaskItemDelegateExecutorCreators.remove(itemClass);
-
-				_itemClasses.remove(itemClass.getName());
-			}
-
-			_bundleContext.ungetService(serviceReference);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Batch engine task item delegate unregistered for item " +
-						"class " + itemClass);
-			}
+		if (itemClass == null) {
+			throw new IllegalStateException(
+				BatchEngineTaskItemDelegate.class.getName() +
+					" is not implemented");
 		}
 
-		private BatchEngineTaskMethodServiceTrackerCustomizer(
-			BundleContext bundleContext) {
+		return itemClass;
+	}
 
-			_bundleContext = bundleContext;
-		}
+	private Class<?> _getItemClass(
+		BundleContext bundleContext,
+		ServiceReference<BatchEngineTaskItemDelegate<Object>>
+			serviceReference) {
 
-		private String _getBatchEngineTaskItemDelegateName(
-			ServiceReference<BatchEngineTaskItemDelegate<Object>>
-				serviceReference) {
+		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate =
+			bundleContext.getService(serviceReference);
 
-			return GetterUtil.getString(
-				serviceReference.getProperty(
-					"batch.engine.task.item.delegate.name"),
-				"DEFAULT");
-		}
+		return _getItemClass(batchEngineTaskItemDelegate);
+	}
 
-		private Class<?> _getItemClass(
-			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate) {
+	@SuppressWarnings("unchecked")
+	private Class<?> _getItemClass(ParameterizedType parameterizedType) {
+		Type[] genericTypes = parameterizedType.getActualTypeArguments();
 
-			Class<?> itemClass = batchEngineTaskItemDelegate.getItemClass();
+		return (Class<BatchEngineTaskItemDelegate<Object>>)genericTypes[0];
+	}
 
-			if (itemClass != null) {
-				return itemClass;
-			}
+	private Class<?> _getItemClassFromGenericInterfaces(
+		Type[] genericInterfaceTypes) {
 
-			Class<?> batchEngineTaskItemDelegateClass =
-				batchEngineTaskItemDelegate.getClass();
+		for (Type genericInterfaceType : genericInterfaceTypes) {
+			if (genericInterfaceType instanceof ParameterizedType) {
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericInterfaceType;
 
-			itemClass = _getItemClassFromGenericInterfaces(
-				batchEngineTaskItemDelegateClass.getGenericInterfaces());
+				if (parameterizedType.getRawType() !=
+						BatchEngineTaskItemDelegate.class) {
 
-			if (itemClass == null) {
-				itemClass = _getItemClassFromGenericSuperclass(
-					batchEngineTaskItemDelegateClass.getGenericSuperclass());
-			}
-
-			if (itemClass == null) {
-				throw new IllegalStateException(
-					BatchEngineTaskItemDelegate.class.getName() +
-						" is not implemented");
-			}
-
-			return itemClass;
-		}
-
-		@SuppressWarnings("unchecked")
-		private Class<?> _getItemClass(ParameterizedType parameterizedType) {
-			Type[] genericTypes = parameterizedType.getActualTypeArguments();
-
-			return (Class<BatchEngineTaskItemDelegate<?>>)genericTypes[0];
-		}
-
-		private Class<?> _getItemClassFromGenericInterfaces(
-			Type[] genericInterfaceTypes) {
-
-			for (Type genericInterfaceType : genericInterfaceTypes) {
-				if (genericInterfaceType instanceof ParameterizedType) {
-					ParameterizedType parameterizedType =
-						(ParameterizedType)genericInterfaceType;
-
-					if (parameterizedType.getRawType() !=
-							BatchEngineTaskItemDelegate.class) {
-
-						continue;
-					}
-
-					return _getItemClass(parameterizedType);
+					continue;
 				}
-			}
 
+				return _getItemClass(parameterizedType);
+			}
+		}
+
+		return null;
+	}
+
+	private Class<?> _getItemClassFromGenericSuperclass(
+		Type genericSuperclassType) {
+
+		if (genericSuperclassType == null) {
 			return null;
 		}
 
-		private Class<?> _getItemClassFromGenericSuperclass(
-			Type genericSuperclassType) {
-
-			if (genericSuperclassType == null) {
-				return null;
-			}
-
-			return _getItemClass((ParameterizedType)genericSuperclassType);
-		}
-
-		private final BundleContext _bundleContext;
-
+		return _getItemClass((ParameterizedType)genericSuperclassType);
 	}
+
+	private ServiceTrackerMap
+		<String, BatchEngineTaskItemDelegateExecutorCreator>
+			_batchEngineTaskItemDelegateExecutorCreatorServiceTrackerMap;
+	private ServiceTrackerMap<String, Class<?>> _itemClassServiceTrackerMap;
 
 }

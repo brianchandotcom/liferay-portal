@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayChart from '@clayui/charts';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useParams} from 'react-router-dom';
@@ -22,107 +21,11 @@ import ProgressBar from '~/components/ProgressBar';
 import useSearchBuilder from '~/hooks/useSearchBuilder';
 import i18n from '~/i18n';
 import {TestrayBuild, testrayBuildImpl} from '~/services/rest';
-import {DATA_COLORS, Statuses} from '~/util/constants';
 import dayjs from '~/util/date';
 
 import BuildAddButton from './Builds/BuildAddButton';
+import BuildHistoryChart from './Builds/BuildHistoryChart';
 import useBuildActions from './Builds/useBuildActions';
-
-type BuildChartProps = {
-	builds: TestrayBuild[];
-};
-
-const BuildChart: React.FC<BuildChartProps> = ({builds}) => (
-	<div className="graph-container graph-container-sm">
-		<ClayChart
-			axis={{
-				x: {
-					label: {
-						position: 'outer-center',
-						text: i18n.translate('builds-ordered-by-date'),
-					},
-				},
-				y: {
-					label: {
-						position: 'outer-middle',
-						text: i18n.translate('tests').toUpperCase(),
-					},
-				},
-			}}
-			bar={{
-				width: {
-					max: 30,
-				},
-			}}
-			data={{
-				colors: {
-					[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
-					[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
-					[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
-					[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
-					[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
-				},
-				columns: [
-					[
-						Statuses.PASSED,
-						...builds.map(({caseResultPassed = 0}) =>
-							Number(caseResultPassed)
-						),
-					],
-					[
-						Statuses.FAILED,
-						...builds.map(({caseResultFailed = 0}) =>
-							Number(caseResultFailed)
-						),
-					],
-					[
-						Statuses.BLOCKED,
-						...builds.map(({caseResultBlocked = 0}) =>
-							Number(caseResultBlocked)
-						),
-					],
-					[
-						Statuses.TEST_FIX,
-						...builds.map(({caseResultTestFix = 0}) =>
-							Number(caseResultTestFix)
-						),
-					],
-					[
-						Statuses.INCOMPLETE,
-						...builds.map(
-							({
-								caseResultInProgress = 0,
-								caseResultUntested = 0,
-							}) =>
-								Number(caseResultInProgress) +
-								Number(caseResultUntested)
-						),
-					],
-				],
-				stack: {
-					normalize: true,
-				},
-				type: 'area',
-			}}
-			legend={{
-				inset: {
-					anchor: 'top-right',
-					step: 1,
-					x: 10,
-					y: -30,
-				},
-				item: {
-					tile: {
-						height: 12,
-						width: 12,
-					},
-				},
-				position: 'inset',
-			}}
-			padding={{bottom: 5, top: 30}}
-		/>
-	</div>
-);
 
 const Routine = () => {
 	const {actions, formModal} = useBuildActions();
@@ -226,37 +129,31 @@ const Routine = () => {
 						{
 							clickable: true,
 							key: 'caseResultFailed',
-							render: (failed = 0) => failed,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultBlocked',
-							render: (blocked = 0) => blocked,
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultUntested',
-							render: (untested = 0) => untested,
 							value: i18n.translate('untested'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultInProgress',
-							render: (inProgress = 0) => inProgress,
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultPassed',
-							render: (passed = 0) => passed,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultTestFix',
-							render: (caseResultFailed = 0) => caseResultFailed,
 							value: i18n.translate('test-fix'),
 						},
 						{
@@ -272,7 +169,7 @@ const Routine = () => {
 									build.caseResultTestFix,
 									build.caseResultUntested,
 								]
-									.map((count) => (count ? Number(count) : 0))
+									.map(Number)
 									.reduce(
 										(prevCount, currentCount) =>
 											prevCount + currentCount
@@ -285,17 +182,11 @@ const Routine = () => {
 							render: (_, build: TestrayBuild) => (
 								<ProgressBar
 									items={{
-										blocked: Number(
-											build.caseResultBlocked
-										),
-										failed: Number(build.caseResultFailed),
-										incomplete: Number(
-											build.caseResultIncomplete
-										),
-										passed: Number(build.caseResultPassed),
-										test_fix: Number(
-											build.caseResultTestFix
-										),
+										blocked: build.caseResultBlocked as number,
+										failed: build.caseResultFailed as number,
+										incomplete: build.caseResultIncomplete as number,
+										passed: build.caseResultPassed as number,
+										test_fix: build.caseResultTestFix as number,
 									}}
 								/>
 							),
@@ -313,7 +204,7 @@ const Routine = () => {
 				}}
 			>
 				{({items, totalCount}) =>
-					totalCount > 0 && <BuildChart builds={items} />
+					totalCount > 0 && <BuildHistoryChart builds={items} />
 				}
 			</ListView>
 		</Container>

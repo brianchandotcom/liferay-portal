@@ -61,6 +61,9 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			nestedFields: 'buildToTasks,productVersion',
 			transformData: (testrayBuild) => ({
 				...testrayBuild,
+				...testrayCaseResultImpl.normalizeCaseResultAggregation(
+					testrayBuild
+				),
 				creator: testrayBuild?.creator || {},
 				productVersion:
 					testrayBuild?.r_productVersionToBuilds_c_productVersion,

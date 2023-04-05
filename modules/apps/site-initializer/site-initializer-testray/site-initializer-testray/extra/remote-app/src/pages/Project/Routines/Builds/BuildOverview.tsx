@@ -18,7 +18,7 @@ import {useRef} from 'react';
 import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
-import useCaseResultGroupBy from '../../../../hooks/data/useCaseResultGroupBy';
+import {useTotalTestCases} from '../../../../hooks/data/useCaseResultGroupBy';
 import useIssuesFound from '../../../../hooks/data/useIssuesFound';
 import i18n from '../../../../i18n';
 import {TestrayBuild, TestrayTask} from '../../../../services/rest';
@@ -32,7 +32,7 @@ type BuildOverviewProps = {
 };
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
-	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
+	const totalTestCasesGroup = useTotalTestCases(testrayBuild);
 	const issues = useIssuesFound({buildId: testrayBuild.id});
 	const ref = useRef<any>();
 

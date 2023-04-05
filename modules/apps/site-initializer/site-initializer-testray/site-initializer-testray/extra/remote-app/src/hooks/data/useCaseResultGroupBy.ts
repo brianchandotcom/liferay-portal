@@ -38,6 +38,62 @@ function getStatusesMap(
 	return facetValueMap;
 }
 
+const getAggregationValue = (value: number | string) =>
+	value ? Number(value) : 0;
+
+const useTotalTestCases = (testrayBuild: TestrayBuild) => {
+	const donutColumns = useMemo(
+		() => [
+			[
+				CaseResultStatuses.PASSED,
+				getAggregationValue(testrayBuild.caseResultPassed),
+			],
+			[
+				CaseResultStatuses.FAILED,
+				getAggregationValue(testrayBuild.caseResultFailed),
+			],
+			[
+				CaseResultStatuses.BLOCKED,
+				getAggregationValue(testrayBuild.caseResultBlocked),
+			],
+			[
+				CaseResultStatuses.TEST_FIX,
+				getAggregationValue(testrayBuild.caseResultTestFix),
+			],
+			[
+				CaseResultStatuses.INCOMPLETE,
+				getAggregationValue(testrayBuild.caseResultUntested) +
+					getAggregationValue(testrayBuild.caseResultInProgress),
+			],
+		],
+		[
+			testrayBuild.caseResultBlocked,
+			testrayBuild.caseResultFailed,
+			testrayBuild.caseResultInProgress,
+			testrayBuild.caseResultPassed,
+			testrayBuild.caseResultTestFix,
+			testrayBuild.caseResultUntested,
+		]
+	);
+
+	return useMemo(
+		() => ({
+			colors: chartColors,
+			donut: {
+				columns: donutColumns,
+				total: donutColumns
+					.map(([, totalCase]) => Number(totalCase))
+					.reduce(
+						(prevValue, currentValue) => prevValue + currentValue
+					),
+			},
+			ready: !!testrayBuild,
+			statuses: Object.values(CaseResultStatuses),
+		}),
+		[donutColumns, testrayBuild]
+	);
+};
+
 const useCaseResultGroupBy = (buildId: number = 0) => {
 	const {data, loading} = useFetch<
 		APIResponse<TestrayBuild> & FacetAggregation
@@ -45,7 +101,7 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 		params: {
 			aggregationTerms: 'dueStatus',
 			fields: 'id',
-			filter: SearchBuilder.eq('buildId', buildId as number),
+			filter: SearchBuilder.eq('buildId', buildId),
 		},
 	});
 
@@ -89,5 +145,7 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 		statuses: Object.values(CaseResultStatuses),
 	};
 };
+
+export {useTotalTestCases};
 
 export default useCaseResultGroupBy;

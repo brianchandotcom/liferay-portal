@@ -13,6 +13,7 @@
  */
 
 import {useParams} from 'react-router-dom';
+import ProgressBar from '~/components/ProgressBar';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListView from '../../../../../../components/ListView';
@@ -80,10 +81,70 @@ const Runs = () => {
 							key: 'operatingSystem',
 							value: i18n.translate('operating-system'),
 						},
+						{
+							clickable: true,
+							key: 'caseResultFailed',
+							value: i18n.translate('failed'),
+						},
+						{
+							clickable: true,
+							key: 'caseResultBlocked',
+							value: i18n.translate('blocked'),
+						},
+						{
+							clickable: true,
+							key: 'caseResultsInProgress',
+							value: i18n.translate('in-progress'),
+						},
+						{
+							clickable: true,
+							key: 'caseResultPassed',
+							value: i18n.translate('passed'),
+						},
+						{
+							clickable: true,
+							key: 'caseResultTestFix',
+							value: i18n.translate('test-fix'),
+						},
+						{
+							clickable: true,
+							key: 'total',
+							render: (_, testrayRun) =>
+								[
+									testrayRun?.caseResultBlocked,
+									testrayRun?.caseResultFailed,
+									testrayRun?.caseResultInProgress,
+									testrayRun?.caseResultIncomplete,
+									testrayRun?.caseResultPassed,
+									testrayRun?.caseResultTestFix,
+									testrayRun?.caseResultUntested,
+								].reduce(
+									(prevCount, currentCount) =>
+										prevCount + currentCount
+								),
+							size: 'sm',
+							value: i18n.translate('total'),
+						},
+						{
+							clickable: true,
+							key: 'metrics',
+							render: (_, testrayRun) => (
+								<ProgressBar
+									items={{
+										blocked: testrayRun?.caseResultBlocked,
+										failed: testrayRun?.caseResultFailed,
+										incomplete:
+											testrayRun?.caseResultIncomplete,
+										passed: testrayRun?.caseResultPassed,
+										test_fix: testrayRun?.caseResultTestFix,
+									}}
+								/>
+							),
+							value: i18n.translate('metrics'),
+							width: '300',
+						},
 					],
-					navigateTo: (run) => {
-						return `..?runId=${run.id}`;
-					},
+					navigateTo: (run) => `..?runId=${run.id}`,
 				}}
 				transformData={(response) =>
 					testrayRunImpl.transformDataFromList(response)

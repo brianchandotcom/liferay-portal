@@ -21,7 +21,7 @@ import {Liferay} from '../liferay';
 import {liferayMessageBoardImpl} from './LiferayMessageBoard';
 import {testrayCaseResultsIssuesImpl} from './TestrayCaseresultsIssues';
 import {testrayIssueImpl} from './TestrayIssues';
-import {TestrayCaseResult} from './types';
+import {CaseResultAggregation, TestrayCaseResult} from './types';
 
 type CaseResultForm = typeof yupSchema.caseResult.__outputType;
 
@@ -57,6 +57,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user,caseResultToCaseResultsIssues',
 			transformData: (caseResult) => ({
 				...caseResult,
+				...this.normalizeCaseResultAggregation(caseResult),
 				build: caseResult?.r_buildToCaseResult_c_build
 					? {
 							...caseResult?.r_buildToCaseResult_c_build,
@@ -108,6 +109,34 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			}),
 			uri: 'caseresults',
 		});
+	}
+
+	public normalizeCaseResultAggregation(
+		caseResultAggregation: CaseResultAggregation
+	): CaseResultAggregation {
+		return {
+			caseResultBlocked: Number(
+				caseResultAggregation.caseResultBlocked ?? 0
+			),
+			caseResultFailed: Number(
+				caseResultAggregation.caseResultFailed ?? 0
+			),
+			caseResultInProgress: Number(
+				caseResultAggregation.caseResultInProgress ?? 0
+			),
+			caseResultIncomplete: Number(
+				caseResultAggregation.caseResultIncomplete ?? 0
+			),
+			caseResultPassed: Number(
+				caseResultAggregation.caseResultPassed ?? 0
+			),
+			caseResultTestFix: Number(
+				caseResultAggregation.caseResultTestFix ?? 0
+			),
+			caseResultUntested: Number(
+				caseResultAggregation.caseResultUntested ?? 0
+			),
+		};
 	}
 
 	public assignTo(caseResult: TestrayCaseResult, userId: number) {
@@ -192,8 +221,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}

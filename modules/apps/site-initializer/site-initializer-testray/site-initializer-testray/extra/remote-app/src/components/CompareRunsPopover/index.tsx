@@ -162,11 +162,13 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 							<ClayButton
 								disabled={validateCompareButtons}
 								displayType="primary"
-								onClick={() =>
+								onClick={() => {
 									navigate(
 										`/compare-runs/${compareRuns.runA}/${compareRuns.runB}/teams`
-									)
-								}
+									);
+
+									setVisible(false);
+								}}
 							>
 								{i18n.sub('compare-x', 'runs')}
 							</ClayButton>

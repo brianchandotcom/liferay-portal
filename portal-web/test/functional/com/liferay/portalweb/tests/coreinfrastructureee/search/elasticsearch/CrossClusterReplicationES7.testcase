@@ -395,6 +395,7 @@ definition {
 
 	@priority = 3
 	test CreateBlogsEntryWithNewWorkflow {
+		property portal.upstream = "false";
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CreateBlogsEntryWithNewWorkflow";
 
 		CrossClusterReplication.setupCrossClusterReplication();

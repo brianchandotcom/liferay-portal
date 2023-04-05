@@ -20,11 +20,16 @@ import React, {useEffect, useState} from 'react';
 
 import {TFDSView} from './FDSViews';
 import Details from './fds_view/Details';
+import Pagination from './fds_view/Pagination';
 
 const NAVIGATION_BAR_ITEMS = [
 	{
 		Component: Details,
 		label: Liferay.Language.get('details'),
+	},
+	{
+		Component: Pagination,
+		label: Liferay.Language.get('pagination'),
 	},
 ];
 

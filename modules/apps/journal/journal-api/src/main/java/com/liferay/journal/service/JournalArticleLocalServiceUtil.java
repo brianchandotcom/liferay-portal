@@ -342,14 +342,6 @@ public class JournalArticleLocalServiceUtil {
 	 * Checks all web content articles by handling their expirations and sending
 	 * review notifications based on their current workflow.
 	 */
-	public static void checkArticles() throws PortalException {
-		getService().checkArticles();
-	}
-
-	/**
-	 * Checks all web content articles by handling their expirations and sending
-	 * review notifications based on their current workflow.
-	 */
 	public static void checkArticles(long companyId) throws PortalException {
 		getService().checkArticles(companyId);
 	}

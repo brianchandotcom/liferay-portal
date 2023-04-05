@@ -1221,6 +1221,44 @@ definition {
 			status = "Scheduled");
 	}
 
+	@description = "This is a test for bug COMMERCE-11242. Verify that after a product is created with the API the End of Life Date field is empty"
+	@priority = 5
+	test CanCreateProductViaAPIWithoutTheEndOfLifeDate {
+		property portal.acceptance = "true";
+
+		CommerceJSONProductsAPI._addCommerceProduct(
+			catalogName = "Master",
+			externalReferenceCode = "externalReferenceCode",
+			neverExpire = "true",
+			price = 101,
+			productDescription = "Full Description",
+			productName = "Simple Product",
+			productType = "Simple",
+			purchasable = "true",
+			shortDescription = "Short Description",
+			sku = 12341234);
+
+		CommerceProducts.openProductsAdmin();
+
+		CommerceNavigator.gotoEntry(entryName = "Simple Product");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = 12341234);
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		WaitForElementPresent(
+			key_inputField = "End of Life Date",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD");
+
+		var endOfLifeDate = selenium.getAttribute("//label[contains(text(),'End of Life Date')]/following::input[contains(@placeholder,'mm/dd/yyyy')]@value");
+
+		if (${endOfLifeDate} != "") {
+			fail("The End of Life Date field contains a date");
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-11209. As the Admin I can delete a product image when the image is set via headless API."
 	@priority = 5
 	test CanDeleteProductImageUploadedViaAPI {

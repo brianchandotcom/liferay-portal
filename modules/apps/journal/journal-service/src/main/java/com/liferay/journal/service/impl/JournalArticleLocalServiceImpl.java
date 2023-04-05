@@ -887,15 +887,6 @@ public class JournalArticleLocalServiceImpl
 	 * review notifications based on their current workflow.
 	 */
 	@Override
-	public void checkArticles() throws PortalException {
-		checkArticles(CompanyThreadLocal.getCompanyId());
-	}
-
-	/**
-	 * Checks all web content articles by handling their expirations and sending
-	 * review notifications based on their current workflow.
-	 */
-	@Override
 	public void checkArticles(long companyId) throws PortalException {
 		Date date = new Date();
 

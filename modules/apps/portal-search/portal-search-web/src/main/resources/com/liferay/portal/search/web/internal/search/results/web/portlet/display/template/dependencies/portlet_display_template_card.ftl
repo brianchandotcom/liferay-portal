@@ -1,4 +1,4 @@
-<div class="search-total-label">
+<div class="c-mb-4 c-mt-4 search-total-label">
 	<#if searchContainer.getTotal() == 1>
 		${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
 	<#else>
@@ -43,7 +43,7 @@
 										</h3>
 
 										<#if entry.isCreatorVisible()>
-											<p class="card-subtitle">
+											<p class="card-subtitle text-2">
 												<span class="text-truncate-inline">
 													<span class="text-truncate">
 														${htmlUtil.escape(entry.getCreatorUserName())}
@@ -53,7 +53,7 @@
 										</#if>
 
 										<#if entry.isCreationDateVisible()>
-											<p class="card-subtitle">
+											<p class="card-subtitle text-2">
 												<span class="text-truncate-inline">
 													<span class="text-truncate">
 														${entry.getCreationDateString()}
@@ -63,7 +63,7 @@
 										</#if>
 
 										<#if entry.isModelResourceVisible()>
-											<p class="card-subtitle">
+											<p class="card-subtitle text-2">
 												<span class="text-truncate-inline">
 													<span class="text-truncate">
 														${entry.getModelResource()}
@@ -73,7 +73,7 @@
 										</#if>
 
 										<#if entry.isContentVisible()>
-											<p class="card-description">
+											<p class="c-mt-1 card-description text-2">
 												${entry.getContent()}
 											</p>
 										</#if>

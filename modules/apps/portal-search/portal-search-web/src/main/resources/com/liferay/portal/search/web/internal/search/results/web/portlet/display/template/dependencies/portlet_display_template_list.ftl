@@ -1,4 +1,4 @@
-<div class="search-total-label">
+<div class="c-mb-4 c-mt-4 search-total-label">
 	<#if searchContainer.getTotal() == 1>
 		${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
 	<#else>
@@ -33,7 +33,7 @@
 
 					<div class="autofit-col autofit-col-expand">
 						<section class="autofit-section">
-							<div class="list-group-title">
+							<div class="c-mt-0 list-group-title">
 								<a href="${entry.getViewURL()}">
 									${entry.getHighlightedTitle()}
 								</a>
@@ -100,7 +100,7 @@
 								</#if>
 
 								<#if entry.isAssetCategoriesOrTagsVisible()>
-									<div class="h6 search-document-tags text-default">
+									<div class="c-mt-2 h6 search-document-tags text-default">
 										<@liferay_asset["asset-tags-summary"]
 											className=entry.getClassName()
 											classPK=entry.getClassPK()
@@ -118,22 +118,22 @@
 								</#if>
 
 								<#if entry.isDocumentFormVisible()>
-									<div class="expand-details h6 text-default">
-										<span class="list-group-text" style="">
-											<a href="javascript:void(0);">
+									<div class="expand-details text-default">
+										<span class="list-group-text text-2">
+											<a class="shadow-none" href="javascript:void(0);">
 												<@liferay.language key="details" />...
 											</a>
 										</span>
 									</div>
 
 									<div class="hide search-results-list table-details table-responsive">
-										<table class="table">
+										<table class="table table-sm">
 											<thead>
 												<tr>
-													<th class="key-column">
+													<th class="table-cell-expand-smaller table-cell-text-end">
 														<@liferay.language key="key" />
 													</th>
-													<th>
+													<th class="table-cell-expand">
 														<@liferay.language key="value" />
 													</th>
 												</tr>
@@ -142,10 +142,10 @@
 											<tbody>
 												<#list entry.getDocumentFormFieldDisplayContexts() as fieldDisplayContext>
 													<tr>
-														<td class="key-column table-details-content">
+														<td class="table-cell-expand-smaller table-cell-text-end table-details-content">
 															<strong>${htmlUtil.escape(fieldDisplayContext.getName())}</strong>
 														</td>
-														<td class="table-details-content">
+														<td class="table-cell-expand table-details-content">
 															<code>
 																${fieldDisplayContext.getValuesToString()}
 															</code>

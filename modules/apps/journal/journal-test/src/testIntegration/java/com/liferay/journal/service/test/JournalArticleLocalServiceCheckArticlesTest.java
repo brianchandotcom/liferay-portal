@@ -103,7 +103,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 	@Test
 	public void testExpireApprovedArticlePostponeExpiration() throws Exception {
-		testExpireArticle(true, _MODE_POSTPONE_EXPIRIRATION);
+		testExpireArticle(true, _MODE_POSTPONE_EXPIRATION);
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 	@Test
 	public void testExpireDraftArticlePostponeExpiration() throws Exception {
-		testExpireArticle(false, _MODE_POSTPONE_EXPIRIRATION);
+		testExpireArticle(false, _MODE_POSTPONE_EXPIRATION);
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		Date modifiedDate = article.getModifiedDate();
 
 		JournalArticle updatedArticle = updateArticle(
-			article, _MODE_POSTPONE_EXPIRIRATION);
+			article, _MODE_POSTPONE_EXPIRATION);
 
 		article = _journalArticleLocalService.getArticle(article.getId());
 
@@ -272,7 +272,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		article = _journalArticleLocalService.getArticle(article.getId());
 
 		if (approved) {
-			if (mode == _MODE_POSTPONE_EXPIRIRATION) {
+			if (mode == _MODE_POSTPONE_EXPIRATION) {
 				Assert.assertFalse(article.isExpired());
 			}
 			else {
@@ -287,7 +287,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 	protected JournalArticle updateArticle(JournalArticle article, int mode)
 		throws Exception {
 
-		if (mode == _MODE_POSTPONE_EXPIRIRATION) {
+		if (mode == _MODE_POSTPONE_EXPIRATION) {
 			Calendar displayDateCalendar = new GregorianCalendar();
 
 			displayDateCalendar.setTime(article.getDisplayDate());
@@ -354,7 +354,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 
 	private static final int _MODE_DEFAULT = 0;
 
-	private static final int _MODE_POSTPONE_EXPIRIRATION = 1;
+	private static final int _MODE_POSTPONE_EXPIRATION = 1;
 
 	@DeleteAfterTestRun
 	private Group _group;

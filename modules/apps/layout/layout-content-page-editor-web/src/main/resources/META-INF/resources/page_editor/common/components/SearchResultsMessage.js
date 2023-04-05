@@ -18,17 +18,20 @@ import React, {useEffect, useState} from 'react';
 
 import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 
-export default function SearchResultsMessage({numberOfResults = null}) {
+export default function SearchResultsMessage({
+	resultType = Liferay.Language.get('results'),
+	numberOfResults = null,
+}) {
 	const [text, setText] = useState('');
 
 	useEffect(() => {
 		if (!isNullOrUndefined(numberOfResults)) {
 			const timeout = setTimeout(() => {
 				const message = numberOfResults
-					? sub(
-							Liferay.Language.get('showing-x-results'),
-							numberOfResults
-					  )
+					? sub(Liferay.Language.get('showing-x-x'), [
+							numberOfResults,
+							resultType,
+					  ])
 					: Liferay.Language.get('no-results-found');
 
 				setText(message);
@@ -38,7 +41,7 @@ export default function SearchResultsMessage({numberOfResults = null}) {
 				clearTimeout(timeout);
 			};
 		}
-	}, [numberOfResults]);
+	}, [resultType, numberOfResults]);
 
 	return (
 		<span className="sr-only" role="status">
@@ -48,5 +51,6 @@ export default function SearchResultsMessage({numberOfResults = null}) {
 }
 
 SearchResultsMessage.propTypes = {
-	numberOfResults: PropTypes.number,
+	numberOfResults: PropTypes.number.isRequired,
+	resultType: PropTypes.string,
 };

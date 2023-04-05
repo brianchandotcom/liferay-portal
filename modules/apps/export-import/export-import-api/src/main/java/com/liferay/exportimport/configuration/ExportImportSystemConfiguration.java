@@ -35,8 +35,9 @@ public interface ExportImportSystemConfiguration {
 
 	/**
 	 * Set the interval in minutes on how often
-	 * DeleteExpiredBackgroundTasksMessageListener will run to check for expired
+	 * DeleteExpiredBackgroundTasksSchedulerJobConfiguration will run to check for expired
 	 * Export/Import entries.
+	 * Default value is 30.
 	 */
 	@Meta.AD(
 		deflt = "30", description = "export-import-clean-up-job-interval-help",

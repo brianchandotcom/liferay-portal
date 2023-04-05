@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.exportimport.internal.messaging;
+package com.liferay.exportimport.internal.scheduler;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.configuration.ExportImportSystemConfiguration;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,17 +29,11 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Time;
 
@@ -47,7 +42,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -59,10 +53,23 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
 		"com.liferay.exportimport.configuration.ExportImportSystemConfiguration"
 	},
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
-public class DeleteExpiredBackgroundTasksMessageListener
-	extends BaseMessageListener {
+public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
+	implements SchedulerJobConfiguration {
+
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> _deleteExpiredBackGroundTasks(companyId));
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_exportImportSystemConfiguration.cleanupJobInterval(),
+			TimeUnit.MINUTE);
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -70,32 +77,6 @@ public class DeleteExpiredBackgroundTasksMessageListener
 			ExportImportServiceConfiguration.class, properties);
 		_exportImportSystemConfiguration = ConfigurableUtil.createConfigurable(
 			ExportImportSystemConfiguration.class, properties);
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			_exportImportSystemConfiguration.cleanupJobInterval(),
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		_companyLocalService.forEachCompanyId(
-			companyId -> _deleteExpiredBackGroundTasks(companyId));
 	}
 
 	private void _deleteExpiredBackGroundTasks(long companyId)
@@ -112,9 +93,8 @@ public class DeleteExpiredBackgroundTasksMessageListener
 		if (exportImportEntryExpiryDays <= 0) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"exportImportEntryExpiryDays=" +
-						exportImportEntryExpiryDays +
-							": no cleanup on this instance.");
+					"Export/Import cleanup job on instance " + companyId +
+						" is disabled");
 			}
 
 			return;
@@ -201,7 +181,7 @@ public class DeleteExpiredBackgroundTasksMessageListener
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteExpiredBackgroundTasksMessageListener.class);
+		DeleteExpiredBackgroundTasksSchedulerJobConfiguration.class);
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
@@ -216,11 +196,5 @@ public class DeleteExpiredBackgroundTasksMessageListener
 		_exportImportServiceConfiguration;
 	private volatile ExportImportSystemConfiguration
 		_exportImportSystemConfiguration;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

@@ -46,7 +46,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 
 	public static final Filter[] FILTERS = {
 		new Filter(
-			"status", new String[] {"enabled", "disabled"},
+			"status", "filter-by-status", new String[] {"enabled", "disabled"},
 			(featureFlag, currentValue) -> {
 				if ((currentValue == null) ||
 					Objects.equals(currentValue, "all")) {
@@ -134,7 +134,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 		for (Filter filter : FILTERS) {
 			dropdownItemList.addGroup(
 				dropdownGroupItem -> dropdownGroupItem.setLabel(
-					langGet("filter-by-x", filter.getName())));
+					langGet(filter.getLabel())));
 
 			String currentValue = filter.getCurrentValue(httpServletRequest);
 
@@ -163,16 +163,21 @@ public class FeatureFlagsManagementToolbarDisplayContext
 	public static class Filter {
 
 		public Filter(
-			String name, String[] values,
+			String name, String label, String[] values,
 			BiPredicate<FeatureFlag, String> biPredicate) {
 
 			_name = name;
+			_label = label;
 			_values = values;
 			_biPredicate = biPredicate;
 		}
 
 		public String getCurrentValue(HttpServletRequest httpServletRequest) {
 			return ParamUtil.get(httpServletRequest, getParameterName(), "all");
+		}
+
+		public String getLabel() {
+			return _label;
 		}
 
 		public String getName() {
@@ -204,6 +209,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 		}
 
 		private final BiPredicate<FeatureFlag, String> _biPredicate;
+		private final String _label;
 		private final String _name;
 		private final String[] _values;
 

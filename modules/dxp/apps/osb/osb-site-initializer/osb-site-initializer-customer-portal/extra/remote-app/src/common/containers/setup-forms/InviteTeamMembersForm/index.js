@@ -31,6 +31,12 @@ import TeamMemberInputs from './TeamMemberInputs';
 const MAXIMUM_INVITES_COUNT = 10;
 const INITIAL_INVITES_COUNT = 1;
 
+const DEFAULT_WARNING = {
+	message: i18n.translate('one-or-more-requests-may-have-failed'),
+	title: i18n.translate('Warning'),
+	type: 'warning',
+};
+
 const InviteTeamMembersPage = ({
 	availableAdministratorAssets = 0,
 	errors,
@@ -185,55 +191,75 @@ const InviteTeamMembersPage = ({
 
 		if (filledEmails.length) {
 			setIsLoadingUserInvitation(true);
-			const newMembersData = await addTeamMemberInvitation({
-				context: {
-					type: 'liferay-rest',
-				},
-				variables: {
-					TeamMembersInvitation: filledEmails.map(
-						({email, role}) => ({
-							email,
-							r_accountEntryToDXPCloudEnvironment_accountEntryId:
-								project?.id,
-							role: role.key,
-						})
-					),
-				},
-			});
+			let displaySuccess = true;
 
-			filledEmails.map(async ({email, role}) => {
-				await associateUserAccount({
+			const filledEmailsPromises = filledEmails.map(
+				async (filledEmail) => {
+					const associateContactRoleData = await associateContactRoleNameByEmailByProject(
+						project.accountKey,
+						provisioningServerAPI,
+						sessionId,
+						encodeURI(filledEmail.email),
+						filledEmail.role.raysourceName
+					);
+
+					if (associateContactRoleData.ok) {
+						await associateUserAccount({
+							context: {
+								displaySuccess: false,
+							},
+							variables: {
+								accountKey: project.accountKey,
+								accountRoleId: filledEmail.role.id,
+								emailAddress: filledEmail.email,
+							},
+						});
+
+						return filledEmail;
+					}
+
+					displaySuccess = false;
+					Liferay.Util.openToast(DEFAULT_WARNING);
+				}
+			);
+
+			const filledEmailsData = await Promise.all(filledEmailsPromises);
+
+			const filledEmailsDataFiltered = filledEmailsData.filter(
+				(filledEmail) => filledEmail
+			);
+
+			if (filledEmailsDataFiltered.length) {
+				const newMembersData = await addTeamMemberInvitation({
 					context: {
-						displaySuccess: false,
+						displaySuccess,
+						type: 'liferay-rest',
 					},
 					variables: {
-						accountKey: project.accountKey,
-						accountRoleId: role.id,
-						emailAddress: email,
+						TeamMembersInvitation: filledEmailsDataFiltered.map(
+							({email, role}) => ({
+								email,
+								r_accountEntryToDXPCloudEnvironment_accountEntryId:
+									project?.id,
+								role: role.key,
+							})
+						),
 					},
 				});
 
-				await associateContactRoleNameByEmailByProject(
-					project.accountKey,
-					provisioningServerAPI,
-					sessionId,
-					encodeURI(email),
-					role.raysourceName
-				);
-			});
+				if (
+					!addTeamMemberError &&
+					!associateUserAccountError &&
+					newMembersData
+				) {
+					if (mutateUserData) {
+						mutateUserData(newMembersData);
+					}
+					handlePage();
+				}
+			}
 
 			setIsLoadingUserInvitation(false);
-
-			if (
-				!addTeamMemberError &&
-				!associateUserAccountError &&
-				newMembersData
-			) {
-				if (mutateUserData) {
-					mutateUserData(newMembersData);
-				}
-				handlePage();
-			}
 		}
 		else {
 			setInitialError(true);

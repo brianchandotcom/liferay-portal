@@ -235,6 +235,7 @@
 	"on-or-before": "On or Before",
 	"on-premise": "On-Premise",
 	"one-or-more-host-name-ip-address-or-mac-address-is-required": "One or more Host Name, IP Address, or MAC Address is required.",
+	"one-or-more-requests-may-have-failed": "One or more requests may have failed.",
 	"only-x-member-for-this-project-including-yourself-can-have-role-permissions-administrators-requesters-to-open-support-tickets": "Only {0} member for this project (including yourself) can have role permissions (Administrators and Requesters) to open Support tickets. ",
 	"only-x-members-for-this-project-including-yourself-can-have-role-permissions-administrators-requesters-to-open-support-tickets": "Only {0} members for this project (including yourself) can have role permissions (Administrators and Requesters) to open Support tickets. ",
 	"oregon-usa": "Oregon, USA",

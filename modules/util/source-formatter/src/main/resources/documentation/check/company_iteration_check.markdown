@@ -1,10 +1,13 @@
 ## CompanyIterationCheck
 
-It is required to use one of the following methods:
+It is required to use one of the following methods when iterating companies:
 - `com.liferay.portal.kernel.service.CompanyLocalService#forEachCompany`
 - `com.liferay.portal.kernel.service.CompanyLocalService#forEachCompanyId`
 
-When iterating companies. In that way, we ensure that the thread locals are initialized properly.
+This way, we process companies in the correct order and ensure that the thread
+locals are initialized properly.
+
+This applies to SQL queries as well.
 
 #### Example 1
 
@@ -24,7 +27,6 @@ _companyLocalService.forEachCompanyId(
 	companyId ->
 		_commerceAccountGroupLocalService.
 			checkGuestCommerceAccountGroup(companyId));
-	}
 ```
 #### Example 2
 
@@ -43,4 +45,24 @@ public void cleanUp(String... companyIds) {
 	_companyLocalService.forEachCompanyId(
 		companyId -> _cleanUp(companyId), companyIds);
 }
+```
+
+#### Example 3
+
+Instead of:
+```java
+PreparedStatement preparedStatement = connection.prepareStatement(
+	"select companyId, userId from Company");
+
+ResultSet resultSet = preparedStatement.executeQuery();
+
+while (resultSet.next()) {
+	processCompany(resultSet.getLong("companyId"), resultSet.getLong("userId"));
+}
+```
+
+We should do:
+```java
+_companyLocalService.forEachCompany(
+	company -> processCompany(company.getCompanyId(), company.getUserId()));
 ```

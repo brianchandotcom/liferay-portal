@@ -89,6 +89,8 @@ public class ClientExtensionAdminDisplayContext {
 	private static final Map<String, String> _featureFlags = HashMapBuilder.put(
 		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
 	).put(
+		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
+	).put(
 		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
 	).build();
 

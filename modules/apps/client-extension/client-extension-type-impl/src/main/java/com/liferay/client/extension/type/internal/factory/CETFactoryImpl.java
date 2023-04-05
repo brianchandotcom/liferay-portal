@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -168,12 +167,12 @@ public class CETFactoryImpl implements CETFactory {
 
 		CETImplFactory cetImplFactory = _cetImplFactories.get(type);
 
-		if ((cetImplFactory != null) &&
-			(!Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP) ||
-			 FeatureFlagManagerUtil.isEnabled("LPS-166479"))) {
+		if (cetImplFactory != null) {
+			String featureFlag = _featureFlags.get(type);
 
-			return cetImplFactory;
+			if (featureFlag == null || FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+				return cetImplFactory;
+			}
 		}
 
 		throw new ClientExtensionEntryTypeException("Unknown type " + type);
@@ -220,4 +219,11 @@ public class CETFactoryImpl implements CETFactory {
 
 	private final Set<String> _types;
 
+	private static final Map<String, String> _featureFlags = HashMapBuilder.put(
+		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
+	).put(
+		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
+	).put(
+		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
+	).build();
 }

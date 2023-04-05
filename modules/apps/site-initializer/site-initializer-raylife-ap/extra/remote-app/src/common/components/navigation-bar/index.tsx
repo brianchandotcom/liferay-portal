@@ -36,13 +36,21 @@ const NavigationBar: Function = (
 								{
 									'active border-link-active shadow-sm font-weight-semi-bold bg-neutral-0':
 										currentNavbarLabel === props.active,
+									'nav-link-border':
+										index < props.navbarLabel.length - 1,
 								}
 							)}
 							onClick={() => {
 								props.setActive(currentNavbarLabel);
 							}}
 						>
-							{currentNavbarLabel}
+							<p
+								className={classNames('mt-3', {
+									'ml-3': index === 0,
+								})}
+							>
+								{currentNavbarLabel}
+							</p>
 						</a>
 					</li>
 				</ul>

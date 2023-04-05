@@ -74,7 +74,7 @@ const GoogleMaps = ({address}: LocationType) => {
 	) : (
 		<img
 			className="img-fluid"
-			src={`${getWebDavUrl()}/google-maps-fallback`}
+			src={`${getWebDavUrl()}/google-maps-fallback.svg`}
 		/>
 	);
 };

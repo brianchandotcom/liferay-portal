@@ -51,7 +51,7 @@ const IncidentDetail = (claimData: ClaimComponentsType) => {
 		<div className="incident-info-nav-bar-claims-details px-5">
 			{claimIncidentDetails && (
 				<div className="align-items-start bg-neutral-0 claims-detail-incident-info-content d-flex justify-content-center py-6 rounded row">
-					<div className="col-lg-4 col-md-4 col-sm-12 pr-5">
+					<div className="col-lg-4 col-md-4 col-sm-12">
 						<div className="google-maps-container">
 							<GoogleMaps address={address as string} />
 						</div>

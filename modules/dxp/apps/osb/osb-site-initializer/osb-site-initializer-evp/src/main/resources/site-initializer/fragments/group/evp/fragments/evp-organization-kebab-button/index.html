@@ -25,11 +25,13 @@ organizationId).organizationName)! /] [#assign organizationStatusListing =
 	[@liferay_ui["icon-menu"] direction="left-side" markupView="lexicon"
 	showWhenSingleIcon=true ] [@liferay_ui["icon"] message="Details" url=URL +
 	"/l/" + organizationId /] [#list userRoles as role] [#if role.name ==
-	"Administrator" || role.name == "EVP Manager" && organizationStatus ==
-	"verified" || role.name == "Finance User" && organizationStatus ==
+	"Administrator" || role.name == "EVP Manager" && organizationStatus
+	=="verified" || role.name == "Finance User" && organizationStatus ==
 	"awaitingFinanceApproval" ] [@liferay_ui["icon"] message="Edit" url=URL +
-	"/edit-organization-form?id=" + organizationId /] [/#if] [#if
-	approvedRolesForOrganization?seqContains(role.name) &&
+	"/edit-organization-form?id=" + organizationId /] [/#if] [#if role.name ==
+	"Finance User" && organizationStatus == "awaitingFinanceApproval" &&
+	!organizationStatusListing?seqContains(organizationStatus) || role.name ==
+	"EVP Manager" && organizationStatus == "awaitingApprovalOnEvp" &&
 	!organizationStatusListing?seqContains(organizationStatus)]
 	<div class="btnOpenModal">
 		[@liferay_ui["icon"] message="Review" url="#${organizationId}" /]

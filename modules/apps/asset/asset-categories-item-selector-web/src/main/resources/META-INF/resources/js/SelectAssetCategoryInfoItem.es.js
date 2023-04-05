@@ -73,7 +73,7 @@ function SelectAssetCategory({
 									setFilterQuery(event.target.value)
 								}
 								placeholder={Liferay.Language.get('search')}
-								type="text"
+								type="search"
 							/>
 
 							<div className="input-group-inset-item input-group-inset-item-after pr-3">

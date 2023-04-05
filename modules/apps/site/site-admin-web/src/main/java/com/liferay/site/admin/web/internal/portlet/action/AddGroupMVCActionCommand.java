@@ -26,20 +26,24 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -62,6 +66,7 @@ import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -118,7 +123,9 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 				"redirect", siteAdministrationURL.toString());
 			siteAdministrationURL.setParameter(
 				"historyKey",
-				ActionUtil.getHistoryKey(actionRequest, actionResponse));
+				HttpComponentsUtil.getParameter(
+					ParamUtil.getString(actionRequest, "redirect"),
+					actionResponse.getNamespace() + "historyKey", false));
 
 			jsonObject.put("redirectURL", siteAdministrationURL.toString());
 
@@ -520,7 +527,28 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, group);
 
-		ActionUtil.updateWorkflowDefinitionLinks(actionRequest, group);
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+
+		Group layoutSetPrototypeGroup =
+			_groupLocalService.getLayoutSetPrototypeGroup(
+				group.getCompanyId(), layoutSetPrototypeId);
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+				group.getCompanyId(), layoutSetPrototypeGroup.getGroupId(), 0);
+
+		for (WorkflowDefinitionLink workflowDefinitionLink :
+				workflowDefinitionLinks) {
+
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				group.getCreatorUserId(), group.getCompanyId(),
+				group.getGroupId(), workflowDefinitionLink.getClassName(),
+				workflowDefinitionLink.getClassPK(),
+				workflowDefinitionLink.getTypePK(),
+				workflowDefinitionLink.getWorkflowDefinitionName(),
+				workflowDefinitionLink.getWorkflowDefinitionVersion());
+		}
 	}
 
 	private static final TransactionConfig _transactionConfig =
@@ -529,6 +557,9 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private GroupExceptionRequestHandler _groupExceptionRequestHandler;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupService _groupService;
@@ -553,6 +584,10 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	private class GroupCallable implements Callable<Group> {
 

@@ -10,6 +10,7 @@ definition {
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
 	var testAccount = "Test Account Analytics Cloud";
+	var testProduct = "Analytics Cloud";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -54,37 +55,35 @@ definition {
 
 	@description = "Automation ID: LPS-150680 | Test Summary: Verify if the same user submits the setup page in two different tabs or diferrent user submits the setup at the same project displays a message to the user that the form was sent"
 	@priority = 3
-	test MessageConfirmingFormHasAlreadyBeenSent {
+	test AssertThatTheACActivationFormHasAlreadyBeenSent {
 		task ("Given that I go to the card activation page") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2Utils.onboardingFlow();
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("And I open a new tab, go to the Set up modal, fill out the whole form and send it") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8080/web/customer-portal-site");
+			var baseURL = PropsUtil.get("portal.url");
 
-			WaitForPageLoad();
+			Open.openInTheNewTab(locator1 = "${baseURL}/web/${testSiteURL}/project/#/ERC-003/activation/analytics-cloud");
 
-			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+			WaitForElementPresent(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 
 			CustomerPortal.clickOnFinishActivationButton();
 
 			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
 
-			CustomerPortal.clickAtButton(text = "Submit");
+			Button.click(button = "Submit");
 
-			CustomerPortal.clickAtButton(text = "Done");
+			Button.click(button = "Done");
 
 			Navigator.closeWindow();
 		}
@@ -94,13 +93,13 @@ definition {
 
 			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
 
-			CustomerPortal.clickAtButton(text = "Submit");
+			Button.click(button = "Submit");
 		}
 
 		task ("Then I should be able to assert the message in the modal that the form has already been submitted ") {
 			CustomerPortal.viewConfirmationModal(modalText = "Another user already submitted the Analytics Cloud activation request.");
 
-			CustomerPortal.clickAtButton(text = "Done");
+			Button.click(button = "Done");
 		}
 
 		task ("Delete the entries and objects created") {

@@ -45,7 +45,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164164. Verify if a banner is displayed when user access Marketing page and will appear again after dismissed"
+	@description = "This is a test for LPS-164164. Verify if a banner is displayed when user access Marketing page and will not appear again after dismissed"
 	@priority = 5
 	test BannerIsDisplayed {
 		property test.name.skip.portal.instance = "PRMMarketing#BannerIsDisplayed";
@@ -70,15 +70,7 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Marketing");
 		}
 
-		task ("Then the banner should be displayed again") {
-			AssertVisible(locator1 = "PRMPages#WELCOME_BANNER");
-		}
-
-		task ("And when the user clicks on 'Dismiss' button") {
-			PRMPages.dismissBanner();
-		}
-
-		task ("Then the banner should desappear") {
+		task ("Then the banner should not be displayed again") {
 			AssertNotVisible(locator1 = "PRMPages#WELCOME_BANNER");
 		}
 
@@ -86,8 +78,8 @@ definition {
 			Refresh();
 		}
 
-		task ("Then the banner should be displayed again") {
-			AssertVisible(locator1 = "PRMPages#WELCOME_BANNER");
+		task ("Then the banner should not be displayed again") {
+			AssertNotVisible(locator1 = "PRMPages#WELCOME_BANNER");
 		}
 	}
 

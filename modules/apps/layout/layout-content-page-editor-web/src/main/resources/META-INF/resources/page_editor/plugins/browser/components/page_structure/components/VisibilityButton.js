@@ -27,6 +27,7 @@ import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 export default function VisibilityButton({
+	className,
 	dispatch,
 	node,
 	selectedViewportSize,
@@ -43,7 +44,8 @@ export default function VisibilityButton({
 				[node.name]
 			)}
 			className={classNames(
-				'page-editor__page-structure__tree-node__visibility-button',
+				'page-editor__page-structure__tree-node__visibility-button ' +
+					className,
 				{
 					'page-editor__page-structure__tree-node__visibility-button--visible': visible,
 				}

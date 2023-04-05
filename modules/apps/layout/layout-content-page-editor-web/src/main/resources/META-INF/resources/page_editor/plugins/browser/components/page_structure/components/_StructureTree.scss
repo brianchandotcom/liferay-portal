@@ -3,7 +3,21 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__page-structure__structure-tree {
+			min-height: 100%;
 			padding: 0 16px;
+
+			&-node {
+				width: initial;
+				min-width: initial;
+
+				&.treeview-link {
+					width: fit-content;
+				}
+
+				& > .autofit-col-expand {
+					flex-shrink: 0;
+				}
+			}
 
 			.lfr-treeview-node-list {
 				border-left: none;

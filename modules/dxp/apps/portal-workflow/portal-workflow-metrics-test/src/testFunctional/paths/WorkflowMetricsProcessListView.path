@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON</td>
-	<td>//a[contains(@class, 'page-link') and contains(@aria-label,'next')]</td>
+	<td>//*[contains(@class, 'right') and contains(@role,'presentation')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_PAGINATION_PREVIOUS_BUTTON</td>
-	<td>//a[contains(@class, 'page-link') and contains(@aria-label,'Previous')]</td>
+	<td>//*[contains(@class, 'left') and contains(@role,'presentation')]</td>
 	<td></td>
 </tr>
 <tr>

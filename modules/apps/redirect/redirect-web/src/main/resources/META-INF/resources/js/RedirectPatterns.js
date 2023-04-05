@@ -52,9 +52,10 @@ const PatternFieldWithUserAgent = ({
 	pattern = '',
 	portletNamespace,
 	strings,
-	userAgent,
+	userAgent: initialUserAgent,
 }) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
+	const [userAgent, setUserAgent] = useState(initialUserAgent);
 
 	return (
 		<div className="redirect-pattern-group">
@@ -170,6 +171,9 @@ const PatternFieldWithUserAgent = ({
 						aria-label={Liferay.Language.get('select-user-agent')}
 						id="userAgent"
 						name={`${portletNamespace}userAgent_${index}`}
+						onChange={({currentTarget}) =>
+							setUserAgent(currentTarget.value)
+						}
 						value={userAgent}
 					>
 						{USER_AGENT_OPTIONS.map((item) => (

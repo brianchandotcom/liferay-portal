@@ -20,6 +20,10 @@ package com.liferay.portal.kernel.upgrade;
  */
 public interface ReleaseManager {
 
-	public String getStatusMessage(boolean checkMicro);
+	public boolean check() throws Exception;
+
+	public String getShortStatusMessage(boolean onlyRequiredUpgrades);
+
+	public String getStatusMessage(boolean showUpgradeSteps);
 
 }

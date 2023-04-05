@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.osgi.debug.SystemChecker;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
@@ -65,18 +66,16 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = {ReleaseManager.class, ReleaseManagerImpl.class})
 public class ReleaseManagerImpl implements ReleaseManager {
 
-	public String check(boolean showUpgradeSteps) {
-		StringBundler sb = new StringBundler(3);
+	public boolean check() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+				_isPendingModuleUpgrades()) {
 
-		sb.append(_checkPortal(showUpgradeSteps));
-
-		if (sb.length() > 0) {
-			sb.append(StringPool.NEW_LINE);
+				return false;
+			}
 		}
 
-		sb.append(_checkModules(showUpgradeSteps));
-
-		return sb.toString();
+		return _checkUnsatisfiedUpgradeComponents();
 	}
 
 	public Set<String> getBundleSymbolicNames() {
@@ -96,7 +95,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	}
 
 	@Override
-	public String getStatusMessage(boolean onlyRequiredUpgrades) {
+	public String getShortStatusMessage(boolean onlyRequiredUpgrades) {
 		String message =
 			"%s upgrades in %s are pending. Run the upgrade process or type " +
 				"upgrade:checkAll in the Gogo shell to get more information.";
@@ -138,6 +137,28 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getStatusMessage(boolean showUpgradeSteps) {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_checkPortal(showUpgradeSteps));
+
+		if (sb.length() > 0) {
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.append(_checkModules(showUpgradeSteps));
+
+		if (!_checkUnsatisfiedUpgradeComponents()) {
+			sb.append("Unsatisfied components prevent upgrade processes to ");
+			sb.append("be registered");
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
 	}
 
 	public Set<String> getUpgradableBundleSymbolicNames() {
@@ -334,6 +355,12 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		return StringPool.BLANK;
 	}
 
+	private boolean _checkUnsatisfiedUpgradeComponents() {
+		String result = _systemChecker.check();
+
+		return !result.contains("UpgradeStepRegistrator");
+	}
+
 	private String _getModulePendingUpgradeMessage(
 		String moduleName, String currentSchemaVersion,
 		String finalSchemaVersion) {
@@ -431,6 +458,11 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	private ReleaseLocalService _releaseLocalService;
 
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
+
+	@Reference(
+		target = "(component.name=com.liferay.portal.osgi.debug.declarative.service.internal.DeclarativeServiceUnsatisfiedComponentSystemChecker)"
+	)
+	private volatile SystemChecker _systemChecker;
 
 	@Reference
 	private UpgradeExecutor _upgradeExecutor;

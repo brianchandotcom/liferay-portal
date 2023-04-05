@@ -49,12 +49,12 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List pending upgrades")
 	public String check() {
-		return _releaseManagerImpl.check(false);
+		return _releaseManagerImpl.getStatusMessage(false);
 	}
 
 	@Descriptor("List pending upgrade processes and their upgrade steps")
 	public String checkAll() {
-		return _releaseManagerImpl.check(true);
+		return _releaseManagerImpl.getStatusMessage(true);
 	}
 
 	@Descriptor("Execute upgrade for a specific module")

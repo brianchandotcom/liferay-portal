@@ -40,7 +40,10 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 	);
 
 	const getManageUsersButton = () => {
-		if (accountSubscriptionGroupLiferayExperienceCloud) {
+		if (
+			Liferay.FeatureFlags['LPS-153478'] &&
+			accountSubscriptionGroupLiferayExperienceCloud
+		) {
 			return (
 				<ManageUsersButton
 					href={
@@ -93,7 +96,8 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 					<Skeleton height={25} width={224} />
 				) : (
 					<h4 className="mb-0">
-						{accountSubscriptionGroupLiferayExperienceCloud
+						{Liferay.FeatureFlags['LPS-153478'] &&
+						accountSubscriptionGroupLiferayExperienceCloud
 							? i18n.translate(
 									'manage-liferay-experience-cloud-users'
 							  )

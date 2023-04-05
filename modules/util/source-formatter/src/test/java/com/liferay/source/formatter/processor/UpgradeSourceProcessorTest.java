@@ -54,6 +54,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeVelocityCommentMigrationCheck() throws Exception {
+		testMigration(
+			"upgrade/UpgradeVelocityCommentMigrationCheck.testvm",
+			"upgrade/migrated/UpgradeVelocityCommentMigrationCheck.testftl");
+	}
+
+	@Test
 	public void testXMLUpgradeDTDVersionCheck() throws Exception {
 		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
 	}

@@ -1,0 +1,13 @@
+<#--FreeMarker Template -->
+
+<#-- Test migration of Velocity template with comments -->
+	
+<#-- display Back link to Newsheadline -->
+
+<#--#if ("$parameters" !="" && "$parameters.newsArchiveId" !="" )  -->
+<#--	#if ("$parameters.newsArchiveId" =="${parameters.newsArchiveId}" )  -->
+<#--<a href="?p_p_id=${portletId}&${portletNamespace}articleId=${parameters.newsArchiveId}"> Back </a> -->
+<#--	#end -->
+<#--#end -->
+
+<#-- display Title + Intro paragraph -->

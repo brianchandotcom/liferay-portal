@@ -92,10 +92,14 @@ LowLevelSearchOptionsPortletPreferences lowLevelSearchOptionsPortletPreferences 
 			%>
 
 				<div class="field-form-row lfr-form-row lfr-form-row-inline">
-					<div class="row-fields">
-						<aui:input cssClass="key-input" label="key" name='<%= "key_" + i %>' value='<%= jsonObject.getString("key") %>' />
+					<div class="autofit-row row-fields">
+						<div class="autofit-col-expand">
+							<aui:input cssClass="flex-fill key-input" label="key" name='<%= "key_" + i %>' value='<%= jsonObject.getString("key") %>' />
+						</div>
 
-						<aui:input cssClass="value-input" label="value" name='<%= "value_" + i %>' value='<%= jsonObject.getString("value") %>' />
+						<div class="autofit-col-expand">
+							<aui:input cssClass="flex-fill value-input" label="value" name='<%= "value_" + i %>' value='<%= jsonObject.getString("value") %>' />
+						</div>
 					</div>
 				</div>
 

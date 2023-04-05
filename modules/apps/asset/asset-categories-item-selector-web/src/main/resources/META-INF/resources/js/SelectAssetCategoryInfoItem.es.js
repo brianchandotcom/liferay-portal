@@ -65,6 +65,9 @@ function SelectAssetCategory({
 					<div className="input-group">
 						<div className="input-group-item">
 							<input
+								aria-label={Liferay.Language.get(
+									'search-categories'
+								)}
 								className="form-control h-100 input-group-inset input-group-inset-after"
 								onChange={(event) =>
 									setFilterQuery(event.target.value)

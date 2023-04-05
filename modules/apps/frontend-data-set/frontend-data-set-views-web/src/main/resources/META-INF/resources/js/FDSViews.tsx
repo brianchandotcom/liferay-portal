@@ -26,6 +26,7 @@ import RequiredMark from './RequiredMark';
 
 export type TFDSView = {
 	description: string;
+	externalReferenceCode: string;
 	id: string;
 	label: string;
 };

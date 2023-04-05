@@ -168,9 +168,11 @@ public class CETFactoryImpl implements CETFactory {
 		CETImplFactory cetImplFactory = _cetImplFactories.get(type);
 
 		if (cetImplFactory != null) {
-			String featureFlag = _featureFlags.get(type);
+			String featureFlag = FEATURE_FLAGS.get(type);
 
-			if (featureFlag == null || FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+			if ((featureFlag == null) ||
+				FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+
 				return cetImplFactory;
 			}
 		}
@@ -219,11 +221,4 @@ public class CETFactoryImpl implements CETFactory {
 
 	private final Set<String> _types;
 
-	private static final Map<String, String> _featureFlags = HashMapBuilder.put(
-		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
-	).put(
-		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
-	).put(
-		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
-	).build();
 }

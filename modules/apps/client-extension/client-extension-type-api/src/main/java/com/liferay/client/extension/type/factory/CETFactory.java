@@ -14,13 +14,16 @@
 
 package com.liferay.client.extension.type.factory;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -49,5 +52,13 @@ public interface CETFactory {
 			UnicodeProperties newTypeSettingsUnicodeProperties,
 			UnicodeProperties oldTypeSettingsUnicodeProperties, String type)
 		throws PortalException;
+
+	public final Map<String, String> FEATURE_FLAGS = HashMapBuilder.put(
+		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
+	).put(
+		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
+	).put(
+		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
+	).build();
 
 }

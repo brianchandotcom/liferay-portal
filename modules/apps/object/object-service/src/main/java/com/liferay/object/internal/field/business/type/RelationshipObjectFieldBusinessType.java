@@ -86,13 +86,6 @@ public class RelationshipObjectFieldBusinessType
 		return HashMapBuilder.<String, Object>put(
 			"accountEntryRestrictedObjectField",
 			() -> {
-				Map<String, Object> properties =
-					objectFieldRenderingContext.getProperties();
-
-				if (properties.isEmpty()) {
-					return false;
-				}
-
 				ObjectDefinition objectDefinition =
 					_objectDefinitionLocalService.getObjectDefinition(
 						objectField.getObjectDefinitionId());

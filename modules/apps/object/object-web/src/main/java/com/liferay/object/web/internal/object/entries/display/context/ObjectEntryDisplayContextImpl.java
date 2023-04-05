@@ -49,7 +49,6 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutBox;
@@ -59,6 +58,7 @@ import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -181,7 +181,9 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
-	public ObjectEntry getObjectEntry() throws PortalException {
+	public com.liferay.object.model.ObjectEntry getObjectEntry()
+		throws PortalException {
+
 		return _toServiceBuilderObjectEntry(_getObjectEntry());
 	}
 
@@ -353,7 +355,7 @@ public class ObjectEntryDisplayContextImpl
 						).setParameter(
 							"parentObjectEntryERC",
 							() -> {
-								ObjectEntry objectEntry = getObjectEntry();
+								ObjectEntry objectEntry = _getObjectEntry();
 
 								return String.valueOf(
 									objectEntry.getExternalReferenceCode());
@@ -431,9 +433,9 @@ public class ObjectEntryDisplayContextImpl
 		).setParameter(
 			"objectEntryId",
 			() -> {
-				ObjectEntry objectEntry = getObjectEntry();
+				ObjectEntry objectEntry = _getObjectEntry();
 
-				return GetterUtil.getLong(objectEntry.getObjectEntryId());
+				return GetterUtil.getLong(objectEntry.getId());
 			}
 		).setParameter(
 			"objectRelationshipId", objectRelationship.getObjectRelationshipId()
@@ -482,8 +484,7 @@ public class ObjectEntryDisplayContextImpl
 		}
 
 		try {
-			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-				_getObjectEntry();
+			ObjectEntry objectEntry = _getObjectEntry();
 
 			if (objectEntry == null) {
 				return false;
@@ -521,17 +522,16 @@ public class ObjectEntryDisplayContextImpl
 	public String renderDDMForm(PageContext pageContext)
 		throws PortalException {
 
+		ObjectEntry objectEntry = _getObjectEntry();
+
 		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 
-		DDMForm ddmForm = _getDDMForm(objectLayoutTab);
+		DDMForm ddmForm = _getDDMForm(objectEntry, objectLayoutTab);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setContainerId("editObjectEntry");
-
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			_getObjectEntry();
 
 		if (objectEntry != null) {
 			ddmFormRenderingContext.addProperty(
@@ -571,15 +571,16 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	private void _addDDMFormFields(
-			DDMForm ddmForm, List<ObjectField> objectFields,
-			ObjectLayoutTab objectLayoutTab, boolean readOnly)
+			DDMForm ddmForm, ObjectEntry objectEntry,
+			List<ObjectField> objectFields, ObjectLayoutTab objectLayoutTab,
+			boolean readOnly)
 		throws PortalException {
 
 		for (ObjectLayoutBox objectLayoutBox :
 				objectLayoutTab.getObjectLayoutBoxes()) {
 
 			List<DDMFormField> nestedDDMFormFields = _getNestedDDMFormFields(
-				objectFields, objectLayoutBox, readOnly);
+				objectEntry, objectFields, objectLayoutBox, readOnly);
 
 			if (nestedDDMFormFields.isEmpty()) {
 				continue;
@@ -614,7 +615,8 @@ public class ObjectEntryDisplayContextImpl
 		}
 	}
 
-	private ObjectFieldRenderingContext _createObjectFieldRenderingContext()
+	private ObjectFieldRenderingContext _createObjectFieldRenderingContext(
+			ObjectEntry objectEntry)
 		throws PortalException {
 
 		ObjectFieldRenderingContext objectFieldRenderingContext =
@@ -625,9 +627,6 @@ public class ObjectEntryDisplayContextImpl
 		objectFieldRenderingContext.setHttpServletRequest(
 			_objectRequestHelper.getRequest());
 		objectFieldRenderingContext.setLocale(_objectRequestHelper.getLocale());
-
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			_getObjectEntry();
 
 		if (objectEntry != null) {
 			objectFieldRenderingContext.setExternalReferenceCode(
@@ -643,7 +642,8 @@ public class ObjectEntryDisplayContextImpl
 		return objectFieldRenderingContext;
 	}
 
-	private DDMForm _getDDMForm(ObjectLayoutTab objectLayoutTab)
+	private DDMForm _getDDMForm(
+			ObjectEntry objectEntry, ObjectLayoutTab objectLayoutTab)
 		throws PortalException {
 
 		DDMForm ddmForm = new DDMForm();
@@ -654,17 +654,12 @@ public class ObjectEntryDisplayContextImpl
 
 		boolean readOnly = _readOnly;
 
-		if (!readOnly) {
-			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-				_getObjectEntry();
-
-			if (objectEntry != null) {
-				readOnly =
-					!ObjectDefinitionResourcePermissionUtil.
-						hasModelResourcePermission(
-							objectDefinition, objectEntry, _objectEntryService,
-							ActionKeys.UPDATE);
-			}
+		if (!readOnly && (objectEntry != null)) {
+			readOnly =
+				!ObjectDefinitionResourcePermissionUtil.
+					hasModelResourcePermission(
+						objectDefinition, objectEntry, _objectEntryService,
+						ActionKeys.UPDATE);
 		}
 
 		List<ObjectField> objectFields =
@@ -683,16 +678,17 @@ public class ObjectEntryDisplayContextImpl
 						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 					ddmForm.addDDMFormField(
-						_getDDMFormField(objectField, true));
+						_getDDMFormField(objectEntry, objectField, true));
 				}
 				else {
 					ddmForm.addDDMFormField(
-						_getDDMFormField(objectField, readOnly));
+						_getDDMFormField(objectEntry, objectField, readOnly));
 				}
 			}
 		}
 		else {
-			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab, readOnly);
+			_addDDMFormFields(
+				ddmForm, objectEntry, objectFields, objectLayoutTab, readOnly);
 		}
 
 		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());
@@ -701,7 +697,7 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	private DDMFormField _getDDMFormField(
-			ObjectField objectField, boolean readOnly)
+			ObjectEntry objectEntry, ObjectField objectField, boolean readOnly)
 		throws PortalException {
 
 		// TODO Store the type and the object field type in the database
@@ -715,7 +711,7 @@ public class ObjectEntryDisplayContextImpl
 			objectFieldBusinessType.getDDMFormFieldTypeName());
 
 		Map<String, Object> properties = objectFieldBusinessType.getProperties(
-			objectField, _createObjectFieldRenderingContext());
+			objectField, _createObjectFieldRenderingContext(objectEntry));
 
 		ddmFormField.setDDMFormFieldValidation(
 			_getDDMFormFieldValidation(
@@ -761,24 +757,31 @@ public class ObjectEntryDisplayContextImpl
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+				 (objectEntry != null)) {
 
-			ObjectEntry objectEntry = getObjectEntry();
+			ObjectDefinition objectDefinition = getObjectDefinition1();
 
-			if (objectEntry != null) {
-				ObjectDefinition objectDefinition = getObjectDefinition1();
+			ddmFormField.setProperty(
+				"objectDefinitionExternalReferenceCode",
+				objectDefinition.getExternalReferenceCode());
 
-				ddmFormField.setProperty(
-					"objectDefinitionExternalReferenceCode",
-					objectDefinition.getExternalReferenceCode());
-
-				ddmFormField.setProperty(
-					"objectEntryExternalReferenceCode",
-					objectEntry.getExternalReferenceCode());
-			}
+			ddmFormField.setProperty(
+				"objectEntryExternalReferenceCode",
+				objectEntry.getExternalReferenceCode());
 		}
 
-		ddmFormField.setReadOnly(readOnly);
+		if (GetterUtil.getBoolean(
+				ddmFormField.getProperty(
+					"accountEntryRestrictedObjectField")) &&
+			(objectEntry != null)) {
+
+			ddmFormField.setReadOnly(true);
+		}
+		else {
+			ddmFormField.setReadOnly(readOnly);
+		}
+
 		ddmFormField.setRequired(objectField.isRequired());
 
 		return ddmFormField;
@@ -866,8 +869,7 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	private DDMFormValues _getDDMFormValues(
-		DDMForm ddmForm,
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
+		DDMForm ddmForm, ObjectEntry objectEntry) {
 
 		Map<String, Object> values = objectEntry.getProperties();
 
@@ -952,8 +954,8 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	private List<DDMFormField> _getNestedDDMFormFields(
-			List<ObjectField> objectFields, ObjectLayoutBox objectLayoutBox,
-			boolean readOnly)
+			ObjectEntry objectEntry, List<ObjectField> objectFields,
+			ObjectLayoutBox objectLayoutBox, boolean readOnly)
 		throws PortalException {
 
 		List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
@@ -992,11 +994,13 @@ public class ObjectEntryDisplayContextImpl
 						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 					nestedDDMFormFields.add(
-						_getDDMFormField(currentObjectField, true));
+						_getDDMFormField(
+							objectEntry, currentObjectField, true));
 				}
 				else {
 					nestedDDMFormFields.add(
-						_getDDMFormField(currentObjectField, readOnly));
+						_getDDMFormField(
+							objectEntry, currentObjectField, readOnly));
 				}
 			}
 		}
@@ -1021,9 +1025,7 @@ public class ObjectEntryDisplayContextImpl
 			});
 	}
 
-	private com.liferay.object.rest.dto.v1_0.ObjectEntry _getObjectEntry()
-		throws PortalException {
-
+	private ObjectEntry _getObjectEntry() throws PortalException {
 		if (_objectEntry != null) {
 			return _objectEntry;
 		}
@@ -1216,8 +1218,8 @@ public class ObjectEntryDisplayContextImpl
 		}
 	}
 
-	private ObjectEntry _toServiceBuilderObjectEntry(
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
+	private com.liferay.object.model.ObjectEntry _toServiceBuilderObjectEntry(
+		ObjectEntry objectEntry) {
 
 		if (objectEntry == null) {
 			return null;
@@ -1225,7 +1227,7 @@ public class ObjectEntryDisplayContextImpl
 
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
-		ObjectEntry serviceBuilderObjectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.createObjectEntry(0L);
 
 		serviceBuilderObjectEntry.setExternalReferenceCode(
@@ -1244,7 +1246,7 @@ public class ObjectEntryDisplayContextImpl
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private com.liferay.object.rest.dto.v1_0.ObjectEntry _objectEntry;
+	private ObjectEntry _objectEntry;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectEntryService _objectEntryService;

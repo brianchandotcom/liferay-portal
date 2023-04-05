@@ -68,7 +68,7 @@ if (Validator.isNotNull(script)) {
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
 					<div class="tabbable">
 						<div class="tabbable-content">
-							<ul class="lfr-nav nav nav-underline">
+							<ul class="lfr-nav nav nav-tabs">
 								<li class="nav-item">
 									<a class="nav-link" href="javascript:void(0);">
 										<liferay-ui:message key="fields" />

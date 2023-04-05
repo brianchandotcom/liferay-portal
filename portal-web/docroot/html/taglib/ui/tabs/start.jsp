@@ -91,7 +91,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 
 // Type
 
-String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:type"), "underline");
+String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:type"), "tabs");
 %>
 
 <c:if test="<%= names.length > 0 %>">

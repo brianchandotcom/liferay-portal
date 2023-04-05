@@ -101,7 +101,7 @@ const SidebarTab = ({onTabClick, selectedTab, tabs}) => {
 	return (
 		<nav className="component-tbar tbar">
 			<ClayLayout.ContainerFluid>
-				<ul className="nav nav-underline" role="tablist">
+				<ul className="nav nav-tabs" role="tablist">
 					{tabs.map(({label}, index) => (
 						<li className="nav-item" key={index}>
 							<button

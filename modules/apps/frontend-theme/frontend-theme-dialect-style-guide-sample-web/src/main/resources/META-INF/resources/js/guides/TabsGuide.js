@@ -45,7 +45,7 @@ const TERTIARY_TAB = (
 
 const TABS_ACTIVE_BAR_COMPONENTS = [
 	{
-		className: 'nav-underline nav-active-bar-top',
+		className: 'nav-tabs nav-active-bar-top',
 		type: 'underline',
 	},
 	{
@@ -61,7 +61,7 @@ const TABS_ACTIVE_BAR_COMPONENTS = [
 
 const TABS_DISABLED_COMPONENTS = [
 	{
-		className: 'nav-underline',
+		className: 'nav-tabs',
 		disabled: true,
 	},
 	{
@@ -81,7 +81,7 @@ const TABS_DISABLED_COMPONENTS = [
 ];
 
 const TABS_COMPONENTS = [
-	{className: 'nav-underline'},
+	{className: 'nav-tabs'},
 	{className: 'nav-secondary'},
 	{
 		child: TERTIARY_TAB,
@@ -91,8 +91,8 @@ const TABS_COMPONENTS = [
 ];
 
 const TABS_ICONS_COMPONENTS = [
-	{className: 'nav-underline', icon: 'after'},
-	{className: 'nav-underline', icon: 'before'},
+	{className: 'nav-tabs', icon: 'after'},
+	{className: 'nav-tabs', icon: 'before'},
 	{className: 'nav-secondary', icon: 'after'},
 	{className: 'nav-secondary', icon: 'before'},
 	{className: 'nav-segment', icon: 'after'},
@@ -100,7 +100,7 @@ const TABS_ICONS_COMPONENTS = [
 ];
 
 const TABS_VERTICAL_COMPONENTS = [
-	{className: 'nav-vertical nav-underline'},
+	{className: 'nav-vertical nav-tabs'},
 	{className: 'nav-vertical nav-secondary'},
 	{
 		child: TERTIARY_TAB,

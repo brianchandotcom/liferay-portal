@@ -56,7 +56,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 			<aui:form action="<%= assignScopesURL %>" name="fm">
 				<div class="sheet">
-					<ul class="hidden nav nav-underline" id="<portlet:namespace />navScopeTypes" role="tablist">
+					<ul class="hidden nav nav-tabs" id="<portlet:namespace />navScopeTypes" role="tablist">
 						<li class="nav-item">
 							<a aria-controls="<portlet:namespace />navResourceScopes" aria-expanded="true" class="active nav-link" data-toggle="liferay-tab" href="#<portlet:namespace />navResourceScopes" id="<portlet:namespace />navResourceScopesTab" role="tab">
 								<liferay-ui:message key="resource-scopes" />

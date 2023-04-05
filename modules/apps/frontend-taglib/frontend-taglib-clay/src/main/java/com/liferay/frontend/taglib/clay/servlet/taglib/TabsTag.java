@@ -128,7 +128,7 @@ public class TabsTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<ul class=\"nav nav-underline\" role=\"tablist\">");
+		jspWriter.write("<ul class=\"nav nav-tabs\" role=\"tablist\">");
 
 		for (TabsItem tabsItem : _tabsItems) {
 			jspWriter.write("<li class=\"nav-item\" role=\"none\">");

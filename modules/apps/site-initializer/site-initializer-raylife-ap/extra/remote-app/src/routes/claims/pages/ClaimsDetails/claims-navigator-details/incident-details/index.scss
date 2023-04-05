@@ -1,0 +1,21 @@
+.incident-info-nav-bar-claims-details {
+	.claims-detail-incident-info-content .google-maps-container {
+		height: 300px;
+	}
+
+	@media (max-width: 768px) {
+		.claims-detail-incident-info-content .google-maps-container {
+			width: 300px;
+			height: 250px;
+		}
+
+		.claims-detail-incident-info {
+			margin-top: 15px;
+			margin-left: 10px;
+		}
+
+		.claim-details-incident-body {
+			margin-top: 15px;
+		}
+	}
+}

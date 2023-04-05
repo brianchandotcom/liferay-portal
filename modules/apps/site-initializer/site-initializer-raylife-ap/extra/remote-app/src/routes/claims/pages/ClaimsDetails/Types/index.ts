@@ -18,6 +18,7 @@ export type ClaimType = {
 	claimStatus: {key: string; name: string};
 	dataJSON: string;
 	id: number;
+	incidentDate: string;
 	r_policyToClaims_c_raylifePolicy: {
 		r_quoteToPolicies_c_raylifeQuote: {
 			r_applicationToQuotes_c_raylifeApplication: {
@@ -57,5 +58,6 @@ export type ClaimActivitiesDataType = {
 
 export type ClaimComponentsType = {
 	claimData: ClaimType;
+	incidentDate?: string;
 	isClaimSettled?: boolean;
 };

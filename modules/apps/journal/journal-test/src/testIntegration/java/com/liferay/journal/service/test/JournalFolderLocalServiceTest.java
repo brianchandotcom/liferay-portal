@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -55,10 +55,13 @@ public class JournalFolderLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetFolders() throws Exception {
-		JournalTestUtil.addFolder(
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		journalFolderFixture.addFolder(
 			_group.getGroupId(), RandomTestUtil.randomString());
 
-		JournalFolder folder = JournalTestUtil.addFolder(
+		JournalFolder folder = journalFolderFixture.addFolder(
 			_group.getGroupId(), RandomTestUtil.randomString());
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(

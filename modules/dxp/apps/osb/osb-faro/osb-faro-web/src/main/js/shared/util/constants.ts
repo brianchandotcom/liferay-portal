@@ -238,6 +238,15 @@ export const TIME_RANGE_LABELS = {
 };
 
 /**
+ * Conjunctions
+ */
+
+export enum ConjunctionKey {
+	And = 'and',
+	Or = 'or'
+}
+
+/**
  * Sprite
  */
 export const spritemap = '/o/osb-faro-web/dist/sprite.svg';

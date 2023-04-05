@@ -15,6 +15,7 @@
 package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.project.Project;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,24 @@ public class TaskFactory {
 			}
 
 			task = new DefaultTask(build, jsonObject);
+
+			_tasks.put(task.getId(), task);
+		}
+
+		return task;
+	}
+
+	public static Task newTask(Project project, JSONObject jsonObject) {
+		long id = jsonObject.getLong("id");
+
+		Task task = null;
+
+		synchronized (_tasks) {
+			if (_tasks.containsKey(id)) {
+				return _tasks.get(id);
+			}
+
+			task = new DefaultTask(project, jsonObject);
 
 			_tasks.put(task.getId(), task);
 		}

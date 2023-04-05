@@ -15,6 +15,8 @@
 package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.run.TaskRun;
 
 import java.util.ArrayList;
@@ -27,6 +29,22 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class BaseTask implements Task {
+
+	@Override
+	public void addEnvironment(Environment environment) {
+		addEnvironments(Arrays.asList(environment));
+	}
+
+	@Override
+	public void addEnvironments(List<Environment> environments) {
+		for (Environment environment : environments) {
+			if (_environments.contains(environment)) {
+				continue;
+			}
+
+			_environments.add(environment);
+		}
+	}
 
 	@Override
 	public void addTaskRun(TaskRun taskRun) {
@@ -47,6 +65,11 @@ public class BaseTask implements Task {
 	@Override
 	public Build getBuild() {
 		return _build;
+	}
+
+	@Override
+	public List<Environment> getEnvironments() {
+		return _environments;
 	}
 
 	@Override
@@ -77,8 +100,23 @@ public class BaseTask implements Task {
 	}
 
 	@Override
+	public Project getProject() {
+		return _project;
+	}
+
+	@Override
 	public List<TaskRun> getTaskRuns() {
 		return null;
+	}
+
+	@Override
+	public void removeEnvironment(Environment environment) {
+		_environments.remove(environment);
+	}
+
+	@Override
+	public void removeEnvironments(List<Environment> environments) {
+		_environments.removeAll(environments);
 	}
 
 	@Override
@@ -92,8 +130,18 @@ public class BaseTask implements Task {
 	}
 
 	@Override
+	public void setBuild(Build build) {
+		_build = build;
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
+	}
+
+	@Override
+	public void setProject(Project project) {
+		_project = project;
 	}
 
 	@Override
@@ -108,9 +156,18 @@ public class BaseTask implements Task {
 		_name = jsonObject.getString("name");
 	}
 
-	private final Build _build;
+	protected BaseTask(Project project, JSONObject jsonObject) {
+		_project = project;
+
+		_id = jsonObject.getLong("id");
+		_name = jsonObject.getString("name");
+	}
+
+	private Build _build;
+	private final List<Environment> _environments = new ArrayList<>();
 	private final long _id;
 	private String _name;
+	private Project _project;
 	private final List<TaskRun> _taskRuns = new ArrayList<>();
 
 }

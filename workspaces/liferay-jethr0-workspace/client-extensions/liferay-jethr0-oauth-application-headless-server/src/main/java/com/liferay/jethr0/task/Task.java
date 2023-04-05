@@ -15,6 +15,8 @@
 package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.run.TaskRun;
 
 import java.util.List;
@@ -26,11 +28,17 @@ import org.json.JSONObject;
  */
 public interface Task {
 
+	public void addEnvironment(Environment environment);
+
+	public void addEnvironments(List<Environment> environments);
+
 	public void addTaskRun(TaskRun taskRun);
 
 	public void addTaskRuns(List<TaskRun> taskRuns);
 
 	public Build getBuild();
+
+	public List<Environment> getEnvironments();
 
 	public long getId();
 
@@ -38,12 +46,22 @@ public interface Task {
 
 	public String getName();
 
+	public Project getProject();
+
 	public List<TaskRun> getTaskRuns();
+
+	public void removeEnvironment(Environment environment);
+
+	public void removeEnvironments(List<Environment> environments);
 
 	public void removeTaskRun(TaskRun taskRun);
 
 	public void removeTaskRuns(List<TaskRun> taskRuns);
 
+	public void setBuild(Build build);
+
 	public void setName(String name);
+
+	public void setProject(Project project);
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.project.Project;
 
 import org.json.JSONObject;
 
@@ -25,6 +26,10 @@ public class DefaultTask extends BaseTask {
 
 	protected DefaultTask(Build build, JSONObject jsonObject) {
 		super(build, jsonObject);
+	}
+
+	protected DefaultTask(Project project, JSONObject jsonObject) {
+		super(project, jsonObject);
 	}
 
 }

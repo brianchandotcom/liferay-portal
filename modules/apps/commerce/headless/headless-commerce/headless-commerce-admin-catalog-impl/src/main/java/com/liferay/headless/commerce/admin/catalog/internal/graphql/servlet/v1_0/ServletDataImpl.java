@@ -40,6 +40,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Produc
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductSpecificationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductSubscriptionConfigurationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductTaxConfigurationResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductVirtualSettingsResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuSubscriptionConfigurationResourceImpl;
@@ -68,6 +69,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductShipping
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSubscriptionConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductTaxConfigurationResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductVirtualSettingsResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.RelatedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuSubscriptionConfigurationResource;
@@ -200,6 +202,8 @@ public class ServletDataImpl implements ServletData {
 				_productSubscriptionConfigurationResourceComponentServiceObjects);
 		Query.setProductTaxConfigurationResourceComponentServiceObjects(
 			_productTaxConfigurationResourceComponentServiceObjects);
+		Query.setProductVirtualSettingsResourceComponentServiceObjects(
+			_productVirtualSettingsResourceComponentServiceObjects);
 		Query.setRelatedProductResourceComponentServiceObjects(
 			_relatedProductResourceComponentServiceObjects);
 		Query.setSkuResourceComponentServiceObjects(
@@ -1175,6 +1179,16 @@ public class ServletDataImpl implements ServletData {
 							ProductTaxConfigurationResourceImpl.class,
 							"getProductIdTaxConfiguration"));
 					put(
+						"query#productByExternalReferenceCodeVirtualSettings",
+						new ObjectValuePair<>(
+							ProductVirtualSettingsResourceImpl.class,
+							"getProductByExternalReferenceCodeVirtualSettings"));
+					put(
+						"query#productIdVirtualSettings",
+						new ObjectValuePair<>(
+							ProductVirtualSettingsResourceImpl.class,
+							"getProductIdVirtualSettings"));
+					put(
 						"query#productByExternalReferenceCodeRelatedProducts",
 						new ObjectValuePair<>(
 							RelatedProductResourceImpl.class,
@@ -1340,6 +1354,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<LinkedProductResource>
 		_linkedProductResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductVirtualSettingsResource>
+		_productVirtualSettingsResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SkuSubscriptionConfigurationResource>

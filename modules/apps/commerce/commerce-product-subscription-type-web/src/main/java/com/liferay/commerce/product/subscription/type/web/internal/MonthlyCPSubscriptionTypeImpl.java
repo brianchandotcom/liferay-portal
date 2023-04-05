@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -197,9 +196,12 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 					"Invalid ", monthlyModeKey, " ", monthlyModeValue));
 		}
 
-		HashMapBuilder.HashMapWrapper<String, String>
-			newSubscriptionTypeSettingsUnicodeProperties = HashMapBuilder.put(
-				monthlyModeKey, String.valueOf(monthlyMode));
+		UnicodeProperties newSubscriptionTypeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				monthlyModeKey, String.valueOf(monthlyMode)
+			).build();
 
 		if (monthlyMode ==
 				CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) {
@@ -224,9 +226,7 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 				monthDayKey, String.valueOf(monthDay));
 		}
 
-		return UnicodePropertiesBuilder.create(
-			newSubscriptionTypeSettingsUnicodeProperties.build(), true
-		).build();
+		return newSubscriptionTypeSettingsUnicodeProperties;
 	}
 
 	@Reference

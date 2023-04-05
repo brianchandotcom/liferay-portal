@@ -15,6 +15,7 @@
 package com.liferay.jethr0;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 import com.liferay.jethr0.dalo.ProjectComparatorDALO;
 import com.liferay.jethr0.dalo.ProjectDALO;
 import com.liferay.jethr0.dalo.ProjectPrioritizerDALO;
@@ -28,6 +29,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 
 /**
  * @author Michael Hashimoto
@@ -38,6 +41,16 @@ public class Jethr0SpringBootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Jethr0SpringBootApplication.class, args);
+	}
+
+	@Bean
+	public OAuth2AccessToken getOAuth2AccessToken(
+		AuthorizedClientServiceOAuth2AuthorizedClientManager
+			authorizedClientServiceOAuth2AuthorizedClientManager) {
+
+		return LiferayOAuth2Util.getOAuth2AccessToken(
+			authorizedClientServiceOAuth2AuthorizedClientManager,
+			_liferayOAuthApplicationExternalReferenceCodes);
 	}
 
 	@Bean
@@ -86,6 +99,9 @@ public class Jethr0SpringBootApplication {
 
 		return projectPrioritizer;
 	}
+
+	@Value("${liferay.oauth.application.external.reference.codes}")
+	private String _liferayOAuthApplicationExternalReferenceCodes;
 
 	@Value("${liferay.jethr0.project.prioritizer}")
 	private String _liferayProjectPrioritizer;

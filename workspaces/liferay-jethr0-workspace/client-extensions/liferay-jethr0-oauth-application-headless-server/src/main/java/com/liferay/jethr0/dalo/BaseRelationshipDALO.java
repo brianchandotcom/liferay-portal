@@ -14,7 +14,6 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.util.LiferayOAuthConfiguration;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.jethr0.util.ThreadUtil;
 
@@ -31,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -58,7 +58,7 @@ public class BaseRelationshipDALO {
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					_liferayOAuthConfiguration.getAuthorization()
+					"Bearer " + _oAuth2AccessToken.getTokenValue()
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -113,7 +113,7 @@ public class BaseRelationshipDALO {
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					_liferayOAuthConfiguration.getAuthorization()
+					"Bearer " + _oAuth2AccessToken.getTokenValue()
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -173,7 +173,7 @@ public class BaseRelationshipDALO {
 						MediaType.APPLICATION_JSON
 					).header(
 						"Authorization",
-						_liferayOAuthConfiguration.getAuthorization()
+						"Bearer " + _oAuth2AccessToken.getTokenValue()
 					).retrieve(
 					).bodyToMono(
 						String.class
@@ -236,10 +236,10 @@ public class BaseRelationshipDALO {
 	private static final Log _log = LogFactory.getLog(
 		BaseRelationshipDALO.class);
 
-	@Autowired
-	private LiferayOAuthConfiguration _liferayOAuthConfiguration;
-
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
+
+	@Autowired
+	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

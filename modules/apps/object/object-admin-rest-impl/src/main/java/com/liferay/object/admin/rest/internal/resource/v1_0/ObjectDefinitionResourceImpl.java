@@ -448,35 +448,40 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (serviceBuilderObjectDefinition.isUnmodifiableSystemObject()) {
-			return _toObjectDefinition(
+			serviceBuilderObjectDefinition =
 				_objectDefinitionService.updateSystemObjectDefinition(
 					objectDefinition.getExternalReferenceCode(),
-					objectDefinitionId, titleObjectFieldId));
+					objectDefinitionId, titleObjectFieldId);
 		}
-
-		serviceBuilderObjectDefinition =
-			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinition.getExternalReferenceCode(), objectDefinitionId,
-				GetterUtil.getLong(accountEntryRestrictedObjectFieldId), 0,
-				titleObjectFieldId,
-				GetterUtil.getBoolean(
-					objectDefinition.getAccountEntryRestricted()),
-				GetterUtil.getBoolean(
-					objectDefinition.getActive(),
-					serviceBuilderObjectDefinition.getActive()),
-				GetterUtil.getBoolean(
-					objectDefinition.getEnableCategorization(), true),
-				GetterUtil.getBoolean(objectDefinition.getEnableComments()),
-				GetterUtil.getBoolean(objectDefinition.getEnableLocalization()),
-				GetterUtil.getBoolean(
-					objectDefinition.getEnableObjectEntryHistory()),
-				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
-				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
-				objectDefinition.getPanelCategoryKey(),
-				GetterUtil.getBoolean(objectDefinition.getPortlet()),
-				LocalizedMapUtil.getLocalizedMap(
-					objectDefinition.getPluralLabel()),
-				objectDefinition.getScope());
+		else {
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.updateCustomObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
+					objectDefinitionId,
+					GetterUtil.getLong(accountEntryRestrictedObjectFieldId), 0,
+					titleObjectFieldId,
+					GetterUtil.getBoolean(
+						objectDefinition.getAccountEntryRestricted()),
+					GetterUtil.getBoolean(
+						objectDefinition.getActive(),
+						serviceBuilderObjectDefinition.getActive()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableCategorization(), true),
+					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableLocalization()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntryHistory()),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getLabel()),
+					objectDefinition.getName(),
+					objectDefinition.getPanelAppOrder(),
+					objectDefinition.getPanelCategoryKey(),
+					GetterUtil.getBoolean(objectDefinition.getPortlet()),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getPluralLabel()),
+					objectDefinition.getScope());
+		}
 
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(

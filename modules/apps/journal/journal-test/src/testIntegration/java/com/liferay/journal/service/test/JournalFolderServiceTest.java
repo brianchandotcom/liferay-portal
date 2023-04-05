@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -72,8 +71,6 @@ public class JournalFolderServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		_journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);

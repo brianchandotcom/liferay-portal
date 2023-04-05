@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -49,7 +48,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -88,21 +86,12 @@ public class JournalArticleServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
 
 		_article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Version 1",
 			"This is a test article.");
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(

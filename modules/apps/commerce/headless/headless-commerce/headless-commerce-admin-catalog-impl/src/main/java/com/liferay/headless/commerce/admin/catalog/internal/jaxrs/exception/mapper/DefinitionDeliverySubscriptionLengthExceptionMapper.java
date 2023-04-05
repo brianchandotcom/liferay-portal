@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CPSubscriptionTypeSettingsException;
+import com.liferay.commerce.product.exception.CPDefinitionDeliverySubscriptionLengthException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -30,21 +30,22 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPSubscriptionTypeSettingsExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionDeliverySubscriptionLengthExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class CPSubscriptionTypeSettingsExceptionMapper
-	extends BaseExceptionMapper<CPSubscriptionTypeSettingsException> {
+public class DefinitionDeliverySubscriptionLengthExceptionMapper
+	extends BaseExceptionMapper
+		<CPDefinitionDeliverySubscriptionLengthException> {
 
 	@Override
 	protected Problem getProblem(
-		CPSubscriptionTypeSettingsException
-			cpSubscriptionTypeSettingsException) {
+		CPDefinitionDeliverySubscriptionLengthException
+			cpDefinitionDeliverySubscriptionLengthException) {
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			cpSubscriptionTypeSettingsException.getMessage());
+			cpDefinitionDeliverySubscriptionLengthException.getMessage());
 	}
 
 }

@@ -46,15 +46,12 @@ const RunExperimentModal = ({dxpVariants, experimentId, observer, onClose}) => {
 	const [{allRefetch}]: any = useStateValue();
 	const [mutate] = useMutation(EXPERIMENT_MUTATION);
 	const [variants, setVariants] = useState(initialStateVariants(dxpVariants));
-	const [trafficSplitTotal, setTrafficSplitTotal] = useState(
-		TRAFFIC_SPLIT_TOTAL
-	);
+	const [trafficSplitTotal, setTrafficSplitTotal] =
+		useState(TRAFFIC_SPLIT_TOTAL);
 	const [disabled, setDisabled] = useState(false);
 	const [confidenceLevel, setConfidenceLevel] = useState(CONFIDENCE_LEVEL);
-	const [
-		confidenceLevelWithDebounce,
-		setConfidenceLevelWithDebounce
-	] = useState(confidenceLevel);
+	const [confidenceLevelWithDebounce, setConfidenceLevelWithDebounce] =
+		useState(confidenceLevel);
 
 	const confidenceLeveInRange =
 		confidenceLevel >= MIN_CONFIDENCE_LEVEL &&
@@ -164,19 +161,22 @@ const RunExperimentModal = ({dxpVariants, experimentId, observer, onClose}) => {
 									setVariants(
 										variants.map((variant, j) => {
 											if (i === j) {
-												let trafficSplit = MIN_TRAFFIC_SPLIT;
+												let trafficSplit =
+													MIN_TRAFFIC_SPLIT;
 
 												if (
 													inputValue <
 														MIN_TRAFFIC_SPLIT ||
 													!inputValue
 												) {
-													trafficSplit = MIN_TRAFFIC_SPLIT;
+													trafficSplit =
+														MIN_TRAFFIC_SPLIT;
 												} else if (
 													inputValue >
 													MAX_TRAFFIC_SPLIT
 												) {
-													trafficSplit = MAX_TRAFFIC_SPLIT;
+													trafficSplit =
+														MAX_TRAFFIC_SPLIT;
 												} else {
 													trafficSplit = inputValue;
 												}

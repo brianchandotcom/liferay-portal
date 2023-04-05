@@ -23,10 +23,10 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 		dateKeysIMap,
 		format,
 		prevDateKeysIMap
-	} = useMemo(() => getActiveItem(data, compareToPrevious), [
-		compareToPrevious,
-		data
-	]);
+	} = useMemo(
+		() => getActiveItem(data, compareToPrevious),
+		[compareToPrevious, data]
+	);
 
 	const showCurrentPeriod =
 		compareToPrevious && asymmetricComparison ? payload.length > 1 : true;

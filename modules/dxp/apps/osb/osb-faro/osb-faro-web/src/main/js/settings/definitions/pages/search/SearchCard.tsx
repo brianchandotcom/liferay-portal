@@ -65,13 +65,14 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 	history,
 	open
 }) => {
-	const {data: searchQueryStringsData, error, loading} = useQuery(
-		PreferenceQuery,
-		{
-			fetchPolicy: 'no-cache',
-			variables: {key: SEARCH_QUERY_STRINGS_KEY}
-		}
-	);
+	const {
+		data: searchQueryStringsData,
+		error,
+		loading
+	} = useQuery(PreferenceQuery, {
+		fetchPolicy: 'no-cache',
+		variables: {key: SEARCH_QUERY_STRINGS_KEY}
+	});
 
 	const [updatePreference] = useMutation(PreferenceMutation);
 
@@ -262,7 +263,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																.queryStringList
 																.length,
 															{
-																disabled: isSubmitting,
+																disabled:
+																	isSubmitting,
 																onClick: () =>
 																	arrayHelpers.push(
 																		''

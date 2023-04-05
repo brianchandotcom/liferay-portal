@@ -13,19 +13,20 @@ const defaultOptions = {
  * @param {Function} hoc - The HOC to apply to the component.
  * @returns {Function} - The newly wrapped component.
  */
-export default (hoc, options = {}) => WrappedComponent => {
-	const OptionalHOC = hoc(WrappedComponent);
-	const {idPropName} = {...defaultOptions, ...options};
+export default (hoc, options = {}) =>
+	WrappedComponent => {
+		const OptionalHOC = hoc(WrappedComponent);
+		const {idPropName} = {...defaultOptions, ...options};
 
-	return class Optional extends React.Component {
-		render() {
-			const idProp = this.props[idPropName];
+		return class Optional extends React.Component {
+			render() {
+				const idProp = this.props[idPropName];
 
-			if (isNil(idProp)) {
-				return <WrappedComponent {...this.props} />;
-			} else {
-				return <OptionalHOC {...this.props} />;
+				if (isNil(idProp)) {
+					return <WrappedComponent {...this.props} />;
+				} else {
+					return <OptionalHOC {...this.props} />;
+				}
 			}
-		}
+		};
 	};
-};

@@ -157,12 +157,8 @@ const buildQueryString = (
 					queryString = queryString.concat(`(${val})`);
 				}
 			} else {
-				const {
-					operatorName,
-					propertyName,
-					type,
-					value
-				} = criterion as Criterion;
+				const {operatorName, propertyName, type, value} =
+					criterion as Criterion;
 
 				const parsedValue = isString(value)
 					? `'${decodeQuotesToOdataQuotes(encodeQuotes(value))}'`
@@ -173,9 +169,8 @@ const buildQueryString = (
 						`${propertyName} ${operatorName} ${parsedValue}`
 					);
 				} else if (isValueType(CustomFunctionOperators, operatorName)) {
-					const fnName = getFunctionNameFromOperatorName(
-						operatorName
-					);
+					const fnName =
+						getFunctionNameFromOperatorName(operatorName);
 
 					const paramKeys = value.keySeq().toJS();
 
@@ -249,14 +244,8 @@ const buildQueryString = (
  * Converts custom encodings back to original characters.
  */
 const decodeSpecialCharacters = (queryString: string): string => {
-	const {
-		ampersand,
-		hash,
-		percent,
-		plus,
-		question,
-		slash
-	} = FARO_SPECIAL_CHARS;
+	const {ampersand, hash, percent, plus, question, slash} =
+		FARO_SPECIAL_CHARS;
 
 	const specialCharsEncoded = Object.values(FARO_SPECIAL_CHARS)
 		.map(({encoded}) => encoded)
@@ -290,14 +279,8 @@ const encodeQuotes = (text: string): string => text.replace(/'/g, '%27');
  * Encode certain special characters with our own encoding.
  */
 const encodeSpecialCharacters = (queryString: string): string => {
-	const {
-		ampersand,
-		hash,
-		percent,
-		plus,
-		question,
-		slash
-	} = FARO_SPECIAL_CHARS;
+	const {ampersand, hash, percent, plus, question, slash} =
+		FARO_SPECIAL_CHARS;
 
 	const charsNeedEscaped = ['+', '?'];
 
@@ -627,11 +610,8 @@ const transformCommonNode = ({oDataASTNode}: Context): Criteria[] => {
 		const methodExpressionName = getExpressionName(nextNodeExpression);
 
 		if (methodExpressionName === 'substring') {
-			const [
-				{raw: propertyName},
-				{raw: start},
-				{raw: end}
-			] = nextNodeExpression.value.parameters;
+			const [{raw: propertyName}, {raw: start}, {raw: end}] =
+				nextNodeExpression.value.parameters;
 
 			return [
 				{

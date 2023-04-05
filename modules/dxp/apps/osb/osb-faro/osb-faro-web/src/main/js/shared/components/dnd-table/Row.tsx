@@ -81,10 +81,8 @@ const Row: React.FC<IRowProps> = ({
 			const hoverIndex = index;
 
 			if (_itemRef.current) {
-				const {
-					bottom,
-					height
-				} = _itemRef.current.getBoundingClientRect();
+				const {bottom, height} =
+					_itemRef.current.getBoundingClientRect();
 
 				const targetMiddleY = height / 2;
 

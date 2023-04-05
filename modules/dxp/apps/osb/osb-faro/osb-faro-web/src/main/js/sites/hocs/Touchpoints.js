@@ -23,14 +23,16 @@ import {Routes} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 
 // LRAC-6976 POC TEMP
-const withData = (useDB = false) => () =>
-	graphql(
-		useDB ? TOUCHPOINTS_QUERY_TEST : TouchpointsQuery,
-		getMetricsMapper(result => ({
-			items: result.pages.assetMetrics,
-			total: result.pages.total
-		}))
-	);
+const withData =
+	(useDB = false) =>
+	() =>
+		graphql(
+			useDB ? TOUCHPOINTS_QUERY_TEST : TouchpointsQuery,
+			getMetricsMapper(result => ({
+				items: result.pages.assetMetrics,
+				total: result.pages.total
+			}))
+		);
 
 // LRAC-6976 POC TEMP
 const getTableWithData = useDB => {

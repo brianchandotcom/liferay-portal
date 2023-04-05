@@ -29,11 +29,9 @@ interface IIndividualsDistributionProps extends PropsFromRedux {
 	knownIndividualCount: number | null;
 }
 
-export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = ({
-	currentUser,
-	knownIndividualCount,
-	...otherProps
-}) => {
+export const IndividualsDistribution: React.FC<
+	IIndividualsDistributionProps
+> = ({currentUser, knownIndividualCount, ...otherProps}) => {
 	const {groupId} = useParams();
 	const authorized = currentUser.isAdmin();
 	const dataSourceStates = useDataSource();

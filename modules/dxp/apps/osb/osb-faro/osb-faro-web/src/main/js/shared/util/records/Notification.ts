@@ -23,7 +23,8 @@ export default class Notification
 		subtype: null,
 		type: null
 	})
-	implements INotification {
+	implements INotification
+{
 	id: string;
 	subtype: NotificationSubtypes;
 	type: NotificationTypes;

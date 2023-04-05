@@ -270,11 +270,11 @@ interface IAudienceReportProps {
 const AudienceReport: React.FC<IAudienceReportProps> = ({
 	knownIndividuals,
 	knownIndividualsTitle,
+	metricAction = Liferay.Language.get('view'),
 	segments,
 	segmentsTitle = Liferay.Language.get('viewer-segments'),
 	uniqueVisitors,
-	uniqueVisitorsTitle = Liferay.Language.get('visitors'),
-	metricAction = Liferay.Language.get('view')
+	uniqueVisitorsTitle = Liferay.Language.get('visitors')
 }) => (
 	<div className={`${CLASSNAME} row w-100`}>
 		<div className='col-sm-6'>

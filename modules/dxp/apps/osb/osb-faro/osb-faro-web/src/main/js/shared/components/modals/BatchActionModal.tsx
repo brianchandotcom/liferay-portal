@@ -45,10 +45,8 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	const [itemsIList, setItemsIList] = useState<List<any>>(fromJS(items));
 	const [selectedKey, setSelectedKey] = useState(optionsLabel);
 
-	const {
-		selectedItems: selectedItemsIOMap,
-		selectionDispatch
-	} = useSelectionContext();
+	const {selectedItems: selectedItemsIOMap, selectionDispatch} =
+		useSelectionContext();
 
 	useEffect(() => {
 		items.length &&

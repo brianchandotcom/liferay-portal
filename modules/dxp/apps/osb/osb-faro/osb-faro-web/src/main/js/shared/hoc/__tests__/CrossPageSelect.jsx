@@ -131,16 +131,16 @@ describe('defaultSearch', () => {
 
 describe('defaultSort', () => {
 	it('should return the results of a sort on the given items', () => {
-		expect(
-			defaultSort(mockData, createOrderIOMap(NAME)).toArray()
-		).toEqual([
-			mockItemArray[1],
-			mockItemArray[2],
-			mockItemArray[3],
-			mockItemArray[0],
-			mockItemArray[4],
-			mockItemArray[5]
-		]);
+		expect(defaultSort(mockData, createOrderIOMap(NAME)).toArray()).toEqual(
+			[
+				mockItemArray[1],
+				mockItemArray[2],
+				mockItemArray[3],
+				mockItemArray[0],
+				mockItemArray[4],
+				mockItemArray[5]
+			]
+		);
 	});
 });
 

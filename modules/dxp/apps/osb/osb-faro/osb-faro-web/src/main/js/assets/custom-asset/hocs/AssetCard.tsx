@@ -111,12 +111,12 @@ const AssetCard: React.FC<IAssetCardProps> = ({
 	onRemoveAsset,
 	panel
 }) => {
-	const AssetComponent = (compose(
+	const AssetComponent = compose(
 		graphql(itemQuery, getMapper(panel)),
 		withLoading({alignCenter: true, page: false}),
 		withError(),
 		withEmpty()
-	)(Chart) as unknown) as React.FC<IAssetComponent>;
+	)(Chart) as unknown as React.FC<IAssetComponent>;
 
 	const [showPrevious, setShowPrevious] = useState(false);
 

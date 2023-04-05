@@ -17,8 +17,7 @@ export const ANIMATION_DURATION = {
 
 export const AXIS = {
 	borderStroke: '#E7E7ED',
-	font:
-		'14px "Source Sans Pro", "Source Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+	font: '14px "Source Sans Pro", "Source Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
 	gridStroke: '#E7E7ED',
 	textColor: '#6B6C7E'
 };
@@ -58,25 +57,23 @@ export const getTextWidth: (text: any, font?: string) => number = (
 	return Math.ceil(metrics.width) + TEXT_PADDING;
 };
 
-export const getAxisTickText = (axis = 'x', formatter = val => val) => ({
-	payload: {offset, value},
-	textAnchor,
-	x,
-	y
-}) => (
-	<Text
-		style={{
-			fill: AXIS.textColor,
-			font: AXIS.font,
-			fontSize: '0.75rem'
-		}}
-		textAnchor={textAnchor}
-		x={x}
-		y={axis === 'y' ? y + offset : y}
-	>
-		{formatter(value)}
-	</Text>
-);
+export const getAxisTickText =
+	(axis = 'x', formatter = val => val) =>
+	({payload: {offset, value}, textAnchor, x, y}) =>
+		(
+			<Text
+				style={{
+					fill: AXIS.textColor,
+					font: AXIS.font,
+					fontSize: '0.75rem'
+				}}
+				textAnchor={textAnchor}
+				x={x}
+				y={axis === 'y' ? y + offset : y}
+			>
+				{formatter(value)}
+			</Text>
+		);
 
 interface IRechartsTooltipProps extends React.HTMLAttributes<HTMLElement> {
 	dateTitle?: string;
@@ -129,29 +126,31 @@ export const RechartsTooltip: FC<IRechartsTooltipProps> = ({
 	</div>
 );
 
-export const getYAxisLabel = (
-	label,
-	position = 'left',
-	yAxisWidth = Y_AXIS_WIDTH
-) => ({viewBox: {height, width, x, y}}) => {
-	const verticalSign = height >= 0 ? 1 : -1;
+export const getYAxisLabel =
+	(label, position = 'left', yAxisWidth = Y_AXIS_WIDTH) =>
+	({viewBox: {height, width, x, y}}) => {
+		const verticalSign = height >= 0 ? 1 : -1;
 
-	const verticalEnd = verticalSign > 0 ? 'end' : 'start';
+		const verticalEnd = verticalSign > 0 ? 'end' : 'start';
 
-	const textAnchor = position === 'right' ? 'end' : 'start';
+		const textAnchor = position === 'right' ? 'end' : 'start';
 
-	return (
-		<Text
-			fill={AXIS.textColor}
-			textAnchor={textAnchor}
-			verticalAnchor={verticalEnd}
-			x={position === 'right' ? x + yAxisWidth : x + width - yAxisWidth}
-			y={y - verticalSign * AXIS_LABEL_OFFSET}
-		>
-			{label}
-		</Text>
-	);
-};
+		return (
+			<Text
+				fill={AXIS.textColor}
+				textAnchor={textAnchor}
+				verticalAnchor={verticalEnd}
+				x={
+					position === 'right'
+						? x + yAxisWidth
+						: x + width - yAxisWidth
+				}
+				y={y - verticalSign * AXIS_LABEL_OFFSET}
+			>
+				{label}
+			</Text>
+		);
+	};
 
 export const getYAxisWidth = (data, dataKey, minWidth = Y_AXIS_WIDTH) =>
 	data.reduce((acc, tick) => {

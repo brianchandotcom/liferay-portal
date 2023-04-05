@@ -62,8 +62,8 @@ export const defaultSort = (
 
 export const fetchLocalData = ({
 	delta,
-	items,
 	filterBy,
+	items,
 	orderIOMap,
 	page,
 	query,

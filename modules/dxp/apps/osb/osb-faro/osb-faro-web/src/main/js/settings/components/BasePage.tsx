@@ -37,8 +37,8 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 	pageActionsDisplayLimit,
 	pageDescription,
 	pageTitle,
-	subTitle,
-	passedChildren
+	passedChildren,
+	subTitle
 }) => {
 	const notificationResponse = useNotificationsAPI(groupId);
 

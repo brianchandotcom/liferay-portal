@@ -18,7 +18,9 @@ interface ISearchableEntitiesTableModalProps {
 	title: string;
 }
 
-const SearchableEntitiesTableModal: React.FC<ISearchableEntitiesTableModalProps> = ({
+const SearchableEntitiesTableModal: React.FC<
+	ISearchableEntitiesTableModalProps
+> = ({
 	className,
 	initialDelta = 10,
 	initialOrderIOMap = createOrderIOMap(NAME),

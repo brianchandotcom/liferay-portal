@@ -36,7 +36,8 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 					const {value: newOperatorName} = event.target;
 
 					let criterion: Criterion = {
-						operatorName: newOperatorName as Criterion['operatorName']
+						operatorName:
+							newOperatorName as Criterion['operatorName']
 					};
 
 					if (

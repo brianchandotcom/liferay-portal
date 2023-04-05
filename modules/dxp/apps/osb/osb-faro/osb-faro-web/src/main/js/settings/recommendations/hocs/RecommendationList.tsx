@@ -208,9 +208,8 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 										onClose: close,
 										onSubmit: handleSubmit,
 										submitButtonDisplay: 'warning',
-										submitMessage: Liferay.Language.get(
-											'delete'
-										),
+										submitMessage:
+											Liferay.Language.get('delete'),
 										title: sub(
 											Liferay.Language.get('deleting-x'),
 											[

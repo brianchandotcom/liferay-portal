@@ -703,8 +703,7 @@ export class Distribution extends React.Component {
 
 												<YAxis
 													axisLine={{
-														stroke:
-															AXIS.borderStroke
+														stroke: AXIS.borderStroke
 													}}
 													dataKey='graphValue'
 													domain={yAxisDomain}
@@ -743,8 +742,7 @@ export class Distribution extends React.Component {
 
 												<YAxis
 													axisLine={{
-														stroke:
-															AXIS.borderStroke
+														stroke: AXIS.borderStroke
 													}}
 													dataKey='graphValue'
 													domain={yAxisDomain}
@@ -756,8 +754,7 @@ export class Distribution extends React.Component {
 
 												<XAxis
 													axisLine={{
-														stroke:
-															AXIS.borderStroke
+														stroke: AXIS.borderStroke
 													}}
 													dataKey={CHART_DATA_ID}
 													interval='preserveStart'
@@ -769,8 +766,7 @@ export class Distribution extends React.Component {
 
 												<XAxis
 													axisLine={{
-														stroke:
-															AXIS.borderStroke
+														stroke: AXIS.borderStroke
 													}}
 													dataKey={CHART_DATA_ID}
 													tick={false}
@@ -809,8 +805,7 @@ export class Distribution extends React.Component {
 																)}
 																key={`cell-${index}`}
 																style={{
-																	cursor:
-																		'pointer'
+																	cursor: 'pointer'
 																}}
 															/>
 														)

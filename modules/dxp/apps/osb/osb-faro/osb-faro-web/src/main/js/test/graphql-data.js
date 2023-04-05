@@ -263,7 +263,7 @@ export function mockExperimentReq() {
 	};
 }
 
-export function mockBag({items, itemTypeName, name, typeName}) {
+export function mockBag({itemTypeName, items, name, typeName}) {
 	return {
 		[name]: {
 			__typename: typeName,
@@ -1526,7 +1526,7 @@ export const mockEventMetrics = variables => ({
 	}
 });
 
-export function mockCommerceTotalOrderValueReq({data, Query, variables}) {
+export function mockCommerceTotalOrderValueReq({Query, data, variables}) {
 	return {
 		request: {
 			query: Query,

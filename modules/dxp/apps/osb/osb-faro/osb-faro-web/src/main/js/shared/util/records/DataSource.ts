@@ -36,7 +36,8 @@ export default class DataSource
 		type: 1,
 		url: null
 	})
-	implements IDataSource {
+	implements IDataSource
+{
 	contactsSelected: boolean;
 	createDate?: number;
 	credentials?: Map<string, any>;

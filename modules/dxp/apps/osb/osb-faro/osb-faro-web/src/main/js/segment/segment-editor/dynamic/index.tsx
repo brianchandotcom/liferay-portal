@@ -239,14 +239,14 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 																	{
 																		iconSymbol:
 																			'exclamation-full',
-																		message: Liferay.Language.get(
-																			'some-criteria-are-empty-please-update-to-continue-using-this-segment'
-																		),
+																		message:
+																			Liferay.Language.get(
+																				'some-criteria-are-empty-please-update-to-continue-using-this-segment'
+																			),
 																		title: Liferay.Language.get(
 																			'error'
 																		),
-																		type:
-																			AlertTypes.Danger
+																		type: AlertTypes.Danger
 																	}
 																]}
 															/>

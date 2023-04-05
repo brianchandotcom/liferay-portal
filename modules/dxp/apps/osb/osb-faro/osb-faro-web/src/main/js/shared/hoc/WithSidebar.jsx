@@ -142,7 +142,7 @@ export default compose(
 
 			@autobind
 			handleSidebarToggle() {
-				const {collapsed, collapseSidebar, currentUser} = this.props;
+				const {collapseSidebar, collapsed, currentUser} = this.props;
 
 				collapseSidebar({
 					collapsed: !collapsed,

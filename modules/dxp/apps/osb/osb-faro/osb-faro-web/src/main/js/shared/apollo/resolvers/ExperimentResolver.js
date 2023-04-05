@@ -7,11 +7,8 @@ export default {
 			return null;
 		}
 
-		return mergedVariants(
-			dxpVariants,
-			variantMetrics
-		).reduce((prev, current) =>
-			prev.median > current.median ? prev : current
+		return mergedVariants(dxpVariants, variantMetrics).reduce(
+			(prev, current) => (prev.median > current.median ? prev : current)
 		);
 	}
 };

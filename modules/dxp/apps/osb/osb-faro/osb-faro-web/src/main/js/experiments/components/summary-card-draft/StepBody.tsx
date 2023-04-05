@@ -22,7 +22,7 @@ interface ISummaryCardDraftStepBodyProps
 
 const SummaryCardDraftStepBody: React.FC<ISummaryCardDraftStepBodyProps> = ({
 	status,
-	step: {buttonProps, Description, link, modal, title}
+	step: {Description, buttonProps, link, modal, title}
 }) => {
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({

@@ -110,8 +110,9 @@ export const useSelectionContext = () => {
 	return context;
 };
 
-export const withSelectionProvider = WrappedComponent => props => (
-	<SelectionProvider>
-		<WrappedComponent {...props} />
-	</SelectionProvider>
-);
+export const withSelectionProvider = WrappedComponent => props =>
+	(
+		<SelectionProvider>
+			<WrappedComponent {...props} />
+		</SelectionProvider>
+	);

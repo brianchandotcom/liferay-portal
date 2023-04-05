@@ -83,12 +83,12 @@ const isEmptyData: IsEmptyData = data =>
 	!data.filter(value => value > 0).length;
 
 const LineChart: React.FC<ILineChartProps> = ({
+	Tooltip,
 	chartType = LINE_TYPE,
 	data,
 	format,
 	height = 320,
-	intervals,
-	Tooltip
+	intervals
 }) => {
 	const [legendHoverItem, setLegendHoverItem] = useState();
 

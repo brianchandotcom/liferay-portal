@@ -25,12 +25,8 @@ class Select extends React.Component {
 	};
 
 	render() {
-		const {
-			children,
-			className,
-			showBlankOption,
-			...otherProps
-		} = this.props;
+		const {children, className, showBlankOption, ...otherProps} =
+			this.props;
 
 		return (
 			<select

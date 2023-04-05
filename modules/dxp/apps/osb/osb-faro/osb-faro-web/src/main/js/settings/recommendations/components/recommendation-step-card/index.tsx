@@ -180,18 +180,11 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 
 	const getInitialValues = () => {
 		if (job) {
-			const {
-				id,
-				name,
-				parameters,
-				runDataPeriod,
-				runFrequency,
-				type
-			} = job;
+			const {id, name, parameters, runDataPeriod, runFrequency, type} =
+				job;
 
-			const includePreviousPeriodParameter: JobParameter = parameters.find(
-				({name}) => name === 'includePreviousPeriod'
-			);
+			const includePreviousPeriodParameter: JobParameter =
+				parameters.find(({name}) => name === 'includePreviousPeriod');
 
 			const itemFilters: Filter[] = parameters.reduce(
 				(acc, {name, value}) => {

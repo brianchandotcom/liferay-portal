@@ -133,7 +133,7 @@ const getBooleanDisplay = (
 
 const getDateDisplay = (
 	attribute: Attribute,
-	{operator, attributeType, values: [startDate, endDate]}: Filter
+	{attributeType, operator, values: [startDate, endDate]}: Filter
 ): [string, string] => {
 	const operatorLabel = DATE_OPERATOR_LABELS_MAP[operator];
 
@@ -163,7 +163,7 @@ export const getBreakdownDisplay = (
 
 const getDurationDisplay = (
 	attribute: Attribute,
-	{operator, attributeType, values: [value]}: Filter
+	{attributeType, operator, values: [value]}: Filter
 ): [string, string] => {
 	const duration = formatTime(Number(value));
 
@@ -175,7 +175,7 @@ const getDurationDisplay = (
 
 const getNumberDisplay = (
 	attribute: Attribute,
-	{operator, attributeType, values: [start, end]}: Filter
+	{attributeType, operator, values: [start, end]}: Filter
 ): [string, string] => {
 	const operatorLabel = NUMBER_OPERATOR_LABELS_MAP[operator];
 

@@ -28,8 +28,8 @@ const HeaderCell: React.FC<IHeaderCellProps> = ({
 	field,
 	headerLink = false,
 	onSortOrderChange = noop,
-	sortable = true,
-	sortOrder
+	sortOrder,
+	sortable = true
 }) => (
 	<th className={getCN('table-head-title', className)}>
 		{sortable ? (

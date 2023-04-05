@@ -15,9 +15,9 @@ interface IAttributeConjunctionDisplayProps {
 	conjunctionCriterion: Criterion;
 }
 
-const AttributeConjunctionDisplay: React.FC<IAttributeConjunctionDisplayProps> = ({
-	conjunctionCriterion: {operatorName, propertyName, value}
-}) => {
+const AttributeConjunctionDisplay: React.FC<
+	IAttributeConjunctionDisplayProps
+> = ({conjunctionCriterion: {operatorName, propertyName, value}}) => {
 	const {referencedEntities} = useContext(ReferencedObjectsContext);
 
 	const [, id] = propertyName.split('/');

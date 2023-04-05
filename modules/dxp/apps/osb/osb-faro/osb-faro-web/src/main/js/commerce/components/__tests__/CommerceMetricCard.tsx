@@ -37,8 +37,8 @@ const COMMERCE_TREND_PERCENTAGE = 50;
 
 const getData = ({
 	classification = 'POSITIVE',
-	percentage = COMMERCE_TREND_PERCENTAGE,
-	currencyCode = 'USD'
+	currencyCode = 'USD',
+	percentage = COMMERCE_TREND_PERCENTAGE
 }) => ({
 	orderTotalCurrencyValues: [
 		{

@@ -71,7 +71,11 @@ const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
 
-	const {data = {}, error, loading} = useQuery(EXPERIMENT_LIST_QUERY, {
+	const {
+		data = {},
+		error,
+		loading
+	} = useQuery(EXPERIMENT_LIST_QUERY, {
 		fetchPolicy: 'network-only',
 		variables: {
 			...getGraphQLVariablesFromPagination({

@@ -199,11 +199,13 @@ export const formatStringToLowercase: (value: string) => string = flow(
 /**
  * Merges multiple refs to be used on one element
  */
-export const mergeRef = (...refs) => instance =>
-	refs.forEach(ref => {
-		if (typeof ref === 'function') {
-			ref(instance);
-		} else if (ref) {
-			ref.current = instance;
-		}
-	});
+export const mergeRef =
+	(...refs) =>
+	instance =>
+		refs.forEach(ref => {
+			if (typeof ref === 'function') {
+				ref(instance);
+			} else if (ref) {
+				ref.current = instance;
+			}
+		});

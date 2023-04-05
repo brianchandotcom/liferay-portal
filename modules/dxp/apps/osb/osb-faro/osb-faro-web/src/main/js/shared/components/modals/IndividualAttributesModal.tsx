@@ -12,11 +12,9 @@ interface IIndividualAttributesModalInterface
 	onClose: () => void;
 }
 
-const IndividualAttributesModal: React.FC<IIndividualAttributesModalInterface> = ({
-	dataSources,
-	fieldName,
-	onClose
-}) => (
+const IndividualAttributesModal: React.FC<
+	IIndividualAttributesModalInterface
+> = ({dataSources, fieldName, onClose}) => (
 	<Modal>
 		<Modal.Header onClose={onClose} title={fieldName} />
 

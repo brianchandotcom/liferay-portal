@@ -70,7 +70,7 @@ interface IInterestDetailsListProp {
 	className?: string;
 	dataSourceParams: {[key: string]: any};
 	groupId: string;
-	tabId: typeof tabIds[keyof typeof tabIds];
+	tabId: (typeof tabIds)[keyof typeof tabIds];
 }
 
 const InterestDetailsList: React.FC<IInterestDetailsListProp> = ({

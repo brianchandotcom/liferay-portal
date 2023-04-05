@@ -86,10 +86,8 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 	const formRef = useRef<Formik>();
 
 	const [inputListValue, setInputListValue] = useState();
-	const [
-		emailAddressesInputValues,
-		setEmailAddressesInputValues
-	] = useState();
+	const [emailAddressesInputValues, setEmailAddressesInputValues] =
+		useState();
 
 	const handleSubmit = (
 		values,

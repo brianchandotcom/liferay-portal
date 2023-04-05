@@ -101,7 +101,12 @@ const ChannelList: React.FC<IChannelListProps> = ({
 		initialOrderIOMap: createOrderIOMap(CREATE_TIME)
 	});
 
-	const {data, error, loading, refetch: refetchChannels} = useRequest({
+	const {
+		data,
+		error,
+		loading,
+		refetch: refetchChannels
+	} = useRequest({
 		dataSourceFn: API.channels.search,
 		variables: {
 			cur: page,

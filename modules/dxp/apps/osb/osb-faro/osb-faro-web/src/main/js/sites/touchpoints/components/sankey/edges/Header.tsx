@@ -125,47 +125,55 @@ const Header: React.FC<IHeaderProps> = ({
 
 		return (
 			<>
-				{items.length > 1 && name !== Liferay.Language.get('others') && (
-					<g data-node-index={index} onClick={handleShowMoreAssets}>
-						<Title
-							color={getNodeColor(node, activeIndex)}
-							hasOnClick
-							iconLetter='+'
-							parentLines={lines.length}
-							radius={9}
-							textClass={`${CLASSNAME}-subtitle-show-link`}
-							title={getWrappedText(
-								sub(Liferay.Language.get('show-top-x-assets'), [
-									items.length
-								])
-							)}
-							y={y + 28}
-						/>
-					</g>
-				)}
+				{items.length > 1 &&
+					name !== Liferay.Language.get('others') && (
+						<g
+							data-node-index={index}
+							onClick={handleShowMoreAssets}
+						>
+							<Title
+								color={getNodeColor(node, activeIndex)}
+								hasOnClick
+								iconLetter='+'
+								parentLines={lines.length}
+								radius={9}
+								textClass={`${CLASSNAME}-subtitle-show-link`}
+								title={getWrappedText(
+									sub(
+										Liferay.Language.get(
+											'show-top-x-assets'
+										),
+										[items.length]
+									)
+								)}
+								y={y + 28}
+							/>
+						</g>
+					)}
 
-				{items.length === 1 && name !== Liferay.Language.get('others') && (
-					<g>
-						<Title
-							color={getNodeColor(node, activeIndex)}
-							iconLetter='A'
-							parentLines={lines.length}
-							radius={9}
-							textClass={`${CLASSNAME}-subtitle`}
-							title={items[0].wrappedText}
-							url={getAssetUrl(
-								{
-									...items[0],
-									id: items[0].assetId,
-									type: items[0].assetType
-								},
-								url,
-								router
-							)}
-							y={y + 28}
-						/>
-					</g>
-				)}
+				{items.length === 1 &&
+					name !== Liferay.Language.get('others') && (
+						<g>
+							<Title
+								color={getNodeColor(node, activeIndex)}
+								iconLetter='A'
+								parentLines={lines.length}
+								radius={9}
+								textClass={`${CLASSNAME}-subtitle`}
+								title={items[0].wrappedText}
+								url={getAssetUrl(
+									{
+										...items[0],
+										id: items[0].assetId,
+										type: items[0].assetType
+									},
+									url,
+									router
+								)}
+								y={y + 28}
+							/>
+						</g>
+					)}
 			</>
 		);
 	};

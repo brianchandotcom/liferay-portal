@@ -138,23 +138,24 @@ export const Routes = buildRoutes({
 												'/interests/:interestId',
 											CONTACTS_INDIVIDUALS_INTERESTS:
 												'/interests',
-											CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS: {
-												path: '/known-individuals',
-												routes: {
-													CONTACTS_INDIVIDUAL: {
-														path: '/:id',
-														routes: {
-															CONTACTS_INDIVIDUAL_DETAILS:
-																'/details',
-															CONTACTS_INDIVIDUAL_INTEREST_DETAILS:
-																'/interests/:interestId',
-															CONTACTS_INDIVIDUAL_INTERESTS:
-																'/interests',
-															CONTACTS_INDIVIDUAL_SEGMENTS: `/${SEGMENTS}`
+											CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS:
+												{
+													path: '/known-individuals',
+													routes: {
+														CONTACTS_INDIVIDUAL: {
+															path: '/:id',
+															routes: {
+																CONTACTS_INDIVIDUAL_DETAILS:
+																	'/details',
+																CONTACTS_INDIVIDUAL_INTEREST_DETAILS:
+																	'/interests/:interestId',
+																CONTACTS_INDIVIDUAL_INTERESTS:
+																	'/interests',
+																CONTACTS_INDIVIDUAL_SEGMENTS: `/${SEGMENTS}`
+															}
 														}
 													}
 												}
-											}
 										}
 									},
 									// Deprecated - Prefer the more specific routes for the entity type

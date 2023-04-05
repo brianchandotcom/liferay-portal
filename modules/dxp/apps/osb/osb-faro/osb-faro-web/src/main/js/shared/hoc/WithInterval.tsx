@@ -7,19 +7,22 @@ interface IWrappedComponentProps {
 	interval: Interval;
 }
 
-const withInterval = (
-	WrappedComponent: React.ComponentType<IWrappedComponentProps>
-) => props => {
-	const [interval, setInterval] = useState(INTERVAL_KEY_MAP.day);
-	const handleChangeInterval = useCallback(newVal => setInterval(newVal), []);
+const withInterval =
+	(WrappedComponent: React.ComponentType<IWrappedComponentProps>) =>
+	props => {
+		const [interval, setInterval] = useState(INTERVAL_KEY_MAP.day);
+		const handleChangeInterval = useCallback(
+			newVal => setInterval(newVal),
+			[]
+		);
 
-	return (
-		<WrappedComponent
-			{...props}
-			interval={interval}
-			onChangeInterval={handleChangeInterval}
-		/>
-	);
-};
+		return (
+			<WrappedComponent
+				{...props}
+				interval={interval}
+				onChangeInterval={handleChangeInterval}
+			/>
+		);
+	};
 
 export default withInterval;

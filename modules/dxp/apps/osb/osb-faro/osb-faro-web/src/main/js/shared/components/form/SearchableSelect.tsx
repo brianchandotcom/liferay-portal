@@ -55,14 +55,8 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 	}
 
 	render() {
-		const {
-			className,
-			field,
-			form,
-			label,
-			onSearchChange,
-			...otherProps
-		} = this.props;
+		const {className, field, form, label, onSearchChange, ...otherProps} =
+			this.props;
 
 		const {name, value} = field;
 

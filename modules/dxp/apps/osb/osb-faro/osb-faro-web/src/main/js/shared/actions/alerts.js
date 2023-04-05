@@ -26,8 +26,8 @@ function removeAfterDelay(action, timeout) {
 
 export function addAlert({
 	alertType,
-	message,
 	id = uniqueId(),
+	message,
 	timeout = true
 }) {
 	const action = {

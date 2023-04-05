@@ -265,8 +265,7 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value:
-											'Page#pageViewed#348853654381438580'
+										value: 'Page#pageViewed#348853654381438580'
 									})
 								])
 							}),
@@ -304,8 +303,7 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value:
-											'Page#pageViewed#348853654381438580'
+										value: 'Page#pageViewed#348853654381438580'
 									})
 								])
 							}),
@@ -343,8 +341,7 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value:
-											'Page#pageViewed#348853654381438580'
+										value: 'Page#pageViewed#348853654381438580'
 									})
 								])
 							}),
@@ -382,8 +379,7 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value:
-											'Page#pageViewed#348853654381438580'
+										value: 'Page#pageViewed#348853654381438580'
 									})
 								])
 							}),

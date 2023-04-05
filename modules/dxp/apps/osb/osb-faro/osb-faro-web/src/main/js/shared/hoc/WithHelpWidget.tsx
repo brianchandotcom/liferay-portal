@@ -12,14 +12,14 @@ interface IWrappedComponentProps {
 	workspaceName: string;
 }
 
-const withHelpWidget = (
-	WrappedComponent: React.ComponentType<IWrappedComponentProps>
-) => props => (
-	<>
-		<WrappedComponent {...props} />
+const withHelpWidget =
+	(WrappedComponent: React.ComponentType<IWrappedComponentProps>) => props =>
+		(
+			<>
+				<WrappedComponent {...props} />
 
-		<HelpWidget groupId={props.groupId} />
-	</>
-);
+				<HelpWidget groupId={props.groupId} />
+			</>
+		);
 
 export default withHelpWidget;

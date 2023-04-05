@@ -37,9 +37,8 @@ class WrappedComponent extends React.Component {
 	}
 }
 
-const WrappedComponentWithStatefulPagination = withStatefulPagination(
-	WrappedComponent
-);
+const WrappedComponentWithStatefulPagination =
+	withStatefulPagination(WrappedComponent);
 
 describe('withStatefulPagination', () => {
 	it('should render', () => {

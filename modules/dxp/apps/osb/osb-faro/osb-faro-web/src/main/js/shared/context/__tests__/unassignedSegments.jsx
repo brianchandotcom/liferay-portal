@@ -57,10 +57,8 @@ describe('useUnassignedSegmentsContext', () => {
 		const successMsg = 'has context!';
 
 		const ChildComponent = () => {
-			const {
-				unassignedSegments,
-				unassignedSegmentsDispatch
-			} = useUnassignedSegmentsContext();
+			const {unassignedSegments, unassignedSegmentsDispatch} =
+				useUnassignedSegmentsContext();
 
 			return (
 				unassignedSegments && unassignedSegmentsDispatch && successMsg

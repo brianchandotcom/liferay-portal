@@ -26,13 +26,8 @@ export default class SearchableVerticalTimeline extends React.Component {
 
 	@autobind
 	renderVerticalTimeline({items, loading}) {
-		const {
-			groupId,
-			headerLabels,
-			initialExpanded,
-			nested,
-			timeZoneId
-		} = this.props;
+		const {groupId, headerLabels, initialExpanded, nested, timeZoneId} =
+			this.props;
 
 		return (
 			<VerticalTimeline

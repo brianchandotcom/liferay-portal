@@ -14,127 +14,138 @@ import {toRoute} from 'shared/util/router';
  * @param {Object} - Options object to pass as props to ErrorDisplay
  * @returns {Function} Returns the ErrorDisplay or Wrapped Component.
  */
-export const withError = (options = {}) => Component => ({
-	error,
-	errorProps = {},
-	pageDisplay = true,
-	refetch,
-	...otherProps
-}) => {
-	const otherOptions = omit(options, 'page');
+export const withError =
+	(options = {}) =>
+	Component =>
+	({error, errorProps = {}, pageDisplay = true, refetch, ...otherProps}) => {
+		const otherOptions = omit(options, 'page');
 
-	if (error) {
-		return get(options, 'page', pageDisplay) ? (
-			<ErrorPage {...errorProps} {...otherOptions} />
-		) : (
-			<ErrorDisplay
-				onReload={refetch}
-				spacer
-				{...errorProps}
-				{...otherOptions}
-			/>
-		);
-	}
+		if (error) {
+			return get(options, 'page', pageDisplay) ? (
+				<ErrorPage {...errorProps} {...otherOptions} />
+			) : (
+				<ErrorDisplay
+					onReload={refetch}
+					spacer
+					{...errorProps}
+					{...otherOptions}
+				/>
+			);
+		}
 
-	return <Component refetch={refetch} {...otherProps} />;
-};
+		return <Component refetch={refetch} {...otherProps} />;
+	};
 
 /**
  * HOC for NoResultsDisplay.
  * @param {Object} - Options object to pass as props to NoResultsDisplay.
  * @returns {Function} Returns the NoResultsDisplay or WrappedComponent.
  */
-export const withEmpty = (options = {}) => Component => ({
-	data,
-	error,
-	loading,
-	noResultsRenderer,
-	noResultsRendererProps,
-	total,
-	...props
-}) => {
-	if (((data && data.total === 0) || total === 0) && !loading && !error) {
-		if (noResultsRenderer) {
-			const NoResults = noResultsRenderer;
+export const withEmpty =
+	(options = {}) =>
+	Component =>
+	({
+		data,
+		error,
+		loading,
+		noResultsRenderer,
+		noResultsRendererProps,
+		total,
+		...props
+	}) => {
+		if (((data && data.total === 0) || total === 0) && !loading && !error) {
+			if (noResultsRenderer) {
+				const NoResults = noResultsRenderer;
 
-			return <NoResults />;
+				return <NoResults />;
+			}
+
+			return (
+				<NoResultsDisplay {...options} {...noResultsRendererProps} />
+			);
 		}
 
-		return <NoResultsDisplay {...options} {...noResultsRendererProps} />;
-	}
-
-	return (
-		<Component
-			data={data}
-			error={error}
-			loading={loading}
-			total={total}
-			{...props}
-		/>
-	);
-};
+		return (
+			<Component
+				data={data}
+				error={error}
+				loading={loading}
+				total={total}
+				{...props}
+			/>
+		);
+	};
 
 /**
  * HOC for Loading display.
  * @param {Object} - Options object to pass as props to Loading component.
  * @returns {Function} Returns the Loading or WrappedComponent.
  */
-export const withLoading = (options = {}) => Component => ({
-	alignCenter = false,
-	className,
-	data,
-	fadeIn = true,
-	inline = false,
-	loading,
-	pageDisplay = true,
-	...otherProps
-}) => {
-	if (loading) {
-		return get(options, 'page', pageDisplay) ? (
-			<LoadingPage
-				className={className}
-				fadeIn={get(options, 'fadeIn', fadeIn)}
-				key='LOADING'
-			/>
-		) : (
-			<Spinner
-				alignCenter={get(options, 'alignCenter', alignCenter)}
-				className={className}
-				inline={get(options, 'inline', inline)}
-				key='SPINNER'
-				spacer={!get(options, 'inline', inline)}
-			/>
-		);
-	}
+export const withLoading =
+	(options = {}) =>
+	Component =>
+	({
+		alignCenter = false,
+		className,
+		data,
+		fadeIn = true,
+		inline = false,
+		loading,
+		pageDisplay = true,
+		...otherProps
+	}) => {
+		if (loading) {
+			return get(options, 'page', pageDisplay) ? (
+				<LoadingPage
+					className={className}
+					fadeIn={get(options, 'fadeIn', fadeIn)}
+					key='LOADING'
+				/>
+			) : (
+				<Spinner
+					alignCenter={get(options, 'alignCenter', alignCenter)}
+					className={className}
+					inline={get(options, 'inline', inline)}
+					key='SPINNER'
+					spacer={!get(options, 'inline', inline)}
+				/>
+			);
+		}
 
-	return <Component className={className} data={data} {...otherProps} />;
-};
+		return <Component className={className} data={data} {...otherProps} />;
+	};
 
-export const withNull = (key, errorProps = {}) => Component => props => {
-	const {entityType = Liferay.Language.get('page'), linkRoute} = errorProps;
+export const withNull =
+	(key, errorProps = {}) =>
+	Component =>
+	props => {
+		const {entityType = Liferay.Language.get('page'), linkRoute} =
+			errorProps;
 
-	if (key && !props[key]) {
-		return (
-			<ErrorPage
-				{...props}
-				href={toRoute(linkRoute, props.router.params)}
-				linkLabel={sub(Liferay.Language.get('go-to-x'), [entityType])}
-				message={sub(
-					Liferay.Language.get(
-						'the-x-you-are-looking-for-does-not-exist'
-					),
-					[entityType.toLowerCase()]
-				)}
-				subtitle={sub(Liferay.Language.get('x-not-found'), [
-					entityType
-				])}
-				title={Liferay.Language.get('404')}
-			/>
-		);
-	}
+		if (key && !props[key]) {
+			return (
+				<ErrorPage
+					{...props}
+					href={toRoute(linkRoute, props.router.params)}
+					linkLabel={sub(Liferay.Language.get('go-to-x'), [
+						entityType
+					])}
+					message={sub(
+						Liferay.Language.get(
+							'the-x-you-are-looking-for-does-not-exist'
+						),
+						[entityType.toLowerCase()]
+					)}
+					subtitle={sub(Liferay.Language.get('x-not-found'), [
+						entityType
+					])}
+					title={Liferay.Language.get('404')}
+				/>
+			);
+		}
 
-	return <Component {...props} />;
-};
+		return <Component {...props} />;
+	};
 
 /**
  * HOC for displaying results.

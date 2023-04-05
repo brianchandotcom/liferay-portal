@@ -20,7 +20,9 @@ interface IUpdateExperimentStatusModalProps
 	title: string;
 }
 
-const UpdateExperimentStatusModal: React.FC<IUpdateExperimentStatusModalProps> = ({
+const UpdateExperimentStatusModal: React.FC<
+	IUpdateExperimentStatusModalProps
+> = ({
 	experimentId,
 	modalBody,
 	modalStatus,

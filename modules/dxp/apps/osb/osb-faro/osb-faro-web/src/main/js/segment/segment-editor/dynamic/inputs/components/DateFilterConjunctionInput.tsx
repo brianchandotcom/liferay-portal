@@ -42,10 +42,9 @@ interface IDateFilterConjunctionInputProps {
 	onChange: (conjunctionCriterion: Criterion) => void;
 }
 
-const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = ({
-	conjunctionCriterion,
-	onChange
-}) => {
+const DateFilterConjunctionInput: React.FC<
+	IDateFilterConjunctionInputProps
+> = ({conjunctionCriterion, onChange}) => {
 	const [conjunction, setConjunction] = useState(
 		getInitialConjunction(conjunctionCriterion)
 	);

@@ -48,7 +48,8 @@ import {
 } from 'shared/context/selection';
 import {withCurrentUser} from 'shared/hoc';
 
-const EVENT_LIMIT_REACHED = /Processing request will exceed custom event definition limit/;
+const EVENT_LIMIT_REACHED =
+	/Processing request will exceed custom event definition limit/;
 
 const connector = connect(
 	(store: RootState, {groupId}: {groupId: string}) => ({
@@ -464,11 +465,12 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 											}
 											iconAlignment='left'
 											onClick={() => {
-												const hideEventFn = hasUnhiddenEvent(
-													selectedItems
-												)
-													? handleHideEvents
-													: handleUnhideEvents;
+												const hideEventFn =
+													hasUnhiddenEvent(
+														selectedItems
+													)
+														? handleHideEvents
+														: handleUnhideEvents;
 
 												hideEventFn(
 													selectedItems.toArray()

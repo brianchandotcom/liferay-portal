@@ -37,8 +37,8 @@ const canDrop = (
 ): boolean => {
 	const {
 		childGroupIds = [],
-		criterion,
 		criteriaGroupId: startGroupId,
+		criterion,
 		index: startIndex
 	} = monitor.getItem();
 

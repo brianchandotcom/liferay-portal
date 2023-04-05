@@ -24,9 +24,10 @@ interface ISearchableTableModalGraphQLProps extends IPagination {
 	initialOrderIOMap: OrderedMap<string, OrderParams>;
 	instruction?: string;
 	mapPropsToOptions: (props: {[key: string]: any}) => QueryHookOptions;
-	mapResultToProps: (result: {
-		[key: string]: any;
-	}) => {items: any[]; total: number};
+	mapResultToProps: (result: {[key: string]: any}) => {
+		items: any[];
+		total: number;
+	};
 	onClose?: () => void;
 	onSubmit: (selectedItems: OrderedMap<string, any>) => void;
 	requireSelection?: boolean;
@@ -35,7 +36,9 @@ interface ISearchableTableModalGraphQLProps extends IPagination {
 	title?: string;
 }
 
-const SearchableTableModalGraphql: React.FC<ISearchableTableModalGraphQLProps> = ({
+const SearchableTableModalGraphql: React.FC<
+	ISearchableTableModalGraphQLProps
+> = ({
 	className,
 	columns,
 	graphqlQuery,
@@ -68,10 +71,8 @@ const SearchableTableModalGraphql: React.FC<ISearchableTableModalGraphQLProps> =
 		mapPropsToOptions({delta, orderIOMap, page, query, ...otherProps})
 	);
 
-	const {
-		selectedItems: contextSelectedItems,
-		selectionDispatch
-	} = useSelectionContext();
+	const {selectedItems: contextSelectedItems, selectionDispatch} =
+		useSelectionContext();
 
 	useEffect(() => {
 		if (selectedItems.length) {

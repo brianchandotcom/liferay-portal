@@ -89,10 +89,11 @@ export const useUnassignedSegmentsContext = () => {
 	return context;
 };
 
-export const withUnassignedSegmentsProvider = WrappedComponent => props => (
-	<UnassignedSegmentsProvider>
-		<WrappedComponent {...props} />
-	</UnassignedSegmentsProvider>
-);
+export const withUnassignedSegmentsProvider = WrappedComponent => props =>
+	(
+		<UnassignedSegmentsProvider>
+			<WrappedComponent {...props} />
+		</UnassignedSegmentsProvider>
+	);
 
 export default UnassignedSegmentsProvider;

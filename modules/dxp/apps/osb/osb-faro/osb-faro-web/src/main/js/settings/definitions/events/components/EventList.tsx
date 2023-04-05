@@ -289,11 +289,10 @@ const EventList: React.FC<IEventListProps> = ({
 										}
 										iconAlignment='left'
 										onClick={() => {
-											const hideEventFn = hasUnhiddenEvent(
-												selectedItems
-											)
-												? handleHideEvents
-												: handleUnhideEvents;
+											const hideEventFn =
+												hasUnhiddenEvent(selectedItems)
+													? handleHideEvents
+													: handleUnhideEvents;
 
 											hideEventFn(
 												selectedItems.toArray()

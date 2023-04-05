@@ -206,25 +206,16 @@ export class OAuthForm extends React.Component {
 
 	@autobind
 	hasNavigationWarning() {
-		const {
-			credentialsModified,
-			editing,
-			nameModified,
-			ownerRemoved
-		} = this.state;
+		const {credentialsModified, editing, nameModified, ownerRemoved} =
+			this.state;
 
 		return (credentialsModified || nameModified || ownerRemoved) && editing;
 	}
 
 	@autobind
 	save(values, tempCredentials) {
-		const {
-			addAlert,
-			groupId,
-			history,
-			onSubmit,
-			redirectRoute
-		} = this.props;
+		const {addAlert, groupId, history, onSubmit, redirectRoute} =
+			this.props;
 
 		const {setSubmitting} = this._formRef.current;
 

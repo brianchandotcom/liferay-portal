@@ -10,14 +10,8 @@ import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
 
-const {
-	Last7Days,
-	Last24Hours,
-	Last28Days,
-	Last30Days,
-	Last90Days,
-	Yesterday
-} = RangeKeyTimeRanges;
+const {Last7Days, Last24Hours, Last28Days, Last30Days, Last90Days, Yesterday} =
+	RangeKeyTimeRanges;
 
 type Item = {
 	description?: string;

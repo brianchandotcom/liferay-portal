@@ -20,11 +20,9 @@ interface IIndividualsDistributionCardProps
 	showAddDataSource?: boolean;
 }
 
-const IndividualsDistributionCard: React.FC<IIndividualsDistributionCardProps> = ({
-	fetchDistribution,
-	id,
-	...otherProps
-}) => {
+const IndividualsDistributionCard: React.FC<
+	IIndividualsDistributionCardProps
+> = ({fetchDistribution, id, ...otherProps}) => {
 	const {channelId, groupId} = useParams();
 
 	return (

@@ -1,7 +1,8 @@
 import emailValidator from 'isemail';
 import {toPromise} from 'shared/components/form';
 
-const VALIDATE_DOMAINS = /^([a-zA-Z0-9_]([a-zA-Z0-9_-]{0,61}[a-zA-Z0-9_])?\.){1,126}[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z]$/;
+const VALIDATE_DOMAINS =
+	/^([a-zA-Z0-9_]([a-zA-Z0-9_-]{0,61}[a-zA-Z0-9_])?\.){1,126}[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z]$/;
 
 export const validateEmailDomain = (emailDomain: string): boolean =>
 	VALIDATE_DOMAINS.test(emailDomain);

@@ -29,7 +29,7 @@ const connector = connect(null, {close, open});
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IAttributeFilterDropdownProps extends PropsFromRedux {
-	alignmentPosition?: typeof Align[keyof typeof Align];
+	alignmentPosition?: (typeof Align)[keyof typeof Align];
 	attribute?: Attribute;
 	disabledIds?: string[];
 	eventId: string;
@@ -49,10 +49,8 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 	trigger,
 	uneditableIds
 }) => {
-	const [
-		attributeOwnerType,
-		setAttributeOwnerType
-	] = useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
+	const [attributeOwnerType, setAttributeOwnerType] =
+		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
 	const [query, setQuery] = useState('');
 	const [selectedAttribute, setSelectedAttribute] = useState<Attribute>(
 		filter ? attribute : null
@@ -141,20 +139,21 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										const modifieldEventAttributeDefinitions = attribute
-											? eventAttributeDefinitions.map(
-													eventAttributeDefinition => {
-														if (
-															attribute.id ===
-															eventAttributeDefinition.id
-														) {
-															return attribute;
-														}
+										const modifieldEventAttributeDefinitions =
+											attribute
+												? eventAttributeDefinitions.map(
+														eventAttributeDefinition => {
+															if (
+																attribute.id ===
+																eventAttributeDefinition.id
+															) {
+																return attribute;
+															}
 
-														return eventAttributeDefinition;
-													}
-											  )
-											: eventAttributeDefinitions;
+															return eventAttributeDefinition;
+														}
+												  )
+												: eventAttributeDefinitions;
 
 										return (
 											<BaseDropdown.SearchableList
@@ -170,7 +169,8 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
 															id: attribute.id,
-															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															mutation:
+																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EVENT_ATTRIBUTE_DEFINITION_QUERY,
 															showTypecast: true
@@ -224,9 +224,9 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 													open(
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
-															id:
-																selectedAttribute.id,
-															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															id: selectedAttribute.id,
+															mutation:
+																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EVENT_ATTRIBUTE_DEFINITION_QUERY,
 															showTypecast: true

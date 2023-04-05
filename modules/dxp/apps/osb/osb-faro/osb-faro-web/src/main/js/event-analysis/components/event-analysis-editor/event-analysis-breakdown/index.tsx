@@ -155,9 +155,8 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 		};
 	};
 
-	const {columns, count, highestValue, items} = parseData(
-		eventAnalysisResult
-	);
+	const {columns, count, highestValue, items} =
+		parseData(eventAnalysisResult);
 
 	const orderIOMap = OrderedMap(
 		breakdownOrder.map((breakdownId, i) => {
@@ -277,7 +276,9 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 	);
 };
 
-const BreakdownWithSafeResults: React.FC<IBreakdownTableWithSafeResultsProps> = ({
+const BreakdownWithSafeResults: React.FC<
+	IBreakdownTableWithSafeResultsProps
+> = ({
 	attributes,
 	breakdownOrder,
 	breakdowns,

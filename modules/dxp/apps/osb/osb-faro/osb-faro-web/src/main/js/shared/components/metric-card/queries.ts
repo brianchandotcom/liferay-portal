@@ -56,9 +56,8 @@ export const AssetTabsQuery = (metrics: Metric[], name: string) => gql`
 	${METRIC_TABS_FRAGMENT}
 `;
 
-export const AssetMetricQuery = (queryName: string) => (
-	metricName: string
-) => gql`
+export const AssetMetricQuery = (queryName: string) => (metricName: string) =>
+	gql`
 	query ${queryMetricName(queryName)}(
 		$assetId: String!
 		$channelId: String

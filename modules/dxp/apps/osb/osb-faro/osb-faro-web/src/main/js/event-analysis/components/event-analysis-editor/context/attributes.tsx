@@ -457,14 +457,16 @@ export const AttributesProvider: React.FC<IAttributesProviderProps> = ({
 	);
 };
 
-export const withAttributesProvider = WrappedComponent => props => (
-	<AttributesProvider>
-		<WrappedComponent {...props} />
-	</AttributesProvider>
-);
+export const withAttributesProvider = WrappedComponent => props =>
+	(
+		<AttributesProvider>
+			<WrappedComponent {...props} />
+		</AttributesProvider>
+	);
 
-export const withAttributesConsumer = WrappedComponent => props => (
-	<AttributesContext.Consumer>
-		{attributes => <WrappedComponent {...props} {...attributes} />}
-	</AttributesContext.Consumer>
-);
+export const withAttributesConsumer = WrappedComponent => props =>
+	(
+		<AttributesContext.Consumer>
+			{attributes => <WrappedComponent {...props} {...attributes} />}
+		</AttributesContext.Consumer>
+	);

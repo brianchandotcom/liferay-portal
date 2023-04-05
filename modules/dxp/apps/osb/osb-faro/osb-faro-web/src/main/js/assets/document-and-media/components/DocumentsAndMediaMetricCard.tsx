@@ -17,7 +17,9 @@ import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'document';
 
-const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
+const DocumentsAndMediaMetricCard: React.FC<
+	IGenericMetricBaseCardProps
+> = props => {
 	const variables = commonVariables => useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [

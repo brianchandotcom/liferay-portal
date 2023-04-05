@@ -16,13 +16,8 @@ export class IndividualFieldMapping extends React.Component {
 	};
 
 	render() {
-		const {
-			currentUser,
-			dataSource,
-			groupId,
-			id,
-			...otherProps
-		} = this.props;
+		const {currentUser, dataSource, groupId, id, ...otherProps} =
+			this.props;
 
 		return (
 			<BaseFieldMappingView

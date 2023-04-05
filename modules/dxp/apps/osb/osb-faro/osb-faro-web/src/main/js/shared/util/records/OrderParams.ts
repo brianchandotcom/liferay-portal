@@ -11,7 +11,8 @@ export default class OrderParams
 		field: null,
 		sortOrder: null
 	})
-	implements IOrderParams {
+	implements IOrderParams
+{
 	field: string;
 	sortOrder: OrderByDirections;
 

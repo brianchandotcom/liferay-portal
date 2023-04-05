@@ -12,7 +12,8 @@ export default class TimeZone
 		displayTimeZone: '(UTC) UTC',
 		timeZoneId: 'UTC'
 	})
-	implements ITimeZone {
+	implements ITimeZone
+{
 	country: string;
 	displayTimeZone: string;
 	timeZoneId: string;

@@ -29,100 +29,101 @@ const defaultParams = {
  * @returns {Function} Returns the new component
  */
 export default (
-	request,
-	stopConditionFn = defaultParams.stopConditionFn,
-	options
-) => WrappedComponent => {
-	const {intervalLength, propName, requestProps} = {
-		...defaultParams.options,
-		...options
-	};
+		request,
+		stopConditionFn = defaultParams.stopConditionFn,
+		options
+	) =>
+	WrappedComponent => {
+		const {intervalLength, propName, requestProps} = {
+			...defaultParams.options,
+			...options
+		};
 
-	return connect()(
-		class extends React.Component {
-			static propTypes = {
-				dispatch: PropTypes.func
-			};
+		return connect()(
+			class extends React.Component {
+				static propTypes = {
+					dispatch: PropTypes.func
+				};
 
-			state = {
-				data: null,
-				pollingError: null
-			};
+				state = {
+					data: null,
+					pollingError: null
+				};
 
-			_isMounted = false;
+				_isMounted = false;
 
-			componentDidMount() {
-				this._isMounted = true;
+				componentDidMount() {
+					this._isMounted = true;
 
-				this.getNextValue();
-			}
+					this.getNextValue();
+				}
 
-			componentWillUnmount() {
-				this._isMounted = false;
+				componentWillUnmount() {
+					this._isMounted = false;
 
-				clearTimeout(this._request);
-			}
+					clearTimeout(this._request);
+				}
 
-			getNextValue() {
-				return this.handleRequest(
-					request({
-						groupId: this.props.groupId,
-						...requestProps.reduce(
-							(acc, propName) => ({
-								...acc,
-								[propName]: this.props[propName]
-							}),
-							{}
-						)
-					})
-				)
-					.then(data => {
-						if (this._isMounted) {
-							this.setState({
-								data
-							});
+				getNextValue() {
+					return this.handleRequest(
+						request({
+							groupId: this.props.groupId,
+							...requestProps.reduce(
+								(acc, propName) => ({
+									...acc,
+									[propName]: this.props[propName]
+								}),
+								{}
+							)
+						})
+					)
+						.then(data => {
+							if (this._isMounted) {
+								this.setState({
+									data
+								});
 
-							if (!stopConditionFn(data, this.props)) {
-								this._request = setTimeout(
-									() => this.getNextValue(),
-									intervalLength
-								);
+								if (!stopConditionFn(data, this.props)) {
+									this._request = setTimeout(
+										() => this.getNextValue(),
+										intervalLength
+									);
+								}
 							}
-						}
-					})
-					.catch(err => {
-						if (!err.IS_CANCELLATION_ERROR && this._isMounted) {
-							this.setState({
-								pollingError: err
-							});
-						}
-					});
-			}
+						})
+						.catch(err => {
+							if (!err.IS_CANCELLATION_ERROR && this._isMounted) {
+								this.setState({
+									pollingError: err
+								});
+							}
+						});
+				}
 
-			handleRequest(result) {
-				if (isFSA(result)) {
-					return this.props
-						.dispatch(result)
-						.then(({payload}) => payload);
-				} else {
-					return result;
+				handleRequest(result) {
+					if (isFSA(result)) {
+						return this.props
+							.dispatch(result)
+							.then(({payload}) => payload);
+					} else {
+						return result;
+					}
+				}
+
+				render() {
+					const {className, data, pollingError} = this.state;
+
+					const componentData = {[propName]: data};
+
+					return (
+						<WrappedComponent
+							{...this.props}
+							{...componentData}
+							className={className}
+							pollingError={pollingError}
+						/>
+					);
 				}
 			}
-
-			render() {
-				const {className, data, pollingError} = this.state;
-
-				const componentData = {[propName]: data};
-
-				return (
-					<WrappedComponent
-						{...this.props}
-						{...componentData}
-						className={className}
-						pollingError={pollingError}
-					/>
-				);
-			}
-		}
-	);
-};
+		);
+	};

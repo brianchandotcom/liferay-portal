@@ -144,28 +144,26 @@ export const getSankeyData = (
 		({accessMetric: {value}}) => value > 0
 	);
 
-	let nodes = referrers.map(
-		({assetTitle, external, referrer}): Node => {
-			const url = referrer || '';
-			const name =
-				url === 'others'
-					? Liferay.Language.get('others')
-					: assetTitle || removeProtocol(url);
+	let nodes = referrers.map(({assetTitle, external, referrer}): Node => {
+		const url = referrer || '';
+		const name =
+			url === 'others'
+				? Liferay.Language.get('others')
+				: assetTitle || removeProtocol(url);
 
-			const node: Node = {
-				external,
-				name,
-				url,
-				wrappedText: getWrappedText(name)
-			};
+		const node: Node = {
+			external,
+			name,
+			url,
+			wrappedText: getWrappedText(name)
+		};
 
-			if (url === 'others') {
-				node.color = Colors.gray;
-			}
-
-			return node;
+		if (url === 'others') {
+			node.color = Colors.gray;
 		}
-	);
+
+		return node;
+	});
 
 	nodes = [
 		...nodes,

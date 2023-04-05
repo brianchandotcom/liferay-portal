@@ -62,10 +62,10 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 		format,
 		intervals,
 		timeline
-	} = useMemo(() => getActiveItem(data, compareToPrevious), [
-		compareToPrevious,
-		data
-	]);
+	} = useMemo(
+		() => getActiveItem(data, compareToPrevious),
+		[compareToPrevious, data]
+	);
 
 	const dataIds = chartData.map(item => item.id);
 

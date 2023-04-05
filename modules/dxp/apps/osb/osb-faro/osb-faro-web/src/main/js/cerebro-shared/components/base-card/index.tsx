@@ -18,9 +18,9 @@ interface BaseCardIProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const BaseCard: React.FC<BaseCardIProps> = ({
-	className,
-	children,
 	Header = HeaderDefault,
+	children,
+	className,
 	headerProps = {},
 	label,
 	legacyDropdownRangeKey = true,

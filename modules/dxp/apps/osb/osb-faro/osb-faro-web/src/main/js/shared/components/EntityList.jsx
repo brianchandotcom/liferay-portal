@@ -171,8 +171,8 @@ class EntityList extends React.Component {
 			loading,
 			noItemsContent,
 			onSelectItemsChange,
-			selectedItemsISet,
 			selectMultiple,
+			selectedItemsISet,
 			showBorder,
 			total,
 			...otherProps

@@ -1,5 +1,6 @@
-jest.mock('shared/components/workspaces/SuccessDisplay', () => () =>
-	'SuccessDisplay'
+jest.mock(
+	'shared/components/workspaces/SuccessDisplay',
+	() => () => 'SuccessDisplay'
 );
 
 import * as API from 'shared/api';

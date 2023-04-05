@@ -30,7 +30,11 @@ export const useDataSource: (
 ) => {
 	const {groupId} = useParams();
 
-	const {data = {items: []}, error, loading} = useRequest({
+	const {
+		data = {items: []},
+		error,
+		loading
+	} = useRequest({
 		dataSourceFn: API.dataSource.search,
 		variables: {
 			groupId,

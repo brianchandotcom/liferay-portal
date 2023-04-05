@@ -42,15 +42,8 @@ export default WrappedComponent => {
 
 		@autobind
 		deleteSegment() {
-			const {
-				addAlert,
-				channelId,
-				close,
-				groupId,
-				history,
-				id,
-				open
-			} = this.props;
+			const {addAlert, channelId, close, groupId, history, id, open} =
+				this.props;
 
 			open(modalTypes.CONFIRMATION_MODAL, {
 				message: (
@@ -129,15 +122,8 @@ export default WrappedComponent => {
 
 		@autobind
 		handleSubmit(form, formRef, submitFn) {
-			const {
-				addAlert,
-				channelId,
-				close,
-				groupId,
-				history,
-				id,
-				open
-			} = this.props;
+			const {addAlert, channelId, close, groupId, history, id, open} =
+				this.props;
 
 			const {setSubmitting} = formRef.current.getFormikActions();
 
@@ -294,8 +280,8 @@ export default WrappedComponent => {
 														label: Liferay.Language.get(
 															'delete-segment'
 														),
-														onClick: this
-															.deleteSegment
+														onClick:
+															this.deleteSegment
 													}
 											  ]
 											: []

@@ -27,9 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Mijarra
  */
-@Component(
-	enabled = false, service = FriendlyURLRedirectionConfigurationProvider.class
-)
+@Component(service = FriendlyURLRedirectionConfigurationProvider.class)
 public class FriendlyURLRedirectionConfigurationProviderImpl
 	implements FriendlyURLRedirectionConfigurationProvider {
 

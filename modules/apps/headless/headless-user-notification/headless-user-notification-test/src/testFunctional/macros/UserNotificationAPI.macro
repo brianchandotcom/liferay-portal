@@ -48,26 +48,48 @@ definition {
 	}
 
 	macro createNotificationTemplate {
-		Variables.assertDefined(parameterList = "${name},${recipientType},${userScreenName},${en_US},${type}");
+		Variables.assertDefined(parameterList = "${name},${recipientType},${en_US},${type}");
 
-		var curl = UserNotificationAPI._curlNotificationTemplates();
-		var body = '''
-			-d {
-				"editorType": "richText",
-				"externalReferenceCode": "${externalReferenceCode}",
-				"name": "${name}",
-				"recipientType": "${recipientType}",
-				"recipients": [
-					{
-						"userScreenName": "${userScreenName}"
-					}
-				],
-				"subject": {
-					"en_US": "${en_US}"
-				},
-				"type": "${type}"
-			}
-		''';
+		if (${recipientType} == "term") {
+			var curl = UserNotificationAPI._curlNotificationTemplates();
+			var body = '''
+				-d {
+					"editorType": "richText",
+					"externalReferenceCode": "${externalReferenceCode}",
+					"name": "${name}",
+					"recipientType": "${recipientType}",
+					"recipients": [
+						{
+							"term": "${term}"
+						}
+					],
+					"subject": {
+						"en_US": "${en_US}"
+					},
+					"type": "${type}"
+				}
+			''';
+		}
+		else {
+			var curl = UserNotificationAPI._curlNotificationTemplates();
+			var body = '''
+				-d {
+					"editorType": "richText",
+					"externalReferenceCode": "${externalReferenceCode}",
+					"name": "${name}",
+					"recipientType": "${recipientType}",
+					"recipients": [
+						{
+							"userScreenName": "${userScreenName}"
+						}
+					],
+					"subject": {
+						"en_US": "${en_US}"
+					},
+					"type": "${type}"
+				}
+			''';
+		}
 
 		var curl = StringUtil.add(${curl}, ${body}, " ");
 

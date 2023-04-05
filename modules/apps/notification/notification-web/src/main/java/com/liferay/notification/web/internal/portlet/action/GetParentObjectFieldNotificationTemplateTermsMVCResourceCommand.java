@@ -20,11 +20,13 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -66,14 +68,17 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 			return;
 		}
 
+		User user = GuestOrUserUtil.getGuestOrUser();
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			getTermsJSONArray(
+				user.getLocale(),
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId()),
-				objectRelationship.getName(),
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY)));
+				StringBundler.concat(
+					objectRelationship.getName(), StringPool.UNDERLINE,
+					objectDefinition.getShortName())));
 	}
 
 	@Reference

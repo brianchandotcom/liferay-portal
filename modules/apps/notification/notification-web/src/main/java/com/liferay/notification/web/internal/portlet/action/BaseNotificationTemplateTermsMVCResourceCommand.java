@@ -16,19 +16,19 @@ package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,8 +41,7 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	protected Set<Map.Entry<String, String>> getTermNamesEntries(
-		List<ObjectField> objectFields, String partialTermName,
-		ThemeDisplay themeDisplay) {
+		Locale locale, List<ObjectField> objectFields, String partialTermName) {
 
 		Map<String, String> termNames = new LinkedHashMap<>();
 
@@ -59,7 +58,7 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 			}
 			else {
 				termNames.put(
-					objectField.getLabel(themeDisplay.getLocale()),
+					objectField.getLabel(locale),
 					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
 						partialTermName, objectField.getName()));
 			}
@@ -69,19 +68,18 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 	}
 
 	protected JSONArray getTermsJSONArray(
-		List<ObjectField> objectFields, String partialTermName,
-		ThemeDisplay themeDisplay) {
+			Locale locale, List<ObjectField> objectFields,
+			String partialTermName)
+		throws PortalException {
 
 		JSONArray termsJSONArray = jsonFactory.createJSONArray();
 
 		for (Map.Entry<String, String> entry :
-				getTermNamesEntries(
-					objectFields, partialTermName, themeDisplay)) {
+				getTermNamesEntries(locale, objectFields, partialTermName)) {
 
 			termsJSONArray.put(
 				JSONUtil.put(
-					"termLabel",
-					language.get(themeDisplay.getLocale(), entry.getKey())
+					"termLabel", language.get(locale, entry.getKey())
 				).put(
 					"termName", entry.getValue()
 				));
@@ -112,8 +110,5 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 
 	@Reference
 	protected Language language;
-
-	@Reference
-	protected UserLocalService userLocalService;
 
 }

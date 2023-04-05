@@ -25,12 +25,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -64,13 +66,15 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		User user = GuestOrUserUtil.getGuestOrUser();
+
+		Locale locale = user.getLocale();
 
 		JSONArray termsJSONArray = getTermsJSONArray(
+			locale,
 			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId()),
-			objectDefinition.getShortName(), themeDisplay);
+			objectDefinition.getShortName());
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-165849")) {
 			JSONPortletResponseUtil.writeJSON(
@@ -98,12 +102,9 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 								objectRelationship.getObjectDefinitionId1());
 
 						return StringBundler.concat(
-							objectRelationship.getLabel(
-								themeDisplay.getLocale()),
-							" (",
+							objectRelationship.getLabel(locale), " (",
 							StringUtil.upperCase(
-								relatedObjectDefinition.getLabel(
-									themeDisplay.getLocale())),
+								relatedObjectDefinition.getLabel(locale)),
 							StringPool.CLOSE_PARENTHESIS);
 					}
 				));

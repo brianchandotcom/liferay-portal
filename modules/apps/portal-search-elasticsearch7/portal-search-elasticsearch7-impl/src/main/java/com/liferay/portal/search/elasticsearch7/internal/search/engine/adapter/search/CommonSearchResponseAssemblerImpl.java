@@ -199,19 +199,19 @@ public class CommonSearchResponseAssemblerImpl
 		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
 	}
 
-	private void _setScrollId(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		if (searchResponse.getScrollId() != null) {
-			baseSearchResponse.setScrollId(searchResponse.getScrollId());
-		}
-	}
-
 	private void _setPointInTimeId(
 		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
 
 		if (searchResponse.pointInTimeId() != null) {
 			baseSearchResponse.setPointInTimeId(searchResponse.pointInTimeId());
+		}
+	}
+
+	private void _setScrollId(
+		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+
+		if (searchResponse.getScrollId() != null) {
+			baseSearchResponse.setScrollId(searchResponse.getScrollId());
 		}
 	}
 

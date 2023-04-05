@@ -37,7 +37,7 @@ definition {
 		}
 
 		task ("Given Notification Template created") {
-			UserNotificationAPI.createNotificationTemplate(
+			UserNotificationAPI.postNotificationTemplate(
 				en_US = "The entry name is [%STUDENT_NAME%].",
 				externalReferenceCode = "test",
 				name = "User Notification Template",

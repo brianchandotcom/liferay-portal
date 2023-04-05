@@ -47,39 +47,6 @@ definition {
 		return ${curl};
 	}
 
-	macro createNotificationTemplate {
-		Variables.assertDefined(parameterList = "${name},${recipientType},${userScreenName},${en_US},${type}");
-
-		var curl = UserNotificationAPI._curlNotificationTemplates();
-		var body = '''
-			-d {
-				"editorType": "richText",
-				"externalReferenceCode": "${externalReferenceCode}",
-				"name": "${name}",
-				"recipientType": "${recipientType}",
-				"recipients": [
-					{
-						"userScreenName": "${userScreenName}"
-					}
-				],
-				"subject": {
-					"en_US": "${en_US}"
-				},
-				"type": "${type}"
-			}
-		''';
-
-		var curl = StringUtil.add(${curl}, ${body}, " ");
-
-		var curl = JSONCurlUtil.post(${curl});
-
-		var notificationTemplateId = JSONUtil.getWithJSONPath(${curl}, "$.id");
-
-		static var staticNotificationTemplateId = ${notificationTemplateId};
-
-		return ${staticNotificationTemplateId};
-	}
-
 	macro deleteNotificationTemplate {
 		var curl = UserNotificationAPI._curlNotificationTemplates(notificationTemplateId = ${staticNotificationTemplateId});
 
@@ -102,6 +69,61 @@ definition {
 		var response = JSONCurlUtil.get(${curl});
 
 		return ${response};
+	}
+
+	macro postNotificationTemplate {
+		Variables.assertDefined(parameterList = "${name},${recipientType},${en_US},${type}");
+
+		if (${recipientType} == "term") {
+			var curl = UserNotificationAPI._curlNotificationTemplates();
+			var body = '''
+				-d {
+					"editorType": "richText",
+					"externalReferenceCode": "${externalReferenceCode}",
+					"name": "${name}",
+					"recipientType": "${recipientType}",
+					"recipients": [
+						{
+							"term": "${term}"
+						}
+					],
+					"subject": {
+						"en_US": "${en_US}"
+					},
+					"type": "${type}"
+				}
+			''';
+		}
+		else {
+			var curl = UserNotificationAPI._curlNotificationTemplates();
+			var body = '''
+				-d {
+					"editorType": "richText",
+					"externalReferenceCode": "${externalReferenceCode}",
+					"name": "${name}",
+					"recipientType": "${recipientType}",
+					"recipients": [
+						{
+							"userScreenName": "${userScreenName}"
+						}
+					],
+					"subject": {
+						"en_US": "${en_US}"
+					},
+					"type": "${type}"
+				}
+			''';
+		}
+
+		var curl = StringUtil.add(${curl}, ${body}, " ");
+
+		var curl = JSONCurlUtil.post(${curl});
+
+		var notificationTemplateId = JSONUtil.getWithJSONPath(${curl}, "$.id");
+
+		static var staticNotificationTemplateId = ${notificationTemplateId};
+
+		return ${staticNotificationTemplateId};
 	}
 
 	macro putUserNotificationReadOrUnread {

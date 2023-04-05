@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -413,6 +414,8 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 * @return the name of the friendly URL mapping of the portlet
 	 */
 	public String getFriendlyURLMapping();
+
+	public String getFriendlyURLMapping(boolean lookupFriendlyURLMapper);
 
 	/**
 	 * Returns the class loader resource path to the friendly URL routes of the

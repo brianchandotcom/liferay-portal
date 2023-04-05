@@ -749,7 +749,7 @@ public class FragmentCollectionContributorRegistryImpl
 		@Override
 		public RequestDispatcher getRequestDispatcher(String path) {
 			return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-				ServletContextPool.get(StringPool.BLANK), path);
+				ServletContextPool.get(_portal.getServletContextName()), path);
 		}
 
 		@Override
@@ -784,7 +784,7 @@ public class FragmentCollectionContributorRegistryImpl
 
 		@Override
 		public ServletContext getServletContext() {
-			return ServletContextPool.get(StringPool.BLANK);
+			return ServletContextPool.get(_portal.getServletContextName());
 		}
 
 		@Override
@@ -895,7 +895,8 @@ public class FragmentCollectionContributorRegistryImpl
 
 		private final Map<String, Object> _attributes =
 			ConcurrentHashMapBuilder.<String, Object>put(
-				WebKeys.CTX, ServletContextPool.get(StringPool.BLANK)
+				WebKeys.CTX,
+				ServletContextPool.get(_portal.getServletContextName())
 			).build();
 
 		private final HttpSession _httpSession = new HttpSession() {

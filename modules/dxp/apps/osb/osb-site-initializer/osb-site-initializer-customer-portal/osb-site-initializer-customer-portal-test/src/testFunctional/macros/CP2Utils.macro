@@ -190,11 +190,11 @@ definition {
 	}
 
 	macro onboardingFlow {
-		CustomerPortal.clickOnStartProjectSetup();
+		Button.click(button = "Start Project Setup");
 
-		CustomerPortal.clickOnSkipForNowButton();
+		Button.click(button = "Skip for now");
 
-		CustomerPortal.clickOnSkipForNowButton();
+		Button.click(button = "Skip for now");
 	}
 
 	macro onlySeeExportAllKeys {

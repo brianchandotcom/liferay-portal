@@ -823,7 +823,7 @@ definition {
 	macro viewConfirmationModal {
 		var key_text = ${modalText};
 
-		AssertElementPresent(locator1 = "CustomerPortalSite#MODAL_INFO");
+		AssertVisible(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}
 
 	macro viewCPObjectCustomInfo {

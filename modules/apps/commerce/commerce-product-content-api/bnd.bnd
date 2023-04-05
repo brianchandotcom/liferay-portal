@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.commerce.product.content.api
 Bundle-Version: 9.0.1
 Export-Package:\
 	com.liferay.commerce.product.content.constants,\
+	com.liferay.commerce.product.content.info.item.renderer,\
 	com.liferay.commerce.product.content.render,\
 	com.liferay.commerce.product.content.render.list,\
 	com.liferay.commerce.product.content.render.list.entry,\

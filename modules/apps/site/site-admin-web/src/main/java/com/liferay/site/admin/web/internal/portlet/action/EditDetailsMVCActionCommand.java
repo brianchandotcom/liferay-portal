@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -91,8 +90,8 @@ public class EditDetailsMVCActionCommand
 				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Group.class.getName(), actionRequest);
+		ServiceContext serviceContext = ActionUtil.getServiceContext(
+			actionRequest, liveGroupId);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

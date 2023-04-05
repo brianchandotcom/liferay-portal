@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -61,8 +60,8 @@ public class EditSiteURLMVCActionCommand
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Group.class.getName(), actionRequest);
+		ServiceContext serviceContext = ActionUtil.getServiceContext(
+			actionRequest, liveGroupId);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

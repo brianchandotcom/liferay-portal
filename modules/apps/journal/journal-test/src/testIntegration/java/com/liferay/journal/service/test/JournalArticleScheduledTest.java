@@ -168,7 +168,7 @@ public class JournalArticleScheduledTest {
 		JournalArticle article = addArticle(
 			_group.getGroupId(), new Date(), when, approved);
 
-		JournalArticleLocalServiceUtil.checkArticles();
+		JournalArticleLocalServiceUtil.checkArticles(_group.getCompanyId());
 
 		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
 

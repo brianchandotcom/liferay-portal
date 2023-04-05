@@ -683,6 +683,10 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected FriendlyURLNormalizer friendlyURLNormalizer;
 
 	@Reference
+	protected FriendlyURLRedirectionConfigurationProvider
+		friendlyURLRedirectionConfigurationProvider;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -770,7 +774,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	private String _getFriendlyURLRedirectionType(long companyId) {
 		FriendlyURLRedirectionConfiguration
 			friendlyURLRedirectionConfiguration =
-				_friendlyURLRedirectionConfigurationProvider.
+				friendlyURLRedirectionConfigurationProvider.
 					getCompanyConfiguration(companyId);
 
 		return friendlyURLRedirectionConfiguration.redirectionType();
@@ -1011,11 +1015,6 @@ public class FriendlyURLServlet extends HttpServlet {
 		FriendlyURLServlet.class);
 
 	private String _friendlyURLPathPrefix;
-
-	@Reference
-	private FriendlyURLRedirectionConfigurationProvider
-		_friendlyURLRedirectionConfigurationProvider;
-
 	private int _pathInfoOffset;
 	private boolean _private;
 	private boolean _user;

@@ -19,7 +19,9 @@ import getFlatItems from '../utils/getFlatItems';
 
 const KeyboardDndContext = React.createContext();
 
-const ROOT_ITEM_OFFSET_WIDTH = NESTING_MARGIN / 2;
+const ITEM_MARGIN = 16;
+
+const ROOT_ITEM_OFFSET_WIDTH = NESTING_MARGIN * 0.325;
 
 export function KeyboardDndProvider({children}) {
 	const [dragLayer, setDragLayer] = useState(null);
@@ -60,12 +62,6 @@ export function useSetDragLayer() {
 				const siblingElement = document.querySelector(
 					`[data-item-id="${siblingItem.siteNavigationMenuItemId}"]`
 				);
-
-				siblingElement.scrollIntoView({
-					behavior: 'auto',
-					block: 'nearest',
-					inline: 'nearest',
-				});
 
 				const siblingElementRect = siblingElement.getBoundingClientRect();
 
@@ -115,12 +111,6 @@ export function useSetDragLayer() {
 				nextChildNode = nextChildNode.nextElementSibling;
 			}
 
-			(nextChildNode || parentElement).scrollIntoView({
-				behavior: 'auto',
-				block: 'nearest',
-				inline: 'nearest',
-			});
-
 			const parentElementRect = parentElement.getBoundingClientRect();
 
 			setDragLayer({
@@ -132,7 +122,7 @@ export function useSetDragLayer() {
 							: parentElementRect.x + NESTING_MARGIN,
 					y: nextChildNode
 						? nextChildNode.getBoundingClientRect().y
-						: parentElementRect.bottom,
+						: parentElementRect.bottom + ITEM_MARGIN,
 				},
 			});
 		},

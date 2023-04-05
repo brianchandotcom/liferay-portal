@@ -25,7 +25,6 @@ import {SidebarPanelIdProvider} from '../contexts/SidebarPanelIdContext';
 import decorateAddSiteNavigationMenuItemOptions from '../utils/decorateAddSiteNavigationMenuItemOptions';
 import {DragDropProvider} from '../utils/useDragAndDrop';
 import {AppLayout} from './AppLayout';
-import DragPreview from './DragPreview';
 import {EmptyState} from './EmptyState';
 import {Menu} from './Menu';
 import {MenuItemSettingsPanel} from './MenuItemSettingsPanel';
@@ -63,8 +62,6 @@ export function App(props) {
 			>
 				<ItemsProvider initialItems={siteNavigationMenuItems}>
 					<KeyboardDndProvider>
-						<DragPreview />
-
 						<DragDropProvider>
 							<SelectedMenuItemIdProvider>
 								<SidebarPanelIdProvider>

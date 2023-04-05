@@ -22,6 +22,7 @@ import {
 	useSetSidebarPanelId,
 	useSidebarPanelId,
 } from '../contexts/SidebarPanelIdContext';
+import DragPreview from './DragPreview';
 
 const DEFAULT_SIDEBAR_PANELS = [];
 
@@ -90,6 +91,8 @@ export function AppLayout({
 				})}
 				ref={appLayoutContentRef}
 			>
+				<DragPreview wrapperRef={appLayoutContentRef} />
+
 				{contentChildren}
 
 				<div

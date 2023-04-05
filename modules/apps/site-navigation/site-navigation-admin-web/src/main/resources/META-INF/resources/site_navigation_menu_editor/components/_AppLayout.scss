@@ -24,6 +24,7 @@ $sidebarWidth: 320px;
 
 	&-content {
 		padding-right: 0;
+		position: relative;
 		transition: padding-right ease 0.5s;
 		will-change: padding-right;
 

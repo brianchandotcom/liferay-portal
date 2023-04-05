@@ -21,20 +21,34 @@ import {useItems} from '../contexts/ItemsContext';
 import {useDragLayer as useKeyboardDragLayer} from '../contexts/KeyboardDndContext';
 import getDescendantsCount from '../utils/getDescendantsCount';
 
+const PREVIEW_HEIGHT = 64;
 const HANDLER_OFFSET = 10;
 
-const getItemStyles = (currentOffset, ref, rtl) => {
+const getItemStyles = (wrapperElement, currentOffset, ref, rtl) => {
 	if (!currentOffset || !ref.current) {
 		return {
 			display: 'none',
 		};
 	}
 
-	const rect = ref.current.getBoundingClientRect();
+	const wrapperRect = wrapperElement.getBoundingClientRect();
+
 	const x = rtl
-		? currentOffset.x + HANDLER_OFFSET - window.innerWidth
-		: currentOffset.x - HANDLER_OFFSET;
-	const y = currentOffset.y - rect.height * 0.5;
+		? currentOffset.x +
+		  wrapperRect.right +
+		  wrapperElement.scrollLeft +
+		  HANDLER_OFFSET -
+		  window.innerWidth
+		: currentOffset.x +
+		  wrapperElement.scrollLeft -
+		  wrapperRect.left -
+		  HANDLER_OFFSET;
+
+	const y =
+		currentOffset.y +
+		wrapperElement.scrollTop -
+		wrapperRect.top -
+		PREVIEW_HEIGHT * 0.5;
 
 	const transform = `translate(${x}px, ${y}px)`;
 
@@ -44,7 +58,7 @@ const getItemStyles = (currentOffset, ref, rtl) => {
 	};
 };
 
-export default function DragPreview() {
+export default function DragPreview({wrapperRef}) {
 	const ref = useRef();
 
 	const {languageId, portletNamespace} = useConstants();
@@ -93,18 +107,45 @@ export default function DragPreview() {
 		}
 	}, [itemId, items]);
 
-	if (!isDragging || itemNamespace !== portletNamespace) {
+	useEffect(() => {
+		if (keyboardDragLayer) {
+			ref.current?.scrollIntoView({
+				behavior: 'auto',
+				block: 'center',
+				inline: 'center',
+			});
+		}
+	});
+
+	if (
+		!isDragging ||
+		itemNamespace !== portletNamespace ||
+		!wrapperRef.current
+	) {
 		return null;
 	}
 
 	return (
 		<div className="site-navigation__drag-preview">
+			<div className="site-navigation__drag-preview__mask" />
+
 			<div
 				className="site-navigation__drag-preview__content"
 				ref={ref}
-				style={getItemStyles(currentOffset, ref, rtl)}
+				style={getItemStyles(
+					wrapperRef.current,
+					currentOffset,
+					ref,
+					rtl
+				)}
 			>
-				{label}
+				{keyboardDragLayer ? (
+					<div className="site-navigation__drag-preview__border" />
+				) : null}
+
+				<div className="site-navigation__drag-preview__label">
+					{label}
+				</div>
 			</div>
 		</div>
 	);

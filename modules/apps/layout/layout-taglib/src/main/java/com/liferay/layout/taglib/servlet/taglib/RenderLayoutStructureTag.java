@@ -988,6 +988,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				"p_l_mode", Constants.VIEW));
 		jspWriter.write("\"><input name=\"plid\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
+		jspWriter.write("\"><input name=\"p_l_id\" type=\"hidden\" value=\"");
+		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
 		jspWriter.write(
 			"\"><input name=\"segmentsExperienceId\" type=\"hidden\" value=\"");
 		jspWriter.write(

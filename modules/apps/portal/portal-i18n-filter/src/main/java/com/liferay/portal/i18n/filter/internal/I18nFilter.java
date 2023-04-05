@@ -57,7 +57,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Mijarra
  */
 @Component(
-	immediate = true,
 	property = {
 		"before-filter=GZip Filter", "dispatcher=FORWARD", "dispatcher=REQUEST",
 		"servlet-context-name=", "servlet-filter-name=I18n Filter",

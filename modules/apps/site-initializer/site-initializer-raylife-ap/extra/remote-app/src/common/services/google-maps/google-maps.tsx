@@ -37,8 +37,7 @@ const setup = (GOOGLE_API: any) => {
 		});
 
 		googleMapsLoader.load();
-	}
-	catch (error) {
+	} catch (error) {
 		console.warn(error);
 	}
 };
@@ -89,6 +88,23 @@ const InfoWindow = () => {
 	}
 
 	return new google.maps.InfoWindow();
+};
+
+const GeoLocation = async (addressLocation: string) => {
+	let lat = 0;
+	let lng = 0;
+	const address = addressLocation;
+
+	const geocoder = new google.maps.Geocoder();
+
+	await geocoder.geocode({address}, (results, status) => {
+		if (status === google.maps.GeocoderStatus.OK && results) {
+			lat = results[0].geometry.location.lat();
+			lng = results[0].geometry.location.lng();
+		}
+	});
+
+	return [lat, lng];
 };
 
 /**
@@ -150,6 +166,7 @@ const _adaptGoogleMapsAddressIntoAddress = (addressComponents: any) => {
 };
 
 export const GoogleMapsService = {
+	GeoLocation,
 	InfoWindow,
 	autocomplete,
 	getAutocompletePlaces,

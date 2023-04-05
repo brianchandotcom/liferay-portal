@@ -55,7 +55,7 @@ public class ProductSubscriptionConfigurationDTOConverter
 					ProductSubscriptionConfiguration.SubscriptionType.create(
 						cpDefinition.getSubscriptionType());
 				subscriptionTypeSettings =
-					cpDefinition.getSubscriptionTypeSettingsProperties();
+					cpDefinition.getSubscriptionTypeSettingsUnicodeProperties();
 			}
 		};
 	}

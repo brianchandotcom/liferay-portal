@@ -248,7 +248,9 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
+	public UnicodeProperties
+		getDeliverySubscriptionTypeSettingsUnicodeProperties() {
+
 		if (_deliverySubscriptionTypeSettingsUnicodeProperties == null) {
 			_deliverySubscriptionTypeSettingsUnicodeProperties =
 				UnicodePropertiesBuilder.create(
@@ -346,7 +348,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getSubscriptionTypeSettingsProperties() {
+	public UnicodeProperties getSubscriptionTypeSettingsUnicodeProperties() {
 		if (_subscriptionTypeSettingsUnicodeProperties == null) {
 			_subscriptionTypeSettingsUnicodeProperties =
 				UnicodePropertiesBuilder.create(
@@ -408,7 +410,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public void setDeliverySubscriptionTypeSettingsProperties(
+	public void setDeliverySubscriptionTypeSettingsUnicodeProperties(
 		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties) {
 
 		_deliverySubscriptionTypeSettingsUnicodeProperties =
@@ -448,7 +450,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public void setSubscriptionTypeSettingsProperties(
+	public void setSubscriptionTypeSettingsUnicodeProperties(
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties) {
 
 		_subscriptionTypeSettingsUnicodeProperties =

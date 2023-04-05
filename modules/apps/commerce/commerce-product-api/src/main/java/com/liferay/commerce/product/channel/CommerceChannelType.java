@@ -31,7 +31,7 @@ public interface CommerceChannelType {
 
 	public String getLabel(Locale locale);
 
-	public UnicodeProperties getTypeSettingsProperties(
+	public UnicodeProperties getTypeSettingsUnicodeProperties(
 		Map<String, String[]> parameterMap);
 
 }

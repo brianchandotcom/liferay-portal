@@ -14,12 +14,18 @@
 
 package com.liferay.commerce.product.subscription.type.web.internal;
 
+import com.liferay.commerce.exception.CPSubscriptionTypeSettingsException;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.util.CPSubscriptionType;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -40,6 +46,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = CPSubscriptionType.class
 )
 public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
+
+	@Override
+	public UnicodeProperties
+			getDeliverySubscriptionTypeSettingsUnicodeProperties(
+				UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return _getSubscriptionTypeSettingsUnicodeProperties(
+			"deliveryWeekDay", subscriptionTypeSettingsUnicodeProperties);
+	}
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -107,6 +123,48 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		calendar.add(Calendar.DAY_OF_MONTH, weekDay - today);
 
 		return calendar.getTime();
+	}
+
+	@Override
+	public UnicodeProperties getSubscriptionTypeSettingsUnicodeProperties(
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return _getSubscriptionTypeSettingsUnicodeProperties(
+			"weekDay", subscriptionTypeSettingsUnicodeProperties);
+	}
+
+	private UnicodeProperties _getSubscriptionTypeSettingsUnicodeProperties(
+			String weekDayKey,
+			UnicodeProperties subscriptionTypeSettingsUnicodeProperties)
+		throws CPSubscriptionTypeSettingsException {
+
+		if (subscriptionTypeSettingsUnicodeProperties == null) {
+			return null;
+		}
+
+		String weekDayValue = subscriptionTypeSettingsUnicodeProperties.get(
+			weekDayKey);
+
+		if (Validator.isBlank(weekDayValue)) {
+			throw new CPSubscriptionTypeSettingsException(
+				"The " + weekDayKey + " field is mandatory");
+		}
+
+		int weekDay = GetterUtil.getInteger(weekDayValue, -1);
+
+		if ((weekDay < Calendar.SUNDAY) || (weekDay > Calendar.SATURDAY)) {
+			throw new CPSubscriptionTypeSettingsException(
+				StringBundler.concat(
+					"Invalid ", weekDayKey, " ", weekDayValue));
+		}
+
+		return UnicodePropertiesBuilder.create(
+			HashMapBuilder.put(
+				weekDayKey, String.valueOf(weekDay)
+			).build(),
+			true
+		).build();
 	}
 
 	@Reference

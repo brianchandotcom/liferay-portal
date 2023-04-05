@@ -45,7 +45,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					commerceChannel.getCommerceChannelId(),
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					commerceChannel.getName(), commerceChannel.getType(),
-					commerceChannel.getTypeSettingsProperties(),
+					commerceChannel.getTypeSettingsUnicodeProperties(),
 					commerceChannel.getCommerceCurrencyCode());
 			}
 		}

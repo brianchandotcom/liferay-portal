@@ -924,7 +924,7 @@ public class CPTestUtil {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, false, sku, false, 0, null, null, 0L,
+				expirationDateMinute, false, sku, false, 1, null, null, 0L,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -1020,7 +1020,7 @@ public class CPTestUtil {
 				ddmStructureKey, published, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, false, sku, false, 0,
+				expirationDateHour, expirationDateMinute, false, sku, false, 1,
 				null, null, 0L, WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -1133,7 +1133,7 @@ public class CPTestUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, false,
-			sku, false, 0, null, null, 0L, WorkflowConstants.STATUS_DRAFT,
+			sku, false, 1, null, null, 0L, WorkflowConstants.STATUS_DRAFT,
 			serviceContext);
 	}
 

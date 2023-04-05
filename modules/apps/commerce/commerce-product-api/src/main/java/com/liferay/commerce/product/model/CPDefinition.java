@@ -86,7 +86,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 		throws Exception;
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getDeliverySubscriptionTypeSettingsProperties();
+		getDeliverySubscriptionTypeSettingsUnicodeProperties();
 
 	public java.util.Map<java.util.Locale, String> getDescriptionMap();
 
@@ -103,7 +103,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	public java.util.Map<java.util.Locale, String> getShortDescriptionMap();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSubscriptionTypeSettingsProperties();
+		getSubscriptionTypeSettingsUnicodeProperties();
 
 	public String getURL(String languageId);
 
@@ -111,7 +111,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public int hashCode();
 
-	public void setDeliverySubscriptionTypeSettingsProperties(
+	public void setDeliverySubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 
@@ -123,7 +123,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	public void setShortDescriptionMap(
 		java.util.Map<java.util.Locale, String> shortDescriptionMap);
 
-	public void setSubscriptionTypeSettingsProperties(
+	public void setSubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			subscriptionTypeSettingsUnicodeProperties);
 

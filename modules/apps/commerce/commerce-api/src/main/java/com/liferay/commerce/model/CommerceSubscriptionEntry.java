@@ -76,16 +76,16 @@ public interface CommerceSubscriptionEntry
 	public long getCPInstanceId();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getDeliverySubscriptionTypeSettingsProperties();
+		getDeliverySubscriptionTypeSettingsUnicodeProperties();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSubscriptionTypeSettingsProperties();
+		getSubscriptionTypeSettingsUnicodeProperties();
 
-	public void setDeliverySubscriptionTypeSettingsProperties(
+	public void setDeliverySubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 
-	public void setSubscriptionTypeSettingsProperties(
+	public void setSubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			subscriptionTypeSettingsUnicodeProperties);
 

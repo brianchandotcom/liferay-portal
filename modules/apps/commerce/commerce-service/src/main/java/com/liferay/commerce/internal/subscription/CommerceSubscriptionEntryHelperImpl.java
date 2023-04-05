@@ -95,13 +95,13 @@ public class CommerceSubscriptionEntryHelperImpl
 							subscriptionType,
 							cpSubscriptionInfo.getMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
-								getSubscriptionTypeSettingsProperties(),
+								getSubscriptionTypeSettingsUnicodeProperties(),
 							cpSubscriptionInfo.getDeliverySubscriptionLength(),
 							deliverySubscriptionType,
 							cpSubscriptionInfo.
 								getDeliveryMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
-								getDeliverySubscriptionTypeSettingsProperties());
+								getDeliverySubscriptionTypeSettingsUnicodeProperties());
 				}
 			}
 		}

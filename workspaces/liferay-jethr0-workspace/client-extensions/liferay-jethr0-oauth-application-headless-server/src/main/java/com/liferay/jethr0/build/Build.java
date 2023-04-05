@@ -16,6 +16,7 @@ package com.liferay.jethr0.build;
 
 import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 
@@ -38,6 +39,10 @@ public interface Build {
 
 	public void addBuildRuns(List<BuildRun> buildRuns);
 
+	public void addEnvironment(Environment environment);
+
+	public void addEnvironments(List<Environment> environments);
+
 	public void addTask(Task task);
 
 	public void addTasks(List<Task> tasks);
@@ -51,6 +56,8 @@ public interface Build {
 	public List<BuildRun> getBuildRuns();
 
 	public List<Build> getChildBuilds();
+
+	public List<Environment> getEnvironments();
 
 	public long getId();
 
@@ -81,6 +88,10 @@ public interface Build {
 	public void removeBuildRun(BuildRun buildRun);
 
 	public void removeBuildRuns(List<BuildRun> buildRuns);
+
+	public void removeEnvironment(Environment environment);
+
+	public void removeEnvironments(List<Environment> environments);
 
 	public void removeTask(Task task);
 

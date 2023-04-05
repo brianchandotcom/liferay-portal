@@ -1,5 +1,6 @@
 import DisplayComponent from './display-components';
 import React, {Fragment} from 'react';
+import {ConjunctionKey} from 'shared/util/constants';
 import {Criteria} from 'segment/segment-editor/dynamic/utils/types';
 import {findPropertyByCriterion} from 'segment/segment-editor/dynamic/utils/utils';
 import {ReferencedObjectsContext} from 'segment/segment-editor/dynamic/context/referencedObjects';
@@ -9,6 +10,11 @@ interface ICriteriaViewProps extends React.HTMLAttributes<HTMLDivElement> {
 	forwardedRef?: React.Ref<any>;
 	timeZoneId: string;
 }
+
+const CONJUNCTION_MAP = {
+	[ConjunctionKey.And]: Liferay.Language.get('and'),
+	[ConjunctionKey.Or]: Liferay.Language.get('or')
+};
 
 class CriteriaView extends React.Component<ICriteriaViewProps> {
 	static contextType = ReferencedObjectsContext;
@@ -21,7 +27,9 @@ class CriteriaView extends React.Component<ICriteriaViewProps> {
 				{items.map((criterion, index) => (
 					<Fragment key={index}>
 						{index !== 0 && (
-							<div className='conjunction'>{conjunctionName}</div>
+							<div className='conjunction'>
+								{CONJUNCTION_MAP[conjunctionName]}
+							</div>
 						)}
 
 						{criterion.items

@@ -26,10 +26,12 @@ String url = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
 	<div class="card d-flex flex-column product-card">
 		<div class="card-item-first position-relative">
 			<a href="<%= url %>">
-				<liferay-adaptive-media:img
-					class="img-fluid product-card-picture"
-					fileVersion="<%= csDiagramCPTypeHelper.getCPDiagramImageFileVersion(cpCatalogEntry.getCPDefinitionId(), csDiagramSetting, request) %>"
-				/>
+				<c:if test="<%= showImage %>">
+					<liferay-adaptive-media:img
+						class="img-fluid product-card-picture"
+						fileVersion="<%= csDiagramCPTypeHelper.getCPDiagramImageFileVersion(cpCatalogEntry.getCPDefinitionId(), csDiagramSetting, request) %>"
+					/>
+				</c:if>
 			</a>
 		</div>
 
@@ -41,24 +43,30 @@ String url = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
 					</span>
 				</p>
 
-				<p class="card-title" title="<%= cpCatalogEntry.getName() %>">
-					<a href="<%= url %>">
-						<span class="text-truncate-inline">
-							<span class="text-truncate"><%= cpCatalogEntry.getName() %></span>
-						</span>
-					</a>
-				</p>
+				<c:if test="<%= showName %>">
+					<p class="card-title" title="<%= cpCatalogEntry.getName() %>">
+						<a href="<%= url %>">
+							<span class="text-truncate-inline">
+								<span class="text-truncate"><%= cpCatalogEntry.getName() %></span>
+							</span>
+						</a>
+					</p>
+				</c:if>
 
-				<p class="card-body">
-					<span class="two-lined-description">
-						<%= cpCatalogEntry.getShortDescription() %>
-					</span>
-				</p>
+				<c:if test="<%= showPrice %>">
+					<p class="card-body">
+						<span class="two-lined-description">
+							<%= cpCatalogEntry.getShortDescription() %>
+						</span>
+					</p>
+				</c:if>
 
 				<div class="add-to-cart d-flex my-2">
-					<a class="btn btn-block btn-secondary" href="<%= url %>" role="button" style="margin-top: 0.35rem;">
-						<liferay-ui:message key="view" />
-					</a>
+					<c:if test="<%= showAddToCartButton %>">
+						<a class="btn btn-block btn-secondary" href="<%= url %>" role="button" style="margin-top: 0.35rem;">
+							<liferay-ui:message key="view" />
+						</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

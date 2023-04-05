@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/adaptive-media-image" prefix="liferay-adaptive-media" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -38,4 +40,9 @@ CommerceContext commerceContext = (CommerceContext)request.getAttribute(Commerce
 CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute(CPWebKeys.CP_CATALOG_ENTRY);
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 CSDiagramCPTypeHelper csDiagramCPTypeHelper = (CSDiagramCPTypeHelper)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_HELPER);
+
+boolean showAddToCartButton = (boolean)request.getAttribute("liferay-commerce:product-card:showAddToCartButton");
+boolean showImage = (boolean)request.getAttribute("liferay-commerce:product-card:showImage");
+boolean showName = (boolean)request.getAttribute("liferay-commerce:product-card:showName");
+boolean showPrice = (boolean)request.getAttribute("liferay-commerce:product-card:showPrice");
 %>

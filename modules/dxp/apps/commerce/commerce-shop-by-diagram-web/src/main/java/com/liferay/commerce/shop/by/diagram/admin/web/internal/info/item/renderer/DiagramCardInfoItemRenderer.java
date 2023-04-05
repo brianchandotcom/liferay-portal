@@ -84,6 +84,16 @@ public class DiagramCardInfoItemRenderer
 				CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_HELPER,
 				_csDiagramCPTypeHelper);
 
+			httpServletRequest.setAttribute(
+				"liferay-commerce:product-card:showAddToCartButton",
+				Boolean.TRUE);
+			httpServletRequest.setAttribute(
+				"liferay-commerce:product-card:showImage", Boolean.TRUE);
+			httpServletRequest.setAttribute(
+				"liferay-commerce:product-card:showName", Boolean.TRUE);
+			httpServletRequest.setAttribute(
+				"liferay-commerce:product-card:showPrice", Boolean.TRUE);
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
 					"/info/item/renderer/diagram_card/page.jsp");

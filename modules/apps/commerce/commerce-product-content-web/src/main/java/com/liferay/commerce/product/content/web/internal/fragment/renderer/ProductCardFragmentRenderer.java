@@ -20,6 +20,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
+import com.liferay.commerce.product.content.info.item.renderer.CPContentInfoItemRendererRegistry;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
@@ -195,6 +196,11 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 
+			httpServletRequest.setAttribute(
+				CPContentWebKeys.CP_CONTENT_INFO_ITEM_RENDERER,
+				_cpContentInfoItemRendererRegistry.getCPContentInfoItemRenderer(
+					cpDefinition.getProductTypeName()));
+
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
@@ -336,6 +342,10 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CPContentHelper _cpContentHelper;
+
+	@Reference
+	private CPContentInfoItemRendererRegistry
+		_cpContentInfoItemRendererRegistry;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

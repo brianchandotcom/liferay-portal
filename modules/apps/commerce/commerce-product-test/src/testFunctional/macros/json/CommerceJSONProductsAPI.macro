@@ -143,6 +143,10 @@ definition {
 			var sku = "${productName}_default";
 		}
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		var productSpecifications = "";
 
 		if (isSet(specifications)) {
@@ -204,7 +208,7 @@ definition {
 					"displayDate": "${displayDate}",
 					"expando": {},
 					"expirationDate": "${expirationDate}",
-					"externalReferenceCode": "",
+					"externalReferenceCode": "${externalReferenceCode}",
 					"metaDescription": {
 						"en_US": "${metaDescription}"
 					},

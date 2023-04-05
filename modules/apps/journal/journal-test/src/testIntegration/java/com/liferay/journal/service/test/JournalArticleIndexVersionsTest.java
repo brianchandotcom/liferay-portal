@@ -21,7 +21,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,7 +37,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -72,20 +69,7 @@ public class JournalArticleIndexVersionsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
-
-		User user = TestPropsValues.getUser();
-
-		user.setCompanyId(TestPropsValues.getCompanyId());
-
-		UserTestUtil.setUser(user);
 
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(

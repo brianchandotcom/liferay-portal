@@ -454,7 +454,6 @@ const NameLabel = React.forwardRef(
 						'page-editor__page-structure__tree-node__name--hidden': hidden,
 						'page-editor__page-structure__tree-node__name--mapped': isMapped,
 						'page-editor__page-structure__tree-node__name--master-item': isMasterItem,
-						'w-100': editingName,
 					}
 				)}
 				ref={ref}

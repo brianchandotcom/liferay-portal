@@ -8,10 +8,14 @@ html#{$cadmin-selector} {
 
 			&-node {
 				width: initial;
-				min-width: initial;
+				min-width: 100%;
 
 				&.treeview-link {
 					width: fit-content;
+				}
+
+				.c-inner {
+					width: auto;
 				}
 
 				& > .autofit-col-expand {

@@ -228,7 +228,7 @@ export default function PageStructureSidebar() {
 
 		return (
 			<div
-				className={classNames('autofit-row', {
+				className={classNames('autofit-row w-auto', {
 					'page-editor__page-structure__tree-node__buttons--hidden':
 						item.hidden || item.hiddenAncestor,
 				})}

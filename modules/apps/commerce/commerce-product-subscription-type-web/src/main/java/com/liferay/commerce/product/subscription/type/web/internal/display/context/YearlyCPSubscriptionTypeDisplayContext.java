@@ -65,8 +65,8 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 
 	public int getMonthDay() {
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
-			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object, _payment);
+			CommerceSubscriptionTypeUtil.
+				getSubscriptionTypeSettingsUnicodeProperties(_object, _payment);
 
 		if ((subscriptionTypeSettingsUnicodeProperties == null) ||
 			subscriptionTypeSettingsUnicodeProperties.isEmpty()) {
@@ -100,8 +100,8 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 
 	public int getSelectedMonth() {
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
-			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object, _payment);
+			CommerceSubscriptionTypeUtil.
+				getSubscriptionTypeSettingsUnicodeProperties(_object, _payment);
 
 		if (subscriptionTypeSettingsUnicodeProperties == null) {
 			return 0;
@@ -118,8 +118,8 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 
 	public int getSelectedYearlyMode() {
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
-			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object, _payment);
+			CommerceSubscriptionTypeUtil.
+				getSubscriptionTypeSettingsUnicodeProperties(_object, _payment);
 
 		if (subscriptionTypeSettingsUnicodeProperties == null) {
 			return CPSubscriptionTypeConstants.MODE_ORDER_DATE;

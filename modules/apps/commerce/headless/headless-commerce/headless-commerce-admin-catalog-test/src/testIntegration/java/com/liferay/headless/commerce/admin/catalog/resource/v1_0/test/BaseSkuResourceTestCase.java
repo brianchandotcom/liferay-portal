@@ -1307,6 +1307,17 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"skuSubscriptionConfiguration",
+					additionalAssertFieldName)) {
+
+				if (sku.getSkuSubscriptionConfiguration() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("unspsc", additionalAssertFieldName)) {
 				if (sku.getUnspsc() == null) {
 					valid = false;
@@ -1681,6 +1692,20 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"skuSubscriptionConfiguration",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sku1.getSkuSubscriptionConfiguration(),
+						sku2.getSkuSubscriptionConfiguration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("unspsc", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(sku1.getUnspsc(), sku2.getUnspsc())) {
 					return false;
@@ -2021,6 +2046,11 @@ public abstract class BaseSkuResourceTestCase {
 		}
 
 		if (entityFieldName.equals("skuOptions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("skuSubscriptionConfiguration")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

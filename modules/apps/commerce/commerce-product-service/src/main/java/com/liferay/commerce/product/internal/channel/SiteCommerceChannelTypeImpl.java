@@ -52,7 +52,7 @@ public class SiteCommerceChannelTypeImpl implements CommerceChannelType {
 	}
 
 	@Override
-	public UnicodeProperties getTypeSettingsProperties(
+	public UnicodeProperties getTypeSettingsUnicodeProperties(
 		Map<String, String[]> parameterMap) {
 
 		return UnicodePropertiesBuilder.create(

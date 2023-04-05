@@ -183,7 +183,7 @@ public class EditCommerceChannelMVCActionCommand
 		commerceChannel = _commerceChannelService.updateCommerceChannel(
 			commerceChannel.getCommerceChannelId(), siteGroupId,
 			commerceChannel.getName(), commerceChannel.getType(),
-			commerceChannel.getTypeSettingsProperties(),
+			commerceChannel.getTypeSettingsUnicodeProperties(),
 			commerceChannel.getCommerceCurrencyCode());
 
 		_accountEntryGroupSettings.setAllowedTypes(
@@ -245,8 +245,8 @@ public class EditCommerceChannelMVCActionCommand
 		return _commerceChannelService.updateCommerceChannel(
 			commerceChannelId, commerceChannel.getSiteGroupId(), name,
 			commerceChannel.getType(),
-			commerceChannel.getTypeSettingsProperties(), commerceCurrencyCode,
-			priceDisplayType, discountsTargetNetPrice);
+			commerceChannel.getTypeSettingsUnicodeProperties(),
+			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
 	}
 
 	private void _updatePurchaseOrderNumber(

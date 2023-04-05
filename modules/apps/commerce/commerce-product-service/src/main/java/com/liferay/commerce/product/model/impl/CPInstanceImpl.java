@@ -50,10 +50,10 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 
 			return new CPSubscriptionInfo(
 				getSubscriptionLength(), getSubscriptionType(),
-				getSubscriptionTypeSettingsProperties(),
+				getSubscriptionTypeSettingsUnicodeProperties(),
 				getMaxSubscriptionCycles(), getDeliverySubscriptionLength(),
 				getDeliverySubscriptionType(),
-				getDeliverySubscriptionTypeSettingsProperties(),
+				getDeliverySubscriptionTypeSettingsUnicodeProperties(),
 				getDeliveryMaxSubscriptionCycles());
 		}
 		else if (!isOverrideSubscriptionInfo()) {
@@ -65,12 +65,12 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 				return new CPSubscriptionInfo(
 					cpDefinition.getSubscriptionLength(),
 					cpDefinition.getSubscriptionType(),
-					cpDefinition.getSubscriptionTypeSettingsProperties(),
+					cpDefinition.getSubscriptionTypeSettingsUnicodeProperties(),
 					cpDefinition.getMaxSubscriptionCycles(),
 					cpDefinition.getDeliverySubscriptionLength(),
 					cpDefinition.getDeliverySubscriptionType(),
 					cpDefinition.
-						getDeliverySubscriptionTypeSettingsProperties(),
+						getDeliverySubscriptionTypeSettingsUnicodeProperties(),
 					cpDefinition.getDeliveryMaxSubscriptionCycles());
 			}
 		}
@@ -79,7 +79,9 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
+	public UnicodeProperties
+		getDeliverySubscriptionTypeSettingsUnicodeProperties() {
+
 		if (_deliverySubscriptionTypeSettingsUnicodeProperties == null) {
 			_deliverySubscriptionTypeSettingsUnicodeProperties =
 				UnicodePropertiesBuilder.create(
@@ -93,7 +95,7 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getSubscriptionTypeSettingsProperties() {
+	public UnicodeProperties getSubscriptionTypeSettingsUnicodeProperties() {
 		if (_subscriptionTypeSettingsUnicodeProperties == null) {
 			_subscriptionTypeSettingsUnicodeProperties =
 				UnicodePropertiesBuilder.create(
@@ -116,7 +118,7 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	}
 
 	@Override
-	public void setDeliverySubscriptionTypeSettingsProperties(
+	public void setDeliverySubscriptionTypeSettingsUnicodeProperties(
 		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties) {
 
 		_deliverySubscriptionTypeSettingsUnicodeProperties =
@@ -139,7 +141,7 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	}
 
 	@Override
-	public void setSubscriptionTypeSettingsProperties(
+	public void setSubscriptionTypeSettingsUnicodeProperties(
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties) {
 
 		_subscriptionTypeSettingsUnicodeProperties =

@@ -341,9 +341,9 @@ public class CommerceChannelWrapper
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties() {
+		getTypeSettingsUnicodeProperties() {
 
-		return model.getTypeSettingsProperties();
+		return model.getTypeSettingsUnicodeProperties();
 	}
 
 	/**
@@ -552,11 +552,11 @@ public class CommerceChannelWrapper
 	}
 
 	@Override
-	public void setTypeSettingsProperties(
+	public void setTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			typeSettingsUnicodeProperties) {
 
-		model.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+		model.setTypeSettingsUnicodeProperties(typeSettingsUnicodeProperties);
 	}
 
 	/**

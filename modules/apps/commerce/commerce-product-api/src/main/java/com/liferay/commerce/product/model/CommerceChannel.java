@@ -63,9 +63,9 @@ public interface CommerceChannel extends CommerceChannelModel, PersistedModel {
 	public long getGroupId();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties();
+		getTypeSettingsUnicodeProperties();
 
-	public void setTypeSettingsProperties(
+	public void setTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			typeSettingsUnicodeProperties);
 

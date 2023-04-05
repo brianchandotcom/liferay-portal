@@ -919,7 +919,7 @@ public class CPDefinitionsImporter {
 
 		boolean overrideSubscriptionInfo = false;
 		boolean subscriptionEnabled = false;
-		int subscriptionLength = 0;
+		int subscriptionLength = 1;
 		String subscriptionType = null;
 		long maxSubscriptionCycles = 0;
 

@@ -1,0 +1,27 @@
+import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.parser.Parser
+
+buildscript {
+	dependencies {
+		classpath group: "com.vladsch.flexmark", name: "flexmark-all", version: "0.64.0"
+	}
+
+	repositories {
+		mavenCentral()
+	}
+}
+
+task flexmark
+
+flexmark {
+	File inputFile = project.file("src/sample.markdown")
+	inputs.file(inputFile)
+
+	File outputFile = project.file("${project.buildDir}/sample.html")
+	outputs.file(outputFile)
+
+	doLast {
+		outputFile.parentFile.mkdirs()
+		outputFile.text = HtmlRenderer.builder().build().render(Parser.builder().build().parse(inputFile.text))
+	}
+}

@@ -1,0 +1,7 @@
+assemble:
+    - fromTask: flexmark
+      into: static
+liferay-sample-static-content:
+    name: Liferay Sample Static Content
+    type: staticContent
+    url: sample.html

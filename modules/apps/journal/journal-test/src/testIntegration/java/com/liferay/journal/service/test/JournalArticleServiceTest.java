@@ -124,7 +124,7 @@ public class JournalArticleServiceTest {
 	}
 
 	@Test
-	public void testAddArticle() throws Exception {
+	public void testAddArticle() {
 		Assert.assertEquals(
 			"Version 1", _article.getTitle(LocaleUtil.getDefault()));
 		Assert.assertTrue(_article.isApproved());
@@ -698,14 +698,13 @@ public class JournalArticleServiceTest {
 		return articles;
 	}
 
-	protected JournalArticle fetchLatestArticle(int status) throws Exception {
+	protected JournalArticle fetchLatestArticle(int status) {
 		return _journalArticleLocalService.fetchLatestArticle(
 			_group.getGroupId(), _article.getArticleId(), status);
 	}
 
 	protected JournalArticle fetchLatestArticle(
-			int status, boolean preferApproved)
-		throws Exception {
+		int status, boolean preferApproved) {
 
 		return _journalArticleLocalService.fetchLatestArticle(
 			_article.getResourcePrimKey(), status, preferApproved);

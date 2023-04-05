@@ -14,6 +14,9 @@
 
 package com.liferay.jethr0.environment;
 
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.task.Task;
+
 import org.json.JSONObject;
 
 /**
@@ -34,6 +37,11 @@ public abstract class BaseEnvironment implements Environment {
 	@Override
 	public String getBrowser() {
 		return _browser;
+	}
+
+	@Override
+	public Build getBuild() {
+		return _build;
 	}
 
 	@Override
@@ -97,6 +105,11 @@ public abstract class BaseEnvironment implements Environment {
 	}
 
 	@Override
+	public Task getTask() {
+		return _task;
+	}
+
+	@Override
 	public void setAppServer(String appServer) {
 		_appServer = appServer;
 	}
@@ -109,6 +122,11 @@ public abstract class BaseEnvironment implements Environment {
 	@Override
 	public void setBrowser(String browser) {
 		_browser = browser;
+	}
+
+	@Override
+	public void setBuild(Build build) {
+		_build = build;
 	}
 
 	@Override
@@ -139,6 +157,11 @@ public abstract class BaseEnvironment implements Environment {
 	}
 
 	@Override
+	public void setTask(Task task) {
+		_task = task;
+	}
+
+	@Override
 	public String toString() {
 		return String.valueOf(getJSONObject());
 	}
@@ -160,11 +183,13 @@ public abstract class BaseEnvironment implements Environment {
 	private String _appServer;
 	private String _batchName;
 	private String _browser;
+	private Build _build;
 	private String _database;
 	private final long _id;
 	private String _javaVersion;
 	private LiferayBundle _liferayBundle;
 	private LiferayPortalBranch _liferayPortalBranch;
 	private String _operatingSystem;
+	private Task _task;
 
 }

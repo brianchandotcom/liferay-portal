@@ -14,6 +14,9 @@
 
 package com.liferay.jethr0.environment;
 
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.task.Task;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +33,8 @@ public interface Environment {
 
 	public String getBrowser();
 
+	public Build getBuild();
+
 	public String getDatabase();
 
 	public long getId();
@@ -44,11 +49,15 @@ public interface Environment {
 
 	public String getOperatingSystem();
 
+	public Task getTask();
+
 	public void setAppServer(String appServer);
 
 	public void setBatchName(String batchName);
 
 	public void setBrowser(String browser);
+
+	public void setBuild(Build build);
 
 	public void setDatabase(String database);
 
@@ -59,6 +68,8 @@ public interface Environment {
 	public void setLiferayPortalBranch(LiferayPortalBranch liferayPortalBranch);
 
 	public void setOperatingSystem(String operatingSystem);
+
+	public void setTask(Task task);
 
 	public enum LiferayBundle {
 

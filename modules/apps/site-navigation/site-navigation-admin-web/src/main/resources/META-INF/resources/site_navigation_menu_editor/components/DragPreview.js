@@ -79,14 +79,17 @@ export default function DragPreview() {
 		if (item) {
 			const descendantsCount = getDescendantsCount(items, itemId);
 
-			setLabel(
-				descendantsCount
-					? sub(
-							Liferay.Language.get('x-elements'),
-							descendantsCount + 1
-					  )
-					: item.title
-			);
+			if (descendantsCount) {
+				const translationKey =
+					descendantsCount > 1
+						? Liferay.Language.get('x-and-x-children')
+						: Liferay.Language.get('x-and-x-child');
+
+				setLabel(sub(translationKey, item.title, descendantsCount));
+			}
+			else {
+				setLabel(item.title);
+			}
 		}
 	}, [itemId, items]);
 

@@ -7,6 +7,7 @@ import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountInfo,
+	getAccountInfoFromCommerce,
 	getAccounts,
 	getChannels,
 	getDeliveryProduct,
@@ -103,7 +104,16 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				accountId,
 			});
 
-			setAccount(currentAccount);
+			// The call for getAccountInfoFromCommerce is only temporary
+
+			const currentAccountCommerce = await getAccountInfoFromCommerce({
+				accountId,
+			});
+
+			setAccount({
+				...currentAccount,
+				logoURL: currentAccountCommerce.logoURL,
+			});
 
 			const skuResponse = await getProductSKU({
 				appProductId: Liferay.MarketplaceCustomerFlow.appId,

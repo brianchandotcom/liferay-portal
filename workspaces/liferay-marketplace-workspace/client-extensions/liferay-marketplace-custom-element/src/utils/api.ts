@@ -212,6 +212,19 @@ export async function getAccounts() {
 
 export async function getAccountInfo({accountId}: {accountId: number}) {
 	const response = await fetch(
+		`/o/headless-admin-user/v1.0/accounts/${accountId}`,
+		{headers, method: 'GET'}
+	);
+
+	return response.json();
+}
+
+export async function getAccountInfoFromCommerce({
+	accountId,
+}: {
+	accountId: number;
+}) {
+	const response = await fetch(
 		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}`,
 		{headers, method: 'GET'}
 	);

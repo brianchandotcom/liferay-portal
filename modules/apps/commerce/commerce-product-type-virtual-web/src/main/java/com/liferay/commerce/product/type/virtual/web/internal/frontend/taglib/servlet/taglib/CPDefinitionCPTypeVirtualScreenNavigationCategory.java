@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.type.virtual.web.internal.constants.CPTypeVirtualScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
@@ -54,7 +55,8 @@ public class CPDefinitionCPTypeVirtualScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "cp.definition.general";
+		return CPDefinitionScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL;
 	}
 
 	@Reference

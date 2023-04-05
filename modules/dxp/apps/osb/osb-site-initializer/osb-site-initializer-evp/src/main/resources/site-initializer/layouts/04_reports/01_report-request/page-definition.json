@@ -1,0 +1,39 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "9"
+					},
+					"indexed": true,
+					"layout": {
+						"opacity": 100,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"properties": "route=generate-report"
+								},
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:EVP$]"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

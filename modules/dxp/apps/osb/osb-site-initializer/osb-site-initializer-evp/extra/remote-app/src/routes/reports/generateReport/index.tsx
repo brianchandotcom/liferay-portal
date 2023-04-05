@@ -17,6 +17,7 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import Form from '../../../common/components/Form';
 import LoadingIndicator from '../../../common/components/Form/LoadingIndicator';
 import yupSchema, {yupResolver} from '../../../common/schema/yup';
+import {Liferay} from '../../../common/services/liferay/liferay';
 import {getPicklistByName} from '../../../common/services/picklist';
 import {getRequestsByFilter} from '../../../common/services/request';
 import {
@@ -34,6 +35,8 @@ const GenerateReport = () => {
 	const [statuses, setStatuses] = useState<any>([]);
 	const [branches, setBranches] = useState<any>([]);
 	const [isLoading, setIsLoading] = useState(true);
+
+	const redirect = `${Liferay.ThemeDisplay.getPortalURL()}/web/evp/reports`;
 
 	const {
 		clearErrors,
@@ -345,15 +348,31 @@ const GenerateReport = () => {
 						</div>
 					</div>
 
-					<div className="mt-4 row">
-						<div className="col d-flex justify-content-end">
-							<Form.Button
-								className="px-4"
-								displayType="primary"
-								onClick={handleSubmit(onSubmit)}
-							>
-								Generate
-							</Form.Button>
+					<div className="mt-5 row">
+						<div className="col">
+							<div className="col d-flex justify-content-start p-0">
+								<Form.Button
+									className="px-4"
+									displayType="secondary"
+									onClick={() => {
+										window.location.href = redirect;
+									}}
+								>
+									Back
+								</Form.Button>
+							</div>
+						</div>
+
+						<div className="col">
+							<div className="col d-flex justify-content-end">
+								<Form.Button
+									className="px-4"
+									displayType="primary"
+									onClick={handleSubmit(onSubmit)}
+								>
+									Generate
+								</Form.Button>
+							</div>
 						</div>
 					</div>
 				</ClayForm>

@@ -1,6 +1,207 @@
 {
 	"pageElement": {
 		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "9"
+					},
+					"indexed": true,
+					"layout": {
+						"opacity": 100,
+						"widthType": "Fixed"
+					},
+					"name": "Landing Page Container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"name": "Landing Page Grid",
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "middle"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"EVPRequestsListing"
+											],
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/report-request"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
+											"indexed": true,
+											"layout": {
+												"opacity": 100,
+												"widthType": "Fluid"
+											},
+											"name": "Container EVP Requests Listing"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "evp-card",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "1-card-title",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "EVP Requests Listing"
+																	}
+																}
+															}
+														},
+														{
+															"id": "1-card-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Go to EVP Requests Listing Page"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"opacity": 100,
+												"widthType": "Fluid"
+											}
+										},
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "evp-check-card-permission",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
 		],
 		"type": "Root"
 	},

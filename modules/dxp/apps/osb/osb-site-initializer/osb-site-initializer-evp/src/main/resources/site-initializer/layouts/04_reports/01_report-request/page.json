@@ -1,7 +1,8 @@
 {
-	"hidden": false,
+	"friendlyURL": "/report-request",
+	"hidden": true,
 	"name_i18n": {
-		"en_US": "Reports"
+		"en_US": "Report Request"
 	},
 	"permissions": [
 		{

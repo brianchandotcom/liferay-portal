@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -160,10 +159,9 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		}
 
 		return UnicodePropertiesBuilder.create(
-			HashMapBuilder.put(
-				weekDayKey, String.valueOf(weekDay)
-			).build(),
 			true
+		).put(
+			weekDayKey, String.valueOf(weekDay)
 		).build();
 	}
 

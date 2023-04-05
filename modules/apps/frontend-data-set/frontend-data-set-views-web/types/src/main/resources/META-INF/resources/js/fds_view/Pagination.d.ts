@@ -12,25 +12,17 @@
  * details.
  */
 
-import '../css/FDSEntries.scss';
-export declare type TFDSView = {
-	description: string;
-	externalReferenceCode: string;
-	id: string;
-	label: string;
-};
-interface IFDSViewsProps {
-	fdsEntryId: string;
-	fdsEntryLabel: string;
-	fdsViewURL: string;
+/// <reference types="react" />
+
+import {TFDSView} from '../FDSViews';
+interface IPaginationProps {
+	fdsView: TFDSView;
 	fdsViewsAPIURL: string;
 	namespace: string;
 }
-declare const FDSViews: ({
-	fdsEntryId,
-	fdsEntryLabel,
-	fdsViewURL,
+declare function Pagination({
+	fdsView,
 	fdsViewsAPIURL,
 	namespace,
-}: IFDSViewsProps) => JSX.Element;
-export default FDSViews;
+}: IPaginationProps): JSX.Element;
+export default Pagination;

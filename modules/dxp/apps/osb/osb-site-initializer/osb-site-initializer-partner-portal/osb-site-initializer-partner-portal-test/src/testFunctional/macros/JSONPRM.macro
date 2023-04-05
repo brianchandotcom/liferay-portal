@@ -152,12 +152,28 @@ definition {
 
 			var secondTotalMDFRequestAmount = ${secondTotalCostOfExpense} / 2;
 
-			var secondActivityId = JSONPRMAPI.addActivity(
+			var activityExternalReferenceCode = JSONPRMAPI.addActivitySf(
+				accountEntryName = ${accountEntryName},
 				activityDescription = ${activityDescription},
 				activityName = ${secondActivityName},
 				budgetValue = ${secondTotalCostOfExpense},
 				endDate = ${endDate},
 				expenseOption = ${expenseOption},
+				mdfExternalReferenceCode = ${mdfExternalReferenceCode},
+				requestId = ${requestId},
+				startDate = ${startDate},
+				totalMDFRequestAmount = ${secondTotalMDFRequestAmount});
+
+			var secondActivityId = JSONPRMAPI.addActivity(
+				accountEntryName = ${accountEntryName},
+				activityDescription = ${activityDescription},
+				activityExternalReferenceCode = ${activityExternalReferenceCode},
+				activityName = ${secondActivityName},
+				budgetValue = ${secondTotalCostOfExpense},
+				endDate = ${endDate},
+				expenseOption = ${expenseOption},
+				mdfExternalReferenceCode = ${mdfExternalReferenceCode},
+				mdfExternalReferenceCode = ${mdfExternalReferenceCode},
 				requestId = ${requestId},
 				startDate = ${startDate},
 				totalMDFRequestAmount = ${secondTotalMDFRequestAmount});

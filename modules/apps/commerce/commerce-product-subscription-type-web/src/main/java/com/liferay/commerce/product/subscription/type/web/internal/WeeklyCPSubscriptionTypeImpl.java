@@ -142,26 +142,31 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 			return null;
 		}
 
-		String weekDayValue = subscriptionTypeSettingsUnicodeProperties.get(
-			weekDayKey);
-
-		if (Validator.isBlank(weekDayValue)) {
-			throw new CPSubscriptionTypeSettingsException(
-				"The " + weekDayKey + " field is mandatory");
-		}
-
-		int weekDay = GetterUtil.getInteger(weekDayValue, -1);
-
-		if ((weekDay < Calendar.SUNDAY) || (weekDay > Calendar.SATURDAY)) {
-			throw new CPSubscriptionTypeSettingsException(
-				StringBundler.concat(
-					"Invalid ", weekDayKey, " ", weekDayValue));
-		}
-
 		return UnicodePropertiesBuilder.create(
 			true
 		).put(
-			weekDayKey, String.valueOf(weekDay)
+			weekDayKey,
+			() -> {
+				String weekDayValue =
+					subscriptionTypeSettingsUnicodeProperties.get(weekDayKey);
+
+				if (Validator.isBlank(weekDayValue)) {
+					throw new CPSubscriptionTypeSettingsException(
+						"The " + weekDayKey + " field is mandatory");
+				}
+
+				int weekDay = GetterUtil.getInteger(weekDayValue, -1);
+
+				if ((weekDay < Calendar.SUNDAY) ||
+					(weekDay > Calendar.SATURDAY)) {
+
+					throw new CPSubscriptionTypeSettingsException(
+						StringBundler.concat(
+							"Invalid ", weekDayKey, " ", weekDayValue));
+				}
+
+				return weekDayValue;
+			}
 		).build();
 	}
 

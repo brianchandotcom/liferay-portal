@@ -62,41 +62,19 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
+		for (var newWorkflow : list "1,2,3") {
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow ${newWorkflow}");
 
-		ProcessBuilderKaleoDesignerReact.addConnector(
-			connectorIn = "end",
-			connectorLabel = "Start-End Connector",
-			connectorOut = "start",
-			key_direction = "right");
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Start-End Connector",
+				connectorOut = "start",
+				key_direction = "right");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Navigator.gotoBack();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 2");
-
-		ProcessBuilderKaleoDesignerReact.addConnector(
-			connectorIn = "end",
-			connectorLabel = "Start-End Connector",
-			connectorOut = "start",
-			key_direction = "right");
-
-		PortletEntry.publish();
-
-		Navigator.gotoBack();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 3");
-
-		ProcessBuilderKaleoDesignerReact.addConnector(
-			connectorIn = "end",
-			connectorLabel = "Start-End Connector",
-			connectorOut = "start",
-			key_direction = "right");
-
-		PortletEntry.publish();
-
-		Navigator.gotoBack();
+			Navigator.gotoBack();
+		}
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

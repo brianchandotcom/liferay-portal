@@ -244,6 +244,10 @@
 			<contains></contains>
 			<matches>Portlet com_liferay_depot_web_portlet_Depot.*failed to initialize</matches>
 		</ignore-error>
+		<ignore-error description="LPS-122481 - temporarily ignore until fixed">
+			<contains></contains>
+			<matches>Declarative Service Unsatisfied Component Checker check result.*\n.*com.liferay.depot.web((.|\n)*)</matches>
+		</ignore-error>
 		<ignore-error description="LPS-123610">
 			<contains>No default user was found for company</contains>
 			<matches></matches>

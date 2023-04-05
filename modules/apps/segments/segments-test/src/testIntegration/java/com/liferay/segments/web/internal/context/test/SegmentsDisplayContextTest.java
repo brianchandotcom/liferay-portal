@@ -190,9 +190,9 @@ public class SegmentsDisplayContextTest {
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), _user.getUserId()));
 
-				Assert.assertEquals(
-					"assign-site-roles-link dropdown-item action disabled",
-					_getAssignUserRolesLinkCss(segmentsEntry));
+				Assert.assertFalse(
+					_isAssignUserRolesButtonEnabled(
+						segmentsEntry.getCompanyId()));
 			}
 		}
 	}
@@ -220,9 +220,9 @@ public class SegmentsDisplayContextTest {
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), _user.getUserId()));
 
-				Assert.assertEquals(
-					"assign-site-roles-link dropdown-item",
-					_getAssignUserRolesLinkCss(segmentsEntry));
+				Assert.assertTrue(
+					_isAssignUserRolesButtonEnabled(
+						segmentsEntry.getCompanyId()));
 			}
 		}
 	}
@@ -684,19 +684,6 @@ public class SegmentsDisplayContextTest {
 			segmentsEntry);
 	}
 
-	private String _getAssignUserRolesLinkCss(SegmentsEntry segmentsEntry)
-		throws Exception {
-
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_renderPortlet();
-
-		return ReflectionTestUtil.invoke(
-			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
-			"getAssignUserRolesLinkCss", new Class<?>[] {SegmentsEntry.class},
-			segmentsEntry);
-	}
-
 	private String _getAvailableActions(SegmentsEntry segmentsEntry)
 		throws Exception {
 
@@ -855,6 +842,19 @@ public class SegmentsDisplayContextTest {
 		themeDisplay.setUser(_user);
 
 		return themeDisplay;
+	}
+
+	private boolean _isAssignUserRolesButtonEnabled(long companyId)
+		throws Exception {
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_renderPortlet();
+
+		return ReflectionTestUtil.invoke(
+			mockLiferayPortletRenderRequest.getAttribute(
+				"SEGMENTS_DISPLAY_CONTEXT"),
+			"isRoleSegmentationEnabled", new Class<?>[] {long.class},
+			companyId);
 	}
 
 	private boolean _isRoleSegmentationEnabled(long companyId)

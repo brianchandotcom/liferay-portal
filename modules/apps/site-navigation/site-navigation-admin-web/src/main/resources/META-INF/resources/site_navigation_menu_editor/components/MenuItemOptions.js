@@ -153,6 +153,7 @@ export default function MenuItemOptions({
 							? setDeletionModalVisible(true)
 							: deleteMenuItem()
 					}
+					symbol="times-circle"
 					tabIndex={
 						isTarget && Liferay.FeatureFlags['LPS-134527']
 							? '0'

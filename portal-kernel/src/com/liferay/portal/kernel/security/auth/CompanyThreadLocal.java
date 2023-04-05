@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -137,37 +137,52 @@ public class CompanyThreadLocal {
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-			String sql =
-				"select userId, languageId, timeZoneId from User_ where " +
-					"companyId = ?";
-
-			PreparedStatement preparedStatement = null;
-
-			if (dbInspector.hasColumn("User_", "defaultUser")) {
-				preparedStatement = connection.prepareStatement(
-					sql + " and defaultUser = ?");
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select userId, languageId, timeZoneId from User_ " +
+							"where companyId = ? and type_ = ?")) {
 
 				preparedStatement.setLong(1, companyId);
-				preparedStatement.setBoolean(2, Boolean.TRUE);
-			}
-			else {
-				preparedStatement = connection.prepareStatement(
-					sql + " and type_ = " + UserConstants.TYPE_GUEST);
+				preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
 
-				preparedStatement.setLong(1, companyId);
-			}
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (!resultSet.next()) {
+						return null;
+					}
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					return null;
+					guestUser = UserLocalServiceUtil.createUser(
+						resultSet.getLong("userId"));
+
+					guestUser.setLanguageId(resultSet.getString("languageId"));
+					guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
 				}
+			}
+			catch (SQLException sqlException) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select userId, languageId, timeZoneId from " +
+								"User_ where companyId = ? and defaultUser = " +
+									"?")) {
 
-				guestUser = UserLocalServiceUtil.createUser(
-					resultSet.getLong("userId"));
+					preparedStatement.setLong(1, companyId);
+					preparedStatement.setBoolean(2, true);
 
-				guestUser.setLanguageId(resultSet.getString("languageId"));
-				guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						if (!resultSet.next()) {
+							return null;
+						}
+
+						guestUser = UserLocalServiceUtil.createUser(
+							resultSet.getLong("userId"));
+
+						guestUser.setLanguageId(
+							resultSet.getString("languageId"));
+						guestUser.setTimeZoneId(
+							resultSet.getString("timeZoneId"));
+					}
+				}
 			}
 		}
 

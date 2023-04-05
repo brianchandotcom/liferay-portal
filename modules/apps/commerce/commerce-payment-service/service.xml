@@ -4,6 +4,81 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.commerce.payment">
 	<author>Luca Pellizzon</author>
 	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommercePaymentEntry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePaymentEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="amount" type="BigDecimal" />
+		<column name="currencyCode" type="String" />
+		<column name="paymentMethodName" type="String" />
+		<column name="paymentStatus" type="int" />
+		<column name="transactionCode" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommercePaymentEntryAudit" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePaymentEntryAuditId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commercePaymentEntryId" type="long" />
+		<column name="amount" type="BigDecimal" />
+		<column name="currencyCode" type="String" />
+		<column name="logType" type="String" />
+		<column name="logTypeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePaymentEntryId" return-type="Collection">
+			<finder-column name="commercePaymentEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommercePaymentMethodGroupRel" remote-service="true">
 
 		<!-- PK fields -->

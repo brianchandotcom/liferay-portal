@@ -65,11 +65,9 @@ definition {
 
 	@description = "Automation ID: LPS-149144 | Test Summary: Verify if after a user submits the DXP Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
 	@priority = 4
-	test CanViewAUsefulMessage {
+	test AssertThatTheLXCSMActivationFormHasAlreadyBeenSent {
 		task ("Given that I go to the card activation page") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
 
 			CustomerPortal.search(searchItem = ${testAccount});
 
@@ -83,15 +81,11 @@ definition {
 		}
 
 		task ("And I open a new tab, go to the Set up modal, fill out the whole form and send it") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8080/web/customer-portal-site");
+			var baseURL = PropsUtil.get("portal.url");
 
-			WaitForPageLoad();
+			Open.openInTheNewTab(locator1 = "${baseURL}/web/${testSiteURL}/project/#/ERC-001/activation/lxc-sm");
 
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			WaitForElementPresent(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 
 			CustomerPortal.clickOnFinishActivationButton();
 

@@ -15,6 +15,7 @@
 		},
 		{
 			"actionIds": [
+				"VIEW"
 			],
 			"roleName": "User",
 			"scope": 4

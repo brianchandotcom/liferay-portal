@@ -166,13 +166,9 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest();
 
-		searchSearchRequest.setIndexNames(_INDEX_NAME);
 		searchSearchRequest.setScrollKeepAliveMinutes(1);
-		searchSearchRequest.setQuery(new MatchAllQuery());
-		searchSearchRequest.setStart(0);
-		searchSearchRequest.setSize(1);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
@@ -190,21 +186,15 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest();
 
-		searchSearchRequest.setIndexNames(_INDEX_NAME);
 		searchSearchRequest.setPointInTime(_getPointInTime());
-		searchSearchRequest.setQuery(new MatchAllQuery());
-		searchSearchRequest.setSize(1);
 		searchSearchRequest.setSorts(new Sort[] {new Sort("_count", true)});
-		searchSearchRequest.setStart(0);
 
-		SearchSearchResponse searchSearchResponse = null;
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		for (int i = 0; i < 3; i++) {
-			searchSearchResponse = _searchEngineAdapter.execute(
-				searchSearchRequest);
-
 			Assert.assertEquals(1, _getDocumentsLength(searchSearchResponse));
 
 			searchSearchResponse = _searchAfter(
@@ -464,6 +454,17 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 			_searchEngineAdapter.execute(openPointInTimeRequest);
 
 		return new PointInTime(openPointInTimeResponse.pitId());
+	}
+
+	private SearchSearchRequest _getSearchSearchRequest() {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(_INDEX_NAME);
+		searchSearchRequest.setQuery(new MatchAllQuery());
+		searchSearchRequest.setSize(1);
+		searchSearchRequest.setStart(0);
+
+		return searchSearchRequest;
 	}
 
 	private String _getUID(String value) {

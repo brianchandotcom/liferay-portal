@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
-import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeRequest;
-import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeResponse;
 import com.liferay.portal.search.engine.adapter.search.ClearScrollRequest;
 import com.liferay.portal.search.engine.adapter.search.ClearScrollResponse;
+import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeRequest;
+import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeResponse;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;

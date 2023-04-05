@@ -70,6 +70,30 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	 * Adds a default admin user for the company.
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param screenName the user's screen name
+	 * @param emailAddress the user's email address
+	 * @param locale the user's locale
+	 * @param firstName the user's first name
+	 * @param middleName the user's middle name
+	 * @param lastName the user's last name
+	 * @param password1 the password of the user
+	 * @return the new default admin user
+	 */
+	public static User addDefaultAdminUser(
+			long companyId, String screenName, String emailAddress,
+			java.util.Locale locale, String firstName, String middleName,
+			String lastName, String password1)
+		throws PortalException {
+
+		return getService().addDefaultAdminUser(
+			companyId, screenName, emailAddress, locale, firstName, middleName,
+			lastName, password1);
+	}
+
+	/**
 	 * Adds the user to the default groups, unless the user is already in these
 	 * groups. The default groups can be specified in
 	 * <code>portal.properties</code> with the key

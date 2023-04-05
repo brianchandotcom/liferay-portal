@@ -88,6 +88,12 @@ components:
                 value:
                     format: int64
                     type: integer
+        Strategy:
+            properties:
+                name:
+                    type: string
+                type:
+                    type: string
 info:
     license:
         name: Apache 2.0
@@ -200,6 +206,29 @@ paths:
                                     $ref: "#/components/schemas/SiteScope"
                                 type: array
             tags: ["SiteScope"]
+    /plans/{internalClassName}/strategies:
+        get:
+            operationId: getPlanInternalClassNameStrategiesPage
+            parameters:
+                - in: path
+                  name: internalClassName
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Strategy"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Strategy"
+                                type: array
+            tags: ["Strategy"]
     /plans/{internalClassName}/template:
         get:
             operationId: getPlanTemplate

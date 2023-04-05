@@ -42,7 +42,8 @@ const IncidentDetail = (claimData: ClaimComponentsType) => {
 
 			setClaimDetails(detailsJSON.Detail.IncidentDetail);
 			setClaimVehicleRepair(detailsJSON.Detail.VehicleRepair);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	}, [claimData]);

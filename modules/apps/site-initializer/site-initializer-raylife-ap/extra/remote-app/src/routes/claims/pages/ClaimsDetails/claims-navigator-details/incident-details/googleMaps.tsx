@@ -35,7 +35,8 @@ const GoogleMaps = ({address}: LocationType) => {
 
 				setPosition({lat: latitude, lng: longitude});
 			})();
-		} catch (error) {
+		}
+		catch (error) {
 			setGoogleKey(false);
 		}
 
@@ -62,7 +63,8 @@ const GoogleMaps = ({address}: LocationType) => {
 			});
 
 			marker.setMap(googleMap);
-		} catch (error) {
+		}
+		catch (error) {
 			setGoogleKey(false);
 		}
 

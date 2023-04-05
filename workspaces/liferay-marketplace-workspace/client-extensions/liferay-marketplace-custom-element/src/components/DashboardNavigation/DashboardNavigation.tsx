@@ -29,12 +29,12 @@ interface DashboardNavigationProps {
 export function DashboardNavigation({
 	accountAppsNumber,
 	accountIcon,
-	currentAccount,
 	accounts,
+	currentAccount,
 	dashboardNavigationItems,
 	onSelectAppChange,
 	setDashboardNavigationItems,
-	setSelectedAccount
+	setSelectedAccount,
 }: DashboardNavigationProps) {
 	return (
 		<div className="dashboard-navigation-container">
@@ -70,9 +70,7 @@ export function DashboardNavigation({
 					{accounts.map((account) => (
 						<ClayDropDown.Item
 							key={account.id}
-							onClick={() =>
-								setSelectedAccount(account)
-							}
+							onClick={() => setSelectedAccount(account)}
 						>
 							{account.name}
 						</ClayDropDown.Item>

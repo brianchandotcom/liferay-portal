@@ -219,7 +219,9 @@ export async function getCatalogs() {
 	return response.json();
 }
 
-export async function getCatalogByExternalReferenceCode(externalReferenceCode: string) {
+export async function getCatalogByExternalReferenceCode(
+	externalReferenceCode: string
+) {
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/catalog/by-externalReferenceCode/${externalReferenceCode}`,
 		{headers, method: 'GET'}

@@ -1,3 +1,9 @@
+type Account = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
 type AccountBrief = {
 	externalReferenceCode: string;
 	id: number;
@@ -108,10 +114,4 @@ type SKU = {
 
 type UserAccount = {
 	accountBriefs: AccountBrief[];
-}
-
-type Account = {
-	externalReferenceCode: string;
-	id: number;
-	name: string;
 };

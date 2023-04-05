@@ -52,23 +52,21 @@ const tableHeaders = [
 	},
 ];
 
-const initialAccountState: Account[] = [{
-	externalReferenceCode: "",
-	id: 0,
-	name: ""
-}];
+const initialAccountState: Account[] = [
+	{
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+	},
+];
 
 export function PurchasedAppsDashboardPage() {
-	const [accounts, setAccounts] = useState<Account[]>(
-		initialAccountState
-	);
-	const [selectedAccount, setSelectedAccount] = useState<Account>(
-		{
-			externalReferenceCode: "",
-			id: 0,
-			name: ""
-		}
-	);
+	const [accounts, setAccounts] = useState<Account[]>(initialAccountState);
+	const [selectedAccount, setSelectedAccount] = useState<Account>({
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+	});
 	const [purchasedAppTable, setPurchasedAppTable] =
 		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
 	const [page, setPage] = useState<number>(1);
@@ -137,13 +135,15 @@ export function PurchasedAppsDashboardPage() {
 
 			const accountsResponse = await getAccounts();
 
-			const accountsList = accountsResponse.items.map((account: any, index:number) => {
-				return {
-					externalReferenceCode: account.externalReferenceCode,
-					id: account.id,
-					name: account.name,
+			const accountsList = accountsResponse.items.map(
+				(account: any, index: number) => {
+					return {
+						externalReferenceCode: account.externalReferenceCode,
+						id: account.id,
+						name: account.name,
+					};
 				}
-			});
+			);
 
 			setAccounts(accountsList);
 		};

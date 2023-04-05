@@ -6,39 +6,11 @@ import membersIcon from '../../assets/icons/person-fill.svg';
 
 export const appList: AppProps[] = [];
 
-export type MemberProps = {
-	accountBriefs: AccountBriefProps[];
-	dateCreated: string;
-	email: string;
-	image: string;
-	lastLoginDate: string;
-	name: string;
-	role: string;
-	userId: number;
-};
-
-export type UserAccountProps = {
-	accountBriefs: AccountBriefProps[];
-	dateCreated: string;
-	emailAddress: string;
-	image: string;
-	lastLoginDate: string;
-	name: string;
-	roleBriefs: RoleBriefProps[];
-	id: number;
-}
-
 export type AccountBriefProps = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
-}
-
-
-export type RoleBriefProps = {
-	id: number;
-	name: string;
-}
+};
 
 export type CatalogProps = {
 	externalReferenceCode: string;
@@ -61,3 +33,30 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemTitle: 'Members',
 	},
 ];
+
+export type MemberProps = {
+	accountBriefs: AccountBriefProps[];
+	dateCreated: string;
+	email: string;
+	image: string;
+	lastLoginDate: string;
+	name: string;
+	role: string;
+	userId: number;
+};
+
+export type RoleBriefProps = {
+	id: number;
+	name: string;
+};
+
+export type UserAccountProps = {
+	accountBriefs: AccountBriefProps[];
+	dateCreated: string;
+	emailAddress: string;
+	image: string;
+	lastLoginDate: string;
+	name: string;
+	roleBriefs: RoleBriefProps[];
+	id: number;
+};

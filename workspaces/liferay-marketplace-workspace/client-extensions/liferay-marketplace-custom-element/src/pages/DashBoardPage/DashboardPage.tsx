@@ -48,7 +48,7 @@ export function DashboardPage({
 	dashboardNavigationItems,
 	messages,
 	setDashboardNavigationItems,
-	setSelectedAccount
+	setSelectedAccount,
 }: DashBoardPageProps) {
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 

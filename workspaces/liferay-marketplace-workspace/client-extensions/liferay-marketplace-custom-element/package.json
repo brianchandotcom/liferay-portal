@@ -39,13 +39,14 @@
 			"Liferay": true
 		}
 	},
+	"license": "LGPL",
 	"name": "liferay-marketplace-custom-element",
 	"private": true,
 	"scripts": {
 		"build": "tsc && vite build",
 		"dev": "vite",
-		"format": "liferay-npm-scripts format --experimental-standalone",
-		"lint": "liferay-npm-scripts lint:fix --experimental-standalone",
+		"format": "liferay-npm-scripts format --experimental-standalone 'src/**'",
+		"lint": "liferay-npm-scripts lint:fix --experimental-standalone 'src/**'",
 		"preview": "vite preview"
 	},
 	"type": "module",

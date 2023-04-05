@@ -53,12 +53,13 @@
 			width: 1rem;
 		}
 
-		&:hover, &[aria-expanded=true] {
-			background: #EDF3FE;
+		&:hover,
+		&[aria-expanded='true'] {
+			background: #edf3fe;
 
 			.dashboard-navigation-header-arrow-down {
 				display: block;
-				fill: #0053F0;
+				fill: #0053f0;
 			}
 		}
 	}

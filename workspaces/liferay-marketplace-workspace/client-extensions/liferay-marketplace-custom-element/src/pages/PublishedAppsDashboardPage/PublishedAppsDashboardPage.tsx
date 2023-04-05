@@ -9,21 +9,21 @@ import {
 import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/PublishedAppsDashboardTableRow';
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
+	getAccounts,
+	getCatalogByExternalReferenceCode,
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
-	getAccounts,
-	getCatalogByExternalReferenceCode,
 } from '../../utils/api';
 import {
 	DashboardListItems,
 	DashboardPage,
 } from '../DashBoardPage/DashboardPage';
 import {
-	MemberProps,
-	initialDashboardNavigationItems,
 	AccountBriefProps,
+	MemberProps,
 	UserAccountProps,
+	initialDashboardNavigationItems,
 } from './PublishedDashboardPageUtil';
 
 declare let Liferay: {ThemeDisplay: any; authToken: string};
@@ -60,16 +60,16 @@ const memberTableHeaders = [
 	},
 ];
 
-const initialAccountsState: Account[] = [{
-	externalReferenceCode: "",
-	id: 0,
-	name: ""
-}];
+const initialAccountsState: Account[] = [
+	{
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+	},
+];
 
 export function PublishedAppsDashboardPage() {
-	const [accounts, setAccounts] = useState<Account[]>(
-		initialAccountsState
-	);
+	const [accounts, setAccounts] = useState<Account[]>(initialAccountsState);
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
@@ -78,13 +78,11 @@ export function PublishedAppsDashboardPage() {
 		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const [selectedAccount, setSelectedAccount] = useState<Account>(
-		{
-			externalReferenceCode: "",
-			id: 0,
-			name: ""
-		}
-	);
+	const [selectedAccount, setSelectedAccount] = useState<Account>({
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+	});
 
 	const appMessages = {
 		description: 'Manage and publish apps on the Marketplace',
@@ -191,15 +189,17 @@ export function PublishedAppsDashboardPage() {
 		(async () => {
 			const accountsResponse = await getAccounts();
 
-			const accountsList = accountsResponse.items.map((account: Account) => {
-				return {
-					externalReferenceCode: account.externalReferenceCode,
-					id: account.id,
-					name: account.name,
-				} as Account
-			});
+			const accountsList = accountsResponse.items.map(
+				(account: Account) => {
+					return {
+						externalReferenceCode: account.externalReferenceCode,
+						id: account.id,
+						name: account.name,
+					} as Account;
+				}
+			);
 
-			setAccounts(accountsList)
+			setAccounts(accountsList);
 			setSelectedAccount(accountsList[0]);
 		})();
 	}, []);
@@ -209,44 +209,48 @@ export function PublishedAppsDashboardPage() {
 			const accountERC = selectedAccount.externalReferenceCode;
 
 			if (accountERC) {
-				const currentCatalog = await getCatalogByExternalReferenceCode(selectedAccount.externalReferenceCode);
+				const currentCatalog = await getCatalogByExternalReferenceCode(
+					selectedAccount.externalReferenceCode
+				);
 
 				const currentCatalogId = currentCatalog.id;
 
 				if (currentCatalogId !== 0) {
 					const appList = await getProducts();
 
-					const appListProductIds: number[] = getAppListProductIds(appList);
+					const appListProductIds: number[] =
+						getAppListProductIds(appList);
 
 					const appListProductSpecifications =
-						await getAppListProductSpecifications(appListProductIds);
+						await getAppListProductSpecifications(
+							appListProductIds
+						);
 
-					const newAppList : any[] = [];
+					const newAppList: any[] = [];
 
-					appList.items.forEach(
-						(product: any, index: number) => {
-							if (product.catalogId === currentCatalogId) {
-								newAppList.push({
-									externalReferenceCode: product.externalReferenceCode,
-									lastUpdatedBy: product.lastUpdatedBy,
-									name: product.name.en_US,
-									productId: product.productId,
-									status: product.workflowStatusInfo.label.replace(
-										/(^\w|\s\w)/g,
-										(m: string) => m.toUpperCase()
-									),
-									thumbnail: product.thumbnail,
-									type: getProductTypeFromSpecifications(
-										appListProductSpecifications[index]
-									),
-									updatedDate: formatDate(product.modifiedDate),
-									version: getProductVersionFromSpecifications(
-										appListProductSpecifications[index]
-									),
-								});
-							}
+					appList.items.forEach((product: any, index: number) => {
+						if (product.catalogId === currentCatalogId) {
+							newAppList.push({
+								externalReferenceCode:
+									product.externalReferenceCode,
+								lastUpdatedBy: product.lastUpdatedBy,
+								name: product.name.en_US,
+								productId: product.productId,
+								status: product.workflowStatusInfo.label.replace(
+									/(^\w|\s\w)/g,
+									(m: string) => m.toUpperCase()
+								),
+								thumbnail: product.thumbnail,
+								type: getProductTypeFromSpecifications(
+									appListProductSpecifications[index]
+								),
+								updatedDate: formatDate(product.modifiedDate),
+								version: getProductVersionFromSpecifications(
+									appListProductSpecifications[index]
+								),
+							});
 						}
-					);
+					});
 
 					setApps(newAppList);
 				}
@@ -305,15 +309,23 @@ export function PublishedAppsDashboardPage() {
 					}
 				);
 
-				var filteredMembersList : MemberProps[] = [];
+				let filteredMembersList: MemberProps[] = [];
 
-				filteredMembersList = membersList.filter((member: MemberProps) => {
-					if (member.accountBriefs.find((accountBrief: AccountBriefProps) =>
-						accountBrief.externalReferenceCode === selectedAccount.externalReferenceCode)) {
+				filteredMembersList = membersList.filter(
+					(member: MemberProps) => {
+						if (
+							member.accountBriefs.find(
+								(accountBrief: AccountBriefProps) =>
+									accountBrief.externalReferenceCode ===
+									selectedAccount.externalReferenceCode
+							)
+						) {
 							return true;
 						}
-					return false;
-				})
+
+						return false;
+					}
+				);
 
 				setMembers(filteredMembersList);
 			}

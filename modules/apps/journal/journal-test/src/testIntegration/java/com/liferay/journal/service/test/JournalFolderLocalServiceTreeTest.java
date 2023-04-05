@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.search.Hits;
@@ -80,13 +79,13 @@ public class JournalFolderLocalServiceTreeTest
 
 		folders.add(folderAAA);
 
-		JournalFolderLocalServiceUtil.moveFolder(
+		_journalFolderLocalService.moveFolder(
 			folderAA.getFolderId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		for (JournalFolder folder : folders) {
-			folder = JournalFolderLocalServiceUtil.fetchFolder(
+			folder = _journalFolderLocalService.fetchFolder(
 				folder.getFolderId());
 
 			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
@@ -148,25 +147,24 @@ public class JournalFolderLocalServiceTreeTest
 
 		folder.setTreePath("/0/");
 
-		return JournalFolderLocalServiceUtil.updateJournalFolder(folder);
+		return _journalFolderLocalService.updateJournalFolder(folder);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
 		JournalFolder folder = (JournalFolder)treeModel;
 
-		JournalFolderLocalServiceUtil.deleteFolder(folder);
+		_journalFolderLocalService.deleteFolder(folder);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return JournalFolderLocalServiceUtil.getFolder(primaryKey);
+		return _journalFolderLocalService.getFolder(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		JournalFolderLocalServiceUtil.rebuildTree(
-			TestPropsValues.getCompanyId());
+		_journalFolderLocalService.rebuildTree(TestPropsValues.getCompanyId());
 	}
 
 	@Inject

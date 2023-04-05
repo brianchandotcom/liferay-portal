@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -254,11 +254,14 @@ public class JournalArticleDDMFormConverterTest {
 	}
 
 	private String _readFileToString(String s) throws Exception {
-		return new String(FileUtil.getBytes(getClass(), s));
+		return new String(_file.getBytes(getClass(), s));
 	}
 
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Inject
+	private File _file;
 
 	@DeleteAfterTestRun
 	private Group _group;

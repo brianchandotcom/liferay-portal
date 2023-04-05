@@ -16,15 +16,16 @@ package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -60,21 +61,27 @@ public class JournalFolderLocalServiceTest {
 		JournalFolder folder = JournalTestUtil.addFolder(
 			_group.getGroupId(), RandomTestUtil.randomString());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalFolder.class.getName(), folder.getFolderId());
 
 		Assert.assertNotNull(assetEntry);
 
-		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
+		_assetEntryLocalService.deleteAssetEntry(assetEntry);
 
 		List<JournalFolder> folders =
-			JournalFolderLocalServiceUtil.getNoAssetFolders();
+			_journalFolderLocalService.getNoAssetFolders();
 
 		Assert.assertEquals(folders.toString(), 1, folders.size());
 		Assert.assertEquals(folders.toString(), folder, folders.get(0));
 	}
 
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

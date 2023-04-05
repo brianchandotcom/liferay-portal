@@ -16,7 +16,7 @@ package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -32,17 +32,16 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -116,30 +115,30 @@ public class JournalArticleServiceTest {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
+			_portletPreferencesFactory.getPortalPreferences(
 				TestPropsValues.getUserId(), true);
 
-		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+		_originalPortalPreferencesXML = _portletPreferencesFactory.toXML(
 			portalPreferences);
 
 		portalPreferences.setValue(
 			"", "expireAllArticleVersionsEnabled", "true");
 
-		PortalPreferencesLocalServiceUtil.updatePreferences(
+		_portalPreferencesLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-			PortletPreferencesFactoryUtil.toXML(portalPreferences));
+			_portletPreferencesFactory.toXML(portalPreferences));
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		if (_article != null) {
-			JournalArticleLocalServiceUtil.deleteArticle(
+			_journalArticleLocalService.deleteArticle(
 				_group.getGroupId(), _article.getArticleId(),
 				new ServiceContext());
 		}
 
-		PortalPreferencesLocalServiceUtil.updatePreferences(
+		_portalPreferencesLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			_originalPortalPreferencesXML);
@@ -177,7 +176,7 @@ public class JournalArticleServiceTest {
 			externalReferenceCode, _article.getExternalReferenceCode());
 
 		_latestArticle =
-			JournalArticleServiceUtil.fetchLatestArticleByExternalReferenceCode(
+			_journalArticleService.fetchLatestArticleByExternalReferenceCode(
 				_group.getGroupId(), externalReferenceCode);
 
 		Assert.assertNotNull(_latestArticle);
@@ -211,7 +210,7 @@ public class JournalArticleServiceTest {
 		Assert.assertEquals(externalReferenceCode, _article.getUuid());
 
 		_latestArticle =
-			JournalArticleServiceUtil.fetchLatestArticleByExternalReferenceCode(
+			_journalArticleService.fetchLatestArticleByExternalReferenceCode(
 				_group.getGroupId(), externalReferenceCode);
 
 		Assert.assertNotNull(_latestArticle);
@@ -234,7 +233,7 @@ public class JournalArticleServiceTest {
 			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
 
 		try {
-			DDMTemplateLocalServiceUtil.deleteTemplate(
+			_ddmTemplateLocalService.deleteTemplate(
 				ddmTemplate.getTemplateId());
 
 			Assert.fail();
@@ -316,7 +315,7 @@ public class JournalArticleServiceTest {
 		_article = JournalTestUtil.updateArticle(_article, "Version 2");
 
 		_latestArticle =
-			JournalArticleServiceUtil.fetchLatestArticleByExternalReferenceCode(
+			_journalArticleService.fetchLatestArticleByExternalReferenceCode(
 				groupId, externalReferenceCode);
 
 		Assert.assertEquals(
@@ -331,7 +330,7 @@ public class JournalArticleServiceTest {
 		throws Exception {
 
 		_latestArticle =
-			JournalArticleServiceUtil.fetchLatestArticleByExternalReferenceCode(
+			_journalArticleService.fetchLatestArticleByExternalReferenceCode(
 				_article.getGroupId(), RandomTestUtil.randomString());
 
 		Assert.assertNull(_latestArticle);
@@ -442,13 +441,13 @@ public class JournalArticleServiceTest {
 
 		expectedArticles.add(article);
 
-		int actualCount = JournalArticleServiceUtil.getArticlesCountByArticleId(
+		int actualCount = _journalArticleService.getArticlesCountByArticleId(
 			_group.getGroupId(), article.getArticleId());
 
 		Assert.assertEquals(expectedArticles.size(), actualCount);
 
 		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getArticlesByArticleId(
+			_journalArticleService.getArticlesByArticleId(
 				_group.getGroupId(), article.getArticleId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new ArticleVersionComparator(true));
 
@@ -476,14 +475,14 @@ public class JournalArticleServiceTest {
 
 		updateArticleStatus(article, WorkflowConstants.STATUS_DRAFT);
 
-		int actualCount = JournalArticleServiceUtil.getArticlesCountByArticleId(
+		int actualCount = _journalArticleService.getArticlesCountByArticleId(
 			_group.getGroupId(), article.getArticleId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(expectedArticles.size(), actualCount);
 
 		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getArticlesByArticleId(
+			_journalArticleService.getArticlesByArticleId(
 				_group.getGroupId(), article.getArticleId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new ArticleVersionComparator(true));
@@ -506,17 +505,16 @@ public class JournalArticleServiceTest {
 
 		expectedArticles.add(_article);
 
-		int count = JournalArticleServiceUtil.getGroupArticlesCount(
+		int count = _journalArticleService.getGroupArticlesCount(
 			_group.getGroupId(), _article.getUserId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(3, count);
 
-		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getGroupArticles(
-				_group.getGroupId(), _article.getUserId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<JournalArticle> articles = _journalArticleService.getGroupArticles(
+			_group.getGroupId(), _article.getUserId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(expectedArticles, articles);
 	}
@@ -533,19 +531,18 @@ public class JournalArticleServiceTest {
 		_article = updateArticleStatus(
 			_article, WorkflowConstants.STATUS_DRAFT);
 
-		int count = JournalArticleServiceUtil.getGroupArticlesCount(
+		int count = _journalArticleService.getGroupArticlesCount(
 			_group.getGroupId(), _article.getUserId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(3, count);
 
-		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getGroupArticles(
-				_group.getGroupId(), _article.getUserId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+		List<JournalArticle> articles = _journalArticleService.getGroupArticles(
+			_group.getGroupId(), _article.getUserId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(expectedArticles, articles);
 	}
@@ -562,17 +559,16 @@ public class JournalArticleServiceTest {
 
 		expectedArticles.add(_article);
 
-		int count = JournalArticleServiceUtil.getGroupArticlesCount(
+		int count = _journalArticleService.getGroupArticlesCount(
 			_group.getGroupId(), 0,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(3, count);
 
-		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getGroupArticles(
-				_group.getGroupId(), 0,
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<JournalArticle> articles = _journalArticleService.getGroupArticles(
+			_group.getGroupId(), 0,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(expectedArticles, articles);
 	}
@@ -589,19 +585,18 @@ public class JournalArticleServiceTest {
 		_article = updateArticleStatus(
 			_article, WorkflowConstants.STATUS_DRAFT);
 
-		int count = JournalArticleServiceUtil.getGroupArticlesCount(
+		int count = _journalArticleService.getGroupArticlesCount(
 			_group.getGroupId(), 0,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(3, count);
 
-		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getGroupArticles(
-				_group.getGroupId(), 0,
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+		List<JournalArticle> articles = _journalArticleService.getGroupArticles(
+			_group.getGroupId(), 0,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(expectedArticles, articles);
 	}
@@ -614,7 +609,7 @@ public class JournalArticleServiceTest {
 		_article = JournalTestUtil.updateArticle(_article, "Version 2");
 
 		_latestArticle =
-			JournalArticleServiceUtil.getLatestArticleByExternalReferenceCode(
+			_journalArticleService.getLatestArticleByExternalReferenceCode(
 				groupId, externalReferenceCode);
 
 		Assert.assertEquals(
@@ -628,7 +623,7 @@ public class JournalArticleServiceTest {
 	public void testGetLatestArticleByNonexistentExternalReferenceCode()
 		throws Exception {
 
-		JournalArticleServiceUtil.getLatestArticleByExternalReferenceCode(
+		_journalArticleService.getLatestArticleByExternalReferenceCode(
 			_article.getGroupId(), RandomTestUtil.randomString());
 	}
 
@@ -639,13 +634,13 @@ public class JournalArticleServiceTest {
 
 		articles.add(0, _article);
 
-		int count = JournalArticleServiceUtil.getLatestArticlesCount(
+		int count = _journalArticleService.getLatestArticlesCount(
 			_group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(2, count);
 
 		Assert.assertEquals(
-			JournalArticleServiceUtil.getLatestArticles(
+			_journalArticleService.getLatestArticles(
 				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			articles);
@@ -653,13 +648,13 @@ public class JournalArticleServiceTest {
 		_article = updateArticleStatus(
 			_article, WorkflowConstants.STATUS_DRAFT);
 
-		int draftCount = JournalArticleServiceUtil.getLatestArticlesCount(
+		int draftCount = _journalArticleService.getLatestArticlesCount(
 			_group.getGroupId(), WorkflowConstants.STATUS_DRAFT);
 
 		Assert.assertEquals(1, draftCount);
 
 		List<JournalArticle> draftArticles =
-			JournalArticleServiceUtil.getLatestArticles(
+			_journalArticleService.getLatestArticles(
 				_group.getGroupId(), WorkflowConstants.STATUS_DRAFT,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -677,7 +672,7 @@ public class JournalArticleServiceTest {
 		Assert.assertTrue(_article.isApproved());
 		Assert.assertEquals(1.1, _article.getVersion(), 0);
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			_article.getModelClassName(), _article.getResourcePrimKey());
 
 		Assert.assertEquals(
@@ -700,7 +695,7 @@ public class JournalArticleServiceTest {
 		Assert.assertTrue(_article.isApproved());
 		Assert.assertEquals(1.1, _article.getVersion(), 0);
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			_article.getModelClassName(), _article.getResourcePrimKey());
 
 		Assert.assertEquals(
@@ -725,7 +720,7 @@ public class JournalArticleServiceTest {
 	}
 
 	protected JournalArticle fetchLatestArticle(int status) throws Exception {
-		return JournalArticleLocalServiceUtil.fetchLatestArticle(
+		return _journalArticleLocalService.fetchLatestArticle(
 			_group.getGroupId(), _article.getArticleId(), status);
 	}
 
@@ -733,7 +728,7 @@ public class JournalArticleServiceTest {
 			int status, boolean preferApproved)
 		throws Exception {
 
-		return JournalArticleLocalServiceUtil.fetchLatestArticle(
+		return _journalArticleLocalService.fetchLatestArticle(
 			_article.getResourcePrimKey(), status, preferApproved);
 	}
 
@@ -830,13 +825,28 @@ public class JournalArticleServiceTest {
 
 	private JournalArticle _article;
 
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;
+
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private JournalArticleService _journalArticleService;
+
 	private JournalArticle _latestArticle;
 	private String _originalPortalPreferencesXML;
+
+	@Inject
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 }

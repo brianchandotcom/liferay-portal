@@ -17,20 +17,21 @@ package com.liferay.journal.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -87,10 +88,10 @@ public class JournalArticleIndexVersionsTest {
 		UserTestUtil.setUser(user);
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
+			_portletPreferencesFactory.getPortalPreferences(
 				TestPropsValues.getUserId(), true);
 
-		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+		_originalPortalPreferencesXML = _portletPreferencesFactory.toXML(
 			portalPreferences);
 
 		portalPreferences.setValue(
@@ -98,7 +99,7 @@ public class JournalArticleIndexVersionsTest {
 		portalPreferences.setValue(
 			"", "indexAllArticleVersionsEnabled", "false");
 
-		PortalPreferencesLocalServiceUtil.updatePreferences(
+		_portalPreferencesLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
@@ -106,7 +107,7 @@ public class JournalArticleIndexVersionsTest {
 
 	@After
 	public void tearDown() throws Exception {
-		PortalPreferencesLocalServiceUtil.updatePreferences(
+		_portalPreferencesLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			_originalPortalPreferencesXML);
@@ -128,7 +129,7 @@ public class JournalArticleIndexVersionsTest {
 
 		assertSearchCount(1, true);
 
-		JournalArticleLocalServiceUtil.deleteArticle(
+		_journalArticleLocalService.deleteArticle(
 			_group.getGroupId(), updateArticle.getArticleId(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -154,7 +155,7 @@ public class JournalArticleIndexVersionsTest {
 
 		assertSearchCount(1, true);
 
-		JournalArticleLocalServiceUtil.deleteArticle(
+		_journalArticleLocalService.deleteArticle(
 			updateArticle, updateArticle.getUrlTitle(), serviceContext);
 
 		assertSearchArticle(1, article);
@@ -240,7 +241,7 @@ public class JournalArticleIndexVersionsTest {
 			long expectedCount, JournalArticle article)
 		throws Exception {
 
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<JournalArticle> indexer = _indexerRegistry.getIndexer(
 			JournalArticle.class);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -300,8 +301,20 @@ public class JournalArticleIndexVersionsTest {
 	private Group _group;
 
 	@Inject
+	private IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
 	private JournalHelper _journalHelper;
 
 	private String _originalPortalPreferencesXML;
+
+	@Inject
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 }

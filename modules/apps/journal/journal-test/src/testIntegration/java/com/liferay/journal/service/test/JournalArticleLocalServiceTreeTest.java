@@ -18,9 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -81,12 +80,12 @@ public class JournalArticleLocalServiceTreeTest {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(), folderAA.getFolderId());
 
-		JournalFolderLocalServiceUtil.moveFolder(
+		_journalFolderLocalService.moveFolder(
 			folderAA.getFolderId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		article = JournalArticleLocalServiceUtil.getArticle(
+		article = _journalArticleLocalService.getArticle(
 			_group.getGroupId(), article.getArticleId());
 
 		Assert.assertEquals(article.buildTreePath(), article.getTreePath());
@@ -99,15 +98,13 @@ public class JournalArticleLocalServiceTreeTest {
 		for (JournalArticle article : articles) {
 			article.setTreePath("/0/");
 
-			JournalArticleLocalServiceUtil.updateJournalArticle(article);
+			_journalArticleLocalService.updateJournalArticle(article);
 		}
 
-		JournalArticleLocalServiceUtil.rebuildTree(
-			TestPropsValues.getCompanyId());
+		_journalArticleLocalService.rebuildTree(TestPropsValues.getCompanyId());
 
 		for (JournalArticle article : articles) {
-			article = JournalArticleLocalServiceUtil.getArticle(
-				article.getId());
+			article = _journalArticleLocalService.getArticle(article.getId());
 
 			Assert.assertEquals(article.buildTreePath(), article.getTreePath());
 		}
@@ -164,6 +161,9 @@ public class JournalArticleLocalServiceTreeTest {
 
 	@Inject
 	private static IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private static JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;

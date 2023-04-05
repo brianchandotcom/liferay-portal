@@ -97,6 +97,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		Map<String, Object> jsonMap = new HashMap<>();
 
+		jsonMap.put(":configurator:policy", "force");
+
 		_clientExtensions.forEach(
 			clientExtension -> {
 				String pid = _clientExtensionProperties.getProperty(

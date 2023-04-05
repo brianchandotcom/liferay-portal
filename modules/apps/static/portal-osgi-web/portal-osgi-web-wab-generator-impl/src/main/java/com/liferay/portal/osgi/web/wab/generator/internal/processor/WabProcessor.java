@@ -376,6 +376,10 @@ public class WabProcessor {
 					for (String key : jsonObject1.keySet()) {
 						JSONObject jsonObject2 = jsonObject1.getJSONObject(key);
 
+						if (jsonObject2 == null) {
+							continue;
+						}
+
 						JSONArray jsonArray = jsonObject2.getJSONArray(
 							"typeSettings");
 

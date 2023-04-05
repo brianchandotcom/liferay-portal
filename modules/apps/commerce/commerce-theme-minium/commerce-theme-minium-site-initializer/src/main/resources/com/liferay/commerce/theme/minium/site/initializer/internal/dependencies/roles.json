@@ -257,6 +257,12 @@
 				"actionIds": [
 					"VIEW"
 				],
+				"resource": "com.liferay.account.model.AccountEntry"
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
 				"resource": "com.liferay.commerce.model.CommerceOrder"
 			},
 			{

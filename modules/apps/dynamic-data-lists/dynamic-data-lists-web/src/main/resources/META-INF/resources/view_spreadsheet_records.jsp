@@ -129,10 +129,14 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		return a.displayIndex - b.displayIndex;
 	});
 
-	var data = Liferay.SpreadSheet.buildEmptyRecords(
-		<%= Math.max(recordSet.getMinDisplayRows() - records.size(), 0) %>,
-		keys
-	);
+	var data = [];
+
+	<c:if test="<%= editable %>">
+		data = Liferay.SpreadSheet.buildEmptyRecords(
+			<%= Math.max(recordSet.getMinDisplayRows() - records.size(), 0) %>,
+			keys
+		);
+	</c:if>
 
 	records.forEach((item, index) => {
 		data.splice(item.displayIndex, 0, item);

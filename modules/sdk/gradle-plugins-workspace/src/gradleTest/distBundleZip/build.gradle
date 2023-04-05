@@ -8,7 +8,6 @@ gradle.liferayWorkspace {
 	bundleDistRootDirName = "foo/bar"
 	environment = "production"
 	modules.jspPrecompileEnabled = true
-	product = "portal-7.4-ga8"
 }
 
 node {
@@ -113,6 +112,10 @@ runGradleTest {
 
 				assert zipFile.getEntry(zipEntryName) != null : zipEntryName
 			}
+
+			String setEnvTomcatEntryName = zipEntryRootName + "tomcat-9.0.10/bin/setEnv1.sh"
+
+			assert zipFile.getEntry(setEnvTomcatEntryName) != null : setEnvTomcatEntryName
 		}
 	}
 }

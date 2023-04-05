@@ -5,10 +5,6 @@ List<String> outputPaths = []
 
 task runGradleTest
 
-gradle.liferayWorkspace {
-	product = "portal-7.4-ga8"
-}
-
 gradle.taskGraph.afterTask {
 	Task task, TaskState taskState ->
 

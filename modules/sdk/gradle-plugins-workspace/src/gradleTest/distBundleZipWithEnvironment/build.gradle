@@ -5,7 +5,6 @@ task runGradleTest
 
 gradle.liferayWorkspace {
 	environment = "uat"
-	product = "portal-7.4-ga8"
 }
 
 runGradleTest {

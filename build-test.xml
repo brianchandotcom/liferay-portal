@@ -4331,6 +4331,55 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-selenium-site-initializer-partner-portal-salesforce-properties">
+		<sequential>
+			<if>
+				<isset property="site.initializer.partner.portal.login.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.partner.portal.login.url=${site.initializer.partner.portal.login.url}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.partner.portal.consumer.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.partner.portal.consumer.key=${site.initializer.partner.portal.consumer.key}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.partner.portal.consumer.secret" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.partner.portal.consumer.secret=${site.initializer.partner.portal.consumer.secret}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.partner.portal.username" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.partner.portal.username=${site.initializer.partner.portal.username}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.partner.portal.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.partner.portal.password=${site.initializer.partner.portal.password}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-selenium-site-initializer-raylife-d2c-paypal-properties">
 		<sequential>
 			<if>

@@ -330,8 +330,8 @@ public class SearchSearchRequest
 	private String _preference;
 	private Boolean _scoreEnabled;
 	private String _scrollId;
-	private Object[] _searchAfter;
 	private long _scrollKeepAliveMinutes;
+	private Object[] _searchAfter;
 	private String[] _selectedFieldNames;
 	private Integer _size;
 	private List<Sort> _sorts = new ArrayList<>();

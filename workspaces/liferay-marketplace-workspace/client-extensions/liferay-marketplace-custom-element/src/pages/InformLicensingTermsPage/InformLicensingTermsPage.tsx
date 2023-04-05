@@ -143,12 +143,14 @@ export function InformLicensingTermsPage({
 								neverExpire: true,
 								price: 0,
 								purchasable: true,
-								skuOptions: [
-									{
-										key: productOptionId,
-										value: optionValuesId.noOptionId,
-									},
-								],
+
+								// skuOptions: [
+								// 	{
+								// 		key: productOptionId,
+								// 		value: optionValuesId.noOptionId,
+								// 	},
+								// ],
+
 							};
 
 							await patchSKUById(skuVersionId, skuBody);
@@ -172,15 +174,17 @@ export function InformLicensingTermsPage({
 								neverExpire: appLicense === 'perpetual',
 								price: 0,
 								purchasable: true,
-								skuOptions: [
-									{
-										key: productOptionId,
-										value:
-											dayTrial === 'yes'
-												? optionValuesId.yesOptionId
-												: optionValuesId.noOptionId,
-									},
-								],
+
+								// skuOptions: [
+								// 	{
+								// 		key: productOptionId,
+								// 		value:
+								// 			dayTrial === 'yes'
+								// 				? optionValuesId.yesOptionId
+								// 				: optionValuesId.noOptionId,
+								// 	},
+								// ],
+
 							};
 
 							await patchSKUById(skuVersionId, skuBody);
@@ -218,12 +222,14 @@ export function InformLicensingTermsPage({
 											appVersion,
 											'ts'
 										),
-										skuOptions: [
-											{
-												key: productOptionId,
-												value: optionValuesId.yesOptionId,
-											},
-										],
+
+										// skuOptions: [
+										// 	{
+										// 		key: productOptionId,
+										// 		value: optionValuesId.yesOptionId,
+										// 	},
+										// ],
+
 									},
 								});
 

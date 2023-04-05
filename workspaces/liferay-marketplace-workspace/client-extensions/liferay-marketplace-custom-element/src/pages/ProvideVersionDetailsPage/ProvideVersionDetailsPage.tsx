@@ -41,58 +41,59 @@ export function ProvideVersionDetailsPage({
 		},
 		dispatch,
 	] = useAppContext();
-	useEffect(() => {
-		if (!productOptionId) {
-			const makeFetch = async () => {
-				let newOptionId: number;
-				const options = await getOptions();
 
-				const trialOption = options.find(({key}) => key === 'trial');
+	// useEffect(() => {
+	// 	if (!productOptionId) {
+	// 		const makeFetch = async () => {
+	// 			let newOptionId: number;
+	// 			const options = await getOptions();
 
-				if (!optionId && !trialOption) {
-					newOptionId = await postTrialOption();
-				}
-				else {
-					newOptionId = optionId ?? trialOption!.id;
-				}
+	// 			const trialOption = options.find(({key}) => key === 'trial');
 
-				dispatch({
-					payload: {value: newOptionId},
-					type: TYPES.UPDATE_OPTION_ID,
-				});
+	// 			if (!optionId && !trialOption) {
+	// 				newOptionId = await postTrialOption();
+	// 			}
+	// 			else {
+	// 				newOptionId = optionId ?? trialOption!.id;
+	// 			}
 
-				const newProductOptionId = await postTrialProductOption(
-					newOptionId,
-					appProductId
-				);
+	// 			dispatch({
+	// 				payload: {value: newOptionId},
+	// 				type: TYPES.UPDATE_OPTION_ID,
+	// 			});
 
-				dispatch({
-					payload: {value: newProductOptionId},
-					type: TYPES.UPDATE_PRODUCT_OPTION_ID,
-				});
+	// 			const newProductOptionId = await postTrialProductOption(
+	// 				newOptionId,
+	// 				appProductId
+	// 			);
 
-				const noOptionId = await postOptionValue(
-					'no',
-					'No',
-					newProductOptionId,
-					0
-				);
-				const yesOptionId = await postOptionValue(
-					'yes',
-					'Yes',
-					newProductOptionId,
-					1
-				);
+	// 			dispatch({
+	// 				payload: {value: newProductOptionId},
+	// 				type: TYPES.UPDATE_PRODUCT_OPTION_ID,
+	// 			});
 
-				dispatch({
-					payload: {noOptionId, yesOptionId},
-					type: TYPES.UPDATE_PRODUCT_OPTION_VALUES_ID,
-				});
-			};
+	// 			const noOptionId = await postOptionValue(
+	// 				'no',
+	// 				'No',
+	// 				newProductOptionId,
+	// 				0
+	// 			);
+	// 			const yesOptionId = await postOptionValue(
+	// 				'yes',
+	// 				'Yes',
+	// 				newProductOptionId,
+	// 				1
+	// 			);
 
-			makeFetch();
-		}
-	}, []);
+	// 			dispatch({
+	// 				payload: {noOptionId, yesOptionId},
+	// 				type: TYPES.UPDATE_PRODUCT_OPTION_VALUES_ID,
+	// 			});
+	// 		};
+
+	// 		makeFetch();
+	// 	}
+	// }, []);
 
 	return (
 		<div className="provide-version-details-page-container">
@@ -161,12 +162,14 @@ export function ProvideVersionDetailsPage({
 							appProductId,
 							body: {
 								sku: createSkuName(appProductId, appVersion),
-								skuOptions: [
-									{
-										key: productOptionId,
-										value: optionValuesId.noOptionId,
-									},
-								],
+
+								// skuOptions: [
+								// 	{
+								// 		key: productOptionId,
+								// 		value: optionValuesId.noOptionId,
+								// 	},
+								// ],
+
 							},
 						});
 

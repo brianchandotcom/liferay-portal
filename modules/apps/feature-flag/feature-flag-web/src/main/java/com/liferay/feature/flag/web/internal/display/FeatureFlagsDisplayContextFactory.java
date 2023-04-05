@@ -89,7 +89,7 @@ public class FeatureFlagsDisplayContextFactory {
 				portletRequest,
 				PortletURLUtil.getCurrent(
 					liferayPortletRequest, liferayPortletResponse),
-				null, "no-feature-flags-found");
+				null, "no-feature-flags-were-found");
 
 		searchContainer.setId("accountEntryAccountGroupsSearchContainer");
 		searchContainer.setOrderByCol(

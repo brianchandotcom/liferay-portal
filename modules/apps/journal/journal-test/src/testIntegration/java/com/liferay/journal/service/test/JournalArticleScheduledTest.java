@@ -16,7 +16,7 @@ package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Calendar;
@@ -168,11 +170,11 @@ public class JournalArticleScheduledTest {
 		JournalArticle article = addArticle(
 			_group.getGroupId(), new Date(), when, approved);
 
-		JournalArticleLocalServiceUtil.checkArticles(_group.getCompanyId());
+		_journalArticleLocalService.checkArticles(_group.getCompanyId());
 
-		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+		article = _journalArticleLocalService.getArticle(article.getId());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		if (when == _WHEN_FUTURE) {
@@ -211,7 +213,13 @@ public class JournalArticleScheduledTest {
 
 	private static final int _WHEN_PAST = -1;
 
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

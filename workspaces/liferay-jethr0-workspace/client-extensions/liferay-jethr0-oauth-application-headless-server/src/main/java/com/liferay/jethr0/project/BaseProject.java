@@ -16,6 +16,7 @@ package com.liferay.jethr0.project;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
 import java.text.ParseException;
@@ -62,6 +63,22 @@ public abstract class BaseProject implements Project {
 			}
 
 			_gitBranches.add(gitBranch);
+		}
+	}
+
+	@Override
+	public void addTask(Task task) {
+		addTasks(Arrays.asList(task));
+	}
+
+	@Override
+	public void addTasks(List<Task> tasks) {
+		for (Task task : tasks) {
+			if (_tasks.contains(task)) {
+				continue;
+			}
+
+			_tasks.add(task);
 		}
 	}
 
@@ -141,6 +158,11 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
+	public List<Task> getTasks() {
+		return _tasks;
+	}
+
+	@Override
 	public List<TestSuite> getTestSuites() {
 		return _testSuites;
 	}
@@ -168,6 +190,15 @@ public abstract class BaseProject implements Project {
 	@Override
 	public void removeGitBranches(List<GitBranch> gitBranches) {
 		_gitBranches.removeAll(gitBranches);
+	}
+
+	@Override
+	public void removeTask(Task task) {
+		_tasks.remove(task);
+	}
+
+	public void removeTasks(List<Task> tasks) {
+		_tasks.removeAll(tasks);
 	}
 
 	@Override
@@ -226,6 +257,7 @@ public abstract class BaseProject implements Project {
 	private String _name;
 	private int _priority;
 	private State _state;
+	private final List<Task> _tasks = new ArrayList<>();
 	private final List<TestSuite> _testSuites = new ArrayList<>();
 	private final Type _type;
 

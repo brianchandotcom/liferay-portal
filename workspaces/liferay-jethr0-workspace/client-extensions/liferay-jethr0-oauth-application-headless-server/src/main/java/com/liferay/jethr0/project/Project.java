@@ -16,6 +16,7 @@ package com.liferay.jethr0.project;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
 import java.util.Date;
@@ -38,6 +39,10 @@ public interface Project {
 
 	public void addGitBranches(List<GitBranch> gitBranches);
 
+	public void addTask(Task task);
+
+	public void addTasks(List<Task> tasks);
+
 	public void addTestSuite(TestSuite testSuite);
 
 	public void addTestSuites(List<TestSuite> testSuites);
@@ -58,6 +63,8 @@ public interface Project {
 
 	public State getState();
 
+	public List<Task> getTasks();
+
 	public List<TestSuite> getTestSuites();
 
 	public Type getType();
@@ -69,6 +76,10 @@ public interface Project {
 	public void removeGitBranch(GitBranch gitBranch);
 
 	public void removeGitBranches(List<GitBranch> gitBranches);
+
+	public void removeTask(Task task);
+
+	public void removeTasks(List<Task> tasks);
 
 	public void removeTestSuite(TestSuite testSuite);
 

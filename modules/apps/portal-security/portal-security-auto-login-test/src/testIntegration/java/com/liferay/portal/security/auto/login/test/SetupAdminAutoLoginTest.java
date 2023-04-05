@@ -58,7 +58,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Alvaro Saugar
  */
 @RunWith(Arquillian.class)
-public class AdminPasswordAutoLoginTest {
+public class SetupAdminAutoLoginTest {
 
 	@ClassRule
 	@Rule
@@ -159,7 +159,7 @@ public class AdminPasswordAutoLoginTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AdminPasswordAutoLoginTest.class);
+		SetupAdminAutoLoginTest.class);
 
 	private static Company _company;
 	private static String _emailAdressAdminUser;

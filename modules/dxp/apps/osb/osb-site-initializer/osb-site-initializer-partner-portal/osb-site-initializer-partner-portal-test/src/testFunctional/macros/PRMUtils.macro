@@ -14,6 +14,58 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
+	macro connectWithSalesforce {
+		var salesforceLoginURL = PropsUtil.get("site.initializer.partner.portal.login.url");
+		var salesforceConsumerKey = PropsUtil.get("site.initializer.partner.portal.consumer.key");
+		var salesforceConsumerSecret = PropsUtil.get("site.initializer.partner.portal.consumer.secret");
+		var salesforceUsername = PropsUtil.get("site.initializer.partner.portal.username");
+		var salesforcePassword = PropsUtil.get("site.initializer.partner.portal.password");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Third Party",
+			configurationName = "Salesforce Integration",
+			configurationScope = "Punch Out");
+
+		Navigator.gotoNavTab(navTab = "Salesforce Integration");
+
+		if (IsTextEqual(key_fieldName = "loginURL", locator1 = "PRMUtils#SALESFORCE_FIELD", value1 = ${salesforceLoginURL})) {
+			Navigator.openURL();
+		}
+		else {
+			Type(
+				key_fieldName = "loginURL",
+				locator1 = "PRMUtils#SALESFORCE_FIELD",
+				value1 = ${salesforceLoginURL});
+
+			Type(
+				key_fieldName = "consumerKey",
+				locator1 = "PRMUtils#SALESFORCE_FIELD",
+				value1 = ${salesforceConsumerKey});
+
+			Type(
+				key_fieldName = "consumerSecret",
+				locator1 = "PRMUtils#SALESFORCE_FIELD",
+				value1 = ${salesforceConsumerSecret});
+
+			Type(
+				key_fieldName = "username",
+				locator1 = "PRMUtils#SALESFORCE_FIELD",
+				value1 = ${salesforceUsername});
+
+			Type(
+				key_fieldName = "password",
+				locator1 = "PRMUtils#SALESFORCE_FIELD",
+				value1 = ${salesforcePassword});
+
+			Button.clickSubmitButton();
+		}
+	}
+
 	@summary = "Define object permission to a role"
 	macro definePermission {
 		ApplicationsMenu.gotoPortlet(

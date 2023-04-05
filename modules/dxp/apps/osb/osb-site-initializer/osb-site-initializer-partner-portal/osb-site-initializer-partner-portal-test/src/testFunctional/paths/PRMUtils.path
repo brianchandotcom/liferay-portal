@@ -21,7 +21,11 @@
 	<td>//div//a[contains(@class,'btn-solid') and contains(.,'Sign In')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>SALESFORCE_FIELD</td>
+	<td>//div[@class='ddm-field'][@data-field-name='${key_fieldName}']//input/../div/textarea</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

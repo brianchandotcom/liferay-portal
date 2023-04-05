@@ -24,6 +24,9 @@ public class CPContentWebKeys {
 
 	public static final String CP_CONTENT_HELPER = "CP_CONTENT_HELPER";
 
+	public static final String CP_CONTENT_INFO_ITEM_RENDERER =
+		"CP_CONTENT_INFO_ITEM_RENDERER";
+
 	public static final String CP_CONTENT_LIST_ENTRY_RENDERER_KEYS =
 		"CP_CONTENT_LIST_ENTRY_RENDERER_KEYS";
 

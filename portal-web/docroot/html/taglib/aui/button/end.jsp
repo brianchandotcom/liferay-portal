@@ -37,7 +37,7 @@
 						name="<%= namespace %><%= name %>"
 					</c:if>
 
-					onClick="<%= "Liferay.Util.navigate('" + escapedHREF + "')" %>"
+					onClick="Liferay.Util.navigate('<%= escapedHREF %>')"
 
 					type="button"
 

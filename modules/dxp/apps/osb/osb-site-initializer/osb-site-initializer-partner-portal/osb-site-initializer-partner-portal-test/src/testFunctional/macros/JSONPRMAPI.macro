@@ -457,41 +457,4 @@ definition {
 		}
 	}
 
-	@summary = "Get the 'externalReferenceCode' from '${accountEntryName}'"
-	macro getAccountExternalReferenceCode {
-		Variables.assertDefined(parameterList = ${accountEntryName});
-
-		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
-		}
-
-		var companyId = JSONCompany.getCompanyId();
-		var portalURL = JSONCompany.getPortalURL();
-		var userId = JSONUserSetter.setUserId(userEmailAddress = ${creatorEmailAddress});
-		var curl = '''
-			${portalURL}/api/jsonws/account.accountentry/get-account-entries \
-				-u ${creatorEmailAddress}:${creatorPassword} \
-				-d companyId=${companyId} \
-				-d status=0 \
-				-d <CURL_DATA[start=-1]CURL_DATA> \
-				-d <CURL_DATA[end=-1]CURL_DATA> \
-				-d -orderByComparator=
-		''';
-
-		var accountExternalReferenceCode = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${accountEntryName}')]['externalReferenceCode']");
-
-		echo("curl: ${curl}");
-
-		if (${externalReferenceCode} == "") {
-			fail("FAIL. Cannot find account entry.");
-		}
-		else {
-			return ${accountExternalReferenceCode};
-		}
-	}
-
 }

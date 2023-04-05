@@ -375,19 +375,6 @@ definition {
 		}
 	}
 
-	@summary = "Fill in and search"
-	macro SearchMDF {
-		Type(
-			key_placeHolder = "Search",
-			locator1 = "TextInput#ANY_PLACEHOLDER",
-			value1 = ${key_value});
-
-		KeyPress(
-			key_placeHolder = "Search",
-			locator1 = "TextInput#ANY_PLACEHOLDER",
-			value1 = "\RETURN");
-	}
-
 	@summary = "Search for an MDF Request"
 	macro searchMDF {
 		Type(

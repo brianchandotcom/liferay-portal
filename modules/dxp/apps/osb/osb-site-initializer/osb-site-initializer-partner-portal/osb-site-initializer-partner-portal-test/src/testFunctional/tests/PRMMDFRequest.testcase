@@ -331,7 +331,7 @@ definition {
 		}
 
 		task ("When I search for the first MDF") {
-			PRMMDFRequest.SearchMDF(campaignName = "Campaign Name 1");
+			PRMMDFRequest.searchMDF(campaignName = "Campaign Name 1");
 		}
 
 		task ("And I click on the 'Export MDF Report' button") {
@@ -345,7 +345,7 @@ definition {
 		}
 
 		task ("When I search for the second MDF") {
-			PRMMDFRequest.SearchMDF(campaignName = "Campaign Name 2");
+			PRMMDFRequest.searchMDF(campaignName = "Campaign Name 2");
 		}
 
 		task ("And I click on the 'Export MDF Report' button") {
@@ -971,7 +971,7 @@ definition {
 		}
 
 		task ("Then I can see the message 'You can submit up to 2 claim(s)'") {
-			PRMMDFRequest.assertClaimMessage(key_claimMessage = "You can submit up to 2 claim(s).");
+			PRMMDFRequest.assertClaimMessage(claimMessage = "You can submit up to 2 claim(s).");
 		}
 	}
 

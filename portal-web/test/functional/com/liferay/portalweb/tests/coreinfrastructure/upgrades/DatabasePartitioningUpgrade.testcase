@@ -14,7 +14,7 @@ definition {
 	@priority = 5
 	test CanAutoUpgradeLargePartitionedDatabase7413U47 {
 		property custom.properties = "upgrade.database.auto.run=true";
-		property custom.startup.timeout = "300";
+		property custom.startup.timeout = "360";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";

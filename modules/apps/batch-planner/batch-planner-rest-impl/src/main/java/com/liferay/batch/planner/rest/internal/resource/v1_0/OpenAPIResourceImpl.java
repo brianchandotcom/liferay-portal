@@ -100,6 +100,8 @@ public class OpenAPIResourceImpl {
 
 			add(SiteScopeResourceImpl.class);
 
+			add(StrategyResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

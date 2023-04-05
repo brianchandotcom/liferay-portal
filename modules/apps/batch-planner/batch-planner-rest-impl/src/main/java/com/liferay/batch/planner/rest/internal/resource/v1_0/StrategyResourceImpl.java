@@ -14,9 +14,17 @@
 
 package com.liferay.batch.planner.rest.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
+import com.liferay.batch.planner.rest.dto.v1_0.Strategy;
 import com.liferay.batch.planner.rest.resource.v1_0.StrategyResource;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +35,47 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = StrategyResource.class
 )
 public class StrategyResourceImpl extends BaseStrategyResourceImpl {
+
+	@Override
+	public Page<Strategy> getPlanInternalClassNameStrategiesPage(
+			String internalClassName)
+		throws Exception {
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				internalClassName, "DEFAULT");
+
+		List<Strategy> strategies = new ArrayList<>();
+
+		for (String createStrategy :
+				batchEngineTaskItemDelegate.getAvailableCreateStrategies()) {
+
+			strategies.add(
+				new Strategy() {
+					{
+						name = createStrategy;
+						type = "create";
+					}
+				});
+		}
+
+		for (String updateStrategy :
+				batchEngineTaskItemDelegate.getAvailableUpdateStrategies()) {
+
+			strategies.add(
+				new Strategy() {
+					{
+						name = updateStrategy;
+						type = "update";
+					}
+				});
+		}
+
+		return Page.of(strategies);
+	}
+
+	@Reference
+	private BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
+
 }

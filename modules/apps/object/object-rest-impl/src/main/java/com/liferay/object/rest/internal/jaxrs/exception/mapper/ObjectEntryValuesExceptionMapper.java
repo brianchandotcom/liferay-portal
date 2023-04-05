@@ -20,10 +20,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -41,7 +39,6 @@ public class ObjectEntryValuesExceptionMapper
 	protected Problem getProblem(
 		ObjectEntryValuesException objectEntryValuesException) {
 
-
 		String messageKey = objectEntryValuesException.getMessageKey();
 
 		if (messageKey == null) {
@@ -53,7 +50,6 @@ public class ObjectEntryValuesExceptionMapper
 			_language.format(
 				_acceptLanguage.getPreferredLocale(), messageKey,
 				objectEntryValuesException.getArguments()));
-
 	}
 
 	@Context

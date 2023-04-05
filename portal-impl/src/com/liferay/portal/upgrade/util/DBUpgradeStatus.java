@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.upgrade.util.DBUpgradeChecker;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -298,10 +299,11 @@ public class DBUpgradeStatus {
 	private static final Map<String, ServletSchemaVersions>
 		_servletSchemaVersionsMap = new ConcurrentHashMap<>();
 	private static String _status =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN ? "Pending" : "Not enabled";
+		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
+			"Pending" : "Not enabled";
 	private static String _type =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN ? "Not calculated" :
-			"Not enabled";
+		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
+			"Not calculated" : "Not enabled";
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
 	private static final Map<String, Map<String, Integer>> _warningMessages =

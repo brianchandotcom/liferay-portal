@@ -542,6 +542,9 @@ public class ClientExtensionProjectConfigurator
 
 		createClientExtensionConfigTaskProvider.configure(
 			createClientExtensionConfigTask -> {
+				createClientExtensionConfigTask.dependsOn(
+					ASSEMBLE_CLIENT_EXTENSION_TASK_NAME);
+
 				TaskInputs taskInputs =
 					createClientExtensionConfigTask.getInputs();
 
@@ -551,16 +554,16 @@ public class ClientExtensionProjectConfigurator
 					_getClientExtensionProperties());
 			});
 
+		File clientExtensionBuildDir = new File(
+			project.getBuildDir(), CLIENT_EXTENSION_BUILD_DIR);
+
 		assembleClientExtensionTaskProvider.configure(
-			copy -> {
-				copy.dependsOn(CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME);
-				copy.into(
-					new File(
-						project.getBuildDir(), CLIENT_EXTENSION_BUILD_DIR));
-			});
+			copy -> copy.into(clientExtensionBuildDir));
 
 		buildClientExtensionZipTaskProvider.configure(
 			zip -> {
+				zip.dependsOn(CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME);
+
 				DirectoryProperty destinationDirectoryProperty =
 					zip.getDestinationDirectory();
 
@@ -581,7 +584,7 @@ public class ClientExtensionProjectConfigurator
 
 						}));
 
-				zip.from(assembleClientExtensionTaskProvider);
+				zip.from(clientExtensionBuildDir);
 				zip.include("**/*");
 			});
 	}

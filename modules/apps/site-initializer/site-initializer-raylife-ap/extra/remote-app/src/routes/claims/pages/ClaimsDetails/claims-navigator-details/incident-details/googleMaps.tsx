@@ -22,7 +22,7 @@ type LocationType = {
 };
 
 const GoogleMaps = ({address}: LocationType) => {
-	const [position, setPosition] = useState({lat: 34.00037, lng: -117.8151});
+	const [position, setPosition] = useState({lat: -8.03437, lng: -34.92374});
 	const [hasGoogleKey, setGoogleKey] = useState<boolean>();
 
 	useEffect(() => {

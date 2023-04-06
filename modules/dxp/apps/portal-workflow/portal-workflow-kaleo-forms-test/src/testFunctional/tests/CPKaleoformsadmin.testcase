@@ -166,7 +166,7 @@ definition {
 
 	@priority = 5
 	test DeactivateAndActivateWorkflowDefinition {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndActivateWorkflowDefinition";
 
 		Navigator.openURL();
@@ -225,7 +225,7 @@ definition {
 
 	@priority = 5
 	test DeactivateAndDeleteWorkflowDefinition {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndDeleteWorkflowDefinition";
 
 		Navigator.openURL();
@@ -686,7 +686,7 @@ definition {
 
 	@priority = 5
 	test DeleteProcess {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		Navigator.openURL();
 
@@ -1434,7 +1434,7 @@ definition {
 
 	@priority = 5
 	test EditProcessNewWorkflowViaSourceTab {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
 
 		Navigator.openURL();

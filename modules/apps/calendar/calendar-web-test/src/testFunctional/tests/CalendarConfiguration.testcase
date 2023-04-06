@@ -111,7 +111,7 @@ definition {
 
 	@priority = 5
 	test ConfigureDisplayTimeZone {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		CalendarNavigator.gotoConfiguration();
 

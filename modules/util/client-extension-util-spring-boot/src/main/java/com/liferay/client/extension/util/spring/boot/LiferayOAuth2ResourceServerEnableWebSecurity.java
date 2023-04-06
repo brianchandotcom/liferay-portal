@@ -119,9 +119,18 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 		for (String externalReferenceCode :
 				liferayOauthApplicationExternalReferenceCodes.split(",")) {
 
-			String clientId = LiferayOAuth2Util.getClientId(
-				externalReferenceCode, _lxcDXPMainDomain,
-				_lxcDXPServerProtocol);
+			String clientId = _environment.getProperty(
+				externalReferenceCode + ".oauth2.user.agent.client.id");
+
+			if (clientId == null) {
+				clientId = LiferayOAuth2Util.getClientId(
+					externalReferenceCode, _lxcDXPMainDomain,
+					_lxcDXPServerProtocol);
+			}
+
+			if (clientId == null) {
+				continue;
+			}
 
 			clientIds.add(clientId);
 

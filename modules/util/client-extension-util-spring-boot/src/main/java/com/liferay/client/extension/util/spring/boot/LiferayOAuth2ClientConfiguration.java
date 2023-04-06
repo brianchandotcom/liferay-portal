@@ -141,6 +141,19 @@ public class LiferayOAuth2ClientConfiguration {
 		for (String externalReferenceCode :
 				liferayOauthApplicationExternalReferenceCodes.split(",")) {
 
+			String clientId = _environment.getProperty(
+				externalReferenceCode + ".oauth2.headless.server.client.id");
+
+			if (clientId == null) {
+				clientId = LiferayOAuth2Util.getClientId(
+					externalReferenceCode, _lxcDXPMainDomain,
+					_lxcDXPServerProtocol);
+			}
+
+			if (clientId == null) {
+				continue;
+			}
+
 			String clientSecret = _environment.getProperty(
 				externalReferenceCode +
 					".oauth2.headless.server.client.secret");
@@ -158,9 +171,7 @@ public class LiferayOAuth2ClientConfiguration {
 				).tokenUri(
 					_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain + tokenURI
 				).clientId(
-					LiferayOAuth2Util.getClientId(
-						externalReferenceCode, _lxcDXPMainDomain,
-						_lxcDXPServerProtocol)
+					clientId
 				).clientSecret(
 					clientSecret
 				).authorizationGrantType(

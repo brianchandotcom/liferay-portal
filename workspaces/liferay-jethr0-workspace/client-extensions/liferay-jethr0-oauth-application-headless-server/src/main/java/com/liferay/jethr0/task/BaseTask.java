@@ -161,7 +161,6 @@ public class BaseTask extends BaseEntity implements Task {
 
 	private Build _build;
 	private final List<Environment> _environments = new ArrayList<>();
-	private final Build _build;
 	private String _name;
 	private Project _project;
 	private final List<TaskRun> _taskRuns = new ArrayList<>();

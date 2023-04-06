@@ -130,11 +130,6 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public String getJobName() {
 		return _jobName;
 	}

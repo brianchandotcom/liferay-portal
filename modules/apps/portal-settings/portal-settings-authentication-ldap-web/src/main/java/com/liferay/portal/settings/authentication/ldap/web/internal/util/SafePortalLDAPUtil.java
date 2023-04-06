@@ -14,27 +14,19 @@
 
 package com.liferay.portal.settings.authentication.ldap.web.internal.util;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Edward C. Han
  */
-@Component(service = {})
 public class SafePortalLDAPUtil {
 
 	public static SafePortalLDAP getSafePortalLDAP() {
-		return _safePortalLDAP;
+		return _safePortalLDAPSnapshot.get();
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
-	protected void setPortalLDAP(SafePortalLDAP safePortalLDAP) {
-		_safePortalLDAP = safePortalLDAP;
-	}
-
-	private static SafePortalLDAP _safePortalLDAP;
+	private static final Snapshot<SafePortalLDAP> _safePortalLDAPSnapshot =
+		new Snapshot<>(SafePortalLDAPUtil.class, SafePortalLDAP.class);
 
 }

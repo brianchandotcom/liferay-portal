@@ -112,15 +112,6 @@ definition {
 		}
 	}
 
-	@description = "Confirm that the user can create a dataset entry via API"
-	@ignore = "Test Stub"
-	@priority = 5
-	test CanCreateDataSetViaAPI {
-
-		// TODO CanCreateDataSetViaAPI pending implementation JQuery enabled
-
-	}
-
 	@description = "LPS-179521. Confirm that the dataset can be delete"
 	@priority = 5
 	test CanDeleteDataSet {

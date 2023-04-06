@@ -16,19 +16,10 @@ package com.liferay.data.engine.rest.resource.v2_0.test.util.content.type;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.net.URL;
-
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,7 +61,7 @@ public class TestDataDefinitionContentType
 
 	@Override
 	public String getPortletResourceName() {
-		return _PORTLET_RESOURCE_NAME;
+		return ModelResourceActionTestUtil.PORTLET_RESOURCE_NAME;
 	}
 
 	@Override
@@ -99,54 +90,9 @@ public class TestDataDefinitionContentType
 		_allowEmptyDataDefinition = allowEmptyDataDefinition;
 	}
 
-	@Activate
-	protected void activate() throws Exception {
-		URL url = TestDataDefinitionContentType.class.getResource(
-			"dependencies/resource-actions.xml");
-
-		_resourceActions.populateModelResources(
-			TestDataDefinitionContentType.class.getClassLoader(),
-			url.getPath());
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		List<ResourceAction> portletResourceActions =
-			_resourceActionLocalService.getResourceActions(
-				_PORTLET_RESOURCE_NAME);
-
-		for (ResourceAction portletResourceAction : portletResourceActions) {
-			_resourceActionLocalService.deleteResourceAction(
-				portletResourceAction);
-		}
-
-		List<String> modelResourceNames =
-			_resourceActions.getPortletModelResources(_PORTLET_RESOURCE_NAME);
-
-		for (String modelResourceName : modelResourceNames) {
-			List<ResourceAction> modelResourceActions =
-				_resourceActionLocalService.getResourceActions(
-					modelResourceName);
-
-			for (ResourceAction modelResourceAction : modelResourceActions) {
-				_resourceActionLocalService.deleteResourceAction(
-					modelResourceAction);
-			}
-		}
-	}
-
-	private static final String _PORTLET_RESOURCE_NAME =
-		"com_liferay_data_engine_test_portlet_DataEngineTestPortlet";
-
 	private boolean _allowEmptyDataDefinition = true;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 }

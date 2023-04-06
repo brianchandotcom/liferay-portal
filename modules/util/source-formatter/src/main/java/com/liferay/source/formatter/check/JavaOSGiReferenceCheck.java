@@ -154,6 +154,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			sourceFormatterArgs.getBaseDirName(),
 			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
+		outerLoop:
 		for (String currentBranchFileDiffBlock :
 				StringUtil.split(currentBranchFileDiff, "\n@@")) {
 
@@ -167,7 +168,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				x = currentBranchFileDiffBlock.indexOf("@Reference", x + 1);
 
 				if (x == -1) {
-					break;
+					continue outerLoop;
 				}
 
 				if (!StringUtil.startsWith(

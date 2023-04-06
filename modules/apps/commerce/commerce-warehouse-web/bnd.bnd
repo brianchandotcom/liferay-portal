@@ -2,3 +2,4 @@ Bundle-Name: Liferay Commerce Warehouse Web
 Bundle-SymbolicName: com.liferay.commerce.warehouse.web
 Bundle-Version: 4.0.43
 Web-ContextPath: /commerce-warehouse-web
+-dsannotations-options: inherit

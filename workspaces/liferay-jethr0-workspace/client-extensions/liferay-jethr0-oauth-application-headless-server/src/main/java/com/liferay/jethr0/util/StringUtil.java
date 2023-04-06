@@ -17,6 +17,10 @@ package com.liferay.jethr0.util;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -32,6 +36,19 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static Date toDate(String dateString) {
+		if (dateString == null) {
+			return null;
+		}
+
+		try {
+			return _simpleDateFormat.parse(dateString);
+		}
+		catch (ParseException parseException) {
+			return null;
+		}
 	}
 
 	public static String toLowerCase(String s) {
@@ -75,6 +92,14 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String toString(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return _simpleDateFormat.format(date);
+	}
+
 	public static URL toURL(String urlString) {
 		try {
 			return new URL(urlString);
@@ -83,5 +108,8 @@ public class StringUtil {
 			throw new RuntimeException(malformedURLException);
 		}
 	}
+
+	private static final SimpleDateFormat _simpleDateFormat =
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 }

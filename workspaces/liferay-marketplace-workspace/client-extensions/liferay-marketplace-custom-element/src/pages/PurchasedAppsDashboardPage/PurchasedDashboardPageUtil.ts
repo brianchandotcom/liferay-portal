@@ -14,3 +14,11 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		items: appList,
 	},
 ];
+
+export const initialAccountState: Account[] = [
+	{
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+	},
+];

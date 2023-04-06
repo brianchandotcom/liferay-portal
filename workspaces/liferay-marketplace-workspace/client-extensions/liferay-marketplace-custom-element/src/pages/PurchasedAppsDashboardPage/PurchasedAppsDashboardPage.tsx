@@ -10,10 +10,9 @@ import {
 	getChannels,
 	getOrders,
 	getSKUCustomFieldExpandoValue,
-	getUserAccountsById,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import {initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
+import {initialDashboardNavigationItems, initialAccountState} from './PurchasedDashboardPageUtil';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -54,21 +53,9 @@ const tableHeaders = [
 	},
 ];
 
-const initialAccountState: Account[] = [
-	{
-		externalReferenceCode: '',
-		id: 0,
-		name: '',
-	},
-];
-
 export function PurchasedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountState);
-	const [selectedAccount, setSelectedAccount] = useState<Account>({
-		externalReferenceCode: '',
-		id: 0,
-		name: '',
-	});
+	const [selectedAccount, setSelectedAccount] = useState<Account>(accounts[0]);
 	const [purchasedAppTable, setPurchasedAppTable] =
 		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
 	const [page, setPage] = useState<number>(1);
@@ -88,9 +75,26 @@ export function PurchasedAppsDashboardPage() {
 	};
 
 	useEffect(() => {
-		const makeFetch = async () => {
-			const userAccounts = await getUserAccountsById();
+		(async () => {
+			const accountsResponse = await getAccounts();
 
+			const accountsList = accountsResponse.items.map(
+				(account: Account) => {
+					return {
+						externalReferenceCode: account.externalReferenceCode,
+						id: account.id,
+						name: account.name,
+					} as Account;
+				}
+			);
+
+			setAccounts(accountsList);
+			setSelectedAccount(accountsList[0]);
+		})();
+	}, []);
+
+	useEffect(() => {
+		const makeFetch = async () => {
 			const channels = await getChannels();
 
 			const channel =
@@ -99,7 +103,7 @@ export function PurchasedAppsDashboardPage() {
 				) || channels[0];
 
 			const placedOrders = await getOrders(
-				userAccounts.accountBriefs[0]?.id || 50307,
+				selectedAccount.id || 50307,
 				channel.id,
 				page,
 				purchasedAppTable.pageSize
@@ -150,7 +154,7 @@ export function PurchasedAppsDashboardPage() {
 			const accountsResponse = await getAccounts();
 
 			const accountsList = accountsResponse.items.map(
-				(account: any, index: number) => {
+				(account: Account) => {
 					return {
 						externalReferenceCode: account.externalReferenceCode,
 						id: account.id,
@@ -162,7 +166,7 @@ export function PurchasedAppsDashboardPage() {
 			setAccounts(accountsList);
 		};
 		makeFetch();
-	}, [page]);
+	}, [page, selectedAccount]);
 
 	return (
 		<DashboardPage

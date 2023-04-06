@@ -946,37 +946,65 @@ public class DefaultObjectEntryManagerImplTest {
 				_objectEntryManager.fetchObjectEntry(
 					_simpleDTOConverterContext, objectDefinition2,
 					objectEntry2.getId()));
+
+			ObjectEntry objectEntry3 = _objectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition1,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			_objectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition2,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"r_oneToManyRelationship_" +
+								objectDefinition1.getPKObjectFieldName(),
+							objectEntry3.getId()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+			PrincipalThreadLocal.setName(_user.getUserId());
+
+			// Relationshp type prevent
+
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					objectRelationship.getObjectRelationshipId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+					objectRelationship.getLabelMap());
+
+			try {
+				_objectEntryManager.deleteObjectEntry(
+					objectEntry3.getExternalReferenceCode(), _companyId,
+					objectDefinition1, null);
+
+				Assert.fail();
+			}
+			catch (RequiredObjectRelationshipException
+						requiredObjectRelationshipException) {
+
+				Assert.assertEquals(
+					StringBundler.concat(
+						"Object relationship ",
+						objectRelationship.getObjectRelationshipId(),
+						" does not allow deletes"),
+					requiredObjectRelationshipException.getMessage());
+			}
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
-		}
-
-		// Relationshp type prevent
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				objectRelationship.getLabelMap());
-
-		try {
-			_objectEntryManager.deleteObjectEntry(
-				objectEntry1.getExternalReferenceCode(), _companyId,
-				objectDefinition1, null);
-
-			Assert.fail();
-		}
-		catch (RequiredObjectRelationshipException
-					requiredObjectRelationshipException) {
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Object relationship ",
-					objectRelationship.getObjectRelationshipId(),
-					" does not allow deletes"),
-				requiredObjectRelationshipException.getMessage());
 		}
 
 		_roleLocalService.deleteRole(role.getRoleId());

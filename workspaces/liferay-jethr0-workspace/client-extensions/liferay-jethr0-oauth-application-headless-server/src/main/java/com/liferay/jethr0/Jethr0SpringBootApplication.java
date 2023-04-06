@@ -76,15 +76,6 @@ public class Jethr0SpringBootApplication {
 		return projectQueue;
 	}
 
-	@Bean
-	public ProjectRepository getProjectRepository(ProjectDALO projectDALO) {
-		ProjectRepository projectRepository = new ProjectRepository();
-
-		projectRepository.add(projectDALO.get());
-
-		return projectRepository;
-	}
-
 	private ProjectPrioritizer _getDefaultProjectPrioritizer(
 		ProjectComparatorDALO projectComparatorDALO,
 		ProjectPrioritizerDALO projectPrioritizerDALO) {

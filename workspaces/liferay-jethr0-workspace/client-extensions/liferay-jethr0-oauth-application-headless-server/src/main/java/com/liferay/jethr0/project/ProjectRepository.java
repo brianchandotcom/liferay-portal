@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class ProjectRepository extends BaseEntityRepository<Project> {
 
 	public List<Project> getByState(Project.State state) {

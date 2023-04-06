@@ -127,11 +127,10 @@ public class CommerceDiscountCommerceAccountGroupRelWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.account.model.CommerceAccountGroup
-			getCommerceAccountGroup()
+	public com.liferay.account.model.AccountGroup getAccountGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return model.getCommerceAccountGroup();
+		return model.getAccountGroup();
 	}
 
 	/**

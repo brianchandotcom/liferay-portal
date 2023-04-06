@@ -1,14 +1,56 @@
 assemble:
     - from: build/vite
       into: static
-liferay-marketplace-custom-element:
+liferay-marketplace-custom-element-create-app:
     cssURLs:
         - .*.css
-    friendlyURLMapping: liferay-marketplace-custom-element
+    friendlyURLMapping: liferay-marketplace-custom-element-create-app
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
-    name: Liferay Marketplace Custom Element
+    name: Liferay Marketplace Create App
     portletCategoryName: category.client-extensions
+    properties:
+        route: create-app
+    type: customElement
+    urls:
+        - .*.js
+    useESM: true
+liferay-marketplace-custom-element-get-app:
+    cssURLs:
+        - .*.css
+    friendlyURLMapping: liferay-marketplace-custom-element-get-app
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Get App
+    portletCategoryName: category.client-extensions
+    properties:
+        route: get-app
+    type: customElement
+    urls:
+        - .*.js
+    useESM: true
+liferay-marketplace-custom-element-published-apps:
+    cssURLs:
+        - .*.css
+    friendlyURLMapping: liferay-marketplace-custom-element-published-apps
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Published Apps
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - .*.js
+    useESM: true
+liferay-marketplace-custom-element-purchased-apps:
+    cssURLs:
+        - .*.css
+    friendlyURLMapping: liferay-marketplace-custom-element-purchased-apps
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Purchased apps
+    portletCategoryName: category.client-extensions
+    properties:
+        route: purchased-apps-dashboard
     type: customElement
     urls:
         - .*.js

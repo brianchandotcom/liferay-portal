@@ -7,14 +7,14 @@ interface AppRoutesProps {
 	route: string;
 }
 export default function AppRoutes({route}: AppRoutesProps) {
-	if (route === 'create-new-app') {
+	if (route === 'create-app') {
 		return <AppCreationFlow />;
-	}
-	else if (route === 'purchased-apps-dashboard') {
-		return <PurchasedAppsDashboardPage />;
-	}
+	}	
 	else if (route === 'get-app') {
 		return <GetAppPage />;
+	}
+	else if (route === 'purchased-apps') {
+		return <PurchasedAppsDashboardPage />;
 	}
 
 	return <PublishedAppsDashboardPage />;

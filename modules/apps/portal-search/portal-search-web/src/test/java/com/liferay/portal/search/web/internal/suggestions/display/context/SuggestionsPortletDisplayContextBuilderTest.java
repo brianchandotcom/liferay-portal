@@ -157,7 +157,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 		SuggestionDisplayContext suggestionDisplayContext =
 			buildSpellCheckSuggestion("a C");
 
-		_assertSuggestion("a [C] | q=a+C", suggestionDisplayContext);
+		_assertSuggestion(
+			"a [<strong>C</strong>] | q=a+C", suggestionDisplayContext);
 	}
 
 	@Test

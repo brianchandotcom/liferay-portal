@@ -35,7 +35,14 @@
 					%>
 
 						<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
-							<%= HtmlUtil.escape(suggestedKeyword) %>
+							<c:choose>
+								<c:when test="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) %>">
+									<strong><%= HtmlUtil.escape(suggestedKeyword) %></strong>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(suggestedKeyword) %>
+								</c:otherwise>
+							</c:choose>
 						</span>
 
 					<%
@@ -73,7 +80,14 @@
 							%>
 
 								<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
-									<%= HtmlUtil.escape(suggestedKeyword) %>
+									<c:choose>
+										<c:when test="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) %>">
+											<strong><%= HtmlUtil.escape(suggestedKeyword) %></strong>
+										</c:when>
+										<c:otherwise>
+											<%= HtmlUtil.escape(suggestedKeyword) %>
+										</c:otherwise>
+									</c:choose>
 								</span>
 
 							<%

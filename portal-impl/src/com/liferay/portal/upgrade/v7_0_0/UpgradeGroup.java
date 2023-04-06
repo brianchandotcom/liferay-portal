@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
@@ -43,9 +44,7 @@ import com.liferay.portlet.PortalPreferencesWrapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -69,21 +68,7 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected void updateGlobalGroupName() throws Exception {
-		List<Long> companyIds = new ArrayList<>();
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company")) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long companyId = resultSet.getLong("companyId");
-
-					companyIds.add(companyId);
-				}
-			}
-		}
-
-		for (Long companyId : companyIds) {
+		for (Long companyId : PortalInstances.getCompanyIdsBySQL()) {
 			LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
 
 			for (String languageId : PropsValues.LOCALES_ENABLED) {

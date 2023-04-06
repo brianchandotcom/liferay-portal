@@ -2977,7 +2977,6 @@ definition {
 	@description = "LPS-98517 - Verify that the usernames in the result table are separated by a comma when there is more than one assignee per item"
 	@priority = 3
 	test UsernamesAreSeparatedByComma {
-		property portal.acceptance = "true";
 
 		// TODO LRQA-67751 UsernamesAreSeparatedByComma pending implementation
 

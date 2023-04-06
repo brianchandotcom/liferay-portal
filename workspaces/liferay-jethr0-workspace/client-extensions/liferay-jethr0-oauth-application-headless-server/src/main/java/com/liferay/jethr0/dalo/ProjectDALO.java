@@ -16,6 +16,7 @@ package com.liferay.jethr0.dalo;
 
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectFactory;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,28 +32,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProjectDALO extends BaseDALO {
 
-	public Project createProject(
-		String name, int priority, Project.State state, Project.Type type) {
-
-		JSONObject requestJSONObject = new JSONObject();
-
-		requestJSONObject.put(
-			"name", name
-		).put(
-			"priority", priority
-		).put(
-			"state", state.getJSONObject()
-		).put(
-			"type", type.getJSONObject()
-		);
-
-		JSONObject responseJSONObject = create(requestJSONObject);
+	public Project createProject(Project project) {
+		JSONObject responseJSONObject = create(project.getJSONObject());
 
 		if (responseJSONObject == null) {
 			throw new RuntimeException("No response");
 		}
 
-		return ProjectFactory.newProject(responseJSONObject);
+		project.setCreatedDate(
+			StringUtil.toDate(responseJSONObject.getString("dateCreated")));
+		project.setId(responseJSONObject.getLong("id"));
+
+		return project;
 	}
 
 	public void deleteProject(Project project) {
@@ -61,8 +52,6 @@ public class ProjectDALO extends BaseDALO {
 		}
 
 		delete(project.getId());
-
-		ProjectFactory.removeProject(project);
 	}
 
 	public List<Project> retrieveProjects() {

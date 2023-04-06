@@ -844,6 +844,18 @@ public class DefaultObjectEntryManagerImplTest {
 					Collections.emptyList()
 				).build()));
 
+		// Relationship type cascade
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				_adminUser.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationship",
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
 		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition1,
 			new ObjectEntry() {
@@ -882,18 +894,6 @@ public class DefaultObjectEntryManagerImplTest {
 		_user = _addUser();
 
 		_userLocalService.addRoleUser(role.getRoleId(), _user);
-
-		// Relationship type cascade
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				_adminUser.getUserId(),
-				objectDefinition1.getObjectDefinitionId(),
-				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationship",
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		try {
 			_objectEntryManager.deleteObjectEntry(

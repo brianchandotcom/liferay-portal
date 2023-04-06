@@ -721,7 +721,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			instancesMap.put(instance.getId(), instance);
 		}
 
-		_setSLAResults(processId, instancesMap);
+		_setSLAResults(instancesMap, processId);
 
 		return instancesMap.values();
 	}
@@ -983,7 +983,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private void _setSLAResults(
-		long processId, Map<Long, Instance> instancesMap) {
+		Map<Long, Instance> instancesMap, long processId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 

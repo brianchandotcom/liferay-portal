@@ -126,8 +126,8 @@ public class TaskUtil {
 		Function<Long, User> userFunction) {
 
 		Map<String, String> assetTitleMap = _createMap(
-			sourcesMap, "assetTitle");
-		Map<String, String> assetTypeMap = _createMap(sourcesMap, "assetType");
+			"assetTitle", sourcesMap);
+		Map<String, String> assetTypeMap = _createMap("assetType", sourcesMap);
 
 		return new Task() {
 			{
@@ -244,7 +244,7 @@ public class TaskUtil {
 	}
 
 	private static Map<String, String> _createMap(
-		Map<String, Object> sourcesMap, String fieldName) {
+		String fieldName, Map<String, Object> sourcesMap) {
 
 		Map<String, String> map = new HashMap<>();
 

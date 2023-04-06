@@ -1,0 +1,53 @@
+.account-details {
+	&-container {
+		width: 100vw;
+	}
+
+	&-header {
+		&-container {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			padding-right: 2.313rem;
+		}
+
+		&-left-content {
+			&-container {
+				align-items: center;
+				display: flex;
+				gap: 1.5rem;
+				justify-content: center;
+			}
+
+			&-description {
+				color: #54555f;
+				font-size: 1rem;
+				font-weight: 400;
+				line-height: 1.5rem;
+			}
+
+			&-image {
+				height: 4.5rem;
+				width: 4.5rem;
+			}
+
+			&-text-container {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+
+			&-title {
+				color: #282934;
+				font-size: 2rem;
+				font-weight: 700;
+				line-height: 2.5rem;
+			}
+		}
+
+		&-right-container {
+			display: flex;
+			gap: 3rem;
+		}
+	}
+}

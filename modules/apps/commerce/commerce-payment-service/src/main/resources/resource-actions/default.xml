@@ -3,6 +3,60 @@
 
 <resource-action-mapping>
 	<model-resource>
+		<model-name>com.liferay.commerce.payment.model.CommercePaymentEntry</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_payment_web_internal_portlet_CommercePaymentPortlet</portlet-name>
+		</portlet-ref>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+			<owner-defaults>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</owner-defaults>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.payment.model.CommercePaymentEntryAudit</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_payment_web_internal_portlet_CommercePaymentPortlet</portlet-name>
+		</portlet-ref>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+			<owner-defaults>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</owner-defaults>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet</portlet-name>

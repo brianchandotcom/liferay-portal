@@ -53,6 +53,10 @@ definition {
 		Navigator.gotoNavTab(navTab = "Salesforce Integration");
 
 		if (IsTextEqual(key_fieldName = "loginURL", locator1 = "PRMUtils#SALESFORCE_FIELD", value1 = ${salesforceLoginURL})) {
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessage();
+
 			Navigator.openURL();
 		}
 		else {
@@ -77,11 +81,12 @@ definition {
 				value1 = ${salesforceUsername});
 
 			Type(
-				key_fieldName = "password",
-				locator1 = "PRMUtils#SALESFORCE_FIELD",
+				locator1 = "PRMUtils#SALESFORCE_PASSWORD_FIELD",
 				value1 = ${salesforcePassword});
 
 			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessage();
 		}
 	}
 

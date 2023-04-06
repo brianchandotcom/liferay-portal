@@ -15,10 +15,10 @@ definition {
 			User.firstLoginPG();
 		}
 
-		PRMUtils.connectWithSalesforce();
-
-		task ("Create a new Partner Portal Site") {
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
 			PRMUtils.addSite();
+
+			PRMUtils.connectWithSalesforce();
 		}
 
 		task ("Add a partner user") {

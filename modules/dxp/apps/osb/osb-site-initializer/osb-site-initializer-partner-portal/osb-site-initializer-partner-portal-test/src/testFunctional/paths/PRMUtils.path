@@ -26,6 +26,11 @@
 	<td>//div[@class='ddm-field'][@data-field-name='${key_fieldName}']//input/../div/textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SALESFORCE_PASSWORD_FIELD</td>
+	<td>//div[@class='ddm-field'][@data-field-name='password']//input[@type='password']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

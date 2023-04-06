@@ -16,6 +16,9 @@ package com.liferay.commerce.payment.internal.upgrade.registry;
 
 import com.liferay.commerce.payment.internal.upgrade.v1_0_1.CommercePaymentMethodGroupRelUpgradeProcess;
 import com.liferay.commerce.payment.internal.upgrade.v1_2_0.util.CommercePaymentMethodGroupRelQualifierTable;
+import com.liferay.commerce.payment.internal.upgrade.v1_4_0.CommercePaymentEntryUpgradeProcess;
+import com.liferay.commerce.payment.internal.upgrade.v1_4_0.util.CommercePaymentEntryAuditTable;
+import com.liferay.commerce.payment.internal.upgrade.v1_4_0.util.CommercePaymentEntryTable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -66,6 +69,12 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 			new com.liferay.commerce.payment.internal.upgrade.v1_3_0.
 				CommercePaymentMethodGroupRelUpgradeProcess(
 					_resourceActionLocalService, _resourceLocalService));
+
+		registry.register(
+			"1.3.0", "1.4.0", CommercePaymentEntryTable.create(),
+			CommercePaymentEntryAuditTable.create(),
+			new CommercePaymentEntryUpgradeProcess(
+				_resourceActionLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce payment upgrade step registrator finished");

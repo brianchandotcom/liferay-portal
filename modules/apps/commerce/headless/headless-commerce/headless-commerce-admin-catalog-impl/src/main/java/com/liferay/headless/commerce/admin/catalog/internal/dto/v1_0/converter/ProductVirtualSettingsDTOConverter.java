@@ -111,30 +111,30 @@ public class ProductVirtualSettingsDTOConverter
 						FileEntry fileEntry =
 							cpDefinitionVirtualSetting.getSampleFileEntry();
 
-						if (fileEntry != null) {
-							return _commerceMediaResolver.
-								getDownloadVirtualProductSampleURL(
-									CommerceAccountConstants.ACCOUNT_ID_ADMIN,
-									cpDefinition.getCPDefinitionId(),
-									fileEntry.getFileEntryId());
+						if (fileEntry == null) {
+							return null;
 						}
 
-						return null;
+						return _commerceMediaResolver.
+							getDownloadVirtualProductSampleURL(
+								CommerceAccountConstants.ACCOUNT_ID_ADMIN,
+								cpDefinition.getCPDefinitionId(),
+								fileEntry.getFileEntryId());
 					});
 				setSrc(
 					() -> {
 						FileEntry fileEntry =
 							cpDefinitionVirtualSetting.getFileEntry();
 
-						if (fileEntry != null) {
-							return _commerceMediaResolver.
-								getDownloadVirtualProductURL(
-									CommerceAccountConstants.ACCOUNT_ID_ADMIN,
-									cpDefinition.getCPDefinitionId(),
-									fileEntry.getFileEntryId());
+						if (fileEntry == null) {
+							return null;
 						}
 
-						return null;
+						return _commerceMediaResolver.
+							getDownloadVirtualProductURL(
+								CommerceAccountConstants.ACCOUNT_ID_ADMIN,
+								cpDefinition.getCPDefinitionId(),
+								fileEntry.getFileEntryId());
 					});
 				setTermsOfUseJournalArticleId(
 					() -> {
@@ -142,12 +142,11 @@ public class ProductVirtualSettingsDTOConverter
 							cpDefinitionVirtualSetting.
 								getTermsOfUseJournalArticle();
 
-						if (termsOfUseJournalArticle != null) {
-							return termsOfUseJournalArticle.
-								getResourcePrimKey();
+						if (termsOfUseJournalArticle == null) {
+							return null;
 						}
 
-						return null;
+						return termsOfUseJournalArticle.getResourcePrimKey();
 					});
 			}
 		};

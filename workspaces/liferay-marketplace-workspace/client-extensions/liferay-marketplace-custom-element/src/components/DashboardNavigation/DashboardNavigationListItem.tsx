@@ -23,7 +23,7 @@ export function DashboardNavigationListItem({
 	onSelectAppChange,
 	setDashboardNavigationItems,
 }: DashboardNavigationListItem) {
-	const {image, name, selected, status, version} = item;
+	const {thumbnail, name, selected, status, version} = item;
 
 	return (
 		<div
@@ -66,7 +66,7 @@ export function DashboardNavigationListItem({
 				<img
 					alt="App Image"
 					className="dashboard-navigation-body-list-item-app-logo"
-					src={image}
+					src={thumbnail}
 				/>
 
 				<span className="dashboard-navigation-body-list-item-app-title">

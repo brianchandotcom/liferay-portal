@@ -18,6 +18,25 @@ export type CatalogProps = {
 	name: string;
 };
 
+export type ProductSpecificationProps = {
+	items: [];
+	id: number;
+	productId: number;
+	specificationKey: string;
+	value: {};
+};
+
+export type ProductResponseProps = {
+	catalogId: number;
+	externalReferenceCode: string;
+	lastUpdatedBy: string;
+	name: { en_US: string; };
+	productId: number;
+	workflowStatusInfo: { label: string; };
+	thumbnail: string;
+	modifiedDate: string;
+}
+
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,

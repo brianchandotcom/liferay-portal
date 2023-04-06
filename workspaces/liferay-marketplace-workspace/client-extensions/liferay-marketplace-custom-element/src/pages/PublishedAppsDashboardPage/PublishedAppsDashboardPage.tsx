@@ -24,9 +24,12 @@ import {
 	MemberProps,
 	UserAccountProps,
 	initialDashboardNavigationItems,
+	ProductSpecificationProps,
+	RoleBriefProps,
+	ProductResponseProps,
 } from './PublishedDashboardPageUtil';
 
-declare let Liferay: {ThemeDisplay: any; authToken: string};
+declare let Liferay: {ThemeDisplay: { getLanguageId: () => string; }; authToken: string};
 
 const appTableHeaders = [
 	{
@@ -108,7 +111,7 @@ export function PublishedAppsDashboardPage() {
 	const formatDate = (date: string) => {
 		const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
 
-		const dateOptions: any = {
+		const dateOptions: Intl.DateTimeFormatOptions = {
 			day: 'numeric',
 			month: 'short',
 			year: 'numeric',
@@ -123,7 +126,7 @@ export function PublishedAppsDashboardPage() {
 	};
 
 	function getAppListProductSpecifications(productIds: number[]) {
-		const appListProductSpecifications: any[] = [];
+		const appListProductSpecifications: Promise<ProductSpecificationProps>[] = [];
 
 		productIds.forEach((productId) => {
 			appListProductSpecifications.push(
@@ -134,20 +137,20 @@ export function PublishedAppsDashboardPage() {
 		return Promise.all(appListProductSpecifications);
 	}
 
-	function getAppListProductIds(products: any) {
-		const productIds: any[] = [];
+	function getAppListProductIds(products: {items: AppProps[]}) {
+		const productIds: number[] = [];
 
-		products.items.map((product: any) => {
+		products.items.map((product: AppProps) => {
 			productIds.push(product.productId);
 		});
 
 		return productIds;
 	}
 
-	function getProductTypeFromSpecifications(specifications: any) {
+	function getProductTypeFromSpecifications(specifications: ProductSpecificationProps) {
 		let productType = 'no type';
 
-		specifications.items.forEach((specification: any) => {
+		specifications.items.forEach((specification: Specification) => {
 			if (specification.specificationKey === 'type') {
 				productType = specification.value.en_US;
 
@@ -163,10 +166,10 @@ export function PublishedAppsDashboardPage() {
 		return productType;
 	}
 
-	function getProductVersionFromSpecifications(specifications: any) {
+	function getProductVersionFromSpecifications(specifications: ProductSpecificationProps) {
 		let productVersion = '0';
 
-		specifications.items.forEach((specification: any) => {
+		specifications.items.forEach((specification: Specification) => {
 			if (specification.specificationKey === 'version') {
 				productVersion = specification.value.en_US;
 			}
@@ -175,10 +178,10 @@ export function PublishedAppsDashboardPage() {
 		return productVersion;
 	}
 
-	function getRolesList(roles: any) {
-		const rolesList: any[] = [];
+	function getRolesList(roles: RoleBriefProps[]) {
+		const rolesList: string[] = [];
 
-		roles.forEach((role: any) => {
+		roles.forEach((role) => {
 			rolesList.push(role.name);
 		});
 
@@ -226,11 +229,12 @@ export function PublishedAppsDashboardPage() {
 							appListProductIds
 						);
 
-					const newAppList: any[] = [];
+					const newAppList: AppProps[] = [];
 
-					appList.items.forEach((product: any, index: number) => {
+					appList.items.forEach((product: ProductResponseProps, index: number) => {
 						if (product.catalogId === currentCatalogId) {
 							newAppList.push({
+								catalogId: product.catalogId,
 								externalReferenceCode:
 									product.externalReferenceCode,
 								lastUpdatedBy: product.lastUpdatedBy,
@@ -280,10 +284,10 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		(() => {
-			const clickedNavigationItem: any = dashboardNavigationItems.find(
+			const clickedNavigationItem = dashboardNavigationItems.find(
 				(dashboardNavigationItem) =>
 					dashboardNavigationItem.itemSelected
-			);
+			) || dashboardNavigationItems[0];
 
 			setSelectedNavigationItem(clickedNavigationItem.itemTitle);
 		})();

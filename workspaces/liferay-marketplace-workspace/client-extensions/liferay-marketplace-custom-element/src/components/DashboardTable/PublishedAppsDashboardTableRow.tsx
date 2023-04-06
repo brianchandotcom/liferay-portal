@@ -14,13 +14,12 @@ export function PublishedAppsDashboardTableRow({
 	item,
 }: PublishedAppsDashboardTableRowProps) {
 	const {
-		image,
+		lastUpdatedBy,
 		name,
 		status,
+		thumbnail,
 		type,
-		updatedBy,
 		updatedDate,
-		updatedResponsible,
 		version,
 	} = item;
 
@@ -31,7 +30,7 @@ export function PublishedAppsDashboardTableRow({
 					<img
 						alt="App Image"
 						className="dashboard-table-row-name-logo"
-						src={image}
+						src={thumbnail}
 					/>
 
 					<span className="dashboard-table-row-name-text">
@@ -53,14 +52,10 @@ export function PublishedAppsDashboardTableRow({
 					<span className="dashboard-table-row-last-updated-date">
 						{updatedDate}
 					</span>
-
-					<span className="dashboard-table-row-last-updated-responsible">
-						{updatedResponsible}
-					</span>
 				</div>
 
 				<span className="dashboard-table-row-last-updated-by">
-					{updatedBy}
+					{lastUpdatedBy}
 				</span>
 			</ClayTable.Cell>
 

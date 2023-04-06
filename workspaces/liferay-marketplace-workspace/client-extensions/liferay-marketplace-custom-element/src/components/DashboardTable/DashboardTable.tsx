@@ -8,16 +8,16 @@ import React, {ReactNode} from 'react';
 import {DashboardEmptyTable} from './DashboardEmptyTable';
 
 export type AppProps = {
+	catalogId: number;
 	externalReferenceCode: string;
-	image: string;
+	lastUpdatedBy: string;
 	name: string;
 	productId: number;
-	selected: boolean;
+	selected?: boolean;
 	status: string;
+	thumbnail: string;
 	type: string;
-	updatedBy: string;
 	updatedDate: string;
-	updatedResponsible: string;
 	version: string;
 };
 

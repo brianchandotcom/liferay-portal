@@ -99,7 +99,7 @@ export function AppDetailsPage({
 						<img
 							alt="App Logo"
 							className="app-details-page-app-info-logo"
-							src={selectedApp.image}
+							src={selectedApp.thumbnail}
 						/>
 					</div>
 

@@ -658,7 +658,10 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 							// Check if intervals exists after fetch members
 							// to show/hide membership list based on intervals of chart
 							// to avoid render two empty states
-							setShowMembershipList(!!intervals.length);
+							setShowMembershipList(
+								!!individualCounts.knownCount ||
+									!!intervals.length
+							);
 
 							return (
 								<NoResultsDisplay

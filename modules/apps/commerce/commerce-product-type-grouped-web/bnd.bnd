@@ -2,3 +2,4 @@ Bundle-Name: Liferay Commerce Product Type Grouped Web
 Bundle-SymbolicName: com.liferay.commerce.product.type.grouped.web
 Bundle-Version: 4.0.39
 Web-ContextPath: /commerce-product-type-grouped-web
+-dsannotations-options: inherit

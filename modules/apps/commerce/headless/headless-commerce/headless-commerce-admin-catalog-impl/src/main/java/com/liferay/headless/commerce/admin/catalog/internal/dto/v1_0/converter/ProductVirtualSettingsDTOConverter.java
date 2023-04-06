@@ -89,7 +89,7 @@ public class ProductVirtualSettingsDTOConverter
 
 				setActivationStatusInfo(
 					() -> {
-						String activationStatusLabel =
+						String orderStatusLabel =
 							CommerceOrderConstants.getOrderStatusLabel(
 								cpDefinitionVirtualSetting.
 									getActivationStatus());
@@ -99,10 +99,10 @@ public class ProductVirtualSettingsDTOConverter
 								code =
 									cpDefinitionVirtualSetting.
 										getActivationStatus();
-								label = activationStatusLabel;
+								label = orderStatusLabel;
 								label_i18n = _language.get(
 									dtoConverterContext.getLocale(),
-									activationStatusLabel);
+									orderStatusLabel);
 							}
 						};
 					});
@@ -138,15 +138,15 @@ public class ProductVirtualSettingsDTOConverter
 					});
 				setTermsOfUseJournalArticleId(
 					() -> {
-						JournalArticle termsOfUseJournalArticle =
+						JournalArticle journalArticle =
 							cpDefinitionVirtualSetting.
 								getTermsOfUseJournalArticle();
 
-						if (termsOfUseJournalArticle == null) {
+						if (journalArticle == null) {
 							return null;
 						}
 
-						return termsOfUseJournalArticle.getResourcePrimKey();
+						return journalArticle.getResourcePrimKey();
 					});
 			}
 		};

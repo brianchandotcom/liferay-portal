@@ -146,45 +146,47 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		if (sourceFormatterArgs.isFormatCurrentBranch()) {
-			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
-				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
+			return;
+		}
 
-			for (String currentBranchFileDiffBlock :
-					StringUtil.split(currentBranchFileDiff, "\n@@")) {
+		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
-				if (currentBranchFileDiffBlock.startsWith("diff")) {
+		for (String currentBranchFileDiffBlock :
+				StringUtil.split(currentBranchFileDiff, "\n@@")) {
+
+			if (currentBranchFileDiffBlock.startsWith("diff")) {
+				continue;
+			}
+
+			int x = 1;
+
+			while (true) {
+				x = currentBranchFileDiffBlock.indexOf("@Reference", x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (!StringUtil.startsWith(
+						getLine(
+							currentBranchFileDiffBlock,
+							getLineNumber(currentBranchFileDiffBlock, x)),
+						StringPool.PLUS)) {
+
 					continue;
 				}
 
-				int x = 1;
+				Matcher matcher = _protectedPublicVoidMethodPattern.matcher(
+					currentBranchFileDiffBlock.substring(x));
 
-				while (true) {
-					x = currentBranchFileDiffBlock.indexOf("@Reference", x + 1);
-
-					if (x == -1) {
-						break;
-					}
-
-					if (!StringUtil.startsWith(
-							getLine(
-								currentBranchFileDiffBlock,
-								getLineNumber(currentBranchFileDiffBlock, x)),
-							StringPool.PLUS)) {
-
-						continue;
-					}
-
-					Matcher matcher = _protectedPublicVoidMethodPattern.matcher(
-						currentBranchFileDiffBlock.substring(x));
-
-					if (matcher.find()) {
-						addMessage(
-							fileName,
-							"Do not use annotation @Reference on method " +
-								matcher.group(2));
-					}
+				if (matcher.find()) {
+					addMessage(
+						fileName,
+						"Do not use annotation @Reference on method " +
+							matcher.group(2));
 				}
 			}
 		}

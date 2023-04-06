@@ -310,6 +310,58 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Suite the system should return that suite"
+	@priority = 4
+	test AdminCanSearchSuite {
+		task ("Given that two suite are created via API") {
+			JSONTestray.addSuite(suiteName = ${suiteName});
+
+			JSONTestray.addSuite(suiteName = "Suite 2");
+		}
+
+		task ("And go to the tab suite") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+		}
+
+		task ("And confirm that there are two suites in the table") {
+			AssertElementPresent(
+				key_projectName = ${suiteName},
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Suite 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter suite 1") {
+			TestrayFilter.clickFilter();
+
+			PortletEntry.inputName(name = ${suiteName});
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only suite 1 in the table") {
+			AssertElementPresent(
+				key_projectName = ${suiteName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the suite 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Suite 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-159467 | Test Summary: Verify that the user can not create a suite if all the required fields are not filled in"
 	@priority = 3
 	test AdminCanViewRequiredField {

@@ -1,5 +1,14 @@
 ## JavaOSGiReferenceCheck
 
+### @Reference annotation on method
+
+Do not use `@Reference` on method, use `@Reference` on field or
+`ServiceTracker/ServiceTrackerList/ServiceTrackerMap` instead.
+
+See <https://issues.liferay.com/browse/LPS-179392>.
+
+---
+
 ### OSGi Components Inheritance
 
 Duplicate methods with the `@Reference` annotation in a `@Component` class and

@@ -64,11 +64,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -108,11 +106,7 @@ public class FinderCacheImpl
 
 	@Override
 	public void clearDSLQueryCache(String tableName) {
-		String modelImplClassName = _modelImplClassNames.getService(tableName);
-
-		if (modelImplClassName != null) {
-			_clearDSLQueryCache(modelImplClassName);
-		}
+		_clearDSLQueryCache(tableName);
 
 		if (_clusterExecutor.isEnabled() &&
 			ClusterInvokeThreadLocal.isEnabled()) {
@@ -325,34 +319,12 @@ public class FinderCacheImpl
 
 		if (!finderPaths.containsKey(cacheKeyPrefix)) {
 			if (cacheKeyPrefix.startsWith("dslQuery")) {
-				String[] tableNames = FinderPath.decodeDSLQueryCacheName(
-					cacheName);
+				for (String tableName :
+						FinderPath.decodeDSLQueryCacheName(cacheName)) {
 
-				String[] modelImplClassNames = new String[tableNames.length];
-
-				for (int i = 0; i < tableNames.length; i++) {
-					String tableName = tableNames[i];
-
-					String modelImplClassName = _modelImplClassNames.getService(
-						tableName);
-
-					if (modelImplClassName == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to find corresponding model impl " +
-									"class for table " + tableName);
-						}
-
-						return;
-					}
-
-					modelImplClassNames[i] = modelImplClassName;
-				}
-
-				for (String modelImplClassName : modelImplClassNames) {
 					Set<String> dslQueryCacheNames =
 						_dslQueryCacheNamesMap.computeIfAbsent(
-							modelImplClassName,
+							tableName,
 							key -> Collections.newSetFromMap(
 								new ConcurrentHashMap<>()));
 
@@ -378,7 +350,7 @@ public class FinderCacheImpl
 	}
 
 	public void removeByEntityCache(String className, BaseModel<?> baseModel) {
-		ArgumentsResolver argumentsResolver = _argumentsResolvers.getService(
+		ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
 			className);
 
 		if (argumentsResolver == null) {
@@ -422,8 +394,17 @@ public class FinderCacheImpl
 		removeCache(_getCacheNameWithPagination(cacheName));
 		removeCache(_getCacheNameWithoutPagination(cacheName));
 
-		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.remove(
+		String tableName = cacheName;
+
+		ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
 			cacheName);
+
+		if (argumentsResolver != null) {
+			tableName = argumentsResolver.getTableName();
+		}
+
+		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.remove(
+			tableName);
 
 		if (dslQueryCacheNames != null) {
 			for (String dslQueryCacheName : dslQueryCacheNames) {
@@ -446,7 +427,7 @@ public class FinderCacheImpl
 			return;
 		}
 
-		ArgumentsResolver argumentsResolver = _argumentsResolvers.getService(
+		ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
 			className);
 
 		if (argumentsResolver == null) {
@@ -519,33 +500,8 @@ public class FinderCacheImpl
 
 		portalCacheManager.registerPortalCacheManagerListener(this);
 
-		_argumentsResolvers = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ArgumentsResolver.class, "class.name");
-		_modelImplClassNames = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ArgumentsResolver.class, "table.name",
-			new ServiceTrackerCustomizer<ArgumentsResolver, String>() {
-
-				@Override
-				public String addingService(
-					ServiceReference<ArgumentsResolver> serviceReference) {
-
-					return GetterUtil.getString(
-						serviceReference.getProperty("class.name"), null);
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ArgumentsResolver> serviceReference,
-					String className) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ArgumentsResolver> serviceReference,
-					String className) {
-				}
-
-			});
 	}
 
 	private void _clearCache(String cacheName) {
@@ -555,7 +511,16 @@ public class FinderCacheImpl
 	}
 
 	private void _clearDSLQueryCache(String className) {
-		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.get(className);
+		String tableName = className;
+
+		ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
+			className);
+
+		if (argumentsResolver != null) {
+			tableName = argumentsResolver.getTableName();
+		}
+
+		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.get(tableName);
 
 		if (dslQueryCacheNames != null) {
 			for (String dslQueryCacheName : dslQueryCacheNames) {
@@ -650,8 +615,8 @@ public class FinderCacheImpl
 					0, className.length() - 6);
 			}
 
-			ArgumentsResolver argumentsResolver =
-				_argumentsResolvers.getService(modleImplClassName);
+			ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
+				modleImplClassName);
 
 			if ((argumentsResolver != null) &&
 				!Objects.equals(
@@ -730,7 +695,6 @@ public class FinderCacheImpl
 	private static final MethodKey _clearDSLQueryCacheMethodKey = new MethodKey(
 		FinderCacheUtil.class, "clearDSLQueryCache", String.class);
 
-	private ServiceTrackerMap<String, ArgumentsResolver> _argumentsResolvers;
 	private volatile CacheKeyGenerator _baseModelCacheKeyGenerator;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
 
@@ -743,7 +707,6 @@ public class FinderCacheImpl
 	private final Map<String, Map<String, FinderPath>> _finderPathsMap =
 		new ConcurrentHashMap<>();
 	private ThreadLocal<LRUMap<LocalCacheKey, Serializable>> _localCache;
-	private ServiceTrackerMap<String, String> _modelImplClassNames;
 
 	@Reference
 	private MultiVMPool _multiVMPool;
@@ -754,6 +717,7 @@ public class FinderCacheImpl
 	@Reference
 	private Props _props;
 
+	private ServiceTrackerMap<String, ArgumentsResolver> _serviceTrackerMap;
 	private boolean _valueObjectFinderCacheEnabled;
 	private int _valueObjectFinderCacheListThreshold;
 

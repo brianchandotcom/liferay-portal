@@ -25,7 +25,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
-import com.liferay.object.internal.persistence.ObjectDefinitionTableArgumentsResolver;
 import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
@@ -50,7 +49,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -254,15 +252,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 							companyId, systemObjectDefinitionManager);
 			}
 
-			_bundleContext.registerService(
-				ArgumentsResolver.class,
-				new ObjectDefinitionTableArgumentsResolver(
-					objectDefinition.getExtensionDBTableName()),
-				HashMapDictionaryBuilder.put(
-					"class.name", objectDefinition.getExtensionDBTableName()
-				).put(
-					"table.name", objectDefinition.getExtensionDBTableName()
-				).build());
 			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new SystemObjectEntryItemSelectorView(

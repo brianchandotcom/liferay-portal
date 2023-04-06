@@ -17,9 +17,9 @@ package com.liferay.jethr0;
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 import com.liferay.jethr0.dalo.ProjectComparatorDALO;
-import com.liferay.jethr0.dalo.ProjectDALO;
 import com.liferay.jethr0.dalo.ProjectPrioritizerDALO;
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectDALO;
 import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
@@ -80,7 +80,7 @@ public class Jethr0SpringBootApplication {
 	public ProjectRepository getProjectRepository(ProjectDALO projectDALO) {
 		ProjectRepository projectRepository = new ProjectRepository();
 
-		projectRepository.add(projectDALO.retrieveProjects());
+		projectRepository.add(projectDALO.get());
 
 		return projectRepository;
 	}

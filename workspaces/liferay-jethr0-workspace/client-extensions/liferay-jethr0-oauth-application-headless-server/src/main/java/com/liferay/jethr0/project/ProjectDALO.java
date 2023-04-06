@@ -14,39 +14,26 @@
 
 package com.liferay.jethr0.project;
 
-import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class ProjectRepository extends BaseEntityRepository<Project> {
+@Configuration
+public class ProjectDALO extends BaseEntityDALO<Project> {
 
-	public List<Project> getByState(Project.State state) {
-		List<Project> projects = new ArrayList<>();
-
-		for (Project project : get()) {
-			if (!Objects.equals(project.getState(), state)) {
-				continue;
-			}
-
-			projects.add(project);
-		}
-
-		return projects;
+	@Override
+	protected String getObjectDefinitionLabel() {
+		return "Project";
 	}
 
 	@Override
-	public ProjectDALO getEntityDALO() {
-		return _projectDALO;
+	protected Project newEntity(JSONObject jsonObject) {
+		return ProjectFactory.newProject(jsonObject);
 	}
-
-	@Autowired
-	private ProjectDALO _projectDALO;
 
 }

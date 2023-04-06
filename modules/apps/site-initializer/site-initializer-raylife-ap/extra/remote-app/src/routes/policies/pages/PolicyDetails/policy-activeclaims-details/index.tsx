@@ -48,6 +48,15 @@ export type Parameters = {
 	[key: string]: string | string[];
 };
 
+export type RowContentType = {
+	[key: string]: string | number;
+};
+
+export type RowType = {
+	rowContent: RowContentType;
+	rowIndex: number;
+};
+
 type ClaimTableElements = {
 	claim: number;
 	date: string;
@@ -114,7 +123,26 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [policyId, policyDataJSON]);
+	}, [policyId]);
+
+	const ComponentRow = ({rowContent, rowIndex}: RowType) => {
+		return (
+			<>
+				<ClayTable.Row>
+					{HEADERS.map((item, index) => (
+						<ClayTable.Cell className="border-0 px-5" key={index}>
+							<span>{rowContent[item.key]}</span>
+						</ClayTable.Cell>
+					))}
+				</ClayTable.Row>
+
+				<Alert
+					claimNumber={rowContent.claim as number}
+					index={rowIndex}
+				/>
+			</>
+		);
+	};
 
 	return (
 		<div>
@@ -148,26 +176,15 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 
 						<ClayTable.Body>
 							{claimsTable.map(
-								(rowContent: any, rowIndex: number) => (
-									<>
-										<ClayTable.Row key={rowIndex}>
-											{HEADERS.map((item, index) => (
-												<ClayTable.Cell
-													className="border-0 px-5"
-													key={index}
-												>
-													<span>
-														{rowContent[item.key]}
-													</span>
-												</ClayTable.Cell>
-											))}
-										</ClayTable.Row>
-
-										<Alert
-											claimNumber={rowContent.claim}
-											index={rowIndex}
-										/>
-									</>
+								(
+									rowContent: RowContentType,
+									rowIndex: number
+								) => (
+									<ComponentRow
+										key={rowIndex}
+										rowContent={rowContent}
+										rowIndex={rowIndex}
+									/>
 								)
 							)}
 						</ClayTable.Body>

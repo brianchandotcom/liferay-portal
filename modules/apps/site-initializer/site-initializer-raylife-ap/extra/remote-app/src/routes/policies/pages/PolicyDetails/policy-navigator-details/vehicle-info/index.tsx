@@ -18,12 +18,16 @@ import {getWebDavUrl} from '../../../../../../common/utils/webdav';
 import '../index.scss';
 import {PolicyDetailsType} from '../types';
 
-const VehicleInfo = (applicationDataJSON: any) => {
-	const applicationData = applicationDataJSON?.dataJSON;
+type VehicleNavigatorType = {
+	dataJSON: {form: []};
+};
+
+const VehicleInfo = ({dataJSON}: VehicleNavigatorType) => {
+	const applicationData = dataJSON;
 
 	return (
 		<div>
-			{applicationData?.vehicleInfo?.form.map(
+			{applicationData?.form.map(
 				(currentVehicle: PolicyDetailsType, indexVehicle: number) => (
 					<div
 						className="bg-neutral-0 h-100 pl-6 policy-detail-border pr-6 py-6"

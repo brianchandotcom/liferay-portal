@@ -17,7 +17,7 @@ import calculatedAge from '../../../../../../common/utils/calculatedAge';
 import '../index.scss';
 import {PolicyDetailsType, dataJSONType} from '../types';
 
-type ApplicationPolicyDetailsType = {
+export type ApplicationPolicyDetailsType = {
 	dataJSON: dataJSONType;
 	email: string;
 	phone: string;

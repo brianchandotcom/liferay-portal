@@ -14,16 +14,26 @@
 
 import Summary from '../../../../../common/components/summary';
 
-const PolicySummary = ({application, policy}: any) => {
-	const {data} = policy;
-
-	const applicationDataJSON = application?.dataJSON
-		? JSON.parse(application?.dataJSON)
+type SummaryType = {
+	summaryData: {
+		applicationDataJSON: string;
+		boundDate: string;
+		commission: number;
+		email: string;
+		endDate: string;
+		phone: string;
+		policyDataJSON: JSON;
+		termPremium: number;
+	};
+};
+const PolicySummary = ({summaryData}: SummaryType) => {
+	const applicationDataJSON = summaryData.applicationDataJSON
+		? JSON.parse(summaryData.applicationDataJSON)
 		: {};
 
 	const {driverInfo} = applicationDataJSON;
 
-	const policyEndDate = Date.parse(data?.endDate);
+	const policyEndDate = Date.parse(summaryData?.endDate);
 
 	const differenceOfDays = Math.abs(+policyEndDate - +new Date());
 
@@ -55,8 +65,8 @@ const PolicySummary = ({application, policy}: any) => {
 
 	const summaryPolicyData = [
 		{
-			data: `${dateFormatter(data?.boundDate)} - ${dateFormatter(
-				data?.endDate
+			data: `${dateFormatter(summaryData?.boundDate)} - ${dateFormatter(
+				summaryData?.endDate
 			)}`,
 			key: 'currentPeriod',
 			text: 'Current Period',
@@ -67,12 +77,16 @@ const PolicySummary = ({application, policy}: any) => {
 			text: 'Renewal Due',
 		},
 		{
-			data: `${valueFormatter(data?.termPremium?.toFixed(2))}`,
+			data: `${valueFormatter(
+				Number(summaryData?.termPremium?.toFixed(2))
+			)}`,
 			key: 'totalPremium',
 			text: 'Total Premium',
 		},
 		{
-			data: `${valueFormatter(data?.commission?.toFixed(2))}`,
+			data: `${valueFormatter(
+				Number(summaryData?.commission?.toFixed(2))
+			)}`,
 			key: 'commission',
 			text: 'Commission',
 		},
@@ -91,11 +105,11 @@ const PolicySummary = ({application, policy}: any) => {
 			key: 'primaryHolder',
 			text: 'Primary Holder',
 		},
-		{data: application?.phone, key: 'phone', text: 'Phone'},
+		{data: summaryData.phone, key: 'phone', text: 'Phone'},
 		{
-			data: application?.email,
+			data: summaryData.email,
 			key: 'email',
-			redirectTo: application?.email,
+			redirectTo: summaryData.email,
 			text: 'Email',
 			type: 'link',
 		},

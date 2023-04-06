@@ -82,7 +82,7 @@ const PolicyDetail = ({
 
 			<div>
 				{active === NavBarLabel.Vehicles && applicationData && (
-					<VehicleInfo dataJSON={applicationData} />
+					<VehicleInfo dataJSON={applicationData.vehicleInfo} />
 				)}
 				{active === NavBarLabel.Drivers && applicationData && (
 					<DriverInfo

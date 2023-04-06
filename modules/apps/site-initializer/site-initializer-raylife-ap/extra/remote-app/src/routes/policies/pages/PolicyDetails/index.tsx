@@ -78,6 +78,17 @@ const PolicyDetails = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const summaryData = {
+		applicationDataJSON: application?.dataJSON,
+		boundDate: policy?.data?.boundDate,
+		commission: policy?.data?.commission,
+		email: application?.email,
+		endDate: policy?.data?.endDate,
+		phone: application?.phone,
+		policyDataJSON: policy?.data?.dataJSON,
+		termPremium: policy?.data?.termPremium,
+	};
+
 	return (
 		<>
 			<div className="policy-details-container">
@@ -86,10 +97,7 @@ const PolicyDetails = () => {
 						<div className="row">
 							<div className="col-xl-3 d-flex">
 								<div className="mb-4 summary-policy-content w-100">
-									<PolicySummary
-										application={application}
-										policy={policy}
-									/>
+									<PolicySummary summaryData={summaryData} />
 								</div>
 							</div>
 

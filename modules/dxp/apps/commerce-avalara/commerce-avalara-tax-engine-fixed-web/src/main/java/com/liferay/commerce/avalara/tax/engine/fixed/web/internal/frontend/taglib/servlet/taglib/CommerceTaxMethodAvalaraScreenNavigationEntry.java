@@ -55,11 +55,9 @@ public class CommerceTaxMethodAvalaraScreenNavigationEntry
 	extends CommerceTaxMethodAvalaraScreenNavigationCategory
 	implements ScreenNavigationEntry<CommerceTaxMethod> {
 
-	public static final String ENTRY_KEY = "settings";
-
 	@Override
 	public String getEntryKey() {
-		return ENTRY_KEY;
+		return getCategoryKey();
 	}
 
 	@Override

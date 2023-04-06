@@ -28,14 +28,13 @@ public class ObjectDefinitionModifiableException extends PortalException {
 		super(msg);
 	}
 
-	public ObjectDefinitionModifiableException(
-		String msg, Throwable throwable) {
+	public static class MustBeModifiable
+		extends ObjectDefinitionModifiableException {
 
-		super(msg, throwable);
-	}
+		public MustBeModifiable() {
+			super("A modifiable object definition is required");
+		}
 
-	public ObjectDefinitionModifiableException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

@@ -13,29 +13,32 @@
 		title="site"
 	>
 		<#if !scopeSearchFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled c-mb-4 facet-clear-btn"
+			<@clay.button
+				cssClass="btn-unstyled c-mb-4 facet-clear-btn"
+				displayType="link"
+				id="${namespace + 'facetScopeClear'}"
 				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
+			>
+				<strong>${languageUtil.get(locale, "clear")}</strong>
+			</@clay.button>
 		</#if>
 
 		<#if entries?has_content>
 			<div class="label-container">
 				<#list entries as entry>
-					<button
-						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
-						data-term-id="${entry.getFilterValue()}"
-						disabled
+					<@clay.button
+						cssClass="label label-lg facet-term ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')} term-name"
+						data\-term\-id="${entry.getFilterValue()}"
+						disabled="true"
+						displayType="unstyled"
 						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
-						type="button"
 					>
 						${htmlUtil.escape(entry.getBucketText())}
 
 						<#if entry.isFrequencyVisible()>
 							(${entry.getFrequency()})
 						</#if>
-					</button>
+					</@clay.button>
 				</#list>
 			</div>
 		</#if>

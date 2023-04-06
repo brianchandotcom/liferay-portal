@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -77,7 +78,14 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 						title="<%= customFacetDisplayContext.getDisplayCaption() %>"
 					>
 						<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
-							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+							<clay:button
+								cssClass="btn-unstyled c-mb-4 facet-clear-btn"
+								displayType="link"
+								id='<%= liferayPortletResponse.getNamespace() + "facetCustomClear" %>'
+								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+							>
+								<strong><liferay-ui:message key="clear" /></strong>
+							</clay:button>
 						</c:if>
 
 						<aui:fieldset>
@@ -96,7 +104,16 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 												<input class="custom-control-input facet-term" data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>" disabled id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
 												<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-													<span class="custom-control-label-text"><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></span>
+													<span class="custom-control-label-text">
+														<c:choose>
+															<c:when test="<%= bucketDisplayContext.isSelected() %>">
+																<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
+															</c:when>
+															<c:otherwise>
+																<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
+															</c:otherwise>
+														</c:choose>
+													</span>
 												</span>
 
 												<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">

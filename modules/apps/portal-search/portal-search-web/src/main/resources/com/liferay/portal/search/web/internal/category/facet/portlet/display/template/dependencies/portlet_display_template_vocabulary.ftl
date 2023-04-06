@@ -24,14 +24,14 @@
 					<span class="autofit-row">
 						<#if termDisplayContexts?has_content>
 							<span class="autofit-col">
-								<button
-									aria-controls="${namespace}treeItem${id}"
-									aria-expanded="true"
-									class="btn btn-monospaced component-expander"
-									data-target="#${namespace}treeItem${id}"
-									data-toggle="collapse"
+								<@clay.button
+									aria\-controls="${namespace}treeItem${id}"
+									aria\-expanded="true"
+									cssClass="btn btn-monospaced component-expander"
+									data\-target="#${namespace}treeItem${id}"
+									data\-toggle="collapse"
+									displayType="link"
 									tabindex="-1"
-									type="button"
 								>
 									<span class="c-inner" tabindex="-2">
 										<@clay["icon"] symbol="angle-down" />
@@ -41,7 +41,7 @@
 											symbol="angle-right"
 										/>
 									</span>
-								</button>
+								</@clay.button>
 							</span>
 						</#if>
 
@@ -131,11 +131,14 @@
 		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}"
 	>
 		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled c-mb-4 facet-clear-btn"
+			<@clay.button
+				cssClass="btn-unstyled c-mb-4 facet-clear-btn"
+				displayType="link"
+				id="${namespace + 'facetAssetCategoriesClear'}"
 				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
+			>
+				<strong>${languageUtil.get(locale, "clear")}</strong>
+			</@clay.button>
 		</#if>
 
 		<#if vocabularyNames?has_content>

@@ -13,25 +13,34 @@
 		title="category"
 	>
 		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
-			<@liferay_aui.button
-				cssClass="btn-link btn-unstyled c-mb-4 facet-clear-btn"
+			<@clay.button
+				cssClass="btn-unstyled c-mb-4 facet-clear-btn"
+				displayType="link"
+				id="${namespace + 'facetAssetCategoriesClear'}"
 				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-				value="clear"
-			/>
+			>
+				<strong>${languageUtil.get(locale, "clear")}</strong>
+			</@clay.button>
 		</#if>
 
 		<ul class="list-unstyled tag-cloud">
 			<#if entries?has_content>
 				<#list entries as entry>
 					<span class="facet-value">
-						<button
-							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} tag-popularity-${entry.getPopularity()} term-name"
-							data-term-id="${entry.getFilterValue()}"
-							disabled
+						<@clay.button
+							cssClass="btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} tag-popularity-${entry.getPopularity()} term-name"
+							data\-term\-id="${entry.getFilterValue()}"
+							disabled="true"
+							displayType="link"
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+							style="line-height: 1.2;"
 						>
-							${htmlUtil.escape(entry.getBucketText())}
-						</button>
+							<#if entry.isSelected()>
+								<strong>${htmlUtil.escape(entry.getBucketText())}</strong>
+							<#else>
+								${htmlUtil.escape(entry.getBucketText())}
+							</#if>
+						</@clay.button>
 					</span>
 				</#list>
 			</#if>

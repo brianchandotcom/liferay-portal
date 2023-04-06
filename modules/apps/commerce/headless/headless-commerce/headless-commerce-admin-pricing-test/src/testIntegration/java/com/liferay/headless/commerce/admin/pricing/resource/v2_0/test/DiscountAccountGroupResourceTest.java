@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.resource.v2_0.test;
 
+import com.liferay.account.model.AccountGroup;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalServiceUtil;
@@ -435,17 +436,17 @@ public class DiscountAccountGroupResourceTest
 				commerceDiscountCommerceAccountGroupRel)
 		throws Exception {
 
-		CommerceAccountGroup commerceAccountGroup =
-			commerceDiscountCommerceAccountGroupRel.getCommerceAccountGroup();
+		AccountGroup discountAccountGroup =
+			commerceDiscountCommerceAccountGroupRel.getAccountGroup();
+
 		CommerceDiscount commerceDiscount =
 			commerceDiscountCommerceAccountGroupRel.getCommerceDiscount();
 
 		return new DiscountAccountGroup() {
 			{
 				accountGroupExternalReferenceCode =
-					commerceAccountGroup.getExternalReferenceCode();
-				accountGroupId =
-					commerceAccountGroup.getCommerceAccountGroupId();
+					discountAccountGroup.getExternalReferenceCode();
+				accountGroupId = discountAccountGroup.getAccountGroupId();
 				discountAccountGroupId =
 					commerceDiscountCommerceAccountGroupRel.
 						getCommerceDiscountCommerceAccountGroupRelId();

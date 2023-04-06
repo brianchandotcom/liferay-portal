@@ -15,47 +15,15 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.util.FileUtil;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Nícolas Moura
  */
-public class UpgradeVelocityCommentMigrationCheck extends BaseFileCheck {
+public class UpgradeVelocityCommentMigrationCheck
+	extends BaseUpgradeVelocityMigrationCheck {
 
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
-
-		if (!fileName.endsWith(".vm")) {
-			return content;
-		}
-
-		int periodIndex = fileName.lastIndexOf(StringPool.PERIOD);
-		int slashIndex = fileName.lastIndexOf(StringPool.SLASH);
-
-		File file = new File(
-			StringBundler.concat(
-				fileName.substring(0, slashIndex), "/migrated/",
-				fileName.substring(slashIndex + 1, periodIndex), ".ftl"));
-
-		if (file.length() != 0) {
-			content = FileUtil.read(file);
-		}
-
-		content = _formatContent(content);
-
-		FileUtil.write(file, content);
-
-		return content;
-	}
-
-	private String _formatContent(String content) {
+	protected String migrateContent(String content) {
 		String[] lines = content.split(StringPool.NEW_LINE);
 
 		for (String line : lines) {

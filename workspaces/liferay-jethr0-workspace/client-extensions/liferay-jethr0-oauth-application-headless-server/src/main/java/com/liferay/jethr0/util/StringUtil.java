@@ -42,7 +42,7 @@ public class StringUtil {
 	}
 
 	public static Date toDate(String dateString) {
-		if (dateString == null) {
+		if ((dateString == null) || dateString.isEmpty()) {
 			return null;
 		}
 

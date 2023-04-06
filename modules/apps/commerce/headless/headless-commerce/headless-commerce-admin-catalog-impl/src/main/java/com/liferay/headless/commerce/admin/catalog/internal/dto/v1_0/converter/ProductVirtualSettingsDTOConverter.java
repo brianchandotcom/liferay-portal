@@ -58,9 +58,9 @@ public class ProductVirtualSettingsDTOConverter
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			(Long)dtoConverterContext.getId());
 
-		String cpTypeName = cpDefinition.getProductTypeName();
+		if (VirtualCPTypeConstants.NAME.equals(
+				cpDefinition.getProductTypeName())) {
 
-		if (VirtualCPTypeConstants.NAME.equals(cpTypeName)) {
 			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
 					fetchCPDefinitionVirtualSetting(

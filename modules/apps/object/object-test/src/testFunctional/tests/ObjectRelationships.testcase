@@ -2080,6 +2080,68 @@ definition {
 		}
 	}
 
+	@description = "Verify that a label “Parent/Child” is displayed when editing the Relationship"
+	@priority = 3
+	test CanSeeLabelWhenEditingRelationship {
+		task ("Given: An object related to itself, in a Many-to-Many relationship (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 163659",
+				objectName = "CustomObject163659",
+				pluralLabelName = "Custom Objects 163659");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject163659");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject163659",
+				objectName_2 = "CustomObject163659",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163659");
+		}
+
+		task ("When: The user navigates to the Relationship tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 163659");
+
+			ObjectAdmin.gotoRelationshipsTab();
+		}
+
+		task ("Then: The relationship has a label indicating whether it is the Parent or the Child") {
+			Click(
+				key_labelName = "Relationship",
+				key_relationHierarchy = "Parent",
+				locator1 = "ObjectRelationships#SELECT_RELATIONSHIP_DETAILS_HIERARCHY_AND_LABEL");
+
+			SelectFrame(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_relationHierarchy = "Parent",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_EXPANDED_RELATIONSHIPS_HIERARCHY");
+
+			Button.clickCancel();
+
+			Click(
+				key_labelName = "Relationship",
+				key_relationHierarchy = "Child",
+				locator1 = "ObjectRelationships#SELECT_RELATIONSHIP_DETAILS_HIERARCHY_AND_LABEL");
+
+			SelectFrame(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_relationHierarchy = "Child",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_EXPANDED_RELATIONSHIPS_HIERARCHY");
+		}
+	}
+
 	@description = "LPS-158478 - Verify that it's possible to see all related entries to the entry on the relationship tab"
 	@priority = 5
 	test CanSeeRelatedEntriesOnTab {

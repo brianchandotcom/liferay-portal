@@ -23,6 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Michael Hashimoto
  */
@@ -47,6 +50,13 @@ public class StringUtil {
 			return _simpleDateFormat.parse(dateString);
 		}
 		catch (ParseException parseException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					combine(
+						"Unable to parse date string \'", dateString, "\'\n",
+						parseException.getMessage()));
+			}
+
 			return null;
 		}
 	}
@@ -108,6 +118,8 @@ public class StringUtil {
 			throw new RuntimeException(malformedURLException);
 		}
 	}
+
+	private static final Log _log = LogFactory.getLog(StringUtil.class);
 
 	private static final SimpleDateFormat _simpleDateFormat =
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");

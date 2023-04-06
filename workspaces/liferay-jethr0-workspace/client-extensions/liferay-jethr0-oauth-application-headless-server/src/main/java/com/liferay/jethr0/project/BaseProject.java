@@ -19,8 +19,6 @@ import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -218,9 +216,6 @@ public abstract class BaseProject implements Project {
 		_state = State.get(jsonObject.getJSONObject("state"));
 		_type = Type.get(jsonObject.getJSONObject("type"));
 	}
-
-	private static final SimpleDateFormat _simpleDateFormat =
-		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	private final List<Build> _builds = new ArrayList<>();
 	private Date _createdDate;

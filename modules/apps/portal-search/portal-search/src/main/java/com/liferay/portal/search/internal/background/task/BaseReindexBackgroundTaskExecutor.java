@@ -50,8 +50,10 @@ public abstract class BaseReindexBackgroundTaskExecutor
 			ReindexBackgroundTaskConstants.CLASS_NAME);
 		long[] companyIds = GetterUtil.getLongValues(
 			taskContextMap.get(ReindexBackgroundTaskConstants.COMPANY_IDS));
+		String executionMode = (String)taskContextMap.get(
+			ReindexBackgroundTaskConstants.EXECUTION_MODE);
 
-		reindex(className, companyIds);
+		reindex(className, companyIds, executionMode);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -63,7 +65,8 @@ public abstract class BaseReindexBackgroundTaskExecutor
 		return new ReindexBackgroundTaskDisplay(backgroundTask);
 	}
 
-	protected abstract void reindex(String className, long[] companyIds)
+	protected abstract void reindex(
+			String className, long[] companyIds, String executionMode)
 		throws Exception;
 
 }

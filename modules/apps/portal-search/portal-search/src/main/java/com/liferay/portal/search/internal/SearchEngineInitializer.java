@@ -21,6 +21,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.search.index.BlueGreenIndexManager;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -46,11 +48,14 @@ import org.osgi.framework.BundleContext;
 public class SearchEngineInitializer implements Runnable {
 
 	public SearchEngineInitializer(
-		BundleContext bundleContext, long companyId,
+		BlueGreenIndexManager blueGreenIndexManager,
+		BundleContext bundleContext, long companyId, String executionMode,
 		PortalExecutorManager portalExecutorManager) {
 
+		_blueGreenIndexManager = blueGreenIndexManager;
 		_bundleContext = bundleContext;
 		_companyId = companyId;
+		_executionMode = executionMode;
 		_portalExecutorManager = portalExecutorManager;
 	}
 
@@ -129,9 +134,14 @@ public class SearchEngineInitializer implements Runnable {
 		stopWatch.start();
 
 		try {
-			SearchEngineHelperUtil.removeCompany(_companyId);
+			if (_shouldExecuteBlueGreenReindex()) {
+				_blueGreenIndexManager.createGreenIndex(_companyId);
+			}
+			else {
+				SearchEngineHelperUtil.removeCompany(_companyId);
 
-			SearchEngineHelperUtil.initialize(_companyId);
+				SearchEngineHelperUtil.initialize(_companyId);
+			}
 
 			long backgroundTaskId =
 				BackgroundTaskThreadLocal.getBackgroundTaskId();
@@ -189,6 +199,11 @@ public class SearchEngineInitializer implements Runnable {
 				futureTask.get();
 			}
 
+			if (_shouldExecuteBlueGreenReindex()) {
+				_blueGreenIndexManager.replaceBlueIndexWithGreenIndex(
+					_companyId);
+			}
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Reindexing completed in " +
@@ -196,6 +211,10 @@ public class SearchEngineInitializer implements Runnable {
 			}
 		}
 		catch (Exception exception) {
+			if (_shouldExecuteBlueGreenReindex()) {
+				_blueGreenIndexManager.deleteGreenIndex(_companyId);
+			}
+
 			_log.error("Error encountered while reindexing", exception);
 
 			if (_log.isInfoEnabled()) {
@@ -206,11 +225,25 @@ public class SearchEngineInitializer implements Runnable {
 		_finished = true;
 	}
 
+	private boolean _shouldExecuteBlueGreenReindex() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-177664") &&
+			(_blueGreenIndexManager != null) && (_executionMode != null) &&
+			_executionMode.equals("blue-green") &&
+			(_companyId != CompanyConstants.SYSTEM)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineInitializer.class);
 
+	private final BlueGreenIndexManager _blueGreenIndexManager;
 	private final BundleContext _bundleContext;
 	private final long _companyId;
+	private final String _executionMode;
 	private boolean _finished;
 	private ServiceTrackerList<Indexer<?>> _indexers;
 	private final PortalExecutorManager _portalExecutorManager;

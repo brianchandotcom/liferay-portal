@@ -376,6 +376,21 @@ definition {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 	}
 
+	macro selectPicklistImportFile {
+		var filePath = TestCase.getDependenciesDirPath(fileName = "${picklistFileName}.json");
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = ${filePath});
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${picklistName});
+
+		Button.clickImport();
+	}
+
 	macro updatePicklistItemName {
 		Picklist.optionsPicklistItem(
 			itemKey = ${itemkey},

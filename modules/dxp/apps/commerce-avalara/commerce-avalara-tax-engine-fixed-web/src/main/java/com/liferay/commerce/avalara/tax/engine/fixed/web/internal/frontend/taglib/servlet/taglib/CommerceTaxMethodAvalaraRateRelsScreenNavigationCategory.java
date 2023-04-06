@@ -33,16 +33,18 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceTaxMethodAvalaraRateRelsScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
-	public static final String CATEGORY_KEY = "avalara-tax-rates";
-
 	@Override
 	public String getCategoryKey() {
-		return CATEGORY_KEY;
+		return CommerceTaxScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_AVALARA_TAX_RATES;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return language.get(locale, "avalara-tax-rates");
+		return language.get(
+			locale,
+			CommerceTaxScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_AVALARA_TAX_RATES);
 	}
 
 	@Override

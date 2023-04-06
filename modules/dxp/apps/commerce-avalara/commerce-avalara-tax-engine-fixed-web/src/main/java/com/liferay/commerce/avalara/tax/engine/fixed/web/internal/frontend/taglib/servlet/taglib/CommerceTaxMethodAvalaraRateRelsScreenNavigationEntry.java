@@ -51,11 +51,9 @@ public class CommerceTaxMethodAvalaraRateRelsScreenNavigationEntry
 	extends CommerceTaxMethodAvalaraRateRelsScreenNavigationCategory
 	implements ScreenNavigationEntry<CommerceTaxMethod> {
 
-	public static final String ENTRY_KEY = "avalara-tax-rates";
-
 	@Override
 	public String getEntryKey() {
-		return ENTRY_KEY;
+		return getCategoryKey();
 	}
 
 	@Override

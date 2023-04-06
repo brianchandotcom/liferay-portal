@@ -12,6 +12,7 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-bean", version: "3.6.4"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":core:petra:petra-function")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-reflect")
 	testCompile project(":core:petra:petra-string")

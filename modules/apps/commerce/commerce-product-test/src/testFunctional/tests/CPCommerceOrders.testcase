@@ -2415,6 +2415,115 @@ definition {
 		}
 	}
 
+	@description = "This is a test for the COMMERCE-10895. As a buyer user, I can only view the order created by myself when I log in via headless API"
+	@priority = 3
+	test CanViewOrderOnlyCreatedByCurrentUsersViaAPI {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And two accounts are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account A",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account B",
+				accountEntryType = "Business");
+		}
+
+		task ("And buyer user logs in and completes an order with checkout") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			var orderId1 = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("And the GET order API is called") {
+			var orderCount = CommerceJSONOrdersAPI._getCommerceOrdersCount(email = "buyer@liferay.com");
+
+			TestUtils.assertEquals(
+				actual = ${orderCount},
+				expected = 1);
+		}
+
+		task ("When the admin changes the active account on Minium") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account B");
+		}
+
+		task ("And completes an order with checkout") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			var orderId2 = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the GET order API only created by buyer user is called") {
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(email = "buyer@liferay.com");
+
+			TestUtils.assertEquals(
+				actual = ${orderId1},
+				expected = ${orderIds});
+
+			TestUtils.assertNotEquals(
+				actual = ${orderId2},
+				expected = ${orderIds});
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10750. User can see if a SKU is on order and can search for Order Id or Account Name the orders under Order Tab in Inventory"
 	@priority = 5
 	test CanViewOrderSKUAndSearchForSpecificOrderIdAndAccountName {

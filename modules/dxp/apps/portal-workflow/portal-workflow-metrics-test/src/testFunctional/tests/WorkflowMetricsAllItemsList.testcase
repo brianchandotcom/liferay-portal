@@ -3182,41 +3182,47 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, Open when an SLA is paused, the SLA status will be related to the moment when it triggered the pause timer"
 	@priority = 4
 	test WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer {
-		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+		task ("Given a Single Approver SLA with a pause") {
+			WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+			Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
-		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = 0,
-			slaDefinitionDescription = "SLA Description",
-			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "00:01",
-			slaDefinitionName = "SLA Definition 1",
-			slaDefinitionPause = "On Task: Review",
-			slaDefinitionStart = "Process Begins");
+			WorkflowMetrics.fillSLAForm(
+				slaDefinitionDays = 0,
+				slaDefinitionDescription = "SLA Description",
+				slaDefinitionEnd = "Process Ends: Approved",
+				slaDefinitionHours = "00:01",
+				slaDefinitionName = "SLA Definition 1",
+				slaDefinitionPause = "On Task: Review",
+				slaDefinitionStart = "Process Begins");
 
-		Button.clickSave();
+			Button.clickSave();
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		task ("When a blog entry is created with a Single Approver Workflow") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
 
-		Navigator.gotoNavItem(navItem = "Configuration");
+			Navigator.gotoNavItem(navItem = "Configuration");
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry(
-			entryContent = "Test Content",
-			entryTitle = "Test Blog");
+			JSONBlog.addEntry(
+				entryContent = "Test Content",
+				entryTitle = "Test Blog");
+		}
 
-		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+		task ("Then the SLA status should be related to the moment the pause timer triggered") {
+			WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED");
+			AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED");
+		}
 	}
 
 }

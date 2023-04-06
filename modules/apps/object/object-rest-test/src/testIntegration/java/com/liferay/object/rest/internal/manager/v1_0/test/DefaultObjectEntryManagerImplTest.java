@@ -38,6 +38,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
@@ -144,6 +145,8 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -856,29 +859,9 @@ public class DefaultObjectEntryManagerImplTest {
 				"oneToManyRelationship",
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinition1,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectEntry objectEntry2 = _objectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinition2,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"r_oneToManyRelationship_" +
-							objectDefinition1.getPKObjectFieldName(),
-						objectEntry1.getId()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_addRelatedObjectEntries(
+			objectDefinition1, objectDefinition2, "externalReferenceCode1",
+			"externalReferenceCode2", objectRelationship);
 
 		_user = _addUser();
 
@@ -891,19 +874,16 @@ public class DefaultObjectEntryManagerImplTest {
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
-				objectEntry1.getExternalReferenceCode(), _companyId,
-				objectDefinition1, null);
+				"externalReferenceCode1", _companyId, objectDefinition1, null);
 
 			Assert.fail();
 		}
 		catch (ObjectRelationshipDeletionTypeException
 					objectRelationshipDeletionTypeException) {
 
-			String message =
-				objectRelationshipDeletionTypeException.getMessage();
-
-			Assert.assertTrue(
-				message.contains(
+			Assert.assertThat(
+				objectRelationshipDeletionTypeException.getMessage(),
+				CoreMatchers.containsString(
 					StringBundler.concat(
 						"User ", _user.getUserId(),
 						" must have DELETE permission for ",
@@ -919,86 +899,59 @@ public class DefaultObjectEntryManagerImplTest {
 				objectRelationship.getLabelMap());
 
 		_objectEntryManager.deleteObjectEntry(
-			objectEntry1.getExternalReferenceCode(), _companyId,
-			objectDefinition1, null);
-
-		Assert.assertNull(
-			_objectEntryManager.fetchObjectEntry(
-				_simpleDTOConverterContext, objectDefinition1,
-				objectEntry1.getId()));
-
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+			"externalReferenceCode1", _companyId, objectDefinition1, null);
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_adminUser));
-			PrincipalThreadLocal.setName(_adminUser.getUserId());
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, "externalReferenceCode1",
+				_companyId, objectDefinition1, null);
 
-			Assert.assertNotNull(
-				_objectEntryManager.fetchObjectEntry(
-					_simpleDTOConverterContext, objectDefinition2,
-					objectEntry2.getId()));
-
-			ObjectEntry objectEntry3 = _objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, objectDefinition2,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationship_" +
-								objectDefinition1.getPKObjectFieldName(),
-							objectEntry3.getId()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
-			PrincipalThreadLocal.setName(_user.getUserId());
-
-			// Relationshp type prevent
-
-			objectRelationship =
-				_objectRelationshipLocalService.updateObjectRelationship(
-					objectRelationship.getObjectRelationshipId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-					objectRelationship.getLabelMap());
-
-			try {
-				_objectEntryManager.deleteObjectEntry(
-					objectEntry3.getExternalReferenceCode(), _companyId,
-					objectDefinition1, null);
-
-				Assert.fail();
-			}
-			catch (RequiredObjectRelationshipException
-						requiredObjectRelationshipException) {
-
-				Assert.assertEquals(
-					StringBundler.concat(
-						"Object relationship ",
-						objectRelationship.getObjectRelationshipId(),
-						" does not allow deletes"),
-					requiredObjectRelationshipException.getMessage());
-			}
+			Assert.fail();
 		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
+		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
+			Assert.assertNotNull(noSuchObjectEntryException);
+		}
+
+		PrincipalThreadLocal.setName(_adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		Assert.assertNotNull(
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, "externalReferenceCode2",
+				_companyId, objectDefinition2, null));
+
+		_addRelatedObjectEntries(
+			objectDefinition1, objectDefinition2, "externalReferenceCode3",
+			"externalReferenceCode4", objectRelationship);
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		// Relationshp type prevent
+
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getObjectRelationshipId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				objectRelationship.getLabelMap());
+
+		try {
+			_objectEntryManager.deleteObjectEntry(
+				"externalReferenceCode3", _companyId, objectDefinition1, null);
+
+			Assert.fail();
+		}
+		catch (RequiredObjectRelationshipException
+					requiredObjectRelationshipException) {
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Object relationship ",
+					objectRelationship.getObjectRelationshipId(),
+					" does not allow deletes"),
+				requiredObjectRelationshipException.getMessage());
 		}
 
 		_roleLocalService.deleteRole(role.getRoleId());
@@ -1993,6 +1946,49 @@ public class DefaultObjectEntryManagerImplTest {
 					properties = HashMapBuilder.<String, Object>put(
 						"r_oneToManyRelationshipName_accountEntryId",
 						accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private void _addRelatedObjectEntries(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2,
+			String objectEntryExternalReferenceCode1,
+			String objectEntryExternalReferenceCode2,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		_objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"externalReferenceCode",
+						objectEntryExternalReferenceCode1
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		String objectRelationshipERCObjectFieldName = StringBundler.concat(
+			"r_", objectRelationship.getName(), "_",
+			StringUtil.replaceLast(
+				objectDefinition1.getPKObjectFieldName(), "Id", "ERC"));
+
+		_objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectRelationshipERCObjectFieldName,
+						objectEntryExternalReferenceCode1
+					).put(
+						"externalReferenceCode",
+						objectEntryExternalReferenceCode2
 					).build();
 				}
 			},

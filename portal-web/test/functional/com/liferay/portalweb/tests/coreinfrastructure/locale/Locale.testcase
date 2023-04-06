@@ -997,9 +997,12 @@ definition {
 
 		Site.editVirtualHostLanguageCP(languageVirtualHost = "Spanish (Spain)");
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		User.firstLoginUI(specificURL = "http://www.able.com:8080");
+		User.firstLoginUI(
+			localization = "ES",
+			localizedAgree = "Acepto",
+			localizedAnswer = "Respuesta",
+			localizedSaveButton = "Guardar",
+			specificURL = "http://www.able.com:8080");
 
 		Click(
 			key_tagName = "languageId=en_US",

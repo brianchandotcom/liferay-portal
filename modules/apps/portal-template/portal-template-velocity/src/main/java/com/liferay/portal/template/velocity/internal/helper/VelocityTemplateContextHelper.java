@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.velocity.internal.helper;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -140,7 +138,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		// Custom template context contributors
 
 		for (TemplateContextContributor templateContextContributor :
-				_serviceTrackerList.toList()) {
+				getTemplateContextContributors()) {
 
 			templateContextContributor.prepare(
 				contextObjects, httpServletRequest);
@@ -152,9 +150,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 	protected void activate(
 		Map<String, Object> properties, BundleContext bundleContext) {
 
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, TemplateContextContributor.class,
-			"(type=" + TemplateContextContributor.TYPE_GLOBAL + ")");
+		init(bundleContext);
 
 		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
 			VelocityEngineConfiguration.class, properties);
@@ -162,7 +158,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		destory();
 	}
 
 	@Override
@@ -220,8 +216,5 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Reference
 	private RolePermission _rolePermission;
-
-	private volatile ServiceTrackerList<TemplateContextContributor>
-		_serviceTrackerList;
 
 }

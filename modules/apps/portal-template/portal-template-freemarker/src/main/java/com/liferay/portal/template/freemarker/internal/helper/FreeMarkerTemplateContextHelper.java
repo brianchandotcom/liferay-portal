@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.freemarker.internal.helper;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -133,7 +131,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		// Custom template context contributors
 
 		for (TemplateContextContributor templateContextContributor :
-				_serviceTrackerList.toList()) {
+				getTemplateContextContributors()) {
 
 			templateContextContributor.prepare(
 				contextObjects, httpServletRequest);
@@ -153,9 +151,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	protected void activate(
 		Map<String, Object> properties, BundleContext bundleContext) {
 
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, TemplateContextContributor.class,
-			"(type=" + TemplateContextContributor.TYPE_GLOBAL + ")");
+		init(bundleContext);
 
 		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
@@ -166,7 +162,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		destory();
 	}
 
 	@Override
@@ -206,7 +202,5 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		_freeMarkerEngineConfiguration;
 	private BeansWrapper _restrictedBeansWrapper;
 	private volatile Set<String> _restrictedVariables;
-	private volatile ServiceTrackerList<TemplateContextContributor>
-		_serviceTrackerList;
 
 }

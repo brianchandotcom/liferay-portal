@@ -18,6 +18,8 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -115,6 +118,8 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+
 /**
  * @author Tina Tian
  * @author Jorge Ferrer
@@ -157,6 +162,10 @@ public class TemplateContextHelper {
 		return templateVariableGroups;
 	}
 
+	public void destory() {
+		_serviceTrackerList.close();
+	}
+
 	public Map<String, Object> getHelperUtilities(boolean restricted) {
 		if (_helperUtilitiesMapArray == null) {
 			_helperUtilitiesMapArray = (Map<String, Object>[])new Map<?, ?>[2];
@@ -191,6 +200,12 @@ public class TemplateContextHelper {
 
 	public Set<String> getRestrictedVariables() {
 		return Collections.emptySet();
+	}
+
+	public void init(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, TemplateContextContributor.class,
+			"(type=" + TemplateContextContributor.TYPE_GLOBAL + ")");
 	}
 
 	public void prepare(
@@ -359,6 +374,12 @@ public class TemplateContextHelper {
 
 	public void removeAllHelperUtilities() {
 		_helperUtilitiesMapArray = null;
+	}
+
+	protected Iterable<TemplateContextContributor>
+		getTemplateContextContributors() {
+
+		return _serviceTrackerList;
 	}
 
 	protected void populateCommonHelperUtilities(
@@ -844,6 +865,8 @@ public class TemplateContextHelper {
 		TemplateContextHelper.class);
 
 	private Map<String, Object>[] _helperUtilitiesMapArray;
+	private volatile ServiceTrackerList<TemplateContextContributor>
+		_serviceTrackerList;
 
 	private static class HttpWrapper implements Http {
 

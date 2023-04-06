@@ -29,7 +29,12 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.petra.function.transform.TransformUtil;
+<#if freeMarkerTool.isVersionCompatible(configYAML, 2)>
+	import com.liferay.petra.function.transform.TransformUtil;
+
+<#else>
+	import com.liferay.portal.vulcan.util.TransformUtil;
+</#if>
 
 <#assign
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)

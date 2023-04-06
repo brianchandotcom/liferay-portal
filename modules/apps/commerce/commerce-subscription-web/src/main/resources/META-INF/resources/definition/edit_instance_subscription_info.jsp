@@ -67,7 +67,7 @@ if (deliveryCPSubscriptionType != null) {
 	defaultDeliveryCPSubscriptionTypeLabel = deliveryCPSubscriptionType.getLabel(locale);
 }
 
-CPSubscriptionTypeJSPContributor cpSubscriptionTypeJSPContributor = cpInstanceSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(subscriptionType);
+CPSubscriptionTypeJSPContributor paymentCPSubscriptionTypeJSPContributor = cpInstanceSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(subscriptionType);
 CPSubscriptionTypeJSPContributor deliveryCPSubscriptionTypeJSPContributor = cpInstanceSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(deliverySubscriptionType);
 
 boolean ending = false;
@@ -107,7 +107,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 				collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "subscriptionEnabled" %>'
 				title='<%= LanguageUtil.get(request, "payment-subscription") %>'
 			>
-				<aui:select name="subscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectSubscriptionType();" %>'>
+				<aui:select name="subscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectSubscriptionType(this);" %>'>
 
 					<%
 					for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
@@ -121,11 +121,30 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 				</aui:select>
 
-				<%
-				if (cpSubscriptionTypeJSPContributor != null) {
-					cpSubscriptionTypeJSPContributor.render(cpInstance, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-				}
-				%>
+				<div id="<portlet:namespace />subscriptionTypeContributors">
+
+					<%
+					for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
+						CPSubscriptionTypeJSPContributor cpSubscriptionTypeJSPContributor = cpInstanceSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(curCPSubscriptionType.getName());
+
+						if (cpSubscriptionTypeJSPContributor == null) {
+							continue;
+						}
+					%>
+
+					<div class="<%= !cpSubscriptionTypeJSPContributor.equals(paymentCPSubscriptionTypeJSPContributor) ? "hide" : "" %>" id="<portlet:namespace />subscriptionTypeContributor<%= curCPSubscriptionType.getName() %>">
+
+						<%
+						cpSubscriptionTypeJSPContributor.render(cpInstance, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+						%>
+
+					</div>
+
+					<%
+					}
+					%>
+
+				</div>
 
 				<div id="<portlet:namespace />cycleLengthContainer">
 					<aui:input name="subscriptionLength" suffix="<%= defaultCPSubscriptionTypeLabel %>" value="<%= String.valueOf(subscriptionLength) %>">
@@ -184,7 +203,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 				collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "deliverySubscriptionEnabled" %>'
 				title='<%= LanguageUtil.get(request, "delivery-subscription") %>'
 			>
-				<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectDeliverySubscriptionType();" %>'>
+				<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectDeliverySubscriptionType(this);" %>'>
 
 					<%
 					for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
@@ -198,11 +217,30 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 				</aui:select>
 
-				<%
-				if (deliveryCPSubscriptionTypeJSPContributor != null) {
-					deliveryCPSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponseFactory.createPipingServletResponse(pageContext), false);
-				}
-				%>
+				<div id="<portlet:namespace />deliverySubscriptionTypeContributors">
+
+					<%
+					for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
+						CPSubscriptionTypeJSPContributor cpSubscriptionTypeJSPContributor = cpInstanceSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(curCPSubscriptionType.getName());
+
+						if (cpSubscriptionTypeJSPContributor == null) {
+							continue;
+						}
+					%>
+
+					<div class="<%= !cpSubscriptionTypeJSPContributor.equals(deliveryCPSubscriptionTypeJSPContributor) ? "hide" : "" %>" id="<portlet:namespace />deliverySubscriptionTypeContributor<%= curCPSubscriptionType.getName() %>">
+
+						<%
+						cpSubscriptionTypeJSPContributor.render(cpInstance, request, PipingServletResponseFactory.createPipingServletResponse(pageContext), false);
+						%>
+
+					</div>
+
+					<%
+					}
+					%>
+
+				</div>
 
 				<div id="<portlet:namespace />deliveryCycleLengthContainer">
 					<aui:input label="subscription-length" name="deliverySubscriptionLength" suffix="<%= defaultDeliveryCPSubscriptionTypeLabel %>" value="<%= String.valueOf(deliverySubscriptionLength) %>">
@@ -273,46 +311,27 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectSubscriptionType',
-		() => {
+		(element) => {
+			if (!element) {
+				return;
+			}
+
 			var A = AUI();
 
-			var overrideSubscriptionInfo = A.one(
-				'#<portlet:namespace />overrideSubscriptionInfo'
-			).attr('checked');
-			var deliverySubscriptionEnabled = A.one(
-				'#<portlet:namespace />deliverySubscriptionEnabled'
-			).attr('checked');
-			var subscriptionEnabled = A.one(
-				'#<portlet:namespace />subscriptionEnabled'
-			).attr('checked');
-			var subscriptionLength = A.one(
-				'#<portlet:namespace />subscriptionLength'
-			).val();
-			var subscriptionType = A.one(
-				'#<portlet:namespace />subscriptionType'
-			).val();
-			var maxSubscriptionCycles = A.one(
-				'#<portlet:namespace />maxSubscriptionCycles'
-			).val();
+			var subscriptionType = A.one(element).val();
 
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
+			A.one('#<portlet:namespace />subscriptionTypeContributors')
+				.get('children')
+				.hide();
+
+			var subscriptionTypeContributor = A.one(
+				'#<portlet:namespace />subscriptionTypeContributor' +
+					subscriptionType
 			);
 
-			portletURL.setParameter(
-				'overrideSubscriptionInfo',
-				overrideSubscriptionInfo
-			);
-			portletURL.setParameter(
-				'deliverySubscriptionEnabled',
-				deliverySubscriptionEnabled
-			);
-			portletURL.setParameter('subscriptionEnabled', subscriptionEnabled);
-			portletURL.setParameter('subscriptionLength', subscriptionLength);
-			portletURL.setParameter('subscriptionType', subscriptionType);
-			portletURL.setParameter('maxSubscriptionCycles', maxSubscriptionCycles);
-
-			window.location.replace(portletURL.toString());
+			if (subscriptionTypeContributor) {
+				subscriptionTypeContributor.show();
+			}
 		},
 		['liferay-portlet-url']
 	);
@@ -320,55 +339,27 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectDeliverySubscriptionType',
-		() => {
+		(element) => {
+			if (!element) {
+				return;
+			}
+
 			var A = AUI();
 
-			var overrideSubscriptionInfo = A.one(
-				'#<portlet:namespace />overrideSubscriptionInfo'
-			).attr('checked');
-			var subscriptionEnabled = A.one(
-				'#<portlet:namespace />subscriptionEnabled'
-			).attr('checked');
-			var deliverySubscriptionEnabled = A.one(
-				'#<portlet:namespace />deliverySubscriptionEnabled'
-			).attr('checked');
-			var deliverySubscriptionLength = A.one(
-				'#<portlet:namespace />deliverySubscriptionLength'
-			).val();
-			var deliverySubscriptionType = A.one(
-				'#<portlet:namespace />deliverySubscriptionType'
-			).val();
-			var deliveryMaxSubscriptionCycles = A.one(
-				'#<portlet:namespace />deliveryMaxSubscriptionCycles'
-			).val();
+			var subscriptionType = A.one(element).val();
 
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
+			A.one('#<portlet:namespace />deliverySubscriptionTypeContributors')
+				.get('children')
+				.hide();
+
+			var deliverySubscriptionTypeContributor = A.one(
+				'#<portlet:namespace />deliverySubscriptionTypeContributor' +
+					subscriptionType
 			);
 
-			portletURL.setParameter(
-				'overrideSubscriptionInfo',
-				overrideSubscriptionInfo
-			);
-			portletURL.setParameter('subscriptionEnabled', subscriptionEnabled);
-			portletURL.setParameter(
-				'deliverySubscriptionEnabled',
-				deliverySubscriptionEnabled
-			);
-			portletURL.setParameter(
-				'deliverySubscriptionLength',
-				deliverySubscriptionLength
-			);
-			portletURL.setParameter(
-				'deliverySubscriptionType',
-				deliverySubscriptionType
-			);
-			portletURL.setParameter(
-				'deliveryMaxSubscriptionCycles',
-				deliveryMaxSubscriptionCycles
-			);
-
-			window.location.replace(portletURL.toString());
+			if (deliverySubscriptionTypeContributor) {
+				deliverySubscriptionTypeContributor.show();
+			}
 		},
 		['liferay-portlet-url']
 	);

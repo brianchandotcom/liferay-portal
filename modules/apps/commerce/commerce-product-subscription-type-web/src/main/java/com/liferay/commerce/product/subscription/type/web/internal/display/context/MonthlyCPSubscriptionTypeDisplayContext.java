@@ -44,11 +44,12 @@ public class MonthlyCPSubscriptionTypeDisplayContext {
 
 		if (isPayment()) {
 			return GetterUtil.getInteger(
-				subscriptionTypeSettingsUnicodeProperties.get("monthDay"));
+				subscriptionTypeSettingsUnicodeProperties.get("monthDay"), 1);
 		}
 
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsUnicodeProperties.get("deliveryMonthDay"));
+			subscriptionTypeSettingsUnicodeProperties.get("deliveryMonthDay"),
+			1);
 	}
 
 	public int getSelectedMonthlyMode() {

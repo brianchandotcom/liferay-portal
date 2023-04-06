@@ -187,22 +187,31 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "subscriptionEnabled");
 		int subscriptionLength = ParamUtil.getInteger(
 			actionRequest, "subscriptionLength");
+
 		String subscriptionType = ParamUtil.getString(
 			actionRequest, "subscriptionType");
+
 		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
-				actionRequest, "subscriptionTypeSettings--");
+				actionRequest,
+				"subscriptionTypeSettings--" + subscriptionType + "--");
+
 		long maxSubscriptionCycles = ParamUtil.getLong(
 			actionRequest, "maxSubscriptionCycles");
 		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
 			actionRequest, "deliverySubscriptionEnabled");
 		int deliverySubscriptionLength = ParamUtil.getInteger(
 			actionRequest, "deliverySubscriptionLength");
+
 		String deliverySubscriptionType = ParamUtil.getString(
 			actionRequest, "deliverySubscriptionType");
+
 		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
-				actionRequest, "deliverySubscriptionTypeSettings--");
+				actionRequest,
+				"deliverySubscriptionTypeSettings--" +
+					deliverySubscriptionType + "--");
+
 		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
 			actionRequest, "deliveryMaxSubscriptionCycles");
 

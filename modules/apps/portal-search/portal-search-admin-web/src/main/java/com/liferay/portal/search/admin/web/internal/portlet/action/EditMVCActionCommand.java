@@ -16,6 +16,7 @@ package com.liferay.portal.search.admin.web.internal.portlet.action;
 
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -124,7 +126,14 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "companyIds");
 
 		String className = ParamUtil.getString(actionRequest, "className");
+
 		Map<String, Serializable> taskContextMap = new HashMap<>();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+			taskContextMap.put(
+				ReindexBackgroundTaskConstants.EXECUTION_MODE,
+				ParamUtil.getString(actionRequest, "executionMode"));
+		}
 
 		if (!ParamUtil.getBoolean(actionRequest, "blocking")) {
 			_indexWriterHelper.reindex(

@@ -1069,78 +1069,76 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());
 
-		if (cpType != null) {
+		if (cpType == null) {
+			return cpDefinition;
+		}
 
-			// Diagram
+		// Diagram
 
-			Diagram diagram = product.getDiagram();
-			MappedProduct[] mappedProducts = product.getMappedProducts();
-			Pin[] pins = product.getPins();
+		Diagram diagram = product.getDiagram();
+		MappedProduct[] mappedProducts = product.getMappedProducts();
+		Pin[] pins = product.getPins();
 
-			if ((diagram != null) || (mappedProducts != null) ||
-				(pins != null)) {
+		if ((diagram != null) || (mappedProducts != null) || (pins != null)) {
+			if (CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
+				if (diagram != null) {
+					DiagramUtil.addOrUpdateCSDiagramSetting(
+						contextCompany.getCompanyId(),
+						_cpAttachmentFileEntryService,
+						cpDefinition.getCPDefinitionId(),
+						_cpDefinitionOptionRelService,
+						_cpDefinitionOptionValueRelService, _cpOptionService,
+						_csDiagramSettingService, diagram,
+						cpDefinition.getGroupId(),
+						contextAcceptLanguage.getPreferredLocale(),
+						_serviceContextHelper, _uniqueFileNameProvider);
+				}
 
-				if (CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
-					if (diagram != null) {
-						DiagramUtil.addOrUpdateCSDiagramSetting(
+				if (mappedProducts != null) {
+					_csDiagramEntryService.deleteCSDiagramEntries(
+						cpDefinition.getCPDefinitionId());
+
+					for (MappedProduct mappedProduct : mappedProducts) {
+						MappedProductUtil.addOrUpdateCSDiagramEntry(
 							contextCompany.getCompanyId(),
-							_cpAttachmentFileEntryService,
 							cpDefinition.getCPDefinitionId(),
-							_cpDefinitionOptionRelService,
-							_cpDefinitionOptionValueRelService,
-							_cpOptionService, _csDiagramSettingService, diagram,
-							cpDefinition.getGroupId(),
+							_cpDefinitionService, _cpInstanceService,
+							_csDiagramEntryService, cpDefinition.getGroupId(),
 							contextAcceptLanguage.getPreferredLocale(),
-							_serviceContextHelper, _uniqueFileNameProvider);
-					}
-
-					if (mappedProducts != null) {
-						_csDiagramEntryService.deleteCSDiagramEntries(
-							cpDefinition.getCPDefinitionId());
-
-						for (MappedProduct mappedProduct : mappedProducts) {
-							MappedProductUtil.addOrUpdateCSDiagramEntry(
-								contextCompany.getCompanyId(),
-								cpDefinition.getCPDefinitionId(),
-								_cpDefinitionService, _cpInstanceService,
-								_csDiagramEntryService,
-								cpDefinition.getGroupId(),
-								contextAcceptLanguage.getPreferredLocale(),
-								mappedProduct, _serviceContextHelper);
-						}
-					}
-
-					if (pins != null) {
-						_csDiagramPinService.deleteCSDiagramPins(
-							cpDefinition.getCPDefinitionId());
-
-						for (Pin pin : pins) {
-							PinUtil.addOrUpdateCSDiagramPin(
-								cpDefinition.getCPDefinitionId(),
-								_csDiagramPinService, pin);
-						}
+							mappedProduct, _serviceContextHelper);
 					}
 				}
-				else {
-					throw new CPDefinitionProductTypeNameException();
+
+				if (pins != null) {
+					_csDiagramPinService.deleteCSDiagramPins(
+						cpDefinition.getCPDefinitionId());
+
+					for (Pin pin : pins) {
+						PinUtil.addOrUpdateCSDiagramPin(
+							cpDefinition.getCPDefinitionId(),
+							_csDiagramPinService, pin);
+					}
 				}
 			}
+			else {
+				throw new CPDefinitionProductTypeNameException();
+			}
+		}
 
-			// Virtual
+		// Virtual
 
-			ProductVirtualSettings productVirtualSettings =
-				product.getVirtualSettings();
+		ProductVirtualSettings productVirtualSettings =
+			product.getVirtualSettings();
 
-			if (productVirtualSettings != null) {
-				if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
-					VirtualSettingsUtil.addOrUpdateVirtualSettings(
-						cpDefinition, productVirtualSettings,
-						_cpDefinitionVirtualSettingService,
-						_uniqueFileNameProvider, serviceContext);
-				}
-				else {
-					throw new CPDefinitionProductTypeNameException();
-				}
+		if (productVirtualSettings != null) {
+			if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
+				VirtualSettingsUtil.addOrUpdateVirtualSettings(
+					cpDefinition, productVirtualSettings,
+					_cpDefinitionVirtualSettingService, _uniqueFileNameProvider,
+					serviceContext);
+			}
+			else {
+				throw new CPDefinitionProductTypeNameException();
 			}
 		}
 

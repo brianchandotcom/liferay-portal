@@ -880,20 +880,14 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_user = _addUser();
 
-		_resourcePermissionLocalService.setResourcePermissions(
-			_companyId, objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(),
+		Role role = _addRoleUser(
 			new String[] {
 				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
 				ActionKeys.VIEW
-			});
-
-		_user = _addUser();
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+			},
+			objectDefinition1, _user);
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
@@ -1008,8 +1002,10 @@ public class DefaultObjectEntryManagerImplTest {
 		}
 
 		_roleLocalService.deleteRole(role.getRoleId());
+
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship.getObjectRelationshipId());
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition1.getObjectDefinitionId());
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -1033,18 +1029,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addUser();
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition3.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(), ActionKeys.DELETE);
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition3.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(), ActionKeys.VIEW);
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		Role role = _addRoleUser(
+			new String[] {ActionKeys.DELETE, ActionKeys.VIEW},
+			_objectDefinition3, _user);
 
 		_objectEntryManager.deleteObjectEntry(
 			_objectDefinition3, objectEntry1.getId());
@@ -1567,14 +1554,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(0);
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition3.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(), ActionKeys.VIEW);
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		Role role = _addRoleUser(
+			new String[] {ActionKeys.VIEW}, _objectDefinition3, _user);
 
 		_assertObjectEntriesSize(2);
 
@@ -1721,14 +1702,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_user = _addUser();
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(), ActionKeys.VIEW);
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinition1, _user);
 
 		Aggregation aggregation = new Aggregation() {
 			{
@@ -1781,20 +1755,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 		ObjectEntry objectEntry2 = _addObjectEntry(accountEntry2);
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition3.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(), ActionKeys.UPDATE);
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition3.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
-			role.getRoleId(), ActionKeys.VIEW);
-
 		_user = _addUser();
 
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		Role role = _addRoleUser(
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+			_objectDefinition3, _user);
 
 		_objectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition3,
@@ -2046,6 +2011,22 @@ public class DefaultObjectEntryManagerImplTest {
 		_resourcePermissionLocalService.addResourcePermission(
 			_companyId, name, ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			role.getRoleId(), actionId);
+	}
+
+	private Role _addRoleUser(
+			String[] actionIds, ObjectDefinition objectDefinition, User user)
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_companyId, objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			role.getRoleId(), actionIds);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user);
+
+		return role;
 	}
 
 	private User _addUser() throws Exception {

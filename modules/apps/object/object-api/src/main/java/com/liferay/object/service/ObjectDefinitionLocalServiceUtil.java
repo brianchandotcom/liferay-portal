@@ -421,6 +421,13 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getObjectDefinitions(companyId, active, status);
 	}
 
+	public static List<ObjectDefinition> getObjectDefinitionsByModifiable(
+		long companyId, boolean active, boolean modifiable, int status) {
+
+		return getService().getObjectDefinitionsByModifiable(
+			companyId, active, modifiable, status);
+	}
+
 	/**
 	 * Returns the number of object definitions.
 	 *

@@ -44,6 +44,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.search.experiences.exception.NoSuchSXPBlueprintException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -75,118 +76,124 @@ public class SXPBlueprintInfoCollectionProvider
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
-		// TODO Better null check for configuration and SXPBlueprint
+		if (configuration == null) {
+			configuration = Collections.emptyMap();
+		}
 
-		if (configuration != null) {
-			String[] sxpBlueprintERCs = configuration.get("sxpBlueprintERC");
+		String[] sxpBlueprintExternalReferenceCodes = configuration.get(
+			"sxpBlueprintExternalReferenceCode");
 
-			String sxpBlueprintERC = sxpBlueprintERCs[0];
+		if ((sxpBlueprintExternalReferenceCodes == null) ||
+			Validator.isNull(sxpBlueprintExternalReferenceCodes[0])) {
 
-			if (Validator.isNotNull(sxpBlueprintERC)) {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+			return InfoPage.of(
+				Collections.emptyList(), collectionQuery.getPagination(), 0);
+		}
 
-				SXPBlueprint sxpBlueprint =
-					_sxpBlueprintLocalService.
-						fetchSXPBlueprintByExternalReferenceCode(
-							sxpBlueprintERC, serviceContext.getCompanyId());
+		String sxpBlueprintExternalReferenceCode =
+			sxpBlueprintExternalReferenceCodes[0];
 
-				if (sxpBlueprint != null) {
-					Pagination pagination = collectionQuery.getPagination();
+		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-					SearchRequestBuilder searchRequestBuilder =
-						_searchRequestBuilderFactory.builder(
-						).companyId(
-							serviceContext.getCompanyId()
-						).emptySearchEnabled(
-							true
-						).from(
-							pagination.getStart()
-						).size(
-							pagination.getEnd()
-						).withSearchContext(
-							searchContext -> {
-								CategoriesInfoFilter categoriesInfoFilter =
-									collectionQuery.getInfoFilter(
-										CategoriesInfoFilter.class);
+			SXPBlueprint sxpBlueprint =
+				_sxpBlueprintLocalService.
+					getSXPBlueprintByExternalReferenceCode(
+						sxpBlueprintExternalReferenceCode,
+						serviceContext.getCompanyId());
 
-								// TODO Added isEmpty check for consistency
-								// with TagsInfoFilter
+			Pagination pagination = collectionQuery.getPagination();
 
-								if ((categoriesInfoFilter != null) &&
-									!ArrayUtil.isEmpty(
-										categoriesInfoFilter.
-											getCategoryIds())) {
+			SearchRequestBuilder searchRequestBuilder =
+				_searchRequestBuilderFactory.builder(
+				).companyId(
+					serviceContext.getCompanyId()
+				).emptySearchEnabled(
+					true
+				).from(
+					pagination.getStart()
+				).size(
+					pagination.getEnd()
+				).withSearchContext(
+					searchContext -> {
+						CategoriesInfoFilter categoriesInfoFilter =
+							collectionQuery.getInfoFilter(
+								CategoriesInfoFilter.class);
 
-									long[] categoryIds = ArrayUtil.append(
-										categoriesInfoFilter.getCategoryIds());
+						// TODO Added isEmpty check for consistency
+						// with TagsInfoFilter
 
-									categoryIds = ArrayUtil.unique(categoryIds);
+						if ((categoriesInfoFilter != null) &&
+							!ArrayUtil.isEmpty(
+								categoriesInfoFilter.getCategoryIds())) {
 
-									searchContext.setAssetCategoryIds(
-										categoryIds);
-								}
+							long[] categoryIds = ArrayUtil.append(
+								categoriesInfoFilter.getCategoryIds());
 
-								TagsInfoFilter tagsInfoFilter =
-									collectionQuery.getInfoFilter(
-										TagsInfoFilter.class);
+							categoryIds = ArrayUtil.unique(categoryIds);
 
-								// TODO Added isEmpty check, otherwise getting
-								// ArrayIndexOutOfBoundsException
+							searchContext.setAssetCategoryIds(categoryIds);
+						}
 
-								if ((tagsInfoFilter != null) &&
-									!ArrayUtil.isEmpty(
-										tagsInfoFilter.getTagNames())) {
+						TagsInfoFilter tagsInfoFilter =
+							collectionQuery.getInfoFilter(TagsInfoFilter.class);
 
-									String[] tagNames = ArrayUtil.append(
-										tagsInfoFilter.getTagNames());
+						// TODO Added isEmpty check, otherwise getting
+						// ArrayIndexOutOfBoundsException
 
-									tagNames = ArrayUtil.unique(tagNames);
+						if ((tagsInfoFilter != null) &&
+							!ArrayUtil.isEmpty(tagsInfoFilter.getTagNames())) {
 
-									searchContext.setAssetTagNames(tagNames);
-								}
+							String[] tagNames = ArrayUtil.append(
+								tagsInfoFilter.getTagNames());
 
-								KeywordsInfoFilter keywordsInfoFilter =
-									collectionQuery.getInfoFilter(
-										KeywordsInfoFilter.class);
+							tagNames = ArrayUtil.unique(tagNames);
 
-								if (keywordsInfoFilter != null) {
-									searchContext.setKeywords(
-										keywordsInfoFilter.getKeywords());
-								}
+							searchContext.setAssetTagNames(tagNames);
+						}
 
-								searchContext.setAttribute(
-									"search.experiences.blueprint.id",
-									sxpBlueprint.getSXPBlueprintId());
-								searchContext.setLocale(
-									serviceContext.getLocale());
+						KeywordsInfoFilter keywordsInfoFilter =
+							collectionQuery.getInfoFilter(
+								KeywordsInfoFilter.class);
 
-								searchContext.setAttribute(
-									"search.experiences.ip.address",
-									serviceContext.getRemoteAddr());
+						if (keywordsInfoFilter != null) {
+							searchContext.setKeywords(
+								keywordsInfoFilter.getKeywords());
+						}
 
-								ThemeDisplay themeDisplay =
-									serviceContext.getThemeDisplay();
+						searchContext.setAttribute(
+							"search.experiences.blueprint.id",
+							sxpBlueprint.getSXPBlueprintId());
+						searchContext.setLocale(serviceContext.getLocale());
 
-								searchContext.setAttribute(
-									"search.experiences.scope.group.id",
-									themeDisplay.getScopeGroupId());
+						searchContext.setAttribute(
+							"search.experiences.ip.address",
+							serviceContext.getRemoteAddr());
 
-								searchContext.setTimeZone(
-									serviceContext.getTimeZone());
-								searchContext.setUserId(
-									serviceContext.getUserId());
-							}
-						);
+						ThemeDisplay themeDisplay =
+							serviceContext.getThemeDisplay();
 
-					SearchResponse searchResponse = _searcher.search(
-						searchRequestBuilder.build());
+						searchContext.setAttribute(
+							"search.experiences.scope.group.id",
+							themeDisplay.getScopeGroupId());
 
-					return InfoPage.of(
-						_assetHelper.getAssetEntries(
-							searchResponse.getSearchHits()));
-				}
-			}
+						searchContext.setTimeZone(serviceContext.getTimeZone());
+						searchContext.setUserId(serviceContext.getUserId());
+					}
+				);
+
+			SearchResponse searchResponse = _searcher.search(
+				searchRequestBuilder.build());
+
+			return InfoPage.of(
+				_assetHelper.getAssetEntries(searchResponse.getSearchHits()));
+		}
+		catch (NoSuchSXPBlueprintException noSuchSXPBlueprintException) {
+			_log.error(noSuchSXPBlueprintException);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get asset entries", exception);
 		}
 
 		return InfoPage.of(
@@ -205,7 +212,7 @@ public class SXPBlueprintInfoCollectionProvider
 			).namespace(
 				StringPool.BLANK
 			).name(
-				"sxpBlueprintERC"
+				"sxpBlueprintExternalReferenceCode"
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "blueprint")
 			).localizable(

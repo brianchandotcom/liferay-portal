@@ -40,7 +40,7 @@
 	[#assign userRoles = userRoles + (myUserAccount.accountBriefs?filter(account_brief -> account_brief.id == accountEntryId)?first.roleBriefs)! /]
 
 	[#list userRoles as userRole]
-		[#if approvedRoles?seq_contains(userRole.name) || claimStatus=="draft" || claimStatus=="moreInfoRequested"]
+		[#if approvedRoles?seq_contains(userRole.name) || claimStatus == "draft" || claimStatus == "moreInfoRequested"]
 			<a class="btn btn-primary d-flex mr-2 mt-2" href="${site_url}/marketing/mdf-claim/new/#/mdfrequest/${mdfRequestId}/mdfclaim/${mdfClaimId}" id="edit-button-manager">
 				<div>
 					[@clay["icon"] symbol="pencil"/]

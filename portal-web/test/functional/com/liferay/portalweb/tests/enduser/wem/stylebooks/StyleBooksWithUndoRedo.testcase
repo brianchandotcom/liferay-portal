@@ -141,9 +141,6 @@ definition {
 	@description = "This is a test for LPS-142363. The History dropdown menu could list up to the last 100 interaction states."
 	@priority = 4
 	test ListUpToLastHundredInteractionStatesOnHistoryDropdownMenu {
-		property custom.properties = "session.timeout=30";
-		property web.xml.timeout = "30";
-
 		task ("Given a style book designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",

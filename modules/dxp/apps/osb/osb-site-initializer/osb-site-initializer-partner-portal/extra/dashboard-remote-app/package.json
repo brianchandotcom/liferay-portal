@@ -17,8 +17,8 @@
 		]
 	},
 	"dependencies": {
-		"@clayui/alert": "3.85.0",
-		"@clayui/button": "3.83.0",
+		"@clayui/alert": "3.92.0",
+		"@clayui/button": "3.92.0",
 		"@clayui/charts": "3.65.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/loading-indicator": "3.60.0",

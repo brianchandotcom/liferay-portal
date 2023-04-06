@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
+import com.liferay.portal.search.index.BlueGreenIndexManager;
 import com.liferay.portal.search.internal.SearchEngineInitializer;
 
 import org.osgi.framework.BundleContext;
@@ -31,9 +32,11 @@ public class ReindexPortalBackgroundTaskExecutor
 	extends BaseReindexBackgroundTaskExecutor {
 
 	public ReindexPortalBackgroundTaskExecutor(
+		BlueGreenIndexManager blueGreenIndexManager,
 		BundleContext bundleContext,
 		PortalExecutorManager portalExecutorManager) {
 
+		_blueGreenIndexManager = blueGreenIndexManager;
 		_bundleContext = bundleContext;
 		_portalExecutorManager = portalExecutorManager;
 	}
@@ -41,11 +44,12 @@ public class ReindexPortalBackgroundTaskExecutor
 	@Override
 	public BackgroundTaskExecutor clone() {
 		return new ReindexPortalBackgroundTaskExecutor(
-			_bundleContext, _portalExecutorManager);
+			_blueGreenIndexManager, _bundleContext, _portalExecutorManager);
 	}
 
 	@Override
-	protected void reindex(String className, long[] companyIds)
+	protected void reindex(
+			String className, long[] companyIds, String executionMode)
 		throws Exception {
 
 		for (long companyId : companyIds) {
@@ -60,7 +64,8 @@ public class ReindexPortalBackgroundTaskExecutor
 			try {
 				SearchEngineInitializer searchEngineInitializer =
 					new SearchEngineInitializer(
-						_bundleContext, companyId, _portalExecutorManager);
+						_blueGreenIndexManager, _bundleContext, companyId,
+						executionMode, _portalExecutorManager);
 
 				searchEngineInitializer.reindex();
 			}
@@ -82,6 +87,7 @@ public class ReindexPortalBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexPortalBackgroundTaskExecutor.class);
 
+	private final BlueGreenIndexManager _blueGreenIndexManager;
 	private final BundleContext _bundleContext;
 	private final PortalExecutorManager _portalExecutorManager;
 

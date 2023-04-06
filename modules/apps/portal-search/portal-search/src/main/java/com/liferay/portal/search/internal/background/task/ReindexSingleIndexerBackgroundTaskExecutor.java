@@ -95,7 +95,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 	}
 
 	@Override
-	protected void reindex(String className, long[] companyIds)
+	protected void reindex(
+			String className, long[] companyIds, String executionMode)
 		throws Exception {
 
 		Indexer<?> indexer = indexerRegistry.getIndexer(className);

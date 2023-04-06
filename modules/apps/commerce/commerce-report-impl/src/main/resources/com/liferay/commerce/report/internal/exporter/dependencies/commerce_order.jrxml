@@ -5,10 +5,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record" />
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true" />
 	<property name="net.sf.jasperreports.default.font.name" value="Sans Serif" />
-	<style fontName="Times New Roman" fontSize="50" forecolor="#FFFFFF" isBold="false" name="Title" pdfFontName="Times-Bold" />
-	<style fontName="Times New Roman" fontSize="18" forecolor="#CCCCCC" isBold="false" name="SubTitle" pdfFontName="Times-Roman" />
-	<style fontName="Times New Roman" fontSize="14" forecolor="#666666" isBold="true" name="Column header" />
-	<style fontName="Times New Roman" mode="Transparent" name="Detail" />
+	<style fontName="arial" fontSize="14" isDefault="true" name="Sans_Normal" />
 	<style fontName="Times New Roman" mode="Transparent" name="Row" pdfFontName="Times-Roman">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
@@ -88,6 +85,7 @@
 	<parameter class="java.lang.Integer" name="commerceOrderItemsSize" />
 	<parameter class="java.lang.Long" name="companyId" />
 	<parameter class="java.lang.String" name="externalReferenceCode" />
+	<parameter class="com.liferay.portal.kernel.language.Language" name="language" />
 	<parameter class="java.util.Locale" name="locale" />
 	<parameter class="java.lang.String" name="logoURL" />
 	<parameter class="java.util.Date" name="orderDate" />
@@ -102,6 +100,7 @@
 	<parameter class="java.lang.String" name="shippingAddressZip" />
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="shippingAmountMoney" />
 	<parameter class="java.lang.String" name="shippingDiscountAmount" />
+	<parameter class="java.util.Locale" name="siteDefaultLocale" />
 	<parameter class="java.lang.String" name="taxAmount" />
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalMoney" />
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalWithTaxAmountMoney" />
@@ -130,33 +129,33 @@
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="c86748e5-ca9e-487f-8287-41275ab2586c" width="167" x="20" y="70">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Order Number]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "order-number")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="2d1d9fe6-ed1c-4cdd-9c4b-d5767aa999b3" width="167" x="187" y="70">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Order Date]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "order-date")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="0325dfbf-4df1-485f-957e-283f464b1358" width="167" x="354" y="70">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Purchase Order Number]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "purchase-order-number")]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement height="14" uuid="be608ff2-acce-4b31-b81c-e07149205ca1" width="167" x="20" y="90">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -193,24 +192,24 @@
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="24ebcf6a-8c4f-4bb6-aed1-2bef2c49de7d" width="167" x="20" y="130">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Customer Info]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "customer-info")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="2575f3a8-6a6e-4fae-914d-92d455006979" width="167" x="187" y="130">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Customer Number]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "customer-number")]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement height="14" uuid="7ce8b8fd-5deb-4a6c-ab2a-e5f7de92356f" width="167" x="20" y="150">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -237,33 +236,33 @@
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="16e07639-fe75-4ed6-9b69-822314ef035b" width="167" x="20" y="190">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Billing Address]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "billing-address")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="fe427734-daca-4f9f-8735-742b062dfb11" width="167" x="187" y="190">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Shipping Address]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "shipping-address")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="7a2ef92b-d61a-415f-bb4d-451149689c2b" width="167" x="354" y="190">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Request Delivery Date]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "request-delivery-date")]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="bc711843-aee5-4b05-a0b0-5970eab23e52" width="167" x="20" y="210">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -380,15 +379,15 @@
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="f5e7d1ae-8955-4cc3-a626-49d7874566c1" width="167" x="20" y="310">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Order Notes]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "order-notes")]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="30" uuid="5876a7a6-a0e0-4ac4-811b-e99eff0b25f6" width="524" x="20" y="330">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -405,15 +404,15 @@
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="6ff9fd32-1cc5-4b19-a978-8cae211c722d" width="167" x="10" y="393">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Items]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "items")]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="e580b7b5-573d-44de-b865-4c66bd28cd76" width="166" x="20" y="280">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -434,15 +433,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{shippingAddressPhoneNumber}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="f0d3c4eb-252b-42f7-9d8d-c52fa36a99a4" width="167" x="354" y="130">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[External Reference Code]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "external-reference-code")]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="752f0505-9393-4c74-bb26-99d7ff2af666" width="167" x="354" y="150">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -457,7 +456,7 @@
 	</title>
 	<columnHeader>
 		<band height="29">
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="c1a00e5e-ad2d-44aa-a42f-80fc29a44ca2" width="118" x="10" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
@@ -466,18 +465,18 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Name]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "name")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="98a3fbdf-1e9d-48d1-af5b-743165c619fe" width="28" x="434" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb3147dc-3162-43b9-82cb-14f999a79da9" />
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Qty]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "qty")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="163ff2b4-130b-4856-9344-0b50f6ffc128" width="52" x="140" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
@@ -486,10 +485,10 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[SKU]]></text>
-			</staticText>
-			<staticText>
-				<reportElement height="14" uuid="f46e5e3c-93bc-4eb6-bf5b-6dcbfb529543" width="62" x="200" y="7">
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "sku")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement height="14" uuid="f46e5e3c-93bc-4eb6-bf5b-6dcbfb529543" width="82" x="200" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -497,9 +496,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Delivery Date]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "delivery-date")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="1cd53939-c150-4e19-a75b-495522965a8e" width="48" x="290" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
@@ -508,9 +507,9 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Price]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "price")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="1caa5163-10b9-4501-907b-4927d87b4522" width="40" x="370" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
@@ -519,17 +518,17 @@
 				<textElement verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Discount]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "discount")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement height="14" uuid="79700a87-a031-40e1-89fd-41144979cf6d" width="40" x="490" y="7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb3147dc-3162-43b9-82cb-14f999a79da9" />
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Total]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "total")]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
@@ -541,7 +540,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nameMap}.get($P{locale})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{nameMap}.containsKey($P{locale})) ? $F{nameMap}.get($P{locale}) : $F{nameMap}.get($P{siteDefaultLocale})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement height="20" uuid="550e1c16-4b1a-46a4-8c0a-f652b28ff76e" width="52" x="140" y="1">
@@ -607,23 +606,23 @@
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
+			<textField>
 				<reportElement height="14" uuid="58a45771-a582-4458-8688-2b2623e61ab2" width="167" x="10" y="23">
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" size="9" />
 				</textElement>
-				<text><![CDATA[Order Summary]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "order-summary")]]></textFieldExpression>
+			</textField>
 			<rectangle>
 				<reportElement height="153" uuid="ce76c885-976e-4104-a667-411f183cfb48" width="555" x="0" y="50" />
 				<graphicElement>
 					<pen lineColor="#CCCCCC" />
 				</graphicElement>
 			</rectangle>
-			<staticText>
-				<reportElement height="14" uuid="b5644b42-8dfa-4515-813d-33bb6fe452f1" width="62" x="400" y="60">
+			<textField>
+				<reportElement height="14" uuid="b5644b42-8dfa-4515-813d-33bb6fe452f1" width="112" x="350" y="60">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -631,10 +630,10 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Units]]></text>
-			</staticText>
-			<staticText>
-				<reportElement height="14" uuid="80411b27-e849-45fe-8397-a36439e765ff" width="62" x="400" y="81">
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "units")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement height="14" uuid="80411b27-e849-45fe-8397-a36439e765ff" width="112" x="350" y="81">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -642,10 +641,10 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Subtotal]]></text>
-			</staticText>
-			<staticText>
-				<reportElement height="14" uuid="280ee13d-8924-44bc-a8c0-15f7d50b7d35" width="62" x="400" y="100">
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "subtotal")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement height="14" uuid="280ee13d-8924-44bc-a8c0-15f7d50b7d35" width="112" x="350" y="100">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -653,10 +652,10 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Delivery]]></text>
-			</staticText>
-			<staticText>
-				<reportElement height="14" uuid="da734d55-1b1e-49ea-aedd-5b6e2ce2fc12" width="92" x="370" y="120">
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "delivery")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement height="14" uuid="da734d55-1b1e-49ea-aedd-5b6e2ce2fc12" width="112" x="350" y="120">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -664,10 +663,10 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Delivery discount]]></text>
-			</staticText>
-			<staticText>
-				<reportElement height="14" uuid="d73068e6-8f12-4d56-b1c3-919251859735" width="62" x="400" y="140">
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "delivery-discount")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement height="14" uuid="d73068e6-8f12-4d56-b1c3-919251859735" width="112" x="350" y="140">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -675,10 +674,10 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Tax]]></text>
-			</staticText>
-			<staticText>
-				<reportElement height="14" uuid="2d06a8e0-025f-45c4-abb6-667c5e6d736e" width="62" x="400" y="170">
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "tax")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement height="14" uuid="2d06a8e0-025f-45c4-abb6-667c5e6d736e" width="112" x="350" y="170">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
@@ -686,8 +685,8 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" />
 				</textElement>
-				<text><![CDATA[Total]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "total")]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement height="14" uuid="a3728970-0d8b-41de-8618-d51536dbfee2" width="70" x="470" y="60">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="895dde53-9a59-4aea-90ff-211d1966faf4" />

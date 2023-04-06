@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<fontFamilies>
+	<fontFamily name="arial">
+		<normal>com/liferay/commerce/report/internal/exporter/dependencies/fonts/arial/arial-unicode-ms.ttf</normal>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+	</fontFamily>
+</fontFamilies>

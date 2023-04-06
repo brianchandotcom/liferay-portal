@@ -16,13 +16,14 @@ package com.liferay.jethr0;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
-import com.liferay.jethr0.dalo.ProjectComparatorDALO;
-import com.liferay.jethr0.dalo.ProjectPrioritizerDALO;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectDALO;
 import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
+import com.liferay.jethr0.project.comparator.ProjectComparatorRepository;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerRepository;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -56,15 +57,15 @@ public class Jethr0SpringBootApplication {
 
 	@Bean
 	public ProjectQueue getProjectQueue(
-		ProjectComparatorDALO projectComparatorDALO,
-		ProjectPrioritizerDALO projectPrioritizerDALO,
+		ProjectComparatorRepository projectComparatorRepository,
+		ProjectPrioritizerRepository projectPrioritizerRepository,
 		ProjectRepository projectRepository) {
 
 		ProjectQueue projectQueue = new ProjectQueue();
 
 		projectQueue.setProjectPrioritizer(
 			_getDefaultProjectPrioritizer(
-				projectComparatorDALO, projectPrioritizerDALO));
+				projectComparatorRepository, projectPrioritizerRepository));
 
 		projectQueue.addProjects(
 			projectRepository.getByState(Project.State.RUNNING));
@@ -77,28 +78,29 @@ public class Jethr0SpringBootApplication {
 	}
 
 	private ProjectPrioritizer _getDefaultProjectPrioritizer(
-		ProjectComparatorDALO projectComparatorDALO,
-		ProjectPrioritizerDALO projectPrioritizerDALO) {
-
-		for (ProjectPrioritizer projectPrioritizer :
-				projectPrioritizerDALO.retrieveProjectPrioritizers()) {
-
-			String projectPrioritizerName = projectPrioritizer.getName();
-
-			if (projectPrioritizerName.equals(_liferayProjectPrioritizer)) {
-				return projectPrioritizer;
-			}
-		}
+		ProjectComparatorRepository projectComparatorRepository,
+		ProjectPrioritizerRepository projectPrioritizerRepository) {
 
 		ProjectPrioritizer projectPrioritizer =
-			projectPrioritizerDALO.createProjectPrioritizer(
-				_liferayProjectPrioritizer);
+			projectPrioritizerRepository.getByName(_liferayProjectPrioritizer);
 
-		projectComparatorDALO.createProjectComparator(
-			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
-			null);
-		projectComparatorDALO.createProjectComparator(
-			projectPrioritizer, 2, ProjectComparator.Type.FIFO, null);
+		if (projectPrioritizer != null) {
+			return projectPrioritizer;
+		}
+
+		projectPrioritizer = ProjectPrioritizerFactory.newProjectPrioritizer(
+			_liferayProjectPrioritizer);
+
+		projectPrioritizer = projectPrioritizerRepository.add(
+			projectPrioritizer);
+
+		projectComparatorRepository.add(
+			ProjectComparatorFactory.newProjectComparator(
+				projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
+				null));
+		projectComparatorRepository.add(
+			ProjectComparatorFactory.newProjectComparator(
+				projectPrioritizer, 2, ProjectComparator.Type.FIFO, null));
 
 		return projectPrioritizer;
 	}

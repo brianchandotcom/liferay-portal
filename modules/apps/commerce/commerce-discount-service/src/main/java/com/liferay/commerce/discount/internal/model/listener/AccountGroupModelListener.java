@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.internal.model.listener;
 
-import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -26,14 +26,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(service = ModelListener.class)
-public class CommerceAccountGroupModelListener
-	extends BaseModelListener<CommerceAccountGroup> {
+public class AccountGroupModelListener extends BaseModelListener<AccountGroup> {
 
 	@Override
-	public void onBeforeRemove(CommerceAccountGroup commerceAccountGroup) {
+	public void onBeforeRemove(AccountGroup accountGroup) {
 		_commerceDiscountCommerceAccountGroupRelLocalService.
 			deleteCommerceDiscountCommerceAccountGroupRelsBycommerceAccountGroupId(
-				commerceAccountGroup.getCommerceAccountGroupId());
+				accountGroup.getAccountGroupId());
 	}
 
 	@Reference

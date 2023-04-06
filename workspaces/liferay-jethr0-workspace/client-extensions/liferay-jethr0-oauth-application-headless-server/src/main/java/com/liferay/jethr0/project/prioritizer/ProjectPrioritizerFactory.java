@@ -14,10 +14,6 @@
 
 package com.liferay.jethr0.project.prioritizer;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 /**
@@ -28,37 +24,15 @@ public class ProjectPrioritizerFactory {
 	public static ProjectPrioritizer newProjectPrioritizer(
 		JSONObject jsonObject) {
 
-		long id = jsonObject.getLong("id");
-
-		ProjectPrioritizer projectPrioritizer = null;
-
-		synchronized (_projectPrioritizers) {
-			if (_projectPrioritizers.containsKey(id)) {
-				return _projectPrioritizers.get(id);
-			}
-
-			projectPrioritizer = new DefaultProjectPrioritizer(jsonObject);
-
-			_projectPrioritizers.put(
-				projectPrioritizer.getId(), projectPrioritizer);
-		}
-
-		return projectPrioritizer;
+		return new DefaultProjectPrioritizer(jsonObject);
 	}
 
-	public static void removeProjectPrioritizer(
-		ProjectPrioritizer projectPrioritizer) {
+	public static ProjectPrioritizer newProjectPrioritizer(String name) {
+		JSONObject jsonObject = new JSONObject();
 
-		if (projectPrioritizer == null) {
-			return;
-		}
+		jsonObject.put("name", name);
 
-		synchronized (_projectPrioritizers) {
-			_projectPrioritizers.remove(projectPrioritizer.getId());
-		}
+		return newProjectPrioritizer(jsonObject);
 	}
-
-	private static final Map<Long, ProjectPrioritizer> _projectPrioritizers =
-		Collections.synchronizedMap(new HashMap<>());
 
 }

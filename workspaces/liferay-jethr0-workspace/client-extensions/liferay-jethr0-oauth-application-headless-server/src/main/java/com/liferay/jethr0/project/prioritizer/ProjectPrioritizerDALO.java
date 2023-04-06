@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.jethr0.dalo;
+package com.liferay.jethr0.project.prioritizer;
 
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
+import com.liferay.jethr0.dalo.ProjectPrioritizerToProjectComparatorsDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.project.comparator.ProjectComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,43 +30,35 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerDALO extends BaseDALO {
+public class ProjectPrioritizerDALO extends BaseEntityDALO<ProjectPrioritizer> {
 
-	public ProjectPrioritizer createProjectPrioritizer(String name) {
-		JSONObject requestJSONObject = new JSONObject();
+	@Override
+	public ProjectPrioritizer create(ProjectPrioritizer projectPrioritizer) {
+		projectPrioritizer = super.create(projectPrioritizer);
 
-		requestJSONObject.put("name", name);
+		_projectPrioritizerToProjectComparatorsDALO.updateRelationships(
+			projectPrioritizer);
 
-		JSONObject responseJSONObject = create(requestJSONObject);
-
-		if (responseJSONObject == null) {
-			throw new RuntimeException("No response");
-		}
-
-		return ProjectPrioritizerFactory.newProjectPrioritizer(
-			responseJSONObject);
+		return projectPrioritizer;
 	}
 
-	public void deleteProjectPrioritizer(
-		ProjectPrioritizer projectPrioritizer) {
+	@Override
+	public void delete(ProjectPrioritizer projectPrioritizer) {
+		for (ProjectComparator projectComparator :
+				projectPrioritizer.getProjectComparators()) {
 
-		if (projectPrioritizer == null) {
-			return;
+			_projectPrioritizerToProjectComparatorsDALO.deleteRelationship(
+				projectPrioritizer, projectComparator);
 		}
 
-		delete(projectPrioritizer.getId());
-
-		ProjectPrioritizerFactory.removeProjectPrioritizer(projectPrioritizer);
+		super.delete(projectPrioritizer);
 	}
 
-	public List<ProjectPrioritizer> retrieveProjectPrioritizers() {
+	@Override
+	public List<ProjectPrioritizer> getAll() {
 		List<ProjectPrioritizer> projectPrioritizers = new ArrayList<>();
 
-		for (JSONObject responseJSONObject : retrieve()) {
-			ProjectPrioritizer projectPrioritizer =
-				ProjectPrioritizerFactory.newProjectPrioritizer(
-					responseJSONObject);
-
+		for (ProjectPrioritizer projectPrioritizer : super.getAll()) {
 			projectPrioritizer.addProjectComparators(
 				_projectPrioritizerToProjectComparatorsDALO.
 					retrieveProjectComparators(projectPrioritizer));
@@ -76,18 +69,12 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 		return projectPrioritizers;
 	}
 
-	public ProjectPrioritizer updateProjectPrioritizer(
-		ProjectPrioritizer projectPrioritizer) {
+	@Override
+	public ProjectPrioritizer update(ProjectPrioritizer projectPrioritizer) {
+		projectPrioritizer = super.update(projectPrioritizer);
 
 		_projectPrioritizerToProjectComparatorsDALO.updateRelationships(
 			projectPrioritizer);
-
-		JSONObject responseJSONObject = update(
-			projectPrioritizer.getJSONObject());
-
-		if (responseJSONObject == null) {
-			throw new RuntimeException("No response");
-		}
 
 		return projectPrioritizer;
 	}
@@ -95,6 +82,11 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 	@Override
 	protected String getObjectDefinitionLabel() {
 		return "Project Prioritizer";
+	}
+
+	@Override
+	protected ProjectPrioritizer newEntity(JSONObject jsonObject) {
+		return ProjectPrioritizerFactory.newProjectPrioritizer(jsonObject);
 	}
 
 	@Autowired

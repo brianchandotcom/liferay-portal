@@ -27,6 +27,8 @@ public class ReindexBackgroundTaskConstants {
 
 	public static final String COUNT = "count";
 
+	public static final String EXECUTION_MODE = "executionMode";
+
 	public static final String PHASE = "phase";
 
 	public static final String PORTAL_END = "portalEnd";

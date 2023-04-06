@@ -103,25 +103,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private synchronized boolean _checkIsModifyFile(
-			String fileName, SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		if (_currentBranchFileNames == null) {
-			_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
-				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName(), false);
-		}
-
-		for (String currentBranchFileName : _currentBranchFileNames) {
-			if (fileName.endsWith(currentBranchFileName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _checkMissingReference(String fileName, String content) {
 		String moduleServicePackageName = null;
 
@@ -166,10 +147,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			sourceProcessor.getSourceFormatterArgs();
 
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
-			if (!_checkIsModifyFile(fileName, sourceFormatterArgs)) {
-				return;
-			}
-
 			boolean addReference = false;
 			StringBundler sb = new StringBundler();
 
@@ -701,7 +678,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
-	private List<String> _currentBranchFileNames;
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;

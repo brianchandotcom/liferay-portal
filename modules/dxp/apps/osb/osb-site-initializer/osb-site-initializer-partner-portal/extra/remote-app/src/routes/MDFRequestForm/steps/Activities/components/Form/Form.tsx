@@ -61,10 +61,13 @@ const Form = ({
 	};
 
 	useEffect(() => {
+		const hasLeadGenerated =
+			currentActivity?.activityDescription?.leadGenerated;
+		const isEventActivity =
+			currentActivity?.typeActivity?.key === TypeActivityKey.EVENT;
+
 		const displaySection =
-			currentActivity?.typeActivity?.key === TypeActivityKey.EVENT
-				? 'true'
-				: '';
+			hasLeadGenerated || (isEventActivity ? 'true' : '');
 
 		setFieldValue(
 			`activities[${currentActivityIndex}].activityDescription.leadGenerated`,

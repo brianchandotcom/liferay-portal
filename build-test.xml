@@ -12166,6 +12166,51 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="site.initializer.partner.portal.login.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.partner.portal.login.url=${site.initializer.partner.portal.login.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.partner.portal.consumer.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.partner.portal.consumer.key=${site.initializer.partner.portal.consumer.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.partner.portal.consumer.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.partner.portal.consumer.secret=${site.initializer.partner.portal.consumer.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.partner.portal.username" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.partner.portal.username=${site.initializer.partner.portal.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.partner.portal.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.partner.portal.password=${site.initializer.partner.portal.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="site.initializer.raylife.d2c.paypal.client.id" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

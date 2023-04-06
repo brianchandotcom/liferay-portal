@@ -28,7 +28,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 public class CreatorUtil {
 
 	public static Creator toCreator(
-		Portal portal, DTOConverterContext dtoConverterContext, User user) {
+		DTOConverterContext dtoConverterContext, Portal portal, User user) {
 
 		if ((user == null) || user.isGuestUser()) {
 			return null;

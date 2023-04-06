@@ -16,16 +16,13 @@ package com.liferay.data.engine.rest.internal.content.type;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
-import java.util.TreeMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -51,7 +48,7 @@ public class DataDefinitionContentTypeRegistry {
 		long classNameId) {
 
 		for (DataDefinitionContentType dataDefinitionContentType :
-				_dataDefinitionContentTypesByContentType.values()) {
+				_serviceTrackerMap.values()) {
 
 			if (dataDefinitionContentType.getClassNameId() == classNameId) {
 				return dataDefinitionContentType;
@@ -66,7 +63,7 @@ public class DataDefinitionContentTypeRegistry {
 		throws Exception {
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypesByContentType.get(contentType);
+			_serviceTrackerMap.getService(contentType);
 
 		if (dataDefinitionContentType == null) {
 			throw new DataDefinitionValidationException.MustSetValidContentType(
@@ -76,33 +73,18 @@ public class DataDefinitionContentTypeRegistry {
 		return dataDefinitionContentType;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(content.type=*)"
-	)
-	protected void addDataDefinitionContentType(
-		DataDefinitionContentType dataDefinitionContentType,
-		Map<String, Object> properties) {
-
-		_dataDefinitionContentTypesByContentType.put(
-			(String)properties.get("content.type"), dataDefinitionContentType);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DataDefinitionContentType.class, "content.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dataDefinitionContentTypesByContentType.clear();
+		_serviceTrackerMap.close();
 	}
 
-	protected void removeDataDefinitionContentType(
-		DataDefinitionContentType dataDefinitionContentType,
-		Map<String, Object> properties) {
-
-		_dataDefinitionContentTypesByContentType.remove(
-			(String)properties.get("content.type"));
-	}
-
-	private final Map<String, DataDefinitionContentType>
-		_dataDefinitionContentTypesByContentType = new TreeMap<>();
+	private ServiceTrackerMap<String, DataDefinitionContentType>
+		_serviceTrackerMap;
 
 }

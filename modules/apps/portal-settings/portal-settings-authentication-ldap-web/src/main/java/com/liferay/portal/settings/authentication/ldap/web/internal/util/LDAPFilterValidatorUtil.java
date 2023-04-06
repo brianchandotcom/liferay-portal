@@ -14,28 +14,20 @@
 
 package com.liferay.portal.settings.authentication.ldap.web.internal.util;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(service = {})
 public class LDAPFilterValidatorUtil {
 
 	public static LDAPFilterValidator getLDAPFilterValidator() {
-		return _ldapFilterValidator;
+		return _ldapFilterValidatorSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setLDAPFilterValidator(
-		LDAPFilterValidator ldapFilterValidator) {
-
-		_ldapFilterValidator = ldapFilterValidator;
-	}
-
-	private static LDAPFilterValidator _ldapFilterValidator;
+	private static final Snapshot<LDAPFilterValidator>
+		_ldapFilterValidatorSnapshot = new Snapshot<>(
+			LDAPFilterValidatorUtil.class, LDAPFilterValidator.class);
 
 }

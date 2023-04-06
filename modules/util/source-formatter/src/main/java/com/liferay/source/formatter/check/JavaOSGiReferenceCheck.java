@@ -57,7 +57,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_checkNewReferenceAnnotation(fileName, absolutePath);
+		_checkNewAddedReference(fileName, absolutePath);
 
 		if (!content.contains("@Component")) {
 			return content;
@@ -137,8 +137,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkNewReferenceAnnotation(
-			String fileName, String absolutePath)
+	private void _checkNewAddedReference(String fileName, String absolutePath)
 		throws Exception {
 
 		SourceProcessor sourceProcessor = getSourceProcessor();

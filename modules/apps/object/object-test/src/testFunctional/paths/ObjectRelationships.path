@@ -31,6 +31,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_RELATIONSHIP_DETAILS_HIERARCHY_AND_LABEL</td>
+		<td>//div[contains(@class, 'dnd-td') and contains(., '${key_relationHierarchy}')]//preceding-sibling::div//*[contains(text(), '${key_labelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE</td>
 		<td>//input[@disabled][contains(@class,'form-control') and contains(@value,'${key_relation}')]</td>
 		<td></td>

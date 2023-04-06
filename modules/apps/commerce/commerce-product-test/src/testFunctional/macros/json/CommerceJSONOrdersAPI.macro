@@ -413,9 +413,17 @@ definition {
 			var ordersCount = 100;
 		}
 
+		if (!(isSet(email))) {
+			var email = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders?pageSize=${ordersCount} \
-				-u test@liferay.com:test \
+				-u ${email}:${password} \
 				-H 'accept: application/json' \
 		''';
 
@@ -453,9 +461,17 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(email))) {
+			var email = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
-				-u test@liferay.com:test \
+				-u ${email}:${password} \
 				-H 'accept: application/json' \
 		''';
 

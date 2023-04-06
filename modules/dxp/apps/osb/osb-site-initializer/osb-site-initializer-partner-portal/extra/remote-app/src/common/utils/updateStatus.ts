@@ -24,6 +24,10 @@ const updateStatus = (
 	if (!id && currentRequestStatus) {
 		status = currentRequestStatus;
 	}
+
+	if (!currentRequestStatus && id) {
+		status = Status.PENDING;
+	}
 	else {
 		if (
 			roles &&

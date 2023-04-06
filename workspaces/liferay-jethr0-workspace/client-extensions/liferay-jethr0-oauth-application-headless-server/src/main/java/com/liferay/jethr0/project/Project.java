@@ -74,6 +74,10 @@ public interface Project {
 
 	public void removeTestSuites(List<TestSuite> testSuites);
 
+	public void setCreatedDate(Date createdDate);
+
+	public void setId(long id);
+
 	public void setName(String name);
 
 	public void setPriority(int priority);

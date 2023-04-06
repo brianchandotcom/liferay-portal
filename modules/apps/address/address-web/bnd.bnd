@@ -2,3 +2,4 @@ Bundle-Name: Liferay Address Web
 Bundle-SymbolicName: com.liferay.address.web
 Bundle-Version: 1.0.18
 Web-ContextPath: /address-web
+-dsannotations-options: inherit

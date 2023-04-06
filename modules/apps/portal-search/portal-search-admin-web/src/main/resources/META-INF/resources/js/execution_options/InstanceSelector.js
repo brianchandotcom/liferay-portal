@@ -13,30 +13,25 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayCheckbox, ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import ClaySticker from '@clayui/sticker';
 import ClayToolbar from '@clayui/toolbar';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const DEFAULT_DELTA = 10;
 
-const SCOPES = {
-	ALL: 'all',
-	SELECTED: 'selected',
-};
-
+/**
+ * A paginated list of virtual instances.
+ */
 function InstanceSelector({selected, setSelected, virtualInstances}) {
 	const [activePage, setActivePage] = useState(1);
 	const [currentVirtualInstances, setCurrentVirtualInstances] = useState(
 		virtualInstances
-	);
+	); // The virtual instances currently in view.
 	const [delta, setDelta] = useState(DEFAULT_DELTA);
 	const [searchValue, setSearchValue] = useState('');
 
@@ -95,8 +90,7 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 					)
 				)
 			);
-		}
-		else {
+		} else {
 			setCurrentVirtualInstances(virtualInstances);
 		}
 	}, [virtualInstances, searchValue]);
@@ -281,67 +275,4 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 	);
 }
 
-function ExecutionScope({
-	initialCompanyIds = [],
-	initialScope,
-	portletNamespace,
-	virtualInstances = [],
-}) {
-	const [selected, setSelected] = useState(initialCompanyIds);
-	const [scope, setScope] = useState(initialScope || SCOPES.ALL);
-
-	return (
-		<div className="execution-scope-sheet sheet sheet-lg">
-			<h2 className="sheet-title">
-				<span>{Liferay.Language.get('execution-scope')}</span>
-
-				<ClayTooltipProvider>
-					<ClaySticker
-						data-tooltip-align="bottom-left"
-						displayType="secondary"
-						size="md"
-						title={Liferay.Language.get('execution-scope-help')}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</ClaySticker>
-				</ClayTooltipProvider>
-			</h2>
-
-			<ClayRadioGroup
-				name={`${portletNamespace}scope`}
-				onChange={(newScope) => setScope(newScope)}
-				value={scope}
-			>
-				<ClayRadio
-					label={Liferay.Language.get('all-instances')}
-					value={SCOPES.ALL}
-				/>
-
-				<ClayRadio
-					label={Liferay.Language.get('selected-instances')}
-					value={SCOPES.SELECTED}
-				/>
-			</ClayRadioGroup>
-
-			{scope === SCOPES.SELECTED && (
-				<InstanceSelector
-					selected={selected}
-					setSelected={setSelected}
-					virtualInstances={virtualInstances}
-				/>
-			)}
-
-			<input
-				name={`${portletNamespace}companyIds`}
-				type="hidden"
-				value={
-					scope === SCOPES.ALL
-						? virtualInstances.map(({id}) => id).toString()
-						: selected.toString()
-				}
-			/>
-		</div>
-	);
-}
-
-export default ExecutionScope;
+export default InstanceSelector;

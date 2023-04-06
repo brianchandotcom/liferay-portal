@@ -98,7 +98,7 @@ page import="java.util.Map" %>
 				size="4"
 			>
 				<react:component
-					module="js/ExecutionScope.es"
+					module="js/execution_options/index"
 					props="<%= indexActionsDisplayContext.getData() %>"
 				/>
 			</clay:col>

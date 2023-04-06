@@ -27,9 +27,9 @@ public interface EntityDALO<T extends Entity> {
 
 	public void delete(T entity);
 
-	public List<T> get();
-
 	public T get(long id);
+
+	public List<T> getAll();
 
 	public T update(T entity);
 

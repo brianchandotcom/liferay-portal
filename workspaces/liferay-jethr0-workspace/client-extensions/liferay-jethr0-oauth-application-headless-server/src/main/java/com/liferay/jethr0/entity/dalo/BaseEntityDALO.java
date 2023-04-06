@@ -69,7 +69,20 @@ public abstract class BaseEntityDALO<T extends Entity>
 	}
 
 	@Override
-	public List<T> get() {
+	public T get(long id) {
+		for (T entity : getAll()) {
+			if (!Objects.equals(entity.getId(), id)) {
+				continue;
+			}
+
+			return entity;
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<T> getAll() {
 		List<T> entities = new ArrayList<>();
 
 		for (JSONObject jsonObject : _get()) {
@@ -79,19 +92,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 		}
 
 		return entities;
-	}
-
-	@Override
-	public T get(long id) {
-		for (T entity : get()) {
-			if (!Objects.equals(entity.getId(), id)) {
-				continue;
-			}
-
-			return entity;
-		}
-
-		return null;
 	}
 
 	@Override

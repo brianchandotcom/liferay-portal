@@ -72,10 +72,10 @@ public class ProjectDALO extends BaseEntityDALO<Project> {
 	}
 
 	@Override
-	public List<Project> get() {
+	public List<Project> getAll() {
 		List<Project> projects = new ArrayList<>();
 
-		for (Project project : super.get()) {
+		for (Project project : super.getAll()) {
 			project.addGitBranches(
 				_projectsToGitBranchesDALO.retrieveGitBranches(project));
 			project.addTestSuites(

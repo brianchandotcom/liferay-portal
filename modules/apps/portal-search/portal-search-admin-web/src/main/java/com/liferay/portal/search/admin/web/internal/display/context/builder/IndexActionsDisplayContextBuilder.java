@@ -68,6 +68,8 @@ public class IndexActionsDisplayContextBuilder {
 		return HashMapBuilder.<String, Object>put(
 			"initialCompanyIds", _getInitialCompanyIds()
 		).put(
+			"initialExecutionMode", _getInitialExecutionMode()
+		).put(
 			"initialScope", _getInitialScope()
 		).put(
 			"virtualInstances", _getVirtualInstancesJSONArray()
@@ -77,6 +79,10 @@ public class IndexActionsDisplayContextBuilder {
 	private long[] _getInitialCompanyIds() {
 		return StringUtil.split(
 			ParamUtil.getString(_httpServletRequest, "companyIds"), 0L);
+	}
+
+	private String _getInitialExecutionMode() {
+		return ParamUtil.getString(_httpServletRequest, "executionMode");
 	}
 
 	private String _getInitialScope() {

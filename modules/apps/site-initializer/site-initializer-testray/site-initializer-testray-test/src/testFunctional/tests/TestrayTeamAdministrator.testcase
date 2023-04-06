@@ -160,6 +160,62 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Team the system should return that team"
+	@priority = 4
+	test AdminCanSearchTeam {
+		task ("Given that two team are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = "Team 2");
+		}
+
+		task ("And go to the manage teams") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+		}
+
+		task ("And confirm that there are two teams in the table") {
+			AssertElementPresent(
+				key_projectName = ${teamName},
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Team 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter team 1") {
+			TestrayFilter.clickFilter();
+
+			PortletEntry.inputName(name = ${teamName});
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only team 1 in the table") {
+			AssertElementPresent(
+				key_projectName = ${teamName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the team 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Team 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
 	@priority = 4
 	test AssertThatTheFieldIsRequired {

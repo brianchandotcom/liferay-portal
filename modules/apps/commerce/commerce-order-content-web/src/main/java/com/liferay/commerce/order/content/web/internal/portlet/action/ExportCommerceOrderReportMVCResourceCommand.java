@@ -26,6 +26,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
@@ -157,6 +158,8 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			"externalReferenceCode",
 			(commerceOrder.getExternalReferenceCode() != null) ?
 				commerceOrder.getExternalReferenceCode() : StringPool.BLANK
+		).put(
+			"language", _language
 		).put(
 			"locale", themeDisplay.getLocale()
 		).put(
@@ -296,6 +299,8 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				commerceOrder.getCommerceCurrency(),
 				commerceOrder.getShippingWithTaxAmount(),
 				themeDisplay.getLocale())
+		).put(
+			"siteDefaultLocale", themeDisplay.getSiteDefaultLocale()
 		).put(
 			"subtotalDiscountAmount",
 			_commercePriceFormatter.format(
@@ -458,6 +463,9 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

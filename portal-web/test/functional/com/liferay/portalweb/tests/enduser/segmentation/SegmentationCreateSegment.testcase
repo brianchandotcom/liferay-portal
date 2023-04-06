@@ -1772,8 +1772,6 @@ definition {
 		}
 
 		task ("Add group and assign to the user") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
 			JSONGroup.assignUserToGroup(
 				groupName = "Test Site Name",
 				userEmailAddress = "userea@liferay.com");
@@ -1820,8 +1818,6 @@ definition {
 		}
 
 		task ("Add group and assign to the user") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
 			JSONGroup.assignUserToGroup(
 				groupName = "Test Site Name",
 				userEmailAddress = "userea@liferay.com");
@@ -1918,8 +1914,6 @@ definition {
 		}
 
 		task ("Add group and assign to the user") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
 			JSONGroup.assignUserToGroup(
 				groupName = "Test Site Name",
 				userEmailAddress = "userea@liferay.com");
@@ -3177,8 +3171,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
 			var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 		}
 

@@ -1,0 +1,18 @@
+{
+	"externalReferenceCode": "testoverwrite001",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "ac1421ef-f4ab-f990-e162-57f80aadbee4",
+			"key": "newitem",
+			"name": "newitem",
+			"name_i18n": {
+				"en-US": "newitem"
+			},
+			"type": ""
+		}
+	],
+	"name": "New Picklist",
+	"name_i18n": {
+		"en-US": "New Picklist"
+	}
+}

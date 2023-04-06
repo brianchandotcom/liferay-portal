@@ -310,12 +310,40 @@ definition {
 		}
 	}
 
-	@description = "LPS-167536 - It’s possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"
+	@description = "LPS-167536 - It's possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"
 	@priority = 5
 	test CanOverwritePicklistWhenERCisDuplicated {
+		property custom.properties = "feature.flag.LPS-167536=true";
+		property portal.acceptance = "true";
 
-		// TODO pending implementation
+		task ("Given a picklist with its ERC edited") {
+			JSONObject.addPicklist(
+				externalReferenceCode = "testoverwrite001",
+				picklistName = "Picklist Test");
 
+			Picklist.gotoPicklists();
+
+		}
+
+		task ("When a picklist is imported with the same ERC as an existing picklist") {
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Import Picklist");
+
+			Picklist.selectPicklistImportFile(
+				picklistFileName = "ListType_New_Picklist_44198_20230322182913922",
+				picklistName = "Updated Picklist");
+
+			IFrame.selectTopFrame();
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the existing Picklist is updated") {
+			AssertElementPresent(
+				key_picklistName = "Updated Picklist",
+				locator1 = "Picklist#ASSERT_PICKLIST");
+		}
 	}
 
 }

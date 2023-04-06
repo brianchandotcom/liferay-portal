@@ -219,6 +219,32 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode()
+		throws Exception {
+
+		Sku postSku = skuResource.postProductIdSku(
+			_cProduct.getCProductId(), randomSku());
+
+		String newExternalReferenceCode = RandomTestUtil.randomString();
+
+		Sku putSku =
+			skuResource.
+				putSkuByExternalReferenceCodeChangeExternalReferenceCodeNewExternalReferenceCode(
+					postSku.getExternalReferenceCode(),
+					newExternalReferenceCode);
+
+		assertEquals(postSku, putSku);
+		assertValid(putSku);
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			newExternalReferenceCode);
+
+		assertEquals(putSku, getSku);
+		assertValid(getSku);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"depth", "discontinued", "gtin", "height", "manufacturerPartNumber",

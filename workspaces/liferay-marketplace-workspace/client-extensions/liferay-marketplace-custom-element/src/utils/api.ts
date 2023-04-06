@@ -176,6 +176,16 @@ export async function deleteTrialSKU(skuTrialId: number) {
 	});
 }
 
+export async function getAccountGroup(accountId: number) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}/accountGroups`,
+		{headers, method: 'GET'}
+	);
+	const {items} = await response.json();
+
+	return items as AccountGroup[];
+}
+
 export async function getAccountInfo({accountId}: {accountId: number}) {
 	const response = await fetch(
 		`/o/headless-admin-user/v1.0/accounts/${accountId}`,
@@ -474,7 +484,7 @@ export async function getUserAccountsById() {
 		}
 	);
 
-	return (await response.json()) as UserAccount;
+	return response;
 }
 
 export async function getVocabularies() {

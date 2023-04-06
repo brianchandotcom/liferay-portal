@@ -4,6 +4,7 @@ interface ILiferay {
 	ThemeDisplay: {
 		getCompanyId: () => string;
 		getPathThemeImages: () => string;
+		isSignedIn: () => boolean;
 	};
 	detach: Function;
 	on: Function;
@@ -20,6 +21,9 @@ export const Liferay = window.Liferay || {
 	ThemeDisplay: {
 		getCompanyId: () => '',
 		getPathThemeImages: () => '',
+		isSignedIn: () => {
+			return false;
+		},
 	},
 	detach: (
 		type: keyof WindowEventMap,

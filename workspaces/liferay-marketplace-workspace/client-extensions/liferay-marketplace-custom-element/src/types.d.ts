@@ -12,6 +12,13 @@ type AccountBrief = {
 	name: string;
 };
 
+type AccountGroup = {
+	customFields: {};
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
 type Cart = {
 	accountId: number;
 	cartItems: CartItem[];

@@ -89,8 +89,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			setCurrentUser(currentUser);
 
-			const userAccounts = await getUserAccountsById();
+			const response = await getUserAccountsById();
 
+			const userAccounts = (await response.json()) as UserAccount;
 			let accountId;
 
 			if (userAccounts.accountBriefs.length) {

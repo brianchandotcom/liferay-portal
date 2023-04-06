@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.project.prioritizer;
 
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProjectPrioritizer implements ProjectPrioritizer {
+public abstract class BaseProjectPrioritizer
+	extends BaseEntity implements ProjectPrioritizer {
 
 	@Override
 	public void addProjectComparator(ProjectComparator projectComparator) {
@@ -45,19 +47,10 @@ public abstract class BaseProjectPrioritizer implements ProjectPrioritizer {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put(
-			"id", getId()
-		).put(
-			"name", getName()
-		);
+		jsonObject.put("name", getName());
 
 		return jsonObject;
 	}
@@ -88,11 +81,11 @@ public abstract class BaseProjectPrioritizer implements ProjectPrioritizer {
 	}
 
 	protected BaseProjectPrioritizer(JSONObject jsonObject) {
-		_id = jsonObject.getLong("id");
+		super(jsonObject);
+
 		_name = jsonObject.getString("name");
 	}
 
-	private final long _id;
 	private String _name;
 	private final List<ProjectComparator> _projectComparators =
 		new ArrayList<>();

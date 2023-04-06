@@ -15,14 +15,13 @@
 package com.liferay.jethr0.project;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
-import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -30,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProject implements Project {
+public abstract class BaseProject extends BaseEntity implements Project {
 
 	@Override
 	public void addBuild(Build build) {
@@ -102,32 +101,18 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
-	public Date getCreatedDate() {
-		return _createdDate;
-	}
-
-	@Override
 	public List<GitBranch> getGitBranches() {
 		return _gitBranches;
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		Project.State state = getState();
 		Project.Type type = getType();
 
 		jsonObject.put(
-			"dateCreated", StringUtil.toString(getCreatedDate())
-		).put(
-			"id", getId()
-		).put(
 			"name", getName()
 		).put(
 			"priority", getPriority()
@@ -210,16 +195,6 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
-	public void setCreatedDate(Date createdDate) {
-		_createdDate = createdDate;
-	}
-
-	@Override
-	public void setId(long id) {
-		_id = id;
-	}
-
-	@Override
 	public void setName(String name) {
 		_name = name;
 	}
@@ -240,8 +215,8 @@ public abstract class BaseProject implements Project {
 	}
 
 	protected BaseProject(JSONObject jsonObject) {
-		_createdDate = StringUtil.toDate(jsonObject.optString("dateCreated"));
-		_id = jsonObject.optLong("id");
+		super(jsonObject);
+
 		_name = jsonObject.getString("name");
 		_priority = jsonObject.optInt("priority");
 		_state = State.get(jsonObject.getJSONObject("state"));
@@ -249,9 +224,7 @@ public abstract class BaseProject implements Project {
 	}
 
 	private final List<Build> _builds = new ArrayList<>();
-	private Date _createdDate;
 	private final List<GitBranch> _gitBranches = new ArrayList<>();
-	private long _id;
 	private String _name;
 	private int _priority;
 	private State _state;

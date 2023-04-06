@@ -14,25 +14,20 @@
 
 package com.liferay.jethr0.project.prioritizer;
 
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 
 import java.util.List;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public interface ProjectPrioritizer {
+public interface ProjectPrioritizer extends Entity {
 
 	public void addProjectComparator(ProjectComparator projectComparator);
 
 	public void addProjectComparators(
 		List<ProjectComparator> projectComparators);
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public String getName();
 

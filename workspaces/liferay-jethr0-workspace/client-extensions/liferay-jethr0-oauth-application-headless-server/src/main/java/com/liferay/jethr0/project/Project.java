@@ -15,11 +15,11 @@
 package com.liferay.jethr0.project;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Project {
+public interface Project extends Entity {
 
 	public void addBuild(Build build);
 
@@ -49,13 +49,7 @@ public interface Project {
 
 	public List<Build> getBuilds();
 
-	public Date getCreatedDate();
-
 	public List<GitBranch> getGitBranches();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public String getName();
 
@@ -84,10 +78,6 @@ public interface Project {
 	public void removeTestSuite(TestSuite testSuite);
 
 	public void removeTestSuites(List<TestSuite> testSuites);
-
-	public void setCreatedDate(Date createdDate);
-
-	public void setId(long id);
 
 	public void setName(String name);
 

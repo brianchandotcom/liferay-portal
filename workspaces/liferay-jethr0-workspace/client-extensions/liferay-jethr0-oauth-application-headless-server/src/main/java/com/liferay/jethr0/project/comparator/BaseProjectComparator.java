@@ -14,30 +14,28 @@
 
 package com.liferay.jethr0.project.comparator;
 
+import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+
+import java.util.Comparator;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProjectComparator implements ProjectComparator {
-
-	@Override
-	public long getId() {
-		return _id;
-	}
+public abstract class BaseProjectComparator
+	extends BaseEntity implements Comparator<Project>, ProjectComparator {
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		ProjectComparator.Type type = getType();
 		ProjectPrioritizer projectPrioritizer = getProjectPrioritizer();
 
 		jsonObject.put(
-			"id", getId()
-		).put(
 			"position", getPosition()
 		).put(
 			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
@@ -89,17 +87,17 @@ public abstract class BaseProjectComparator implements ProjectComparator {
 	protected BaseProjectComparator(
 		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 
+		super(jsonObject);
+
 		_projectPrioritizer = projectPrioritizer;
 
 		_projectPrioritizer.addProjectComparator(this);
 
-		_id = jsonObject.getLong("id");
 		_position = jsonObject.getInt("position");
 		_type = Type.get(jsonObject.getJSONObject("type"));
 		_value = jsonObject.optString("value");
 	}
 
-	private final long _id;
 	private int _position;
 	private final ProjectPrioritizer _projectPrioritizer;
 	private final Type _type;

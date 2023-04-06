@@ -15,19 +15,14 @@
 package com.liferay.jethr0.build.parameter;
 
 import com.liferay.jethr0.build.Build;
-
-import org.json.JSONObject;
+import com.liferay.jethr0.entity.Entity;
 
 /**
  * @author Michael Hashimoto
  */
-public interface BuildParameter {
+public interface BuildParameter extends Entity {
 
 	public Build getBuild();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public String getName();
 

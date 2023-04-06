@@ -16,6 +16,7 @@ package com.liferay.jethr0.build;
 
 import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
@@ -34,7 +35,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuild implements Build {
+public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public void addBuildParameter(BuildParameter buildParameter) {
@@ -140,14 +141,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getJSONObject() {
-		State state = getState();
+		JSONObject jsonObject = super.getJSONObject();
 
-		JSONObject jsonObject = new JSONObject();
+		State state = getState();
 
 		jsonObject.put(
 			"buildName", getBuildName()
-		).put(
-			"id", getId()
 		).put(
 			"jobName", getJobName()
 		).put(
@@ -298,10 +297,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected BaseBuild(Project project, JSONObject jsonObject) {
+		super(jsonObject);
+
 		_project = project;
 
 		_buildName = jsonObject.getString("buildName");
-		_id = jsonObject.getLong("id");
 		_jobName = jsonObject.getString("jobName");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
@@ -336,7 +336,6 @@ public abstract class BaseBuild implements Build {
 	private final List<BuildRun> _buildRuns = new ArrayList<>();
 	private final List<Build> _childBuilds = new ArrayList<>();
 	private final List<Environment> _environments = new ArrayList<>();
-	private final long _id;
 	private String _jobName;
 	private final List<Build> _parentBuilds = new ArrayList<>();
 	private final Project _project;

@@ -15,6 +15,7 @@
 package com.liferay.jethr0.build.run;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.Entity;
 
 import java.net.URL;
 
@@ -26,17 +27,13 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface BuildRun {
+public interface BuildRun extends Entity {
 
 	public Build getBuild();
 
 	public URL getBuildURL();
 
 	public long getDuration();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public Result getResult();
 

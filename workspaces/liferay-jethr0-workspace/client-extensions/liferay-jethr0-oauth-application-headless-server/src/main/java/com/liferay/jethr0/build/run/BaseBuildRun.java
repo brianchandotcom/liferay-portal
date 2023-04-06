@@ -15,6 +15,7 @@
 package com.liferay.jethr0.build.run;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRun implements BuildRun {
+public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 
 	@Override
 	public Build getBuild() {
@@ -42,13 +43,8 @@ public abstract class BaseBuildRun implements BuildRun {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		Result result = getResult();
 		State state = getState();
@@ -57,8 +53,6 @@ public abstract class BaseBuildRun implements BuildRun {
 			"buildURL", getBuildURL()
 		).put(
 			"duration", getDuration()
-		).put(
-			"id", getId()
 		).put(
 			"result", result.getJSONObject()
 		).put(
@@ -104,11 +98,12 @@ public abstract class BaseBuildRun implements BuildRun {
 	}
 
 	protected BaseBuildRun(Build build, JSONObject jsonObject) {
+		super(jsonObject);
+
 		_build = build;
 
 		_buildURL = StringUtil.toURL(jsonObject.getString("buildURL"));
 		_duration = jsonObject.getLong("duration");
-		_id = jsonObject.getLong("id");
 		_result = Result.get(jsonObject.getJSONObject("result"));
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
@@ -116,7 +111,6 @@ public abstract class BaseBuildRun implements BuildRun {
 	private final Build _build;
 	private URL _buildURL;
 	private long _duration;
-	private final long _id;
 	private Result _result;
 	private State _state;
 

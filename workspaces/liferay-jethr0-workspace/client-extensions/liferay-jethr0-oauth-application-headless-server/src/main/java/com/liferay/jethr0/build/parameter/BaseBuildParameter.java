@@ -15,13 +15,15 @@
 package com.liferay.jethr0.build.parameter;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.BaseEntity;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildParameter implements BuildParameter {
+public abstract class BaseBuildParameter
+	extends BaseEntity implements BuildParameter {
 
 	@Override
 	public Build getBuild() {
@@ -29,17 +31,10 @@ public abstract class BaseBuildParameter implements BuildParameter {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"id", getId()
-		).put(
 			"name", getName()
 		).put(
 			"value", getValue()
@@ -66,15 +61,15 @@ public abstract class BaseBuildParameter implements BuildParameter {
 	}
 
 	protected BaseBuildParameter(Build build, JSONObject jsonObject) {
+		super(jsonObject);
+
 		_build = build;
 
 		_name = jsonObject.getString("name");
-		_id = jsonObject.getLong("id");
 		_value = jsonObject.getString("value");
 	}
 
 	private final Build _build;
-	private final long _id;
 	private final String _name;
 	private final String _value;
 

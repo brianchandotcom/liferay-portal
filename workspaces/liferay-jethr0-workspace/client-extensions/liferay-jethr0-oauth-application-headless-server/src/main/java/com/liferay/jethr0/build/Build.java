@@ -16,6 +16,7 @@ package com.liferay.jethr0.build;
 
 import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
@@ -29,7 +30,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Build {
+public interface Build extends Entity {
 
 	public void addBuildParameter(BuildParameter buildParameter);
 
@@ -59,11 +60,7 @@ public interface Build {
 
 	public List<Environment> getEnvironments();
 
-	public long getId();
-
 	public String getJobName();
-
-	public JSONObject getJSONObject();
 
 	public int getMaxSlaveCount();
 

@@ -88,7 +88,9 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		protected List<Long> getCompanyIds(Connection connection)
+		protected String getSelectSQL(
+				Connection connection, String foreignTableName,
+				String foreignColumnName)
 			throws SQLException {
 
 			List<Long> companyIds = new ArrayList<>();
@@ -99,21 +101,9 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
-
-					companyIds.add(companyId);
+					companyIds.add(resultSet.getLong(1));
 				}
 			}
-
-			return companyIds;
-		}
-
-		protected String getSelectSQL(
-				Connection connection, String foreignTableName,
-				String foreignColumnName)
-			throws SQLException {
-
-			List<Long> companyIds = getCompanyIds(connection);
 
 			if (companyIds.size() == 1) {
 				return String.valueOf(companyIds.get(0));

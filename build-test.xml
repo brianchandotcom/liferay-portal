@@ -15073,7 +15073,7 @@ mail.send.blacklist=</echo>
 						<equals arg1="${store.migration.test}" arg2="true" />
 					</not>
 					<then>
-						<prepare-azure-store-configuration-configuration />
+						<prepare-azure-store-configuration />
 					</then>
 				</if>
 			</then>

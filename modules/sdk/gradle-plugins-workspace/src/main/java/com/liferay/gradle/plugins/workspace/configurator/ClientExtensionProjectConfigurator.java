@@ -182,8 +182,7 @@ public class ClientExtensionProjectConfigurator
 					String id = entry.getKey();
 
 					if (!Objects.equals(profileName, "default") &&
-						(Objects.equals(id, "assemble") ||
-						 Objects.equals(id, "runtime"))) {
+						Objects.equals(id, "runtime")) {
 
 						return;
 					}
@@ -193,7 +192,7 @@ public class ClientExtensionProjectConfigurator
 
 						_configureAssembleClientExtensionTask(
 							project, assembleClientExtensionTaskProvider,
-							assembleJsonNode);
+							assembleJsonNode, profileName);
 					}
 					else if (Objects.equals(id, "runtime")) {
 						JsonNode runtimeJsonNode = entry.getValue();
@@ -444,58 +443,74 @@ public class ClientExtensionProjectConfigurator
 
 	private void _configureAssembleClientExtensionTask(
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
-		JsonNode assembleJsonNode) {
+		JsonNode assembleJsonNode, String profileName) {
 
-		assembleClientExtensionTaskProvider.configure(
-			copy -> assembleJsonNode.forEach(
-				copyJsonNode -> {
-					JsonNode fromJsonNode = copyJsonNode.get("from");
-					JsonNode fromTaskJsonNode = copyJsonNode.get("fromTask");
-					JsonNode includeJsonNode = copyJsonNode.get("include");
-					JsonNode intoJsonNode = copyJsonNode.get("into");
+		if (assembleJsonNode.isEmpty()) {
+			return;
+		}
 
-					Object fromPath = null;
+		Copy copy = GradleUtil.addTask(
+			project,
+			"assembleClientExtension" + StringUtil.capitalize(profileName),
+			Copy.class);
 
-					if (fromTaskJsonNode != null) {
-						TaskContainer taskContainer = project.getTasks();
+		copy.onlyIf(
+			task -> Objects.equals(
+				profileName,
+				GradleUtil.getProperty(project, "profileName", "default")));
+		copy.into(new File(project.getBuildDir(), CLIENT_EXTENSION_BUILD_DIR));
 
-						fromPath = taskContainer.findByName(
-							fromTaskJsonNode.asText());
-					}
+		assembleJsonNode.forEach(
+			copyJsonNode -> {
+				JsonNode fromJsonNode = copyJsonNode.get("from");
+				JsonNode fromTaskJsonNode = copyJsonNode.get("fromTask");
+				JsonNode includeJsonNode = copyJsonNode.get("include");
+				JsonNode intoJsonNode = copyJsonNode.get("into");
 
-					if ((fromPath == null) && (fromJsonNode != null)) {
-						fromPath = fromJsonNode.asText();
-					}
+				Object fromPath = null;
 
-					copy.from(
-						(fromPath != null) ? fromPath : ".",
-						copySpec -> {
-							if (includeJsonNode instanceof ArrayNode) {
-								ArrayNode arrayNode =
-									(ArrayNode)includeJsonNode;
+				if (fromTaskJsonNode != null) {
+					TaskContainer taskContainer = project.getTasks();
 
-								arrayNode.forEach(
-									include -> copySpec.include(
-										include.asText()));
+					fromPath = taskContainer.findByName(
+						fromTaskJsonNode.asText());
+				}
+
+				if ((fromPath == null) && (fromJsonNode != null)) {
+					fromPath = fromJsonNode.asText();
+				}
+
+				copy.from(
+					(fromPath != null) ? fromPath : ".",
+					copySpec -> {
+						if (includeJsonNode instanceof ArrayNode) {
+							ArrayNode arrayNode = (ArrayNode)includeJsonNode;
+
+							arrayNode.forEach(
+								include -> copySpec.include(include.asText()));
+						}
+						else {
+							if (includeJsonNode != null) {
+								copySpec.include(includeJsonNode.asText());
 							}
 							else {
-								if (includeJsonNode != null) {
-									copySpec.include(includeJsonNode.asText());
-								}
-								else {
-									copySpec.include("**/*");
-								}
+								copySpec.include("**/*");
 							}
+						}
 
-							copySpec.exclude(CLIENT_EXTENSION_BUILD_DIR);
+						copySpec.exclude(CLIENT_EXTENSION_BUILD_DIR);
 
-							if (intoJsonNode != null) {
-								copySpec.into(intoJsonNode.asText());
-							}
+						if (intoJsonNode != null) {
+							copySpec.into(intoJsonNode.asText());
+						}
 
-							copySpec.setIncludeEmptyDirs(false);
-						});
-				}));
+						copySpec.setIncludeEmptyDirs(false);
+					});
+			});
+
+		assembleClientExtensionTaskProvider.configure(
+			assembleClientExtensionTask ->
+				assembleClientExtensionTask.finalizedBy(copy));
 	}
 
 	private Map<String, JsonNode> _configureClientExtensionJsonNodes(

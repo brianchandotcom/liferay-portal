@@ -93,11 +93,6 @@ public abstract class BaseJenkinsMaster
 		_slaveRAM = slaveRAM;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseJenkinsMaster(JSONObject jsonObject) {
 		super(jsonObject);
 

@@ -92,11 +92,6 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 		_state = state;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseBuildRun(Build build, JSONObject jsonObject) {
 		super(jsonObject);
 

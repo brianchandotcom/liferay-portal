@@ -156,11 +156,6 @@ public abstract class BaseEnvironment
 		_task = task;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseEnvironment(JSONObject jsonObject) {
 		super(jsonObject);
 

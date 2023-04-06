@@ -209,11 +209,6 @@ public abstract class BaseProject extends BaseEntity implements Project {
 		_state = state;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseProject(JSONObject jsonObject) {
 		super(jsonObject);
 

@@ -79,11 +79,6 @@ public abstract class BaseProjectComparator
 		_value = value;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseProjectComparator(
 		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 

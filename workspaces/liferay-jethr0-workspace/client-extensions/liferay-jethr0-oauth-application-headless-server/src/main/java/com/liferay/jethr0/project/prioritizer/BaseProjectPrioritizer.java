@@ -75,11 +75,6 @@ public abstract class BaseProjectPrioritizer
 		_name = name;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseProjectPrioritizer(JSONObject jsonObject) {
 		super(jsonObject);
 

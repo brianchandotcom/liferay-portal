@@ -55,11 +55,6 @@ public abstract class BaseBuildParameter
 		return _value;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseBuildParameter(Build build, JSONObject jsonObject) {
 		super(jsonObject);
 

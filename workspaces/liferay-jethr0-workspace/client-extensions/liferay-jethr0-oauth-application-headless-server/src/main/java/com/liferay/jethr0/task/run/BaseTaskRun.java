@@ -67,11 +67,6 @@ public class BaseTaskRun extends BaseEntity implements TaskRun {
 		_result = result;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseTaskRun(Task task, JSONObject jsonObject) {
 		super(jsonObject);
 

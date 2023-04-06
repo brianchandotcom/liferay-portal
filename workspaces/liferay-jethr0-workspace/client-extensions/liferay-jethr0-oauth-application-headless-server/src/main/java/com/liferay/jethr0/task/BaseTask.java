@@ -138,11 +138,6 @@ public class BaseTask extends BaseEntity implements Task {
 		_project = project;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseTask(Build build, JSONObject jsonObject) {
 		super(jsonObject);
 

@@ -78,11 +78,6 @@ public class BaseTestSuite extends BaseEntity implements TestSuite {
 		_name = name;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseTestSuite(JSONObject jsonObject) {
 		super(jsonObject);
 

@@ -155,11 +155,6 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 		_url = url;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(getJSONObject());
-	}
-
 	protected BaseGitBranch(JSONObject jsonObject) {
 		super(jsonObject);
 

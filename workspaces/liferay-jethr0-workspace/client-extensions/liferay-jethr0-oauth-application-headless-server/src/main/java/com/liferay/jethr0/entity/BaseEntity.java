@@ -58,6 +58,11 @@ public abstract class BaseEntity implements Entity {
 		_id = id;
 	}
 
+	@Override
+	public String toString() {
+		return String.valueOf(getJSONObject());
+	}
+
 	protected BaseEntity(JSONObject jsonObject) {
 		_createdDate = StringUtil.toDate(jsonObject.optString("dateCreated"));
 		_id = jsonObject.optLong("id");

@@ -1,5 +1,62 @@
 # Poshi Runner Change Log
 
+## 1.0.420
+
+### Core
+
+* [POSHI-511](https://issues.liferay.com/browse/POSHI-511) - Fix bug with VarMacro Invocation being match incorrectly
+
+### Feature Request
+
+* [LRCI-970](https://issues.liferay.com/browse/LRCI-970) - As a test engineer, it should be simpler to specify which tests run on virtual instances or not
+
+### Gradle
+
+* [POSHI-508](https://issues.liferay.com/browse/POSHI-508) - Add parallel poshi test running capability to poshi gradle plugin
+
+### Other
+
+* [LPS-174314](https://issues.liferay.com/browse/LPS-174314) - [SF] Use passed in var to avoid any possible errors
+* [POSHI-509](https://issues.liferay.com/browse/POSHI-509) - Poshi script was not formatted correctly in com.liferay.poshi.core.elements.PoshiElementFactoryTest
+* [LRCI-3516](https://issues.liferay.com/browse/LRCI-3516) - Add the ability to create a set of Poshi Queries that can be run against a different test base dir name
+* [LRQA-80009](https://issues.liferay.com/browse/LRQA-80009) - Poshi sintax error in testMissingSemicolonMacro
+
+### Prose
+
+* [POSHI-291](https://issues.liferay.com/browse/POSHI-291) - Add compatibility between Poshi Prose and Poshi Script
+
+### Script
+
+* [POSHI-484](https://issues.liferay.com/browse/POSHI-484) - Fix parsing of macros that are then set into a var
+
+### Testing
+
+* [POSHI-501](https://issues.liferay.com/browse/POSHI-501) - Add unit tests for poshi script parser error handling 
+
+### Utils
+
+* [POSHI-489](https://issues.liferay.com/browse/POSHI-489) - AntCommand times out without error when used to start or stop server on certain app servers
+* [POSHI-506](https://issues.liferay.com/browse/POSHI-506) - Client extension tests will need more flexibility to run bash scripts
+
+### Validation
+
+* [POSHI-388](https://issues.liferay.com/browse/POSHI-388) - Validate description tags to contain no elements
+* [POSHI-465](https://issues.liferay.com/browse/POSHI-465) - Add validation for quotes in for loops
+* [POSHI-477](https://issues.liferay.com/browse/POSHI-477) - Give clearer error message when using a function that doesnt exist
+* [POSHI-483](https://issues.liferay.com/browse/POSHI-483) - Add validation for multiline strings in @description property
+* [POSHI-493](https://issues.liferay.com/browse/POSHI-493) - Improve the error messasges from poshi standalone
+* [POSHI-495](https://issues.liferay.com/browse/POSHI-495) - [Poshi Standalone] Error for missing ; is not clear
+* [POSHI-497](https://issues.liferay.com/browse/POSHI-497) - [Poshi Standalone] Default.Open function fails if the URL start with /
+
+### WebDriver
+
+* [POSHI-434](https://issues.liferay.com/browse/POSHI-434) - Support press more special keys
+* [POSHI-475](https://issues.liferay.com/browse/POSHI-475) - Add parallelized Poshi functionality
+* [POSHI-500](https://issues.liferay.com/browse/POSHI-500) - Add method to maximize window size
+* [POSHI-504](https://issues.liferay.com/browse/POSHI-504) - Add getHtmlNodeText into Liferay Selenium
+* [POSHI-507](https://issues.liferay.com/browse/POSHI-507) - Encode URLs when being passed into Open
+* [POSHI-512](https://issues.liferay.com/browse/POSHI-512) - Fix behavior for LiferaySelenium.isTestName 
+
 ## 1.0.405
 
 ### Gradle

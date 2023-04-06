@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.server.admin.web
 Bundle-Version: 5.0.76
 DynamicImport-Package: *
 Web-ContextPath: /server-admin-web
+-dsannotations-options: inherit

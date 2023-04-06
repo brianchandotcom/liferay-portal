@@ -58,106 +58,102 @@ public class ProductVirtualSettingsDTOConverter
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			(Long)dtoConverterContext.getId());
 
-		if (VirtualCPTypeConstants.NAME.equals(
+		if (!VirtualCPTypeConstants.NAME.equals(
 				cpDefinition.getProductTypeName())) {
 
-			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-				_cpDefinitionVirtualSettingService.
-					fetchCPDefinitionVirtualSetting(
-						CPDefinition.class.getName(),
-						cpDefinition.getCPDefinitionId());
-
-			if (cpDefinitionVirtualSetting != null) {
-				return new ProductVirtualSettings() {
-					{
-						activationStatus =
-							cpDefinitionVirtualSetting.getActivationStatus();
-						duration = TimeUnit.MILLISECONDS.toDays(
-							cpDefinitionVirtualSetting.getDuration());
-						maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
-						sampleUrl = cpDefinitionVirtualSetting.getSampleUrl();
-						termsOfUseContent = LanguageUtils.getLanguageIdMap(
-							cpDefinitionVirtualSetting.
-								getTermsOfUseContentMap());
-						termsOfUseRequired =
-							cpDefinitionVirtualSetting.isTermsOfUseRequired();
-						url = cpDefinitionVirtualSetting.getUrl();
-						useSample = cpDefinitionVirtualSetting.isUseSample();
-
-						setActivationStatusInfo(
-							() -> {
-								String activationStatusLabel =
-									CommerceOrderConstants.getOrderStatusLabel(
-										cpDefinitionVirtualSetting.
-											getActivationStatus());
-
-								return new Status() {
-									{
-										code =
-											cpDefinitionVirtualSetting.
-												getActivationStatus();
-										label = activationStatusLabel;
-										label_i18n = _language.get(
-											dtoConverterContext.getLocale(),
-											activationStatusLabel);
-									}
-								};
-							});
-
-						setSampleSrc(
-							() -> {
-								FileEntry fileEntry =
-									cpDefinitionVirtualSetting.
-										getSampleFileEntry();
-
-								if (fileEntry != null) {
-									return _commerceMediaResolver.
-										getDownloadVirtualProductSampleURL(
-											CommerceAccountConstants.
-												ACCOUNT_ID_ADMIN,
-											cpDefinition.getCPDefinitionId(),
-											fileEntry.getFileEntryId());
-								}
-
-								return null;
-							});
-
-						setSrc(
-							() -> {
-								FileEntry fileEntry =
-									cpDefinitionVirtualSetting.getFileEntry();
-
-								if (fileEntry != null) {
-									return _commerceMediaResolver.
-										getDownloadVirtualProductURL(
-											CommerceAccountConstants.
-												ACCOUNT_ID_ADMIN,
-											cpDefinition.getCPDefinitionId(),
-											fileEntry.getFileEntryId());
-								}
-
-								return null;
-							});
-
-						setTermsOfUseJournalArticleId(
-							() -> {
-								JournalArticle termsOfUseJournalArticle =
-									cpDefinitionVirtualSetting.
-										getTermsOfUseJournalArticle();
-
-								if (termsOfUseJournalArticle != null) {
-									return termsOfUseJournalArticle.
-										getResourcePrimKey();
-								}
-
-								return null;
-							});
-					}
-				};
-			}
+			return null;
 		}
 
-		return null;
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			_cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSetting(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+		if (cpDefinitionVirtualSetting == null) {
+			return null;
+		}
+
+		return new ProductVirtualSettings() {
+			{
+				activationStatus =
+					cpDefinitionVirtualSetting.getActivationStatus();
+				duration = TimeUnit.MILLISECONDS.toDays(
+					cpDefinitionVirtualSetting.getDuration());
+				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
+				sampleUrl = cpDefinitionVirtualSetting.getSampleUrl();
+				termsOfUseContent = LanguageUtils.getLanguageIdMap(
+					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
+				termsOfUseRequired =
+					cpDefinitionVirtualSetting.isTermsOfUseRequired();
+				url = cpDefinitionVirtualSetting.getUrl();
+				useSample = cpDefinitionVirtualSetting.isUseSample();
+
+				setActivationStatusInfo(
+					() -> {
+						String activationStatusLabel =
+							CommerceOrderConstants.getOrderStatusLabel(
+								cpDefinitionVirtualSetting.
+									getActivationStatus());
+
+						return new Status() {
+							{
+								code =
+									cpDefinitionVirtualSetting.
+										getActivationStatus();
+								label = activationStatusLabel;
+								label_i18n = _language.get(
+									dtoConverterContext.getLocale(),
+									activationStatusLabel);
+							}
+						};
+					});
+
+				setSampleSrc(
+					() -> {
+						FileEntry fileEntry =
+							cpDefinitionVirtualSetting.getSampleFileEntry();
+
+						if (fileEntry != null) {
+							return _commerceMediaResolver.
+								getDownloadVirtualProductSampleURL(
+									CommerceAccountConstants.ACCOUNT_ID_ADMIN,
+									cpDefinition.getCPDefinitionId(),
+									fileEntry.getFileEntryId());
+						}
+
+						return null;
+					});
+
+				setSrc(
+					() -> {
+						FileEntry fileEntry =
+							cpDefinitionVirtualSetting.getFileEntry();
+
+						if (fileEntry != null) {
+							return _commerceMediaResolver.
+								getDownloadVirtualProductURL(
+									CommerceAccountConstants.ACCOUNT_ID_ADMIN,
+									cpDefinition.getCPDefinitionId(),
+									fileEntry.getFileEntryId());
+						}
+
+						return null;
+					});
+
+				setTermsOfUseJournalArticleId(
+					() -> {
+						JournalArticle termsOfUseJournalArticle =
+							cpDefinitionVirtualSetting.
+								getTermsOfUseJournalArticle();
+
+						if (termsOfUseJournalArticle != null) {
+							return termsOfUseJournalArticle.
+								getResourcePrimKey();
+						}
+
+						return null;
+					});
+			}
+		};
 	}
 
 	@Reference

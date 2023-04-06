@@ -84,6 +84,12 @@ public class SlaveOfflineRule {
 				Matcher matcher = consolePattern.matcher(line);
 
 				if (matcher.find()) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Build ", build.getBuildURL(), " matched with",
+							"slave offline rule ", getName(),
+							".\nMatching console log line:\n", line));
+
 					return true;
 				}
 			}

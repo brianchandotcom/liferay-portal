@@ -190,8 +190,9 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 			script = script.replace(
 				"${offline.status}", String.valueOf(offlineStatus));
 
-			JenkinsResultsParserUtil.executeJenkinsScript(
-				_jenkinsMaster.getName(), script);
+			System.out.println(
+				JenkinsResultsParserUtil.executeJenkinsScript(
+					_jenkinsMaster.getName(), script));
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to set the status for slaves: " + _name);

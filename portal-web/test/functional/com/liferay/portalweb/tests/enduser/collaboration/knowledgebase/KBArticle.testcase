@@ -314,8 +314,6 @@ definition {
 	@description = "This test ensures that users can delete article in the table view."
 	@priority = 5
 	test CanDeleteArticleInTableView {
-		property custom.properties = "feature.flag.LPS-169675=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -335,8 +333,6 @@ definition {
 	@description = "This test ensures that users can edit article in the table view."
 	@priority = 5
 	test CanEditArticleInTableView {
-		property custom.properties = "feature.flag.LPS-169675=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

@@ -211,8 +211,6 @@ definition {
 	@description = "This test ensures that users can view article in the table view."
 	@priority = 5
 	test CanViewArticleInTableView {
-		property custom.properties = "feature.flag.LPS-169675=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -246,8 +244,6 @@ definition {
 	@description = "This test ensures that users can view folder in the table view."
 	@priority = 5
 	test CanViewFolderInTableView {
-		property custom.properties = "feature.flag.LPS-169675=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",

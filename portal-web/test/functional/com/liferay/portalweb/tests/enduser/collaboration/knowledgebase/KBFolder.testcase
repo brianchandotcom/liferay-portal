@@ -242,8 +242,6 @@ definition {
 	@description = "This test ensures that users can delete folder in the table view."
 	@priority = 5
 	test CanDeleteFolderInTableView {
-		property custom.properties = "feature.flag.LPS-169675=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -302,8 +300,6 @@ definition {
 	@description = "This test ensures that users can edit folder in the table view."
 	@priority = 5
 	test CanEditFolderInTableView {
-		property custom.properties = "feature.flag.LPS-169675=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",

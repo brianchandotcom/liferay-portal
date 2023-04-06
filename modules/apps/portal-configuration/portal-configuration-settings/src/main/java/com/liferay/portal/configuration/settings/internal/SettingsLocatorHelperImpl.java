@@ -111,15 +111,11 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getConfigurationBeanSettings(String configurationPid) {
-		Class<?> configurationBeanClass = _configurationBeanClasses.get(
-			configurationPid);
-
-		if (configurationBeanClass == null) {
-			return _portalPropertiesSettings;
-		}
+		configurationPid = _configurationPidMappings.getOrDefault(
+			configurationPid, configurationPid);
 
 		Settings configurationBeanSettings = _configurationBeanSettings.get(
-			configurationBeanClass);
+			configurationPid);
 
 		if (configurationBeanSettings == null) {
 			return _portalPropertiesSettings;
@@ -266,7 +262,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		String configurationPid = ConfigurationPidUtil.getConfigurationPid(
 			configurationBeanClass);
 
-		if (_configurationBeanClasses.containsKey(configurationPid)) {
+		if (_configurationBeanSettings.containsKey(configurationPid)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skipping registration for class because it is already " +
@@ -286,7 +282,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			new ConfigurationBeanManagedService(
 				_bundleContext, configurationBeanClass,
 				configurationBean -> _configurationBeanSettings.put(
-					configurationBeanClass,
+					configurationPid,
 					new ConfigurationBeanSettings(
 						locationVariableResolver, configurationBean,
 						_portalPropertiesSettings)));
@@ -311,10 +307,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 					configurationBeanClass.getName());
 		}
 
-		_configurationBeanClasses.put(
-			configurationBeanManagedService.getConfigurationPid(),
-			configurationBeanClass);
-
 		_settingsFactoryImpl.registerConfigurationBeanClass(
 			configurationBeanClass);
 
@@ -322,13 +314,13 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			_settingsFactoryImpl.unregisterConfigurationBeanClass(
 				configurationBeanClass);
 
-			_configurationBeanClasses.remove(configurationPid);
+			_configurationPidMappings.remove(configurationPid);
 
 			_scopedConfigurationManagedServiceFactories.remove(
 				configurationPid);
 			scopedConfigurationManagedServiceFactory.unregister();
 
-			_configurationBeanSettings.remove(configurationBeanClass);
+			_configurationBeanSettings.remove(configurationPid);
 			configurationBeanManagedService.unregister();
 		};
 	}
@@ -451,9 +443,10 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	protected void setConfigurationPidMapping(
 		ConfigurationPidMapping configurationPidMapping) {
 
-		_configurationBeanClasses.put(
+		_configurationPidMappings.put(
 			configurationPidMapping.getConfigurationPid(),
-			configurationPidMapping.getConfigurationBeanClass());
+			ConfigurationPidUtil.getConfigurationPid(
+				configurationPidMapping.getConfigurationBeanClass()));
 	}
 
 	@Reference(unbind = "-")
@@ -504,7 +497,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	protected void unsetConfigurationPidMapping(
 		ConfigurationPidMapping configurationPidMapping) {
 
-		_configurationBeanClasses.remove(
+		_configurationPidMappings.remove(
 			configurationPidMapping.getConfigurationPid());
 	}
 
@@ -540,9 +533,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	private BundleContext _bundleContext;
 	private BundleTracker<List<SafeCloseable>> _bundleTracker;
-	private final ConcurrentMap<String, Class<?>> _configurationBeanClasses =
+	private final Map<String, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
-	private final Map<Class<?>, Settings> _configurationBeanSettings =
+	private final ConcurrentMap<String, String> _configurationPidMappings =
 		new ConcurrentHashMap<>();
 
 	@Reference

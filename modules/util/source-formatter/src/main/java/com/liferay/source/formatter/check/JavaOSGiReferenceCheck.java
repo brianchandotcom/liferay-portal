@@ -57,8 +57,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_checkNewAddedReference(fileName, absolutePath);
-
 		if (!content.contains("@Component")) {
 			return content;
 		}
@@ -70,6 +68,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 
 		_checkMissingReference(fileName, content);
+		_checkNewAddedReference(fileName, absolutePath);
 
 		String moduleSuperClassContent = _getModuleSuperClassContent(
 			content, JavaSourceUtil.getClassName(fileName), packageName);

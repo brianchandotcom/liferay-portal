@@ -140,7 +140,14 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			const accountPublisher = accounts?.items.find(
 				({customFields}: AccountBrief) => {
-					return customFields?.CatalogID == catalogID;
+					const catalogIDField = customFields.find(
+						(customField: {
+							customValue: {data: string};
+							name: string;
+						}) => customField.name === 'CatalogID'
+					);
+
+					return catalogIDField.customValue.data == catalogID;
 				}
 			);
 

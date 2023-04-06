@@ -112,14 +112,6 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 			});
 
-		String absolutePath = rootDir.getAbsolutePath();
-
-		if (File.separatorChar == '\\') {
-			absolutePath = absolutePath.replace('\\', '/');
-		}
-
-		String rootAbsolutePath = absolutePath;
-
 		Path rootDirPath = rootDir.toPath();
 
 		FileSystem fileSystem = rootDirPath.getFileSystem();
@@ -136,13 +128,14 @@ public class WorkspacePlugin implements Plugin<Settings> {
 					return;
 				}
 
-				Path path = projectDir.toPath();
+				Path relativeProjectPath = rootDirPath.relativize(
+					projectDir.toPath());
 
 				for (String glob : workspaceExtension.getDirExcludesGlobs()) {
 					PathMatcher pathMatcher = fileSystem.getPathMatcher(
-						"glob:" + rootAbsolutePath + '/' + glob);
+						"glob:" + glob);
 
-					if (!pathMatcher.matches(path)) {
+					if (!pathMatcher.matches(relativeProjectPath)) {
 						continue;
 					}
 

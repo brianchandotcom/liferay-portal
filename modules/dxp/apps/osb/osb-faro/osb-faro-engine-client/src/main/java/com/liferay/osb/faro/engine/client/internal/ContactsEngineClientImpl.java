@@ -2201,7 +2201,8 @@ public class ContactsEngineClientImpl
 		filterBuilder.addFilter(
 			"name", FilterConstants.STRING_FUNCTION_CONTAINS, query);
 		filterBuilder.addFilter(
-			"ownerId", FilterConstants.COMPARISON_OPERATOR_EQUALS, ownerId);
+			"individualId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+			ownerId);
 		filterBuilder.addFilter(
 			"ownerType", FilterConstants.COMPARISON_OPERATOR_EQUALS, ownerType);
 

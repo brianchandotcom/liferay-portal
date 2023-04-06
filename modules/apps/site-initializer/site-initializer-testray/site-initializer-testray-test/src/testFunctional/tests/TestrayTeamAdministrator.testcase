@@ -160,6 +160,42 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Team that does not exist the system should not return that team"
+	@priority = 3
+	test AdminCanNotSearchTeamNonExistent {
+		task ("Given that two team are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
+		}
+
+		task ("And go to the manage teams") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+		}
+
+		task ("When the user search team non existent") {
+			TestrayFilter.clickFilter();
+
+			PortletEntry.inputName(name = "Team 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then not see the team 3 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Team 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Team the system should return that team"
 	@priority = 4
 	test AdminCanSearchTeam {

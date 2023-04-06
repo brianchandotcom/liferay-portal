@@ -2,3 +2,4 @@ Bundle-Name: Liferay Commerce Inventory Web
 Bundle-SymbolicName: com.liferay.commerce.inventory.web
 Bundle-Version: 4.0.39
 Web-ContextPath: /commerce-inventory-web
+-dsannotations-options: inherit

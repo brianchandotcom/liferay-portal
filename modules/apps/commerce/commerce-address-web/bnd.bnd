@@ -2,3 +2,4 @@ Bundle-Name: Liferay Commerce Address Web
 Bundle-SymbolicName: com.liferay.commerce.address.web
 Bundle-Version: 4.0.45
 Web-ContextPath: /commerce-address-web
+-dsannotations-options: inherit

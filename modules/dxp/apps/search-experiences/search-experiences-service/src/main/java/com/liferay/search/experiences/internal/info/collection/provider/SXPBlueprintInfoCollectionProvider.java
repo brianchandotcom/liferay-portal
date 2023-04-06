@@ -15,8 +15,7 @@
 package com.liferay.search.experiences.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
@@ -41,9 +40,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -51,7 +47,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -188,7 +183,8 @@ public class SXPBlueprintInfoCollectionProvider
 						searchRequestBuilder.build());
 
 					return InfoPage.of(
-						_getAssetEntries(searchResponse.getSearchHits()));
+						_assetHelper.getAssetEntries(
+							searchResponse.getSearchHits()));
 				}
 			}
 		}
@@ -239,44 +235,13 @@ public class SXPBlueprintInfoCollectionProvider
 		return FeatureFlagManagerUtil.isEnabled("LPS-129412");
 	}
 
-	@Reference
-	protected AssetEntryService assetEntryService;
-
-	// TODO Revisit and maybe implement differently?
-
-	private List<AssetEntry> _getAssetEntries(SearchHits searchHits) {
-		List<AssetEntry> assetEntries = new ArrayList<>();
-
-		List<SearchHit> searchHitList = searchHits.getSearchHits();
-
-		for (SearchHit searchHit : searchHitList) {
-			Document document = searchHit.getDocument();
-
-			String className = document.getString("entryClassName");
-
-			long classPK = document.getLong("entryClassPK");
-
-			try {
-				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-					className, classPK);
-
-				assetEntries.add(assetEntry);
-			}
-			catch (Exception exception) {
-				_log.error("Unable to get asset entry", exception);
-			}
-		}
-
-		return assetEntries;
-	}
-
 	// TODO Add more logging
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintInfoCollectionProvider.class);
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private Language _language;

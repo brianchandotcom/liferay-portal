@@ -13,15 +13,19 @@ const ROLE = {
 	ADMINISTRATOR: 'Administrator',
 	EVP_MANAGER: 'EVP Manager',
 	FINANCE_USER: 'Finance User',
+	POWER_USER: 'Power User',
 };
 
 const userRoles = document.querySelector('.userRoles').value;
 const fieldEVPRequestsListing = document.querySelector('.EVPRequestsListing');
 
 if (
-	![ROLE.EVP_MANAGER, ROLE.FINANCE_USER, ROLE.ADMINISTRATOR].includes(
-		userRoles
-	)
+	![
+		ROLE.EVP_MANAGER,
+		ROLE.FINANCE_USER,
+		ROLE.ADMINISTRATOR,
+		ROLE.POWER_USER,
+	].includes(userRoles)
 ) {
-	fieldEVPRequestsListing.style.display = 'none';
+	fieldEVPRequestsListing.hidden = true;
 }

@@ -1061,7 +1061,9 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	@Test
-	public void testDeleteRelatedObjectEntryPermission() throws Exception {
+	public void testDeleteObjectEntryForAllObjectRelationshipDeletionTypes()
+		throws Exception {
+
 		ObjectDefinition objectDefinition1 = _createObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(

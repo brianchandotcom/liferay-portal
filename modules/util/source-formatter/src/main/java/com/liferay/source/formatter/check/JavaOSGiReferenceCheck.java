@@ -184,8 +184,11 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				if (matcher.find()) {
 					addMessage(
 						fileName,
-						"Do not use annotation @Reference on method " +
-							matcher.group(2));
+						StringBundler.concat(
+							"Do not use @Reference on method ",
+							matcher.group(2),
+							", use @Reference on field or ServiceTracker",
+							"/ServiceTrackerList/ServiceTrackerMap instead"));
 				}
 			}
 		}

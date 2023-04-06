@@ -1481,6 +1481,71 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-5312. Can view a product's subscription information on Speedwell's Product Detail page"
+	@priority = 3
+	test CanAssertSpeedwellProductSubscriptionInformation {
+		property portal.acceptance = "false";
+
+		task ("Given a Speedwell site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+		}
+
+		task ("And a user is created") {
+			JSONUser.addUser(
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Speedwell",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And a product with subscription configurations enabled") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+			CommerceProducts.configureSubscription(
+				subscriptionLength = 5,
+				subscriptionMode = "Order Date",
+				subscriptionName = "Delivery Subscription",
+				subscriptionType = "Month");
+
+			CommerceProducts.configureSubscription(
+				subscriptionLength = 5,
+				subscriptionMode = "Order Date",
+				subscriptionName = "Payment Subscription",
+				subscriptionType = "Year");
+		}
+
+		task ("When the user navigates to Speedwell -> U-Joint") {
+			User.logoutPG();
+
+			CommerceLogin.speedwellLogin(
+				password = "test",
+				urlAppend = "web/speedwell",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell/p/u-joint");
+		}
+
+		task ("Then the user can see the product's subscription information in the Detail page") {
+			FrontStore.assertProductDetails(
+				deliverySubscriptionPeriod = "Every 5 Month",
+				paymentSubscriptionPeriod = "Every 5 Year",
+				productName = "U-Joint");
+		}
+	}
+
 	@description = "COMMERCE-9675. Users can view and download a product's attachments"
 	@priority = 3
 	test CanDownloadProductAttachments {

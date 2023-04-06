@@ -1,0 +1,109 @@
+.gallery-container {
+	.image-container {
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.7;
+			cursor: zoom-in;
+		}
+	}
+
+	.image {
+		max-width: 100%;
+		object-fit: cover;
+	}
+
+	.modal {
+		top: 0;
+		left: 0;
+		z-index: 2;
+	}
+
+	.modal-overlay {
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1;
+	}
+
+	.modal-content {
+		width: 90%;
+		height: 80%;
+		max-width: 1200px;
+		max-height: 800px;
+		z-index: 2;
+	}
+
+	.modal-close {
+		cursor: pointer;
+		z-index: 1;
+	}
+
+	.modal-prev,
+	.modal-next {
+		top: 50%;
+		transform: translateY(-50%);
+		cursor: pointer;
+		z-index: 1;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	.button-unable {
+		opacity: 0.4;
+
+		&:hover {
+			background: none;
+			cursor: not-allowed;
+		}
+	}
+
+	.modal-prev {
+		left: 10px;
+	}
+
+	.modal-next {
+		right: 10px;
+	}
+
+	.modal-carousel-container {
+		img {
+			width: 450px !important;
+			height: 450px !important;
+		}
+
+		.slide {
+			top: 0;
+			left: 0;
+			transition: all 0.3s ease-out;
+
+			.active {
+				transform: scale(1);
+			}
+		}
+
+		.slide img {
+			object-fit: contain;
+		}
+	}
+
+	.gallery-modal-preview-bar {
+		.item {
+			cursor: pointer;
+		}
+
+		.active {
+			border: 2px solid rgb(69, 69, 233);
+		}
+
+		.item img {
+			width: 105px;
+			height: 99px;
+			object-fit: cover;
+			border: 3px solid white;
+			transition: all 0.3s ease-out;
+		}
+	}
+}

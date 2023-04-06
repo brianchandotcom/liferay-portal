@@ -1,5 +1,5 @@
 import ActivitiesWithData from 'contacts/pages/account/Activities';
-import BaseCard from 'cerebro-shared/components/base-card';
+import BaseCard from 'shared/components/base-card';
 import React from 'react';
 import {Account} from 'shared/util/records';
 

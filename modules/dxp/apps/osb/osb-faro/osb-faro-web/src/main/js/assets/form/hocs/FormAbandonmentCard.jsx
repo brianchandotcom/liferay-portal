@@ -1,4 +1,4 @@
-import BaseCard from 'cerebro-shared/components/base-card';
+import BaseCard from 'shared/components/base-card';
 import Card from 'shared/components/Card';
 import FormMetricsQuery from 'shared/queries/FormMetricsQuery';
 import HTMLBarChart from 'shared/components/HTMLBarChart';

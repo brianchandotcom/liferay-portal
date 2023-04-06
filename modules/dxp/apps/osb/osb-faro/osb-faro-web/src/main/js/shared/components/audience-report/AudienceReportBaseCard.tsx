@@ -1,5 +1,5 @@
 import AudienceReport from './AudienceReport';
-import BaseCard from 'cerebro-shared/components/base-card';
+import BaseCard from 'shared/components/base-card';
 import Card from '../Card';
 import React from 'react';
 import {AssetAudienceReportQuery, PageAudienceReportQuery} from './queries';

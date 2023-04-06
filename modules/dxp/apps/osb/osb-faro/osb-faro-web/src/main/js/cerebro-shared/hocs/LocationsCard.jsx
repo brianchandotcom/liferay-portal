@@ -1,4 +1,4 @@
-import BaseCard from 'cerebro-shared/components/base-card';
+import BaseCard from 'shared/components/base-card';
 import Card from 'shared/components/Card';
 import GeoMap from 'shared/components/geo-map/GeoMapCard';
 import React from 'react';

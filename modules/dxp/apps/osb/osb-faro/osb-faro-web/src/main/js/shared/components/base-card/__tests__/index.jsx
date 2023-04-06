@@ -1,4 +1,4 @@
-import BaseCard from '../';
+import BaseCard from '..';
 import BasePage from 'shared/components/base-page';
 import client from 'shared/apollo/client';
 import React from 'react';

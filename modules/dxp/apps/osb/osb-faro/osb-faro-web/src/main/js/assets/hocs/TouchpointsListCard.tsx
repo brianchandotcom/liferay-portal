@@ -1,5 +1,5 @@
 import AssetsTouchpointQuery from 'shared/queries/AssetsTouchpointQuery';
-import BaseCard from 'cerebro-shared/components/base-card';
+import BaseCard from 'shared/components/base-card';
 import React from 'react';
 import TouchpointsListCard from 'assets/components/TouchpointsListCard';
 import URLConstants from 'shared/util/url-constants';

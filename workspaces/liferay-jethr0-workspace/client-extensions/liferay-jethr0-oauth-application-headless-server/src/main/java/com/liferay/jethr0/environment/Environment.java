@@ -15,6 +15,7 @@
 package com.liferay.jethr0.environment;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.task.Task;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Environment {
+public interface Environment extends Entity {
 
 	public String getAppServer();
 
@@ -37,11 +38,7 @@ public interface Environment {
 
 	public String getDatabase();
 
-	public long getId();
-
 	public String getJavaVersion();
-
-	public JSONObject getJSONObject();
 
 	public LiferayBundle getLiferayBundle();
 

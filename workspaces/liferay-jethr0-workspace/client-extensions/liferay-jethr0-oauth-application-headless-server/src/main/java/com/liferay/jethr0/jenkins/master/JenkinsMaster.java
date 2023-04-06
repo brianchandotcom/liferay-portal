@@ -15,19 +15,14 @@
 package com.liferay.jethr0.jenkins.master;
 
 import com.liferay.jethr0.build.Build;
-
-import org.json.JSONObject;
+import com.liferay.jethr0.entity.Entity;
 
 /**
  * @author Michael Hashimoto
  */
-public interface JenkinsMaster {
+public interface JenkinsMaster extends Entity {
 
 	public boolean getGoodBattery();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public String getName();
 

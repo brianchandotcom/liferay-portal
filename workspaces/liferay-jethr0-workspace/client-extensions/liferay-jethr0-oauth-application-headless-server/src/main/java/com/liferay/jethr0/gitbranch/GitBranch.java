@@ -14,18 +14,17 @@
 
 package com.liferay.jethr0.gitbranch;
 
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.project.Project;
 
 import java.net.URL;
 
 import java.util.List;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public interface GitBranch {
+public interface GitBranch extends Entity {
 
 	public void addProject(Project project);
 
@@ -34,10 +33,6 @@ public interface GitBranch {
 	public String getBranchName();
 
 	public String getBranchSHA();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public List<Project> getProjects();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.environment;
 
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.task.Task;
 
@@ -22,7 +23,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseEnvironment implements Environment {
+public abstract class BaseEnvironment
+	extends BaseEntity implements Environment {
 
 	@Override
 	public String getAppServer() {
@@ -50,18 +52,13 @@ public abstract class BaseEnvironment implements Environment {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public String getJavaVersion() {
 		return _javaVersion;
 	}
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		LiferayBundle liferayBundle = getLiferayBundle();
 		LiferayPortalBranch liferayPortalBranch = getLiferayPortalBranch();
@@ -74,8 +71,6 @@ public abstract class BaseEnvironment implements Environment {
 			"browser", getBrowser()
 		).put(
 			"database", getDatabase()
-		).put(
-			"id", getId()
 		).put(
 			"javaVersion", getJavaVersion()
 		).put(
@@ -167,11 +162,12 @@ public abstract class BaseEnvironment implements Environment {
 	}
 
 	protected BaseEnvironment(JSONObject jsonObject) {
+		super(jsonObject);
+
 		_appServer = jsonObject.getString("appServer");
 		_batchName = jsonObject.getString("batchName");
 		_browser = jsonObject.getString("browser");
 		_database = jsonObject.getString("database");
-		_id = jsonObject.getLong("id");
 		_javaVersion = jsonObject.getString("operatingSystem");
 		_liferayBundle = LiferayBundle.get(
 			jsonObject.getJSONObject("liferayBundle"));
@@ -185,7 +181,6 @@ public abstract class BaseEnvironment implements Environment {
 	private String _browser;
 	private Build _build;
 	private String _database;
-	private final long _id;
 	private String _javaVersion;
 	private LiferayBundle _liferayBundle;
 	private LiferayPortalBranch _liferayPortalBranch;

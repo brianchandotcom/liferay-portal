@@ -14,24 +14,19 @@
 
 package com.liferay.jethr0.testsuite;
 
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.project.Project;
 
 import java.util.List;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public interface TestSuite {
+public interface TestSuite extends Entity {
 
 	public void addProject(Project project);
 
 	public void addProjects(List<Project> projects);
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public String getName();
 

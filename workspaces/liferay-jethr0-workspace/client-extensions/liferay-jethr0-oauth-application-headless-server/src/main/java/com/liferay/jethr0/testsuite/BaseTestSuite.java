@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.testsuite;
 
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.project.Project;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseTestSuite implements TestSuite {
+public class BaseTestSuite extends BaseEntity implements TestSuite {
 
 	@Override
 	public void addProject(Project project) {
@@ -44,19 +45,10 @@ public class BaseTestSuite implements TestSuite {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put(
-			"id", getId()
-		).put(
-			"name", getName()
-		);
+		jsonObject.put("name", getName());
 
 		return jsonObject;
 	}
@@ -92,11 +84,11 @@ public class BaseTestSuite implements TestSuite {
 	}
 
 	protected BaseTestSuite(JSONObject jsonObject) {
-		_id = jsonObject.getLong("id");
+		super(jsonObject);
+
 		_name = jsonObject.getString("name");
 	}
 
-	private final long _id;
 	private String _name;
 	private final List<Project> _projects = new ArrayList<>();
 

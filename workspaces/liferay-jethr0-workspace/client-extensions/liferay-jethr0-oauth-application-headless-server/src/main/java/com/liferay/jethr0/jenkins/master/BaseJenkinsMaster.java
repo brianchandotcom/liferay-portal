@@ -15,13 +15,15 @@
 package com.liferay.jethr0.jenkins.master;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.BaseEntity;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseJenkinsMaster implements JenkinsMaster {
+public abstract class BaseJenkinsMaster
+	extends BaseEntity implements JenkinsMaster {
 
 	@Override
 	public boolean getGoodBattery() {
@@ -29,18 +31,11 @@ public abstract class BaseJenkinsMaster implements JenkinsMaster {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
 			"goodBattery", getGoodBattery()
-		).put(
-			"id", getId()
 		).put(
 			"name", getName()
 		).put(
@@ -104,7 +99,7 @@ public abstract class BaseJenkinsMaster implements JenkinsMaster {
 	}
 
 	protected BaseJenkinsMaster(JSONObject jsonObject) {
-		_id = jsonObject.getLong("id");
+		super(jsonObject);
 
 		_goodBattery = jsonObject.getBoolean("goodBattery");
 		_name = jsonObject.getString("name");
@@ -137,7 +132,6 @@ public abstract class BaseJenkinsMaster implements JenkinsMaster {
 	}
 
 	private boolean _goodBattery;
-	private final long _id;
 	private String _name;
 	private int _slaveCount;
 	private int _slaveRAM;

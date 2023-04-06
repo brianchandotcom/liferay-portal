@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.gitbranch;
 
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseGitBranch implements GitBranch {
+public class BaseGitBranch extends BaseEntity implements GitBranch {
 
 	@Override
 	public void addProject(Project project) {
@@ -57,20 +58,13 @@ public class BaseGitBranch implements GitBranch {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
 			"branchName", getBranchName()
 		).put(
 			"branchSHA", getBranchSHA()
-		).put(
-			"id", getId()
 		).put(
 			"rebased", getRebased()
 		).put(
@@ -167,7 +161,7 @@ public class BaseGitBranch implements GitBranch {
 	}
 
 	protected BaseGitBranch(JSONObject jsonObject) {
-		_id = jsonObject.getLong("id");
+		super(jsonObject);
 
 		_branchName = jsonObject.getString("branchName");
 		_branchSHA = jsonObject.getString("branchSHA");
@@ -180,7 +174,6 @@ public class BaseGitBranch implements GitBranch {
 
 	private String _branchName;
 	private String _branchSHA;
-	private final long _id;
 	private final List<Project> _projects = new ArrayList<>();
 	private boolean _rebased;
 	private String _repositoryName;

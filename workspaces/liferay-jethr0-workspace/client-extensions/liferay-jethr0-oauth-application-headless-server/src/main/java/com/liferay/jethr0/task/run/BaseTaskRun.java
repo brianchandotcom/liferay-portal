@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.task.run;
 
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.task.Task;
 
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseTaskRun implements TaskRun {
+public class BaseTaskRun extends BaseEntity implements TaskRun {
 
 	@Override
 	public long getDuration() {
@@ -29,21 +30,14 @@ public class BaseTaskRun implements TaskRun {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
 		Result result = getResult();
 		Task task = getTask();
 
-		JSONObject jsonObject = new JSONObject();
-
 		jsonObject.put(
 			"duration", getDuration()
-		).put(
-			"id", getId()
 		).put(
 			"r_taskToTaskRuns_c_taskId", task.getId()
 		).put(
@@ -79,15 +73,15 @@ public class BaseTaskRun implements TaskRun {
 	}
 
 	protected BaseTaskRun(Task task, JSONObject jsonObject) {
+		super(jsonObject);
+
 		_task = task;
 
 		_duration = jsonObject.getLong("duration");
 		_result = Result.get(jsonObject.getJSONObject("result"));
-		_id = jsonObject.getLong("id");
 	}
 
 	private long _duration;
-	private final long _id;
 	private Result _result;
 	private final Task _task;
 

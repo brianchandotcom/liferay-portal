@@ -15,18 +15,17 @@
 package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.run.TaskRun;
 
 import java.util.List;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public interface Task {
+public interface Task extends Entity {
 
 	public void addEnvironment(Environment environment);
 
@@ -39,10 +38,6 @@ public interface Task {
 	public Build getBuild();
 
 	public List<Environment> getEnvironments();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public String getName();
 

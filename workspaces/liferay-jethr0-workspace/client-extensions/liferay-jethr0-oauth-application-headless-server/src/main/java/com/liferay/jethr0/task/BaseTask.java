@@ -15,6 +15,7 @@
 package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.run.TaskRun;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseTask implements Task {
+public class BaseTask extends BaseEntity implements Task {
 
 	@Override
 	public void addEnvironment(Environment environment) {
@@ -73,19 +74,12 @@ public class BaseTask implements Task {
 	}
 
 	@Override
-	public long getId() {
-		return _id;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
 		Build build = getBuild();
 
-		JSONObject jsonObject = new JSONObject();
-
 		jsonObject.put(
-			"id", getId()
-		).put(
 			"name", getName()
 		).put(
 			"r_buildToTasks_c_buildId", build.getId()
@@ -150,22 +144,24 @@ public class BaseTask implements Task {
 	}
 
 	protected BaseTask(Build build, JSONObject jsonObject) {
+		super(jsonObject);
+
 		_build = build;
 
-		_id = jsonObject.getLong("id");
 		_name = jsonObject.getString("name");
 	}
 
 	protected BaseTask(Project project, JSONObject jsonObject) {
+		super(jsonObject);
+
 		_project = project;
 
-		_id = jsonObject.getLong("id");
 		_name = jsonObject.getString("name");
 	}
 
 	private Build _build;
 	private final List<Environment> _environments = new ArrayList<>();
-	private final long _id;
+	private final Build _build;
 	private String _name;
 	private Project _project;
 	private final List<TaskRun> _taskRuns = new ArrayList<>();

@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.task.run;
 
+import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.task.Task;
 
 import java.util.HashMap;
@@ -24,13 +25,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface TaskRun {
+public interface TaskRun extends Entity {
 
 	public long getDuration();
-
-	public long getId();
-
-	public JSONObject getJSONObject();
 
 	public Result getResult();
 

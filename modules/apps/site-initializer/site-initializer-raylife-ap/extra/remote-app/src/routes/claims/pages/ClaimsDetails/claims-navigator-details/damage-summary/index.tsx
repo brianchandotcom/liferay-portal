@@ -12,12 +12,16 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useState} from 'react';
 
-import Carrousel from './Carrousel/Carrousel';
+import Galerry from '../../../../../../common/components/Carrousel/Galerry';
+import {getWebDavUrl} from '../../../../../../common/utils/webdav';
 
 import './index.scss';
+
 enum NavVehicleLabel {
 	Exterior = 'Exterior',
 	Interior = 'Interior',
@@ -26,60 +30,104 @@ enum NavVehicleLabel {
 const DamageSummary = () => {
 	const [active, setActive] = useState(NavVehicleLabel.Exterior);
 
+	const images = [
+		`${getWebDavUrl()}/driver-side-damage.svg`,
+		`${getWebDavUrl()}/driver-side-damage-rear.svg`,
+	];
+
 	return (
 		<>
-			<div className="d-flex damage-summary-container">
-				<div className="w-50">
-					<div className="p-5">
-						<p className="list-title">Condition of Your Vehicle</p>
-
-						<p className="list-text">Good to drive</p>
-					</div>
-
-					<div className="col d-flex">
-						<div className="col-3 ml-5">
-							<p
-								className={classNames('cursor-pointer pl-5', {
-									'vehicle-link-active':
-										active === NavVehicleLabel.Exterior,
-								})}
-								onClick={() =>
-									setActive(NavVehicleLabel.Exterior)
-								}
-								vehicle-link-active
-							>
-								{NavVehicleLabel.Exterior}
+			{!!images.length && (
+				<div className="d-flex damage-summary-container">
+					<div className="container-left-side w-50">
+						<div className="pl-5 pt-5">
+							<p className="font-weight-semi-bold list-title">
+								Condition of Your Vehicle
 							</p>
 
-							<p
-								className={classNames('cursor-pointer pl-5', {
-									'vehicle-link-active':
-										active === NavVehicleLabel.Interior,
-								})}
-								onClick={() =>
-									setActive(NavVehicleLabel.Interior)
-								}
-							>
-								{NavVehicleLabel.Interior}
+							<p className="font-weight-bold h6 mb-4 text-brand-primary-darken-5">
+								Good to drive
 							</p>
 						</div>
 
-						<div className="pb-5">
-							{active === NavVehicleLabel.Exterior ? (
-								<img src="http://placekitten.com/400/200" />
-							) : (
-								<img src="http://placekitten.com/400/210"></img>
-							)}
+						<div className="align-items-center col d-flex flex-wrap">
+							<div className="mx-5">
+								<div
+									className={classNames(
+										'cursor-pointer vehicle-link',
+										{
+											'vehicle-link-active':
+												active ===
+												NavVehicleLabel.Exterior,
+										}
+									)}
+									onClick={() =>
+										setActive(NavVehicleLabel.Exterior)
+									}
+								>
+									<p className="ml-4">
+										{NavVehicleLabel.Exterior}
+									</p>
+								</div>
+
+								<div
+									className={classNames(
+										'cursor-pointer vehicle-link',
+										{
+											'vehicle-link-active':
+												active ===
+												NavVehicleLabel.Interior,
+										}
+									)}
+									onClick={() =>
+										setActive(NavVehicleLabel.Interior)
+									}
+								>
+									<p className="ml-4">
+										{NavVehicleLabel.Interior}
+									</p>
+								</div>
+							</div>
+
+							<div className="pb-5 pl-5 vehicle-damage">
+								{active === NavVehicleLabel.Exterior ? (
+									<img
+										src={`${getWebDavUrl()}/AutoExterior.svg`}
+									/>
+								) : (
+									<img
+										src={`${getWebDavUrl()}/AutoInterior.svg`}
+									/>
+								)}
+							</div>
+						</div>
+					</div>
+
+					<div className="container-right-side font-weight-semi-bold list-title mb-1 pl-5 pt-5 w-50">
+						<p className="pb-3">Damage Pictures</p>
+
+						<div className="d-flex">
+							<Galerry
+								images={images}
+								size={{
+									height: '150px',
+									width: '255px',
+								}}
+							/>
+
+							<ClayButton
+								className="btn-add pl-3"
+								displayType="link"
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol="plus" />
+								</span>
+								Add
+							</ClayButton>
 						</div>
 					</div>
 				</div>
-
-				<div className="list-title pt-5 w-50">
-					<p>Damage Pictures</p>
-
-					<Carrousel />
-				</div>
-			</div>
+			)}
 		</>
 	);
 };

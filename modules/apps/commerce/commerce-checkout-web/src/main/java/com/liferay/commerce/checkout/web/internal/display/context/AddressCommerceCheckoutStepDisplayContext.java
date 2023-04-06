@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
@@ -49,14 +50,16 @@ import javax.portlet.ActionRequest;
 public class AddressCommerceCheckoutStepDisplayContext {
 
 	public AddressCommerceCheckoutStepDisplayContext(
-		CommerceAccountLocalService commerceAccountLocalService,
-		int commerceAddressType, CommerceOrderService commerceOrderService,
+		AccountEntryLocalService accountEntryLocalService,
+		CommerceAccountHelper commerceAccountHelper, int commerceAddressType,
+		CommerceOrderService commerceOrderService,
 		CommerceAddressService commerceAddressService,
 		CountryLocalService countryLocalService,
 		ModelResourcePermission<CommerceOrder>
 			commerceOrderModelResourcePermission) {
 
-		_commerceAccountLocalService = commerceAccountLocalService;
+		_accountEntryLocalService = accountEntryLocalService;
+		_commerceAccountHelper = commerceAccountHelper;
 		_commerceAddressType = commerceAddressType;
 		_commerceOrderService = commerceOrderService;
 		_commerceAddressService = commerceAddressService;
@@ -246,14 +249,18 @@ public class AddressCommerceCheckoutStepDisplayContext {
 		if (commerceOrder.isGuestOrder()) {
 			String email = ParamUtil.getString(actionRequest, "email");
 
-			CommerceAccount commerceAccount =
-				_commerceAccountLocalService.addCommerceAccount(
-					name, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-					email, null, CommerceAccountConstants.ACCOUNT_TYPE_GUEST,
-					true, null, serviceContext);
+			AccountEntry accountEntry =
+				_accountEntryLocalService.addAccountEntry(
+					serviceContext.getUserId(),
+					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name,
+					null, null, email, null, null,
+					_commerceAccountHelper.toAccountEntryType(
+						CommerceAccountConstants.ACCOUNT_TYPE_GUEST),
+					_commerceAccountHelper.toAccountEntryStatus(true),
+					serviceContext);
 
 			commerceOrder.setCommerceAccountId(
-				commerceAccount.getCommerceAccountId());
+				accountEntry.getAccountEntryId());
 
 			commerceOrder = _commerceOrderService.updateCommerceOrder(
 				commerceOrder);
@@ -265,7 +272,8 @@ public class AddressCommerceCheckoutStepDisplayContext {
 			countryId, phoneNumber, _commerceAddressType, serviceContext);
 	}
 
-	private final CommerceAccountLocalService _commerceAccountLocalService;
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final CommerceAccountHelper _commerceAccountHelper;
 	private final CommerceAddressService _commerceAddressService;
 	private int _commerceAddressType;
 	private final ModelResourcePermission<CommerceOrder>

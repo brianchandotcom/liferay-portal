@@ -74,6 +74,10 @@ public interface CommerceAccountHelper {
 			long commerceAccountId)
 		throws PortalException;
 
+	public Integer toAccountEntryStatus(Boolean commerceAccountActive);
+
+	public String toAccountEntryType(int commerceAccountType);
+
 	public String[] toAccountEntryTypes(int commerceSiteType);
 
 }

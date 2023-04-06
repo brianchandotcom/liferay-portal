@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.portlet;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -126,7 +126,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 						httpServletRequest));
 
 				if ((commerceOrder.getCommerceAccountId() ==
-						CommerceAccountConstants.ACCOUNT_ID_GUEST) &&
+						AccountConstants.ACCOUNT_ENTRY_ID_GUEST) &&
 					!continueAsGuest) {
 
 					httpServletResponse.sendRedirect(

@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -150,7 +150,7 @@ public class CommerceAccountResource {
 
 			accountList = getAccountList(
 				themeDisplay.getUserId(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 				commerceContext.getCommerceSiteType(), queryString, page,
 				pageSize, themeDisplay.getPathImage());
 		}
@@ -282,18 +282,18 @@ public class CommerceAccountResource {
 		int start = (page - 1) * pageSize;
 		int end = page * pageSize;
 
-		List<CommerceAccount> userCommerceAccounts =
-			_commerceAccountLocalService.getUserCommerceAccounts(
-				userId, parentAccountId, commerceSiteType, keywords, true,
-				start, end);
+		List<AccountEntry> userAccountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				userId, parentAccountId, keywords,
+				_commerceAccountHelper.toAccountEntryTypes(commerceSiteType),
+				_commerceAccountHelper.toAccountEntryStatus(true), start, end);
 
-		for (CommerceAccount commerceAccount : userCommerceAccounts) {
+		for (AccountEntry accountEntry : userAccountEntries) {
 			accounts.add(
 				new Account(
-					String.valueOf(commerceAccount.getCommerceAccountId()),
-					commerceAccount.getName(),
-					_getLogoThumbnailSrc(
-						commerceAccount.getLogoId(), imagePath)));
+					String.valueOf(accountEntry.getAccountEntryId()),
+					accountEntry.getName(),
+					_getLogoThumbnailSrc(accountEntry.getLogoId(), imagePath)));
 		}
 
 		return accounts;
@@ -304,8 +304,10 @@ public class CommerceAccountResource {
 			String keywords)
 		throws PortalException {
 
-		return _commerceAccountLocalService.getUserCommerceAccountsCount(
-			userId, parentAccountId, commerceSiteType, keywords);
+		return _accountEntryLocalService.getUserAccountEntriesCount(
+			userId, parentAccountId, keywords,
+			_commerceAccountHelper.toAccountEntryTypes(commerceSiteType),
+			_commerceAccountHelper.toAccountEntryStatus(true));
 	}
 
 	private String _getLogoThumbnailSrc(long logoId, String imagePath) {
@@ -465,10 +467,10 @@ public class CommerceAccountResource {
 		CommerceAccountResource.class);
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

@@ -106,7 +106,6 @@ public class ProductVirtualSettingsDTOConverter
 							}
 						};
 					});
-
 				setSampleSrc(
 					() -> {
 						FileEntry fileEntry =
@@ -122,7 +121,6 @@ public class ProductVirtualSettingsDTOConverter
 
 						return null;
 					});
-
 				setSrc(
 					() -> {
 						FileEntry fileEntry =
@@ -138,7 +136,6 @@ public class ProductVirtualSettingsDTOConverter
 
 						return null;
 					});
-
 				setTermsOfUseJournalArticleId(
 					() -> {
 						JournalArticle termsOfUseJournalArticle =

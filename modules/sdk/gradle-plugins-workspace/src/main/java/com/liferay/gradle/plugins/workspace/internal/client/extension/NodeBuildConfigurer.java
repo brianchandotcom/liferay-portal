@@ -14,10 +14,6 @@
 
 package com.liferay.gradle.plugins.workspace.internal.client.extension;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator;
@@ -28,14 +24,10 @@ import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask
 import groovy.json.JsonSlurper;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,6 +58,19 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 		Project project, Optional<ClientExtension> clientExtensionOptional,
 		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
 
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigTaskProvider =
+				GradleUtil.getTaskProvider(
+					project,
+					ClientExtensionProjectConfigurator.
+						CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME,
+					CreateClientExtensionConfigTask.class);
+
+		createClientExtensionConfigTaskProvider.configure(
+			createClientExtensionConfigTask ->
+				createClientExtensionConfigTask.doLast(
+					task -> _updateConfigFiles(project.getBuildDir())));
+
 		if (!_hasFrontendBuildScript(project)) {
 			return;
 		}
@@ -77,21 +82,10 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 
 		_configureExtensionNode(nodeExtension);
 
-		TaskProvider<CreateClientExtensionConfigTask>
-			createClientExtensionConfigTaskProvider =
-				GradleUtil.getTaskProvider(
-					project,
-					ClientExtensionProjectConfigurator.
-						CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME,
-					CreateClientExtensionConfigTask.class);
-
-		createClientExtensionConfigTaskProvider.configure(
-			createClientExtensionConfigTask -> {
-				createClientExtensionConfigTask.dependsOn(
-					NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
-				createClientExtensionConfigTask.doLast(
-					task -> _processAssembleIntructions(project));
-			});
+		assembleClientExtensionTaskProvider.configure(
+			assembleClientExtensionTask ->
+				assembleClientExtensionTask.dependsOn(
+					NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME));
 	}
 
 	private void _configureExtensionNode(NodeExtension nodeExtension) {
@@ -129,7 +123,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 
 	@SuppressWarnings("unchecked")
 	private void _expandClientExtensionConfigURLs(
-		File clientExtensionConfigFile, File buildDir) {
+		File clientExtensionConfigFile, File sourceFilesDir) {
 
 		String originalConfigFileContent = FileUtil.read(
 			clientExtensionConfigFile);
@@ -144,6 +138,8 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 			originalConfigFileContent);
 
 		Set<String> keySet = clientExtensionConfigMap.keySet();
+
+		Path sourceFilesDirPath = sourceFilesDir.toPath();
 
 		keySet.forEach(
 			key -> {
@@ -191,11 +187,9 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 					Collectors.toList()
 				);
 
-				Path buildPath = buildDir.toPath();
-
-				try (Stream<Path> files = Files.walk(buildPath)) {
+				try (Stream<Path> files = Files.walk(sourceFilesDirPath)) {
 					files.map(
-						buildPath::relativize
+						sourceFilesDirPath::relativize
 					).forEach(
 						buildFile -> {
 							Stream<Pattern> stream = globs.stream();
@@ -269,91 +263,24 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 		return false;
 	}
 
-	private boolean _isExcludedDirName(String dirName) {
-		if (dirName == null) {
-			return false;
+	private void _updateConfigFiles(File buildDir) {
+		File clientExtensionBuildDir = new File(
+			buildDir,
+			ClientExtensionProjectConfigurator.CLIENT_EXTENSION_BUILD_DIR);
+
+		File staticDir = new File(buildDir, "static");
+
+		if (!staticDir.exists()) {
+			return;
 		}
 
-		if (dirName.equals(".gradle") || dirName.equals("dist") ||
-			dirName.equals("gradle") || dirName.equals("node_modules") ||
-			dirName.equals("node_modules_cache")) {
+		File[] configFiles = clientExtensionBuildDir.listFiles(
+			(d, name) -> name.endsWith(".client-extension-config.json"));
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _processAssembleIntructions(Project project) {
-		File clientExtensionFile = project.file(_CLIENT_EXTENSION_YAML);
-
-		try (FileReader fileReader = new FileReader(clientExtensionFile)) {
-			ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-
-			JsonNode rootJsonNode = objectMapper.readTree(clientExtensionFile);
-
-			JsonNode assembleJsonNode = rootJsonNode.get("assemble");
-
-			if (assembleJsonNode != null) {
-				assembleJsonNode.forEach(
-					jsonNode -> {
-						JsonNode fromJsonNode = jsonNode.get("from");
-
-						if (fromJsonNode != null) {
-							_updateConfigFiles(
-								project.getBuildDir(),
-								project.file(fromJsonNode.asText()));
-						}
-					});
-			}
-		}
-		catch (IOException ioException) {
-			throw new GradleException(ioException.getMessage());
+		for (File configFile : configFiles) {
+			_expandClientExtensionConfigURLs(configFile, staticDir);
 		}
 	}
-
-	private void _updateConfigFiles(File buildDir, File fromDir) {
-		try {
-			Files.walkFileTree(
-				buildDir.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path dirPath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						String dirName = String.valueOf(dirPath.getFileName());
-
-						if (_isExcludedDirName(dirName)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						File dir = dirPath.toFile();
-
-						File[] configFiles = dir.listFiles(
-							(d, name) -> name.endsWith(
-								".client-extension-config.json"));
-
-						for (File configFile : configFiles) {
-							_expandClientExtensionConfigURLs(
-								configFile, fromDir);
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-		}
-		catch (IOException ioException) {
-			throw new GradleException(
-				"Error updating config files", ioException);
-		}
-	}
-
-	private static final String _CLIENT_EXTENSION_YAML =
-		"client-extension.yaml";
 
 	private static final Version _MINIMUM_NODE_VERSION = Version.parseVersion(
 		"10.15.3");

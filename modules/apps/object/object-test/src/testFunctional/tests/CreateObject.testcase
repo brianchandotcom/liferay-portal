@@ -2915,6 +2915,8 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
+			WaitForElementPresent(locator1 = "ObjectAdmin#KEBAB_MENU");
+
 			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 			SelectFrame(locator1 = "IFrame#IFRAME");

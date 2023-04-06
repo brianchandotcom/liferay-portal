@@ -18,44 +18,36 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class DataRecordValuesUtil {
 
 	public static Map<String, Object> getDataRecordValues(
 			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
 		throws PortalException {
 
-		return _ddmFormValuesToMapConverter.convert(
+		DDMFormValuesToMapConverter ddmFormValuesToMapConverter =
+			_ddmFormValuesToMapConverterSnapshot.get();
+		DDMStructureLocalService ddmStructureLocalService =
+			_ddmStructureLocalServiceSnapshot.get();
+
+		return ddmFormValuesToMapConverter.convert(
 			ddmFormValues,
-			_ddmStructureLocalService.getStructure(
+			ddmStructureLocalService.getStructure(
 				ddmStructure.getStructureId()));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesToMapConverter(
-		DDMFormValuesToMapConverter ddmFormValuesToMapConverter) {
-
-		_ddmFormValuesToMapConverter = ddmFormValuesToMapConverter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	private static DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
-	private static DDMStructureLocalService _ddmStructureLocalService;
+	private static final Snapshot<DDMFormValuesToMapConverter>
+		_ddmFormValuesToMapConverterSnapshot = new Snapshot<>(
+			DataRecordValuesUtil.class, DDMFormValuesToMapConverter.class);
+	private static final Snapshot<DDMStructureLocalService>
+		_ddmStructureLocalServiceSnapshot = new Snapshot<>(
+			DataRecordValuesUtil.class, DDMStructureLocalService.class);
 
 }

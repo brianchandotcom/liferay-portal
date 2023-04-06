@@ -631,7 +631,6 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
 			"VIEW"
 		],
 		"primKey": "0",

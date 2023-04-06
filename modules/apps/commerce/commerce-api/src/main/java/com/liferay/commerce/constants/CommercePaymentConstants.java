@@ -14,24 +14,56 @@
 
 package com.liferay.commerce.constants;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
 /**
  * @author Luca Pellizzon
  */
 public class CommercePaymentConstants {
 
-	public static final int COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE = 2;
-
-	public static final int COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT = 1;
-
-	public static final int COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD = 0;
-
-	public static final int[] COMMERCE_PAYMENT_METHOD_TYPES_ONLINE = {
-		COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD,
-		COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT
-	};
-
 	public static final String DEFAULT_PAYMENT_REQUEST_PROVIDER_KEY = "default";
 
+	public static final int METHOD_TYPE_OFFLINE = 2;
+
+	public static final int METHOD_TYPE_ONLINE_REDIRECT = 1;
+
+	public static final int METHOD_TYPE_ONLINE_STANDARD = 0;
+
+	public static final int[] METHOD_TYPES_ONLINE = {
+		METHOD_TYPE_ONLINE_STANDARD, METHOD_TYPE_ONLINE_REDIRECT
+	};
+
 	public static final String SERVLET_PATH = "commerce-payment";
+
+	public static final int STATUS_AUTHORIZED = WorkflowConstants.STATUS_DRAFT;
+
+	public static final int STATUS_CANCELLED =
+		WorkflowConstants.STATUS_IN_TRASH;
+
+	public static final int STATUS_DENIED = WorkflowConstants.STATUS_DENIED;
+
+	public static final int STATUS_PAID = WorkflowConstants.STATUS_APPROVED;
+
+	public static final int STATUS_PENDING = WorkflowConstants.STATUS_PENDING;
+
+	public static String getCommercePaymentStatusLabel(int paymentStatus) {
+		if (paymentStatus == STATUS_AUTHORIZED) {
+			return "authorized";
+		}
+		else if (paymentStatus == STATUS_CANCELLED) {
+			return "cancelled";
+		}
+		else if (paymentStatus == STATUS_DENIED) {
+			return WorkflowConstants.LABEL_DENIED;
+		}
+		else if (paymentStatus == STATUS_PAID) {
+			return "paid";
+		}
+		else if (paymentStatus == STATUS_PENDING) {
+			return WorkflowConstants.LABEL_PENDING;
+		}
+
+		return null;
+	}
 
 }

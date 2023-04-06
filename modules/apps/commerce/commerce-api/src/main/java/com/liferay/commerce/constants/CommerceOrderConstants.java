@@ -100,15 +100,6 @@ public class CommerceOrderConstants {
 		ORDER_STATUS_PARTIALLY_SHIPPED, ORDER_STATUS_SHIPPED
 	};
 
-	public static final int PAYMENT_STATUS_AUTHORIZED =
-		WorkflowConstants.STATUS_DRAFT;
-
-	public static final int PAYMENT_STATUS_PAID =
-		WorkflowConstants.STATUS_APPROVED;
-
-	public static final int PAYMENT_STATUS_PENDING =
-		WorkflowConstants.STATUS_PENDING;
-
 	public static final String RESOURCE_NAME = "com.liferay.commerce.order";
 
 	public static final long TYPE_PK_APPROVAL = 0;
@@ -218,34 +209,6 @@ public class CommerceOrderConstants {
 		}
 
 		return "info";
-	}
-
-	public static String getPaymentLabelStyle(int paymentStatus) {
-		if (paymentStatus == PAYMENT_STATUS_AUTHORIZED) {
-			return "info";
-		}
-		else if (paymentStatus == PAYMENT_STATUS_PAID) {
-			return "success";
-		}
-		else if (paymentStatus == PAYMENT_STATUS_PENDING) {
-			return "warning";
-		}
-
-		return StringPool.BLANK;
-	}
-
-	public static String getPaymentStatusLabel(int paymentStatus) {
-		if (paymentStatus == PAYMENT_STATUS_AUTHORIZED) {
-			return "authorized";
-		}
-		else if (paymentStatus == PAYMENT_STATUS_PAID) {
-			return "paid";
-		}
-		else if (paymentStatus == PAYMENT_STATUS_PENDING) {
-			return WorkflowConstants.LABEL_PENDING;
-		}
-
-		return null;
 	}
 
 	public static String getStatusLabelStyle(int status) {

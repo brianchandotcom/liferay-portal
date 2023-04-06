@@ -15,7 +15,6 @@
 package com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter;
 
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
@@ -52,9 +51,8 @@ public class DiscountAccountGroupDTOConverter
 					getCommerceDiscountCommerceAccountGroupRel(
 						(Long)dtoConverterContext.getId());
 
-		AccountGroup accountGroup = _accountGroupLocalService.getAccountGroup(
-			commerceDiscountCommerceAccountGroupRel.
-				getCommerceAccountGroupId());
+		AccountGroup accountGroup =
+			commerceDiscountCommerceAccountGroupRel.getAccountGroup();
 		CommerceDiscount commerceDiscount =
 			commerceDiscountCommerceAccountGroupRel.getCommerceDiscount();
 
@@ -72,9 +70,6 @@ public class DiscountAccountGroupDTOConverter
 			}
 		};
 	}
-
-	@Reference
-	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceDiscountCommerceAccountGroupRelService

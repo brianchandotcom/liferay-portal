@@ -20,6 +20,7 @@ import com.liferay.jethr0.dalo.ProjectComparatorDALO;
 import com.liferay.jethr0.dalo.ProjectDALO;
 import com.liferay.jethr0.dalo.ProjectPrioritizerDALO;
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.project.queue.ProjectQueue;
@@ -55,8 +56,9 @@ public class Jethr0SpringBootApplication {
 
 	@Bean
 	public ProjectQueue getProjectQueue(
-		ProjectComparatorDALO projectComparatorDALO, ProjectDALO projectDALO,
-		ProjectPrioritizerDALO projectPrioritizerDALO) {
+		ProjectComparatorDALO projectComparatorDALO,
+		ProjectPrioritizerDALO projectPrioritizerDALO,
+		ProjectRepository projectRepository) {
 
 		ProjectQueue projectQueue = new ProjectQueue();
 
@@ -64,13 +66,23 @@ public class Jethr0SpringBootApplication {
 			_getDefaultProjectPrioritizer(
 				projectComparatorDALO, projectPrioritizerDALO));
 
-		projectQueue.addProjects(projectDALO.retrieveProjects());
+		projectQueue.addProjects(
+			projectRepository.getByState(Project.State.RUNNING));
 
 		for (Project project : projectQueue.getProjects()) {
 			System.out.println(project);
 		}
 
 		return projectQueue;
+	}
+
+	@Bean
+	public ProjectRepository getProjectRepository(ProjectDALO projectDALO) {
+		ProjectRepository projectRepository = new ProjectRepository();
+
+		projectRepository.add(projectDALO.retrieveProjects());
+
+		return projectRepository;
 	}
 
 	private ProjectPrioritizer _getDefaultProjectPrioritizer(

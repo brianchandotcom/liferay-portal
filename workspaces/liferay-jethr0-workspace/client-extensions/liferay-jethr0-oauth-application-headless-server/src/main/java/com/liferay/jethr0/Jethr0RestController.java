@@ -14,14 +14,18 @@
 
 package com.liferay.jethr0;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectFactory;
+import com.liferay.jethr0.project.ProjectRepository;
+import com.liferay.jethr0.project.queue.ProjectQueue;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,20 +34,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Jethr0RestController {
 
-	@GetMapping("/")
-	public ResponseEntity<String> home() {
-		JSONObject jsonObject = new JSONObject();
+	@PostMapping(
+		consumes = "application/json", produces = "application/json",
+		value = "/createProject"
+	)
+	public ResponseEntity<Project> createProject(
+		@RequestBody String requestBody) {
 
-		jsonObject.put("name", "value");
+		JSONObject requestJSONObject = new JSONObject(requestBody);
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Return: " + jsonObject);
-		}
+		requestJSONObject.put("state", Project.State.OPENED.getJSONObject());
 
-		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.CREATED);
+		Project project = ProjectFactory.newProject(requestJSONObject);
+
+		_projectRepository.add(project);
+
+		return new ResponseEntity<>(project, HttpStatus.CREATED);
 	}
 
-	private static final Log _log = LogFactory.getLog(
-		Jethr0RestController.class);
+	@PostMapping(
+		consumes = "application/json", produces = "application/json",
+		value = "/startProject"
+	)
+	public ResponseEntity<Project> startProject(
+		@RequestBody String requestBody) {
+
+		JSONObject requsetJSONObject = new JSONObject(requestBody);
+
+		Project project = _projectRepository.getById(
+			requsetJSONObject.getLong("id"));
+
+		project.setState(Project.State.RUNNING);
+
+		project = _projectRepository.update(project);
+
+		_projectQueue.addProject(project);
+
+		return new ResponseEntity<>(project, HttpStatus.CREATED);
+	}
+
+	@Autowired
+	private ProjectQueue _projectQueue;
+
+	@Autowired
+	private ProjectRepository _projectRepository;
 
 }

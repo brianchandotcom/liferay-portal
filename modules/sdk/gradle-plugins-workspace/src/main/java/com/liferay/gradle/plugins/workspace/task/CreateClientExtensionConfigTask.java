@@ -25,6 +25,7 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExte
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,6 +39,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -47,6 +49,8 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -125,6 +129,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			if (Objects.equals(clientExtension.type, "instanceSettings")) {
 				pid = clientExtension.typeSettings.remove("pid") + ".scoped";
 			}
+
+			_expandWildcards(clientExtension.typeSettings);
 
 			if (pid != null) {
 				jsonMap.putAll(clientExtension.toJSONMap(pid));
@@ -308,6 +314,48 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 	}
 
+	private void _expandWildcards(Map<String, Object> typeSettings) {
+		Project project = getProject();
+
+		File clientExtensionBuildDir = new File(
+			project.getBuildDir(),
+			ClientExtensionProjectConfigurator.CLIENT_EXTENSION_BUILD_DIR);
+
+		File staticDir = new File(clientExtensionBuildDir, "static");
+
+		if (!staticDir.exists()) {
+			return;
+		}
+
+		Path staticDirPath = staticDir.toPath();
+
+		for (Map.Entry<String, Object> entry : typeSettings.entrySet()) {
+			Object currentValue = entry.getValue();
+
+			if ((currentValue instanceof String) &&
+				_isWildcardValue((String)currentValue)) {
+
+				entry.setValue(
+					_getMatchingPaths(staticDirPath, (String)currentValue));
+			}
+
+			if (currentValue instanceof List) {
+				List<String> values = new ArrayList<>();
+
+				for (String value : (List<String>)currentValue) {
+					if (_isWildcardValue(value)) {
+						values.addAll(_getMatchingPaths(staticDirPath, value));
+					}
+					else {
+						values.add(value);
+					}
+				}
+
+				entry.setValue(values);
+			}
+		}
+	}
+
 	private String _getFileContentFromProject(Project project, String path) {
 		File file = project.file(path);
 
@@ -334,6 +382,30 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return id;
 	}
 
+	private List<String> _getMatchingPaths(Path basePath, String regexString) {
+		Pattern pattern = Pattern.compile(regexString);
+
+		try (Stream<Path> files = Files.walk(basePath)) {
+			return files.map(
+				basePath::relativize
+			).map(
+				String::valueOf
+			).filter(
+				pathString -> {
+					Matcher matcher = pattern.matcher(pathString);
+
+					return matcher.matches();
+				}
+			).collect(
+				Collectors.toList()
+			);
+		}
+		catch (IOException ioException) {
+			throw new GradleException(
+				"Unable to expand wildcard paths", ioException);
+		}
+	}
+
 	private Properties _getPluginPackageProperties() {
 		Properties pluginPackageProperties = new Properties();
 
@@ -352,6 +424,14 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 
 		return pluginPackageProperties;
+	}
+
+	private boolean _isWildcardValue(String value) {
+		if (value.contains(StringPool.STAR)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _loadTemplate(

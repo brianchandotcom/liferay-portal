@@ -2,3 +2,4 @@ Bundle-Name: Liferay Dispatch Web
 Bundle-SymbolicName: com.liferay.dispatch.web
 Bundle-Version: 3.0.54
 Web-ContextPath: /dispatch-web
+-dsannotations-options: inherit

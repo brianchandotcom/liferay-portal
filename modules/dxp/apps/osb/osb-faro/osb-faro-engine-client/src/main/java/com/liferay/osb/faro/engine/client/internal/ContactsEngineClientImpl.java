@@ -1982,16 +1982,6 @@ public class ContactsEngineClientImpl
 		uriVariables.put("apply", getGroupBy("dateChanged", interval));
 		uriVariables.put("id", individualSegmentId);
 
-		IndividualSegment individualSegment = getIndividualSegment(
-			faroProject, individualSegmentId, false);
-
-		if (StringUtil.equals(
-				individualSegment.getSegmentType(),
-				IndividualSegment.Type.DYNAMIC.name())) {
-
-			uriVariables.put("includeToday", false);
-		}
-
 		PagedModel<?, IndividualSegmentMembershipChangeAggregation> pagedModel =
 			get(
 				faroProject, Rels.INDIVIDUAL_SEGMENT_MEMBERSHIP_CHANGES,

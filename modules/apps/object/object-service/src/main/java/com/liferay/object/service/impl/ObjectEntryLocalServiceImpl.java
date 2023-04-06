@@ -94,7 +94,6 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
-import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -107,7 +106,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -322,9 +320,6 @@ public class ObjectEntryLocalServiceImpl
 
 		insertIntoOrUpdateExtensionTable(
 			objectDefinition.getObjectDefinitionId(), primaryKey, values);
-
-		_clearExtensionDynamicObjectDefinitionTableCache(
-			objectDefinition.getObjectDefinitionId(), primaryKey);
 	}
 
 	@Override
@@ -390,9 +385,6 @@ public class ObjectEntryLocalServiceImpl
 		_deleteFileEntries(
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			extensionDynamicObjectDefinitionTableValues);
-
-		_clearExtensionDynamicObjectDefinitionTableCache(
-			objectDefinition.getObjectDefinitionId(), primaryKey);
 	}
 
 	@Override
@@ -1456,40 +1448,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _clearExtensionDynamicObjectDefinitionTableCache(
-			long objectDefinitionId, long primaryKey)
-		throws PortalException {
-
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
-			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
-
-		String tableName = extensionDynamicObjectDefinitionTable.getTableName();
-
-		_clearFinderCache(
-			_getExtensionDynamicObjectDefinitionTableCountDSLQuery(
-				extensionDynamicObjectDefinitionTable, primaryKey),
-			primaryKey, tableName);
-		_clearFinderCache(
-			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
-				extensionDynamicObjectDefinitionTable, primaryKey,
-				_getSelectExpressions(extensionDynamicObjectDefinitionTable)),
-			primaryKey, tableName);
-	}
-
-	private void _clearFinderCache(
-		DSLQuery dslQuery, long primaryKey, String tableName) {
-
-		StringBundler sb = new StringBundler();
-
-		dslQuery.toSQL(sb::append, new DefaultASTNodeListener());
-
-		FinderCacheUtil.removeResult(
-			new FinderPath(
-				FinderPath.encodeDSLQueryCacheName(new String[] {tableName}),
-				"dslQuery", sb.getStrings(), new String[0], false),
-			new Long[] {primaryKey});
-	}
-
 	private void _deleteFileEntries(
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
@@ -1871,21 +1829,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectFieldPersistence.findByODI_DTN(
 				objectDefinitionId, objectDefinition.getExtensionDBTableName()),
 			objectDefinition.getExtensionDBTableName());
-	}
-
-	private DSLQuery _getExtensionDynamicObjectDefinitionTableCountDSLQuery(
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
-		long primaryKey) {
-
-		return DSLQueryFactoryUtil.count(
-		).from(
-			extensionDynamicObjectDefinitionTable
-		).where(
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				primaryKey
-			)
-		);
 	}
 
 	private DSLQuery _getExtensionDynamicObjectDefinitionTableSelectDSLQuery(

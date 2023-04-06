@@ -91,6 +91,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-173139. The page designer could see a tooltip for assets on the Content panel of widget page."
+	@priority = 3
+	test ViewAssetWithLongTitle {
+		task ("Given a page deisgner displays a web content with long title") {
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Lighthouse promises life coaching to help people realise their dreams. But an 18-month investigation by the BBC finds it takes over people'\''s lives, separates people from their loved ones and harasses its critics.",
+				groupName = "Test Site Name",
+				title = "Inside the life coaching cult that takes over lives");
+		}
+
+		task ("When the page designer navigates to the Content panel on the widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+			Navigator.gotoNavTab(navTab = "Content");
+		}
+
+		task ("Then the page designer could see the full title on the tooltip") {
+			MouseOver.javaScriptFocus(
+				key_entryTitle = "Inside the life coaching cult that takes over lives",
+				locator1 = "ControlMenuAddPanel#ASSET_ENTRY");
+
+			AssertVisible(
+				key_content = "Inside the life coaching cult that takes over lives",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-142251. View widgets are rendered well after adding a web content via content panel."
 	@priority = 4
 	test ViewWidgetAfterAddWebContentViaContentPanel {

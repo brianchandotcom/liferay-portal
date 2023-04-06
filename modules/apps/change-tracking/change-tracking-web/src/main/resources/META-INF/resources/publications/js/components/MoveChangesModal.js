@@ -36,7 +36,10 @@ export default function MoveChangesModal({
 	const [status, setStatus] = useState(null);
 	const [toCTCollectionId, setToCTCollectionId] = useState(null);
 	const {observer, onClose} = useModal({
-		onClose: () => setShowModal(false),
+		onClose: () => {
+			setShowModal(false);
+			setStatus(null);
+		},
 	});
 
 	const handleSubmit = (event) => {
@@ -62,12 +65,7 @@ export default function MoveChangesModal({
 				return response.json();
 			})
 			.then((json) => {
-				if (json.redirect) {
-					navigate(json.redirectURL);
-				}
-				else {
-					setStatus(json);
-				}
+				setStatus(json);
 			});
 	};
 
@@ -76,6 +74,14 @@ export default function MoveChangesModal({
 
 		if (response.displayType === 'success') {
 			title = Liferay.Language.get('the-changes-were-moved-successfully');
+		}
+		else if (
+			response.displayType === 'danger' &&
+			response.label === 'conflict'
+		) {
+			title = Liferay.Language.get(
+				'one-or-more-changes-conflict-with-existing-changes-in-the-destination-publication'
+			);
 		}
 		else {
 			title = Liferay.Language.get('the-changes-could-not-be-moved');

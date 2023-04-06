@@ -17,6 +17,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayToggle} from '@clayui/form';
+import ClayLink from '@clayui/link';
 import {
 	Card,
 	ExpressionBuilder,
@@ -124,6 +125,14 @@ export function DefaultValueContainer({
 					{Liferay.Language.get(
 						'enter-a-value-or-use-expressions-to-set-default-values'
 					)}
+					&nbsp;
+					<ClayLink
+						displayType="primary"
+						href="https://learn.liferay.com/en/w/dxp/building-applications/objects/creating-and-managing-objects/validations/expression-builder-validations-reference"
+						target="_blank"
+					>
+						{Liferay.Language.get('click-here-for-documentation')}
+					</ClayLink>
 				</ClayAlert>
 			)}
 

@@ -19,9 +19,6 @@ import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidU
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-
 import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.function.Consumer;
@@ -80,33 +77,6 @@ public class ConfigurationBeanManagedService implements ManagedService {
 
 	@Override
 	public void updated(Dictionary<String, ?> properties) {
-		if (System.getSecurityManager() != null) {
-			AccessController.doPrivileged(
-				new UpdatePrivilegedAction(properties));
-		}
-		else {
-			_updated(properties);
-		}
-	}
-
-	protected class UpdatePrivilegedAction implements PrivilegedAction<Void> {
-
-		@Override
-		public Void run() {
-			_updated(_properties);
-
-			return null;
-		}
-
-		private UpdatePrivilegedAction(Dictionary<String, ?> properties) {
-			_properties = properties;
-		}
-
-		private final Dictionary<String, ?> _properties;
-
-	}
-
-	private void _updated(Dictionary<String, ?> properties) {
 		if (properties == null) {
 			properties = new HashMapDictionary<>();
 		}

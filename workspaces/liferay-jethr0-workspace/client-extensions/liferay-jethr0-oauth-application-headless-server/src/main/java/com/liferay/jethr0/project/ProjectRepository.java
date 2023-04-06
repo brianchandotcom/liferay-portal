@@ -30,7 +30,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	public List<Project> getByState(Project.State state) {
 		List<Project> projects = new ArrayList<>();
 
-		for (Project project : get()) {
+		for (Project project : getAll()) {
 			if (!Objects.equals(project.getState(), state)) {
 				continue;
 			}

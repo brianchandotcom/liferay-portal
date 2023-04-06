@@ -23,11 +23,11 @@ import java.util.List;
  */
 public interface EntityRepository<T extends Entity> {
 
-	public void add(List<T> entities);
+	public T add(T entity);
 
-	public void add(T entity);
+	public void addAll(List<T> entities);
 
-	public List<T> get();
+	public List<T> getAll();
 
 	public T getById(long id);
 

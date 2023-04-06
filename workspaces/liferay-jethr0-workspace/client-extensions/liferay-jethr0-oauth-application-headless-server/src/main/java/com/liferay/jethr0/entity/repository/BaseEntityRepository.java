@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Michael Hashimoto
  */
@@ -30,7 +33,14 @@ public abstract class BaseEntityRepository<T extends Entity>
 	implements EntityRepository<T> {
 
 	@Override
-	public void add(List<T> entities) {
+	public T add(T entity) {
+		addAll(Collections.singletonList(entity));
+
+		return entity;
+	}
+
+	@Override
+	public void addAll(List<T> entities) {
 		if (entities == null) {
 			return;
 		}
@@ -39,28 +49,29 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
+		Map<Long, T> entitiesMap = _getEntitiesMap();
+
 		for (T entity : entities) {
 			if (entity.getId() == 0) {
 				entity = entityDALO.create(entity);
 			}
 
-			_entities.put(entity.getId(), entity);
+			entitiesMap.put(entity.getId(), entity);
 		}
 	}
 
 	@Override
-	public void add(T entity) {
-		add(Collections.singletonList(entity));
-	}
+	public List<T> getAll() {
+		Map<Long, T> entitiesMap = _getEntitiesMap();
 
-	@Override
-	public List<T> get() {
-		return new ArrayList<>(_entities.values());
+		return new ArrayList<>(entitiesMap.values());
 	}
 
 	@Override
 	public T getById(long id) {
-		return _entities.get(id);
+		Map<Long, T> entitiesMap = _getEntitiesMap();
+
+		return entitiesMap.get(id);
 	}
 
 	@Override
@@ -73,8 +84,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
+		Map<Long, T> entitiesMap = _getEntitiesMap();
+
 		for (T entity : entities) {
-			_entities.remove(entity.getId());
+			entitiesMap.remove(entity.getId());
 
 			entityDALO.delete(entity);
 		}
@@ -100,6 +113,24 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	protected abstract EntityDALO<T> getEntityDALO();
 
-	private final Map<Long, T> _entities = new HashMap<>();
+	private Map<Long, T> _getEntitiesMap() {
+		synchronized (_log) {
+			if (_entitiesMap == null) {
+				_entitiesMap = new HashMap<>();
+			}
+
+			EntityDALO<T> entityDALO = getEntityDALO();
+
+			for (T entity : entityDALO.getAll()) {
+				_entitiesMap.put(entity.getId(), entity);
+			}
+
+			return _entitiesMap;
+		}
+	}
+
+	private static final Log _log = LogFactory.getLog(EntityRepository.class);
+
+	private Map<Long, T> _entitiesMap;
 
 }

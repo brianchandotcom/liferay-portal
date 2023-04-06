@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.constants;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
 /**
  * @author Luca Pellizzon
  */
@@ -31,6 +33,21 @@ public class CommercePaymentConstants {
 	};
 
 	public static final String DEFAULT_PAYMENT_REQUEST_PROVIDER_KEY = "default";
+
+	public static final int PAYMENT_STATUS_AUTHORIZED =
+		WorkflowConstants.STATUS_DRAFT;
+
+	public static final int PAYMENT_STATUS_CANCELLED =
+		WorkflowConstants.STATUS_IN_TRASH;
+
+	public static final int PAYMENT_STATUS_DENIED =
+		WorkflowConstants.STATUS_DENIED;
+
+	public static final int PAYMENT_STATUS_PAID =
+		WorkflowConstants.STATUS_APPROVED;
+
+	public static final int PAYMENT_STATUS_PENDING =
+		WorkflowConstants.STATUS_PENDING;
 
 	public static final String SERVLET_PATH = "commerce-payment";
 

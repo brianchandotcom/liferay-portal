@@ -16,10 +16,6 @@ package com.liferay.jethr0.project.comparator;
 
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 /**
@@ -30,50 +26,35 @@ public class ProjectComparatorFactory {
 	public static ProjectComparator newProjectComparator(
 		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 
-		long id = jsonObject.getLong("id");
+		ProjectComparator.Type type = ProjectComparator.Type.get(
+			jsonObject.getJSONObject("type"));
 
-		ProjectComparator projectComparator = null;
-
-		synchronized (_projectComparators) {
-			if (_projectComparators.containsKey(id)) {
-				return _projectComparators.get(id);
-			}
-
-			ProjectComparator.Type type = ProjectComparator.Type.get(
-				jsonObject.getJSONObject("type"));
-
-			if (type == ProjectComparator.Type.FIFO) {
-				projectComparator = new FIFOProjectComparator(
-					projectPrioritizer, jsonObject);
-			}
-			else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
-				projectComparator = new PriorityProjectComparator(
-					projectPrioritizer, jsonObject);
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-
-			_projectComparators.put(
-				projectComparator.getId(), projectComparator);
+		if (type == ProjectComparator.Type.FIFO) {
+			return new FIFOProjectComparator(projectPrioritizer, jsonObject);
+		}
+		else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
+			return new PriorityProjectComparator(
+				projectPrioritizer, jsonObject);
 		}
 
-		return projectComparator;
+		throw new UnsupportedOperationException();
 	}
 
-	public static void removeProjectComparator(
-		ProjectComparator projectComparator) {
+	public static ProjectComparator newProjectComparator(
+		ProjectPrioritizer projectPrioritizer, long position,
+		ProjectComparator.Type type, String value) {
 
-		if (projectComparator == null) {
-			return;
-		}
+		JSONObject jsonObject = new JSONObject();
 
-		synchronized (_projectComparators) {
-			_projectComparators.remove(projectComparator.getId());
-		}
+		jsonObject.put(
+			"position", position
+		).put(
+			"type", type.getJSONObject()
+		).put(
+			"value", value
+		);
+
+		return newProjectComparator(projectPrioritizer, jsonObject);
 	}
-
-	private static final Map<Long, ProjectComparator> _projectComparators =
-		Collections.synchronizedMap(new HashMap<>());
 
 }

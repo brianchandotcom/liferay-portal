@@ -15,6 +15,7 @@
 package com.liferay.jethr0.project.queue;
 
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.comparator.BaseProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
@@ -92,7 +93,14 @@ public class ProjectQueue {
 			for (ProjectComparator projectComparator :
 					_projectPrioritizer.getProjectComparators()) {
 
-				int result = projectComparator.compare(project1, project2);
+				if (!(projectComparator instanceof BaseProjectComparator)) {
+					continue;
+				}
+
+				BaseProjectComparator baseProjectComparator =
+					(BaseProjectComparator)projectComparator;
+
+				int result = baseProjectComparator.compare(project1, project2);
 
 				if (result != 0) {
 					return result;

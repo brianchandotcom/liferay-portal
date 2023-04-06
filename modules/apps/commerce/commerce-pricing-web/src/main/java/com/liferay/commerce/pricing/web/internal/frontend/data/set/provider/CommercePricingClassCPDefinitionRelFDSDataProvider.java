@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
@@ -103,7 +103,7 @@ public class CommercePricingClassCPDefinitionRelFDSDataProvider
 								_language.getLanguageId(locale)),
 							"rounded", "lg",
 							cpDefinition.getDefaultImageThumbnailSrc(
-								CommerceAccountConstants.ACCOUNT_ID_ADMIN))));
+								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN))));
 			}
 		}
 		catch (Exception exception) {

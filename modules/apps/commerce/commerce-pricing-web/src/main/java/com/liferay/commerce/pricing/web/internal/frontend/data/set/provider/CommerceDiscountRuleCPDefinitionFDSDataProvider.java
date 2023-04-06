@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.frontend.model.ImageField;
@@ -142,7 +142,7 @@ public class CommerceDiscountRuleCPDefinitionFDSDataProvider
 					new ImageField(
 						cpDefinitionName, "rounded", "lg",
 						cpDefinition.getDefaultImageThumbnailSrc(
-							CommerceAccountConstants.ACCOUNT_ID_ADMIN))));
+							AccountConstants.ACCOUNT_ENTRY_ID_ADMIN))));
 		}
 
 		return discountRuleCPDefinitions;

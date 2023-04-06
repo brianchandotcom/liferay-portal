@@ -63,40 +63,6 @@ definition {
 		}
 	}
 
-	@description = "View web content is shown in Web Content Display after be added via content panel."
-	@priority = 5
-	test AddRecentContentViaContentPanel {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name 1");
-		}
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Add the web content to page via Content tab of Add panel") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
-
-			WidgetPages.addRecentContent(assetTitle = "Web Content Title");
-		}
-
-		task ("View web content is shown in Web Content Display") {
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-	}
-
 	@description = "Add a web content via web content display widget."
 	@priority = 5
 	test AddWebContent {

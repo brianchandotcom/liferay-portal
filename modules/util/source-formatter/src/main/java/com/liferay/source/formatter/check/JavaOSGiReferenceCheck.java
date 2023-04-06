@@ -147,62 +147,44 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			sourceProcessor.getSourceFormatterArgs();
 
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
-			boolean addReference = false;
-			StringBundler sb = new StringBundler();
-
 			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
 				sourceFormatterArgs.getBaseDirName(),
 				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
-			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
-				if (line.startsWith(StringPool.DASH)) {
+			for (String currentBranchFileDiffBlock :
+					StringUtil.split(currentBranchFileDiff, "\n@@")) {
+
+				if (currentBranchFileDiffBlock.startsWith("diff")) {
 					continue;
 				}
 
-				if (line.startsWith(StringPool.PLUS)) {
-					line = line.substring(1);
+				int x = 1;
 
-					String trimmedLine = StringUtil.trimLeading(line);
+				while (true) {
+					x = currentBranchFileDiffBlock.indexOf("@Reference", x + 1);
 
-					if (trimmedLine.startsWith("@Reference")) {
-						addReference = true;
-						sb.append(line);
-						sb.append(StringPool.NEW_LINE);
+					if (x == -1) {
+						break;
 					}
-				}
 
-				if (addReference) {
-					if (line.startsWith(StringPool.AT)) {
-						String codeBlock = sb.toString();
+					if (!StringUtil.startsWith(
+							getLine(
+								currentBranchFileDiffBlock,
+								getLineNumber(currentBranchFileDiffBlock, x)),
+							StringPool.PLUS)) {
 
-						if (codeBlock.matches(
-								"\\t+@Reference[\\s\\S]*?(protected|public) " +
-									"void \\w+?\\([\\s\\S]*?")) {
-
-							addMessage(
-								fileName, "Do not use @Reference on methods");
-
-							return;
-						}
-
-						sb = new StringBundler();
-						addReference = false;
+						continue;
 					}
-					else {
-						sb.append(line);
-						sb.append(StringPool.NEW_LINE);
+
+					Matcher matcher = _protectedPublicVoidMethodPattern.matcher(
+						currentBranchFileDiffBlock.substring(x));
+
+					if (matcher.find()) {
+						addMessage(
+							fileName,
+							"Do not use annotation @Reference on method " +
+								matcher.group(2));
 					}
-				}
-			}
-
-			if (sb.index() > 0) {
-				String codeBlock = sb.toString();
-
-				if (codeBlock.matches(
-						"\\t+@Reference[\\s\\S]*?(protected|public) " +
-							"void \\w+?\\([\\s\\S]*?")) {
-
-					addMessage(fileName, "Do not use @Reference on methods");
 				}
 			}
 		}
@@ -670,6 +652,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private static final String _SERVICE_REFERENCE_UTIL_CLASS_NAMES_KEY =
 		"serviceReferenceUtilClassNames";
 
+	private static final Pattern _protectedPublicVoidMethodPattern =
+		Pattern.compile("(protected|public) void (\\w+)?\\(");
 	private static final Pattern _referenceMethodContentPattern =
 		Pattern.compile("^(\\w+) =\\s+\\w+;$");
 	private static final Pattern _referenceMethodPattern = Pattern.compile(

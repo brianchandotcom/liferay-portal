@@ -20,17 +20,14 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.osgi.util.service.Snapshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carlos Correa
  */
-@Component(service = {})
 public class HeadlessBuilderUtil {
 
 	public static Map<String, Object> getEntity(
@@ -53,7 +50,10 @@ public class HeadlessBuilderUtil {
 			String className, Class<T> serviceClass)
 		throws Exception {
 
-		T infoItemService = _infoItemServiceRegistry.getFirstInfoItemService(
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			_infoItemServiceRegistrySnapshot.get();
+
+		T infoItemService = infoItemServiceRegistry.getFirstInfoItemService(
 			serviceClass, className);
 
 		if (infoItemService == null) {
@@ -65,13 +65,6 @@ public class HeadlessBuilderUtil {
 		return infoItemService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setInfoItemServiceRegistry(
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		_infoItemServiceRegistry = infoItemServiceRegistry;
-	}
-
 	private static Object _getValue(
 		InfoItemFieldValues infoItemFieldValues, InfoField infoField) {
 
@@ -81,6 +74,8 @@ public class HeadlessBuilderUtil {
 		return infoFieldValue.getValue();
 	}
 
-	private static InfoItemServiceRegistry _infoItemServiceRegistry;
+	private static final Snapshot<InfoItemServiceRegistry>
+		_infoItemServiceRegistrySnapshot = new Snapshot<>(
+			HeadlessBuilderUtil.class, InfoItemServiceRegistry.class);
 
 }

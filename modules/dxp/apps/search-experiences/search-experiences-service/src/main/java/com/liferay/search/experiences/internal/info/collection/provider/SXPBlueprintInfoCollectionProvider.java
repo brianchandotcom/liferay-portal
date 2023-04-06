@@ -83,20 +83,21 @@ public class SXPBlueprintInfoCollectionProvider
 		// TODO Better null check for configuration and SXPBlueprint
 
 		if (configuration != null) {
-			String[] sxpBlueprintIds = configuration.get("sxpBlueprintId");
+			String[] sxpBlueprintERCs = configuration.get("sxpBlueprintERC");
 
-			String sxpBlueprintId = sxpBlueprintIds[0];
+			String sxpBlueprintERC = sxpBlueprintERCs[0];
 
-			if (Validator.isNotNull(sxpBlueprintId)) {
+			if (Validator.isNotNull(sxpBlueprintERC)) {
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
 				SXPBlueprint sxpBlueprint =
-					_sxpBlueprintLocalService.fetchSXPBlueprint(
-						Long.valueOf(sxpBlueprintId));
+					_sxpBlueprintLocalService.
+						fetchSXPBlueprintByExternalReferenceCode(
+							sxpBlueprintERC, serviceContext.getCompanyId());
 
 				if (sxpBlueprint != null) {
 					Pagination pagination = collectionQuery.getPagination();
-
-					ServiceContext serviceContext =
-						ServiceContextThreadLocal.getServiceContext();
 
 					SearchRequestBuilder searchRequestBuilder =
 						_searchRequestBuilderFactory.builder(
@@ -161,7 +162,7 @@ public class SXPBlueprintInfoCollectionProvider
 
 								searchContext.setAttribute(
 									"search.experiences.blueprint.id",
-									sxpBlueprintId);
+									sxpBlueprint.getSXPBlueprintId());
 								searchContext.setLocale(
 									serviceContext.getLocale());
 
@@ -208,7 +209,7 @@ public class SXPBlueprintInfoCollectionProvider
 			).namespace(
 				StringPool.BLANK
 			).name(
-				"sxpBlueprintId"
+				"sxpBlueprintERC"
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "blueprint")
 			).localizable(

@@ -2,3 +2,4 @@ Bundle-Name: Liferay Commerce Shipping Web
 Bundle-SymbolicName: com.liferay.commerce.shipping.web
 Bundle-Version: 6.0.28
 Web-ContextPath: /commerce-shipping-web
+-dsannotations-options: inherit

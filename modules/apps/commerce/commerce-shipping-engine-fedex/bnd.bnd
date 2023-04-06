@@ -24,3 +24,4 @@ Import-Package:\
 	\
 	*
 Web-ContextPath: /commerce-shipping-engine-fedex
+-dsannotations-options: inherit

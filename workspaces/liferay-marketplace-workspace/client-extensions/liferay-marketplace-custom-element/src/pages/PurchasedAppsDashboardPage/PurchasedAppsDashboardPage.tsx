@@ -12,7 +12,7 @@ import {
 	getSKUCustomFieldExpandoValue,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import {initialDashboardNavigationItems, initialAccountState} from './PurchasedDashboardPageUtil';
+import {initialAccountState, initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -103,7 +103,7 @@ export function PurchasedAppsDashboardPage() {
 				) || channels[0];
 
 			const placedOrders = await getOrders(
-				selectedAccount.id || 50307,
+				selectedAccount?.id || 50307,
 				channel.id,
 				page,
 				purchasedAppTable.pageSize

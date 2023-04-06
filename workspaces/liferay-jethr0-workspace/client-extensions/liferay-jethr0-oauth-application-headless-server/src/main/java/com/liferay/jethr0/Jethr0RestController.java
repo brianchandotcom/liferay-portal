@@ -59,10 +59,10 @@ public class Jethr0RestController {
 	public ResponseEntity<Project> startProject(
 		@RequestBody String requestBody) {
 
-		JSONObject requsetJSONObject = new JSONObject(requestBody);
+		JSONObject requestJSONObject = new JSONObject(requestBody);
 
 		Project project = _projectRepository.getById(
-			requsetJSONObject.getLong("id"));
+			requestJSONObject.getLong("id"));
 
 		project.setState(Project.State.RUNNING);
 

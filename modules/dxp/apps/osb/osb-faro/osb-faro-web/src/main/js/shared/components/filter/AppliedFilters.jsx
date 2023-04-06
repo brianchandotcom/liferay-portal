@@ -1,7 +1,6 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import Label from 'cerebro-shared/components/Label';
 import React from 'react';
 import {
 	filterLangMap,
@@ -9,6 +8,7 @@ import {
 	isClearFilterVisible
 } from 'shared/util/filter';
 import {getDeviceLabel} from 'shared/util/lang';
+import {Label} from 'shared/components/filter/Label';
 import {PropTypes} from 'prop-types';
 
 const CLASSNAME = 'analytics-applied-filters';
@@ -84,13 +84,11 @@ class AppliedFilters extends React.Component {
 				</small>
 				{subItems.map((label, index) => (
 					<Label
-						closeable
 						key={`${index}_subItems`}
 						label={getDeviceLabel(label) || label}
 						onRemove={() =>
 							this.handleRemoveFilter({category, label})
 						}
-						size='lg'
 					/>
 				))}
 			</div>

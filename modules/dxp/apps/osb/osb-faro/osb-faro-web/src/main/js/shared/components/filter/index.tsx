@@ -2,7 +2,7 @@ import AppliedFilters from 'shared/components/filter/AppliedFilters';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import dom from 'metal-dom';
-import DropdownMenu from 'cerebro-shared/components/DropdownMenu';
+import DropdownMenu from 'shared/components/filter/DropdownMenu';
 import React, {useEffect, useRef, useState} from 'react';
 import remove from 'lodash/remove';
 

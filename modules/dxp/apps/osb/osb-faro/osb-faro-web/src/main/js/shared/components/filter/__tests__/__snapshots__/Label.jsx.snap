@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Label should render 1`] = `
+<div>
+  <span
+    class="label label-secondary label-dismissible label-lg"
+  >
+    <span
+      class="label-item label-item-expand"
+    >
+      Label
+    </span>
+    <span
+      class="label-item label-item-after"
+    >
+      <button
+        aria-label="Close"
+        class="button-root btn btn-unstyled close"
+        type="button"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-times"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+          />
+        </svg>
+      </button>
+    </span>
+  </span>
+</div>
+`;

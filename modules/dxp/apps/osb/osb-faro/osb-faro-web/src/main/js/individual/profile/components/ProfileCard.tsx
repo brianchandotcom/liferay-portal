@@ -22,6 +22,7 @@ import UserSessionQuery, {
 import useSelectedPoint from 'shared/hooks/useSelectedPoint';
 import VerticalTimeline from 'shared/components/VerticalTimeline';
 import {compose, withPaginationBar} from 'shared/hoc';
+import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {
 	FORMAT,
 	formatUTCDate,
@@ -110,7 +111,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	const activityResponse = useQuery<EventMetricsData, EventMetricsVariables>(
 		EventMetricQuery,
 		{
-			fetchPolicy: 'network-only',
+			fetchPolicy: fetchPolicyDefinition(rangeSelectors),
 			variables: {
 				channelId,
 				entityId,
@@ -187,7 +188,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	const sessionsResponse = useQuery<UserSessionData, UserSessionVariables>(
 		UserSessionQuery,
 		{
-			fetchPolicy: 'network-only',
+			fetchPolicy: fetchPolicyDefinition(rangeSelectors),
 			variables: {
 				...newRangeSelectors,
 				channelId,
@@ -207,16 +208,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 			total: totalEvents
 		})
 	);
-
-	const handleChangeCustomRange = (rangeSelectors: RangeSelectors) => {
-		onRangeSelectorsChange(rangeSelectors);
-		onPointSelect(null);
-	};
-
-	const handleChangeInterval = (interval: Interval) => {
-		onChangeInterval(interval);
-		onPointSelect(null);
-	};
 
 	const handleChangeSelection = ({
 		index,
@@ -271,12 +262,26 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						activeInterval={interval}
 						className='mr-3'
 						disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
-						onChange={handleChangeInterval}
+						onChange={(interval: Interval) => {
+							onChangeInterval(interval);
+
+							handleChangeSelection({
+								index: null,
+								payload: INITIAL_CHART_PAYLOAD
+							});
+						}}
 					/>
 
 					<DropdownRangeKey
 						legacy={false}
-						onChange={handleChangeCustomRange}
+						onChange={(rangeSelectors: RangeSelectors) => {
+							onRangeSelectorsChange(rangeSelectors);
+
+							handleChangeSelection({
+								index: null,
+								payload: INITIAL_CHART_PAYLOAD
+							});
+						}}
 						rangeSelectors={rangeSelectors}
 					/>
 				</div>

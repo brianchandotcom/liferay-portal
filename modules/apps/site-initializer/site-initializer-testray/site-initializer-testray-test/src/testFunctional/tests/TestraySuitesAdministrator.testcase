@@ -310,6 +310,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Suite that does not exist the system should not return that suite"
+	@priority = 3
+	test AdminCanNotSearchSuiteNonExistent {
+		task ("Given that suite are created via API") {
+			JSONTestray.addSuite(suiteName = ${suiteName});
+		}
+
+		task ("And go to the suite page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+		}
+
+		task ("When the user search suite non existent") {
+			TestrayFilter.clickFilter();
+
+			PortletEntry.inputName(name = "Team 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then not see the suite 3 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Team 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Suite the system should return that suite"
 	@priority = 4
 	test AdminCanSearchSuite {

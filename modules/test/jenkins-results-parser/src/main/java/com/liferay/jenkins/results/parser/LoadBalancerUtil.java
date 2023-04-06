@@ -34,7 +34,16 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, String clock,int minimumRAM,
+		String masterPrefix, String blacklistString, int minimumRAM,
+		int maximumSlavesPerHost, Properties properties) {
+
+		return getAvailableJenkinsMasters(
+			masterPrefix, blacklistString, false, minimumRAM, maximumSlavesPerHost,
+			properties, true);
+	}
+
+	public static List<JenkinsMaster> getAvailableJenkinsMasters(
+		String masterPrefix, String blacklistString, boolean clock, int minimumRAM,
 		int maximumSlavesPerHost, Properties properties) {
 
 		return getAvailableJenkinsMasters(
@@ -43,7 +52,7 @@ public class LoadBalancerUtil {
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, String clock,int minimumRAM,
+		String masterPrefix, String blacklistString, boolean clock, int minimumRAM,
 		int maximumSlavesPerHost, Properties properties, boolean verbose) {
 
 		List<JenkinsMaster> allJenkinsMasters = null;
@@ -71,14 +80,16 @@ public class LoadBalancerUtil {
 			}
 		}
 
-		List<String> goodClockList = _getGoodClockList(properties, verbose);
+		if (clock) {
+			List<String> goodClockList = _getGoodClockList(properties, verbose);
+		}
 
 		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
 			if (blacklist.contains(jenkinsMaster.getName()) ||
-				!goodClockList.contains(jenkinsMaster.getName()) ||
+				(clock && !goodClockList.contains(jenkinsMaster.getName())) ||
 				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
 				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
 

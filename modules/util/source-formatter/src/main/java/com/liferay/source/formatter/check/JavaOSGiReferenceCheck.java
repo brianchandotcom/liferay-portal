@@ -161,7 +161,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				continue;
 			}
 
-			int x = 1;
+			int x = -1;
 
 			while (true) {
 				x = currentBranchFileDiffBlock.indexOf("@Reference", x + 1);

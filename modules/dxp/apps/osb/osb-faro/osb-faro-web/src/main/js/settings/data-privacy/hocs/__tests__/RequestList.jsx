@@ -3,11 +3,7 @@ import mockStore from 'test/mock-store';
 import moment from 'moment';
 import React from 'react';
 import RequestListQuery from '../../queries/RequestListQuery';
-import {
-	cleanup,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import {GDPRRequestStatuses, GDPRRequestTypes} from 'shared/util/constants';
 import {Map, Set} from 'immutable';
 import {MemoryRouter, Route} from 'react-router-dom';
@@ -20,6 +16,7 @@ import {
 	selectFilterDropdownItem,
 	waitForLoading
 } from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 const mockItems = [
 	{
@@ -149,9 +146,7 @@ describe('RequestList', () => {
 	it('should render a request row as checkable with a download button if the status is "DONE"', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 
@@ -171,9 +166,7 @@ describe('RequestList', () => {
 	it('should render a request row as disabled with no download button if the status is not "DONE"', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 
@@ -193,9 +186,7 @@ describe('RequestList', () => {
 	it('should render a request row as disabled with a "download expired" message if the request status is EXPIRED', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

@@ -10,7 +10,7 @@ import {
 	mockTimeRangeReq
 } from 'test/graphql-data';
 import {Provider} from 'react-redux';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
@@ -43,10 +43,6 @@ describe('IndividualOverview', () => {
 		);
 
 		jest.runAllTimers();
-
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
 
 		expect(container).toMatchSnapshot();
 	});

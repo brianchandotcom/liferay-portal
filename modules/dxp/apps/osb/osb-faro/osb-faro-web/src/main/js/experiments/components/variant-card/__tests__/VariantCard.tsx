@@ -1,12 +1,7 @@
 import BasePage from 'shared/components/base-page';
 import React from 'react';
 import VariantCard from '../index';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {ExperimentResolver as Experiment} from 'shared/apollo/resolvers';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
@@ -17,6 +12,7 @@ import {
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
 import {StateProvider} from 'experiments/state';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 jest.useRealTimers();
@@ -63,9 +59,7 @@ describe('VariantCard', () => {
 			</MemoryRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -93,9 +87,7 @@ describe('VariantCard', () => {
 			</MemoryRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getAllByText(PER_DAY)[0].className).not.toContain('active');
 

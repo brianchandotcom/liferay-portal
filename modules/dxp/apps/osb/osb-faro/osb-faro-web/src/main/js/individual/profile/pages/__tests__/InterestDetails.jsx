@@ -2,8 +2,9 @@ import * as data from 'test/data';
 import InterestDetails from '../InterestDetails';
 import React from 'react';
 import {Individual} from 'shared/util/records';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 const defaultProps = {
 	active: 'true',
@@ -23,9 +24,7 @@ describe('InterestDetails', () => {
 			</StaticRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -37,9 +36,7 @@ describe('InterestDetails', () => {
 			</StaticRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Active Pages')).toBeTruthy();
 		expect(getByText('Active Pages').parentElement).toHaveClass('active');
@@ -52,9 +49,7 @@ describe('InterestDetails', () => {
 			</StaticRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Inactive Pages')).toBeTruthy();
 		expect(getByText('Inactive Pages').parentElement).toHaveClass('active');

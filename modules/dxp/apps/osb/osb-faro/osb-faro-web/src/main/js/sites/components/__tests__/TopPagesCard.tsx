@@ -6,8 +6,9 @@ import {ApolloProvider} from '@apollo/react-components';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockSitesTopPagesReq, mockTimeRangeReq} from 'test/graphql-data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -48,9 +49,7 @@ describe('TopPagesCard', () => {
 	it('renders', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

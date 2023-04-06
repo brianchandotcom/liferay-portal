@@ -4,11 +4,7 @@ import CommerceTotalOrderValueQuery, {
 } from 'commerce/queries/TotalOrderValueQuery';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-hooks';
-import {
-	cleanup,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import {CommerceMetricCard} from 'commerce/components/CommerceMetricCard';
 import {
 	mockCommerceTotalOrderValueReq,
@@ -19,6 +15,7 @@ import {mockUser} from 'test/data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {StaticRouter} from 'react-router-dom';
 import {User} from 'shared/util/records';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -103,9 +100,7 @@ describe('CommerceMetricCard', () => {
 			<WrappedComponent data={getData({})} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const dropdownRangeSelector = document.querySelector(
 			'.dropdown-range-key-menu-root'
@@ -122,9 +117,7 @@ describe('CommerceMetricCard', () => {
 	it('should render with empty state message', async () => {
 		const {container, getByText} = render(<WrappedComponent data={[]} />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			getByText('There are no orders on the selected period.')
@@ -145,9 +138,7 @@ describe('CommerceMetricCard Classifications', () => {
 			<WrappedComponent data={getData({classification: 'POSITIVE'})} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(window.getComputedStyle(trendElement).color).toEqual(
@@ -163,9 +154,7 @@ describe('CommerceMetricCard Classifications', () => {
 			<WrappedComponent data={getData({classification: 'NEGATIVE'})} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(window.getComputedStyle(trendElement).color).toEqual(
@@ -181,9 +170,7 @@ describe('CommerceMetricCard Classifications', () => {
 			<WrappedComponent data={getData({classification: 'NEUTRAL'})} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(window.getComputedStyle(trendElement).color).toEqual(
@@ -205,9 +192,7 @@ describe('CommerceMetricCard Trend', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(
@@ -222,9 +207,7 @@ describe('CommerceMetricCard Trend', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(
@@ -239,9 +222,7 @@ describe('CommerceMetricCard Trend', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const trendElement = container.querySelector('.analytics-trend');
 		expect(
@@ -264,9 +245,7 @@ describe('CommerceMetricCard Format Currency', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const currencyValue = document.querySelector('.commerce-card-currency');
 
@@ -281,9 +260,7 @@ describe('CommerceMetricCard Format Currency', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const currencyValue = document.querySelector('.commerce-card-currency');
 
@@ -298,9 +275,7 @@ describe('CommerceMetricCard Format Currency', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const currencyValue = document.querySelector('.commerce-card-currency');
 

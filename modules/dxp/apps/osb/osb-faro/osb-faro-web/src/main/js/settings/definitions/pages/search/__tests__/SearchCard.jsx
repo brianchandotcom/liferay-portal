@@ -3,15 +3,12 @@ import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import SearchCard from '../SearchCard';
-import {
-	fireEvent,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockSearchStringListReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -37,9 +34,7 @@ describe('SearchCard', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -47,9 +42,7 @@ describe('SearchCard', () => {
 	it('should have a default uneditable field with value of q', async () => {
 		const {container, getByDisplayValue} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByDisplayValue('q')).toBeTruthy();
 	});
@@ -57,9 +50,7 @@ describe('SearchCard', () => {
 	it('should remove special characters on fields', async () => {
 		const {container, getByDisplayValue} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const input = getByDisplayValue('jackson');
 
@@ -71,9 +62,7 @@ describe('SearchCard', () => {
 	it('should remove every character after equals sign', async () => {
 		const {container, getByDisplayValue} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const input = getByDisplayValue('jackson');
 
@@ -89,9 +78,7 @@ describe('SearchCard', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		container.querySelectorAll('.query-input input').forEach(el => {
 			expect(el).toBeDisabled();
@@ -105,9 +92,7 @@ describe('SearchCard', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('.query-card-root button')

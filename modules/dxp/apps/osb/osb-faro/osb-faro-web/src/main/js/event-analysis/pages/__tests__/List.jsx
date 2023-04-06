@@ -6,11 +6,7 @@ import EventAnalysisList from '../List';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-components';
-import {
-	fireEvent,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockEmptyState, mockSuccessState} from 'test/__mocks__/mock-objects';
@@ -18,6 +14,7 @@ import {mockEventAnalysisListReq} from 'test/graphql-data';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -71,9 +68,7 @@ describe('Event Analysis List', () => {
 			<WrappedComponent eventAnalyses={eventAnalysis} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -81,9 +76,7 @@ describe('Event Analysis List', () => {
 	it('should render empty state', async () => {
 		const {container} = render(<WrappedComponent eventAnalyses={[]} />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const noResults = container.querySelector('.no-results-root');
 
@@ -100,9 +93,7 @@ describe('Event Analysis List', () => {
 			<WrappedComponent eventAnalyses={eventAnalysis} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const deleteButton = container.querySelector(
 			'table tbody tr button[title="Delete"]'
@@ -118,9 +109,7 @@ describe('Event Analysis List', () => {
 			<WrappedComponent eventAnalyses={eventAnalysis} />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const managementBar = container.querySelector('.management-bar');
 

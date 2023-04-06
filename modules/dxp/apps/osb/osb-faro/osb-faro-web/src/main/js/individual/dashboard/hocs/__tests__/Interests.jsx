@@ -3,8 +3,9 @@ import React from 'react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockIndividualInterestsReq} from 'test/graphql-data';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -33,9 +34,7 @@ describe('Interests', () => {
 			</MockedProvider>
 		);
 
-		await waitForElementToBeRemoved(
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

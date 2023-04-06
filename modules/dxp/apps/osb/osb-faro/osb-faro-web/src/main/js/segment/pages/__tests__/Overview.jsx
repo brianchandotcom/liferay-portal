@@ -5,9 +5,10 @@ import Overview from '../Overview';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-components';
 import {Provider} from 'react-redux';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {Segment} from 'shared/util/records';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -30,9 +31,7 @@ describe('SegmentOverview', () => {
 			</Provider>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		).then(() => {
+		await waitForLoadingToBeRemoved(container).then(() => {
 			expect(container).toMatchSnapshot();
 		});
 	});

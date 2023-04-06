@@ -4,10 +4,11 @@ import React from 'react';
 import {DataSource, User} from 'shared/util/records';
 import {Edit} from '../Edit';
 import {Provider} from 'react-redux';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {Routes, toRoute} from 'shared/util/router';
 import {StaticRouter} from 'react-router';
 import {UserRoleNames} from 'shared/util/constants';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 jest.useRealTimers();
@@ -59,9 +60,7 @@ describe('Edit', () => {
 			</Provider>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Configure Salesforce')).toBeInTheDocument();
 	});

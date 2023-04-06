@@ -1,8 +1,9 @@
 import Interests, {ContributionsCell} from '../Interests';
 import React from 'react';
 import {MemoryRouter, Route} from 'react-router-dom';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -20,9 +21,7 @@ describe('Interests', () => {
 			</MemoryRouter>
 		);
 
-		await waitForElementToBeRemoved(
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

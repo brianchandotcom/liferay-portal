@@ -6,8 +6,9 @@ import {ApolloProvider} from '@apollo/react-components';
 import {CompositionTypes, RangeKeyTimeRanges} from 'shared/util/constants';
 import {mockAcquisitionsReq, mockTimeRangeReq} from 'test/graphql-data';
 import {MockedProvider} from '@apollo/react-testing';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -45,9 +46,7 @@ describe('AcquisitionsCard', () => {
 	it('renders', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

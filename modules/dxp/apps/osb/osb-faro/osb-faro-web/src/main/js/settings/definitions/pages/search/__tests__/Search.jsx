@@ -4,8 +4,9 @@ import Search from '../Search';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockSearchStringListReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -23,9 +24,7 @@ describe('Search', () => {
 			</MockedProvider>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

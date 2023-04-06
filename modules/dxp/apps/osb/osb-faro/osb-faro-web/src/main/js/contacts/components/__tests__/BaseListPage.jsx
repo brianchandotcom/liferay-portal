@@ -5,12 +5,7 @@ import mockStore from 'test/mock-store';
 import Promise from 'metal-promise';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
-import {
-	cleanup,
-	render,
-	waitForElement,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {cleanup, render, waitForElement} from '@testing-library/react';
 import {createOrderIOMap} from 'shared/util/pagination';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {mockChannelContext} from 'test/mock-channel-context';
@@ -19,6 +14,7 @@ import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {times} from 'lodash';
 import {User} from 'shared/util/records';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 const TOTAL = 5;
 
@@ -83,9 +79,7 @@ describe('BaseListPage', () => {
 	it('should render', async () => {
 		const {container} = render(<WrappedComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -93,9 +87,7 @@ describe('BaseListPage', () => {
 	it('should load accounts', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelectorAll('.table-head-title')).toHaveLength(2);
 		expect(container.querySelector('tbody').children).toHaveLength(5);
@@ -106,9 +98,7 @@ describe('BaseListPage', () => {
 	it('should render "No Account" empty state with no query', async () => {
 		const {container, getByText} = render(<WrappedComponent empty />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			getByText('There is no account data from existing data sources.')
@@ -121,9 +111,7 @@ describe('BaseListPage', () => {
 			<WrappedComponent empty query='test' />
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.tbar-nav').children).toHaveLength(2);
 

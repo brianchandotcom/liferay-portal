@@ -3,7 +3,9 @@ import EmailReports from '../EmailReports';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {Provider} from 'react-redux';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
+
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -30,9 +32,7 @@ describe('EmailReports', () => {
 	it('should render', async () => {
 		const {container} = render(<WrappedComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -40,9 +40,7 @@ describe('EmailReports', () => {
 	it('should render with config btn enabled', async () => {
 		const {container} = render(<WrappedComponent sitesSynced />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const configBtn = container.querySelector('button');
 
@@ -60,9 +58,7 @@ describe('EmailReports', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Email Reports: Disabled'));
 	});
@@ -76,9 +72,7 @@ describe('EmailReports', () => {
 			/>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Email Reports: Enabled'));
 	});
@@ -86,9 +80,7 @@ describe('EmailReports', () => {
 	it('should render with config btn disabled', async () => {
 		const {container} = render(<WrappedComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		const configBtn = container.querySelector('button');
 

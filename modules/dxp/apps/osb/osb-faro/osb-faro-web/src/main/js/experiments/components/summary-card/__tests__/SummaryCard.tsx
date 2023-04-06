@@ -1,17 +1,14 @@
 import BasePage from 'shared/components/base-page';
 import React from 'react';
 import SummaryCard from '../SummaryCard';
-import {
-	cleanup,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import {ExperimentResolver as Experiment} from 'shared/apollo/resolvers';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockExperimentReq} from 'test/graphql-data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {StateProvider} from 'experiments/state';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -48,9 +45,7 @@ describe('SummaryCard', () => {
 			</StaticRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

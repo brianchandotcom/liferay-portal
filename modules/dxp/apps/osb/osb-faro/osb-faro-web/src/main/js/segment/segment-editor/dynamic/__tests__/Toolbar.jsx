@@ -1,14 +1,11 @@
 import * as API from 'shared/api';
 import * as data from 'test/data';
 import React from 'react';
-import {
-	cleanup,
-	render,
-	waitForElementToBeRemoved
-} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import {Formik} from 'formik';
 import {StaticRouter} from 'react-router';
 import {Toolbar} from '../Toolbar';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -81,9 +78,7 @@ describe('Toolbar', () => {
 			</StaticRouter>
 		);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByTestId('preview-criteria-button')).toBeEnabled();
 	});

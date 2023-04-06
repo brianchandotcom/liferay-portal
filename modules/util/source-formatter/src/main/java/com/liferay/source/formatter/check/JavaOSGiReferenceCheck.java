@@ -158,7 +158,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				if (line.startsWith(StringPool.DASH)) {
 					continue;
 				}
-				else if (line.startsWith(StringPool.PLUS)) {
+
+				if (line.startsWith(StringPool.PLUS)) {
 					line = line.substring(1);
 
 					String trimmedLine = StringUtil.trimLeading(line);

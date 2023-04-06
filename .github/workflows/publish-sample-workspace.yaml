@@ -1,0 +1,24 @@
+jobs:
+    publish-workspaces:
+        env:
+            ANT_OPTS: "-Xmx2560m"
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Set up JDK 8
+              uses: actions/setup-java@v3
+              with:
+                  distribution: "temurin"
+                  java-version: "8"
+            - name: Build with Ant
+              run: ant
+            - name: Run publish-workspaces task
+              run: ant publish-workspaces -Dsonatype.release.password=${{secrets.LIFERAY_NEXUS_PASSWORD}} -Dsonatype.release.username=${{secrets.LIFERAY_NEXUS_USERNAME}}
+name: CI Publish Workspaces
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - workspaces/liferay-sample-workspace/**

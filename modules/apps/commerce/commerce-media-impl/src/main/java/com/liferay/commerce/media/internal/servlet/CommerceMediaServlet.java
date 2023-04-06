@@ -474,7 +474,8 @@ public class CommerceMediaServlet extends HttpServlet {
 			if (cpDefinition == null) {
 				_sendError(
 					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-					"The product " + cpDefinitionId + " does not exist");
+					"The commerce product definition " + cpDefinitionId +
+						" does not exist");
 
 				return;
 			}
@@ -511,7 +512,8 @@ public class CommerceMediaServlet extends HttpServlet {
 			if (cpDefinitionVirtualSetting == null) {
 				_sendError(
 					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-					"The product " + cpDefinitionId + " is not virtual");
+					"The commerce product definition " + cpDefinitionId +
+						" is not virtual");
 
 				return;
 			}

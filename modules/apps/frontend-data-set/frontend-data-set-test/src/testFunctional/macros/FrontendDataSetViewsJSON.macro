@@ -1,0 +1,50 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a DataSet"
+	macro addDataSetViaAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		FrontendDataSetAdmin.dataSetVariables(
+			dataSetName = ${dataSetName},
+			dataSetPath = ${dataSetPath},
+			provider = ${provider},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			version = ${version});
+
+		if (${provider} == "FDSEntry") {
+			var provider = "ObjectEntry#C_FDSEntry";
+		}
+
+		if (${provider} == "FDSView") {
+			var provider = "ObjectEntry#C_FDSView";
+		}
+
+		var dataSetPath = StringUtil.lowerCase(${dataSetPath});
+
+		var dataSetPath = StringUtil.replace(${dataSetPath}, " ", ".");
+		var version = StringUtil.replace(${version}, ".", "_");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsentries \
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+					"entityClassName": "com.${dataSetPath}.dto.${version}.${provider}",
+					"label": "${dataSetName}"
+				}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+}

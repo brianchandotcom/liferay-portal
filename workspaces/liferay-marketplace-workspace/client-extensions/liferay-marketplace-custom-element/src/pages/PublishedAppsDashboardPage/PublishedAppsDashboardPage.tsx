@@ -22,14 +22,17 @@ import {
 import {
 	AccountBriefProps,
 	MemberProps,
-	UserAccountProps,
-	initialDashboardNavigationItems,
+	ProductResponseProps,
 	ProductSpecificationProps,
 	RoleBriefProps,
-	ProductResponseProps,
+	UserAccountProps,
+	initialDashboardNavigationItems,
 } from './PublishedDashboardPageUtil';
 
-declare let Liferay: {ThemeDisplay: { getLanguageId: () => string; }; authToken: string};
+declare let Liferay: {
+	ThemeDisplay: {getLanguageId: () => string};
+	authToken: string;
+};
 
 const appTableHeaders = [
 	{
@@ -126,7 +129,8 @@ export function PublishedAppsDashboardPage() {
 	};
 
 	function getAppListProductSpecifications(productIds: number[]) {
-		const appListProductSpecifications: Promise<ProductSpecificationProps>[] = [];
+		const appListProductSpecifications: Promise<ProductSpecificationProps>[] =
+			[];
 
 		productIds.forEach((productId) => {
 			appListProductSpecifications.push(
@@ -147,7 +151,9 @@ export function PublishedAppsDashboardPage() {
 		return productIds;
 	}
 
-	function getProductTypeFromSpecifications(specifications: ProductSpecificationProps) {
+	function getProductTypeFromSpecifications(
+		specifications: ProductSpecificationProps
+	) {
 		let productType = 'no type';
 
 		specifications.items.forEach((specification: Specification) => {
@@ -166,7 +172,9 @@ export function PublishedAppsDashboardPage() {
 		return productType;
 	}
 
-	function getProductVersionFromSpecifications(specifications: ProductSpecificationProps) {
+	function getProductVersionFromSpecifications(
+		specifications: ProductSpecificationProps
+	) {
 		let productVersion = '0';
 
 		specifications.items.forEach((specification: Specification) => {
@@ -231,30 +239,35 @@ export function PublishedAppsDashboardPage() {
 
 					const newAppList: AppProps[] = [];
 
-					appList.items.forEach((product: ProductResponseProps, index: number) => {
-						if (product.catalogId === currentCatalogId) {
-							newAppList.push({
-								catalogId: product.catalogId,
-								externalReferenceCode:
-									product.externalReferenceCode,
-								lastUpdatedBy: product.lastUpdatedBy,
-								name: product.name.en_US,
-								productId: product.productId,
-								status: product.workflowStatusInfo.label.replace(
-									/(^\w|\s\w)/g,
-									(m: string) => m.toUpperCase()
-								),
-								thumbnail: product.thumbnail,
-								type: getProductTypeFromSpecifications(
-									appListProductSpecifications[index]
-								),
-								updatedDate: formatDate(product.modifiedDate),
-								version: getProductVersionFromSpecifications(
-									appListProductSpecifications[index]
-								),
-							});
+					appList.items.forEach(
+						(product: ProductResponseProps, index: number) => {
+							if (product.catalogId === currentCatalogId) {
+								newAppList.push({
+									catalogId: product.catalogId,
+									externalReferenceCode:
+										product.externalReferenceCode,
+									lastUpdatedBy: product.lastUpdatedBy,
+									name: product.name.en_US,
+									productId: product.productId,
+									status: product.workflowStatusInfo.label.replace(
+										/(^\w|\s\w)/g,
+										(m: string) => m.toUpperCase()
+									),
+									thumbnail: product.thumbnail,
+									type: getProductTypeFromSpecifications(
+										appListProductSpecifications[index]
+									),
+									updatedDate: formatDate(
+										product.modifiedDate
+									),
+									version:
+										getProductVersionFromSpecifications(
+											appListProductSpecifications[index]
+										),
+								});
+							}
 						}
-					});
+					);
 
 					setApps(newAppList);
 				}
@@ -284,10 +297,11 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		(() => {
-			const clickedNavigationItem = dashboardNavigationItems.find(
-				(dashboardNavigationItem) =>
-					dashboardNavigationItem.itemSelected
-			) || dashboardNavigationItems[0];
+			const clickedNavigationItem =
+				dashboardNavigationItems.find(
+					(dashboardNavigationItem) =>
+						dashboardNavigationItem.itemSelected
+				) || dashboardNavigationItems[0];
 
 			setSelectedNavigationItem(clickedNavigationItem.itemTitle);
 		})();

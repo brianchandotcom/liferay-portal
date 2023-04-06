@@ -23,7 +23,7 @@ export function DashboardNavigationListItem({
 	onSelectAppChange,
 	setDashboardNavigationItems,
 }: DashboardNavigationListItem) {
-	const {thumbnail, name, selected, status, version} = item;
+	const {name, selected, status, thumbnail, version} = item;
 
 	return (
 		<div

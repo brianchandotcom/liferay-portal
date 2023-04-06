@@ -114,9 +114,9 @@ type SKU = {
 };
 
 type Specification = {
-    specificationKey: string;
-    value: {[key: string] : string};
-}
+	specificationKey: string;
+	value: {[key: string]: string};
+};
 
 type UserAccount = {
 	accountBriefs: AccountBrief[];

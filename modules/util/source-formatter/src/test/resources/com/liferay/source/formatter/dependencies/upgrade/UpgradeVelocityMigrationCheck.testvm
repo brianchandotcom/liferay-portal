@@ -1,0 +1,11 @@
+## Velocity Transform Template
+##
+## Test migration of Velocity template to Freemarker Template
+
+#set ($portalBeanLocator = $portal.getClass().forName('com.liferay.portal.kernel.bean.PortalBeanLocatorUtil'))
+#set ($dateFormatFactory = $portalBeanLocator.locate('com.liferay.portal.kernel.util.DateFormatFactoryUtil'))
+
+## #set ($indexFormat = $dateFormatFactory.getSimpleDateFormat('EEE, dd MMM yyyy hh:mm:ss Z'))
+## #set ($modified_date = $indexFormat.parse($reserved-article-display-date.getData()))
+## #set ($modified_date = $indexFormat.parse($$reserved-article-modified-date.getData()))
+## #set ($mod_date = $dateTool.format("d MMMM yyyy H:m",$modified_date))

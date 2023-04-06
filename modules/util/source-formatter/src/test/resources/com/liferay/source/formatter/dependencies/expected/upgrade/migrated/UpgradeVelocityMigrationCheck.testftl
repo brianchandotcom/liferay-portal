@@ -1,0 +1,11 @@
+<#-- FreeMarker Template -->
+
+<#-- Test migration of Velocity template to Freemarker Template -->
+
+<#assign $portalBeanLocator = $portal.getClass().forName('com.liferay.portal.kernel.bean.PortalBeanLocatorUtil') />
+<#assign $dateFormatFactory = $portalBeanLocator.locate('com.liferay.portal.kernel.util.DateFormatFactoryUtil') />
+
+<#-- <#assign $indexFormat = $dateFormatFactory.getSimpleDateFormat('EEE, dd MMM yyyy hh:mm:ss Z') /> -->
+<#-- <#assign $modified_date = $indexFormat.parse($reserved-article-display-date.getData()) /> -->
+<#-- <#assign $modified_date = $indexFormat.parse($$reserved-article-modified-date.getData()) /> -->
+<#-- <#assign $mod_date = $dateTool.format("d MMMM yyyy H:m",$modified_date) /> -->

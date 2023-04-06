@@ -54,12 +54,12 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeVelocityCommentMigrationCheck() throws Exception {
+	public void testUpgradeVelocityMigrationCheck() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
-				"upgrade/UpgradeVelocityCommentMigrationCheck.testvm"
+				"upgrade/UpgradeVelocityMigrationCheck.testvm"
 			).setExpectedFileName(
-				"upgrade/migrated/UpgradeVelocityCommentMigrationCheck.testftl"
+				"upgrade/migrated/UpgradeVelocityMigrationCheck.testftl"
 			));
 	}
 

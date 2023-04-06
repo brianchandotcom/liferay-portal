@@ -63,7 +63,7 @@ definition {
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175680");
 
-			ObjectAdmin.addObjectMultiPicklistFieldEntryViaUI(picklistOptionList = "Picklist Item 1, Picklist Item 2");
+			ObjectAdmin.addObjectMultiPicklistFieldEntryViaUI(picklistOptionList = "Picklist Item 1,Picklist Item 2");
 
 			PortletEntry.save();
 		}

@@ -246,7 +246,7 @@ definition {
 						"listTypeDefinitionId": ${picklist},
 						"name": "${fieldName}",
 						"objectFieldSettings": [],
-						"required": true,
+						"required": ${isRequired},
 						"system": false,
 						"type": "String"
 					}'

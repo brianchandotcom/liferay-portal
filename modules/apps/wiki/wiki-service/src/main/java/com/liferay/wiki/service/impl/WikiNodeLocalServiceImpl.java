@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -86,6 +87,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
 	property = "model.class.name=com.liferay.wiki.model.WikiNode",
 	service = AopService.class
 )
@@ -557,7 +559,12 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
+
 		_wikiImporterServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, WikiImporter.class, "importer");
@@ -679,9 +686,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
-
 	private ServiceTrackerMap<String, WikiImporter>
 		_wikiImporterServiceTrackerMap;
 

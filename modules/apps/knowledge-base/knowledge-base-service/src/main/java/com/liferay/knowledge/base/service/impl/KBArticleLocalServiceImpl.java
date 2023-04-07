@@ -63,6 +63,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -144,6 +145,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -153,6 +155,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Edward Han
  */
 @Component(
+	configurationPid = "com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration",
 	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = AopService.class
 )
@@ -1479,6 +1482,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return kbArticle;
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_kbServiceConfiguration = ConfigurableUtil.createConfigurable(
+			KBServiceConfiguration.class, properties);
+	}
+
 	private void _addKBArticleAttachment(
 			long userId, long groupId, long resourcePrimKey,
 			String selectedFileName)
@@ -2548,7 +2557,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	@Reference
 	private KBFolderPersistence _kbFolderPersistence;
 
-	@Reference
 	private KBServiceConfiguration _kbServiceConfiguration;
 
 	@Reference

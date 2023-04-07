@@ -65,6 +65,7 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -129,6 +130,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -138,6 +140,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
+	configurationPid = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
 	property = "model.class.name=com.liferay.commerce.model.CommerceOrder",
 	service = AopService.class
 )
@@ -1771,6 +1774,12 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceOrderConfiguration = ConfigurableUtil.createConfigurable(
+			CommerceOrderConfiguration.class, properties);
+	}
+
 	private SearchContext _buildSearchContext(
 			long companyId, long commerceChannelGroupId,
 			long[] commerceAccountIds, String keywords, boolean negated,
@@ -2299,7 +2308,6 @@ public class CommerceOrderLocalServiceImpl
 	@Reference
 	private CommerceModelAttributesProvider _commerceModelAttributesProvider;
 
-	@Reference
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@Reference

@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -72,6 +73,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -80,6 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
 	property = {"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"},
 	service = WikiImporter.class
 )
@@ -156,6 +159,12 @@ public class MediaWikiImporter implements WikiImporter {
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
 	}
 
 	private String _getCreoleRedirectContent(String redirectTitle) {
@@ -812,7 +821,6 @@ public class MediaWikiImporter implements WikiImporter {
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 	@Reference

@@ -29,6 +29,7 @@ import com.liferay.commerce.wish.list.service.base.CommerceWishListItemLocalServ
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -37,7 +38,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
+	configurationPid = "com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration",
 	property = "model.class.name=com.liferay.commerce.wish.list.model.CommerceWishListItem",
 	service = AopService.class
 )
@@ -186,6 +190,12 @@ public class CommerceWishListItemLocalServiceImpl
 			commerceWishListId);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceWishListConfiguration = ConfigurableUtil.createConfigurable(
+			CommerceWishListConfiguration.class, properties);
+	}
+
 	private void _validate(
 			CommerceWishList commerceWishList, long cProductId,
 			String cpInstanceUuid)
@@ -221,7 +231,6 @@ public class CommerceWishListItemLocalServiceImpl
 		}
 	}
 
-	@Reference
 	private CommerceWishListConfiguration _commerceWishListConfiguration;
 
 	@Reference

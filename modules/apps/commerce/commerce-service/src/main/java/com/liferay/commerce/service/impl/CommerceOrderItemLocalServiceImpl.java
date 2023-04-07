@@ -63,6 +63,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -104,8 +105,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -116,6 +119,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(
+	configurationPid = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
 	property = "model.class.name=com.liferay.commerce.model.CommerceOrderItem",
 	service = AopService.class
 )
@@ -1200,6 +1204,12 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceOrderConfiguration = ConfigurableUtil.createConfigurable(
+			CommerceOrderConfiguration.class, properties);
 	}
 
 	private SearchContext _buildSearchContext(
@@ -2334,7 +2344,6 @@ public class CommerceOrderItemLocalServiceImpl
 	@Reference
 	private CommerceOptionValueHelper _commerceOptionValueHelper;
 
-	@Reference
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@Reference

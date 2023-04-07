@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -32,13 +33,17 @@ import com.liferay.wiki.service.WikiNodeLocalService;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
  */
-@Component(service = StagedModelDataHandler.class)
+@Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
+	service = StagedModelDataHandler.class
+)
 public class WikiNodeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<WikiNode> {
 
@@ -80,6 +85,12 @@ public class WikiNodeStagedModelDataHandler
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
 	}
 
 	@Override
@@ -223,7 +234,6 @@ public class WikiNodeStagedModelDataHandler
 			StringBundler.concat(nodeName, StringPool.SPACE, count), ++count);
 	}
 
-	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 	@Reference

@@ -15,6 +15,7 @@
 package com.liferay.wiki.engine.html.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,7 +54,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Zsigmond Rab
  */
-@Component(service = WikiEngine.class)
+@Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
+	service = WikiEngine.class
+)
 public class HtmlEngine extends BaseWikiEngine {
 
 	@Override
@@ -94,7 +98,10 @@ public class HtmlEngine extends BaseWikiEngine {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
+
 		_friendlyURLMapping =
 			Portal.FRIENDLY_URL_SEPARATOR + _friendlyURLMapper.getMapping();
 
@@ -196,7 +203,6 @@ public class HtmlEngine extends BaseWikiEngine {
 	)
 	private ServletContext _servletContext;
 
-	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 	@Reference

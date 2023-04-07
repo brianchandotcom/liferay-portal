@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.navigation.web.internal.portlet;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -21,11 +22,14 @@ import com.liferay.wiki.navigation.web.internal.constants.WikiNavigationPortletK
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
 	property = {
 		"com.liferay.portlet.css-class-wrapper=wiki-navigation-portlet-tree-menu",
 		"com.liferay.portlet.display-category=category.wiki",
@@ -68,12 +73,17 @@ public class WikiNavigationTreeMenuPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
+	}
+
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.wiki.navigation.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
 
-	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

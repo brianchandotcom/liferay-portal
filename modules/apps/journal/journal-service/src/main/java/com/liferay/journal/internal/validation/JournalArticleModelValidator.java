@@ -48,6 +48,7 @@ import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -81,6 +82,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -88,6 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
+	configurationPid = "com.liferay.journal.configuration.JournalFileUploadsConfiguration",
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
 	service = ModelValidator.class
 )
@@ -481,6 +484,12 @@ public class JournalArticleModelValidator
 			groupId, content);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			JournalFileUploadsConfiguration.class, properties);
+	}
+
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -521,7 +530,6 @@ public class JournalArticleModelValidator
 	@Reference
 	private JournalConverter _journalConverter;
 
-	@Reference
 	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
 
 	@Reference

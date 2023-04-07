@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.engine.creole.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,13 +45,17 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
  */
-@Component(service = WikiEngine.class)
+@Component(
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
+	service = WikiEngine.class
+)
 public class CreoleWikiEngine extends BaseWikiEngine {
 
 	@Override
@@ -121,6 +126,12 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 		return outgoingLinks;
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
+	}
+
 	@Override
 	protected ServletContext getEditPageServletContext() {
 		return _wikiEngineInputEditorServletContext;
@@ -175,7 +186,6 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 	)
 	private ServletContext _wikiEngineInputEditorServletContext;
 
-	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 	@Reference

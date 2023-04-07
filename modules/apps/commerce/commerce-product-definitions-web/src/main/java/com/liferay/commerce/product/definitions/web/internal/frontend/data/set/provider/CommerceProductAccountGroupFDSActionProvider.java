@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
-import com.liferay.commerce.product.definitions.web.internal.model.AccountGroup;
+import com.liferay.commerce.product.definitions.web.internal.model.CProductAccountGroup;
 import com.liferay.commerce.product.definitions.web.internal.security.permission.resource.CommerceCatalogPermission;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -58,14 +58,14 @@ public class CommerceProductAccountGroupFDSActionProvider
 			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
-		AccountGroup accountGroup = (AccountGroup)model;
+		CProductAccountGroup cProductAccountGroup = (CProductAccountGroup)model;
 
-		CommerceAccountGroupRel commerceAccountGroupRel =
-			_commerceAccountGroupRelService.getCommerceAccountGroupRel(
-				accountGroup.getCommerceAccountGroupRelId());
+		AccountGroupRel accountGroupRel =
+			_accountGroupRelLocalService.getAccountGroupRel(
+				cProductAccountGroup.getAccountGroupRelId());
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			commerceAccountGroupRel.getClassPK());
+			accountGroupRel.getClassPK());
 
 		return DropdownItemListBuilder.add(
 			() -> CommerceCatalogPermission.contains(
@@ -73,7 +73,7 @@ public class CommerceProductAccountGroupFDSActionProvider
 				ActionKeys.UPDATE),
 			dropdownItem -> {
 				PortletURL deleteURL = _getAccountGroupDeleteURL(
-					commerceAccountGroupRel, httpServletRequest);
+					accountGroupRel, httpServletRequest);
 
 				dropdownItem.setHref(deleteURL.toString());
 
@@ -84,7 +84,7 @@ public class CommerceProductAccountGroupFDSActionProvider
 	}
 
 	private PortletURL _getAccountGroupDeleteURL(
-		CommerceAccountGroupRel commerceAccountGroupRel,
+		AccountGroupRel accountGroupRel,
 		HttpServletRequest httpServletRequest) {
 
 		return PortletURLBuilder.create(
@@ -100,15 +100,14 @@ public class CommerceProductAccountGroupFDSActionProvider
 				httpServletRequest, "currentUrl",
 				_portal.getCurrentURL(httpServletRequest))
 		).setParameter(
-			"commerceAccountGroupRelId",
-			commerceAccountGroupRel.getCommerceAccountGroupRelId()
+			"commerceAccountGroupRelId", accountGroupRel.getAccountGroupRelId()
 		).setParameter(
-			"cpDefinitionId", commerceAccountGroupRel.getClassPK()
+			"cpDefinitionId", accountGroupRel.getClassPK()
 		).buildPortletURL();
 	}
 
 	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

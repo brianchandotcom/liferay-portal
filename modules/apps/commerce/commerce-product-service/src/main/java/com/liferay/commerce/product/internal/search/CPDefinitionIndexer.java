@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.product.internal.search;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -245,57 +245,52 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			contextBooleanFilter.add(
 				commerceChannelBooleanFilter, BooleanClauseOccur.MUST);
 
-			long[] commerceAccountGroupIds = GetterUtil.getLongValues(
+			long[] accountGroupIds = GetterUtil.getLongValues(
 				searchContext.getAttribute("commerceAccountGroupIds"), null);
 
-			BooleanFilter commerceAccountGroupsBooleanFilter =
+			BooleanFilter accountGroupsBooleanFilter = new BooleanFilter();
+
+			BooleanFilter accountGroupsFilterEnableBooleanFilter =
 				new BooleanFilter();
 
-			BooleanFilter commerceAccountGroupsFilterEnableBooleanFilter =
-				new BooleanFilter();
-
-			commerceAccountGroupsFilterEnableBooleanFilter.addTerm(
+			accountGroupsFilterEnableBooleanFilter.addTerm(
 				CPField.ACCOUNT_GROUP_FILTER_ENABLED, Boolean.TRUE.toString(),
 				BooleanClauseOccur.MUST);
 
-			if ((commerceAccountGroupIds != null) &&
-				(commerceAccountGroupIds.length > 0)) {
-
-				BooleanFilter commerceAccountGroupIdsBooleanFilter =
+			if ((accountGroupIds != null) && (accountGroupIds.length > 0)) {
+				BooleanFilter accountGroupIdsBooleanFilter =
 					new BooleanFilter();
 
-				for (long commerceAccountGroupId : commerceAccountGroupIds) {
+				for (long accountGroupId : accountGroupIds) {
 					Filter termFilter = new TermFilter(
 						"commerceAccountGroupIds",
-						String.valueOf(commerceAccountGroupId));
+						String.valueOf(accountGroupId));
 
-					commerceAccountGroupIdsBooleanFilter.add(
+					accountGroupIdsBooleanFilter.add(
 						termFilter, BooleanClauseOccur.SHOULD);
 				}
 
-				commerceAccountGroupsFilterEnableBooleanFilter.add(
-					commerceAccountGroupIdsBooleanFilter,
-					BooleanClauseOccur.MUST);
+				accountGroupsFilterEnableBooleanFilter.add(
+					accountGroupIdsBooleanFilter, BooleanClauseOccur.MUST);
 			}
 			else {
-				commerceAccountGroupsFilterEnableBooleanFilter.addTerm(
+				accountGroupsFilterEnableBooleanFilter.addTerm(
 					"commerceAccountGroupIds", "-1", BooleanClauseOccur.MUST);
 			}
 
-			commerceAccountGroupsBooleanFilter.add(
-				commerceAccountGroupsFilterEnableBooleanFilter,
+			accountGroupsBooleanFilter.add(
+				accountGroupsFilterEnableBooleanFilter,
 				BooleanClauseOccur.SHOULD);
-			commerceAccountGroupsBooleanFilter.addTerm(
+			accountGroupsBooleanFilter.addTerm(
 				CPField.ACCOUNT_GROUP_FILTER_ENABLED, Boolean.FALSE.toString(),
 				BooleanClauseOccur.SHOULD);
 
-			boolean ignoreCommerceAccountGroup = GetterUtil.getBoolean(
+			boolean ignoreAccountGroup = GetterUtil.getBoolean(
 				attributes.get("ignoreCommerceAccountGroup"));
 
-			if (!ignoreCommerceAccountGroup) {
+			if (!ignoreAccountGroup) {
 				contextBooleanFilter.add(
-					commerceAccountGroupsBooleanFilter,
-					BooleanClauseOccur.MUST);
+					accountGroupsBooleanFilter, BooleanClauseOccur.MUST);
 			}
 		}
 		else {
@@ -474,7 +469,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addKeyword(
 				CPField.DEFAULT_IMAGE_FILE_URL,
 				_commerceMediaResolver.getURL(
-					CommerceAccountConstants.ACCOUNT_ID_GUEST,
+					AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
 					cpAttachmentFileEntryId, false, false, false));
 		}
 
@@ -615,11 +610,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		document.addNumber(
 			"commerceAccountGroupIds",
 			TransformUtil.transformToLongArray(
-				_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+				_accountGroupRelLocalService.getAccountGroupRels(
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null),
-				CommerceAccountGroupRel::getCommerceAccountGroupId));
+				AccountGroupRel::getAccountGroupId));
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 
@@ -1024,10 +1019,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		CPDefinitionIndexer.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;

@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
-import com.liferay.commerce.product.definitions.web.internal.model.AccountGroup;
+import com.liferay.commerce.product.definitions.web.internal.model.CProductAccountGroup;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
@@ -43,38 +44,36 @@ import org.osgi.service.component.annotations.Reference;
 	service = FDSDataProvider.class
 )
 public class CommerceProductAccountGroupFDSDataProvider
-	implements FDSDataProvider<AccountGroup> {
+	implements FDSDataProvider<CProductAccountGroup> {
 
 	@Override
-	public List<AccountGroup> getItems(
+	public List<CProductAccountGroup> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<AccountGroup> accountGroups = new ArrayList<>();
+		List<CProductAccountGroup> cProductAccountGroups = new ArrayList<>();
 
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		List<CommerceAccountGroupRel> commerceAccountGroupRels =
-			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+		List<AccountGroupRel> accountGroupRels =
+			_accountGroupRelLocalService.getAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinitionId,
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), null);
 
-		for (CommerceAccountGroupRel commerceAccountGroupRel :
-				commerceAccountGroupRels) {
+		for (AccountGroupRel accountGroupRel : accountGroupRels) {
+			AccountGroup accountGroup = _accountGroupService.getAccountGroup(
+				accountGroupRel.getAccountGroupId());
 
-			CommerceAccountGroup commerceAccountGroup =
-				commerceAccountGroupRel.getCommerceAccountGroup();
-
-			accountGroups.add(
-				new AccountGroup(
-					commerceAccountGroupRel.getCommerceAccountGroupRelId(),
-					commerceAccountGroup.getName()));
+			cProductAccountGroups.add(
+				new CProductAccountGroup(
+					accountGroupRel.getAccountGroupRelId(),
+					accountGroup.getName()));
 		}
 
-		return accountGroups;
+		return cProductAccountGroups;
 	}
 
 	@Override
@@ -85,11 +84,14 @@ public class CommerceProductAccountGroupFDSDataProvider
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		return _commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
+		return _accountGroupRelLocalService.getAccountGroupRelsCount(
 			CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private AccountGroupService _accountGroupService;
 
 }

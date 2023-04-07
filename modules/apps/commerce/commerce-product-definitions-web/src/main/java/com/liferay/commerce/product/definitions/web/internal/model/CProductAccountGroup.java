@@ -17,22 +17,22 @@ package com.liferay.commerce.product.definitions.web.internal.model;
 /**
  * @author Alessio Antonio Rendina
  */
-public class AccountGroup {
+public class CProductAccountGroup {
 
-	public AccountGroup(long commerceAccountGroupRelId, String name) {
-		_commerceAccountGroupRelId = commerceAccountGroupRelId;
+	public CProductAccountGroup(long accountGroupRelId, String name) {
+		_accountGroupRelId = accountGroupRelId;
 		_name = name;
 	}
 
-	public long getCommerceAccountGroupRelId() {
-		return _commerceAccountGroupRelId;
+	public long getAccountGroupRelId() {
+		return _accountGroupRelId;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	private final long _commerceAccountGroupRelId;
+	private final long _accountGroupRelId;
 	private final String _name;
 
 }

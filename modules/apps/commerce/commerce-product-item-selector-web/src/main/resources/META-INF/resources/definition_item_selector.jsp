@@ -52,7 +52,7 @@ String itemSelectedEventName = cpDefinitionItemSelectorViewDisplayContext.getIte
 
 			CPType cpType = cpDefinitionItemSelectorViewDisplayContext.getCPType(cpDefinition.getProductTypeName());
 
-			String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(CommerceAccountConstants.ACCOUNT_ID_ADMIN);
+			String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(AccountConstants.ACCOUNT_ENTRY_ID_ADMIN);
 			%>
 
 			<c:choose>

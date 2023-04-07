@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -898,17 +898,15 @@ public class CPDefinitionLocalServiceImpl
 				commerceChannelRel.getCommerceChannelId(), serviceContext);
 		}
 
-		for (CommerceAccountGroupRel commerceAccountGroupRel :
-				_commerceAccountGroupRelLocalService.
-					getCommerceAccountGroupRels(
-						originalCPDefinition.getModelClassName(),
-						originalCPDefinition.getCPDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (AccountGroupRel accountGroupRel :
+				_accountGroupRelLocalService.getAccountGroupRels(
+					originalCPDefinition.getModelClassName(),
+					originalCPDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
-			_commerceAccountGroupRelLocalService.addCommerceAccountGroupRel(
-				newCPDefinition.getModelClassName(), newCPDefinitionId,
-				commerceAccountGroupRel.getCommerceAccountGroupId(),
-				serviceContext);
+			_accountGroupRelLocalService.addAccountGroupRel(
+				accountGroupRel.getAccountGroupId(),
+				newCPDefinition.getModelClassName(), newCPDefinitionId);
 		}
 
 		List<CPVersionContributor> cpVersionContributors =
@@ -1269,17 +1267,15 @@ public class CPDefinitionLocalServiceImpl
 				commerceChannelRel.getCommerceChannelId(), serviceContext);
 		}
 
-		for (CommerceAccountGroupRel commerceAccountGroupRel :
-				_commerceAccountGroupRelLocalService.
-					getCommerceAccountGroupRels(
-						sourceCPDefinition.getModelClassName(),
-						sourceCPDefinition.getCPDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (AccountGroupRel accountGroupRel :
+				_accountGroupRelLocalService.getAccountGroupRels(
+					sourceCPDefinition.getModelClassName(),
+					sourceCPDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
-			_commerceAccountGroupRelLocalService.addCommerceAccountGroupRel(
-				targetCPDefinition.getModelClassName(), newCPDefinitionId,
-				commerceAccountGroupRel.getCommerceAccountGroupId(),
-				serviceContext);
+			_accountGroupRelLocalService.addAccountGroupRel(
+				accountGroupRel.getAccountGroupId(),
+				targetCPDefinition.getModelClassName(), newCPDefinitionId);
 		}
 
 		List<CPVersionContributor> cpVersionContributors =
@@ -3305,6 +3301,9 @@ public class CPDefinitionLocalServiceImpl
 				"_commercePriceListLocalService", true);
 
 	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
@@ -3312,10 +3311,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CommerceAccountGroupRelLocalService
-		_commerceAccountGroupRelLocalService;
 
 	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;

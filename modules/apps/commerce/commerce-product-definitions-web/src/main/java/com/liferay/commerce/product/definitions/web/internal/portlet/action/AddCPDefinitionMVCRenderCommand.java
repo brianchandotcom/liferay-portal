@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext;
@@ -61,7 +61,7 @@ public class AddCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 			CPDefinitionsDisplayContext cpDefinitionsDisplayContext =
 				new CPDefinitionsDisplayContext(
 					_actionHelper, _portal.getHttpServletRequest(renderRequest),
-					_commerceAccountGroupRelService, _commerceCatalogService,
+					_accountGroupRelLocalService, _commerceCatalogService,
 					_commerceChannelRelService, _configurationProvider,
 					_cpDefinitionService, _cpFriendlyURL, _itemSelector);
 
@@ -94,10 +94,10 @@ public class AddCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+	private ActionHelper _actionHelper;
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;

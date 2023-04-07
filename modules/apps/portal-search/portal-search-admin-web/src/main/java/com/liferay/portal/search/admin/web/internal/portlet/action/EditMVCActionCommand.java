@@ -107,6 +107,9 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			StringUtil.merge(
 				ParamUtil.getLongValues(actionRequest, "companyIds")));
 		redirect = HttpComponentsUtil.setParameter(
+			redirect, actionResponse.getNamespace() + "executionMode",
+			ParamUtil.getString(actionRequest, "executionMode"));
+		redirect = HttpComponentsUtil.setParameter(
 			redirect, actionResponse.getNamespace() + "scope",
 			ParamUtil.getString(actionRequest, "scope"));
 

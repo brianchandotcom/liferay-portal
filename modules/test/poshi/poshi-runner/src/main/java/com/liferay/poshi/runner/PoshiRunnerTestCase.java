@@ -37,7 +37,8 @@ public abstract class PoshiRunnerTestCase extends TestCase {
 
 		poshiRunner.test();
 
-		WebDriverUtil.stopWebDriver(testName);
+		WebDriverUtil.stopWebDriver(
+			PoshiContext.getDefaultNamespace() + "." + testName);
 	}
 
 	public void setUpPoshiRunner(String testBaseDirName) throws Exception {

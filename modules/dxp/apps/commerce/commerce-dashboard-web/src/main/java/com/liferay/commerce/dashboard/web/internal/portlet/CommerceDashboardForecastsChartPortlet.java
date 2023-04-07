@@ -14,13 +14,14 @@
 
 package com.liferay.commerce.dashboard.web.internal.portlet;
 
-import com.liferay.commerce.account.permission.CommerceAccountPermission;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
 import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -33,6 +34,8 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Andrea Di Giorgi
@@ -72,7 +75,7 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new CommerceDashboardForecastDisplayContext(
-					_commerceAccountPermission,
+					_accountEntryModelResourcePermission,
 					_portal.getHttpServletRequest(renderRequest)));
 		}
 		catch (PortalException portalException) {
@@ -85,8 +88,13 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDashboardForecastsChartPortlet.class);
 
-	@Reference
-	private CommerceAccountPermission _commerceAccountPermission;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

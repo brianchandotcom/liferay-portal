@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.dashboard.web.internal.display.context;
 
-import com.liferay.commerce.account.permission.CommerceAccountPermission;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastPortletInstanceConfiguration;
 import com.liferay.commerce.dashboard.web.internal.display.context.helper.CommerceDashboardForecastRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +33,13 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceDashboardForecastDisplayContext {
 
 	public CommerceDashboardForecastDisplayContext(
-			CommerceAccountPermission commerceAccountPermission,
+			ModelResourcePermission<AccountEntry>
+				accountEntryModelResourcePermission,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_commerceAccountPermission = commerceAccountPermission;
+		_accountEntryModelResourcePermission =
+			accountEntryModelResourcePermission;
 
 		_commerceDashboardForecastRequestHelper =
 			new CommerceDashboardForecastRequestHelper(httpServletRequest);
@@ -59,7 +62,7 @@ public class CommerceDashboardForecastDisplayContext {
 			_commerceDashboardForecastRequestHelper.getPermissionChecker();
 
 		try {
-			return _commerceAccountPermission.contains(
+			return _accountEntryModelResourcePermission.contains(
 				permissionChecker,
 				_commerceDashboardForecastRequestHelper.getAccountEntryId(),
 				ActionKeys.VIEW);
@@ -76,7 +79,8 @@ public class CommerceDashboardForecastDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDashboardForecastDisplayContext.class);
 
-	private final CommerceAccountPermission _commerceAccountPermission;
+	private final ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 	private final CommerceDashboardForecastPortletInstanceConfiguration
 		_commerceDashboardForecastPortletInstanceConfiguration;
 	private final CommerceDashboardForecastRequestHelper

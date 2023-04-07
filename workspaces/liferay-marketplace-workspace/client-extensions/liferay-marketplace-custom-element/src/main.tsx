@@ -6,6 +6,7 @@ import {AppContextProvider} from './manage-app-state/AppManageState';
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
+		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(
 			<React.StrictMode>
 				<AppContextProvider>

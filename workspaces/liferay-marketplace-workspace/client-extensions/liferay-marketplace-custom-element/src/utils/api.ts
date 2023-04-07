@@ -1,3 +1,5 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
+
 declare let Liferay: {Service: any; ThemeDisplay: any; authToken: string};
 const headers = {
 	'Content-Type': 'application/json',
@@ -34,7 +36,13 @@ export async function addSkuExpandoValue({
 			companyId,
 			tableName: 'CUSTOM_FIELDS',
 		},
-		(obj: any) => {}
+
+		// (obj: any) => {
+
+		// 	// console.log(obj);
+
+		// }
+
 	);
 }
 

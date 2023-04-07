@@ -25,6 +25,7 @@ import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,15 +53,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo Lundgren
  * @author Peter Shin
  * @author Fabio Pezzutto
  */
-@Component(service = {})
 public class CalendarUtil {
 
 	public static JSONObject getCalendarRenderingRulesJSONObject(
@@ -68,7 +65,10 @@ public class CalendarUtil {
 			long startTime, long endTime, String ruleName, TimeZone timeZone)
 		throws PortalException {
 
-		List<CalendarBooking> calendarBookings = _calendarBookingService.search(
+		CalendarBookingService calendarBookingService =
+			_calendarBookingServiceSnapshot.get();
+
+		List<CalendarBooking> calendarBookings = calendarBookingService.search(
 			themeDisplay.getCompanyId(), null, calendarIds, new long[0], -1,
 			null, startTime, endTime, timeZone, true, statuses,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -177,8 +177,11 @@ public class CalendarUtil {
 		).put(
 			"calendarResourceName",
 			() -> {
+				CalendarResourceLocalService calendarResourceLocalService =
+					_calendarResourceLocalServiceSnapshot.get();
+
 				CalendarResource calendarResource =
-					_calendarResourceLocalService.getCalendarResource(
+					calendarResourceLocalService.getCalendarResource(
 						calendarBooking.getCalendarResourceId());
 
 				return calendarResource.getName(themeDisplay.getLocale());
@@ -206,10 +209,16 @@ public class CalendarUtil {
 			"hasChildCalendarBookings", childCalendarBookings.size() > 1
 		).put(
 			"hasWorkflowInstanceLink",
-			_workflowInstanceLinkLocalService.hasWorkflowInstanceLink(
-				themeDisplay.getCompanyId(), calendarBooking.getGroupId(),
-				CalendarBooking.class.getName(),
-				calendarBooking.getCalendarBookingId())
+			() -> {
+				WorkflowInstanceLinkLocalService
+					workflowInstanceLinkLocalService =
+						_workflowInstanceLinkLocalServiceSnapshot.get();
+
+				return workflowInstanceLinkLocalService.hasWorkflowInstanceLink(
+					themeDisplay.getCompanyId(), calendarBooking.getGroupId(),
+					CalendarBooking.class.getName(),
+					calendarBooking.getCalendarBookingId());
+			}
 		).put(
 			"instanceIndex", calendarBooking.getInstanceIndex()
 		).put(
@@ -219,8 +228,11 @@ public class CalendarUtil {
 			calendarBooking.getParentCalendarBookingId()
 		);
 
+		CalendarBookingService calendarBookingService =
+			_calendarBookingServiceSnapshot.get();
+
 		CalendarBooking lastInstanceCalendarBooking =
-			_calendarBookingService.getLastInstanceCalendarBooking(
+			calendarBookingService.getLastInstanceCalendarBooking(
 				calendarBooking.getCalendarBookingId());
 
 		String recurrence = lastInstanceCalendarBooking.getRecurrence();
@@ -308,8 +320,11 @@ public class CalendarUtil {
 			ThemeDisplay themeDisplay, Calendar calendar)
 		throws PortalException {
 
+		CalendarResourceLocalService calendarResourceLocalService =
+			_calendarResourceLocalServiceSnapshot.get();
+
 		CalendarResource calendarResource =
-			_calendarResourceLocalService.fetchCalendarResource(
+			calendarResourceLocalService.fetchCalendarResource(
 				calendar.getCalendarResourceId());
 
 		return JSONUtil.put(
@@ -331,13 +346,26 @@ public class CalendarUtil {
 			"groupId", calendar.getGroupId()
 		).put(
 			"hasWorkflowDefinitionLink",
-			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-				themeDisplay.getCompanyId(), calendarResource.getGroupId(),
-				CalendarBooking.class.getName())
+			() -> {
+				WorkflowDefinitionLinkLocalService
+					workflowDefinitionLinkLocalService =
+						_workflowDefinitionLinkLocalServiceSnapshot.get();
+
+				return workflowDefinitionLinkLocalService.
+					hasWorkflowDefinitionLink(
+						themeDisplay.getCompanyId(),
+						calendarResource.getGroupId(),
+						CalendarBooking.class.getName());
+			}
 		).put(
 			"manageable",
-			_calendarService.isManageableFromGroup(
-				calendar.getCalendarId(), themeDisplay.getScopeGroupId())
+			() -> {
+				CalendarService calendarService =
+					_calendarServiceSnapshot.get();
+
+				return calendarService.isManageableFromGroup(
+					calendar.getCalendarId(), themeDisplay.getScopeGroupId());
+			}
 		).put(
 			"name", calendar.getName(themeDisplay.getLocale())
 		).put(
@@ -391,50 +419,6 @@ public class CalendarUtil {
 		return jsonArray;
 	}
 
-	@Reference(unbind = "-")
-	protected void setCalendarBookingService(
-		CalendarBookingService calendarBookingService) {
-
-		_calendarBookingService = calendarBookingService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarResourceLocalService(
-		CalendarResourceLocalService calendarResourceLocalService) {
-
-		_calendarResourceLocalService = calendarResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarService(CalendarService calendarService) {
-		_calendarService = calendarService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.calendar.model.Calendar)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<Calendar> modelResourcePermission) {
-
-		_calendarModelResourcePermission = modelResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowInstanceLinkLocalService(
-		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
-
-		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
-	}
-
 	private static void _addTimeProperties(
 		JSONObject jsonObject, String prefix, java.util.Calendar jCalendar) {
 
@@ -457,42 +441,54 @@ public class CalendarUtil {
 			PermissionChecker permissionChecker, Calendar calendar)
 		throws PortalException {
 
+		ModelResourcePermission<Calendar> calendarModelResourcePermission =
+			_calendarModelResourcePermissionSnapshot.get();
+
 		return JSONUtil.put(
 			ActionKeys.DELETE,
-			_calendarModelResourcePermission.contains(
+			calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.DELETE)
 		).put(
 			ActionKeys.PERMISSIONS,
-			_calendarModelResourcePermission.contains(
+			calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.PERMISSIONS)
 		).put(
 			ActionKeys.UPDATE,
-			_calendarModelResourcePermission.contains(
+			calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.UPDATE)
 		).put(
 			ActionKeys.VIEW,
-			_calendarModelResourcePermission.contains(
+			calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.VIEW)
 		).put(
 			CalendarActionKeys.MANAGE_BOOKINGS,
-			_calendarModelResourcePermission.contains(
+			calendarModelResourcePermission.contains(
 				permissionChecker, calendar, CalendarActionKeys.MANAGE_BOOKINGS)
 		).put(
 			CalendarActionKeys.VIEW_BOOKING_DETAILS,
-			_calendarModelResourcePermission.contains(
+			calendarModelResourcePermission.contains(
 				permissionChecker, calendar,
 				CalendarActionKeys.VIEW_BOOKING_DETAILS)
 		);
 	}
 
-	private static CalendarBookingService _calendarBookingService;
-	private static ModelResourcePermission<Calendar>
-		_calendarModelResourcePermission;
-	private static CalendarResourceLocalService _calendarResourceLocalService;
-	private static CalendarService _calendarService;
-	private static WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
-	private static WorkflowInstanceLinkLocalService
-		_workflowInstanceLinkLocalService;
+	private static final Snapshot<CalendarBookingService>
+		_calendarBookingServiceSnapshot = new Snapshot<>(
+			CalendarUtil.class, CalendarBookingService.class);
+	private static final Snapshot<ModelResourcePermission<Calendar>>
+		_calendarModelResourcePermissionSnapshot = new Snapshot<>(
+			CalendarUtil.class, Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.calendar.model.Calendar)");
+	private static final Snapshot<CalendarResourceLocalService>
+		_calendarResourceLocalServiceSnapshot = new Snapshot<>(
+			CalendarUtil.class, CalendarResourceLocalService.class);
+	private static final Snapshot<CalendarService> _calendarServiceSnapshot =
+		new Snapshot<>(CalendarUtil.class, CalendarService.class);
+	private static final Snapshot<WorkflowDefinitionLinkLocalService>
+		_workflowDefinitionLinkLocalServiceSnapshot = new Snapshot<>(
+			CalendarUtil.class, WorkflowDefinitionLinkLocalService.class);
+	private static final Snapshot<WorkflowInstanceLinkLocalService>
+		_workflowInstanceLinkLocalServiceSnapshot = new Snapshot<>(
+			CalendarUtil.class, WorkflowInstanceLinkLocalService.class);
 
 }

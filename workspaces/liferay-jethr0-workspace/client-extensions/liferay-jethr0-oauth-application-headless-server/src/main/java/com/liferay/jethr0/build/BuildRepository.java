@@ -14,17 +14,24 @@
 
 package com.liferay.jethr0.build;
 
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.entity.dalo.EntityDALO;
+import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class BuildFactory {
+@Configuration
+public class BuildRepository extends BaseEntityRepository<Build> {
 
-	public static Build newBuild(Project project, JSONObject jsonObject) {
-		return new DefaultBuild(project, jsonObject);
+	@Override
+	protected EntityDALO<Build> getEntityDALO() {
+		return _buildDALO;
 	}
+
+	@Autowired
+	private BuildDALO _buildDALO;
 
 }

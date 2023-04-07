@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.search.results.portlet;
 
-import java.util.Optional;
-
 /**
  * @author Lino Alves
  */
@@ -46,7 +44,7 @@ public interface SearchResultsPortletPreferences {
 
 	public String getFederatedSearchKey();
 
-	public Optional<String> getFieldsToDisplayOptional();
+	public String getFieldsToDisplay();
 
 	public String getFieldsToDisplayString();
 

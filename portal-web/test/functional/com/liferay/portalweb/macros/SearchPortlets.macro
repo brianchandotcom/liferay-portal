@@ -46,10 +46,10 @@ definition {
 	}
 
 	macro chooseSortOption {
-		Click(locator1 = "Search#SORT_PORTLET_DROPDOWN");
+		Click(locator1 = "Search#SORT_WIDGET_DROPDOWN");
 
 		Click.clickNoMouseOver(
-			locator1 = "Search#SORT_PORTLET_SORT_OPTION",
+			locator1 = "Search#SORT_WIDGET_SORT_OPTION",
 			sortOption = ${sortOption});
 	}
 

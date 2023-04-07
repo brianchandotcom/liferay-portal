@@ -226,12 +226,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SORT_PORTLET_DROPDOWN</td>
+	<td>SORT_WIDGET_DROPDOWN</td>
 	<td>//div/select[contains(@id, "SortPortlet")]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SORT_PORTLET_SORT_OPTION</td>
+	<td>SORT_WIDGET_SORT_OPTION</td>
 	<td>//div/select[contains(@id, "SortPortlet")]/option[contains(., "${sortOption}")]</td>
 	<td></td>
 </tr>

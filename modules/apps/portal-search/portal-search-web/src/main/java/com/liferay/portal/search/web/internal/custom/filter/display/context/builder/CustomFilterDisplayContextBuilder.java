@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
@@ -53,10 +51,10 @@ public class CustomFilterDisplayContextBuilder {
 		return customFilterDisplayContext;
 	}
 
-	public CustomFilterDisplayContextBuilder customHeadingOptional(
-		Optional<String> customHeadingOptional) {
+	public CustomFilterDisplayContextBuilder customHeading(
+		String customHeading) {
 
-		_customHeadingOptional = customHeadingOptional;
+		_customHeading = customHeading;
 
 		return this;
 	}
@@ -67,18 +65,14 @@ public class CustomFilterDisplayContextBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayContextBuilder filterFieldOptional(
-		Optional<String> filterFieldOptional) {
-
-		_filterFieldOptional = filterFieldOptional;
+	public CustomFilterDisplayContextBuilder filterField(String filterField) {
+		_filterField = filterField;
 
 		return this;
 	}
 
-	public CustomFilterDisplayContextBuilder filterValueOptional(
-		Optional<String> filterValueOptional) {
-
-		_filterValueOptional = filterValueOptional;
+	public CustomFilterDisplayContextBuilder filterValue(String filterValue) {
+		_filterValue = filterValue;
 
 		return this;
 	}
@@ -100,15 +94,13 @@ public class CustomFilterDisplayContextBuilder {
 	public CustomFilterDisplayContextBuilder parameterValueOptional(
 		Optional<String> parameterValueOptional) {
 
-		_parameterValueOptional = parameterValueOptional;
+		_parameterValue = parameterValueOptional.orElse(null);
 
 		return this;
 	}
 
-	public CustomFilterDisplayContextBuilder queryNameOptional(
-		Optional<String> queryNameOptional) {
-
-		_queryNameOptional = queryNameOptional;
+	public CustomFilterDisplayContextBuilder queryName(String queryName) {
+		_queryName = queryName;
 
 		return this;
 	}
@@ -156,21 +148,38 @@ public class CustomFilterDisplayContextBuilder {
 
 	protected String getFilterValue() {
 		if (_immutable) {
-			return SearchOptionalUtil.findFirstPresent(
-				Stream.of(_filterValueOptional), StringPool.BLANK);
+			if (_filterValue != null) {
+				return _filterValue;
+			}
+
+			return StringPool.BLANK;
 		}
 
-		return SearchOptionalUtil.findFirstPresent(
-			Stream.of(_parameterValueOptional, _filterValueOptional),
-			StringPool.BLANK);
+		if (_parameterValue != null) {
+			return _parameterValue;
+		}
+
+		if (_filterValue != null) {
+			return _filterValue;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	protected String getHeading() {
-		return SearchOptionalUtil.findFirstPresent(
-			Stream.of(
-				_customHeadingOptional, _queryNameOptional,
-				_filterFieldOptional),
-			"custom");
+		if (_customHeading != null) {
+			return _customHeading;
+		}
+
+		if (_queryName != null) {
+			return _queryName;
+		}
+
+		if (_filterField != null) {
+			return _filterField;
+		}
+
+		return "custom";
 	}
 
 	protected boolean isRenderNothing() {
@@ -185,14 +194,14 @@ public class CustomFilterDisplayContextBuilder {
 		return HttpComponentsUtil.getPath(_themeDisplay.getURLCurrent());
 	}
 
-	private Optional<String> _customHeadingOptional = Optional.empty();
+	private String _customHeading;
 	private boolean _disabled;
-	private Optional<String> _filterFieldOptional = Optional.empty();
-	private Optional<String> _filterValueOptional = Optional.empty();
+	private String _filterField;
+	private String _filterValue;
 	private boolean _immutable;
 	private String _parameterName;
-	private Optional<String> _parameterValueOptional = Optional.empty();
-	private Optional<String> _queryNameOptional = Optional.empty();
+	private String _parameterValue;
+	private String _queryName;
 	private boolean _renderNothing;
 	private ThemeDisplay _themeDisplay;
 

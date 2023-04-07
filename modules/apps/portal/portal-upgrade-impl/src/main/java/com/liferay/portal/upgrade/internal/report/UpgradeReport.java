@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.util.DBUpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
@@ -77,15 +77,14 @@ public class UpgradeReport {
 	}
 
 	public void generateReport(
-		PersistenceManager persistenceManager,
-		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
+		PersistenceManager persistenceManager, ReleaseManager releaseManager) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Starting upgrade report generation");
 		}
 
 		Map<String, Object> reportData = _getReportData(
-			persistenceManager, releaseManagerOSGiCommands);
+			persistenceManager, releaseManager);
 
 		_printToLogContext(reportData);
 		_writeToFile(reportData);
@@ -145,8 +144,7 @@ public class UpgradeReport {
 	}
 
 	private Map<String, Object> _getReportData(
-		PersistenceManager persistenceManager,
-		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
+		PersistenceManager persistenceManager, ReleaseManager releaseManager) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"execution.date",
@@ -457,17 +455,17 @@ public class UpgradeReport {
 		).put(
 			"osgi.status",
 			() -> {
-				if (releaseManagerOSGiCommands == null) {
+				if (releaseManager == null) {
 					return "Unable to determine. Upgrade check not available";
 				}
 
-				String check = releaseManagerOSGiCommands.check();
+				String statusMessage = releaseManager.getStatusMessage(false);
 
-				if (check.isEmpty()) {
+				if (statusMessage.isEmpty()) {
 					return "There are no pending upgrades";
 				}
 
-				return check;
+				return statusMessage;
 			}
 		).build();
 	}

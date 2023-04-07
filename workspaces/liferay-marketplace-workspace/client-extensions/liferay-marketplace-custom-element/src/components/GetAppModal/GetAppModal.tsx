@@ -124,7 +124,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			setSku(sku);
 
 			const version = await getSKUCustomFieldExpandoValue({
-				companyId: parseInt(getCompanyId()),
+				companyId: Number(getCompanyId()),
 				customFieldName: 'version',
 				skuId: sku.id,
 			});

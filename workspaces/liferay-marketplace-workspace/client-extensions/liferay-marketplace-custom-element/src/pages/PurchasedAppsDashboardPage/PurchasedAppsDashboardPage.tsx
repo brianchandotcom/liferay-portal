@@ -125,7 +125,7 @@ export function PurchasedAppsDashboardPage() {
 					);
 
 					const version = await getSKUCustomFieldExpandoValue({
-						companyId: parseInt(getCompanyId()),
+						companyId: Number(getCompanyId()),
 						customFieldName: 'version',
 						skuId: placeOrderItem.skuId,
 					});

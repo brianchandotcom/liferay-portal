@@ -193,7 +193,7 @@ export function ProvideVersionDetailsPage({
 					}
 
 					addSkuExpandoValue({
-						companyId: parseInt(getCompanyId()),
+						companyId: Number(getCompanyId()),
 						notesValue: appNotes,
 						skuId: id,
 						versionValue: appVersion,

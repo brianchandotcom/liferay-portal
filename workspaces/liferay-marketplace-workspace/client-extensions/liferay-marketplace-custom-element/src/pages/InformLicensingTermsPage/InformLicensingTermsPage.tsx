@@ -245,7 +245,7 @@ export function InformLicensingTermsPage({
 							}
 
 							addSkuExpandoValue({
-								companyId: parseInt(getCompanyId()),
+								companyId: Number(getCompanyId()),
 								notesValue: appNotes,
 								skuId: skuTrialId,
 								versionValue: appVersion,

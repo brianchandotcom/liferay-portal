@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.internal.health.status.comparator;
 
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -26,8 +26,7 @@ import java.util.Comparator;
  * @author Alessio Antonio Rendina
  */
 public class CommerceHealthStatusServiceWrapperDisplayOrderComparator
-	implements Comparator<ServiceWrapper<CommerceHealthHttpStatus>>,
-			   Serializable {
+	implements Comparator<ServiceWrapper<CommerceHealthStatus>>, Serializable {
 
 	public CommerceHealthStatusServiceWrapperDisplayOrderComparator() {
 		this(true);
@@ -41,8 +40,8 @@ public class CommerceHealthStatusServiceWrapperDisplayOrderComparator
 
 	@Override
 	public int compare(
-		ServiceWrapper<CommerceHealthHttpStatus> serviceWrapper1,
-		ServiceWrapper<CommerceHealthHttpStatus> serviceWrapper2) {
+		ServiceWrapper<CommerceHealthStatus> serviceWrapper1,
+		ServiceWrapper<CommerceHealthStatus> serviceWrapper2) {
 
 		int displayOrder1 = MapUtil.getInteger(
 			serviceWrapper1.getProperties(),

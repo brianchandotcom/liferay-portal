@@ -14,22 +14,26 @@
 
 package com.liferay.commerce.health.status.web.internal;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,27 +45,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"commerce.health.status.display.order:Integer=90",
-		"commerce.health.status.key=" + CommerceHealthStatusConstants.CURRENCIES_COMMERCE_HEALTH_STATUS_KEY
+		"commerce.health.status.display.order:Integer=110",
+		"commerce.health.status.key=" + CommerceHealthStatusConstants.ACCOUNTS_COMMERCE_HEALTH_STATUS_KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class CurrenciesCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class AccountsCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
 		try {
-			_commerceCurrencyLocalService.importDefaultValues(
-				true, serviceContext);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				httpServletRequest);
+
+			Callable<Object> accountRoleCallable = new AccountRoleCallable(
+				serviceContext);
+
+			TransactionInvokerUtil.invoke(
+				_transactionConfig, accountRoleCallable);
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		catch (Throwable throwable) {
+			_log.error(throwable, throwable);
 		}
 	}
 
@@ -73,13 +79,13 @@ public class CurrenciesCommerceHealthHttpStatus
 		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
-				CURRENCIES_COMMERCE_HEALTH_STATUS_DESCRIPTION);
+				ACCOUNTS_COMMERCE_HEALTH_STATUS_DESCRIPTION);
 	}
 
 	@Override
 	public String getKey() {
 		return CommerceHealthStatusConstants.
-			CURRENCIES_COMMERCE_HEALTH_STATUS_KEY;
+			ACCOUNTS_COMMERCE_HEALTH_STATUS_KEY;
 	}
 
 	@Override
@@ -89,8 +95,7 @@ public class CurrenciesCommerceHealthHttpStatus
 
 		return _language.get(
 			resourceBundle,
-			CommerceHealthStatusConstants.
-				CURRENCIES_COMMERCE_HEALTH_STATUS_KEY);
+			CommerceHealthStatusConstants.ACCOUNTS_COMMERCE_HEALTH_STATUS_KEY);
 	}
 
 	@Override
@@ -100,23 +105,57 @@ public class CurrenciesCommerceHealthHttpStatus
 	}
 
 	@Override
+	public boolean isActive() {
+		return true;
+	}
+
+	@Override
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
-		List<CommerceCurrency> commerceCurrencies =
-			_commerceCurrencyLocalService.getCommerceCurrencies(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		Role role = _roleLocalService.fetchRole(
+			companyId,
+			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
-		return !commerceCurrencies.isEmpty();
+		if (role != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CurrenciesCommerceHealthHttpStatus.class);
+		AccountsCommerceHealthStatus.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	private class AccountRoleCallable implements Callable<Object> {
+
+		@Override
+		public Object call() throws Exception {
+			_commerceAccountRoleHelper.checkCommerceAccountRoles(
+				_serviceContext);
+
+			return null;
+		}
+
+		private AccountRoleCallable(ServiceContext serviceContext) {
+			_serviceContext = serviceContext;
+		}
+
+		private final ServiceContext _serviceContext;
+
+	}
 
 }

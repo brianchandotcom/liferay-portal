@@ -17,7 +17,7 @@ package com.liferay.commerce.avalara.connector.web.internal.health.status;
 import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.engine.CommerceAvalaraConnectorEngine;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,12 +44,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"commerce.health.status.display.order:Integer=150",
-		"commerce.health.status.key=" + AvalaraTaxCodesCommerceHealthHttpStatus.KEY
+		"commerce.health.status.key=" + AvalaraTaxCodesCommerceHealthStatus.KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class AvalaraTaxCodesCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class AvalaraTaxCodesCommerceHealthStatus
+	implements CommerceHealthStatus {
 
 	public static final String KEY =
 		"avalara.tax.codes.commerce.health.status.key";
@@ -63,8 +63,8 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 				httpServletRequest);
 
 			Callable<Object> avalaraTaxCodesCallable =
-				new AvalaraTaxCodesCommerceHealthHttpStatus.
-					AvalaraTaxCodesCallable(serviceContext);
+				new AvalaraTaxCodesCommerceHealthStatus.AvalaraTaxCodesCallable(
+					serviceContext);
 
 			TransactionInvokerUtil.invoke(
 				_transactionConfig, avalaraTaxCodesCallable);
@@ -97,6 +97,11 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 	}
 
 	@Override
+	public boolean isActive() {
+		return true;
+	}
+
+	@Override
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
@@ -115,7 +120,7 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AvalaraTaxCodesCommerceHealthHttpStatus.class);
+		AvalaraTaxCodesCommerceHealthStatus.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

@@ -17,7 +17,7 @@ package com.liferay.commerce.health.status.web.internal.portlet;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatusRegistry;
+import com.liferay.commerce.health.status.CommerceHealthStatusRegistry;
 import com.liferay.commerce.health.status.web.internal.display.context.CommerceHealthStatusDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -68,7 +68,7 @@ public class CommerceHealthCheckPortlet extends MVCPortlet {
 
 		CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext =
 			new CommerceHealthStatusDisplayContext(
-				_commerceHealthHttpStatusRegistry, _portletResourcePermission,
+				_commerceHealthStatusRegistry, _portletResourcePermission,
 				renderRequest, renderResponse,
 				CommerceHealthStatusConstants.
 					COMMERCE_HEALTH_STATUS_TYPE_VIRTUAL_INSTANCE);
@@ -81,7 +81,7 @@ public class CommerceHealthCheckPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceHealthHttpStatusRegistry _commerceHealthHttpStatusRegistry;
+	private CommerceHealthStatusRegistry _commerceHealthStatusRegistry;
 
 	@Reference(
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_HEALTH + ")"

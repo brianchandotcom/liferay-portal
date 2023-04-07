@@ -14,26 +14,20 @@
 
 package com.liferay.journal.web.internal.util;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.site.util.RecentGroupManager;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
  */
-@Component(service = {})
 public class RecentGroupManagerUtil {
 
 	public static RecentGroupManager getRecentGroupManager() {
-		return _recentGroupManager;
+		return _recentGroupManagerSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setServletContext(RecentGroupManager recentGroupManager) {
-		_recentGroupManager = recentGroupManager;
-	}
-
-	private static RecentGroupManager _recentGroupManager;
+	private static final Snapshot<RecentGroupManager>
+		_recentGroupManagerSnapshot = new Snapshot<>(
+			RecentGroupManagerUtil.class, RecentGroupManager.class);
 
 }

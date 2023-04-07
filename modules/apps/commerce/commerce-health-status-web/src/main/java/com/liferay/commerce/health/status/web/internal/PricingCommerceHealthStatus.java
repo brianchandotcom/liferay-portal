@@ -17,7 +17,7 @@ package com.liferay.commerce.health.status.web.internal;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
@@ -67,10 +67,9 @@ import org.osgi.service.component.annotations.Reference;
 		"commerce.health.status.display.order:Integer=130",
 		"commerce.health.status.key=" + CommerceHealthStatusConstants.PRICING_COMMERCE_HEALTH_STATUS_KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class PricingCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class PricingCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -81,8 +80,7 @@ public class PricingCommerceHealthHttpStatus
 				httpServletRequest);
 
 			Callable<Object> pricingCallable =
-				new PricingCommerceHealthHttpStatus.PricingCallable(
-					serviceContext);
+				new PricingCommerceHealthStatus.PricingCallable(serviceContext);
 
 			TransactionInvokerUtil.invoke(_transactionConfig, pricingCallable);
 		}
@@ -121,6 +119,11 @@ public class PricingCommerceHealthHttpStatus
 	public int getType() {
 		return CommerceHealthStatusConstants.
 			COMMERCE_HEALTH_STATUS_TYPE_VIRTUAL_INSTANCE;
+	}
+
+	@Override
+	public boolean isActive() {
+		return true;
 	}
 
 	@Override
@@ -228,7 +231,7 @@ public class PricingCommerceHealthHttpStatus
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PricingCommerceHealthHttpStatus.class);
+		PricingCommerceHealthStatus.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

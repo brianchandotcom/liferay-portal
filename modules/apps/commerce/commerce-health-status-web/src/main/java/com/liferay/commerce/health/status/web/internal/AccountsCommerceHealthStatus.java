@@ -16,7 +16,7 @@ package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -48,10 +48,9 @@ import org.osgi.service.component.annotations.Reference;
 		"commerce.health.status.display.order:Integer=110",
 		"commerce.health.status.key=" + CommerceHealthStatusConstants.ACCOUNTS_COMMERCE_HEALTH_STATUS_KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class AccountsCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class AccountsCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -106,6 +105,11 @@ public class AccountsCommerceHealthHttpStatus
 	}
 
 	@Override
+	public boolean isActive() {
+		return true;
+	}
+
+	@Override
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
@@ -121,7 +125,7 @@ public class AccountsCommerceHealthHttpStatus
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AccountsCommerceHealthHttpStatus.class);
+		AccountsCommerceHealthStatus.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

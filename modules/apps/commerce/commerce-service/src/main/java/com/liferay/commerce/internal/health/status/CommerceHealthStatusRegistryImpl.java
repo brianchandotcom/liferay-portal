@@ -14,20 +14,19 @@
 
 package com.liferay.commerce.internal.health.status;
 
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatusRegistry;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatusRegistry;
 import com.liferay.commerce.internal.health.status.comparator.CommerceHealthStatusServiceWrapperDisplayOrderComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -39,17 +38,39 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = CommerceHealthHttpStatusRegistry.class)
-public class CommerceHealthHttpStatusRegistryImpl
-	implements CommerceHealthHttpStatusRegistry {
+@Component(service = CommerceHealthStatusRegistry.class)
+public class CommerceHealthStatusRegistryImpl
+	implements CommerceHealthStatusRegistry {
 
 	@Override
-	public CommerceHealthHttpStatus getCommerceHealthStatus(String key) {
+	public List<CommerceHealthStatus> getActiveCommerceHealthStatuses(
+		int type) {
+
+		return TransformUtil.transform(
+			ListUtil.sort(
+				ListUtil.fromCollection(_serviceTrackerMap.values()),
+				_commerceHealthStatusServiceWrapperDisplayOrderComparator),
+			commerceHealthStatusServiceWrapper -> {
+				CommerceHealthStatus commerceHealthStatus =
+					commerceHealthStatusServiceWrapper.getService();
+
+				if ((type == commerceHealthStatus.getType()) &&
+					commerceHealthStatus.isActive()) {
+
+					return commerceHealthStatus;
+				}
+
+				return null;
+			});
+	}
+
+	@Override
+	public CommerceHealthStatus getCommerceHealthStatus(String key) {
 		if (Validator.isNull(key)) {
 			return null;
 		}
 
-		ServiceWrapper<CommerceHealthHttpStatus>
+		ServiceWrapper<CommerceHealthStatus>
 			commerceHealthStatusServiceWrapper = _serviceTrackerMap.getService(
 				key);
 
@@ -66,40 +87,30 @@ public class CommerceHealthHttpStatusRegistryImpl
 	}
 
 	@Override
-	public List<CommerceHealthHttpStatus> getCommerceHealthStatuses(int type) {
-		List<CommerceHealthHttpStatus> commerceHealthHttpStatuses =
-			new ArrayList<>();
+	public List<CommerceHealthStatus> getCommerceHealthStatuses(int type) {
+		return TransformUtil.transform(
+			ListUtil.sort(
+				ListUtil.fromCollection(_serviceTrackerMap.values()),
+				_commerceHealthStatusServiceWrapperDisplayOrderComparator),
+			commerceHealthStatusServiceWrapper -> {
+				CommerceHealthStatus commerceHealthStatus =
+					commerceHealthStatusServiceWrapper.getService();
 
-		List<ServiceWrapper<CommerceHealthHttpStatus>>
-			commerceHealthStatusServiceWrappers = ListUtil.fromCollection(
-				_serviceTrackerMap.values());
+				if (type == commerceHealthStatus.getType()) {
+					return commerceHealthStatus;
+				}
 
-		Collections.sort(
-			commerceHealthStatusServiceWrappers,
-			_commerceHealthStatusServiceWrapperDisplayOrderComparator);
-
-		for (ServiceWrapper<CommerceHealthHttpStatus>
-				commerceHealthStatusServiceWrapper :
-					commerceHealthStatusServiceWrappers) {
-
-			CommerceHealthHttpStatus commerceHealthHttpStatus =
-				commerceHealthStatusServiceWrapper.getService();
-
-			if (type == commerceHealthHttpStatus.getType()) {
-				commerceHealthHttpStatuses.add(commerceHealthHttpStatus);
-			}
-		}
-
-		return Collections.unmodifiableList(commerceHealthHttpStatuses);
+				return null;
+			});
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceHealthHttpStatus.class,
+			bundleContext, CommerceHealthStatus.class,
 			"commerce.health.status.key",
 			ServiceTrackerCustomizerFactory.
-				<CommerceHealthHttpStatus>serviceWrapper(bundleContext));
+				<CommerceHealthStatus>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
@@ -108,13 +119,13 @@ public class CommerceHealthHttpStatusRegistryImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceHealthHttpStatusRegistryImpl.class);
+		CommerceHealthStatusRegistryImpl.class);
 
-	private static final Comparator<ServiceWrapper<CommerceHealthHttpStatus>>
+	private static final Comparator<ServiceWrapper<CommerceHealthStatus>>
 		_commerceHealthStatusServiceWrapperDisplayOrderComparator =
 			new CommerceHealthStatusServiceWrapperDisplayOrderComparator();
 
-	private ServiceTrackerMap<String, ServiceWrapper<CommerceHealthHttpStatus>>
+	private ServiceTrackerMap<String, ServiceWrapper<CommerceHealthStatus>>
 		_serviceTrackerMap;
 
 }

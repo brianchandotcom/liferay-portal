@@ -15,7 +15,7 @@
 package com.liferay.commerce.wish.list.web.internal.health.status;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -44,12 +44,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"commerce.health.status.display.order:Integer=20",
-		"commerce.health.status.key=" + WishListContentCommerceHealthHttpStatus.KEY
+		"commerce.health.status.key=" + WishListContentCommerceHealthStatus.KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class WishListContentCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class WishListContentCommerceHealthStatus
+	implements CommerceHealthStatus {
 
 	public static final String KEY = "wish-list-content";
 
@@ -118,6 +118,11 @@ public class WishListContentCommerceHealthHttpStatus
 	public int getType() {
 		return CommerceHealthStatusConstants.
 			COMMERCE_HEALTH_STATUS_TYPE_GROUP_INSTANCE;
+	}
+
+	@Override
+	public boolean isActive() {
+		return true;
 	}
 
 	@Override

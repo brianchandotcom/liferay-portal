@@ -91,9 +91,9 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpe
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSubscriptionConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductTaxConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductVirtualSettingsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.RelatedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
-import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.VirtualSettingsUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -1128,11 +1128,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		// Virtual
 
 		ProductVirtualSettings productVirtualSettings =
-			product.getVirtualSettings();
+			product.getProductVirtualSettings();
 
 		if (productVirtualSettings != null) {
 			if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
-				VirtualSettingsUtil.addOrUpdateVirtualSettings(
+				ProductVirtualSettingsUtil.addOrUpdateProductVirtualSettings(
 					cpDefinition, productVirtualSettings,
 					_cpDefinitionVirtualSettingService, _uniqueFileNameProvider,
 					serviceContext);

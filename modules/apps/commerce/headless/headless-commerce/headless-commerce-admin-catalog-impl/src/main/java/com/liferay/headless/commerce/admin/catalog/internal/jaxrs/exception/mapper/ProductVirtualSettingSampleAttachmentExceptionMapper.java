@@ -14,10 +14,9 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-
-import java.net.MalformedURLException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -31,17 +30,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.VirtualSettingUrlExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.ProductVirtualSettingSampleAttachmentExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class VirtualSettingUrlExceptionMapper
-	extends BaseExceptionMapper<MalformedURLException> {
+public class ProductVirtualSettingSampleAttachmentExceptionMapper
+	extends BaseExceptionMapper<CPDefinitionVirtualSettingSampleException> {
 
 	@Override
-	protected Problem getProblem(MalformedURLException malformedURLException) {
+	protected Problem getProblem(
+		CPDefinitionVirtualSettingSampleException
+			cpDefinitionVirtualSettingSampleException) {
+
 		return new Problem(
-			Response.Status.BAD_REQUEST, malformedURLException.getMessage());
+			Response.Status.BAD_REQUEST,
+			"Invalid product virtual sample settings.");
 	}
 
 }

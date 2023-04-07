@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.util.DBUpgradeStatus;
+import com.liferay.portal.upgrade.util.UpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -171,7 +171,7 @@ public class UpgradeReport {
 				"initial.schema.version",
 				() -> {
 					String initialSchemaVersion =
-						DBUpgradeStatus.getInitialSchemaVersion(
+						UpgradeStatus.getInitialSchemaVersion(
 							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 					if ((initialSchemaVersion != null) &&
@@ -196,9 +196,8 @@ public class UpgradeReport {
 			).put(
 				"final.schema.version",
 				() -> {
-					String schemaVersion =
-						DBUpgradeStatus.getFinalSchemaVersion(
-							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+					String schemaVersion = UpgradeStatus.getFinalSchemaVersion(
+						ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 					if (schemaVersion != null) {
 						return schemaVersion;
@@ -231,9 +230,9 @@ public class UpgradeReport {
 				}
 			).build()
 		).put(
-			"type", DBUpgradeStatus.getType()
+			"type", UpgradeStatus.getType()
 		).put(
-			"result", DBUpgradeStatus.getStatus()
+			"result", UpgradeStatus.getStatus()
 		).put(
 			"database.version",
 			() -> {
@@ -385,7 +384,7 @@ public class UpgradeReport {
 			"longest.upgrade.processes",
 			() -> {
 				Map<String, ArrayList<String>> eventMessages =
-					DBUpgradeStatus.getUpgradeProcessMessages();
+					UpgradeStatus.getUpgradeProcessMessages();
 
 				List<String> messages = eventMessages.get(
 					UpgradeProcess.class.getName());
@@ -448,10 +447,9 @@ public class UpgradeReport {
 				return longestRunningUpgradeProcesses;
 			}
 		).put(
-			"errors", _getMessagesPrinters(DBUpgradeStatus.getErrorMessages())
+			"errors", _getMessagesPrinters(UpgradeStatus.getErrorMessages())
 		).put(
-			"warnings",
-			_getMessagesPrinters(DBUpgradeStatus.getWarningMessages())
+			"warnings", _getMessagesPrinters(UpgradeStatus.getWarningMessages())
 		).put(
 			"osgi.status",
 			() -> {

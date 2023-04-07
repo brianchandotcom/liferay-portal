@@ -40,7 +40,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.util.DBUpgradeStatus;
+import com.liferay.portal.upgrade.util.UpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -533,19 +533,19 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			PropsValues.class, "UPGRADE_REPORT_ENABLED", true);
 
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_errorMessages");
+			UpgradeStatus.class, "_errorMessages");
 		_originalFiltered = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_filtered");
+			UpgradeStatus.class, "_filtered");
 		_originalModuleSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_servletSchemaVersionsMap");
+			UpgradeStatus.class, "_servletSchemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_upgradeProcessMessages");
+			UpgradeStatus.class, "_upgradeProcessMessages");
 		_originalStatus = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_status");
+			UpgradeStatus.class, "_status");
 		_originalType = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_type");
+			UpgradeStatus.class, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_warningMessages");
+			UpgradeStatus.class, "_warningMessages");
 	}
 
 	protected abstract String getFilePath();

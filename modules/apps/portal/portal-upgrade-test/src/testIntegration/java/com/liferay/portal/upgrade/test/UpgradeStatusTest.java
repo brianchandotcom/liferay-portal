@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.upgrade.util.DBUpgradeStatus;
+import com.liferay.portal.upgrade.util.UpgradeStatus;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class DBUpgradeStatusTest {
+public class UpgradeStatusTest {
 
 	@ClassRule
 	@Rule
@@ -59,19 +59,19 @@ public class DBUpgradeStatusTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_errorMessages");
+			UpgradeStatus.class, "_errorMessages");
 		_originalFiltered = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_filtered");
+			UpgradeStatus.class, "_filtered");
 		_originalServletSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_servletSchemaVersionsMap");
+			UpgradeStatus.class, "_servletSchemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_upgradeProcessMessages");
+			UpgradeStatus.class, "_upgradeProcessMessages");
 		_originalStatus = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_status");
+			UpgradeStatus.class, "_status");
 		_originalType = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_type");
+			UpgradeStatus.class, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
-			DBUpgradeStatus.class, "_warningMessages");
+			UpgradeStatus.class, "_warningMessages");
 
 		_originalStopWatch = ReflectionTestUtil.getFieldValue(
 			DBUpgrader.class, "_stopWatch");
@@ -106,9 +106,9 @@ public class DBUpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Failure", DBUpgradeStatus.getStatus());
+		Assert.assertEquals("Failure", UpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
 	}
 
 	@Test
@@ -127,9 +127,9 @@ public class DBUpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			bundleSymbolicName, currentSchemaVersion.toString());
 
-		Assert.assertEquals("Failure", DBUpgradeStatus.getStatus());
+		Assert.assertEquals("Failure", UpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
 	}
 
 	@Test
@@ -153,9 +153,9 @@ public class DBUpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Success", DBUpgradeStatus.getStatus());
+		Assert.assertEquals("Success", UpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
 	}
 
 	@Test
@@ -173,9 +173,9 @@ public class DBUpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Warning", DBUpgradeStatus.getStatus());
+		Assert.assertEquals("Warning", UpgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", DBUpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
 	}
 
 	private Version _getReleaseSchemaVersion(String bundleSymbolicName) {
@@ -262,13 +262,13 @@ public class DBUpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			microBundleSymbolicName, currentMicroSchemaVersion.toString());
 
-		Assert.assertEquals("Success", DBUpgradeStatus.getStatus());
+		Assert.assertEquals("Success", UpgradeStatus.getStatus());
 
 		if (!type.equals("Qualifier")) {
-			Assert.assertEquals(type, DBUpgradeStatus.getType());
+			Assert.assertEquals(type, UpgradeStatus.getType());
 		}
 		else {
-			Assert.assertEquals("Micro", DBUpgradeStatus.getType());
+			Assert.assertEquals("Micro", UpgradeStatus.getType());
 		}
 	}
 

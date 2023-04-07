@@ -14,28 +14,21 @@
 
 package com.liferay.sharing.taglib.internal.servlet;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class SharingConfigurationFactoryUtil {
 
 	public static SharingConfigurationFactory getSharingConfigurationFactory() {
-		return _sharingConfigurationFactory;
+		return _sharingConfigurationFactorySnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setSharingOnclickMethodFactory(
-		SharingConfigurationFactory sharingConfigurationFactory) {
-
-		_sharingConfigurationFactory = sharingConfigurationFactory;
-	}
-
-	private static SharingConfigurationFactory _sharingConfigurationFactory;
+	private static final Snapshot<SharingConfigurationFactory>
+		_sharingConfigurationFactorySnapshot = new Snapshot<>(
+			SharingConfigurationFactoryUtil.class,
+			SharingConfigurationFactory.class);
 
 }

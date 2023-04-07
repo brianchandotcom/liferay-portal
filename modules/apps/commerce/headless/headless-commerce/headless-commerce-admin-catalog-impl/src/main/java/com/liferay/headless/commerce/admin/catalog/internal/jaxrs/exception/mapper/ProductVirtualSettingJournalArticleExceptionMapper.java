@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -30,21 +30,22 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.VirtualSettingTermsOfUseExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.ProductVirtualSettingJournalArticleExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class VirtualSettingTermsOfUseExceptionMapper
-	extends BaseExceptionMapper<CPDefinitionVirtualSettingTermsOfUseException> {
+public class ProductVirtualSettingJournalArticleExceptionMapper
+	extends BaseExceptionMapper
+		<CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException> {
 
 	@Override
 	protected Problem getProblem(
-		CPDefinitionVirtualSettingTermsOfUseException
-			cpDefinitionVirtualSettingTermsOfUseException) {
+		CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException
+			cpDefinitionVirtualSettingTermsOfUseArticleResourcePKException) {
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"Invalid product virtual terms of use settings.");
+			"Invalid product terms of use journal article ID.");
 	}
 
 }

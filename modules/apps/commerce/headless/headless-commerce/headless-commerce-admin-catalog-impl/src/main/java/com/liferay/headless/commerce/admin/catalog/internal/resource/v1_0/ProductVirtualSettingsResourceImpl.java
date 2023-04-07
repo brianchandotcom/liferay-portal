@@ -44,7 +44,7 @@ public class ProductVirtualSettingsResourceImpl
 
 	@Override
 	public ProductVirtualSettings
-			getProductByExternalReferenceCodeVirtualSettings(
+			getProductByExternalReferenceCodeProductVirtualSettings(
 				String externalReferenceCode)
 		throws Exception {
 
@@ -62,9 +62,9 @@ public class ProductVirtualSettingsResourceImpl
 		return _toProductVirtualSettings(cpDefinition.getCPDefinitionId());
 	}
 
-	@NestedField(parentClass = Product.class, value = "virtualSettings")
+	@NestedField(parentClass = Product.class, value = "productVirtualSettings")
 	@Override
-	public ProductVirtualSettings getProductIdVirtualSettings(
+	public ProductVirtualSettings getProductIdProductVirtualSettings(
 			@NestedFieldId(value = "productId") Long id)
 		throws Exception {
 

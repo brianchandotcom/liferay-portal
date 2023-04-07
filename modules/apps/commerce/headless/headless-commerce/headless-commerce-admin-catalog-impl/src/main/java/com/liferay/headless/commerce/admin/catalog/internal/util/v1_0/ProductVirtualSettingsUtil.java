@@ -53,9 +53,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Stefano Motta
  */
-public class VirtualSettingsUtil {
+public class ProductVirtualSettingsUtil {
 
-	public static CPDefinitionVirtualSetting addOrUpdateVirtualSettings(
+	public static CPDefinitionVirtualSetting addOrUpdateProductVirtualSettings(
 			CPDefinition cpDefinition,
 			ProductVirtualSettings productVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
@@ -68,13 +68,13 @@ public class VirtualSettingsUtil {
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
 		if (cpDefinitionVirtualSetting == null) {
-			return _addVirtualSettings(
+			return _addProductVirtualSettings(
 				cpDefinition, productVirtualSettings,
 				cpDefinitionVirtualSettingService, uniqueFileNameProvider,
 				serviceContext);
 		}
 
-		return _updateVirtualSettings(
+		return _updateProductVirtualSettings(
 			cpDefinitionVirtualSetting, productVirtualSettings,
 			cpDefinitionVirtualSettingService, uniqueFileNameProvider,
 			serviceContext);
@@ -109,7 +109,7 @@ public class VirtualSettingsUtil {
 		return fileEntry;
 	}
 
-	private static CPDefinitionVirtualSetting _addVirtualSettings(
+	private static CPDefinitionVirtualSetting _addProductVirtualSettings(
 			CPDefinition cpDefinition,
 			ProductVirtualSettings productVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
@@ -235,7 +235,7 @@ public class VirtualSettingsUtil {
 		return 0;
 	}
 
-	private static CPDefinitionVirtualSetting _updateVirtualSettings(
+	private static CPDefinitionVirtualSetting _updateProductVirtualSettings(
 			CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
 			ProductVirtualSettings productVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
@@ -359,9 +359,9 @@ public class VirtualSettingsUtil {
 	}
 
 	private static final String _TEMP_FILE_NAME =
-		VirtualSettingsUtil.class.getName();
+		ProductVirtualSettingsUtil.class.getName();
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VirtualSettingsUtil.class);
+		ProductVirtualSettingsUtil.class);
 
 }

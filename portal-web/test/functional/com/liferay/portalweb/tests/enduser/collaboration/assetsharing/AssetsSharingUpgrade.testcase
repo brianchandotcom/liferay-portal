@@ -18,6 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanViewSharedAssetsArchive72101 {

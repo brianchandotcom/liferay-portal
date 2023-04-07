@@ -218,7 +218,7 @@ definition {
 			textType = "TextArea");
 	}
 
-	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site."
+	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanMapWCWithOpenGraph {

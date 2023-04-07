@@ -762,7 +762,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that only the valid translation files can be uploaded and resubmitted from a zip file when enabling Workflow."
+	@description = "This ensures that only the valid translation files can be uploaded and resubmitted from a zip file when enabling Workflow. Skip the instance for performance improvement."
 	@priority = 4
 	@refactordone
 	test CanResubmitImportedEntryFromZipFile {

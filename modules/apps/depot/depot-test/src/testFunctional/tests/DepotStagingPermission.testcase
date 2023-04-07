@@ -209,7 +209,7 @@ definition {
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_2.jpg");
 	}
 
-	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions."
+	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishDocument {
 		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishDocument";
@@ -267,7 +267,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.doc");
 	}
 
-	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library."
+	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedImage {
 		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishEditedImage";
@@ -332,7 +332,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Image Edit");
 	}
 
-	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library."
+	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedWC {
 		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishEditedWC";
@@ -398,7 +398,7 @@ definition {
 			webContentTitle = "WC WebContent Title Edit");
 	}
 
-	@description = "This test ensures that a user with permissions can add a basic article and publish it to live in asset library."
+	@description = "This test ensures that a user with permissions can add a basic article and publish it to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishWC {
 		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishWC";

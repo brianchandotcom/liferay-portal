@@ -103,6 +103,7 @@ definition {
 		Upgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test ViewDMArchive72104 {
@@ -123,6 +124,7 @@ definition {
 		Upgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test ViewDMArchive73101 {
@@ -163,6 +165,7 @@ definition {
 		Upgrade.viewDocument();
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test ViewDMArchive701015 {

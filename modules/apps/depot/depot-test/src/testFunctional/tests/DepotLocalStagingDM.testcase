@@ -296,7 +296,7 @@ definition {
 		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
-	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
+	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
 	@e2e
 	@priority = 5
 	@refactordone
@@ -373,7 +373,7 @@ definition {
 		Navigator.gotoStagedView();
 	}
 
-	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
+	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanDeleteDocument {
@@ -456,7 +456,7 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_1.doc");
 	}
 
-	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging."
+	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanDeleteDocumentWithCustomField {
@@ -832,7 +832,7 @@ definition {
 			locator1 = "WCD#WEB_CONTENT_IMAGE");
 	}
 
-	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging."
+	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanEditBlogCoverImage {
@@ -1097,7 +1097,7 @@ definition {
 		BlogsEntry.viewSmallImage(uploadFileName = "Document_2.jpg");
 	}
 
-	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
+	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanEditDMImage {
@@ -1179,7 +1179,7 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.jpg");
 	}
 
-	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
+	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanEditDocument {
@@ -1262,7 +1262,7 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_3.doc");
 	}
 
-	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling local staging."
+	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanEditDocumentWithCustomField {
@@ -1541,7 +1541,7 @@ definition {
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 	}
 
-	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging."
+	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanEditWCImage {
@@ -2262,7 +2262,7 @@ definition {
 			dmDocumentType = "DM Document Type Depot");
 	}
 
-	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling local staging."
+	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanPublishDocumentFolder {
@@ -2441,7 +2441,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that a document stored in a DM folder of asset library can be edited and republished in DM widget when local staging is enabled."
+	@description = "This ensures that a document stored in a DM folder of asset library can be edited and republished in DM widget when local staging is enabled. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedDocumentFromFolderViaWidget {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishEditedDocumentFromFolderViaWidget";
@@ -2525,7 +2525,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "Document_2.doc");
 	}
 
-	@description = "This ensures that a document stored in an asset library can be edited and republished in DM widget when local staging is enabled."
+	@description = "This ensures that a document stored in an asset library can be edited and republished in DM widget when local staging is enabled. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedDocumentViaWidget {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishEditedDocumentViaWidget";
@@ -2598,7 +2598,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "Document_2.doc");
 	}
 
-	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in DM widget when local staging is enabled."
+	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in DM widget when local staging is enabled. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedImageFromFolderViaWidget {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishEditedImageFromFolderViaWidget";
@@ -2753,7 +2753,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "Document_1.png");
 	}
 
-	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in DM widget when local staging is enabled."
+	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in DM widget when local staging is enabled. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishImageAfterChangingDepot {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishImageAfterChangingDepot";
@@ -3031,7 +3031,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that an image with custom field in depot can be published in staging site when enabling local staging."
+	@description = "This ensures that an image with custom field in depot can be published in staging site when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanPublishImageWithCustomField {
@@ -3094,7 +3094,7 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 	}
 
-	@description = "This ensures that the latest version of an image in a depot can be published in local staging site."
+	@description = "This ensures that the latest version of an image in a depot can be published in local staging site. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanPublishImageWithLatestVersion {
@@ -3248,7 +3248,7 @@ definition {
 		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 	}
 
-	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging."
+	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging. Skip the instance for performance improvement."
 	@priority = 3
 	@refactordone
 	test CanPublishVideoShortcutThumbnail {

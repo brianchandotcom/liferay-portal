@@ -357,6 +357,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title 2");
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 3
 	@refactorneeded
 	test CanViewArticlesWithDifferentSiteScopes {

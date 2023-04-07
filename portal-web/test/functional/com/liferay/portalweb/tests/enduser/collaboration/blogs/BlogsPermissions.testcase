@@ -632,6 +632,7 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenOrgRoleHasNoPermissions {
@@ -1109,6 +1110,7 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "Skip the instance for performance improvement."
 	@priority = 4
 	@refactorneeded
 	test CannotEditEntryWhenOwnerHasNoPermissions {
@@ -1698,7 +1700,7 @@ definition {
 		BlogsEntry.viewPermissionsPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This checks that an entry cannot be viewed by a guest once permissions are removed."
+	@description = "This checks that an entry cannot be viewed by a guest once permissions are removed. Skip the instance for performance improvement."
 	@priority = 4
 	@refactordone
 	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {

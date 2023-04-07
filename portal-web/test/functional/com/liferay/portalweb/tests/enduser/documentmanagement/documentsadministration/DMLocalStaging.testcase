@@ -22,7 +22,7 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 	}
 
-	@description = "This ensures that the document using custom document type can be deleted and republished."
+	@description = "This ensures that the document using custom document type can be deleted and republished. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
 	test CanDeleteDocumentWithCustomType {

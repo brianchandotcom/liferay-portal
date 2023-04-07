@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the translator can select which target language she wants to translate into numeric fields."
+	@description = "This ensures that the translator can select which target language she wants to translate into numeric fields. Skip the instance for performance improvement."
 	@priority = 5
 	test CanTranslateCustomizedWCWithNumericFields {
 		property test.name.skip.portal.instance = "TranslationsInterface#CanTranslateCustomizedWCWithNumericFields";
@@ -214,7 +214,7 @@ definition {
 			webContentTitleTranslated = "WC WebContent Título");
 	}
 
-	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields."
+	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields. Skip the instance for performance improvement."
 	@priority = 5
 	test CanTranslateCustomizedWCWithTextFields {
 		property test.name.skip.portal.instance = "TranslationsInterface#CanTranslateCustomizedWCWithTextFields";

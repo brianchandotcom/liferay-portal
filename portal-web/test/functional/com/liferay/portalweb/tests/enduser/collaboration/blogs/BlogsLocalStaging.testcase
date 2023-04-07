@@ -225,7 +225,7 @@ definition {
 		AssertLocation(value1 = "${portalURL}/web/site-name/b/blogs-entry-title");
 	}
 
-	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."
+	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishDeletedCoverImageViaSAP {
 		property test.name.skip.portal.instance = "BlogsLocalStaging#CanPublishDeletedCoverImageViaSAP";
@@ -1115,7 +1115,7 @@ definition {
 			entryTitle = "New Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-154410. It ensures that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
+	@description = "This test covers LPS-154410. It ensures that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished. Skip the instance for performance improvement."
 	@priority = 5
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "BlogsLocalStaging#CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated";

@@ -363,6 +363,101 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-11003. Assert only the product options that are added to SKUs can be displayed in the product detail widget"
+	@priority = 5
+	test CanAssertProductOptionSelectorDisplaysOnlySkuOptions {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a simple product with four values sku contributor option is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "City");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_fieldType = "Select from List",
+				key_option = "City",
+				productOptionSkuContributor = "true");
+
+			for (var cityName : list "Delhi,Mumbai,Bangalore,Pune") {
+				CommerceProductOptions.createProductOptionValue(key_name = ${cityName});
+
+				SelectFrame.selectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			}
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And adding only two of the four values as SKUs from SKUs tab of the Product") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.addSKU(optionValuesList = "Delhi:1,Mumbai:2");
+		}
+
+		task ("When the buyer user logs in and navigates to the product detail page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/test-simple-product");
+		}
+
+		task ("And opens the dropdown option values selector") {
+			Click(
+				key_optionName = "City",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+		}
+
+		task ("Then only the 2 values set for the SKUs before are shown") {
+			for (var cityName : list "Delhi,Mumbai") {
+				AssertElementPresent(
+					key_optionValue = ${cityName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+			}
+
+			for (var cityName : list "Bangalore,Pune") {
+				AssertElementNotPresent(
+					key_optionValue = ${cityName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9837. CanChangeOptionAndOptionValuePositions"
 	@priority = 5
 	test CanChangeOptionAndOptionValuePositions {

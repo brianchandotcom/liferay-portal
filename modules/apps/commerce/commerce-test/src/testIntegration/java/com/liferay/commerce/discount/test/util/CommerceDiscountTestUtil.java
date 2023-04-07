@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.discount.test.util;
 
+import com.liferay.account.model.AccountGroup;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
@@ -324,8 +325,7 @@ public class CommerceDiscountTestUtil {
 
 	public static CommerceDiscountCommerceAccountGroupRel
 			addDiscountCommerceAccountGroupRel(
-				CommerceDiscount commerceDiscount,
-				CommerceAccountGroup commerceAccountGroup)
+				CommerceDiscount commerceDiscount, AccountGroup accountGroup)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -335,8 +335,7 @@ public class CommerceDiscountTestUtil {
 			addCommerceDiscountCommerceAccountGroupRel(
 				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(),
-				commerceAccountGroup.getCommerceAccountGroupId(),
-				serviceContext);
+				accountGroup.getAccountGroupId(), serviceContext);
 	}
 
 	public static CommerceDiscount addFixedCommerceDiscount(

@@ -137,14 +137,10 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_user.getUserId(), "Business Account6", "example1@email.com",
 			_serviceContext);
 
-		CommerceAccountGroupTestUtil.addCommerceAccountToAccountGroup(
-			_group.getGroupId(),
-			_commerceAccountLocalService.getCommerceAccount(
-				_accountEntry4.getAccountEntryId()));
-		CommerceAccountGroupTestUtil.addCommerceAccountToAccountGroup(
-			_group.getGroupId(),
-			_commerceAccountLocalService.getCommerceAccount(
-				_accountEntry5.getAccountEntryId()));
+		CommerceAccountGroupTestUtil.addAccountEntryToAccountGroup(
+			_group.getGroupId(), _accountEntry4);
+		CommerceAccountGroupTestUtil.addAccountEntryToAccountGroup(
+			_group.getGroupId(), _accountEntry5);
 
 		_commerceChannel2 = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());

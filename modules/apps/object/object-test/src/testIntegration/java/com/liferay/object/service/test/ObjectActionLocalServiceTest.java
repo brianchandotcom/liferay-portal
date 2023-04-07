@@ -14,8 +14,8 @@
 
 package com.liferay.object.service.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -749,7 +749,7 @@ public class ObjectActionLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		CommerceAccount commerceAccount = CommerceTestUtil.addAccount(
+		AccountEntry accountEntry = CommerceTestUtil.addAccount(
 			group.getGroupId(), TestPropsValues.getUserId());
 
 		CommerceCurrency commerceCurrency =
@@ -779,7 +779,7 @@ public class ObjectActionLocalServiceTest {
 					).put(
 						"name", "accountId"
 					).put(
-						"value", commerceAccount.getCommerceAccountId()
+						"value", accountEntry.getAccountEntryId()
 					),
 					JSONUtil.put(
 						"inputAsValue", true
@@ -857,7 +857,7 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertNotNull(commerceOrder2);
 
 			Assert.assertEquals(
-				commerceAccount.getCommerceAccountId(),
+				accountEntry.getAccountEntryId(),
 				commerceOrder2.getCommerceAccountId());
 			Assert.assertEquals(
 				commerceCurrency.getCommerceCurrencyId(),

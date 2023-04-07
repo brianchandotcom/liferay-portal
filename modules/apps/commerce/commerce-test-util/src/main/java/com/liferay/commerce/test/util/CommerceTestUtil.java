@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.test.util;
 
-import com.liferay.commerce.account.exception.CommerceAccountTypeException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -74,12 +73,11 @@ import java.util.Map;
  */
 public class CommerceTestUtil {
 
-	public static CommerceAccount addAccount(long groupId, long userId)
+	public static AccountEntry addAccount(long groupId, long userId)
 		throws Exception {
 
-		return CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
-			userId, StringPool.BLANK, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(groupId));
+		return CommerceAccountTestUtil.addPersonAccountEntry(
+			userId, ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static CommerceOrder addB2BCommerceOrder(
@@ -114,11 +112,11 @@ public class CommerceTestUtil {
 			userId = serviceContext.getUserId();
 		}
 
-		CommerceAccount commerceAccount =
-			CommerceAccountLocalServiceUtil.getPersonalCommerceAccount(userId);
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.getPersonAccountEntry(userId);
 
 		return CommerceOrderLocalServiceUtil.addCommerceOrder(
-			userId, groupId, commerceAccount.getCommerceAccountId(),
+			userId, groupId, accountEntry.getAccountEntryId(),
 			commerceCurrency.getCommerceCurrencyId());
 	}
 
@@ -133,21 +131,19 @@ public class CommerceTestUtil {
 			userId = serviceContext.getUserId();
 		}
 
-		CommerceAccount commerceAccount;
+		AccountEntry accountEntry;
 
 		try {
-			commerceAccount =
-				CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
-					userId, StringPool.BLANK, StringPool.BLANK, serviceContext);
+			accountEntry = CommerceAccountTestUtil.addPersonAccountEntry(
+				userId, serviceContext);
 		}
-		catch (CommerceAccountTypeException commerceAccountTypeException) {
-			commerceAccount =
-				CommerceAccountLocalServiceUtil.getPersonalCommerceAccount(
-					userId);
+		catch (Exception exception) {
+			accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+				userId);
 		}
 
 		return CommerceOrderLocalServiceUtil.addCommerceOrder(
-			userId, groupId, commerceAccount.getCommerceAccountId(),
+			userId, groupId, accountEntry.getAccountEntryId(),
 			commerceCurrencyId);
 	}
 

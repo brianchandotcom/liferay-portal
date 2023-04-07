@@ -15,11 +15,11 @@
 package com.liferay.commerce.discount.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -166,9 +166,9 @@ public class CommerceDiscountTargetGrossV2Test {
 			_user.getUserId(), _commerceChannel.getGroupId(), cpTaxCategoryId,
 			_commerceTaxMethod.getCommerceTaxMethodId(), rate);
 
-		CommerceAccountGroup commerceAccountGroup =
-			CommerceAccountGroupTestUtil.addCommerceAccountToAccountGroup(
-				_group.getGroupId(), _commerceAccount);
+		AccountGroup accountGroup =
+			CommerceAccountGroupTestUtil.addAccountEntryToAccountGroup(
+				_group.getGroupId(), _accountEntry);
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
@@ -204,7 +204,7 @@ public class CommerceDiscountTargetGrossV2Test {
 				cpDefinition.getCPDefinitionId());
 
 		CommerceDiscountTestUtil.addDiscountCommerceAccountGroupRel(
-			commerceDiscount, commerceAccountGroup);
+			commerceDiscount, accountGroup);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,

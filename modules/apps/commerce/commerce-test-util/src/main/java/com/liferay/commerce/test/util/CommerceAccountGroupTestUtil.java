@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.test.util;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalServiceUtil;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalServiceUtil;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalServiceUtil;
+import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -28,55 +29,30 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
  */
 public class CommerceAccountGroupTestUtil {
 
-	public static CommerceAccountGroup addCommerceAccountGroup(long groupId)
+	public static AccountGroup addAccountEntryToAccountGroup(
+			long groupId, AccountEntry accountEntry)
 		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		return CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(
-			serviceContext.getCompanyId(), RandomTestUtil.randomString(), 0,
-			false, null, serviceContext);
-	}
+		AccountGroup accountGroup =
+			AccountGroupLocalServiceUtil.addAccountGroup(
+				serviceContext.getUserId(), null, RandomTestUtil.randomString(),
+				serviceContext);
 
-	public static CommerceAccountGroup addCommerceAccountToAccountGroup(
-			CommerceAccount commerceAccount)
-		throws PortalException {
+		accountGroup.setDefaultAccountGroup(false);
+		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
+		accountGroup.setExpandoBridgeAttributes(serviceContext);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		accountGroup = AccountGroupLocalServiceUtil.updateAccountGroup(
+			accountGroup);
 
-		CommerceAccountGroup commerceAccountGroup =
-			CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(
-				serviceContext.getCompanyId(), RandomTestUtil.randomString(), 0,
-				false, null, serviceContext);
+		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
 
-		CommerceAccountGroupCommerceAccountRelLocalServiceUtil.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), serviceContext);
-
-		return commerceAccountGroup;
-	}
-
-	public static CommerceAccountGroup addCommerceAccountToAccountGroup(
-			long groupId, CommerceAccount commerceAccount)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		CommerceAccountGroup commerceAccountGroup =
-			CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(
-				serviceContext.getCompanyId(), RandomTestUtil.randomString(), 0,
-				false, null, serviceContext);
-
-		CommerceAccountGroupCommerceAccountRelLocalServiceUtil.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), serviceContext);
-
-		return commerceAccountGroup;
+		return accountGroup;
 	}
 
 }

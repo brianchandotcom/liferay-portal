@@ -15,27 +15,23 @@
 package com.liferay.layout.admin.web.internal.info.search;
 
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = {})
 public class InfoSearchClassMapperRegistryUtil {
 
 	public static String getSearchClassName(String className) {
-		return _infoSearchClassMapperRegistry.getSearchClassName(className);
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry =
+			_infoSearchClassMapperRegistrySnapshot.get();
+
+		return infoSearchClassMapperRegistry.getSearchClassName(className);
 	}
 
-	@Reference(unbind = "-")
-	protected void setInfoSearchClassMapperRegistry(
-		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry) {
-
-		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
-	}
-
-	private static InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+	private static final Snapshot<InfoSearchClassMapperRegistry>
+		_infoSearchClassMapperRegistrySnapshot = new Snapshot<>(
+			InfoSearchClassMapperRegistryUtil.class,
+			InfoSearchClassMapperRegistry.class);
 
 }

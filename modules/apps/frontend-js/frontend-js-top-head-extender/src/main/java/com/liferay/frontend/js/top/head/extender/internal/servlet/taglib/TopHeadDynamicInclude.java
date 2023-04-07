@@ -154,7 +154,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 	}
 
-	private synchronized ResourceURLsBag _rebuild() {
+	private ResourceURLsBag _rebuild() {
 		PortalWebResources portalWebResources =
 			PortalWebResourcesUtil.getPortalWebResources(
 				PortalWebResourceConstants.RESOURCE_TYPE_JS);
@@ -175,46 +175,42 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			resourceURLsBag._jsResourceURLs,
 			PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
-		synchronized (_topHeadResourcesServiceReferences) {
-			for (ServiceReference<TopHeadResources>
-					topHeadResourcesServiceReference :
-						_topHeadResourcesServiceReferences) {
+		for (ServiceReference<TopHeadResources>
+				topHeadResourcesServiceReference :
+					_topHeadResourcesServiceReferences) {
 
-				TopHeadResources topHeadResources = _bundleContext.getService(
-					topHeadResourcesServiceReference);
+			TopHeadResources topHeadResources = _bundleContext.getService(
+				topHeadResourcesServiceReference);
 
-				try {
-					String bundleContextPath = _portal.getPathContext(
-						topHeadResources.getServletContextPath());
+			try {
+				String bundleContextPath = _portal.getPathContext(
+					topHeadResources.getServletContextPath());
 
-					String proxyPath = _portal.getPathProxy();
+				String proxyPath = _portal.getPathProxy();
 
-					String unproxiedBundleContextPath =
-						bundleContextPath.substring(proxyPath.length());
+				String unproxiedBundleContextPath = bundleContextPath.substring(
+					proxyPath.length());
 
-					String urlPrefix = proxyPath + unproxiedBundleContextPath;
+				String urlPrefix = proxyPath + unproxiedBundleContextPath;
 
-					for (String jsResourcePath :
-							topHeadResources.getJsResourcePaths()) {
+				for (String jsResourcePath :
+						topHeadResources.getJsResourcePaths()) {
 
-						String url = urlPrefix + jsResourcePath;
+					String url = urlPrefix + jsResourcePath;
 
-						resourceURLsBag._allJsResourceURLs.add(url);
-						resourceURLsBag._jsResourceURLs.add(url);
-					}
-
-					for (String jsResourcePath :
-							topHeadResources.
-								getAuthenticatedJsResourcePaths()) {
-
-						resourceURLsBag._allJsResourceURLs.add(
-							urlPrefix + jsResourcePath);
-					}
+					resourceURLsBag._allJsResourceURLs.add(url);
+					resourceURLsBag._jsResourceURLs.add(url);
 				}
-				finally {
-					_bundleContext.ungetService(
-						topHeadResourcesServiceReference);
+
+				for (String jsResourcePath :
+						topHeadResources.getAuthenticatedJsResourcePaths()) {
+
+					resourceURLsBag._allJsResourceURLs.add(
+						urlPrefix + jsResourcePath);
 				}
+			}
+			finally {
+				_bundleContext.ungetService(topHeadResourcesServiceReference);
 			}
 		}
 

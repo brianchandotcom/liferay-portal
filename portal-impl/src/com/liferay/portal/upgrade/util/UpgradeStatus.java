@@ -145,12 +145,23 @@ public class UpgradeStatus {
 	public static void start() {
 		_status = "Running";
 
-		_browseReleaseTable(
+		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions.setInitial(schemaVersion));
 	}
 
-	private static void _browseReleaseTable(
+	private static void _filterMessages() {
+		if (!_filtered) {
+			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
+				_errorMessages.remove(filteredClassName);
+				_warningMessages.remove(filteredClassName);
+			}
+
+			_filtered = true;
+		}
+	}
+
+	private static void _processRelease(
 		UnsafeBiConsumer<SchemaVersions, String, Exception> unsafeBiConsumer) {
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
@@ -191,19 +202,8 @@ public class UpgradeStatus {
 		}
 	}
 
-	private static void _filterMessages() {
-		if (!_filtered) {
-			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
-				_errorMessages.remove(filteredClassName);
-				_warningMessages.remove(filteredClassName);
-			}
-
-			_filtered = true;
-		}
-	}
-
 	private static void _setFinalSchemaVersion() {
-		_browseReleaseTable(
+		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions.setFinal(schemaVersion));
 	}

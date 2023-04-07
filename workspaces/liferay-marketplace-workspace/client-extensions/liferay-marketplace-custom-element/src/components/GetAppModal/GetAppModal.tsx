@@ -147,7 +147,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 						}) => customField.name === 'CatalogID'
 					);
 
-					return catalogIDField.customValue.data == catalogID;
+					return catalogIDField.customValue.data === catalogID;
 				}
 			);
 

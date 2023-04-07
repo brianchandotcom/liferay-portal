@@ -31,6 +31,7 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.layout.util.LayoutsTree;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.SegmentsEntryRetriever;
@@ -55,47 +56,47 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class ServletContextUtil {
 
 	public static CollectionPaginationHelper getCollectionPaginationHelper() {
-		return _collectionPaginationHelper;
+		return _collectionPaginationHelperSnapshot.get();
 	}
 
 	public static FragmentEntryConfigurationParser
 		getFragmentEntryConfigurationParser() {
 
-		return _fragmentEntryConfigurationParser;
+		return _fragmentEntryConfigurationParserSnapshot.get();
 	}
 
 	public static FragmentEntryLinkHelper getFragmentEntryLinkHelper() {
-		return _fragmentEntryLinkHelper;
+		return _fragmentEntryLinkHelperSnapshot.get();
 	}
 
 	public static FragmentEntryProcessorHelper
 		getFragmentEntryProcessorHelper() {
 
-		return _fragmentEntryProcessorHelper;
+		return _fragmentEntryProcessorHelperSnapshot.get();
 	}
 
 	public static FragmentRendererController getFragmentRendererController() {
-		return _fragmentRendererController;
+		return _fragmentRendererControllerSnapshot.get();
 	}
 
 	public static FrontendTokenDefinitionRegistry
 		getFrontendTokenDefinitionRegistry() {
 
-		return _frontendTokenDefinitionRegistry;
+		return _frontendTokenDefinitionRegistrySnapshot.get();
 	}
 
 	public static InfoItemServiceRegistry getInfoItemServiceRegistry() {
-		return _infoItemServiceRegistry;
+		return _infoItemServiceRegistrySnapshot.get();
 	}
 
 	public static InfoListRendererRegistry getInfoListRendererRegistry() {
-		return _infoListRendererRegistry;
+		return _infoListRendererRegistrySnapshot.get();
 	}
 
 	public static LayoutAdaptiveMediaProcessor
 		getLayoutAdaptiveMediaProcessor() {
 
-		return _layoutAdaptiveMediaProcessor;
+		return _layoutAdaptiveMediaProcessorSnapshot.get();
 	}
 
 	public static Map<String, LayoutClassedModelUsageRecorder>
@@ -107,55 +108,55 @@ public class ServletContextUtil {
 	public static LayoutClassedModelUsagesHelper
 		getLayoutClassedModelUsagesHelper() {
 
-		return _layoutClassedModelUsagesHelper;
+		return _layoutClassedModelUsagesHelperSnapshot.get();
 	}
 
 	public static LayoutDisplayPageProviderRegistry
 		getLayoutDisplayPageProviderRegistry() {
 
-		return _layoutDisplayPageProviderRegistry;
+		return _layoutDisplayPageProviderRegistrySnapshot.get();
 	}
 
 	public static LayoutListPermissionProviderRegistry
 		getLayoutListPermissionProviderRegistry() {
 
-		return _layoutListPermissionProviderRegistry;
+		return _layoutListPermissionProviderRegistrySnapshot.get();
 	}
 
 	public static LayoutListRetrieverRegistry getLayoutListRetrieverRegistry() {
-		return _layoutListRetrieverRegistry;
+		return _layoutListRetrieverRegistrySnapshot.get();
 	}
 
 	public static LayoutsTree getLayoutsTree() {
-		return _layoutsTree;
+		return _layoutsTreeSnapshot.get();
 	}
 
 	public static LayoutStructureProvider getLayoutStructureHelper() {
-		return _layoutStructureProvider;
+		return _layoutStructureProviderSnapshot.get();
 	}
 
 	public static ListObjectReferenceFactoryRegistry
 		getListObjectReferenceFactoryRegistry() {
 
-		return _listObjectReferenceFactoryRegistry;
+		return _listObjectReferenceFactoryRegistrySnapshot.get();
 	}
 
 	public static RequestContextMapper getRequestContextMapper() {
-		return _requestContextMapper;
+		return _requestContextMapperSnapshot.get();
 	}
 
 	public static SegmentsEntryRetriever getSegmentsEntryRetriever() {
-		return _segmentsEntryRetriever;
+		return _segmentsEntryRetrieverSnapshot.get();
 	}
 
 	public static SegmentsExperienceLocalService
 		getSegmentsExperienceLocalService() {
 
-		return _segmentsExperienceLocalService;
+		return _segmentsExperienceLocalServiceSnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContext;
+		return _servletContextSnapshot.get();
 	}
 
 	@Reference(
@@ -192,176 +193,68 @@ public class ServletContextUtil {
 		_layoutClassedModelUsageRecorders.remove(modelClassName);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCollectionPaginationHelper(
-		CollectionPaginationHelper collectionPaginationHelper) {
-
-		_collectionPaginationHelper = collectionPaginationHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentEntryConfigurationParser(
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser) {
-
-		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentEntryLinkHelper(
-		FragmentEntryLinkHelper fragmentEntryLinkHelper) {
-
-		_fragmentEntryLinkHelper = fragmentEntryLinkHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentEntryProcessorHelper(
-		FragmentEntryProcessorHelper fragmentEntryProcessorHelper) {
-
-		_fragmentEntryProcessorHelper = fragmentEntryProcessorHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentRendererController(
-		FragmentRendererController fragmentRendererController) {
-
-		_fragmentRendererController = fragmentRendererController;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFrontendTokenDefinitionRegistry(
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry) {
-
-		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfoItemServiceRegistry(
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		_infoItemServiceRegistry = infoItemServiceRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfoListRendererRegistry(
-		InfoListRendererRegistry infoListRendererRegistry) {
-
-		_infoListRendererRegistry = infoListRendererRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutAdaptiveMediaProcessor(
-		LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor) {
-
-		_layoutAdaptiveMediaProcessor = layoutAdaptiveMediaProcessor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutClassedModelUsagesHelper(
-		LayoutClassedModelUsagesHelper layoutClassedModelUsagesHelper) {
-
-		_layoutClassedModelUsagesHelper = layoutClassedModelUsagesHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutDisplayPageProviderRegistry(
-		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
-
-		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutListPermissionProviderRegistry(
-		LayoutListPermissionProviderRegistry
-			layoutListPermissionProviderRegistry) {
-
-		_layoutListPermissionProviderRegistry =
-			layoutListPermissionProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutListRetrieverRegistry(
-		LayoutListRetrieverRegistry layoutListRetrieverRegistry) {
-
-		_layoutListRetrieverRegistry = layoutListRetrieverRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutsTree(LayoutsTree layoutsTree) {
-		_layoutsTree = layoutsTree;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutStructureHelper(
-		LayoutStructureProvider layoutStructureProvider) {
-
-		_layoutStructureProvider = layoutStructureProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setListObjectReferenceFactoryRegistry(
-		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry) {
-
-		_listObjectReferenceFactoryRegistry =
-			listObjectReferenceFactoryRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRequestContextMapper(
-		RequestContextMapper requestContextMapper) {
-
-		_requestContextMapper = requestContextMapper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSegmentsEntryRetriever(
-		SegmentsEntryRetriever segmentsEntryRetriever) {
-
-		_segmentsEntryRetriever = segmentsEntryRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSegmentsExperienceLocalService(
-		SegmentsExperienceLocalService segmentsExperienceLocalService) {
-
-		_segmentsExperienceLocalService = segmentsExperienceLocalService;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private static CollectionPaginationHelper _collectionPaginationHelper;
-	private static FragmentEntryConfigurationParser
-		_fragmentEntryConfigurationParser;
-	private static FragmentEntryLinkHelper _fragmentEntryLinkHelper;
-	private static FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-	private static FragmentRendererController _fragmentRendererController;
-	private static FrontendTokenDefinitionRegistry
-		_frontendTokenDefinitionRegistry;
-	private static InfoItemServiceRegistry _infoItemServiceRegistry;
-	private static InfoListRendererRegistry _infoListRendererRegistry;
-	private static LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;
+	private static final Snapshot<CollectionPaginationHelper>
+		_collectionPaginationHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CollectionPaginationHelper.class);
+	private static final Snapshot<FragmentEntryConfigurationParser>
+		_fragmentEntryConfigurationParserSnapshot = new Snapshot<>(
+			ServletContextUtil.class, FragmentEntryConfigurationParser.class);
+	private static final Snapshot<FragmentEntryLinkHelper>
+		_fragmentEntryLinkHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, FragmentEntryLinkHelper.class);
+	private static final Snapshot<FragmentEntryProcessorHelper>
+		_fragmentEntryProcessorHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, FragmentEntryProcessorHelper.class);
+	private static final Snapshot<FragmentRendererController>
+		_fragmentRendererControllerSnapshot = new Snapshot<>(
+			ServletContextUtil.class, FragmentRendererController.class);
+	private static final Snapshot<FrontendTokenDefinitionRegistry>
+		_frontendTokenDefinitionRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, FrontendTokenDefinitionRegistry.class);
+	private static final Snapshot<InfoItemServiceRegistry>
+		_infoItemServiceRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, InfoItemServiceRegistry.class);
+	private static final Snapshot<InfoListRendererRegistry>
+		_infoListRendererRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, InfoListRendererRegistry.class);
+	private static final Snapshot<LayoutAdaptiveMediaProcessor>
+		_layoutAdaptiveMediaProcessorSnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutAdaptiveMediaProcessor.class);
 	private static final Map<String, LayoutClassedModelUsageRecorder>
 		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();
-	private static LayoutClassedModelUsagesHelper
-		_layoutClassedModelUsagesHelper;
-	private static LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
-	private static LayoutListPermissionProviderRegistry
-		_layoutListPermissionProviderRegistry;
-	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
-	private static LayoutsTree _layoutsTree;
-	private static LayoutStructureProvider _layoutStructureProvider;
-	private static ListObjectReferenceFactoryRegistry
-		_listObjectReferenceFactoryRegistry;
-	private static RequestContextMapper _requestContextMapper;
-	private static SegmentsEntryRetriever _segmentsEntryRetriever;
-	private static SegmentsExperienceLocalService
-		_segmentsExperienceLocalService;
-	private static ServletContext _servletContext;
+	private static final Snapshot<LayoutClassedModelUsagesHelper>
+		_layoutClassedModelUsagesHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutClassedModelUsagesHelper.class);
+	private static final Snapshot<LayoutDisplayPageProviderRegistry>
+		_layoutDisplayPageProviderRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutDisplayPageProviderRegistry.class);
+	private static final Snapshot<LayoutListPermissionProviderRegistry>
+		_layoutListPermissionProviderRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class,
+			LayoutListPermissionProviderRegistry.class);
+	private static final Snapshot<LayoutListRetrieverRegistry>
+		_layoutListRetrieverRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutListRetrieverRegistry.class);
+	private static final Snapshot<LayoutsTree> _layoutsTreeSnapshot =
+		new Snapshot<>(ServletContextUtil.class, LayoutsTree.class);
+	private static final Snapshot<LayoutStructureProvider>
+		_layoutStructureProviderSnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutStructureProvider.class);
+	private static final Snapshot<ListObjectReferenceFactoryRegistry>
+		_listObjectReferenceFactoryRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, ListObjectReferenceFactoryRegistry.class);
+	private static final Snapshot<RequestContextMapper>
+		_requestContextMapperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, RequestContextMapper.class);
+	private static final Snapshot<SegmentsEntryRetriever>
+		_segmentsEntryRetrieverSnapshot = new Snapshot<>(
+			ServletContextUtil.class, SegmentsEntryRetriever.class);
+	private static final Snapshot<SegmentsExperienceLocalService>
+		_segmentsExperienceLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, SegmentsExperienceLocalService.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.layout.taglib)");
 
 }

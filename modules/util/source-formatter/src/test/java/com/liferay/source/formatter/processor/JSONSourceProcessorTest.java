@@ -68,13 +68,15 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testJSONDeprecatedPackagesCheck() throws Exception {
 		test(
-			"JSONDeprecatedPackages/package.testjson",
-			new String[] {
+			SourceProcessorTestParameters.create(
+				"JSONDeprecatedPackages/package.testjson"
+			).addExpectedMessage(
 				"Do not use deprecated package " +
 					"'liferay-module-config-generator'",
-				"Do not use deprecated package 'metal-cli'"
-			},
-			new Integer[] {4, 5});
+				4
+			).addExpectedMessage(
+				"Do not use deprecated package 'metal-cli'", 5
+			));
 	}
 
 	@Test

@@ -826,7 +826,7 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_DATA_PROVIDER_LIST</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//li[contains(.,'${key_selectOption}')] | //div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_selectOption}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_fieldName}')]//following-sibling::li//button[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>

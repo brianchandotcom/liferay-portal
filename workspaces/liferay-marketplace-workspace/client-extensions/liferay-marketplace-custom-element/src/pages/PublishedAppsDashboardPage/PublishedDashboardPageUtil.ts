@@ -49,16 +49,16 @@ export type ProductResponseProps = {
 	catalogId: number;
 	externalReferenceCode: string;
 	lastUpdatedBy: string;
+	modifiedDate: string;
 	name: {en_US: string};
 	productId: number;
-	workflowStatusInfo: {label: string};
 	thumbnail: string;
-	modifiedDate: string;
+	workflowStatusInfo: {label: string};
 };
 
 export type ProductSpecificationProps = {
-	items: [];
 	id: number;
+	items: [];
 	productId: number;
 	specificationKey: string;
 	value: {};
@@ -73,9 +73,9 @@ export type UserAccountProps = {
 	accountBriefs: AccountBriefProps[];
 	dateCreated: string;
 	emailAddress: string;
+	id: number;
 	image: string;
 	lastLoginDate: string;
 	name: string;
 	roleBriefs: RoleBriefProps[];
-	id: number;
 };

@@ -166,9 +166,9 @@ export function ProvideVersionDetailsPage({
 						const response = await createAppSKU({
 							appProductId,
 							body: {
-								sku: createSkuName(appProductId, appVersion),
 								published: true,
 								purchasable: true,
+								sku: createSkuName(appProductId, appVersion),
 
 								// skuOptions: [
 								// 	{

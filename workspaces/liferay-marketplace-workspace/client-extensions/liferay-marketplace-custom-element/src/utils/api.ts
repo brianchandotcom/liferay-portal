@@ -450,9 +450,9 @@ export async function getSKUCustomFieldExpandoValue({
 	await Liferay.Service(
 		'/expandovalue/get-data',
 		{
-			columnName: customFieldName,
 			className: 'com.liferay.commerce.product.model.CPInstance',
 			classPK: skuId,
+			columnName: customFieldName,
 			companyId,
 			tableName: 'CUSTOM_FIELDS',
 		},
@@ -609,13 +609,13 @@ export async function postOptionValue(
 		const response = await fetch(
 			`/o/headless-commerce-admin-catalog/v1.0/productOptions/${optionId}/productOptionValues`,
 			{
-				headers,
-				method: 'POST',
 				body: JSON.stringify({
 					key,
 					name: {en_US: name},
 					priority,
 				}),
+				headers,
+				method: 'POST',
 			}
 		);
 
@@ -629,13 +629,13 @@ export async function postTrialOption() {
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/options`,
 		{
-			headers,
-			method: 'POST',
 			body: JSON.stringify({
 				fieldType: 'radio',
 				key: 'trial',
 				name: {en_US: 'Trial'},
 			}),
+			headers,
+			method: 'POST',
 		}
 	);
 
@@ -651,14 +651,12 @@ export async function postTrialProductOption(
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions`,
 		{
-			headers,
-			method: 'POST',
 			body: JSON.stringify([
 				{
-					facetable: true,
 					description: {
 						en_US: 'Specifies if a trial exists for a given app or solution submission.',
 					},
+					facetable: true,
 					fieldType: 'radio',
 					key: 'trial',
 					name: {
@@ -670,6 +668,8 @@ export async function postTrialProductOption(
 					skuContributor: true,
 				},
 			]),
+			headers,
+			method: 'POST',
 		}
 	);
 

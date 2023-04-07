@@ -22,6 +22,7 @@ export function SetAppPrivacyPage({
 	onClickContinue,
 }: SetAppPrivacyPageProps) {
 	// const [collectUsersData, setCollectUsersData] = useState(false);
+
 	const [checkboxDataCardsValues, setCheckboxDataCardsValues] = useState(
 		initialCheckboxDataCardsValues
 	);

@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.upgrade.util.DBUpgradeChecker;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class DBUpgradeCheckerImplTest {
+public class ReleaseManagerTest {
 
 	@ClassRule
 	@Rule
@@ -40,12 +40,12 @@ public class DBUpgradeCheckerImplTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCheckOK() {
-		Assert.assertTrue(_dbUpgradeChecker.check());
+	public void testCheckOK() throws Exception {
+		Assert.assertTrue(_releaseManager.check());
 	}
 
 	@Test
-	public void testMissingUpgrades() {
+	public void testMissingUpgrades() throws Exception {
 		String bundleSymbolicName = "com.liferay.asset.service";
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
@@ -57,7 +57,7 @@ public class DBUpgradeCheckerImplTest {
 
 			_releaseLocalService.updateRelease(release);
 
-			Assert.assertFalse(_dbUpgradeChecker.check());
+			Assert.assertFalse(_releaseManager.check());
 		}
 		finally {
 			release = _releaseLocalService.fetchRelease(bundleSymbolicName);
@@ -69,9 +69,9 @@ public class DBUpgradeCheckerImplTest {
 	}
 
 	@Inject
-	private volatile DBUpgradeChecker _dbUpgradeChecker;
+	private ReleaseLocalService _releaseLocalService;
 
 	@Inject
-	private ReleaseLocalService _releaseLocalService;
+	private volatile ReleaseManager _releaseManager;
 
 }

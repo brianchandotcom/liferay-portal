@@ -18,11 +18,13 @@ import {TFDSView} from '../FDSViews';
 interface IPaginationProps {
 	fdsView: TFDSView;
 	fdsViewsAPIURL: string;
+	fdsViewsURL: string;
 	namespace: string;
 }
 declare function Pagination({
 	fdsView,
 	fdsViewsAPIURL,
+	fdsViewsURL,
 	namespace,
 }: IPaginationProps): JSX.Element;
 export default Pagination;

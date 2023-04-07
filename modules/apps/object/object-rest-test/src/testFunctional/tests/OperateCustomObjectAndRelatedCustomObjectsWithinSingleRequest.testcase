@@ -63,7 +63,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given Student and Subject entries are created with postStudent including studentsSubjects with Subject entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -75,7 +75,7 @@ definition {
 		task ("When with patchStudent and studentId including studentsSubjects with new Subject entries information to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPatch(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPatch(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Bob",
@@ -87,21 +87,21 @@ definition {
 
 		task ("Then Student entry is updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Bob");
+				expectedValues = "Bob",
+				objectJsonPath = "$.items[*].name");
 		}
 
 		task ("And Then new Subject entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 1);
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 4);
+				expectedValues = 4,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -111,7 +111,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given Subject and Student entries are created with postSubject including studentsSubjects with Student entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "subjects",
 				externalReferenceCode = "subjectErc",
 				fieldName = "name",
@@ -125,7 +125,7 @@ definition {
 		task ("When with putSubject and subjectId including studentsSubjects with new Student entries information to update Subject entry") {
 			var subjectId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPut(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
 				en_US_plural_label = "subjects",
 				externalReferenceCode = "subjectErc",
 				fieldName = "name",
@@ -139,21 +139,21 @@ definition {
 
 		task ("Then Subject entry is updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "subjects",
-				expectedValues = "English");
+				expectedValues = "English",
+				objectJsonPath = "$.items[*].name");
 		}
 
 		task ("And Then new Student entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 1);
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 4);
+				expectedValues = 4,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -163,7 +163,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given two Student entries are created with postStudent including studentsStudents with another Student entry information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				externalReferenceCode = "ableErc",
 				fieldName = "name",
@@ -176,7 +176,7 @@ definition {
 		task ("When with putStudent and studentId including studentsStudents with new Student entry information to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPut(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
 				en_US_plural_label = "students",
 				externalReferenceCode = "ableErc",
 				fieldName = "name",
@@ -189,16 +189,16 @@ definition {
 
 		task ("Then the original Student entry is updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Able-update,name0,name0-update");
+				expectedValues = "Able-update,name0,name0-update",
+				objectJsonPath = "$.items[*].name");
 		}
 
 		task ("And Then one more Student entry is created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 3);
+				expectedValues = 3,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -208,7 +208,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given Student and Subject entries are created with postStudent including studentsSubjects with Subject entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				externalReferenceCode = "studentErc",
 				fieldName = "name",
@@ -221,7 +221,7 @@ definition {
 		task ("When with putStudent and studentId including studentsSubjects with new Subject entries information to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPut(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
 				en_US_plural_label = "students",
 				externalReferenceCode = "studentErc",
 				fieldName = "name",
@@ -234,21 +234,21 @@ definition {
 
 		task ("Then Student entry is updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Bob");
+				expectedValues = "Bob",
+				objectJsonPath = "$.items[*].name");
 		}
 
 		task ("And Then new Subject entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 1);
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 4);
+				expectedValues = 4,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -258,7 +258,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Subject entry with postSubject including studentsSubjects with Student entries information") {
-			CustomObjectAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "subjects",
 				fieldName = "name",
 				fieldValue = "Math",
@@ -269,14 +269,14 @@ definition {
 
 		task ("Then both Subject and Student entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 2);
+				expectedValues = 2,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 1);
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -286,7 +286,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsSubjects with Subject entries information") {
-			CustomObjectAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -297,14 +297,14 @@ definition {
 
 		task ("Then both Student and Subject entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 1);
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 2);
+				expectedValues = 2,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -314,7 +314,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsStudents with another two Student entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				externalReferenceCode = "studentErc",
 				fieldName = "name",
@@ -326,9 +326,9 @@ definition {
 
 		task ("Then three Student entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 3);
+				expectedValues = 3,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -340,7 +340,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including studentsSubjects with nonexistent field in Subject entries") {
-			CustomObjectAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -351,14 +351,14 @@ definition {
 
 		task ("Then no Student and Subject entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 0);
+				expectedValues = 0,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 0);
+				expectedValues = 0,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -370,7 +370,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When creating a Student entry with postStudent including nonexistent nestedField with Subject entries information") {
-			CustomObjectAPI.createObjectEntryWithField(
+			CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "subjects",
 				fieldName = "name",
 				fieldValue = "Math",
@@ -381,14 +381,14 @@ definition {
 
 		task ("Then no Student and Subject entries are created") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "students",
-				expectedValues = 0);
+				expectedValues = 0,
+				objectJsonPath = "$.totalCount");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.totalCount",
 				en_US_plural_label = "subjects",
-				expectedValues = 0);
+				expectedValues = 0,
+				objectJsonPath = "$.totalCount");
 		}
 	}
 
@@ -398,7 +398,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given two Student entries with custom ERCs are created with postStudent including studentsStudents with another Student entry information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -411,7 +411,7 @@ definition {
 		task ("When with patchStudent and studentId including studentsStudents with modified Student name and its erc to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPatch(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPatch(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able-update",
@@ -424,9 +424,9 @@ definition {
 
 		task ("Then both Students entries are updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Able-update,name0-update,name1-update");
+				expectedValues = "Able-update,name0-update,name1-update",
+				objectJsonPath = "$.items[*].name");
 		}
 	}
 
@@ -436,7 +436,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given Student and Subject entries with custom ERCs are created with postStudent including studentsSubjects with Subject entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				fieldName = "name",
 				fieldValue = "Able",
@@ -449,7 +449,7 @@ definition {
 		task ("When with patchStudent and studentId including studentsSubjects with modified names of Subject entries and their ERCs to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPatch(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPatch(
 				en_US_plural_label = "students",
 				externalReferenceCode = "studentErc",
 				fieldName = "name",
@@ -463,14 +463,14 @@ definition {
 
 		task ("Then both Student and Subject entries are updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Able-update");
+				expectedValues = "Able-update",
+				objectJsonPath = "$.items[*].name");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "subjects",
-				expectedValues = "name0-update,name1-update");
+				expectedValues = "name0-update,name1-update",
+				objectJsonPath = "$.items[*].name");
 		}
 	}
 
@@ -480,7 +480,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given Subject and Student entries with custom ERCs are created with postSubject including studentsSubjects with Student entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "subjects",
 				externalReferenceCode = "subjectErc",
 				fieldName = "name",
@@ -494,7 +494,7 @@ definition {
 		task ("When with putSubject and subjectId including studentsSubjects with modified names of Student entries and their ERCs to update Subject entry") {
 			var subjectId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPut(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
 				en_US_plural_label = "subjects",
 				externalReferenceCode = "subjectErc",
 				fieldName = "name",
@@ -508,14 +508,14 @@ definition {
 
 		task ("Then both Student and Subject entries are updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "subjects",
-				expectedValues = "English");
+				expectedValues = "English",
+				objectJsonPath = "$.items[*].name");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "name0-update,name1-update");
+				expectedValues = "name0-update,name1-update",
+				objectJsonPath = "$.items[*].name");
 		}
 	}
 
@@ -525,7 +525,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given two Student entries with custom ERCs are created with postStudent including studentsStudents with another Student entry information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				externalReferenceCode = "ableErc",
 				fieldName = "name",
@@ -539,7 +539,7 @@ definition {
 		task ("When with putStudent and studentId including studentsStudents with modified Student name and its erc to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPut(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
 				en_US_plural_label = "students",
 				externalReferenceCode = "ableErc",
 				fieldName = "name",
@@ -553,9 +553,9 @@ definition {
 
 		task ("Then both Students entries are updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Able-update,name0-update,name1-update");
+				expectedValues = "Able-update,name0-update,name1-update",
+				objectJsonPath = "$.items[*].name");
 		}
 	}
 
@@ -565,7 +565,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given Student and Subject entries with custom ERCs are created with postStudent including studentsSubjects with Subject entries information") {
-			var response = CustomObjectAPI.createObjectEntryWithField(
+			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
 				en_US_plural_label = "students",
 				externalReferenceCode = "studentErc",
 				fieldName = "name",
@@ -579,7 +579,7 @@ definition {
 		task ("When with putStudent and studentId including studentsSubjects with modified names of Subject entries and their ERCs to update Student entry") {
 			var studentId = JSONPathUtil.getIdValue(response = ${response});
 
-			CustomObjectAPI.updateObjectEntryByPut(
+			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
 				en_US_plural_label = "students",
 				externalReferenceCode = "studentErc",
 				fieldName = "name",
@@ -593,14 +593,14 @@ definition {
 
 		task ("Then both Student and Subject entries are updated") {
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "students",
-				expectedValues = "Bob");
+				expectedValues = "Bob",
+				objectJsonPath = "$.items[*].name");
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				element = "$.items[*].name",
 				en_US_plural_label = "subjects",
-				expectedValues = "name0-update,name1-update");
+				expectedValues = "name0-update,name1-update",
+				objectJsonPath = "$.items[*].name");
 		}
 	}
 

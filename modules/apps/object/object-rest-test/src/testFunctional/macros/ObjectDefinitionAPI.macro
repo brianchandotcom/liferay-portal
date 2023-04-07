@@ -119,7 +119,7 @@ definition {
 	macro _createObjectEntryWithName {
 		Variables.assertDefined(parameterList = ${name});
 
-		var response = CustomObjectAPI.createObjectEntryWithField(
+		var response = CustomObjectAPI.createObjectEntryWithFields(
 			en_US_plural_label = ${en_US_plural_label},
 			fieldName = "name",
 			fieldValue = ${name},

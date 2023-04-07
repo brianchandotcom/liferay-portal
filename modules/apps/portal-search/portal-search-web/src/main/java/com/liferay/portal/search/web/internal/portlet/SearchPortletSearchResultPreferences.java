@@ -20,8 +20,6 @@ import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySuppli
 import com.liferay.portal.search.web.internal.document.DocumentFormPermissionChecker;
 import com.liferay.portal.search.web.internal.document.DocumentFormPermissionCheckerImpl;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -41,8 +39,8 @@ public class SearchPortletSearchResultPreferences
 	}
 
 	@Override
-	public Optional<String> getFieldsToDisplayOptional() {
-		return Optional.empty();
+	public String getFieldsToDisplay() {
+		return null;
 	}
 
 	@Override

@@ -22,7 +22,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
+<%@ page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertActionKeys" %><%@
 page import="com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants" %><%@
 page import="com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry" %><%@

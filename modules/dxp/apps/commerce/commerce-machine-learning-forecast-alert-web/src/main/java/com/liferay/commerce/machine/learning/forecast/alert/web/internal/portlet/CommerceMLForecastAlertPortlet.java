@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.web.internal.portlet;
 
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertPortletKeys;
 import com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryService;
@@ -72,7 +72,7 @@ public class CommerceMLForecastAlertPortlet extends MVCPortlet {
 			CommerceMLForecastAlertEntryListDisplayContext
 				commerceMLForecastAlertEntryListDisplayContext =
 					new CommerceMLForecastAlertEntryListDisplayContext(
-						_commerceAccountLocalService,
+						_accountEntryLocalService,
 						_commerceMLForecastAlertEntryService,
 						_portletResourcePermission, renderRequest);
 
@@ -92,7 +92,7 @@ public class CommerceMLForecastAlertPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private CommerceMLForecastAlertEntryService

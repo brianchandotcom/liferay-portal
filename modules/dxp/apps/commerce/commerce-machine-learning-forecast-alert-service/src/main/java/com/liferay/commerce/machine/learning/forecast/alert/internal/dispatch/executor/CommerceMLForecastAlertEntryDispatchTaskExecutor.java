@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.internal.dispatch.executor;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
 import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecastManager;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
@@ -86,16 +86,16 @@ public class CommerceMLForecastAlertEntryDispatchTaskExecutor
 					COMMERCE_ML_FORECAST_ALERT_ENTRY_THRESHOLD),
 			_DEFAULT_COMMERCE_ML_FORECAST_ALERT_ENTRY_THRESHOLD);
 
-		long[] commerceAccountIds = ListUtil.toLongArray(
-			_commerceAccountLocalService.getCommerceAccounts(
+		long[] accountEntryIds = ListUtil.toLongArray(
+			_accountEntryLocalService.getAccountEntries(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			CommerceAccount::getCommerceAccountId);
+			AccountEntry::getAccountEntryId);
 
 		List<CommerceAccountCommerceMLForecast>
 			commerceAccountCommerceMLForecasts =
 				_commerceAccountCommerceMLForecastManager.
 					getMonthlyRevenueCommerceAccountCommerceMLForecasts(
-						dispatchTrigger.getCompanyId(), commerceAccountIds,
+						dispatchTrigger.getCompanyId(), accountEntryIds,
 						commerceMLForecastAlertEntryCheckDate, 1, 0);
 
 		for (CommerceAccountCommerceMLForecast
@@ -159,11 +159,11 @@ public class CommerceMLForecastAlertEntryDispatchTaskExecutor
 		CommerceMLForecastAlertEntryDispatchTaskExecutor.class);
 
 	@Reference
-	private CommerceAccountCommerceMLForecastManager
-		_commerceAccountCommerceMLForecastManager;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private CommerceAccountCommerceMLForecastManager
+		_commerceAccountCommerceMLForecastManager;
 
 	@Reference
 	private CommerceMLForecastAlertEntryLocalService

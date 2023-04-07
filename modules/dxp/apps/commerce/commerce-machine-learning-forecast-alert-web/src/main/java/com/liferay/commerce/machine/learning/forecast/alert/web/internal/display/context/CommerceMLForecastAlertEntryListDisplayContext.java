@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertActionKeys;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
@@ -38,12 +38,12 @@ import javax.portlet.RenderRequest;
 public class CommerceMLForecastAlertEntryListDisplayContext {
 
 	public CommerceMLForecastAlertEntryListDisplayContext(
-		CommerceAccountLocalService commerceAccountLocalService,
+		AccountEntryLocalService accountEntryLocalService,
 		CommerceMLForecastAlertEntryService commerceMLForecastAlertEntryService,
 		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest) {
 
-		_commerceAccountLocalService = commerceAccountLocalService;
+		_accountEntryLocalService = accountEntryLocalService;
 		_commerceMLForecastAlertEntryService =
 			commerceMLForecastAlertEntryService;
 		_portletResourcePermission = portletResourcePermission;
@@ -52,10 +52,9 @@ public class CommerceMLForecastAlertEntryListDisplayContext {
 			new CommerceMLForecastAlertEntryRequestHelper(renderRequest);
 	}
 
-	public CommerceAccount getCommerceAccount(long commerceAccountId) {
+	public AccountEntry getAccountEntry(long accountEntryId) {
 		try {
-			return _commerceAccountLocalService.getCommerceAccount(
-				commerceAccountId);
+			return _accountEntryLocalService.getAccountEntry(accountEntryId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -120,7 +119,7 @@ public class CommerceMLForecastAlertEntryListDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLForecastAlertEntryListDisplayContext.class);
 
-	private final CommerceAccountLocalService _commerceAccountLocalService;
+	private final AccountEntryLocalService _accountEntryLocalService;
 	private final CommerceMLForecastAlertEntryRequestHelper
 		_commerceMLForecastAlertEntryRequestHelper;
 	private final CommerceMLForecastAlertEntryService

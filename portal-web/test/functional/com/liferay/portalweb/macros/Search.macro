@@ -18,7 +18,10 @@ definition {
 			var siteURLKey = "guest";
 		}
 
-		if (isSet(locale)) {
+		if (isSet(searchTerm)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/search?q=${searchTerm}");
+		}
+		else if (isSet(locale)) {
 			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/web/${siteURLKey}/search");
 		}
 		else {

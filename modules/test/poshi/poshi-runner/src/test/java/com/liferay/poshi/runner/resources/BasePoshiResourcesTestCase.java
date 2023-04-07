@@ -93,6 +93,8 @@ public abstract class BasePoshiResourcesTestCase {
 
 			method.setAccessible(true);
 			method.invoke(classLoader, url);
+
+			System.out.println("Adding " + url + " to classpath");
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -100,6 +102,8 @@ public abstract class BasePoshiResourcesTestCase {
 	}
 
 	private void _downloadFile(URL url, String fileName) throws Exception {
+		System.out.println("Downloading " + url);
+
 		ReadableByteChannel readableByteChannel = Channels.newChannel(
 			url.openStream());
 

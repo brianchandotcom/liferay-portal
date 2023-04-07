@@ -1,6 +1,38 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.commerce.payment.model.CommercePaymentEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="commercePaymentEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="amount" type="BigDecimal" />
+		<field name="currencyCode" type="String" />
+		<field name="paymentMethodName" type="String" />
+		<field name="paymentStatus" type="int" />
+		<field name="transactionCode" type="String" />
+	</model>
+	<model name="com.liferay.commerce.payment.model.CommercePaymentEntryAudit">
+		<field name="mvccVersion" type="long" />
+		<field name="commercePaymentEntryAuditId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commercePaymentEntryId" type="long" />
+		<field name="amount" type="BigDecimal" />
+		<field name="currencyCode" type="String" />
+		<field name="logType" type="String" />
+		<field name="logTypeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
 	<model name="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel">
 		<field name="mvccVersion" type="long" />
 		<field name="commercePaymentMethodGroupRelId" type="long" />

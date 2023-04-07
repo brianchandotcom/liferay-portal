@@ -4327,7 +4327,11 @@ definition {
 		}
 
 		task ("Assert that assets appear only once in Asset Publisher") {
-			AssetPublisherPortlet.viewAssetOrderPG(assetTitleList = "WC_Title_2,WC_Title_1,WC_Title_4,WC_Title_3");
+			for (var title : list "WC_Title_1,WC_Title_2,WC_Title_3,WC_Title_4") {
+				AssetPublisherPortlet.viewAssetPG(assetTitle = ${title});
+			}
+
+			AssertElementNotPresent(locator1 = "xpath=(//div[contains(@class,'asset-abstract')])[5]");
 		}
 
 		task ("Set collections configuration to default values") {

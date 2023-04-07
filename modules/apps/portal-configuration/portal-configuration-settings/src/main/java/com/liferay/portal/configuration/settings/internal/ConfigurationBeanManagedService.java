@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
@@ -60,19 +59,6 @@ public class ConfigurationBeanManagedService implements ManagedService {
 
 	public void unregister() {
 		_managedServiceServiceRegistration.unregister();
-
-		while (true) {
-			ServiceRegistration<?> serviceRegistration =
-				_configurationBeanServiceRegistrationReference.getReference();
-
-			if (_configurationBeanServiceRegistrationReference.compareAndSet(
-					serviceRegistration, null, false, true)) {
-
-				serviceRegistration.unregister();
-
-				return;
-			}
-		}
 	}
 
 	@Override
@@ -85,41 +71,11 @@ public class ConfigurationBeanManagedService implements ManagedService {
 			_configurationBeanClass, properties);
 
 		_configurationBeanConsumer.accept(configurationBean);
-
-		ServiceRegistration<?> newServiceRegistration =
-			_bundleContext.registerService(
-				_configurationBeanClass.getName(), configurationBean,
-				new HashMapDictionary<>());
-
-		while (true) {
-			if (_configurationBeanServiceRegistrationReference.isMarked()) {
-				newServiceRegistration.unregister();
-
-				break;
-			}
-
-			ServiceRegistration<?> serviceRegistration =
-				_configurationBeanServiceRegistrationReference.getReference();
-
-			if (_configurationBeanServiceRegistrationReference.compareAndSet(
-					serviceRegistration, newServiceRegistration, false,
-					false)) {
-
-				if (serviceRegistration != null) {
-					serviceRegistration.unregister();
-				}
-
-				break;
-			}
-		}
 	}
 
 	private final BundleContext _bundleContext;
 	private final Class<?> _configurationBeanClass;
 	private final Consumer<Object> _configurationBeanConsumer;
-	private final AtomicMarkableReference<ServiceRegistration<?>>
-		_configurationBeanServiceRegistrationReference =
-			new AtomicMarkableReference<>(null, false);
 	private final String _configurationPid;
 	private ServiceRegistration<ManagedService>
 		_managedServiceServiceRegistration;

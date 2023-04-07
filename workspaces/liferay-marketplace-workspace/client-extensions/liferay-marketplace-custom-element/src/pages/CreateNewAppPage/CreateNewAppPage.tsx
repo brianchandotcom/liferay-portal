@@ -99,6 +99,8 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 							},
 							type: TYPES.UPDATE_CATALOG_ID,
 						});
+					}).catch((error: string) => {
+						console.error(error);
 					});
 
 					onClickContinue();

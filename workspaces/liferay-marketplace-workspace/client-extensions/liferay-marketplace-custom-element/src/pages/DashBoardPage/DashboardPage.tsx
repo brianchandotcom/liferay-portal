@@ -5,7 +5,6 @@ import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
-import {MemberProps} from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './DashboardPage.scss';
 

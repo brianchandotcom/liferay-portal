@@ -21,7 +21,7 @@ export function SetAppPrivacyPage({
 	onClickBack,
 	onClickContinue,
 }: SetAppPrivacyPageProps) {
-	const [collectUsersData, setCollectUsersData] = useState(false);
+	// const [collectUsersData, setCollectUsersData] = useState(false);
 	const [checkboxDataCardsValues, setCheckboxDataCardsValues] = useState(
 		initialCheckboxDataCardsValues
 	);
@@ -89,7 +89,7 @@ export function SetAppPrivacyPage({
                 </span> */}
 			</Section>
 
-			{collectUsersData && (
+			{/* collectUsersData && */ (
 				<Section
 					label="Select all data this publisher will collect from this app"
 					required

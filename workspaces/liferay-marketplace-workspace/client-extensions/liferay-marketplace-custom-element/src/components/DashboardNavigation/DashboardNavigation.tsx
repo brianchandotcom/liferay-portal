@@ -1,7 +1,6 @@
-import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {Dispatch, useState} from 'react';
+import {Dispatch} from 'react';
 
 import {DashboardNavigationList} from './DashboardNavigationList';
 

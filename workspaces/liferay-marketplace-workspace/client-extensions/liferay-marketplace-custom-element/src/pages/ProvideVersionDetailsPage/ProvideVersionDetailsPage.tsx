@@ -8,16 +8,20 @@ import {TYPES} from '../../manage-app-state/actionTypes';
 import {
 	addSkuExpandoValue,
 	createAppSKU,
-	getOptions,
+
+	// getOptions,
+
 	getProductSKU,
-	postOptionValue,
-	postTrialOption,
-	postTrialProductOption,
+
+	// postOptionValue,
+	// postTrialOption,
+	// postTrialProductOption,
+
 } from '../../utils/api';
 
 import './ProvideVersionDetailsPage.scss';
 
-import {useEffect} from 'react';
+// import {useEffect} from 'react';
 
 import {createSkuName} from '../../utils/util';
 
@@ -35,9 +39,10 @@ export function ProvideVersionDetailsPage({
 			appNotes,
 			appProductId,
 			appVersion,
-			optionId,
-			optionValuesId,
-			productOptionId,
+
+			// optionId,
+			// optionValuesId,
+			// productOptionId,
 		},
 		dispatch,
 	] = useAppContext();
@@ -168,7 +173,9 @@ export function ProvideVersionDetailsPage({
 								// skuOptions: [
 								// 	{
 								// 		key: productOptionId,
-								// 		value: optionValuesId.noOptionId,
+
+										value: optionValuesId.noOptionId,
+
 								// 	},
 								// ],
 

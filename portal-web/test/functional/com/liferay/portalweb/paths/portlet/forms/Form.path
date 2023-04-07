@@ -666,11 +666,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*//li[contains(.,'${key_outputParameterType}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON</td>
 	<td>//div[contains(@data-field-name,'outputParameters')]//div[contains(@class,'field-repeatable')]//button[contains(@class,'add-button')]</td>
 	<td></td>

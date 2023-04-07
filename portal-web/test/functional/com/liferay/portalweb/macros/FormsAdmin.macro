@@ -183,7 +183,7 @@ definition {
 			var key_outputParameterType = ${outputParameterType2};
 
 			AssertClick(
-				locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2",
+				locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST",
 				value1 = ${outputParameterType2});
 		}
 	}

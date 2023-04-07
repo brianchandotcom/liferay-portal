@@ -226,6 +226,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SORT_WIDGET_CONFIGURATION_EMPTY_DISPLAY_LABEL</td>
+	<td>//input[contains(@id,'displayLabel')][@value='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_CONFIGURATION_EMPTY_INDEXED_FIELD</td>
+	<td>//input[contains(@id,'indexedField')][@value='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_WIDGET_DROPDOWN</td>
 	<td>//div/select[contains(@id, "SortPortlet")]</td>
 	<td></td>

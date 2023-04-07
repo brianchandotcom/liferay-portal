@@ -4034,6 +4034,67 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test SearchWithCustomSortOption {
+		task ("Create 3 Web Content Articles. Add more words to some article's content fields to get them to show up lower in search results") {
+			JSONWebcontent.addWebContent(
+				content = "Fruit Test Test Test Test Test",
+				groupName = "Guest",
+				title = "Apple");
+
+			JSONWebcontent.addWebContent(
+				content = "Fruit Test Test Test",
+				groupName = "Guest",
+				title = "Banana");
+
+			JSONWebcontent.addWebContent(
+				content = "Fruit",
+				groupName = "Guest",
+				title = "Cantaloupe");
+		}
+
+		task ("Search for the created articles, add the Sort widget to the search page, and navigate to the Sort widget configuration") {
+			SearchPortlets.searchEmbedded(searchTerm = "Fruit");
+
+			SearchPortlets.addWidgets(searchPortletList = "Sort");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Sort",
+				portletOption = "Configuration");
+		}
+
+		task ("Click the 'Add Option' button to add empty sort option fields") {
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			Click(
+				key_text = "Add Option",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Fill out the empty sort option fields sorting by the 'title' indexed field and using the default 'Ascending' order") {
+			Type.type(
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_EMPTY_INDEXED_FIELD",
+				value1 = "title");
+
+			Type.type(
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_EMPTY_DISPLAY_LABEL",
+				value1 = "Test Title");
+		}
+
+		task ("Save the changes made to the Sort widget configuration and refresh the page so the configurations take effect and the search is executed again") {
+			PortletEntry.save();
+
+			Refresh();
+		}
+
+		task ("Choose the custom sort option created earlier") {
+			SearchPortlets.chooseSortOption(sortOption = "Test Title");
+		}
+
+		task ("Assert the search results are being ordered by title even though the extra words in the articles's content fields would have produced the opposite order") {
+			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
+		}
+	}
+
 	@priority = 4
 	test SearchWithFolderFacet {
 		for (var count : list "1,2") {

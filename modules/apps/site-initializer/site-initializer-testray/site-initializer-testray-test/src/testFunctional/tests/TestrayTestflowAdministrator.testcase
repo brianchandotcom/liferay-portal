@@ -49,8 +49,6 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			JSONTestray.addCaseType(caseType = ${caseType});
-
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -309,6 +307,55 @@ definition {
 
 		task ("Then the error message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "A task for this build already exists.");
+		}
+	}
+
+	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an abandoned task"
+	@priority = 3
+	test AdminCanReanalyzeAbandonedTask {
+		task ("Given that the user add a Task and subtask via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = "Task_1");
+
+			JSONTestray.addSubtask(
+				key = "INANALYSIS",
+				score = 3,
+				statusSubtask = "In Analysis",
+				subtaskName = "Subtask_1",
+				subtaskNumber = 1,
+				taskName = "Task_1");
+
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.assertTaskDetails(
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
+				status = "In Analysis",
+				taskName = "Task_1");
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
+
+		task ("When the user abandon a task") {
+			Button.click(button = "Abandon");
+
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "Abandoned");
+		}
+
+		task ("And the user reanalyze a task") {
+			Button.click(button = "Reanalyze");
+		}
+
+		task ("Then the task should appear on the list with the status in analysis") {
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "In Analysis");
 		}
 	}
 

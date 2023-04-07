@@ -15,12 +15,13 @@
 package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -37,17 +38,22 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"commerce.health.status.display.order:Integer=60",
-		"commerce.health.status.key=" + CommerceHealthStatusConstants.COUNTRIES_COMMERCE_HEALTH_STATUS_KEY
+		"commerce.health.status.display.order:Integer=100",
+		"commerce.health.status.key=" + CommerceHealthStatusConstants.MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class CountriesCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class MeasurementUnitsCommerceHealthStatus
+	implements CommerceHealthStatus {
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 	}
 
 	@Override
@@ -58,13 +64,13 @@ public class CountriesCommerceHealthHttpStatus
 		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
-				COUNTRIES_COMMERCE_HEALTH_STATUS_DESCRIPTION);
+				MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_DESCRIPTION);
 	}
 
 	@Override
 	public String getKey() {
 		return CommerceHealthStatusConstants.
-			COUNTRIES_COMMERCE_HEALTH_STATUS_KEY;
+			MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY;
 	}
 
 	@Override
@@ -74,7 +80,8 @@ public class CountriesCommerceHealthHttpStatus
 
 		return _language.get(
 			resourceBundle,
-			CommerceHealthStatusConstants.COUNTRIES_COMMERCE_HEALTH_STATUS_KEY);
+			CommerceHealthStatusConstants.
+				MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY);
 	}
 
 	@Override
@@ -84,17 +91,22 @@ public class CountriesCommerceHealthHttpStatus
 	}
 
 	@Override
+	public boolean isActive() {
+		return true;
+	}
+
+	@Override
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
-		List<Country> countries = _countryLocalService.getCompanyCountries(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<CPMeasurementUnit> cpMeasurementUnits =
+			_cpMeasurementUnitLocalService.getCPMeasurementUnits(companyId);
 
-		return !countries.isEmpty();
+		return !cpMeasurementUnits.isEmpty();
 	}
 
 	@Reference
-	private CountryService _countryLocalService;
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private Language _language;

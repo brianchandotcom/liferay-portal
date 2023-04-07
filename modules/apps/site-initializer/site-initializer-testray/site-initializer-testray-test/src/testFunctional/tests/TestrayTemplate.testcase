@@ -102,6 +102,67 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178541 | Test Summary: Verify if as an Administrator I should be able to filter by template name"
+	@priority = 3
+	test AdminCanFilterTemplateByName {
+		task ("Given that the user adds two Template") {
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
+
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template 2",
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			TestrayTemplate.viewTemplateDetails(
+				templateName = "Build_Template",
+				templateStatus = "Activated");
+		}
+
+		task ("And Deactivated Build_Template 2") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template 2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
+
+			TestrayTemplate.viewTemplateDetails(
+				templateName = "Build_Template 2",
+				templateStatus = "Deactivated");
+
+			Click(
+				key_indexNumber = 2,
+				key_text = "Clear",
+				locator1 = "Button#ANY_N");
+		}
+
+		task ("When the user filter a template by name") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.typeFilter(
+				label = "Template Name",
+				value = "Build_Template 2");
+		}
+
+		task ("Then the user see only the Build_Template 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Build_Template 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see Build_Template in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Build_Template",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-162435 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate template"
 	@priority = 5
 	test AdminCanNotAddDuplicateTemplate {

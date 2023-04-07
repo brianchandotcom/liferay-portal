@@ -49,6 +49,10 @@ public class SearchStringUtil {
 	}
 
 	public static String[] splitAndUnquote(String s) {
+		if (Validator.isBlank(s)) {
+			return new String[0];
+		}
+
 		return Stream.of(
 			StringUtil.split(s.trim(), CharPool.COMMA)
 		).map(

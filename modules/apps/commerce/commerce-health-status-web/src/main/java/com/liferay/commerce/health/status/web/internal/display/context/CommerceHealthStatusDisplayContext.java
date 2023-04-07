@@ -15,8 +15,8 @@
 package com.liferay.commerce.health.status.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatusRegistry;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatusRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,23 +33,23 @@ import javax.portlet.RenderResponse;
 public class CommerceHealthStatusDisplayContext {
 
 	public CommerceHealthStatusDisplayContext(
-		CommerceHealthHttpStatusRegistry commerceHealthHttpStatusRegistry,
+		CommerceHealthStatusRegistry commerceHealthStatusRegistry,
 		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse, int type) {
 
-		_commerceHealthHttpStatusRegistry = commerceHealthHttpStatusRegistry;
+		_commerceHealthStatusRegistry = commerceHealthStatusRegistry;
 		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_type = type;
 	}
 
-	public List<CommerceHealthHttpStatus> getCommerceHealthStatuses() {
-		return _commerceHealthHttpStatusRegistry.getCommerceHealthStatuses(
+	public List<CommerceHealthStatus> getCommerceHealthStatuses() {
+		return _commerceHealthStatusRegistry.getActiveCommerceHealthStatuses(
 			_type);
 	}
 
-	public SearchContainer<CommerceHealthHttpStatus> getSearchContainer() {
+	public SearchContainer<CommerceHealthStatus> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -58,7 +58,7 @@ public class CommerceHealthStatusDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-results");
 
-		List<CommerceHealthHttpStatus> results = getCommerceHealthStatuses();
+		List<CommerceHealthStatus> results = getCommerceHealthStatuses();
 
 		_searchContainer.setResultsAndTotal(() -> results, results.size());
 
@@ -74,12 +74,11 @@ public class CommerceHealthStatusDisplayContext {
 			CommerceActionKeys.MANAGE_COMMERCE_HEALTH_STATUS);
 	}
 
-	private final CommerceHealthHttpStatusRegistry
-		_commerceHealthHttpStatusRegistry;
+	private final CommerceHealthStatusRegistry _commerceHealthStatusRegistry;
 	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private SearchContainer<CommerceHealthHttpStatus> _searchContainer;
+	private SearchContainer<CommerceHealthStatus> _searchContainer;
 	private final int _type;
 
 }

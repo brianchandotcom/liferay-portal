@@ -15,11 +15,14 @@
 package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
-import com.liferay.commerce.product.model.CPMeasurementUnit;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -38,13 +41,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"commerce.health.status.display.order:Integer=100",
-		"commerce.health.status.key=" + CommerceHealthStatusConstants.MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY
+		"commerce.health.status.display.order:Integer=90",
+		"commerce.health.status.key=" + CommerceHealthStatusConstants.CURRENCIES_COMMERCE_HEALTH_STATUS_KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class MeasurementUnitsCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class CurrenciesCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -53,7 +55,13 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+		try {
+			_commerceCurrencyLocalService.importDefaultValues(
+				true, serviceContext);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Override
@@ -64,13 +72,13 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
-				MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_DESCRIPTION);
+				CURRENCIES_COMMERCE_HEALTH_STATUS_DESCRIPTION);
 	}
 
 	@Override
 	public String getKey() {
 		return CommerceHealthStatusConstants.
-			MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY;
+			CURRENCIES_COMMERCE_HEALTH_STATUS_KEY;
 	}
 
 	@Override
@@ -81,7 +89,7 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
-				MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY);
+				CURRENCIES_COMMERCE_HEALTH_STATUS_KEY);
 	}
 
 	@Override
@@ -91,17 +99,26 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 	}
 
 	@Override
+	public boolean isActive() {
+		return true;
+	}
+
+	@Override
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
-		List<CPMeasurementUnit> cpMeasurementUnits =
-			_cpMeasurementUnitLocalService.getCPMeasurementUnits(companyId);
+		List<CommerceCurrency> commerceCurrencies =
+			_commerceCurrencyLocalService.getCommerceCurrencies(
+				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return !cpMeasurementUnits.isEmpty();
+		return !commerceCurrencies.isEmpty();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CurrenciesCommerceHealthStatus.class);
+
 	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private Language _language;

@@ -27,7 +27,7 @@ CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext = (Commerc
 			searchContainer="<%= commerceHealthStatusDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.health.status.CommerceHealthHttpStatus"
+				className="com.liferay.commerce.health.status.CommerceHealthStatus"
 				modelVar="commerceHealthStatus"
 			>
 				<liferay-ui:search-container-column-text

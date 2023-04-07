@@ -375,13 +375,41 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
-	@ignore = "Test Stub"
-	@priority = 4
+	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
+	@priority = 3
 	test AdminCanSearchComponentNonExistent {
+		task ("Given that component are created via API") {
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+		}
 
-		// TODO LPS-156996 AdminCanSearchComponentNonExistent pending implementation
+		task ("And go to the manage components") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+		}
+
+		task ("When the user search component non existent") {
+			TestrayFilter.clickFilter();
+
+			PortletEntry.inputName(name = "Component 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then not see the component 3 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Component 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"

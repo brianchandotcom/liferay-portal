@@ -103,25 +103,25 @@ public class UpgradeStatus {
 	}
 
 	public static String getFinalSchemaVersion(String servletContextName) {
-		ServletSchemaVersions servletSchemaVersions =
-			_servletSchemaVersionsMap.get(servletContextName);
+		SchemaVersions schemaVersions = _schemaVersionsMap.get(
+			servletContextName);
 
-		if (servletSchemaVersions == null) {
+		if (schemaVersions == null) {
 			return null;
 		}
 
-		return servletSchemaVersions.getFinal();
+		return schemaVersions.getFinal();
 	}
 
 	public static String getInitialSchemaVersion(String servletContextName) {
-		ServletSchemaVersions servletSchemaVersions =
-			_servletSchemaVersionsMap.get(servletContextName);
+		SchemaVersions schemaVersions = _schemaVersionsMap.get(
+			servletContextName);
 
-		if (servletSchemaVersions == null) {
+		if (schemaVersions == null) {
 			return null;
 		}
 
-		return servletSchemaVersions.getInitial();
+		return schemaVersions.getInitial();
 	}
 
 	public static String getStatus() {
@@ -151,8 +151,7 @@ public class UpgradeStatus {
 	}
 
 	private static void _browseReleaseTable(
-		UnsafeBiConsumer<ServletSchemaVersions, String, Exception>
-			unsafeBiConsumer) {
+		UnsafeBiConsumer<SchemaVersions, String, Exception> unsafeBiConsumer) {
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
@@ -171,13 +170,13 @@ public class UpgradeStatus {
 					"servletContextName");
 				String schemaVersion = resultSet.getString("schemaVersion");
 
-				ServletSchemaVersions moduleSchemaVersions =
-					_servletSchemaVersionsMap.get(servletContextName);
+				SchemaVersions moduleSchemaVersions = _schemaVersionsMap.get(
+					servletContextName);
 
 				if (moduleSchemaVersions == null) {
-					moduleSchemaVersions = new ServletSchemaVersions(null);
+					moduleSchemaVersions = new SchemaVersions(null);
 
-					_servletSchemaVersionsMap.put(
+					_schemaVersionsMap.put(
 						servletContextName, moduleSchemaVersions);
 				}
 
@@ -244,10 +243,10 @@ public class UpgradeStatus {
 	private static void _setType() {
 		String upgradeType = "No upgrade";
 
-		for (Map.Entry<String, ServletSchemaVersions> servlet :
-				_servletSchemaVersionsMap.entrySet()) {
+		for (Map.Entry<String, SchemaVersions> schemaVersionsEntry :
+				_schemaVersionsMap.entrySet()) {
 
-			ServletSchemaVersions schemaVersions = servlet.getValue();
+			SchemaVersions schemaVersions = schemaVersionsEntry.getValue();
 
 			if (schemaVersions.getInitial() == null) {
 				continue;
@@ -301,8 +300,8 @@ public class UpgradeStatus {
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private static boolean _filtered;
-	private static final Map<String, ServletSchemaVersions>
-		_servletSchemaVersionsMap = new ConcurrentHashMap<>();
+	private static final Map<String, SchemaVersions> _schemaVersionsMap =
+		new ConcurrentHashMap<>();
 	private static String _status =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
 			"Pending" : "Not enabled";
@@ -314,9 +313,9 @@ public class UpgradeStatus {
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
-	private static class ServletSchemaVersions {
+	private static class SchemaVersions {
 
-		public ServletSchemaVersions(String initialSchemaVersion) {
+		public SchemaVersions(String initialSchemaVersion) {
 			_initial = initialSchemaVersion;
 		}
 

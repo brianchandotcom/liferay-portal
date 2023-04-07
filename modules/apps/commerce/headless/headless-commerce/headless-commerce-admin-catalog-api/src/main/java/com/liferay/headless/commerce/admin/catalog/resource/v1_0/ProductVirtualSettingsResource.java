@@ -53,11 +53,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ProductVirtualSettingsResource {
 
 	public ProductVirtualSettings
-			getProductByExternalReferenceCodeVirtualSettings(
+			getProductByExternalReferenceCodeProductVirtualSettings(
 				String externalReferenceCode)
 		throws Exception;
 
-	public ProductVirtualSettings getProductIdVirtualSettings(Long id)
+	public ProductVirtualSettings getProductIdProductVirtualSettings(Long id)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

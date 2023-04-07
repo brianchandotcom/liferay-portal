@@ -2915,6 +2915,8 @@ definition {
 
 		task ("When the user clicks on Download option the kebab menu") {
 			ContentDashboard.downloadVersion(version = "1.2");
+
+			DownloadTempFile();
 		}
 
 		task ("Then the document is downloaded") {

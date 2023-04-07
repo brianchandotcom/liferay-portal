@@ -189,6 +189,39 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178541 | Test Summary: Verify if as an Administrator I should not see template that don't exist when I try filtering for them"
+	@priority = 3
+	test AdminCanNotFilterForNonExistentTemplate {
+		task ("Given that the user add build Template") {
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			TestrayTemplate.viewTemplateDetails(
+				templateName = "Build_Template",
+				templateStatus = "Activated");
+		}
+
+		task ("When the user filter a template non existent") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.typeFilter(
+				label = "Template Name",
+				value = "Build_Template 3");
+		}
+
+		task ("Then the user not see the Build_Template 3 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Build_Template 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-162439 | Test Summary: Verify if that can Activate Disabled Template"
 	@priority = 5
 	test CanActivateDisabledTemplate {

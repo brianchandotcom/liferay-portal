@@ -16,9 +16,11 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import InstanceSelector from './InstanceSelector';
+
+const EXECUTE_BUTTON_QUERY_SELECTOR = '.save-server-button';
 
 const EXECUTION_MODES = {
 	BLUE_GREEN: 'blue-green',
@@ -50,6 +52,28 @@ function ExecutionOptions({
 	);
 	const [selected, setSelected] = useState(initialCompanyIds);
 	const [scope, setScope] = useState(initialScope || SCOPES.ALL);
+
+	const executeButtonElementsRef = useRef(
+		document.querySelectorAll(EXECUTE_BUTTON_QUERY_SELECTOR)
+	);
+
+	/**
+	 * Disables execute buttons with the attribute `data-blue-green-disabled`
+	 * if Blue/Green execution mode is selected.
+	 */
+	useEffect(() => {
+		executeButtonElementsRef.current?.forEach((element) => {
+			if (
+				executionMode === EXECUTION_MODES.BLUE_GREEN &&
+				element.hasAttribute('data-blue-green-disabled')
+			) {
+				element.disabled = true;
+			}
+			else {
+				element.disabled = false;
+			}
+		});
+	}, [executionMode]);
 
 	const _handleExecutionModeChange = (value) => {
 		setExecutionMode(value);

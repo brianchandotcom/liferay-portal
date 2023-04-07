@@ -90,7 +90,8 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 					)
 				)
 			);
-		} else {
+		}
+		else {
 			setCurrentVirtualInstances(virtualInstances);
 		}
 	}, [virtualInstances, searchValue]);

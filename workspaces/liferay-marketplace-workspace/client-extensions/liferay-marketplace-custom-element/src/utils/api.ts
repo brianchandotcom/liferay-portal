@@ -456,8 +456,8 @@ export async function getSKUCustomFieldExpandoValue({
 			companyId,
 			tableName: 'CUSTOM_FIELDS',
 		},
-		(obj: any) => {
-			response = obj;
+		(object: any) => {
+			response = object;
 		}
 	);
 

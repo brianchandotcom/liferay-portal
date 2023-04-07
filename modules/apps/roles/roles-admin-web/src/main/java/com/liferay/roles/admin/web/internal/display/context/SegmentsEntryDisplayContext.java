@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.display.context;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,20 +35,18 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
 public class SegmentsEntryDisplayContext {
 
 	public static String getGroupDescriptiveName(
 			SegmentsEntry segmentsEntry, Locale locale)
 		throws Exception {
 
-		Group group = _groupLocalService.fetchGroup(segmentsEntry.getGroupId());
+		GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();
+
+		Group group = groupLocalService.fetchGroup(segmentsEntry.getGroupId());
 
 		return group.getDescriptiveName(locale);
 	}
@@ -56,7 +55,10 @@ public class SegmentsEntryDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		try {
-			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
+			SegmentsConfigurationProvider segmentsConfigurationProvider =
+				_segmentsConfigurationProviderSnapshot.get();
+
+			return segmentsConfigurationProvider.getCompanyConfigurationURL(
 				httpServletRequest);
 		}
 		catch (PortalException portalException) {
@@ -70,23 +72,37 @@ public class SegmentsEntryDisplayContext {
 			long segmentsEntryId, int start, int end)
 		throws Exception {
 
+		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry =
+			_segmentsEntryProviderRegistrySnapshot.get();
+
 		return TransformUtil.transformToList(
 			ArrayUtil.toLongArray(
-				_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+				segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
 					segmentsEntryId, start, end)),
-			_userLocalService::fetchUser);
+			userId -> {
+				UserLocalService userLocalService =
+					_userLocalServiceSnapshot.get();
+
+				return userLocalService.fetchUser(userId);
+			});
 	}
 
 	public static int getSegmentsEntryUsersCount(long segmentsEntryId)
 		throws Exception {
 
-		return _segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
+		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry =
+			_segmentsEntryProviderRegistrySnapshot.get();
+
+		return segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 			segmentsEntryId);
 	}
 
 	public static boolean isRoleSegmentationEnabled(long companyId) {
 		try {
-			return _segmentsConfigurationProvider.isRoleSegmentationEnabled(
+			SegmentsConfigurationProvider segmentsConfigurationProvider =
+				_segmentsConfigurationProviderSnapshot.get();
+
+			return segmentsConfigurationProvider.isRoleSegmentationEnabled(
 				companyId);
 		}
 		catch (ConfigurationException configurationException) {
@@ -96,36 +112,22 @@ public class SegmentsEntryDisplayContext {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSegmentsConfigurationProvider(
-		SegmentsConfigurationProvider segmentsConfigurationProvider) {
-
-		_segmentsConfigurationProvider = segmentsConfigurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSegmentsEntryProviderRegistry(
-		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry) {
-
-		_segmentsEntryProviderRegistry = segmentsEntryProviderRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryDisplayContext.class);
 
-	private static GroupLocalService _groupLocalService;
-	private static SegmentsConfigurationProvider _segmentsConfigurationProvider;
-	private static SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
-	private static UserLocalService _userLocalService;
+	private static final Snapshot<GroupLocalService>
+		_groupLocalServiceSnapshot = new Snapshot<>(
+			SegmentsEntryDisplayContext.class, GroupLocalService.class);
+	private static final Snapshot<SegmentsConfigurationProvider>
+		_segmentsConfigurationProviderSnapshot = new Snapshot<>(
+			SegmentsEntryDisplayContext.class,
+			SegmentsConfigurationProvider.class);
+	private static final Snapshot<SegmentsEntryProviderRegistry>
+		_segmentsEntryProviderRegistrySnapshot = new Snapshot<>(
+			SegmentsEntryDisplayContext.class,
+			SegmentsEntryProviderRegistry.class);
+	private static final Snapshot<UserLocalService> _userLocalServiceSnapshot =
+		new Snapshot<>(
+			SegmentsEntryDisplayContext.class, UserLocalService.class);
 
 }

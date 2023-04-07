@@ -2,6 +2,6 @@
 
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="INFO" name="com.liferay.blade.samples.configurationaction" />
+		<Logger level="INFO" name="com.liferay.blade.configuration.action" />
 	</Loggers>
 </Configuration>

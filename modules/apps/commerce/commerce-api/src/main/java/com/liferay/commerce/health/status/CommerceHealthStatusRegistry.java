@@ -14,29 +14,17 @@
 
 package com.liferay.commerce.health.status;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
-public interface CommerceHealthHttpStatus {
+public interface CommerceHealthStatusRegistry {
 
-	public void fixIssue(HttpServletRequest httpServletRequest)
-		throws PortalException;
+	public List<CommerceHealthStatus> getActiveCommerceHealthStatuses(int type);
 
-	public String getDescription(Locale locale);
+	public CommerceHealthStatus getCommerceHealthStatus(String key);
 
-	public String getKey();
-
-	public String getName(Locale locale);
-
-	public int getType();
-
-	public boolean isFixed(long companyId, long commerceChannelId)
-		throws PortalException;
+	public List<CommerceHealthStatus> getCommerceHealthStatuses(int type);
 
 }

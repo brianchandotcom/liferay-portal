@@ -291,6 +291,69 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178541 | Test Summary: Verify that can filter out deactived template"
+	@priority = 3
+	test CanFilterDeactivedTemplate {
+		task ("Given that the user adds two Template") {
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
+
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template 2",
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			TestrayTemplate.viewTemplateDetails(
+				templateName = "Build_Template",
+				templateStatus = "Activated");
+		}
+
+		task ("And Deactivated Build_Template 2") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template 2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
+
+			TestrayTemplate.viewTemplateDetails(
+				templateName = "Build_Template 2",
+				templateStatus = "Deactivated");
+
+			Click(
+				key_indexNumber = 2,
+				key_text = "Clear",
+				locator1 = "Button#ANY_N");
+		}
+
+		task ("When the user filter a template with Deactivated status") {
+			TestrayFilter.clickFilter();
+
+			Select(
+				locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
+				value1 = "Deactivated");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the Deactivated status in the table") {
+			AssertElementPresent(
+				key_projectName = "Deactivated",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see Activated status in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Activated",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-162435 | Test Summary: Verify if As an administrator can search for the new template created"
 	@priority = 3
 	test CanSeachTemplate {

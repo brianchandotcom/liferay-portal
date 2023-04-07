@@ -29,12 +29,13 @@ public class TLDSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testMissingCDATA() throws Exception {
 		test(
-			"MissingCDATA.testtld",
-			new String[] {
-				"Use CDATA to warp each '<code>' in the description",
-				"Missing CDATA after 'replaced by' in the description"
-			},
-			new Integer[] {14, 19});
+			SourceProcessorTestParameters.create(
+				"MissingCDATA.testtld"
+			).addExpectedMessage(
+				"Use CDATA to warp each '<code>' in the description", 14
+			).addExpectedMessage(
+				"Missing CDATA after 'replaced by' in the description", 19
+			));
 	}
 
 	@Test

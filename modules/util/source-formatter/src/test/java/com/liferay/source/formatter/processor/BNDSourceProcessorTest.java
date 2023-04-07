@@ -31,26 +31,30 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"Deprecated apps that are not published on Marketplace should be " +
 				"moved to the archived folder");
 		test(
-			"FormatBndInstructions3/app.testbnd",
-			new String[] {
+			SourceProcessorTestParameters.create(
+				"FormatBndInstructions3/app.testbnd"
+			).addExpectedMessage(
 				"The 'Liferay-Releng-Restart-Required' can only be set to " +
-					"false if a POSHI tests exists",
+					"false if a POSHI tests exists"
+			).addExpectedMessage(
 				StringBundler.concat(
 					"The 'Liferay-Releng-Suite' can be blank or one of the ",
 					"following values 'collaboration, commerce, ",
 					"forms-and-workflow, foundation, static, web-experience'")
-			});
+			));
 	}
 
 	@Test
 	public void testFormatDefinitionKeys() throws Exception {
 		test("FormatDefinitionKeys1/common.testbnd");
 		test(
-			"FormatDefinitionKeys2/common.testbnd",
-			new String[] {
-				"Unknown key \"-fixupmessagess\"",
+			SourceProcessorTestParameters.create(
+				"FormatDefinitionKeys2/common.testbnd"
+			).addExpectedMessage(
+				"Unknown key \"-fixupmessagess\""
+			).addExpectedMessage(
 				"Unknown key \"Liferay-Portal-ServerInfo\""
-			});
+			));
 	}
 
 	@Test

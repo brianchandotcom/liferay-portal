@@ -39,13 +39,15 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testPoshiPauseUsage() throws Exception {
 		test(
-			"PoshiPauseUsage.testmacro",
-			new String[] {
-				"Missing a comment before using 'Pause'",
+			SourceProcessorTestParameters.create(
+				"PoshiPauseUsage.testmacro"
+			).addExpectedMessage(
+				"Missing a comment before using 'Pause'", 6
+			).addExpectedMessage(
 				"Missing a required JIRA project in comment before using " +
-					"'Pause'"
-			},
-			new Integer[] {6, 10});
+					"'Pause'",
+				10
+			));
 	}
 
 	@Test

@@ -136,10 +136,10 @@ public class CompanyIterationCheck extends BaseCheck {
 		Matcher matcher = _selectCompanySQLPattern.matcher(stringLiteral);
 
 		if (matcher.find()) {
-			if (_isCoreUpgrade() &&
-				Objects.equals(matcher.group(1), "companyId")) {
-
-				log(methodCallDetailAST, _MSG_USE_PORTAL_INSTANCES);
+			if (_isCoreUpgrade()) {
+				if (Objects.equals(matcher.group(1), "companyId")) {
+					log(methodCallDetailAST, _MSG_USE_PORTAL_INSTANCES);
+				}
 			}
 			else {
 				log(methodCallDetailAST, _MSG_USE_COMPANY_LOCAL_SERVICE_SQL);

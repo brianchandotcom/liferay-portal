@@ -19,10 +19,10 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
@@ -712,19 +712,17 @@ public class CPDefinitionsImporter {
 					_friendlyURLNormalizer.normalize(
 						filterAccountGroupsJSONArray.getString(i));
 
-				CommerceAccountGroup commerceAccountGroup =
-					_commerceAccountGroupLocalService.
-						fetchByExternalReferenceCode(
-							company.getCompanyId(),
-							accountGroupExternalReferenceCode);
+				AccountGroup accountGroup =
+					_accountGroupLocalService.
+						fetchAccountGroupByExternalReferenceCode(
+							accountGroupExternalReferenceCode,
+							company.getCompanyId());
 
-				if (commerceAccountGroup != null) {
-					_commerceAccountGroupRelLocalService.
-						addCommerceAccountGroupRel(
-							CPDefinition.class.getName(),
-							cpDefinition.getCPDefinitionId(),
-							commerceAccountGroup.getCommerceAccountGroupId(),
-							serviceContext);
+				if (accountGroup != null) {
+					_accountGroupRelLocalService.addAccountGroupRel(
+						accountGroup.getAccountGroupId(),
+						CPDefinition.class.getName(),
+						accountGroup.getAccountGroupId());
 				}
 			}
 		}
@@ -1012,17 +1010,16 @@ public class CPDefinitionsImporter {
 		CPDefinitionsImporter.class);
 
 	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
 	private AssetCategoriesImporter _assetCategoriesImporter;
 
 	@Reference
 	private AssetTagsImporter _assetTagsImporter;
-
-	@Reference
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
-
-	@Reference
-	private CommerceAccountGroupRelLocalService
-		_commerceAccountGroupRelLocalService;
 
 	@Reference
 	private CommerceAvailabilityEstimateLocalService

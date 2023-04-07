@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.initializer.util;
 
-import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
+import com.liferay.account.exception.NoSuchGroupException;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
@@ -183,14 +183,14 @@ public class CommercePriceListsImporter {
 						_friendlyURLNormalizer.normalize(
 							accountGroupsJSONArray.getString(i));
 
-					CommerceAccountGroup commerceAccountGroup =
-						_commerceAccountGroupLocalService.
-							fetchByExternalReferenceCode(
-								serviceContext.getCompanyId(),
-								accountGroupExternalReferenceCode);
+					AccountGroup accountGroup =
+						_accountGroupLocalService.
+							fetchAccountGroupByExternalReferenceCode(
+								accountGroupExternalReferenceCode,
+								serviceContext.getCompanyId());
 
-					if (commerceAccountGroup == null) {
-						throw new NoSuchAccountGroupException();
+					if (accountGroup == null) {
+						throw new NoSuchGroupException();
 					}
 
 					CommercePriceListCommerceAccountGroupRel
@@ -198,23 +198,19 @@ public class CommercePriceListsImporter {
 							_commercePriceListCommerceAccountGroupRelLocalService.
 								fetchCommercePriceListCommerceAccountGroupRel(
 									commercePriceList.getCommercePriceListId(),
-									commerceAccountGroup.
-										getCommerceAccountGroupId());
+									accountGroup.getAccountGroupId());
 
 					if (commercePriceListCommerceAccountGroupRel == null) {
 						_commercePriceListCommerceAccountGroupRelLocalService.
 							addCommercePriceListCommerceAccountGroupRel(
 								serviceContext.getUserId(),
 								commercePriceList.getCommercePriceListId(),
-								commerceAccountGroup.
-									getCommerceAccountGroupId(),
-								0, serviceContext);
+								accountGroup.getAccountGroupId(), 0,
+								serviceContext);
 					}
 				}
-				catch (NoSuchAccountGroupException
-							noSuchAccountGroupException) {
-
-					_log.error(noSuchAccountGroupException);
+				catch (NoSuchGroupException noSuchGroupException) {
+					_log.error(noSuchGroupException);
 				}
 			}
 		}
@@ -224,7 +220,7 @@ public class CommercePriceListsImporter {
 		CommercePriceListsImporter.class);
 
 	@Reference
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

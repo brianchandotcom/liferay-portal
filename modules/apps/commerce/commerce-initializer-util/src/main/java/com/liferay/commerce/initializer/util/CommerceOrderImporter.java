@@ -19,8 +19,10 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserIdMapperLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 
@@ -169,13 +172,27 @@ public class CommerceOrderImporter {
 
 		long userId = userIdMapper.getUserId();
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.getPersonalCommerceAccount(userId);
+		AccountEntry accountEntry =
+			_accountEntryLocalService.fetchPersonAccountEntry(userId);
+
+		if (accountEntry == null) {
+			User user = _userLocalService.getUser(userId);
+
+			accountEntry = _accountEntryLocalService.addAccountEntry(
+				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				user.getFullName(), null, null, user.getEmailAddress(), null,
+				StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			_commerceAccountHelper.addAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), user.getUserId(),
+				serviceContext);
+		}
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				userId, serviceContext.getScopeGroupId(),
-				commerceAccount.getCommerceAccountId(), 0, 0);
+				accountEntry.getAccountEntryId(), 0, 0);
 
 		// We update the order create date to the one in the dataset
 
@@ -192,7 +209,7 @@ public class CommerceOrderImporter {
 		CommerceContext commerceContext = _commerceContextFactory.create(
 			serviceContext.getCompanyId(), commerceOrder.getGroupId(),
 			serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceAccount.getCommerceAccountId());
+			accountEntry.getAccountEntryId());
 
 		// Create CommerceOrderItem
 
@@ -208,7 +225,10 @@ public class CommerceOrderImporter {
 		CommerceOrderImporter.class);
 
 	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;

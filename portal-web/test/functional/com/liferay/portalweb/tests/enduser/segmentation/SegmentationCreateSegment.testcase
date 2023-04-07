@@ -2394,7 +2394,9 @@ definition {
 
 			AssertElementPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
 
-			Check.checkToggleSwitch(locator1 = "ToggleSwitch#EDIT_TOGGLE");
+			Click(
+				ariaLabel = "Enter Edit Mode",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			AssertElementNotPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
 		}

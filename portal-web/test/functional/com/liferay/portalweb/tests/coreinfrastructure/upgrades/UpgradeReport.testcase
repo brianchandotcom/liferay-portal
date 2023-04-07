@@ -332,6 +332,94 @@ definition {
 		}
 	}
 
+	@description = "LPS-158743: Upgrade report is generated in the console using log context format"
+	@priority = 4
+	test ReportGeneratedWithLogContext {
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property log.context.enabled = "true";
+		property skip.start.app.server = "false";
+		property skip.upgrade-legacy-database = "true";
+		property upgrade.reports.enabled = "false";
+
+		task ("Check report is generated console") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "copy-log-file");
+
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var fileContent = FileUtil.read("${liferayHome}/liferay.log");
+
+			if (!(contains(${fileContent}, "upgrade.report.execution.time="))) {
+				fail("upgrade.report.execution.time is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.database.version=mysql"))) {
+				fail("upgrade.report.database.version is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.portal.expected.build.number=7413"))) {
+				fail("upgrade.report.portal.expected.build.number is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.portal.expected.schema.version="))) {
+				fail("upgrade.report.portal.expected.schema.version is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.portal.final.build.number=7413"))) {
+				fail("upgrade.report.portal.final.build.number is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.portal.final.schema.version="))) {
+				fail("upgrade.report.portal.final.schema.version is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.portal.initial.build.number=7413"))) {
+				fail("upgrade.report.portal.initial.build.number is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.portal.initial.schema.version="))) {
+				fail("upgrade.report.portal.initial.schema.version is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.document.library.storage.size="))) {
+				fail("upgrade.report.document.library.storage.size is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.property.dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
+				fail("upgrade.report.property.dl.store.impl is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.longest.upgrade.processes=["))) {
+				fail("upgrade.report.longest.upgrade.processes is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.tables.initial.final.rows=["))) {
+				fail("upgrade.report.tables.initial.final.rows is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.errors=[]"))) {
+				fail("upgrade.report.errors is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.warnings=[]"))) {
+				fail("upgrade.report.warnings is not present in portal log.");
+			}
+
+			if (!(contains(${fileContent}, "upgrade.report.osgi.status=There are no pending upgrades"))) {
+				fail("upgrade.report.osgi.status is not present in portal log.");
+			}
+		}
+
+		task ("Check report file is generated") {
+			var reportFileExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
+
+			if (${reportFileExists} != "true") {
+				fail("Upgrade report not found in ${liferayHome}/reports");
+			}
+		}
+	}
+
 	@description = "LPS-154683: Upgrade Report is not created when property is not set to true"
 	@priority = 4
 	test ReportNotGenerated {
@@ -412,6 +500,22 @@ definition {
 
 				fail("Renamed upgrade report does not match original upgrade report.");
 			}
+		}
+	}
+
+	@description = "LPS-158743: Upgrade report trace line is generated in the console"
+	@priority = 3
+	test ReportTraceLineLogged {
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property log.context.enabled = "true";
+		property skip.start.app.server = "false";
+		property skip.upgrade-legacy-database = "true";
+		property upgrade.reports.enabled = "false";
+
+		task ("Check report is generated console") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			AssertConsoleTextPresent(value1 = "Upgrade report generated in ${liferayHome}/reports/upgrade_report.info");
 		}
 	}
 

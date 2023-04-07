@@ -82,24 +82,15 @@ public class DispatchTriggerResourceImpl
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<com.liferay.dispatch.model.DispatchTrigger>
-			modelResourcePermission) {
-
-		_dispatchTriggerModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission
-		<com.liferay.dispatch.model.DispatchTrigger>
-			_dispatchTriggerModelResourcePermission;
-
-	@Reference(
 		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
 	)
 	private Destination _destination;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
+	)
+	private ModelResourcePermission<com.liferay.dispatch.model.DispatchTrigger>
+		_dispatchTriggerModelResourcePermission;
 
 	@Reference
 	private DispatchTriggerService _dispatchTriggerService;

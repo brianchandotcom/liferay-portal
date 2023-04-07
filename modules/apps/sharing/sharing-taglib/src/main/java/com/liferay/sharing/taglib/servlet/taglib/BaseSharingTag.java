@@ -14,11 +14,11 @@
 
 package com.liferay.sharing.taglib.servlet.taglib;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-import com.liferay.sharing.taglib.internal.servlet.SharingConfigurationFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public abstract class BaseSharingTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		SharingConfigurationFactory sharingConfigurationFactory =
-			SharingConfigurationFactoryUtil.getSharingConfigurationFactory();
+			_sharingConfigurationFactorySnapshot.get();
 
 		SharingConfiguration sharingConfiguration =
 			sharingConfigurationFactory.getGroupSharingConfiguration(
@@ -49,5 +49,9 @@ public abstract class BaseSharingTag extends IncludeTag {
 
 		return EVAL_BODY_INCLUDE;
 	}
+
+	private static final Snapshot<SharingConfigurationFactory>
+		_sharingConfigurationFactorySnapshot = new Snapshot<>(
+			BaseSharingTag.class, SharingConfigurationFactory.class);
 
 }

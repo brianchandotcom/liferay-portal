@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -122,7 +121,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 				parameterName, portletSharedSearchResponse, renderRequest);
 
 		return customFacetDisplayContextBuilder.setCustomDisplayCaption(
-			customFacetPortletPreferences.getCustomHeadingOptional()
+			customFacetPortletPreferences.getCustomHeading()
 		).setFacet(
 			_getFacet(
 				portletSharedSearchResponse, customFacetPortletPreferences,
@@ -196,16 +195,20 @@ public class CustomFacetPortlet extends MVCPortlet {
 	private String _getParameterName(
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
 
-		Optional<String> optional = Stream.of(
-			customFacetPortletPreferences.getParameterNameOptional(),
-			customFacetPortletPreferences.getAggregationFieldOptional()
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).findFirst();
+		String parameterName = customFacetPortletPreferences.getParameterName();
 
-		return optional.orElse("customfield");
+		if (parameterName != null) {
+			return parameterName;
+		}
+
+		String aggregationField =
+			customFacetPortletPreferences.getAggregationField();
+
+		if (aggregationField != null) {
+			return aggregationField;
+		}
+
+		return "customfield";
 	}
 
 	private Optional<List<String>> _getParameterValuesOptional(

@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.workspace.internal.client.extension;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,7 +49,8 @@ public class ClientExtension {
 
 		configMap.put("baseURL", "${portalURL}/o/" + projectName);
 		configMap.put("description", description);
-		configMap.put("dxp.lxc.liferay.com.virtualInstanceId", "default");
+		configMap.put(
+			"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId);
 		configMap.put("name", name);
 		configMap.put("properties", _encode(properties));
 		configMap.put("sourceCodeURL", sourceCodeURL);
@@ -91,6 +93,9 @@ public class ClientExtension {
 
 	@JsonIgnore
 	public Map<String, Object> typeSettings = new HashMap<>();
+
+	@JsonProperty("dxp.lxc.liferay.com.virtualInstanceId")
+	public String virtualInstanceId = "default";
 
 	private List<String> _encode(Map<String, Object> map) {
 		Set<Map.Entry<String, Object>> set = map.entrySet();

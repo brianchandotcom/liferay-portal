@@ -15,7 +15,7 @@
 package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
-import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 		"commerce.health.status.display.order:Integer=100",
 		"commerce.health.status.key=" + CommerceHealthStatusConstants.MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY
 	},
-	service = CommerceHealthHttpStatus.class
+	service = CommerceHealthStatus.class
 )
-public class MeasurementUnitsCommerceHealthHttpStatus
-	implements CommerceHealthHttpStatus {
+public class MeasurementUnitsCommerceHealthStatus
+	implements CommerceHealthStatus {
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -88,6 +88,11 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 	public int getType() {
 		return CommerceHealthStatusConstants.
 			COMMERCE_HEALTH_STATUS_TYPE_VIRTUAL_INSTANCE;
+	}
+
+	@Override
+	public boolean isActive() {
+		return true;
 	}
 
 	@Override

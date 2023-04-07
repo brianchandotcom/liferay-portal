@@ -33,13 +33,15 @@ function handleOverrideExistingRecordsCheckbox(namespace) {
 		`#${namespace}createStrategy`
 	);
 
-	const updateStrategySelect = document.querySelector(
-		`#${namespace}updateStrategy`
-	);
+	if (createStrategySelect) {
+		const updateStrategySelect = document.querySelector(
+			`#${namespace}updateStrategy`
+		);
 
-	createStrategySelect.addEventListener('change', ({target}) => {
-		updateStrategySelect.disabled = target.value === 'INSERT';
-	});
+		createStrategySelect.addEventListener('change', ({target}) => {
+			updateStrategySelect.disabled = target.value === 'INSERT';
+		});
+	}
 }
 
 function trimPackage(name) {

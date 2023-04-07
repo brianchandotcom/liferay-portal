@@ -30,6 +30,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-utility-page-api")
 	compileOnly project(":apps:segments:segments-api")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":core:petra:petra-function")

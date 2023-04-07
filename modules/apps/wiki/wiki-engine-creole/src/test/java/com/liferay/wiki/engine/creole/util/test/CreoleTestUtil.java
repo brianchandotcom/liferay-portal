@@ -26,6 +26,9 @@ import com.liferay.wiki.engine.creole.internal.util.WikiEngineCreoleComponentPro
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -44,7 +47,8 @@ public class CreoleTestUtil {
 			new WikiEngineCreoleComponentProvider();
 
 		ReflectionTestUtil.invoke(
-			wikiEngineCreoleComponentProvider, "activate", new Class<?>[0]);
+			wikiEngineCreoleComponentProvider, "activate",
+			new Class<?>[] {Map.class}, Collections.emptyMap());
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 			Mockito.mock(WikiGroupServiceConfiguration.class);

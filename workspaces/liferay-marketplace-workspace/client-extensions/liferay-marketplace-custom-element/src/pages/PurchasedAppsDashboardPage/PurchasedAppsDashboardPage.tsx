@@ -145,10 +145,12 @@ export function PurchasedAppsDashboardPage() {
 				})
 			);
 
-			setPurchasedAppTable({
-				...purchasedAppTable,
-				items: newOrderItems,
-				totalCount: placedOrders.totalCount,
+			setPurchasedAppTable((previousPurchasedAppTable) => {
+				return {
+					...previousPurchasedAppTable,
+					items: newOrderItems,
+					totalCount: placedOrders.totalCount,
+				};
 			});
 
 			const accountsResponse = await getAccounts();
@@ -166,7 +168,7 @@ export function PurchasedAppsDashboardPage() {
 			setAccounts(accountsList);
 		};
 		makeFetch();
-	}, [page, selectedAccount]);
+	}, [page, purchasedAppTable.pageSize, selectedAccount]);
 
 	return (
 		<DashboardPage

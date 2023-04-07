@@ -250,7 +250,8 @@ export function ReviewAndSubmitAppPage({
 		};
 
 		getData();
-	}, [appERC, appProductId]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps		
+	}, [appERC, appProductId, dispatch]);
 
 	return (
 		<div className="review-and-submit-app-page-container">

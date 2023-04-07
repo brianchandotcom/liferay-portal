@@ -42,7 +42,7 @@ export function AppDetailsPage({
 			},
 			type: TYPES.SUBMIT_APP_PROFILE,
 		});
-	}, [selectedApp]);
+	}, [dispatch, selectedApp]);
 
 	return (
 		<div className="app-details-page-container">

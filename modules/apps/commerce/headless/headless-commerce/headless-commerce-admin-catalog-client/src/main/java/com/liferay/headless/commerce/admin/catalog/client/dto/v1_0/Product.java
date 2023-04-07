@@ -853,6 +853,30 @@ public class Product implements Cloneable, Serializable {
 
 	protected String productTypeI18n;
 
+	public ProductVirtualSettings getProductVirtualSettings() {
+		return productVirtualSettings;
+	}
+
+	public void setProductVirtualSettings(
+		ProductVirtualSettings productVirtualSettings) {
+
+		this.productVirtualSettings = productVirtualSettings;
+	}
+
+	public void setProductVirtualSettings(
+		UnsafeSupplier<ProductVirtualSettings, Exception>
+			productVirtualSettingsUnsafeSupplier) {
+
+		try {
+			productVirtualSettings = productVirtualSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ProductVirtualSettings productVirtualSettings;
+
 	public RelatedProduct[] getRelatedProducts() {
 		return relatedProducts;
 	}
@@ -1091,28 +1115,6 @@ public class Product implements Cloneable, Serializable {
 	}
 
 	protected Integer version;
-
-	public ProductVirtualSettings getVirtualSettings() {
-		return virtualSettings;
-	}
-
-	public void setVirtualSettings(ProductVirtualSettings virtualSettings) {
-		this.virtualSettings = virtualSettings;
-	}
-
-	public void setVirtualSettings(
-		UnsafeSupplier<ProductVirtualSettings, Exception>
-			virtualSettingsUnsafeSupplier) {
-
-		try {
-			virtualSettings = virtualSettingsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ProductVirtualSettings virtualSettings;
 
 	public Status getWorkflowStatusInfo() {
 		return workflowStatusInfo;

@@ -209,38 +209,40 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductByExternalReferenceCodeVirtualSettings()
+	public void testGetProductByExternalReferenceCodeProductVirtualSettings()
 		throws Exception {
 
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeVirtualSettings()
+	public void testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings()
 		throws Exception {
 
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeVirtualSettingsNotFound()
+	public void testGraphQLGetProductByExternalReferenceCodeProductVirtualSettingsNotFound()
 		throws Exception {
 
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetProductIdVirtualSettings() throws Exception {
+	public void testGetProductIdProductVirtualSettings() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetProductIdVirtualSettings() throws Exception {
+	public void testGraphQLGetProductIdProductVirtualSettings()
+		throws Exception {
+
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetProductIdVirtualSettingsNotFound()
+	public void testGraphQLGetProductIdProductVirtualSettingsNotFound()
 		throws Exception {
 
 		Assert.assertTrue(true);

@@ -55,7 +55,7 @@ public abstract class BaseProductVirtualSettingsResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/virtual-settings'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/product-virtual-settings'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -74,12 +74,12 @@ public abstract class BaseProductVirtualSettingsResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/virtual-settings"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/product-virtual-settings"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public ProductVirtualSettings
-			getProductByExternalReferenceCodeVirtualSettings(
+			getProductByExternalReferenceCodeProductVirtualSettings(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("externalReferenceCode")
@@ -92,7 +92,7 @@ public abstract class BaseProductVirtualSettingsResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/virtual-settings'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/product-virtual-settings'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -110,10 +110,10 @@ public abstract class BaseProductVirtualSettingsResourceImpl
 		}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/products/{id}/virtual-settings")
+	@javax.ws.rs.Path("/products/{id}/product-virtual-settings")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ProductVirtualSettings getProductIdVirtualSettings(
+	public ProductVirtualSettings getProductIdProductVirtualSettings(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id)

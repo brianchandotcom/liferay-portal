@@ -1189,6 +1189,38 @@ public class Product implements Serializable {
 
 	@Schema
 	@Valid
+	public ProductVirtualSettings getProductVirtualSettings() {
+		return productVirtualSettings;
+	}
+
+	public void setProductVirtualSettings(
+		ProductVirtualSettings productVirtualSettings) {
+
+		this.productVirtualSettings = productVirtualSettings;
+	}
+
+	@JsonIgnore
+	public void setProductVirtualSettings(
+		UnsafeSupplier<ProductVirtualSettings, Exception>
+			productVirtualSettingsUnsafeSupplier) {
+
+		try {
+			productVirtualSettings = productVirtualSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ProductVirtualSettings productVirtualSettings;
+
+	@Schema
+	@Valid
 	public RelatedProduct[] getRelatedProducts() {
 		return relatedProducts;
 	}
@@ -1513,36 +1545,6 @@ public class Product implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer version;
-
-	@Schema
-	@Valid
-	public ProductVirtualSettings getVirtualSettings() {
-		return virtualSettings;
-	}
-
-	public void setVirtualSettings(ProductVirtualSettings virtualSettings) {
-		this.virtualSettings = virtualSettings;
-	}
-
-	@JsonIgnore
-	public void setVirtualSettings(
-		UnsafeSupplier<ProductVirtualSettings, Exception>
-			virtualSettingsUnsafeSupplier) {
-
-		try {
-			virtualSettings = virtualSettingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ProductVirtualSettings virtualSettings;
 
 	@Schema
 	@Valid
@@ -2125,6 +2127,16 @@ public class Product implements Serializable {
 			sb.append("\"");
 		}
 
+		if (productVirtualSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productVirtualSettings\": ");
+
+			sb.append(String.valueOf(productVirtualSettings));
+		}
+
 		if (relatedProducts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2275,16 +2287,6 @@ public class Product implements Serializable {
 			sb.append("\"version\": ");
 
 			sb.append(version);
-		}
-
-		if (virtualSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"virtualSettings\": ");
-
-			sb.append(String.valueOf(virtualSettings));
 		}
 
 		if (workflowStatusInfo != null) {

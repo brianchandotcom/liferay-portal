@@ -15,9 +15,8 @@
 package com.liferay.portal.upgrade.internal.apache.logging.log4j.core;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.DBUpgradeChecker;
-import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
 import com.liferay.portal.upgrade.util.DBUpgradeStatus;
 import com.liferay.portal.util.PropsValues;
@@ -139,11 +138,11 @@ public class UpgradeLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			DBUpgradeStatus.finish(_dbUpgradeChecker);
+			DBUpgradeStatus.finish(_releaseManager);
 
 			if (_upgradeReport != null) {
 				_upgradeReport.generateReport(
-					_persistenceManager, _releaseManagerOSGiCommands);
+					_persistenceManager, _releaseManager);
 
 				_upgradeReport = null;
 			}
@@ -155,14 +154,11 @@ public class UpgradeLogAppender implements Appender {
 	private static final Logger _rootLogger =
 		(Logger)LogManager.getRootLogger();
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile DBUpgradeChecker _dbUpgradeChecker;
-
 	@Reference
 	private PersistenceManager _persistenceManager;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
+	private volatile ReleaseManager _releaseManager;
 
 	private volatile boolean _started;
 	private volatile UpgradeReport _upgradeReport;

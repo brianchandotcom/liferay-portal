@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.util.DBUpgradeChecker;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
@@ -74,9 +74,9 @@ public class DBUpgradeStatus {
 		messages.put(message, occurrences);
 	}
 
-	public static void finish(DBUpgradeChecker dbUpgradeChecker) {
+	public static void finish(ReleaseManager releaseManager) {
 		_setFinalSchemaVersion();
-		_setFinalStatus(dbUpgradeChecker);
+		_setFinalStatus(releaseManager);
 		_setType();
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
@@ -209,18 +209,24 @@ public class DBUpgradeStatus {
 				moduleSchemaVersions.setFinal(schemaVersion));
 	}
 
-	private static void _setFinalStatus(DBUpgradeChecker dbUpgradeChecker) {
-		if (dbUpgradeChecker == null) {
+	private static void _setFinalStatus(ReleaseManager releaseManager) {
+		boolean check;
+
+		try {
+			check = releaseManager.check();
+		}
+		catch (Exception exception) {
 			_log.error(
-				"Not possible to check upgrade successful completion. Please " +
-					"check manually.");
+				StringBundler.concat(
+					"Not possible to check the upgrade status due to ",
+					exception.getMessage(), ". Please check manually."));
 
 			_status = "Failure";
 
 			return;
 		}
 
-		if (!_errorMessages.isEmpty() || !dbUpgradeChecker.check()) {
+		if (!_errorMessages.isEmpty() || !check) {
 			_status = "Failure";
 
 			return;

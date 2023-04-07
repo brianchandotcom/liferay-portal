@@ -41,7 +41,7 @@ import org.apache.logging.log4j.ThreadContext;
 /**
  * @author Luis Ortiz
  */
-public class DBUpgradeStatus {
+public class UpgradeStatus {
 
 	public static void addErrorMessage(String loggerName, String message) {
 		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
@@ -296,8 +296,7 @@ public class DBUpgradeStatus {
 			"SidecarManager"
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DBUpgradeStatus.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeStatus.class);
 
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.upgrade.util.DBUpgradeStatus;
+import com.liferay.portal.upgrade.util.UpgradeStatus;
 import com.liferay.portal.verify.VerifyProperties;
 
 import java.util.Collections;
@@ -108,7 +108,7 @@ public class UpgradeLogContext implements LogContext {
 	private final Map<String, String> _defaultContext =
 		Collections.singletonMap("component", "framework");
 	private final Set<String> _upgradeClassNames = SetUtil.fromArray(
-		DBUpgrader.class.getName(), DBUpgradeStatus.class.getName(),
+		DBUpgrader.class.getName(), UpgradeStatus.class.getName(),
 		LoggingTimer.class.getName(), VerifyProperties.class.getName(),
 		"com.liferay.portal.upgrade.internal.registry." +
 			"UpgradeStepRegistratorTracker",

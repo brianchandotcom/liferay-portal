@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
-import com.liferay.portal.upgrade.util.DBUpgradeStatus;
+import com.liferay.portal.upgrade.util.UpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -60,7 +60,7 @@ public class UpgradeLogAppender implements Appender {
 		}
 
 		if (logEvent.getLevel() == Level.ERROR) {
-			DBUpgradeStatus.addErrorMessage(
+			UpgradeStatus.addErrorMessage(
 				logEvent.getLoggerName(), formattedMessage);
 		}
 		else if (logEvent.getLevel() == Level.INFO) {
@@ -68,12 +68,12 @@ public class UpgradeLogAppender implements Appender {
 					logEvent.getLoggerName(), UpgradeProcess.class.getName()) &&
 				formattedMessage.startsWith("Completed upgrade process ")) {
 
-				DBUpgradeStatus.addUpgradeProcessMessage(
+				UpgradeStatus.addUpgradeProcessMessage(
 					logEvent.getLoggerName(), formattedMessage);
 			}
 		}
 		else if (logEvent.getLevel() == Level.WARN) {
-			DBUpgradeStatus.addWarningMessage(
+			UpgradeStatus.addWarningMessage(
 				logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 	}
@@ -125,7 +125,7 @@ public class UpgradeLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		DBUpgradeStatus.start();
+		UpgradeStatus.start();
 
 		if (PropsValues.UPGRADE_REPORT_ENABLED) {
 			_upgradeReport = new UpgradeReport();
@@ -137,7 +137,7 @@ public class UpgradeLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			DBUpgradeStatus.finish(_releaseManager);
+			UpgradeStatus.finish(_releaseManager);
 
 			if (_upgradeReport != null) {
 				_upgradeReport.generateReport(

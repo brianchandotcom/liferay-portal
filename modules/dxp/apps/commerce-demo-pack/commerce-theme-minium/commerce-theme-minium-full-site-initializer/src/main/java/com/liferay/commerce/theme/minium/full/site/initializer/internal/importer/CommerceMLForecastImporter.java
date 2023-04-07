@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.theme.minium.full.site.initializer.internal.importer;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecast;
 import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecastManager;
 import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
@@ -169,12 +169,12 @@ public class CommerceMLForecastImporter {
 
 		String accountName = jsonObject.getString("account");
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(),
-				_friendlyURLNormalizer.normalize(accountName));
+		AccountEntry accountEntry =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				_friendlyURLNormalizer.normalize(accountName),
+				serviceContext.getCompanyId());
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No commerce account with name: " + accountName);
 			}
@@ -183,7 +183,7 @@ public class CommerceMLForecastImporter {
 		}
 
 		assetCategoryCommerceMLForecast.setCommerceAccountId(
-			commerceAccount.getCommerceAccountId());
+			accountEntry.getAccountEntryId());
 
 		_assetCategoryCommerceMLForecastManager.
 			addAssetCategoryCommerceMLForecast(assetCategoryCommerceMLForecast);
@@ -201,12 +201,12 @@ public class CommerceMLForecastImporter {
 
 		String accountName = jsonObject.getString("account");
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(),
-				_friendlyURLNormalizer.normalize(accountName));
+		AccountEntry accountEntry =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				_friendlyURLNormalizer.normalize(accountName),
+				serviceContext.getCompanyId());
 
-		if (commerceAccount == null) {
+		if (accountEntry == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No commerce account with name: " + accountName);
 			}
@@ -215,7 +215,7 @@ public class CommerceMLForecastImporter {
 		}
 
 		commerceAccountCommerceMLForecast.setCommerceAccountId(
-			commerceAccount.getCommerceAccountId());
+			accountEntry.getAccountEntryId());
 
 		_commerceAccountCommerceMLForecastManager.
 			addCommerceAccountCommerceMLForecast(
@@ -255,6 +255,9 @@ public class CommerceMLForecastImporter {
 		CommerceMLForecastImporter.class);
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
 	private AssetCategoryCommerceMLForecastManager
 		_assetCategoryCommerceMLForecastManager;
 
@@ -267,9 +270,6 @@ public class CommerceMLForecastImporter {
 	@Reference
 	private CommerceAccountCommerceMLForecastManager
 		_commerceAccountCommerceMLForecastManager;
-
-	@Reference
-	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -103,8 +103,9 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 									<clay:checkbox
 										checked="<%= false %>"
 										disabled="<%= true %>"
+										id='<%= liferayPortletResponse.getNamespace() + "detectCategoryNames" %>'
 										label='<%= LanguageUtil.get(request, "detect-category-names-from-CSV-file") %>'
-										name="headerCheckbox"
+										name='<%= liferayPortletResponse.getNamespace() + "detectCategoryNames" %>'
 									/>
 								</div>
 							</c:if>
@@ -118,23 +119,13 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								/>
 							</div>
 
-							<div class="mt-2">
-								<clay:select
-									id='<%= liferayPortletResponse.getNamespace() + "createStrategy" %>'
-									label='<%= LanguageUtil.get(request, "import-strategy") %>'
-									name="createStrategy"
-									options="<%= editBatchPlannerPlanDisplayContext.getCreateStrategySelectOptions() %>"
-								/>
-							</div>
-
-							<div class="mt-2">
-								<clay:select
-									id='<%= liferayPortletResponse.getNamespace() + "updateStrategy" %>'
-									label='<%= LanguageUtil.get(request, "update-strategy") %>'
-									name="updateStrategy"
-									options="<%= editBatchPlannerPlanDisplayContext.getUpdateStrategySelectOptions() %>"
-								/>
-							</div>
+							<clay:row>
+								<clay:col>
+									<react:component
+										module="js/components/Strategies"
+									/>
+								</clay:col>
+							</clay:row>
 						</liferay-frontend:edit-form-body>
 					</div>
 				</div>

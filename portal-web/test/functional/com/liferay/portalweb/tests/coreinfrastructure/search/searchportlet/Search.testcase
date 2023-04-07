@@ -5145,70 +5145,128 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
 	}
 
+	@description = "This is a use case for LPS-134052."
 	test ViewSortWidgetConfigurationNewUI {
-		for (var title : list "Banana,Apple,Cherry") {
-			JSONWebcontent.addWebContent(
-				content = "Content ",
-				groupName = "Guest",
-				title = ${title});
+		task ("Execute a search to populate the search widgets and add the Sort widget") {
+			Search.openSearchPage(searchTerm = "test");
+
+			SearchPortlets.addWidgets(searchPortletList = "Sort");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "Content");
+		task ("Confirm the Sort configuration uses the new view by default") {
+			Portlet.gotoPortletOptions(
+				portletName = "Sort",
+				portletOption = "Configuration");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Refresh();
+			AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Sort",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
-
-		AssertElementNotPresent(locator1 = "Button#ADD_ROW");
-
-		IFrame.closeFrame();
-
-		SearchPortlets.chooseSortOption(sortOption = "Title");
-
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cherry");
-	}
-
-	test ViewSortWidgetConfigurationOldUI {
-		for (var title : list "Banana,Apple,Cherry") {
-			JSONWebcontent.addWebContent(
-				content = "Content ",
-				groupName = "Guest",
-				title = ${title});
+			AssertElementNotPresent(locator1 = "Button#ADD_ROW");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "Content");
+		task ("Click the 'Switch to Classic View' button and assert the modal switches to the classic view") {
+			Click(
+				key_text = "Switch to Classic View",
+				locator1 = "Button#ANY");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+			AssertElementPresent(locator1 = "Button#ADD_ROW");
 
-		Refresh();
+			AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+		}
 
-		Portlet.gotoPortletOptions(
-			portletName = "Sort",
-			portletOption = "Configuration");
+		task ("Click the 'Switch to New View' button and assert the modal switches back to the new view") {
+			Click(
+				key_text = "Switch to New View",
+				locator1 = "Button#ANY");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+			AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
 
-		Click(
-			key_text = "Switch to Classic View",
-			locator1 = "Button#ANY");
+			AssertElementNotPresent(locator1 = "Button#ADD_ROW");
+		}
 
-		AssertElementPresent(locator1 = "Button#ADD_ROW");
+		task ("Delete the row that contains the 'title' display label and assert that it is removed") {
+			Click(
+				key_displayLabel = "title",
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_TRASH_BUTTON");
 
-		AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+			AssertElementNotPresent(
+				key_value = "title",
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_DISPLAY_LABEL_WITH_VALUE");
+		}
 
-		IFrame.closeFrame();
+		task ("Reposition the row with the 'user' display label from the bottom to the top using the drag and drop functionality") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_displayLabel = "user",
+				key_targetPosition = 1,
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_OPTION_DRAG_HANDLE",
+				locator2 = "Search#SORT_WIDGET_CONFIGURATION_DRAG_AND_DROP_TARGET");
 
-		SearchPortlets.chooseSortOption(sortOption = "Title");
+			AssertValue(
+				key_position = 1,
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_DISPLAY_LABEL_AT_POSITION",
+				value1 = "user");
+		}
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cherry");
+		task ("Disable the 'Relevance' toggle so that it is not available as a sort option") {
+			Uncheck.uncheckToggleSwitch(locator1 = "Search#SORT_WIDGET_CONFIGURATION_RELEVANCE_TOGGLE");
+		}
+
+		task ("Save the configuration modal and refresh the page so the changes take effect") {
+			PortletEntry.save();
+
+			Refresh();
+		}
+
+		task ("Assert that 'Title' is not available as a sort option since it was deleted earlier") {
+			AssertElementNotPresent(
+				locator1 = "Search#SORT_WIDGET_SORT_OPTION",
+				sortOption = "Title");
+		}
+
+		task ("Assert that 'Relevance' is not available as a sort option since it was disabled earlier") {
+			AssertElementNotPresent(
+				locator1 = "Search#SORT_WIDGET_SORT_OPTION",
+				sortOption = "Relevance");
+		}
+
+		task ("Assert that 'User' shows up at the top of the dropdown list since it was repositioned earlier") {
+			AssertTextEquals(
+				key_position = 1,
+				locator1 = "Search#SORT_WIDGET_SORT_OPTION_POSITION",
+				value1 = "User");
+		}
+
+		task ("In the Sort configuration, enable the 'Relevance' toggle and change its display label") {
+			Portlet.gotoPortletOptions(
+				portletName = "Sort",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			Check.checkToggleSwitch(locator1 = "Search#SORT_WIDGET_CONFIGURATION_RELEVANCE_TOGGLE");
+
+			Type.type(
+				locator1 = "Search#SORT_WIDGET_CONFIGURATION_RELEVANCE_DISPLAY_LABEL",
+				value1 = "Relevant Test");
+		}
+
+		task ("Save the configuration modal and refresh the page") {
+			PortletEntry.save();
+
+			Refresh();
+		}
+
+		task ("Assert that the renamed 'Relevance' sort option appears and is at the top of the Sort dropdown list ") {
+			AssertElementPresent(
+				locator1 = "Search#SORT_WIDGET_SORT_OPTION",
+				sortOption = "Relevant Test");
+
+			AssertTextEquals(
+				key_position = 1,
+				locator1 = "Search#SORT_WIDGET_SORT_OPTION_POSITION",
+				value1 = "Relevant Test");
+		}
 	}
 
 	@priority = 4

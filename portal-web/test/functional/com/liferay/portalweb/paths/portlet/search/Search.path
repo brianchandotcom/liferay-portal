@@ -226,6 +226,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SORT_WIDGET_CONFIGURATION_DISPLAY_LABEL_AT_POSITION</td>
+	<td>xpath=(//input[contains(@id,'displayLabel')])[${key_position}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_CONFIGURATION_DISPLAY_LABEL_WITH_VALUE</td>
+	<td>//div[contains(@class,'form-group')]//input[@value='${key_value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_CONFIGURATION_DRAG_AND_DROP_TARGET</td>
+	<td>xpath=(//div[contains(@class,'input-sets-item-drop-zone-root')])[${key_targetPosition}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_WIDGET_CONFIGURATION_EMPTY_DISPLAY_LABEL</td>
 	<td>//input[contains(@id,'displayLabel')][@value='']</td>
 	<td></td>
@@ -236,6 +251,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SORT_WIDGET_CONFIGURATION_OPTION_DRAG_HANDLE</td>
+	<td>//div[contains(@class,'form-group')][.//input[@value='${key_displayLabel}']]//button[contains(@class,'drag-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_CONFIGURATION_RELEVANCE_DISPLAY_LABEL</td>
+	<td>//input[@id='relevance']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_CONFIGURATION_RELEVANCE_TOGGLE</td>
+	<td>//div[contains(@class,'relevance')]//input[contains(@class,'toggle-switch-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_CONFIGURATION_TRASH_BUTTON</td>
+	<td>//div[contains(@class,'form-group')][.//input[@value='${key_displayLabel}']]//button[@aria-label='Delete']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_WIDGET_DROPDOWN</td>
 	<td>//div/select[contains(@id, "SortPortlet")]</td>
 	<td></td>
@@ -243,6 +278,11 @@
 <tr>
 	<td>SORT_WIDGET_SORT_OPTION</td>
 	<td>//div/select[contains(@id, "SortPortlet")]/option[contains(., "${sortOption}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_WIDGET_SORT_OPTION_POSITION</td>
+	<td>xpath=(//div/select[contains(@id, "SortPortlet")]/option)[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -87,8 +87,8 @@ public class UpgradeStatus {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Upgrade of type ", _type, " finished with ", _status,
-					" result."));
+					"Upgrade of type ", _type, " finished with status ",
+					_status));
 		}
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
@@ -217,7 +217,7 @@ public class UpgradeStatus {
 		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Not possible to check the upgrade status due to ",
+					"Unable to check the upgrade status due to ",
 					exception.getMessage(), ". Please check manually."));
 
 			_status = "Failure";

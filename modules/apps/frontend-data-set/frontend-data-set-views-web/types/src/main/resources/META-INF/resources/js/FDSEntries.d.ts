@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import '../css/FDSEntries.scss';
 interface FDSEntriesInterface {
 	fdsEntriesAPIURL: string;

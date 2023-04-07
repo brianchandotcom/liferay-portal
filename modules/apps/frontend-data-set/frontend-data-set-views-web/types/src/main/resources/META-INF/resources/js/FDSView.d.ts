@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 interface IFDSViewProps {
 	fdsViewId: string;
 	fdsViewsAPIURL: string;

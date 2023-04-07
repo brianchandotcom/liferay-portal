@@ -14,10 +14,12 @@
 
 import '../css/FDSEntries.scss';
 export declare type TFDSView = {
+	defaultPageSize: number;
 	description: string;
 	externalReferenceCode: string;
 	id: string;
 	label: string;
+	pageSizes: string;
 };
 interface IFDSViewsProps {
 	fdsEntryId: string;

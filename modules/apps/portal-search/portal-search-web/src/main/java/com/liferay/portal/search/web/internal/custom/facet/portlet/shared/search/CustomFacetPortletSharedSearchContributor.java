@@ -28,8 +28,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchCo
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,14 +50,12 @@ public class CustomFacetPortletSharedSearchContributor
 			new CustomFacetPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		Optional<String> fieldToAggregateOptional =
-			customFacetPortletPreferences.getAggregationFieldOptional();
+		String fieldToAggregate =
+			customFacetPortletPreferences.getAggregationField();
 
-		if (!fieldToAggregateOptional.isPresent()) {
+		if (fieldToAggregate == null) {
 			return;
 		}
-
-		String fieldToAggregate = fieldToAggregateOptional.get();
 
 		if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
 			fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_ARRAY)) {
@@ -205,16 +201,20 @@ public class CustomFacetPortletSharedSearchContributor
 	private String _getParameterName(
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
 
-		Optional<String> optional = Stream.of(
-			customFacetPortletPreferences.getParameterNameOptional(),
-			customFacetPortletPreferences.getAggregationFieldOptional()
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).findFirst();
+		String parameterName = customFacetPortletPreferences.getParameterName();
 
-		return optional.orElse("customfield");
+		if (parameterName != null) {
+			return parameterName;
+		}
+
+		String aggregationField =
+			customFacetPortletPreferences.getAggregationField();
+
+		if (aggregationField != null) {
+			return aggregationField;
+		}
+
+		return "customfield";
 	}
 
 	private Locale _getSuffixLocale(String string) {

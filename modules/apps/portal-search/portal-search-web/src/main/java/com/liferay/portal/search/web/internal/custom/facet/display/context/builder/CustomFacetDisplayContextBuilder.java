@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
-import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
@@ -74,11 +74,9 @@ public class CustomFacetDisplayContextBuilder {
 	}
 
 	public CustomFacetDisplayContextBuilder setCustomDisplayCaption(
-		Optional<String> customDisplayCaptionOptional) {
+		String customDisplayCaption) {
 
-		customDisplayCaptionOptional.ifPresent(
-			customDisplayCaption ->
-				_customDisplayCaption = customDisplayCaption);
+		_customDisplayCaption = customDisplayCaption;
 
 		return this;
 	}
@@ -164,13 +162,19 @@ public class CustomFacetDisplayContextBuilder {
 	}
 
 	protected String getDisplayCaption() {
-		Optional<String> optional1 = SearchStringUtil.maybe(
-			_customDisplayCaption);
+		String customDisplayCaption = StringUtil.trim(_customDisplayCaption);
 
-		Optional<String> optional2 = SearchStringUtil.maybe(
-			optional1.orElse(_fieldToAggregate));
+		if (!Validator.isBlank(customDisplayCaption)) {
+			return customDisplayCaption;
+		}
 
-		return optional2.orElse("custom");
+		String fieldToAggregate = StringUtil.trim(_fieldToAggregate);
+
+		if (!Validator.isBlank(fieldToAggregate)) {
+			return fieldToAggregate;
+		}
+
+		return "custom";
 	}
 
 	protected List<TermCollector> getTermCollectors() {

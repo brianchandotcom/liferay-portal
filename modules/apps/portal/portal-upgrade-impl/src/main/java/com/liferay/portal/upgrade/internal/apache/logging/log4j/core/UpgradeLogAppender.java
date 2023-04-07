@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author Sam Ziemer
  */
 @Component(
-	immediate = true, property = "appender.name=UpgradeLogAppender",
-	service = Appender.class
+	property = "appender.name=UpgradeLogAppender", service = Appender.class
 )
 public class UpgradeLogAppender implements Appender {
 

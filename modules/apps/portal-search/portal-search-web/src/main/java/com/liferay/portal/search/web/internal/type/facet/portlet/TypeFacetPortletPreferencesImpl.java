@@ -25,6 +25,7 @@ import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -50,12 +51,15 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String[]> getAssetTypesArray() {
-		Optional<String> assetTypesOptional =
-			_portletPreferencesHelper.getString(
-				TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES);
+	public String[] getAssetTypesArray() {
+		String assetTypes = _portletPreferencesHelper.getString(
+			TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES);
 
-		return assetTypesOptional.map(StringUtil::split);
+		if (assetTypes == null) {
+			return null;
+		}
+
+		return StringUtil.split(assetTypes);
 	}
 
 	@Override
@@ -69,16 +73,16 @@ public class TypeFacetPortletPreferencesImpl
 	public List<KeyValuePair> getAvailableAssetTypes(
 		long companyId, Locale locale) {
 
-		Optional<String[]> assetTypesOptional = getAssetTypesArray();
+		String[] assetTypesArray = getAssetTypesArray();
 
-		String[] allAssetTypes = getAllAssetTypes(companyId);
-
-		String[] assetTypes = assetTypesOptional.orElse(allAssetTypes);
+		if (ArrayUtil.isEmpty(assetTypesArray)) {
+			return Collections.emptyList();
+		}
 
 		List<KeyValuePair> availableAssetTypes = new ArrayList<>();
 
-		for (String className : allAssetTypes) {
-			if (!ArrayUtil.contains(assetTypes, className)) {
+		for (String className : getAllAssetTypes(companyId)) {
+			if (!ArrayUtil.contains(assetTypesArray, className)) {
 				availableAssetTypes.add(_getKeyValuePair(locale, className));
 			}
 		}
@@ -103,9 +107,13 @@ public class TypeFacetPortletPreferencesImpl
 
 	@Override
 	public String[] getCurrentAssetTypesArray(long companyId) {
-		Optional<String[]> assetTypesOptional = getAssetTypesArray();
+		String[] assetTypes = getAssetTypesArray();
 
-		return assetTypesOptional.orElseGet(() -> getAllAssetTypes(companyId));
+		if (assetTypes != null) {
+			return assetTypes;
+		}
+
+		return getAllAssetTypes(companyId);
 	}
 
 	@Override

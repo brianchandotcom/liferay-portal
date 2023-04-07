@@ -46,6 +46,13 @@ import java.io.Serializable;
 
 import java.net.URL;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -78,6 +85,16 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		}
 
 		try (ZipFile zipFile = new ZipFile(file)) {
+			if (_isProcessed(zipFile)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Batch engine file " + zipFile.getName() +
+							"was already processed");
+				}
+
+				return false;
+			}
+
 			for (BatchEngineZipUnit batchEngineZipUnit :
 					_getBatchEngineZipUnits(zipFile)) {
 
@@ -121,6 +138,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	public URL transformURL(File file) throws AutoDeployException {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			_deploy(zipFile);
+			_setProcessed(zipFile);
 		}
 		catch (Exception exception) {
 			throw new AutoDeployException(exception);
@@ -389,6 +407,22 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		return false;
 	}
 
+	private boolean _isProcessed(ZipFile zipFile) {
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (Objects.equals(
+					zipEntry.getName(), ".processed-batch-engine-zip")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _processBatchEngineZipUnit(
 			BatchEngineZipUnit<BatchEngineImportConfiguration>
 				batchEngineZipUnit)
@@ -458,6 +492,18 @@ public class BatchEngineFileInstaller implements FileInstaller {
 							batchEngineZipUnit.getZipFileName());
 				}
 			});
+	}
+
+	private void _setProcessed(ZipFile zipFile) throws Exception {
+		Path zipFilePath = Paths.get(zipFile.getName());
+
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				zipFilePath, null)) {
+
+			Files.write(
+				fileSystem.getPath(".processed-batch-engine-zip"), new byte[0],
+				StandardOpenOption.CREATE);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

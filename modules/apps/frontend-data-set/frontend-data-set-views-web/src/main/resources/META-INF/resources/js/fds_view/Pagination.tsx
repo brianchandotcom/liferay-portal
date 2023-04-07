@@ -16,38 +16,55 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
-import {fetch, openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import {fetch, navigate, openToast} from 'frontend-js-web';
+import React, {useRef, useState} from 'react';
 
 import {TFDSView} from '../FDSViews';
 import RequiredMark from '../RequiredMark';
 
-const FDS_PAGE_SIZES = '4, 8, 20, 40, 60';
-const FDS_DEFAULT_PAGE_SIZE = '20';
-
 interface IPaginationProps {
 	fdsView: TFDSView;
 	fdsViewsAPIURL: string;
+	fdsViewsURL: string;
 	namespace: string;
 }
 
-function Pagination({fdsView, fdsViewsAPIURL, namespace}: IPaginationProps) {
-	const [pageSizes, setPageSizes] = useState(FDS_PAGE_SIZES);
+function Pagination({
+	fdsView,
+	fdsViewsAPIURL,
+	fdsViewsURL,
+	namespace,
+}: IPaginationProps) {
+	const [pageSizes, setPageSizes] = useState(fdsView.pageSizes);
 	const [defaultPageSize, setDefaultPageSize] = useState(
-		FDS_DEFAULT_PAGE_SIZE
+		fdsView.defaultPageSize.toString()
 	);
-	const [defaultValueError, setDefaultValueError] = useState(false);
+	const [
+		incompatibleDefaultPageSizeValidationError,
+		setIncompatibleDefaultPageSizeValidationError,
+	] = useState(false);
+	const [
+		requiredDefaultPageSizeValidationError,
+		setRequiredDefaultPageSizeValidationError,
+	] = useState(false);
+	const [
+		requiredPageSizesValidationError,
+		setRequiredPageSizesValidationError,
+	] = useState(false);
 
-	useEffect(() => {
+	const fdsViewPageSizesRef = useRef<HTMLInputElement>(null);
+	const fdsViewDefaultPageSizeRef = useRef<HTMLInputElement>(null);
+
+	const compatibilityValidation = () => {
 		const paginationArray = pageSizes.split(', ');
 
 		if (!paginationArray.includes(defaultPageSize)) {
-			setDefaultValueError(true);
+			setIncompatibleDefaultPageSizeValidationError(true);
 		}
 		else {
-			setDefaultValueError(false);
+			setIncompatibleDefaultPageSizeValidationError(false);
 		}
-	}, [defaultPageSize, pageSizes]);
+	};
 
 	const handleSaveClick = async () => {
 		const body = {
@@ -70,7 +87,7 @@ function Pagination({fdsView, fdsViewsAPIURL, namespace}: IPaginationProps) {
 
 		const responseJSON = await response.json();
 
-		if (responseJSON?.id) {
+		if (response.ok && responseJSON?.id) {
 			openToast({
 				message: Liferay.Language.get(
 					'your-request-completed-successfully'
@@ -95,14 +112,19 @@ function Pagination({fdsView, fdsViewsAPIURL, namespace}: IPaginationProps) {
 					{Liferay.Language.get('pagination')}
 				</h2>
 
-				<p>
-					Use values separated by commas to generate different
-					pagination items in the Dataset view.{' '}
-				</p>
+				<div className="sheet-text">
+					{Liferay.Language.get(
+						'use-values-separated-by-commas-to-generate-different-pagination-items-in-the-dataset-view'
+					)}
+				</div>
 			</ClayLayout.SheetHeader>
 
 			<ClayLayout.SheetSection>
-				<ClayForm.Group>
+				<ClayForm.Group
+					className={classnames(
+						requiredPageSizesValidationError && 'has-error'
+					)}
+				>
 					<label htmlFor={`${namespace}fdsViewPageSizesTextarea`}>
 						{Liferay.Language.get('page-sizes')}
 
@@ -111,16 +133,38 @@ function Pagination({fdsView, fdsViewsAPIURL, namespace}: IPaginationProps) {
 
 					<ClayInput
 						component="textarea"
-						id={`${namespace}fdsViewPaginationItemsTextarea`}
+						id={`${namespace}fdsViewPageSizesTextarea`}
+						onBlur={() => {
+							compatibilityValidation();
+
+							setRequiredPageSizesValidationError(
+								!fdsViewPageSizesRef.current?.value
+							);
+						}}
 						onChange={(event) => setPageSizes(event.target.value)}
+						ref={fdsViewPageSizesRef}
 						required
 						type="text"
 						value={pageSizes}
 					/>
+
+					{requiredPageSizesValidationError && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get('this-field-is-required')}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
 				</ClayForm.Group>
 
 				<ClayForm.Group
-					className={classnames(defaultValueError && 'has-error')}
+					className={classnames(
+						(incompatibleDefaultPageSizeValidationError ||
+							requiredDefaultPageSizeValidationError) &&
+							'has-error'
+					)}
 				>
 					<label
 						htmlFor={`${namespace}fdsViewPaginationDefaultPageSizeInput`}
@@ -131,22 +175,35 @@ function Pagination({fdsView, fdsViewsAPIURL, namespace}: IPaginationProps) {
 					</label>
 
 					<ClayInput
-						id={`${namespace}fdsViewPaginationDefaultValueInput`}
+						id={`${namespace}fdsViewPaginationDefaultPageSizeInput`}
+						onBlur={() => {
+							compatibilityValidation();
+
+							setRequiredDefaultPageSizeValidationError(
+								!fdsViewDefaultPageSizeRef.current?.value
+							);
+						}}
 						onChange={(event) =>
 							setDefaultPageSize(event.target.value)
 						}
-						type="text"
+						ref={fdsViewDefaultPageSizeRef}
+						type="number"
 						value={defaultPageSize}
 					/>
 
-					{defaultValueError && (
+					{(incompatibleDefaultPageSizeValidationError ||
+						requiredDefaultPageSizeValidationError) && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{Liferay.Language.get(
-									'the-default-value-must-exist-in-the-pagination-items-input'
-								)}
+								{requiredDefaultPageSizeValidationError
+									? Liferay.Language.get(
+											'this-field-is-required'
+									  )
+									: Liferay.Language.get(
+											'the-default-value-must-exist-in-the-pagination-items-input'
+									  )}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
@@ -161,20 +218,13 @@ function Pagination({fdsView, fdsViewsAPIURL, namespace}: IPaginationProps) {
 
 			<ClayLayout.SheetFooter>
 				<ClayButton.Group spaced>
-					<ClayButton
-						disabled={defaultValueError}
-						onClick={handleSaveClick}
-					>
+					<ClayButton onClick={handleSaveClick}>
 						{Liferay.Language.get('save')}
 					</ClayButton>
 
 					<ClayButton
 						displayType="secondary"
-						onClick={() => {
-							setDefaultPageSize(FDS_DEFAULT_PAGE_SIZE);
-
-							setPageSizes(FDS_PAGE_SIZES);
-						}}
+						onClick={() => navigate(fdsViewsURL)}
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

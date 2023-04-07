@@ -46,14 +46,17 @@ const Details = ({
 			label: fdsViewLabelRef.current?.value,
 		};
 
-		const response = await fetch(`${fdsViewsAPIURL}/${fdsView.id}`, {
-			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			method: 'PATCH',
-		});
+		const response = await fetch(
+			`${fdsViewsAPIURL}/by-external-reference-code/${fdsView.externalReferenceCode}`,
+			{
+				body: JSON.stringify(body),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: 'PATCH',
+			}
+		);
 
 		const responseJSON = await response.json();
 

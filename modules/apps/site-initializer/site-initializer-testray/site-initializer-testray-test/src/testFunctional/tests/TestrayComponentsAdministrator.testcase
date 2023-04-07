@@ -317,13 +317,62 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator when I search for a Component the system should return that component"
-	@ignore = "Test Stub"
+	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component the system should return that component"
 	@priority = 4
 	test AdminCanSearchComponent {
+		task ("Given that two component are created via API") {
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
 
-		// TODO LPS-156995 AdminCanSearchComponent pending implementation
+			JSONTestray.addComponent(
+				componentName = "Component 2",
+				projectName = ${projectName},
+				teamName = ${teamName});
+		}
 
+		task ("And go to the manage components") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+		}
+
+		task ("And confirm that there are two components in the table") {
+			AssertElementPresent(
+				key_projectName = ${componentName},
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter component 1") {
+			TestrayFilter.clickFilter();
+
+			PortletEntry.inputName(name = ${componentName});
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only component 1 in the table") {
+			AssertElementPresent(
+				key_projectName = ${componentName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the component 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"

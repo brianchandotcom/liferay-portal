@@ -23,7 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlFactory;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.google.merchant.internal.xml.model.Feed;
 import com.liferay.commerce.google.merchant.internal.xml.model.Link;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -179,7 +179,7 @@ public class ProductFeedXMLGenerator {
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
 				"commerceAccountGroupIds",
-				new long[] {CommerceAccountConstants.ACCOUNT_ID_GUEST}
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_GUEST}
 			).put(
 				"commerceChannelGroupId", commerceChannel.getGroupId()
 			).build());

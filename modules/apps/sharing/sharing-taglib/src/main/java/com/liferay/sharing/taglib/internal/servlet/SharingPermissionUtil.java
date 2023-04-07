@@ -14,26 +14,20 @@
 
 package com.liferay.sharing.taglib.internal.servlet;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.sharing.security.permission.SharingPermission;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class SharingPermissionUtil {
 
 	public static SharingPermission getSharingPermission() {
-		return _sharingPermission;
+		return _sharingPermissionSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setSharingPermission(SharingPermission sharingPermission) {
-		_sharingPermission = sharingPermission;
-	}
-
-	private static SharingPermission _sharingPermission;
+	private static final Snapshot<SharingPermission>
+		_sharingPermissionSnapshot = new Snapshot<>(
+			SharingPermissionUtil.class, SharingPermission.class);
 
 }

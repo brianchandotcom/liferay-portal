@@ -150,6 +150,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 		_checkDynamicOption(annotationDetailAST, policyName);
 
+		_checkTarget(annotationDetailAST);
+
 		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
 			_checkVolatileVariable(detailAST, policyName);
 
@@ -180,8 +182,6 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				classDefinitionDetailAST, detailAST, methodName,
 				defaultUnbindMethodName);
 		}
-
-		_checkTarget(annotationDetailAST);
 	}
 
 	private void _checkTarget(DetailAST annotationDetailAST) {

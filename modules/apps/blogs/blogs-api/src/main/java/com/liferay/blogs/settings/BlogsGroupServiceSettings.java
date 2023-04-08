@@ -58,7 +58,7 @@ public class BlogsGroupServiceSettings {
 
 	public static void registerSettingsMetadata() {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			BlogsGroupServiceSettings.class, null, _getFallbackKeys());
+			BlogsGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	public BlogsGroupServiceSettings(Settings settings) {
@@ -156,7 +156,7 @@ public class BlogsGroupServiceSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			BlogsGroupServiceSettings.class, null, _getFallbackKeys());
+			BlogsGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

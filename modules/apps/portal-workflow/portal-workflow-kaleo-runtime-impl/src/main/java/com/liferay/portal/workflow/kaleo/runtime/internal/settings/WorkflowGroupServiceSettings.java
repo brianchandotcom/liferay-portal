@@ -67,7 +67,7 @@ public class WorkflowGroupServiceSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			WorkflowGroupServiceSettings.class, null, _getFallbackKeys());
+			WorkflowGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

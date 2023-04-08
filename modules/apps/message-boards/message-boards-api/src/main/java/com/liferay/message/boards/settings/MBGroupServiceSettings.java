@@ -63,7 +63,7 @@ public class MBGroupServiceSettings {
 
 	public static void registerSettingsMetadata() {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			MBGroupServiceSettings.class, null, _getFallbackKeys());
+			MBGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	public MBGroupServiceSettings(Settings settings) {
@@ -259,7 +259,7 @@ public class MBGroupServiceSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			MBGroupServiceSettings.class, null, _getFallbackKeys());
+			MBGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

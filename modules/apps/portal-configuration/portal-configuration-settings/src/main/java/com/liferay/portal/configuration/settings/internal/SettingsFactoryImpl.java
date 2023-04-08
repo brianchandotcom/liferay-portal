@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class SettingsFactoryImpl implements SettingsFactory {
 
 	public SettingsFactoryImpl() {
-		registerSettingsMetadata(PortalSettings.class, null, null);
+		registerSettingsMetadata(PortalSettings.class, null);
 	}
 
 	@Override
@@ -110,8 +110,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public void registerSettingsMetadata(
-		Class<?> settingsClass, Object configurationBean,
-		FallbackKeys fallbackKeys) {
+		Class<?> settingsClass, FallbackKeys fallbackKeys) {
 
 		SettingsDescriptor settingsDescriptor = new AnnotatedSettingsDescriptor(
 			settingsClass);

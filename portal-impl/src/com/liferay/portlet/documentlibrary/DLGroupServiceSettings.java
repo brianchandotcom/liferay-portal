@@ -58,7 +58,7 @@ public class DLGroupServiceSettings {
 
 	public static void registerSettingsMetadata() {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			DLGroupServiceSettings.class, null, _getFallbackKeys());
+			DLGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	public DLGroupServiceSettings(Settings settings) {
@@ -248,7 +248,7 @@ public class DLGroupServiceSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			DLGroupServiceSettings.class, null, _getFallbackKeys());
+			DLGroupServiceSettings.class, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

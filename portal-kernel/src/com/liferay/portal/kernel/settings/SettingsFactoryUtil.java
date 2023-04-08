@@ -54,11 +54,9 @@ public class SettingsFactoryUtil {
 	}
 
 	public static void registerSettingsMetadata(
-		Class<?> settingsClass, Object configurationBean,
-		FallbackKeys fallbackKeys) {
+		Class<?> settingsClass, FallbackKeys fallbackKeys) {
 
-		_settingsFactory.registerSettingsMetadata(
-			settingsClass, configurationBean, fallbackKeys);
+		_settingsFactory.registerSettingsMetadata(settingsClass, fallbackKeys);
 	}
 
 	private static volatile SettingsFactory _settingsFactory =

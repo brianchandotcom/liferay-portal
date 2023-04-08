@@ -66,7 +66,7 @@ public class DLPortletInstanceSettings {
 
 	public static void registerSettingsMetadata() {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			DLPortletInstanceSettings.class, null, _getFallbackKeys());
+			DLPortletInstanceSettings.class, _getFallbackKeys());
 	}
 
 	public DLPortletInstanceSettings(Settings settings) {
@@ -176,7 +176,7 @@ public class DLPortletInstanceSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			DLPortletInstanceSettings.class, null, _getFallbackKeys());
+			DLPortletInstanceSettings.class, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

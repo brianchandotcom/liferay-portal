@@ -75,7 +75,12 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		String targetAttributeValue = getAnnotationAttributeValue(
 			annotation, "target");
 
-		if (targetAttributeValue == null) {
+		List<String> ignoreTargetAttributeValues = getAttributeValues(
+			_IGNORE_TARGET_ATTRIBUTE_VALUES_KEY, absolutePath);
+
+		if ((targetAttributeValue == null) ||
+			ignoreTargetAttributeValues.contains(targetAttributeValue)) {
+
 			return;
 		}
 
@@ -225,6 +230,9 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 
 		return _rootDirName;
 	}
+
+	private static final String _IGNORE_TARGET_ATTRIBUTE_VALUES_KEY =
+		"ignoreTargetAttributeValues";
 
 	private static final Pattern _classConstantPattern = Pattern.compile(
 		"^([A-Z]\\w+)\\.?([A-Z]\\w+)$");

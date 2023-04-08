@@ -234,6 +234,7 @@ JavaModuleUniqueVerifyProcessCheck | [Bug Prevention](bug_prevention_checks.mark
 [JavaProcessCallableCheck](check/java_process_callable_check.markdown#javaprocesscallablecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that a class implementing `ProcessCallable` assigns a `serialVersionUID`. |
 JavaProviderTypeAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on classes with `@ProviderType` annotation. |
 JavaRedundantConstructorCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds unnecessary empty constructor. |
+JavaReferenceAnnotationsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on classes with `@Reference` annotations. |
 JavaReleaseInfoCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Validates information in `ReleaseInfo.java`. |
 [JavaResultSetCheck](check/java_result_set_check.markdown#javaresultsetcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks for correct use `java.sql.ResultSet.getInt(int)`. |
 JavaReturnStatementCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Finds unnecessary `else` statement (when `if` and `else` statement both end with `return` statement). |

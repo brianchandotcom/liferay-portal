@@ -110,6 +110,7 @@ JavaModuleUniqueVerifyProcessCheck | .java | Checks that a module can not have m
 [JavaProcessCallableCheck](check/java_process_callable_check.markdown#javaprocesscallablecheck) | .java | Checks that a class implementing `ProcessCallable` assigns a `serialVersionUID`. |
 JavaProviderTypeAnnotationCheck | .java | Performs several checks on classes with `@ProviderType` annotation. |
 JavaRedundantConstructorCheck | .java | Finds unnecessary empty constructor. |
+JavaReferenceAnnotationsCheck | .java | Performs several checks on classes with `@Reference` annotations. |
 JavaReleaseInfoCheck | .java | Validates information in `ReleaseInfo.java`. |
 [JavaResultSetCheck](check/java_result_set_check.markdown#javaresultsetcheck) | .java | Checks for correct use `java.sql.ResultSet.getInt(int)`. |
 [JavaSeeAnnotationCheck](check/java_see_annotation_check.markdown#javaseeannotationcheck) | .java | Checks for nested annotations inside `@see`. |

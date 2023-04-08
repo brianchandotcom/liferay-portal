@@ -89,20 +89,22 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_log.debug("Registered portal instance " + company);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-			for (ModifiableSystemObjectDefinitions
-					modifiableSystemObjectDefinitions :
-						_modifiableSystemObjectDefinitionsServiceTrackerList) {
-
-				_createModifiableSystemObjectDefinitions(
-					company, modifiableSystemObjectDefinitions);
-			}
-		}
-
 		for (SystemObjectDefinitionMetadata systemObjectDefinitionMetadata :
 				_serviceTrackerList) {
 
 			_apply(company.getCompanyId(), systemObjectDefinitionMetadata);
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			return;
+		}
+
+		for (ModifiableSystemObjectDefinitions
+				modifiableSystemObjectDefinitions :
+					_modifiableSystemObjectDefinitionsServiceTrackerList) {
+
+			_createModifiableSystemObjectDefinitions(
+				company, modifiableSystemObjectDefinitions);
 		}
 	}
 

@@ -20,6 +20,8 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.object.admin.rest.dto.v1_0.Status;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -37,6 +39,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.object.system.ModifiableSystemObjectDefinitions;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
@@ -49,6 +52,9 @@ import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -59,6 +65,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -77,9 +84,19 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	implements EveryNodeEveryStartup {
 
 	@Override
-	public void portalInstanceRegistered(Company company) {
+	public void portalInstanceRegistered(Company company) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Registered portal instance " + company);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			for (ModifiableSystemObjectDefinitions
+					modifiableSystemObjectDefinitions :
+						_modifiableSystemObjectDefinitionsServiceTrackerList) {
+
+				_createModifiableSystemObjectDefinitions(
+					company, modifiableSystemObjectDefinitions);
+			}
 		}
 
 		for (SystemObjectDefinitionMetadata systemObjectDefinitionMetadata :
@@ -98,6 +115,10 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		_bundleContext = bundleContext;
 
 		_openingThreadLocal.set(Boolean.TRUE);
+
+		_modifiableSystemObjectDefinitionsServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, ModifiableSystemObjectDefinitions.class);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SystemObjectDefinitionMetadata.class, null,
@@ -153,6 +174,7 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 	@Deactivate
 	protected void deactivate() {
+		_modifiableSystemObjectDefinitionsServiceTrackerList.close();
 		_serviceTrackerList.close();
 	}
 
@@ -253,6 +275,52 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		}
 	}
 
+	private void _createModifiableSystemObjectDefinitions(
+			Company company,
+			ModifiableSystemObjectDefinitions modifiableSystemObjectDefinitions)
+		throws Exception {
+
+		Class<?> clazz = modifiableSystemObjectDefinitions.getClass();
+
+		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.read(
+				clazz.getClassLoader(),
+				modifiableSystemObjectDefinitions.getResourcePath()));
+
+		com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition
+			objectDefinition =
+				com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.toDTO(
+					objectDefinitionJSONObject.toString());
+
+		ObjectDefinition serviceBuilderObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				company.getCompanyId(), "C_" + objectDefinition.getName());
+
+		if (serviceBuilderObjectDefinition != null) {
+			return;
+		}
+
+		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			objectDefinitionResourceBuilder.checkPermissions(
+				false
+			).user(
+				company.getDefaultUser()
+			).build();
+
+		objectDefinition = objectDefinitionResource.postObjectDefinition(
+			objectDefinition);
+
+		Status status = objectDefinition.getStatus();
+
+		if (status.getCode() != 0) {
+			objectDefinitionResource.postObjectDefinitionPublish(
+				objectDefinition.getId());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionMetadataPortalInstanceLifecycleListener.class);
 
@@ -275,10 +343,19 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		_itemSelectorViewDescriptorRenderer;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	private ServiceTrackerList<ModifiableSystemObjectDefinitions>
+		_modifiableSystemObjectDefinitionsServiceTrackerList;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

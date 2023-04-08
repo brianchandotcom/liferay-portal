@@ -1702,6 +1702,28 @@ definition {
 		}
 	}
 
+	macro configureFragmentViaKeyboard {
+		if (${difference} == "Up") {
+			KeyPress(
+				key_fieldLabel = ${fieldLabel},
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "\UP");
+		}
+		else {
+			KeyPress(
+				key_fieldLabel = ${fieldLabel},
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "\DOWN");
+		}
+
+		KeyPress(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "FormFields#NUMBER_FIELD",
+			value1 = "\ENTER");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro createPageTemplate {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 

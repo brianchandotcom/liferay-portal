@@ -1,29 +1,11 @@
 {
 	"accountEntryRestricted": false,
-	"accountEntryRestrictedObjectFieldName": "",
-	"actions": {
-		"delete": {
-		},
-		"get": {
-		},
-		"permissions": {
-		},
-		"update": {
-		}
-	},
-	"active": true,
-	"defaultLanguageId": "en_US",
-	"enableCategorization": true,
-	"enableComments": false,
-	"enableObjectEntryHistory": false,
 	"externalReferenceCode": "BOOKMARK_OBJECT_DEFINITION",
 	"label": {
 		"en_US": "Bookmark"
 	},
 	"modifiable": true,
 	"name": "Bookmark",
-	"objectActions": [
-	],
 	"objectFields": [
 		{
 			"DBType": "Clob",
@@ -98,25 +80,11 @@
 			"type": "String"
 		}
 	],
-	"objectLayouts": [
-	],
-	"objectRelationships": [
-	],
-	"objectViews": [
-	],
 	"panelCategoryKey": "site_administration.content",
-	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "Bookmarks"
 	},
-	"portlet": true,
-	"restContextPath": "/o/c/bookmarks",
 	"scope": "site",
-	"status": {
-		"code": 0,
-		"label": "approved",
-		"label_i18n": "Approved"
-	},
 	"system": true,
 	"titleObjectFieldName": "name"
 }

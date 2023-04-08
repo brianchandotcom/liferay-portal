@@ -27,7 +27,7 @@ public class BookmarksModifiableSystemObjectDefinitions
 
 	@Override
 	public String getResourcePath() {
-		return "com/liferay/object/internal/system/dependencies/bookmarks.json";
+		return "com/liferay/object/internal/system/dependencies/bookmark-modifiable-system-object-definition.json";
 	}
 
 }

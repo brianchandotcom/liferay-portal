@@ -715,6 +715,10 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@ProviderType` annotation." />
 		</check>
+		<check name="JavaReferenceAnnotationsCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on classes with `@Reference` annotations." />
+		</check>
 		<check name="JavaReleaseInfoCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates information in `ReleaseInfo.java`." />

@@ -21,8 +21,6 @@ import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.io.IOException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +33,7 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws IOException {
+		throws Exception {
 
 		return formatAnnotations(
 			fileName, absolutePath, (JavaClass)javaTerm, fileContent);

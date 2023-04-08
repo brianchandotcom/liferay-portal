@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -21,8 +22,6 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
-
-import java.io.IOException;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -37,15 +36,16 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws IOException {
+		throws Exception {
 
 		return formatAnnotations(
 			fileName, absolutePath, (JavaClass)javaTerm, fileContent);
 	}
 
 	protected String formatAnnotation(
-		String fileName, String absolutePath, JavaClass javaClass,
-		String fileContent, String annotation, String indent) {
+			String fileName, String absolutePath, JavaClass javaClass,
+			String fileContent, String annotation, String indent)
+		throws Exception {
 
 		if (!annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 			return annotation;
@@ -61,7 +61,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	protected String formatAnnotations(
 			String fileName, String absolutePath, JavaClass javaClass,
 			String fileContent)
-		throws IOException {
+		throws Exception {
 
 		String content = javaClass.getContent();
 
@@ -84,6 +84,49 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		}
 
 		return content;
+	}
+
+	protected String getAnnotationAttributeValue(
+		String annotation, String attributeName) {
+
+		Pattern pattern = Pattern.compile("[^\\w\"]" + attributeName + "\\s*=");
+
+		Matcher matcher = pattern.matcher(annotation);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		int start = matcher.end() + 1;
+
+		int end = start;
+
+		while (true) {
+			end = annotation.indexOf(CharPool.COMMA, end + 1);
+
+			if (end == -1) {
+				end = annotation.lastIndexOf(CharPool.CLOSE_PARENTHESIS);
+
+				break;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(annotation, end) &&
+				(getLevel(annotation.substring(start, end), "{", "}") == 0)) {
+
+				break;
+			}
+		}
+
+		String attributeValue = StringUtil.trim(
+			annotation.substring(start, end));
+
+		if (!attributeValue.contains("\n")) {
+			return attributeValue;
+		}
+
+		return StringUtil.replace(
+			attributeValue, new String[] {"\t", ",\n", "\n"},
+			new String[] {"", ", ", ""});
 	}
 
 	@Override
@@ -169,7 +212,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	private String _formatAnnotations(
 			String fileName, String absolutePath, JavaClass javaClass,
 			String fileContent, String annotationsBlock, String indent)
-		throws IOException {
+		throws Exception {
 
 		List<String> annotations = SourceUtil.splitAnnotations(
 			annotationsBlock, indent);

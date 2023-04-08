@@ -21,8 +21,6 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.io.IOException;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -38,7 +36,7 @@ public class JavaAnnotationDefaultAttributeCheck extends JavaAnnotationsCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws IOException {
+		throws Exception {
 
 		return formatAnnotations(
 			fileName, absolutePath, (JavaClass)javaTerm, fileContent);

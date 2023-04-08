@@ -165,7 +165,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			}
 		}
 
-		String immediateAttributeValue = _getAttributeValue(
+		String immediateAttributeValue = getAnnotationAttributeValue(
 			annotation, "immediate");
 
 		if ((immediateAttributeValue != null) &&
@@ -250,7 +250,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String fileName, String absolutePath, JavaClass javaClass,
 		String annotation) {
 
-		String configurationPid = _getAttributeValue(
+		String configurationPid = getAnnotationAttributeValue(
 			annotation, "configurationPid");
 
 		if (configurationPid != null) {
@@ -286,7 +286,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		if (imports.contains(
 				"org.osgi.service.component.annotations.Modified") ||
-			(_getAttributeValue(annotation, "configurationPolicy ") != null)) {
+			(getAnnotationAttributeValue(annotation, "configurationPolicy ") !=
+				null)) {
 
 			return annotation;
 		}
@@ -394,7 +395,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				continue;
 			}
 
-			String enabledAttributeValue = _getAttributeValue(
+			String enabledAttributeValue = getAnnotationAttributeValue(
 				annotation, "enabled");
 
 			if (enabledAttributeValue == null) {
@@ -448,7 +449,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			!absolutePath.contains("/modules/sdk/") &&
 			!newProperties.contains("\"javax.portlet.version=3.0\"")) {
 
-			String serviceAttributeValue = _getAttributeValue(
+			String serviceAttributeValue = getAnnotationAttributeValue(
 				annotation, "service");
 
 			if (serviceAttributeValue.startsWith(StringPool.OPEN_CURLY_BRACE) &&
@@ -477,7 +478,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String expectedServiceAttributeValue =
 			_getExpectedServiceAttributeValue(implementedClassNames);
 
-		String serviceAttributeValue = _getAttributeValue(
+		String serviceAttributeValue = getAnnotationAttributeValue(
 			annotation, "service");
 
 		if (serviceAttributeValue == null) {
@@ -510,47 +511,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		return annotation;
-	}
-
-	private String _getAttributeValue(String annotation, String attributeName) {
-		Pattern pattern = Pattern.compile("[^\\w\"]" + attributeName + "\\s*=");
-
-		Matcher matcher = pattern.matcher(annotation);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		int start = matcher.end() + 1;
-
-		int end = start;
-
-		while (true) {
-			end = annotation.indexOf(CharPool.COMMA, end + 1);
-
-			if (end == -1) {
-				end = annotation.lastIndexOf(CharPool.CLOSE_PARENTHESIS);
-
-				break;
-			}
-
-			if (!ToolsUtil.isInsideQuotes(annotation, end) &&
-				(getLevel(annotation.substring(start, end), "{", "}") == 0)) {
-
-				break;
-			}
-		}
-
-		String attributeValue = StringUtil.trim(
-			annotation.substring(start, end));
-
-		if (!attributeValue.contains("\n")) {
-			return attributeValue;
-		}
-
-		return StringUtil.replace(
-			attributeValue, new String[] {"\t", ",\n", "\n"},
-			new String[] {"", ", ", ""});
 	}
 
 	private synchronized Map<String, String> _getBundleSymbolicNamesMap(

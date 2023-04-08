@@ -39,7 +39,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.object.system.ModifiableSystemObjectDefinitions;
+import com.liferay.object.system.ModifiableSystemObjectDefinition;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
@@ -99,12 +99,11 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			return;
 		}
 
-		for (ModifiableSystemObjectDefinitions
-				modifiableSystemObjectDefinitions :
-					_modifiableSystemObjectDefinitionsServiceTrackerList) {
+		for (ModifiableSystemObjectDefinition modifiableSystemObjectDefinition :
+				_modifiableSystemObjectDefinitionServiceTrackerList) {
 
-			_createModifiableSystemObjectDefinitions(
-				company, modifiableSystemObjectDefinitions);
+			_createModifiableSystemObjectDefinition(
+				company, modifiableSystemObjectDefinition);
 		}
 	}
 
@@ -118,9 +117,9 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 		_openingThreadLocal.set(Boolean.TRUE);
 
-		_modifiableSystemObjectDefinitionsServiceTrackerList =
+		_modifiableSystemObjectDefinitionServiceTrackerList =
 			ServiceTrackerListFactory.open(
-				bundleContext, ModifiableSystemObjectDefinitions.class);
+				bundleContext, ModifiableSystemObjectDefinition.class);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SystemObjectDefinitionMetadata.class, null,
@@ -176,7 +175,7 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 	@Deactivate
 	protected void deactivate() {
-		_modifiableSystemObjectDefinitionsServiceTrackerList.close();
+		_modifiableSystemObjectDefinitionServiceTrackerList.close();
 		_serviceTrackerList.close();
 	}
 
@@ -277,17 +276,17 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _createModifiableSystemObjectDefinitions(
+	private void _createModifiableSystemObjectDefinition(
 			Company company,
-			ModifiableSystemObjectDefinitions modifiableSystemObjectDefinitions)
+			ModifiableSystemObjectDefinition modifiableSystemObjectDefinition)
 		throws Exception {
 
-		Class<?> clazz = modifiableSystemObjectDefinitions.getClass();
+		Class<?> clazz = modifiableSystemObjectDefinition.getClass();
 
 		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
 			StringUtil.read(
 				clazz.getClassLoader(),
-				modifiableSystemObjectDefinitions.getResourcePath()));
+				modifiableSystemObjectDefinition.getResourcePath()));
 
 		com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition
 			objectDefinition =
@@ -350,8 +349,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
-	private ServiceTrackerList<ModifiableSystemObjectDefinitions>
-		_modifiableSystemObjectDefinitionsServiceTrackerList;
+	private ServiceTrackerList<ModifiableSystemObjectDefinition>
+		_modifiableSystemObjectDefinitionServiceTrackerList;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

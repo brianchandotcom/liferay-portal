@@ -14,20 +14,21 @@
 
 package com.liferay.object.internal.system;
 
-import com.liferay.object.system.ModifiableSystemObjectDefinitions;
+import com.liferay.object.system.ModifiableSystemObjectDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
  */
-@Component(service = ModifiableSystemObjectDefinitions.class)
-public class BookmarksModifiableSystemObjectDefinitions
-	implements ModifiableSystemObjectDefinitions {
+@Component(service = ModifiableSystemObjectDefinition.class)
+public class BookmarkModifiableSystemObjectDefinition
+	implements ModifiableSystemObjectDefinition {
 
 	@Override
 	public String getResourcePath() {
-		return "com/liferay/object/internal/system/dependencies/bookmark-modifiable-system-object-definition.json";
+		return "com/liferay/object/internal/system/dependencies" +
+			"/bookmark-modifiable-system-object-definition.json";
 	}
 
 }

@@ -18,7 +18,7 @@ package com.liferay.object.system;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-public interface ModifiableSystemObjectDefinitions {
+public interface ModifiableSystemObjectDefinition {
 
 	public String getResourcePath();
 

@@ -33,8 +33,8 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DLGroupServiceSettings.registerSettingsMetadata();
-		DLPortletInstanceSettings.registerSettingsMetadata();
+		Class.forName(DLGroupServiceSettings.class.getName());
+		Class.forName(DLPortletInstanceSettings.class.getName());
 
 		upgradeMainPortlet(
 			DLPortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,

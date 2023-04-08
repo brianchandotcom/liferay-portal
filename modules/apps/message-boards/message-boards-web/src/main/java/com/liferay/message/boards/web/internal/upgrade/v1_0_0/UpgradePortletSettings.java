@@ -32,7 +32,7 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		MBGroupServiceSettings.registerSettingsMetadata();
+		Class.forName(MBGroupServiceSettings.class.getName());
 
 		upgradeMainPortlet(
 			MBPortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,

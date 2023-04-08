@@ -32,7 +32,7 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		BlogsGroupServiceSettings.registerSettingsMetadata();
+		Class.forName(BlogsGroupServiceSettings.class.getName());
 
 		upgradeMainPortlet(
 			BlogsPortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,

@@ -64,11 +64,6 @@ public class DLPortletInstanceSettings {
 		return new DLPortletInstanceSettings(parameterMapSettings);
 	}
 
-	public static void registerSettingsMetadata() {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			DLPortletInstanceSettings.class, _getFallbackKeys());
-	}
-
 	public DLPortletInstanceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}

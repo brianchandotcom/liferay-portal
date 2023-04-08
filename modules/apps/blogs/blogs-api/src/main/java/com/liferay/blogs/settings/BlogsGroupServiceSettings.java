@@ -56,11 +56,6 @@ public class BlogsGroupServiceSettings {
 			new ParameterMapSettings(parameterMap, settings));
 	}
 
-	public static void registerSettingsMetadata() {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			BlogsGroupServiceSettings.class, _getFallbackKeys());
-	}
-
 	public BlogsGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}

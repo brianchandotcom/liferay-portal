@@ -1,0 +1,122 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "system-bookmark",
+	"label": {
+		"en_US": "Bookmark"
+	},
+	"modifiable": true,
+	"name": "Bookmark",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"defaultValue": "",
+			"externalReferenceCode": "bookmark-description",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Description"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "description",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "bookmark-name",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Name"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "name",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "bookmark-url",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "URL"
+			},
+			"listTypeDefinitionExternalReferenceCode": "",
+			"name": "uRL",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "site_administration.content",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Bookmarks"
+	},
+	"portlet": true,
+	"restContextPath": "/o/c/bookmarks",
+	"scope": "site",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": true,
+	"titleObjectFieldName": "name"
+}

@@ -679,113 +679,17 @@ definition {
 				fragmentName = "Tabs");
 		}
 
-		task ("Change the number of Tabs 19 times") {
-			PageEditor.editTabs(
-				numberOfTabs = 1,
-				panel = "General");
+		task ("Change the number of Tabs 100 times") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
-			var i = 2;
+			var count = 0;
 
-			while ((${i} != 20) && (maxIterations = "30")) {
-				PageEditor.configureFragment(numberOfTabs = ${i});
+			while ((${count} != 100) && (maxIterations = "100")) {
+				PageEditor.configureFragmentViaKeyboard(
+					difference = "Up",
+					fieldLabel = "Number of Tabs");
 
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Delete the Tabs") {
-			PageEditor.removeFragment(fragmentName = "Tabs");
-		}
-
-		task ("Add a Tabs fragment to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Tabs");
-		}
-
-		task ("Change the number of Tabs 18 times") {
-			PageEditor.editTabs(
-				numberOfTabs = 1,
-				panel = "General");
-
-			var i = 2;
-
-			while ((${i} != 19) && (maxIterations = "30")) {
-				PageEditor.configureFragment(numberOfTabs = ${i});
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Delete the Tabs") {
-			PageEditor.removeFragment(fragmentName = "Tabs");
-		}
-
-		task ("Add a Tabs fragment to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Tabs");
-		}
-
-		task ("Change the number of Tabs 18 times") {
-			PageEditor.editTabs(
-				numberOfTabs = 1,
-				panel = "General");
-
-			var i = 2;
-
-			while ((${i} != 19) && (maxIterations = "30")) {
-				PageEditor.configureFragment(numberOfTabs = ${i});
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Delete the Tabs") {
-			PageEditor.removeFragment(fragmentName = "Tabs");
-		}
-
-		task ("Add a Tabs fragment to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Tabs");
-		}
-
-		task ("Change the number of Tabs 18 times") {
-			PageEditor.editTabs(
-				numberOfTabs = 1,
-				panel = "General");
-
-			var i = 2;
-
-			while ((${i} != 19) && (maxIterations = "30")) {
-				PageEditor.configureFragment(numberOfTabs = ${i});
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Delete the Tabs") {
-			PageEditor.removeFragment(fragmentName = "Tabs");
-		}
-
-		task ("Add a Tabs fragment to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Tabs");
-		}
-
-		task ("Change the number of Tabs 19 times") {
-			PageEditor.editTabs(
-				numberOfTabs = 1,
-				panel = "General");
-
-			var i = 2;
-
-			while ((${i} != 20) && (maxIterations = "30")) {
-				PageEditor.configureFragment(numberOfTabs = ${i});
-
-				var i = ${i} + 1;
+				var count = ${count} + 1;
 			}
 		}
 

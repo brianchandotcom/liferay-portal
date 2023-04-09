@@ -34,7 +34,6 @@ public interface SettingsFactory {
 
 	public SettingsDescriptor getSettingsDescriptor(String settingsId);
 
-	public void registerSettingsMetadata(
-		Class<?> settingsClass, FallbackKeys fallbackKeys);
+	public void registerSettingsMetadata(Class<?> settingsClass);
 
 }

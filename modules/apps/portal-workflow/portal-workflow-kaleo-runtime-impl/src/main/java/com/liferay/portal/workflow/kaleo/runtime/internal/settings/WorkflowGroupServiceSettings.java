@@ -16,11 +16,9 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -52,22 +50,9 @@ public class WorkflowGroupServiceSettings {
 		return _typedSettings.getValue("emailFromName");
 	}
 
-	private static FallbackKeys _getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.WORKFLOW_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.WORKFLOW_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-
-		return fallbackKeys;
-	}
-
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			WorkflowGroupServiceSettings.class, _getFallbackKeys());
+			WorkflowGroupServiceSettings.class);
 	}
 
 	private final TypedSettings _typedSettings;

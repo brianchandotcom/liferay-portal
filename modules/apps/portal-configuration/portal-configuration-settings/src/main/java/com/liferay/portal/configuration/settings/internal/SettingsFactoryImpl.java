@@ -14,6 +14,8 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,11 +42,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -55,10 +59,6 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(service = {SettingsFactory.class, SettingsFactoryImpl.class})
 public class SettingsFactoryImpl implements SettingsFactory {
-
-	public SettingsFactoryImpl() {
-		registerSettingsMetadata(PortalSettings.class, null);
-	}
 
 	@Override
 	public ArchivedSettings getPortletInstanceArchivedSettings(
@@ -109,9 +109,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
-	public void registerSettingsMetadata(
-		Class<?> settingsClass, FallbackKeys fallbackKeys) {
-
+	public void registerSettingsMetadata(Class<?> settingsClass) {
 		SettingsDescriptor settingsDescriptor = new AnnotatedSettingsDescriptor(
 			settingsClass);
 
@@ -119,8 +117,22 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			Settings.Config.class);
 
 		for (String settingsId : settingsConfig.settingsIds()) {
-			register(settingsId, settingsDescriptor, fallbackKeys);
+			_settingsDescriptors.put(settingsId, settingsDescriptor);
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		registerSettingsMetadata(PortalSettings.class);
+
+		_fallbackKeysServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, FallbackKeys.class, "settingsId");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_fallbackKeysServiceTrackerMap.close();
 	}
 
 	protected long getCompanyId(long groupId) throws SettingsException {
@@ -131,17 +143,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 		catch (PortalException portalException) {
 			throw new SettingsException(portalException);
-		}
-	}
-
-	protected void register(
-		String settingsId, SettingsDescriptor settingsDescriptor,
-		FallbackKeys fallbackKeys) {
-
-		_settingsDescriptors.put(settingsId, settingsDescriptor);
-
-		if (fallbackKeys != null) {
-			_fallbackKeysMap.put(settingsId, fallbackKeys);
 		}
 	}
 
@@ -156,7 +157,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 				new ConfigurationBeanClassSettingsDescriptor(
 					configurationBeanClass);
 
-		register(settingsId, configurationBeanClassSettingsDescriptor, null);
+		_settingsDescriptors.put(
+			settingsId, configurationBeanClassSettingsDescriptor);
 	}
 
 	@Reference(
@@ -173,7 +175,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 				new ConfigurationBeanClassSettingsDescriptor(
 					configurationPidMapping.getConfigurationBeanClass());
 
-		register(settingsId, configurationBeanClassSettingsDescriptor, null);
+		_settingsDescriptors.put(
+			settingsId, configurationBeanClassSettingsDescriptor);
 	}
 
 	@Reference(unbind = "-")
@@ -188,25 +191,18 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		_portletItemLocalService = portletItemLocalService;
 	}
 
-	protected void unregister(String settingsId) {
-		_fallbackKeysMap.remove(settingsId);
-
-		_settingsDescriptors.remove(settingsId);
-	}
-
 	protected void unregisterConfigurationBeanClass(
 		Class<?> configurationBeanClass) {
 
-		String settingsId = ConfigurationPidUtil.getConfigurationPid(
-			configurationBeanClass);
-
-		unregister(settingsId);
+		_settingsDescriptors.remove(
+			ConfigurationPidUtil.getConfigurationPid(configurationBeanClass));
 	}
 
 	protected void unsetConfigurationPidMapping(
 		ConfigurationPidMapping configurationPidMapping) {
 
-		unregister(configurationPidMapping.getConfigurationPid());
+		_settingsDescriptors.remove(
+			configurationPidMapping.getConfigurationPid());
 	}
 
 	private Settings _applyFallbackKeys(String settingsId, Settings settings) {
@@ -216,7 +212,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		settingsId = PortletIdCodec.decodePortletName(settingsId);
 
-		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
+		FallbackKeys fallbackKeys = _fallbackKeysServiceTrackerMap.getService(
+			settingsId);
 
 		if (fallbackKeys != null) {
 			settings = new FallbackSettings(settings, fallbackKeys);
@@ -254,8 +251,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsFactoryImpl.class);
 
-	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, FallbackKeys>
+		_fallbackKeysServiceTrackerMap;
 	private GroupLocalService _groupLocalService;
 	private PortletItemLocalService _portletItemLocalService;
 	private final Map<String, SettingsDescriptor> _settingsDescriptors =

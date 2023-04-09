@@ -16,7 +16,6 @@ package com.liferay.blogs.settings;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.Map;
 
@@ -120,38 +118,9 @@ public class BlogsGroupServiceSettings {
 		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
 	}
 
-	private static FallbackKeys _getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailEntryAddedBody", PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
-		fallbackKeys.add(
-			"emailEntryAddedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryAddedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
-		fallbackKeys.add(
-			"emailEntryUpdatedBody", PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailEntryUpdatedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryUpdatedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.BLOGS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.BLOGS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-
-		return fallbackKeys;
-	}
-
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			BlogsGroupServiceSettings.class, _getFallbackKeys());
+			BlogsGroupServiceSettings.class);
 	}
 
 	private final TypedSettings _typedSettings;

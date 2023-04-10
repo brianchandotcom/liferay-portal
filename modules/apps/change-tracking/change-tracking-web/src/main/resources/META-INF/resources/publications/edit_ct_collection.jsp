@@ -26,7 +26,7 @@ long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 String description = StringPool.BLANK;
 String name = StringPool.BLANK;
 String saveButtonLabel = "create";
-boolean showTemplates = false;
+boolean showTemplates = true;
 
 boolean revert = ParamUtil.getBoolean(request, "revert");
 
@@ -35,6 +35,7 @@ if (revert) {
 	ctCollectionId = ctCollection.getCtCollectionId();
 	name = StringBundler.concat(LanguageUtil.get(request, "revert"), " \"", ctCollection.getName(), "\"");
 	saveButtonLabel = "revert-and-create-publication";
+	showTemplates = false;
 
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "revert"));
 }
@@ -47,8 +48,6 @@ else if (ctCollection != null) {
 	renderResponse.setTitle(StringBundler.concat(LanguageUtil.format(resourceBundle, "edit-x", new Object[] {ctCollection.getName()})));
 }
 else {
-	showTemplates = true;
-
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
 }
 

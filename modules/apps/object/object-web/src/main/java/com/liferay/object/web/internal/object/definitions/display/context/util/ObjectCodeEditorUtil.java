@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context.util;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -31,13 +32,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carolina Barbosa
  */
-@Component(service = {})
 public class ObjectCodeEditorUtil {
 
 	public static List<Map<String, Object>> getCodeEditorElements(
@@ -47,11 +44,14 @@ public class ObjectCodeEditorUtil {
 
 		List<Map<String, Object>> codeEditorElements = new ArrayList<>();
 
+		ObjectFieldLocalService objectFieldLocalService =
+			_objectFieldLocalServiceSnapshot.get();
+
 		codeEditorElements.add(
 			_createCodeEditorElement(
 				TransformUtil.transform(
 					ListUtil.filter(
-						_objectFieldLocalService.getObjectFields(
+						objectFieldLocalService.getObjectFields(
 							objectDefinitionId),
 						objectFieldPredicate),
 					objectField -> HashMapBuilder.put(
@@ -96,11 +96,14 @@ public class ObjectCodeEditorUtil {
 		Locale locale, long objectDefinitionId,
 		Predicate<ObjectField> objectFieldPredicate) {
 
+		ObjectFieldLocalService objectFieldLocalService =
+			_objectFieldLocalServiceSnapshot.get();
+
 		return ListUtil.fromArray(
 			_createCodeEditorElement(
 				TransformUtil.transform(
 					ListUtil.filter(
-						_objectFieldLocalService.getObjectFields(
+						objectFieldLocalService.getObjectFields(
 							objectDefinitionId),
 						objectFieldPredicate),
 					objectField -> HashMapBuilder.put(
@@ -200,14 +203,9 @@ public class ObjectCodeEditorUtil {
 		).build();
 	}
 
-	@Reference(unbind = "-")
-	private void _setObjectFieldLocalService(
-		ObjectFieldLocalService objectFieldLocalService) {
-
-		_objectFieldLocalService = objectFieldLocalService;
-	}
-
-	private static ObjectFieldLocalService _objectFieldLocalService;
+	private static final Snapshot<ObjectFieldLocalService>
+		_objectFieldLocalServiceSnapshot = new Snapshot<>(
+			ObjectCodeEditorUtil.class, ObjectFieldLocalService.class);
 
 	private enum DDMExpressionFunction {
 

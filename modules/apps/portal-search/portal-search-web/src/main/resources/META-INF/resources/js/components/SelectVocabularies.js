@@ -230,7 +230,7 @@ function VocabularyTree({
 			)}
 		</TreeView>
 	) : (
-		<span className="text-3 text-secondary">
+		<span className="c-mb-0 sheet-text text-3">
 			{Liferay.Language.get(
 				'an-error-has-occurred-and-we-were-unable-to-load-the-results'
 			)}
@@ -343,14 +343,14 @@ function SelectVocabularies({
 				}
 			/>
 
-			<div className="select-vocabularies-helptext text-3">
+			<div className="c-mb-3 c-mt-2 sheet-text text-3">
 				{Liferay.Language.get(
 					'select-vocabularies-configuration-description'
 				)}
 
 				{!disabled && (
 					<LearnMessage
-						className="ml-1"
+						className="c-ml-1"
 						learnMessages={learnMessages}
 						resourceKey="tag-and-category-facet"
 					/>

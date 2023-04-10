@@ -319,4 +319,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should not see subtask that don't exist when I try filtering for them"
+	@priority = 3
+	test AdminCanNotFilterForNonExistentSubtask {
+		task ("Given that the user has two subtasks that existent in the table") {
+			AssertElementPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When filtering a subtask by his non-existent name") {
+			TestrayFilter.clickFilter();
+
+            ScrollWebElementIntoView(
+                key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.typeFilter(
+				label = "Subtask Name",
+				value = "Subtask_3");
+		}
+
+		task ("Then the user is not present in the subtask table") {
+			AssertElementNotPresent(
+				key_projectName = "Subtask_3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

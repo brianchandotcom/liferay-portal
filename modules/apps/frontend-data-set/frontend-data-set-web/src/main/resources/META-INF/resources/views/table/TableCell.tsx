@@ -168,8 +168,13 @@ function TableCell({
 
 					setLoading(false);
 				})
-				.catch(() => {
-					setDataRenderer(() => null);
+				.catch((error) => {
+					console.log(
+						`Unable to load FDS cell renderer at ${view.contentRendererModuleURL}:`,
+						error
+					);
+
+					setDataRenderer(() => getDataRendererById('default'));
 
 					setLoading(false);
 				});

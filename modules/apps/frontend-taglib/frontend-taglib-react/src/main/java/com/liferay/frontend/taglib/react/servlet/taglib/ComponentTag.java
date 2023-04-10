@@ -138,19 +138,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			servletContext = getServletContext();
 		}
 
-		try {
-			return NPMResolvedPackageNameUtil.get(servletContext);
-		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(unsupportedOperationException);
-			}
-
-			JSModuleResolver jsModuleResolver =
-				ServicesProvider.getJSModuleResolver();
-
-			return jsModuleResolver.resolveModule(servletContext, null);
-		}
+		return NPMResolvedPackageNameUtil.get(servletContext);
 	}
 
 	protected Map<String, Object> getProps() {

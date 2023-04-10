@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.settings.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-@Component(service = {SettingsFactory.class, SettingsFactoryImpl.class})
+@Component(service = SettingsFactory.class)
 public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
@@ -130,21 +129,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 	}
 
-	protected void registerConfigurationBeanClass(
-		Class<?> configurationBeanClass) {
-
-		String settingsId = ConfigurationPidUtil.getConfigurationPid(
-			configurationBeanClass);
-
-		ConfigurationBeanClassSettingsDescriptor
-			configurationBeanClassSettingsDescriptor =
-				new ConfigurationBeanClassSettingsDescriptor(
-					configurationBeanClass);
-
-		_settingsDescriptors.put(
-			settingsId, configurationBeanClassSettingsDescriptor);
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
@@ -177,13 +161,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		PortletItemLocalService portletItemLocalService) {
 
 		_portletItemLocalService = portletItemLocalService;
-	}
-
-	protected void unregisterConfigurationBeanClass(
-		Class<?> configurationBeanClass) {
-
-		_settingsDescriptors.remove(
-			ConfigurationPidUtil.getConfigurationPid(configurationBeanClass));
 	}
 
 	protected void unsetConfigurationPidMapping(

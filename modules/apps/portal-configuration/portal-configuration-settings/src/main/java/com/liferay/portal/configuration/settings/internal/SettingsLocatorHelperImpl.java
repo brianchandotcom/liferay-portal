@@ -58,6 +58,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -66,6 +67,7 @@ import javax.portlet.PortletPreferences;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -307,12 +309,26 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 					configurationBeanClass.getName());
 		}
 
-		_settingsFactoryImpl.registerConfigurationBeanClass(
-			configurationBeanClass);
+		ServiceRegistration<?> configurationPidMappingServiceRegistration =
+			_bundleContext.registerService(
+				ConfigurationPidMapping.class,
+				new ConfigurationPidMapping() {
+
+					@Override
+					public Class<?> getConfigurationBeanClass() {
+						return configurationBeanClass;
+					}
+
+					@Override
+					public String getConfigurationPid() {
+						return configurationPid;
+					}
+
+				},
+				null);
 
 		return () -> {
-			_settingsFactoryImpl.unregisterConfigurationBeanClass(
-				configurationBeanClass);
+			configurationPidMappingServiceRegistration.unregister();
 
 			_configurationPidMappings.remove(configurationPid);
 
@@ -446,10 +462,13 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
 
 		if (clazz.getAnnotation(Settings.Config.class) == null) {
-			_configurationPidMappings.put(
-				configurationPidMapping.getConfigurationPid(),
-				ConfigurationPidUtil.getConfigurationPid(
-					configurationPidMapping.getConfigurationBeanClass()));
+			String mappedPid = configurationPidMapping.getConfigurationPid();
+			String ocdPid = ConfigurationPidUtil.getConfigurationPid(
+				configurationPidMapping.getConfigurationBeanClass());
+
+			if (!Objects.equals(mappedPid, ocdPid)) {
+				_configurationPidMappings.put(mappedPid, ocdPid);
+			}
 		}
 	}
 
@@ -556,8 +575,5 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	private final Map<String, ScopedConfigurationManagedServiceFactory>
 		_scopedConfigurationManagedServiceFactories = new ConcurrentHashMap<>();
-
-	@Reference
-	private SettingsFactoryImpl _settingsFactoryImpl;
 
 }

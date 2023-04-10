@@ -25,6 +25,7 @@ import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.io.File;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -207,20 +208,28 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		return null;
 	}
 
-	private JavaClass _getJavaClass(
+	private synchronized JavaClass _getJavaClass(
 			String absolutePath, String fullyQualifiedName)
 		throws Exception {
+
+		if (_javaClassMap.containsKey(fullyQualifiedName)) {
+			return _javaClassMap.get(fullyQualifiedName);
+		}
 
 		File javaFile = JavaSourceUtil.getJavaFile(
 			fullyQualifiedName, _getRootDirName(absolutePath),
 			_getBundleSymbolicNamesMap(absolutePath));
 
-		if (javaFile == null) {
-			return null;
+		JavaClass javaClass = null;
+
+		if (javaFile != null) {
+			javaClass = JavaClassParser.parseJavaClass(
+				javaFile.getName(), FileUtil.read(javaFile));
 		}
 
-		return JavaClassParser.parseJavaClass(
-			javaFile.getName(), FileUtil.read(javaFile));
+		_javaClassMap.put(fullyQualifiedName, javaClass);
+
+		return _javaClassMap.get(fullyQualifiedName);
 	}
 
 	private synchronized String _getRootDirName(String absolutePath) {
@@ -240,6 +249,7 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		"\\(component\\.name=([^)]+)\\)");
 
 	private Map<String, String> _bundleSymbolicNamesMap;
+	private final Map<String, JavaClass> _javaClassMap = new HashMap<>();
 	private String _rootDirName;
 
 }

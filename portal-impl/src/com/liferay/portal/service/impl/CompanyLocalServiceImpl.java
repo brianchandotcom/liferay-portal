@@ -1939,39 +1939,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				company.getCompanyId(), UserConstants.TYPE_GUEST, null);
 
 			if (guestUser != null) {
-				boolean modified = false;
-
 				if (!guestUser.isAgreedToTermsOfUse()) {
 					guestUser.setAgreedToTermsOfUse(true);
 
-					modified = true;
-				}
-
-				if (guestUser.getLocale() != companyDefaultLocale) {
-					guestUser.setLanguageId(
-						LocaleUtil.toLanguageId(companyDefaultLocale));
-
-					String greeting = LanguageUtil.format(
-						guestUser.getLocale(), "welcome", null, false);
-
-					guestUser.setGreeting(greeting + StringPool.EXCLAMATION);
-
-					modified = true;
-				}
-
-				if (Validator.isNotNull(
-						PropsValues.COMPANY_DEFAULT_TIME_ZONE) &&
-					!Objects.equals(
-						guestUser.getTimeZoneId(),
-						PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
-
-					guestUser.setTimeZoneId(
-						PropsValues.COMPANY_DEFAULT_TIME_ZONE);
-
-					modified = true;
-				}
-
-				if (modified) {
 					guestUser = _userPersistence.update(guestUser);
 				}
 			}

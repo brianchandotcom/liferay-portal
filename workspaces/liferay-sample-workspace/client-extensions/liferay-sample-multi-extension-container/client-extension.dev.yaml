@@ -1,0 +1,8 @@
+header-liferay-sample-multi-extension-container:
+    baseURL: http://localhost:5002/assets
+liferay-sample-fds-cell-renderer:
+    baseURL: http://localhost:5002/assets
+sidebar-liferay-sample-multi-extension-container:
+    baseURL: http://localhost:5002/assets
+spritemap-liferay-sample-multi-extension-container:
+    baseURL: http://localhost:5002/assets

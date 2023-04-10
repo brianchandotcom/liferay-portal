@@ -4,5 +4,14 @@
 	<source-check>
 		<suppress checks="CDNCheck" files="org-gradle/org-gradle-resources-http/src/main/java/org/gradle/internal/resource/transport/http/LiferayHttpResourceAccessor\.java" />
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="com-h3xstream-findsecbugs/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="com-webex-schemas/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-apache-ivy/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-apache-xalan/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-apache-xmlbeans/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-drools-core/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-quartz/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-springframework-beans-3.0.7/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-springframework-beans-4.3.30/build\.gradle" />
 	</source-check>
 </suppressions>

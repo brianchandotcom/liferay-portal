@@ -106,15 +106,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162987 - Verify if as an Administrador can change his Role"
-	@ignore = "true"
-	@priority = 5
-	test CanChangeRole {
-
-		// TODO LPS-162987 CanChangeRole pending implementation
-
-	}
-
 	@description = "This is a test for LPS-162986 - Verify if as an User can edit account information"
 	@priority = 4
 	test CanEditAccountInformation {

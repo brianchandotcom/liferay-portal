@@ -57,7 +57,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 				value="seo"
 			/>
 
-			<h3 class="sheet-title"><liferay-ui:message key="settings" /></h3>
+			<h3 class="mb-4 text-uppercase"><liferay-ui:message key="settings" /></h3>
 
 			<clay:alert
 				cssClass="mb-4"
@@ -194,11 +194,13 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 			</c:choose>
 
 			<aui:input name="robots" placeholder="robots" />
+		</clay:sheet-section>
 
-			<c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
-				<hr class="mt-4 separator" />
+		<c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
+			<hr class="mb-5 separator" />
 
-				<h3 class="sheet-title"><liferay-ui:message key="sitemap" /></h3>
+			<clay:sheet-section>
+				<h3 class="mb-4 text-uppercase"><liferay-ui:message key="sitemap" /></h3>
 
 				<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" />
@@ -231,8 +233,8 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 					<aui:option label="yearly" />
 					<aui:option label="never" />
 				</aui:select>
-			</c:if>
-		</clay:sheet-section>
+			</clay:sheet-section>
+		</c:if>
 
 		<clay:sheet-footer>
 			<clay:button

@@ -59,6 +59,10 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
 		throws PortalException {
 
+		ddmFormInstanceRecordVersion =
+			ddmFormInstanceRecordVersionPersistence.remove(
+				ddmFormInstanceRecordVersion);
+
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecordVersion.getFormInstance();
 
@@ -84,8 +88,7 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 			DDMFormInstanceRecord.class.getName(),
 			ddmFormInstanceRecordVersion.getPrimaryKey());
 
-		return super.deleteDDMFormInstanceRecordVersion(
-			ddmFormInstanceRecordVersion);
+		return ddmFormInstanceRecordVersion;
 	}
 
 	@Override

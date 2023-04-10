@@ -16,6 +16,7 @@ package com.liferay.wiki.web.internal.util;
 
 import com.liferay.diff.DiffVersion;
 import com.liferay.diff.DiffVersionsInfo;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -60,14 +61,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-@Component(service = {})
 public class WikiUtil {
 
 	public static String getAttachmentURLPrefix(
@@ -85,7 +82,10 @@ public class WikiUtil {
 		double previousVersion = 0;
 		double nextVersion = 0;
 
-		List<WikiPage> pages = _wikiPageLocalService.getPages(
+		WikiPageLocalService wikiPageLocalService =
+			_wikiPageLocalServiceSnapshot.get();
+
+		List<WikiPage> pages = wikiPageLocalService.getPages(
 			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new PageVersionComparator(true));
 
@@ -157,7 +157,10 @@ public class WikiUtil {
 			URLCodec.encodeURL(page.getTitle()), "&fileName=");
 
 		if (!preview && (version == 0)) {
-			WikiPageDisplay pageDisplay = _wikiPageLocalService.getDisplay(
+			WikiPageLocalService wikiPageLocalService =
+				_wikiPageLocalServiceSnapshot.get();
+
+			WikiPageDisplay pageDisplay = wikiPageLocalService.getDisplay(
 				page.getNodeId(), title, curViewPageURL, () -> curEditPageURL,
 				attachmentURLPrefix);
 
@@ -181,11 +184,14 @@ public class WikiUtil {
 
 		Iterator<WikiNode> iterator = nodes.iterator();
 
+		ModelResourcePermission<WikiNode> wikiNodeModelResourcePermission =
+			_wikiNodeModelResourcePermissionSnapshot.get();
+
 		while (iterator.hasNext()) {
 			WikiNode node = iterator.next();
 
 			if (!(Arrays.binarySearch(hiddenNodes, node.getName()) < 0) ||
-				!_wikiNodeModelResourcePermission.contains(
+				!wikiNodeModelResourcePermission.contains(
 					permissionChecker, node, ActionKeys.VIEW)) {
 
 				iterator.remove();
@@ -254,25 +260,12 @@ public class WikiUtil {
 		writer.write(sb.toString());
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.wiki.model.WikiNode)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<WikiNode> modelResourcePermission) {
-
-		_wikiNodeModelResourcePermission = modelResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	private static ModelResourcePermission<WikiNode>
-		_wikiNodeModelResourcePermission;
-	private static WikiPageLocalService _wikiPageLocalService;
+	private static final Snapshot<ModelResourcePermission<WikiNode>>
+		_wikiNodeModelResourcePermissionSnapshot = new Snapshot<>(
+			WikiUtil.class, Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.wiki.model.WikiNode)");
+	private static final Snapshot<WikiPageLocalService>
+		_wikiPageLocalServiceSnapshot = new Snapshot<>(
+			WikiUtil.class, WikiPageLocalService.class);
 
 }

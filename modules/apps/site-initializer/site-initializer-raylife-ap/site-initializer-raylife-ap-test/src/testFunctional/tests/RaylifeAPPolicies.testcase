@@ -24,6 +24,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
+
 		Raylife.tearDownCP();
 
 		if (${testPortalInstance} == "true") {

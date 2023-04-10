@@ -31,6 +31,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
@@ -636,9 +637,10 @@ public class RepositoryBrowserTagDisplayContext {
 			return _repositoryBrowserURL;
 		}
 
-		_repositoryBrowserURL =
-			PortalUtil.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE +
-				"/repository_browser";
+		_repositoryBrowserURL = StringBundler.concat(
+			PortalUtil.getPortalURL(_httpServletRequest),
+			PortalUtil.getPathContext(), Portal.PATH_MODULE,
+			"/repository_browser");
 
 		return _repositoryBrowserURL;
 	}

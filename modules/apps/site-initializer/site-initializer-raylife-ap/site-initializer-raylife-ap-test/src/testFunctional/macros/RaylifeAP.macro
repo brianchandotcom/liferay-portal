@@ -8,7 +8,7 @@ definition {
 			siteTemplateName = "Raylife AP");
 	}
 
-	macro AssertApplicationNumber {
+	macro assertApplicationNumber {
 		var applicationvalue = selenium.getText("RaylifeAP#APPLICATIONS_NUMBER");
 
 		AssertElementNotPresent(locator1 = ${applicationvalue});
@@ -98,6 +98,40 @@ definition {
 		Click(
 			key_subsection = ${key_subsection},
 			locator1 = "RaylifeAP#TASKS_SECTION");
+	}
+
+	@summary = "This macro edits the deletion type to cascade and deletes all entries created when adding an application"
+	macro deleteAllCreatedEntries {
+		var entry = ${searchTerm};
+
+		ObjectAdmin.editObjectDeletionType(
+			deletionType = "Cascade",
+			field = "Deletion",
+			label = "Raylife Application",
+			labelName = "RaylifeQuote");
+
+		ObjectAdmin.editObjectDeletionType(
+			deletionType = "Cascade",
+			field = "Deletion",
+			label = "Raylife Quote",
+			labelName = "RaylifePolicy");
+
+		ObjectAdmin.editObjectDeletionType(
+			deletionType = "Cascade",
+			field = "Deletion",
+			label = "Raylife Policy",
+			labelName = "RaylifeClaim");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Raylife Applications");
+
+		Search.searchCP(searchTerm = ${searchTerm});
+
+		if (IsElementPresent(key_entry = ${entry}, locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
+			ObjectPortlet.deleteEntry(entry = ${searchTerm});
+		}
 	}
 
 	macro expandedSidebar {
@@ -191,8 +225,5 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
-
-	// Workaround for LPS-172183
-
 
 }

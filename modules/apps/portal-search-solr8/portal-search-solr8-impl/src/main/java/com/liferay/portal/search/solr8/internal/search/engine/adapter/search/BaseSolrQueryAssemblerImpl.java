@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -28,7 +30,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.solr8.internal.AggregationFilteringFacetProcessorContext;
@@ -43,7 +44,6 @@ import com.liferay.portal.search.stats.StatsRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,11 +51,11 @@ import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Bryan Engler
@@ -74,6 +74,14 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		setStatsRequests(solrQuery, baseSearchRequest);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<FacetProcessor<SolrQuery>>)(Class<?>)FacetProcessor.class,
+			"class.name");
+	}
+
 	protected void addFilterQuery(
 		List<String> filterQueries, Facet facet, String tag) {
 
@@ -89,6 +97,11 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		filterQueries.add(
 			StringBundler.concat(
 				"{!tag=", tag, StringPool.CLOSE_CURLY_BRACE, filterString));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	protected void excludeTags(
@@ -160,20 +173,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		if (baseSearchRequest.isExplain()) {
 			solrQuery.setShowDebugInfo(true);
 		}
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(class.name=*)"
-	)
-	protected void setFacetProcessor(
-		FacetProcessor<SolrQuery> facetProcessor,
-		Map<String, Object> properties) {
-
-		String className = MapUtil.getString(properties, "class.name");
-
-		_facetProcessors.put(className, facetProcessor);
 	}
 
 	protected void setFacets(
@@ -271,15 +270,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		return _filterTranslator.translate(booleanFilter);
 	}
 
-	protected void unsetFacetProcessor(
-		FacetProcessor<SolrQuery> facetProcessor,
-		Map<String, Object> properties) {
-
-		String className = MapUtil.getString(properties, "class.name");
-
-		_facetProcessors.remove(className);
-	}
-
 	private void _add(
 		Collection<String> filterQueries, BooleanQuery booleanQuery) {
 
@@ -311,8 +301,8 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	private Map<String, JSONObject> _processFacet(Facet facet) {
 		Class<?> clazz = facet.getClass();
 
-		FacetProcessor<SolrQuery> facetProcessor = _facetProcessors.get(
-			clazz.getName());
+		FacetProcessor<SolrQuery> facetProcessor =
+			_serviceTrackerMap.getService(clazz.getName());
 
 		if (facetProcessor == null) {
 			facetProcessor = _defaultFacetProcessor;
@@ -379,9 +369,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 
 		};
 
-	private final Map<String, FacetProcessor<SolrQuery>> _facetProcessors =
-		new HashMap<>();
-
 	@Reference(target = "(search.engine.impl=Solr)")
 	private FilterTranslator<String> _filterTranslator;
 
@@ -391,6 +378,8 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	@Reference(target = "(search.engine.impl=Solr)")
 	private QueryTranslator<String> _queryTranslator;
 
+	private ServiceTrackerMap<String, FacetProcessor<SolrQuery>>
+		_serviceTrackerMap;
 	private final SolrQueryTranslator _solrQueryTranslator =
 		new SolrQueryTranslator();
 

@@ -131,7 +131,6 @@ definition {
 			endDate = ${endDate},
 			expenseOption = ${expenseOption},
 			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
-			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
 			requestId = ${requestId},
 			startDate = ${startDate},
 			totalMDFRequestAmount = ${totalMDFRequestAmount});
@@ -172,7 +171,6 @@ definition {
 				budgetValue = ${secondTotalCostOfExpense},
 				endDate = ${endDate},
 				expenseOption = ${expenseOption},
-				mdfExternalReferenceCode = ${mdfExternalReferenceCode},
 				mdfExternalReferenceCode = ${mdfExternalReferenceCode},
 				requestId = ${requestId},
 				startDate = ${startDate},

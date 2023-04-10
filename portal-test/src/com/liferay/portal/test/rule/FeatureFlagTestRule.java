@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.runner.Description;
 
 /**
@@ -32,19 +35,28 @@ public class FeatureFlagTestRule extends AbstractTestRule<Void, Void> {
 	protected void afterClass(Description description, Void v)
 		throws Throwable {
 
-		_setFeatureFlags(description, false);
+		_restoreInitialProperties(
+			description.getAnnotation(FeatureFlags.class),
+			_initialClassProperties);
 	}
 
 	@Override
 	protected void afterMethod(Description description, Void v, Object target)
 		throws Throwable {
 
-		_setFeatureFlags(description, false);
+		_restoreInitialProperties(
+			description.getAnnotation(FeatureFlags.class),
+			_initialMethodProperties);
 	}
 
 	@Override
 	protected Void beforeClass(Description description) throws Throwable {
-		_setFeatureFlags(description, true);
+		FeatureFlags featureFlags = description.getAnnotation(
+			FeatureFlags.class);
+
+		_storeInitialProperties(featureFlags, _initialClassProperties);
+
+		_setFeatureFlags(featureFlags, true);
 
 		return null;
 	}
@@ -53,15 +65,31 @@ public class FeatureFlagTestRule extends AbstractTestRule<Void, Void> {
 	protected Void beforeMethod(Description description, Object target)
 		throws Throwable {
 
-		_setFeatureFlags(description, true);
+		FeatureFlags featureFlags = description.getAnnotation(
+			FeatureFlags.class);
+
+		_storeInitialProperties(featureFlags, _initialMethodProperties);
+
+		_setFeatureFlags(featureFlags, true);
 
 		return null;
 	}
 
-	private void _setFeatureFlags(Description description, boolean enabled) {
-		FeatureFlags featureFlags = description.getAnnotation(
-			FeatureFlags.class);
+	private void _restoreInitialProperties(
+		FeatureFlags featureFlags, Map<String, String> propertiesMap) {
 
+		if (featureFlags != null) {
+			for (String key : featureFlags.value()) {
+				PropsUtil.addProperties(
+					UnicodePropertiesBuilder.setProperty(
+						"feature.flag." + key,
+						propertiesMap.get("feature.flag." + key)
+					).build());
+			}
+		}
+	}
+
+	private void _setFeatureFlags(FeatureFlags featureFlags, boolean enabled) {
 		if (featureFlags != null) {
 			for (String key : featureFlags.value()) {
 				PropsUtil.addProperties(
@@ -71,5 +99,21 @@ public class FeatureFlagTestRule extends AbstractTestRule<Void, Void> {
 			}
 		}
 	}
+
+	private void _storeInitialProperties(
+		FeatureFlags featureFlags, Map<String, String> propertiesMap) {
+
+		if (featureFlags != null) {
+			for (String key : featureFlags.value()) {
+				propertiesMap.putIfAbsent(
+					"feature.flag." + key,
+					PropsUtil.get("feature.flag." + key));
+			}
+		}
+	}
+
+	private final Map<String, String> _initialClassProperties = new HashMap<>();
+	private final Map<String, String> _initialMethodProperties =
+		new HashMap<>();
 
 }

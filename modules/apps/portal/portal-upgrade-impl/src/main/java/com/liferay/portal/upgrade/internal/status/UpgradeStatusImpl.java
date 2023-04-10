@@ -83,8 +83,8 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions.setFinal(schemaVersion));
 
-		_setFinalState();
-		_setType();
+		_state = _calculateState();
+		_type = _calculateType();
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.put("upgrade.type", _type);
@@ -155,6 +155,73 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 				moduleSchemaVersions.setInitial(schemaVersion));
 	}
 
+	private String _calculateState() {
+		boolean check;
+
+		try {
+			check = _releaseManager.check();
+		}
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to check the upgrade state due to ",
+					exception.getMessage(), ". Please check manually."));
+
+			return "Failure";
+		}
+
+		if (!_errorMessages.isEmpty() || !check) {
+			return "Failure";
+		}
+
+		if (!_warningMessages.isEmpty()) {
+			return "Warning";
+		}
+
+		return "Success";
+	}
+
+	private String _calculateType() {
+		String type = "No upgrade";
+
+		for (Map.Entry<String, SchemaVersions> schemaVersionsEntry :
+				_schemaVersionsMap.entrySet()) {
+
+			SchemaVersions schemaVersions = schemaVersionsEntry.getValue();
+
+			if (schemaVersions.getInitial() == null) {
+				continue;
+			}
+
+			Version initialVersion = Version.parseVersion(
+				schemaVersions.getInitial());
+			Version finalVersion = Version.parseVersion(
+				schemaVersions.getFinal());
+
+			if (initialVersion.equals(finalVersion)) {
+				continue;
+			}
+
+			if (initialVersion.getMajor() < finalVersion.getMajor()) {
+				return "Major";
+			}
+
+			if (type.equals("Minor")) {
+				continue;
+			}
+
+			if (initialVersion.getMinor() < finalVersion.getMinor()) {
+				type = "Minor";
+
+				continue;
+			}
+
+			type = "Micro";
+		}
+
+		return type;
+	}
+
 	private Map<String, Map<String, Integer>> _filter(
 		Map<String, Map<String, Integer>> messages) {
 
@@ -206,81 +273,6 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		}
 	}
 
-	private void _setFinalState() {
-		boolean check;
-
-		try {
-			check = _releaseManager.check();
-		}
-		catch (Exception exception) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to check the upgrade state due to ",
-					exception.getMessage(), ". Please check manually."));
-
-			_state = "Failure";
-
-			return;
-		}
-
-		if (!_errorMessages.isEmpty() || !check) {
-			_state = "Failure";
-
-			return;
-		}
-
-		if (!_warningMessages.isEmpty()) {
-			_state = "Warning";
-
-			return;
-		}
-
-		_state = "Success";
-	}
-
-	private void _setType() {
-		String upgradeType = "No upgrade";
-
-		for (Map.Entry<String, SchemaVersions> schemaVersionsEntry :
-				_schemaVersionsMap.entrySet()) {
-
-			SchemaVersions schemaVersions = schemaVersionsEntry.getValue();
-
-			if (schemaVersions.getInitial() == null) {
-				continue;
-			}
-
-			Version initialVersion = Version.parseVersion(
-				schemaVersions.getInitial());
-			Version finalVersion = Version.parseVersion(
-				schemaVersions.getFinal());
-
-			if (initialVersion.equals(finalVersion)) {
-				continue;
-			}
-
-			if (initialVersion.getMajor() < finalVersion.getMajor()) {
-				upgradeType = "Major";
-
-				break;
-			}
-
-			if (upgradeType.equals("Minor")) {
-				continue;
-			}
-
-			if (initialVersion.getMinor() < finalVersion.getMinor()) {
-				upgradeType = "Minor";
-
-				continue;
-			}
-
-			upgradeType = "Micro";
-		}
-
-		_type = upgradeType;
-	}
-
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
@@ -310,8 +302,8 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 
 	private class SchemaVersions {
 
-		public SchemaVersions(String initialSchemaVersion) {
-			_initial = initialSchemaVersion;
+		public SchemaVersions(String initial) {
+			_initial = initial;
 		}
 
 		public String getFinal() {

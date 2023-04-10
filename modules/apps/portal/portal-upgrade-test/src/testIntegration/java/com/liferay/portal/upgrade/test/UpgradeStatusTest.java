@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.upgrade.util.UpgradeStatus;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -59,19 +59,19 @@ public class UpgradeStatusTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_errorMessages");
+			_upgradeStatus, "_errorMessages");
 		_originalFiltered = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_filtered");
+			_upgradeStatus, "_filtered");
 		_originalServletSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_servletSchemaVersionsMap");
+			_upgradeStatus, "_servletSchemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_upgradeProcessMessages");
+			_upgradeStatus, "_upgradeProcessMessages");
 		_originalStatus = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_status");
+			_upgradeStatus, "_status");
 		_originalType = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_type");
+			_upgradeStatus, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_warningMessages");
+			_upgradeStatus, "_warningMessages");
 
 		_originalStopWatch = ReflectionTestUtil.getFieldValue(
 			DBUpgrader.class, "_stopWatch");
@@ -106,9 +106,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Failure", UpgradeStatus.getStatus());
+		Assert.assertEquals("Failure", _upgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
 	}
 
 	@Test
@@ -127,9 +127,9 @@ public class UpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			bundleSymbolicName, currentSchemaVersion.toString());
 
-		Assert.assertEquals("Failure", UpgradeStatus.getStatus());
+		Assert.assertEquals("Failure", _upgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
 	}
 
 	@Test
@@ -153,9 +153,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Success", UpgradeStatus.getStatus());
+		Assert.assertEquals("Success", _upgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
 	}
 
 	@Test
@@ -173,9 +173,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Warning", UpgradeStatus.getStatus());
+		Assert.assertEquals("Warning", _upgradeStatus.getStatus());
 
-		Assert.assertEquals("No upgrade", UpgradeStatus.getType());
+		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
 	}
 
 	private Version _getReleaseSchemaVersion(String bundleSymbolicName) {
@@ -262,13 +262,13 @@ public class UpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			microBundleSymbolicName, currentMicroSchemaVersion.toString());
 
-		Assert.assertEquals("Success", UpgradeStatus.getStatus());
+		Assert.assertEquals("Success", _upgradeStatus.getStatus());
 
 		if (!type.equals("Qualifier")) {
-			Assert.assertEquals(type, UpgradeStatus.getType());
+			Assert.assertEquals(type, _upgradeStatus.getType());
 		}
 		else {
-			Assert.assertEquals("Micro", UpgradeStatus.getType());
+			Assert.assertEquals("Micro", _upgradeStatus.getType());
 		}
 	}
 
@@ -281,6 +281,9 @@ public class UpgradeStatusTest {
 	private static Map<String, ArrayList<String>>
 		_originalUpgradeProcessMessages;
 	private static Map<String, Map<String, Integer>> _originalWarningMessages;
+
+	@Inject
+	private static UpgradeStatus _upgradeStatus;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;

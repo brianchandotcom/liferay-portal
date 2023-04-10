@@ -104,9 +104,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	public Map<String, Map<String, Integer>> getErrorMessages() {
-		_filterMessages();
-
-		return _errorMessages;
+		return _filter(_errorMessages);
 	}
 
 	public String getFinalSchemaVersion(String servletContextName) {
@@ -146,9 +144,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	public Map<String, Map<String, Integer>> getWarningMessages() {
-		_filterMessages();
-
-		return _warningMessages;
+		return _filter(_warningMessages);
 	}
 
 	public void start() {
@@ -159,15 +155,14 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 				moduleSchemaVersions.setInitial(schemaVersion));
 	}
 
-	private void _filterMessages() {
-		if (!_filtered) {
-			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
-				_errorMessages.remove(filteredClassName);
-				_warningMessages.remove(filteredClassName);
-			}
+	private Map<String, Map<String, Integer>> _filter(
+		Map<String, Map<String, Integer>> messages) {
 
-			_filtered = true;
+		for (String filteredClassName : _FILTERED_CLASS_NAMES) {
+			messages.remove(filteredClassName);
 		}
+
+		return messages;
 	}
 
 	private void _processRelease(
@@ -303,7 +298,6 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
-	private boolean _filtered;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
 	private ReleaseManager _releaseManager;

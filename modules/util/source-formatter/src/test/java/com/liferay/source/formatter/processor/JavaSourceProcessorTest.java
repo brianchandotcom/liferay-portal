@@ -197,6 +197,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFeatureFlagsAnnotation() throws Exception {
+		test("FeatureFlagsAnnotation1Test.testjava",
+			"Use '@FeatureFlags(\"LPS-180713\", \"LPS-180714\")' on class definition.",
+			27);
+		test("FeatureFlagsAnnotation2Test.testjava",
+			"Use '@FeatureFlags(\"LPS-180713\", \"LPS-180714\")' on method definition.",
+			27);
+	}
+
+	@Test
 	public void testFormatAnnotations() throws Exception {
 		test("FormatAnnotations1.testjava");
 		test("FormatAnnotations2.testjava");

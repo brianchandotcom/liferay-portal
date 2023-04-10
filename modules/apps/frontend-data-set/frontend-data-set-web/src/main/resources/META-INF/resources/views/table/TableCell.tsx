@@ -169,6 +169,7 @@ function TableCell({
 					setLoading(false);
 				})
 				.catch((error) => {
+					// eslint-disable-next-line no-console
 					console.log(
 						`Unable to load FDS cell renderer at ${view.contentRendererModuleURL}:`,
 						error

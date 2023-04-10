@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.react.internal.util;
 
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import org.osgi.service.component.annotations.Component;

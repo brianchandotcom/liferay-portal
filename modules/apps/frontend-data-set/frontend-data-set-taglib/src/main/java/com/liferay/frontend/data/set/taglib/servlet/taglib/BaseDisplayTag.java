@@ -18,6 +18,7 @@ import com.liferay.frontend.data.set.model.FDSPaginationEntry;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -264,9 +265,11 @@ public class BaseDisplayTag extends AttributesTagSupport {
 				propsTransformer = _propsTransformer;
 			}
 			else {
+				String resolvedPackageName = NPMResolvedPackageNameUtil.get(
+					getPropsTransformerServletContext());
+
 				propsTransformer =
-					NPMResolvedPackageNameUtil.get(
-						getPropsTransformerServletContext()) + "/" + _propsTransformer;
+					resolvedPackageName + StringPool.SLASH + _propsTransformer;
 			}
 		}
 

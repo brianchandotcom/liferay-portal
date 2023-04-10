@@ -189,7 +189,7 @@
 	</tr>
 	<tr>
 		<td>LABEL_DEFAULT_VALUE</td>
-		<td>//label[contains(.,'Default Value')]//..//div[contains(@aria-controls,'clay-dropdown-menu')]</td>
+		<td>//label[contains(.,'Default Value')]//..//div[contains(@class,'input-group-item')]</td>
 		<td></td>
 	</tr>
 </tbody>

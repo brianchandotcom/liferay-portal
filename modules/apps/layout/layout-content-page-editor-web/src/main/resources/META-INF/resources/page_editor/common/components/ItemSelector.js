@@ -106,6 +106,14 @@ export default function ItemSelector({
 			}
 
 			if (transformedMappedItems.length) {
+				transformedMappedItems = [
+					{
+						items: transformedMappedItems,
+						label: Liferay.Language.get('recent'),
+						type: 'group',
+					},
+				];
+
 				transformedMappedItems.push(
 					{
 						type: 'divider',

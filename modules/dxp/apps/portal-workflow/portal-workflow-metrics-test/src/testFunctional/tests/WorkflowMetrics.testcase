@@ -3154,7 +3154,9 @@ definition {
 
 		WorkflowMetrics.selectStepFilterPerformaceByAssignee(velocityUnit = "UPDATE");
 
-		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_RESULTS");
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_TEXT",
+			value1 = "No results were found.");
 	}
 
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"

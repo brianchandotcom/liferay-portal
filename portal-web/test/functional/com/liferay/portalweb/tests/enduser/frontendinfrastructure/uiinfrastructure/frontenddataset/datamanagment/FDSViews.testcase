@@ -27,15 +27,53 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			GoBack();
+
+			FrontendDataSetAdmin.tearDownCP();
+		}
 	}
 
 	@description = "LPS-180898. Confirm that the user can cancel deletion when clicking close (X) button"
-	@ignore = "true"
 	@priority = 3
 	test CanCancelDeletionOnCloseButton {
+		task ("When The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Channel");
+		}
 
-		// TO DO FDSViews#CanCancelDeletionOnCloseButton
+		task ("And Add a new view") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
 
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("And The user tries to delete the view") {
+			Click(
+				key_name = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			AssertElementPresent(
+				key_modalText = "Deleting a dataset view is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
+
+		task ("And When the user clicks on the 'X' button in the modal") {
+			Click(
+				key_modalTitle = "Delete Dataset View",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then The dataset is present in the data set Admin page") {
+			AssertElementPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+		}
 	}
 
 	@description = "LPS-180893. Confirm that a dataset view can be deleted"

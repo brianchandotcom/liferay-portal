@@ -73,10 +73,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -89,10 +88,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -102,6 +99,7 @@ import org.junit.runner.RunWith;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
+@FeatureFlags({"LPS-146755", "LPS-163716"})
 @RunWith(Arquillian.class)
 public class ObjectFieldLocalServiceTest {
 
@@ -109,30 +107,6 @@ public class ObjectFieldLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-146755", "true"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-163716", "true"
-			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-146755", "false"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-163716", "false"
-			).build());
-	}
 
 	@Before
 	public void setUp() throws Exception {

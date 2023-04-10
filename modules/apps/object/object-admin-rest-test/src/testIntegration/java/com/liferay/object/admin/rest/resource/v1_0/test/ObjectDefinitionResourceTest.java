@@ -34,18 +34,15 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,25 +50,10 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@FeatureFlags("LPS-146755")
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-146755", "true"
-			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-146755", "false"
-			).build());
-	}
 
 	@After
 	@Override

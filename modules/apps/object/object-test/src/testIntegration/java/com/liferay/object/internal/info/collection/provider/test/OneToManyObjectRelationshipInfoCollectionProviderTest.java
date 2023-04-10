@@ -39,10 +39,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -51,7 +50,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,6 +60,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
+@FeatureFlags("LPS-176083")
 @RunWith(Arquillian.class)
 public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
@@ -72,11 +71,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-176083", "true"
-			).build());
-
 		_group = GroupTestUtil.addGroup();
 
 		_childObjectDefinition = _addObjectDefinition(
@@ -117,14 +111,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"oneToManyRelationshipName",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-	}
-
-	@After
-	public void tearDown() {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-176083", "false"
-			).build());
 	}
 
 	@Test

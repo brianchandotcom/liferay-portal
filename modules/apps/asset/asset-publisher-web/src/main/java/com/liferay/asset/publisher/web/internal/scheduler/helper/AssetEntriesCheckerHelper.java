@@ -252,62 +252,24 @@ public class AssetEntriesCheckerHelper {
 
 		if (Objects.equals(
 				selectionStyle,
-				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
 
-			return _getManuallySelectedAssetEntries(
+			return _getAssetListEntrySelectedAssetEntries(
 				portletPreferences, layout.getGroupId());
 		}
 		else if (Objects.equals(
 					selectionStyle,
-					AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
+					AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
 
-			return _getAssetListEntryAssetEntries(
-				layout.getGroupId(), portletPreferences);
+			return _getDynamicSelectedAssetEntries(portletPreferences, layout);
 		}
 
-		AssetPublisherWebConfiguration assetPublisherWebConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				AssetPublisherWebConfiguration.class, layout.getCompanyId());
-
-		AssetEntryQuery assetEntryQuery =
-			_assetPublisherHelper.getAssetEntryQuery(
-				portletPreferences, layout.getGroupId(), layout, null, null);
-
-		int end = assetPublisherWebConfiguration.dynamicSubscriptionLimit();
-		int start = 0;
-
-		if (end == 0) {
-			end = QueryUtil.ALL_POS;
-			start = QueryUtil.ALL_POS;
-		}
-
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
-
-		try {
-			SearchContext searchContext = SearchContextFactory.getInstance(
-				new long[0], new String[0], null, layout.getCompanyId(),
-				StringPool.BLANK, layout,
-				LocaleThreadLocal.getSiteDefaultLocale(), layout.getGroupId(),
-				TimeZoneThreadLocal.getDefaultTimeZone(), 0);
-
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				_assetHelper.searchAssetEntries(
-					searchContext, assetEntryQuery, start, end);
-
-			return baseModelSearchResult.getBaseModels();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return Collections.emptyList();
-		}
+		return _getManuallySelectedAssetEntries(
+			portletPreferences, layout.getGroupId());
 	}
 
-	private List<AssetEntry> _getAssetListEntryAssetEntries(
-		long groupId, PortletPreferences portletPreferences) {
+	private List<AssetEntry> _getAssetListEntrySelectedAssetEntries(
+		PortletPreferences portletPreferences, long groupId) {
 
 		long assetListEntryId = GetterUtil.getLong(
 			portletPreferences.getValue("assetListEntryId", null));
@@ -367,6 +329,51 @@ public class AssetEntriesCheckerHelper {
 		}
 
 		return assetEntries;
+	}
+
+	private List<AssetEntry> _getDynamicSelectedAssetEntries(
+			PortletPreferences portletPreferences, Layout layout)
+		throws PortalException {
+
+		AssetPublisherWebConfiguration assetPublisherWebConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AssetPublisherWebConfiguration.class, layout.getCompanyId());
+
+		AssetEntryQuery assetEntryQuery =
+			_assetPublisherHelper.getAssetEntryQuery(
+				portletPreferences, layout.getGroupId(), layout, null, null);
+
+		int end = assetPublisherWebConfiguration.dynamicSubscriptionLimit();
+		int start = 0;
+
+		if (end == 0) {
+			end = QueryUtil.ALL_POS;
+			start = QueryUtil.ALL_POS;
+		}
+
+		assetEntryQuery.setEnd(end);
+		assetEntryQuery.setStart(start);
+
+		try {
+			SearchContext searchContext = SearchContextFactory.getInstance(
+				new long[0], new String[0], null, layout.getCompanyId(),
+				StringPool.BLANK, layout,
+				LocaleThreadLocal.getSiteDefaultLocale(), layout.getGroupId(),
+				TimeZoneThreadLocal.getDefaultTimeZone(), 0);
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				_assetHelper.searchAssetEntries(
+					searchContext, assetEntryQuery, start, end);
+
+			return baseModelSearchResult.getBaseModels();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return Collections.emptyList();
+		}
 	}
 
 	private List<AssetEntry> _getManuallySelectedAssetEntries(

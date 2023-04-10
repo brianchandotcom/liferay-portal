@@ -18,7 +18,6 @@ import com.liferay.frontend.data.set.model.FDSPaginationEntry;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -261,27 +260,14 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		String propsTransformer = null;
 
 		if (Validator.isNotNull(_propsTransformer)) {
-			String resolvedPackageName = null;
-
-			try {
-				resolvedPackageName = NPMResolvedPackageNameUtil.get(
-					getPropsTransformerServletContext());
+			if (_propsTransformer.contains(" from ")) {
+				propsTransformer = _propsTransformer;
 			}
-			catch (UnsupportedOperationException
-						unsupportedOperationException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(unsupportedOperationException);
-				}
-
-				JSModuleResolver jsModuleResolver =
-					ServicesProvider.getJSModuleResolver();
-
-				resolvedPackageName = jsModuleResolver.resolveModule(
-					getPropsTransformerServletContext(), null);
+			else {
+				propsTransformer =
+					NPMResolvedPackageNameUtil.get(
+						getPropsTransformerServletContext()) + "/" + _propsTransformer;
 			}
-
-			propsTransformer = resolvedPackageName + "/" + _propsTransformer;
 		}
 
 		ComponentDescriptor componentDescriptor = new ComponentDescriptor(

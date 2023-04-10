@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.data.set.taglib.internal.util;
 
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,17 +25,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class ServicesProvider {
 
-	public static JSModuleResolver getJSModuleResolver() {
-		return _jsModuleResolver;
-	}
-
 	public static ReactRenderer getReactRenderer() {
 		return _reactRenderer;
-	}
-
-	@Reference(unbind = "-")
-	public void setJSModuleResolver(JSModuleResolver jsModuleResolver) {
-		_jsModuleResolver = jsModuleResolver;
 	}
 
 	@Reference(unbind = "-")
@@ -44,7 +34,6 @@ public class ServicesProvider {
 		_reactRenderer = reactRenderer;
 	}
 
-	private static JSModuleResolver _jsModuleResolver;
 	private static ReactRenderer _reactRenderer;
 
 }

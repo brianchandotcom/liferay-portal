@@ -96,7 +96,7 @@ function SearchBarConfigurationSuggestions({
 					)}
 
 					<LearnMessage
-						className="ml-1"
+						className="c-ml-1"
 						learnMessages={learnMessages}
 						resourceKey="search-bar-suggestions-blueprints"
 					/>
@@ -114,7 +114,7 @@ function SearchBarConfigurationSuggestions({
 					)}
 
 					<LearnMessage
-						className="ml-1"
+						className="c-ml-1"
 						learnMessages={learnMessages}
 						resourceKey="search-bar-suggestions-site-activities"
 					/>
@@ -235,7 +235,7 @@ function SearchBarConfigurationSuggestions({
 					{!!contributorOptions.length && (
 						<div
 							className={getCN({
-								'mt-4': !suggestionsContributorConfiguration.length,
+								'c-mt-4': !suggestionsContributorConfiguration.length,
 							})}
 						>
 							<SuggestionContributorAddButton>

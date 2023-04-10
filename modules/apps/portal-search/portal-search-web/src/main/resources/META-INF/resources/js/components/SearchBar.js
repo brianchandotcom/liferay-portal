@@ -271,12 +271,14 @@ export default function SearchBar({
 						/>
 
 						<ClayInput.GroupInsetItem after>
-							<ClayLoadingIndicator
-								className={getCN({
-									invisible: !loading,
-								})}
-								small
-							/>
+							<span className="c-mr-2 inline-item">
+								<ClayLoadingIndicator
+									className={getCN({
+										invisible: !loading,
+									})}
+									small
+								/>
+							</span>
 						</ClayInput.GroupInsetItem>
 					</ClayInput.Group>
 				</ClayInput.GroupItem>
@@ -303,7 +305,7 @@ export default function SearchBar({
 					</ClaySelect>
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem append className="mr-0" shrink>
+				<ClayInput.GroupItem append className="c-mr-0" shrink>
 					<ClayButton
 						aria-label={Liferay.Language.get('search')}
 						displayType="secondary"

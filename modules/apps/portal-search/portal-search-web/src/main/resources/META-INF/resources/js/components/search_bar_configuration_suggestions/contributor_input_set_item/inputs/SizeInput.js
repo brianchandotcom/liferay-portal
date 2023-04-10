@@ -35,7 +35,7 @@ function SizeInput({onBlur, onChange, touched, value}) {
 
 				<ClayTooltipProvider>
 					<span
-						className="ml-2"
+						className="c-ml-2"
 						data-tooltip-align="top"
 						title={Liferay.Language.get('size-suggestion-help')}
 					>

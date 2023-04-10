@@ -66,14 +66,14 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 					)}
 
 					<LearnMessage
-						className="ml-1"
+						className="c-ml-1"
 						learnMessages={learnMessages}
 						resourceKey="search-bar-suggestions-blueprints"
 					/>
 				</InputSetItemHeader.Description>
 			</InputSetItemHeader>
 
-			<div className="form-group-autofit">
+			<div className="c-mb-3 form-group-autofit">
 				<DisplayGroupNameInput
 					onBlur={onBlur('displayGroupName')}
 					onChange={onInputSetItemChange(index, 'displayGroupName')}
@@ -89,7 +89,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 			</div>
 
-			<div className="form-group-autofit">
+			<div className="c-mb-3 form-group-autofit">
 				<SXPBlueprintSelectorInput
 					onBlur={onBlur('attributes.sxpBlueprintId')}
 					onSubmit={_handleChangeSXPBlueprint}
@@ -98,7 +98,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 			</div>
 
-			<div className="form-group-autofit">
+			<div className="c-mb-0 form-group-autofit">
 				<CharacterThresholdInput
 					onBlur={onBlur('attributes.characterThreshold')}
 					onChange={_handleChangeAttribute('characterThreshold')}
@@ -112,7 +112,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 						<ClayTooltipProvider>
 							<span
-								className="ml-2"
+								className="c-ml-2"
 								data-tooltip-align="top"
 								title={Liferay.Language.get(
 									'include-asset-url-help'
@@ -146,7 +146,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 						<ClayTooltipProvider>
 							<span
-								className="ml-2"
+								className="c-ml-2"
 								data-tooltip-align="top"
 								title={Liferay.Language.get(
 									'include-asset-summary-help'

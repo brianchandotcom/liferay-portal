@@ -41,7 +41,7 @@ function Basic({index, onBlur, onInputSetItemChange, touched, value}) {
 				</InputSetItemHeader.Description>
 			</InputSetItemHeader>
 
-			<div className="form-group-autofit">
+			<div className="c-mb-3 form-group-autofit">
 				<DisplayGroupNameInput
 					onBlur={onBlur('displayGroupName')}
 					onChange={onInputSetItemChange(index, 'displayGroupName')}
@@ -57,7 +57,7 @@ function Basic({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 			</div>
 
-			<div className="form-group-autofit">
+			<div className="c-mb-0 form-group-autofit">
 				<CharacterThresholdInput
 					onBlur={onBlur('attributes.characterThreshold')}
 					onChange={_handleChangeAttribute('characterThreshold')}

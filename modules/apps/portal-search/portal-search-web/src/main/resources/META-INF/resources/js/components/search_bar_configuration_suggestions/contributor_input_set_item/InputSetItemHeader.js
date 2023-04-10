@@ -16,16 +16,24 @@ import React from 'react';
 
 function InputSetItemHeader({children}) {
 	return (
-		<div className="contributor-input-set-item-header-root">{children}</div>
+		<div className="c-mb-3 contributor-input-set-item-header-root w-100">
+			{children}
+		</div>
 	);
 }
 
 function InputSetItemHeaderTitle({children}) {
-	return <h3 className="contributor-name sheet-subtitle">{children}</h3>;
+	return (
+		<h3 className="c-mb-1 contributor-name sheet-subtitle">{children}</h3>
+	);
 }
 
 function InputSetItemHeaderDescription({children}) {
-	return <div className="contributor-description sheet-text">{children}</div>;
+	return (
+		<div className="c-mb-0 contributor-description sheet-text text-3">
+			{children}
+		</div>
+	);
 }
 
 InputSetItemHeader.Title = InputSetItemHeaderTitle;

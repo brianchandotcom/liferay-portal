@@ -134,7 +134,9 @@ function SXPBlueprintSelectorInput({
 				<div className="select-sxp-blueprint">
 					{sxpBlueprint.loading ? (
 						<div className="form-control" readOnly>
-							<ClayLoadingIndicator small />
+							<span className="inline-item w-100">
+								<ClayLoadingIndicator small />
+							</span>
 						</div>
 					) : (
 						<ClayInput

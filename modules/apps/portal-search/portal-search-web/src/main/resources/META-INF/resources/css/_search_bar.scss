@@ -1,43 +1,22 @@
 .portlet-search-bar {
-	.alert {
-		margin-bottom: 0;
-	}
-
-	.options-container {
-		.form-group {
-			margin-bottom: 0;
-		}
-	}
-
 	.search-bar {
 		.form-group.input-group-item {
 			margin-bottom: 0;
 		}
 	}
 
-	.search-bar-configuration-suggestions-root {
-		.form-group-autofit {
-			margin-bottom: 1rem;
-
-			&:last-child {
-				margin-bottom: 0;
-			}
+	.search-bar-configuration-options-container {
+		.form-group {
+			margin-bottom: 0;
 		}
+	}
 
+	.search-bar-configuration-suggestions-root {
 		.input-sets-item-root {
 			.contributor-input-set-item-header-root {
-				margin-bottom: 1rem;
-				width: 100%;
-
-				.contributor-description {
-					font-size: 14px;
-					margin-bottom: 0;
-				}
-
 				.contributor-name {
 					border-color: $secondaryL2;
 					color: $secondary;
-					margin-bottom: 4px;
 					text-transform: none;
 				}
 			}
@@ -69,11 +48,6 @@
 				&:focus {
 					box-shadow: none;
 				}
-
-				.loading-animation {
-					margin-bottom: 0;
-					margin-top: 0;
-				}
 			}
 
 			.btn {
@@ -100,14 +74,6 @@
 
 	.search-bar-search-select-wrapper {
 		max-width: 9.375rem;
-	}
-
-	.search-bar-with-scope {
-		.loading-animation {
-			margin-bottom: 0;
-			margin-right: 4px;
-			margin-top: 0;
-		}
 	}
 }
 

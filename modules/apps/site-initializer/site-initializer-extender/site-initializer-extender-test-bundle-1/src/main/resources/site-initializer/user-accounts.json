@@ -2,12 +2,12 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC0001"
+				"externalReferenceCode": "TESTACC1"
 			}
 		],
 		"alternateName": "testAlternateName1",
 		"emailAddress": "test.user1@liferay.com",
-		"externalReferenceCode": "USER-1",
+		"externalReferenceCode": "TESTUSER1",
 		"familyName": "User1",
 		"givenName": "Test",
 		"name": "Test User 1",
@@ -20,12 +20,12 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC0002"
+				"externalReferenceCode": "TESTACC2"
 			}
 		],
 		"alternateName": "testAlternateName2",
 		"emailAddress": "test.user2@liferay.com",
-		"externalReferenceCode": "USER-2",
+		"externalReferenceCode": "TESTUSER2",
 		"familyName": "User2",
 		"givenName": "Test",
 		"name": "Test User 2",

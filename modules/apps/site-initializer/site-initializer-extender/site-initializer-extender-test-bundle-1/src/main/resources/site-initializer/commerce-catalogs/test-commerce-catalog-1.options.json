@@ -1,13 +1,13 @@
 [
 	{
 		"ddmFormFieldTypeName": "text",
-		"externalReferenceCode": "TESTOPT001",
+		"externalReferenceCode": "TESTOPT1",
 		"key": "test-option-1",
 		"name": "Test Option 1",
 		"required": false
 	},
 	{
-		"externalReferenceCode": "TESTOPT002",
+		"externalReferenceCode": "TESTOPT2",
 		"facetable": false,
 		"fieldType": "select",
 		"key": "test-option-2",

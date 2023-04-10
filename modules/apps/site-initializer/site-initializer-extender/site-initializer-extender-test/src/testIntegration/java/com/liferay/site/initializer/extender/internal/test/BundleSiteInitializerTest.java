@@ -359,21 +359,21 @@ public class BundleSiteInitializerTest {
 		).build();
 
 		Account account1 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0001");
+			"TESTACC1");
 
 		Assert.assertNotNull(account1);
 		Assert.assertEquals("Test Account 1", account1.getName());
 		Assert.assertEquals("business", account1.getTypeAsString());
 
 		Account account2 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0002");
+			"TESTACC2");
 
 		Assert.assertNotNull(account2);
 		Assert.assertEquals("Test Account 2", account2.getName());
 		Assert.assertEquals("guest", account2.getTypeAsString());
 
 		Account account3 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0003");
+			"TESTACC3");
 
 		Assert.assertNotNull(account3);
 		Assert.assertEquals("Test Account 3", account3.getName());
@@ -389,28 +389,28 @@ public class BundleSiteInitializerTest {
 		).build();
 
 		Account account1 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0001");
+			"TESTACC1");
 
 		Assert.assertNotNull(account1);
 		Assert.assertEquals("Test Account 1", account1.getName());
 		Assert.assertEquals("business", account1.getTypeAsString());
 
 		Account account2 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0002");
+			"TESTACC2");
 
 		Assert.assertNotNull(account2);
 		Assert.assertEquals("Test Account Guest", account2.getName());
 		Assert.assertEquals("guest", account2.getTypeAsString());
 
 		Account account3 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0003");
+			"TESTACC3");
 
 		Assert.assertNotNull(account3);
 		Assert.assertEquals("Test Account 3", account3.getName());
 		Assert.assertEquals("person", account3.getTypeAsString());
 
 		Account account4 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0004");
+			"TESTACC4");
 
 		Assert.assertNotNull(account4);
 		Assert.assertEquals("Test Account 4", account4.getName());
@@ -424,7 +424,7 @@ public class BundleSiteInitializerTest {
 		AssetCategory testAssetCategory1 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
-					"TESTCAT0001", companyGroup.getGroupId());
+					"TESTCAT1", companyGroup.getGroupId());
 
 		Assert.assertNotNull(testAssetCategory1);
 		Assert.assertEquals(
@@ -437,12 +437,12 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetCategory2);
 		Assert.assertEquals(
-			"TESTCAT0002", testAssetCategory2.getExternalReferenceCode());
+			"TESTCAT2", testAssetCategory2.getExternalReferenceCode());
 
 		AssetCategory testAssetCategory3 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
-					"TESTCAT0003", _group.getGroupId());
+					"TESTCAT3", _group.getGroupId());
 
 		Assert.assertNotNull(testAssetCategory3);
 		Assert.assertEquals(
@@ -455,7 +455,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetCategory4);
 		Assert.assertEquals(
-			"TESTCAT0004", testAssetCategory4.getExternalReferenceCode());
+			"TESTCAT4", testAssetCategory4.getExternalReferenceCode());
 	}
 
 	private void _assertAssetListEntries() {
@@ -493,7 +493,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetVocabulary1);
 		Assert.assertEquals(
-			"TESTVOC0001", testAssetVocabulary1.getExternalReferenceCode());
+			"TESTVOC1", testAssetVocabulary1.getExternalReferenceCode());
 
 		AssetVocabulary testAssetVocabulary2 =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
@@ -501,7 +501,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetVocabulary2);
 		Assert.assertEquals(
-			"TESTVOC0002", testAssetVocabulary2.getExternalReferenceCode());
+			"TESTVOC2", testAssetVocabulary2.getExternalReferenceCode());
 
 		_assertAssetCategories();
 	}
@@ -510,7 +510,7 @@ public class BundleSiteInitializerTest {
 		ClientExtensionEntry clientExtensionEntry =
 			_clientExtensionEntryLocalService.
 				fetchClientExtensionEntryByExternalReferenceCode(
-					"ERC001", _group.getCompanyId());
+					"CEXT1", _group.getCompanyId());
 
 		Assert.assertNotNull(clientExtensionEntry);
 
@@ -528,7 +528,7 @@ public class BundleSiteInitializerTest {
 		CommerceCatalog commerceCatalog1 =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
-					"TESTCATG0001", _group.getCompanyId());
+					"TESTCATEG1", _group.getCompanyId());
 
 		Assert.assertNotNull(commerceCatalog1);
 		Assert.assertEquals(
@@ -537,7 +537,7 @@ public class BundleSiteInitializerTest {
 		CommerceCatalog commerceCatalog2 =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
-					"TESTCATG0002", _group.getCompanyId());
+					"TESTCATEG2", _group.getCompanyId());
 
 		Assert.assertNotNull(commerceCatalog2);
 		Assert.assertEquals(
@@ -554,7 +554,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(commerceChannel);
 		Assert.assertEquals(
-			"TESTVOC0001", commerceChannel.getExternalReferenceCode());
+			"TESTVOC1", commerceChannel.getExternalReferenceCode());
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
 
@@ -566,7 +566,7 @@ public class BundleSiteInitializerTest {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseLocalService.
 				fetchCommerceInventoryWarehouseByExternalReferenceCode(
-					"TESTWARE0001", _group.getCompanyId());
+					"TESTWARE1", _group.getCompanyId());
 
 		Assert.assertNotNull(commerceInventoryWarehouse);
 		Assert.assertEquals(
@@ -611,7 +611,7 @@ public class BundleSiteInitializerTest {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTPROD001", _serviceContext.getCompanyId());
+					"TESTPROD1", _serviceContext.getCompanyId());
 
 		Assert.assertNotNull(cpDefinition);
 
@@ -641,7 +641,7 @@ public class BundleSiteInitializerTest {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTPROD001", _group.getCompanyId());
+					"TESTPROD1", _group.getCompanyId());
 
 		Assert.assertNotNull(cpDefinition);
 		Assert.assertEquals("Test Commerce Product", cpDefinition.getName());
@@ -670,7 +670,7 @@ public class BundleSiteInitializerTest {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTPROD001", _group.getCompanyId());
+					"TESTPROD1", _group.getCompanyId());
 
 		CPInstance cpInstance1 = _cpInstanceLocalService.getCPInstance(
 			cpDefinition.getCPDefinitionId(), "TEST VALUE 1");
@@ -710,7 +710,7 @@ public class BundleSiteInitializerTest {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTPROD001", _group.getCompanyId());
+					"TESTPROD1", _group.getCompanyId());
 
 		Assert.assertNotNull(cpDefinition);
 
@@ -926,13 +926,13 @@ public class BundleSiteInitializerTest {
 		JournalFolder journalFolder1 = journalFolders.get(0);
 
 		Assert.assertEquals(
-			"JOURNALFOLDER001", journalFolder1.getExternalReferenceCode());
+			"JOURNALFOLDER1", journalFolder1.getExternalReferenceCode());
 		Assert.assertEquals("Test Journal Folder 1", journalFolder1.getName());
 
 		JournalFolder journalFolder2 = journalFolders.get(1);
 
 		Assert.assertEquals(
-			"JOURNALFOLDER002", journalFolder2.getExternalReferenceCode());
+			"JOURNALFOLDER2", journalFolder2.getExternalReferenceCode());
 		Assert.assertEquals("Test Journal Folder 2", journalFolder2.getName());
 	}
 
@@ -2328,7 +2328,7 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		UserAccount userAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode("USER-1");
+			userAccountResource.getUserAccountByExternalReferenceCode("TESTUSER1");
 
 		Assert.assertNotNull(userAccount);
 
@@ -2351,7 +2351,7 @@ public class BundleSiteInitializerTest {
 		_assertUserSiteGroups(userAccount.getId());
 
 		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
-			"USER-2");
+			"TESTUSER2");
 
 		Assert.assertNotNull(userAccount);
 
@@ -2383,7 +2383,7 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		UserAccount userAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode("USER-1");
+			userAccountResource.getUserAccountByExternalReferenceCode("TESTUSER1");
 
 		Assert.assertNotNull(userAccount);
 
@@ -2406,7 +2406,7 @@ public class BundleSiteInitializerTest {
 		_assertUserSiteGroups(userAccount.getId());
 
 		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
-			"USER-2");
+			"TESTUSER2");
 
 		Assert.assertNotNull(userAccount);
 

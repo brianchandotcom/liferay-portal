@@ -24,7 +24,7 @@
 		"description": "This is the description for Test Commerce Product.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "TESTPROD001",
+		"externalReferenceCode": "TESTPROD1",
 		"height": 2,
 		"images": [
 			"test_commerce_product.png"
@@ -39,7 +39,7 @@
 		],
 		"price": 29.0,
 		"promoPrice": 18.0,
-		"sku": "TESTPROD001",
+		"sku": "TESTPROD1",
 		"specificationOptions": [
 		],
 		"taxCategory": "Test Tax Category",

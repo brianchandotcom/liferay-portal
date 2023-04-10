@@ -76,10 +76,12 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 			CTWebKeys.CT_COLLECTION_TEMPLATES,
 			jsonSerializer.serializeDeep(ctCollectionTemplates));
 
-		renderRequest.setAttribute(
-			CTWebKeys.DEFAULT_CT_COLLECTION_TEMPLATE_ID,
-			_ctSettingsConfigurationHelper.getDefaultCTCollectionTemplateId(
-				themeDisplay.getCompanyId()));
+		if (ctCollectionId == 0) {
+			renderRequest.setAttribute(
+				CTWebKeys.DEFAULT_CT_COLLECTION_TEMPLATE_ID,
+				_ctSettingsConfigurationHelper.getDefaultCTCollectionTemplateId(
+					themeDisplay.getCompanyId()));
+		}
 
 		Map<Long, JSONObject> map = new HashMap<>();
 

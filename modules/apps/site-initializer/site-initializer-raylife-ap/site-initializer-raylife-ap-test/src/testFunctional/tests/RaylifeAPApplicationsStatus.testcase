@@ -102,7 +102,9 @@ definition {
 
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
-			var quoted = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Quoted");
+			AssertElementNotPresent(
+				key_legendItem = "Quoted",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND");
 		}
 
 		task ("When the user fill in the forms in Raylife D2C") {

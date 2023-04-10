@@ -115,37 +115,6 @@ public class BaseNotificationTypeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_authorTermValues = HashMapBuilder.<String, Object>put(
-			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
-		).put(
-			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
-		).put(
-			getTerm("AUTHOR_ID"), user2.getUserId()
-		).put(
-			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
-		).put(
-			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
-		).put(
-			getTerm("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
-		).put(
-			getTerm("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
-		).build();
-		_currentUserTermValues = HashMapBuilder.<String, Object>put(
-			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
-		).put(
-			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
-		).put(
-			"[%CURRENT_USER_ID%]", user2.getUserId()
-		).put(
-			"[%CURRENT_USER_LAST_NAME%]", user2.getLastName()
-		).put(
-			"[%CURRENT_USER_MIDDLE_NAME%]", user2.getMiddleName()
-		).put(
-			"[%CURRENT_USER_PREFIX%]", _getListType("PREFIX", user2)
-		).put(
-			"[%CURRENT_USER_SUFFIX%]", _getListType("SUFFIX", user2)
-		).build();
-
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), false, false,
@@ -195,6 +164,37 @@ public class BaseNotificationTypeTest {
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				user1.getUserId(), objectDefinition.getObjectDefinitionId());
+
+		_authorTermValues = HashMapBuilder.<String, Object>put(
+			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
+		).put(
+			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
+		).put(
+			getTerm("AUTHOR_ID"), user2.getUserId()
+		).put(
+			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
+		).put(
+			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
+		).put(
+			getTerm("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
+		).put(
+			getTerm("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
+		).build();
+		_currentUserTermValues = HashMapBuilder.<String, Object>put(
+			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
+		).put(
+			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
+		).put(
+			"[%CURRENT_USER_ID%]", user2.getUserId()
+		).put(
+			"[%CURRENT_USER_LAST_NAME%]", user2.getLastName()
+		).put(
+			"[%CURRENT_USER_MIDDLE_NAME%]", user2.getMiddleName()
+		).put(
+			"[%CURRENT_USER_PREFIX%]", _getListType("PREFIX", user2)
+		).put(
+			"[%CURRENT_USER_SUFFIX%]", _getListType("SUFFIX", user2)
+		).build();
 	}
 
 	protected void assertTerms(

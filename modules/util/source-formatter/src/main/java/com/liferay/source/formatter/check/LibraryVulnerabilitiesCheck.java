@@ -429,7 +429,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 			_generateVulnerableVersionMap(
 				packageName, securityAdvisoryEcosystemEnum,
-				getAttributeValues(_SEVERITIES, absolutePath));
+				getAttributeValues(_SEVERITIES_KEY, absolutePath));
 		}
 
 		_checkVulnerabilities(
@@ -706,7 +706,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 	private static final String _GITHUB_ACCESS_TOKEN_FILE_PATH =
 		System.getProperty("user.home") + "/github.token";
 
-	private static final String _SEVERITIES = "severities";
+	private static final String _SEVERITIES_KEY = "severities";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LibraryVulnerabilitiesCheck.class);

@@ -2328,7 +2328,8 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		UserAccount userAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode("TESTUSER1");
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				"TESTUSER1");
 
 		Assert.assertNotNull(userAccount);
 
@@ -2383,7 +2384,8 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		UserAccount userAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode("TESTUSER1");
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				"TESTUSER1");
 
 		Assert.assertNotNull(userAccount);
 

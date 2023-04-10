@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.source.formatter</artifactId>
-	<version>1.0.1294</version>
+	<version>1.0.1295</version>
 	<goalPrefix>source-formatter</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>

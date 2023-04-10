@@ -1,4 +1,4 @@
-# Checks for .bnd, .gradle, .java or .vm
+# Checks for .bnd, .gradle or .java
 
 Check | Category | Description
 ----- | -------- | -----------

@@ -965,6 +965,28 @@ definition {
 			whenAction = ${whenAction});
 	}
 
+	macro editObjectDeletionType {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = ${label});
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.goToRelationshipsDetails(labelName = ${labelName});
+
+		WaitForSPARefresh();
+
+		Click(
+			field = ${field},
+			locator1 = "ObjectRelationships#RELATIONSHIPS_FIELD");
+
+		ClickNoError.clickNoMouseOver(
+			key_type = ${deletionType},
+			locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+
+		Button.clickSave();
+	}
+
 	macro enableCondition {
 		Check.checkToggleSwitch(locator1 = "ObjectAction#ENABLE_DISABLE_CONDITION");
 	}
@@ -1203,9 +1225,18 @@ definition {
 	}
 
 	macro goToRelationshipsDetails {
-		Click(
-			key_name = ${fieldName},
-			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+		if (isSet(labelName)) {
+			Click(
+				key_name = ${labelName},
+				locator1 = "CreateObject#SELECT_ANY_OBJECT_FIELD_IN_TABLE");
+
+			MenuItem.clickNoError(menuItem = "View");
+		}
+		else {
+			Click(
+				key_name = ${fieldName},
+				locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+		}
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
 	}

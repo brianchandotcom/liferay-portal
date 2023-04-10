@@ -5366,6 +5366,8 @@ definition {
 
 		ObjectAdmin.goToLayoutsTab();
 
+		WaitForElementPresent(locator1 = "ObjectAdmin#KEBAB_MENU");
+
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		ObjectAdmin.markLayoutAsDefault();

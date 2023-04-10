@@ -15,7 +15,8 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.util.PropsUtil;
 
 import org.junit.runner.Description;
 
@@ -63,8 +64,10 @@ public class FeatureFlagTestRule extends AbstractTestRule<Void, Void> {
 
 		if (featureFlags != null) {
 			for (String key : featureFlags.value()) {
-				PropsTestUtil.setProps(
-					"feature.flag." + key, Boolean.toString(enabled));
+				PropsUtil.addProperties(
+					UnicodePropertiesBuilder.setProperty(
+						"feature.flag." + key, Boolean.toString(enabled)
+					).build());
 			}
 		}
 	}

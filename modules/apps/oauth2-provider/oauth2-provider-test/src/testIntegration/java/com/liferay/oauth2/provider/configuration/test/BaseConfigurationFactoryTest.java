@@ -64,9 +64,9 @@ public class BaseConfigurationFactoryTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"_portalK8sConfigMapModifier.cardinality.minimum", 0
 			).put(
-				"companyId", companyId
+				"baseURL", "http://foo.me"
 			).put(
-				"homePageURL", "http://foo.me"
+				"companyId", companyId
 			).build();
 
 		_testGetFactoryConfiguration(

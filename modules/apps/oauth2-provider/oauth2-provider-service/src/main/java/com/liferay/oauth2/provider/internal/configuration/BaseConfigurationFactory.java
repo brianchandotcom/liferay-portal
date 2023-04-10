@@ -70,6 +70,14 @@ public abstract class BaseConfigurationFactory {
 		}
 	}
 
+	protected String getHomePageURL(String homePageURL, String baseURL) {
+		if (Validator.isNull(homePageURL)) {
+			return baseURL;
+		}
+
+		return homePageURL;
+	}
+
 	protected abstract Log getLog();
 
 	protected String getName(String name, String defaultValue) {

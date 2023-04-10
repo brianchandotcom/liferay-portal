@@ -1,26 +1,36 @@
 {
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "POST"
+		}
+	},
 	"configuration": {
-		"callbackURL": null,
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"fieldNameMappingMap": {
-		},
+		"companyId": 0,
 		"parameters": {
-			"createStrategy": "UPSERT"
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
 		},
+		"userId": 0,
 		"version": "v1.0"
 	},
-	"facets": [
-	],
 	"items": [
 		{
 			"accountEntryRestricted": false,
 			"accountEntryRestrictedObjectFieldName": "",
 			"active": true,
+			"dateCreated": "2023-03-02T21:43:03.776+00:00",
+			"dateModified": "2023-03-03T15:48:30.576+00:00",
 			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "1b437c8e-abd4-26e7-5473-2e8c68aa93e1",
+			"id": 44131,
 			"label": {
 				"en_US": "Sample"
 			},
@@ -29,9 +39,13 @@
 				{
 					"active": true,
 					"conditionExpression": "",
+					"dateCreated": "2023-03-03T15:10:15.037+00:00",
+					"dateModified": "2023-03-03T15:10:15.037+00:00",
 					"description": "",
 					"errorMessage": {
 					},
+					"externalReferenceCode": "6856761c-aa27-9b6a-0efc-09e388a38d1c",
+					"id": 44833,
 					"label": {
 						"en_US": "Sample Update 1"
 					},
@@ -49,9 +63,13 @@
 				{
 					"active": true,
 					"conditionExpression": "",
+					"dateCreated": "2023-03-03T15:10:15.046+00:00",
+					"dateModified": "2023-03-03T15:10:15.046+00:00",
 					"description": "",
 					"errorMessage": {
 					},
+					"externalReferenceCode": "a8cac2d3-0358-9f6d-f414-5a7cf0e3acab",
+					"id": 44834,
 					"label": {
 						"en_US": "Sample Update 2"
 					},
@@ -72,14 +90,14 @@
 					"DBType": "Date",
 					"businessType": "Date",
 					"defaultValue": "",
-					"externalReferenceCode": "b861207e-9044-8956-39ca-a4f90acaf256",
+					"externalReferenceCode": "37555450-fe52-e50b-08c5-94bc3f70fe00",
+					"id": 44133,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Create Date"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "createDate",
 					"objectFieldSettings": [
@@ -93,14 +111,14 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "",
-					"externalReferenceCode": "91f88c9c-eb8c-fcc1-dc30-fdf06a741c19",
+					"externalReferenceCode": "30ed45d6-696c-cd6b-f5f4-ec258b42f420",
+					"id": 44132,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Author"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "creator",
 					"objectFieldSettings": [
@@ -114,14 +132,14 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "",
-					"externalReferenceCode": "dccc9c01-a0a5-e929-548b-8a3dde20a2a6",
+					"externalReferenceCode": "3c2281be-636e-e8bb-b3ba-1cf67227a454",
+					"id": 44134,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "External Reference Code"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "externalReferenceCode",
 					"objectFieldSettings": [
@@ -136,13 +154,13 @@
 					"businessType": "Text",
 					"defaultValue": "",
 					"externalReferenceCode": "47356a30-ea5e-997b-6e7f-6e92247310dc",
+					"id": 44138,
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "Field1"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "field1",
 					"objectFieldSettings": [
@@ -160,14 +178,14 @@
 					"DBType": "Long",
 					"businessType": "LongInteger",
 					"defaultValue": "",
-					"externalReferenceCode": "bfb3f0ee-46ff-9102-f4bf-480eab078946",
+					"externalReferenceCode": "670b4470-f0bc-e20b-4ef3-339cde0bbfd5",
+					"id": 44135,
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "ID"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "id",
 					"objectFieldSettings": [
@@ -181,14 +199,14 @@
 					"DBType": "Date",
 					"businessType": "Date",
 					"defaultValue": "",
-					"externalReferenceCode": "88f5019f-2c55-80e6-c19b-27a451985caf",
+					"externalReferenceCode": "fae687eb-4cba-cc75-398e-237e91ad4fe1",
+					"id": 44136,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Modified Date"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "modifiedDate",
 					"objectFieldSettings": [
@@ -202,14 +220,14 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "",
-					"externalReferenceCode": "2b96046e-6510-0a04-1dec-fe3e23b0f586",
+					"externalReferenceCode": "1dcbd7a6-6f8f-6ff9-f553-9ec4a1954f97",
+					"id": 44137,
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "",
 					"listTypeDefinitionId": 0,
 					"name": "status",
 					"objectFieldSettings": [
@@ -226,7 +244,7 @@
 			],
 			"objectViews": [
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "applications_menu.applications.content",
 			"parameterRequired": false,
 			"pluralLabel": {
 				"en_US": "Samples"
@@ -242,9 +260,5 @@
 			"system": false,
 			"titleObjectFieldName": "id"
 		}
-	],
-	"lastPage": 1,
-	"page": 1,
-	"pageSize": 20,
-	"totalCount": 1
+	]
 }

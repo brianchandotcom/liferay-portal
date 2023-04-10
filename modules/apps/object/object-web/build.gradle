@@ -36,6 +36,7 @@ dependencies {
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:template:template-api")
 	compileOnly project(":apps:upload:upload-api")

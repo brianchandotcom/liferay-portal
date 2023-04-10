@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordVersionException;
-import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
@@ -63,9 +62,18 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecordVersion.getFormInstance();
 
-		_deleteStorage(
-			ddmFormInstanceRecordVersion.getStorageId(),
-			ddmFormInstance.getStorageType());
+		if (!StringUtil.equals(ddmFormInstance.getStorageType(), "object")) {
+			DDMStorageAdapter ddmStorageAdapter =
+				_ddmStorageAdapterRegistry.getDDMStorageAdapter(
+					GetterUtil.getString(
+						ddmFormInstance.getStorageType(),
+						StorageType.DEFAULT.toString()));
+
+			ddmStorageAdapter.delete(
+				DDMStorageAdapterDeleteRequest.Builder.newBuilder(
+					ddmFormInstanceRecordVersion.getStorageId()
+				).build());
+		}
 
 		_ddmStorageLinkLocalService.deleteClassStorageLink(
 			ddmFormInstanceRecordVersion.getStorageId());
@@ -182,24 +190,6 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 			new FormInstanceRecordVersionVersionComparator());
 
 		return ddmFormInstanceRecordVersions.get(0);
-	}
-
-	private void _deleteStorage(long storageId, String storageType)
-		throws StorageException {
-
-		if (StringUtil.equals(storageType, "object")) {
-			return;
-		}
-
-		DDMStorageAdapter ddmStorageAdapter =
-			_ddmStorageAdapterRegistry.getDDMStorageAdapter(
-				GetterUtil.getString(
-					storageType, StorageType.DEFAULT.toString()));
-
-		ddmStorageAdapter.delete(
-			DDMStorageAdapterDeleteRequest.Builder.newBuilder(
-				storageId
-			).build());
 	}
 
 	@Reference

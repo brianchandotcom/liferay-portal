@@ -93,7 +93,7 @@ trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
 			<if>
 				<isset property="env.TEST_PORTAL_RELEASE_VERSION" />
 				<then>
-					<echo append="true" file="portal-impl/src/portal-ext.properties">
+					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
 enterprise.product.enterprise.search.enabled=false</echo>
 				</then>

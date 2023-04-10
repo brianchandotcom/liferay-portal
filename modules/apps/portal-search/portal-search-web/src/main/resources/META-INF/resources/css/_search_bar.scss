@@ -15,8 +15,8 @@
 		.input-sets-item-root {
 			.contributor-input-set-item-header-root {
 				.contributor-name {
-					border-color: $secondaryL2;
-					color: $secondary;
+					border-color: var(--gray-400, $secondary-l2);
+					color: var(--gray-600, $secondary);
 					text-transform: none;
 				}
 			}
@@ -25,8 +25,8 @@
 		.has-error {
 			.select-sxp-blueprint {
 				.form-control {
-					background-color: #feefef;
-					border-color: #f48989;
+					background-color: var(--danger-l2, $danger-l2);
+					border-color: var(--danger-l1, $danger-l1);
 				}
 			}
 		}
@@ -36,9 +36,9 @@
 			width: 100%;
 
 			.form-control {
-				background-color: #fff;
+				background-color: var(--white, $white);
 				border-bottom-right-radius: 0;
-				border-color: #cdced9;
+				border-color: var(--gray-400, $secondary-l2);
 				border-right: 0;
 				border-top-right-radius: 0;
 				caret-color: transparent;
@@ -83,25 +83,25 @@
 
 	.search-bar-suggestions-results-list {
 		.dropdown-subheader {
-			color: #6b6c7e;
+			color: var(--gray-600, $secondary);
 		}
 
 		.suggestion-item-title {
-			color: #272833;
+			color: var(--dark, $dark);
 
 			+ .suggestion-item-description {
-				color: #6b6c7e;
+				color: var(--gray-600, $secondary);
 				font-size: 0.75rem;
 			}
 		}
 	}
 
 	.search-bar-suggestions-show-more {
-		color: #0b5fff;
+		color: var(--primary, $primary);
 
 		&:hover {
-			background-color: #fff;
-			color: #004ad7;
+			background-color: var(--white, $white);
+			color: var(--primary-d2, $primary-d2);
 			text-decoration: underline;
 		}
 	}

@@ -5,13 +5,13 @@
 		}
 
 		.sheet-text {
-			color: #a7a9bc;
+			color: var(--gray-500, $secondary-l1);
 		}
 
 		.treeview {
 			.autofit-col,
 			.custom-control-label-text {
-				color: #a7a9bc;
+				color: var(--gray-500, $secondary-l1);
 			}
 		}
 	}

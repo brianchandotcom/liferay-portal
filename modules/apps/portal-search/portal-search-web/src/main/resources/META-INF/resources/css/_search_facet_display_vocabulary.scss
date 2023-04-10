@@ -4,7 +4,7 @@
 			padding-left: 24px;
 
 			.custom-control-label-text {
-				color: #6b6c7e;
+				color: var(--gray-600, $secondary);
 			}
 
 			> .c-inner {
@@ -19,7 +19,7 @@
 		}
 
 		.tree-item-vocabulary {
-			color: #272833;
+			color: var(--dark, $dark);
 			font-weight: 600;
 			margin-bottom: 8px;
 

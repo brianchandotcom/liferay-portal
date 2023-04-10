@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -193,11 +194,16 @@ public class ObjectDefinitionNotificationTermEvaluator
 		ObjectDefinition objectDefinition = null;
 		ObjectField objectField2 = null;
 		String objectFieldName = StringPool.BLANK;
+		boolean found = false;
 
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.
 					getObjectRelationshipsByObjectDefinitionId2(
 						_objectDefinition.getObjectDefinitionId())) {
+
+			if (found) {
+				break;
+			}
 
 			objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
@@ -233,7 +239,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 				objectFieldName = objectField.getName();
 
-				break;
+				found = true;
 			}
 		}
 
@@ -245,7 +251,35 @@ public class ObjectDefinitionNotificationTermEvaluator
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 				GetterUtil.getLong(termValues.get(objectField2.getName())));
 
-			return MapUtil.getString(objectEntry.getValues(), objectFieldName);
+			return MapUtil.getString(
+				HashMapBuilder.putAll(
+					objectEntry.getValues()
+				).put(
+					"createDate", objectEntry.getCreateDate()
+				).put(
+					"creator",
+					() -> {
+						long userId = objectEntry.getUserId();
+
+						if (context.equals(Context.RECIPIENT)) {
+							return userId;
+						}
+
+						User user = _userLocalService.getUser(userId);
+
+						return user.getFullName(true, true);
+					}
+				).put(
+					"externalReferenceCode",
+					objectEntry.getExternalReferenceCode()
+				).put(
+					"id", objectEntry.getObjectEntryId()
+				).put(
+					"modifiedDate", objectEntry.getModifiedDate()
+				).put(
+					"status", objectEntry.getStatus()
+				).build(),
+				objectFieldName);
 		}
 
 		return MapUtil.getString(

@@ -54,6 +54,8 @@ function getItemFields(
 				valuePath={valuePath}
 				view={{
 					contentRenderer: field.contentRenderer,
+					contentRendererClientExtension:
+						field.contentRendererClientExtension,
 					contentRendererModuleURL: field.contentRendererModuleURL,
 				}}
 			/>

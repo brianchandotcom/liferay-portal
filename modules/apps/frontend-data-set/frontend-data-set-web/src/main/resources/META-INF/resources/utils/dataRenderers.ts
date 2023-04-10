@@ -72,7 +72,8 @@ export function getDataRendererById(id: string): AnyDataRenderer {
 }
 
 export async function getDataRendererByURL(
-	url: string
+	url: string,
+	type: 'clientExtension' | 'internal'
 ): Promise<AnyDataRenderer> {
 	const addedDataRenderer = fetchedDataRenderers.find(
 		(contentRenderer) => contentRenderer.url === url
@@ -90,10 +91,18 @@ export async function getDataRendererByURL(
 		// @ts-ignore
 		const module = await import(/* webpackIgnore: true */ moduleName);
 
-		dataRenderer = {
-			renderer: module[symbolName],
-			type: 'clientExtension',
-		};
+		if (type === 'clientExtension') {
+			dataRenderer = {
+				renderer: module[symbolName],
+				type,
+			};
+		}
+		else {
+			dataRenderer = {
+				Component: module[symbolName],
+				type,
+			};
+		}
 	}
 	else {
 		dataRenderer = {

@@ -1,0 +1,131 @@
+definition {
+
+    macro revokeAndUpdateSharedEntry {
+		Asset.openTosharedContent(
+			navTab = "Shared by Me",
+			siteURLKey = "guest");
+
+		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = ${dmDocumentTitleView});
+
+		DMDocumentSharing.removeCollaborator(
+			collaboratorList = "user1fn",
+			sharedByMe = "true");
+
+		Asset.openTosharedContent(
+			navTab = "Shared by Me",
+			siteURLKey = "guest");
+
+		if (isSet(blogsEntryTitleView)) {
+			Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = ${blogsEntryTitleView});
+
+			DMDocumentSharing.removeCollaborator(
+				collaboratorList = "user2fn",
+				sharedByMe = "true");
+
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "user2@liferay.com");
+
+			DMDocumentSharing.editViaSharedwithMe(
+				entryTitle = ${blogsEntryTitleUpdate},
+				entryTitleEdit = "${blogsEntryTitleUpdate} Edit");
+		}
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		DMDocumentSharing.editViaSharedwithMe(
+			dmDocumentTitle = ${dmDocumentTitleUpdate},
+			entryTitleEdit = "${dmDocumentTitleUpdate} Edit");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+
+	macro viewNoShareOptionAfterDisabled {
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "guest");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "Document with sharing disabled");
+
+		BlogsNavigator.openBlogsAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "guest");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "Blogs Entry with sharing disabled");
+	}
+
+	macro viewSharedBlog {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = 2);
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "Blogs Entry Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		BlogsEntry.viewSharedAsset(
+			contentSharingPermission = "View",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+
+	macro viewSharedDocument {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = ${dmDocumentTitle},
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "View",
+			dmDocumentTitle = ${dmDocumentTitle});
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+		
+}

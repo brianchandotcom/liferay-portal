@@ -89,22 +89,14 @@ export function PurchasedAppsDashboardPage() {
 	};
 
 	useEffect(() => {
-		(async () => {
+		const makeFetch = async () => {
 			const accountsResponse = await getAccounts();
 
-			const accountsList = accountsResponse.items.map(
-				(account: Account) => {
-					return {
-						externalReferenceCode: account.externalReferenceCode,
-						id: account.id,
-						name: account.name,
-					} as Account;
-				}
-			);
+			setAccounts(accountsResponse.items);
+			setSelectedAccount(accountsResponse.items[0]);
+		};
 
-			setAccounts(accountsList);
-			setSelectedAccount(accountsList[0]);
-		})();
+		makeFetch();
 	}, []);
 
 	useEffect(() => {
@@ -166,20 +158,6 @@ export function PurchasedAppsDashboardPage() {
 					totalCount: placedOrders.totalCount,
 				};
 			});
-
-			const accountsResponse = await getAccounts();
-
-			const accountsList = accountsResponse.items.map(
-				(account: Account) => {
-					return {
-						externalReferenceCode: account.externalReferenceCode,
-						id: account.id,
-						name: account.name,
-					};
-				}
-			);
-
-			setAccounts(accountsList);
 		};
 		makeFetch();
 	}, [page, purchasedAppTable.pageSize, selectedAccount]);

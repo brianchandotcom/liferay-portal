@@ -1,7 +1,17 @@
 type Account = {
-	customFields?: {[key: string]: number};
+	customFields?: AccountCustomField[];
+	description: string;
 	externalReferenceCode: string;
 	id: number;
+	name: string;
+	type: string;
+};
+
+type AccountCustomField = {
+	customValue: {
+		data: string;
+	};
+	dataType: string;
 	name: string;
 };
 
@@ -12,6 +22,34 @@ type AccountBrief = {
 	logoURL?: string;
 	name: string;
 	roleBriefs: RoleBrief[];
+};
+
+type AccountPostalAddresses = {
+	addressCountry: string;
+	addressLocality: string;
+	addressRegion: string;
+	addressType: string;
+	id: number;
+	name: string;
+	postalCode: number;
+	primary: boolean;
+	streetAddressLine1: string;
+	streetAddressLine2: string;
+	streetAddressLine3: string;
+};
+
+type AccountPostalAddresses = {
+	addressCountry: string;
+	addressLocality: string;
+	addressRegion: string;
+	addressType: string;
+	id: number;
+	name: string;
+	postalCode: number;
+	primary: boolean;
+	streetAddressLine1: string;
+	streetAddressLine2: string;
+	streetAddressLine3: string;
 };
 
 type AccountGroup = {

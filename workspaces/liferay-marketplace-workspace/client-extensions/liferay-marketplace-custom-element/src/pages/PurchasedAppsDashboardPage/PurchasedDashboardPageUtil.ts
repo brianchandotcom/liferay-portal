@@ -10,6 +10,8 @@ export const initialAccountState: Account[] = [
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
+		description: '',
+		type: '',
 	},
 ];
 

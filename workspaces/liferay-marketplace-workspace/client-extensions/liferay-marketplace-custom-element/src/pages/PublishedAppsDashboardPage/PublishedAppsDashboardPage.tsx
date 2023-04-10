@@ -77,6 +77,8 @@ const initialAccountsState: Account[] = [
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
+		description: '',
+		type: '',
 	},
 ];
 
@@ -100,12 +102,9 @@ export function PublishedAppsDashboardPage() {
 		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const [selectedAccount, setSelectedAccount] = useState<Account>({
-		customFields: {CatalogId: 0},
-		externalReferenceCode: '',
-		id: 0,
-		name: '',
-	});
+	const [selectedAccount, setSelectedAccount] = useState<Account>(
+		initialAccountsState[0]
+	);
 
 	const appMessages = {
 		description: 'Manage and publish apps on the Marketplace',
@@ -218,23 +217,14 @@ export function PublishedAppsDashboardPage() {
 	}
 
 	useEffect(() => {
-		(async () => {
+		const makeFetch = async () => {
 			const accountsResponse = await getAccounts();
 
-			const accountsList = accountsResponse.items.map(
-				(account: Account) => {
-					return {
-						customFields: account.customFields,
-						externalReferenceCode: account.externalReferenceCode,
-						id: account.id,
-						name: account.name,
-					} as Account;
-				}
-			);
+			setAccounts(accountsResponse.items);
+			setSelectedAccount(accountsResponse.items[0]);
+		};
 
-			setAccounts(accountsList);
-			setSelectedAccount(accountsList[0]);
-		})();
+		makeFetch();
 	}, []);
 
 	useEffect(() => {
@@ -434,14 +424,41 @@ export function PublishedAppsDashboardPage() {
 							return true;
 						}
 
-						return false;
-					}
-				);
+			const membersList = accountsListResponse.items.map(
+				(member: UserAccountProps) => {
+					return {
+						accountBriefs: member.accountBriefs,
+						dateCreated: member.dateCreated,
+						email: member.emailAddress,
+						image: member.image,
+						lastLoginDate: member.lastLoginDate,
+						name: member.name,
+						role: getRolesList(member.roleBriefs),
+						userId: member.id,
+					} as MemberProps;
+				}
+			);
 
-				setMembers(filteredMembersList);
-			}
+			let filteredMembersList: MemberProps[] = [];
+
+			filteredMembersList = membersList.filter((member: MemberProps) => {
+				if (
+					member.accountBriefs.find(
+						(accountBrief: AccountBriefProps) =>
+							accountBrief.externalReferenceCode ===
+							selectedAccount.externalReferenceCode
+					)
+				) {
+					return true;
+				}
+>>>>>>> 6042bea (LPS-180755 Create Account Details Page)
+
+				return false;
+			});
+
+			setMembers(filteredMembersList);
 		})();
-	}, [selectedNavigationItem, selectedAccount]);
+	}, [selectedAccount]);
 
 	return (
 		<div className="published-apps-dashboard-page-container">
@@ -524,7 +541,9 @@ export function PublishedAppsDashboardPage() {
 				</DashboardPage>
 			)}
 
-			{selectedNavigationItem === 'Account' && <AccountDetailsPage />}
+			{selectedNavigationItem === 'Account' && (
+				<AccountDetailsPage selectedAccount={selectedAccount} />
+			)}
 		</div>
 	);
 }

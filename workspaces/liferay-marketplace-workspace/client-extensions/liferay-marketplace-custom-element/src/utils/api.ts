@@ -214,7 +214,19 @@ export async function getAccounts() {
 		method: 'GET',
 	});
 
-	return response.json();
+	return (await response.json()) as {items: Account[]};
+}
+
+export async function getAccountPostalAddressesByAccountId(accountId: number) {
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return (await response.json()) as {items: AccountPostalAddresses[]};
 }
 
 export async function getCatalogs() {

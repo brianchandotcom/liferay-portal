@@ -3,7 +3,80 @@ import {AccountHeaderButton} from './AccountHeaderButton';
 
 import './AccountDetailsPage.scss';
 
-export function AccountDetailsPage() {
+import {useEffect, useState} from 'react';
+
+import creditCartIcon from '../../assets/icons/credit-card.svg';
+import downloadIcon from '../../assets/icons/download-icon.svg';
+import locationIcon from '../../assets/icons/location-on-icon.svg';
+import phoneIcon from '../../assets/icons/phone-icon.svg';
+import userIcon from '../../assets/icons/user-icon.svg';
+import {DetailedCard} from '../../components/DetailedCard/DetailedCard';
+import {getAccountPostalAddressesByAccountId} from '../../utils/api';
+
+interface AccountDetailsPageProps {
+	selectedAccount: Account;
+}
+
+export function AccountDetailsPage({selectedAccount}: AccountDetailsPageProps) {
+	const [selectedAccountAddress, setSelectedAccountAddress] =
+		useState<AccountPostalAddresses[]>();
+
+	const getCustomFieldValue = (customFieldName: string) => {
+		const customField = selectedAccount.customFields?.find(
+			(customField) => customField.name === customFieldName
+		);
+
+		if (customField) {
+			const {
+				customValue: {data},
+			} = customField;
+
+			return data;
+		}
+
+		return '';
+	};
+
+	const maskDigits = (str: string) => {
+		const first3Digits = str.slice(0, 3);
+		const lastDigits = str.slice(3);
+		const maskedDigits = lastDigits.replaceAll(/\S/g, '*');
+
+		return first3Digits + maskedDigits;
+	};
+
+	const updateDashboardNavigationItems = (itemName: string) => {
+		const newDashboardNavigationItems = dashboardNavigationItems.map(
+			(navigationItem) => {
+				if (navigationItem.itemName === itemName) {
+					return {
+						...navigationItem,
+						itemSelected: true,
+					};
+				}
+
+				return {
+					...navigationItem,
+					itemSelected: false,
+				};
+			}
+		);
+
+		setDashboardNavigationItems(newDashboardNavigationItems);
+	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const {items} = await getAccountPostalAddressesByAccountId(
+				selectedAccount.id
+			);
+
+			setSelectedAccountAddress(items);
+		};
+
+		makeFetch();
+	}, [selectedAccount]);
+
 	return (
 		<>
 			<div className="account-details-container">
@@ -21,7 +94,7 @@ export function AccountDetailsPage() {
 							</span>
 
 							<span className="account-details-header-left-content-description">
-								Business account
+								{selectedAccount.type} account
 							</span>
 						</div>
 					</div>
@@ -45,6 +118,179 @@ export function AccountDetailsPage() {
 							title="Solutions"
 						/>
 					</div>
+				</div>
+
+				<div className="account-details-body-container">
+					<DetailedCard
+						cardIcon={userIcon}
+						cardIconAltText="Profile Icon"
+						cardTitle="Profile"
+						sizing="lg"
+					>
+						<table className="account-details-body-table">
+							<tr className="account-details-body-table-row">
+								<th>Entity Type</th>
+
+								<td className="account-details-body-table-description">
+									{selectedAccount.type}
+								</td>
+							</tr>
+
+							<tr className="account-details-body-table-row">
+								<th>Publisher Name</th>
+
+								<td className="account-details-body-table-description">
+									{selectedAccount.name}
+								</td>
+							</tr>
+
+							<tr className="account-details-body-table-row">
+								<th>Publisher ID</th>
+
+								<td className="account-details-body-table-description">
+									{selectedAccount.id}
+								</td>
+							</tr>
+
+							<tr className="account-details-body-table-row">
+								<th>Github Username</th>
+
+								<td className="account-details-body-table-description">
+									{getCustomFieldValue('Github Username')}
+								</td>
+							</tr>
+
+							<tr className="account-details-body-table-row">
+								<th>Description</th>
+
+								<td className="account-details-body-table-description">
+									{selectedAccount.description}
+								</td>
+							</tr>
+						</table>
+					</DetailedCard>
+
+					<DetailedCard
+						cardIcon={phoneIcon}
+						cardIconAltText="Contact Icon"
+						cardTitle="Contact"
+						sizing="lg"
+					>
+						<table className="account-details-body-table">
+							<tr className="account-details-body-table-row">
+								<th>Phone</th>
+
+								<td className="account-details-body-table-description">
+									{getCustomFieldValue('Contact Phone')}
+								</td>
+							</tr>
+
+							<tr className="account-details-body-table-row">
+								<th>Email</th>
+
+								<td className="account-details-body-table-description">
+									{getCustomFieldValue('Contact Email')}
+								</td>
+							</tr>
+
+							<tr className="account-details-body-table-row">
+								<th>Website</th>
+
+								<td className="account-details-body-table-description">
+									<a
+										href={getCustomFieldValue(
+											'Homepage URL'
+										)}
+										target="__blank"
+									>
+										{getCustomFieldValue('Homepage URL')}
+									</a>
+								</td>
+							</tr>
+						</table>
+					</DetailedCard>
+
+					<DetailedCard
+						cardIcon={locationIcon}
+						cardIconAltText="Address Icon"
+						cardTitle="Address"
+						sizing="lg"
+					>
+						<table className="account-details-body-table">
+							{selectedAccountAddress?.map((address) => (
+								<tr className="account-details-body-table-row">
+									<th>Business Address</th>
+
+									<td className="account-details-body-table-description">
+										{address.streetAddressLine1}
+									</td>
+								</tr>
+							))}
+						</table>
+					</DetailedCard>
+
+					<DetailedCard
+						cardIcon={phoneIcon}
+						cardIconAltText="Agreements Icon"
+						cardTitle="Agreements"
+						sizing="lg"
+					>
+						<table className="account-details-body-table">
+							<tr>
+								<th>
+									Liferay Publisher Program License agreement
+								</th>
+
+								<td className="account-details-body-table-description">
+									<img src={downloadIcon} />
+								</td>
+							</tr>
+
+							<tr>
+								<th>Liferay Publisher agreement</th>
+
+								<td className="account-details-body-table-description">
+									<img src={downloadIcon} />
+								</td>
+							</tr>
+						</table>
+					</DetailedCard>
+
+					<DetailedCard
+						cardIcon={creditCartIcon}
+						cardIconAltText="Payment  Icon"
+						cardTitle="Payment "
+						sizing="lg"
+					>
+						{getCustomFieldValue('Paypal Email Address') ? (
+							<table className="account-details-body-table">
+								<tr className="account-details-body-table-row">
+									<th>Paypal Account</th>
+
+									<td className="account-details-body-table-description">
+										{maskDigits(
+											getCustomFieldValue(
+												'Paypal Email Address'
+											)
+										)}
+									</td>
+								</tr>
+
+								<tr className="account-details-body-table-row">
+									<th>Tax ID</th>
+
+									<td className="account-details-body-table-description">
+										{maskDigits('12345')}
+									</td>
+								</tr>
+							</table>
+						) : (
+							<div className="account-details-body-empty-payment">
+								Edit your publisher account to provide payment
+								information for sales in the Marketplace
+							</div>
+						)}
+					</DetailedCard>
 				</div>
 			</div>
 		</>

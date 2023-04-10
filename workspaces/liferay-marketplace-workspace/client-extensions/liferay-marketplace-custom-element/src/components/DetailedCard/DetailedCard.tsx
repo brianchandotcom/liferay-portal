@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import './DetailedCard.scss';
 
 import {ReactNode} from 'react';
@@ -7,6 +9,7 @@ interface DetailedCardProps {
 	cardIconAltText: string;
 	cardTitle: string;
 	children: ReactNode;
+	sizing?: 'lg';
 }
 
 export function DetailedCard({
@@ -14,9 +17,14 @@ export function DetailedCard({
 	cardIconAltText,
 	cardTitle,
 	children,
+	sizing,
 }: DetailedCardProps) {
 	return (
-		<div className="detailed-card-container">
+		<div
+			className={classNames('detailed-card-container', {
+				'detailed-card-container-larger': sizing === 'lg',
+			})}
+		>
 			<div className="detailed-card-header">
 				<h2 className="">{cardTitle}</h2>
 

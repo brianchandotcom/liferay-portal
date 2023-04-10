@@ -49,39 +49,6 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 @Component(service = {UpgradeStatus.class, UpgradeStatusImpl.class})
 public class UpgradeStatusImpl implements UpgradeStatus {
 
-	public static void finish() {
-		_processRelease(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setFinal(schemaVersion));
-
-		_setFinalState();
-		_setType();
-
-		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			ThreadContext.put("upgrade.type", _type);
-			ThreadContext.put("upgrade.result", _state);
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Upgrade of type ", _type, " finished with state ",
-					_state));
-		}
-
-		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			ThreadContext.clearMap();
-		}
-	}
-
-	public static void start() {
-		_state = "Running";
-
-		_processRelease(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setInitial(schemaVersion));
-	}
-
 	public void addErrorMessage(String loggerName, String message) {
 		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentHashMap<>());
@@ -109,6 +76,31 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		occurrences++;
 
 		messages.put(message, occurrences);
+	}
+
+	public void finish() {
+		_processRelease(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setFinal(schemaVersion));
+
+		_setFinalState();
+		_setType();
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.put("upgrade.type", _type);
+			ThreadContext.put("upgrade.result", _state);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Upgrade of type ", _type, " finished with state ",
+					_state));
+		}
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.clearMap();
+		}
 	}
 
 	public Map<String, Map<String, Integer>> getErrorMessages() {
@@ -159,7 +151,26 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		return _warningMessages;
 	}
 
-	private static void _processRelease(
+	public void start() {
+		_state = "Running";
+
+		_processRelease(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setInitial(schemaVersion));
+	}
+
+	private void _filterMessages() {
+		if (!_filtered) {
+			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
+				_errorMessages.remove(filteredClassName);
+				_warningMessages.remove(filteredClassName);
+			}
+
+			_filtered = true;
+		}
+	}
+
+	private void _processRelease(
 		UnsafeBiConsumer<SchemaVersions, String, Exception> unsafeBiConsumer) {
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
@@ -200,7 +211,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		}
 	}
 
-	private static void _setFinalState() {
+	private void _setFinalState() {
 		boolean check;
 
 		try {
@@ -232,7 +243,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		_state = "Success";
 	}
 
-	private static void _setType() {
+	private void _setType() {
 		String upgradeType = "No upgrade";
 
 		for (Map.Entry<String, SchemaVersions> schemaVersionsEntry :
@@ -282,17 +293,6 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		_type = upgradeType;
 	}
 
-	private void _filterMessages() {
-		if (!_filtered) {
-			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
-				_errorMessages.remove(filteredClassName);
-				_warningMessages.remove(filteredClassName);
-			}
-
-			_filtered = true;
-		}
-	}
-
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
@@ -301,27 +301,27 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeStatusImpl.class);
 
-	private static final Map<String, Map<String, Integer>> _errorMessages =
+	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
-	private static boolean _filtered;
+	private boolean _filtered;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private static ReleaseManager _releaseManager;
+	private ReleaseManager _releaseManager;
 
-	private static final Map<String, SchemaVersions> _schemaVersionsMap =
+	private final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();
-	private static String _state =
+	private String _state =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
 			"Pending" : "Not enabled";
-	private static String _type =
+	private String _type =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
 			"Not calculated" : "Not enabled";
-	private static final Map<String, ArrayList<String>>
-		_upgradeProcessMessages = new ConcurrentHashMap<>();
-	private static final Map<String, Map<String, Integer>> _warningMessages =
+	private final Map<String, ArrayList<String>> _upgradeProcessMessages =
+		new ConcurrentHashMap<>();
+	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
-	private static class SchemaVersions {
+	private class SchemaVersions {
 
 		public SchemaVersions(String initialSchemaVersion) {
 			_initial = initialSchemaVersion;

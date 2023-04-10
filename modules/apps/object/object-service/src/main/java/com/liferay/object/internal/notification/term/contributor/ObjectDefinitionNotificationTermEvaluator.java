@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -189,89 +190,69 @@ public class ObjectDefinitionNotificationTermEvaluator
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition = null;
+		ObjectField objectField2 = null;
+		String objectFieldName = StringPool.BLANK;
+
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.
 					getObjectRelationshipsByObjectDefinitionId2(
 						_objectDefinition.getObjectDefinitionId())) {
 
-			if (!StringUtil.equalsIgnoreCase(
-					objectRelationship.getName(),
-					StringUtil.extractFirst(
-						StringUtil.removeSubstrings(termName, "[%"),
-						StringPool.UNDERLINE))) {
-
-				continue;
-			}
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2());
-
-			if (Validator.isNull(
-					GetterUtil.getLong(
-						termValues.get(objectField.getName())))) {
-
-				return null;
-			}
-
-			ObjectDefinition objectDefinition =
+			objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			String objectRelationshipNameUpperCase = StringUtil.extractFirst(
-				StringUtil.removeSubstrings(termName, "[%"),
-				StringPool.UNDERLINE);
+			String prefix = StringUtil.toUpperCase(
+				StringBundler.concat(
+					objectRelationship.getName(), StringPool.UNDERLINE,
+					objectDefinition.getShortName()));
 
-			if (!objectDefinition.isSystem()) {
-				_objectEntry = _objectEntryLocalService.getObjectEntry(
-					GetterUtil.getLong(termValues.get(objectField.getName())));
+			for (ObjectField objectField :
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId())) {
 
-				return _getTermValue(
-					_objectEntry.getValues(),
-					StringUtil.removeSubstrings(
+				if (!Objects.equals(
 						termName,
-						StringBundler.concat(
-							objectRelationshipNameUpperCase,
-							StringPool.UNDERLINE,
-							StringUtil.toUpperCase(
-								objectDefinition.getShortName()),
-							StringPool.UNDERLINE),
-						"[%", "%]"));
-			}
+						ObjectDefinitionNotificationTermUtil.
+							getObjectFieldTermName(
+								prefix, objectField.getName()))) {
 
-			return _getTermValue(
-				_objectEntryLocalService.getSystemModelAttributes(
-					objectDefinition,
-					GetterUtil.getLong(termValues.get(objectField.getName()))),
-				StringUtil.removeSubstrings(
-					termName,
-					StringBundler.concat(
-						objectRelationshipNameUpperCase, StringPool.UNDERLINE,
-						StringUtil.toUpperCase(objectDefinition.getShortName()),
-						StringPool.UNDERLINE),
-					"[%", "%]"));
-		}
+					continue;
+				}
 
-		return null;
-	}
+				objectField2 = _objectFieldLocalService.getObjectField(
+					objectRelationship.getObjectFieldId2());
 
-	private String _getTermValue(Map<String, ?> map, String partialTermName)
-		throws PortalException {
+				if (Validator.isNull(
+						GetterUtil.getLong(
+							termValues.get(objectField2.getName())))) {
 
-		String termValue = _getTermValue(
-			StringUtil.removeSubstring(partialTermName, "AUTHOR_"),
-			_userLocalService.getUser(_objectEntry.getUserId()));
+					return null;
+				}
 
-		if (Validator.isNotNull(termValue)) {
-			return termValue;
-		}
+				objectFieldName = objectField.getName();
 
-		for (Map.Entry<String, ?> entry : map.entrySet()) {
-			if (StringUtil.equalsIgnoreCase(partialTermName, entry.getKey())) {
-				return String.valueOf(entry.getValue());
+				break;
 			}
 		}
 
-		return null;
+		if (Objects.isNull(objectFieldName)) {
+			return null;
+		}
+
+		if (!objectDefinition.isSystem()) {
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				GetterUtil.getLong(termValues.get(objectField2.getName())));
+
+			return MapUtil.getString(objectEntry.getValues(), objectFieldName);
+		}
+
+		return MapUtil.getString(
+			_objectEntryLocalService.getSystemModelAttributes(
+				objectDefinition,
+				GetterUtil.getLong(termValues.get(objectField2.getName()))),
+			objectFieldName);
 	}
 
 	private String _getTermValue(String partialTermName, User user)
@@ -325,7 +306,6 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private ObjectEntry _objectEntry;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

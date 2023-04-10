@@ -161,66 +161,30 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by name"
-	@priority = 3
-	test AdminCanFilterSubtasksByName {
-		task ("Given that the user has two subtasks different in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("When the user select the subtask 2 in the filter by name") {
-			TestrayFilter.clickFilter();
-
-            ScrollBy(value1 = "0, 60");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_2");
-		}
-
-		task ("Then the user see only subtask 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("And do not see the subtask 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-		}
-	}
-
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by assignee"
 	@priority = 3
 	test AdminCanFilterSubtasksByAssignee {
-        task ("Given that subtask 1 is assigned to user userfn userln") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+		task ("Given that subtask 1 is assigned to user userfn userln") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
 
 			TestrayTestflow.assignUsers(userName = "userfn userln");
-        }
+		}
 
-        task ("And that subtask 2 is assigned to user Test") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+		task ("And that subtask 2 is assigned to user Test") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
-        }
+		}
 
 		task ("When the user select the user userfn userln in the filter") {
 			TestrayFilter.clickFilter();
 
-            ScrollWebElementIntoView(
-                key_projectName = "userfn userln",
+			ScrollWebElementIntoView(
+				key_projectName = "userfn userln",
 				locator1 = "Testray#ITEM_NAME");
 
 			Select(
@@ -244,27 +208,63 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by name"
+	@priority = 3
+	test AdminCanFilterSubtasksByName {
+		task ("Given that the user has two subtasks different in the table") {
+			AssertElementPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user select the subtask 2 in the filter by name") {
+			TestrayFilter.clickFilter();
+
+			ScrollBy(value1 = "0, 60");
+
+			TestrayFilter.typeFilter(
+				label = "Subtask Name",
+				value = "Subtask_2");
+		}
+
+		task ("Then the user see only subtask 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the subtask 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtask using multiple filtering options"
 	@priority = 5
 	test AdminCanFilterSubtaskWithMultipleOptions {
-        task ("Given that subtask 1 is assigned to user userfn userln") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+		task ("Given that subtask 1 is assigned to user userfn userln") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
 
 			TestrayTestflow.assignUsers(userName = "userfn userln");
-        }
+		}
 
-        task ("And that subtask 2 is assigned to user Test Test") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+		task ("And that subtask 2 is assigned to user Test Test") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
-        }
+		}
 
-        task ("And that subtask 2 is completed with blocked") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+		task ("And that subtask 2 is completed with blocked") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
 
@@ -274,13 +274,13 @@ definition {
 				selectStatus = "Blocked");
 
 			WaitForPageLoad();
-        }
+		}
 
 		task ("When the user filter multiple options by: Assignee, user and status in the filter") {
 			TestrayFilter.clickFilter();
 
-            ScrollWebElementIntoView(
-                key_projectName = "userfn userln",
+			ScrollWebElementIntoView(
+				key_projectName = "userfn userln",
 				locator1 = "Testray#ITEM_NAME");
 
 			Select(
@@ -288,7 +288,7 @@ definition {
 				selectFieldLabel = "Assignee",
 				value1 = "Test");
 
-            Click.clickAtNotVisible(
+			Click.clickAtNotVisible(
 				key_label = "Status",
 				key_status = "Complete",
 				locator1 = "TestrayFilter#STATUS_IN_FILTER");
@@ -335,8 +335,8 @@ definition {
 		task ("When filtering a subtask by his non-existent name") {
 			TestrayFilter.clickFilter();
 
-            ScrollWebElementIntoView(
-                key_projectName = "Subtask_2",
+			ScrollWebElementIntoView(
+				key_projectName = "Subtask_2",
 				locator1 = "Testray#ITEM_NAME");
 
 			TestrayFilter.typeFilter(
@@ -357,8 +357,8 @@ definition {
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();
 
-            ScrollWebElementIntoView(
-                key_projectName = "Subtask_1",
+			ScrollWebElementIntoView(
+				key_projectName = "Subtask_1",
 				locator1 = "Testray#ITEM_NAME");
 
 			TestrayFilter.searchFilter(value = "Assignee");

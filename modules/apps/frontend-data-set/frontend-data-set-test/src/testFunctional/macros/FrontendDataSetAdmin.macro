@@ -18,6 +18,20 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro createDataSetView {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = ${key_name});
+
+		Type(
+			locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+			value1 = ${description});
+
+		PortletEntry.save();
+	}
+
 	macro deleteDataSet {
 		Click(
 			key_entry = ${entry},
@@ -30,6 +44,28 @@ definition {
 			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
+	}
+
+	macro deleteDataSetView {
+		Click(
+			key_name = ${viewName},
+			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		AssertElementPresent(
+			key_modalText = "Deleting a dataset view is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+
+		Button.clickDelete();
+	}
+
+	macro goToViews {
+		Click(
+			key_entry = ${dataSetName},
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+		Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
 	}
 
 	macro searchProvider {

@@ -6,6 +6,8 @@ liferay-sample-batch:
     oAuthApplicationHeadlessServer: liferay-sample-batch-oauth-application-headless-server
     type: batch
 liferay-sample-batch-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
     name: Liferay Sample OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.Workflow.everything

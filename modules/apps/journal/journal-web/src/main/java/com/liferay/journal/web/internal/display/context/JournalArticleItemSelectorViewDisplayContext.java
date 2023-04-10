@@ -477,10 +477,34 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			return _ddmStructureId;
 		}
 
-		_ddmStructureId = ParamUtil.getLong(
+		DDMStructure ddmStructure = null;
+
+		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId",
 			GetterUtil.getLong(
 				_infoItemItemSelectorCriterion.getItemSubtype()));
+
+		if (ddmStructureId > 0) {
+			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				ddmStructureId);
+		}
+
+		if ((ddmStructure == null) &&
+			Validator.isNotNull(
+				_infoItemItemSelectorCriterion.getItemSubtype())) {
+
+			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				_getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_infoItemItemSelectorCriterion.getItemSubtype(), true);
+		}
+
+		if (ddmStructure != null) {
+			_ddmStructureId = ddmStructure.getStructureId();
+		}
+		else {
+			_ddmStructureId = 0L;
+		}
 
 		return _ddmStructureId;
 	}

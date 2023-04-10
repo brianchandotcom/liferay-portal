@@ -35,9 +35,27 @@
 	<td>//div[@class='liferay-modal-body'][contains(text(),'${key_modalText}')]</td>
 	<td></td>
 </tr>
+
+<!--DATA SET VIEWS-->
+
 <tr>
 	<td>VIEW_ENTRY_BUTTON</td>
 	<td>//div[contains(@class,'show')]//button[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_DATA_SET_VIEW_DESCRIPTION</td>
+	<td>//div[@class='form-group']//input[contains(@id,'fdsViewDesctiptionInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_OF_VIEWS</td>
+	<td>//div[contains(@class,'dnd-table')]//div[normalize-space(text())='Views']/../../../..//span[contains(@class,'count') and contains(.,'${numberOfViews}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_SET_VIEW_ENTRY_KEBAB_MENU</td>
+	<td>//div[contains(@class,'justify-content-center') and contains(.,'${key_name}')]/..//div[contains(@class,'d-flex')]//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 </tbody>

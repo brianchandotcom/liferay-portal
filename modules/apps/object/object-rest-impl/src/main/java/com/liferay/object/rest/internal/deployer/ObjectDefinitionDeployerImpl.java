@@ -676,7 +676,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_undeployObjectDefinitionsMap(companyId, restContextPath);
 		_undeployRestContextPathCompanyIds(companyId, restContextPath);
-		_undeployScopedServiceRegistrationsMap(restContextPath, companyId);
+		_undeployScopedServiceRegistrationsMap(companyId, restContextPath);
 
 		if (_shouldUnregisterApplication(restContextPath)) {
 			_unregisterApplication(restContextPath);
@@ -718,7 +718,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private void _undeployScopedServiceRegistrationsMap(
-		String restContextPath, long companyId) {
+		long companyId, String restContextPath) {
 
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			_scopedServiceRegistrationsMap.get(restContextPath);
@@ -761,7 +761,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_disposeComponentInstances(restContextPath);
 
 		_undeployScopedServiceRegistrationsMap(
-			restContextPath, objectDefinition.getCompanyId());
+			objectDefinition.getCompanyId(), restContextPath);
 	}
 
 	private void _unregisterApplication(String restContextPath) {

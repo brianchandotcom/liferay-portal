@@ -1,7 +1,0 @@
-assemble:
-    - from: build
-      into: static
-liferay-sample-theme-spritemap-3:
-    name: Liferay Sample Theme Spritemap 3
-    type: themeSpritemap
-    url: spritemap.svg

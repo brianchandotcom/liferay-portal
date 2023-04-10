@@ -28,7 +28,7 @@ public interface UpgradeStatus {
 
 	public String getInitialSchemaVersion(String servletContextName);
 
-	public String getStatus();
+	public String getState();
 
 	public String getType();
 

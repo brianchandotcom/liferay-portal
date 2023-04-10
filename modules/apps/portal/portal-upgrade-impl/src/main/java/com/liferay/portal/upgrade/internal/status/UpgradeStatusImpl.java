@@ -54,19 +54,19 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions.setFinal(schemaVersion));
 
-		_setFinalStatus();
+		_setFinalState();
 		_setType();
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.put("upgrade.type", _type);
-			ThreadContext.put("upgrade.result", _status);
+			ThreadContext.put("upgrade.result", _state);
 		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Upgrade of type ", _type, " finished with status ",
-					_status));
+					"Upgrade of type ", _type, " finished with state ",
+					_state));
 		}
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
@@ -75,7 +75,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	public static void start() {
-		_status = "Running";
+		_state = "Running";
 
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
@@ -140,8 +140,8 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	@Override
-	public String getStatus() {
-		return _status;
+	public String getState() {
+		return _state;
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		}
 	}
 
-	private static void _setFinalStatus() {
+	private static void _setFinalState() {
 		boolean check;
 
 		try {
@@ -209,27 +209,27 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to check the upgrade status due to ",
+					"Unable to check the upgrade state due to ",
 					exception.getMessage(), ". Please check manually."));
 
-			_status = "Failure";
+			_state = "Failure";
 
 			return;
 		}
 
 		if (!_errorMessages.isEmpty() || !check) {
-			_status = "Failure";
+			_state = "Failure";
 
 			return;
 		}
 
 		if (!_warningMessages.isEmpty()) {
-			_status = "Warning";
+			_state = "Warning";
 
 			return;
 		}
 
-		_status = "Success";
+		_state = "Success";
 	}
 
 	private static void _setType() {
@@ -310,7 +310,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 
 	private static final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();
-	private static String _status =
+	private static String _state =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
 			"Pending" : "Not enabled";
 	private static String _type =

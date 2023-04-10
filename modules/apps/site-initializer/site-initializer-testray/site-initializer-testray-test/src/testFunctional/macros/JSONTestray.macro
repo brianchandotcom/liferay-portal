@@ -190,6 +190,7 @@ definition {
 		var taskId = JSONTestraySetter.getTaskId(taskName = ${taskName});
 
 		var subtaskId = JSONTestrayAPI.createSubtaskAPI(
+			messageError = ${messageError},
 			key = ${key},
 			score = ${score},
 			statusSubtask = ${statusSubtask},

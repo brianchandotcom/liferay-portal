@@ -499,6 +499,10 @@ definition {
 			var score = "";
 		}
 
+		if (!(isSet(messageError))) {
+			var messageError = "";
+		}
+
 		var curl = '''
 			${portalURL}/o/c/subtasks \
 				-u test@liferay.com:test \
@@ -509,6 +513,7 @@ definition {
 						"key": "${key}",
 						"name": "${statusSubtask}"
 					},
+					"errors": "${messageError}",
 					"number": "${subtaskNumber}",
 					"score": "${score}",
 					"name": "${subtaskName}",

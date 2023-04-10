@@ -505,7 +505,7 @@ definition {
 
 			SelectFrameParent();
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 
 			Alert.viewSuccessMessage();
 		}

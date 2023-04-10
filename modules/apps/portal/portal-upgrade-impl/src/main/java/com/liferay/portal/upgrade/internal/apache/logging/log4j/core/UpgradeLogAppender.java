@@ -125,7 +125,7 @@ public class UpgradeLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		UpgradeStatusImpl.start();
+		_upgradeStatusImpl.start();
 
 		if (PropsValues.UPGRADE_REPORT_ENABLED) {
 			_upgradeReport = new UpgradeReport();
@@ -137,7 +137,7 @@ public class UpgradeLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			UpgradeStatusImpl.finish(_releaseManager);
+			_upgradeStatusImpl.finish();
 
 			if (_upgradeReport != null) {
 				_upgradeReport.generateReport(

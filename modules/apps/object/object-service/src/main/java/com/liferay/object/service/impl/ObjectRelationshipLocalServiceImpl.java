@@ -49,6 +49,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -157,6 +158,9 @@ public class ObjectRelationshipLocalServiceImpl
 					pkObjectFieldDBColumnNames.get(
 						"pkObjectFieldDBColumnName2"),
 					") values (", primaryKey1, ", ", primaryKey2, ")"));
+
+			FinderCacheUtil.clearDSLQueryCache(
+				objectRelationship.getDBTableName());
 
 			return;
 		}
@@ -366,6 +370,9 @@ public class ObjectRelationshipLocalServiceImpl
 					pkObjectFieldDBColumnNames.get(
 						"pkObjectFieldDBColumnName1"),
 					" = ", primaryKey1));
+
+			FinderCacheUtil.clearDSLQueryCache(
+				objectRelationship.getDBTableName());
 		}
 	}
 
@@ -404,6 +411,9 @@ public class ObjectRelationshipLocalServiceImpl
 					pkObjectFieldDBColumnNames.get(
 						"pkObjectFieldDBColumnName2"),
 					" = ", primaryKey2));
+
+			FinderCacheUtil.clearDSLQueryCache(
+				objectRelationship.getDBTableName());
 		}
 	}
 

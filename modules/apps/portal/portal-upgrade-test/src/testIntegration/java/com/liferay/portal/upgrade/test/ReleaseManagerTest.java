@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
@@ -65,12 +66,33 @@ public class ReleaseManagerTest {
 		try {
 			release.setSchemaVersion("0.0.0");
 
-			_releaseLocalService.updateRelease(release);
+			release = _releaseLocalService.updateRelease(release);
 
 			Assert.assertFalse(_releaseManager.check());
 		}
 		finally {
-			_releaseLocalService.deleteRelease(release.getReleaseId());
+			_releaseLocalService.deleteRelease(release);
+		}
+	}
+
+	@Test
+	public void testCheckMissingPortalUpgrade() throws Exception {
+		Release release = _releaseLocalService.fetchRelease(
+			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+		String currentSchemaVersion = release.getSchemaVersion();
+
+		try {
+			release.setSchemaVersion("0.0.0");
+
+			release = _releaseLocalService.updateRelease(release);
+
+			Assert.assertFalse(_releaseManager.check());
+		}
+		finally {
+			release.setSchemaVersion(currentSchemaVersion);
+
+			_releaseLocalService.updateRelease(release);
 		}
 	}
 

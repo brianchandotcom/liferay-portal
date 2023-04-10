@@ -244,4 +244,79 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtask using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterSubtaskWithMultipleOptions {
+        task ("Given that subtask 1 is assigned to user userfn userln") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+        }
+
+        task ("And that subtask 2 is assigned to user Test Test") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+        }
+
+        task ("And that subtask 2 is completed with blocked") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-166191",
+				selectStatus = "Blocked");
+
+			WaitForPageLoad();
+        }
+
+		task ("When the user filter multiple options by: Assignee, user and status in the filter") {
+			TestrayFilter.clickFilter();
+
+            ScrollWebElementIntoView(
+                key_projectName = "userfn userln",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee",
+				value1 = "Test");
+
+            Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Complete",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			TestrayFilter.typeFilter(
+				label = "Subtask Name",
+				value = "Subtask_2");
+		}
+
+		task ("Then can see only user userfn userln and complete status in the table") {
+			AssertElementPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Complete");
+		}
+
+		task ("And do not see the Subtask_2 and user test test in the table") {
+			AssertElementNotPresent(
+				key_projectName = "userfn userln",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementNotPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

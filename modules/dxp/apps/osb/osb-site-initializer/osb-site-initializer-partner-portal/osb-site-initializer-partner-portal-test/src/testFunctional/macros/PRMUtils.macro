@@ -33,6 +33,12 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
+	macro checkDownloadedFile {
+		var testDependenciesDir = PropsUtil.get("output.dir.name");
+
+		var fileExists = FileUtil.exists("${testDependenciesDir}/${fileName}");
+	}
+
 	macro connectWithSalesforce {
 		var salesforceLoginURL = PropsUtil.get("site.initializer.partner.portal.login.url");
 		var salesforceConsumerKey = PropsUtil.get("site.initializer.partner.portal.consumer.key");

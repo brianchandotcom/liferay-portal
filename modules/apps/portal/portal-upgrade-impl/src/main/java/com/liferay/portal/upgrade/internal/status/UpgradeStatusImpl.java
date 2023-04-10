@@ -40,6 +40,8 @@ import javax.sql.DataSource;
 import org.apache.logging.log4j.ThreadContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Luis Ortiz
@@ -47,9 +49,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = {UpgradeStatus.class, UpgradeStatusImpl.class})
 public class UpgradeStatusImpl implements UpgradeStatus {
 
-	public static void finish(ReleaseManager releaseManager) {
+	public static void finish() {
 		_setFinalSchemaVersion();
-		_setFinalStatus(releaseManager);
+		_setFinalStatus();
 		_setType();
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
@@ -201,11 +203,11 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 				moduleSchemaVersions.setFinal(schemaVersion));
 	}
 
-	private static void _setFinalStatus(ReleaseManager releaseManager) {
+	private static void _setFinalStatus() {
 		boolean check;
 
 		try {
-			check = releaseManager.check();
+			check = _releaseManager.check();
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -305,6 +307,10 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private static boolean _filtered;
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private static ReleaseManager _releaseManager;
+
 	private static final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();
 	private static String _status =

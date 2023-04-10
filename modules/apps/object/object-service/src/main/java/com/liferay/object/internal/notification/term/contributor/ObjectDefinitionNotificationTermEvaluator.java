@@ -214,6 +214,52 @@ public class ObjectDefinitionNotificationTermEvaluator
 					objectRelationship.getName(), StringPool.UNDERLINE,
 					objectDefinition.getShortName()));
 
+			if (termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") ||
+				termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") ||
+				termName.equals("[%" + prefix + "_AUTHOR_ID%]") ||
+				termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") ||
+				termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") ||
+				termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") ||
+				termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") ||
+				termName.equals("[%" + prefix + "_CREATOR%]")) {
+
+				objectField2 = _objectFieldLocalService.getObjectField(
+					objectRelationship.getObjectFieldId2());
+
+				User user = null;
+
+				if (!objectDefinition.isSystem()) {
+					ObjectEntry objectEntry =
+						_objectEntryLocalService.getObjectEntry(
+							GetterUtil.getLong(
+								termValues.get(objectField2.getName())));
+
+					user = _userLocalService.getUser(objectEntry.getUserId());
+				}
+				else {
+					user = _userLocalService.getUser(
+						MapUtil.getLong(
+							_objectEntryLocalService.getSystemModelAttributes(
+								objectDefinition,
+								GetterUtil.getLong(
+									termValues.get(objectField2.getName()))),
+							"creator"));
+				}
+
+				if (termName.equals("[%" + prefix + "_CREATOR%]")) {
+					if (context.equals(Context.RECIPIENT)) {
+						return String.valueOf(termValues.get("creator"));
+					}
+
+					return user.getFullName(true, true);
+				}
+
+				return _getTermValue(
+					StringUtil.removeSubstring(
+						termName, "[%" + prefix + "_AUTHOR_"),
+					user);
+			}
+
 			for (ObjectField objectField :
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {

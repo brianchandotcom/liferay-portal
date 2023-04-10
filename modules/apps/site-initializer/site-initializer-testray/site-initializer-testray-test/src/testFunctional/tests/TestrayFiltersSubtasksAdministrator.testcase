@@ -197,4 +197,51 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by assignee"
+	@priority = 3
+	test AdminCanFilterSubtasksByAssignee {
+        task ("Given that subtask 1 is assigned to user userfn userln") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "userfn userln");
+        }
+
+        task ("And that subtask 2 is assigned to user Test") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+        }
+
+		task ("When the user select the user userfn userln in the filter") {
+			TestrayFilter.clickFilter();
+
+            ScrollWebElementIntoView(
+                key_projectName = "userfn userln",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee",
+				value1 = "userfn");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see only user userfn userln in the table") {
+			AssertElementPresent(
+				key_projectName = "userfn userln",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the user Test in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

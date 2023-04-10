@@ -196,8 +196,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				}
 
 				addMessage(
-					fileName, "Use '@FeatureFlags' on " + scope,
-					getLineNumber(javaTermContent, matcher.start()));
+					fileName,
+					"Use '@FeatureFlags' on " + scope + " definition");
 
 				return;
 			}

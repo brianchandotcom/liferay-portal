@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.info.search;
+package com.liferay.info.search;
 
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.osgi.util.service.Snapshot;
 
 /**

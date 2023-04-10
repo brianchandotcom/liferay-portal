@@ -16,6 +16,7 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashMap;
@@ -26,94 +27,75 @@ import org.junit.runner.Description;
 /**
  * @author Alejandro Tardín
  */
-public class FeatureFlagTestRule extends AbstractTestRule<Void, Void> {
+public class FeatureFlagTestRule
+	extends AbstractTestRule<Map<String, String>, Map<String, String>> {
 
 	public static final FeatureFlagTestRule INSTANCE =
 		new FeatureFlagTestRule();
 
 	@Override
-	protected void afterClass(Description description, Void v)
+	protected void afterClass(
+			Description description, Map<String, String> previousValues)
 		throws Throwable {
 
-		_restoreInitialProperties(
-			description.getAnnotation(FeatureFlags.class),
-			_initialClassProperties);
+		_restoreFeatureFlags(previousValues);
 	}
 
 	@Override
-	protected void afterMethod(Description description, Void v, Object target)
+	protected void afterMethod(
+			Description description, Map<String, String> previousValues,
+			Object target)
 		throws Throwable {
 
-		_restoreInitialProperties(
-			description.getAnnotation(FeatureFlags.class),
-			_initialMethodProperties);
+		_restoreFeatureFlags(previousValues);
 	}
 
 	@Override
-	protected Void beforeClass(Description description) throws Throwable {
+	protected Map<String, String> beforeClass(Description description)
+		throws Throwable {
+
+		return _enableFeatureFlags(description);
+	}
+
+	@Override
+	protected Map<String, String> beforeMethod(
+			Description description, Object target)
+		throws Throwable {
+
+		return _enableFeatureFlags(description);
+	}
+
+	private Map<String, String> _enableFeatureFlags(Description description) {
 		FeatureFlags featureFlags = description.getAnnotation(
 			FeatureFlags.class);
 
-		_storeInitialProperties(featureFlags, _initialClassProperties);
-
-		_setFeatureFlags(featureFlags, true);
-
-		return null;
-	}
-
-	@Override
-	protected Void beforeMethod(Description description, Object target)
-		throws Throwable {
-
-		FeatureFlags featureFlags = description.getAnnotation(
-			FeatureFlags.class);
-
-		_storeInitialProperties(featureFlags, _initialMethodProperties);
-
-		_setFeatureFlags(featureFlags, true);
-
-		return null;
-	}
-
-	private void _restoreInitialProperties(
-		FeatureFlags featureFlags, Map<String, String> propertiesMap) {
+		Map<String, String> previousValues = new HashMap<>();
 
 		if (featureFlags != null) {
 			for (String key : featureFlags.value()) {
+				String featureFlagKey = "feature.flag." + key;
+
+				String previousValue = PropsUtil.get(featureFlagKey);
+
+				if (Validator.isNotNull(previousValue)) {
+					previousValues.put(featureFlagKey, previousValue);
+				}
+
 				PropsUtil.addProperties(
 					UnicodePropertiesBuilder.setProperty(
-						"feature.flag." + key,
-						propertiesMap.get("feature.flag." + key)
+						featureFlagKey, "true"
 					).build());
 			}
 		}
+
+		return previousValues;
 	}
 
-	private void _setFeatureFlags(FeatureFlags featureFlags, boolean enabled) {
-		if (featureFlags != null) {
-			for (String key : featureFlags.value()) {
-				PropsUtil.addProperties(
-					UnicodePropertiesBuilder.setProperty(
-						"feature.flag." + key, Boolean.toString(enabled)
-					).build());
-			}
-		}
+	private void _restoreFeatureFlags(Map<String, String> previousValues) {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.create(
+				previousValues, true
+			).build());
 	}
-
-	private void _storeInitialProperties(
-		FeatureFlags featureFlags, Map<String, String> propertiesMap) {
-
-		if (featureFlags != null) {
-			for (String key : featureFlags.value()) {
-				propertiesMap.putIfAbsent(
-					"feature.flag." + key,
-					PropsUtil.get("feature.flag." + key));
-			}
-		}
-	}
-
-	private final Map<String, String> _initialClassProperties = new HashMap<>();
-	private final Map<String, String> _initialMethodProperties =
-		new HashMap<>();
 
 }

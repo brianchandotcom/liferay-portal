@@ -93,6 +93,12 @@ public class FeatureFlagsAnnotationCheck extends BaseCheck {
 
 			featureFlags.sort(new NaturalOrderStringComparator());
 
+			String annotationValue = StringUtil.merge(featureFlags, ", ");
+
+			if (featureFlags.size() > 1) {
+				annotationValue = "{" + annotationValue + "}";
+			}
+
 			if ((StringUtil.equals(methodName, "setUp") &&
 				 AnnotationUtil.containsAnnotation(
 					 methodDefDetailAST, "Before")) ||
@@ -101,13 +107,13 @@ public class FeatureFlagsAnnotationCheck extends BaseCheck {
 					 methodDefDetailAST, "BeforeClass"))) {
 
 				log(
-					detailAST, _MSG_USE_FEATURE_FLAGS,
-					StringUtil.merge(featureFlags, ", "), "class");
+					detailAST, _MSG_USE_FEATURE_FLAGS, annotationValue,
+					"class");
 			}
 			else {
 				log(
-					methodDefDetailAST, _MSG_USE_FEATURE_FLAGS,
-					StringUtil.merge(featureFlags, ", "), "method");
+					methodDefDetailAST, _MSG_USE_FEATURE_FLAGS, annotationValue,
+					"method");
 			}
 		}
 	}

@@ -23,20 +23,20 @@ definition {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			tagName = "dxp",
 			webContentTitle = "Digital Transformation or Digital Experience?");
 
-		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			tagName = "computers",
 			webContentTitle = "WC Google Text AutoTagging");
 
-		Upgrade.addAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			tagName = "adventures",
 			webContentContent = "Alice's Adventures in Wonderland",
 			webContentTitle = "WC New OpenNLP AutoTagging");
 
-		Upgrade.addAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			tagName = "value people",
 			webContentContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			webContentTitle = "WC New Google AutoTagging");
@@ -48,20 +48,20 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.name.skip.portal.instance = "WebContentAutoTaggingUpgrade#ViewWebContentArchive73101";
 
-		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			tagName = "dxp",
 			webContentTitle = "Digital Transformation or Digital Experience?");
 
-		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			tagName = "computers",
 			webContentTitle = "WC Google Text AutoTagging");
 
-		Upgrade.addAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			tagName = "adventures",
 			webContentContent = "Alice's Adventures in Wonderland",
 			webContentTitle = "WC New OpenNLP AutoTagging");
 
-		Upgrade.addAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			tagName = "value people",
 			webContentContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			webContentTitle = "WC New Google AutoTagging");

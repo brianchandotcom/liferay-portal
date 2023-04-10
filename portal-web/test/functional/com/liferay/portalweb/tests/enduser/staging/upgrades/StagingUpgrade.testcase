@@ -970,7 +970,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -984,7 +984,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -998,7 +998,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -1012,7 +1012,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -1025,7 +1025,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -1038,7 +1038,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -1051,7 +1051,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -1064,7 +1064,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
@@ -1078,7 +1078,7 @@ definition {
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Dynamic Data Lists,Message Boards,Templates,Wiki");
 
-		Upgrade.viewStagingConfiguration();
+		ValidateStagingUpgrade.viewStagingConfiguration();
 	}
 
 }

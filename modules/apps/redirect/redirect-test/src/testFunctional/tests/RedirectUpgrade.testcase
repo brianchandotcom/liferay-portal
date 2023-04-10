@@ -38,11 +38,11 @@ definition {
 			PortletEntry.update();
 		}
 
-		Upgrade.viewAndAccessRedirects();
+		ValidateRedirectionUpgrade.viewAndAccessRedirects();
 
-		Upgrade.editAndDeleteRedirects();
+		ValidateRedirectionUpgrade.editAndDeleteRedirects();
 
-		Upgrade.ignore404URLs();
+		ValidateRedirectionUpgrade.ignore404URLs();
 	}
 
 }

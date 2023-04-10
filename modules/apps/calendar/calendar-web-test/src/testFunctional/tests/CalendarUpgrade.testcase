@@ -20,7 +20,7 @@ definition {
 		property portal.upstream = "true";
 		property portal.version = "6.2.5";
 
-		Upgrade.viewCalendar();
+		ValidateCalendarUpgrade.viewCalendar();
 	}
 
 	@priority = 5
@@ -30,7 +30,7 @@ definition {
 		property portal.upstream = "true";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.viewCalendar();
+		ValidateCalendarUpgrade.viewCalendar();
 	}
 
 	@priority = 5
@@ -40,7 +40,7 @@ definition {
 		property portal.upstream = "true";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewCalendar();
+		ValidateCalendarUpgrade.viewCalendar();
 	}
 
 }

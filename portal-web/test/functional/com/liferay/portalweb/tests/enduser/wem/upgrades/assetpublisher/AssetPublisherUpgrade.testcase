@@ -23,7 +23,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 
-		Upgrade.viewAssetPublisher();
+		ValidateAssetPublisherUpgrade.viewAssetPublisher();
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -33,9 +33,9 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.6";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -45,9 +45,9 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -57,9 +57,9 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -69,9 +69,9 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -81,7 +81,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -91,7 +91,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.4.13";
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -101,9 +101,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -113,9 +113,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -125,9 +125,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -137,7 +137,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.3.21";
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -147,7 +147,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.viewAssetPublisher();
+		ValidateAssetPublisherUpgrade.viewAssetPublisher();
 	}
 
 	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
@@ -157,7 +157,7 @@ definition {
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 }

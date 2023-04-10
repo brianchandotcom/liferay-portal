@@ -25,43 +25,43 @@ definition {
 		property portal.version = "7.2.10.1";
 		property test.name.skip.portal.instance = "DMAutoTaggingUpgrade#ViewDMArchive72101";
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document JPG",
 			tagName = "carton");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document DOCX",
 			tagName = "alice");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "Document Google Image AutoTagging",
 			tagName = "t-shirt");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "Document Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Blue.jpg",
 			dmDocumentTitle = "DM New Document JPG",
 			tagName = "jersey");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM New Document PDF",
 			tagName = "alice");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_White.jpg",
 			dmDocumentTitle = "Document New Google Image AutoTagging",
 			tagName = "pattern");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document New Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTagViaGogoShell(
+		ValidateAutoTaggingUpgrade.addAutoTagViaGogoShell(
 			blogEntryTitle = "Blogs Without Autotagging",
 			blogTagName = "dxp,business services",
 			blogTagNum = 5,
@@ -81,43 +81,43 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.name.skip.portal.instance = "DMAutoTaggingUpgrade#ViewDMArchive73101";
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document JPG",
 			tagName = "carton");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document DOCX",
 			tagName = "alice");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "Document Google Image AutoTagging",
 			tagName = "t-shirt");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "Document Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Blue.jpg",
 			dmDocumentTitle = "DM New Document JPG",
 			tagName = "jersey");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM New Document PDF",
 			tagName = "alice");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_White.jpg",
 			dmDocumentTitle = "Document New Google Image AutoTagging",
 			tagName = "pattern");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document New Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTagViaGogoShell(
+		ValidateAutoTaggingUpgrade.addAutoTagViaGogoShell(
 			blogEntryTitle = "Blogs Without Autotagging",
 			blogTagName = "dxp,business services",
 			blogTagNum = 5,

@@ -26,17 +26,17 @@ definition {
 		property portal.version = "7.2.10.1";
 		property test.name.skip.portal.instance = "AssetsSharingUpgrade#CanViewSharedAssetsArchive72101";
 
-		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
+		ValidateAssetSharingUpgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
 
-		Upgrade.viewSharedBlog();
+		ValidateAssetSharingUpgrade.viewSharedBlog();
 
-		Upgrade.revokeAndUpdateSharedEntry(
+		ValidateAssetSharingUpgrade.revokeAndUpdateSharedEntry(
 			blogsEntryTitleUpdate = "Blogs Entry Title Can Update",
 			blogsEntryTitleView = "Blogs Entry Title",
 			dmDocumentTitleUpdate = "DM Document Title Can Update",
 			dmDocumentTitleView = "DM Document Title 1");
 
-		Upgrade.viewNoShareOptionAfterDisabled();
+		ValidateAssetSharingUpgrade.viewNoShareOptionAfterDisabled();
 	}
 
 	@priority = 5
@@ -45,17 +45,17 @@ definition {
 		property data.archive.type = "data-archive-asset-sharing";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
+		ValidateAssetSharingUpgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
 
-		Upgrade.viewSharedBlog();
+		ValidateAssetSharingUpgrade.viewSharedBlog();
 
-		Upgrade.revokeAndUpdateSharedEntry(
+		ValidateAssetSharingUpgrade.revokeAndUpdateSharedEntry(
 			blogsEntryTitleUpdate = "Blogs Entry Title Can Update",
 			blogsEntryTitleView = "Blogs Entry Title",
 			dmDocumentTitleUpdate = "DM Document Title Can Update",
 			dmDocumentTitleView = "DM Document Title 1");
 
-		Upgrade.viewNoShareOptionAfterDisabled();
+		ValidateAssetSharingUpgrade.viewNoShareOptionAfterDisabled();
 	}
 
 }

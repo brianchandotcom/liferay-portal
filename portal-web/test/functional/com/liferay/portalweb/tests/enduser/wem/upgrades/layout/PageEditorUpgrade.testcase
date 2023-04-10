@@ -22,9 +22,9 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.configurePageEditor();
+		ValidatePageEditorUpgrade.configurePageEditor();
 	}
 
 	@description = "This is a test for LPS-106776 and LPS-156027. This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
@@ -34,9 +34,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewDefaultPage();
+		ValidatePageEditorUpgrade.viewDefaultPage();
 
-		Upgrade.configurePageEditor();
+		ValidatePageEditorUpgrade.configurePageEditor();
 	}
 
 	@description = "This is a test for LPS-151110. View the button content does not appear in the results and Hide Content from Search Results configuration is checked."
@@ -46,9 +46,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.2.10.4";
 
-		Upgrade.viewNoSearchResults();
+		ValidatePageEditorUpgrade.viewNoSearchResults();
 
-		Upgrade.viewConfigurationChecked();
+		ValidatePageEditorUpgrade.viewConfigurationChecked();
 	}
 
 	@description = "This is a use case for LPS-106776. Fragment configuration persists after upgrating."
@@ -58,7 +58,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
 
-		Upgrade.viewContributedFragmentStyle();
+		ValidatePageEditorUpgrade.viewContributedFragmentStyle();
 	}
 
 	@description = "This is a use case for LPS-106776. Fragment configuration persists after upgrating."
@@ -68,7 +68,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewContributedFragmentStyle();
+		ValidatePageEditorUpgrade.viewContributedFragmentStyle();
 	}
 
 }

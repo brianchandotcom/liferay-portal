@@ -22,7 +22,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.addDataDefinitionWithDB2(site = "Guest");
+		ValidateDataEngineUpgrade.addDataDefinitionWithDB2(site = "Guest");
 	}
 
 }

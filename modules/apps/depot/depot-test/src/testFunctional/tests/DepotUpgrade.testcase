@@ -26,15 +26,15 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.name.skip.portal.instance = "DepotUpgrade#ViewDepotArchive73101";
 
-		Upgrade.validateDepotWCAndStructure();
+		ValidateDepotUpgrade.validateDepotWCAndStructure();
 
-		Upgrade.validateDepotDMAndType();
+		ValidateDepotUpgrade.validateDepotDMAndType();
 
-		Upgrade.validateCollections();
+		ValidateDepotUpgrade.validateCollections();
 
-		Upgrade.validateDepotSettings();
+		ValidateDepotUpgrade.validateDepotSettings();
 
-		Upgrade.validateDepotEntries();
+		ValidateDepotUpgrade.validateDepotEntries();
 	}
 
 	@priority = 5
@@ -44,79 +44,79 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.name.skip.portal.instance = "DepotUpgrade#ViewDepotAutotaggingAndSharingArchive73101";
 
-		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
+		ValidateAssetSharingUpgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
 
-		Upgrade.revokeAndUpdateSharedEntry(
+		ValidateAssetSharingUpgrade.revokeAndUpdateSharedEntry(
 			dmDocumentTitleUpdate = "DM Document Title Can Update",
 			dmDocumentTitleView = "DM Document Title Sharing");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document Image AutoTagging",
 			tagName = "carton");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document DOCX AutoTagging",
 			tagName = "alice");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "Document Google Image AutoTagging",
 			tagName = "t-shirt");
 
-		Upgrade.editTagsAndDeleteAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "Document Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentFile = "Commerce_Blue.jpg",
 			dmDocumentTitle = "DM New Document JPG",
 			tagName = "jersey");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM New Document PDF",
 			tagName = "alice");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentFile = "Commerce_White.jpg",
 			dmDocumentTitle = "Document New Google Image AutoTagging",
 			tagName = "pattern");
 
-		Upgrade.addAutoTaggedDM(
+		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			depotName = "Test Depot Name",
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document New Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			depotName = "Test Depot Name",
 			tagName = "dxp",
 			webContentTitle = "Digital Transformation or Digital Experience?");
 
-		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			depotName = "Test Depot Name",
 			tagName = "computers",
 			webContentTitle = "WC Google Text AutoTagging");
 
-		Upgrade.addAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			depotName = "Test Depot Name",
 			tagName = "adventures",
 			webContentContent = "Alice's Adventures in Wonderland",
 			webContentTitle = "WC New OpenNLP AutoTagging");
 
-		Upgrade.addAutoTaggedWebContent(
+		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			depotName = "Test Depot Name",
 			tagName = "value people",
 			webContentContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			webContentTitle = "WC New Google AutoTagging");
 
-		Upgrade.addAutoTagViaGogoShell(
+		ValidateAutoTaggingUpgrade.addAutoTagViaGogoShell(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Without Autotagging",
 			dmTagName = "jersey,t-shirt",

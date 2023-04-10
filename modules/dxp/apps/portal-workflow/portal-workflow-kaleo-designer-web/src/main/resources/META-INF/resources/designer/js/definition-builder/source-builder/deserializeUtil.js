@@ -37,13 +37,13 @@ DeserializeUtil.prototype = {
 
 		const elements = [];
 
-		const transitionsIDs = [];
+		const transitionsNames = [];
 
-		const nodesIDs = [];
+		const nodesNames = [];
 
 		instance.definition.forEachField((_, fieldData) => {
 			fieldData.results.forEach((node) => {
-				nodesIDs.push(node.name);
+				nodesNames.push(node.name);
 			});
 		});
 
@@ -143,13 +143,13 @@ DeserializeUtil.prototype = {
 					});
 				});
 
-				let nodeId;
+				let nodeName;
 
 				if (node.id) {
-					nodeId = node.id;
+					nodeName = node.id;
 				}
 				else if (node.name) {
-					nodeId = node.name;
+					nodeName = node.name;
 				}
 				else {
 					return;
@@ -157,7 +157,7 @@ DeserializeUtil.prototype = {
 
 				elements.push({
 					data,
-					id: nodeId,
+					id: nodeName,
 					position,
 					type,
 				});
@@ -181,32 +181,32 @@ DeserializeUtil.prototype = {
 							label = {[defaultLanguageId]: transition.name};
 						}
 
-						let transitionId;
+						let transitionName;
 
 						if (transition.id) {
-							transitionId = transition.id;
+							transitionName = transition.id;
 						}
 						else if (transition.name) {
-							transitionId = transition.name;
+							transitionName = transition.name;
 						}
 						else {
 							return;
 						}
 
 						if (
-							transitionsIDs.includes(transitionId) ||
-							nodesIDs.includes(transitionId)
+							transitionsNames.includes(transitionName) ||
+							nodesNames.includes(transitionName)
 						) {
-							transitionId = `${nodeId}_${transitionId}_${transition.target}`;
+							transitionName = `${nodeName}_${transitionName}_${transition.target}`;
 						}
 						else {
-							transitionsIDs.push(transitionId);
+							transitionsNames.push(transitionName);
 						}
 
 						const hasDefaultEdge = elements.find(
 							(element) =>
 								isEdge(element) &&
-								element.source === nodeId &&
+								element.source === nodeName &&
 								element.data.defaultEdge
 						);
 
@@ -220,8 +220,8 @@ DeserializeUtil.prototype = {
 										: false,
 								label,
 							},
-							id: transitionId,
-							source: nodeId,
+							id: transitionName,
+							source: nodeName,
 							target: transition.target,
 							type: 'transition',
 						});

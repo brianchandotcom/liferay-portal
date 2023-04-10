@@ -366,7 +366,6 @@ XMLDefinition.prototype = {
 		const schema = {
 			resultFields: [
 				'description',
-				'id',
 				'initial',
 				{
 					key: 'labels',

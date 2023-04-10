@@ -128,18 +128,18 @@ export default function EdgeInformation({errors, setErrors}) {
 							: ''
 					}
 				>
-					<label htmlFor="transitionId">
+					<label htmlFor="transitionName">
 						<span>
 							{`${Liferay.Language.get(
 								'transition'
-							)} ${Liferay.Language.get('id')}`}
+							)} ${Liferay.Language.get('name')}`}
 						</span>
 
 						<span className="ml-1 mr-1 text-warning">*</span>
 
 						<span
 							title={Liferay.Language.get(
-								'id-is-the-transition-identifier'
+								'name-is-the-transition-identifier'
 							)}
 						>
 							<ClayIcon
@@ -150,7 +150,7 @@ export default function EdgeInformation({errors, setErrors}) {
 					</label>
 
 					<ClayInput
-						id="transitionId"
+						id="transitionName"
 						onChange={({target}) => {
 							setErrors(checkIdErrors(elements, errors, target));
 							setSelectedItemNewId(target.value);
@@ -166,7 +166,7 @@ export default function EdgeInformation({errors, setErrors}) {
 
 								{errors.id.duplicated
 									? Liferay.Language.get(
-											'a-transition-with-that-id-already-exists'
+											'a-transition-with-that-name-already-exists'
 									  )
 									: Liferay.Language.get(
 											'this-field-is-required'

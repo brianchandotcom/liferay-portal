@@ -86,13 +86,13 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 			if (assignmentType === 'roleType') {
 				const assignmentSummary = assignments.roleName;
 
-				const result = [assignmentSummary[0]];
+				const result = [assignmentSummary?.[0]];
 
-				if (assignmentSummary.length > 1) {
+				if (assignmentSummary?.length > 1) {
 					result.push(
 						' ' +
 							lang.sub(Liferay.Language.get('and-x-more'), [
-								assignmentSummary.length - 1,
+								assignmentSummary?.length - 1,
 							])
 					);
 				}

@@ -567,7 +567,7 @@ function appendXMLTaskTimers(buffer, taskTimers, exporting) {
 	}
 }
 
-function appendXMLTransitions(buffer, transitions, exporting) {
+function appendXMLTransitions(buffer, transitions) {
 	if (transitions.length) {
 		const xmlTransitions = XMLUtil.createObj('transitions');
 
@@ -593,11 +593,7 @@ function appendXMLTransitions(buffer, transitions, exporting) {
 
 			buffer.push(xmlLabels.close);
 
-			const tagTransitionNameId = exporting ? 'name' : 'id';
-
-			buffer.push(
-				createTagWithEscapedContent(`${tagTransitionNameId}`, item.id)
-			);
+			buffer.push(createTagWithEscapedContent('name', item.id));
 
 			buffer.push(
 				createTagWithEscapedContent('target', item.target),
@@ -660,8 +656,8 @@ function serializeDefinition(
 
 	nodes?.forEach((item) => {
 		const description = item.data?.description;
-		const id = item.id;
 		const initial = item.type === 'start';
+		const name = item.id;
 		const script = item.data?.script;
 		const scriptLanguage = item.data?.scriptLanguage;
 		let xmlType = item.type;
@@ -672,12 +668,7 @@ function serializeDefinition(
 
 		const xmlNode = XMLUtil.createObj(xmlType);
 
-		const tagNodeNameId = exporting ? 'name' : 'id';
-
-		buffer.push(
-			xmlNode.open,
-			createTagWithEscapedContent(`${tagNodeNameId}`, id)
-		);
+		buffer.push(xmlNode.open, createTagWithEscapedContent('name', name));
 
 		if (description) {
 			const descriptionWithHTMLEscape = Liferay.Util.escape(description);
@@ -742,10 +733,10 @@ function serializeDefinition(
 		}
 
 		const nodeTransitions = transitions.filter(
-			(transition) => transition.source === id
+			(transition) => transition.source === name
 		);
 
-		appendXMLTransitions(buffer, nodeTransitions, exporting);
+		appendXMLTransitions(buffer, nodeTransitions);
 
 		buffer.push(xmlNode.close);
 	});

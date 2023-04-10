@@ -79,6 +79,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public String getModule() {
+		if (_module.contains(" from ")) {
+			return _module;
+		}
+
 		return StringBundler.concat(getNamespace(), "/", _module);
 	}
 

@@ -347,9 +347,6 @@ function StructureTreeNodeContent({
 				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
-				'page-editor__page-structure__tree-node--mapped': isMapped,
-				'page-editor__page-structure__tree-node--master-item':
-					node.isMasterItem,
 			})}
 			ref={targetRef}
 		>

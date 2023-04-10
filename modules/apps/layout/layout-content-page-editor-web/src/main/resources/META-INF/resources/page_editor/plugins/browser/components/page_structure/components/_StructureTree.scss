@@ -6,23 +6,6 @@ html#{$cadmin-selector} {
 			min-height: 100%;
 			padding: 0 16px;
 
-			&-node {
-				width: initial;
-				min-width: 100%;
-
-				&.treeview-link {
-					width: fit-content;
-				}
-
-				.c-inner {
-					width: auto;
-				}
-
-				& > .autofit-col-expand {
-					flex-shrink: 0;
-				}
-			}
-
 			.lfr-treeview-node-list {
 				border-left: none;
 

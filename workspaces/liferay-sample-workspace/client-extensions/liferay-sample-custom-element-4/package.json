@@ -1,0 +1,8 @@
+{
+	"devDependencies": {
+		"serve": "^14.2.0"
+	},
+	"scripts": {
+		"start": "PORT=5001 serve --cors"
+	}
+}

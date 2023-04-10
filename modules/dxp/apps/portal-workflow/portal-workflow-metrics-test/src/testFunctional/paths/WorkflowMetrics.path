@@ -341,11 +341,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_RESULTS</td>
-	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@class, 'panel-header')]/following-sibling::div//p[contains(.,'No results were found.')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_REVIEW</td>
 	<td>//div[contains(@class, 'dropdown-menu show')]//div[contains(text(),'Review')]</td>
 	<td></td>

@@ -187,14 +187,85 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _evaluateRelatedObjectFields(
+	private String _evaluateRelatedObjectAuthor(
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition = null;
+		User user = null;
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.
+					getObjectRelationshipsByObjectDefinitionId2(
+						_objectDefinition.getObjectDefinitionId())) {
+
+			objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			String prefix = StringUtil.toUpperCase(
+				StringBundler.concat(
+					objectRelationship.getName(), StringPool.UNDERLINE,
+					objectDefinition.getShortName()));
+
+			if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
+				!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
+				!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&
+				!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") &&
+				!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") &&
+				!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") &&
+				!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") &&
+				!termName.equals("[%" + prefix + "_CREATOR%]")) {
+
+				continue;
+			}
+
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+			if (!objectDefinition.isSystem()) {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						GetterUtil.getLong(
+							termValues.get(objectField.getName())));
+
+				user = _userLocalService.getUser(objectEntry.getUserId());
+			}
+			else {
+				user = _userLocalService.getUser(
+					MapUtil.getLong(
+						_objectEntryLocalService.getSystemModelAttributes(
+							objectDefinition,
+							GetterUtil.getLong(
+								termValues.get(objectField.getName()))),
+						"creator"));
+			}
+
+			if (termName.equals("[%" + prefix + "_CREATOR%]")) {
+				if (context.equals(Context.RECIPIENT)) {
+					return String.valueOf(termValues.get("creator"));
+				}
+
+				return user.getFullName(true, true);
+			}
+
+			return _getTermValue(
+				StringUtil.removeSubstring(
+					termName, "[%" + prefix + "_AUTHOR_"),
+				user);
+		}
+
+		return null;
+	}
+
+	private String _evaluateRelatedObjectFields(
+			Context context, String termName, Map<String, Object> termValues)
+		throws PortalException {
+
+		boolean found = false;
+		ObjectDefinition objectDefinition = null;
 		ObjectField objectField2 = null;
 		String objectFieldName = StringPool.BLANK;
-		boolean found = false;
 
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.
@@ -213,52 +284,6 @@ public class ObjectDefinitionNotificationTermEvaluator
 				StringBundler.concat(
 					objectRelationship.getName(), StringPool.UNDERLINE,
 					objectDefinition.getShortName()));
-
-			if (termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") ||
-				termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") ||
-				termName.equals("[%" + prefix + "_AUTHOR_ID%]") ||
-				termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") ||
-				termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") ||
-				termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") ||
-				termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") ||
-				termName.equals("[%" + prefix + "_CREATOR%]")) {
-
-				objectField2 = _objectFieldLocalService.getObjectField(
-					objectRelationship.getObjectFieldId2());
-
-				User user = null;
-
-				if (!objectDefinition.isSystem()) {
-					ObjectEntry objectEntry =
-						_objectEntryLocalService.getObjectEntry(
-							GetterUtil.getLong(
-								termValues.get(objectField2.getName())));
-
-					user = _userLocalService.getUser(objectEntry.getUserId());
-				}
-				else {
-					user = _userLocalService.getUser(
-						MapUtil.getLong(
-							_objectEntryLocalService.getSystemModelAttributes(
-								objectDefinition,
-								GetterUtil.getLong(
-									termValues.get(objectField2.getName()))),
-							"creator"));
-				}
-
-				if (termName.equals("[%" + prefix + "_CREATOR%]")) {
-					if (context.equals(Context.RECIPIENT)) {
-						return String.valueOf(termValues.get("creator"));
-					}
-
-					return user.getFullName(true, true);
-				}
-
-				return _getTermValue(
-					StringUtil.removeSubstring(
-						termName, "[%" + prefix + "_AUTHOR_"),
-					user);
-			}
 
 			for (ObjectField objectField :
 					_objectFieldLocalService.getObjectFields(
@@ -302,19 +327,6 @@ public class ObjectDefinitionNotificationTermEvaluator
 					objectEntry.getValues()
 				).put(
 					"createDate", objectEntry.getCreateDate()
-				).put(
-					"creator",
-					() -> {
-						long userId = objectEntry.getUserId();
-
-						if (context.equals(Context.RECIPIENT)) {
-							return userId;
-						}
-
-						User user = _userLocalService.getUser(userId);
-
-						return user.getFullName(true, true);
-					}
 				).put(
 					"externalReferenceCode",
 					objectEntry.getExternalReferenceCode()
@@ -382,7 +394,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(
 		this::_evaluateAuthor, this::_evaluateCurrentUser,
-		this::_evaluateObjectFields, this::_evaluateRelatedObjectFields);
+		this::_evaluateObjectFields, this::_evaluateRelatedObjectAuthor,
+		this::_evaluateRelatedObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

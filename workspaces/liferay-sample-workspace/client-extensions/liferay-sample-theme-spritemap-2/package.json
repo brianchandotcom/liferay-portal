@@ -1,13 +1,14 @@
 {
 	"dependencies": {
-		"@liferay/dxp-7.4": "*"
+		"glob": "9.3.4"
 	},
 	"description": "Liferay Sample Theme Spritemap 2",
+	"devDependencies": {
+		"@clayui/css": "^3.92.0"
+	},
 	"name": "liferay-sample-theme-spritemap-2",
 	"scripts": {
-		"build": "liferay build",
-		"clean": "liferay clean",
-		"deploy": "liferay deploy"
+		"build": "node ./buildSpritemap.js"
 	},
 	"version": "1.0.0"
 }

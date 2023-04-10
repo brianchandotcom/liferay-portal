@@ -93,7 +93,7 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			return null;
 		}
 
-		return _siteInitializerItem.getIcon();
+		return PortalUtil.getPathContext() + _siteInitializerItem.getIcon();
 	}
 
 	@Override

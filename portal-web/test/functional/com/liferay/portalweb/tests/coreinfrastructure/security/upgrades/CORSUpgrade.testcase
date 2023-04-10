@@ -28,7 +28,7 @@ definition {
 				configurationName = "Portal Cross-Origin Resource Sharing (CORS)",
 				configurationScope = "Virtual Instance Scope");
 
-			Upgrade.viewPortalCORS(
+			ValidateCORSUpgrade.viewPortalCORS(
 				header = "Test-Header",
 				name = "Test",
 				urlPattern = "/api/*/test");
@@ -49,7 +49,7 @@ definition {
 				configurationName = "Web Contexts Cross-Origin Resource Sharing (CORS)",
 				configurationScope = "System Scope");
 
-			Upgrade.viewWebContextsCORS(
+			ValidateCORSUpgrade.viewWebContextsCORS(
 				filter = "(&(!(liferay.cors=false))(osgi.jaxrs.name=test-cors))",
 				urlPattern = "/api/*/test");
 		}

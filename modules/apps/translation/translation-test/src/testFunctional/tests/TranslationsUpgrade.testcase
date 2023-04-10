@@ -24,11 +24,11 @@ definition {
 		property data.archive.type = "data-archive-translations";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewTranslations();
+		ValidateTranslationsManagementUpgrade.viewTranslations();
 
-		Upgrade.addAndEditTranslations();
+		ValidateTranslationsManagementUpgrade.addAndEditTranslations();
 
-		Upgrade.exportAndImportTranslations();
+		ValidateTranslationsManagementUpgrade.exportAndImportTranslations();
 	}
 
 }

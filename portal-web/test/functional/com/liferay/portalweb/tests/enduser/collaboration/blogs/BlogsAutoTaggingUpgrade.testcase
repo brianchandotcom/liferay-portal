@@ -25,24 +25,24 @@ definition {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial...",
 			entryTitle = "Digital Transformation or Digital Experience?",
 			entryTitleKey = "digital-transformation-or-digital-experience-?",
 			tagName = "dxp");
 
-		Upgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
 			entryContent = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			entryTitle = "Blogs Google AutoTagging",
 			entryTitleKey = "blogs-google-autoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Alice's Adventures in Wonderland",
 			entryTitle = "Blogs New OpenNLP AutoTagging",
 			tagName = "adventures");
 
-		Upgrade.addAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			entryTitle = "Blogs New Google AutoTagging",
 			tagName = "value people");
@@ -54,24 +54,24 @@ definition {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial...",
 			entryTitle = "Digital Transformation or Digital Experience?",
 			entryTitleKey = "digital-transformation-or-digital-experience-?",
 			tagName = "dxp");
 
-		Upgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedBlogsEntry(
 			entryContent = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			entryTitle = "Blogs Google AutoTagging",
 			entryTitleKey = "blogs-google-autoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Alice's Adventures in Wonderland",
 			entryTitle = "Blogs New OpenNLP AutoTagging",
 			tagName = "adventures");
 
-		Upgrade.addAutoTaggedBlogsEntry(
+		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			entryTitle = "Blogs New Google AutoTagging",
 			tagName = "value people");

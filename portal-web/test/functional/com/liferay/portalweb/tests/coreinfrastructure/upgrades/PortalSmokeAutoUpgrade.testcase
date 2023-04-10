@@ -23,7 +23,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 4
@@ -32,7 +32,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@description = "LPS-158183: This is a smoke test to directly upgrade from 6.1 to 7.4 version using Auto Upgrade."
@@ -43,7 +43,7 @@ definition {
 		property database.types = "sybase,oracle,mariadb,mysql,postgresql,db2";
 		property portal.version = "6.1.30";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 5
@@ -51,7 +51,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 5
@@ -60,7 +60,7 @@ definition {
 		property portal.version = "7.2.10";
 		property test.run.environment = "EE";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 5
@@ -69,7 +69,7 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 5
@@ -78,7 +78,7 @@ definition {
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 
 		task ("Check the upgrade report is not present without property upgrade.database.auto.run=true") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -96,7 +96,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 5
@@ -104,7 +104,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10.3";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 	@priority = 5
@@ -112,7 +112,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewUpgrade();
+		ValidateSmokeUpgrade.viewUpgrade();
 	}
 
 }

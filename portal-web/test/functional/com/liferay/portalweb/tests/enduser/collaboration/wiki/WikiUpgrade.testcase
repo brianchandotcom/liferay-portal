@@ -23,9 +23,9 @@ definition {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.1.10.5";
 
-		Upgrade.viewAndAddWiki();
+		ValidateWikiUpgrade.viewAndAddWiki();
 
-		Upgrade.editAndDeleteWiki();
+		ValidateWikiUpgrade.editAndDeleteWiki();
 	}
 
 	@priority = 5
@@ -33,9 +33,9 @@ definition {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.2.10.4";
 
-		Upgrade.viewAndAddWiki();
+		ValidateWikiUpgrade.viewAndAddWiki();
 
-		Upgrade.editAndDeleteWiki();
+		ValidateWikiUpgrade.editAndDeleteWiki();
 	}
 
 	@priority = 5
@@ -43,9 +43,9 @@ definition {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndAddWiki();
+		ValidateWikiUpgrade.viewAndAddWiki();
 
-		Upgrade.editAndDeleteWiki();
+		ValidateWikiUpgrade.editAndDeleteWiki();
 	}
 
 	@priority = 5
@@ -53,9 +53,9 @@ definition {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.0.10.15";
 
-		Upgrade.viewAndAddWiki();
+		ValidateWikiUpgrade.viewAndAddWiki();
 
-		Upgrade.editAndDeleteWiki();
+		ValidateWikiUpgrade.editAndDeleteWiki();
 	}
 
 }

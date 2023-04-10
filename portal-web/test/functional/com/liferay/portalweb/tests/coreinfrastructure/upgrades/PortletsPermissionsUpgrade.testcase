@@ -23,7 +23,7 @@ definition {
 		property database.types = "db2,mysql,oracle,sybase";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.ViewPortletsPermissions();
+		ValidatePortletPermissionsUpgrade.viewPortletsPermissions();
 	}
 
 	@priority = 4
@@ -32,7 +32,7 @@ definition {
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.ViewPortletsPermissions();
+		ValidatePortletPermissionsUpgrade.viewPortletsPermissions();
 	}
 
 }

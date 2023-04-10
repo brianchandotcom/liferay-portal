@@ -21,7 +21,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -30,7 +30,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -39,7 +39,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -47,7 +47,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -55,7 +55,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -64,7 +64,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -73,7 +73,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.addForm(site = "Guest");
+		ValidateFormsUpgrade.addForm(site = "Guest");
 	}
 
 	@priority = 5
@@ -85,7 +85,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10";
 
-		Upgrade.submitFormEntry7010();
+		ValidateFormsUpgrade.submitFormEntry7010();
 	}
 
 	@priority = 5
@@ -97,7 +97,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
-		Upgrade.submitFormEntry();
+		ValidateFormsUpgrade.submitFormEntry();
 	}
 
 	@priority = 5
@@ -109,7 +109,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
-		Upgrade.submitFormEntry();
+		ValidateFormsUpgrade.submitFormEntry();
 	}
 
 	@priority = 5
@@ -121,7 +121,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 
-		Upgrade.submitFormEntry7310();
+		ValidateFormsUpgrade.submitFormEntry7310();
 	}
 
 	@priority = 5
@@ -133,7 +133,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10";
 
-		Upgrade.viewUpdateFieldNameToFieldReference7010();
+		ValidateFormsUpgrade.viewUpdateFieldNameToFieldReference7010();
 	}
 
 	@priority = 5
@@ -145,7 +145,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
-		Upgrade.viewUpdateFieldNameToFieldReference();
+		ValidateFormsUpgrade.viewUpdateFieldNameToFieldReference();
 	}
 
 	@priority = 5
@@ -157,7 +157,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
-		Upgrade.viewUpdateFieldNameToFieldReference();
+		ValidateFormsUpgrade.viewUpdateFieldNameToFieldReference();
 	}
 
 	@priority = 5
@@ -169,7 +169,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
-		Upgrade.viewUploadFormEntry();
+		ValidateFormsUpgrade.viewUploadFormEntry();
 	}
 
 	@priority = 5
@@ -181,7 +181,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
-		Upgrade.viewUploadFormEntry();
+		ValidateFormsUpgrade.viewUploadFormEntry();
 	}
 
 	@priority = 5
@@ -193,7 +193,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 
-		Upgrade.viewUploadFormEntry();
+		ValidateFormsUpgrade.viewUploadFormEntry();
 	}
 
 	@priority = 5
@@ -205,7 +205,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.0.4";
 
-		Upgrade.viewAndDeleteFormEntry();
+		ValidateFormsUpgrade.viewAndDeleteFormEntry();
 	}
 
 	@priority = 5
@@ -217,7 +217,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.6";
 
-		Upgrade.viewAndDeleteFormEntry();
+		ValidateFormsUpgrade.viewAndDeleteFormEntry();
 	}
 
 	@priority = 5
@@ -229,7 +229,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10";
 
-		Upgrade.viewFormEntry7010();
+		ValidateFormsUpgrade.viewFormEntry7010();
 	}
 
 	@priority = 5
@@ -241,7 +241,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
-		Upgrade.viewFormEntry();
+		ValidateFormsUpgrade.viewFormEntry();
 	}
 
 	@priority = 5
@@ -253,7 +253,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
-		Upgrade.viewFormEntry();
+		ValidateFormsUpgrade.viewFormEntry();
 	}
 
 	@priority = 5
@@ -265,7 +265,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 
-		Upgrade.viewFormEntry7310();
+		ValidateFormsUpgrade.viewFormEntry7310();
 	}
 
 }

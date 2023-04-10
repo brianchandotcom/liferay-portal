@@ -23,7 +23,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 
-		Upgrade.viewNestedPortlets();
+		ValidateWebContentUpgrade.viewNestedPortlets();
 	}
 
 	@description = "View nested portlets after upgrade."
@@ -33,7 +33,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.viewNestedPortlets();
+		ValidateWebContentUpgrade.viewNestedPortlets();
 	}
 
 	@description = "View nested portlets after upgrade."
@@ -43,7 +43,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewNestedPortlets();
+		ValidateWebContentUpgrade.viewNestedPortlets();
 	}
 
 	@description = "This is a use case for LPS-66141. View nested portlets in staging site after upgrade."
@@ -53,7 +53,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 
-		Upgrade.viewStagingNestedPortlets();
+		ValidateStagingUpgrade.viewStagingNestedPortlets();
 	}
 
 	@description = "This is a use case for LPS-66141. View nested portlets in staging site after upgrade."
@@ -63,7 +63,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.viewStagingNestedPortlets();
+		ValidateStagingUpgrade.viewStagingNestedPortlets();
 	}
 
 	@description = "This is a use case for LPS-66141. View nested portlets in staging site after upgrade."
@@ -73,7 +73,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewStagingNestedPortlets();
+		ValidateStagingUpgrade.viewStagingNestedPortlets();
 	}
 
 }

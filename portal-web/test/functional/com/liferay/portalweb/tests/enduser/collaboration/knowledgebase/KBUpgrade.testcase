@@ -25,9 +25,9 @@ definition {
 		property portal.version = "7.1.10.5";
 		property test.name.skip.portal.instance = "KBUpgrade#ViewKBArticleArchive71105";
 
-		Upgrade.viewAndAddKBArticle(portalVersion = "7.1.10.5");
+		ValidateKnowledgeBaseUpgrade.viewAndAddKBArticle(portalVersion = "7.1.10.5");
 
-		Upgrade.editAndDeleteKBArticle();
+		ValidateKnowledgeBaseUpgrade.editAndDeleteKBArticle();
 	}
 
 	@priority = 5
@@ -36,9 +36,9 @@ definition {
 		property database.types = "mariadb,mysql,postgresql,db2,oracle,sqlserver";
 		property portal.version = "7.2.10.7";
 
-		Upgrade.viewAndAddKBArticle();
+		ValidateKnowledgeBaseUpgrade.viewAndAddKBArticle();
 
-		Upgrade.editAndDeleteKBArticle();
+		ValidateKnowledgeBaseUpgrade.editAndDeleteKBArticle();
 	}
 
 	@priority = 5
@@ -47,9 +47,9 @@ definition {
 		property portal.acceptance = "true";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndAddKBArticle();
+		ValidateKnowledgeBaseUpgrade.viewAndAddKBArticle();
 
-		Upgrade.editAndDeleteKBArticle();
+		ValidateKnowledgeBaseUpgrade.editAndDeleteKBArticle();
 	}
 
 }

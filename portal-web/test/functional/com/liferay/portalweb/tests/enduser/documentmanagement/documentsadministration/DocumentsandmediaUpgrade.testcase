@@ -81,7 +81,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 
-		Upgrade.viewDocument();
+		ValidateDocumentsAndMediaUpgrade.viewDocument();
 	}
 
 	@priority = 5
@@ -90,17 +90,17 @@ definition {
 		property data.archive.type = "data-archive-documents-and-media";
 		property portal.version = "7.1.10.5";
 
-		Upgrade.viewDocuments();
+		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 
-		Upgrade.viewDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.viewDocumentTypesAndMetadataSets();
 
-		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.editDocumentTypesAndMetadataSets();
 
-		Upgrade.editAndDeleteDocuments();
+		ValidateDocumentsAndMediaUpgrade.editAndDeleteDocuments();
 
-		Upgrade.deleteDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
 	@description = "Skip the instance for performance improvement."
@@ -111,17 +111,17 @@ definition {
 		property portal.version = "7.2.10.4";
 		property test.name.skip.portal.instance = "DocumentsandmediaUpgrade#ViewDMArchive72104";
 
-		Upgrade.viewDocuments();
+		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 
-		Upgrade.viewDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.viewDocumentTypesAndMetadataSets();
 
-		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.editDocumentTypesAndMetadataSets();
 
-		Upgrade.editAndDeleteDocuments();
+		ValidateDocumentsAndMediaUpgrade.editAndDeleteDocuments();
 
-		Upgrade.deleteDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
 	@description = "Skip the instance for performance improvement."
@@ -132,17 +132,17 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.name.skip.portal.instance = "DocumentsandmediaUpgrade#ViewDMArchive73101";
 
-		Upgrade.viewDocuments();
+		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 
-		Upgrade.viewDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.viewDocumentTypesAndMetadataSets();
 
-		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.editDocumentTypesAndMetadataSets();
 
-		Upgrade.editAndDeleteDocuments();
+		ValidateDocumentsAndMediaUpgrade.editAndDeleteDocuments();
 
-		Upgrade.deleteDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
 	@priority = 5
@@ -152,7 +152,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.viewDocument();
+		ValidateDocumentsAndMediaUpgrade.viewDocument();
 	}
 
 	@priority = 5
@@ -162,7 +162,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewDocument();
+		ValidateDocumentsAndMediaUpgrade.viewDocument();
 	}
 
 	@description = "Skip the instance for performance improvement."
@@ -173,17 +173,17 @@ definition {
 		property portal.version = "7.0.10.15";
 		property test.name.skip.portal.instance = "DocumentsandmediaUpgrade#ViewDMArchive701015";
 
-		Upgrade.viewDocuments();
+		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 
-		Upgrade.viewDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.viewDocumentTypesAndMetadataSets();
 
-		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.editDocumentTypesAndMetadataSets();
 
-		Upgrade.editAndDeleteDocuments();
+		ValidateDocumentsAndMediaUpgrade.editAndDeleteDocuments();
 
-		Upgrade.deleteDocumentTypesAndMetadataSets();
+		ValidateDocumentsAndMediaUpgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
 }

@@ -19,7 +19,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
 
-		Upgrade.addStyleBook();
+		ValidateStyleBooksUpgrade.addStyleBook();
 	}
 
 	@description = "This is a test for LPS-131851. Can create Style Book entry after upgrading"
@@ -29,7 +29,7 @@ definition {
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.addStyleBook();
+		ValidateStyleBooksUpgrade.addStyleBook();
 	}
 
 }

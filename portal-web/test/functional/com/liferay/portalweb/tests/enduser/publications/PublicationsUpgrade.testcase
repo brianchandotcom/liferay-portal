@@ -50,7 +50,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
 
-		PublicationsUpgrade.viewAdminRoleName();
+		ValidatePublicationsUpgrade.viewAdminRoleName();
 	}
 
 	@priority = 5
@@ -59,7 +59,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
 
-		PublicationsUpgrade.viewAdminRoleName();
+		ValidatePublicationsUpgrade.viewAdminRoleName();
 	}
 
 	@priority = 5
@@ -69,7 +69,7 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewAdminRoleName();
+		ValidatePublicationsUpgrade.viewAdminRoleName();
 	}
 
 	@priority = 5
@@ -79,7 +79,7 @@ definition {
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewAdminRoleName();
+		ValidatePublicationsUpgrade.viewAdminRoleName();
 	}
 
 	@priority = 5
@@ -89,7 +89,7 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewAdminRoleName();
+		ValidatePublicationsUpgrade.viewAdminRoleName();
 	}
 
 	@priority = 5
@@ -99,7 +99,7 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewNoUnrelatedPreviews();
+		ValidatePublicationsUpgrade.viewNoUnrelatedPreviews();
 	}
 
 	@priority = 5
@@ -109,7 +109,7 @@ definition {
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewNoUnrelatedPreviews();
+		ValidatePublicationsUpgrade.viewNoUnrelatedPreviews();
 	}
 
 	@priority = 5
@@ -118,7 +118,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
 
-		PublicationsUpgrade.viewOutOfDatePublications();
+		ValidatePublicationsUpgrade.viewOutOfDatePublications();
 	}
 
 	@priority = 5
@@ -127,7 +127,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
 
-		PublicationsUpgrade.viewOutOfDatePublications();
+		ValidatePublicationsUpgrade.viewOutOfDatePublications();
 	}
 
 	@priority = 5
@@ -137,7 +137,7 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewOutOfDatePublications();
+		ValidatePublicationsUpgrade.viewOutOfDatePublications();
 	}
 
 	@priority = 5
@@ -147,7 +147,7 @@ definition {
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewOutOfDatePublications();
+		ValidatePublicationsUpgrade.viewOutOfDatePublications();
 	}
 
 	@priority = 5
@@ -157,7 +157,7 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewOutOfDatePublications();
+		ValidatePublicationsUpgrade.viewOutOfDatePublications();
 	}
 
 	@priority = 5
@@ -166,7 +166,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
 
-		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+		ValidatePublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
 	@priority = 5
@@ -175,7 +175,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
 
-		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+		ValidatePublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
 	@priority = 5
@@ -185,7 +185,7 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+		ValidatePublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
 	@priority = 5
@@ -195,7 +195,7 @@ definition {
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+		ValidatePublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
 	@priority = 5
@@ -205,7 +205,7 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.run.environment = "EE";
 
-		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+		ValidatePublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
 	@priority = 4

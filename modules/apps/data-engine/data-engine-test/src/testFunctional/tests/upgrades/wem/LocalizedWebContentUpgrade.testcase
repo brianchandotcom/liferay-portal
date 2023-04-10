@@ -25,7 +25,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructure();
+		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructure();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -36,7 +36,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -47,7 +47,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -58,7 +58,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -69,7 +69,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -80,7 +80,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -91,7 +91,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -102,7 +102,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -113,7 +113,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -124,7 +124,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -135,7 +135,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.validateNWebContent();
+		ValidateDataEngineUpgrade.validateNWebContent();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -146,7 +146,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.validateNWebContent();
+		ValidateDataEngineUpgrade.validateNWebContent();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -157,7 +157,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.validateNWebContent();
+		ValidateDataEngineUpgrade.validateNWebContent();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -168,7 +168,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		DataEngineUpgrade.validateNWebContent();
+		ValidateDataEngineUpgrade.validateNWebContent();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -179,7 +179,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.validateNWebContent();
+		ValidateDataEngineUpgrade.validateNWebContent();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -192,7 +192,7 @@ definition {
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Color,Web Content,Geolocation";
 
-		DataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
+		ValidateDataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -205,7 +205,7 @@ definition {
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Color,Web Content,Geolocation";
 
-		DataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
+		ValidateDataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -218,7 +218,7 @@ definition {
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Color,Web Content,Geolocation";
 
-		DataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
+		ValidateDataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -231,7 +231,7 @@ definition {
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box";
 
-		DataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
+		ValidateDataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -244,7 +244,7 @@ definition {
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content,Geolocation";
 
-		DataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
+		ValidateDataEngineUpgrade.validateWebContentWithAllFieldsTranslated(fieldList = ${fieldList});
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -255,7 +255,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -266,7 +266,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -277,7 +277,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -288,7 +288,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -299,7 +299,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -310,7 +310,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -321,7 +321,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -332,7 +332,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -343,7 +343,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -354,7 +354,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -365,7 +365,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -376,7 +376,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -387,7 +387,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
@@ -398,7 +398,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
 	}
 
 }

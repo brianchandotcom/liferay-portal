@@ -77,12 +77,35 @@ definition {
 	}
 
 	@description = "LPS-180893. Confirm that a dataset view can be deleted"
-	@ignore = "true"
 	@priority = 5
 	test CanDeleteView {
+		task ("When The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Channel");
+		}
 
-		// TO DO FDSViews#CanDeleteView
+		task ("And Add a new view") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
 
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("And the user deletes a View created") {
+			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test");
+		}
+
+		task ("Then Confirm that the Success message should appear") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And The dataset View is not present in the data set View page") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
 	}
 
 }

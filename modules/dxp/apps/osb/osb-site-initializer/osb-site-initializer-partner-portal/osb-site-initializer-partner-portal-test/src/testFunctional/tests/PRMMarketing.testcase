@@ -101,7 +101,7 @@ definition {
 		task ("Then the guide will be downloaded") {
 			PRMUtils.downloadFileViaCurl(fileName = ${fileName});
 
-			ImportExport.assertDownloadedFileName(downloadedFile = ${fileName});
+			PRMUtils.checkDownloadedFile(fileName = ${fileName});
 		}
 	}
 

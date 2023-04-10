@@ -51,6 +51,11 @@ import org.osgi.service.component.annotations.Reference;
 public class StagingProcessesPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return StagingProcessesPortletKeys.STAGING_PROCESSES;
 	}
@@ -67,15 +72,6 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 		}
 
 		return super.isShow(permissionChecker, group);
-	}
-
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
 	}
 
 	@Activate
@@ -111,5 +107,10 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 	private ConfigurationProvider _configurationProvider;
 
 	private volatile CTSettingsConfiguration _defaultCTSettingsConfiguration;
+
+	@Reference(
+		target = "(javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES + ")"
+	)
+	private Portlet _portlet;
 
 }

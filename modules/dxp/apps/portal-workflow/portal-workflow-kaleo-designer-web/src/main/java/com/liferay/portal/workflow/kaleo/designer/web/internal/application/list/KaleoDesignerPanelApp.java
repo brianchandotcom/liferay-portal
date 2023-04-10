@@ -39,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 public class KaleoDesignerPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return KaleoDesignerPortletKeys.KALEO_DESIGNER;
 	}
@@ -50,13 +55,9 @@ public class KaleoDesignerPanelApp extends BasePanelApp {
 		return false;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

@@ -40,6 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 public class BatchPlannerPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return BatchPlannerPortletKeys.BATCH_PLANNER;
 	}
@@ -55,13 +60,9 @@ public class BatchPlannerPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

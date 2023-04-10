@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SynonymsPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SynonymsPortletKeys.SYNONYMS;
 	}
@@ -57,16 +62,12 @@ public class SynonymsPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
-
 	@Reference
 	protected SearchEngineInformation searchEngineInformation;
+
+	@Reference(
+		target = "(javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS + ")"
+	)
+	private Portlet _portlet;
 
 }

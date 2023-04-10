@@ -52,17 +52,13 @@ public class NotificationsPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public String getPortletId() {
-		return NotificationsPortletKeys.NOTIFICATIONS;
+	public Portlet getPortlet() {
+		return _portlet;
 	}
 
 	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+	public String getPortletId() {
+		return NotificationsPortletKeys.NOTIFICATIONS;
 	}
 
 	@Override
@@ -72,6 +68,11 @@ public class NotificationsPanelApp extends BasePanelApp {
 
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS + ")"
+	)
+	private Portlet _portlet;
 
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

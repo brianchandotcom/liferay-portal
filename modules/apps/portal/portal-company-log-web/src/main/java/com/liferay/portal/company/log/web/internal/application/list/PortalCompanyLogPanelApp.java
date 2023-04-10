@@ -43,6 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 public class PortalCompanyLogPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortalCompanyLogPortletKeys.PORTAL_COMPANY_LOG;
 	}
@@ -61,13 +66,9 @@ public class PortalCompanyLogPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + PortalCompanyLogPortletKeys.PORTAL_COMPANY_LOG + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + PortalCompanyLogPortletKeys.PORTAL_COMPANY_LOG + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

@@ -56,6 +56,11 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 	}
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return ProductNavigationSimulationPortletKeys.
 			PRODUCT_NAVIGATION_SIMULATION;
@@ -72,15 +77,6 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		}
 
 		return true;
-	}
-
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
 	}
 
 	@Override
@@ -101,6 +97,11 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(javax.portlet.name=" + ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION + ")"
+	)
+	private Portlet _portlet;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.device)"

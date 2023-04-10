@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 public class ResultRankingsPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return ResultRankingsPortletKeys.RESULT_RANKINGS;
 	}
@@ -57,16 +62,12 @@ public class ResultRankingsPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + ResultRankingsPortletKeys.RESULT_RANKINGS + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
-
 	@Reference
 	protected SearchEngineInformation searchEngineInformation;
+
+	@Reference(
+		target = "(javax.portlet.name=" + ResultRankingsPortletKeys.RESULT_RANKINGS + ")"
+	)
+	private Portlet _portlet;
 
 }

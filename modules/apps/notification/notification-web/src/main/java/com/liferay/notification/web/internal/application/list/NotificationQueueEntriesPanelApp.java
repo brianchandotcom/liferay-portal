@@ -39,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 public class NotificationQueueEntriesPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return NotificationPortletKeys.NOTIFICATION_QUEUE_ENTRIES;
 	}
@@ -50,13 +55,9 @@ public class NotificationQueueEntriesPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_QUEUE_ENTRIES + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_QUEUE_ENTRIES + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

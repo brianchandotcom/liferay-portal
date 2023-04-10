@@ -36,17 +36,18 @@ import org.osgi.service.component.annotations.Reference;
 public class UserWorkflowPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return WorkflowPortletKeys.USER_WORKFLOW;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + WorkflowPortletKeys.USER_WORKFLOW + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + WorkflowPortletKeys.USER_WORKFLOW + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

@@ -38,6 +38,11 @@ public class ContactsFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		return _MAPPING;
 	}
 
+	@Override
+	public String getPortletId() {
+		return ContactsPortletKeys.MEMBERS;
+	}
+
 	private static final String _MAPPING = "contacts";
 
 }

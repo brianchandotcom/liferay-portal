@@ -240,7 +240,7 @@ definition {
 						content = "Web Content Content Edit",
 						fieldLabel = "Content");
 
-					PortletEntry.publish();
+					Button.clickPublish();
 				}
 
 				if (${title} == "Blogs Entry Title") {
@@ -250,7 +250,7 @@ definition {
 						entryTitle = "Blogs Entry Title",
 						entryTitleEdit = "Blogs Entry Title Edit");
 
-					PortletEntry.publish();
+					Button.clickPublish();
 				}
 
 				PageEditor.assertFragmentSidebarLoaded();

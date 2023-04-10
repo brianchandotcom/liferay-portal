@@ -56,6 +56,46 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-146257 | Test Summary: Verify if the kebab button has and edit and delete options and then test if the delete option works"
+	@priority = 4
+	test CanDeletePolicies {
+		task ("Given that I generate a new quotation") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields();
+
+			Button.click(button = "Generate Quote");
+		}
+
+		task ("And I go to the Policies page") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
+
+			RaylifeAP.searchFor(searchTerm = "Testing Model");
+		}
+
+		task ("When I delete a Policies") {
+			RaylifeAP.gotoEllipsisMenuItem(menuItem = "Delete");
+		}
+
+		task ("Then I should be able to assert that Policies has been deleted") {
+			RaylifeAP.searchFor(searchTerm = "Testing Model");
+
+			RaylifeAP.assertQuantity(text = "Policies (0)");
+		}
+	}
+
 	@description = "Story ID: LPS-146254 | Test Summary: Check if adding a new application increases the number of Policies"
 	@priority = 5
 	test CanViewIfTheNumberOfPoliciesHasIncreased {

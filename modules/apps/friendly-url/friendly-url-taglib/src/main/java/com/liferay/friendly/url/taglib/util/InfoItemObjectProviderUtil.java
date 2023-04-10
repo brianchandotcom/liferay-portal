@@ -16,27 +16,26 @@ package com.liferay.friendly.url.taglib.util;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(service = {})
 public class InfoItemObjectProviderUtil {
 
 	public static Object getInfoItem(String className, long classPK) {
 		try {
-			if (_infoItemServiceRegistry == null) {
+			InfoItemServiceRegistry infoItemServiceRegistry =
+				_infoItemServiceRegistrySnapshot.get();
+
+			if (infoItemServiceRegistry == null) {
 				return null;
 			}
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
+				infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class, className);
 
 			return infoItemObjectProvider.getInfoItem(classPK);
@@ -50,22 +49,12 @@ public class InfoItemObjectProviderUtil {
 		}
 	}
 
-	@Reference(policy = ReferencePolicy.DYNAMIC)
-	protected void setInfoItemServiceRegistry(
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		_infoItemServiceRegistry = infoItemServiceRegistry;
-	}
-
-	protected void unsetInfoItemServiceRegistry(
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		_infoItemServiceRegistry = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		InfoItemObjectProviderUtil.class);
 
-	private static volatile InfoItemServiceRegistry _infoItemServiceRegistry;
+	private static final Snapshot<InfoItemServiceRegistry>
+		_infoItemServiceRegistrySnapshot = new Snapshot<>(
+			InfoItemObjectProviderUtil.class, InfoItemServiceRegistry.class,
+			null, true);
 
 }

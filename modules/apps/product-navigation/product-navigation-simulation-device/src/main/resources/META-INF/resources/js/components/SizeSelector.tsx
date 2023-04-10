@@ -191,8 +191,8 @@ function CustomSizeSelector({
 		const resizeObserver = new ResizeObserver(([firstEntry]) => {
 			const preview = firstEntry.target as HTMLElement;
 
-			setHeight(preview.offsetHeight);
-			setWidth(preview.offsetWidth);
+			setHeight(preview.clientHeight);
+			setWidth(preview.clientWidth);
 		});
 
 		if (previewRef.current) {

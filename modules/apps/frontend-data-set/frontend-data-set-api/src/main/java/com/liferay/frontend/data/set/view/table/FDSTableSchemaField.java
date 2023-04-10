@@ -32,6 +32,10 @@ public class FDSTableSchemaField {
 		return _contentRenderer;
 	}
 
+	public boolean isContentRendererClientExtension() {
+		return _contentRendererClientExtension;
+	}
+
 	public String getContentRendererModuleURL() {
 		return _contentRendererModuleURL;
 	}
@@ -68,6 +72,14 @@ public class FDSTableSchemaField {
 
 	public FDSTableSchemaField setContentRenderer(String contentRenderer) {
 		_contentRenderer = contentRenderer;
+
+		return this;
+	}
+
+	public FDSTableSchemaField setContentRendererClientExtension(
+		boolean contentRendererClientExtension) {
+
+		_contentRendererClientExtension = contentRendererClientExtension;
 
 		return this;
 	}
@@ -122,6 +134,9 @@ public class FDSTableSchemaField {
 		).put(
 			"contentRenderer", getContentRenderer()
 		).put(
+			"contentRendererClientExtension",
+			isContentRendererClientExtension()
+		).put(
 			"contentRendererModuleURL", getContentRendererModuleURL()
 		).put(
 			"expand", isExpand()
@@ -164,6 +179,7 @@ public class FDSTableSchemaField {
 	private String _actionId;
 	private String _contentRenderer;
 	private String _contentRendererModuleURL;
+	private boolean _contentRendererClientExtension;
 	private boolean _expand;
 	private String _fieldName;
 	private String _label;

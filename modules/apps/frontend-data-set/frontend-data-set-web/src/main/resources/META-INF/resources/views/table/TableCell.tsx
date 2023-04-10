@@ -157,7 +157,12 @@ function TableCell({
 		if (!loading && view.contentRendererModuleURL && !dataRenderer) {
 			setLoading(true);
 
-			getDataRendererByURL(view.contentRendererModuleURL)
+			getDataRendererByURL(
+				view.contentRendererModuleURL,
+				view.contentRendererClientExtension
+					? 'clientExtension'
+					: 'internal'
+			)
 				.then((dataRenderer) => {
 					setDataRenderer(() => dataRenderer);
 

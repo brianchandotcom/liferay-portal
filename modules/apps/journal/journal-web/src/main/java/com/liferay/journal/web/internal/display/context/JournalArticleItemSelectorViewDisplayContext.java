@@ -208,8 +208,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		).put(
 			"className", JournalArticle.class.getName()
 		).put(
-			"classNameId",
-			PortalUtil.getClassNameId(JournalArticle.class.getName())
+			"classNameId", _getJournalArticleClassNameId()
 		).put(
 			"classPK", journalArticle.getResourcePrimKey()
 		).put(
@@ -494,8 +493,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				_infoItemItemSelectorCriterion.getItemSubtype())) {
 
 			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-				_getGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getGroupId(), _getJournalArticleClassNameId(),
 				_infoItemItemSelectorCriterion.getItemSubtype(), true);
 		}
 
@@ -563,6 +561,17 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			).buildString());
 
 		return breadcrumbEntry;
+	}
+
+	private long _getJournalArticleClassNameId() {
+		if (_journalArticleClassNameId != null) {
+			return _journalArticleClassNameId;
+		}
+
+		_journalArticleClassNameId = PortalUtil.getClassNameId(
+			JournalArticle.class.getName());
+
+		return _journalArticleClassNameId;
 	}
 
 	private String _getOrderByCol() {
@@ -755,6 +764,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemItemSelectorCriterion _infoItemItemSelectorCriterion;
 	private final String _itemSelectedEventName;
+	private Long _journalArticleClassNameId;
 	private final JournalArticleItemSelectorView
 		_journalArticleItemSelectorView;
 	private final JournalWebConfiguration _journalWebConfiguration;

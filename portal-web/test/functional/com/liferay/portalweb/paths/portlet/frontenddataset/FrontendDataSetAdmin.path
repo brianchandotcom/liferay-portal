@@ -58,6 +58,11 @@
 	<td>//div[contains(@class,'justify-content-center') and contains(.,'${key_name}')]/..//div[contains(@class,'d-flex')]//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DATA_SET_VIEW_ENTRY_NAME</td>
+	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'justify-content-center')]//p[(@class="list-group-title") and contains (.,'${entryName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

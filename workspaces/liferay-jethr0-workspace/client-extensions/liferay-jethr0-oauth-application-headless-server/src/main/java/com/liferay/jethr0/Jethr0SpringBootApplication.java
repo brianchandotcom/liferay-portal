@@ -16,6 +16,7 @@ package com.liferay.jethr0;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
+import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
@@ -43,6 +44,15 @@ public class Jethr0SpringBootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Jethr0SpringBootApplication.class, args);
+	}
+
+	@Bean
+	public BuildQueue getBuildQueue(ProjectQueue projectQueue) {
+		BuildQueue buildQueue = new BuildQueue();
+
+		buildQueue.setProjectQueue(projectQueue);
+
+		return buildQueue;
 	}
 
 	@Bean

@@ -99,6 +99,8 @@ public class BuildQueue {
 
 	public void setProjectQueue(ProjectQueue projectQueue) {
 		_projectQueue = projectQueue;
+
+		_sort();
 	}
 
 	public static class ParentBuildComparator implements Comparator<Build> {

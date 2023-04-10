@@ -161,4 +161,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by name"
+	@priority = 3
+	test AdminCanFilterSubtasksByName {
+		task ("Given that the user has two subtasks different in the table") {
+			AssertElementPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user select the subtask 2 in the filter by name") {
+			TestrayFilter.clickFilter();
+
+            ScrollBy(value1 = "0, 60");
+
+			TestrayFilter.typeFilter(
+				label = "Subtask Name",
+				value = "Subtask_2");
+		}
+
+		task ("Then the user see only subtask 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the subtask 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

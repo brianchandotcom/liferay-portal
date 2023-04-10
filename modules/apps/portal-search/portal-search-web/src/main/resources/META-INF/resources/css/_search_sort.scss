@@ -5,15 +5,6 @@
 				&:first-child {
 					margin-left: 40px;
 				}
-
-				.toggle-switch {
-					margin-left: 12px;
-					width: 80px;
-				}
-			}
-
-			.text-secondary {
-				font-size: 14px;
 			}
 		}
 
@@ -25,7 +16,6 @@
 			align-items: center;
 			display: flex;
 			flex-direction: row-reverse;
-			margin-bottom: 8px;
 		}
 	}
 }

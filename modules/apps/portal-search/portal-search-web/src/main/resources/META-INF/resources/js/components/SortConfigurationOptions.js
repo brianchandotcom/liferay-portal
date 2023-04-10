@@ -142,7 +142,7 @@ function Inputs({index, onInputSetItemChange, value}) {
 
 					<ClayTooltipProvider>
 						<span
-							className="ml-2"
+							className="c-ml-2"
 							data-title={Liferay.Language.get(
 								'indexed-field-help'
 							)}
@@ -354,7 +354,7 @@ function SortConfigurationOptions({
 
 	return (
 		<div className="sort-configurations-options">
-			<div className="view-switcher">
+			<div className="c-mb-2 view-switcher">
 				<ClayButton
 					borderless
 					displayType="secondary"
@@ -399,7 +399,10 @@ function SortConfigurationOptions({
 									</ClayForm.FeedbackGroup>
 								</ClayInput.GroupItem>
 
-								<ClayInput.GroupItem shrink>
+								<ClayInput.GroupItem
+									className="c-pl-2 c-pr-2"
+									shrink
+								>
 									<ClayToggle
 										label={
 											relevanceOn
@@ -431,7 +434,7 @@ function SortConfigurationOptions({
 						<ClayButton
 							aria-label={Liferay.Language.get('add-option')}
 							className={getCN({
-								'mt-4': !fields.length,
+								'c-mt-4': !fields.length,
 							})}
 							displayType="secondary"
 							onClick={onInputSetsAdd}

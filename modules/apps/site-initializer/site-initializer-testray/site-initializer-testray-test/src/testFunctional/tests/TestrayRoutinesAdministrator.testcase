@@ -18,7 +18,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Go to Testray, Create Project and change pagination") {

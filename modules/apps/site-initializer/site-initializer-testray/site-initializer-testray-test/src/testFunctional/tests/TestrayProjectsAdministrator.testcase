@@ -19,7 +19,7 @@ definition {
 		}
 
 		task ("Create a new Testray Site") {
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Go to Testray Site") {

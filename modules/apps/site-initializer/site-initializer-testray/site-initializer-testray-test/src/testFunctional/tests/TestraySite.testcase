@@ -19,7 +19,11 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.testrayApisTearDown();
+		Testray.tearDownCP();
+
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -64,8 +68,6 @@ definition {
 
 		task ("Create Testray") {
 			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
 		}
 
 		task ("Go to Remote Apps Portlet") {

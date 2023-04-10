@@ -28,7 +28,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Setup for TaskAPI") {
@@ -257,18 +257,32 @@ definition {
 				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
+
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Button.click(button = "View Task");
 		}
 
 		task ("When the user edit the task") {
-			TestrayTestflow.goToTask(taskName = "Task_2");
-
 			TestrayTestflow.editTask(taskName = "Task_2");
 
 			TestrayTestflow.goToTestflow();
 		}
 
 		task ("Then the task is edited with new details") {
-			Testray.assertItemName(key_name = "Task_2");
+			AssertElementPresent(
+				key_projectName = "Task_2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 

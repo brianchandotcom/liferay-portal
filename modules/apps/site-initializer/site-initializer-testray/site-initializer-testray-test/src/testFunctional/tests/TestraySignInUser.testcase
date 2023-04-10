@@ -15,13 +15,17 @@ definition {
 
 		User.firstLoginPG();
 
-		Testray.addTR2Site(siteName = ${testSiteName});
+		Testray.addTestraySite(siteName = ${testSiteName});
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.testrayApisTearDown();
+		Testray.tearDownCP();
+
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

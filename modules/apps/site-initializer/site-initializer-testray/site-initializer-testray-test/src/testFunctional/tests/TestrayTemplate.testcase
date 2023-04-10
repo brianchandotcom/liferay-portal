@@ -25,7 +25,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Setup for template") {
@@ -45,8 +45,6 @@ definition {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
-
-			JSONTestray.addCaseType(caseType = ${caseType});
 
 			JSONTestray.addCases(
 				caseName = ${caseName},
@@ -153,17 +151,18 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
 
-			Refresh();
+			Click(
+				key_indexNumber = 2,
+				key_text = "Clear",
+				locator1 = "Button#ANY_N");
 
 			TestrayTemplate.viewTemplateDetails(
 				templateName = "Build_Template",
-				templateStatus = "Deactive");
+				templateStatus = "Deactivated");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Deactivated");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Active");
-
-			Refresh();
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Activate");
 		}
 
 		task ("Then the Activated status should appear in the list") {
@@ -213,8 +212,6 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
 
-			Refresh();
-
 			TestrayTemplate.viewTemplateDetails(
 				templateName = "Build_Template",
 				templateStatus = "Deactivated");
@@ -255,47 +252,6 @@ definition {
 		task ("Then can search for the template created in the filter") {
 			TestrayTemplate.assertTemplateName(templateName = "Build_Template");
 		}
-	}
-
-	@description = "This is a test for LPS-166567 - Verify if As an administrator can use a new template in a build"
-	@priority = 3
-	test CanUseTemplateInBuild {
-		task ("Given a new template") {
-			TestrayTemplate.addTemplate(
-				description = "Template Description",
-				dropdownItem = "New Template",
-				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routine 1");
-		}
-
-		task ("When an administrator accesses the template") {
-			TestrayTemplate.assertTemplateName(templateName = "Build_Template");
-
-			TestrayTemplate.goToBuildTemplate(templateName = "Build_Template");
-		}
-
-		task ("Then the new template can be used in a build") {
-			TestrayBuild.createBuild(
-				addVersion = "1.4",
-				caseName = "Case 1",
-				description = "Build 1 Project Description",
-				fieldName = "Build 1 Project",
-				gitHash = 12345,
-				productVersion = "1.4",
-				routine = "Routine 1");
-
-			Testray.assertItemName(text = "Build 1 Project");
-		}
-	}
-
-	@description = "Story ID: LPS-162435 | Test Summary: Verify that can see the activated templates in the filter"
-	@ignore = "Test Stub"
-	@priority = 5
-	test CanViewActiveInFilter {
-
-		// TODO LPS-163907 CanViewActiveInFilter pending implementation
-
 	}
 
 	@description = "Story ID: LPS-162435 | Test Summary: Verify if, as an Administrator, can see the required field message"

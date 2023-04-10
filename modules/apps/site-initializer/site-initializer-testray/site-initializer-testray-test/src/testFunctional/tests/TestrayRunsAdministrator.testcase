@@ -26,7 +26,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Given that a Testray project, team, component, routine, case type, case, environment factors, product version and build are created via API") {

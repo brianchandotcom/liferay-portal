@@ -27,7 +27,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("create all objects: projects, routine, teams, components, cases, case type, enviroment factors, product version, build, category, options, run and case results") {

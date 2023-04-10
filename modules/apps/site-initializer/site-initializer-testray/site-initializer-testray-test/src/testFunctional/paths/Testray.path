@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>PROJECT_NAME_HEADER</td>
-	<td>//p[contains(@class, 'header-title') and contains(@title, '${key_projectName}')]</td>
+	<td>//p[contains(@class, 'tr-header') and contains(@title, '${key_projectName}')]</td>
 	<td></td>
 </tr>
 <tr>

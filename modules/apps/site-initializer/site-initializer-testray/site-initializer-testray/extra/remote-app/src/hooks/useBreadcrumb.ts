@@ -127,7 +127,7 @@ const defaultEntities: Entity[] = [
 			`/projects?filter=${SearchBuilder.contains(
 				'name',
 				search
-			)}&pageSize=100`,
+			)}&fields=id,name%pageSize=100`,
 		name: i18n.translate('project'),
 	},
 	{
@@ -138,7 +138,10 @@ const defaultEntities: Entity[] = [
 			`/routines?filter=${SearchBuilder.eq(
 				'projectId',
 				projectId
-			)} and ${SearchBuilder.contains('name', search)}&pageSize=50`,
+			)} and ${SearchBuilder.contains(
+				'name',
+				search
+			)}&fields=id,name&pageSize=50`,
 		name: i18n.translate('routine'),
 	},
 	{
@@ -146,21 +149,22 @@ const defaultEntities: Entity[] = [
 		getPage: ([projectId, routineId, buildId]) =>
 			`/project/${projectId}/routines/${routineId}/build/${buildId}`,
 		getResource: ([, routineId], search) =>
-			`/builds?filter=${SearchBuilder.eq(
-				'routineId',
-				routineId
-			)} and ${SearchBuilder.contains('name', search)}&pageSize=100`,
+			`/builds?filter=${new SearchBuilder()
+				.eq('routineId', routineId)
+				.and()
+				.contains('name', search)
+				.build()}&fields=id,name&pageSize=100`,
 		name: i18n.translate('build'),
 	},
 	{
 		entity: 'runs',
 		getPage: ([projectId, routineId, buildId, runId]) =>
 			`/project/${projectId}/routines/${routineId}/build/${buildId}?runId=${runId}`,
-		getResource: ([, , buildId]) =>
+		getResource: ([, , buildId], search) =>
 			`/runs?filter=${SearchBuilder.eq(
 				'r_buildToRuns_c_buildId',
 				buildId
-			)}&fields=id,number`,
+			)} ${search ? `and number eq ${search}` : ''} &fields=id,number`,
 		name: i18n.translate('run'),
 		transformer: (response: APIResponse<TestrayRun>) => ({
 			...response,
@@ -174,11 +178,13 @@ const defaultEntities: Entity[] = [
 		entity: 'caseresults',
 		getPage: ([projectId, routineId, buildId, , caseResultsId]) =>
 			`/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultsId}`,
-		getResource: ([, , buildId, runId]) =>
+		getResource: ([, , buildId, runId], search) =>
 			`/caseresults?filter=${new SearchBuilder()
 				.eq('buildId', buildId)
 				.and()
 				.eq('r_runToCaseResult_c_runId', runId)
+				.and()
+				.contains('caseToCaseResult/name', search)
 				.build()}&nestedFields=case,r_runToCaseResult_c_runId&pageSize=20&fields=r_caseToCaseResult_c_case,id,run`,
 		name: i18n.translate('case-result'),
 		transformer: (response: APIResponse<TestrayCaseResult>) => {

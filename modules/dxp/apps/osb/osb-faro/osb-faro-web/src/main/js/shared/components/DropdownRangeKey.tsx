@@ -19,6 +19,17 @@ const {
 	Yesterday
 } = RangeKeyTimeRanges;
 
+const initialRangeKeys = [Last24Hours, Last7Days, Last30Days, Last90Days];
+
+const legacyRangeKeys = [
+	Last24Hours,
+	Yesterday,
+	Last7Days,
+	Last28Days,
+	Last30Days,
+	Last90Days
+];
+
 type Item = {
 	description?: string;
 	label: string;
@@ -28,10 +39,11 @@ type Item = {
 interface DropdownRangeKeyIProps {
 	className: string;
 	disabled: boolean;
+	filterRangeKeys: [];
+	rangeKeys: Array<RangeKeyTimeRanges>;
 	items: Array<Item>;
 	legacy: boolean;
 	onChange: (rangeSelectors: RangeSelectors) => void;
-	rangeKeys: Array<RangeKeyTimeRanges>;
 	rangeSelectors: RangeSelectors;
 }
 
@@ -41,7 +53,10 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 	items,
 	legacy = true, // legacy can be removed once we convert all uses of DropdownRangeKey to include the new values.
 	onChange,
-	rangeKeys = [Last24Hours, Last7Days, Last30Days, Last90Days],
+	/**
+	 * When legacy props is true, rangeKeys will be ignored.
+	 */
+	rangeKeys = initialRangeKeys,
 	rangeSelectors: {rangeEnd, rangeKey, rangeStart} = {
 		rangeEnd: '',
 		rangeKey: Last30Days,
@@ -85,17 +100,15 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 	const filterItems = () => {
 		if (legacy) {
 			return items.filter(({value}) =>
-				[
-					Last24Hours,
-					Yesterday,
-					Last7Days,
-					Last28Days,
-					Last30Days,
-					Last90Days
-				].includes(value as RangeKeyTimeRanges)
+				legacyRangeKeys.includes(value as RangeKeyTimeRanges)
 			);
 		} else if (seeMore) {
-			return items;
+			return items.filter(
+				item =>
+					!initialRangeKeys
+						.filter(x => !rangeKeys.includes(x))
+						.includes(item.value)
+			);
 		}
 
 		return items.filter(

@@ -50,7 +50,10 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 public class UpgradeStatusImpl implements UpgradeStatus {
 
 	public static void finish() {
-		_setFinalSchemaVersion();
+		_processRelease(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setFinal(schemaVersion));
+
 		_setFinalStatus();
 		_setType();
 
@@ -195,12 +198,6 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		catch (Exception exception) {
 			_log.error("Unable to process Release_ table", exception);
 		}
-	}
-
-	private static void _setFinalSchemaVersion() {
-		_processRelease(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setFinal(schemaVersion));
 	}
 
 	private static void _setFinalStatus() {

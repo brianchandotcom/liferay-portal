@@ -21,12 +21,17 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Ortiz
@@ -40,31 +45,32 @@ public class ReleaseManagerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCheckOK() throws Exception {
+	public void testCheck() throws Exception {
 		Assert.assertTrue(_releaseManager.check());
 	}
 
 	@Test
-	public void testMissingUpgrades() throws Exception {
-		String bundleSymbolicName = "com.liferay.asset.service";
+	public void testCheckMissingModuleUpgrade() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
 
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		String currentSchemaVersion = release.getSchemaVersion();
+		bundleContext.registerService(
+			UpgradeStepRegistrator.class,
+			new ReleaseManagerTest.TestUpgradeStepRegistrator(), null);
+
+		Release release = _releaseLocalService.fetchRelease(
+			bundle.getSymbolicName());
 
 		try {
-			release.setSchemaVersion("1.0.0");
+			release.setSchemaVersion("0.0.0");
 
 			_releaseLocalService.updateRelease(release);
 
 			Assert.assertFalse(_releaseManager.check());
 		}
 		finally {
-			release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-			release.setSchemaVersion(currentSchemaVersion);
-
-			_releaseLocalService.updateRelease(release);
+			_releaseLocalService.deleteRelease(release.getReleaseId());
 		}
 	}
 
@@ -73,5 +79,15 @@ public class ReleaseManagerTest {
 
 	@Inject
 	private volatile ReleaseManager _releaseManager;
+
+	private static class TestUpgradeStepRegistrator
+		implements UpgradeStepRegistrator {
+
+		@Override
+		public void register(Registry registry) {
+			registry.registerInitialization();
+		}
+
+	}
 
 }

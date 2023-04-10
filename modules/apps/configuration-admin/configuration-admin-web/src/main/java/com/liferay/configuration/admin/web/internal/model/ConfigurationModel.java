@@ -280,7 +280,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			return false;
 		}
 
-		Dictionary<String, Object> properties = _configuration.getProperties();
+		Dictionary<String, Object> properties =
+			_configuration.getProcessedProperties(null);
 
 		if (properties == null) {
 			return false;

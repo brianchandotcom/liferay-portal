@@ -457,8 +457,6 @@ definition {
 	test RolesSitesPermissionsInheritance {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
 		for (var userNumber : list "1,2,3") {
 			JSONUser.addUser(
 				userEmailAddress = "userea${userNumber}@liferay.com",
@@ -482,16 +480,13 @@ definition {
 			pageName = "MB Page",
 			siteTemplateName = "Site Template Name");
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "MB Page",
-			siteName = ${siteName},
-			siteTemplateName = "Site Template Name");
+		ProductMenu.gotoHomePage();
+
+		Navigator._gotoPage(pageName = "MB Page");
 
 		Portlet.addPG(
 			defaultURL = "false",
 			portletName = "Message Boards");
-
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

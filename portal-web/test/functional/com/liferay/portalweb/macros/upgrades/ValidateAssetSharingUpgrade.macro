@@ -1,6 +1,6 @@
 definition {
 
-    macro revokeAndUpdateSharedEntry {
+	macro revokeAndUpdateSharedEntry {
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
 			siteURLKey = "guest");
@@ -127,5 +127,5 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 	}
-		
+
 }

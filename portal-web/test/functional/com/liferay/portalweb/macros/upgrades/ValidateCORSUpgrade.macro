@@ -1,6 +1,6 @@
 definition {
 
-    macro viewPortalCORS {
+	macro viewPortalCORS {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${name});
@@ -26,5 +26,5 @@ definition {
 			locator1 = "SystemSettings#CORS_CONFIGURATION",
 			value1 = ${urlPattern});
 	}
-		
+
 }

@@ -1,6 +1,6 @@
 definition {
 
-    macro addForm {
+	macro addForm {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -766,5 +766,5 @@ definition {
 			fieldName = "Upload",
 			uploadFileName = "Document_1.jpg");
 	}
-		
+
 }

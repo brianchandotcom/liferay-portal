@@ -8,7 +8,7 @@ definition {
 			threadSubject = "Message Boards Subject 3");
 	}
 
-    macro editAndDeleteMessageBoard {
+	macro editAndDeleteMessageBoard {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.gotoPG(
@@ -91,5 +91,5 @@ definition {
 
 		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Subject 2");
 	}
-		
+
 }

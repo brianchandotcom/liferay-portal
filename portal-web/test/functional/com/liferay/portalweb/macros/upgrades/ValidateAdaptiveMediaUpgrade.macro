@@ -1,6 +1,6 @@
 definition {
 
-    macro deleteImageResolution {
+	macro deleteImageResolution {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
 		AdaptiveMedia.disableImageResolution(
@@ -50,5 +50,5 @@ definition {
 			maxWidth = 320,
 			percentAdapted = 0);
 	}
-		
+
 }

@@ -1,6 +1,6 @@
 definition {
 
-    macro viewAndEditCustomMetaTag {
+	macro viewAndEditCustomMetaTag {
 		var portalURL = PropsUtil.get("portal.url");
 
 		User.logoutPG();
@@ -170,5 +170,5 @@ definition {
 			pageName = "Test Page",
 			portalURL = ${portalURL});
 	}
-		
+
 }

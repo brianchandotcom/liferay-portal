@@ -1,6 +1,6 @@
 definition {
 
-    macro viewUpgradeDBPartition {
+	macro viewUpgradeDBPartition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
@@ -113,5 +113,5 @@ definition {
 
 		ValidateCalendarUpgrade.viewMatchingCalendarIndexesInPartitionedDatabase();
 	}
-		
+
 }

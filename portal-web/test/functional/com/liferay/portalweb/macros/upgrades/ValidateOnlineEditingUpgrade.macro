@@ -1,6 +1,6 @@
 definition {
 
-    macro addOneDriveDocument {
+	macro addOneDriveDocument {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -115,5 +115,5 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Document");
 	}
-		
+
 }

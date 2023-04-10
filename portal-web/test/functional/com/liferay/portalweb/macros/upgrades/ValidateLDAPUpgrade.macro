@@ -1,6 +1,6 @@
 definition {
 
-    macro viewLDAPConfiguration {
+	macro viewLDAPConfiguration {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -39,5 +39,5 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "exportEnabled");
 	}
-		
+
 }

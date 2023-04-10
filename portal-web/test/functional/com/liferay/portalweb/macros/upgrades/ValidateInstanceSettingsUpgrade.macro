@@ -1,6 +1,6 @@
 definition {
-		
-    macro viewInstanceSettings {
+
+	macro viewInstanceSettings {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "General",
@@ -306,5 +306,5 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateTemplateKey");*/
 	}
-	
+
 }

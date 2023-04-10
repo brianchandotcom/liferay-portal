@@ -1,6 +1,6 @@
 definition {
 
-    macro viewCardWithThreeColumnsInMobileBreakpoint {
+	macro viewCardWithThreeColumnsInMobileBreakpoint {
 		task ("Select Mobile Device in simulation menu") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -144,5 +144,5 @@ definition {
 				text = "Editable Title");
 		}
 	}
-		
+
 }

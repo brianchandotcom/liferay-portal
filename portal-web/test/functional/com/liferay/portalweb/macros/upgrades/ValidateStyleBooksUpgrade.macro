@@ -1,6 +1,6 @@
 definition {
 
-    macro addStyleBook {
+	macro addStyleBook {
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
@@ -33,5 +33,5 @@ definition {
 			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name 2");
 		}
 	}
-		
+
 }

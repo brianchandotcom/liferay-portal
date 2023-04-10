@@ -1,6 +1,6 @@
 definition {
 
-    macro addContentPage {
+	macro addContentPage {
 		task ("Add a content page in Test Site Name site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -311,5 +311,5 @@ definition {
 			AssertTextPresent(value1 = "The requested resource could not be found.");
 		}
 	}
-		
+
 }

@@ -1,6 +1,6 @@
 definition {
 
-    macro viewSXPBlueprintAndElements {
+	macro viewSXPBlueprintAndElements {
 		Blueprints.openBlueprintsAdmin();
 
 		Navigator.gotoNavItem(navItem = "Elements");
@@ -114,5 +114,5 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
-		
+
 }

@@ -1,6 +1,6 @@
 definition {
 
-    macro editAndDeleteBlogEntry {
+	macro editAndDeleteBlogEntry {
 		if (isSet(video)) {
 			Navigator.gotoPage(pageName = "Blogs");
 
@@ -110,5 +110,5 @@ definition {
 			entryContent = "Blogs Entry After Upgrade Content",
 			entryTitle = "Blogs Entry After Upgrade Title");
 	}
-		
+
 }

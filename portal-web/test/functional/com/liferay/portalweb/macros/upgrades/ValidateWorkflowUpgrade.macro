@@ -1,6 +1,6 @@
 definition {
 
-    macro approveWorkflow {
+	macro approveWorkflow {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -271,5 +271,5 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "New Blog After Upgrade");
 	}
-		
+
 }

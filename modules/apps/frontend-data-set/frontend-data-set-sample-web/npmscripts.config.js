@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,27 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
-
-<%
-ControlledFDSDisplayContext controlledFDSDisplayContext = new ControlledFDSDisplayContext(request);
-%>
-
-<react:component
-	module="{ControlledFrontendDataSet} from frontend-data-set-sample-web"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"id", FDSSampleFDSNames.CONTROLLED
-		).put(
-			"items", controlledFDSDisplayContext.getItems()
-		).put(
-			"showManagementBar", false
-		).put(
-			"style", "fluid"
-		).put(
-			"views", controlledFDSDisplayContext.getViews()
-		).build()
-	%>'
-/>
+module.exports = {
+	build: {
+		main: 'src/main/resources/META-INF/resources/js/index.js',
+	},
+};

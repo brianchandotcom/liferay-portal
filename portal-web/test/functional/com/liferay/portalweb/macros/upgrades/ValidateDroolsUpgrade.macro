@@ -1,6 +1,6 @@
 definition {
 
-    macro ViewDroolsAppManager {
+	macro viewDroolsAppManager {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
@@ -16,5 +16,5 @@ definition {
 			appStatus = "Active",
 			searchTerm = "Drools");
 	}
-		
+
 }

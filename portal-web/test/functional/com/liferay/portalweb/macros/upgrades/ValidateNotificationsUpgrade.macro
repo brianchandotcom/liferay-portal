@@ -1,6 +1,6 @@
 definition {
 
-    macro viewNotifications {
+	macro viewNotifications {
 		Navigator.openURL();
 
 		Notifications.gotoNotifications();
@@ -50,5 +50,5 @@ definition {
 			threadBody = "Message Boards Body",
 			threadSubject = "Message Boards Subject 3");
 	}
-		
+
 }

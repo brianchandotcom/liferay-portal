@@ -1,6 +1,6 @@
 definition {
 
-    macro viewCustomSiteSetting {
+	macro viewCustomSiteSetting {
 		task ("Get the default site name") {
 			Navigator.openURL();
 
@@ -58,5 +58,5 @@ definition {
 				value1 = "Chinese (China)");
 		}
 	}
-		
+
 }

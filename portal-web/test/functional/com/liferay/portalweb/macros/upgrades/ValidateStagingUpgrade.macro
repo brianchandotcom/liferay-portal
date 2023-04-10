@@ -1,6 +1,6 @@
 definition {
 
-    macro publishStagedSite {
+	macro publishStagedSite {
 		Navigator.openSiteURL(siteName = "Staging Site Staging");
 
 		AssertElementNotPresent(locator1 = "Home#PORTLET");
@@ -74,5 +74,5 @@ definition {
 			nestedColumnNumber = 1,
 			portletName = "Blogs");
 	}
-		
+
 }

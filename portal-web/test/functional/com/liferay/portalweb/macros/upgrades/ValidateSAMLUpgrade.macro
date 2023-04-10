@@ -1,6 +1,6 @@
 definition {
 
-    macro viewSAMLGeneralConfiguration {
+	macro viewSAMLGeneralConfiguration {
 		SAML.goToSAMLAdmin();
 
 		FormFields.viewCheckboxChecked(fieldName = "enabled");
@@ -16,7 +16,7 @@ definition {
 			value1 = "samlidp");
 	}
 
-    macro viewSAMLSPConnectionConfiguration {
+	macro viewSAMLSPConnectionConfiguration {
 		SAMLNavigation.gotoServiceProviderConnection();
 
 		Click(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_DROPDOWN");
@@ -45,5 +45,5 @@ definition {
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
 			value1 = "emailAddress");
 	}
-		
+
 }

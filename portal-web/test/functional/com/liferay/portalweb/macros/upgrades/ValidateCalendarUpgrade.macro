@@ -1,6 +1,6 @@
 definition {
 
-    macro viewCalendar {
+	macro viewCalendar {
 		Navigator.gotoPage(pageName = "Calendar");
 
 		ProductMenuHelper.closeProductMenu();
@@ -48,5 +48,5 @@ definition {
 			fail("Base schema index is ${baseSchemaIndex} but partitioned schema index is ${partitionSchemaIndex}");
 		}
 	}
-		
+
 }

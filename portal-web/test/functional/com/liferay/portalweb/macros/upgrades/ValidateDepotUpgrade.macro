@@ -1,6 +1,6 @@
 definition {
-		
-    macro publishCollectionsInRemoteStagingDepot {
+
+	macro publishCollectionsInRemoteStagingDepot {
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.selectAsset(
@@ -63,7 +63,7 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title Without Publish");
 	}
 
-    macro publishCollectionsInStagingDepot {
+	macro publishCollectionsInStagingDepot {
 		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
 
 		AssetListsAdmin.selectAsset(
@@ -140,7 +140,7 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-    macro publishDMsInRemoteStagingDepot {
+	macro publishDMsInRemoteStagingDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
@@ -240,7 +240,7 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_2.jpg");
 	}
 
-    macro publishDMsInStagingDepot {
+	macro publishDMsInStagingDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");

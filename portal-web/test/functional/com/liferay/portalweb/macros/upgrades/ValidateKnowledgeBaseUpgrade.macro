@@ -1,6 +1,6 @@
 definition {
 
-    macro editAndDeleteKBArticle {
+	macro editAndDeleteKBArticle {
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
 		Ratings.rateThumb(
@@ -74,5 +74,5 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content After Upgrade",
 			kbArticleTitle = "Knowledge Base Article Title After Upgrade");
 	}
-		
+
 }

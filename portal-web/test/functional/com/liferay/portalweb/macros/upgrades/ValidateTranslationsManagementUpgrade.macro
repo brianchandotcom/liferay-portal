@@ -1,6 +1,6 @@
 definition {
-		
-        macro addAndEditTranslations {
+
+	macro addAndEditTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
@@ -148,5 +148,5 @@ definition {
 
 		PortletEntry.publish();
 	}
-    
+
 }

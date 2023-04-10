@@ -1,6 +1,6 @@
 definition {
-		
-    macro addAndViewAccountGroup {
+
+	macro addAndViewAccountGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",

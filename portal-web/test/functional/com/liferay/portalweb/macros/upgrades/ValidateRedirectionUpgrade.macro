@@ -1,6 +1,6 @@
 definition {
 
-    macro editAndDeleteRedirects {
+	macro editAndDeleteRedirects {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -91,5 +91,5 @@ definition {
 			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-with-references-page3");
 		}
 	}
-		
+
 }

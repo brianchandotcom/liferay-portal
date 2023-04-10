@@ -1,6 +1,6 @@
 definition {
 
-    macro viewOrderOfAssetsOnMostedViewedAssets {
+	macro viewOrderOfAssetsOnMostedViewedAssets {
 		task ("View order of displayed assets on Mosted Viewed Assets") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -83,5 +83,5 @@ definition {
 			}
 		}
 	}
-		
+
 }

@@ -1,6 +1,6 @@
 definition {
-		
-    macro configurePageEditor {
+
+	macro configurePageEditor {
 		task ("View fragment persists and could add another fragment in page editor") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -458,5 +458,5 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "Awesome Button");
 	}
-    
+
 }

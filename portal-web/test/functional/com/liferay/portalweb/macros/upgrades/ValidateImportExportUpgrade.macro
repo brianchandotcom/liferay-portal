@@ -1,6 +1,6 @@
 definition {
 
-    macro exportDefaultSiteIntoNewSite {
+	macro exportDefaultSiteIntoNewSite {
 		task ("View displayed asset on Asset Publisher on default site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "home",
@@ -63,5 +63,5 @@ definition {
 			}
 		}
 	}
-		
+
 }

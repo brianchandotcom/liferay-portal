@@ -1,6 +1,6 @@
 definition {
 
-    macro viewAssetPublisher {
+	macro viewAssetPublisher {
 		task ("Configure the Asset Publisher to show full content") {
 			Navigator.gotoPage(pageName = "Asset Publisher");
 
@@ -39,5 +39,5 @@ definition {
 			}
 		}
 	}
-		
+
 }

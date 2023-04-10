@@ -1,6 +1,6 @@
 definition {
 
-    macro addOrganization {
+	macro addOrganization {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -191,5 +191,5 @@ definition {
 			orgName = "Organization1 Edit",
 			orgType = "Organization");
 	}
-		
+
 }

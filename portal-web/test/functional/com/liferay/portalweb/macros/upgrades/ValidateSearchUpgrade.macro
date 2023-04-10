@@ -1,6 +1,6 @@
 definition {
 
-    macro viewClassicSearchPortletConfiguration {
+	macro viewClassicSearchPortletConfiguration {
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
@@ -151,5 +151,5 @@ definition {
 			key_synonyms = "apple, banana",
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 	}
-		
+
 }

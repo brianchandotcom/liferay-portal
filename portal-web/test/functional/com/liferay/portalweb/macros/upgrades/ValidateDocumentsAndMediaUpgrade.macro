@@ -1,6 +1,6 @@
 definition {
 
-    macro addDMWithDocumentTypesAndMetadataSets {
+	macro addDMWithDocumentTypesAndMetadataSets {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -268,5 +268,5 @@ definition {
 			fieldFieldLabel = "Number",
 			fieldName = "Numeric");
 	}
-		
+
 }

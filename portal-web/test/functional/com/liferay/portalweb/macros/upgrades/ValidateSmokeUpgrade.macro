@@ -1,6 +1,6 @@
 definition {
 
-    macro changeDisplayStyle {
+	macro changeDisplayStyle {
 		task ("Change document view type but account for flakiness seen in test execution history") {
 			WaitForPageLoad();
 
@@ -178,5 +178,5 @@ definition {
 
 		SignIn.signIn();
 	}
-		
+
 }

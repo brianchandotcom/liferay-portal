@@ -157,10 +157,10 @@ public class UpgradeLogAppender implements Appender {
 	private PersistenceManager _persistenceManager;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile ReleaseManager _releaseManager;
+	private ReleaseManager _releaseManager;
 
 	private volatile boolean _started;
-	private volatile UpgradeReport _upgradeReport;
+	private UpgradeReport _upgradeReport;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
 	private volatile UpgradeStatusImpl _upgradeStatusImpl;

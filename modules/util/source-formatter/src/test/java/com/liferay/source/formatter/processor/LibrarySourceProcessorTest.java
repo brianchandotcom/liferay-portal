@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.processor;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
 import org.junit.Test;
@@ -98,7 +99,9 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 		SourceFormatterArgs sourceFormatterArgs =
 			super.getSourceFormatterArgs();
 
-		sourceFormatterArgs.setCheckVulnerabilities(true);
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			sourceFormatterArgs.setUseCiGithubAccessToken(true);
+		}
 
 		return sourceFormatterArgs;
 	}

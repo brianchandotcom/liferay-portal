@@ -845,11 +845,17 @@ public class LayoutsAdminDisplayContext {
 		if (MapUtil.isNotEmpty(nameMap) &&
 			!nameMap.containsKey(siteDefaultLocale)) {
 
-			Collection<String> values = nameMap.values();
+			String name = nameMap.get(layout.getDefaultLanguageId());
 
-			Iterator<String> iterator = values.iterator();
+			if (name == null) {
+				Collection<String> values = nameMap.values();
 
-			nameMap.put(siteDefaultLocale, iterator.next());
+				Iterator<String> iterator = values.iterator();
+
+				name = iterator.next();
+			}
+
+			nameMap.put(siteDefaultLocale, name);
 		}
 
 		return LocalizationUtil.updateLocalization(

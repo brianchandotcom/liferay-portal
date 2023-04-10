@@ -628,11 +628,17 @@ public class LayoutImpl extends LayoutBaseImpl {
 		if (MapUtil.isNotEmpty(friendlyURLMap) &&
 			!friendlyURLMap.containsKey(LocaleUtil.getSiteDefault())) {
 
-			Collection<String> values = friendlyURLMap.values();
+			String friendlyURL = friendlyURLMap.get(getDefaultLanguageId());
 
-			Iterator<String> iterator = values.iterator();
+			if (friendlyURL == null) {
+				Collection<String> values = friendlyURLMap.values();
 
-			friendlyURLMap.put(LocaleUtil.getSiteDefault(), iterator.next());
+				Iterator<String> iterator = values.iterator();
+
+				friendlyURL = iterator.next();
+			}
+
+			friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
 		}
 
 		return LocalizationUtil.updateLocalization(

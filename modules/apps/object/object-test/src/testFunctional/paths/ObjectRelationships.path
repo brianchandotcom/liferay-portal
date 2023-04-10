@@ -50,6 +50,11 @@
 		<td>//div[contains(@class,'object-admin-panel__header') and contains(.,'${key_layout}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>RELATIONSHIPS_FIELD</td>
+		<td>//*[contains(text(),'${field} Type')]/..//input</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

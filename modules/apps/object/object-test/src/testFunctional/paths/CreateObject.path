@@ -141,6 +141,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_ANY_OBJECT_FIELD_IN_TABLE</td>
+		<td>//div[contains(text(),'${key_name}')]/parent::div//button</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_OBJECT_FIELD_IN_TABLE</td>
 		<td>//div[contains(@class,'table-list-title')]//a[contains(text(),'${key_name}')]</td>
 		<td></td>

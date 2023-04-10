@@ -772,7 +772,7 @@ public class ObjectEntryInfoItemFormProvider
 			_getGroupId(serviceContext.getRequest(), relatedObjectDefinition));
 
 		return PortalUtil.getPortalURL(serviceContext.getRequest()) +
-			restContextPath;
+			PortalUtil.getPathContext() + restContextPath;
 	}
 
 	private boolean _isDefaultUser() {

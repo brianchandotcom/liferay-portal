@@ -15,13 +15,19 @@
 		}
 	}
 
-	.nav-pills > li {
-		> a {
-			margin-bottom: 2px;
-		}
+	.nav-pills {
+		> li {
+			> a {
+				margin-bottom: 2px;
+			}
 
-		> .dropdown-menu {
-			margin-top: 0;
+			> .dropdown-menu {
+				margin-top: 0;
+			}
+		}
+		> li.active > a {
+			background-color: $nav-pills-link-active-bg;
+			color: $nav-pills-link-active-color;
 		}
 	}
 }

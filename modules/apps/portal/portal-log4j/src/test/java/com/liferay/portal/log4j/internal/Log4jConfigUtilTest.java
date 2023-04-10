@@ -499,13 +499,17 @@ public class Log4jConfigUtilTest {
 			File companyLogDirectory = Log4jConfigUtil.getCompanyLogDirectory(
 				companyId);
 
-			String expectedCompanyLogDirectory =
-				tempLogFileDirPathString + "/" + companyId;
+			File expectedCompanyLogDirectory = new File(
+				tempLogFileDirPathString, String.valueOf(companyId));
+
+			String expectedCompanyLogDirectoryPathString =
+				expectedCompanyLogDirectory.getPath();
 
 			Assert.assertEquals(
 				"Company log directory should be " +
-					expectedCompanyLogDirectory,
-				expectedCompanyLogDirectory, companyLogDirectory.getPath());
+					expectedCompanyLogDirectoryPathString,
+				expectedCompanyLogDirectoryPathString,
+				companyLogDirectory.getPath());
 
 			if (enabled) {
 				Assert.assertTrue(companyLogDirectory.exists());

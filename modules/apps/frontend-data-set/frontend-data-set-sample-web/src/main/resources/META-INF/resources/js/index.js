@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,27 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import ControlledFrontendDataSet from './ControlledFrontendDataSet';
+import GreenCheckDataRenderer from './GreenCheckDataRenderer';
+import SampleCustomDataRenderer from './SampleCustomDataRenderer';
+import SampleFDSPropsTransformer from './SampleFDSPropsTransformer';
+import SampleReactFrontendDataSet from './SampleReactFrontendDataSet';
 
-<%
-ControlledFDSDisplayContext controlledFDSDisplayContext = new ControlledFDSDisplayContext(request);
-%>
-
-<react:component
-	module="{ControlledFrontendDataSet} from frontend-data-set-sample-web"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"id", FDSSampleFDSNames.CONTROLLED
-		).put(
-			"items", controlledFDSDisplayContext.getItems()
-		).put(
-			"showManagementBar", false
-		).put(
-			"style", "fluid"
-		).put(
-			"views", controlledFDSDisplayContext.getViews()
-		).build()
-	%>'
-/>
+export {
+	ControlledFrontendDataSet,
+	GreenCheckDataRenderer,
+	SampleCustomDataRenderer,
+	SampleFDSPropsTransformer,
+	SampleReactFrontendDataSet,
+};

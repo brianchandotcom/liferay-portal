@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "index.js",
 	"name": "@liferay/frontend-data-set-sample-web",
 	"private": true,
 	"scripts": {

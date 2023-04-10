@@ -33,7 +33,7 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	formId="fm"
 	id="<%= FDSSampleFDSNames.CUSTOMIZED %>"
 	itemsPerPage="<%= 10 %>"
-	propsTransformer="js/SampleFDSPropsTransformer"
+	propsTransformer="{SampleFDSPropsTransformer} from frontend-data-set-sample-web"
 	selectedItemsKey="id"
 	selectionType="multiple"
 	style="fluid"

@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
@@ -62,6 +64,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			fileName, javaTerm, "^setUpClass", true, "BeforeAll",
 			"BeforeClass");
 		_checkAnnotationForMethod(fileName, javaTerm, "^test", false, "Test");
+
+		_checkUseFeatureFlags(fileName, javaTerm);
 
 		return javaTerm.getContent();
 	}
@@ -145,5 +149,62 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				javaTerm.getLineNumber());
 		}
 	}
+
+	private void _checkUseFeatureFlags(String fileName, JavaTerm javaTerm) {
+		String javaTermContent = javaTerm.getContent();
+
+		Matcher matcher = _propsUtilAddPropertiesPattern.matcher(
+			javaTermContent);
+
+		while (matcher.find()) {
+			List<String> parameters = JavaSourceUtil.getParameterList(
+				JavaSourceUtil.getMethodCall(javaTermContent, matcher.start()));
+
+			if (parameters.size() > 1) {
+				continue;
+			}
+
+			String parameter = parameters.get(0);
+
+			if (!parameter.startsWith(
+					"UnicodePropertiesBuilder.setProperty(")) {
+
+				continue;
+			}
+
+			parameters = JavaSourceUtil.getParameterList(
+				JavaSourceUtil.getMethodCall(parameter, 0));
+
+			if (parameters.size() != 2) {
+				continue;
+			}
+
+			String firstParameter = StringUtil.unquote(parameters.get(0));
+			String secondParameter = StringUtil.unquote(parameters.get(1));
+
+			if (firstParameter.matches("feature\\.flag\\.[\\w-]+") &&
+				secondParameter.equals("true")) {
+
+				String methodName = javaTerm.getName();
+
+				String scope = "method";
+
+				if (StringUtil.equals(methodName, "setUp") ||
+					StringUtil.equals(methodName, "setUpClass")) {
+
+					scope = "class";
+				}
+
+				addMessage(
+					fileName, "Use '@FeatureFlags' on " + scope,
+					getLineNumber(javaTermContent, matcher.start()));
+
+				return;
+			}
+		}
+	}
+
+	private static final Pattern _propsUtilAddPropertiesPattern =
+		Pattern.compile("PropsUtil\\.addProperties\\(");
 
 }

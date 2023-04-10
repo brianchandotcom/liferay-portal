@@ -186,7 +186,7 @@ definition {
 				fieldPicklist = "ImportedPicklist175681",
 				fieldType = "Picklist",
 				itemName = "Picklist Item 1",
-				maskAsState = "true");
+				markAsState = "true");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175681");
 		}

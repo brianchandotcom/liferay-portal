@@ -104,7 +104,7 @@ definition {
 				fieldPicklist = "Picklist Test",
 				fieldType = "Picklist",
 				itemName = "Picklist Item Test",
-				maskAsState = "true");
+				markAsState = "true");
 
 			Refresh();
 		}
@@ -256,9 +256,7 @@ definition {
 				fieldPicklist = "Picklist Test",
 				fieldType = "Picklist",
 				itemName = "Picklist Item Test 1",
-				maskAsState = "true");
-
-			Refresh();
+				markAsState = "true");
 		}
 
 		task ("Publish the Custom Object and assert that is possible to edit state") {

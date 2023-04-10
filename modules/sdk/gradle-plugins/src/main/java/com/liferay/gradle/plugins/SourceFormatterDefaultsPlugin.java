@@ -215,14 +215,6 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setAutoFix(Boolean.parseBoolean(autoFix));
 		}
 
-		String checkVulnerabilities = GradleUtil.getProperty(
-			project, "check.vulnerabilities", (String)null);
-
-		if (Validator.isNotNull(checkVulnerabilities)) {
-			formatSourceTask.setCheckVulnerabilities(
-				Boolean.parseBoolean(checkVulnerabilities));
-		}
-
 		String baseDirName = GradleUtil.getProperty(
 			project, "source.base.dir", (String)null);
 

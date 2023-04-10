@@ -12,7 +12,10 @@ import {
 	getSKUCustomFieldExpandoValue,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import {initialAccountState, initialDashboardNavigationItems} from './PurchasedDashboardPageUtil';
+import {
+	initialAccountState,
+	initialDashboardNavigationItems,
+} from './PurchasedDashboardPageUtil';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -55,7 +58,9 @@ const tableHeaders = [
 
 export function PurchasedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountState);
-	const [selectedAccount, setSelectedAccount] = useState<Account>(accounts[0]);
+	const [selectedAccount, setSelectedAccount] = useState<Account>(
+		accounts[0]
+	);
 	const [purchasedAppTable, setPurchasedAppTable] =
 		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
 	const [page, setPage] = useState<number>(1);

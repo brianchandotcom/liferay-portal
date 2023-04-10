@@ -246,7 +246,7 @@ export function ReviewAndSubmitAppPage({
 		};
 
 		getData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps		
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [appERC, appProductId, dispatch]);
 
 	return (
@@ -400,7 +400,6 @@ export function ReviewAndSubmitAppPage({
 						regarding this app submission until Liferay completes
 						its review process and I agree with the Liferay
 						Marketplace <a href="#">terms</a> and{' '}
-
 						<a href="#">privacy</a>
 					</span>
 				</div>

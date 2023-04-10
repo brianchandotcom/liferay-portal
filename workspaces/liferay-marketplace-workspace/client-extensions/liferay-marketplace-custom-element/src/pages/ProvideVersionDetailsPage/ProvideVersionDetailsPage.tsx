@@ -43,6 +43,7 @@ export function ProvideVersionDetailsPage({
 			// optionId,
 			// optionValuesId,
 			// productOptionId,
+
 		},
 		dispatch,
 	] = useAppContext();
@@ -173,9 +174,7 @@ export function ProvideVersionDetailsPage({
 								// skuOptions: [
 								// 	{
 								// 		key: productOptionId,
-
-										value: optionValuesId.noOptionId,
-
+								// 		value: optionValuesId.noOptionId,
 								// 	},
 								// ],
 

@@ -35,14 +35,7 @@ export async function addSkuExpandoValue({
 			classPK: skuId,
 			companyId,
 			tableName: 'CUSTOM_FIELDS',
-		},
-
-		// (obj: any) => {
-
-		// 	// console.log(obj);
-
-		// }
-
+		}
 	);
 }
 

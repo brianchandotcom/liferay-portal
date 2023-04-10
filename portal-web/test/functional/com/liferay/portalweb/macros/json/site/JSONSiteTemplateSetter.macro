@@ -12,6 +12,9 @@ definition {
 		if (isSet(description)) {
 			var description = URLUtil.encodeUTF8(${description});
 		}
+		else {
+			var description = "";
+		}
 
 		return ${description};
 	}

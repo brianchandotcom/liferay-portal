@@ -32,5 +32,6 @@ export declare type AnyDataRenderer =
 	| InternalDataRenderer;
 export declare function getDataRendererById(id: string): AnyDataRenderer;
 export declare function getDataRendererByURL(
-	url: string
+	url: string,
+	type: 'clientExtension' | 'internal'
 ): Promise<AnyDataRenderer>;

@@ -81,6 +81,7 @@ type TSorting = {
 type TViews = {
 	component?: any;
 	contentRenderer?: string;
+	contentRendererClientExtension?: boolean;
 	contentRendererModuleURL?: string;
 	label?: string;
 	name?: string;

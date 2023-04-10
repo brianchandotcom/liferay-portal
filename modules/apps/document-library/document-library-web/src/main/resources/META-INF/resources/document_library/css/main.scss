@@ -3,8 +3,6 @@
 
 @import 'image_editor_modal';
 
-@import 'data_engine_info_panel';
-
 @mixin file-icon($colorIndex, $color) {
 	[data-file-icon-color='#{$colorIndex}'] .lexicon-icon {
 		color: $color;

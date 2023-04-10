@@ -18,7 +18,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import '../../../css/_data_engine_info_panel.scss';
+import '../../../css/data_engine_info_panel.scss';
 
 export default function InfoPanel({title, url}) {
 	const [loading, setLoading] = useState(true);

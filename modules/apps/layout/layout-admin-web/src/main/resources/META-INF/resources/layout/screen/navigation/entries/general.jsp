@@ -134,7 +134,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 				for (Locale availableLocale : LanguageUtil.getAvailableLocales(group.getGroupId())) {
 				%>
 
-					<aui:input name='<%= "name_" + LocaleUtil.toLanguageId(availableLocale) %>' type="hidden" value="<%= selLayout.getName(availableLocale) %>" />
+					<aui:input name='<%= "nameMapAsXML_" + LocaleUtil.toLanguageId(availableLocale) %>' type="hidden" value="<%= selLayout.getName(availableLocale) %>" />
 
 				<%
 				}

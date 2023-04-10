@@ -115,7 +115,7 @@ String friendlyURLBase = StringPool.BLANK;
 		</c:if>
 	</c:when>
 	<c:otherwise>
-		<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
+		<aui:input name='<%= "nameMapAsXML_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
 		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
 	</c:otherwise>
 </c:choose>

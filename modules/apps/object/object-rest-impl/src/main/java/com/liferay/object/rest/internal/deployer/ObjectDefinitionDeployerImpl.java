@@ -674,7 +674,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		long companyId = objectDefinition.getCompanyId();
 		String restContextPath = objectDefinition.getRESTContextPath();
 
-		_undeployObjectDefinitionsMap(companyId, restContextPath);
+		_undeployObjectDefinitions(companyId, restContextPath);
 		_undeployRestContextPathCompanyIds(companyId, restContextPath);
 		_undeployScopedServiceRegistrationsMap(companyId, restContextPath);
 
@@ -683,7 +683,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 	}
 
-	private void _undeployObjectDefinitionsMap(
+	private void _undeployObjectDefinitions(
 		long companyId, String restContextPath) {
 
 		Map<Long, ObjectDefinition> objectDefinitions =

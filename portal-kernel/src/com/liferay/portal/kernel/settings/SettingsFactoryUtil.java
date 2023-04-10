@@ -53,10 +53,6 @@ public class SettingsFactoryUtil {
 		return _settingsFactory;
 	}
 
-	public static void registerSettingsMetadata(Class<?> settingsClass) {
-		_settingsFactory.registerSettingsMetadata(settingsClass);
-	}
-
 	private static volatile SettingsFactory _settingsFactory =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			SettingsFactory.class, SettingsFactoryUtil.class,

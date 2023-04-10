@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.upgrade.v1_0_0;
+package com.liferay.blogs.internal.configuration.definition;
 
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.blogs.settings.BlogsGroupServiceSettings;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Shuyang Zhou
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
+@Component(
+	property = "service.ranking:Integer=-1",
+	service = ConfigurationPidMapping.class
+)
+public class BlogsGroupServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
-	public UpgradePortletSettings(SettingsFactory settingsFactory) {
-		super(settingsFactory);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return BlogsGroupServiceSettings.class;
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeMainPortlet(
-			BlogsPortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
+	public String getConfigurationPid() {
+		return BlogsConstants.SERVICE_NAME;
 	}
 
 }

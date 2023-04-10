@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Iván Zaera
  */
-@Settings.Config(settingsIds = BlogsConstants.SERVICE_NAME)
+@Settings.Config
 public class BlogsGroupServiceSettings {
 
 	public static BlogsGroupServiceSettings getInstance(long groupId)
@@ -116,11 +116,6 @@ public class BlogsGroupServiceSettings {
 
 	public boolean isEmailEntryUpdatedEnabled() {
 		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
-	}
-
-	static {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			BlogsGroupServiceSettings.class);
 	}
 
 	private final TypedSettings _typedSettings;

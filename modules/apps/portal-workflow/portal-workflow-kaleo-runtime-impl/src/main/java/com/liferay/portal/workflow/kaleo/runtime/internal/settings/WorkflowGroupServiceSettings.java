@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
  * @author Iván Zaera
  * @author Joshua Cords
  */
-@Settings.Config(settingsIds = WorkflowConstants.SERVICE_NAME)
+@Settings.Config
 public class WorkflowGroupServiceSettings {
 
 	public static WorkflowGroupServiceSettings getInstance(long companyId)
@@ -48,11 +48,6 @@ public class WorkflowGroupServiceSettings {
 
 	public String getEmailFromName() {
 		return _typedSettings.getValue("emailFromName");
-	}
-
-	static {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			WorkflowGroupServiceSettings.class);
 	}
 
 	private final TypedSettings _typedSettings;

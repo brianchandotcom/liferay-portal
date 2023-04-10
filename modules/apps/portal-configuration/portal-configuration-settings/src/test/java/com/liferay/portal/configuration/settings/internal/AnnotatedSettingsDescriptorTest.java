@@ -78,7 +78,7 @@ public class AnnotatedSettingsDescriptorTest {
 			multiValuedKeys2.containsAll(expectedMultiValuedKeys));
 	}
 
-	@Settings.Config(settingsIds = {"settingsId.1", "settingsId.2"})
+	@Settings.Config
 	public class MockSettings {
 
 		public boolean getBoolean() {

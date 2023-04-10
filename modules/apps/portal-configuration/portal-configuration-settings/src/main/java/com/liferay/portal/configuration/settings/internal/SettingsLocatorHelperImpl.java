@@ -443,10 +443,14 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	protected void setConfigurationPidMapping(
 		ConfigurationPidMapping configurationPidMapping) {
 
-		_configurationPidMappings.put(
-			configurationPidMapping.getConfigurationPid(),
-			ConfigurationPidUtil.getConfigurationPid(
-				configurationPidMapping.getConfigurationBeanClass()));
+		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
+
+		if (clazz.getAnnotation(Settings.Config.class) == null) {
+			_configurationPidMappings.put(
+				configurationPidMapping.getConfigurationPid(),
+				ConfigurationPidUtil.getConfigurationPid(
+					configurationPidMapping.getConfigurationBeanClass()));
+		}
 	}
 
 	@Reference(unbind = "-")

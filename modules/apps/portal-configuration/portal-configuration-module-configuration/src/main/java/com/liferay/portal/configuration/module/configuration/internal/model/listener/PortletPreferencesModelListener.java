@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -86,7 +87,13 @@ public class PortletPreferencesModelListener
 					ConfigurationPidMapping configurationPidMapping =
 						bundleContext.getService(serviceReference);
 
-					emitter.emit(configurationPidMapping.getConfigurationPid());
+					Class<?> clazz =
+						configurationPidMapping.getConfigurationBeanClass();
+
+					if (clazz.getAnnotation(Settings.Config.class) == null) {
+						emitter.emit(
+							configurationPidMapping.getConfigurationPid());
+					}
 				});
 	}
 

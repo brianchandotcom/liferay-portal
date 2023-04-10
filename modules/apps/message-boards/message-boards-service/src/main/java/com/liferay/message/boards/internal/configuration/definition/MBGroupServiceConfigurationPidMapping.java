@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.upgrade.v1_0_0;
+package com.liferay.message.boards.internal.configuration.definition;
 
 import com.liferay.message.boards.constants.MBConstants;
-import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Shuyang Zhou
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
+@Component(service = ConfigurationPidMapping.class)
+public class MBGroupServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
-	public UpgradePortletSettings(SettingsFactory settingsFactory) {
-		super(settingsFactory);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return MBGroupServiceSettings.class;
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeMainPortlet(
-			MBPortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
+	public String getConfigurationPid() {
+		return MBConstants.SERVICE_NAME;
 	}
 
 }

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.FallbackSettings;
-import com.liferay.portal.kernel.settings.PortalSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
@@ -108,23 +107,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return _settingsDescriptors.get(settingsId);
 	}
 
-	@Override
-	public void registerSettingsMetadata(Class<?> settingsClass) {
-		SettingsDescriptor settingsDescriptor = new AnnotatedSettingsDescriptor(
-			settingsClass);
-
-		Settings.Config settingsConfig = settingsClass.getAnnotation(
-			Settings.Config.class);
-
-		for (String settingsId : settingsConfig.settingsIds()) {
-			_settingsDescriptors.put(settingsId, settingsDescriptor);
-		}
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		registerSettingsMetadata(PortalSettings.class);
-
 		_fallbackKeysServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, FallbackKeys.class, "settingsId");
@@ -170,13 +154,17 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		String settingsId = configurationPidMapping.getConfigurationPid();
 
-		ConfigurationBeanClassSettingsDescriptor
-			configurationBeanClassSettingsDescriptor =
-				new ConfigurationBeanClassSettingsDescriptor(
-					configurationPidMapping.getConfigurationBeanClass());
+		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
 
-		_settingsDescriptors.put(
-			settingsId, configurationBeanClassSettingsDescriptor);
+		if (clazz.getAnnotation(Settings.Config.class) == null) {
+			_settingsDescriptors.put(
+				settingsId,
+				new ConfigurationBeanClassSettingsDescriptor(clazz));
+		}
+		else {
+			_settingsDescriptors.put(
+				settingsId, new AnnotatedSettingsDescriptor(clazz));
+		}
 	}
 
 	@Reference(unbind = "-")

@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-@Settings.Config(settingsIds = DLConstants.SERVICE_NAME)
+@Settings.Config
 public class DLGroupServiceSettings {
 
 	public static DLGroupServiceSettings getInstance(long groupId)
@@ -168,11 +168,6 @@ public class DLGroupServiceSettings {
 
 	public boolean isShowHiddenMountFolders() {
 		return _typedSettings.getBooleanValue("showHiddenMountFolders");
-	}
-
-	static {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			DLGroupServiceSettings.class);
 	}
 
 	private final TypedSettings _typedSettings;

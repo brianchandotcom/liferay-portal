@@ -80,7 +80,7 @@ public class ConfigurationBeanClassSettingsDescriptorTest {
 			multiValuedKeys2.containsAll(expectedMultiValuedKeys));
 	}
 
-	@Settings.Config(settingsIds = "settingsId.1")
+	@Settings.Config
 	public interface MockSettings {
 
 		public boolean getBoolean();

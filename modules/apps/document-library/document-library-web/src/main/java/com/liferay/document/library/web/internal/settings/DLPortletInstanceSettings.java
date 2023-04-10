@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.settings;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,12 +30,7 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-@Settings.Config(
-	settingsIds = {
-		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		DLPortletKeys.MEDIA_GALLERY_DISPLAY
-	}
-)
+@Settings.Config
 public class DLPortletInstanceSettings {
 
 	public static DLPortletInstanceSettings getInstance(
@@ -137,11 +131,6 @@ public class DLPortletInstanceSettings {
 
 	private static final String[] _MIME_TYPES_DEFAULT = ArrayUtil.toStringArray(
 		DLUtil.getAllMediaGalleryMimeTypes());
-
-	static {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			DLPortletInstanceSettings.class);
-	}
 
 	private final TypedSettings _typedSettings;
 

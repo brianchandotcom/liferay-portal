@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  */
-@Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
+@Settings.Config
 public class MBGroupServiceSettings {
 
 	public static final String[] ALL_KEYS = {};
@@ -189,11 +189,6 @@ public class MBGroupServiceSettings {
 
 	public boolean isThreadAsQuestionByDefault() {
 		return _typedSettings.getBooleanValue("threadAsQuestionByDefault");
-	}
-
-	static {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			MBGroupServiceSettings.class);
 	}
 
 	private final TypedSettings _typedSettings;

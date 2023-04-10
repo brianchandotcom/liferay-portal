@@ -1,0 +1,52 @@
+.publisher-gate-page {
+	&-body {
+		margin-top: 4.5rem;
+		width: 37.5rem;
+	}
+	&-button {
+		&-container {
+			align-items: end;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 7.5rem;
+		}
+		&-link {
+			color: #ffffff;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 24px;
+		}
+	}
+	&-cards {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 2rem;
+		margin-top: 1.25rem;
+	}
+	&-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 100%;
+	}
+	&-content {
+		margin-bottom: 12rem;
+		margin-top: 10rem;
+		width: 37.5rem;
+	}
+	&-divider {
+		margin-bottom: 1.5rem;
+		margin-top: 2rem;
+	}
+	&-icon {
+		color: #0b5fff;
+	}
+	&-text {
+		margin-bottom: 2rem;
+	}
+}
+.header-description {
+	color: #54555f;
+}

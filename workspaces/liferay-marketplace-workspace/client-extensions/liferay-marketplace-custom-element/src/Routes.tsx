@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
 import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {PublishedAppsDashboardPage} from './pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage';
+import {PublisherGatePage} from './pages/PublisherGatePage/PublisherGatePage';
 import {PurchasedAppsDashboardPage} from './pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
 import {publisherUserChecker} from './utils/util';
 
@@ -44,6 +45,9 @@ export default function AppRoutes({route}: AppRoutesProps) {
 		}
 		else if (userPublisherChecker && Liferay.ThemeDisplay.isSignedIn()) {
 			return <PublishedAppsDashboardPage />;
+		}
+		else {
+			return <PublisherGatePage />;
 		}
 	}
 }

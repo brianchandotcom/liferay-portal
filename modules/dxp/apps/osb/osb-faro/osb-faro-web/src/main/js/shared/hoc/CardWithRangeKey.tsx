@@ -11,6 +11,7 @@ interface ICardWithRangeKeyProps
 	children: (val) => React.ReactNode;
 	label: string;
 	legacyDropdownRangeKey: boolean;
+	rangeKeys?: string[];
 }
 
 const CardWithRangeKey = compose(withRangeKey)(
@@ -20,6 +21,7 @@ const CardWithRangeKey = compose(withRangeKey)(
 		label,
 		legacyDropdownRangeKey = true,
 		onRangeSelectorsChange,
+		rangeKeys,
 		rangeSelectors,
 		...otherProps
 	}: ICardWithRangeKeyProps) => (
@@ -30,6 +32,7 @@ const CardWithRangeKey = compose(withRangeKey)(
 				<DropdownRangeKey
 					legacy={legacyDropdownRangeKey}
 					onChange={onRangeSelectorsChange}
+					rangeKeys={rangeKeys}
 					rangeSelectors={rangeSelectors}
 				/>
 			</Card.Header>

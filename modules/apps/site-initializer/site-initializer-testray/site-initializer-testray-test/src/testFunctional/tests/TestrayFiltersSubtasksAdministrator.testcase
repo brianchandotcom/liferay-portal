@@ -56,8 +56,6 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			JSONTestray.addCaseType(caseType = ${caseType});
-
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -95,6 +93,7 @@ definition {
 
 			JSONTestray.addSubtask(
 				key = "OPEN",
+				messageError = "Failed prior to running test",
 				score = 3,
 				statusSubtask = "Open",
 				subtaskName = "Subtask_1",
@@ -141,8 +140,8 @@ definition {
 			objectName = ${routineName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
+			object = "components",
+			objectName = ${componentName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
@@ -204,6 +203,44 @@ definition {
 		task ("And do not see the user Test in the table") {
 			AssertElementNotPresent(
 				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by errors"
+	@priority = 3
+	test AdminCanFilterSubtasksByError {
+		task ("Given that the user has two subtasks different in the table") {
+			AssertElementPresent(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter the subtask in the filter by error") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.typeFilter(
+				label = "Errors",
+				value = "Failed prior to running test");
+		}
+
+		task ("Then the user see only subtask 1 with error in the table") {
+			AssertElementPresent(
+				key_projectName = "Failed prior to running test",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the subtask 2 without error in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Subtask_2",
 				locator1 = "Testray#ITEM_NAME");
 		}
 	}

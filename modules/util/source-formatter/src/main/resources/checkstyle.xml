@@ -393,11 +393,6 @@
 			<property name="description" value="Finds cases where `*Factory` should be used when creating new instances of an object." />
 			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.FeatureFlagsAnnotationCheck">
-			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Find cases where @FeatureFlags annotations can be used." />
-			<message key="use.feature.flags" value="Use ''@FeatureFlags({0})'' on {1} definition." />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.FilterStringWhitespaceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`." />

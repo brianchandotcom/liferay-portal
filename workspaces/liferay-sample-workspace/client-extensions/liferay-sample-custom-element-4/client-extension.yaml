@@ -1,0 +1,15 @@
+assemble:
+    - from: assets
+      into: static
+liferay-sample-custom-element-4:
+    cssURLs:
+        - style.css
+    friendlyURLMapping: liferay-sample-custom-element-4
+    htmlElementName: liferay-sample-custom-element-4
+    instanceable: false
+    name: Liferay Sample Custom Element 4
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - index.js
+    useESM: true

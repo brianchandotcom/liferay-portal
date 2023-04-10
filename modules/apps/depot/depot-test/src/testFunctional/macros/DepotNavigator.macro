@@ -577,6 +577,8 @@ definition {
 	}
 
 	macro switchStagingStatus {
+		WaitForVisible(locator1 = "Button#STAGING_INDICATOR");
+
 		Click(locator1 = "Button#STAGING_INDICATOR");
 
 		DropdownMenuItem.click(menuItem = ${stagingItem});

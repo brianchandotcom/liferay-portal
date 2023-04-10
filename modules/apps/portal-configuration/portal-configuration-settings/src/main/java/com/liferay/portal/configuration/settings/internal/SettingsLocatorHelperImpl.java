@@ -16,6 +16,9 @@ package com.liferay.portal.configuration.settings.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
@@ -60,22 +63,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera
@@ -113,11 +115,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getConfigurationBeanSettings(String configurationPid) {
-		configurationPid = _configurationPidMappings.getOrDefault(
-			configurationPid, configurationPid);
+		String ocdPid = _configurationPidMappingServiceTrackerMap.getService(
+			configurationPid);
+
+		if (ocdPid == null) {
+			ocdPid = configurationPid;
+		}
 
 		Settings configurationBeanSettings = _configurationBeanSettings.get(
-			configurationPid);
+			ocdPid);
 
 		if (configurationBeanSettings == null) {
 			return _portalPropertiesSettings;
@@ -330,8 +336,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return () -> {
 			configurationPidMappingServiceRegistration.unregister();
 
-			_configurationPidMappings.remove(configurationPid);
-
 			_scopedConfigurationManagedServiceFactories.remove(
 				configurationPid);
 			scopedConfigurationManagedServiceFactory.unregister();
@@ -441,35 +445,75 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			new ConfigurationBeanClassBundleTrackerCustomizer());
 
 		_bundleTracker.open();
+
+		_configurationPidMappingServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ConfigurationPidMapping.class, null,
+				ServiceReferenceMapperFactory.createFromFunction(
+					bundleContext,
+					ConfigurationPidMapping::getConfigurationPid),
+				new ServiceTrackerCustomizer
+					<ConfigurationPidMapping, String>() {
+
+					@Override
+					public String addingService(
+						ServiceReference<ConfigurationPidMapping>
+							serviceReference) {
+
+						ConfigurationPidMapping configurationPidMapping =
+							bundleContext.getService(serviceReference);
+
+						Class<?> clazz =
+							configurationPidMapping.getConfigurationBeanClass();
+
+						if (clazz.getAnnotation(Settings.Config.class) ==
+								null) {
+
+							String mappedPid =
+								configurationPidMapping.getConfigurationPid();
+							String ocdPid =
+								ConfigurationPidUtil.getConfigurationPid(
+									configurationPidMapping.
+										getConfigurationBeanClass());
+
+							if (!Objects.equals(mappedPid, ocdPid)) {
+								return ocdPid;
+							}
+						}
+
+						bundleContext.ungetService(serviceReference);
+
+						return null;
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ConfigurationPidMapping>
+							serviceReference,
+						String ocdPid) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ConfigurationPidMapping>
+							serviceReference,
+						String ocdPid) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_configurationPidMappingServiceTrackerMap.close();
+
 		_bundleTracker.close();
 
 		_bundleTracker = null;
 
 		_bundleContext = null;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setConfigurationPidMapping(
-		ConfigurationPidMapping configurationPidMapping) {
-
-		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
-
-		if (clazz.getAnnotation(Settings.Config.class) == null) {
-			String mappedPid = configurationPidMapping.getConfigurationPid();
-			String ocdPid = ConfigurationPidUtil.getConfigurationPid(
-				configurationPidMapping.getConfigurationBeanClass());
-
-			if (!Objects.equals(mappedPid, ocdPid)) {
-				_configurationPidMappings.put(mappedPid, ocdPid);
-			}
-		}
 	}
 
 	@Reference(unbind = "-")
@@ -517,13 +561,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			props.getProperties());
 	}
 
-	protected void unsetConfigurationPidMapping(
-		ConfigurationPidMapping configurationPidMapping) {
-
-		_configurationPidMappings.remove(
-			configurationPidMapping.getConfigurationPid());
-	}
-
 	private Settings _getScopedConfigurationBeanSettings(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
 		String configurationPid, Settings parentSettings) {
@@ -558,8 +595,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private BundleTracker<List<SafeCloseable>> _bundleTracker;
 	private final Map<String, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
-	private final ConcurrentMap<String, String> _configurationPidMappings =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, String>
+		_configurationPidMappingServiceTrackerMap;
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;

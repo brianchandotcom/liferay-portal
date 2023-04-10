@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
@@ -38,18 +39,16 @@ import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Raymond Augé
@@ -103,7 +102,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public SettingsDescriptor getSettingsDescriptor(String settingsId) {
 		settingsId = PortletIdCodec.decodePortletName(settingsId);
 
-		return _settingsDescriptors.get(settingsId);
+		return _settingsDescriptorServiceTrackerMap.getService(settingsId);
 	}
 
 	@Activate
@@ -111,10 +110,60 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		_fallbackKeysServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, FallbackKeys.class, "settingsId");
+
+		_settingsDescriptorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ConfigurationPidMapping.class, null,
+				ServiceReferenceMapperFactory.createFromFunction(
+					bundleContext,
+					ConfigurationPidMapping::getConfigurationPid),
+				new ServiceTrackerCustomizer
+					<ConfigurationPidMapping, SettingsDescriptor>() {
+
+					@Override
+					public SettingsDescriptor addingService(
+						ServiceReference<ConfigurationPidMapping>
+							serviceReference) {
+
+						ConfigurationPidMapping configurationPidMapping =
+							bundleContext.getService(serviceReference);
+
+						Class<?> clazz =
+							configurationPidMapping.getConfigurationBeanClass();
+
+						if (clazz.getAnnotation(Settings.Config.class) ==
+								null) {
+
+							return new ConfigurationBeanClassSettingsDescriptor(
+								clazz);
+						}
+
+						return new AnnotatedSettingsDescriptor(clazz);
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ConfigurationPidMapping>
+							serviceReference,
+						SettingsDescriptor settingsDescriptor) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ConfigurationPidMapping>
+							serviceReference,
+						SettingsDescriptor settingsDescriptor) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_settingsDescriptorServiceTrackerMap.close();
+
 		_fallbackKeysServiceTrackerMap.close();
 	}
 
@@ -129,28 +178,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setConfigurationPidMapping(
-		ConfigurationPidMapping configurationPidMapping) {
-
-		String settingsId = configurationPidMapping.getConfigurationPid();
-
-		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
-
-		if (clazz.getAnnotation(Settings.Config.class) == null) {
-			_settingsDescriptors.put(
-				settingsId,
-				new ConfigurationBeanClassSettingsDescriptor(clazz));
-		}
-		else {
-			_settingsDescriptors.put(
-				settingsId, new AnnotatedSettingsDescriptor(clazz));
-		}
-	}
-
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
@@ -161,13 +188,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		PortletItemLocalService portletItemLocalService) {
 
 		_portletItemLocalService = portletItemLocalService;
-	}
-
-	protected void unsetConfigurationPidMapping(
-		ConfigurationPidMapping configurationPidMapping) {
-
-		_settingsDescriptors.remove(
-			configurationPidMapping.getConfigurationPid());
 	}
 
 	private Settings _applyFallbackKeys(String settingsId, Settings settings) {
@@ -220,7 +240,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		_fallbackKeysServiceTrackerMap;
 	private GroupLocalService _groupLocalService;
 	private PortletItemLocalService _portletItemLocalService;
-	private final Map<String, SettingsDescriptor> _settingsDescriptors =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, SettingsDescriptor>
+		_settingsDescriptorServiceTrackerMap;
 
 }

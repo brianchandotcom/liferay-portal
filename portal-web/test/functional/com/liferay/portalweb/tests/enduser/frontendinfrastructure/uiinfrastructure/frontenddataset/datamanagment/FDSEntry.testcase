@@ -95,7 +95,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178773 Confirm that the user can create a data set view"
+	@description = "LPS-178773 Confirm that the user can create a data set entry"
 	@priority = 5
 	test CanCreateDataSet {
 		task ("When Create a DataSet ") {
@@ -117,7 +117,7 @@ definition {
 		}
 	}
 
-	@description = "Confirm that the user can create a dataset view via API"
+	@description = "Confirm that the user can create a dataset entry via API"
 	@ignore = "Test Stub"
 	@priority = 5
 	test CanCreateDataSetViaAPI {
@@ -146,7 +146,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178779. Confirm the error message that appears when the user tries to create a dataset view with more than 280 characters in the name field"
+	@description = "LPS-178779. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
 	@priority = 3
 	test CannotExceed280Characters {
 		task ("When the user goes to add Datasets") {
@@ -194,7 +194,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178778. Confirm the error message that appears when the user tries to create a data set view without the filled name"
+	@description = "LPS-178778. Confirm the error message that appears when the user tries to create a data set entry without the filled name"
 	@priority = 3
 	test ErrorAppearsWhenNameBlank {
 		task ("When the user goes to add Datasets") {
@@ -238,7 +238,7 @@ definition {
 		}
 	}
 
-	@description = "Confirm that the user can cancel the creation of a data set view"
+	@description = "Confirm that the user can cancel the creation of a data set entry"
 	@priority = 5
 	test NotCreatedAfterCancel {
 		task ("When The user goes to add Datasets") {
@@ -330,7 +330,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179056  Confirm that the user can create a data set view"
+	@description = "LPS-179056  Confirm that the user can create a data set entry"
 	@priority = 5
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {

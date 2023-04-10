@@ -15,7 +15,6 @@
 package com.liferay.journal.internal.upgrade.v5_1_0;
 
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,12 +43,9 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 	public JournalArticleDDMStructureIdUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
-		DDMStructureLocalService ddmStructureLocalService, Portal portal,
 		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider) {
 
 		_classNameLocalService = classNameLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
-		_portal = portal;
 		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
 	}
 
@@ -242,8 +237,6 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 		JournalArticleDDMStructureIdUpgradeProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
-	private final Portal _portal;
 	private final SiteConnectedGroupGroupProvider
 		_siteConnectedGroupGroupProvider;
 

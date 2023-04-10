@@ -374,8 +374,7 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"5.0.0", "5.1.0",
 			new JournalArticleDDMStructureIdUpgradeProcess(
-				_classNameLocalService, _ddmStructureLocalService, _portal,
-				_siteConnectedGroupGroupProvider));
+				_classNameLocalService, _siteConnectedGroupGroupProvider));
 
 		registry.register(
 			"5.1.0", "5.1.1",

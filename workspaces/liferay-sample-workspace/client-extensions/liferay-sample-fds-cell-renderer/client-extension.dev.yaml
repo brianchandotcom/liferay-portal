@@ -1,2 +1,2 @@
 liferay-sample-fds-cell-renderer:
-    url: http://localhost:3000/index.js
+    url: http://localhost:5002/build/index.js

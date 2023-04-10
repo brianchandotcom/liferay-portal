@@ -60,10 +60,8 @@ public class UpgradeStatusTest {
 	public static void setUpClass() {
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_errorMessages");
-		_originalFiltered = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_filtered");
 		_originalServletSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_servletSchemaVersionsMap");
+			_upgradeStatus, "_schemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_upgradeProcessMessages");
 		_originalState = ReflectionTestUtil.getFieldValue(
@@ -86,7 +84,6 @@ public class UpgradeStatusTest {
 	@Before
 	public void setUp() {
 		_originalErrorMessages.clear();
-		_originalFiltered = false;
 		_originalServletSchemaVersionsMap.clear();
 		_originalUpgradeProcessMessages.clear();
 		_originalState = "Pending";
@@ -273,7 +270,6 @@ public class UpgradeStatusTest {
 	}
 
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;
-	private static boolean _originalFiltered;
 	private static Map<String, Object> _originalServletSchemaVersionsMap;
 	private static String _originalState;
 	private static StopWatch _originalStopWatch;

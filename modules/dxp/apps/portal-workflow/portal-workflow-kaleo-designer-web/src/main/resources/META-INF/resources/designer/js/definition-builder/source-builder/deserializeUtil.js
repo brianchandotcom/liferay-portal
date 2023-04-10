@@ -107,16 +107,6 @@ DeserializeUtil.prototype = {
 				}
 
 				if (type === 'task') {
-					node.assignments?.forEach((assignment) => {
-						const roleTypes = assignment['role-type'];
-
-						roleTypes?.forEach((type, index) => {
-							if (type === 'depot') {
-								roleTypes[index] = 'asset library';
-							}
-						});
-					});
-
 					if (node.assignments) {
 						data.assignments = parseAssignments(node);
 					}
@@ -132,16 +122,6 @@ DeserializeUtil.prototype = {
 
 				data.notifications =
 					node.notifications?.length && parseNotifications(node);
-
-				node.notifications?.forEach((notification) => {
-					const roleTypes = notification['role-type'];
-
-					roleTypes?.forEach((type, index) => {
-						if (type === 'depot') {
-							roleTypes[index] = 'asset library';
-						}
-					});
-				});
 
 				let nodeName;
 

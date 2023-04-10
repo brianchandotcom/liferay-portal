@@ -187,8 +187,6 @@ function appendXMLAssignments(
 
 		const xmlRoles = XMLUtil.createObj('roles');
 
-		const roleTypeName = exporting ? 'depot' : 'asset library';
-
 		if (assignmentType === 'resourceActions') {
 			const xmlResourceAction = XMLUtil.createObj('resourceActions');
 
@@ -222,11 +220,7 @@ function appendXMLAssignments(
 
 			dataAssignments.roleType.forEach((item, index) => {
 				const roleKey = dataAssignments.roleKey[index];
-				let roleType = dataAssignments.roleType[index];
-
-				if (item === 'asset library') {
-					roleType = roleTypeName;
-				}
+				const roleType = dataAssignments.roleType[index];
 
 				if (roleKey) {
 					buffer.push(
@@ -371,7 +365,6 @@ function appendXMLAssignments(
 
 function appendXMLRecipients(buffer, exporting, recipients) {
 	const recipientsAttrs = {};
-	const roleTypeName = exporting ? 'depot' : 'asset library';
 
 	if (
 		recipients?.receptionType &&
@@ -379,12 +372,6 @@ function appendXMLRecipients(buffer, exporting, recipients) {
 	) {
 		recipientsAttrs.receptionType = recipients.receptionType;
 	}
-
-	recipients?.roleType?.forEach((item, roleTypeIndex) => {
-		if (item === 'depot' || item === 'asset library') {
-			recipients.roleType[roleTypeIndex] = roleTypeName;
-		}
-	});
 
 	if (isObject(recipients) && !isObjectEmpty(recipients)) {
 		appendXMLAssignments(

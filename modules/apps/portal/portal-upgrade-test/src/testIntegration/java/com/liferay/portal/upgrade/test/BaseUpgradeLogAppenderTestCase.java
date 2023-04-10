@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,7 +41,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.util.UpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -533,19 +533,19 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			PropsValues.class, "UPGRADE_REPORT_ENABLED", true);
 
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_errorMessages");
+			_upgradeStatus, "_errorMessages");
 		_originalFiltered = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_filtered");
+			_upgradeStatus, "_filtered");
 		_originalModuleSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_servletSchemaVersionsMap");
+			_upgradeStatus, "_servletSchemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_upgradeProcessMessages");
+			_upgradeStatus, "_upgradeProcessMessages");
 		_originalStatus = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_status");
+			_upgradeStatus, "_status");
 		_originalType = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_type");
+			_upgradeStatus, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
-			UpgradeStatus.class, "_warningMessages");
+			_upgradeStatus, "_warningMessages");
 	}
 
 	protected abstract String getFilePath();
@@ -671,6 +671,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 	private static Logger _upgradeReportLogger;
+
+	@Inject
+	private static UpgradeStatus _upgradeStatus;
 
 	@Inject(filter = "appender.name=UpgradeLogAppender")
 	private Appender _appender;

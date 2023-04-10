@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.portal.upgrade.internal.status;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
+import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
@@ -38,41 +39,13 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.ThreadContext;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Luis Ortiz
  */
-public class UpgradeStatus {
-
-	public static void addErrorMessage(String loggerName, String message) {
-		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
-			loggerName, key -> new ConcurrentHashMap<>());
-
-		int occurrences = messages.computeIfAbsent(message, key -> 0);
-
-		occurrences++;
-
-		messages.put(message, occurrences);
-	}
-
-	public static void addUpgradeProcessMessage(
-		String loggerName, String message) {
-
-		List<String> messages = _upgradeProcessMessages.computeIfAbsent(
-			loggerName, key -> new ArrayList<>());
-
-		messages.add(message);
-	}
-
-	public static void addWarningMessage(String loggerName, String message) {
-		Map<String, Integer> messages = _warningMessages.computeIfAbsent(
-			loggerName, key -> new ConcurrentHashMap<>());
-
-		int occurrences = messages.computeIfAbsent(message, key -> 0);
-
-		occurrences++;
-
-		messages.put(message, occurrences);
-	}
+@Component(service = {UpgradeStatus.class, UpgradeStatusImpl.class})
+public class UpgradeStatusImpl implements UpgradeStatus {
 
 	public static void finish(ReleaseManager releaseManager) {
 		_setFinalSchemaVersion();
@@ -96,13 +69,50 @@ public class UpgradeStatus {
 		}
 	}
 
-	public static Map<String, Map<String, Integer>> getErrorMessages() {
+	public static void start() {
+		_status = "Running";
+
+		_processRelease(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setInitial(schemaVersion));
+	}
+
+	public void addErrorMessage(String loggerName, String message) {
+		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
+
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
+
+		occurrences++;
+
+		messages.put(message, occurrences);
+	}
+
+	public void addUpgradeProcessMessage(String loggerName, String message) {
+		List<String> messages = _upgradeProcessMessages.computeIfAbsent(
+			loggerName, key -> new ArrayList<>());
+
+		messages.add(message);
+	}
+
+	public void addWarningMessage(String loggerName, String message) {
+		Map<String, Integer> messages = _warningMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
+
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
+
+		occurrences++;
+
+		messages.put(message, occurrences);
+	}
+
+	public Map<String, Map<String, Integer>> getErrorMessages() {
 		_filterMessages();
 
 		return _errorMessages;
 	}
 
-	public static String getFinalSchemaVersion(String servletContextName) {
+	public String getFinalSchemaVersion(String servletContextName) {
 		SchemaVersions schemaVersions = _schemaVersionsMap.get(
 			servletContextName);
 
@@ -113,7 +123,7 @@ public class UpgradeStatus {
 		return schemaVersions.getFinal();
 	}
 
-	public static String getInitialSchemaVersion(String servletContextName) {
+	public String getInitialSchemaVersion(String servletContextName) {
 		SchemaVersions schemaVersions = _schemaVersionsMap.get(
 			servletContextName);
 
@@ -124,41 +134,24 @@ public class UpgradeStatus {
 		return schemaVersions.getInitial();
 	}
 
-	public static String getStatus() {
+	@Override
+	public String getStatus() {
 		return _status;
 	}
 
-	public static String getType() {
+	@Override
+	public String getType() {
 		return _type;
 	}
 
-	public static Map<String, ArrayList<String>> getUpgradeProcessMessages() {
+	public Map<String, ArrayList<String>> getUpgradeProcessMessages() {
 		return _upgradeProcessMessages;
 	}
 
-	public static Map<String, Map<String, Integer>> getWarningMessages() {
+	public Map<String, Map<String, Integer>> getWarningMessages() {
 		_filterMessages();
 
 		return _warningMessages;
-	}
-
-	public static void start() {
-		_status = "Running";
-
-		_processRelease(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setInitial(schemaVersion));
-	}
-
-	private static void _filterMessages() {
-		if (!_filtered) {
-			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
-				_errorMessages.remove(filteredClassName);
-				_warningMessages.remove(filteredClassName);
-			}
-
-			_filtered = true;
-		}
 	}
 
 	private static void _processRelease(
@@ -290,12 +283,24 @@ public class UpgradeStatus {
 		_type = upgradeType;
 	}
 
+	private void _filterMessages() {
+		if (!_filtered) {
+			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
+				_errorMessages.remove(filteredClassName);
+				_warningMessages.remove(filteredClassName);
+			}
+
+			_filtered = true;
+		}
+	}
+
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeStatus.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeStatusImpl.class);
 
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();

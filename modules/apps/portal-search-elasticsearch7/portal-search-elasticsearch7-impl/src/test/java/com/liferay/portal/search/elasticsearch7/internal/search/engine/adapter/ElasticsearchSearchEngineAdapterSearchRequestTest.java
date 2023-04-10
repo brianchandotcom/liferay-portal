@@ -166,18 +166,26 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 
-		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest();
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
+		searchSearchRequest.setIndexNames(_INDEX_NAME);
+		searchSearchRequest.setQuery(new MatchAllQuery());
 		searchSearchRequest.setScrollKeepAliveMinutes(1);
+		searchSearchRequest.setSize(1);
+
+		for (int i = 0; i < 3; i++) {
+			SearchSearchResponse searchSearchResponse =
+				_searchEngineAdapter.execute(searchSearchRequest);
+
+			Assert.assertEquals(1, _getDocumentsLength(searchSearchResponse));
+
+			searchSearchRequest.setScrollId(searchSearchResponse.getScrollId());
+		}
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		Assert.assertEquals(1, _getDocumentsLength(searchSearchResponse));
-
-		_assertScroll(searchSearchRequest, searchSearchResponse, 1);
-		_assertScroll(searchSearchRequest, searchSearchResponse, 1);
-		_assertScroll(searchSearchRequest, searchSearchResponse, 0);
+		Assert.assertEquals(0, _getDocumentsLength(searchSearchResponse));
 	}
 
 	@Test
@@ -186,10 +194,25 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 		_indexSuggestKeyword(RandomTestUtil.randomString());
 
-		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest();
+		OpenPointInTimeRequest openPointInTimeRequest =
+			new OpenPointInTimeRequest(1);
 
-		searchSearchRequest.setPointInTime(_getPointInTime());
+		openPointInTimeRequest.setIndices(_INDEX_NAME);
+
+		OpenPointInTimeResponse openPointInTimeResponse =
+			_searchEngineAdapter.execute(openPointInTimeRequest);
+
+		PointInTime pointInTime = new PointInTime(
+			openPointInTimeResponse.pitId());
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(_INDEX_NAME);
+		searchSearchRequest.setPointInTime(pointInTime);
+		searchSearchRequest.setQuery(new MatchAllQuery());
+		searchSearchRequest.setSize(1);
 		searchSearchRequest.setSorts(new Sort[] {new Sort("_count", true)});
+		searchSearchRequest.setStart(0);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
@@ -197,8 +220,17 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		for (int i = 0; i < 3; i++) {
 			Assert.assertEquals(1, _getDocumentsLength(searchSearchResponse));
 
-			searchSearchResponse = _searchAfter(
-				searchSearchRequest, _getLastSearchHit(searchSearchResponse));
+			SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+			List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+			SearchHit lastSearchHit = searchHitList.get(
+				searchHitList.size() - 1);
+
+			searchSearchRequest.setSearchAfter(lastSearchHit.getSortValues());
+
+			searchSearchResponse = _searchEngineAdapter.execute(
+				searchSearchRequest);
 		}
 
 		Assert.assertEquals(0, _getDocumentsLength(searchSearchResponse));
@@ -313,19 +345,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		return searchEngineAdapter;
 	}
 
-	private void _assertScroll(
-		SearchSearchRequest searchSearchRequest,
-		SearchSearchResponse searchSearchResponse, int expected) {
-
-		searchSearchRequest.setScrollId(searchSearchResponse.getScrollId());
-
-		searchSearchResponse = _searchEngineAdapter.execute(
-			searchSearchRequest);
-
-		Assert.assertEquals(
-			expected, _getDocumentsLength(searchSearchResponse));
-	}
-
 	private void _assertSuggestion(
 		Map<String, SuggestSearchResult> suggestSearchResultMap, int size,
 		String... expectedSuggestionsString) {
@@ -434,39 +453,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		return documents.length;
 	}
 
-	private SearchHit _getLastSearchHit(
-		SearchSearchResponse searchSearchResponse) {
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		List<SearchHit> searchHitList = searchHits.getSearchHits();
-
-		return searchHitList.get(searchHitList.size() - 1);
-	}
-
-	private PointInTime _getPointInTime() {
-		OpenPointInTimeRequest openPointInTimeRequest =
-			new OpenPointInTimeRequest(1);
-
-		openPointInTimeRequest.setIndices(_INDEX_NAME);
-
-		OpenPointInTimeResponse openPointInTimeResponse =
-			_searchEngineAdapter.execute(openPointInTimeRequest);
-
-		return new PointInTime(openPointInTimeResponse.pitId());
-	}
-
-	private SearchSearchRequest _getSearchSearchRequest() {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(_INDEX_NAME);
-		searchSearchRequest.setQuery(new MatchAllQuery());
-		searchSearchRequest.setSize(1);
-		searchSearchRequest.setStart(0);
-
-		return searchSearchRequest;
-	}
-
 	private String _getUID(String value) {
 		return StringBundler.concat(
 			_DEFAULT_COMPANY_ID, "_", _LOCALIZED_FIELD_NAME, "_", value);
@@ -527,14 +513,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	private SearchSearchResponse _searchAfter(
-		SearchSearchRequest searchSearchRequest, SearchHit lastSearchHit) {
-
-		searchSearchRequest.setSearchAfter(lastSearchHit.getSortValues());
-
-		return _searchEngineAdapter.execute(searchSearchRequest);
 	}
 
 	private List<String> _toList(

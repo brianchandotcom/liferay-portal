@@ -255,10 +255,18 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			Version finalVersion = Version.parseVersion(
 				schemaVersions.getFinal());
 
+			if (initialVersion.equals(finalVersion)) {
+				continue;
+			}
+
 			if (initialVersion.getMajor() < finalVersion.getMajor()) {
 				upgradeType = "Major";
 
 				break;
+			}
+
+			if (upgradeType.equals("Minor")) {
+				continue;
 			}
 
 			if (initialVersion.getMinor() < finalVersion.getMinor()) {
@@ -267,22 +275,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 				continue;
 			}
 
-			if (initialVersion.getMicro() < finalVersion.getMicro()) {
-				if (upgradeType.compareTo("Minor") != 0) {
-					upgradeType = "Micro";
-				}
-
-				continue;
-			}
-
-			String initialQualifier = initialVersion.getQualifier();
-			String finalQualifier = finalVersion.getQualifier();
-
-			if (!initialQualifier.isEmpty() && finalQualifier.isEmpty() &&
-				(upgradeType.compareTo("Minor") != 0)) {
-
-				upgradeType = "Micro";
-			}
+			upgradeType = "Micro";
 		}
 
 		_type = upgradeType;

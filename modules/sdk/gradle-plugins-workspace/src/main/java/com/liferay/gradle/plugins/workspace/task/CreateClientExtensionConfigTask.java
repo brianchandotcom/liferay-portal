@@ -33,8 +33,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
+import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -49,8 +51,6 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -60,6 +60,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
@@ -382,23 +383,29 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return id;
 	}
 
-	private List<String> _getMatchingPaths(Path basePath, String regexString) {
-		Pattern pattern = Pattern.compile(regexString);
+	private List<String> _getMatchingPaths(Path basePath, String glob) {
+		FileSystem fileSystem = basePath.getFileSystem();
+
+		PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + glob);
 
 		try (Stream<Path> files = Files.walk(basePath)) {
-			return files.map(
+			List<String> matchingPaths = files.map(
 				basePath::relativize
+			).filter(
+				pathMatcher::matches
 			).map(
 				String::valueOf
-			).filter(
-				pathString -> {
-					Matcher matcher = pattern.matcher(pathString);
-
-					return matcher.matches();
-				}
 			).collect(
 				Collectors.toList()
 			);
+
+			Logger logger = getLogger();
+
+			if (matchingPaths.isEmpty() && logger.isWarnEnabled()) {
+				logger.warn("No paths matched the glob pattern {}", glob);
+			}
+
+			return matchingPaths;
 		}
 		catch (IOException ioException) {
 			throw new GradleException(

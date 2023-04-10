@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -408,7 +409,11 @@ public class Log4jConfigUtilTest {
 		String loggerName, String priority, String... appenderTypes) {
 
 		int initialCapacity =
-			(appenderTypes.length == 0) ? 7 : (9 + (8 * appenderTypes.length));
+			(appenderTypes.length == 0) ? 7 : (9 + (9 * appenderTypes.length));
+
+		if (ArrayUtil.contains(appenderTypes, _CONSOLE, false)) {
+			initialCapacity = initialCapacity + 1;
+		}
 
 		StringBundler sb = new StringBundler(initialCapacity);
 
@@ -422,7 +427,13 @@ public class Log4jConfigUtilTest {
 				sb.append(appenderType);
 				sb.append("\" type=\"");
 				sb.append(appenderType);
-				sb.append("\"></Appender>");
+				sb.append("\">");
+
+				if (appenderType.equals(_CONSOLE)) {
+					sb.append("<Layout type=\"PatternLayout\"/>");
+				}
+
+				sb.append("</Appender>");
 			}
 
 			sb.append("</Appenders>");

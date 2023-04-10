@@ -351,4 +351,34 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173522 | Test Summary: Verify that can search for a field"
+	@priority = 3
+	test AdminCanSearchForField {
+		task ("When the user searches for a field called Assignee") {
+			TestrayFilter.clickFilter();
+
+            ScrollWebElementIntoView(
+                key_projectName = "Subtask_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.searchFilter(value = "Assignee");
+		}
+
+		task ("Then the user can see the field label called Assignee") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee");
+		}
+
+		task ("When the user searches for a field that does not exist") {
+			TestrayFilter.searchFilter(value = "Assignee 2");
+		}
+
+		task ("Then the user can no more see the label called Assignee in the filter") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee 2");
+		}
+	}
+
 }

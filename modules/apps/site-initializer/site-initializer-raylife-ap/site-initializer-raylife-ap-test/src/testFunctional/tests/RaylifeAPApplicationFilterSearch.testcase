@@ -1,0 +1,126 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+		Raylife.createRaylifeSite(siteName = "Raylife AP");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
+
+		Raylife.tearDownCP();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Story ID: LPS-152415 | Test Summary: Verify that the filter can filter through the Auto product"
+	@ignore = "true"
+	@priority = 3
+	test CanFilterByProduct {
+	}
+
+	@description = "Story ID: LPS-152415 | Test Summary: Verify that the filter can filter through the statuses (Bound - Incomplete - Open)"
+	@ignore = "true"
+	@priority = 3
+	test CanFilterByStatus {
+	}
+
+	@description = "Story ID: LPS-152415 | Test Summary: Verify that the filter button is a toggle that turns the filter on and off"
+	@priority = 4
+	test CanViewTheFilterEnableAndDisable {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationFilterSearch#CanViewTheFilterEnableAndDisable";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given I go to the Applications page") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
+
+		task ("When I click on the filter icon") {
+			RaylifeAP.clickOnFilter();
+		}
+
+		task ("Then I should be able to see the filter options") {
+			RaylifeAP.assertViewFilterOptions(options = "Product,Status");
+		}
+
+		task ("And when I click on the filter icon again") {
+			RaylifeAP.clickOnFilter();
+		}
+
+		task ("Then the filter settings are hidden") {
+			RaylifeAP.assertNotViewFilterOptions(options = "Product,Status");
+		}
+	}
+
+	@description = "Story ID: LPS-152415 | Test Summary: Verify that search dialog box searches for the application number, name and email address"
+	@priority = 4
+	test CanViewTheSearchResults {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationFilterSearch#CanViewTheSearchResults";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that I generate a new application") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields();
+
+			Button.click(button = "Generate Quote");
+		}
+
+		task ("And I go to the Applications page") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
+
+		task ("When I search for the email address of the generated application") {
+			RaylifeAP.search(searchTerm = "test@liferay.com");
+		}
+
+		task ("Then I should be able to assert the result of the search") {
+			RaylifeAP.assertQuantity(text = "Applications (1)");
+
+			RaylifeAP.assertTextAtTable(
+				lineColunm = 5,
+				linePosition = 1,
+				text = "test@liferay.com");
+		}
+	}
+
+}

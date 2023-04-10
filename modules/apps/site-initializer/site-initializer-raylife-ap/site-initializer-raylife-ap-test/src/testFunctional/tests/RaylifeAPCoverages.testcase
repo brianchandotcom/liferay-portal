@@ -1,0 +1,119 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+		Raylife.createRaylifeSite(siteName = "Raylife AP");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
+
+		Raylife.tearDownCP();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Story ID: LPS-146336 | Test Summary: Verify that all changes are saved by clicking the REVIEW QUOTE buttons"
+	@ignore = "true"
+	@priority = 3
+	test ClickingSaveButtonChangesStatus {
+	}
+
+	@description = "Story ID: LPS-146336 | Test Summary: Verify that all changes are saved by clicking the REVIEW QUOTE buttons"
+	@ignore = "true"
+	@priority = 4
+	test IfChangesAreSavedClickingReviewQuote {
+	}
+
+	@description = "Story ID: LPS-146336 | Test Summary: Verify if that the Next button is enabled when all required fields are filled in"
+	@priority = 5
+	test IfReviewQuoteButtonIsEnableWhenFieldsFilled {
+		task ("Given that I go to the Coverage Info form") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields();
+		}
+
+		task ("") {
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "mySelectId",
+				value = "$30,000 / $60,000");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "propertyDamage",
+				value = "$25,000");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "uninsuredOrUnderinsuredMBI",
+				value = "$30,000 / $60,000");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "uninsuredOrUnderinsuredMPD",
+				value = "$150,000");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "Medical",
+				value = "$1,000");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "comprehensive",
+				value = "$750");
+
+			RaylifeApplicationModal.selectOptionInModalByID(
+				label = "collision",
+				value = "$2,000");
+		}
+
+		task ("") {
+			Button.viewPresent(button = "Review quote");
+
+			Button.click(button = "Review quote");
+		}
+	}
+
+	@description = "Story ID: LPS-146336 | Test Summary: Verify if that when selecting multiple vehicles in the previous step, I can see VEHICLE 1 and VEHICLE 2 on the Review Page"
+	@ignore = "true"
+	@priority = 5
+	test IfUserCanSeeMultipleVehicles {
+	}
+
+	@description = "Story ID: LPS-146336 | Test Summary: Verify that all changes are saved by clicking the REVIEW QUOTE buttons"
+	@ignore = "true"
+	@priority = 3
+	test StatusRemainsOpenAfterSaving {
+	}
+
+}

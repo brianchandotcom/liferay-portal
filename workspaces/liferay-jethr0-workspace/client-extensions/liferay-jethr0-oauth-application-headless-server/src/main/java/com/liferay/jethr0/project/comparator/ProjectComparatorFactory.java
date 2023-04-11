@@ -14,47 +14,36 @@
 
 package com.liferay.jethr0.project.comparator;
 
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
 import org.json.JSONObject;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class ProjectComparatorFactory {
+@Configuration
+public class ProjectComparatorFactory
+	extends BaseEntityFactory<ProjectComparator> {
 
-	public static ProjectComparator newProjectComparator(
-		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
-
+	@Override
+	public ProjectComparator newEntity(JSONObject jsonObject) {
 		ProjectComparator.Type type = ProjectComparator.Type.get(
 			jsonObject.getJSONObject("type"));
 
 		if (type == ProjectComparator.Type.FIFO) {
-			return new FIFOProjectComparator(projectPrioritizer, jsonObject);
+			return new FIFOProjectComparator(jsonObject);
 		}
 		else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
-			return new PriorityProjectComparator(
-				projectPrioritizer, jsonObject);
+			return new PriorityProjectComparator(jsonObject);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	public static ProjectComparator newProjectComparator(
-		ProjectPrioritizer projectPrioritizer, long position,
-		ProjectComparator.Type type, String value) {
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
-			"position", position
-		).put(
-			"type", type.getJSONObject()
-		).put(
-			"value", value
-		);
-
-		return newProjectComparator(projectPrioritizer, jsonObject);
+	protected ProjectComparatorFactory() {
+		super(ProjectComparator.class);
 	}
 
 }

@@ -14,15 +14,25 @@
 
 package com.liferay.jethr0.project;
 
+import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+
 import org.json.JSONObject;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class ProjectFactory {
+@Configuration
+public class ProjectFactory extends BaseEntityFactory<Project> {
 
-	public static Project newProject(JSONObject jsonObject) {
+	@Override
+	public Project newEntity(JSONObject jsonObject) {
 		return new DefaultProject(jsonObject);
+	}
+
+	protected ProjectFactory() {
+		super(Project.class);
 	}
 
 }

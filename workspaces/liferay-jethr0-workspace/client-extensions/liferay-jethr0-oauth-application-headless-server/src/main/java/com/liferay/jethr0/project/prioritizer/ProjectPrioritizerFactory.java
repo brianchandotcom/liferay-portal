@@ -14,25 +14,25 @@
 
 package com.liferay.jethr0.project.prioritizer;
 
+import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+
 import org.json.JSONObject;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class ProjectPrioritizerFactory {
+@Configuration
+public class ProjectPrioritizerFactory
+	extends BaseEntityFactory<ProjectPrioritizer> {
 
-	public static ProjectPrioritizer newProjectPrioritizer(
-		JSONObject jsonObject) {
-
+	public ProjectPrioritizer newEntity(JSONObject jsonObject) {
 		return new DefaultProjectPrioritizer(jsonObject);
 	}
 
-	public static ProjectPrioritizer newProjectPrioritizer(String name) {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("name", name);
-
-		return newProjectPrioritizer(jsonObject);
+	protected ProjectPrioritizerFactory() {
+		super(ProjectPrioritizer.class);
 	}
 
 }

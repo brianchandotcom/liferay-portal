@@ -16,12 +16,17 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -34,6 +39,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -49,19 +55,36 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.RenderRequestFactory;
+import com.liferay.portlet.RenderResponseFactory;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuPortletKeys;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.HashSet;
@@ -70,8 +93,14 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -123,6 +152,47 @@ public class AssetListEntryUsagesManager {
 		}
 
 		return mappedContentsJSONArray;
+	}
+
+	private LiferayRenderRequest _createRenderRequest(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				httpServletRequest, portlet.getPortletId());
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, servletContext);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(
+			httpServletRequest, portlet,
+			PortletInstanceFactoryUtil.create(portlet, servletContext),
+			portletConfig.getPortletContext(), WindowState.NORMAL,
+			PortletMode.VIEW,
+			_portletPreferencesLocalService.getStrictPreferences(
+				portletPreferencesIds),
+			themeDisplay.getPlid());
+
+		liferayRenderRequest.setPortletRequestDispatcherRequest(
+			httpServletRequest);
+
+		liferayRenderRequest.defineObjects(
+			portletConfig,
+			RenderResponseFactory.create(
+				httpServletResponse, liferayRenderRequest));
+
+		return liferayRenderRequest;
 	}
 
 	private String _generateUniqueLayoutClassedModelUsageKey(
@@ -204,7 +274,7 @@ public class AssetListEntryUsagesManager {
 		JSONArray addItemsJSONArray = _jsonFactory.createJSONArray();
 
 		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-			AssetHelperUtil.getAssetPublisherAddItemHolders(
+			_getAssetPublisherAddItemHolders(
 				assetListEntry, httpServletRequest, httpServletResponse);
 
 		for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
@@ -318,6 +388,57 @@ public class AssetListEntryUsagesManager {
 		}
 
 		return portletURL.toString();
+	}
+
+	private List<AssetPublisherAddItemHolder> _getAssetPublisherAddItemHolders(
+			AssetListEntry assetListEntry,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		AssetEntryQuery assetEntryQuery =
+			_assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry,
+				_segmentsEntryRetriever.getSegmentsEntryIds(
+					_portal.getScopeGroupId(httpServletRequest),
+					_portal.getUserId(httpServletRequest),
+					_requestContextMapper.map(httpServletRequest)),
+				StringPool.BLANK);
+
+		long[] allTagIds = assetEntryQuery.getAllTagIds();
+
+		String[] allTagNames = new String[allTagIds.length];
+
+		int index = 0;
+
+		for (long tagId : allTagIds) {
+			AssetTag assetTag = _assetTagLocalService.getAssetTag(tagId);
+
+			allTagNames[index++] = assetTag.getName();
+		}
+
+		LiferayPortletRequest liferayPortletRequest = _createRenderRequest(
+			httpServletRequest, httpServletResponse);
+
+		PortletResponse portletResponse =
+			(PortletResponse)liferayPortletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(portletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _assetHelper.getAssetPublisherAddItemHolders(
+			liferayPortletRequest, liferayPortletResponse,
+			assetListEntry.getGroupId(), assetEntryQuery.getClassNameIds(),
+			assetEntryQuery.getClassTypeIds(),
+			assetEntryQuery.getAllCategoryIds(), allTagNames,
+			_getRedirect(
+				assetListEntry.getAssetListEntryId(), httpServletRequest,
+				themeDisplay));
 	}
 
 	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
@@ -566,6 +687,35 @@ public class AssetListEntryUsagesManager {
 		return themeDisplay.getURLCurrent();
 	}
 
+	private String _getRedirect(
+			long assetListEntryId, HttpServletRequest httpServletRequest,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String currentURL = HttpComponentsUtil.addParameter(
+			_portal.getLayoutRelativeURL(
+				themeDisplay.getLayout(), themeDisplay),
+			"p_l_mode", Constants.EDIT);
+
+		return HttpComponentsUtil.addParameter(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest,
+					ProductNavigationControlMenuPortletKeys.
+						PRODUCT_NAVIGATION_CONTROL_MENU,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/control_menu/add_collection_item"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"assetListEntryId", assetListEntryId
+			).buildString(),
+			"portletResource",
+			ProductNavigationControlMenuPortletKeys.
+				PRODUCT_NAVIGATION_CONTROL_MENU);
+	}
+
 	private String _getSubtypeLabel(
 		AssetListEntry assetListEntry, Locale locale) {
 
@@ -678,10 +828,19 @@ public class AssetListEntryUsagesManager {
 		AssetListEntryUsagesManager.class);
 
 	@Reference
+	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
+
+	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	private Long _collectionStyledLayoutStructureItemClassNameId;
 	private Long _fragmentEntryLinkClassNameId;
@@ -709,6 +868,18 @@ public class AssetListEntryUsagesManager {
 	private Portal _portal;
 
 	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }

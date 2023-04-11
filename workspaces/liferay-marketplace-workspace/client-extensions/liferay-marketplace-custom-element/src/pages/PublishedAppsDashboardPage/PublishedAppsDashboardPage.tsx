@@ -1,7 +1,7 @@
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
 	AppProps,
@@ -282,14 +282,18 @@ export function PublishedAppsDashboardPage() {
 					setApps(newAppList);
 
 					setPublishedAppTable({
-						items: newAppList.slice(publishedAppTable.pageSize*(page-1), publishedAppTable.pageSize*(page-1)+publishedAppTable.pageSize),
+						items: newAppList.slice(
+							publishedAppTable.pageSize * (page - 1),
+							publishedAppTable.pageSize * (page - 1) +
+								publishedAppTable.pageSize
+						),
 						pageSize: publishedAppTable.pageSize,
-						totalCount: newAppList.length
+						totalCount: newAppList.length,
 					});
 				}
 			}
 		})();
-	}, [selectedAccount, page]);
+	}, [page, publishedAppTable.pageSize, selectedAccount]);
 
 	useEffect(() => {
 		(() => {
@@ -406,7 +410,10 @@ export function PublishedAppsDashboardPage() {
 									activeDelta={publishedAppTable.pageSize}
 									defaultActive={1}
 									ellipsisBuffer={3}
-									ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
+									ellipsisProps={{
+										'aria-label': 'More',
+										'title': 'More',
+									}}
 									onActiveChange={setPage}
 									showDeltasDropDown={false}
 									totalItems={publishedAppTable.totalCount}

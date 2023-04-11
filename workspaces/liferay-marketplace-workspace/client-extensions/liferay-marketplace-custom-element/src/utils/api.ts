@@ -24,19 +24,16 @@ export async function addSkuExpandoValue({
 	skuId: number;
 	versionValue: string;
 }) {
-	await Liferay.Service(
-		'/expandovalue/add-values',
-		{
-			attributeValues: {
-				'version': versionValue,
-				'version description': notesValue,
-			},
-			className: 'com.liferay.commerce.product.model.CPInstance',
-			classPK: skuId,
-			companyId,
-			tableName: 'CUSTOM_FIELDS',
-		}
-	);
+	await Liferay.Service('/expandovalue/add-values', {
+		attributeValues: {
+			'version': versionValue,
+			'version description': notesValue,
+		},
+		className: 'com.liferay.commerce.product.model.CPInstance',
+		classPK: skuId,
+		companyId,
+		tableName: 'CUSTOM_FIELDS',
+	});
 }
 
 export function createApp({

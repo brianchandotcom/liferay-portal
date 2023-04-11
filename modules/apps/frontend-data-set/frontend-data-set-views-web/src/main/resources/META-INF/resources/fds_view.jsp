@@ -31,8 +31,6 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 		HashMapBuilder.<String, Object>put(
 			"fdsViewId", ParamUtil.getString(request, "fdsViewId")
 		).put(
-			"fdsViewsAPIURL", fdsViewsDisplayContext.getFDSViewsAPIURL()
-		).put(
 			"fdsViewsURL", fdsViewsURL
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()

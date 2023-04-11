@@ -12,9 +12,16 @@
  * details.
  */
 
+const API_URL = {
+	FDS_ENTRIES: '/o/c/fdsentries',
+	FDS_FIELDS: '/o/c/fdsfields',
+	FDS_VIEWS: '/o/c/fdsviews',
+};
+
 const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
+	FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship',
 } as const;
 
 const PAGINATION_PROPS = {
@@ -24,4 +31,4 @@ const PAGINATION_PROPS = {
 	},
 };
 
-export {OBJECT_RELATIONSHIP, PAGINATION_PROPS};
+export {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS};

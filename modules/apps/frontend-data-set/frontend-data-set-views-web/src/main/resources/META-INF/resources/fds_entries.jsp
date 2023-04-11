@@ -20,8 +20,6 @@
 	module="js/FDSEntries"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"fdsEntriesAPIURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
-		).put(
 			"fdsViewsURL", fdsViewsDisplayContext.getFDSViewsURL()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()

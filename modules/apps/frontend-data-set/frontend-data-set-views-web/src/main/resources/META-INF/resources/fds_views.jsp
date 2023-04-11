@@ -31,8 +31,6 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsEntryLabel"));
 		).put(
 			"fdsEntryLabel", ParamUtil.getString(request, "fdsEntryLabel")
 		).put(
-			"fdsViewsAPIURL", fdsViewsDisplayContext.getFDSViewsAPIURL()
-		).put(
 			"fdsViewURL", fdsViewsDisplayContext.getFDSViewURL()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()

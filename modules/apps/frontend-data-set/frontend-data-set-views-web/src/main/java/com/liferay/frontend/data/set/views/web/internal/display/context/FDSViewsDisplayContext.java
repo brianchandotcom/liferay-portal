@@ -39,10 +39,6 @@ public class FDSViewsDisplayContext {
 		_serviceTrackerList = serviceTrackerList;
 	}
 
-	public String getFDSEntriesAPIURL() {
-		return "/o/c/fdsentries";
-	}
-
 	public String getFDSEntriesURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
@@ -51,10 +47,6 @@ public class FDSViewsDisplayContext {
 		).setMVCPath(
 			"/fds_entries.jsp"
 		).buildString();
-	}
-
-	public String getFDSViewsAPIURL() {
-		return "/o/c/fdsviews";
 	}
 
 	public String getFDSViewsURL() {

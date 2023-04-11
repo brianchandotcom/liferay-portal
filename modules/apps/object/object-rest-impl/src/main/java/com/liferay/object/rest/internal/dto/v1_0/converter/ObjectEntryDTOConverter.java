@@ -62,8 +62,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -305,16 +303,25 @@ public class ObjectEntryDTOConverter
 							relatedObjectDefinition.getCompanyId(),
 							objectRelationship.getType());
 
-				map.put(
-					objectRelationship.getName(),
-					_toObjectEntries(
-						dtoConverterContext, nestedFieldNames,
-						nestedFieldsDepth,
+				List<com.liferay.object.model.ObjectEntry>
+					relatedObjectEntries =
 						objectRelatedModelsProvider.getRelatedModels(
 							objectEntry.getGroupId(),
 							objectRelationship.getObjectRelationshipId(),
 							objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS)));
+							QueryUtil.ALL_POS);
+
+				map.put(
+					objectRelationship.getName(),
+					TransformUtil.transformToArray(
+						relatedObjectEntries,
+						relatedObjectEntry -> _toDTO(
+							_getDTOConverterContext(
+								dtoConverterContext,
+								relatedObjectEntry.getObjectEntryId()),
+							nestedFieldNames, nestedFieldsDepth - 1,
+							objectEntry),
+						ObjectEntry.class));
 			}
 		}
 
@@ -497,32 +504,6 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private ObjectEntry[] _toObjectEntries(
-		DTOConverterContext dtoConverterContext, List<String> nestedFieldNames,
-		int nestedFieldsDepth,
-		List<com.liferay.object.model.ObjectEntry> objectEntries) {
-
-		return TransformUtil.transformToArray(
-			objectEntries,
-			objectEntry -> {
-				try {
-					return _toDTO(
-						_getDTOConverterContext(
-							dtoConverterContext,
-							objectEntry.getObjectEntryId()),
-						nestedFieldNames, nestedFieldsDepth - 1, objectEntry);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(exception);
-					}
-
-					return null;
-				}
-			},
-			ObjectEntry.class);
-	}
-
 	private Map<String, Object> _toProperties(
 			DTOConverterContext dtoConverterContext,
 			List<String> nestedFieldNames, int nestedFieldsDepth,
@@ -651,9 +632,6 @@ public class ObjectEntryDTOConverter
 	}
 
 	private static final int _NESTED_FIELDS_DEFAULT_DEPTH = 1;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryDTOConverter.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

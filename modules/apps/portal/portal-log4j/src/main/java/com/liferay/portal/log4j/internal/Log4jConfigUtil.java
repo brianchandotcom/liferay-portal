@@ -73,8 +73,7 @@ public class Log4jConfigUtil {
 			Map<String, String> priorities = new HashMap<>();
 
 			for (Element element : rootElement.elements()) {
-				_removeAppender(
-					element, "AppenderRef", "Appender", removedAppenderNames);
+				_removeAppender(element, removedAppenderNames);
 
 				for (Element childElement : element.elements("Logger")) {
 					priorities.put(
@@ -174,8 +173,7 @@ public class Log4jConfigUtil {
 	}
 
 	private static void _removeAppender(
-		Element parentElement, String appenderRefTagName,
-		String appenderTagName, String... removedAppenderNames) {
+		Element parentElement, String... removedAppenderNames) {
 
 		if (removedAppenderNames.length == 0) {
 			return;
@@ -183,18 +181,17 @@ public class Log4jConfigUtil {
 
 		for (Element element : parentElement.elements()) {
 			for (String appenderName : removedAppenderNames) {
-				if (Objects.equals(appenderTagName, element.getName()) &&
+				if (Objects.equals(element.getName(), "Appender") &&
 					Objects.equals(
-						appenderName, element.attributeValue("name"))) {
+						element.attributeValue("name"), appenderName)) {
 
 					parentElement.remove(element);
 				}
 
 				for (Element childElement : element.elements()) {
-					if (Objects.equals(
-							appenderRefTagName, childElement.getName()) &&
+					if (Objects.equals(childElement.getName(), "AppenderRef") &&
 						Objects.equals(
-							appenderName, childElement.attributeValue("ref"))) {
+							childElement.attributeValue("ref"), appenderName)) {
 
 						element.remove(childElement);
 					}

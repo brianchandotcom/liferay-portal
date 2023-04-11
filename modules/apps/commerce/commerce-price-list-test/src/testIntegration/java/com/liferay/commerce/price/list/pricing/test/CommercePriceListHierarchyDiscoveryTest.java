@@ -14,14 +14,10 @@
 
 package com.liferay.commerce.price.list.pricing.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalServiceUtil;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -34,8 +30,6 @@ import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.test.util.CommerceAccountGroupTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -90,15 +84,10 @@ public class CommercePriceListHierarchyDiscoveryTest {
 		_accountEntry1 = CommerceAccountTestUtil.getPersonAccountEntry(
 			_user.getUserId());
 
-		_commerceAccountGroup =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_group.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				null, _serviceContext);
-
-		CommerceAccountGroupCommerceAccountRelLocalServiceUtil.
-			addCommerceAccountGroupCommerceAccountRel(
-				_commerceAccountGroup.getCommerceAccountGroupId(),
-				_accountEntry1.getAccountEntryId(), _serviceContext);
+		CommerceAccountTestUtil.addAccountGroupAndAccountRel(
+			_group.getCompanyId(), RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
+			_accountEntry1.getAccountEntryId(), _serviceContext);
 
 		_commerceChannel1 = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
@@ -137,10 +126,14 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_user.getUserId(), "Business Account6", "example1@email.com",
 			_serviceContext);
 
-		CommerceAccountGroupTestUtil.addAccountEntryToAccountGroup(
-			_group.getGroupId(), _accountEntry4);
-		CommerceAccountGroupTestUtil.addAccountEntryToAccountGroup(
-			_group.getGroupId(), _accountEntry5);
+		CommerceAccountTestUtil.addAccountGroupAndAccountRel(
+			_group.getCompanyId(), RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
+			_accountEntry4.getAccountEntryId(), _serviceContext);
+		CommerceAccountTestUtil.addAccountGroupAndAccountRel(
+			_group.getCompanyId(), RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
+			_accountEntry5.getAccountEntryId(), _serviceContext);
 
 		_commerceChannel2 = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
@@ -162,7 +155,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_catalog.getGroupId(), _accountEntry2.getAccountEntryId(),
 			_commercePriceList1.getCommercePriceListId());
 		CommercePriceListTestUtil.addAccountToPriceList(
-			_catalog.getGroupId(), CommerceAccountConstants.ACCOUNT_ID_GUEST,
+			_catalog.getGroupId(), AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
 			_commercePriceList1.getCommercePriceListId());
 		CommercePriceListTestUtil.addChannelToPriceList(
 			_catalog.getGroupId(), _commerceChannel2.getCommerceChannelId(),
@@ -537,8 +530,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
-				_catalog.getGroupId(),
-				CommerceAccountConstants.ACCOUNT_ID_GUEST,
+				_catalog.getGroupId(), AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
 				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE);
 
 		Assert.assertEquals(
@@ -586,19 +578,12 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private AccountEntry _accountEntry7;
 
 	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	private CommerceCatalog _catalog;
-	private CommerceAccountGroup _commerceAccountGroup;
-
-	@Inject
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
 
 	@Inject
 	private CommerceAccountHelper _commerceAccountHelper;
-
-	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
@@ -608,10 +593,6 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private CommerceChannel _commerceChannel3;
 	private CommerceChannel _commerceChannel4;
 	private CommerceChannel _commerceChannel5;
-
-	@Inject
-	private CommerceChannelLocalService _commerceChannelLocalService;
-
 	private CommerceCurrency _commerceCurrency;
 	private CommercePriceList _commercePriceList1;
 	private CommercePriceList _commercePriceList2;

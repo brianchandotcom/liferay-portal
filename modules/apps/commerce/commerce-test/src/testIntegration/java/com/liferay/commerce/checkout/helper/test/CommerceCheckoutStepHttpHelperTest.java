@@ -15,10 +15,10 @@
 package com.liferay.commerce.checkout.helper.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -29,7 +29,6 @@ import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
@@ -114,32 +113,31 @@ public class CommerceCheckoutStepHttpHelperTest {
 	public void testIsActiveBillingAddressCommerceCheckoutStep()
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addBusinessCommerceAccount(
-				"Test Business Account", 0, null, null, true, null,
-				new long[] {_user.getUserId()},
-				new String[] {_user.getEmailAddress()}, _serviceContext);
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_user.getUserId(), "Test Business Account", null, null,
+				new long[] {_user.getUserId()}, null, _serviceContext);
 
 		long commerceChannelGroupId = _commerceChannel.getGroupId();
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannelGroupId,
-				commerceAccount.getCommerceAccountId(),
+				accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		CommerceAddress commerceAddress = _addCommerceAddress(
-			commerceAccount.getCommerceAccountId());
+			accountEntry.getAccountEntryId());
 
 		Assert.assertTrue(
 			_commerceCheckoutStepHttpHelper.
 				isActiveBillingAddressCommerceCheckoutStep(
 					null, commerceOrder));
 
-		_commerceAccountLocalService.updateDefaultBillingAddress(
-			commerceAccount.getCommerceAccountId(), 0);
-		_commerceAccountLocalService.updateDefaultBillingAddress(
-			commerceAccount.getCommerceAccountId(), 0);
+		_accountEntryLocalService.updateDefaultBillingAddressId(
+			accountEntry.getAccountEntryId(), 0);
+		_accountEntryLocalService.updateDefaultShippingAddressId(
+			accountEntry.getAccountEntryId(), 0);
 
 		commerceOrder.setBillingAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -188,7 +186,7 @@ public class CommerceCheckoutStepHttpHelperTest {
 	}
 
 	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private CommerceAddressLocalService _commerceAddressLocalService;
@@ -202,9 +200,6 @@ public class CommerceCheckoutStepHttpHelperTest {
 	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;
 
 	private CommerceCurrency _commerceCurrency;
-
-	@Inject
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;

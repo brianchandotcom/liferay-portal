@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.inventory.search.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.exception.CommerceAccountTypeException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -101,15 +100,12 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 			_group.getGroupId(), _user.getUserId());
 
 		try {
-			_commerceAccount =
-				CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
-					_user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-					_serviceContext);
+			_accountEntry = CommerceAccountTestUtil.addPersonAccountEntry(
+				_user.getUserId(), _serviceContext);
 		}
-		catch (CommerceAccountTypeException commerceAccountTypeException) {
-			_commerceAccount =
-				CommerceAccountLocalServiceUtil.getPersonalCommerceAccount(
-					_user.getUserId());
+		catch (Exception exception) {
+			_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+				_user.getUserId());
 		}
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -177,7 +173,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -233,7 +229,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -263,7 +259,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 						commerceOrderItem.getSku(), -1, -1);
 
 		_assertSearch(
-			_commerceAccount.getName(), cpInstance.getSku(),
+			_accountEntry.getName(), cpInstance.getSku(),
 			commerceInventoryBookedQuantities);
 		_assertSearch(
 			String.valueOf(commerceOrder.getCommerceOrderId()),
@@ -375,7 +371,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 	@Inject
 	private static IndexerRegistry _indexerRegistry;
 
-	private CommerceAccount _commerceAccount;
+	private AccountEntry _accountEntry;
 
 	@Inject
 	private CommerceInventoryBookedQuantityLocalService

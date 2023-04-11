@@ -14,16 +14,16 @@
 
 package com.liferay.commerce.service.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -129,22 +129,20 @@ public class CommerceServiceTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addBusinessCommerceAccount(
-				"Test Business Account", 0, null, null, true, null,
-				new long[] {_user.getUserId()},
-				new String[] {_user.getEmailAddress()}, _serviceContext);
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_serviceContext.getUserId(), "Test Business Account", null,
+				null, new long[] {_user.getUserId()}, null, _serviceContext);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			commerceAccount.getCommerceAccountId(), user.getUserId());
+			accountEntry.getAccountEntryId(), user.getUserId());
 
 		_userGroupRoleLocalService.addUserGroupRole(
-			user.getUserId(), commerceAccount.getCommerceAccountGroupId(),
+			user.getUserId(), accountEntry.getAccountEntryGroupId(),
 			role.getRoleId());
 
 		_commerceOrderService.addCommerceOrder(
-			_commerceChannel.getGroupId(),
-			commerceAccount.getCommerceAccountId(),
+			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId(), 0);
 	}
 
@@ -171,18 +169,16 @@ public class CommerceServiceTest {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addBusinessCommerceAccount(
-				"Test Business Account", 0, null, null, true, null,
-				new long[] {_user.getUserId()},
-				new String[] {_user.getEmailAddress()}, _serviceContext);
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_serviceContext.getUserId(), "Test Business Account", null,
+				null, new long[] {_user.getUserId()}, null, _serviceContext);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			commerceAccount.getCommerceAccountId(), user.getUserId());
+			accountEntry.getAccountEntryId(), user.getUserId());
 
 		_commerceOrderService.addCommerceOrder(
-			_commerceChannel.getGroupId(),
-			commerceAccount.getCommerceAccountId(),
+			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId(), 0);
 	}
 
@@ -205,13 +201,12 @@ public class CommerceServiceTest {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.getGuestCommerceAccount(
+		AccountEntry accountEntry =
+			_accountEntryLocalService.getGuestAccountEntry(
 				_company.getCompanyId());
 
 		_commerceOrderService.addCommerceOrder(
-			_commerceChannel.getGroupId(),
-			commerceAccount.getCommerceAccountId(),
+			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId(), 0);
 	}
 
@@ -234,13 +229,11 @@ public class CommerceServiceTest {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.getPersonalCommerceAccount(
-				user.getUserId());
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.getPersonAccountEntry(user.getUserId());
 
 		_commerceOrderService.addCommerceOrder(
-			_commerceChannel.getGroupId(),
-			commerceAccount.getCommerceAccountId(),
+			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId(), 0);
 	}
 
@@ -267,16 +260,13 @@ public class CommerceServiceTest {
 	private static Company _company;
 
 	@Inject
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
-
-	@Inject
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;

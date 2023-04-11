@@ -106,7 +106,7 @@ public class CommerceAccountTestUtil {
 	}
 
 	public static AccountGroup addAccountGroupAndAccountRel(
-			long companyId, String name, String type, long accountGroupId,
+			long companyId, String name, String type, long accountEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -116,7 +116,7 @@ public class CommerceAccountTestUtil {
 
 		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
 			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
-			accountGroupId);
+			accountEntryId);
 
 		return accountGroup;
 	}

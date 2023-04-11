@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.price.list.change.tracking.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
@@ -73,9 +73,8 @@ public class CommercePriceListAccountRelTableReferenceDefinitionTest
 			commerceCatalog.getGroupId(), false,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 
-		_commerceAccount =
-			_commerceAccountLocalService.getPersonalCommerceAccount(
-				TestPropsValues.getUserId());
+		_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+			TestPropsValues.getUserId());
 	}
 
 	@Override
@@ -84,12 +83,9 @@ public class CommercePriceListAccountRelTableReferenceDefinitionTest
 			addCommercePriceListAccountRel(
 				TestPropsValues.getUserId(),
 				_commercePriceList.getCommercePriceListId(),
-				_commerceAccount.getCommerceAccountId(), 0,
+				_accountEntry.getAccountEntryId(), 0,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
-
-	@Inject
-	private static CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Inject
 	private static CommerceCatalogLocalService _commerceCatalogLocalService;
@@ -98,7 +94,7 @@ public class CommercePriceListAccountRelTableReferenceDefinitionTest
 	private static CommercePriceListAccountRelLocalService
 		_commercePriceListAccountRelLocalService;
 
-	private CommerceAccount _commerceAccount;
+	private AccountEntry _accountEntry;
 	private CommercePriceList _commercePriceList;
 
 }

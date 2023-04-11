@@ -14,10 +14,9 @@
 
 package com.liferay.commerce.service.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.exception.CommerceAccountTypeException;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -126,15 +125,12 @@ public class CommerceOrderItemLocalServiceTest {
 			_group.getGroupId(), _commerceCurrency.getCode());
 
 		try {
-			_commerceAccount =
-				CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
-					_user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-					_serviceContext);
+			_accountEntry = CommerceAccountTestUtil.addPersonAccountEntry(
+				_user.getUserId(), _serviceContext);
 		}
-		catch (CommerceAccountTypeException commerceAccountTypeException) {
-			_commerceAccount =
-				CommerceAccountLocalServiceUtil.getPersonalCommerceAccount(
-					_user.getUserId());
+		catch (Exception exception) {
+			_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+				_user.getUserId());
 		}
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
@@ -198,7 +194,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		Assert.assertNotNull(_commerceCurrency);
 
-		Assert.assertNotNull(_commerceAccount);
+		Assert.assertNotNull(_accountEntry);
 
 		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -207,7 +203,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -271,7 +267,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		Assert.assertNotNull(_commerceCurrency);
 
-		Assert.assertNotNull(_commerceAccount);
+		Assert.assertNotNull(_accountEntry);
 
 		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -280,7 +276,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -329,7 +325,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		Assert.assertNotNull(_commerceCurrency);
 
-		Assert.assertNotNull(_commerceAccount);
+		Assert.assertNotNull(_accountEntry);
 
 		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -338,7 +334,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -476,7 +472,7 @@ public class CommerceOrderItemLocalServiceTest {
 				"sum of bundle price and option price"
 		);
 
-		Assert.assertNotNull(_commerceAccount);
+		Assert.assertNotNull(_accountEntry);
 
 		_commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
@@ -489,7 +485,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -1016,7 +1012,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		Assert.assertNotNull(_commerceCurrency);
 
-		Assert.assertNotNull(_commerceAccount);
+		Assert.assertNotNull(_accountEntry);
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -1025,7 +1021,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -1243,7 +1239,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -1318,7 +1314,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceAccount.getCommerceAccountId(),
+				_accountEntry.getAccountEntryId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrders.add(commerceOrder);
@@ -1629,7 +1625,7 @@ public class CommerceOrderItemLocalServiceTest {
 		return "value-key-for-" + optionKey;
 	}
 
-	private CommerceAccount _commerceAccount;
+	private AccountEntry _accountEntry;
 
 	@Inject
 	private CommerceInventoryBookedQuantityLocalService

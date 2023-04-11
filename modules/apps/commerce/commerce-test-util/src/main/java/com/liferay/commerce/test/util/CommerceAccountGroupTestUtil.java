@@ -41,6 +41,7 @@ public class CommerceAccountGroupTestUtil {
 				serviceContext.getUserId(), null, RandomTestUtil.randomString(),
 				serviceContext);
 
+		accountGroup.setExternalReferenceCode(null);
 		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);

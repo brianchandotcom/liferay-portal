@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.test.util;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
@@ -211,20 +210,6 @@ public class CommerceDiscountTestUtil {
 		}
 
 		return commerceDiscount;
-	}
-
-	public static CommerceDiscountCommerceAccountGroupRel
-			addAccountGroupToDiscount(
-				long userId, CommerceDiscount commerceDiscount)
-		throws Exception {
-
-		CommerceAccountGroup commerceAccountGroup = null;
-
-		return CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
-			addCommerceDiscountCommerceAccountGroupRel(
-				userId, commerceDiscount.getCommerceDiscountId(),
-				commerceAccountGroup.getCommerceAccountGroupId(),
-				ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static CommerceDiscount addAccountOrderDiscount(

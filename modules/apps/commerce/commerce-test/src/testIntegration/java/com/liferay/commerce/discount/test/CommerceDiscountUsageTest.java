@@ -17,8 +17,7 @@ package com.liferay.commerce.discount.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -27,7 +26,6 @@ import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
@@ -106,12 +104,8 @@ public class CommerceDiscountUsageTest {
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
-		_commerceAccount =
-			_commerceAccountLocalService.getPersonalCommerceAccount(
-				_user.getUserId());
-
-		_accountEntry = _accountEntryLocalService.getAccountEntry(
-			_commerceAccount.getCommerceAccountId());
+		_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+			_user.getUserId());
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
@@ -467,7 +461,7 @@ public class CommerceDiscountUsageTest {
 				"exception"
 		);
 
-		_commerceAccount = _commerceAccountLocalService.getGuestCommerceAccount(
+		_accountEntry = _accountEntryLocalService.getGuestAccountEntry(
 			_group.getCompanyId());
 
 		_assertDiscountLimitation(
@@ -713,18 +707,10 @@ public class CommerceDiscountUsageTest {
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	private CommerceAccount _commerceAccount;
-
-	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
-
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CommerceCurrency _commerceCurrency;
-
-	@Inject
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	@Inject
 	private CommerceDiscountUsageEntryLocalService

@@ -153,8 +153,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 	}
 
 	private String _evaluateObjectFields(
-			Context context, String termName, Map<String, Object> termValues)
-		throws PortalException {
+			Context context, String termName, Map<String, Object> termValues) {
 
 		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
 			return termName;

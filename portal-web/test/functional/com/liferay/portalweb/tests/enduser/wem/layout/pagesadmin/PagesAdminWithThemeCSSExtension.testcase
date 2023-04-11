@@ -335,8 +335,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			Theme.configureLookAndFeelSpecificLook();
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");

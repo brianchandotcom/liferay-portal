@@ -1,1 +1,0 @@
-# liferay-sample-multi-extension-container

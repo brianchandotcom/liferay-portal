@@ -87,10 +87,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MediaWikiImporter {
 
-	public static final String FORMAT_CREOLE = "creole";
-
-	public static final String SHARED_IMAGES_CONTENT = "See attachments";
-
 	public void importPages(
 			long userId, WikiNode node, InputStream[] inputStreams,
 			Map<String, String[]> options)
@@ -230,8 +226,8 @@ public class MediaWikiImporter {
 
 			_wikiPageLocalService.updatePage(
 				authorUserId, node.getNodeId(), title, page.getVersion(),
-				content, summary, true, FORMAT_CREOLE, parentTitle,
-				redirectTitle, serviceContext);
+				content, summary, true, "creole", parentTitle, redirectTitle,
+				serviceContext);
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -363,8 +359,8 @@ public class MediaWikiImporter {
 
 				_wikiPageLocalService.addPage(
 					userId, node.getNodeId(),
-					WikiPageConstants.SHARED_IMAGES_TITLE,
-					SHARED_IMAGES_CONTENT, null, true, serviceContext);
+					WikiPageConstants.SHARED_IMAGES_TITLE, "See attachments",
+					null, true, serviceContext);
 			}
 		}
 

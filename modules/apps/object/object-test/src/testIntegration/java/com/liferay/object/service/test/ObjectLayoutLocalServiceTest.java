@@ -608,9 +608,8 @@ public class ObjectLayoutLocalServiceTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			if (expectedExceptionClass.isInstance(exception)) {
-				Assert.assertEquals(message, exception.getMessage());
-			}
+			Assert.assertEquals(message, exception.getMessage());
+			Assert.assertTrue(expectedExceptionClass.isInstance(exception));
 		}
 	}
 

@@ -76,9 +76,13 @@ definition {
 
 		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
 
-		VisualizeObjectCollectionDisplay.assertTableEntriesPresent(entries = "Test Text 1");
+		AssertElementPresent(
+			key_entries = "Test Text 1",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 
-		VisualizeObjectCollectionDisplay.assertTableEntriesPresent(entries = "Test Text 2");
+		AssertElementPresent(
+			key_entries = "Test Text 2",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 	}
 
 	@description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"
@@ -152,7 +156,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 
-		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider(labelName = "Custom Objects 301");
+		AssertElementPresent(
+			key_labelName = "Custom Objects 301",
+			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
 
 	@description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"
@@ -213,9 +219,13 @@ definition {
 
 		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
 
-		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text 1");
+		AssertElementPresent(
+			key_entries = "Test Text 1",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 
-		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text 2");
+		AssertElementPresent(
+			key_entries = "Test Text 2",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 	}
 
 }

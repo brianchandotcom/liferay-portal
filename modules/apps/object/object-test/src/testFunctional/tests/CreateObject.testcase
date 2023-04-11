@@ -68,9 +68,13 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCustomObject(labelName = "User");
+		AssertElementPresent(
+			key_labelName = "User",
+			locator1 = "CreateObject#OBJECT_NAME");
 
-		CreateObject.assertCustomObject(labelName = "Commerce Order");
+		AssertElementPresent(
+			key_labelName = "Commerce Order",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Block"
@@ -230,7 +234,9 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		CreateObject.assertFieldAddedOnBlock(fieldLabelName = "Custom Field");
+		AssertElementPresent(
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with three columns"
@@ -271,7 +277,9 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		CreateObject.assertFieldAddedOnBlock(fieldLabelName = "Custom Field");
+		AssertElementPresent(
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with two columns"
@@ -312,7 +320,9 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		CreateObject.assertFieldAddedOnBlock(fieldLabelName = "Custom Field");
+		AssertElementPresent(
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Tab with Fields Type"
@@ -374,7 +384,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field");
+		AssertElementPresent(
+			locator1 = "CreateObject#TITLE_FIELD",
+			value1 = "Custom Field");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
@@ -425,7 +437,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		CreateObject.assertCustomObject(labelName = "Custom Object 9");
+		AssertElementPresent(
+			key_labelName = "Custom Object 9",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
@@ -623,7 +637,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		CreateObject.assertEntrySelectedOnRelationshipField(entry = "Entry A");
+		AssertElementPresent(
+			key_entry = "Entry A",
+			locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 
 		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "CustomObject10");
 
@@ -710,7 +726,9 @@ definition {
 
 		Button.clickCancel();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135397 - Verify it is possible to Cancel the update of a Layout"
@@ -915,7 +933,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		CreateObject.assertCustomObject(labelName = "Custom Object 19");
+		AssertElementPresent(
+			key_labelName = "Custom Object 19",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Date field"
@@ -1344,7 +1364,9 @@ definition {
 
 		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 35");
 
-		CreateObject.assertObjectNotPresent(objectLabel = "Custom Object 35");
+		AssertElementNotPresent(
+			key_tabName = "Custom Object 35",
+			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
@@ -1468,7 +1490,9 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-151877 - Verify that when the admin user deletes the relationship between Account and the Object, the Account Restriction is disabled and the admin user can edit the Object"
@@ -1565,7 +1589,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.assertPlusButtonIsNotPresent();
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
 	@description = "LPS-135397 - Verify if it's not possible to add a Tab with Relationship Type in an Object without Relashionsip"
@@ -1598,7 +1622,9 @@ definition {
 			key_tab = "Save",
 			locator1 = "Button#TAB_SUBMIT_BTN");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Relationship");
+		AssertElementPresent(
+			key_fieldLabel = "Relationship",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135397 - Verify that the Relationship tab cannot be added first"
@@ -1838,7 +1864,9 @@ definition {
 			fieldName = "",
 			fieldType = "Text");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Field Name");
+		AssertElementPresent(
+			key_fieldLabel = "Field Name",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
@@ -1862,7 +1890,9 @@ definition {
 			fieldName = "customField",
 			fieldType = "Text");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Label");
+		AssertElementPresent(
+			key_fieldLabel = "Label",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
@@ -1882,7 +1912,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Label");
+		AssertElementPresent(
+			key_fieldLabel = "Label",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
@@ -1897,7 +1929,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Object Name");
+		AssertElementPresent(
+			key_fieldLabel = "Object Name",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave the Picklist field empty when creating an Object Picklist field"
@@ -1920,7 +1954,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Picklist");
+		AssertElementPresent(
+			key_fieldLabel = "Picklist",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
@@ -1943,7 +1979,9 @@ definition {
 			object = "Custom Object 49",
 			type = "One to Many");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Name");
+		AssertElementPresent(
+			key_fieldLabel = "Name",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
@@ -1964,7 +2002,9 @@ definition {
 			label = "Custom Relationship",
 			type = "One to Many");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Object");
+		AssertElementPresent(
+			key_fieldLabel = "Object",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
@@ -1985,7 +2025,9 @@ definition {
 			label = "Relationship",
 			object = "Custom Object 51");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Type");
+		AssertElementPresent(
+			key_fieldLabel = "Type",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
@@ -2006,7 +2048,9 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(fieldLabel = "Custom Field");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Type");
+		AssertElementPresent(
+			key_fieldLabel = "Type",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
@@ -2313,9 +2357,10 @@ definition {
 
 		CreateObject.saveObject();
 
-		CreateObject.viewErrorValueInvalid(
-			className = "feedback",
-			errorMessage = "The field value is invalid.");
+		AssertElementPresent(
+			key_className = "feedback",
+			key_errorMessage = "The field value is invalid.",
+			locator1 = "CreateObject#ERROR_MESSAGE");
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
@@ -2602,7 +2647,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object 71");
+		AssertElementNotPresent(
+			key_labelName = "Custom Object 71",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-151877 - Verify that, when adding a new Object, the admin user is able to restrict users to only see entries from an account that they are part of"
@@ -2727,7 +2774,9 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Private Account");
+			AssertElementNotPresent(
+				key_picklistOption = "Private Account",
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Public Account");
 
@@ -2751,7 +2800,9 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Public Account");
+			AssertElementNotPresent(
+				key_picklistOption = "Public Account",
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Private Account");
 
@@ -3110,9 +3161,13 @@ definition {
 
 		Search.searchCP(searchTerm = "CustomObjectA76");
 
-		CreateObject.assertCustomObject(labelName = "Custom Object A 76");
+		AssertElementPresent(
+			key_labelName = "Custom Object A 76",
+			locator1 = "CreateObject#OBJECT_NAME");
 
-		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object B 76");
+		AssertElementNotPresent(
+			key_labelName = "Custom Object B 76",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a Custom Object"
@@ -3178,9 +3233,13 @@ definition {
 
 		Search.searchCP(searchTerm = "User");
 
-		CreateObject.assertCustomObject(labelName = "User");
+		AssertElementPresent(
+			key_labelName = "User",
+			locator1 = "CreateObject#OBJECT_NAME");
 
-		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object A 78");
+		AssertElementNotPresent(
+			key_labelName = "Custom Object A 78",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-139803 - Verify it is possible to search for the Object Entry Title on the Relationship field"
@@ -3229,9 +3288,13 @@ definition {
 
 		ObjectPortlet.searchEntryRelationshipField(entryValue = "Entry ABC");
 
-		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "Entry ABC");
+		AssertElementPresent(
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "Entry ABC");
 
-		ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Custom Field");
+		AssertElementNotPresent(
+			key_picklistOption = "Custom Field",
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to set the block as Collapsible"
@@ -3332,7 +3395,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCustomObject(labelName = "Objeto Costumizado 82");
+		AssertElementPresent(
+			key_labelName = "Objeto Costumizado 82",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Plural Label"
@@ -3746,7 +3811,9 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		ObjectField.assertType(fieldType = "Date");
+		AssertElementPresent(
+			locator1 = "ObjectField#TYPE_FIELD",
+			value1 = "Date");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
@@ -3779,7 +3846,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 93");
 
-		CreateObject.assertObjectLabel(labelName = "Update Custom Object 93");
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_LABEL",
+			value1 = "Update Custom Object 93");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label before it is published"
@@ -3804,7 +3873,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 94");
 
-		CreateObject.assertObjectLabel(labelName = "Update Custom Object 94");
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_LABEL",
+			value1 = "Update Custom Object 94");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object name before it is published"
@@ -3916,7 +3987,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 98");
 
-		CreateObject.assertObjectPluralLabel(pluralLabelName = "Update Plural Label Custom Object 98");
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+			value1 = "Update Plural Label Custom Object 98");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label before it is published"
@@ -3939,7 +4012,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 99");
 
-		CreateObject.assertObjectPluralLabel(pluralLabelName = "Update Plural Label Custom Object 99");
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+			value1 = "Update Plural Label Custom Object 99");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object scope before it is published"
@@ -4039,11 +4114,17 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Object Edit 101");
 
-		CreateObject.assertObjectLabel(labelName = "Object Edit 101");
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_LABEL",
+			value1 = "Object Edit 101");
 
-		CreateObject.assertObjectPluralLabel(pluralLabelName = "Objects Edit 101");
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+			value1 = "Objects Edit 101");
 
-		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field");
+		AssertElementPresent(
+			locator1 = "CreateObject#TITLE_FIELD",
+			value1 = "Custom Field");
 
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
@@ -4147,7 +4228,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		CreateObject.assertCustomObject(labelName = "Custom Object 103");
+		AssertElementPresent(
+			key_labelName = "Custom Object 103",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 103");
 
@@ -4348,17 +4431,20 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldColumnNumber = 0,
-			fieldLabel = "Custom Field A");
+		AssertElementPresent(
+			key_fieldColumnNumber = 0,
+			key_fieldLabel = "Custom Field A",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 
-		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldColumnNumber = 1,
-			fieldLabel = "Custom Field B");
+		AssertElementPresent(
+			key_fieldColumnNumber = 1,
+			key_fieldLabel = "Custom Field B",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 
-		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldColumnNumber = 2,
-			fieldLabel = "Custom Field C");
+		AssertElementPresent(
+			key_fieldColumnNumber = 2,
+			key_fieldLabel = "Custom Field C",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with two columns"
@@ -4827,7 +4913,9 @@ definition {
 
 		PageEditor.selectItemToPreviewWithObject(objectLabel = "Custom Object 116");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test Entry");
+		AssertElementPresent(
+			key_entry = "Test Entry",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
@@ -5214,7 +5302,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCustomObject(labelName = "Custom Object 119");
+		AssertElementPresent(
+			key_labelName = "Custom Object 119",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to view a Relationship"
@@ -5531,7 +5621,9 @@ definition {
 
 		ObjectPortlet.gotoRelationshipTab();
 
-		ObjectPortlet.assertEntryOnRelationshipFieldNotPresent(customObject = "Entry B");
+		AssertTextNotEquals(
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) and its relations to be deleted"
@@ -5798,9 +5890,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141629");
 
-		ObjectPortlet.assertEntryStauts(
+		AssertElementPresent(
 			key_entry = "Entry 1",
-			key_status = "Approved");
+			key_status = "Approved",
+			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship Many to Many will allow the entry with relation to be deleted and its relations to be disassociated"
@@ -5908,7 +6001,9 @@ definition {
 
 		ObjectPortlet.gotoRelationshipTab();
 
-		ObjectPortlet.assertEntryOnRelationshipFieldNotPresent(customObject = "Entry B");
+		AssertTextNotEquals(
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted and its relation to be disassociated"
@@ -6094,7 +6189,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		ObjectPortlet.assertEntryOnRelationshipFieldNotPresent(customObject = "Entry A");
+		AssertTextNotEquals(
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "Entry A");
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
@@ -6104,7 +6201,9 @@ definition {
 
 		Search.searchCP(searchTerm = "Object X 130");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
@@ -6132,7 +6231,9 @@ definition {
 
 		Search.searchCP(searchTerm = "CustomObject X 130");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
@@ -6149,7 +6250,9 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
@@ -6205,7 +6308,9 @@ definition {
 			key_tab = "Save",
 			locator1 = "Button#TAB_SUBMIT_BTN");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Field");
+		AssertElementPresent(
+			key_fieldLabel = "Field",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-140097 - Verify that other fields are not deleted when a Relationship field is deleted after a Relationship is deleted"
@@ -6287,9 +6392,13 @@ definition {
 
 		ObjectField.selectType(fieldType = "Text");
 
-		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Keyword");
+		AssertElementPresent(
+			key_radioOption = "Keyword",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 
-		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Text");
+		AssertElementPresent(
+			key_radioOption = "Text",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text disappears under the Searchable section when updating the field type from String to another type"
@@ -6894,7 +7003,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test 1");
+		AssertElementPresent(
+			key_entry = "Test 1",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries with workflow are displayed again on the Workflow Metrics page when reactivated"
@@ -7158,7 +7269,9 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		CreateObject.assertRelatedObject(relatedObject = "CustomObjectB149");
+		AssertElementPresent(
+			key_relatedObject = "CustomObjectB149",
+			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
 	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
@@ -8026,7 +8139,9 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		CreateObject.assertRelatedObject(relatedObject = "CustomObjectB167");
+		AssertElementPresent(
+			key_relatedObject = "CustomObjectB167",
+			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -8034,7 +8149,9 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		CreateObject.assertRelatedObject(relatedObject = "CustomObjectA167");
+		AssertElementPresent(
+			key_relatedObject = "CustomObjectA167",
+			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
 	@description = "LPS-135400 - Verify that relationship field is automatically created"
@@ -8921,7 +9038,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.viewCustomObject(name = "Custom Object 176");
+		AssertElementPresent(
+			key_name = "Custom Object 176",
+			key_system = "No",
+			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
 	@description = "LPS-135548 - Verify that user can view system objects"
@@ -8931,7 +9051,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.viewSystemObject(name = "User");
+		AssertElementPresent(
+			key_name = "User",
+			key_system = "Yes",
+			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
 	@description = "LPS-135649 - Verify that a withdrawn pending entry is displayed with a Draft status"
@@ -8971,9 +9094,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject177");
 
-		ObjectPortlet.assertEntryStauts(
+		AssertElementPresent(
 			key_entry = "Entry Test",
-			key_status = "Draft");
+			key_status = "Draft",
+			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Forms"
@@ -9032,9 +9156,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject178");
 
-		ObjectPortlet.assertEntryStauts(
+		AssertElementPresent(
 			key_entry = "Entry Test",
-			key_status = "Pending");
+			key_status = "Pending",
+			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Custom Object portlet"
@@ -9069,9 +9194,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject179");
 
-		ObjectPortlet.assertEntryStauts(
+		AssertElementPresent(
 			key_entry = "Entry Test",
-			key_status = "Pending");
+			key_status = "Pending",
+			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry when Object is scoped by Site and the workflow was assigned on the Workflow settings from the Site Menu"
@@ -9108,9 +9234,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject180");
 
-		ObjectPortlet.assertEntryStauts(
+		AssertElementPresent(
 			key_entry = "Entry Test",
-			key_status = "Pending");
+			key_status = "Pending",
+			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
 }

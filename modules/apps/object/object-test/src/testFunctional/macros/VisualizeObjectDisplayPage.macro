@@ -16,18 +16,6 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro assertDisplayEntry {
-		AssertElementPresent(
-			key_entry = ${entry},
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
-	macro assertDisplayEntryNotPresent {
-		AssertElementNotPresent(
-			key_entry = ${entry},
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	macro createObjectPageTemplate {
 		VisualizeObjectDisplayPage.openPageTemplate();
 

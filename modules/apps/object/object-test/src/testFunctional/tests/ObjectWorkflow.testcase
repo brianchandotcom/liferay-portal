@@ -68,7 +68,9 @@ definition {
 
 		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Custom Field");
 
-		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
+		AssertElementPresent(
+			key_fieldValue = "Entry Test",
+			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 	}
 
 	@description = "LPS-145228 - Verify that the user is able to view the entire entry's information by clicking on View button"
@@ -118,7 +120,9 @@ definition {
 
 		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Custom Field");
 
-		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
+		AssertElementPresent(
+			key_fieldValue = "Entry Test",
+			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 	}
 
 }

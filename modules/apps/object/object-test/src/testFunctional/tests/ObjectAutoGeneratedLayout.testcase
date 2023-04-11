@@ -94,7 +94,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Date");
+		AssertElementPresent(
+			key_entryLabel = "Date",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
 		ObjectPortlet.viewEmptyLabelInDateEntry();
 	}

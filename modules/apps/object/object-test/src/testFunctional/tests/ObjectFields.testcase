@@ -47,7 +47,9 @@ definition {
 
 		ObjectField.checkLimitCharacters();
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = 65000);
+		AssertElementPresent(
+			key_maxValue = 65000,
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	@description = "Verify that all fields from the related object are displayed when adding filters for the long integer fields to select data from the object"
@@ -1330,30 +1332,36 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject161889");
 
 			for (var columnName : list ${listMetaData}) {
-				ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
+				AssertElementPresent(
+					key_column = ${columnName},
+					locator1 = "ObjectPortlet#ENTRY_COLUMN");
 			}
 		}
 
 		task ("Click on arrows and assert the entries change the position") {
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry A",
-				position = 1);
+			AssertElementPresent(
+				key_entryName = "Entry A",
+				key_position = 1,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry B",
-				position = 2);
+			AssertElementPresent(
+				key_entryName = "Entry B",
+				key_position = 2,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
 			Click(
 				key_orderColumn = "Create Date",
 				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
 
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry B",
-				position = 1);
+			AssertElementPresent(
+				key_entryName = "Entry B",
+				key_position = 1,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry A",
-				position = 2);
+			AssertElementPresent(
+				key_entryName = "Entry A",
+				key_position = 2,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 		}
 	}
 
@@ -1666,7 +1674,9 @@ definition {
 		}
 
 		task ("Then: assert the value of Formula Field") {
-			ObjectAdmin.viewFieldValueDisabled(fieldValue = 5555);
+			AssertElementPresent(
+				key_fieldValue = 5555,
+				locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 		}
 	}
 
@@ -2112,9 +2122,13 @@ definition {
 		}
 
 		task ("Then the ERC field shouldn't be seen") {
-			ObjectPortlet.assertEntryColumnNotPresent(column = "External Reference Code");
+			AssertElementNotPresent(
+				key_column = "External Reference Code",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 
-			ObjectPortlet.assertEntryColumnNotPresent(column = "ERC");
+			AssertElementNotPresent(
+				key_column = "ERC",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 	}
 
@@ -2144,7 +2158,9 @@ definition {
 
 		ObjectField.checkLimitCharacters();
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = 280);
+		AssertElementPresent(
+			key_maxValue = 280,
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
 		ObjectField.typeValueOnLimitCharacters(newValue = 281);
 
@@ -2152,7 +2168,9 @@ definition {
 			key_maxValue = 281,
 			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = 28);
+		AssertElementPresent(
+			key_maxValue = 28,
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	@description = "LPS-148112 - Verify that attchment field is working fine to the selecting Request Files: Directly from User's Computer when 'Show files' option is off"
@@ -2355,7 +2373,9 @@ definition {
 
 			CreateObject.saveObject();
 
-			CreateObject.assertTitleFieldIsSelected(fieldLabel = "External Reference Code");
+			AssertElementPresent(
+				locator1 = "CreateObject#TITLE_FIELD",
+				value1 = "External Reference Code");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162184");
 		}
@@ -2391,7 +2411,9 @@ definition {
 			ObjectPortlet.viewEntry(entry = "Entry Test");
 
 			for (var columnName : list "Custom Field,External Reference Code") {
-				ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
+				AssertElementPresent(
+					key_column = ${columnName},
+					locator1 = "ObjectPortlet#ENTRY_COLUMN");
 			}
 		}
 	}
@@ -2464,32 +2486,38 @@ definition {
 		task ("Go to Custom Object entries and assert that the column ERC is present") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject162181");
 
-			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
+			AssertElementPresent(
+				key_column = "External Reference Code",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 
 		var entryOne = selenium.getText("ObjectCustomViews#CUSTOM_FIELD_VALUE_ONE");
 		var entryTwo = selenium.getText("ObjectCustomViews#CUSTOM_FIELD_VALUE_TWO");
 
 		task ("Click on arrows and assert the entries change the position") {
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = ${entryOne},
-				position = 1);
+			AssertElementPresent(
+				key_entryName = ${entryOne},
+				key_position = 1,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = ${entryTwo},
-				position = 2);
+			AssertElementPresent(
+				key_entryName = ${entryTwo},
+				key_position = 2,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
 			Click(
 				key_orderColumn = "External Reference Code",
 				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
 
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = ${entryTwo},
-				position = 1);
+			AssertElementPresent(
+				key_entryName = ${entryTwo},
+				key_position = 1,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = ${entryOne},
-				position = 2);
+			AssertElementPresent(
+				key_entryName = ${entryOne},
+				key_position = 2,
+				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 		}
 	}
 
@@ -2753,7 +2781,9 @@ definition {
 
 			ObjectPortlet.viewEntry(entry = "Entry Test");
 
-			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
+			AssertElementPresent(
+				key_column = "External Reference Code",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 	}
 
@@ -2907,7 +2937,9 @@ definition {
 
 			ObjectPortlet.viewEntry(entry = "Entry Test");
 
-			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
+			AssertElementPresent(
+				key_column = "External Reference Code",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 
 			var externalReferenceCodeId = selenium.getText("//div[contains(@class,'dnd-tbody')]//*[contains(text(),'Entry Test')]/parent::div/following-sibling::div//a");
 
@@ -3094,7 +3126,9 @@ definition {
 		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST");
 
 		for (var numberPicklist : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21") {
-			ObjectAdmin.viewPicklistOptionsOnFields(optionName = "Custom Picklist ${numberPicklist}");
+			AssertElementPresent(
+				key_optionName = "Custom Picklist ${numberPicklist}",
+				locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
 		}
 	}
 
@@ -3190,9 +3224,13 @@ definition {
 
 		ObjectField.checkLimitCharacters();
 
-		ObjectField.assertHelpText(helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 280");
+		AssertElementPresent(
+			key_helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 280",
+			locator1 = "ObjectField#HELP_TEXT");
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = 280);
+		AssertElementPresent(
+			key_maxValue = 280,
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
 		ObjectField.save();
 
@@ -3202,9 +3240,13 @@ definition {
 
 		ObjectField.checkLimitCharacters();
 
-		ObjectField.assertHelpText(helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 65,000");
+		AssertElementPresent(
+			key_helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 65,000",
+			locator1 = "ObjectField#HELP_TEXT");
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = 65000);
+		AssertElementPresent(
+			key_maxValue = 65000,
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
 		ObjectField.save();
 
@@ -4063,7 +4105,9 @@ definition {
 
 		Button.clickSave();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Request Files");
+		AssertElementPresent(
+			key_fieldLabel = "Request Files",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder have a default value"
@@ -4153,7 +4197,9 @@ definition {
 
 		Button.clickSave();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Storage Folder");
+		AssertElementPresent(
+			key_fieldLabel = "Storage Folder",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 }

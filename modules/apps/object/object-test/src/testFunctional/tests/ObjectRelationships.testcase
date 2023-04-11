@@ -80,7 +80,9 @@ definition {
 
 			PortletEntry.save();
 
-			CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
+			AssertElementPresent(
+				key_entry = "userfn",
+				locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 		}
 	}
 
@@ -136,7 +138,9 @@ definition {
 
 		PortletEntry.save();
 
-		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
+		AssertElementPresent(
+			key_entry = "userfn",
+			locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 	}
 
 	@description = "LPS-163656 - Verify that it's possible to add two relationship tabs with the Many-to-Many self-relationship"
@@ -665,7 +669,9 @@ definition {
 				relationshipLabel = "Relationship",
 				relationshipName = "relationship");
 
-			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "Relationship");
+			AssertElementNotPresent(
+				key_label = "Relationship",
+				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 		}
 	}
 
@@ -737,7 +743,9 @@ definition {
 				relationshipLabel = "Relationship",
 				relationshipName = "relationship");
 
-			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "Relationship");
+			AssertElementNotPresent(
+				key_label = "Relationship",
+				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 		}
 	}
 
@@ -1134,7 +1142,9 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
 
-			CreateObject.assertEntrySelectedOnRelationshipField(entry = "Entry A");
+			AssertElementPresent(
+				key_entry = "Entry A",
+				locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 
 			PortletEntry.save();
 		}
@@ -1410,7 +1420,9 @@ definition {
 			object = "Custom Object 147736",
 			type = "One to Many");
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Label");
+		AssertElementPresent(
+			key_fieldLabel = "Label",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135397 - Verify that it is not possible to leave a layout with a Relationship tab on first place by removing the fields tab"
@@ -1995,7 +2007,9 @@ definition {
 
 		PortletEntry.save();
 
-		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
+		AssertElementPresent(
+			key_entry = "userfn",
+			locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 	}
 
 	@description = "LPS-163660 - Verify that a label is displayed on the creation of a Relationship Tab, to differentiate parent (left side) information from child (right side) information"
@@ -2226,7 +2240,9 @@ definition {
 				key_entry = "Entry B",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 
-			CreateObject.assertRelatedObject(relatedObject = "Entry B");
+			AssertElementPresent(
+				key_relatedObject = "Entry B",
+				locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 		}
 	}
 
@@ -2247,7 +2263,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "User");
 
-		CreateObject.assertTitleFieldIsSelected(fieldLabel = "First Name");
+		AssertElementPresent(
+			locator1 = "CreateObject#TITLE_FIELD",
+			value1 = "First Name");
 	}
 
 	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"

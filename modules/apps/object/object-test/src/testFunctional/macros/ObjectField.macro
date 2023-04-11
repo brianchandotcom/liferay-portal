@@ -22,12 +22,6 @@ definition {
 			value1 = ${folderName});
 	}
 
-	macro assertHelpText {
-		AssertElementPresent(
-			key_helpText = ${helpText},
-			locator1 = "ObjectField#HELP_TEXT");
-	}
-
 	macro assertOptionAndDescriptionOnRequestFiles {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
@@ -39,18 +33,6 @@ definition {
 			key_type = ${option},
 			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
 			value1 = ${description});
-	}
-
-	macro assertType {
-		AssertElementPresent(
-			locator1 = "ObjectField#TYPE_FIELD",
-			value1 = ${fieldType});
-	}
-
-	macro assertValueOnLimitCharacters {
-		AssertElementPresent(
-			key_maxValue = ${maxValue},
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	macro checkLimitCharacters {

@@ -380,7 +380,9 @@ definition {
 				key_fieldLabel = "Entry Test",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 
-			ObjectAdmin.assertNoResultsWereFound();
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
 		}
 	}
 
@@ -924,7 +926,9 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
-			ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
+			AssertElementPresent(
+				key_fieldValue = "Entry Test",
+				locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 
 			AssertElementNotPresent(locator1 = "Button#SAVE");
 
@@ -932,7 +936,9 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "New entry related");
 
-			ObjectAdmin.viewFieldValueDisabled(fieldValue = "New entry related");
+			AssertElementPresent(
+				key_fieldValue = "New entry related",
+				locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 
 			AssertElementNotPresent(locator1 = "Button#SAVE");
 		}
@@ -1141,9 +1147,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Jan 1, 2022");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Custom Field");
+		AssertElementPresent(
+			key_entryLabel = "Custom Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "01/01/2022");
+		AssertElementPresent(
+			key_entryValue = "01/01/2022",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 }

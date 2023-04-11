@@ -46,25 +46,6 @@ definition {
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
-	macro assertCustomObject {
-		AssertElementPresent(
-			key_labelName = ${labelName},
-			locator1 = "CreateObject#OBJECT_NAME");
-	}
-
-	macro assertCustomObjectNotPresent {
-		AssertElementNotPresent(
-			key_labelName = ${labelName},
-			locator1 = "CreateObject#OBJECT_NAME");
-	}
-
-	macro assertCustomObjectWithIndex {
-		AssertElementPresent(
-			key_index = ${index},
-			key_labelName = ${labelName},
-			locator1 = "CreateObject#OBJECT_NAME_INDEX");
-	}
-
 	macro assertDisabledAllFields {
 		for (var fieldsDisabled : list "Name,Label,Scope,Panel Category Key") {
 			AssertElementPresent(
@@ -73,18 +54,6 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
-	}
-
-	macro assertEntrySelectedOnRelationshipField {
-		AssertElementPresent(
-			key_entry = ${entry},
-			locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
-	}
-
-	macro assertFieldAddedOnBlock {
-		AssertElementPresent(
-			key_fieldLabelName = ${fieldLabelName},
-			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
 	macro assertLabelBasicInfo {
@@ -131,34 +100,10 @@ definition {
 			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME");
 	}
 
-	macro assertObjectLabel {
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = ${labelName});
-	}
-
-	macro assertObjectNotPresent {
-		AssertElementNotPresent(
-			key_tabName = ${objectLabel},
-			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
-	}
-
-	macro assertObjectPluralLabel {
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = ${pluralLabelName});
-	}
-
 	macro assertOneColumnOnFieldEntry {
 		AssertElementPresent(locator1 = "CreateObject#ASSERT_ONE_COLUMN_FIELD_ENTRY");
 
 		AssertElementNotPresent(locator1 = "CreateObject#ASSERT_TWO_COLUMN_FIELD_ENTRY");
-	}
-
-	macro assertRelatedObject {
-		AssertElementPresent(
-			key_relatedObject = ${relatedObject},
-			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
 	macro assertRelationshipNotPresent {
@@ -171,12 +116,6 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	macro assertSearchableSectionOptionsAppears {
-		AssertElementPresent(
-			key_radioOption = ${radioOption},
-			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
-	}
-
 	macro assertSelectedValueInDeletionType {
 		WaitForSPARefresh();
 
@@ -184,12 +123,6 @@ definition {
 			key_fieldLabel = "Deletion Type",
 			key_value = ${deletionType},
 			locator1 = "CreateObject#ASSERT_DELETION_TYPE_VALUE");
-	}
-
-	macro assertTitleFieldIsSelected {
-		AssertElementPresent(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = ${fieldLabel});
 	}
 
 	macro assertValuesOnObjectData {
@@ -351,13 +284,6 @@ definition {
 		Button.clickSave();
 
 		Alert.viewRequiredField();
-	}
-
-	macro viewErrorValueInvalid {
-		AssertElementPresent(
-			key_className = ${className},
-			key_errorMessage = ${errorMessage},
-			locator1 = "CreateObject#ERROR_MESSAGE");
 	}
 
 	macro withdrawObjectTask {

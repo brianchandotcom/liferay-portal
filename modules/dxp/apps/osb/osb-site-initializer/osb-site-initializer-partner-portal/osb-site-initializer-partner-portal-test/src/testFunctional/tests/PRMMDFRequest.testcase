@@ -412,7 +412,9 @@ definition {
 		}
 
 		task ("Then an alert will appear") {
-			FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Choose your target audience");
+			AssertElementPresent(
+				key_fieldLabel = "Choose your target audience",
+				locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 		}
 	}
 

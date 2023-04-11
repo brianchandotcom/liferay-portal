@@ -60,7 +60,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "We make it possible for people to reach their full potential to serve others.");
+		AssertElementPresent(
+			key_entry = "We make it possible for people to reach their full potential to serve others.",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -68,7 +70,9 @@ definition {
 			menuItem = "View",
 			pageName = "Blank Page");
 
-		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "We make it possible for people to reach their full potential to serve others.");
+		AssertElementPresent(
+			key_entries = "We make it possible for people to reach their full potential to serve others.",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to display a specific entry of Picklist type for a specific Object"
@@ -121,7 +125,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Field Picklist");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Entry Test");
+		AssertElementPresent(
+			key_entry = "Entry Test",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -129,7 +135,9 @@ definition {
 			menuItem = "View",
 			pageName = "Blank Page");
 
-		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Entry Test");
+		AssertElementPresent(
+			key_entries = "Entry Test",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 	}
 
 }

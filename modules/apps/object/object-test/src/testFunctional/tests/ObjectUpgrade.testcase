@@ -38,11 +38,17 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object1");
 
-			CreateObject.assertObjectLabel(labelName = "Custom Object1");
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Custom Object1");
 
-			CreateObject.assertObjectPluralLabel(pluralLabelName = "Custom Objects1");
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+				value1 = "Custom Objects1");
 
-			CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field Text");
+			AssertElementPresent(
+				locator1 = "CreateObject#TITLE_FIELD",
+				value1 = "Custom Field Text");
 
 			AssertTextEquals(
 				locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
@@ -166,9 +172,13 @@ definition {
 				relationshipLabel = "OTM - System Object",
 				relationshipName = "oTMSystemObject");
 
-			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "MTM - Custom Object Edit After Upgrade");
+			AssertElementNotPresent(
+				key_label = "MTM - Custom Object Edit After Upgrade",
+				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 
-			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "OTM - System Object Edit After Upgrade");
+			AssertElementNotPresent(
+				key_label = "OTM - System Object Edit After Upgrade",
+				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 		}
 	}
 

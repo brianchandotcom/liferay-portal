@@ -70,10 +70,4 @@ definition {
 			value1 = ${scriptValidation});
 	}
 
-	macro viewCardsOnCustomValidation {
-		AssertElementPresent.assertVisible(
-			key_title = ${cardName},
-			locator1 = "Header#H3_TITLE");
-	}
-
 }

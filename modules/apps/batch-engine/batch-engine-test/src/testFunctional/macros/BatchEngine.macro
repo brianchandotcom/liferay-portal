@@ -118,7 +118,9 @@ definition {
 			WaitForSPARefresh();
 		}
 
-		CreateObject.assertCustomObject(labelName = "User");
+		AssertElementPresent(
+			key_labelName = "User",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	macro waitUntilWebContentPresentInUI {

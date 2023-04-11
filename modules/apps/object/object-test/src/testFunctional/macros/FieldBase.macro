@@ -1,9 +1,0 @@
-definition {
-
-	macro assertRequiredFieldErrorPresent {
-		AssertElementPresent(
-			key_fieldLabel = ${fieldLabel},
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-}

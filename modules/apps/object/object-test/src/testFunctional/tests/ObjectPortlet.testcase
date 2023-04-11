@@ -143,7 +143,9 @@ definition {
 
 		ObjectPortlet.goToCustomObjectPortletOnControlPanel();
 
-		ObjectPortlet.assertHeader(objectLabel = "Custom Object");
+		AssertElementPresent(
+			key_objectLabel = "Custom Object",
+			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a BigDecimal field on layout"
@@ -759,7 +761,9 @@ definition {
 
 		ObjectPortlet.checkUncheckColumnsDisplayed(dropdownItem = "ID");
 
-		ObjectPortlet.assertEntryColumnNotPresent(column = "ID");
+		AssertElementNotPresent(
+			key_column = "ID",
+			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
 
 	@description = "LPS-135393 - Verify that is possible to delete an entry on the auto-generated table on the Custom Object Portlet"
@@ -1229,7 +1233,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertPlusButtonIsNotPresent();
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object entry without the Delete permission"
@@ -1374,7 +1378,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Text test");
 
-		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Text test");
+		AssertElementPresent(
+			key_fieldValue = "Text test",
+			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view other user's Object entry with only the Add Object Entry permission"
@@ -1668,7 +1674,9 @@ definition {
 
 		ObjectPortlet.searchEntryRelationshipField(entryValue = "Tes");
 
-		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "t 2");
+		AssertElementPresent(
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "t 2");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"
@@ -1777,9 +1785,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "123.123456");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "123.123456");
+		AssertElementPresent(
+			key_entryValue = "123.123456",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Boolean entry and label on layout"
@@ -1809,7 +1821,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Yes");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
 		ObjectPortlet.assertEntryDetailsCheckedPresent();
 	}
@@ -1841,9 +1855,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Jan 1, 2001");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "01/01/2001");
+		AssertElementPresent(
+			key_entryValue = "01/01/2001",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Double entry and label on layout"
@@ -1873,9 +1891,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "1.54");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "1.54");
+		AssertElementPresent(
+			key_entryValue = "1.54",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view an Integer entry and label on layout"
@@ -1905,9 +1927,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = 12345);
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = 12345);
+		AssertElementPresent(
+			key_entryValue = 12345,
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Long entry and label on layout"
@@ -1937,9 +1963,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = 12345678);
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = 12345678);
+		AssertElementPresent(
+			key_entryValue = 12345678,
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view other user's Object entry with the View permission"
@@ -2051,7 +2081,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Item Test 1");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field Picklist");
+		AssertElementPresent(
+			key_entryLabel = "Field Picklist",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
 		ObjectPortlet.assertEntryDetailsValueSelected(entrySelected = "Item Test 1");
 	}
@@ -2085,9 +2117,13 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Text Test");
 
-		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
+		AssertElementPresent(
+			key_entryLabel = "Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Text Test");
+		AssertElementPresent(
+			key_entryValue = "Text Test",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	@description = "LPS-138755 - Add an entry and make sure the author value is correctly displayed"
@@ -2153,11 +2189,17 @@ definition {
 
 		WaitForPageLoad();
 
-		ObjectPortlet.assertGenericEntryColumnIsDisplayed(fieldLabelName = "ID");
+		AssertElementPresent(
+			key_fieldLabelName = "ID",
+			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
 
-		ObjectPortlet.assertFieldEntryColumnIsDisplayed(fieldLabelName = "Field");
+		AssertElementPresent(
+			key_fieldLabelName = "Field",
+			locator1 = "ObjectPortlet#FIELD_ENTRY_COLUMN");
 
-		ObjectPortlet.assertGenericEntryColumnIsDisplayed(fieldLabelName = "Status");
+		AssertElementPresent(
+			key_fieldLabelName = "Status",
+			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
 	}
 
 	@description = "LPS-135393 - Verify that a Date entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
@@ -2242,7 +2284,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject279");
 
-		ObjectPortlet.assertDuplicatedEntryNotPresent(entry = "Test Entry");
+		AssertElementNotPresent(
+			key_entry = "Test Entry",
+			locator1 = "ObjectPortlet#DUPLICATED_ENTRY_VALUE");
 	}
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the auto-generated table on the Custom Object Portlet"
@@ -2272,7 +2316,9 @@ definition {
 
 		ObjectPortlet.searchEntry(entryName = "Lorem ipsum");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
@@ -2302,7 +2348,9 @@ definition {
 
 		ObjectPortlet.searchColumn(columnName = "test");
 
-		ObjectPortlet.assertNoFieldsWereFound();
+		AssertTextEquals(
+			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",
+			value1 = "No fields were found.");
 	}
 
 	@description = "LPS-135393 - Verify if the empty state is displayed when there is no entry on the Custom Object Portlet"
@@ -2325,7 +2373,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject282");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135393 - Verify that an Integer entry is correctly displayed on the auto-generated table on the Custom Object Portlet"

@@ -132,7 +132,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = 149241);
+		AssertElementPresent(
+			key_entry = 149241,
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a Date field for a template on the content page and view the entries"
@@ -209,7 +211,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
+		AssertElementPresent(
+			key_entry = "1/1/21",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a Decimal field for a template on the content page and view the entries"
@@ -286,7 +290,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "149246.0");
+		AssertElementPresent(
+			key_entry = "149246.0",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map an integer field for a template on the content page and view the entries"
@@ -363,7 +369,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = 149242);
+		AssertElementPresent(
+			key_entry = 149242,
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a Long text field for a template on the content page and view the entries"
@@ -440,7 +448,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
+		AssertElementPresent(
+			key_entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a picklist field for a template on the content page and view the entries"
@@ -523,7 +533,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Item Test");
+		AssertElementPresent(
+			key_entry = "Item Test",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a text field for a template on the content page and view the entries"
@@ -600,7 +612,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Custom Entry A");
+		AssertElementPresent(
+			key_entry = "Custom Entry A",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 }

@@ -63,38 +63,8 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 	}
 
-	macro assertDuplicatedEntryNotPresent {
-		AssertElementNotPresent(
-			key_entry = ${entry},
-			locator1 = "ObjectPortlet#DUPLICATED_ENTRY_VALUE");
-	}
-
-	macro assertEntryColumnNotPresent {
-		AssertElementNotPresent(
-			key_column = ${column},
-			locator1 = "ObjectPortlet#ENTRY_COLUMN");
-	}
-
-	macro assertEntryColumnPresent {
-		AssertElementPresent(
-			key_column = ${column},
-			locator1 = "ObjectPortlet#ENTRY_COLUMN");
-	}
-
 	macro assertEntryDetailsCheckedPresent {
 		AssertChecked.assertCheckedNotVisible(locator1 = "//input[@type='checkbox']");
-	}
-
-	macro assertEntryDetailsLabelNotPresent {
-		AssertNotVisible(
-			key_entryLabel = ${entryLabel},
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-	}
-
-	macro assertEntryDetailsLabelPresent {
-		AssertElementPresent(
-			key_entryLabel = ${entryLabel},
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
 	macro assertEntryDetailsNotPresent {
@@ -103,12 +73,6 @@ definition {
 		AssertElementNotPresent(
 			key_entrySelected = ${entryNotSelected},
 			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
-	}
-
-	macro assertEntryDetailsValuePresent {
-		AssertElementPresent(
-			key_entryValue = ${entryValue},
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
 	macro assertEntryDetailsValueSelected {
@@ -123,32 +87,6 @@ definition {
 		AssertElementNotPresent(
 			key_entry = ${entry},
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
-	}
-
-	macro assertEntryOnRelationshipFieldNotPresent {
-		AssertTextNotEquals(
-			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = ${entryValue});
-	}
-
-	macro assertEntryStauts {
-		AssertElementPresent(
-			key_entry = ${entry},
-			key_status = ${status},
-			locator1 = "ObjectPortlet#ENTRY_STATUS");
-	}
-
-	macro assertFieldAtSpecificColumn {
-		AssertElementPresent(
-			key_fieldColumnNumber = ${fieldColumnNumber},
-			key_fieldLabel = ${fieldLabel},
-			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
-	}
-
-	macro assertFieldEntryColumnIsDisplayed {
-		AssertElementPresent(
-			key_fieldLabelName = ${fieldLabelName},
-			locator1 = "ObjectPortlet#FIELD_ENTRY_COLUMN");
 	}
 
 	macro assertFieldLabelName {
@@ -178,18 +116,6 @@ definition {
 		}
 	}
 
-	macro assertGenericEntryColumnIsDisplayed {
-		AssertElementPresent(
-			key_fieldLabelName = ${fieldLabelName},
-			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
-	}
-
-	macro assertHeader {
-		AssertElementPresent(
-			key_objectLabel = ${objectLabel},
-			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
-	}
-
 	macro assertIsDisplayedOnControlPanel {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -200,34 +126,12 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_FIELD_ON_MENU");
 	}
 
-	macro assertNoFieldsWereFound {
-		AssertTextEquals(
-			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",
-			value1 = "No fields were found.");
-	}
-
 	macro assertObjectIsDisplayedOnControlPanel {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
 		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
-	}
-
-	macro assertPlusButtonIsNotPresent {
-		AssertElementNotPresent(locator1 = "Button#PLUS");
-	}
-
-	macro assertRelationshipEntrySearchResultsNotPresent {
-		AssertElementNotPresent(
-			key_picklistOption = ${entry},
-			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
-	}
-
-	macro assertRelationshipEntrySearchResultsPresent {
-		AssertElementPresent(
-			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = ${entry});
 	}
 
 	macro assertUserCanNotUpdateEntryWithoutPermission {

@@ -46,7 +46,9 @@ definition {
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date");
 
 		for (var columnOption : list "Author,Create Date") {
-			ObjectCustomViews.assertColumnPresent(columnName = ${columnOption});
+			AssertElementPresent(
+				key_columnName = ${columnOption},
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 		}
 	}
 
@@ -185,7 +187,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
+		AssertElementPresent(
+			key_text = "No columns added yet.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 	@description = "LPS-147792 - Verify it is possible to cancel the rename of a Column Label"
@@ -243,7 +247,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to create a Default Sort when there is column (Ascending or Descending)"
@@ -520,7 +526,9 @@ definition {
 
 			ObjectCustomViews.goToFiltersTab();
 
-			ObjectCustomViews.assertColumnPresent(columnName = "Relationship");
+			AssertElementPresent(
+				key_columnName = "Relationship",
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 		}
 	}
 
@@ -567,13 +575,19 @@ definition {
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
-		ObjectCustomViews.assertColumnPresent(columnName = "Author");
+		AssertElementPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
+		AssertElementNotPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
+		AssertElementPresent(
+			key_text = "No columns added yet.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View through the delete button"
@@ -602,9 +616,13 @@ definition {
 
 		ObjectCustomViews.deleteSpecificColumn(columnName = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
+		AssertElementNotPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
+		AssertElementPresent(
+			key_text = "No columns added yet.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 	@description = "LPS-166588 - Verify that it's possible to delete a default filter column with the relationship field in the custom view"
@@ -645,11 +663,15 @@ definition {
 		}
 
 		task ("Then: The user is able to delete the Column Label and the Object entries continue to be filtered") {
-			ObjectCustomViews.assertColumnPresent(columnName = "Relationship");
+			AssertElementPresent(
+				key_columnName = "Relationship",
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
 			ObjectCustomViews.deleteSpecificColumn(columnName = "Relationship");
 
-			ObjectCustomViews.assertColumnNotPresent(columnName = "Relationship");
+			AssertElementNotPresent(
+				key_columnName = "Relationship",
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
 			ObjectCustomViews.goToFiltersTab();
 
@@ -815,7 +837,9 @@ definition {
 
 			ObjectCustomViews.goToFiltersTab();
 
-			ObjectCustomViews.assertColumnNotPresent(columnName = "Relationship");
+			AssertElementNotPresent(
+				key_columnName = "Relationship",
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 		}
 	}
 
@@ -892,13 +916,19 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.assertColumnPresent(columnName = "Author");
+		AssertElementPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
 		ObjectCustomViews.deleteSpecificColumn(columnName = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
+		AssertElementNotPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
+		AssertElementPresent(
+			key_text = "No columns added yet.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a View"
@@ -1533,7 +1563,9 @@ definition {
 
 		Button.clickSave();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Name");
+		AssertElementPresent(
+			key_fieldLabel = "Name",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-135394 - Verify that it is not possible to save another View as default"
@@ -1648,13 +1680,15 @@ definition {
 				sortOption = "Ascending");
 		}
 
-		ObjectCustomViews.viewColumnOrderOnDefaultSort(
-			columnName = "Author",
-			position = 1);
+		AssertElementPresent(
+			key_columnName1 = "Author",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
 
-		ObjectCustomViews.viewColumnOrderOnDefaultSort(
-			columnName = "Create Date",
-			position = 2);
+		AssertElementPresent(
+			key_columnName1 = "Create Date",
+			key_position = 2,
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Create Date",
@@ -1663,13 +1697,15 @@ definition {
 			locator2 = "ObjectCustomViews#CHANGE_POSITION_DEFAULT_SORT_SEARCH_RESULT",
 			value1 = "");
 
-		ObjectCustomViews.viewColumnOrderOnDefaultSort(
-			columnName = "Create Date",
-			position = 1);
+		AssertElementPresent(
+			key_columnName1 = "Create Date",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
 
-		ObjectCustomViews.viewColumnOrderOnDefaultSort(
-			columnName = "Author",
-			position = 2);
+		AssertElementPresent(
+			key_columnName1 = "Author",
+			key_position = 2,
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the View Builder tab"
@@ -1696,9 +1732,13 @@ definition {
 
 		ObjectCustomViews.searchOnViewBuilder(columnName = "Author");
 
-		ObjectCustomViews.assertColumnPresent(columnName = "Author");
+		AssertElementPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
-		ObjectCustomViews.assertColumnNotPresent(columnName = "Create Date");
+		AssertElementNotPresent(
+			key_columnName = "Create Date",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
@@ -1872,7 +1912,9 @@ definition {
 			sortingLabel = "Ascending");
 
 		for (var columnNotPresent : list "Create Date,Modified Date") {
-			ObjectCustomViews.assertColumnNotPresentOnDefaultSort(columnName = ${columnNotPresent});
+			AssertElementNotPresent(
+				key_columnName = ${columnNotPresent},
+				locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
 		}
 	}
 
@@ -1925,17 +1967,20 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject152065");
 
-		ObjectCustomViews.viewFieldsEntryByPosition(
-			entryName = "Entry A",
-			position = 1);
+		AssertElementPresent(
+			key_entryName = "Entry A",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-		ObjectCustomViews.viewFieldsEntryByPosition(
-			entryName = "Entry Z",
-			position = 2);
+		AssertElementPresent(
+			key_entryName = "Entry Z",
+			key_position = 2,
+			locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-		ObjectCustomViews.viewFieldsEntryByPosition(
-			entryName = "Entry B",
-			position = 3);
+		AssertElementPresent(
+			key_entryName = "Entry B",
+			key_position = 3,
+			locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 	}
 
 	@description = "LPS-166589 - Verify that it’s possible to view the object entries with the default filter applied"
@@ -2181,13 +2226,15 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject152060");
 
-		ObjectCustomViews.viewFieldsNameByPosition(
-			fieldName = "Entry A",
-			position = 1);
+		AssertElementPresent(
+			key_fieldName = "Entry A",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 
-		ObjectCustomViews.viewFieldsNameByPosition(
-			fieldName = "Entry C",
-			position = 3);
+		AssertElementPresent(
+			key_fieldName = "Entry C",
+			key_position = 3,
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -2209,13 +2256,15 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject152060");
 
-		ObjectCustomViews.viewFieldsNameByPosition(
-			fieldName = "Entry C",
-			position = 1);
+		AssertElementPresent(
+			key_fieldName = "Entry C",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 
-		ObjectCustomViews.viewFieldsNameByPosition(
-			fieldName = "Entry A",
-			position = 3);
+		AssertElementPresent(
+			key_fieldName = "Entry A",
+			key_position = 3,
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user update the pre-order column"
@@ -2289,7 +2338,9 @@ definition {
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
-		ObjectCustomViews.assertColumnPresent(columnName = "Author");
+		AssertElementPresent(
+			key_columnName = "Author",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 
 		PortletEntry.save();
 
@@ -2511,13 +2562,15 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject152058");
 
-		ObjectCustomViews.viewFieldsNameByPosition(
-			fieldName = "Entry A",
-			position = 1);
+		AssertElementPresent(
+			key_fieldName = "Entry A",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 
-		ObjectCustomViews.viewFieldsNameByPosition(
-			fieldName = "Entry B",
-			position = 2);
+		AssertElementPresent(
+			key_fieldName = "Entry B",
+			key_position = 2,
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 	}
 
 	@description = "LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View"
@@ -2564,7 +2617,9 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject149239");
 
 		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
-			ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
+			AssertElementPresent(
+				key_column = ${columnName},
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 	}
 
@@ -2614,11 +2669,15 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147771");
 
 		for (var columnName : list "Author,Create Date,Custom Field") {
-			ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
+			AssertElementPresent(
+				key_column = ${columnName},
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 
 		for (var columnName : list "External Reference Code,Modified Date,Status,ID") {
-			ObjectPortlet.assertEntryColumnNotPresent(column = ${columnName});
+			AssertElementNotPresent(
+				key_column = ${columnName},
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 	}
 
@@ -2677,17 +2736,20 @@ definition {
 
 		WaitForPageLoad();
 
-		ObjectCustomViews.viewColumnsOrder(
-			columnName = "Create Date",
-			position = 1);
+		AssertElementPresent(
+			key_columnName = "Create Date",
+			key_position = 1,
+			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 
-		ObjectCustomViews.viewColumnsOrder(
-			columnName = "Author",
-			position = 2);
+		AssertElementPresent(
+			key_columnName = "Author",
+			key_position = 2,
+			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 
-		ObjectCustomViews.viewColumnsOrder(
-			columnName = "ID",
-			position = 3);
+		AssertElementPresent(
+			key_columnName = "ID",
+			key_position = 3,
+			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 	}
 
 	@description = "LPS-146028 - Verify that the columns present at the View Builder are ordered correctly"
@@ -2876,9 +2938,13 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
+		AssertElementPresent(
+			key_text = "No columns added yet.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Add columns to start creating a view.");
+		AssertElementPresent(
+			key_text = "Add columns to start creating a view.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View tab"
@@ -2895,7 +2961,9 @@ definition {
 
 		ObjectCustomViews.goToViewsTab();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135394 - Verify the Author, Create Date, Modified Date, Status, ID columns (Metadata columns) are displayed to be selected"
@@ -2943,7 +3011,9 @@ definition {
 
 		Search.searchCP(searchTerm = "ObjectTest202");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135394 - Verify the no result message when searching for a column"
@@ -2971,9 +3041,13 @@ definition {
 
 		ObjectCustomViews.searchOnViewBuilder(columnName = "Teste");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No Results Found");
+		AssertElementPresent(
+			key_text = "No Results Found",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 
-		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Sorry, no results were found.");
+		AssertElementPresent(
+			key_text = "Sorry, no results were found.",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 }

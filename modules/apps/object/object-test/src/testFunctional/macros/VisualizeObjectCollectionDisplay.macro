@@ -18,18 +18,6 @@ definition {
 			locator2 = "VisualizeObjectCollectionDisplay#SELECT_COLLECTION_ITEM");
 	}
 
-	macro assertTableEntriesNotPresent {
-		AssertElementNotPresent(
-			key_entries = ${entries},
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
-	}
-
-	macro assertTableEntriesPresent {
-		AssertElementPresent(
-			key_entries = ${entries},
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
-	}
-
 	macro mapFragment {
 		Select(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
@@ -46,12 +34,6 @@ definition {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet&_com_liferay_asset_list_web_portlet_AssetListPortlet_mvcPath=%2Fview_info_collection_providers.jsp");
 	}
 
-	macro viewEntriesFragment {
-		AssertElementPresent(
-			key_entries = ${entries},
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
-	}
-
 	macro viewEntryPreviewOnPageTemplate {
 		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
 
@@ -66,12 +48,6 @@ definition {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
 			value1 = ${fieldLabel});
-	}
-
-	macro viewObjectCollectionProvider {
-		AssertElementPresent(
-			key_labelName = ${labelName},
-			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
 
 }

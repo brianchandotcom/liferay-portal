@@ -126,24 +126,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro assertColumnNotPresent {
-		AssertElementNotPresent(
-			key_columnName = ${columnName},
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
-	}
-
-	macro assertColumnNotPresentOnDefaultSort {
-		AssertElementNotPresent(
-			key_columnName = ${columnName},
-			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
-	}
-
-	macro assertColumnPresent {
-		AssertElementPresent(
-			key_columnName = ${columnName},
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
-	}
-
 	macro assertColumnPresentOnDefaultSort {
 		AssertElementPresent(
 			key_columnName = ${columnName},
@@ -161,12 +143,6 @@ definition {
 		AssertVisible(
 			key_columnName = ${columnOption},
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
-	}
-
-	macro assertEmptyStateTextOnViewBuilder {
-		AssertElementPresent(
-			key_text = ${text},
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
 	macro assertFilterPresent {
@@ -461,34 +437,6 @@ definition {
 				key_permissionName = ${permissionsName},
 				locator1 = "ObjectCustomViews#SELECT_PERMISSIONS_TO_REGULAR_ROLE");
 		}
-	}
-
-	macro viewColumnOrderOnDefaultSort {
-		AssertElementPresent(
-			key_columnName1 = ${columnName},
-			key_position = ${position},
-			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
-	}
-
-	macro viewColumnsOrder {
-		AssertElementPresent(
-			key_columnName = ${columnName},
-			key_position = ${position},
-			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
-	}
-
-	macro viewFieldsEntryByPosition {
-		AssertElementPresent(
-			key_entryName = ${entryName},
-			key_position = ${position},
-			locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
-	}
-
-	macro viewFieldsNameByPosition {
-		AssertElementPresent(
-			key_fieldName = ${fieldName},
-			key_position = ${position},
-			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 	}
 
 	macro viewOptionNotPresentInKebabMenu {

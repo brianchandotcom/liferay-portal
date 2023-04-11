@@ -56,9 +56,13 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		ObjectPortlet.assertHeader(objectLabel = "Picklists");
+		AssertElementPresent(
+			key_objectLabel = "Picklists",
+			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add a Picklist with the Add permission"
@@ -344,7 +348,9 @@ definition {
 
 		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 148930");
 
-		CreateObject.assertObjectNotPresent(objectLabel = "Custom Object 148930");
+		AssertElementNotPresent(
+			key_tabName = "Custom Object 148930",
+			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
 	@description = "LPS-146759 - Verify it is possible to delete a single Picklist with the Delete permission"
@@ -1001,7 +1007,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
-		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
+		AssertElementPresent(
+			key_fieldValue = "Entry Test",
+			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
 
 		AssertElementNotPresent(locator1 = "Button#SAVE");
 	}
@@ -1464,7 +1472,9 @@ definition {
 
 		Refresh();
 
-		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object 148936");
+		AssertElementNotPresent(
+			key_labelName = "Custom Object 148936",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-146759 - Verify it is not possible to view a single Picklist created by the user if the View Owner permission is removed"
@@ -1807,7 +1817,9 @@ definition {
 
 		Refresh();
 
-		CreateObject.assertObjectNotPresent(objectLabel = "Custom Object 148933");
+		AssertElementNotPresent(
+			key_tabName = "Custom Object 148933",
+			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
 	@description = "LPS-146758 - Verify it is possible to update a single Object with the Update permission"
@@ -1867,7 +1879,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCustomObject(labelName = "Update Custom Object");
+		AssertElementPresent(
+			key_labelName = "Update Custom Object",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-146759 - Verify it is possible to update a single Picklist with the Update permission"
@@ -2216,7 +2230,9 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCustomObject(labelName = "Custom Object 148932");
+		AssertElementPresent(
+			key_labelName = "Custom Object 148932",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-146759 - Verify it is possible to view a single Picklist with the View permission"
@@ -2422,7 +2438,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Object Page");
 
-		ObjectPortlet.assertPlusButtonIsNotPresent();
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View"  unactivated can't vizualize object entries"

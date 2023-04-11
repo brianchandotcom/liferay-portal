@@ -525,12 +525,6 @@ definition {
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
-	macro assertNoResultsWereFound {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
-	}
-
 	macro assertObjectActions {
 		AssertElementPresent(
 			key_actionLabel = ${actionLabel},
@@ -616,12 +610,6 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
 	}
 
-	macro assertObjectRelationshipNotPresent {
-		AssertElementNotPresent(
-			key_label = ${relationshipLabel},
-			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
-	}
-
 	macro assertObjectStatus {
 		var key_status = ${status};
 		var key_label = ${label};
@@ -634,12 +622,6 @@ definition {
 			key_type = ${type},
 			locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_DESCRIPTION",
 			value1 = ${description});
-	}
-
-	macro assertRequiredErrorPresent {
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "Required");
 	}
 
 	macro assertUpdateEntryModalIsNotPresent {
@@ -1416,13 +1398,6 @@ definition {
 		}
 	}
 
-	macro viewCustomObject {
-		AssertElementPresent(
-			key_name = ${name},
-			key_system = "No",
-			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
 	macro viewDescriptionForEachFieldType {
 		ObjectAdmin.assertRelationshipsTypeDescription(
 			description = "Add a long integer up to 16 digits.",
@@ -1471,12 +1446,6 @@ definition {
 		}
 	}
 
-	macro viewFieldValueDisabled {
-		AssertElementPresent(
-			key_fieldValue = ${fieldValue},
-			locator1 = "ObjectAdmin#VIEW_FIELD_VALUE_DISABLED");
-	}
-
 	macro viewObjectPresentOnSite {
 		ProductMenuHelper.openProductMenu();
 
@@ -1501,25 +1470,12 @@ definition {
 		}
 	}
 
-	macro viewPicklistOptionsOnFields {
-		AssertElementPresent(
-			key_optionName = ${optionName},
-			locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
-	}
-
 	macro viewSelectedTabOnObject {
 		Refresh();
 
 		AssertElementPresent(
 			key_selectedTab = ${selectedTab},
 			locator1 = "ObjectAdmin#VIEW_SELECTED_TAB_ON_OBJECT");
-	}
-
-	macro viewSystemObject {
-		AssertElementPresent(
-			key_name = ${name},
-			key_system = "Yes",
-			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
 }

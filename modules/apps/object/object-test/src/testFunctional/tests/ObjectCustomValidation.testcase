@@ -2250,7 +2250,9 @@ definition {
 			locator1 = "ObjectCustomValidation#VIEW_ACTIVE_TAB_ON_CUSTOM_VALIDATION");
 
 		for (var cardsName : list "Basic Info,Trigger Event") {
-			ObjectCustomValidation.viewCardsOnCustomValidation(cardName = ${cardsName});
+			AssertElementPresent.assertVisible(
+				key_title = ${cardsName},
+				locator1 = "Header#H3_TITLE");
 		}
 	}
 
@@ -2283,7 +2285,9 @@ definition {
 			locator1 = "ObjectCustomValidation#VIEW_ACTIVE_TAB_ON_CUSTOM_VALIDATION");
 
 		for (var cardsName : list "Groovy,Error Message") {
-			ObjectCustomValidation.viewCardsOnCustomValidation(cardName = ${cardsName});
+			AssertElementPresent.assertVisible(
+				key_title = ${cardsName},
+				locator1 = "Header#H3_TITLE");
 		}
 	}
 
@@ -2597,7 +2601,9 @@ definition {
 
 		ObjectAdmin.goToValidationsTab();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"
@@ -2806,7 +2812,9 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.assertRequiredErrorPresent();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required");
 	}
 
 	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"
@@ -2829,7 +2837,9 @@ definition {
 			validationName = "",
 			validationType = "Groovy");
 
-		ObjectAdmin.assertRequiredErrorPresent();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required");
 
 		Click(
 			key_modalTitle = "New Validation",
@@ -2845,7 +2855,9 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.assertRequiredErrorPresent();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required");
 	}
 
 }

@@ -172,9 +172,13 @@ definition {
 			menuItem = "View",
 			pageName = "Blank Display Page");
 
-		VisualizeObjectCollectionDisplay.assertTableEntriesPresent(entries = "Item Test 1");
+		AssertElementPresent(
+			key_entries = "Item Test 1",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 
-		VisualizeObjectCollectionDisplay.assertTableEntriesNotPresent(entries = "Item Test 2");
+		AssertElementNotPresent(
+			key_entries = "Item Test 2",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"
@@ -348,7 +352,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "BigDecimal");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
+		AssertElementPresent(
+			key_entry = "123.123456",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -356,7 +362,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
+		AssertElementPresent(
+			key_entry = "123.123456",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Boolean type for a specific Object"
@@ -396,7 +404,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Boolean");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
+		AssertElementPresent(
+			key_entry = "true",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -404,7 +414,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
+		AssertElementPresent(
+			key_entry = "true",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Date type for a specific Object"
@@ -444,7 +456,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Date");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
+		AssertElementPresent(
+			key_entry = "1/1/21",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -452,7 +466,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
+		AssertElementPresent(
+			key_entry = "1/1/21",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Double type for a specific Object"
@@ -492,7 +508,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Double");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
+		AssertElementPresent(
+			key_entry = "1.54",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -500,7 +518,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
+		AssertElementPresent(
+			key_entry = "1.54",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Integer type for a specific Object"
@@ -540,7 +560,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Integer");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = 123456789);
+		AssertElementPresent(
+			key_entry = 123456789,
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -548,7 +570,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = 123456789);
+		AssertElementPresent(
+			key_entry = 123456789,
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Long type for a specific Object"
@@ -588,7 +612,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = 1234567891234567);
+		AssertElementPresent(
+			key_entry = 1234567891234567,
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -596,7 +622,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = 1234567891234567);
+		AssertElementPresent(
+			key_entry = 1234567891234567,
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"
@@ -636,7 +664,9 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "String");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
+		AssertElementPresent(
+			key_entry = "Test text",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
 
@@ -644,7 +674,9 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
+		AssertElementPresent(
+			key_entry = "Test text",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
@@ -736,7 +768,9 @@ definition {
 
 		PageEditor.selectItemToPreviewWithObject(objectLabel = "Custom Object 326");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test Entry");
+		AssertElementPresent(
+			key_entry = "Test Entry",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"

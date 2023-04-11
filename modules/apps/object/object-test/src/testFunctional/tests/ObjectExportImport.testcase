@@ -41,7 +41,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-		CreateObject.assertCustomObjectNotPresent(labelName = "Imported Simple Object");
+		AssertElementNotPresent(
+			key_labelName = "Imported Simple Object",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to clear the JSON file on the import dialog"
@@ -163,7 +165,9 @@ definition {
 				objectFileName = "ImportedObjectWithCustomViews",
 				objectName = "ImportedObjectWithCustomViews170541");
 
-			CreateObject.assertCustomObject(labelName = "Imported Object With Custom Views");
+			AssertElementPresent(
+				key_labelName = "Imported Object With Custom Views",
+				locator1 = "CreateObject#OBJECT_NAME");
 		}
 
 		task ("Then the imported object with custom views can be exported") {
@@ -183,7 +187,9 @@ definition {
 				objectFileName = "ImportedObjectWithState",
 				objectName = "ImportedObjectWithState170543");
 
-			CreateObject.assertCustomObject(labelName = "Imported Object With State");
+			AssertElementPresent(
+				key_labelName = "Imported Object With State",
+				locator1 = "CreateObject#OBJECT_NAME");
 		}
 
 		task ("Then the imported object with state can be exported") {
@@ -203,7 +209,9 @@ definition {
 				objectFileName = "ImportedObjectWithValidation",
 				objectName = "ImportedObjectWithValidation170542");
 
-			CreateObject.assertCustomObject(labelName = "Imported Object With Validation");
+			AssertElementPresent(
+				key_labelName = "Imported Object With Validation",
+				locator1 = "CreateObject#OBJECT_NAME");
 		}
 
 		task ("Then the imported object with validation can be exported") {
@@ -224,7 +232,9 @@ definition {
 			objectFileName = "ImportedSimpleObject",
 			objectName = "ImportedSimpleObject146358");
 
-		CreateObject.assertCustomObject(labelName = "Imported Simple Object");
+		AssertElementPresent(
+			key_labelName = "Imported Simple Object",
+			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Fields after importing an Object"
@@ -234,7 +244,9 @@ definition {
 			objectFileName = "ImportedObjectWithField",
 			objectName = "ImportedObjectWithField146361");
 
-		CreateObject.assertCustomObject(labelName = "Imported Object With Field");
+		AssertElementPresent(
+			key_labelName = "Imported Object With Field",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
 
@@ -252,7 +264,9 @@ definition {
 			objectFileName = "ImportedObjectWithLayout",
 			objectName = "ImportedObjectWithLayout146360");
 
-		CreateObject.assertCustomObject(labelName = "Imported Object With Layout");
+		AssertElementPresent(
+			key_labelName = "Imported Object With Layout",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Layout");
 
@@ -271,7 +285,9 @@ definition {
 		}
 
 		task ("Then assert the imported file is present") {
-			CreateObject.assertCustomObject(labelName = "Imported Object With Action");
+			AssertElementPresent(
+				key_labelName = "Imported Object With Action",
+				locator1 = "CreateObject#OBJECT_NAME");
 		}
 	}
 
@@ -286,13 +302,15 @@ definition {
 			objectFileName = "ImportedSimpleObject",
 			objectName = "ImportedSimpleObject146367B");
 
-		CreateObject.assertCustomObjectWithIndex(
-			index = 1,
-			labelName = "Imported Simple Object");
+		AssertElementPresent(
+			key_index = 1,
+			key_labelName = "Imported Simple Object",
+			locator1 = "CreateObject#OBJECT_NAME_INDEX");
 
-		CreateObject.assertCustomObjectWithIndex(
-			index = 2,
-			labelName = "Imported Simple Object");
+		AssertElementPresent(
+			key_index = 2,
+			key_labelName = "Imported Simple Object",
+			locator1 = "CreateObject#OBJECT_NAME_INDEX");
 	}
 
 	@description = "LPS-142175 - Verify it's possible to maintain Scope after importing an Object"
@@ -302,7 +320,9 @@ definition {
 			objectFileName = "ImportedObjectWithScope",
 			objectName = "ImportedObjectWithScope146370");
 
-		CreateObject.assertCustomObject(labelName = "Imported Object With Scope");
+		AssertElementPresent(
+			key_labelName = "Imported Object With Scope",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Scope");
 
@@ -322,13 +342,17 @@ definition {
 			objectFileName = "ImportedObjectWithRelationship",
 			objectName = "ImportedObjectWithRelationship146359");
 
-		CreateObject.assertCustomObject(labelName = "Imported Object With Relationship");
+		AssertElementPresent(
+			key_labelName = "Imported Object With Relationship",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Relationship");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"
@@ -339,7 +363,9 @@ definition {
 			objectFileName = "ImportedObjectWithField",
 			objectName = "ImportedObjectWithField146365");
 
-		CreateObject.assertCustomObject(labelName = "Imported Object With Field");
+		AssertElementPresent(
+			key_labelName = "Imported Object With Field",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
 
@@ -359,7 +385,9 @@ definition {
 			objectFileName = "ImportedSimpleObject",
 			objectName = "ImportedSimpleObject146363");
 
-		CreateObject.assertCustomObject(labelName = "Imported Simple Object");
+		AssertElementPresent(
+			key_labelName = "Imported Simple Object",
+			locator1 = "CreateObject#OBJECT_NAME");
 
 		ObjectAdmin.assertObjectStatus(
 			label = "Imported Simple Object",

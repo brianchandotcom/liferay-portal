@@ -153,7 +153,9 @@ definition {
 
 			PortletEntry.save();
 
-			CreateObject.assertEntrySelectedOnRelationshipField(entry = "Simple T-Shirt");
+			AssertElementPresent(
+				key_entry = "Simple T-Shirt",
+				locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject289");
 

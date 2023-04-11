@@ -134,7 +134,9 @@ definition {
 				relationshipLabel = "Relationship",
 				relationshipName = "relationship");
 
-			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "Relationship");
+			AssertElementNotPresent(
+				key_label = "Relationship",
+				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 		}
 	}
 
@@ -418,7 +420,9 @@ definition {
 		}
 
 		task ("Then: The label is updated successfully") {
-			CreateObject.assertObjectLabel(labelName = "Objeto Personalizado 179102");
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Objeto Personalizado 179102");
 		}
 	}
 
@@ -579,7 +583,9 @@ definition {
 		task ("Assert the Custom Object is present in Object Admin") {
 			ObjectAdmin.openObjectAdmin();
 
-			CreateObject.assertCustomObject(labelName = "Custom Object 163066");
+			AssertElementPresent(
+				key_labelName = "Custom Object 163066",
+				locator1 = "CreateObject#OBJECT_NAME");
 		}
 
 		task ("Assert the Custom Object is present on the application menu and go to it") {

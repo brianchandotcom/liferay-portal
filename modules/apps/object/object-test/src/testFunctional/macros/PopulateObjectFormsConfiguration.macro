@@ -93,18 +93,6 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	macro viewDisplaySelectOption {
-		AssertElementPresent(
-			key_label = ${label},
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-	}
-
-	macro viewDisplaySelectOptionNotPresent {
-		AssertElementNotPresent(
-			key_label = ${label},
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-	}
-
 	macro viewRequiredFieldOptionDisabled {
 		Form.gotoBasicTab();
 

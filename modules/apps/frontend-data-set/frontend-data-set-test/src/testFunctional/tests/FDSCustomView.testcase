@@ -146,7 +146,9 @@ definition {
 
 			FDSCustomView.selectView(key_itemName = "TEST");
 
-			ObjectCustomViews.assertColumnNotPresent(columnName = "Description");
+			AssertElementNotPresent(
+				key_columnName = "Description",
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 		}
 	}
 

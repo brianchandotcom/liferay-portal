@@ -339,7 +339,9 @@ definition {
 
 		Picklist.clickSaveButton();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Key");
+		AssertElementPresent(
+			key_fieldLabel = "Key",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for a Picklist item"
@@ -357,7 +359,9 @@ definition {
 
 		Picklist.clickSaveButton();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Name");
+		AssertElementPresent(
+			key_fieldLabel = "Name",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for Picklist"
@@ -373,7 +377,9 @@ definition {
 
 		Button.clickSave();
 
-		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Name");
+		AssertElementPresent(
+			key_fieldLabel = "Name",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"
@@ -666,7 +672,9 @@ definition {
 	test EmptyStateMessageDisplayedWhenNoPicklist {
 		Picklist.gotoPicklists();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
@@ -680,7 +688,9 @@ definition {
 
 		Picklist.selectPickilistModalFrame();
 
-		ObjectAdmin.assertNoResultsWereFound();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	@description = "LPS-140407 - Verify that the Key field is autofilled when the Name field is filled"

@@ -326,7 +326,9 @@ definition {
 
 		Form.gotoBasicTab();
 
-		ObjectPortlet.assertEntryDetailsLabelNotPresent(entryLabel = "Create List");
+		AssertNotVisible(
+			key_entryLabel = "Create List",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
 	@description = "LPS-137316 - Verify it is not possible to select an unpublished Object"
@@ -343,7 +345,9 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.viewDisplaySelectOptionNotPresent(label = "Custom Object 212");
+		AssertElementNotPresent(
+			key_label = "Custom Object 212",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"

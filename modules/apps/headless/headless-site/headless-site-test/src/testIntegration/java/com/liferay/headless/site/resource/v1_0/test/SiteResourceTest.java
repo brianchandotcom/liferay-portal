@@ -81,6 +81,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteFailureInvalidKey();
 		_testPostSiteFailureNoName();
 		_testPostSiteFailureParentSiteNotFound();
+		_testPostSiteFailureSiteInitializerNotFound();
 		_testPostSiteFailureSiteTemplateInactive();
 		_testPostSiteSuccessChild();
 		_testPostSiteSuccessMembershipTypePrivate();
@@ -191,6 +192,32 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals(
 				"Could not find parent site", problem.getTitle());
+		}
+	}
+
+	private void _testPostSiteFailureSiteInitializerNotFound()
+		throws Exception {
+
+		Site randomSite = randomSite();
+
+		randomSite.setTemplateKey(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		randomSite.setTemplateType(Site.TemplateType.SITE_INITIALIZER);
+
+		try {
+			testPostSite_addSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+
+			Assert.assertEquals(
+				"No site initializer was found for site template key " +
+					randomSite.getTemplateKey(),
+				problem.getTitle());
 		}
 	}
 

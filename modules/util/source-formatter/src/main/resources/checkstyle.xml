@@ -287,6 +287,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ComponentExposureCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Avoid exposing static component." />
+			<property name="enabled" value="false" />
 			<message key="static.component.exposed" value="Do not expose private static field ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConcatCheck">

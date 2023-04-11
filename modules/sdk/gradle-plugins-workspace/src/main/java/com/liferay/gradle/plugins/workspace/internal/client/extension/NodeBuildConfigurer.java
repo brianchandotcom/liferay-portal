@@ -147,8 +147,13 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 
 		keySet.forEach(
 			key -> {
-				Map<String, Object> configMap =
-					(Map<String, Object>)clientExtensionConfigMap.get(key);
+				Object object = clientExtensionConfigMap.get(key);
+
+				if (!(object instanceof Map)) {
+					return;
+				}
+
+				Map<String, Object> configMap = (Map<String, Object>)object;
 
 				List<String> typeSettings = (List<String>)configMap.get(
 					"typeSettings");

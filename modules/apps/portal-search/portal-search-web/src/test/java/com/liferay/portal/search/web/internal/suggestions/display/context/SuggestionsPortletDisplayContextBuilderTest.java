@@ -64,7 +64,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 			buildRelatedQueriesSuggestions(Arrays.asList("alpha"));
 
 		_assertSuggestion(
-			"[alpha] | q=alpha", suggestionDisplayContexts.get(0));
+			"[<strong>alpha</strong>] | q=alpha",
+			suggestionDisplayContexts.get(0));
 	}
 
 	@Test
@@ -89,10 +90,12 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 			suggestionDisplayContexts.toString(), 2,
 			suggestionDisplayContexts.size());
 
-		_assertSuggestion("a [C] | q=a+C", suggestionDisplayContexts.get(0));
+		_assertSuggestion(
+			"a [<strong>C</strong>] | q=a+C", suggestionDisplayContexts.get(0));
 
 		_assertSuggestion(
-			"a b [C] | q=a+b+C", suggestionDisplayContexts.get(1));
+			"a b [<strong>C</strong>] | q=a+b+C",
+			suggestionDisplayContexts.get(1));
 	}
 
 	@Test
@@ -117,7 +120,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 			suggestionDisplayContexts.size());
 
 		_assertSuggestion(
-			"a b [C] | q=a+b+C", suggestionDisplayContexts.get(0));
+			"a b [<strong>C</strong>] | q=a+b+C",
+			suggestionDisplayContexts.get(0));
 	}
 
 	@Test
@@ -132,7 +136,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 			suggestionDisplayContexts.size());
 
 		_assertSuggestion(
-			"a b [C] | q=a+b+C", suggestionDisplayContexts.get(0));
+			"a b [<strong>C</strong>] | q=a+b+C",
+			suggestionDisplayContexts.get(0));
 	}
 
 	@Test
@@ -140,7 +145,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 		SuggestionDisplayContext suggestionDisplayContext =
 			buildSpellCheckSuggestion("alpha");
 
-		_assertSuggestion("[alpha] | q=alpha", suggestionDisplayContext);
+		_assertSuggestion(
+			"[<strong>alpha</strong>] | q=alpha", suggestionDisplayContext);
 	}
 
 	@Test

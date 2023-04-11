@@ -197,8 +197,7 @@ public class Log4jConfigUtilTest {
 			logEntry = logEntries.get(2);
 
 			Assert.assertEquals(
-				"Please use log4j2 <Configuration> enabled strict XML format",
-				logEntry.getMessage());
+				"Log4J 2 <Configuration> is required", logEntry.getMessage());
 		}
 	}
 

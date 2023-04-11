@@ -59,9 +59,7 @@ public class Log4jConfigUtil {
 			Element rootElement = document.getRootElement();
 
 			if (!Objects.equals(rootElement.getName(), "Configuration")) {
-				_log.error(
-					"Please use log4j2 <Configuration> enabled strict XML " +
-						"format");
+				_log.error("Log4J 2 <Configuration> is required");
 
 				return Collections.emptyMap();
 			}

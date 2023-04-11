@@ -103,15 +103,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		String prefix = StringUtil.toUpperCase(
 			_objectDefinition.getShortName());
 
-		if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") &&
-			!termName.equals("[%" + prefix + "_CREATOR%]")) {
-
+		if (!_matchesAuthorTermName(prefix, termName)) {
 			return null;
 		}
 
@@ -205,15 +197,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 			String prefix = ObjectRelationshipUtil.getNotificationTermPrefix(
 				objectDefinition, objectRelationship);
 
-			if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
-				!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
-				!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&
-				!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") &&
-				!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") &&
-				!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") &&
-				!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") &&
-				!termName.equals("[%" + prefix + "_CREATOR%]")) {
-
+			if (!_matchesAuthorTermName(prefix, termName)) {
 				continue;
 			}
 
@@ -380,6 +364,22 @@ public class ObjectDefinitionNotificationTermEvaluator
 		}
 
 		return null;
+	}
+
+	private boolean _matchesAuthorTermName(String prefix, String termName) {
+		if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") &&
+			!termName.equals("[%" + prefix + "_CREATOR%]")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(

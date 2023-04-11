@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -218,9 +219,9 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 						try {
 							long timeout = ReflectionTestUtil.getFieldValue(
 								PropsValues.class,
-								"UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT");
+								"UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT");
 
-							sleep(timeout + 5);
+							sleep((timeout + 1) * Time.SECOND);
 						}
 						catch (InterruptedException interruptedException) {
 							throw new RuntimeException(interruptedException);
@@ -242,7 +243,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
-				_setUpgradeReportDLStorageInfoTimeout(10)) {
+				_setUpgradeReportDLStorageInfoTimeout(1)) {
 
 			Object upgradeReport = ReflectionTestUtil.getFieldValue(
 				_appender, "_upgradeReport");
@@ -272,7 +273,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
-				_setUpgradeReportDLStorageInfoTimeout(10)) {
+				_setUpgradeReportDLStorageInfoTimeout(1)) {
 
 			Object upgradeReport = ReflectionTestUtil.getFieldValue(
 				_appender, "_upgradeReport");
@@ -611,16 +612,14 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		return FileUtil.read(reportFile);
 	}
 
-	private SafeCloseable _setUpgradeReportDLStorageInfoTimeout(
-		long milliseconds) {
-
+	private SafeCloseable _setUpgradeReportDLStorageInfoTimeout(long timeout) {
 		long originalUpgradeReportDLStorageInfoTimeout =
 			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT",
-				milliseconds);
+				PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
+				timeout);
 
 		return () -> ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT",
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
 			originalUpgradeReportDLStorageInfoTimeout);
 	}
 

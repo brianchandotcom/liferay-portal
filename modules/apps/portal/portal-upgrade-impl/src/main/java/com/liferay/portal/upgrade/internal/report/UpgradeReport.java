@@ -326,7 +326,8 @@ public class UpgradeReport {
 				try {
 					_documentLibrarySizeThread.start();
 					_documentLibrarySizeThread.join(
-						PropsValues.UPGRADE_REPORT_DL_STORAGE_INFO_TIMEOUT);
+						PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT *
+							Time.SECOND);
 				}
 				catch (Exception exception) {
 					return exception.getMessage();

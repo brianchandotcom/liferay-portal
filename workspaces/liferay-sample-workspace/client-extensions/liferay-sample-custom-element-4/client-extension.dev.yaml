@@ -1,5 +1,2 @@
 liferay-sample-custom-element-4:
-    cssURLs:
-        - http://localhost:5001/assets/style.css
-    urls:
-        - http://localhost:5001/assets/index.js
+    baseURL: http://localhost:5001/assets

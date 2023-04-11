@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -118,6 +119,77 @@ public class UpgradeStepRegistryTest {
 		_registerAndCheckPreAndPostUpgradeSteps(
 			new UpgradeStep[] {new TestUpgradeStep(), new TestUpgradeStep()},
 			new UpgradeStep[0]);
+	}
+
+	@Test
+	public void testGetInitializationStep() {
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
+		upgradeStepRegistry.registerInitialization();
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			true);
+
+		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
+
+		UpgradeInfo upgradeInfo = upgradeInfos.get(0);
+
+		Assert.assertEquals("0.0.0", upgradeInfo.getFromSchemaVersionString());
+		Assert.assertEquals("1.0.0", upgradeInfo.getToSchemaVersionString());
+		Assert.assertTrue(
+			upgradeInfo.getUpgradeStep() instanceof DummyUpgradeStep);
+	}
+
+	@Test
+	public void testGetInitializationStepWhenAnUpgradeProcessIsRegistered() {
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
+		upgradeStepRegistry.registerInitialization();
+
+		upgradeStepRegistry.register("1.0.0", "2.0.0", new TestUpgradeStep());
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			true);
+
+		Assert.assertEquals(upgradeInfos.toString(), 2, upgradeInfos.size());
+
+		UpgradeInfo upgradeInfo = upgradeInfos.get(0);
+
+		Assert.assertEquals("0.0.0", upgradeInfo.getFromSchemaVersionString());
+		Assert.assertEquals("2.0.0", upgradeInfo.getToSchemaVersionString());
+		Assert.assertTrue(
+			upgradeInfo.getUpgradeStep() instanceof DummyUpgradeStep);
+	}
+
+	@Test
+	public void testSkipInitializationStepWhenAnUpgradeProcessIsRegisteredAndPortalNotUpgraded() {
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
+		upgradeStepRegistry.registerInitialization();
+
+		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
+
+		upgradeStepRegistry.register("1.0.0", "2.0.0", testUpgradeStep);
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			false);
+
+		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
+		Assert.assertEquals(
+			new UpgradeInfo("1.0.0", "2.0.0", 0, testUpgradeStep),
+			upgradeInfos.get(0));
+	}
+
+	@Test
+	public void testSkipInitializationStepWhenPortalNotUpgraded() {
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
+		upgradeStepRegistry.registerInitialization();
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			false);
+
+		Assert.assertEquals(upgradeInfos.toString(), 0, upgradeInfos.size());
 	}
 
 	private void _registerAndCheckPreAndPostUpgradeSteps(

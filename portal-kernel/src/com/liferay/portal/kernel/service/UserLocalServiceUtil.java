@@ -1472,6 +1472,10 @@ public class UserLocalServiceUtil {
 		return getService().getRoleUserIds(roleId);
 	}
 
+	public static long[] getRoleUserIds(long roleId, long type) {
+		return getService().getRoleUserIds(roleId, type);
+	}
+
 	public static List<User> getRoleUsers(long roleId) {
 		return getService().getRoleUsers(roleId);
 	}

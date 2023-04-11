@@ -1192,6 +1192,9 @@ public interface UserLocalService
 	public long[] getRoleUserIds(long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getRoleUserIds(long roleId, long type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getRoleUsers(long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

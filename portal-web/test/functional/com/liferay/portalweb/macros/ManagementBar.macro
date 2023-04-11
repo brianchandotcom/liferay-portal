@@ -35,6 +35,12 @@ definition {
 
 		Click.pauseClickAt(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
+		if (isSet(active)) {
+			AssertElementPresent(
+				key_item = ${filterBy},
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+		}
+
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		MenuItem.click(menuItem = ${menuItem});

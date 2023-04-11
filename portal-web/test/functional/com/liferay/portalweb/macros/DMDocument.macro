@@ -2432,6 +2432,24 @@ definition {
 		}
 	}
 
+	macro selectExtensions {
+		if (${clearAll} == "true") {
+			Click(
+				key_text = "Clear All",
+				locator1 = "Link#ANY");
+		}
+
+		for (var extensionCategory : list ${extensionCategory}) {
+			Check.checkNotVisible(
+				key_nodeName = ${extensionCategory},
+				locator1 = "Treeview#NODE_CHECKBOX");
+		}
+
+		SelectFrameTop();
+
+		Button.clickSelect();
+	}
+
 	macro setExpirationDate {
 		Panel.expandPanel(panel = "Expiration Date");
 
@@ -3471,6 +3489,30 @@ definition {
 		}
 	}
 
+	macro viewExtensionDetails {
+		IFrame.selectModalFrame();
+
+		for (var extensionCategory : list ${extensionCategory}) {
+			AssertTextEquals(
+				key_nodeName = ${extensionCategory},
+				locator1 = "Treeview#NODE_ITEM",
+				value1 = ${extensionCategory});
+		}
+
+		if (isSet(extensionSubcategory)) {
+			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+				Click(locator1 = "Treeview#NODE_COLLAPSED");
+			}
+
+			for (var extensionSubcategory : list ${extensionSubcategory}) {
+				AssertTextEquals(
+					key_nodeName = ${extensionSubcategory},
+					locator1 = "Treeview#SUBNODE_ITEM",
+					value1 = ${extensionSubcategory});
+			}
+		}
+	}
+
 	macro viewFieldLabels {
 		for (var fieldFieldLabels : list ${labels}) {
 			AssertTextEquals.assertPartialText(
@@ -3518,6 +3560,19 @@ definition {
 		AssertVisible(
 			key_dmDocumentSize = ${dmDocumentSize},
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_SIZE");
+	}
+
+	macro viewFilterSummaryResults {
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = ${searchResults});
+
+		for (var filterScope : list ${filterScope}) {
+			AssertTextEquals(
+				key_filterScope = ${filterScope},
+				locator1 = "ManagementBar#FILTER_RESULTS_SCOPE",
+				value1 = ${filterScope});
+		}
 	}
 
 	macro viewIconLockedCP {

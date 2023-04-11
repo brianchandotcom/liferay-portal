@@ -38,6 +38,8 @@ import org.apache.logging.log4j.message.Message;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sam Ziemer
@@ -156,8 +158,12 @@ public class UpgradeLogAppender implements Appender {
 	@Reference
 	private PersistenceManager _persistenceManager;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private ReleaseManager _releaseManager;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ReleaseManager _releaseManager;
 
 	private volatile boolean _started;
 	private UpgradeReport _upgradeReport;

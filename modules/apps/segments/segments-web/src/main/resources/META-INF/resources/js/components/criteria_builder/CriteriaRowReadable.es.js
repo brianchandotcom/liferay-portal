@@ -13,24 +13,23 @@
  */
 
 import {PropTypes} from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
 import {unescapeSingleQuotes} from '../../utils/odata';
 import {dateToInternationalHuman} from '../../utils/utils';
 
-class CriteriaRowReadable extends Component {
-	static propTypes = {
-		criterion: PropTypes.object.isRequired,
-		selectedOperator: PropTypes.object,
-		selectedProperty: PropTypes.object.isRequired,
-	};
-
-	static defaultProps = {
-		criterion: {},
-	};
-
-	_renderCriteriaString = ({operatorLabel, propertyLabel, type, value}) => {
+export default function CriteriaRowReadable({
+	criterion = {},
+	selectedOperator,
+	selectedProperty,
+}) {
+	const _renderCriteriaString = ({
+		operatorLabel,
+		propertyLabel,
+		type,
+		value,
+	}) => {
 		let parsedValue = null;
 
 		if (type === PROPERTY_TYPES.DATE) {
@@ -58,23 +57,24 @@ class CriteriaRowReadable extends Component {
 		);
 	};
 
-	render() {
-		const {criterion, selectedOperator, selectedProperty} = this.props;
-		const value = criterion ? criterion.value : '';
-		const operatorLabel = selectedOperator ? selectedOperator.label : '';
-		const propertyLabel = selectedProperty ? selectedProperty.label : '';
+	const value = criterion ? criterion.value : '';
+	const operatorLabel = selectedOperator ? selectedOperator.label : '';
+	const propertyLabel = selectedProperty ? selectedProperty.label : '';
 
-		return (
-			<span className="criterion-string">
-				{this._renderCriteriaString({
-					operatorLabel,
-					propertyLabel,
-					type: selectedProperty.type,
-					value: criterion.displayValue || value,
-				})}
-			</span>
-		);
-	}
+	return (
+		<span className="criterion-string">
+			{_renderCriteriaString({
+				operatorLabel,
+				propertyLabel,
+				type: selectedProperty.type,
+				value: criterion.displayValue || value,
+			})}
+		</span>
+	);
 }
 
-export default CriteriaRowReadable;
+CriteriaRowReadable.propTypes = {
+	criterion: PropTypes.object.isRequired,
+	selectedOperator: PropTypes.object,
+	selectedProperty: PropTypes.object.isRequired,
+};

@@ -351,7 +351,7 @@ definition {
 		task ("And the admin can delete all the products with one click by using the select all checkbox") {
 			CommerceNavigator.searchEntry(entryName = "");
 
-			Pagination.changePagination(itemsPerPage = "60 items");
+			Pagination.changePagination(itemsPerPage = "60 Items");
 
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 				CommerceProducts.deleteEntries();

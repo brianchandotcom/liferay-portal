@@ -811,7 +811,7 @@ definition {
 		}
 
 		task ("And can see data set is filled with the following data in the preview modal and only eigth items are displayed") {
-			Pagination.changePagination(itemsPerPage = "8 items");
+			Pagination.changePagination(itemsPerPage = "8 Items");
 
 			CommerceEntry.viewPaginationResults(results = "Showing 1 to 8 of 13");
 
@@ -1288,7 +1288,7 @@ definition {
 		}
 
 		task ("Then only four wish lists are displayed") {
-			Pagination.changePagination(itemsPerPage = "4 items");
+			Pagination.changePagination(itemsPerPage = "4 Items");
 
 			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6");
 

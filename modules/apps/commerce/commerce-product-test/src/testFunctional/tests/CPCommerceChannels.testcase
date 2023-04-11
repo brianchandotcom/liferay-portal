@@ -837,7 +837,7 @@ definition {
 				CommerceEntry.gotoMenuTab(menuTab = "${tab} Restrictions");
 
 				task ("Then the admin can use pagination to change the list of countries shown on the page") {
-					Pagination.changePagination(itemsPerPage = "4 items");
+					Pagination.changePagination(itemsPerPage = "4 Items");
 
 					CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 247");
 

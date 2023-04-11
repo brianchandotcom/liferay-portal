@@ -298,7 +298,7 @@ definition {
 		}
 
 		task ("And can see data set is filled with the following data in the preview modal and only four items are displayed") {
-			Pagination.changePagination(itemsPerPage = "4 items");
+			Pagination.changePagination(itemsPerPage = "4 Items");
 
 			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 13");
 

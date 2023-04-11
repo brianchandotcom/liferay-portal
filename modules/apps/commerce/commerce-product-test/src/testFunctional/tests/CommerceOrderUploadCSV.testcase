@@ -405,7 +405,7 @@ definition {
 		}
 
 		task ("And can see data set is filled with the following data in the preview modal and only twenty items are displayed") {
-			Pagination.changePagination(itemsPerPage = "20 items");
+			Pagination.changePagination(itemsPerPage = "20 Items");
 
 			CommerceEntry.viewPaginationResults(results = "Showing 1 to 20 of 216");
 

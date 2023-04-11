@@ -17,97 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-JournalFeed feed = ActionUtil.getFeed(request);
-
-long groupId = BeanParamUtil.getLong(feed, request, "groupId", scopeGroupId);
-
-String feedId = BeanParamUtil.getString(feed, request, "feedId");
-
-String newFeedId = ParamUtil.getString(request, "newFeedId");
-
-String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
-
-if (Validator.isNull(ddmStructureKey) && (feed != null)) {
-	ddmStructureKey = feed.getDDMStructureKey();
-}
-
-DDMStructure ddmStructure = null;
-
-String ddmStructureName = StringPool.BLANK;
-
-if (Validator.isNotNull(ddmStructureKey)) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
-
-	if (ddmStructure != null) {
-		ddmStructureName = ddmStructure.getName(locale);
-	}
-}
-
-List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
-
-if (ddmStructure != null) {
-	ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
-}
-
-String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
-
-if (Validator.isNull(ddmTemplateKey) && (feed != null)) {
-	ddmTemplateKey = feed.getDDMTemplateKey();
-}
-
-if ((ddmStructure == null) && Validator.isNotNull(ddmTemplateKey)) {
-	DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
-
-	if (ddmTemplate != null) {
-		ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmTemplate.getClassPK());
-
-		if (ddmStructure != null) {
-			ddmStructureKey = ddmStructure.getStructureKey();
-			ddmStructureName = ddmStructure.getName(locale);
-
-			ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplate.getClassPK());
-		}
-	}
-}
-
-String ddmRendererTemplateKey = ParamUtil.getString(request, "ddmRendererTemplateKey");
-
-if (Validator.isNull(ddmRendererTemplateKey) && (feed != null)) {
-	ddmRendererTemplateKey = feed.getDDMRendererTemplateKey();
-}
-
-String contentField = BeanParamUtil.getString(feed, request, "contentField");
-
-if (Validator.isNull(contentField) || ((ddmStructure == null) && !contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) && !contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT))) {
-	contentField = JournalFeedConstants.WEB_CONTENT_DESCRIPTION;
-}
-
-String feedFormat = BeanParamUtil.getString(feed, request, "feedFormat", RSSUtil.FORMAT_DEFAULT);
-double feedVersion = BeanParamUtil.getDouble(feed, request, "feedVersion", RSSUtil.VERSION_DEFAULT);
-
-String feedType = RSSUtil.getFeedType(feedFormat, feedVersion);
-
-ResourceURL feedURL = null;
-
-if (feed != null) {
-	long targetLayoutPlid = PortalUtil.getPlidFromFriendlyURL(feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
-
-	feedURL = PortletURLFactoryUtil.create(request, JournalPortletKeys.JOURNAL, targetLayoutPlid, PortletRequest.RESOURCE_PHASE);
-
-	feedURL.setCacheability(ResourceURL.FULL);
-	feedURL.setParameter("groupId", String.valueOf(groupId));
-	feedURL.setParameter("feedId", String.valueOf(feedId));
-	feedURL.setResourceID("/journal/rss");
-}
-
-EditJournalFeedDisplayContext editJournalFeedDisplayContext = new EditJournalFeedDisplayContext(request, feed, liferayPortletResponse);
+EditJournalFeedDisplayContext editJournalFeedDisplayContext = new EditJournalFeedDisplayContext(request, liferayPortletResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(editJournalFeedDisplayContext.getRedirect());
 
-renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") : feed.getName());
+renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 %>
 
 <portlet:actionURL var="editFeedURL">
@@ -122,11 +37,11 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveFeed();" %>'
 >
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="feedId" type="hidden" value="<%= feedId %>" />
-	<aui:input name="ddmRendererTemplateKey" type="hidden" value="<%= ddmRendererTemplateKey %>" />
-	<aui:input name="contentField" type="hidden" value="<%= contentField %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editJournalFeedDisplayContext.getRedirect() %>" />
+	<aui:input name="groupId" type="hidden" value="<%= editJournalFeedDisplayContext.getGroupId() %>" />
+	<aui:input name="feedId" type="hidden" value="<%= editJournalFeedDisplayContext.getFeedId() %>" />
+	<aui:input name="ddmRendererTemplateKey" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMRendererTemplateKey() %>" />
+	<aui:input name="contentField" type="hidden" value="<%= editJournalFeedDisplayContext.getContentField() %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateFeedIdException.class %>" message="please-enter-a-unique-id" />
@@ -136,7 +51,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		<liferay-ui:error exception="<%= FeedTargetLayoutFriendlyUrlException.class %>" message="please-enter-a-valid-target-layout-friendly-url" />
 		<liferay-ui:error exception="<%= FeedTargetPortletIdException.class %>" message="please-enter-a-valid-widget-id" />
 
-		<aui:model-context bean="<%= feed %>" model="<%= JournalFeed.class %>" />
+		<aui:model-context bean="<%= editJournalFeedDisplayContext.getJournalFeed() %>" model="<%= JournalFeed.class %>" />
 
 		<liferay-frontend:fieldset
 			collapsed="<%= false %>"
@@ -144,21 +59,21 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 			label="details"
 		>
 			<c:choose>
-				<c:when test="<%= feed == null %>">
+				<c:when test="<%= editJournalFeedDisplayContext.getJournalFeed() == null %>">
 					<c:choose>
 						<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
 							<aui:input name="newFeedId" type="hidden" />
 							<aui:input name="autoFeedId" type="hidden" value="<%= true %>" />
 						</c:when>
 						<c:otherwise>
-							<aui:input cssClass="lfr-input-text-container" field="feedId" fieldParam="newFeedId" label="id" name="newFeedId" value="<%= newFeedId %>" />
+							<aui:input cssClass="lfr-input-text-container" field="feedId" fieldParam="newFeedId" label="id" name="newFeedId" value="<%= editJournalFeedDisplayContext.getNewFeedId() %>" />
 
 							<aui:input label="autogenerate-id" name="autoFeedId" type="checkbox" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<aui:input name="id" type="resource" value="<%= feedId %>" />
+					<aui:input name="id" type="resource" value="<%= editJournalFeedDisplayContext.getFeedId() %>" />
 				</c:otherwise>
 			</c:choose>
 
@@ -170,14 +85,14 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 			<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-widget-id-help" label="target-widget-id" name="targetPortletId" />
 
-			<c:if test="<%= feed != null %>">
-				<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />
+			<c:if test="<%= editJournalFeedDisplayContext.getJournalFeed() != null %>">
+				<aui:input name="url" type="resource" value="<%= editJournalFeedDisplayContext.getFeedURL() %>" />
 
-				<aui:a href="<%= feedURL.toString() %>" label="preview" target="_blank" />
+				<aui:a href="<%= editJournalFeedDisplayContext.getFeedURL() %>" label="preview" target="_blank" />
 			</c:if>
 		</liferay-frontend:fieldset>
 
-		<c:if test="<%= feed == null %>">
+		<c:if test="<%= editJournalFeedDisplayContext.getJournalFeed() == null %>">
 			<liferay-frontend:fieldset
 				collapsed="<%= true %>"
 				collapsible="<%= true %>"
@@ -195,18 +110,22 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 			label="web-content-constraints"
 		>
 			<div class="form-group">
-				<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= ddmStructureKey %>" />
+				<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMStructureKey() %>" />
 
-				<aui:input name="structure" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
+				<aui:input name="structure" required="<%= true %>" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
 
 				<aui:button name="selectDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>' value="select" />
 
-				<aui:button disabled="<%= Validator.isNull(ddmStructureKey) %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
+				<aui:button disabled="<%= Validator.isNull(editJournalFeedDisplayContext.getDDMStructureKey()) %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
 			</div>
+
+			<%
+			List<DDMTemplate> ddmTemplates = editJournalFeedDisplayContext.getDDMTemplates();
+			%>
 
 			<c:choose>
 				<c:when test="<%= ddmTemplates.isEmpty() %>">
-					<aui:input name="ddmTemplateKey" type="hidden" value="<%= ddmTemplateKey %>" />
+					<aui:input name="ddmTemplateKey" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMTemplateKey() %>" />
 				</c:when>
 				<c:otherwise>
 					<aui:select label="template" name="ddmTemplateKey" showEmptyOption="<%= true %>">
@@ -215,7 +134,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 						for (DDMTemplate ddmTemplate : ddmTemplates) {
 						%>
 
-							<aui:option label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" selected="<%= Objects.equals(ddmTemplateKey, ddmTemplate.getTemplateKey()) %>" value="<%= ddmTemplate.getTemplateKey() %>" />
+							<aui:option label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" selected="<%= Objects.equals(editJournalFeedDisplayContext.getDDMTemplateKey(), ddmTemplate.getTemplateKey()) %>" value="<%= ddmTemplate.getTemplateKey() %>" />
 
 						<%
 						}
@@ -242,18 +161,22 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 			label="presentation-settings"
 		>
 			<aui:select label="feed-item-content" name="contentFieldSelector">
-				<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
+				<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= Objects.equals(editJournalFeedDisplayContext.getContentField(), JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
+
+				<%
+				List<DDMTemplate> ddmTemplates = editJournalFeedDisplayContext.getDDMTemplates();
+				%>
 
 				<optgroup label="<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />">
-					<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />
+					<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= Objects.equals(editJournalFeedDisplayContext.getContentField(), JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />
 
-					<c:if test="<%= (ddmStructure != null) && (ddmTemplates.size() > 1) %>">
+					<c:if test="<%= ddmTemplates.size() > 1 %>">
 
 						<%
 						for (DDMTemplate curTemplate : ddmTemplates) {
 						%>
 
-							<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(request, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale)), false) %>' selected="<%= ddmRendererTemplateKey.equals(curTemplate.getTemplateKey()) %>" value="<%= curTemplate.getTemplateKey() %>" />
+							<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(request, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale)), false) %>' selected="<%= Objects.equals(editJournalFeedDisplayContext.getDDMRendererTemplateKey(), curTemplate.getTemplateKey()) %>" value="<%= curTemplate.getTemplateKey() %>" />
 
 						<%
 						}
@@ -262,12 +185,14 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 					</c:if>
 				</optgroup>
 
-				<c:if test="<%= ddmStructure != null %>">
+				<%
+				DDMForm ddmForm = editJournalFeedDisplayContext.getDDMForm();
+				%>
+
+				<c:if test="<%= ddmForm != null %>">
 					<optgroup label="<liferay-ui:message key="structure-fields" />">
 
 						<%
-						DDMForm ddmForm = ddmStructure.getDDMForm();
-
 						Map<String, DDMFormField> ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
 
 						for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
@@ -286,7 +211,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 										optionValue = ddmFormField.getName() + StringPool.UNDERLINE + optionValue;
 									%>
 
-										<aui:option label='<%= TextFormatter.format(optionLabels.getString(locale), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(optionValue) %>" value="<%= optionValue %>" />
+										<aui:option label='<%= TextFormatter.format(optionLabels.getString(locale), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= Objects.equals(editJournalFeedDisplayContext.getContentField(), optionValue) %>" value="<%= optionValue %>" />
 
 									<%
 									}
@@ -294,7 +219,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 								</c:when>
 								<c:when test='<%= !ddmFormFieldType.equals("checkbox") %>'>
-									<aui:option label='<%= TextFormatter.format(ddmFormField.getName(), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormField.getName()) %>" value="<%= ddmFormField.getName() %>" />
+									<aui:option label='<%= TextFormatter.format(ddmFormField.getName(), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= Objects.equals(editJournalFeedDisplayContext.getContentField(), ddmFormField.getName()) %>" value="<%= ddmFormField.getName() %>" />
 								</c:when>
 							</c:choose>
 
@@ -312,7 +237,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 				for (String curFeedType : RSSUtil.FEED_TYPES) {
 				%>
 
-					<aui:option label="<%= RSSUtil.getFeedTypeName(curFeedType) %>" selected="<%= feedType.equals(curFeedType) %>" value="<%= curFeedType %>" />
+					<aui:option label="<%= RSSUtil.getFeedTypeName(curFeedType) %>" selected="<%= Objects.equals(editJournalFeedDisplayContext.getFeedType(), curFeedType) %>" value="<%= curFeedType %>" />
 
 				<%
 				}
@@ -335,21 +260,9 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-
-		<%
-		boolean hasSavePermission = false;
-
-		if (feed != null) {
-			hasSavePermission = JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE);
-		}
-		else {
-			hasSavePermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED);
-		}
-		%>
-
 		<liferay-frontend:edit-form-buttons
-			redirect="<%= redirect %>"
-			submitDisabled="<%= !hasSavePermission %>"
+			redirect="<%= editJournalFeedDisplayContext.getRedirect() %>"
+			submitDisabled="<%= !editJournalFeedDisplayContext.hasSavePermission() %>"
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
@@ -439,9 +352,9 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		document.<portlet:namespace />fm[
 			'<portlet:namespace />javax-portlet-action'
 		].value =
-			'<%= (feed == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
+			'<%= (editJournalFeedDisplayContext.getJournalFeed() == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
 
-		<c:if test="<%= feed == null %>">
+		<c:if test="<%= editJournalFeedDisplayContext.getJournalFeed() == null %>">
 			document.<portlet:namespace />fm.<portlet:namespace />feedId.value =
 				document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;
 		</c:if>

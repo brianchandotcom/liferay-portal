@@ -607,25 +607,23 @@ public class ObjectEntryDTOConverter
 						objectField.getRelationshipType(),
 						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				if (nestedFieldsDepth >= 0) {
-					long primaryKey = GetterUtil.getLong(serializable);
+				long primaryKey = GetterUtil.getLong(serializable);
 
-					ObjectRelationship objectRelationship =
-						_objectRelationshipLocalService.
-							fetchObjectRelationshipByObjectFieldId2(
-								objectField.getObjectFieldId());
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectFieldId2(
+							objectField.getObjectFieldId());
 
-					if ((nestedFieldsDepth > 0) && (primaryKey > 0)) {
-						_addNestedFields(
-							dtoConverterContext, map, nestedFieldNames,
-							nestedFieldsDepth, objectFieldName,
-							objectRelationship, primaryKey);
-					}
-
-					_addObjectRelationshipNames(
-						map, objectField, objectFieldName, objectRelationship,
-						primaryKey, values);
+				if ((nestedFieldsDepth > 0) && (primaryKey > 0)) {
+					_addNestedFields(
+						dtoConverterContext, map, nestedFieldNames,
+						nestedFieldsDepth, objectFieldName, objectRelationship,
+						primaryKey);
 				}
+
+				_addObjectRelationshipNames(
+					map, objectField, objectFieldName, objectRelationship,
+					primaryKey, values);
 			}
 			else {
 				map.put(objectFieldName, serializable);
@@ -634,7 +632,7 @@ public class ObjectEntryDTOConverter
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		if ((nestedFieldsDepth <= 0) || ListUtil.isEmpty(nestedFieldNames)) {
+		if ((nestedFieldsDepth == 0) || ListUtil.isEmpty(nestedFieldNames)) {
 			return map;
 		}
 

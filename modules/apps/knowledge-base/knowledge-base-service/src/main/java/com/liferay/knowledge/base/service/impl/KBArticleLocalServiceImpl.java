@@ -49,6 +49,7 @@ import com.liferay.knowledge.base.internal.util.KBArticleDiffUtil;
 import com.liferay.knowledge.base.internal.util.KBCommentUtil;
 import com.liferay.knowledge.base.internal.util.KBSectionEscapeUtil;
 import com.liferay.knowledge.base.internal.util.constants.KnowledgeBaseConstants;
+import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBArticleTable;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -329,7 +330,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			WorkflowThreadLocal.setEnabled(false);
 
 			KBArticleImporter kbArticleImporter = new KBArticleImporter(
-				_kbArchiveFactory, this, _portal, _dlURLHelper);
+				_markdownConverterFactory.create(), _kbArchiveFactory, this,
+				_portal, _dlURLHelper);
 
 			return kbArticleImporter.processZipFile(
 				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
@@ -2556,6 +2558,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private KBFolderPersistence _kbFolderPersistence;
 
 	private KBServiceConfiguration _kbServiceConfiguration;
+
+	@Reference
+	private MarkdownConverterFactory _markdownConverterFactory;
 
 	@Reference
 	private Portal _portal;

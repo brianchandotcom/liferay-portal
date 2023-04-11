@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.internal.importer.util.KBArticleMarkdownConverter;
+import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -51,10 +52,11 @@ import java.util.Properties;
 public class KBArticleImporter {
 
 	public KBArticleImporter(
-		KBArchiveFactory kbArchiveFactory,
+		MarkdownConverter markdownConverter, KBArchiveFactory kbArchiveFactory,
 		KBArticleLocalService kbArticleLocalService, Portal portal,
 		DLURLHelper dlURLHelper) {
 
+		_markdownConverter = markdownConverter;
 		_kbArchiveFactory = kbArchiveFactory;
 		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
@@ -98,7 +100,8 @@ public class KBArticleImporter {
 
 		KBArticleMarkdownConverter kbArticleMarkdownConverter =
 			new KBArticleMarkdownConverter(
-				markdown, fileEntryName, metadata, _dlURLHelper);
+				markdown, fileEntryName, _markdownConverter, metadata,
+				_dlURLHelper);
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
@@ -335,6 +338,7 @@ public class KBArticleImporter {
 	private final DLURLHelper _dlURLHelper;
 	private final KBArchiveFactory _kbArchiveFactory;
 	private final KBArticleLocalService _kbArticleLocalService;
+	private final MarkdownConverter _markdownConverter;
 	private final Portal _portal;
 
 }

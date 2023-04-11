@@ -111,11 +111,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_upgradeReportLogger.addAppender(_logContextAppender);
 
 		_originalErrorMessages.clear();
-		_originalFiltered = false;
-		_originalModuleSchemaVersionsMap.clear();
+		_originalSchemaVersionsMap.clear();
 		_originalUpgradeProcessMessages.clear();
-		_originalStatus = "Pending";
-		_originalType = "Not calculated";
 		_originalWarningMessages.clear();
 	}
 
@@ -534,16 +531,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_errorMessages");
-		_originalFiltered = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_filtered");
-		_originalModuleSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_servletSchemaVersionsMap");
+		_originalSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
+			_upgradeStatus, "_schemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_upgradeProcessMessages");
-		_originalStatus = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_status");
-		_originalType = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_warningMessages");
 	}
@@ -658,10 +649,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;
-	private static boolean _originalFiltered;
-	private static Map<String, Object> _originalModuleSchemaVersionsMap;
-	private static String _originalStatus;
-	private static String _originalType;
+	private static Map<String, Object> _originalSchemaVersionsMap;
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static Map<String, ArrayList<String>>

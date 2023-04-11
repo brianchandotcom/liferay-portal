@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Term;
@@ -22,25 +23,23 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Stefano Motta
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class TermResourceTest extends BaseTermResourceTestCase {
 
@@ -56,24 +55,21 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 			_user.getUserId());
 	}
 
-	@Override
-	@Test
-	public void testGetTermsPageWithSortString() throws Exception {
-	}
-
+	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetTermNotFound() throws Exception {
+		super.testGraphQLGetTermNotFound();
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"active", "name"};
+		return new String[] {"description", "label", "priority", "type"};
 	}
 
 	@Override
-	protected Term randomPatchTerm() throws Exception {
-		return randomTerm();
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"type"};
 	}
 
 	@Override
@@ -89,10 +85,10 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 				id = RandomTestUtil.nextLong();
 				label = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
-				name = FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString());
+				name = RandomTestUtil.randomString();
+				neverExpire = true;
 				priority = RandomTestUtil.randomDouble();
-				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = CommerceTermEntryConstants.TYPE_PAYMENT_TERMS;
 			}
 		};
 	}
@@ -170,12 +166,6 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 				GetterUtil.getDouble(term.getPriority()), term.getType(),
 				term.getTypeSettings(), _serviceContext);
 
-		_commerceTermEntries.add(commerceTermEntry);
-
-		return _toTerm(commerceTermEntry);
-	}
-
-	private Term _toTerm(CommerceTermEntry commerceTermEntry) {
 		return new Term() {
 			{
 				active = commerceTermEntry.isActive();
@@ -192,10 +182,6 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 			}
 		};
 	}
-
-	@DeleteAfterTestRun
-	private final List<CommerceTermEntry> _commerceTermEntries =
-		new ArrayList<>();
 
 	@Inject
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;

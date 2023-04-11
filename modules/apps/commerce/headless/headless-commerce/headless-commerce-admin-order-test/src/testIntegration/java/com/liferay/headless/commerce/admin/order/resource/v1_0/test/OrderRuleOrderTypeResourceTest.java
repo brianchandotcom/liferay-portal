@@ -22,26 +22,25 @@ import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRuleOrderType;
-import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Stefano Motta
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class OrderRuleOrderTypeResourceTest
 	extends BaseOrderRuleOrderTypeResourceTestCase {
@@ -57,56 +56,36 @@ public class OrderRuleOrderTypeResourceTest
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
 
-		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-
 		_corEntry = _corEntryLocalService.addCOREntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			displayDateConfig.getMonth(), displayDateConfig.getDay(),
-			displayDateConfig.getYear(), displayDateConfig.getHour(),
-			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
-			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
-			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
-			true, RandomTestUtil.randomString(), 0,
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(), 1, 1,
+			2022, 12, 0, 0, 0, 0, 0, 0, true, RandomTestUtil.randomString(), 0,
 			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testDeleteOrderRuleOrderType() throws Exception {
+		super.testDeleteOrderRuleOrderType();
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGraphQLDeleteOrderRuleOrderType() throws Exception {
-	}
-
-	@Override
-	protected Collection<EntityField> getEntityFields() throws Exception {
-		return new ArrayList<>();
+		super.testGraphQLDeleteOrderRuleOrderType();
 	}
 
 	@Override
 	protected OrderRuleOrderType randomOrderRuleOrderType() throws Exception {
-		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-
 		CommerceOrderType commerceOrderType =
 			_commerceOrderTypeLocalService.addCommerceOrderType(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomBoolean(), displayDateConfig.getMonth(),
-				displayDateConfig.getDay(), displayDateConfig.getYear(),
-				displayDateConfig.getHour(), displayDateConfig.getMinute(), 0,
-				expirationDateConfig.getMonth(), expirationDateConfig.getDay(),
-				expirationDateConfig.getYear(), expirationDateConfig.getHour(),
-				expirationDateConfig.getMinute(), true, _serviceContext);
+				RandomTestUtil.randomBoolean(), 1, 1, 2022, 12, 0, 0, 0, 0, 0,
+				0, 0, true, _serviceContext);
 
 		return new OrderRuleOrderType() {
 			{
@@ -128,7 +107,7 @@ public class OrderRuleOrderTypeResourceTest
 				OrderRuleOrderType orderRuleOrderType)
 		throws Exception {
 
-		return _addOrderRuleOrderType(orderRuleOrderType);
+		return _addCOREntryRel(orderRuleOrderType);
 	}
 
 	@Override
@@ -145,7 +124,7 @@ public class OrderRuleOrderTypeResourceTest
 				Long id, OrderRuleOrderType orderRuleOrderType)
 		throws Exception {
 
-		return _addOrderRuleOrderType(orderRuleOrderType);
+		return _addCOREntryRel(orderRuleOrderType);
 	}
 
 	@Override
@@ -161,7 +140,7 @@ public class OrderRuleOrderTypeResourceTest
 				OrderRuleOrderType orderRuleOrderType)
 		throws Exception {
 
-		return _addOrderRuleOrderType(orderRuleOrderType);
+		return _addCOREntryRel(orderRuleOrderType);
 	}
 
 	@Override
@@ -170,34 +149,26 @@ public class OrderRuleOrderTypeResourceTest
 				OrderRuleOrderType orderRuleOrderType)
 		throws Exception {
 
-		return _addOrderRuleOrderType(orderRuleOrderType);
+		return _addCOREntryRel(orderRuleOrderType);
 	}
 
-	private OrderRuleOrderType _addOrderRuleOrderType(
+	private OrderRuleOrderType _addCOREntryRel(
 			OrderRuleOrderType orderRuleOrderType)
-		throws Exception {
-
-		return _toOrderRuleOrderType(
-			_corEntryRelLocalService.addCOREntryRel(
-				_user.getUserId(), CommerceOrderType.class.getName(),
-				orderRuleOrderType.getOrderTypeId(),
-				orderRuleOrderType.getOrderRuleId()));
-	}
-
-	private OrderRuleOrderType _toOrderRuleOrderType(COREntryRel corEntryRel)
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
 			_commerceOrderTypeLocalService.getCommerceOrderType(
-				corEntryRel.getClassPK());
-		COREntry corEntry = _corEntryLocalService.fetchCOREntry(
-			corEntryRel.getCOREntryId());
+				orderRuleOrderType.getOrderTypeId());
+		COREntryRel corEntryRel = _corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceOrderType.class.getName(),
+			orderRuleOrderType.getOrderTypeId(),
+			orderRuleOrderType.getOrderRuleId());
 
 		return new OrderRuleOrderType() {
 			{
 				orderRuleExternalReferenceCode =
-					corEntry.getExternalReferenceCode();
-				orderRuleId = corEntry.getCOREntryId();
+					_corEntry.getExternalReferenceCode();
+				orderRuleId = _corEntry.getCOREntryId();
 				orderRuleOrderTypeId = corEntryRel.getCOREntryRelId();
 				orderTypeExternalReferenceCode =
 					commerceOrderType.getExternalReferenceCode();

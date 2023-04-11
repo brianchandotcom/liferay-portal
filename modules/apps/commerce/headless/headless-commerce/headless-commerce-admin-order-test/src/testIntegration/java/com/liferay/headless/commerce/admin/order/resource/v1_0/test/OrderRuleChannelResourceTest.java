@@ -23,26 +23,24 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRuleChannel;
-import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Stefano Motta
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class OrderRuleChannelResourceTest
 	extends BaseOrderRuleChannelResourceTestCase {
@@ -54,40 +52,28 @@ public class OrderRuleChannelResourceTest
 
 		_user = UserTestUtil.addUser(testCompany);
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testCompany.getCompanyId(), testGroup.getGroupId(),
-			_user.getUserId());
-
-		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
-			RandomTestUtil.nextDate(), _user.getTimeZone());
-
 		_corEntry = _corEntryLocalService.addCOREntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			displayDateConfig.getMonth(), displayDateConfig.getDay(),
-			displayDateConfig.getYear(), displayDateConfig.getHour(),
-			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
-			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
-			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
-			true, RandomTestUtil.randomString(), 0,
-			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(), 1, 1,
+			2022, 12, 0, 0, 0, 0, 0, 0, true, RandomTestUtil.randomString(), 0,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				testCompany.getCompanyId(), testGroup.getGroupId(),
+				_user.getUserId()));
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testDeleteOrderRuleChannel() throws Exception {
+		super.testDeleteOrderRuleChannel();
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGraphQLDeleteOrderRuleChannel() throws Exception {
-	}
-
-	@Override
-	protected Collection<EntityField> getEntityFields() throws Exception {
-		return new ArrayList<>();
+		super.testGraphQLDeleteOrderRuleChannel();
 	}
 
 	@Override
@@ -114,7 +100,7 @@ public class OrderRuleChannelResourceTest
 				String externalReferenceCode, OrderRuleChannel orderRuleChannel)
 		throws Exception {
 
-		return _addOrderRuleChannel(orderRuleChannel);
+		return _addCOREntryRel(orderRuleChannel);
 	}
 
 	@Override
@@ -131,7 +117,7 @@ public class OrderRuleChannelResourceTest
 				Long id, OrderRuleChannel orderRuleChannel)
 		throws Exception {
 
-		return _addOrderRuleChannel(orderRuleChannel);
+		return _addCOREntryRel(orderRuleChannel);
 	}
 
 	@Override
@@ -147,7 +133,7 @@ public class OrderRuleChannelResourceTest
 				OrderRuleChannel orderRuleChannel)
 		throws Exception {
 
-		return _addOrderRuleChannel(orderRuleChannel);
+		return _addCOREntryRel(orderRuleChannel);
 	}
 
 	@Override
@@ -156,28 +142,18 @@ public class OrderRuleChannelResourceTest
 				OrderRuleChannel orderRuleChannel)
 		throws Exception {
 
-		return _addOrderRuleChannel(orderRuleChannel);
+		return _addCOREntryRel(orderRuleChannel);
 	}
 
-	private OrderRuleChannel _addOrderRuleChannel(
-			OrderRuleChannel orderRuleChannel)
-		throws Exception {
-
-		return _toOrderRuleChannel(
-			_corEntryRelLocalService.addCOREntryRel(
-				_user.getUserId(), CommerceChannel.class.getName(),
-				orderRuleChannel.getChannelId(),
-				orderRuleChannel.getOrderRuleId()));
-	}
-
-	private OrderRuleChannel _toOrderRuleChannel(COREntryRel corEntryRel)
+	private OrderRuleChannel _addCOREntryRel(OrderRuleChannel orderRuleChannel)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(
-				corEntryRel.getClassPK());
-		COREntry corEntry = _corEntryLocalService.fetchCOREntry(
-			corEntryRel.getCOREntryId());
+				orderRuleChannel.getChannelId());
+		COREntryRel corEntryRel = _corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			orderRuleChannel.getChannelId(), orderRuleChannel.getOrderRuleId());
 
 		return new OrderRuleChannel() {
 			{
@@ -186,8 +162,8 @@ public class OrderRuleChannelResourceTest
 				channelId = commerceChannel.getCommerceChannelId();
 				orderRuleChannelId = corEntryRel.getCOREntryRelId();
 				orderRuleExternalReferenceCode =
-					corEntry.getExternalReferenceCode();
-				orderRuleId = corEntry.getCOREntryId();
+					_corEntry.getExternalReferenceCode();
+				orderRuleId = _corEntry.getCOREntryId();
 			}
 		};
 	}
@@ -203,7 +179,6 @@ public class OrderRuleChannelResourceTest
 	@Inject
 	private COREntryRelLocalService _corEntryRelLocalService;
 
-	private ServiceContext _serviceContext;
 	private User _user;
 
 }

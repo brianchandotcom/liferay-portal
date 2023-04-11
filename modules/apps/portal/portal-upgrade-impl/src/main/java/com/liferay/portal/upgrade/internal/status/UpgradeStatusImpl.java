@@ -42,6 +42,8 @@ import org.apache.logging.log4j.ThreadContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Luis Ortiz
@@ -284,8 +286,12 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private ReleaseManager _releaseManager;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ReleaseManager _releaseManager;
 
 	private final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();

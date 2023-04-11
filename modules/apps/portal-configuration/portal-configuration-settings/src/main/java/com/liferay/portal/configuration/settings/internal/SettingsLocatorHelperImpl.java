@@ -21,6 +21,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.configuration.settings.internal.scoped.configuration.admin.service.ScopedConfigurationManagedServiceFactory;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -290,18 +292,22 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 					configurationBeanClass.getClassLoader()),
 				SettingsLocatorHelperImpl.this);
 
-		ConfigurationBeanManagedService configurationBeanManagedService =
-			new ConfigurationBeanManagedService(
-				configurationBeanClass,
-				configurationBean -> _configurationBeanSettings.put(
-					configurationPid,
-					new ConfigurationBeanSettings(
-						locationVariableResolver, configurationBean,
-						_portalPropertiesSettings)));
-
 		ServiceRegistration<?> managedServiceServiceRegistration =
 			_bundleContext.registerService(
-				ManagedService.class, configurationBeanManagedService,
+				ManagedService.class,
+				properties -> {
+					if (properties == null) {
+						properties = new HashMapDictionary<>();
+					}
+
+					_configurationBeanSettings.put(
+						configurationPid,
+						new ConfigurationBeanSettings(
+							locationVariableResolver,
+							ConfigurableUtil.createConfigurable(
+								configurationBeanClass, properties),
+							_portalPropertiesSettings));
+				},
 				MapUtil.singletonDictionary(
 					Constants.SERVICE_PID, configurationPid));
 

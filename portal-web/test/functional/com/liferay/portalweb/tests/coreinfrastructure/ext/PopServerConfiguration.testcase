@@ -24,6 +24,7 @@ definition {
 	@priority = 3
 	test CanEnablePopServerNotificationsPerInstance {
 		property database.types = "mysql";
+		property test.name.skip.portal.instance = "PopServerConfiguration#CanEnablePopServerNotificationsPerInstance";
 
 		task ("Setup: Save default instance mail settings so they appear in database") {
 			PortalSettings.gotoConfiguration(

@@ -14,15 +14,12 @@
 
 package com.liferay.jethr0.dalo;
 
+import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.json.JSONObject;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -32,68 +29,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectPrioritizerToProjectComparatorsDALO
-	extends BaseRelationshipDALO {
+	extends BaseEntityRelationshipDALO<ProjectPrioritizer, ProjectComparator> {
 
-	public JSONObject createRelationship(
-		ProjectPrioritizer projectPrioritizer,
-		ProjectComparator projectComparator) {
-
-		return create(
-			"/o/c/projectprioritizers", projectPrioritizer.getId(),
-			projectComparator.getId());
+	@Override
+	public EntityFactory<ProjectComparator> getChildEntityFactory() {
+		return _projectComparatorFactory;
 	}
 
-	public void deleteRelationship(
-		ProjectPrioritizer projectPrioritizer,
-		ProjectComparator projectComparator) {
-
-		delete(
-			"/o/c/projectprioritizers", projectPrioritizer.getId(),
-			projectComparator.getId());
-	}
-
-	public List<ProjectComparator> retrieveProjectComparators(
-		ProjectPrioritizer projectPrioritizer) {
-
-		List<ProjectComparator> projectComparators = new ArrayList<>();
-
-		for (JSONObject jsonObject :
-				retrieve(
-					"/o/c/projectprioritizers", projectPrioritizer.getId())) {
-
-			ProjectComparator projectComparator =
-				_projectComparatorFactory.newEntity(jsonObject);
-
-			projectComparator.setProjectPrioritizer(projectPrioritizer);
-
-			projectComparators.add(projectComparator);
-		}
-
-		return projectComparators;
-	}
-
-	public void updateRelationships(ProjectPrioritizer projectPrioritizer) {
-		List<ProjectComparator> remoteProjectComparators =
-			retrieveProjectComparators(projectPrioritizer);
-
-		for (ProjectComparator projectComparator :
-				projectPrioritizer.getProjectComparators()) {
-
-			if (remoteProjectComparators.contains(projectComparator)) {
-				remoteProjectComparators.removeAll(
-					Collections.singletonList(projectComparator));
-
-				continue;
-			}
-
-			createRelationship(projectPrioritizer, projectComparator);
-		}
-
-		for (ProjectComparator remoteProjectComparator :
-				remoteProjectComparators) {
-
-			deleteRelationship(projectPrioritizer, remoteProjectComparator);
-		}
+	@Override
+	public EntityFactory<ProjectPrioritizer> getParentEntityFactory() {
+		return _projectPrioritizerFactory;
 	}
 
 	@Override
@@ -103,5 +48,8 @@ public class ProjectPrioritizerToProjectComparatorsDALO
 
 	@Autowired
 	private ProjectComparatorFactory _projectComparatorFactory;
+
+	@Autowired
+	private ProjectPrioritizerFactory _projectPrioritizerFactory;
 
 }

@@ -15,7 +15,6 @@ import {
 	postOptionValue,
 	postTrialOption,
 	postTrialProductOption,
-
 } from '../../utils/api';
 import {createSkuName} from '../../utils/util';
 

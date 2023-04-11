@@ -163,7 +163,7 @@ export function InformLicensingTermsPage({
 									numberOfLength: 1,
 									overrideSubscriptionInfo: true,
 									subscriptionType: 'yearly',
-									subscriptionTypeSettings: {yearlyMode: 0}
+									subscriptionTypeSettings: {yearlyMode: 0},
 								},
 							};
 

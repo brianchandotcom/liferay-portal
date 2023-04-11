@@ -7,9 +7,26 @@
 		<sequential>
 			<local name="bucket.list" />
 
-			<exec executable="aws" outputproperty="bucket.list">
-				<arg line="s3api list-buckets" />
-			</exec>
+			<get-testcase-property property.name="aws.store.enabled" />
+			<get-testcase-property property.name="ibm.store.enabled" />
+
+			<if>
+				<equals arg1="${aws.store.enabled}" arg2="true" />
+				<then>
+					<exec executable="aws" outputproperty="bucket.list">
+						<arg line="s3api list-buckets" />
+					</exec>
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${ibm.store.enabled}" arg2="true" />
+				<then>
+					<exec executable="aws" outputproperty="bucket.list">
+						<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-buckets" />
+					</exec>
+				</then>
+			</if>
 
 			<script language="javascript"><![CDATA[
 				var bucketList = project.getProperty("bucket.list");
@@ -44,9 +61,23 @@
 				<sequential>
 					<echo>Expired Bucket: @{delete.name}</echo>
 
-					<exec executable="aws">
-						<arg line="s3 rb s3://@{delete.name} --force" />
-					</exec>
+					<if>
+						<equals arg1="${aws.store.enabled}" arg2="true" />
+						<then>
+							<exec executable="aws" outputproperty="bucket.list">
+								<arg line="s3 rb s3://@{delete.name} --force" />
+							</exec>
+						</then>
+					</if>
+
+					<if>
+						<equals arg1="${ibm.store.enabled}" arg2="true" />
+						<then>
+							<exec executable="aws" outputproperty="bucket.list">
+								<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud s3 rb s3://@{delete.name} --force" />
+							</exec>
+						</then>
+					</if>
 				</sequential>
 			</for>
 		</sequential>
@@ -55,9 +86,26 @@
 	<target name="assert-document-in-bucket">
 		<local name="bucket.objects" />
 
-		<exec executable="aws" outputproperty="bucket.objects">
-			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
-		</exec>
+		<get-testcase-property property.name="aws.store.enabled" />
+		<get-testcase-property property.name="ibm.store.enabled" />
+
+		<if>
+			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws" outputproperty="bucket.objects">
+					<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+				</exec>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws" outputproperty="bucket.objects">
+					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+				</exec>
+			</then>
+		</if>
 
 		<echo>${bucket.objects}</echo>
 
@@ -75,9 +123,26 @@
 	<target name="assert-no-document-in-bucket">
 		<local name="bucket.objects" />
 
-		<exec executable="aws" outputproperty="bucket.objects">
-			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
-		</exec>
+		<get-testcase-property property.name="aws.store.enabled" />
+		<get-testcase-property property.name="ibm.store.enabled" />
+
+		<if>
+			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws" outputproperty="bucket.objects">
+					<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+				</exec>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws" outputproperty="bucket.objects">
+					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+				</exec>
+			</then>
+		</if>
 
 		<echo>${bucket.objects}</echo>
 
@@ -118,12 +183,55 @@
 		<echo>${bucket.configuration}</echo>
 	</target>
 
+	<target name="configure-ibm-aws-cli">
+		<exec executable="aws">
+			<arg line="configure set aws_access_key_id ${ibm.s3.access.key.id}" />
+		</exec>
+
+		<exec executable="aws">
+			<arg line="configure set aws_secret_access_key ${ibm.s3.secret.access.key}" />
+		</exec>
+
+		<exec executable="aws">
+			<arg line="configure set default.region us-east" />
+		</exec>
+
+		<exec executable="aws">
+			<arg line="configure set default.s3.signature_version s3v4" />
+		</exec>
+
+		<local name="bucket.configuration" />
+
+		<exec executable="aws" outputproperty="bucket.configuration">
+			<arg line="configure list" />
+		</exec>
+
+		<echo>${bucket.configuration}</echo>
+	</target>
+
 	<target name="create-s3-bucket">
 		<local name="bucket.create.output" />
 
-		<exec executable="aws" outputproperty="bucket.create.output">
-			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${aws.bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
-		</exec>
+		<get-testcase-property property.name="aws.store.enabled" />
+		<get-testcase-property property.name="ibm.store.enabled" />
+
+		<if>
+			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws" outputproperty="bucket.create.output">
+					<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${aws.bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
+				</exec>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws" outputproperty="bucket.create.output">
+					<arg line="s3 mb s3://lfr-qa-poshi-test-${aws.bucket.id} --region us-east-standard --endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud" />
+				</exec>
+			</then>
+		</if>
 
 		<echo>${bucket.create.output}</echo>
 
@@ -138,9 +246,26 @@
 	</target>
 
 	<target name="delete-s3-bucket">
-		<exec executable="aws">
-			<arg line="s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />
-		</exec>
+		<get-testcase-property property.name="aws.store.enabled" />
+		<get-testcase-property property.name="ibm.store.enabled" />
+
+		<if>
+			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws">
+					<arg line="s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />
+				</exec>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<then>
+				<exec executable="aws">
+					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />
+				</exec>
+			</then>
+		</if>
 
 		<delete-expired-buckets />
 	</target>

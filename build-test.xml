@@ -2902,6 +2902,17 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-ibm-s3-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config">
+bucketName=&quot;lfr-qa-poshi-test-${aws.bucket.id}&quot;
+accessKey=&quot;${ibm.s3.access.key.id}&quot;
+secretKey=&quot;${ibm.s3.secret.access.key}&quot;
+s3Endpoint=&quot;https://s3.us-east.cloud-object-storage.appdomain.cloud&quot;
+s3Region=&quot;us-east&quot;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
@@ -11421,6 +11432,26 @@ company.default.web.id=www.able.com</echo>
 			</then>
 		</if>
 
+		<if>
+			<or>
+				<equals arg1="ibm.store.enabled" arg2="" />
+				<not>
+					<isset property="ibm.store.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="ibm.store.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="liferay.online.properties" />
 		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
 
@@ -15156,6 +15187,23 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="ibm.store.enabled" />
+
+		<if>
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<then>
+				<tstamp>
+					<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
+				</tstamp>
+
+				<ant antfile="build-test-aws-s3.xml" target="configure-ibm-aws-cli" />
+
+				<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
+
+				<prepare-ibm-s3-configuration />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="liferay.faces" />
 
 		<if>
@@ -15704,6 +15752,15 @@ mail.send.blacklist=</echo>
 			<equals arg1="${azure.store.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-azure.xml" target="delete-azure-container" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="ibm.store.enabled" />
+
+		<if>
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
 			</then>
 		</if>
 

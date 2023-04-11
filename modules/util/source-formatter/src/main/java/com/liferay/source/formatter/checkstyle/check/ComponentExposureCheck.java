@@ -75,7 +75,6 @@ public class ComponentExposureCheck extends BaseCheck {
 		List<DetailAST> variableDefDetailASTList = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 
-		outerLoop:
 		for (DetailAST variableDefDetailAST : variableDefDetailASTList) {
 			String variableName = getName(variableDefDetailAST);
 
@@ -102,7 +101,7 @@ public class ComponentExposureCheck extends BaseCheck {
 						variableDefDetailAST, _MSG_EXPOSED_STATIC_COMPONENT,
 						variableName);
 
-					continue outerLoop;
+					break;
 				}
 			}
 		}

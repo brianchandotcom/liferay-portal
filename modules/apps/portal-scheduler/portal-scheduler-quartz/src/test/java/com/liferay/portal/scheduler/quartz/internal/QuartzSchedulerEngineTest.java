@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.uuid.PortalUUID;
@@ -105,7 +104,8 @@ public class QuartzSchedulerEngineTest {
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
 		ReflectionTestUtil.setFieldValue(
-			_quartzSchedulerEngine, "_props", _setUpPropsUtil());
+			_quartzSchedulerEngine, "_props",
+			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "false"));
 
 		_quartzSchedulerEngine.activate();
 
@@ -561,10 +561,6 @@ public class QuartzSchedulerEngineTest {
 		);
 
 		portalUUIDUtil.setPortalUUID(portalUUID);
-	}
-
-	private Props _setUpPropsUtil() {
-		return PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "false");
 	}
 
 	private static final int _DEFAULT_INTERVAL = 10;

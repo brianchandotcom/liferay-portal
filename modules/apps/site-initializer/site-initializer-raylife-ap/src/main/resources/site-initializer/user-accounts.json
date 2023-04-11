@@ -1,0 +1,66 @@
+[
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "RAYACCOUNT-001"
+			}
+		],
+		"alternateName": "scott.producer",
+		"birthDate": "1949-12-18T00:00:00.000+00:00",
+		"emailAddress": "scott.producer@mailinator.com",
+		"externalReferenceCode": "RAYUSER-001",
+		"familyName": "Producer",
+		"givenName": "Scott",
+		"jobTitle": "Raylife Agent",
+		"name": "Scott Producer",
+		"password": "portal4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "RAYACCOUNT-002"
+			}
+		],
+		"alternateName": "marie.producer",
+		"birthDate": "1933-04-01T00:00:00.000+00:00",
+		"emailAddress": "marie.producer@mailinator.com",
+		"externalReferenceCode": "RAYUSER-002",
+		"familyName": "Producer",
+		"givenName": "Marie",
+		"jobTitle": "Raylife Agent",
+		"name": "Marie Producer",
+		"password": "portal4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "RAYACCOUNT-003"
+			}
+		],
+		"alternateName": "ryan.underwriter",
+		"birthDate": "1937-06-29T00:00:00.000+00:00",
+		"emailAddress": "ryan.underwriter@mailinator.com",
+		"externalReferenceCode": "RAYUSER-003",
+		"familyName": "Underwriter",
+		"givenName": "Ryan",
+		"jobTitle": "Raylife Underwriter",
+		"name": "Ryan Underwriter",
+		"password": "portal4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "RAYACCOUNT-004"
+			}
+		],
+		"alternateName": "clark.insured",
+		"birthDate": "1976-05-31T00:00:00.000+00:00",
+		"emailAddress": "clark.insured@mailinator.com",
+		"externalReferenceCode": "RAYUSER-004",
+		"familyName": "Insured",
+		"givenName": "Clark",
+		"jobTitle": "Raylife Customer",
+		"name": "Clark Insured",
+		"password": "portal4all"
+	}
+]

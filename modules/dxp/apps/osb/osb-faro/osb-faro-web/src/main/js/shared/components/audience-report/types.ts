@@ -16,9 +16,13 @@ export type Empty = {
 };
 
 export type TData = {
-	anonymousUsersCount: number;
-	knownUsersCount: number;
-	nonsegmentedKnownUsersCount: number;
+	audienceReport: {
+		anonymousUsersCount: number;
+		knownUsersCount: number;
+		nonsegmentedKnownUsersCount: number;
+		segmentedAnonymousUsersCount: number;
+		segmentedKnownUsersCount: number;
+	};
 	segment: {
 		metrics: {
 			value: string;
@@ -26,8 +30,6 @@ export type TData = {
 		}[];
 		total: number;
 	};
-	segmentedAnonymousUsersCount: number;
-	segmentedKnownUsersCount: number;
 };
 
 export enum Name {

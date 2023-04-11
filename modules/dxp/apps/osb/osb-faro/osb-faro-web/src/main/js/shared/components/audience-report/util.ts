@@ -158,12 +158,14 @@ type FormattedData = {
 };
 
 export const formatData = ({
-	anonymousUsersCount,
-	knownUsersCount,
-	nonsegmentedKnownUsersCount,
-	segment: {metrics, total: totalOthers},
-	segmentedAnonymousUsersCount,
-	segmentedKnownUsersCount
+	audienceReport: {
+		anonymousUsersCount,
+		knownUsersCount,
+		nonsegmentedKnownUsersCount,
+		segmentedAnonymousUsersCount,
+		segmentedKnownUsersCount
+	},
+	segment: {metrics, total: totalOthers}
 }): FormattedData => {
 	const knownIndividualsData = [
 		{

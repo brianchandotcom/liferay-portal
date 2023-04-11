@@ -2,9 +2,14 @@ import {gql} from 'apollo-boost';
 
 export const AUDIENCE_REPORT_FRAGMENT = gql`
 	fragment audienceReportFragment on Metric {
-		anonymousUsersCount
-		knownUsersCount
-		nonsegmentedKnownUsersCount
+		audienceReport {
+			anonymousUsersCount
+			knownUsersCount
+			nonsegmentedKnownUsersCount
+			segmentedAnonymousUsersCount
+			segmentedKnownUsersCount
+		}
+
 		segment {
 			metrics {
 				value
@@ -12,8 +17,6 @@ export const AUDIENCE_REPORT_FRAGMENT = gql`
 			}
 			total
 		}
-		segmentedAnonymousUsersCount
-		segmentedKnownUsersCount
 	}
 `;
 

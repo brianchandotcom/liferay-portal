@@ -222,14 +222,6 @@ public class ObjectDefinitionNotificationTermEvaluator
 						"creator"));
 			}
 
-			if (termName.equals("[%" + prefix + "_CREATOR%]")) {
-				if (context.equals(Context.RECIPIENT)) {
-					return String.valueOf(termValues.get("creator"));
-				}
-
-				return user.getFullName(true, true);
-			}
-
 			return _getTermValue(
 				StringUtil.removeSubstring(
 					termName, "[%" + prefix + "_AUTHOR_"),

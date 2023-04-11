@@ -691,11 +691,11 @@ definition {
 				key_tableEntry = ${siteName},
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
 
-			Alert.viewSuccessMessage();
-
 			SelectFrame(value1 = "relative=top");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Alert.viewSuccessMessage();
 		}
 
 		Panel.expandPanel(panel = "Scope");

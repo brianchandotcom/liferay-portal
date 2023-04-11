@@ -283,7 +283,7 @@ export function PublishedAppsDashboardPage() {
 
 			const newAppNavigationItem = {
 				...currentAppNavigationItem,
-				items: apps,
+				items: apps.slice(0, 4),
 			};
 
 			setDashboardNavigationItems([

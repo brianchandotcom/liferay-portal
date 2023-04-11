@@ -36,6 +36,8 @@ definition {
 	@description = "LPS-118006: When the DXP is connected to AC after the user has clicked the Don't show me this again button, the Metrics option is shown again, and the sidebar panel with instructions to sync, and without the Dont show me this again button shows up when the user clicks on it"
 	@priority = 4
 	test MetricsInContentDashboardACEnabled {
+		property ci.retries.disabled = "true";
+
 		task ("Create a Web Content") {
 			HeadlessWebcontent.addBasicWebContent(
 				content = "Webcontent Content",

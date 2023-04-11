@@ -578,6 +578,8 @@ definition {
 	@description = "This is a test for LPS-159751. The page editor should be rendered after reset changes from site template."
 	@priority = 4
 	test EditContentPageAfterResetChangesFromSiteTemplate {
+		property ci.retries.disabled = "true";
+
 		task ("Given a page creator has a site based on a site template") {
 			task ("Add a site template") {
 				JSONSiteTemplate.addSiteTemplate(

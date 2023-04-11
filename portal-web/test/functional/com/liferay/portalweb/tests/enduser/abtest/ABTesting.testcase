@@ -1450,6 +1450,8 @@ definition {
 	@description = "LPS-97195: Validate if a message will appear asking if the user wants to delete a variant for A/B Test and he can delete with success"
 	@priority = 4
 	test DeleteVariant {
+		property ci.retries.disabled = "true";
+
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
@@ -1500,6 +1502,8 @@ definition {
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
 	@priority = 4
 	test DeletExperienceWithDraftABTest {
+		property ci.retries.disabled = "true";
+
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
 
@@ -1779,6 +1783,8 @@ definition {
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, a modal is opened requiring some initial fields information"
 	@priority = 3
 	test EditRequiredInfo {
+		property ci.retries.disabled = "true";
+
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
@@ -2255,6 +2261,8 @@ definition {
 	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
 	@priority = 3
 	test NotificationLinkToContentPage {
+		property ci.retries.disabled = "true";
+
 		task ("Create user and sync contact with AC") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -2536,6 +2544,8 @@ definition {
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
 	@priority = 3
 	test RenameSegmentABTestDraft {
+		property ci.retries.disabled = "true";
+
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 

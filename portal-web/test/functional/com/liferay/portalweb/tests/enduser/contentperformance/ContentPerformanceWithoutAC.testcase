@@ -239,6 +239,8 @@ definition {
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"
 	@priority = 3
 	test NotSyncedPanel {
+		property ci.retries.disabled = "true";
+
 		task ("Launch AC and get Token") {
 			ACUtils.launchAC();
 

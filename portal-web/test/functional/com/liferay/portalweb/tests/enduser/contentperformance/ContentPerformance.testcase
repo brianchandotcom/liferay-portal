@@ -1009,6 +1009,7 @@ definition {
 	@description = "LPS-113835: When the user with edit permissions and no permissions to edit the page, the Metrics button is shown"
 	@priority = 4
 	test MetricsWithEditPermissionsNotEditPage {
+		property ci.retries.disabled = "true";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Create a Web Content") {
@@ -1183,6 +1184,7 @@ definition {
 	@description = "LPS-113835: When the user has no permissions to edit the content of and has permission to edit the display page, the Metrics button is shown"
 	@priority = 4
 	test MetricsWithoutEditPermissionsYesEditPage {
+		property ci.retries.disabled = "true";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Create a Web Content") {

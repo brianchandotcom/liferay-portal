@@ -14,17 +14,12 @@
 
 package com.liferay.portal.upgrade.internal.registry;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,25 +41,21 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		return _releaseCreationUpgradeSteps;
 	}
 
-	public List<UpgradeInfo> getUpgradeInfos() throws SQLException {
-		try (Connection connection = DataAccess.getConnection()) {
-			if (_initialization &&
-				PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
-
-				if (_upgradeInfos.isEmpty()) {
-					return Arrays.asList(
-						new UpgradeInfo(
-							"0.0.0", "1.0.0", _buildNumber,
-							new DummyUpgradeStep()));
-				}
-
-				return ListUtil.concat(
-					Arrays.asList(
-						new UpgradeInfo(
-							"0.0.0", _getFinalSchemaVersion(_upgradeInfos),
-							_buildNumber, new DummyUpgradeStep())),
-					_upgradeInfos);
+	public List<UpgradeInfo> getUpgradeInfos(boolean portalUpgraded) {
+		if (_initialization && portalUpgraded) {
+			if (_upgradeInfos.isEmpty()) {
+				return Arrays.asList(
+					new UpgradeInfo(
+						"0.0.0", "1.0.0", _buildNumber,
+						new DummyUpgradeStep()));
 			}
+
+			return ListUtil.concat(
+				Arrays.asList(
+					new UpgradeInfo(
+						"0.0.0", _getFinalSchemaVersion(_upgradeInfos),
+						_buildNumber, new DummyUpgradeStep())),
+				_upgradeInfos);
 		}
 
 		return _upgradeInfos;

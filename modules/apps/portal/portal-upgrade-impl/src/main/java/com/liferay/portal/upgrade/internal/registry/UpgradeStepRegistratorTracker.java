@@ -19,6 +19,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -34,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.OutputStream;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
@@ -62,6 +65,14 @@ public class UpgradeStepRegistratorTracker {
 		_bundleContext = bundleContext;
 		_releaseLocalService = releaseLocalService;
 		_upgradeExecutor = upgradeExecutor;
+
+		try (Connection connection = DataAccess.getConnection()) {
+			_portalUpgraded = PortalUpgradeProcess.isInLatestSchemaVersion(
+				connection);
+		}
+		catch (SQLException sqlException) {
+			throw new RuntimeException(sqlException);
+		}
 	}
 
 	public void close() {
@@ -116,6 +127,7 @@ public class UpgradeStepRegistratorTracker {
 		UpgradeStepRegistratorTracker.class);
 
 	private final BundleContext _bundleContext;
+	private final boolean _portalUpgraded;
 	private final ReleaseLocalService _releaseLocalService;
 	private final Map<String, List<UpgradeStep>> _releaseUpgradeStepsMap =
 		new HashMap<>();
@@ -173,14 +185,8 @@ public class UpgradeStepRegistratorTracker {
 					bundleSymbolicName, releaseUpgradeSteps);
 			}
 
-			List<UpgradeInfo> upgradeInfos = null;
-
-			try {
-				upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
-			}
-			catch (SQLException sqlException) {
-				throw new RuntimeException(sqlException);
-			}
+			List<UpgradeInfo> upgradeInfos =
+				upgradeStepRegistry.getUpgradeInfos(_portalUpgraded);
 
 			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
 				(_releaseLocalService.fetchRelease(bundleSymbolicName) ==

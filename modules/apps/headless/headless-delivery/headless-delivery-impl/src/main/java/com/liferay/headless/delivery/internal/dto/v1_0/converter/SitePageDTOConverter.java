@@ -97,6 +97,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				friendlyUrlPath_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					layout.getFriendlyURLMap());
+				id = layout.getPlid();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						Layout.class.getName(), layout.getPlid()),

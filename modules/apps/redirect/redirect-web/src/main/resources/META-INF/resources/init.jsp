@@ -42,6 +42,7 @@ page import="com.liferay.portal.kernel.util.URLCodec" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.redirect.exception.CircularRedirectEntryException" %><%@
 page import="com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException" %><%@
+page import="com.liferay.redirect.exception.InvalidRedirectionPatternException" %><%@
 page import="com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException" %><%@
 page import="com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException" %><%@
 page import="com.liferay.redirect.web.internal.display.context.EditRedirectEntryDisplayContext" %><%@

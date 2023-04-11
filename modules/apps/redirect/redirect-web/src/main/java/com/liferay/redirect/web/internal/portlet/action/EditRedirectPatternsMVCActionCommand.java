@@ -16,6 +16,8 @@ package com.liferay.redirect.web.internal.portlet.action;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.constants.RedirectConstants;
+import com.liferay.redirect.exception.InvalidRedirectionPatternException;
 import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -64,11 +68,10 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(),
 				_getRedirectPatternEntries(actionRequest));
 		}
-		catch (ConfigurationModelListenerException
-					configurationModelListenerException) {
+		catch (ConfigurationModelListenerException |
+			   InvalidRedirectionPatternException exception) {
 
-			SessionErrors.add(
-				actionRequest, configurationModelListenerException.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
 
@@ -78,7 +81,8 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private List<RedirectPatternEntry> _getRedirectPatternEntries(
-		ActionRequest actionRequest) {
+			ActionRequest actionRequest)
+		throws InvalidRedirectionPatternException {
 
 		List<RedirectPatternEntry> redirectPatternEntries = new ArrayList<>();
 
@@ -110,10 +114,19 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 			if ((patternString != null) && (destinationURL != null) &&
 				(userAgent != null)) {
 
-				redirectPatternEntries.add(
-					new RedirectPatternEntry(
-						Pattern.compile(patternString), destinationURL,
-						userAgent));
+				try {
+					redirectPatternEntries.add(
+						new RedirectPatternEntry(
+							Pattern.compile(patternString), destinationURL,
+							userAgent));
+				}
+				catch (PatternSyntaxException patternSyntaxException) {
+					_log.error(patternSyntaxException);
+
+					throw new InvalidRedirectionPatternException(
+						patternString + " must contain regular expression",
+						patternSyntaxException);
+				}
 			}
 		}
 
@@ -133,6 +146,9 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditRedirectPatternsMVCActionCommand.class);
 
 	@Reference
 	private RedirectPatternConfigurationProvider

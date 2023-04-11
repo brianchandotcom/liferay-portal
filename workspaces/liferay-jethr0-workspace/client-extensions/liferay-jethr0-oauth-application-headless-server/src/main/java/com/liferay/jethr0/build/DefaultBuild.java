@@ -14,8 +14,6 @@
 
 package com.liferay.jethr0.build;
 
-import com.liferay.jethr0.project.Project;
-
 import org.json.JSONObject;
 
 /**
@@ -23,8 +21,8 @@ import org.json.JSONObject;
  */
 public class DefaultBuild extends BaseBuild {
 
-	protected DefaultBuild(Project project, JSONObject jsonObject) {
-		super(project, jsonObject);
+	protected DefaultBuild(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 }

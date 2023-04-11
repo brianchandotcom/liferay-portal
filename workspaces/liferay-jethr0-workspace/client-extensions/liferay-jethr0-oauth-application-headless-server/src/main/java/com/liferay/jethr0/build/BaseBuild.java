@@ -287,14 +287,17 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
+	public void setProject(Project project) {
+		_project = project;
+	}
+
+	@Override
 	public void setState(State state) {
 		_state = state;
 	}
 
-	protected BaseBuild(Project project, JSONObject jsonObject) {
+	protected BaseBuild(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_project = project;
 
 		_buildName = jsonObject.getString("buildName");
 		_jobName = jsonObject.getString("jobName");
@@ -333,7 +336,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private final List<Environment> _environments = new ArrayList<>();
 	private String _jobName;
 	private final List<Build> _parentBuilds = new ArrayList<>();
-	private final Project _project;
+	private Project _project;
 	private State _state;
 	private final List<Task> _tasks = new ArrayList<>();
 

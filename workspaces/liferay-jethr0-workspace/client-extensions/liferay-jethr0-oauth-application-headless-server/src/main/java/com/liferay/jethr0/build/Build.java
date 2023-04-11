@@ -98,6 +98,8 @@ public interface Build extends Entity {
 
 	public void setJobName(String jobName);
 
+	public void setProject(Project project);
+
 	public void setState(State state);
 
 	public enum State {

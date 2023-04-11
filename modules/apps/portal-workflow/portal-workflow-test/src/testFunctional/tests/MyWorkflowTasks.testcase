@@ -339,6 +339,8 @@ definition {
 
 	@priority = 4
 	test ApproveResubmitTaskByActions {
+		property test.name.skip.portal.instance = "MyWorkflowTasks#ApproveResubmitTaskByActions";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -435,6 +437,8 @@ definition {
 	@description = "Verify that the user can assign a task to current user in the Assigned to My Roles tab"
 	@priority = 5
 	test CanAssignTaskToCurrentUser {
+		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToCurrentUser";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

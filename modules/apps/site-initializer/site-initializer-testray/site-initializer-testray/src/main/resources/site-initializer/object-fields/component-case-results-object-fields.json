@@ -22,9 +22,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"BLOCKED"
-								]
+								"in": ["BLOCKED"]
 							}
 						}
 					]
@@ -60,9 +58,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"DIDNOTRUN"
-								]
+								"in": ["DIDNOTRUN"]
 							}
 						}
 					]
@@ -98,9 +94,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"FAILED"
-								]
+								"in": ["FAILED"]
 							}
 						}
 					]
@@ -136,9 +130,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"INPROGRESS"
-								]
+								"in": ["INPROGRESS"]
 							}
 						}
 					]
@@ -174,10 +166,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"INPROGRESS",
-									"UNTESTED"
-								]
+								"in": ["INPROGRESS", "UNTESTED"]
 							}
 						}
 					]
@@ -213,9 +202,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"PASSED"
-								]
+								"in": ["PASSED"]
 							}
 						}
 					]
@@ -251,9 +238,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"TESTFIX"
-								]
+								"in": ["TESTFIX"]
 							}
 						}
 					]
@@ -280,7 +265,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
+					"value": "componentToCaseResult"
 				},
 				{
 					"name": "filters",
@@ -289,9 +274,7 @@
 							"filterBy": "dueStatus",
 							"filterType": "includes",
 							"json": {
-								"in": [
-									"UNTESTED"
-								]
+								"in": ["UNTESTED"]
 							}
 						}
 					]

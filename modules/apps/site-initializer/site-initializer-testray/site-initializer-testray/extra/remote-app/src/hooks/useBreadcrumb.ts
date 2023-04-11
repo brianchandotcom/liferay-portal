@@ -127,7 +127,7 @@ const defaultEntities: Entity[] = [
 			`/projects?filter=${SearchBuilder.contains(
 				'name',
 				search
-			)}&fields=id,name%pageSize=100`,
+			)}&fields=id,name&pageSize=100`,
 		name: i18n.translate('project'),
 	},
 	{

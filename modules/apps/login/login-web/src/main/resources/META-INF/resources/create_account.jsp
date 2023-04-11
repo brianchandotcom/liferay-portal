@@ -229,7 +229,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 						>
 							<aui:input label="password" name="password1" required="<%= true %>" size="30" type="password" value="" />
 
-							<aui:input label="enter-again" name="password2" required="<%= true %>" size="30" type="password" value="">
+							<aui:input label="re-enter-password" name="password2" required="<%= true %>" size="30" type="password" value="">
 								<aui:validator name="equalTo">
 									'#<portlet:namespace />password1'
 								</aui:validator>

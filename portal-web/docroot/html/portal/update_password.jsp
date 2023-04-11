@@ -187,7 +187,7 @@ if (Validator.isNull(titlePage)) {
 					<aui:fieldset>
 						<aui:input class="lfr-input-text-container" label="password" name="password1" required="<%= true %>" showRequiredLabel="<%= false %>" type="password" />
 
-						<aui:input class="lfr-input-text-container" label="enter-again" name="password2" required="<%= true %>" showRequiredLabel="<%= false %>" type="password">
+						<aui:input class="lfr-input-text-container" label="re-enter-password" name="password2" required="<%= true %>" showRequiredLabel="<%= false %>" type="password">
 							<aui:validator name="equalTo">
 								'#<portlet:namespace />password1'
 							</aui:validator>

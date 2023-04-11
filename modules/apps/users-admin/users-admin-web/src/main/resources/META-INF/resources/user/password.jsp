@@ -147,7 +147,7 @@ else {
 
 	<aui:input autocomplete="new-password" label="new-password" name="password1" required="<%= true %>" size="30" type="password" />
 
-	<aui:input autocomplete="new-password" label="enter-again" name="password2" required="<%= true %>" size="30" type="password">
+	<aui:input autocomplete="new-password" label="re-enter-password" name="password2" required="<%= true %>" size="30" type="password">
 		<aui:validator name="equalTo">
 			'#<portlet:namespace />password1'
 		</aui:validator>

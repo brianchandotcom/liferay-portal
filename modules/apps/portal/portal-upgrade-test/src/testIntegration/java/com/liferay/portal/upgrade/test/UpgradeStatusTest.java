@@ -89,7 +89,7 @@ public class UpgradeStatusTest {
 	}
 
 	@Test
-	public void testErrorUpgrade() throws Exception {
+	public void testFailure() throws Exception {
 		StartupHelperUtil.setUpgrading(true);
 
 		ErrorUpgradeProcess upgradeProcess = new ErrorUpgradeProcess();
@@ -104,7 +104,7 @@ public class UpgradeStatusTest {
 	}
 
 	@Test
-	public void testFailureUpgradesPending() {
+	public void testFailureByPendingUpgrade() {
 		List<Release> releases = _releaseLocalService.getReleases(0, 1);
 
 		Release release = releases.get(0);
@@ -133,27 +133,34 @@ public class UpgradeStatusTest {
 
 	@Test
 	public void testMajorUpgrade() {
-		_testUpgradeType("major");
+		_testUpgrade("major");
 
 		Assert.assertEquals("major", _upgradeStatus.getType());
 	}
 
 	@Test
 	public void testMicroUpgrade() {
-		_testUpgradeType("micro");
+		_testUpgrade("micro");
 
 		Assert.assertEquals("micro", _upgradeStatus.getType());
 	}
 
 	@Test
 	public void testMinorUpgrade() {
-		_testUpgradeType("minor");
+		_testUpgrade("minor");
 
 		Assert.assertEquals("minor", _upgradeStatus.getType());
 	}
 
 	@Test
-	public void testNoUpgrades() {
+	public void testQualifierUpgrade() {
+		_testUpgrade("qualifier");
+
+		Assert.assertEquals("micro", _upgradeStatus.getType());
+	}
+
+	@Test
+	public void testSuccessByNoUpgrades() {
 		StartupHelperUtil.setUpgrading(true);
 
 		StartupHelperUtil.setUpgrading(false);
@@ -164,14 +171,7 @@ public class UpgradeStatusTest {
 	}
 
 	@Test
-	public void testQualifierUpgrade() {
-		_testUpgradeType("qualifier");
-
-		Assert.assertEquals("micro", _upgradeStatus.getType());
-	}
-
-	@Test
-	public void testWarningUpgrade() throws Exception {
+	public void testWarning() throws Exception {
 		StartupHelperUtil.setUpgrading(true);
 
 		WarningUpgradeProcess upgradeProcess = new WarningUpgradeProcess();
@@ -185,7 +185,7 @@ public class UpgradeStatusTest {
 		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}
 
-	private void _testUpgradeType(String type) {
+	private void _testUpgrade(String type) {
 		List<Release> releases = _releaseLocalService.getReleases(0, 4);
 
 		Release majorRelease = releases.get(0);

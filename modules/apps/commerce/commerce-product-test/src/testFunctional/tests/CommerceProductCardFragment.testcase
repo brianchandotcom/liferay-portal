@@ -293,6 +293,95 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11195. Product Card fragments renders a Diagram card for Diagram Type products"
+	@priority = 4
+	test CanProductCardFragmentShowDiagramCard {
+		property portal.acceptance = "false";
+		property test.run.environment = "EE";
+
+		task ("Given a Diagram type product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Diagram T-Shirt",
+				productType = "diagram",
+				shortDescription = "This is a short description.");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			CommerceJSONProductsAPI._addDiagramPin(
+				diagram = "Diagram T-Shirt",
+				linkedSKU = "MIN55859",
+				pinType = "Linked to a SKU",
+				position = 1,
+				positionX = 40,
+				positionY = 40,
+				quantity = 1);
+
+			CommerceJSONProductsAPI._addDiagramPin(
+				diagram = "Diagram T-Shirt",
+				linkedSKU = "MIN55861",
+				pinType = "Linked to a SKU",
+				position = 2,
+				positionX = 20,
+				positionY = 25,
+				quantity = 1);
+		}
+
+		task ("And a Product Card fragment is deployed on the DPT") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Product DPT");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Product Card",
+				index = 1);
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Product DPT");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer navigates to Minium -> Diagram T-Shirt") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/diagram-t-shirt");
+		}
+
+		task ("Then Diagram Card fields are shown") {
+			FrontStore.viewProductCard(
+				addToCart = "view",
+				description = "This is a short description.",
+				image = "true",
+				productName = "Diagram T-Shirt");
+		}
+	}
+
 	@description = "COMMERCE-11197. Can deploy Product Card fragment on a DPT and verify that product card is successfully shown"
 	@priority = 5
 	test CanUseProductCardFragment {

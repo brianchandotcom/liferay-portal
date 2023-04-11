@@ -28,8 +28,15 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 
 String dateString = dateFormat.format(new Date())
 
-File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
+File extraDir = new File(projectDir, "extra")
 File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/group")
+
+List<File> extraRemoteAppDirs = extraDir.listFiles(
+	{
+		File file, String fileName ->
+
+		file.isDirectory() && fileName.endsWith("remote-app")
+	} as FilenameFilter)
 
 String webContextPath = ""
 
@@ -75,27 +82,31 @@ processResources {
 	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp") || resolvedConfiguration.hasError()) {
 		dependsOn buildExtraRemoteApp
 
-		into("site-initializer/documents/company/remote-app/" + webContextPath) {
-			File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")
-			File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
+		extraRemoteAppDirs.each {
+			File extraRemoteAppDir ->
 
-			if (!viteConfigJSFile.exists() && !viteConfigTSFile.exists()) {
-				from(new File(projectDir, "extra/remote-app/build/static/css")) {
-					include "*.css"
+			into("site-initializer/documents/company/" + extraRemoteAppDir.name + "/" + webContextPath) {
+				File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")
+				File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
+
+				if (!viteConfigJSFile.exists() && !viteConfigTSFile.exists()) {
+					from(new File(projectDir, "extra/" + extraRemoteAppDir.name + "/build/static/css")) {
+						include "*.css"
+					}
+
+					from(new File(projectDir, "extra/" + extraRemoteAppDir.name + "/build/static/js")) {
+						include "*.js"
+					}
+				}
+				else {
+					from(new File(projectDir, "extra/" + extraRemoteAppDir.name + "/build/static")) {
+						include "*.css"
+						include "*.js"
+					}
 				}
 
-				from(new File(projectDir, "extra/remote-app/build/static/js")) {
-					include "*.js"
-				}
+				rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 			}
-			else {
-				from(new File(projectDir, "extra/remote-app/build/static")) {
-					include "*.css"
-					include "*.js"
-				}
-			}
-
-			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 		}
 
 		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
@@ -114,7 +125,7 @@ processResources {
 	else {
 		into("site-initializer/documents/company") {
 			from zipTree(configurations.extraRemoteApp.singleFile)
-			include "remote-app/**"
+			include "*remote-app/**"
 		}
 
 		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
@@ -172,27 +183,31 @@ zipExtraRemoteApp {
 		archiveName "extra-remote-app.zip"
 		destinationDir new File(buildDir, "dist")
 
-		into("remote-app/" + webContextPath) {
-			File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")
-			File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
+		extraRemoteAppDirs.each {
+			File extraRemoteAppDir ->
 
-			if (!viteConfigJSFile.exists() && !viteConfigTSFile.exists()) {
-				from(new File(projectDir, "extra/remote-app/build/static/css")) {
-					include "*.css"
+			into(extraRemoteAppDir.name + "/" + webContextPath) {
+				File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")
+				File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
+
+				if (!viteConfigJSFile.exists() && !viteConfigTSFile.exists()) {
+					from(new File(projectDir, "extra/" + extraRemoteAppDir.name + "/build/static/css")) {
+						include "*.css"
+					}
+
+					from(new File(projectDir, "extra/" + extraRemoteAppDir.name + "/build/static/js")) {
+						include "*.js"
+					}
+				}
+				else {
+					from(new File(projectDir, "extra/" + extraRemoteAppDir.name + "/build/static")) {
+						include "*.css"
+						include "*.js"
+					}
 				}
 
-				from(new File(projectDir, "extra/remote-app/build/static/js")) {
-					include "*.js"
-				}
+				rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 			}
-			else {
-				from(new File(projectDir, "extra/remote-app/build/static")) {
-					include "*.css"
-					include "*.js"
-				}
-			}
-
-			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 		}
 
 		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
@@ -205,7 +220,7 @@ zipExtraRemoteApp {
 	}
 }
 
-_createExtraTasks([extraRemoteAppDir, fragmentsSrcDir])
+_createExtraTasks(extraRemoteAppDirs + [fragmentsSrcDir])
 
 private String _camelCase(String dirName) {
 	String suffix = dirName.replaceAll(/\-(\w)/) {

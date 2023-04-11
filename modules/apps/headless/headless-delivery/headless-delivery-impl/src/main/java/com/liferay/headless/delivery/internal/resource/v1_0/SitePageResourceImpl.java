@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -204,6 +205,17 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					_isEmbeddedPageDefinition(),
 					_layoutLocalService.getLayout(plid), null);
 			});
+	}
+
+	@Override
+	public SitePage postSiteSitePage(Long siteId, SitePage sitePage)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178052")) {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		return super.postSiteSitePage(siteId, sitePage);
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {

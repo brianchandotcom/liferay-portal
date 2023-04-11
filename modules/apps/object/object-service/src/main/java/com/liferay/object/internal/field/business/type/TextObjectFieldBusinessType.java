@@ -16,6 +16,7 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
@@ -54,7 +55,10 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		return SetUtil.fromArray("maxLength", "showCounter");
+		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_MAX_LENGTH,
+			ObjectFieldSettingConstants.NAME_SHOW_COUNTER,
+			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
 	}
 
 	@Override

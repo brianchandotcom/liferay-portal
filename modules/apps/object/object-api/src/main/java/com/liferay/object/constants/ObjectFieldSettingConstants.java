@@ -25,13 +25,19 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_FILTERS = "filters";
 
+	public static final String NAME_MAX_LENGTH = "maxLength";
+
 	public static final String NAME_OBJECT_DEFINITION_1_SHORT_NAME =
 		"objectDefinition1ShortName";
 
 	public static final String NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME =
 		"objectRelationshipERCObjectFieldName";
 
+	public static final String NAME_SHOW_COUNTER = "showCounter";
+
 	public static final String NAME_STATE_FLOW = "stateFlow";
+
+	public static final String NAME_UNIQUE_VALUES = "uniqueValues";
 
 	public static final String VALUE_EXPRESSION_BUILDER = "expressionBuilder";
 

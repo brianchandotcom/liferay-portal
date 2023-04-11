@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
@@ -4139,6 +4140,33 @@ public class Mutation {
 					_filterBiFunction.apply(sitePageResource, filterString),
 					_sortsBiFunction.apply(sitePageResource, sortsString),
 					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Adds a new site page")
+	public SitePage createSiteSitePage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("sitePage") SitePage sitePage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource -> sitePageResource.postSiteSitePage(
+				Long.valueOf(siteKey), sitePage));
+	}
+
+	@GraphQLField
+	public Response createSiteSitePageBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource -> sitePageResource.postSiteSitePageBatch(
+				Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField

@@ -1271,6 +1271,15 @@ public class ServletDataImpl implements ServletData {
 							SitePageResourceImpl.class,
 							"postSiteSitePagesPageExportBatch"));
 					put(
+						"mutation#createSiteSitePage",
+						new ObjectValuePair<>(
+							SitePageResourceImpl.class, "postSiteSitePage"));
+					put(
+						"mutation#createSiteSitePageBatch",
+						new ObjectValuePair<>(
+							SitePageResourceImpl.class,
+							"postSiteSitePageBatch"));
+					put(
 						"mutation#createAssetLibraryStructuredContentsPageExportBatch",
 						new ObjectValuePair<>(
 							StructuredContentResourceImpl.class,

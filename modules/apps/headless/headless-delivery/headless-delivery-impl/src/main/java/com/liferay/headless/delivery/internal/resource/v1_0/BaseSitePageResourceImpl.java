@@ -245,6 +245,93 @@ public abstract class BaseSitePageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages' -d $'{"customFields": ___, "datePublished": ___, "experience": ___, "friendlyUrlPath": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "pageDefinition": ___, "pageSettings": ___, "pageType": ___, "renderedPage": ___, "taxonomyCategoryIds": ___, "title": ___, "title_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Adds a new site page"
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SitePage")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/sites/{siteId}/site-pages")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public SitePage postSiteSitePage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			SitePage sitePage)
+		throws Exception {
+
+		return new SitePage();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SitePage")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/sites/{siteId}/site-pages/batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response postSiteSitePageBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				SitePage.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyUrlPath}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
@@ -538,8 +625,37 @@ public abstract class BaseSitePageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeConsumer<SitePage, Exception> sitePageUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			if (parameters.containsKey("siteId")) {
+				sitePageUnsafeConsumer = sitePage -> postSiteSitePage(
+					(Long)parameters.get("siteId"), sitePage);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [siteId]");
+			}
+		}
+
+		if (sitePageUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for SitePage");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sitePages, sitePageUnsafeConsumer);
+		}
+		else {
+			for (SitePage sitePage : sitePages) {
+				sitePageUnsafeConsumer.accept(sitePage);
+			}
+		}
 	}
 
 	@Override
@@ -553,7 +669,7 @@ public abstract class BaseSitePageResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

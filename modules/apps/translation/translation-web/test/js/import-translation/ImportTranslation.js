@@ -165,7 +165,8 @@ describe('ImportTranslation', () => {
 		});
 
 		const alert = getByRole('alert');
-		expect(within(alert).getByText(errorMessage)).toBeInTheDocument();
-		expect(alert).toHaveClass('alert-danger');
+		const container = alert.parentElement;
+		expect(within(container).getByText(errorMessage)).toBeInTheDocument();
+		expect(container).toHaveClass('alert-danger');
 	});
 });

@@ -379,13 +379,13 @@ exports[`SegmentEdit renders with given values 1`] = `
     >
       <div
         class="mx-0 alert alert-dismissible alert-fluid alert-warning"
-        role="alert"
       >
         <div
           class="container"
         >
           <div
             class="alert-autofit-row autofit-row"
+            role="alert"
           >
             <div
               class="autofit-col"

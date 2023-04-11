@@ -165,10 +165,10 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
   </div>
   <div
     class="bg-transparent border-0 mt-1 p-1 alert alert-danger"
-    role="alert"
   >
     <div
       class="alert-autofit-row autofit-row"
+      role="alert"
     >
       <div
         class="autofit-col"

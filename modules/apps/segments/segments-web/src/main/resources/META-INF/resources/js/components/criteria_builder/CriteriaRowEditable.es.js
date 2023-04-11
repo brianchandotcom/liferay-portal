@@ -30,7 +30,7 @@ import DateTimeInput from '../inputs/DateTimeInput';
 import DecimalInput from '../inputs/DecimalInput.es';
 import IntegerInput from '../inputs/IntegerInput';
 import SelectEntityInput from '../inputs/SelectEntityInput.es';
-import StringInput from '../inputs/StringInput.es';
+import StringInput from '../inputs/StringInput';
 
 class CriteriaRowEditable extends Component {
 	static propTypes = {

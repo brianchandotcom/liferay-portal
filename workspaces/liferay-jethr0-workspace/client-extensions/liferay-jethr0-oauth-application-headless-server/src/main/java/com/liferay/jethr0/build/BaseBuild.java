@@ -23,11 +23,7 @@ import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.json.JSONObject;
@@ -39,64 +35,42 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public void addBuildParameter(BuildParameter buildParameter) {
-		addBuildParameters(Arrays.asList(buildParameter));
+		addRelatedEntity(buildParameter);
 	}
 
 	@Override
 	public void addBuildParameters(List<BuildParameter> buildParameters) {
-		buildParameters.removeAll(Collections.singleton(null));
-
-		for (BuildParameter buildParameter : buildParameters) {
-			_buildParameters.put(buildParameter.getName(), buildParameter);
-		}
+		addRelatedEntities(buildParameters);
 	}
 
 	@Override
 	public void addBuildRun(BuildRun buildRun) {
-		addBuildRuns(Arrays.asList(buildRun));
+		addRelatedEntity(buildRun);
 	}
 
 	@Override
 	public void addBuildRuns(List<BuildRun> buildRuns) {
-		for (BuildRun buildRun : buildRuns) {
-			if (_buildRuns.contains(buildRun)) {
-				continue;
-			}
-
-			_buildRuns.add(buildRun);
-		}
+		addRelatedEntities(buildRuns);
 	}
 
 	@Override
 	public void addEnvironment(Environment environment) {
-		addEnvironments(Arrays.asList(environment));
+		addRelatedEntity(environment);
 	}
 
 	@Override
 	public void addEnvironments(List<Environment> environments) {
-		for (Environment environment : environments) {
-			if (_environments.contains(environment)) {
-				continue;
-			}
-
-			_environments.add(environment);
-		}
+		addRelatedEntities(environments);
 	}
 
 	@Override
 	public void addTask(Task task) {
-		addTasks(Arrays.asList(task));
+		addRelatedEntity(task);
 	}
 
 	@Override
 	public void addTasks(List<Task> tasks) {
-		for (Task task : tasks) {
-			if (_tasks.contains(task)) {
-				continue;
-			}
-
-			_tasks.add(task);
-		}
+		addRelatedEntities(tasks);
 	}
 
 	@Override
@@ -106,17 +80,23 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public BuildParameter getBuildParameter(String name) {
-		return _buildParameters.get(name);
+		for (BuildParameter buildParameter : getBuildParameters()) {
+			if (Objects.equals(name, buildParameter.getName())) {
+				return buildParameter;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	public List<BuildParameter> getBuildParameters() {
-		return new ArrayList<>(_buildParameters.values());
+		return getRelatedEntities(BuildParameter.class);
 	}
 
 	@Override
 	public List<BuildRun> getBuildRuns() {
-		return _buildRuns;
+		return getRelatedEntities(BuildRun.class);
 	}
 
 	@Override
@@ -126,7 +106,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public List<Environment> getEnvironments() {
-		return _environments;
+		return getRelatedEntities(Environment.class);
 	}
 
 	@Override
@@ -201,7 +181,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public List<Task> getTasks() {
-		return _tasks;
+		return getRelatedEntities(Task.class);
 	}
 
 	@Override
@@ -220,44 +200,42 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public void removeBuildParameter(BuildParameter buildParameter) {
-		_buildParameters.remove(buildParameter.getName());
+		removeRelatedEntity(buildParameter);
 	}
 
 	@Override
 	public void removeBuildParameters(List<BuildParameter> buildParameters) {
-		for (BuildParameter buildParameter : buildParameters) {
-			removeBuildParameter(buildParameter);
-		}
+		removeRelatedEntities(buildParameters);
 	}
 
 	@Override
 	public void removeBuildRun(BuildRun buildRun) {
-		_buildRuns.remove(buildRun);
+		removeRelatedEntity(buildRun);
 	}
 
 	@Override
 	public void removeBuildRuns(List<BuildRun> buildRuns) {
-		_buildRuns.removeAll(buildRuns);
+		removeRelatedEntities(buildRuns);
 	}
 
 	@Override
 	public void removeEnvironment(Environment environment) {
-		_environments.remove(environment);
+		removeRelatedEntity(environment);
 	}
 
 	@Override
 	public void removeEnvironments(List<Environment> environments) {
-		_environments.removeAll(environments);
+		removeRelatedEntities(environments);
 	}
 
 	@Override
 	public void removeTask(Task task) {
-		_tasks.remove(task);
+		removeRelatedEntity(task);
 	}
 
 	@Override
 	public void removeTasks(List<Task> tasks) {
-		_tasks.removeAll(tasks);
+		removeRelatedEntities(tasks);
 	}
 
 	@Override
@@ -329,15 +307,10 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private static final int _DEFAULT_MIN_SLAVE_RAM = 12;
 
 	private final String _buildName;
-	private final Map<String, BuildParameter> _buildParameters =
-		new HashMap<>();
-	private final List<BuildRun> _buildRuns = new ArrayList<>();
 	private final List<Build> _childBuilds = new ArrayList<>();
-	private final List<Environment> _environments = new ArrayList<>();
 	private String _jobName;
 	private final List<Build> _parentBuilds = new ArrayList<>();
 	private Project _project;
 	private State _state;
-	private final List<Task> _tasks = new ArrayList<>();
 
 }

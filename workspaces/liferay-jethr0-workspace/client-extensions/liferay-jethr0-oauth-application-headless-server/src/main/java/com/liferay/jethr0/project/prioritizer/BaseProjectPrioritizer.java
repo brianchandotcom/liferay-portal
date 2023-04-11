@@ -17,7 +17,6 @@ package com.liferay.jethr0.project.prioritizer;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -30,11 +29,9 @@ public abstract class BaseProjectPrioritizer
 
 	@Override
 	public void addProjectComparator(ProjectComparator projectComparator) {
-		if (_projectComparators.contains(projectComparator)) {
-			return;
-		}
+		addRelatedEntity(projectComparator);
 
-		_projectComparators.add(projectComparator);
+		projectComparator.setProjectPrioritizer(this);
 	}
 
 	@Override
@@ -62,12 +59,12 @@ public abstract class BaseProjectPrioritizer
 
 	@Override
 	public List<ProjectComparator> getProjectComparators() {
-		return _projectComparators;
+		return getRelatedEntities(ProjectComparator.class);
 	}
 
 	@Override
 	public void removeProjectComparator(ProjectComparator projectComparator) {
-		_projectComparators.remove(projectComparator);
+		removeRelatedEntity(projectComparator);
 	}
 
 	@Override
@@ -82,7 +79,5 @@ public abstract class BaseProjectPrioritizer
 	}
 
 	private String _name;
-	private final List<ProjectComparator> _projectComparators =
-		new ArrayList<>();
 
 }

@@ -20,14 +20,12 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
-import com.liferay.wiki.web.internal.importer.WikiImporterRegistry;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -48,9 +46,6 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			renderRequest.setAttribute(
-				WikiWebKeys.WIKI_IMPORTER_REGISTRY, _wikiImporterRegistry);
-
-			renderRequest.setAttribute(
 				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 		}
 		catch (Exception exception) {
@@ -67,8 +62,5 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 
 		return "/wiki_admin/import_pages.jsp";
 	}
-
-	@Reference
-	private WikiImporterRegistry _wikiImporterRegistry;
 
 }

@@ -90,7 +90,6 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		progressTracker.start(actionRequest);
 
 		long nodeId = ParamUtil.getLong(uploadPortletRequest, "nodeId");
-		String importer = ParamUtil.getString(uploadPortletRequest, "importer");
 
 		InputStream[] inputStreams = new InputStream[_MAX_FILE_COUNT];
 
@@ -101,8 +100,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			_wikiNodeService.importPages(
-				nodeId, importer, inputStreams,
-				actionRequest.getParameterMap());
+				nodeId, inputStreams, actionRequest.getParameterMap());
 		}
 		finally {
 			try {

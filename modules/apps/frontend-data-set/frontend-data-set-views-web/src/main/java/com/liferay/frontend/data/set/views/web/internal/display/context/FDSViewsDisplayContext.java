@@ -15,16 +15,13 @@
 package com.liferay.frontend.data.set.views.web.internal.display.context;
 
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
-import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -36,7 +33,7 @@ public class FDSViewsDisplayContext {
 
 	public FDSViewsDisplayContext(
 		PortletRequest portletRequest,
-		ServiceTrackerList<FDSHeadlessResource> serviceTrackerList) {
+		ServiceTrackerList<String> serviceTrackerList) {
 
 		_portletRequest = portletRequest;
 		_serviceTrackerList = serviceTrackerList;
@@ -94,49 +91,21 @@ public class FDSViewsDisplayContext {
 		).buildString();
 	}
 
-	public JSONArray getHeadlessResourcesJSONArray() {
+	public JSONArray getRESTApplicationsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<FDSHeadlessResource> fdsHeadlessResources =
-			_serviceTrackerList.toList();
+		List<String> restApplications = _serviceTrackerList.toList();
 
-		fdsHeadlessResources.sort(
-			Comparator.comparing(FDSHeadlessResource::getBundleLabel));
+		Collections.sort(restApplications);
 
-		fdsHeadlessResources.sort(
-			Comparator.comparing(FDSHeadlessResource::getName));
-
-		for (FDSHeadlessResource fdsHeadlessResource : fdsHeadlessResources) {
-			jsonArray.put(
-				JSONUtil.put(
-					"bundleLabel", fdsHeadlessResource.getBundleLabel()
-				).put(
-					"entityClassName", fdsHeadlessResource.getEntityClassName()
-				).put(
-					"name", _getName(fdsHeadlessResource)
-				).put(
-					"version", fdsHeadlessResource.getVersion()
-				));
+		for (String restApplication : restApplications) {
+			jsonArray.put(restApplication);
 		}
 
 		return jsonArray;
 	}
 
-	private String _getName(FDSHeadlessResource fdsHeadlessResource) {
-		String name = fdsHeadlessResource.getName();
-
-		if (name.startsWith("ObjectEntry")) {
-			String[] nameParts = StringUtil.split(name, "#C_");
-
-			if (nameParts.length == 2) {
-				return nameParts[1];
-			}
-		}
-
-		return name;
-	}
-
 	private final PortletRequest _portletRequest;
-	private final ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
+	private final ServiceTrackerList<String> _serviceTrackerList;
 
 }

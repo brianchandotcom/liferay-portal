@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,21 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import ClayForm from '@clayui/form';
+import React from 'react';
 
-<react:component
-	module="js/FDSEntries"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"fdsEntriesAPIURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
-		).put(
-			"fdsViewsURL", fdsViewsDisplayContext.getFDSViewsURL()
-		).put(
-			"namespace", liferayPortletResponse.getNamespace()
-		).put(
-			"restApplications", fdsViewsDisplayContext.getRESTApplicationsJSONArray()
-		).build()
-	%>'
-/>
+const ValidationFeedback = ({
+	message = Liferay.Language.get('this-field-is-required'),
+}: {
+	message?: string;
+}) => (
+	<ClayForm.FeedbackGroup>
+		<ClayForm.FeedbackItem>
+			<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+			{message}
+		</ClayForm.FeedbackItem>
+	</ClayForm.FeedbackGroup>
+);
+
+export default ValidationFeedback;

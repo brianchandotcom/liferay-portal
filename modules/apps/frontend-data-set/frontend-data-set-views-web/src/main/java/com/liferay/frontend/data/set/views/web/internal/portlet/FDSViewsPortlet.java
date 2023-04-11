@@ -17,7 +17,6 @@ package com.liferay.frontend.data.set.views.web.internal.portlet;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
 import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext;
-import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -27,21 +26,17 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.Locale;
 
 import javax.portlet.Portlet;
@@ -49,10 +44,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -81,8 +73,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, null, "(osgi.jaxrs.resource=true)",
-			new FDSHeadlessResourceServiceTrackerCustomizer(bundleContext));
+			bundleContext, null, "(openapi.resource=true)",
+			new RESTApplicationServiceTrackerCustomizer(bundleContext));
 	}
 
 	@Deactivate
@@ -141,7 +133,18 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						"entityClassName", "entityClassName", true)));
+						_language.get(locale, "rest-application"),
+						"restApplication", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-endpoint"), "restEndpoint",
+						true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-schema"), "restSchema",
+						true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsEntryObjectDefinition.getObjectDefinitionId());
@@ -192,65 +195,46 @@ public class FDSViewsPortlet extends MVCPortlet {
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
-	private ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
+	private ServiceTrackerList<String> _serviceTrackerList;
 
-	private class FDSHeadlessResourceServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, FDSHeadlessResource> {
+	private class RESTApplicationServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, String> {
 
 		@Override
-		public FDSHeadlessResource addingService(
-			ServiceReference<Object> serviceReference) {
+		public String addingService(ServiceReference<Object> serviceReference) {
+			String openapiResourcePath = (String)serviceReference.getProperty(
+				"openapi.resource.path");
 
-			String entityClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
-
-			if (entityClassName != null) {
-				String[] entityClassNameParts = StringUtil.split(
-					entityClassName, StringPool.PERIOD);
-
-				Object object = _bundleContext.getService(serviceReference);
-
-				return new FDSHeadlessResource(
-					_getFDSHeadlessResourceBundleLabel(object), entityClassName,
-					entityClassNameParts[entityClassNameParts.length - 1],
-					entityClassNameParts[entityClassNameParts.length - 2].
-						replaceAll(StringPool.UNDERLINE, StringPool.PERIOD));
+			if (openapiResourcePath == null) {
+				return null;
 			}
 
-			return null;
+			String apiVersion = (String)serviceReference.getProperty(
+				"api.version");
+
+			if (apiVersion != null) {
+				return openapiResourcePath + "/" + apiVersion;
+			}
+
+			return openapiResourcePath;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference,
-			FDSHeadlessResource fdsHeadlessResource) {
+			ServiceReference<Object> serviceReference, String restApplication) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference,
-			FDSHeadlessResource fdsHeadlessResource) {
+			ServiceReference<Object> serviceReference, String restApplication) {
 
 			_bundleContext.ungetService(serviceReference);
 		}
 
-		private FDSHeadlessResourceServiceTrackerCustomizer(
+		private RESTApplicationServiceTrackerCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
-		}
-
-		private String _getFDSHeadlessResourceBundleLabel(Object object) {
-			Bundle bundle = FrameworkUtil.getBundle(object.getClass());
-
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
-
-			String bundleName = GetterUtil.getString(
-				headers.get(Constants.BUNDLE_NAME));
-
-			return bundleName.substring(
-				0, bundleName.lastIndexOf(StringPool.SPACE));
 		}
 
 		private final BundleContext _bundleContext;

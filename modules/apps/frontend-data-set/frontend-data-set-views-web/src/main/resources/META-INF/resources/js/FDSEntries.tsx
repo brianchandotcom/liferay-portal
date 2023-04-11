@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
@@ -27,13 +28,14 @@ import '../css/FDSEntries.scss';
 import {OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
 import {TFDSView} from './FDSViews';
 import RequiredMark from './RequiredMark';
+import ValidationFeedback from './ValidationFeedback';
 
 const FUZZY_OPTIONS = {
 	post: '</strong>',
 	pre: '<strong>',
 };
 
-type TFDSEntry = {
+type FDSEntryType = {
 	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<TFDSView>;
 	actions: {
 		delete: {
@@ -41,114 +43,55 @@ type TFDSEntry = {
 			method: string;
 		};
 	};
-	entityClassName: string;
 	id: string;
 	label: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
 };
 
-type THeadlessResource = {
-	bundleLabel: string;
-	entityClassName: string;
-	name: string;
-	version: string;
-};
-
-interface IHeadlessResourceItemProps {
-	headlessResource: THeadlessResource;
-	query: string;
-}
-
-const HeadlessResourceItem = ({
-	headlessResource,
+const RESTApplicationItem = ({
 	query,
-}: IHeadlessResourceItemProps) => {
-	const fuzzyNameMatch = fuzzy.match(
-		query,
-		headlessResource.name,
-		FUZZY_OPTIONS
-	);
-
-	const fuzzyBundleLabelMatch = fuzzy.match(
-		query,
-		headlessResource.bundleLabel,
-		FUZZY_OPTIONS
-	);
+	restApplication,
+}: {
+	query: string;
+	restApplication: string;
+}) => {
+	const fuzzyMatch = fuzzy.match(query, restApplication, FUZZY_OPTIONS);
 
 	return (
-		<ClayLayout.ContentRow className="headless-resource">
-			{fuzzyNameMatch ? (
+		<ClayLayout.ContentRow>
+			{fuzzyMatch ? (
 				<span
 					dangerouslySetInnerHTML={{
-						__html: fuzzyNameMatch.rendered,
+						__html: fuzzyMatch.rendered,
 					}}
 				/>
 			) : (
-				<span>{headlessResource.name}</span>
+				<span>{restApplication}</span>
 			)}
-
-			<span className="context">
-				{fuzzyBundleLabelMatch ? (
-					<span
-						dangerouslySetInnerHTML={{
-							__html: fuzzyBundleLabelMatch.rendered,
-						}}
-					/>
-				) : (
-					<span>{headlessResource.bundleLabel}</span>
-				)}
-
-				{` ${headlessResource.version}`}
-			</span>
 		</ClayLayout.ContentRow>
 	);
 };
 
-interface IProviderRendererProps {
-	headlessResourcesMap: Map<String, THeadlessResource>;
-	itemData: TFDSEntry;
-}
-
-const ProviderRenderer: React.FC<IProviderRendererProps> = ({
-	headlessResourcesMap,
-	itemData,
-}: IProviderRendererProps) => {
-	const headlessResource = headlessResourcesMap.get(itemData.entityClassName);
-
-	return (
-		<>
-			{`${headlessResource?.name} (${headlessResource?.bundleLabel} ${headlessResource?.version})`}
-		</>
-	);
-};
-
-const ViewsCountRenderer = ({itemData}: {itemData: TFDSEntry}) => {
+const ViewsCountRenderer = ({itemData}: {itemData: FDSEntryType}) => {
 	const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
 
 	return (
-		<span
-			className={classNames('count', {
-				'count-zero': !count,
-			})}
-		>
-			{count}
-		</span>
+		<ClayBadge displayType={!count ? 'warning' : 'info'} label={count} />
 	);
 };
 
-interface IDropdownMenuProps {
-	headlessResources: Array<THeadlessResource>;
-	setHeadlessResourceValidationError: Function;
-	setSelectedHeadlessResource: Function;
-}
-
-const DropdownMenu = ({
-	headlessResources: initialHeadlessResources,
-	setHeadlessResourceValidationError,
-	setSelectedHeadlessResource,
-}: IDropdownMenuProps) => {
-	const [headlessResources, setHeadlessResources] = useState<
-		Array<THeadlessResource>
-	>(initialHeadlessResources || []);
+const RestApplicationDropdownMenu = ({
+	onItemClick,
+	restApplications: initialRESTApplications,
+}: {
+	onItemClick: Function;
+	restApplications: Array<string>;
+}) => {
+	const [restApplications, setRESTApplications] = useState<Array<string>>(
+		initialRESTApplications || []
+	);
 	const [query, setQuery] = useState('');
 
 	const onSearch = (query: string) => {
@@ -156,16 +99,12 @@ const DropdownMenu = ({
 
 		const regexp = new RegExp(query, 'i');
 
-		setHeadlessResources(
+		setRESTApplications(
 			query
-				? initialHeadlessResources.filter(
-						({bundleLabel, name}: THeadlessResource) => {
-							return (
-								bundleLabel.match(regexp) || name.match(regexp)
-							);
-						}
+				? initialRESTApplications.filter((restApplication) =>
+						restApplication.match(regexp)
 				  ) || []
-				: initialHeadlessResources
+				: initialRESTApplications
 		);
 	};
 
@@ -177,20 +116,16 @@ const DropdownMenu = ({
 				value={query}
 			/>
 
-			<ClayDropDown.ItemList items={headlessResources} role="listbox">
-				{(item: THeadlessResource) => (
+			<ClayDropDown.ItemList items={restApplications} role="listbox">
+				{(item: string) => (
 					<ClayDropDown.Item
-						key={item.entityClassName}
-						onClick={() => {
-							setSelectedHeadlessResource(item);
-
-							setHeadlessResourceValidationError(false);
-						}}
+						key={item}
+						onClick={() => onItemClick(item)}
 						roleItem="option"
 					>
-						<HeadlessResourceItem
-							headlessResource={item}
+						<RESTApplicationItem
 							query={query}
+							restApplication={item}
 						/>
 					</ClayDropDown.Item>
 				)}
@@ -199,36 +134,186 @@ const DropdownMenu = ({
 	);
 };
 
-interface IAddFDSEntryModalContentProps {
+const RestSchemaDropdownMenu = ({
+	onItemClick,
+	restSchemas: initialRESTSchemas,
+}: {
+	onItemClick: Function;
+	restSchemas: Array<string>;
+}) => {
+	const [restSchemas, setRESTSchemas] = useState<Array<string>>(
+		initialRESTSchemas
+	);
+	const [query, setQuery] = useState('');
+
+	const onSearch = (query: string) => {
+		setQuery(query);
+
+		const regexp = new RegExp(query, 'i');
+
+		setRESTSchemas(
+			query
+				? initialRESTSchemas.filter((restSchema) => {
+						return restSchema.match(regexp);
+				  }) || []
+				: initialRESTSchemas
+		);
+	};
+
+	return (
+		<>
+			<ClayDropDown.Search
+				aria-label={Liferay.Language.get('search')}
+				onChange={onSearch}
+				value={query}
+			/>
+
+			<ClayDropDown.ItemList items={restSchemas} role="listbox">
+				{(item: string) => {
+					const fuzzymatch = fuzzy.match(query, item, FUZZY_OPTIONS);
+
+					return (
+						<ClayDropDown.Item
+							key={item}
+							onClick={() => onItemClick(item)}
+							roleItem="option"
+						>
+							{fuzzymatch ? (
+								<span
+									dangerouslySetInnerHTML={{
+										__html: fuzzymatch.rendered,
+									}}
+								/>
+							) : (
+								item
+							)}
+						</ClayDropDown.Item>
+					);
+				}}
+			</ClayDropDown.ItemList>
+		</>
+	);
+};
+
+const RestEndpointDropdownMenu = ({
+	onItemClick,
+	restEndpoints: initialRESTEndpoints,
+}: {
+	onItemClick: Function;
+	restEndpoints: Array<string>;
+}) => {
+	const [restEndpoints, setRESTEndpoints] = useState<Array<string>>(
+		initialRESTEndpoints || []
+	);
+	const [query, setQuery] = useState('');
+
+	const onSearch = (query: string) => {
+		setQuery(query);
+
+		const regexp = new RegExp(query, 'i');
+
+		setRESTEndpoints(
+			query
+				? initialRESTEndpoints.filter((restEndpoint) => {
+						return restEndpoint.match(regexp);
+				  }) || []
+				: initialRESTEndpoints
+		);
+	};
+
+	return (
+		<>
+			<ClayDropDown.Search
+				aria-label={Liferay.Language.get('search')}
+				onChange={onSearch}
+				value={query}
+			/>
+
+			<ClayDropDown.ItemList items={restEndpoints} role="listbox">
+				{(item: string) => {
+					const fuzzymatch = fuzzy.match(query, item, FUZZY_OPTIONS);
+
+					return (
+						<ClayDropDown.Item
+							key={item}
+							onClick={() => onItemClick(item)}
+							roleItem="option"
+						>
+							{fuzzymatch ? (
+								<span
+									dangerouslySetInnerHTML={{
+										__html: fuzzymatch.rendered,
+									}}
+								/>
+							) : (
+								item
+							)}
+						</ClayDropDown.Item>
+					);
+				}}
+			</ClayDropDown.ItemList>
+		</>
+	);
+};
+
+interface AddFDSEntryModalContentInterface {
 	closeModal: Function;
 	fdsEntriesAPIURL: string;
-	headlessResources: Array<THeadlessResource>;
 	loadData: Function;
 	namespace: string;
+	restApplications: Array<string>;
 }
 
 const AddFDSEntryModalContent = ({
 	closeModal,
 	fdsEntriesAPIURL,
-	headlessResources,
 	loadData,
 	namespace,
-}: IAddFDSEntryModalContentProps) => {
-	const [selectedHeadlessResource, setSelectedHeadlessResource] = useState<
-		THeadlessResource
-	>();
+	restApplications,
+}: AddFDSEntryModalContentInterface) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [
-		headlessResourceValidationError,
-		setHeadlessResourceValidationError,
+		requiredRESTApplicationValidationError,
+		setRequiredRESTApplicationValidationError,
 	] = useState(false);
+	const [
+		noEnpointsRESTApplicationValidationError,
+		setNoEnpointsRESTApplicationValidationError,
+	] = useState(false);
+	const [restSchemaValidationError, setRESTSchemaValidationError] = useState(
+		false
+	);
+	const [
+		restEndpointValidationError,
+		setRESTEndpointValidationError,
+	] = useState(false);
+	const [restSchemaEndpoints, setRESTSchemaEndpoints] = useState<
+		Map<string, Array<string>>
+	>(new Map());
+	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
+		string | null
+	>();
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
+		string | null
+	>();
+	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
+		string | null
+	>();
 
 	const fdsEntryLabelRef = useRef<HTMLInputElement>(null);
 
 	const addFDSEntry = async () => {
+		if (!selectedRESTApplication) {
+			return;
+		}
+
+		selectedRESTApplication;
+
 		const body = {
-			entityClassName: selectedHeadlessResource?.entityClassName,
 			label: fdsEntryLabelRef.current?.value,
+			restApplication: selectedRESTApplication,
+			restEndpoint: selectedRESTEndpoint,
+			restSchema: selectedRESTSchema,
 		};
 
 		const response = await fetch(fdsEntriesAPIURL, {
@@ -242,7 +327,7 @@ const AddFDSEntryModalContent = ({
 
 		const fdsEntry = await response.json();
 
-		if (fdsEntry?.id) {
+		if (response.ok && fdsEntry?.id) {
 			closeModal();
 
 			openToast({
@@ -264,38 +349,135 @@ const AddFDSEntryModalContent = ({
 		}
 	};
 
+	const getRESTSchemas = async (restApplication: string) => {
+		if (!restApplication) {
+			return;
+		}
+
+		const response = await fetch(`/o${restApplication}/openapi.json`);
+
+		const responseJson = await response.json();
+
+		if (response.ok) {
+			const paths = Object.keys(responseJson.paths ?? []);
+			const schemaNames = Object.keys(
+				responseJson.components?.schemas ?? []
+			);
+
+			const schemaEndpoints: Map<string, Array<string>> = new Map();
+
+			schemaNames.forEach((schemaName) => {
+				paths.forEach((path: string) => {
+					if (path.includes('{')) {
+						return;
+					}
+
+					if (
+						responseJson.paths[
+							path
+						]?.get?.responses.default.content[
+							'application/json'
+						]?.schema?.$ref?.endsWith(`/Page${schemaName}`)
+					) {
+						const endpoints = schemaEndpoints.get(schemaName) ?? [];
+
+						endpoints.push(path);
+
+						if (endpoints.length === 1) {
+							schemaEndpoints.set(schemaName, endpoints);
+						}
+					}
+				});
+			});
+
+			if (schemaEndpoints.size === 0) {
+				setSelectedRESTSchema(null);
+
+				setSelectedRESTEndpoint(null);
+
+				setNoEnpointsRESTApplicationValidationError(true);
+			}
+			else if (schemaEndpoints.size === 1) {
+				const schema = schemaEndpoints.keys().next().value;
+
+				setSelectedRESTSchema(schema);
+
+				const paths = schemaEndpoints.get(schema);
+
+				if (paths?.length === 1) {
+					setSelectedRESTEndpoint(paths[0]);
+				}
+
+				setNoEnpointsRESTApplicationValidationError(false);
+			}
+			else {
+				setSelectedRESTSchema(null);
+
+				setSelectedRESTEndpoint(null);
+
+				setNoEnpointsRESTApplicationValidationError(false);
+			}
+
+			setRESTSchemaEndpoints(schemaEndpoints);
+		}
+		else {
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-failed-to-complete'
+				),
+				type: 'danger',
+			});
+		}
+	};
+
 	const validate = () => {
 		if (!fdsEntryLabelRef.current?.value) {
 			setLabelValidationError(true);
+
+			return false;
 		}
 
-		if (!selectedHeadlessResource) {
-			setHeadlessResourceValidationError(true);
+		if (!selectedRESTApplication) {
+			setRequiredRESTApplicationValidationError(true);
+
+			return false;
 		}
 
-		if (!fdsEntryLabelRef.current?.value || !selectedHeadlessResource) {
+		if (noEnpointsRESTApplicationValidationError) {
+			return false;
+		}
+
+		if (!selectedRESTSchema) {
+			setRESTSchemaValidationError(true);
+
+			return false;
+		}
+
+		if (!selectedRESTEndpoint) {
+			setRESTEndpointValidationError(true);
+
 			return false;
 		}
 
 		return true;
 	};
 
-	const Dropdown = () => (
+	const RestApplicationDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'headless-resources-dropdown-menu',
+				className: 'fds-entries-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
-					aria-labelledby={`${namespace}fdsHeadlessResourcesLabel`}
+					aria-labelledby={`${namespace}restApplicationsLabel`}
 					className="form-control form-control-select form-control-select-secondary"
 					displayType="secondary"
-					id={`${namespace}fdsHeadlessResourcesSelect`}
+					id={`${namespace}restApplicationsSelect`}
 				>
-					{selectedHeadlessResource ? (
-						<HeadlessResourceItem
-							headlessResource={selectedHeadlessResource}
+					{selectedRESTApplication ? (
+						<RESTApplicationItem
 							query=""
+							restApplication={selectedRESTApplication}
 						/>
 					) : (
 						Liferay.Language.get('choose-an-option')
@@ -303,12 +485,82 @@ const AddFDSEntryModalContent = ({
 				</ClayButton>
 			}
 		>
-			<DropdownMenu
-				headlessResources={headlessResources}
-				setHeadlessResourceValidationError={
-					setHeadlessResourceValidationError
+			<RestApplicationDropdownMenu
+				onItemClick={(item: string) => {
+					setSelectedRESTApplication(item);
+
+					setRequiredRESTApplicationValidationError(false);
+
+					getRESTSchemas(item);
+				}}
+				restApplications={restApplications}
+			/>
+		</ClayDropDown>
+	);
+
+	const RestSchemaDropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'fds-entries-dropdown-menu',
+			}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}restSchema`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}restSchemaSelect`}
+				>
+					{selectedRESTSchema ||
+						Liferay.Language.get('choose-an-option')}
+				</ClayButton>
+			}
+		>
+			<RestSchemaDropdownMenu
+				onItemClick={(item: string) => {
+					setSelectedRESTSchema(item);
+
+					const endpoints = restSchemaEndpoints.get(item);
+
+					if (endpoints?.length === 1) {
+						setSelectedRESTEndpoint(endpoints[0]);
+					}
+					else {
+						setSelectedRESTEndpoint(null);
+					}
+
+					setRESTSchemaValidationError(false);
+				}}
+				restSchemas={Array.from(restSchemaEndpoints.keys())}
+			/>
+		</ClayDropDown>
+	);
+
+	const RestEndpointDropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'fds-entries-dropdown-menu',
+			}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}restEndpoint`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}restEndpointSelect`}
+				>
+					{selectedRESTEndpoint ||
+						Liferay.Language.get('choose-an-option')}
+				</ClayButton>
+			}
+		>
+			<RestEndpointDropdownMenu
+				onItemClick={(item: string) => {
+					setSelectedRESTEndpoint(item);
+
+					setRESTEndpointValidationError(false);
+				}}
+				restEndpoints={
+					restSchemaEndpoints.get(selectedRESTSchema ?? '') ?? []
 				}
-				setSelectedHeadlessResource={setSelectedHeadlessResource}
 			/>
 		</ClayDropDown>
 	);
@@ -342,43 +594,81 @@ const AddFDSEntryModalContent = ({
 						type="text"
 					/>
 
-					{labelValidationError && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{Liferay.Language.get('this-field-is-required')}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
+					{labelValidationError && <ValidationFeedback />}
 				</ClayForm.Group>
 
 				<ClayForm.Group
 					className={classNames({
-						'has-error': headlessResourceValidationError,
+						'has-error':
+							requiredRESTApplicationValidationError ||
+							noEnpointsRESTApplicationValidationError,
 					})}
 				>
 					<label
-						htmlFor={`${namespace}fdsHeadlessResourcesSelect`}
-						id={`${namespace}fdsHeadlessResourcesLabel`}
+						htmlFor={`${namespace}restApplicationsSelect`}
+						id={`${namespace}restApplicationsLabel`}
 					>
-						{Liferay.Language.get('provider')}
+						{Liferay.Language.get('rest-application')}
 
 						<RequiredMark />
 					</label>
 
-					<Dropdown />
+					<RestApplicationDropdown />
 
-					{headlessResourceValidationError && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+					{requiredRESTApplicationValidationError && (
+						<ValidationFeedback />
+					)}
 
-								{Liferay.Language.get('this-field-is-required')}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
+					{noEnpointsRESTApplicationValidationError && (
+						<ValidationFeedback
+							message={Liferay.Language.get(
+								'there-are-no-usable-endpoints'
+							)}
+						/>
 					)}
 				</ClayForm.Group>
+
+				{restSchemaEndpoints.size > 0 && (
+					<ClayForm.Group
+						className={classNames({
+							'has-error': restSchemaValidationError,
+						})}
+					>
+						<label
+							htmlFor={`${namespace}restSchemaSelect`}
+							id={`${namespace}restSchema`}
+						>
+							{Liferay.Language.get('rest-schema')}
+
+							<RequiredMark />
+						</label>
+
+						<RestSchemaDropdown />
+
+						{restSchemaValidationError && <ValidationFeedback />}
+					</ClayForm.Group>
+				)}
+
+				{selectedRESTSchema && (
+					<ClayForm.Group
+						className={classNames({
+							'has-error': restEndpointValidationError,
+						})}
+					>
+						<label
+							htmlFor={`${namespace}restEndpointSelect`}
+							id={`${namespace}restEndpoint`}
+						>
+							{Liferay.Language.get('rest-endpoint')}
+
+							<RequiredMark />
+						</label>
+
+						<RestEndpointDropdown />
+
+						{restEndpointValidationError && <ValidationFeedback />}
+					</ClayForm.Group>
+				)}
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -409,28 +699,19 @@ const AddFDSEntryModalContent = ({
 	);
 };
 
-interface IFDSEntriesProps {
+interface FDSEntriesInterface {
 	fdsEntriesAPIURL: string;
 	fdsViewsURL: string;
-	headlessResources: Array<THeadlessResource>;
 	namespace: string;
+	restApplications: Array<string>;
 }
 
 const FDSEntries = ({
 	fdsEntriesAPIURL,
 	fdsViewsURL,
-	headlessResources,
 	namespace,
-}: IFDSEntriesProps) => {
-	const headlessResourcesMapRef = useRef<Map<string, THeadlessResource>>(
-		new Map(
-			headlessResources.map((headlessResource) => [
-				headlessResource.entityClassName,
-				headlessResource,
-			])
-		)
-	);
-
+	restApplications,
+}: FDSEntriesInterface) => {
 	const creationMenu = {
 		primaryItems: [
 			{
@@ -445,9 +726,9 @@ const FDSEntries = ({
 							<AddFDSEntryModalContent
 								closeModal={closeModal}
 								fdsEntriesAPIURL={fdsEntriesAPIURL}
-								headlessResources={headlessResources}
 								loadData={loadData}
 								namespace={namespace}
+								restApplications={restApplications}
 							/>
 						),
 					});
@@ -456,7 +737,7 @@ const FDSEntries = ({
 		],
 	};
 
-	const onViewClick = ({itemData}: {itemData: TFDSEntry}) => {
+	const onViewClick = ({itemData}: {itemData: FDSEntryType}) => {
 		const url = new URL(fdsViewsURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);
@@ -469,7 +750,7 @@ const FDSEntries = ({
 		itemData,
 		loadData,
 	}: {
-		itemData: TFDSEntry;
+		itemData: FDSEntryType;
 		loadData: Function;
 	}) => {
 		openModal({
@@ -526,9 +807,16 @@ const FDSEntries = ({
 				fields: [
 					{fieldName: 'label', label: Liferay.Language.get('name')},
 					{
-						contentRenderer: 'provider',
-						fieldName: 'provider',
-						label: Liferay.Language.get('provider'),
+						fieldName: 'restApplication',
+						label: Liferay.Language.get('rest-application'),
+					},
+					{
+						fieldName: 'restSchema',
+						label: Liferay.Language.get('rest-schema'),
+					},
+					{
+						fieldName: 'restEndpoint',
+						label: Liferay.Language.get('rest-endpoint'),
 					},
 					{
 						contentRenderer: 'viewsCount',
@@ -551,14 +839,6 @@ const FDSEntries = ({
 				apiURL={`${fdsEntriesAPIURL}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
 				customDataRenderers={{
-					provider: ({itemData}: {itemData: TFDSEntry}) => (
-						<ProviderRenderer
-							headlessResourcesMap={
-								headlessResourcesMapRef.current
-							}
-							itemData={itemData}
-						/>
-					),
 					viewsCount: ViewsCountRenderer,
 				}}
 				id={`${namespace}FDSEntries`}

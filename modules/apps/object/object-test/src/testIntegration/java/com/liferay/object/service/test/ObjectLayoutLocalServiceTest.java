@@ -20,6 +20,10 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
+import com.liferay.object.exception.DefaultObjectLayoutException;
+import com.liferay.object.exception.ObjectDefinitionModifiableException;
+import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
+import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -99,6 +103,7 @@ public class ObjectLayoutLocalServiceTest {
 	@Test
 	public void testAddObjectLayout() throws Exception {
 		_assertFailure(
+			DefaultObjectLayoutException.class,
 			"All required object fields must be associated to the first tab " +
 				"of a default object layout",
 			() -> _objectLayoutLocalService.addObjectLayout(
@@ -118,6 +123,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 
 		_assertFailure(
+			ObjectLayoutBoxCategorizationTypeException.class,
 			"Categorization layout box can only be used in object " +
 				"definitions with a default storage type",
 			() -> {
@@ -154,6 +160,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 
 		_assertFailure(
+			ObjectLayoutBoxCategorizationTypeException.class,
 			"Categorization layout box must be enabled to be used",
 			() -> {
 				ObjectLayoutTab objectLayoutTab =
@@ -186,6 +193,7 @@ public class ObjectLayoutLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		_assertFailure(
+			ObjectLayoutBoxCategorizationTypeException.class,
 			"Categorization layout box must not have layout rows",
 			() -> {
 				ObjectLayoutTab objectLayoutTab =
@@ -220,6 +228,7 @@ public class ObjectLayoutLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		_assertFailure(
+			ObjectLayoutBoxCategorizationTypeException.class,
 			"Object layout box must have a type",
 			() -> {
 				ObjectLayoutTab objectLayoutTab =
@@ -242,6 +251,7 @@ public class ObjectLayoutLocalServiceTest {
 			});
 
 		_assertFailure(
+			ObjectLayoutColumnSizeException.class,
 			"Object layout column size must be more than 0 and less than 12",
 			() -> {
 				ObjectLayoutTab objectLayoutTab = _addObjectLayoutTab();
@@ -290,6 +300,7 @@ public class ObjectLayoutLocalServiceTest {
 						RandomTestUtil.randomString(), StringUtil.randomId())));
 
 		_assertFailure(
+			ObjectDefinitionModifiableException.class,
 			"A modifiable object definition is required",
 			() -> _objectLayoutLocalService.addObjectLayout(
 				TestPropsValues.getUserId(),
@@ -304,6 +315,7 @@ public class ObjectLayoutLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		_assertFailure(
+			ObjectLayoutBoxCategorizationTypeException.class,
 			"There can only be one categorization layout box per layout",
 			() -> {
 				ObjectLayoutTab objectLayoutTab1 =
@@ -342,6 +354,7 @@ public class ObjectLayoutLocalServiceTest {
 		_deleteObjectFields();
 
 		_assertFailure(
+			DefaultObjectLayoutException.class,
 			"There can only be one default object layout",
 			() -> {
 				ObjectLayoutTab objectLayoutTab = _addObjectLayoutTab();
@@ -586,7 +599,8 @@ public class ObjectLayoutLocalServiceTest {
 	}
 
 	private void _assertFailure(
-		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
+		Class<?> expectedExceptionClass, String message,
+		UnsafeSupplier<Object, Exception> unsafeSupplier) {
 
 		try {
 			unsafeSupplier.get();
@@ -594,7 +608,9 @@ public class ObjectLayoutLocalServiceTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(exception.getMessage(), message);
+			if (expectedExceptionClass.isInstance(exception)) {
+				Assert.assertEquals(message, exception.getMessage());
+			}
 		}
 	}
 

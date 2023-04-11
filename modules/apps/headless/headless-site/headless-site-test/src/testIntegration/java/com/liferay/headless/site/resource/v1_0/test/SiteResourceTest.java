@@ -83,6 +83,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteFailureParentSiteNotFound();
 		_testPostSiteFailureSiteInitializerNotFound();
 		_testPostSiteFailureSiteTemplateInactive();
+		_testPostSiteFailureSiteTemplateNotFound();
 		_testPostSiteSuccessChild();
 		_testPostSiteSuccessMembershipTypePrivate();
 		_testPostSiteSuccessSiteInitializer();
@@ -255,6 +256,29 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Assert.assertEquals(
 				"Site template with site template key " +
 					randomSite.getTemplateKey() + " is inactive",
+				problem.getTitle());
+		}
+	}
+
+	private void _testPostSiteFailureSiteTemplateNotFound() throws Exception {
+		Site randomSite = randomSite();
+
+		randomSite.setTemplateKey(String.valueOf(RandomTestUtil.randomLong()));
+		randomSite.setTemplateType(Site.TemplateType.SITE_TEMPLATE);
+
+		try {
+			testPostSite_addSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+
+			Assert.assertEquals(
+				"No site template was found for site template key " +
+					randomSite.getTemplateKey(),
 				problem.getTitle());
 		}
 	}

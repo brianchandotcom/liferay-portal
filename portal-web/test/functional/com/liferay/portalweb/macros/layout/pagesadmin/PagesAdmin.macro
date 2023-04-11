@@ -616,11 +616,11 @@ definition {
 
 	macro addThemeCSSExtension {
 		WaitForEditable(
-			key_text = "Client Extension",
+			key_text = "Theme CSS",
 			locator1 = "TextInput#ANY");
 
 		Click(
-			key_text = "Client Extension",
+			key_text = "Theme CSS",
 			locator1 = "TextInput#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

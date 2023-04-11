@@ -1,0 +1,73 @@
+@component-name = "portal-document-library-store"
+definition {
+
+	property ibm.store.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Document Library Stores";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			User.logoutPG();
+		}
+	}
+
+	@priority = 5
+	test IBMS3StoreSmoke {
+		property test.name.skip.portal.instance = "IBMStore#IBMS3StoreSmoke";
+
+		var bucketId = PropsUtil.get("aws.bucket.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+	}
+
+}

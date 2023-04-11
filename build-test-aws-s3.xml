@@ -259,7 +259,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws">
 					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />

@@ -17,7 +17,6 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.AddressCommerceCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingAddressCheckoutStepDisplayContext;
@@ -100,7 +99,7 @@ public class ShippingAddressCommerceCheckoutStep
 			AddressCommerceCheckoutStepDisplayContext
 				addressCommerceCheckoutStepDisplayContext =
 					new AddressCommerceCheckoutStepDisplayContext(
-						_accountEntryLocalService, _commerceAccountHelper,
+						_accountEntryLocalService,
 						CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
 						_commerceOrderService, _commerceAddressService,
 						_countryLocalService,
@@ -201,9 +200,6 @@ public class ShippingAddressCommerceCheckoutStep
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
-
-	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

@@ -17,8 +17,6 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
@@ -39,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 
@@ -51,15 +50,13 @@ public class AddressCommerceCheckoutStepDisplayContext {
 
 	public AddressCommerceCheckoutStepDisplayContext(
 		AccountEntryLocalService accountEntryLocalService,
-		CommerceAccountHelper commerceAccountHelper, int commerceAddressType,
-		CommerceOrderService commerceOrderService,
+		int commerceAddressType, CommerceOrderService commerceOrderService,
 		CommerceAddressService commerceAddressService,
 		CountryLocalService countryLocalService,
 		ModelResourcePermission<CommerceOrder>
 			commerceOrderModelResourcePermission) {
 
 		_accountEntryLocalService = accountEntryLocalService;
-		_commerceAccountHelper = commerceAccountHelper;
 		_commerceAddressType = commerceAddressType;
 		_commerceOrderService = commerceOrderService;
 		_commerceAddressService = commerceAddressService;
@@ -254,10 +251,8 @@ public class AddressCommerceCheckoutStepDisplayContext {
 					serviceContext.getUserId(),
 					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name,
 					null, null, email, null, null,
-					_commerceAccountHelper.toAccountEntryType(
-						CommerceAccountConstants.ACCOUNT_TYPE_GUEST),
-					_commerceAccountHelper.toAccountEntryStatus(true),
-					serviceContext);
+					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			commerceOrder.setCommerceAccountId(
 				accountEntry.getAccountEntryId());
@@ -273,7 +268,6 @@ public class AddressCommerceCheckoutStepDisplayContext {
 	}
 
 	private final AccountEntryLocalService _accountEntryLocalService;
-	private final CommerceAccountHelper _commerceAccountHelper;
 	private final CommerceAddressService _commerceAddressService;
 	private int _commerceAddressType;
 	private final ModelResourcePermission<CommerceOrder>

@@ -13,6 +13,10 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
+		JSONLayoututilitypage.deleteLayoutUtilityPage(
+			groupName = "Site Name",
+			layoutUtilityPageName = "404 Error");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");

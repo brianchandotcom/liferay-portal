@@ -1,0 +1,12 @@
+assemble:
+    - from: src
+      into: static
+liferay-sample-custom-element-5:
+    htmlElementName: liferay-sample-custom-element-5
+    instanceable: false
+    name: Liferay Sample Custom Element 5
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - index.js
+    useESM: true

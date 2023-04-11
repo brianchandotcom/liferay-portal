@@ -84,7 +84,7 @@ definition {
 		task ("And I go to the Policies page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
 
-			RaylifeAP.searchFor(searchTerm = "Testing Model");
+			RaylifeAP.search(searchTerm = "Testing Model");
 		}
 
 		task ("When I delete a Policies") {
@@ -92,7 +92,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert that Policies has been deleted") {
-			RaylifeAP.searchFor(searchTerm = "Testing Model");
+			RaylifeAP.search(searchTerm = "Testing Model");
 
 			RaylifeAP.assertQuantity(text = "Policies (0)");
 		}

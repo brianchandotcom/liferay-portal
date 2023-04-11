@@ -48,7 +48,7 @@ definition {
 	test IfChangesAreSavedClickingReviewQuote {
 	}
 
-	@description = "Story ID: LPS-146336 | Test Summary: Verify if that the Next button is enabled when all required fields are filled in"
+	@description = "Story ID: LPS-146336 | Test Summary: Verify if that the Review quote button is enabled when all required fields are filled in"
 	@priority = 5
 	test IfReviewQuoteButtonIsEnableWhenFieldsFilled {
 		task ("Given that I go to the Coverage Info form") {
@@ -67,7 +67,7 @@ definition {
 			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields();
 		}
 
-		task ("") {
+		task ("When I fill in all the required fields") {
 			RaylifeApplicationModal.selectOptionInModalByID(
 				label = "mySelectId",
 				value = "$30,000 / $60,000");
@@ -97,7 +97,7 @@ definition {
 				value = "$2,000");
 		}
 
-		task ("") {
+		task ("Then I should be able to assert that the Review quote button is enabled") {
 			Button.viewPresent(button = "Review quote");
 
 			Button.click(button = "Review quote");

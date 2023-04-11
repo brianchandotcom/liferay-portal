@@ -67,7 +67,7 @@ definition {
 				product = "",
 				status = "Incomplete");
 
-			RaylifeAP.AssertApplicationNumber();
+			RaylifeAP.assertApplicationNumber();
 		}
 	}
 

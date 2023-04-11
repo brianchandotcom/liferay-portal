@@ -29,7 +29,7 @@ import CollectionInput from '../inputs/CollectionInput';
 import DateTimeInput from '../inputs/DateTimeInput';
 import DecimalInput from '../inputs/DecimalInput';
 import IntegerInput from '../inputs/IntegerInput';
-import SelectEntityInput from '../inputs/SelectEntityInput.es';
+import SelectEntityInput from '../inputs/SelectEntityInput';
 import StringInput from '../inputs/StringInput';
 
 class CriteriaRowEditable extends Component {

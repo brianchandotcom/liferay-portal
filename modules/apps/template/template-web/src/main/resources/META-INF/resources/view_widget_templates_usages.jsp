@@ -83,7 +83,7 @@ renderResponse.setTitle(HtmlUtil.escape(ddmTemplate.getName(locale)));
 						%>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand table-title"
+							cssClass="table-title"
 							name="name"
 							value="<%= HtmlUtil.escape(widgetTemplatesTemplateViewUsagesDisplayContext.getDDMTemplateUsageName(curLayout)) %>"
 						/>
@@ -104,6 +104,11 @@ renderResponse.setTitle(HtmlUtil.escape(ddmTemplate.getName(locale)));
 								value="<%= PortletIdCodec.decodeInstanceId(curPortletPreferences.getPortletId()) %>"
 							/>
 						</c:if>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= curLayout.getModifiedDate() %>"
+						/>
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator

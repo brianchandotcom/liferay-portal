@@ -181,7 +181,8 @@ public class AutocompleteUserMVCResourceCommandTest {
 
 	private int _getUsersCount() {
 		return ListUtil.count(
-			UserLocalServiceUtil.getUsers(0, 20), user -> !user.isGuestUser());
+			UserLocalServiceUtil.getUsers(0, 20),
+			user -> !user.isGuestUser() && !user.isServiceAccountUser());
 	}
 
 	private JSONArray _getUsersJSONArray(

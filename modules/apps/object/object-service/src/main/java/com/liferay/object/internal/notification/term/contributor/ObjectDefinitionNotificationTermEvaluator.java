@@ -263,7 +263,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		ObjectDefinition objectDefinition = null;
 		ObjectField objectField2 = null;
-		String objectFieldName = StringPool.BLANK;
+		String objectFieldName = null;
 
 		outerLoop:
 		for (ObjectRelationship objectRelationship :
@@ -309,7 +309,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 			}
 		}
 
-		if (Objects.isNull(objectFieldName)) {
+		if (objectFieldName == null) {
 			return null;
 		}
 

@@ -36,18 +36,6 @@ components:
                     maximum: 2
                     minimum: 0
                     type: integer
-        AccountGroup:
-            properties:
-                id:
-                    example: 30130
-                    format: int64
-                    minimum: 0
-                    readOnly: true
-                    type: integer
-                name:
-                    example: AccountGroup Name
-                    type: string
-            type: object
         BillingAddress:
             properties:
                 city:
@@ -616,6 +604,18 @@ components:
                 - channelId
                 - currencyCode
             type: object
+        OrderAccountGroup:
+            properties:
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                name:
+                    example: OrderAccountGroup Name
+                    type: string
+            type: object
         OrderItem:
             properties:
                 bookedQuantityId:
@@ -946,7 +946,7 @@ components:
         OrderRuleAccountGroup:
             properties:
                 accountGroup:
-                    $ref: "#/components/schemas/AccountGroup"
+                    $ref: "#/components/schemas/OrderAccountGroup"
                     readOnly: true
                 accountGroupExternalReferenceCode:
                     example: DAB-34098-789-N
@@ -1432,10 +1432,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/AccountGroup"
+                                $ref: "#/components/schemas/OrderAccountGroup"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/AccountGroup"
+                                $ref: "#/components/schemas/OrderAccountGroup"
                     description:
                         Successful operation
                 400:
@@ -1477,7 +1477,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminOrder.read
             summary: Gets account group associated to the pricing object.
-            tags: ["AccountGroup"]
+            tags: ["OrderAccountGroup"]
     /order-rule-accounts/{orderRuleAccountId}:
         delete:
             operationId: deleteOrderRuleAccount

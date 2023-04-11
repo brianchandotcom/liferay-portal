@@ -79,18 +79,6 @@ components:
                     example: Account Name
                     type: string
             type: object
-        AccountGroup:
-            properties:
-                id:
-                    example: 30130
-                    format: int64
-                    minimum: 0
-                    readOnly: true
-                    type: integer
-                name:
-                    example: AccountGroup Name
-                    type: string
-            type: object
         Category:
             properties:
                 id:
@@ -309,7 +297,7 @@ components:
         DiscountAccountGroup:
             properties:
                 accountGroup:
-                    $ref: "#/components/schemas/AccountGroup"
+                    $ref: "#/components/schemas/PricingAccountGroup"
                     readOnly: true
                 accountGroupExternalReferenceCode:
                     example: "PAB-34098-789-N"
@@ -932,7 +920,7 @@ components:
         PriceListAccountGroup:
             properties:
                 accountGroup:
-                    $ref: "#/components/schemas/AccountGroup"
+                    $ref: "#/components/schemas/PricingAccountGroup"
                     readOnly: true
                 accountGroupExternalReferenceCode:
                     example: DAB-34098-789-N
@@ -1282,6 +1270,18 @@ components:
                 - priceModifierId
                 - productGroupId
             type: object
+        PricingAccountGroup:
+            properties:
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                name:
+                    example: PricingAccountGroup Name
+                    type: string
+            type: object
         Product:
             properties:
                 id:
@@ -1532,10 +1532,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/AccountGroup"
+                                $ref: "#/components/schemas/PricingAccountGroup"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/AccountGroup"
+                                $ref: "#/components/schemas/PricingAccountGroup"
                     description:
                         Successful operation
                 400:
@@ -1577,7 +1577,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminPricing.read
             summary: Gets account group associated to the pricing object.
-            tags: ["AccountGroup"]
+            tags: ["PricingAccountGroup"]
     /discount-accounts/{discountAccountId}:
         delete:
             operationId: deleteDiscountAccount
@@ -6869,10 +6869,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/AccountGroup"
+                                $ref: "#/components/schemas/PricingAccountGroup"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/AccountGroup"
+                                $ref: "#/components/schemas/PricingAccountGroup"
                     description:
                         Successful operation
                 400:
@@ -6914,7 +6914,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminPricing.read
             summary: Gets account group associated to the pricing object.
-            tags: ["AccountGroup"]
+            tags: ["PricingAccountGroup"]
     /price-list-accounts/{priceListAccountId}:
         delete:
             operationId: deletePriceListAccount

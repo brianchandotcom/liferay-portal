@@ -104,8 +104,15 @@ public class BuildDALO extends BaseEntityDALO<Build> {
 		Project project = _projectRepository.getById(
 			jsonObject.getLong("r_projectToBuilds_c_projectId"));
 
-		return BuildFactory.newBuild(project, jsonObject);
+		Build build = _buildFactory.newBuild(jsonObject);
+
+		build.setProject(project);
+
+		return build;
 	}
+
+	@Autowired
+	private BuildFactory _buildFactory;
 
 	@Autowired
 	private BuildToBuildParametersDALO _buildToBuildParametersDALO;

@@ -108,8 +108,11 @@ public class ProjectDALO extends BaseEntityDALO<Project> {
 
 	@Override
 	protected Project newEntity(JSONObject jsonObject) {
-		return ProjectFactory.newProject(jsonObject);
+		return _projectFactory.newEntity(jsonObject);
 	}
+
+	@Autowired
+	private ProjectFactory _projectFactory;
 
 	@Autowired
 	private ProjectsToGitBranchesDALO _projectsToGitBranchesDALO;

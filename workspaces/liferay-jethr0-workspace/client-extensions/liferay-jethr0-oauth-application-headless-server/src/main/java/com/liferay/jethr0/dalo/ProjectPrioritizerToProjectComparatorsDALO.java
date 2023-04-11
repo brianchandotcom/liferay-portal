@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -60,9 +61,12 @@ public class ProjectPrioritizerToProjectComparatorsDALO
 				retrieve(
 					"/o/c/projectprioritizers", projectPrioritizer.getId())) {
 
-			projectComparators.add(
-				ProjectComparatorFactory.newProjectComparator(
-					projectPrioritizer, jsonObject));
+			ProjectComparator projectComparator =
+				_projectComparatorFactory.newEntity(jsonObject);
+
+			projectComparator.setProjectPrioritizer(projectPrioritizer);
+
+			projectComparators.add(projectComparator);
 		}
 
 		return projectComparators;
@@ -96,5 +100,8 @@ public class ProjectPrioritizerToProjectComparatorsDALO
 	protected String getObjectRelationshipName() {
 		return "projectPrioritizerToProjectComparators";
 	}
+
+	@Autowired
+	private ProjectComparatorFactory _projectComparatorFactory;
 
 }

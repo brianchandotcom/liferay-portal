@@ -45,7 +45,7 @@ public class Jethr0RestController {
 
 		requestJSONObject.put("state", Project.State.OPENED.getJSONObject());
 
-		Project project = ProjectFactory.newProject(requestJSONObject);
+		Project project = _projectFactory.newEntity(requestJSONObject);
 
 		_projectRepository.add(project);
 
@@ -72,6 +72,9 @@ public class Jethr0RestController {
 
 		return new ResponseEntity<>(project, HttpStatus.CREATED);
 	}
+
+	@Autowired
+	private ProjectFactory _projectFactory;
 
 	@Autowired
 	private ProjectQueue _projectQueue;

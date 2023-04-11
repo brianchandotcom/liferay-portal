@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -47,7 +48,7 @@ public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/testsuites", testSuite.getId())) {
 
-			projects.add(ProjectFactory.newProject(responseJSONObject));
+			projects.add(_projectFactory.newEntity(responseJSONObject));
 		}
 
 		return projects;
@@ -106,5 +107,8 @@ public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 	protected String getObjectRelationshipName() {
 		return "projectsToTestSuites";
 	}
+
+	@Autowired
+	private ProjectFactory _projectFactory;
 
 }

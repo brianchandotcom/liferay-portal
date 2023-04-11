@@ -108,20 +108,32 @@ public abstract class BaseEntityRepository<T extends Entity>
 			add(entity);
 		}
 
+		updateEntityRelationshipsInDatabase(entity);
+
 		return entityDALO.update(entity);
 	}
 
-	protected abstract EntityDALO<T> getEntityDALO();
+	protected T updateEntityRelationshipsFromDatabase(T entity) {
+		return entity;
+	}
+
+	protected T updateEntityRelationshipsInDatabase(T entity) {
+		return entity;
+	}
 
 	private Map<Long, T> _getEntitiesMap() {
 		synchronized (_log) {
-			if (_entitiesMap == null) {
-				_entitiesMap = new HashMap<>();
+			if (_entitiesMap != null) {
+				return _entitiesMap;
 			}
+
+			_entitiesMap = new HashMap<>();
 
 			EntityDALO<T> entityDALO = getEntityDALO();
 
 			for (T entity : entityDALO.getAll()) {
+				entity = updateEntityRelationshipsFromDatabase(entity);
+
 				_entitiesMap.put(entity.getId(), entity);
 			}
 

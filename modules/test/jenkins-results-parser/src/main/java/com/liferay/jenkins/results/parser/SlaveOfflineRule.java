@@ -97,7 +97,7 @@ public class SlaveOfflineRule {
 			return false;
 		}
 
-		return true;
+		return false;
 	}
 
 	public boolean shutdown() {

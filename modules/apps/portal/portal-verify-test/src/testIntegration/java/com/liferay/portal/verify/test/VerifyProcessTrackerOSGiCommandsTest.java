@@ -27,16 +27,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.verify.VerifyProcess;
 
-import org.apache.commons.lang.time.StopWatch;
-import org.apache.logging.log4j.core.Appender;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -68,33 +62,15 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_originalUpgrading = StartupHelperUtil.isUpgrading();
-		_originalAppender = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_appender");
-		_originalStopWatch = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_stopWatch");
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", _originalUpgrading);
-		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_appender", _originalAppender);
-		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_stopWatch", _originalStopWatch);
-	}
-
-	@Before
-	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
+		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
 			StartupHelperUtil.class, "_upgrading", false);
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_appender", null);
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@After
 	public void tearDown() {
+		ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_upgrading", _upgrading);
+
 		Release release = _releaseLocalService.fetchRelease(_symbolicName);
 
 		if (release != null) {
@@ -340,16 +316,16 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		_releaseLocalService.updateRelease(release);
 
-		StartupHelperUtil.setUpgrading(true);
+		ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_upgrading", true);
 
-		return () -> StartupHelperUtil.setUpgrading(false);
+		return () -> ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_upgrading", false);
 	}
 
 	private static BundleContext _bundleContext;
-	private static Appender _originalAppender;
-	private static StopWatch _originalStopWatch;
-	private static boolean _originalUpgrading;
 	private static String _symbolicName;
+	private static boolean _upgrading;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

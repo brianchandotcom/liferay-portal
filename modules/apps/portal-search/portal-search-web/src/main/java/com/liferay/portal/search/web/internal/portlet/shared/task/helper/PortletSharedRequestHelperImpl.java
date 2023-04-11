@@ -48,7 +48,7 @@ public class PortletSharedRequestHelperImpl
 	@Override
 	public String getCompleteURL(RenderRequest renderRequest) {
 		return _getCompleteOriginalURL(
-			portal.getHttpServletRequest(renderRequest));
+			_portal.getHttpServletRequest(renderRequest));
 	}
 
 	@Override
@@ -99,9 +99,6 @@ public class PortletSharedRequestHelperImpl
 		return (T)httpServletRequest.getAttribute(name);
 	}
 
-	@Reference
-	protected Portal portal;
-
 	private String _getCompleteOriginalURL(
 		HttpServletRequest httpServletRequest) {
 
@@ -109,7 +106,7 @@ public class PortletSharedRequestHelperImpl
 		String queryString = null;
 
 		if (HttpComponentsUtil.isForwarded(httpServletRequest)) {
-			requestURL = portal.getAbsoluteURL(
+			requestURL = _portal.getAbsoluteURL(
 				httpServletRequest,
 				(String)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI));
@@ -118,7 +115,7 @@ public class PortletSharedRequestHelperImpl
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 		}
 		else {
-			requestURL = portal.getAbsoluteURL(
+			requestURL = _portal.getAbsoluteURL(
 				httpServletRequest,
 				HttpComponentsUtil.getPath(
 					String.valueOf(httpServletRequest.getRequestURL())));
@@ -135,7 +132,7 @@ public class PortletSharedRequestHelperImpl
 			sb.append(queryString);
 		}
 
-		String proxyPath = portal.getPathProxy();
+		String proxyPath = _portal.getPathProxy();
 
 		if (Validator.isNotNull(proxyPath)) {
 			int x =
@@ -154,7 +151,7 @@ public class PortletSharedRequestHelperImpl
 
 			String sessionId = httpSession.getId();
 
-			completeURL = portal.getURLWithSessionId(completeURL, sessionId);
+			completeURL = _portal.getURLWithSessionId(completeURL, sessionId);
 		}
 
 		if (_log.isWarnEnabled() && completeURL.contains("?&")) {
@@ -167,11 +164,14 @@ public class PortletSharedRequestHelperImpl
 	private HttpServletRequest _getSharedHttpServletRequest(
 		RenderRequest renderRequest) {
 
-		return portal.getOriginalServletRequest(
-			portal.getHttpServletRequest(renderRequest));
+		return _portal.getOriginalServletRequest(
+			_portal.getHttpServletRequest(renderRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletSharedRequestHelperImpl.class);
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -87,13 +87,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"},
 	service = WikiImporter.class
 )
-public class MediaWikiImporter implements WikiImporter {
+public class MediaWikiImporter {
 
 	public static final String FORMAT_CREOLE = "creole";
 
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
 
-	@Override
 	public void importPages(
 			long userId, WikiNode node, InputStream[] inputStreams,
 			Map<String, String[]> options)

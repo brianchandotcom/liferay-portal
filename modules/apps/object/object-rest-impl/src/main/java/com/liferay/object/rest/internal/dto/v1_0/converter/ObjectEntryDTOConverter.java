@@ -115,18 +115,20 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
 		return _toDTO(
-			dtoConverterContext, _getNestedFieldsDepth(), objectEntry);
+			dtoConverterContext, nestedFieldsContext,
+			_getNestedFieldsDepth(nestedFieldsContext), objectEntry);
 	}
 
 	private void _addNestedFields(
 			DTOConverterContext dtoConverterContext, Map<String, Object> map,
-			int nestedFieldsDepth, String objectFieldName,
-			ObjectRelationship objectRelationship, long primaryKey)
+			NestedFieldsContext nestedFieldsContext, int nestedFieldsDepth,
+			String objectFieldName, ObjectRelationship objectRelationship,
+			long primaryKey)
 		throws Exception {
-
-		NestedFieldsContext nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
 		if (nestedFieldsContext == null) {
 			return;
@@ -164,7 +166,7 @@ public class ObjectEntryDTOConverter
 		else {
 			value = _toDTO(
 				_getDTOConverterContext(dtoConverterContext, primaryKey),
-				nestedFieldsDepth - 1,
+				nestedFieldsContext, nestedFieldsDepth - 1,
 				_objectEntryLocalService.getObjectEntry(primaryKey));
 		}
 
@@ -246,13 +248,14 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry[] _getManyToManyRelationshipObjectEntries(
-		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+		DTOConverterContext dtoConverterContext,
+		NestedFieldsContext nestedFieldsContext, int nestedFieldsDepth,
 		com.liferay.object.model.ObjectEntry objectEntry,
 		ObjectRelationship objectRelationship) {
 
 		try {
 			return _toObjectEntries(
-				dtoConverterContext, nestedFieldsDepth,
+				dtoConverterContext, nestedFieldsContext, nestedFieldsDepth,
 				_objectEntryLocalService.getManyToManyObjectEntries(
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
@@ -269,10 +272,7 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
-	private int _getNestedFieldsDepth() {
-		NestedFieldsContext nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
-
+	private int _getNestedFieldsDepth(NestedFieldsContext nestedFieldsContext) {
 		if (nestedFieldsContext == null) {
 			return _NESTED_FIELDS_DEFAULT_DEPTH;
 		}
@@ -299,13 +299,14 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry[] _getOneToManyRelationshipObjectEntries(
-		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+		DTOConverterContext dtoConverterContext,
+		NestedFieldsContext nestedFieldsContext, int nestedFieldsDepth,
 		com.liferay.object.model.ObjectEntry objectEntry,
 		ObjectRelationship objectRelationship) {
 
 		try {
 			return _toObjectEntries(
-				dtoConverterContext, nestedFieldsDepth,
+				dtoConverterContext, nestedFieldsContext, nestedFieldsDepth,
 				_objectEntryLocalService.getOneToManyObjectEntries(
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
@@ -424,7 +425,8 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry _toDTO(
-			DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+			DTOConverterContext dtoConverterContext,
+			NestedFieldsContext nestedFieldsContext, int nestedFieldsDepth,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
@@ -453,8 +455,8 @@ public class ObjectEntryDTOConverter
 				}
 
 				properties = _toProperties(
-					dtoConverterContext, nestedFieldsDepth, objectDefinition,
-					objectEntry);
+					dtoConverterContext, nestedFieldsContext, nestedFieldsDepth,
+					objectDefinition, objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
 				status = new Status() {
 					{
@@ -490,7 +492,8 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry[] _toObjectEntries(
-		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+		DTOConverterContext dtoConverterContext,
+		NestedFieldsContext nestedFieldsContext, int nestedFieldsDepth,
 		List<com.liferay.object.model.ObjectEntry> objectEntries) {
 
 		return TransformUtil.transformToArray(
@@ -501,7 +504,8 @@ public class ObjectEntryDTOConverter
 						_getDTOConverterContext(
 							dtoConverterContext,
 							objectEntry.getObjectEntryId()),
-						nestedFieldsDepth - 1, objectEntry);
+						nestedFieldsContext, nestedFieldsDepth - 1,
+						objectEntry);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -515,7 +519,8 @@ public class ObjectEntryDTOConverter
 	}
 
 	private Map<String, Object> _toProperties(
-			DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+			DTOConverterContext dtoConverterContext,
+			NestedFieldsContext nestedFieldsContext, int nestedFieldsDepth,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
@@ -617,8 +622,9 @@ public class ObjectEntryDTOConverter
 
 					if ((nestedFieldsDepth > 0) && (primaryKey > 0)) {
 						_addNestedFields(
-							dtoConverterContext, map, nestedFieldsDepth,
-							objectFieldName, objectRelationship, primaryKey);
+							dtoConverterContext, map, nestedFieldsContext,
+							nestedFieldsDepth, objectFieldName,
+							objectRelationship, primaryKey);
 					}
 
 					_addObjectRelationshipNames(
@@ -633,14 +639,9 @@ public class ObjectEntryDTOConverter
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		if ((nestedFieldsDepth <= 0) ||
-			(NestedFieldsContextThreadLocal.getNestedFieldsContext() == null)) {
-
+		if ((nestedFieldsDepth <= 0) || (nestedFieldsContext == null)) {
 			return map;
 		}
-
-		NestedFieldsContext nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
 		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
 
@@ -660,8 +661,8 @@ public class ObjectEntryDTOConverter
 				map.put(
 					objectRelationship.getName(),
 					_getManyToManyRelationshipObjectEntries(
-						dtoConverterContext, nestedFieldsDepth, objectEntry,
-						objectRelationship));
+						dtoConverterContext, nestedFieldsContext,
+						nestedFieldsDepth, objectEntry, objectRelationship));
 			}
 			else if (Objects.equals(
 						objectRelationship.getType(),
@@ -670,8 +671,8 @@ public class ObjectEntryDTOConverter
 				map.put(
 					objectRelationship.getName(),
 					_getOneToManyRelationshipObjectEntries(
-						dtoConverterContext, nestedFieldsDepth, objectEntry,
-						objectRelationship));
+						dtoConverterContext, nestedFieldsContext,
+						nestedFieldsDepth, objectEntry, objectRelationship));
 			}
 		}
 

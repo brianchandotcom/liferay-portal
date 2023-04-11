@@ -162,7 +162,7 @@ public class UpgradeLogAppender implements Appender {
 	private volatile boolean _started;
 	private UpgradeReport _upgradeReport;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	@Reference
 	private volatile UpgradeStatusImpl _upgradeStatusImpl;
 
 }

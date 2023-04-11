@@ -55,11 +55,9 @@
 				<c:when test="<%= Validator.isNotNull(onClick) %>">
 					onClick="<%= onClick %>"
 				</c:when>
-				<c:otherwise>
-					<c:if test="<%= Validator.isNotNull(escapedHREF) %>">
-						onClick="Liferay.Util.navigate('<%= escapedHREF %>')"
-					</c:if>
-				</c:otherwise>
+				<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
+					onClick="Liferay.Util.navigate('<%= escapedHREF %>')"
+				</c:when>
 			</c:choose>
 
 			type="<%= type.equals("cancel") ? "button" : type %>"

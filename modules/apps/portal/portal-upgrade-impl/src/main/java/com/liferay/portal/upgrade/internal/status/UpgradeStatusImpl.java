@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
@@ -94,10 +95,23 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Upgrade of type ", _type, " finished with state ",
-					_state));
+			if (_type.equals("no upgrade")) {
+				if (_state.equals("success")) {
+					_log.info("No pending upgrades to run");
+				}
+				else {
+					_log.info(
+						"Upgrade process failed or upgrade dependencies are " +
+							"not resolved");
+				}
+			}
+			else {
+				_log.info(
+					StringBundler.concat(
+						StringUtil.toUpperCase(_type.substring(0, 1)),
+						_type.substring(1), " upgrade finished with state ",
+						_state));
+			}
 		}
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
@@ -150,7 +164,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	public void start() {
-		_state = "Running";
+		_state = "running";
 
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
@@ -169,22 +183,22 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 					"Unable to check the upgrade state due to ",
 					exception.getMessage(), ". Please check manually."));
 
-			return "Failure";
+			return "failure";
 		}
 
 		if (!_errorMessages.isEmpty() || !check) {
-			return "Failure";
+			return "failure";
 		}
 
 		if (!_warningMessages.isEmpty()) {
-			return "Warning";
+			return "warning";
 		}
 
-		return "Success";
+		return "success";
 	}
 
 	private String _calculateType() {
-		String type = "No upgrade";
+		String type = "no upgrade";
 
 		for (Map.Entry<String, SchemaVersions> schemaVersionsEntry :
 				_schemaVersionsMap.entrySet()) {
@@ -205,20 +219,20 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			}
 
 			if (initialVersion.getMajor() < finalVersion.getMajor()) {
-				return "Major";
+				return "major";
 			}
 
-			if (type.equals("Minor")) {
+			if (type.equals("minor")) {
 				continue;
 			}
 
 			if (initialVersion.getMinor() < finalVersion.getMinor()) {
-				type = "Minor";
+				type = "minor";
 
 				continue;
 			}
 
-			type = "Micro";
+			type = "micro";
 		}
 
 		return type;
@@ -297,10 +311,10 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		new ConcurrentHashMap<>();
 	private String _state =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
-			"Pending" : "Not enabled";
+			"pending" : "not enabled";
 	private String _type =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
-			"Not calculated" : "Not enabled";
+			"pending" : "not enabled";
 	private final Map<String, ArrayList<String>> _upgradeProcessMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, Integer>> _warningMessages =

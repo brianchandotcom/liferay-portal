@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.webdav.WebDAVServlet;
 
@@ -131,7 +133,12 @@ public class BaseWebDAVTestCase {
 			mockHttpServletRequest.addHeader(entry.getKey(), entry.getValue());
 		}
 
-		try {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.poi.util.XMLHelper", LoggerTestUtil.WARN);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.xmlbeans.impl.common.SAXHelper",
+				LoggerTestUtil.WARN)) {
+
 			WebDAVServlet webDAVServlet = new WebDAVServlet();
 
 			MockHttpServletResponse mockHttpServletResponse =

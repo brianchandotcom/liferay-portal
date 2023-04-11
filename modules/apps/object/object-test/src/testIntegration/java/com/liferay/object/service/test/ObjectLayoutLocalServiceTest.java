@@ -115,6 +115,32 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Test", null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		_assertFailure(
+			ObjectDefinitionModifiableException.class,
+			"A modifiable object definition is required",
+			() -> _objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(_addObjectLayoutTab())));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
 
@@ -281,32 +307,6 @@ public class ObjectLayoutLocalServiceTest {
 						RandomTestUtil.randomString()),
 					Collections.singletonList(objectLayoutTab));
 			});
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				_objectDefinitionLocalService,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-		_assertFailure(
-			ObjectDefinitionModifiableException.class,
-			"A modifiable object definition is required",
-			() -> _objectLayoutLocalService.addObjectLayout(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.singletonList(_addObjectLayoutTab())));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());

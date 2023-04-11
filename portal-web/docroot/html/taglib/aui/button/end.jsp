@@ -21,47 +21,21 @@
 </c:if>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
-		<c:choose>
-			<c:when test='<%= Validator.isNull(onClick) && type.equals("cancel") %>'>
-				<button
-					class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
+	<c:when test='<%= Validator.isNotNull(escapedHREF) && !type.equals("cancel") %>'>
+		<a
+			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
+			href="<%= escapedHREF %>"
+			id="<%= id %>"
 
-					<c:if test="<%= disabled %>">
-						disabled
-					</c:if>
+			<c:if test="<%= Validator.isNotNull(onClick) %>">
+				onClick="<%= onClick %>"
+			</c:if>
 
-					id="<%= id %>"
+			role="button"
 
-					<c:if test="<%= Validator.isNotNull(name) %>">
-						name="<%= namespace %><%= name %>"
-					</c:if>
-
-					onClick="Liferay.Util.navigate('<%= escapedHREF %>')"
-
-					type="button"
-
-					<%= AUIUtil.buildData(data) %>
-					<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
-				>
-			</c:when>
-			<c:otherwise>
-				<a
-					class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
-					href="<%= escapedHREF %>"
-					id="<%= id %>"
-
-					<c:if test="<%= Validator.isNotNull(onClick) %>">
-						onClick="<%= onClick %>"
-					</c:if>
-
-					role="button"
-
-					<%= AUIUtil.buildData(data) %>
-					<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
-				>
-			</c:otherwise>
-		</c:choose>
+			<%= AUIUtil.buildData(data) %>
+			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
+		>
 	</c:when>
 	<c:otherwise>
 		<button
@@ -77,9 +51,16 @@
 				name="<%= namespace %><%= name %>"
 			</c:if>
 
-			<c:if test="<%= Validator.isNotNull(onClick) %>">
-				onClick="<%= onClick %>"
-			</c:if>
+			<c:choose>
+				<c:when test='<%= Validator.isNotNull(onClick) %>'>
+					onClick="<%= onClick %>"
+				</c:when>
+				<c:otherwise>
+					<c:if test="<%= Validator.isNotNull(escapedHREF) %>">
+						onClick="Liferay.Util.navigate('<%= escapedHREF %>')"
+					</c:if>
+				</c:otherwise>
+			</c:choose>
 
 			type="<%= type.equals("cancel") ? "button" : type %>"
 

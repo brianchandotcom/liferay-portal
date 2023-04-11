@@ -17,25 +17,21 @@ package com.liferay.frontend.taglib.internal.util;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = {})
 public class ServicesProvider {
 
 	public static AbsolutePortalURLBuilderFactory
@@ -45,44 +41,45 @@ public class ServicesProvider {
 	}
 
 	public static Map<String, Bundle> getBundleMap() {
-		if (_bundleTracker != null) {
-			return _bundleConcurrentMap;
-		}
+		return _bundleMapDCLSingleton.getSingleton(
+			() -> {
+				Map<String, Bundle> bundleMap = new ConcurrentHashMap<>();
 
-		_bundleConcurrentMap = new ConcurrentHashMap<>();
+				Bundle bundle = FrameworkUtil.getBundle(ServicesProvider.class);
 
-		_bundleTracker = new BundleTracker(
-			_bundleContext, Bundle.ACTIVE,
-			new BundleTrackerCustomizer<String>() {
+				BundleTracker<String> bundleTracker = new BundleTracker<>(
+					bundle.getBundleContext(), Bundle.ACTIVE,
+					new BundleTrackerCustomizer<String>() {
 
-				@Override
-				public String addingBundle(
-					Bundle bundle, BundleEvent bundleEvent) {
+						@Override
+						public String addingBundle(
+							Bundle bundle, BundleEvent bundleEvent) {
 
-					_bundleConcurrentMap.put(bundle.getSymbolicName(), bundle);
+							bundleMap.put(bundle.getSymbolicName(), bundle);
 
-					return bundle.getSymbolicName();
-				}
+							return bundle.getSymbolicName();
+						}
 
-				@Override
-				public void modifiedBundle(
-					Bundle bundle, BundleEvent bundleEvent,
-					String symbolicName) {
-				}
+						@Override
+						public void modifiedBundle(
+							Bundle bundle, BundleEvent bundleEvent,
+							String symbolicName) {
+						}
 
-				@Override
-				public void removedBundle(
-					Bundle bundle, BundleEvent bundleEvent,
-					String symbolicName) {
+						@Override
+						public void removedBundle(
+							Bundle bundle, BundleEvent bundleEvent,
+							String symbolicName) {
 
-					_bundleConcurrentMap.remove(symbolicName);
-				}
+							bundleMap.remove(symbolicName);
+						}
 
+					});
+
+				bundleTracker.open();
+
+				return bundleMap;
 			});
-
-		_bundleTracker.open();
-
-		return _bundleConcurrentMap;
 	}
 
 	public static JSModuleLauncher getJSModuleLauncher() {
@@ -93,28 +90,11 @@ public class ServicesProvider {
 		return _jsModuleResolverSnapshot.get();
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_bundleTracker != null) {
-			_bundleTracker.close();
-
-			_bundleTracker = null;
-		}
-
-		_bundleConcurrentMap = null;
-	}
-
 	private static final Snapshot<AbsolutePortalURLBuilderFactory>
 		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
 			ServicesProvider.class, AbsolutePortalURLBuilderFactory.class);
-	private static ConcurrentMap<String, Bundle> _bundleConcurrentMap;
-	private static BundleContext _bundleContext;
-	private static BundleTracker<String> _bundleTracker;
+	private static final DCLSingleton<Map<String, Bundle>>
+		_bundleMapDCLSingleton = new DCLSingleton<>();
 	private static final Snapshot<JSModuleLauncher> _jsModuleLauncherSnapshot =
 		new Snapshot<>(ServicesProvider.class, JSModuleLauncher.class);
 	private static final Snapshot<JSModuleResolver> _jsModuleResolverSnapshot =

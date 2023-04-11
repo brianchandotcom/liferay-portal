@@ -102,20 +102,14 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationPid, parentSettings);
 	}
 
-	public PortletPreferences getCompanyPortletPreferences(
-		long companyId, String settingsId) {
-
-		return _portletPreferencesLocalService.getStrictPreferences(
-			companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
-			settingsId);
-	}
-
 	@Override
 	public Settings getCompanyPortletPreferencesSettings(
 		long companyId, String settingsId, Settings parentSettings) {
 
 		return new PortletPreferencesSettings(
-			getCompanyPortletPreferences(companyId, settingsId),
+			_portletPreferencesLocalService.getStrictPreferences(
+				companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
+				settingsId),
 			parentSettings);
 	}
 
@@ -147,27 +141,22 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationPid, parentSettings);
 	}
 
-	public PortletPreferences getGroupPortletPreferences(
-		long groupId, String settingsId) {
-
-		try {
-			Group group = _groupLocalService.getGroup(groupId);
-
-			return _portletPreferencesLocalService.getStrictPreferences(
-				group.getCompanyId(), groupId,
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, settingsId);
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
-	}
-
 	@Override
 	public Settings getGroupPortletPreferencesSettings(
 		long groupId, String settingsId, Settings parentSettings) {
 
-		return new PortletPreferencesSettings(
-			getGroupPortletPreferences(groupId, settingsId), parentSettings);
+		try {
+			Group group = _groupLocalService.getGroup(groupId);
+
+			return new PortletPreferencesSettings(
+				_portletPreferencesLocalService.getStrictPreferences(
+					group.getCompanyId(), groupId,
+					PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, settingsId),
+				parentSettings);
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	@Override
@@ -187,43 +176,13 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationPid, parentSettings);
 	}
 
-	public PortletPreferences getPortletInstancePortletPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		String portletId) {
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			Layout layout = _layoutLocalService.fetchLayout(plid);
-
-			if (layout != null) {
-				return _portletPreferencesFactory.getStrictPortletSetup(
-					layout, portletId);
-			}
-		}
-
-		if (PortletIdCodec.hasUserId(portletId)) {
-			ownerId = PortletIdCodec.decodeUserId(portletId);
-			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-		}
-
-		return _portletPreferencesLocalService.getStrictPreferences(
-			companyId, ownerId, ownerType, plid, portletId);
-	}
-
-	public PortletPreferences getPortletInstancePortletPreferences(
-		long companyId, long plid, String portletId) {
-
-		return getPortletInstancePortletPreferences(
-			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
-	}
-
 	@Override
 	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, Settings parentSettings) {
 
 		return new PortletPreferencesSettings(
-			getPortletInstancePortletPreferences(
+			_getPortletInstancePortletPreferences(
 				companyId, ownerId, ownerType, plid, portletId),
 			parentSettings);
 	}
@@ -232,228 +191,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long plid, String portletId, Settings parentSettings) {
 
-		return new PortletPreferencesSettings(
-			getPortletInstancePortletPreferences(companyId, plid, portletId),
+		return getPortletInstancePortletPreferencesSettings(
+			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
 			parentSettings);
 	}
 
 	@Override
 	public Settings getServerSettings(String settingsId) {
 		return getConfigurationBeanSettings(settingsId);
-	}
-
-	public SafeCloseable registerConfigurationBeanClass(
-		Class<?> configurationBeanClass) {
-
-		if (configurationBeanClass.getAnnotation(Meta.OCD.class) == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping registration for class because Meta.OCD is " +
-						"missing: " + configurationBeanClass.getName());
-			}
-
-			return null;
-		}
-
-		for (Method methods : configurationBeanClass.getMethods()) {
-			Meta.AD annotation = methods.getAnnotation(Meta.AD.class);
-
-			if (annotation == null) {
-				continue;
-			}
-
-			if (annotation.required()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping registration for class because Meta.AD is " +
-							"required: " + configurationBeanClass.getName());
-				}
-
-				return null;
-			}
-		}
-
-		String configurationPid = ConfigurationPidUtil.getConfigurationPid(
-			configurationBeanClass);
-
-		if (_configurationBeanSettings.containsKey(configurationPid)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping registration for class because it is already " +
-						"registered: " + configurationPid);
-			}
-
-			return null;
-		}
-
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(
-				new ClassLoaderResourceManager(
-					configurationBeanClass.getClassLoader()),
-				SettingsLocatorHelperImpl.this);
-
-		ServiceRegistration<?> managedServiceServiceRegistration =
-			_bundleContext.registerService(
-				ManagedService.class,
-				properties -> {
-					if (properties == null) {
-						properties = new HashMapDictionary<>();
-					}
-
-					_configurationBeanSettings.put(
-						configurationPid,
-						new ConfigurationBeanSettings(
-							locationVariableResolver,
-							ConfigurableUtil.createConfigurable(
-								configurationBeanClass, properties),
-							_portalPropertiesSettings));
-				},
-				MapUtil.singletonDictionary(
-					Constants.SERVICE_PID, configurationPid));
-
-		ScopedConfigurationManagedServiceFactory
-			scopedConfigurationManagedServiceFactory =
-				new ScopedConfigurationManagedServiceFactory(
-					configurationBeanClass, locationVariableResolver);
-
-		ServiceRegistration<?> managedServiceFactoryServiceRegistration =
-			_bundleContext.registerService(
-				ManagedServiceFactory.class,
-				scopedConfigurationManagedServiceFactory,
-				MapUtil.singletonDictionary(
-					Constants.SERVICE_PID, configurationPid + ".scoped"));
-
-		_scopedConfigurationManagedServiceFactories.put(
-			scopedConfigurationManagedServiceFactory.getName(),
-			scopedConfigurationManagedServiceFactory);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Registering configuration class: " +
-					configurationBeanClass.getName());
-		}
-
-		ServiceRegistration<?> configurationPidMappingServiceRegistration =
-			_bundleContext.registerService(
-				ConfigurationPidMapping.class,
-				new ConfigurationPidMapping() {
-
-					@Override
-					public Class<?> getConfigurationBeanClass() {
-						return configurationBeanClass;
-					}
-
-					@Override
-					public String getConfigurationPid() {
-						return configurationPid;
-					}
-
-				},
-				null);
-
-		return () -> {
-			configurationPidMappingServiceRegistration.unregister();
-
-			_scopedConfigurationManagedServiceFactories.remove(
-				configurationPid);
-
-			managedServiceFactoryServiceRegistration.unregister();
-
-			_configurationBeanSettings.remove(configurationPid);
-
-			managedServiceServiceRegistration.unregister();
-		};
-	}
-
-	public class ConfigurationBeanClassBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<List<SafeCloseable>> {
-
-		@Override
-		public List<SafeCloseable> addingBundle(
-			Bundle bundle, BundleEvent bundleEvent) {
-
-			String bundleSymbolicName = bundle.getSymbolicName();
-
-			if (bundleSymbolicName.endsWith(".test")) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping bundle (do not check test modules): " +
-							bundleSymbolicName);
-				}
-
-				return null;
-			}
-
-			ExtendedMetaTypeInformation metaTypeInformation =
-				_extendedMetaTypeService.getMetaTypeInformation(bundle);
-
-			if (metaTypeInformation == null) {
-				return null;
-			}
-
-			List<SafeCloseable> autoCloseables = new ArrayList<>();
-
-			for (String pid :
-					ArrayUtil.append(
-						metaTypeInformation.getPids(),
-						metaTypeInformation.getFactoryPids())) {
-
-				Class<?> configurationBeanClass;
-
-				try {
-					configurationBeanClass = bundle.loadClass(pid);
-				}
-				catch (ClassNotFoundException classNotFoundException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Class not found: " +
-								classNotFoundException.getMessage());
-					}
-
-					continue;
-				}
-
-				SafeCloseable safeCloseable = registerConfigurationBeanClass(
-					configurationBeanClass);
-
-				if (safeCloseable != null) {
-					autoCloseables.add(safeCloseable);
-				}
-			}
-
-			if (ListUtil.isEmpty(autoCloseables)) {
-				return null;
-			}
-
-			return autoCloseables;
-		}
-
-		@Override
-		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent,
-			List<SafeCloseable> autoCloseables) {
-		}
-
-		@Override
-		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent,
-			List<SafeCloseable> safeCloseables) {
-
-			if (ListUtil.isEmpty(safeCloseables)) {
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Un-registering configuration classes for bundle: " +
-						bundle.getSymbolicName());
-			}
-
-			for (SafeCloseable safeCloseable : safeCloseables) {
-				safeCloseable.close();
-			}
-		}
-
 	}
 
 	@Activate
@@ -581,6 +327,28 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			props.getProperties());
 	}
 
+	private PortletPreferences _getPortletInstancePortletPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId) {
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			Layout layout = _layoutLocalService.fetchLayout(plid);
+
+			if (layout != null) {
+				return _portletPreferencesFactory.getStrictPortletSetup(
+					layout, portletId);
+			}
+		}
+
+		if (PortletIdCodec.hasUserId(portletId)) {
+			ownerId = PortletIdCodec.decodeUserId(portletId);
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+		}
+
+		return _portletPreferencesLocalService.getStrictPreferences(
+			companyId, ownerId, ownerType, plid, portletId);
+	}
+
 	private Settings _getScopedConfigurationBeanSettings(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
 		String configurationPid, Settings parentSettings) {
@@ -608,6 +376,129 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationBean, parentSettings);
 	}
 
+	private SafeCloseable _registerConfigurationBeanClass(
+		Class<?> configurationBeanClass) {
+
+		if (configurationBeanClass.getAnnotation(Meta.OCD.class) == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping registration for class because Meta.OCD is " +
+						"missing: " + configurationBeanClass.getName());
+			}
+
+			return null;
+		}
+
+		for (Method methods : configurationBeanClass.getMethods()) {
+			Meta.AD annotation = methods.getAnnotation(Meta.AD.class);
+
+			if (annotation == null) {
+				continue;
+			}
+
+			if (annotation.required()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping registration for class because Meta.AD is " +
+							"required: " + configurationBeanClass.getName());
+				}
+
+				return null;
+			}
+		}
+
+		String configurationPid = ConfigurationPidUtil.getConfigurationPid(
+			configurationBeanClass);
+
+		if (_configurationBeanSettings.containsKey(configurationPid)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping registration for class because it is already " +
+						"registered: " + configurationPid);
+			}
+
+			return null;
+		}
+
+		LocationVariableResolver locationVariableResolver =
+			new LocationVariableResolver(
+				new ClassLoaderResourceManager(
+					configurationBeanClass.getClassLoader()),
+				SettingsLocatorHelperImpl.this);
+
+		ServiceRegistration<?> managedServiceServiceRegistration =
+			_bundleContext.registerService(
+				ManagedService.class,
+				properties -> {
+					if (properties == null) {
+						properties = new HashMapDictionary<>();
+					}
+
+					_configurationBeanSettings.put(
+						configurationPid,
+						new ConfigurationBeanSettings(
+							locationVariableResolver,
+							ConfigurableUtil.createConfigurable(
+								configurationBeanClass, properties),
+							_portalPropertiesSettings));
+				},
+				MapUtil.singletonDictionary(
+					Constants.SERVICE_PID, configurationPid));
+
+		ScopedConfigurationManagedServiceFactory
+			scopedConfigurationManagedServiceFactory =
+				new ScopedConfigurationManagedServiceFactory(
+					configurationBeanClass, locationVariableResolver);
+
+		ServiceRegistration<?> managedServiceFactoryServiceRegistration =
+			_bundleContext.registerService(
+				ManagedServiceFactory.class,
+				scopedConfigurationManagedServiceFactory,
+				MapUtil.singletonDictionary(
+					Constants.SERVICE_PID, configurationPid + ".scoped"));
+
+		_scopedConfigurationManagedServiceFactories.put(
+			scopedConfigurationManagedServiceFactory.getName(),
+			scopedConfigurationManagedServiceFactory);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registering configuration class: " +
+					configurationBeanClass.getName());
+		}
+
+		ServiceRegistration<?> configurationPidMappingServiceRegistration =
+			_bundleContext.registerService(
+				ConfigurationPidMapping.class,
+				new ConfigurationPidMapping() {
+
+					@Override
+					public Class<?> getConfigurationBeanClass() {
+						return configurationBeanClass;
+					}
+
+					@Override
+					public String getConfigurationPid() {
+						return configurationPid;
+					}
+
+				},
+				null);
+
+		return () -> {
+			configurationPidMappingServiceRegistration.unregister();
+
+			_scopedConfigurationManagedServiceFactories.remove(
+				configurationPid);
+
+			managedServiceFactoryServiceRegistration.unregister();
+
+			_configurationBeanSettings.remove(configurationPid);
+
+			managedServiceServiceRegistration.unregister();
+		};
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsLocatorHelperImpl.class);
 
@@ -632,5 +523,96 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	private final Map<String, ScopedConfigurationManagedServiceFactory>
 		_scopedConfigurationManagedServiceFactories = new ConcurrentHashMap<>();
+
+	private class ConfigurationBeanClassBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<List<SafeCloseable>> {
+
+		@Override
+		public List<SafeCloseable> addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
+			String bundleSymbolicName = bundle.getSymbolicName();
+
+			if (bundleSymbolicName.endsWith(".test")) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping bundle (do not check test modules): " +
+							bundleSymbolicName);
+				}
+
+				return null;
+			}
+
+			ExtendedMetaTypeInformation metaTypeInformation =
+				_extendedMetaTypeService.getMetaTypeInformation(bundle);
+
+			if (metaTypeInformation == null) {
+				return null;
+			}
+
+			List<SafeCloseable> autoCloseables = new ArrayList<>();
+
+			for (String pid :
+					ArrayUtil.append(
+						metaTypeInformation.getPids(),
+						metaTypeInformation.getFactoryPids())) {
+
+				Class<?> configurationBeanClass;
+
+				try {
+					configurationBeanClass = bundle.loadClass(pid);
+				}
+				catch (ClassNotFoundException classNotFoundException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Class not found: " +
+								classNotFoundException.getMessage());
+					}
+
+					continue;
+				}
+
+				SafeCloseable safeCloseable = _registerConfigurationBeanClass(
+					configurationBeanClass);
+
+				if (safeCloseable != null) {
+					autoCloseables.add(safeCloseable);
+				}
+			}
+
+			if (ListUtil.isEmpty(autoCloseables)) {
+				return null;
+			}
+
+			return autoCloseables;
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			List<SafeCloseable> autoCloseables) {
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			List<SafeCloseable> safeCloseables) {
+
+			if (ListUtil.isEmpty(safeCloseables)) {
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Un-registering configuration classes for bundle: " +
+						bundle.getSymbolicName());
+			}
+
+			for (SafeCloseable safeCloseable : safeCloseables) {
+				safeCloseable.close();
+			}
+		}
+
+	}
 
 }

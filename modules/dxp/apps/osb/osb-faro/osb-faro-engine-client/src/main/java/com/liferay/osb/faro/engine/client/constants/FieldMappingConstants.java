@@ -53,6 +53,10 @@ public class FieldMappingConstants {
 
 	public static final String TYPE_DATE = "Date";
 
+	public static final String TYPE_DECIMAL = "Decimal";
+
+	public static final String TYPE_INTEGER = "Integer";
+
 	public static final String TYPE_NUMBER = "Number";
 
 	public static final String TYPE_TEXT = "Text";

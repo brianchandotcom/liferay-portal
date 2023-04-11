@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -153,7 +153,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 	}
 
 	private String _evaluateObjectFields(
-			Context context, String termName, Map<String, Object> termValues) {
+		Context context, String termName, Map<String, Object> termValues) {
 
 		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
 			return termName;
@@ -202,10 +202,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			String prefix = StringUtil.toUpperCase(
-				StringBundler.concat(
-					objectRelationship.getName(), StringPool.UNDERLINE,
-					objectDefinition.getShortName()));
+			String prefix = ObjectRelationshipUtil.getNotificationTermPrefix(
+				objectDefinition, objectRelationship);
 
 			if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
 				!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
@@ -275,10 +273,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			String prefix = StringUtil.toUpperCase(
-				StringBundler.concat(
-					objectRelationship.getName(), StringPool.UNDERLINE,
-					objectDefinition.getShortName()));
+			String prefix = ObjectRelationshipUtil.getNotificationTermPrefix(
+				objectDefinition, objectRelationship);
 
 			for (ObjectField objectField :
 					_objectFieldLocalService.getObjectFields(

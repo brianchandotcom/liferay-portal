@@ -59,7 +59,7 @@ public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 
 	@Override
 	protected Set<Map.Entry<String, String>> getTermNamesEntries(
-		Locale locale, List<ObjectField> objectFields, String partialTermName) {
+		Locale locale, List<ObjectField> objectFields, String prefix) {
 
 		return _termNames.entrySet();
 	}

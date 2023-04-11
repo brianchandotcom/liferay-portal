@@ -16,7 +16,6 @@ package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectField;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -41,7 +40,7 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	protected Set<Map.Entry<String, String>> getTermNamesEntries(
-		Locale locale, List<ObjectField> objectFields, String partialTermName) {
+		Locale locale, List<ObjectField> objectFields, String prefix) {
 
 		Map<String, String> termNames = new LinkedHashMap<>();
 
@@ -53,14 +52,13 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 					(termLabel, objectFieldName) -> termNames.put(
 						termLabel,
 						ObjectDefinitionNotificationTermUtil.
-							getObjectFieldTermName(
-								partialTermName, objectFieldName)));
+							getObjectFieldTermName(prefix, objectFieldName)));
 			}
 			else {
 				termNames.put(
 					objectField.getLabel(locale),
 					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-						partialTermName, objectField.getName()));
+						prefix, objectField.getName()));
 			}
 		}
 
@@ -68,14 +66,12 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 	}
 
 	protected JSONArray getTermsJSONArray(
-			Locale locale, List<ObjectField> objectFields,
-			String partialTermName)
-		throws PortalException {
+		Locale locale, List<ObjectField> objectFields, String prefix) {
 
 		JSONArray termsJSONArray = jsonFactory.createJSONArray();
 
 		for (Map.Entry<String, String> entry :
-				getTermNamesEntries(locale, objectFields, partialTermName)) {
+				getTermNamesEntries(locale, objectFields, prefix)) {
 
 			termsJSONArray.put(
 				JSONUtil.put(

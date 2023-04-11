@@ -21,11 +21,9 @@ import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
@@ -167,22 +165,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		_fallbackKeysServiceTrackerMap.close();
 	}
 
-	protected long getCompanyId(long groupId) throws SettingsException {
-		try {
-			Group group = _groupLocalService.getGroup(groupId);
-
-			return group.getCompanyId();
-		}
-		catch (PortalException portalException) {
-			throw new SettingsException(portalException);
-		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setPortletItemLocalService(
 		PortletItemLocalService portletItemLocalService) {
@@ -238,7 +220,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private ServiceTrackerMap<String, FallbackKeys>
 		_fallbackKeysServiceTrackerMap;
-	private GroupLocalService _groupLocalService;
 	private PortletItemLocalService _portletItemLocalService;
 	private ServiceTrackerMap<String, SettingsDescriptor>
 		_settingsDescriptorServiceTrackerMap;

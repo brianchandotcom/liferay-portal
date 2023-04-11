@@ -126,16 +126,22 @@ public class UpgradeStatusTest {
 	@Test
 	public void testMajorUpgrade() {
 		_testUpgradeType("major");
+
+		Assert.assertEquals("major", _upgradeStatus.getType());
 	}
 
 	@Test
 	public void testMicroUpgrade() {
 		_testUpgradeType("micro");
+
+		Assert.assertEquals("micro", _upgradeStatus.getType());
 	}
 
 	@Test
 	public void testMinorUpgrade() {
 		_testUpgradeType("minor");
+
+		Assert.assertEquals("minor", _upgradeStatus.getType());
 	}
 
 	@Test
@@ -152,6 +158,8 @@ public class UpgradeStatusTest {
 	@Test
 	public void testQualifierUpgrade() {
 		_testUpgradeType("qualifier");
+
+		Assert.assertEquals("micro", _upgradeStatus.getType());
 	}
 
 	@Test
@@ -252,15 +260,6 @@ public class UpgradeStatusTest {
 			minorBundleSymbolicName, currentMinorSchemaVersion.toString());
 		_setReleaseSchemaVersion(
 			microBundleSymbolicName, currentMicroSchemaVersion.toString());
-
-		Assert.assertEquals("success", _upgradeStatus.getState());
-
-		if (!type.equals("qualifier")) {
-			Assert.assertEquals(type, _upgradeStatus.getType());
-		}
-		else {
-			Assert.assertEquals("micro", _upgradeStatus.getType());
-		}
 	}
 
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;

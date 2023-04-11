@@ -25,12 +25,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.context.annotation.Configuration;
-
 /**
  * @author Michael Hashimoto
  */
-@Configuration
 public class BuildQueue {
 
 	public void addBuild(Build build) {

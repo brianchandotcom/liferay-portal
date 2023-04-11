@@ -114,6 +114,10 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 					LocaleUtil.getMostRelevantLocale());
 			}
 
+			if (userCustomFieldValue == null) {
+				continue;
+			}
+
 			String userCustomFieldValueString = userCustomFieldValue.toString();
 
 			List<AssetCategory> assetCategories =

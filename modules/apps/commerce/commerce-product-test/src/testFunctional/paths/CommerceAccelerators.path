@@ -731,6 +731,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_VIEW_BUTTON</td>
+	<td>//p[@title='${key_productName}']//../..//a[normalize-space(text())='View']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_DESCRIPTION</td>
 	<td>//p[@title='${key_productName}']/..//following-sibling::p[@class='card-body']//span[contains(normalize-space(text()),'${key_productDescription}')]</td>
 	<td></td>

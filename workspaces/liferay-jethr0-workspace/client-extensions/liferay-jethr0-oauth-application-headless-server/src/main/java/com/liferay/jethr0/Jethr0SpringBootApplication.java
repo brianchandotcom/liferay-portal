@@ -16,14 +16,13 @@ package com.liferay.jethr0;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
+import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
 import com.liferay.jethr0.project.comparator.ProjectComparatorRepository;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerRepository;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
@@ -78,10 +77,15 @@ public class Jethr0SpringBootApplication {
 				projectComparatorRepository, projectPrioritizerRepository));
 
 		projectQueue.addProjects(
-			projectRepository.getByState(Project.State.RUNNING));
+			projectRepository.getByStates(
+				Project.State.QUEUED, Project.State.RUNNING));
 
 		for (Project project : projectQueue.getProjects()) {
 			System.out.println(project);
+
+			for (Build build : project.getBuilds()) {
+				System.out.println("> " + build);
+			}
 		}
 
 		return projectQueue;
@@ -98,19 +102,14 @@ public class Jethr0SpringBootApplication {
 			return projectPrioritizer;
 		}
 
-		projectPrioritizer = ProjectPrioritizerFactory.newProjectPrioritizer(
+		projectPrioritizer = projectPrioritizerRepository.add(
 			_liferayProjectPrioritizer);
 
-		projectPrioritizer = projectPrioritizerRepository.add(
-			projectPrioritizer);
-
 		projectComparatorRepository.add(
-			ProjectComparatorFactory.newProjectComparator(
-				projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
-				null));
+			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
+			null);
 		projectComparatorRepository.add(
-			ProjectComparatorFactory.newProjectComparator(
-				projectPrioritizer, 2, ProjectComparator.Type.FIFO, null));
+			projectPrioritizer, 2, ProjectComparator.Type.FIFO, null);
 
 		return projectPrioritizer;
 	}

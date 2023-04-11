@@ -21,6 +21,8 @@ import com.liferay.jethr0.project.comparator.ProjectComparator;
 import java.util.List;
 import java.util.Objects;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +32,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProjectPrioritizerRepository
 	extends BaseEntityRepository<ProjectPrioritizer> {
+
+	public ProjectPrioritizer add(String name) {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("name", name);
+
+		return add(_projectPrioritizerFactory.newEntity(jsonObject));
+	}
 
 	public ProjectPrioritizer getByName(String name) {
 		for (ProjectPrioritizer projectPrioritizer : getAll()) {
@@ -77,6 +87,9 @@ public class ProjectPrioritizerRepository
 
 	@Autowired
 	private ProjectPrioritizerDALO _projectPrioritizerDALO;
+
+	@Autowired
+	private ProjectPrioritizerFactory _projectPrioritizerFactory;
 
 	@Autowired
 	private ProjectPrioritizerToProjectComparatorsDALO

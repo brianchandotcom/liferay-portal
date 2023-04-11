@@ -19,8 +19,8 @@ import com.liferay.jethr0.dalo.ProjectToBuildsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -31,11 +31,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProjectRepository extends BaseEntityRepository<Project> {
 
-	public List<Project> getByState(Project.State state) {
+	public List<Project> getByStates(Project.State... states) {
+		List<Project.State> statesList = Arrays.asList(states);
+
 		List<Project> projects = new ArrayList<>();
 
 		for (Project project : getAll()) {
-			if (!Objects.equals(project.getState(), state)) {
+			if (!statesList.contains(project.getState())) {
 				continue;
 			}
 

@@ -885,6 +885,17 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public boolean isServiceAccountUser() {
+		if ((getType() == UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT) ||
+			(getType() == UserConstants.TYPE_SERVICE_ACCOUNT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isSetupComplete() {
 		if (isGuestUser()) {
 			return true;

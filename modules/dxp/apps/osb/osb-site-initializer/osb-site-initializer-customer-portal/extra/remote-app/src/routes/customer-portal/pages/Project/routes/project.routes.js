@@ -125,6 +125,7 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<DeactivateKeysTable
+										initialFilter="startswith(productName,'DXP') or startswith(productName,'Digital')"
 										productName={PRODUCT_TYPES.dxp}
 									/>
 								}

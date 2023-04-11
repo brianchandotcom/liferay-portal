@@ -15,10 +15,10 @@ import {useGetActivationKeys} from '../../../../../common/services/liferay/graph
 const MAX_ITEMS = 9999;
 const PAGE = 1;
 
-export default function useGetActivationKeysData(project, productName) {
+export default function useGetActivationKeysData(project, initialFilter) {
 	const [activationKeys, setActivationKeys] = useState([]);
 	const [filterTerm, setFilterTerm] = useState(
-		`active eq true and startswith(productName,'${productName}')`
+		`active eq true and ${initialFilter}`
 	);
 
 	const {data, loading} = useGetActivationKeys(

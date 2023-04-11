@@ -37,7 +37,12 @@ import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey
 import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
-const ActivationKeysTable = ({productName, project, sessionId}) => {
+const ActivationKeysTable = ({
+	initialFilter,
+	productName,
+	project,
+	sessionId,
+}) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
@@ -70,7 +75,7 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
 		setFilterTerm,
-	} = useGetActivationKeysData(project, productName);
+	} = useGetActivationKeysData(project, initialFilter);
 
 	const {
 		navigationGroupButtons,

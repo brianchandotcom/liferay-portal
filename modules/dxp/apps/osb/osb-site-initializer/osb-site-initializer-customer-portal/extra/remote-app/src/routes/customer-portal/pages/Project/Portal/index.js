@@ -28,6 +28,7 @@ const Portal = () => {
 	return (
 		<div className="mr-4">
 			<ActivationKeysTable
+				initialFilter="startswith(productName,'Portal')"
 				productName="Portal"
 				project={project}
 				sessionId={sessionId}

@@ -45,7 +45,7 @@ const DeactivateKeysTable = ({productName}) => {
 		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
 		setFilterTerm,
-	} = useGetActivationKeysData(project, sessionId, productName);
+	} = useGetActivationKeysData(project, productName);
 
 	const {
 		statusfilterByTitle: [statusFilter],

@@ -10,46 +10,29 @@
  */
 
 import {useEffect, useState} from 'react';
-import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
-import {getActivationLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import {useGetActivationKeys} from '../../../../../common/services/liferay/graphql/activation-keys';
 
 const MAX_ITEMS = 9999;
 const PAGE = 1;
 
-export default function useGetActivationKeysData(
-	project,
-	sessionId,
-	productName
-) {
-	const {provisioningServerAPI} = useAppPropertiesContext();
-
-	const [loading, setLoading] = useState(true);
+export default function useGetActivationKeysData(project, productName) {
 	const [activationKeys, setActivationKeys] = useState([]);
 	const [filterTerm, setFilterTerm] = useState(
 		`active eq true and startswith(productName,'${productName}')`
 	);
 
+	const {data, loading} = useGetActivationKeys(
+		project?.accountKey,
+		encodeURI(filterTerm),
+		PAGE,
+		MAX_ITEMS
+	);
+
 	useEffect(() => {
-		setLoading(true);
-		const fetchActivationKeysData = async () => {
-			const {items} = await getActivationLicenseKey(
-				project?.accountKey,
-				provisioningServerAPI,
-				encodeURI(filterTerm),
-				PAGE,
-				MAX_ITEMS,
-				sessionId
-			);
-
-			if (items) {
-				setActivationKeys(items);
-			}
-
-			setLoading(false);
-		};
-
-		fetchActivationKeysData();
-	}, [filterTerm, provisioningServerAPI, project?.accountKey, sessionId]);
+		if (!loading) {
+			setActivationKeys(data.getActivationKeys.items);
+		}
+	}, [data, loading]);
 
 	return {
 		activationKeysState: [activationKeys, setActivationKeys],

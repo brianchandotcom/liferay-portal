@@ -10,14 +10,14 @@
  */
 import {ACTIVATION_STATUS} from './constants/activationStatus';
 
-export function getStatusActivationTag(activationKeys) {
+export function getStatusActivationTag(activationKey) {
 	let activationStatus = ACTIVATION_STATUS.activated;
 	const now = new Date();
 
-	if (now < new Date(activationKeys.startDate)) {
+	if (now < new Date(activationKey.startDate)) {
 		activationStatus = ACTIVATION_STATUS.notActivated;
 	}
-	else if (now > new Date(activationKeys.expirationDate)) {
+	else if (now > new Date(activationKey.expirationDate)) {
 		activationStatus = ACTIVATION_STATUS.expired;
 	}
 

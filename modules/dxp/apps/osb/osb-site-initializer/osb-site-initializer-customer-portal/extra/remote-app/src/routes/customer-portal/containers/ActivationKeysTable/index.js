@@ -70,7 +70,7 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
 		setFilterTerm,
-	} = useGetActivationKeysData(project, sessionId, productName);
+	} = useGetActivationKeysData(project, productName);
 
 	const {
 		navigationGroupButtons,

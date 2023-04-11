@@ -14,7 +14,7 @@
 
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
 import {DragTypes} from '../../utils/drag-types';
@@ -94,39 +94,30 @@ function drop(props, monitor) {
 	}
 }
 
-class DropZone extends Component {
-	static propTypes = {
-		before: PropTypes.bool,
-		canDrop: PropTypes.bool,
-		connectDropTarget: PropTypes.func,
-		dropIndex: PropTypes.number.isRequired,
-		groupId: PropTypes.string.isRequired,
-		hover: PropTypes.bool,
-		onCriterionAdd: PropTypes.func.isRequired,
-		onMove: PropTypes.func.isRequired,
-		propertyKey: PropTypes.string.isRequired,
-	};
+function DropZone({before, canDrop, connectDropTarget, hover}) {
+	const targetClasses = getCN('drop-zone-target', {
+		'drop-zone-target-before': before,
+	});
 
-	render() {
-		const {before, canDrop, connectDropTarget, hover} = this.props;
-
-		const targetClasses = getCN('drop-zone-target', {
-			'drop-zone-target-before': before,
-		});
-
-		return (
-			<div className="drop-zone-root">
-				{connectDropTarget(
-					<div className={targetClasses}>
-						{canDrop && hover && (
-							<div className="drop-zone-indicator" />
-						)}
-					</div>
-				)}
-			</div>
-		);
-	}
+	return (
+		<div className="drop-zone-root">
+			{connectDropTarget(
+				<div className={targetClasses}>
+					{canDrop && hover && (
+						<div className="drop-zone-indicator" />
+					)}
+				</div>
+			)}
+		</div>
+	);
 }
+
+DropZone.propTypes = {
+	before: PropTypes.bool,
+	canDrop: PropTypes.bool,
+	connectDropTarget: PropTypes.func,
+	hover: PropTypes.bool,
+};
 
 export default dropTarget(
 	acceptedDragTypes,

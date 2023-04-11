@@ -79,7 +79,7 @@ export default function RelationshipSection({
 
 					setShowFDS(false);
 
-					setTimeout(() => setShowFDS(true), 500);
+					setTimeout(() => setShowFDS(true), 1000);
 				}
 			}}
 			showCollapseIcon={true}

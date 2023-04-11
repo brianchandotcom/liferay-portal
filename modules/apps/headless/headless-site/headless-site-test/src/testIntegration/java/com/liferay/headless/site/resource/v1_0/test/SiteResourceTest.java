@@ -85,6 +85,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteFailureSiteTemplateInactive();
 		_testPostSiteFailureSiteTemplateNotFound();
 		_testPostSiteFailureTemplateKeyNoTemplateType();
+		_testPostSiteFailureTemplateTypeNoTemplateKey();
 		_testPostSiteSuccessChild();
 		_testPostSiteSuccessMembershipTypePrivate();
 		_testPostSiteSuccessSiteInitializer();
@@ -304,6 +305,29 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals(
 				"Template type cannot be empty if template key is specified",
+				problem.getTitle());
+		}
+	}
+
+	private void _testPostSiteFailureTemplateTypeNoTemplateKey()
+		throws Exception {
+
+		Site randomSite = randomSite();
+
+		randomSite.setTemplateType(Site.TemplateType.SITE_INITIALIZER);
+
+		try {
+			testPostSite_addSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+
+			Assert.assertEquals(
+				"Template key cannot be empty if template type is specified",
 				problem.getTitle());
 		}
 	}

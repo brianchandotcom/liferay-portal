@@ -1408,8 +1408,46 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
 
-		// Update modifiable object
+	@Test
+	public void testUpdateSystemObjectDefinition() throws Exception {
+
+		// Update unmodifiable system object
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Test", null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				_objectDefinitionLocalService,
+				Collections.<ObjectField>emptyList());
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", true,
+			false, Collections.emptyList());
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateSystemObjectDefinition(
+				"TEST-ERC", objectDefinition.getObjectDefinitionId(),
+				objectField.getObjectFieldId());
+
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		Assert.assertEquals(
+			"TEST-ERC", objectDefinition.getExternalReferenceCode());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Update modifiable system object
 
 		objectDefinition = _publishModifiableSystemObjectDefinition();
 

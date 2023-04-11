@@ -52,7 +52,7 @@
 			</c:if>
 
 			<c:choose>
-				<c:when test='<%= Validator.isNotNull(onClick) %>'>
+				<c:when test="<%= Validator.isNotNull(onClick) %>">
 					onClick="<%= onClick %>"
 				</c:when>
 				<c:otherwise>

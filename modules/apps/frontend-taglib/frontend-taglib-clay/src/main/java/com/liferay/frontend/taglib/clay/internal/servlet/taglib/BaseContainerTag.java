@@ -17,7 +17,7 @@ package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
+import com.liferay.frontend.taglib.react.servlet.taglib.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;

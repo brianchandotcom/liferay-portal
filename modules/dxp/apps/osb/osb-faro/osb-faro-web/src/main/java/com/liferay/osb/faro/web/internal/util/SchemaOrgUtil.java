@@ -25,12 +25,14 @@ import java.util.Map;
  */
 public class SchemaOrgUtil {
 
-	public static String getRawType(String type) {
+	public static String getRawType(String displayType, String type) {
 		if (type.startsWith(_SCHEMA_ORG_URL)) {
 			type = type.substring(_SCHEMA_ORG_URL.length());
 		}
 
 		if (StringUtil.equalsIgnoreCase(
+				displayType, FieldMappingConstants.TYPE_BOOLEAN) ||
+			StringUtil.equalsIgnoreCase(
 				type, FieldMappingConstants.TYPE_BOOLEAN)) {
 
 			return FieldMappingConstants.TYPE_BOOLEAN;
@@ -41,7 +43,11 @@ public class SchemaOrgUtil {
 			return FieldMappingConstants.TYPE_DATE;
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					type, FieldMappingConstants.TYPE_NUMBER)) {
+					type, FieldMappingConstants.TYPE_DECIMAL) ||
+				 StringUtil.equalsIgnoreCase(
+					 type, FieldMappingConstants.TYPE_INTEGER) ||
+				 StringUtil.equalsIgnoreCase(
+					 type, FieldMappingConstants.TYPE_NUMBER)) {
 
 			return FieldMappingConstants.TYPE_NUMBER;
 		}
@@ -55,7 +61,7 @@ public class SchemaOrgUtil {
 	}
 
 	public static boolean isSubtype(String type, String rawType) {
-		if (rawType.equals(getRawType(type))) {
+		if (rawType.equals(getRawType(type, type))) {
 			return true;
 		}
 

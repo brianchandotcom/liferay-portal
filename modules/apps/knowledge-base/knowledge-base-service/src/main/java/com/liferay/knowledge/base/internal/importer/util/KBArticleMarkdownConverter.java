@@ -44,14 +44,12 @@ import java.util.TreeSet;
 public class KBArticleMarkdownConverter {
 
 	public KBArticleMarkdownConverter(
-			String markdown, String fileEntryName, Map<String, String> metadata,
+			String markdown, String fileEntryName,
+			MarkdownConverter markdownConverter, Map<String, String> metadata,
 			DLURLHelper dlURLHelper)
 		throws KBArticleImportException {
 
 		_dlURLHelper = dlURLHelper;
-
-		MarkdownConverter markdownConverter =
-			MarkdownConverterFactoryUtil.create();
 
 		String html = null;
 

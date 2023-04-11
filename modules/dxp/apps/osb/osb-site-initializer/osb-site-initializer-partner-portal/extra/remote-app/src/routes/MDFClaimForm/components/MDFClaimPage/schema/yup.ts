@@ -53,7 +53,6 @@ const claimSchema = object({
 						schema.of(
 							object({
 								invoice: mixed()
-									.required()
 									.when('selected', {
 										is: (selected: boolean) => selected,
 										then: (schema) =>
@@ -80,7 +79,7 @@ const claimSchema = object({
 
 														return true;
 													}
-												)
+												).required()
 												.test(
 													'fileType',
 													validateDocument
@@ -99,10 +98,9 @@ const claimSchema = object({
 
 														return true;
 													}
-												),
+												).required(),
 									}),
 								invoiceAmount: number()
-									.required()
 									.when('selected', {
 										is: (selected: boolean) => selected,
 										then: (schema) =>
@@ -123,7 +121,7 @@ const claimSchema = object({
 															testContext.parent
 																.requestAmount
 														)
-												),
+												).required(),
 									}),
 								requestAmount: number(),
 							})

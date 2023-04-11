@@ -150,6 +150,8 @@ public class UpgradeLogAppender implements Appender {
 		}
 
 		_started = false;
+
+		_rootLogger.removeAppender(this);
 	}
 
 	private static final Logger _rootLogger =

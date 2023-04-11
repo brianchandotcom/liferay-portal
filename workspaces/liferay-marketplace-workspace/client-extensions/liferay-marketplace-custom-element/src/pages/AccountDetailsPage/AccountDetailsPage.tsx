@@ -12,12 +12,19 @@ import phoneIcon from '../../assets/icons/phone-icon.svg';
 import userIcon from '../../assets/icons/user-icon.svg';
 import {DetailedCard} from '../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../utils/api';
+import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 
 interface AccountDetailsPageProps {
+	dashboardNavigationItems: DashboardListItems[];
+	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 	selectedAccount: Account;
 }
 
-export function AccountDetailsPage({selectedAccount}: AccountDetailsPageProps) {
+export function AccountDetailsPage({
+	dashboardNavigationItems,
+	setDashboardNavigationItems,
+	selectedAccount,
+}: AccountDetailsPageProps) {
 	const [selectedAccountAddress, setSelectedAccountAddress] =
 		useState<AccountPostalAddresses[]>();
 
@@ -102,18 +109,27 @@ export function AccountDetailsPage({selectedAccount}: AccountDetailsPageProps) {
 					<div className="account-details-header-right-container">
 						<AccountHeaderButton
 							boldText="4"
+							name="apps"
+							onClick={(itemName) =>
+								updateDashboardNavigationItems(itemName)
+							}
 							text="people"
 							title="Apps"
 						/>
 
 						<AccountHeaderButton
 							boldText="4"
+							name="members"
+							onClick={(itemName) =>
+								updateDashboardNavigationItems(itemName)
+							}
 							text="Items"
 							title="Members"
 						/>
 
 						<AccountHeaderButton
 							boldText="4"
+							name="solutions"
 							text="Items"
 							title="Solutions"
 						/>

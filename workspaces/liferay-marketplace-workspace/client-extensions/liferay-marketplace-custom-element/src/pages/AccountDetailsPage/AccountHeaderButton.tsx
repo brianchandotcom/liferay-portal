@@ -5,13 +5,17 @@ import React from 'react';
 import './AccountHeaderButton.scss';
 
 interface AccountHeaderButtonProps {
-	title: string;
 	boldText: string;
+	name: string;
+	onClick?: (value: string) => void;
 	text: string;
+	title: string;
 }
 
 export function AccountHeaderButton({
 	boldText,
+	name,
+	onClick,
 	text,
 	title,
 }: AccountHeaderButtonProps) {
@@ -21,7 +25,10 @@ export function AccountHeaderButton({
 				{title}
 			</span>
 
-			<ClayButton displayType="unstyled">
+			<ClayButton
+				displayType="unstyled"
+				onClick={() => onClick && onClick(name)}
+			>
 				<div className="account-details-header-right-content-button-container">
 					<strong className="account-details-header-right-content-button-text-bold">
 						{boldText}

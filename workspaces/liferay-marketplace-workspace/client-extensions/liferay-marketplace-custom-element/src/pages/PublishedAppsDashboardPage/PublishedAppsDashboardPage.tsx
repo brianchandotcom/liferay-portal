@@ -542,7 +542,11 @@ export function PublishedAppsDashboardPage() {
 			)}
 
 			{selectedNavigationItem === 'Account' && (
-				<AccountDetailsPage selectedAccount={selectedAccount} />
+				<AccountDetailsPage
+					dashboardNavigationItems={dashboardNavigationItems}
+					selectedAccount={selectedAccount}
+					setDashboardNavigationItems={setDashboardNavigationItems}
+				/>
 			)}
 		</div>
 	);

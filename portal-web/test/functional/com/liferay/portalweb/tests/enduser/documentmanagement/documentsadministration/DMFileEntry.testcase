@@ -1095,6 +1095,137 @@ definition {
 			dmDocumentVersionNumber = "1.1");
 	}
 
+	@description = "This test ensures that users can choose one/multiple of the extensions to filter documents."
+	@priority = 4
+	test CanFilterByExtensions {
+		property custom.properties = "feature.flag.LPS-84424=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.docx",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_1.docx");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.xls",
+			groupName = "Guest",
+			mimeType = "application/excel",
+			sourceFileName = "Document_1.xls");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.docx In Folder",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_2.docx");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.xls In Folder",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/excel",
+			sourceFileName = "Document_2.xls");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		task ("Assert user can choose one of the extensions to filter documents") {
+			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
+				extensionSubcategory = "xls,docx");
+
+			DMDocument.selectExtensions(extensionCategory = "Text (1 Item)");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: docx",
+				searchResults = "2 Results");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.docx In Folder");
+
+			AssertTextEquals.assertPartialText(
+				index = 2,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.docx");
+		}
+
+		task ("Assert user can choose multiple extensions to filter documents in Home folder") {
+			ManagementBar.setFilterAndOrder(
+				active = "true",
+				filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
+				extensionSubcategory = "xls,docx");
+
+			DMDocument.selectExtensions(
+				clearAll = "true",
+				extensionCategory = "Spreadsheet (1 Item),Text (1 Item)");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: xls,Extension: docx",
+				searchResults = "4 Results");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.xls In Folder");
+
+			AssertTextEquals.assertPartialText(
+				index = 2,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.docx In Folder");
+
+			AssertTextEquals.assertPartialText(
+				index = 3,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.xls");
+
+			AssertTextEquals.assertPartialText(
+				index = 4,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.docx");
+		}
+
+		task ("Assert user can choose multiple extensions to filter documents in folder") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
+				extensionSubcategory = "xls,docx");
+
+			DMDocument.selectExtensions(extensionCategory = "Spreadsheet (1 Item),Text (1 Item)");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: docx",
+				searchResults = "2 Results");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.xls In Folder");
+
+			AssertTextEquals.assertPartialText(
+				index = 2,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.docx In Folder");
+		}
+	}
+
 	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
 	@priority = 3
 	@refactordone
@@ -1172,6 +1303,172 @@ definition {
 			index = 2,
 			locator1 = "LexiconTable#TABLE_ROW",
 			value1 = "Document_2.doc");
+	}
+
+	@description = "This test ensures that users can choose one/multiple subcategories of the extensions to filter documents."
+	@priority = 4
+	test CanFilterBySubcategoriesOfExtensions {
+		property custom.properties = "feature.flag.LPS-84424=true";
+
+		for (var documentName : list "Document_1.pdf,Document_1.xls,Document_1.xlsx,Document_2.docx,Document_2.jpeg,Document_3.docx,Document_3.jpg") {
+			var extension = StringUtil.extractLast(${documentName}, ".");
+
+			if (${extension} == "docx") {
+				var mimeType = "application/docx";
+			}
+			else if (${extension} == "jpg") {
+				var mimeType = "image/jpg";
+			}
+			else if (${extension} == "jpeg") {
+				var mimeType = "image/jpeg";
+			}
+			else if (${extension} == "pdf") {
+				var mimeType = "application/pdf";
+			}
+			else if (${extension} == "xls") {
+				var mimeType = "application/vnd.ms-excel";
+			}
+			else if (${extension} == "xlsx") {
+				var mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+			}
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = ${documentName},
+				groupName = "Guest",
+				mimeType = ${mimeType},
+				sourceFileName = ${documentName});
+		}
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.doc",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.pdf",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "Document_2.pdf");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		task ("Assert user can choose one subcategory to filter documents") {
+			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+
+			DMDocument.selectExtensions(extensionCategory = "xlsx");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: xlsx",
+				searchResults = "1 Result");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.xlsx");
+		}
+
+		task ("Assert user can choose multiple subcategories to filter documents") {
+			ManagementBar.setFilterAndOrder(
+				active = "true",
+				filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+
+			DMDocument.selectExtensions(
+				clearAll = "true",
+				extensionCategory = "jpg,jpeg");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: jpg,Extension: jpeg",
+				searchResults = "2 Results");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_3.jpg");
+
+			AssertTextEquals.assertPartialText(
+				index = 2,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.jpeg");
+		}
+
+		task ("Assert user can choose multiple subcategories from different extensions to filter documents") {
+			ManagementBar.setFilterAndOrder(
+				active = "true",
+				filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+
+			DMDocument.selectExtensions(
+				clearAll = "true",
+				extensionCategory = "jpg,xls");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: jpg,Extension: xls",
+				searchResults = "2 Results");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_3.jpg");
+
+			AssertTextEquals.assertPartialText(
+				index = 2,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.xls");
+		}
+
+		task ("Assert user can choose one category and one subcategory of extensions to filter documents") {
+			ManagementBar.setFilterAndOrder(
+				active = "true",
+				filterBy = "Extension...");
+
+			DMDocument.viewExtensionDetails(
+				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+
+			DMDocument.selectExtensions(
+				clearAll = "true",
+				extensionCategory = "doc,pdf");
+
+			DMDocument.viewFilterSummaryResults(
+				filterScope = "Extension: doc,Extension: pdf",
+				searchResults = "3 Results");
+
+			AssertTextEquals.assertPartialText(
+				index = 1,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_2.pdf");
+
+			AssertTextEquals.assertPartialText(
+				index = 2,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.doc");
+
+			AssertTextEquals.assertPartialText(
+				index = 3,
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Document_1.pdf");
+		}
 	}
 
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."

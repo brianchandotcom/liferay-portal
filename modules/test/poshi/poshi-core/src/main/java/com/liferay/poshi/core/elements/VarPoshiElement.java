@@ -616,7 +616,7 @@ public class VarPoshiElement extends PoshiElement {
 	private static final Pattern _partialStatementPattern;
 	private static final Pattern _statementPattern;
 	private static final Pattern _varMacroMethodPattern = Pattern.compile(
-		"^.*\\s=\\s(.*)$");
+		"^.*\\s=\\s(\\$\\{.*\\}|\\\".*\")$");
 	private static final Pattern _varValueMathExpressionPattern;
 
 	static {

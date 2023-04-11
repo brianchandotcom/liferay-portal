@@ -643,6 +643,12 @@ definition {
 				AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 
+			if (isSet(description)) {
+				var key_productDescription = ${description};
+
+				AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_DESCRIPTION");
+			}
+
 			if (isSet(availability)) {
 				AssertTextEquals(
 					key_productName = ${lowerCaseProductName},
@@ -686,6 +692,11 @@ definition {
 
 				AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
 			}
+			else if (${addToCart} == "view") {
+				AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_BUTTON");
+
+				AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+			}
 
 			if (${compare} == "true") {
 				AssertElementPresent(locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
@@ -704,6 +715,12 @@ definition {
 		else if (${assertion} == "negative") {
 			if (${assertName} == "true") {
 				AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			if (isSet(description)) {
+				var key_productDescription = ${description};
+
+				AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_DESCRIPTION");
 			}
 
 			if (isSet(availability)) {
@@ -747,6 +764,9 @@ definition {
 				AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 
 				AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+			}
+			else if (${addToCart} == "view") {
+				AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_BUTTON");
 			}
 
 			if (${compare} == "true") {

@@ -87,7 +87,11 @@ const ActivationKeysTable = ({
 		statusFilter
 	);
 
-	const [filters, setFilters] = useFilters(setFilterTerm, productName);
+	const [filters, setFilters] = useFilters(
+		setFilterTerm,
+		productName,
+		initialFilter
+	);
 
 	const [currentActivationKey, setCurrentActivationKey] = useState();
 	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);

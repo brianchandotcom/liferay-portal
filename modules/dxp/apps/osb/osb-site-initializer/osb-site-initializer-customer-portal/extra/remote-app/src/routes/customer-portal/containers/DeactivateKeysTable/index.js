@@ -56,7 +56,11 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 		statusFilter
 	);
 
-	const [filters, setFilters] = useFilters(setFilterTerm, productName);
+	const [filters, setFilters] = useFilters(
+		setFilterTerm,
+		productName,
+		initialFilter
+	);
 
 	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);
 

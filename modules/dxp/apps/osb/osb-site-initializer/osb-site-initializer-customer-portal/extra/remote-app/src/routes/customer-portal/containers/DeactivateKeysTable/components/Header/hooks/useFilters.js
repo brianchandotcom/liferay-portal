@@ -17,11 +17,11 @@ import {INITIAL_FILTER} from '../../../../ActivationKeysTable/utils/constants/in
 const COMPLIMENTARY = 'Complimentary';
 const SUBSCRIPTION = 'Subscription';
 
-export default function useFilters(setFilterTerm, productName) {
+export default function useFilters(setFilterTerm, productName, baseFilter) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	useEffect(() => {
-		let initialFilter = `active eq true and startswith(productName,'${productName}')`;
+		let initialFilter = `active eq true and ${baseFilter}`;
 		let hasFilterPill = false;
 
 		if (filters.searchTerm) {
@@ -277,6 +277,7 @@ export default function useFilters(setFilterTerm, productName) {
 
 		setFilterTerm(`${initialFilter}`);
 	}, [
+		baseFilter,
 		filters.environmentTypes.value,
 		filters.expirationDate.value,
 		filters.instanceSizes.value,

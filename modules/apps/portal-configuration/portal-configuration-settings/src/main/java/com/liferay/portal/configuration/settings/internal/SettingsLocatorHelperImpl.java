@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -69,8 +70,11 @@ import javax.portlet.PortletPreferences;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.ManagedService;
+import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -288,22 +292,30 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		ConfigurationBeanManagedService configurationBeanManagedService =
 			new ConfigurationBeanManagedService(
-				_bundleContext, configurationBeanClass,
+				configurationBeanClass,
 				configurationBean -> _configurationBeanSettings.put(
 					configurationPid,
 					new ConfigurationBeanSettings(
 						locationVariableResolver, configurationBean,
 						_portalPropertiesSettings)));
 
-		configurationBeanManagedService.register();
+		ServiceRegistration<?> managedServiceServiceRegistration =
+			_bundleContext.registerService(
+				ManagedService.class, configurationBeanManagedService,
+				MapUtil.singletonDictionary(
+					Constants.SERVICE_PID, configurationPid));
 
 		ScopedConfigurationManagedServiceFactory
 			scopedConfigurationManagedServiceFactory =
 				new ScopedConfigurationManagedServiceFactory(
-					_bundleContext, configurationBeanClass,
-					locationVariableResolver);
+					configurationBeanClass, locationVariableResolver);
 
-		scopedConfigurationManagedServiceFactory.register();
+		ServiceRegistration<?> managedServiceFactoryServiceRegistration =
+			_bundleContext.registerService(
+				ManagedServiceFactory.class,
+				scopedConfigurationManagedServiceFactory,
+				MapUtil.singletonDictionary(
+					Constants.SERVICE_PID, configurationPid + ".scoped"));
 
 		_scopedConfigurationManagedServiceFactories.put(
 			scopedConfigurationManagedServiceFactory.getName(),
@@ -338,10 +350,12 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 			_scopedConfigurationManagedServiceFactories.remove(
 				configurationPid);
-			scopedConfigurationManagedServiceFactory.unregister();
+
+			managedServiceFactoryServiceRegistration.unregister();
 
 			_configurationBeanSettings.remove(configurationPid);
-			configurationBeanManagedService.unregister();
+
+			managedServiceServiceRegistration.unregister();
 		};
 	}
 

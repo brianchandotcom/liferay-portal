@@ -15,16 +15,11 @@
 package com.liferay.portal.configuration.settings.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
 import java.util.function.Consumer;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ManagedService;
 
 /**
@@ -34,31 +29,11 @@ import org.osgi.service.cm.ManagedService;
 public class ConfigurationBeanManagedService implements ManagedService {
 
 	public ConfigurationBeanManagedService(
-		BundleContext bundleContext, Class<?> configurationBeanClass,
+		Class<?> configurationBeanClass,
 		Consumer<Object> configurationBeanConsumer) {
 
-		_bundleContext = bundleContext;
 		_configurationBeanClass = configurationBeanClass;
 		_configurationBeanConsumer = configurationBeanConsumer;
-
-		_configurationPid = ConfigurationPidUtil.getConfigurationPid(
-			configurationBeanClass);
-	}
-
-	public String getConfigurationPid() {
-		return _configurationPid;
-	}
-
-	public void register() {
-		_managedServiceServiceRegistration = _bundleContext.registerService(
-			ManagedService.class, this,
-			HashMapDictionaryBuilder.<String, Object>put(
-				Constants.SERVICE_PID, _configurationPid
-			).build());
-	}
-
-	public void unregister() {
-		_managedServiceServiceRegistration.unregister();
 	}
 
 	@Override
@@ -73,11 +48,7 @@ public class ConfigurationBeanManagedService implements ManagedService {
 		_configurationBeanConsumer.accept(configurationBean);
 	}
 
-	private final BundleContext _bundleContext;
 	private final Class<?> _configurationBeanClass;
 	private final Consumer<Object> _configurationBeanConsumer;
-	private final String _configurationPid;
-	private ServiceRegistration<ManagedService>
-		_managedServiceServiceRegistration;
 
 }

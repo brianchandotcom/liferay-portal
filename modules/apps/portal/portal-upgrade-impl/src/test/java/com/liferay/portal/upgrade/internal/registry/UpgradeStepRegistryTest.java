@@ -15,25 +15,18 @@
 package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.sql.Connection;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 import org.osgi.framework.Version;
 
@@ -47,22 +40,8 @@ public class UpgradeStepRegistryTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() {
-		Connection connection = Mockito.mock(Connection.class);
-
-		MockedStatic<DataAccess> dataAccessMockedStatic = Mockito.mockStatic(
-			DataAccess.class);
-
-		dataAccessMockedStatic.when(
-			DataAccess::getConnection
-		).thenReturn(
-			connection
-		);
-	}
-
 	@Test
-	public void testCreateUpgradeInfos() throws Exception {
+	public void testCreateUpgradeInfos() {
 		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
 
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
@@ -71,7 +50,8 @@ public class UpgradeStepRegistryTest {
 			"0.0.0", "1.0.0", testUpgradeStep, testUpgradeStep, testUpgradeStep,
 			testUpgradeStep);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			true);
 
 		Assert.assertEquals(upgradeInfos.toString(), 4, upgradeInfos.size());
 		Assert.assertEquals(
@@ -91,25 +71,27 @@ public class UpgradeStepRegistryTest {
 	}
 
 	@Test
-	public void testCreateUpgradeInfosWithNoSteps() throws Exception {
+	public void testCreateUpgradeInfosWithNoSteps() {
 		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
 
 		upgradeStepRegistry.register("0.0.0", "1.0.0");
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			true);
 
 		Assert.assertTrue(upgradeInfos.toString(), upgradeInfos.isEmpty());
 	}
 
 	@Test
-	public void testCreateUpgradeInfosWithOneStep() throws Exception {
+	public void testCreateUpgradeInfosWithOneStep() {
 		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
 
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
 		upgradeStepRegistry.register("0.0.0", "1.0.0", testUpgradeStep);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			true);
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 		Assert.assertEquals(
@@ -118,31 +100,28 @@ public class UpgradeStepRegistryTest {
 	}
 
 	@Test
-	public void testCreateUpgradeInfosWithPostUpgradeSteps() throws Exception {
+	public void testCreateUpgradeInfosWithPostUpgradeSteps() {
 		_registerAndCheckPreAndPostUpgradeSteps(
 			new UpgradeStep[0],
 			new UpgradeStep[] {new TestUpgradeStep(), new TestUpgradeStep()});
 	}
 
 	@Test
-	public void testCreateUpgradeInfosWithPreAndPostUpgradeSteps()
-		throws Exception {
-
+	public void testCreateUpgradeInfosWithPreAndPostUpgradeSteps() {
 		_registerAndCheckPreAndPostUpgradeSteps(
 			new UpgradeStep[] {new TestUpgradeStep()},
 			new UpgradeStep[] {new TestUpgradeStep()});
 	}
 
 	@Test
-	public void testCreateUpgradeInfosWithPreUpgradeSteps() throws Exception {
+	public void testCreateUpgradeInfosWithPreUpgradeSteps() {
 		_registerAndCheckPreAndPostUpgradeSteps(
 			new UpgradeStep[] {new TestUpgradeStep(), new TestUpgradeStep()},
 			new UpgradeStep[0]);
 	}
 
 	private void _registerAndCheckPreAndPostUpgradeSteps(
-			UpgradeStep[] preUpgradeSteps, UpgradeStep[] postUpgradeSteps)
-		throws Exception {
+		UpgradeStep[] preUpgradeSteps, UpgradeStep[] postUpgradeSteps) {
 
 		UpgradeProcess upgradeProcess = new UpgradeProcess() {
 
@@ -170,7 +149,8 @@ public class UpgradeStepRegistryTest {
 			preUpgradeSteps, new UpgradeStep[] {upgradeProcess},
 			postUpgradeSteps);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
+			true);
 
 		Assert.assertEquals(upgradeInfos.toString(), 3, upgradeInfos.size());
 		Assert.assertEquals(

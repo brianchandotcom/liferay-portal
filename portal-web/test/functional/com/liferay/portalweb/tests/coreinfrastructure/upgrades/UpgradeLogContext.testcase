@@ -35,6 +35,10 @@ definition {
 		task ("Verify that no key-value mark is printed when it's not related with Upgrade Framework") {
 			Log.viewLogFileContentPresent(logContent = "{}");
 		}
+
+		task ("Verify upgrade report is not generated in console output") {
+			AssertConsoleTextNotPresent(value1 = "Upgrade report generated in");
+		}
 	}
 
 	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."

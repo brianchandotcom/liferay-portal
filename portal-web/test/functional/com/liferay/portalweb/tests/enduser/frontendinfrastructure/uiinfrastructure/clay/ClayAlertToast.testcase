@@ -244,26 +244,72 @@ definition {
 	@description = "LPS-170579 - Assert that multiples messages can be displayed"
 	@priority = 5
 	test MultipleContainersCanBeDisplayed {
-		task ("When a toast alert appears") {
-			WaitForElementPresent(
-				key_text = "Success Submit",
-				locator1 = "Button#ANY");
+		task ("Given the known positions from three stacked toast alert messages") {
+			ClayAlertToast.openToastAlert(key_text = "Disappears After 5 Seconds");
 
-			Click(
-				key_text = "Fail Submit",
-				locator1 = "Button#ANY");
+			ClayAlertToast.openToastAlert(key_text = "Fail Submit");
+
+			ClayAlertToast.openToastAlert(key_text = "Success Submit");
+
+			var positionAlertSuccess = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-success",
+				index = 0);
+			var positionAlertFail = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-danger",
+				index = 0);
+			var positionAlertInfo = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-info",
+				index = 0);
+
+			ClayAlertToast.closeToastAlert(key_type = "info");
+
+			ClayAlertToast.closeToastAlert(key_type = "success");
+
+			ClayAlertToast.closeToastAlert(key_type = "danger");
 		}
 
-		task ("Then user should be able to activate another toast alert") {
-			Click(
-				key_text = "Success Submit",
-				locator1 = "Button#ANY");
+		task ("When Click info button") {
+			ClayAlertToast.openToastAlert(key_text = "Disappears After 5 Seconds");
 		}
 
-		task ("And both toast alerts should be displayed") {
-			AssertElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		task ("And Click error button") {
+			ClayAlertToast.openToastAlert(key_text = "Fail Submit");
+		}
 
-			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
+		task ("And Click success button") {
+			ClayAlertToast.openToastAlert(key_text = "Success Submit");
+		}
+
+		task ("Then Each toast appears from bottom to top") {
+			var positionAlertSuccess2 = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-success",
+				index = 0);
+			var positionAlertFail2 = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-danger",
+				index = 0);
+			var positionAlertInfo2 = ClayAlertToast.getElementRectanglePositionY(
+				code = "#ToastAlertContainer .alert-info",
+				index = 0);
+
+			if (${positionAlertSuccess} != ${positionAlertSuccess2}) {
+				takeScreenshot();
+
+				fail("FAIL. Success toast alert coordinate positions do not match.");
+			}
+
+			if (${positionAlertFail} != ${positionAlertFail2}) {
+				takeScreenshot();
+
+				fail("FAIL. Fail toast alert coordinate positions do not match.");
+			}
+
+			if (${positionAlertInfo} != ${positionAlertInfo2}) {
+				takeScreenshot();
+
+				fail("FAIL. Info toast alert coordinate positions do not match.");
+			}
+
+			takeScreenshot();
 		}
 	}
 

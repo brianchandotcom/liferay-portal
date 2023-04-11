@@ -1282,3 +1282,32 @@ Configure the same properties in System Settings &rarr; Infrastructure &rarr; Ti
 ### Why was this change made?
 
 These configuration changes were made because the Tika library was extracted to the `com.liferay.portal.tika` module.
+
+---------------------------------------
+
+## Moved CTSQLModeThreadLocal to portal-kernel and Changed Package
+
+- **Date:** 2023-Apr-11
+- **JIRA Ticket:** [LPS-181233](https://issues.liferay.com/browse/LPS-181233)
+
+### What changed?
+
+The `CTSQLModeThreadLocal` class was moved from the `portal-impl` module into the `portal-kernel` module. Additionally, its package was changed from `com.liferay.portal.change.tracking.sql` to `com.liferay.portal.kernel.change.tracking.sql` to be consistent with the `portal-kernel` module's package naming scheme for the CT-related classes.
+
+### Who is affected?
+
+Anyone who calls the `CTSQLModeThreadLocal` class from their code.
+
+### How should I update my code?
+
+Modify `import` statements for the `CTSQLModeThreadLocal` class to use the new package, e.g.:
+
+```
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
+```
+
+Additionally, ensure that the code has declared a dependency on the `portal-kernel` module.
+
+### Why was this change made?
+
+To resolve the bug reported at [LPS-181233](https://issues.liferay.com/browse/LPS-181233), it was necessary to set the value of the `CTSQLModeThreadLocal` from the `portal-kernel` module. Therefore, it needed to be moved into the `portal-kernel` module so that it could be referenced from there.

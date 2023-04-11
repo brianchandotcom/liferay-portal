@@ -17,6 +17,8 @@ package com.liferay.batch.engine.internal;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
+import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
@@ -119,7 +121,7 @@ public class BatchEngineExportTaskExecutorImpl
 
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
-				_batchEngineTaskMethodRegistry, _expressionConvert,
+				_batchEngineTaskItemDelegateRegistry, _expressionConvert,
 				_filterParserProvider, _sortParserProvider);
 	}
 
@@ -129,7 +131,14 @@ public class BatchEngineExportTaskExecutorImpl
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try (BatchEngineTaskItemDelegateExecutor
+		try (BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
+				_getBatchEngineExportTaskItemWriter(
+					batchEngineExportTask, unsyncByteArrayOutputStream)) {
+
+			int exportBatchSize = _getExportBatchSize(
+				batchEngineExportTask.getCompanyId());
+
+			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineExportTask.getTaskItemDelegateName(),
@@ -139,12 +148,6 @@ public class BatchEngineExportTaskExecutorImpl
 						batchEngineExportTask.getParameters(),
 						_userLocalService.getUser(
 							batchEngineExportTask.getUserId()));
-			BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
-				_getBatchEngineExportTaskItemWriter(
-					batchEngineExportTask, unsyncByteArrayOutputStream)) {
-
-			int exportBatchSize = _getExportBatchSize(
-				batchEngineExportTask.getCompanyId());
 
 			Page<?> page = batchEngineTaskItemDelegateExecutor.getItems(
 				1, exportBatchSize);
@@ -216,7 +219,7 @@ public class BatchEngineExportTaskExecutorImpl
 			).fieldNames(
 				batchEngineExportTask.getFieldNamesList()
 			).itemClass(
-				_batchEngineTaskMethodRegistry.getItemClass(
+				_itemClassRegistry.getItemClass(
 					batchEngineExportTask.getClassName())
 			).outputStream(
 				_getZipOutputStream(
@@ -293,7 +296,8 @@ public class BatchEngineExportTaskExecutorImpl
 		_batchEngineTaskItemDelegateExecutorFactory;
 
 	@Reference
-	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
+	private BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -308,6 +312,9 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;
+
+	@Reference
+	private ItemClassRegistry _itemClassRegistry;
 
 	@Reference
 	private SortParserProvider _sortParserProvider;

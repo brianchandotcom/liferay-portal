@@ -34,7 +34,6 @@ import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 
-import java.io.Closeable;
 import java.io.Serializable;
 
 import java.util.Collection;
@@ -43,35 +42,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.framework.ServiceObjects;
-
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class BatchEngineTaskItemDelegateExecutor implements Closeable {
+public class BatchEngineTaskItemDelegateExecutor {
 
 	public BatchEngineTaskItemDelegateExecutor(
 		Company company, ExpressionConvert<Filter> expressionConvert,
 		FilterParserProvider filterParserProvider,
 		Map<String, Serializable> parameters,
-		ServiceObjects<BatchEngineTaskItemDelegate<Object>> serviceObjects,
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
 		SortParserProvider sortParserProvider, User user) {
 
 		_company = company;
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
 		_parameters = parameters;
-		_serviceObjects = serviceObjects;
+		_batchEngineTaskItemDelegate =
+			(BatchEngineTaskItemDelegate<Object>)batchEngineTaskItemDelegate;
 		_sortParserProvider = sortParserProvider;
 		_user = user;
-
-		_batchEngineTaskItemDelegate = serviceObjects.getService();
-	}
-
-	@Override
-	public void close() {
-		_serviceObjects.ungetService(_batchEngineTaskItemDelegate);
 	}
 
 	public Page<?> getItems(int page, int pageSize) throws Exception {
@@ -216,8 +207,6 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
 	private final Map<String, Serializable> _parameters;
-	private final ServiceObjects<BatchEngineTaskItemDelegate<Object>>
-		_serviceObjects;
 	private final SortParserProvider _sortParserProvider;
 	private final User _user;
 

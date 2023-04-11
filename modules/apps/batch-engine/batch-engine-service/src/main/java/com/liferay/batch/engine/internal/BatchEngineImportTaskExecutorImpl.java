@@ -17,7 +17,9 @@ package com.liferay.batch.engine.internal;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
@@ -122,7 +124,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
-				_batchEngineTaskMethodRegistry, null, null, null);
+				_batchEngineTaskItemDelegateRegistry, null, null, null);
 	}
 
 	private void _commitItems(
@@ -238,7 +240,8 @@ public class BatchEngineImportTaskExecutorImpl
 					batchEngineImportTask,
 					_batchEngineImportTaskLocalService.openContentInputStream(
 						batchEngineImportTask.getBatchEngineImportTaskId()),
-					parameters);
+					parameters)) {
+
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
@@ -248,11 +251,11 @@ public class BatchEngineImportTaskExecutorImpl
 							batchEngineImportTask.getCompanyId()),
 						parameters,
 						_userLocalService.getUser(
-							batchEngineImportTask.getUserId()))) {
+							batchEngineImportTask.getUserId()));
 
 			List<Object> items = new ArrayList<>();
 
-			Class<?> itemClass = _batchEngineTaskMethodRegistry.getItemClass(
+			Class<?> itemClass = _itemClassRegistry.getItemClass(
 				batchEngineImportTask.getClassName());
 
 			int processedItemsCount = 0;
@@ -363,7 +366,8 @@ public class BatchEngineImportTaskExecutorImpl
 		_batchEngineTaskItemDelegateExecutorFactory;
 
 	@Reference
-	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
+	private BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
 
 	private final BatchEngineTaskProgressFactory
 		_batchEngineTaskProgressFactory = new BatchEngineTaskProgressFactory();
@@ -373,6 +377,9 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private ItemClassRegistry _itemClassRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

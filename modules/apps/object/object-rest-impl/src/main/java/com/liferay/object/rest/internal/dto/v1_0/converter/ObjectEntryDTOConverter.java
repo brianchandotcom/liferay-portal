@@ -57,7 +57,6 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -248,40 +247,6 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private ObjectEntry[] _getManyToManyRelationshipObjectEntries(
-		DTOConverterContext dtoConverterContext, List<String> nestedFieldNames,
-		int nestedFieldsDepth, com.liferay.object.model.ObjectEntry objectEntry,
-		ObjectRelationship objectRelationship) {
-
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						objectDefinition.getClassName(),
-						objectDefinition.getCompanyId(),
-						objectRelationship.getType());
-
-			return _toObjectEntries(
-				dtoConverterContext, nestedFieldNames, nestedFieldsDepth,
-				objectRelatedModelsProvider.getRelatedModels(
-					objectEntry.getGroupId(),
-					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-
-			return null;
-		}
-	}
-
 	private List<String> _getNestedFieldNames(
 		NestedFieldsContext nestedFieldsContext) {
 
@@ -316,40 +281,6 @@ public class ObjectEntryDTOConverter
 		}
 
 		return objectDefinition;
-	}
-
-	private ObjectEntry[] _getOneToManyRelationshipObjectEntries(
-		DTOConverterContext dtoConverterContext, List<String> nestedFieldNames,
-		int nestedFieldsDepth, com.liferay.object.model.ObjectEntry objectEntry,
-		ObjectRelationship objectRelationship) {
-
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						objectDefinition.getClassName(),
-						objectDefinition.getCompanyId(),
-						objectRelationship.getType());
-
-			return _toObjectEntries(
-				dtoConverterContext, nestedFieldNames, nestedFieldsDepth,
-				objectRelatedModelsProvider.getRelatedModels(
-					objectEntry.getGroupId(),
-					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-
-			return null;
-		}
 	}
 
 	private String _getScopeKey(
@@ -670,23 +601,32 @@ public class ObjectEntryDTOConverter
 
 			if (Objects.equals(
 					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
+				Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							relatedObjectDefinition.getClassName(),
+							relatedObjectDefinition.getCompanyId(),
+							objectRelationship.getType());
 
 				map.put(
 					objectRelationship.getName(),
-					_getManyToManyRelationshipObjectEntries(
+					_toObjectEntries(
 						dtoConverterContext, nestedFieldNames,
-						nestedFieldsDepth, objectEntry, objectRelationship));
-			}
-			else if (Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-				map.put(
-					objectRelationship.getName(),
-					_getOneToManyRelationshipObjectEntries(
-						dtoConverterContext, nestedFieldNames,
-						nestedFieldsDepth, objectEntry, objectRelationship));
+						nestedFieldsDepth,
+						objectRelatedModelsProvider.getRelatedModels(
+							objectEntry.getGroupId(),
+							objectRelationship.getObjectRelationshipId(),
+							objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS)));
 			}
 		}
 

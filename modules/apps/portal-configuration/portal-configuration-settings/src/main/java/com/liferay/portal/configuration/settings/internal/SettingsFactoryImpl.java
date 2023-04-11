@@ -165,13 +165,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		_fallbackKeysServiceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletItemLocalService(
-		PortletItemLocalService portletItemLocalService) {
-
-		_portletItemLocalService = portletItemLocalService;
-	}
-
 	private Settings _applyFallbackKeys(String settingsId, Settings settings) {
 		if (settings instanceof FallbackKeys) {
 			return settings;
@@ -220,7 +213,10 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private ServiceTrackerMap<String, FallbackKeys>
 		_fallbackKeysServiceTrackerMap;
+
+	@Reference
 	private PortletItemLocalService _portletItemLocalService;
+
 	private ServiceTrackerMap<String, SettingsDescriptor>
 		_settingsDescriptorServiceTrackerMap;
 

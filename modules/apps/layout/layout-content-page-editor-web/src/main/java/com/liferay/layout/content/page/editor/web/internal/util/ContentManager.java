@@ -938,20 +938,46 @@ public class ContentManager {
 			HttpServletRequest httpServletRequest, boolean restricted)
 		throws Exception {
 
+		if (restricted) {
+			return JSONUtil.put(
+				"actions", _jsonFactory.createJSONObject()
+			).put(
+				"className", layoutClassedModelUsage.getClassName()
+			).put(
+				"classNameId", layoutClassedModelUsage.getClassNameId()
+			).put(
+				"classPK", layoutClassedModelUsage.getClassPK()
+			).put(
+				"classTypeId", layoutDisplayPageObjectProvider.getClassTypeId()
+			).put(
+				"icon", StringPool.BLANK
+			).put(
+				"isRestricted", true
+			).put(
+				"status", _jsonFactory.createJSONObject()
+			).put(
+				"subtype", StringPool.BLANK
+			).put(
+				"title", StringPool.BLANK
+			).put(
+				"type", StringPool.BLANK
+			).put(
+				"usagesCount",
+				_layoutClassedModelUsageLocalService.
+					getUniqueLayoutClassedModelUsagesCount(
+						layoutClassedModelUsage.getClassNameId(),
+						layoutClassedModelUsage.getClassPK())
+			);
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		return JSONUtil.put(
 			"actions",
-			() -> {
-				if (restricted) {
-					return _jsonFactory.createJSONObject();
-				}
-
-				return _getActionsJSONObject(
-					layoutClassedModelUsage, themeDisplay, httpServletRequest);
-			}
+			_getActionsJSONObject(
+				layoutClassedModelUsage, themeDisplay, httpServletRequest)
 		).put(
 			"className", layoutClassedModelUsage.getClassName()
 		).put(
@@ -962,59 +988,27 @@ public class ContentManager {
 			"classTypeId", layoutDisplayPageObjectProvider.getClassTypeId()
 		).put(
 			"icon",
-			() -> {
-				if (restricted) {
-					return StringPool.BLANK;
-				}
-
-				return _getIcon(
-					layoutClassedModelUsage.getClassName(),
-					layoutClassedModelUsage.getClassPK());
-			}
+			_getIcon(
+				layoutClassedModelUsage.getClassName(),
+				layoutClassedModelUsage.getClassPK())
 		).put(
-			"isRestricted", restricted
+			"isRestricted", false
 		).put(
-			"status",
-			() -> {
-				if (restricted) {
-					return _jsonFactory.createJSONObject();
-				}
-
-				return _getStatusJSONObject(layoutClassedModelUsage);
-			}
+			"status", _getStatusJSONObject(layoutClassedModelUsage)
 		).put(
 			"subtype",
-			() -> {
-				if (restricted) {
-					return StringPool.BLANK;
-				}
-
-				return _getSubtype(
-					layoutClassedModelUsage.getClassName(),
-					layoutDisplayPageObjectProvider.getClassTypeId(),
-					themeDisplay.getLocale());
-			}
+			_getSubtype(
+				layoutClassedModelUsage.getClassName(),
+				layoutDisplayPageObjectProvider.getClassTypeId(),
+				themeDisplay.getLocale())
 		).put(
 			"title",
-			() -> {
-				if (restricted) {
-					return StringPool.BLANK;
-				}
-
-				return layoutDisplayPageObjectProvider.getTitle(
-					themeDisplay.getLocale());
-			}
+			layoutDisplayPageObjectProvider.getTitle(themeDisplay.getLocale())
 		).put(
 			"type",
-			() -> {
-				if (restricted) {
-					return StringPool.BLANK;
-				}
-
-				return _resourceActions.getModelResource(
-					themeDisplay.getLocale(),
-					layoutClassedModelUsage.getClassName());
-			}
+			_resourceActions.getModelResource(
+				themeDisplay.getLocale(),
+				layoutClassedModelUsage.getClassName())
 		).put(
 			"usagesCount",
 			_layoutClassedModelUsageLocalService.

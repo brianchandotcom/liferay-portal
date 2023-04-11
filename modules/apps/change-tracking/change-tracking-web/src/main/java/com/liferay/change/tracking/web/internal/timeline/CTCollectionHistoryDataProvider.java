@@ -132,25 +132,37 @@ public class CTCollectionHistoryDataProvider {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
-			CTCollectionPermission.contains(
-				permissionChecker, _ctCollection, ActionKeys.UPDATE)) {
+		if (_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			if (CTCollectionPermission.contains(
+					permissionChecker, _ctCollection, ActionKeys.UPDATE)) {
 
-			data.put(
-				"editURL",
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						_httpServletRequest, themeDisplay.getScopeGroup(),
-						CTPortletKeys.PUBLICATIONS, 0, 0,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/change_tracking/edit_ct_collection"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString());
+				data.put(
+					"editURL",
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(
+							_httpServletRequest, themeDisplay.getScopeGroup(),
+							CTPortletKeys.PUBLICATIONS, 0, 0,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/change_tracking/edit_ct_collection"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).buildString());
+			}
 
+			if (CTCollectionPermission.contains(
+					permissionChecker, _ctCollection, ActionKeys.DELETE)) {
+
+				data.put(
+					"deleteURL",
+					_getDeleteHref(
+						_httpServletRequest, themeDisplay.getURLCurrent(),
+						_ctCollection.getCtCollectionId(), themeDisplay));
+			}
+		}
+		else {
 			data.put(
 				"revertURL",
 				PortletURLBuilder.create(
@@ -169,30 +181,23 @@ public class CTCollectionHistoryDataProvider {
 				).buildString());
 		}
 
-		data.put(
-			"reviewURL",
-			PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(
-					_httpServletRequest, themeDisplay.getScopeGroup(),
-					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/change_tracking/view_changes"
-			).setRedirect(
-				themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).buildString());
-
-		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
-			CTCollectionPermission.contains(
-				permissionChecker, _ctCollection, ActionKeys.DELETE)) {
+		if (CTCollectionPermission.contains(
+				permissionChecker, _ctCollection, ActionKeys.VIEW)) {
 
 			data.put(
-				"deleteURL",
-				_getDeleteHref(
-					_httpServletRequest, themeDisplay.getURLCurrent(),
-					_ctCollection.getCtCollectionId(), themeDisplay));
+				"reviewURL",
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/change_tracking/view_changes"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString());
 		}
 
 		return data;

@@ -2241,16 +2241,11 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display Page");
 
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Web Content Display Page",
-				widgetName = "Web Content Display");
-
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+			WidgetPages.addRecentContentWithoutSearch(assetTitle = "WC WebContent Title");
 		}
 
 		task ("Add a page with an Asset Publisher widget and display the Web Content article in the Asset Publisher Widget") {
@@ -2280,20 +2275,13 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display and Asset Publisher Page",
-				widgetName = "Web Content Display");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Web Content Display and Asset Publisher Page",
 				widgetName = "Asset Publisher");
 
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display and Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-			IFrame.closeFrame();
+			WidgetPages.addRecentContentWithoutSearch(assetTitle = "WC WebContent Title");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "WC WebContent Title",

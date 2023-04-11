@@ -75,7 +75,7 @@ public abstract class BaseSettingsLocatorTestCase {
 		groupId = TestPropsValues.getGroupId();
 
 		_safeCloseable = ReflectionTestUtil.invoke(
-			_settingsLocatorHelper, "registerConfigurationBeanClass",
+			_settingsLocatorHelper, "_registerConfigurationBeanClass",
 			new Class<?>[] {Class.class}, TestConfiguration.class);
 	}
 

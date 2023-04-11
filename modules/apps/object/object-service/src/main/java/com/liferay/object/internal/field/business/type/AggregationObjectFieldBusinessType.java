@@ -29,7 +29,6 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -60,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class AggregationObjectFieldBusinessType
-	implements ObjectFieldBusinessType {
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
@@ -98,17 +97,11 @@ public class AggregationObjectFieldBusinessType
 		ObjectField objectField,
 		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"readOnly", true
+		).putAll(
+			super.getProperties(objectField, objectFieldRenderingContext)
 		).build();
-
-		ListUtil.isNotEmptyForEach(
-			_objectFieldSettingLocalService.getObjectFieldObjectFieldSettings(
-				objectField.getObjectFieldId()),
-			objectFieldSetting -> properties.put(
-				objectFieldSetting.getName(), objectFieldSetting.getValue()));
-
-		return properties;
 	}
 
 	@Override
@@ -322,9 +315,6 @@ public class AggregationObjectFieldBusinessType
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

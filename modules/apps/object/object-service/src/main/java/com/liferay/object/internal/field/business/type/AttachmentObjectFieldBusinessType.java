@@ -14,32 +14,24 @@
 
 package com.liferay.object.internal.field.business.type;
 
-import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
-import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
-import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.math.BigDecimal;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -57,12 +49,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class AttachmentObjectFieldBusinessType
-	implements ObjectFieldBusinessType {
+	extends BaseObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
-			"showFilesInDocumentsAndMedia", "storageDLFolderPath");
+			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 	}
 
 	@Override
@@ -96,22 +89,21 @@ public class AttachmentObjectFieldBusinessType
 		ObjectField objectField,
 		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+		Map<String, Object> properties = super.getProperties(
+			objectField, objectFieldRenderingContext);
+
+		properties.remove(
+			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA);
+		properties.remove(
+			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
+
+		return HashMapBuilder.<String, Object>put(
 			"objectFieldId", objectField.getObjectFieldId()
 		).put(
 			"portletId", objectFieldRenderingContext.getPortletId()
+		).putAll(
+			properties
 		).build();
-
-		ListUtil.isNotEmptyForEach(
-			_objectFieldSettingLocalService.getObjectFieldObjectFieldSettings(
-				objectField.getObjectFieldId()),
-			objectFieldSetting -> properties.put(
-				objectFieldSetting.getName(), objectFieldSetting.getValue()));
-
-		properties.remove("showFilesInDocumentsAndMedia");
-		properties.remove("storageDLFolderPath");
-
-		return properties;
 	}
 
 	@Override
@@ -124,7 +116,9 @@ public class AttachmentObjectFieldBusinessType
 		ObjectField objectField) {
 
 		return SetUtil.fromArray(
-			"acceptedFileExtensions", "fileSource", "maximumFileSize");
+			ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+			ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
 	}
 
 	@Override
@@ -133,139 +127,66 @@ public class AttachmentObjectFieldBusinessType
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		ObjectFieldBusinessType.super.validateObjectFieldSettings(
-			objectField, objectFieldSettings);
+		super.validateObjectFieldSettings(objectField, objectFieldSettings);
 
-		Map<String, String> objectFieldSettingsValuesMap = new HashMap<>();
+		Map<String, String> objectFieldSettingsValues =
+			getObjectFieldSettingsValues(objectFieldSettings);
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			objectFieldSettingsValuesMap.put(
-				objectFieldSetting.getName(), objectFieldSetting.getValue());
+		String fileSource = objectFieldSettingsValues.get(
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE);
+
+		if (Objects.equals(
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
+
+			validateNotAllowedObjectFieldSettingNames(
+				SetUtil.fromArray(
+					ObjectFieldSettingConstants.
+						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH),
+				objectField.getName(), objectFieldSettingsValues);
 		}
+		else if (Objects.equals(
+					fileSource,
+					ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
 
-		_validateObjectFieldSettingFileSource(
-			objectFieldSettingsValuesMap.get("fileSource"),
-			objectField.getName(),
-			objectFieldSettingsValuesMap.get("showFilesInDocumentsAndMedia"),
-			objectFieldSettingsValuesMap.get("storageDLFolderPath"));
-		_validateObjectFieldSettingMaximumFileSize(
-			objectField.getName(),
-			objectFieldSettingsValuesMap.get("maximumFileSize"));
-	}
-
-	private void _validateObjectFieldSettingFileSource(
-			String fileSource, String objectFieldName,
-			String showFilesInDocumentsAndMedia, String storageDLFolderPath)
-		throws PortalException {
-
-		if (Objects.equals(fileSource, "documentsAndMedia")) {
-			_validateObjectFieldSettingFileSourceDocumentsAndMedia(
-				objectFieldName, showFilesInDocumentsAndMedia,
-				storageDLFolderPath);
-		}
-		else if (Objects.equals(fileSource, "userComputer")) {
-			_validateObjectFieldSettingFileSourceUserComputer(
-				objectFieldName, showFilesInDocumentsAndMedia,
-				storageDLFolderPath);
+			validateRelatedObjectFieldSettings(
+				objectField,
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+				objectFieldSettingsValues);
 		}
 		else {
 			throw new ObjectFieldSettingValueException.InvalidValue(
-				objectFieldName, "fileSource", fileSource);
-		}
-	}
-
-	private void _validateObjectFieldSettingFileSourceDocumentsAndMedia(
-			String objectFieldName, String showFilesInDocumentsAndMedia,
-			String storageDLFolderPath)
-		throws PortalException {
-
-		Set<String> notAllowedObjectFieldSettingsNames = new HashSet<>();
-
-		if (Validator.isNotNull(showFilesInDocumentsAndMedia)) {
-			notAllowedObjectFieldSettingsNames.add(
-				"showFilesInDocumentsAndMedia");
+				objectField.getName(),
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE, fileSource);
 		}
 
-		if (Validator.isNotNull(storageDLFolderPath)) {
-			notAllowedObjectFieldSettingsNames.add("storageDLFolderPath");
-		}
-
-		if (!notAllowedObjectFieldSettingsNames.isEmpty()) {
-			throw new ObjectFieldSettingNameException.NotAllowedNames(
-				objectFieldName, notAllowedObjectFieldSettingsNames);
-		}
-	}
-
-	private void _validateObjectFieldSettingFileSourceUserComputer(
-			String objectFieldName, String showFilesInDocumentsAndMedia,
-			String storageDLFolderPath)
-		throws PortalException {
-
-		if (Validator.isNull(showFilesInDocumentsAndMedia) ||
-			StringUtil.equalsIgnoreCase(
-				showFilesInDocumentsAndMedia, StringPool.FALSE)) {
-
-			if (Validator.isNotNull(storageDLFolderPath)) {
-				throw new ObjectFieldSettingNameException.NotAllowedNames(
-					objectFieldName,
-					Collections.singleton("storageDLFolderPath"));
-			}
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					showFilesInDocumentsAndMedia, StringPool.TRUE)) {
-
-			if (Validator.isNull(storageDLFolderPath)) {
-				throw new ObjectFieldSettingValueException.
-					MissingRequiredValues(
-						objectFieldName,
-						Collections.singleton("storageDLFolderPath"));
-			}
-			else if (Validator.isNotNull(storageDLFolderPath) &&
-					 (storageDLFolderPath.length() > 255)) {
-
-				throw new ObjectFieldSettingValueException.
-					MustBeLessThan256Characters();
-			}
-
-			for (String directoryName :
-					StringUtil.split(
-						storageDLFolderPath, CharPool.FORWARD_SLASH)) {
-
-				DLValidatorUtil.validateDirectoryName(directoryName);
-			}
-		}
-		else {
-			throw new ObjectFieldSettingValueException.InvalidValue(
-				objectFieldName, "showFilesInDocumentsAndMedia",
-				showFilesInDocumentsAndMedia);
-		}
-	}
-
-	private void _validateObjectFieldSettingMaximumFileSize(
-			String objectFieldName, String objectFieldSettingValue)
-		throws PortalException {
+		BigDecimal bigDecimal = null;
 
 		try {
-			BigDecimal maximumFileSize = new BigDecimal(
-				objectFieldSettingValue);
-
-			if (maximumFileSize.signum() == -1) {
-				throw new ObjectFieldSettingValueException.InvalidValue(
-					objectFieldName, "maximumFileSize",
-					objectFieldSettingValue);
-			}
+			bigDecimal = new BigDecimal(
+				objectFieldSettingsValues.get(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE));
 		}
 		catch (NumberFormatException numberFormatException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(numberFormatException);
+			}
+		}
+
+		if ((bigDecimal == null) || (bigDecimal.signum() == -1)) {
 			throw new ObjectFieldSettingValueException.InvalidValue(
-				objectFieldName, "maximumFileSize", objectFieldSettingValue,
-				numberFormatException);
+				objectField.getName(),
+				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
+				objectFieldSettingsValues.get(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AttachmentObjectFieldBusinessType.class);
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }

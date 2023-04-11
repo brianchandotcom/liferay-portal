@@ -154,34 +154,28 @@ definition {
 		}
 
 		task ("When the style book designer creates 100 interactions states") {
-			for (var n : list "1,2,3,4") {
-				for (var token : list "111111,222222,333333,444444,555555,666666,777777,888888,999999,000000") {
-					Type(
-						key_fieldLabel = "Brand Color ${n}",
-						key_groupLabel = "Brand Colors",
-						locator1 = "TextInput#GROUPED_TEXT_INPUT",
-						value1 = "#${token}");
+			StyleBooks.selectForm(formName = "Typography");
 
-					StyleBooks.clickManagementBar();
+			StyleBooks.expandSection(sectionName = "Headings");
 
-					StyleBooks.waitForAutoSave();
-				}
-			}
+			var count = 0;
 
-			StyleBooks.expandSection(sectionName = "Grays");
+			while ((${count} != 20) && (maxIterations = "20")) {
+				for (var fieldLabel : list "Heading 1 Font Size,Heading 2 Font Size,Heading 3 Font Size,Heading 4 Font Size,Heading 5 Font Size") {
+					KeyPress(
+						ariaLabel = ${fieldLabel},
+						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						value1 = "\UP");
 
-			for (var n : list "100,200,300,400,500,600") {
-				for (var token : list "111111,222222,333333,444444,555555,666666,777777,888888,999999,000000") {
-					Type(
-						key_fieldLabel = "Gray ${n}",
-						key_groupLabel = "Grays",
-						locator1 = "TextInput#GROUPED_TEXT_INPUT",
-						value1 = "#${token}");
-
-					StyleBooks.clickManagementBar();
+					KeyPress(
+						ariaLabel = ${fieldLabel},
+						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						value1 = "\ENTER");
 
 					StyleBooks.waitForAutoSave();
 				}
+
+				var count = ${count} + 1;
 			}
 		}
 
@@ -191,12 +185,12 @@ definition {
 			AssertTextEquals(
 				index = 1,
 				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
-				value1 = "Update Gray 600");
+				value1 = "Update Heading 5 Font Size");
 
 			AssertTextEquals(
 				index = 100,
 				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
-				value1 = "Update Brand Color 1");
+				value1 = "Update Heading 1 Font Size");
 
 			AssertTextEquals(
 				index = 102,

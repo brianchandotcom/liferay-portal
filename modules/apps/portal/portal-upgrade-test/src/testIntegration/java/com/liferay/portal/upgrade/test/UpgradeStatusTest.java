@@ -225,7 +225,7 @@ public class UpgradeStatusTest {
 				majorRelease = _releaseLocalService.updateRelease(majorRelease);
 			}
 
-			if (type.equals("minor")) {
+			if (type.equals("major") || type.equals("minor")) {
 				minorRelease.setSchemaVersion(
 					StringBundler.concat(
 						String.valueOf(minorSchemaVersion.getMajor()),
@@ -237,7 +237,9 @@ public class UpgradeStatusTest {
 				minorRelease = _releaseLocalService.updateRelease(minorRelease);
 			}
 
-			if (type.equals("micro")) {
+			if (type.equals("major") || type.equals("minor") ||
+				type.equals("micro")) {
+
 				microRelease.setSchemaVersion(
 					StringBundler.concat(
 						String.valueOf(microSchemaVersion.getMajor()),

@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
@@ -49,8 +50,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -58,6 +61,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -69,7 +73,9 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -215,7 +221,55 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException("Not implemented");
 		}
 
-		return super.postSiteSitePage(siteId, sitePage);
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(), sitePage.getTitle(),
+			sitePage.getTitle_i18n());
+
+		Map<Locale, String> friendlyUrlMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			sitePage.getFriendlyUrlPath(), sitePage.getFriendlyUrlPath_i18n(),
+			titleMap);
+
+		Layout layout = _addLayout(siteId, friendlyUrlMap, titleMap);
+
+		DefaultDTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getBasicActions(layout), _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser);
+
+		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
+	}
+
+	private Layout _addLayout(
+			Long siteId, Map<Locale, String> friendlyUrlMap,
+			Map<Locale, String> titleMap)
+		throws Exception {
+
+		Layout layout = _layoutService.addLayout(
+			siteId, false, 0, titleMap, new HashMap<>(), new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
+			null, false, friendlyUrlMap, 0,
+			ServiceContextRequestUtil.createServiceContext(
+				siteId, contextHttpServletRequest, null));
+
+		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			draftLayout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		return _layoutLocalService.updateLayout(
+			siteId, false, layout.getLayoutId(), draftLayout.getModifiedDate());
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {

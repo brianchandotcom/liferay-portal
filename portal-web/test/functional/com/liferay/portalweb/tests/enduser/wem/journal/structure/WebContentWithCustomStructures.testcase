@@ -486,6 +486,8 @@ definition {
 	@description = "The user can add a web content with image field."
 	@priority = 4
 	test AddWebContentWithImageField {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a web content with an Image field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
@@ -1338,6 +1340,7 @@ definition {
 	test EditWebContentTitleWithEmptyFields {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
+		property timeout.explicit.wait = "10";
 
 		task ("Add a web content structure with custom fields") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
@@ -1390,6 +1393,8 @@ definition {
 	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = 4
 	test ResetStructureDefaultValues {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1627,6 +1632,7 @@ definition {
 	@priority = 5
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "10";
 
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
@@ -2013,6 +2019,8 @@ definition {
 	@description = "This is a test for LPS-71204. Web content structure with localization cannot save garbage data in place of images."
 	@priority = 4
 	test ViewSourceContainsNoGarbageData {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a web content structure with custom fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

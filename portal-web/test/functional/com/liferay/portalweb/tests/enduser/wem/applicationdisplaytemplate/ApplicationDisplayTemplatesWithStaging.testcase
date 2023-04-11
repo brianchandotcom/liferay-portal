@@ -72,6 +72,8 @@ definition {
 	@priority = 4
 	@uitest
 	test ViewTemplateEditorSidebarPanel {
+		property timeout.explicit.wait = "10";
+
 		task ("Enable Staging Model") {
 			JSONStaging.enableLocalStaging(
 				branchingPrivate = "false",

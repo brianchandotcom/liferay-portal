@@ -295,6 +295,8 @@ definition {
 	@description = "This is a test for LPS-116034. The custom ddmfields of single type collection items are available for mapping in editable field."
 	@priority = 4
 	test MapCustomDDMFieldToFragmentBasedOnSingleTypeCollection {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -462,6 +464,8 @@ definition {
 	@description = "This is a use case for LPS-127706. Assert the mapped image to background image of Container in collection display is shown in view mode."
 	@priority = 3
 	test MapImageToBackgroundImageOfContainer {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -566,6 +570,8 @@ definition {
 	@description = "This is a use case for LPS-120309. Assert the mapped image to Image fragment in collection display is shown in view mode."
 	@priority = 4
 	test MapImageToImageFragment {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

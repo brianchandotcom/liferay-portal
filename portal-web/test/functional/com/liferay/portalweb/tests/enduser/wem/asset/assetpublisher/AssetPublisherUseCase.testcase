@@ -47,6 +47,7 @@ definition {
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
+		property timeout.explicit.wait = "10";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(
@@ -187,6 +188,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
+		property timeout.explicit.wait = "10";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(
@@ -576,6 +578,7 @@ definition {
 	@priority = 5
 	test EditMessageBoardThreadReplyViaAP {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "10";
 
 		task ("Add a Message Boards to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -1435,6 +1438,8 @@ definition {
 	@description = "This is a use case for LPS-133629. The user can select folder by search when create web content based on custom structure via Asset Publisher."
 	@priority = 4
 	test SelectFolderBySearchWhenCreateWebContentBasedOnCustomStructureViaAssetPublisher {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a web content folder") {
 			JSONWebcontent.addFolder(
 				folderDescription = "WC Folder Description",
@@ -2639,6 +2644,8 @@ catch (Exception e) {
 	@description = "This is a test for LPS-129012. View web content in associated public content page."
 	@priority = 4
 	test ViewWebContentInAssociatedPublicContentPage {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -2719,6 +2726,8 @@ catch (Exception e) {
 	@description = "View web content in associated public page."
 	@priority = 4
 	test ViewWebContentInAssociatedPublicPage {
+		property timeout.explicit.wait = "10";
+
 		task ("Set the Asset Publisher as default for page") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",

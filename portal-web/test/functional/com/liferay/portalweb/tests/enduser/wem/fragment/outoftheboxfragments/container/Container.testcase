@@ -857,6 +857,7 @@ definition {
 	@priority = 5
 	test MapWebContentImageToBackgroundImageOfContainerInContentPage {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "10";
 
 		task ("Add a web content structure with an Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -933,6 +934,8 @@ definition {
 	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a content page template."
 	@priority = 3
 	test MapWebContentImageToBackgroundImageOfContainerInContentPageTemplate {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",

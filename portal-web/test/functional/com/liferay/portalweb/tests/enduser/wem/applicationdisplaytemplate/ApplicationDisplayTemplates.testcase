@@ -95,6 +95,8 @@ definition {
 	@priority = 4
 	@uitest
 	test ViewTemplateEditorSidebarPanel {
+		property timeout.explicit.wait = "10";
+
 		task ("Add a widget template for Asset Publisher") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 

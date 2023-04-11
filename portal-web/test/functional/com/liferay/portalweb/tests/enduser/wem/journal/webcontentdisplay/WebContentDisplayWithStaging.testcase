@@ -241,6 +241,7 @@ definition {
 	@priority = 5
 	test ViewWebContentWithEditedImageField {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "10";
 
 		task ("Add an image field to web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");

@@ -31,6 +31,8 @@ definition {
 	@description = "Assert Web Content created From Structure is published Via SAP"
 	@priority = 4
 	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
+		property timeout.explicit.wait = "10";
+
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -383,6 +385,7 @@ definition {
 	@priority = 5
 	test PublishInStagingWebContentFromStructure {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "10";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
@@ -591,6 +594,7 @@ definition {
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentStaging#PublishWebContentWithImportedStructureDefaultValues";
+		property timeout.explicit.wait = "10";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(

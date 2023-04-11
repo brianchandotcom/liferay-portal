@@ -1254,6 +1254,11 @@ public class UserLocalServiceWrapper
 		return _userLocalService.getCompanyUsersCount(companyId);
 	}
 
+	@Override
+	public User getDefaultServiceAccountUser(long companyId) {
+		return _userLocalService.getDefaultServiceAccountUser(companyId);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #getGuestUser(long)}

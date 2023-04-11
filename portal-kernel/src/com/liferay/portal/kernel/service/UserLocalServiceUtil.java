@@ -1152,6 +1152,10 @@ public class UserLocalServiceUtil {
 		return getService().getCompanyUsersCount(companyId);
 	}
 
+	public static User getDefaultServiceAccountUser(long companyId) {
+		return getService().getDefaultServiceAccountUser(companyId);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #getGuestUser(long)}

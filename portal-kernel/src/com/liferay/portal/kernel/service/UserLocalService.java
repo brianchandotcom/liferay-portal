@@ -929,6 +929,9 @@ public interface UserLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyUsersCount(long companyId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public User getDefaultServiceAccountUser(long companyId);
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #getGuestUser(long)}

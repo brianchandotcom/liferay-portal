@@ -330,18 +330,18 @@ definition {
 		}
 	}
 
-	@description = "LPS-179056  Confirm that the user can create a data set entry"
+	@description = "LPS-179056. Confirm that the user can create a data set entry with special chatacters"
 	@priority = 5
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "~!@#$%^&*(){}[],.<>/?",
+				key_name = "Data Set ~!@#$%^&*(){}[],.<>/? name",
 				key_type = "Liferay Analytics Settings REST");
 		}
 
 		task ("Then confirm that the dataset is created and if the name is provided as expected") {
 			AssertElementPresent(
-				key_itemName = "~!@#$%^&*(){}[],.<>/?",
+				key_itemName = "Data Set ~!@#$%^&*(){}[],.<>/? name",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 

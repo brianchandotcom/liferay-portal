@@ -1,0 +1,4 @@
+header-liferay-sample-multi-extension-container-with-shared-code:
+    baseURL: http://localhost:3001/assets
+liferay-sample-fds-cell-renderer:
+    baseURL: http://localhost:3001/assets

@@ -4,7 +4,7 @@
 	},
 	"name": "liferay-sample-multi-extension-container",
 	"scripts": {
-		"start": "PORT=5002 serve --cors"
+		"start": "serve --cors"
 	},
 	"type": "module"
 }

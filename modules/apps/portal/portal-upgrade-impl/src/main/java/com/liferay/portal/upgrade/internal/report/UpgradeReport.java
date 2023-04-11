@@ -330,7 +330,13 @@ public class UpgradeReport {
 							Time.SECOND);
 				}
 				catch (Exception exception) {
-					return exception.getMessage();
+					_log.error(
+						"Unable to determine the document library size",
+						exception);
+
+					return "Unable to determine the document library storage " +
+						"size because of an error. Check log for more " +
+							"details. You can check the size manually";
 				}
 
 				if (_documentLibrarySizeThread.isAlive()) {

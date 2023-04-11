@@ -1,0 +1,62 @@
+@component-name = "portal-publications"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Knowledge Base";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@priority = 4
+	test AddKBArticlePublication {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Knowledge Base Article",
+			changeSite = "Site Name",
+			changeTitle = "Knowledge Base Article Title",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+}

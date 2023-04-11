@@ -58,55 +58,48 @@ public class Log4jConfigUtil {
 
 			Element rootElement = document.getRootElement();
 
-			Map<String, String> priorities = new HashMap<>();
-
-			AbstractConfiguration abstractConfiguration;
-
-			if (Objects.equals(rootElement.getName(), "Configuration")) {
-				if (!GetterUtil.getBoolean(
-						rootElement.attributeValue("strict"))) {
-
-					_log.error(
-						"<Configuration> strict attribute requires true");
-
-					return Collections.emptyMap();
-				}
-
-				for (Element element : rootElement.elements()) {
-					_removeAppender(
-						element, "AppenderRef", "Appender",
-						removedAppenderNames);
-
-					for (Element childElement : element.elements("Logger")) {
-						priorities.put(
-							childElement.attributeValue("name"),
-							childElement.attributeValue("level"));
-					}
-				}
-
-				if (removedAppenderNames.length > 0) {
-					xmlContent = document.asXML();
-				}
-
-				abstractConfiguration = new XmlConfiguration(
-					_loggerContext,
-					new ConfigurationSource(
-						new UnsyncByteArrayInputStream(
-							xmlContent.getBytes(StringPool.UTF8)))) {
-
-					@Override
-					protected void setToDefault() {
-					}
-
-				};
-			}
-			else {
+			if (!Objects.equals(rootElement.getName(), "Configuration")) {
 				_log.error(
 					"Please use log4j2 <Configuration> enabled strict XML " +
 						"format");
 
 				return Collections.emptyMap();
 			}
+
+			if (!GetterUtil.getBoolean(rootElement.attributeValue("strict"))) {
+				_log.error("<Configuration> strict attribute requires true");
+
+				return Collections.emptyMap();
+			}
+
+			Map<String, String> priorities = new HashMap<>();
+
+			for (Element element : rootElement.elements()) {
+				_removeAppender(
+					element, "AppenderRef", "Appender", removedAppenderNames);
+
+				for (Element childElement : element.elements("Logger")) {
+					priorities.put(
+						childElement.attributeValue("name"),
+						childElement.attributeValue("level"));
+				}
+			}
+
+			if (removedAppenderNames.length > 0) {
+				xmlContent = document.asXML();
+			}
+
+			AbstractConfiguration abstractConfiguration = new XmlConfiguration(
+				_loggerContext,
+				new ConfigurationSource(
+					new UnsyncByteArrayInputStream(
+						xmlContent.getBytes(StringPool.UTF8)))) {
+
+				@Override
+				protected void setToDefault() {
+				}
+
+			};
 
 			_centralizedConfiguration.addConfiguration(abstractConfiguration);
 

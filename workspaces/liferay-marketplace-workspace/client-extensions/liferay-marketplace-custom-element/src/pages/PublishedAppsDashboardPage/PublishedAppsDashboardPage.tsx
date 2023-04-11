@@ -546,6 +546,8 @@ export function PublishedAppsDashboardPage() {
 					dashboardNavigationItems={dashboardNavigationItems}
 					selectedAccount={selectedAccount}
 					setDashboardNavigationItems={setDashboardNavigationItems}
+					totalApps={apps.length}
+					totalMembers={members.length}
 				/>
 			)}
 		</div>

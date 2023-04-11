@@ -18,12 +18,16 @@ interface AccountDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
 	selectedAccount: Account;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
+	totalApps: number;
+	totalMembers: number;
 }
 
 export function AccountDetailsPage({
 	dashboardNavigationItems,
 	selectedAccount,
 	setDashboardNavigationItems,
+	totalApps,
+	totalMembers,
 }: AccountDetailsPageProps) {
 	const [selectedAccountAddress, setSelectedAccountAddress] =
 		useState<AccountPostalAddresses[]>();
@@ -108,7 +112,7 @@ export function AccountDetailsPage({
 
 					<div className="account-details-header-right-container">
 						<AccountHeaderButton
-							boldText="4"
+							boldText={`${totalApps}`}
 							name="apps"
 							onClick={(itemName) =>
 								updateDashboardNavigationItems(itemName)
@@ -118,7 +122,7 @@ export function AccountDetailsPage({
 						/>
 
 						<AccountHeaderButton
-							boldText="4"
+							boldText={`${totalMembers}`}
 							name="members"
 							onClick={(itemName) =>
 								updateDashboardNavigationItems(itemName)
@@ -128,7 +132,7 @@ export function AccountDetailsPage({
 						/>
 
 						<AccountHeaderButton
-							boldText="4"
+							boldText="0"
 							name="solutions"
 							text="Items"
 							title="Solutions"

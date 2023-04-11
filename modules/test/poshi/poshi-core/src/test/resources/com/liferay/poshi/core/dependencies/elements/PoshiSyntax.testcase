@@ -46,6 +46,7 @@
 				<arg value="${orderIDs}"/>
 			</execute>
 
+			<var name="pages" method="selenium#getElementValue('//tr[td[contains(@class,\'line-content\')][contains(.,\'textAlign = &quot;right&quot;\')]]/td[contains(@class,\'line-number\')]')"/>
 			<var name="camelCase" method="StringUtil#replace('${camelCase}', ' ', '')"/>
 			<var name="payload" method="StringUtil#replace('${payload}', '${payload}', '${payload}}')"/>
 

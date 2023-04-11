@@ -16,7 +16,7 @@ package com.liferay.frontend.taglib.react.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
-import com.liferay.frontend.taglib.react.internal.util.ServicesProvider;
+import com.liferay.frontend.taglib.react.servlet.taglib.util.ServicesProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Frontend Taglib React
 Bundle-SymbolicName: com.liferay.frontend.taglib.react
 Bundle-Version: 5.0.9
-Export-Package: com.liferay.frontend.taglib.react.servlet.taglib
+Export-Package:\
+	com.liferay.frontend.taglib.react.servlet.taglib,\
+	com.liferay.frontend.taglib.react.servlet.taglib.util
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

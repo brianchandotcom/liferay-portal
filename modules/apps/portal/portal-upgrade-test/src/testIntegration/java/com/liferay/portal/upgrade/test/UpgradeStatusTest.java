@@ -60,14 +60,10 @@ public class UpgradeStatusTest {
 	public static void setUpClass() {
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_errorMessages");
-		_originalServletSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
+		_originalSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_schemaVersionsMap");
 		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_upgradeProcessMessages");
-		_originalState = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_state");
-		_originalType = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_type");
 		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
 			_upgradeStatus, "_warningMessages");
 
@@ -84,10 +80,8 @@ public class UpgradeStatusTest {
 	@Before
 	public void setUp() {
 		_originalErrorMessages.clear();
-		_originalServletSchemaVersionsMap.clear();
+		_originalSchemaVersionsMap.clear();
 		_originalUpgradeProcessMessages.clear();
-		_originalState = "Pending";
-		_originalType = "Not calculated";
 		_originalWarningMessages.clear();
 
 		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
@@ -103,9 +97,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Failure", _upgradeStatus.getState());
+		Assert.assertEquals("failure", _upgradeStatus.getState());
 
-		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}
 
 	@Test
@@ -124,24 +118,24 @@ public class UpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			bundleSymbolicName, currentSchemaVersion.toString());
 
-		Assert.assertEquals("Failure", _upgradeStatus.getState());
+		Assert.assertEquals("failure", _upgradeStatus.getState());
 
-		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}
 
 	@Test
 	public void testMajorUpgrade() {
-		_testUpgradeType("Major");
+		_testUpgradeType("major");
 	}
 
 	@Test
 	public void testMicroUpgrade() {
-		_testUpgradeType("Micro");
+		_testUpgradeType("micro");
 	}
 
 	@Test
 	public void testMinorUpgrade() {
-		_testUpgradeType("Minor");
+		_testUpgradeType("minor");
 	}
 
 	@Test
@@ -150,14 +144,14 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Success", _upgradeStatus.getState());
+		Assert.assertEquals("success", _upgradeStatus.getState());
 
-		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}
 
 	@Test
 	public void testQualifierUpgrade() {
-		_testUpgradeType("Qualifier");
+		_testUpgradeType("qualifier");
 	}
 
 	@Test
@@ -170,9 +164,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("Warning", _upgradeStatus.getState());
+		Assert.assertEquals("warning", _upgradeStatus.getState());
 
-		Assert.assertEquals("No upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}
 
 	private Version _getReleaseSchemaVersion(String bundleSymbolicName) {
@@ -213,7 +207,7 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(true);
 
-		if (type.equals("Major")) {
+		if (type.equals("major")) {
 			_setReleaseSchemaVersion(
 				majorBundleSymbolicName,
 				StringBundler.concat(
@@ -224,7 +218,7 @@ public class UpgradeStatusTest {
 					String.valueOf(currentMajorSchemaVersion.getMicro())));
 		}
 
-		if (type.equals("Minor")) {
+		if (type.equals("minor")) {
 			_setReleaseSchemaVersion(
 				minorBundleSymbolicName,
 				StringBundler.concat(
@@ -235,7 +229,7 @@ public class UpgradeStatusTest {
 					String.valueOf(currentMinorSchemaVersion.getMicro())));
 		}
 
-		if (type.equals("Micro")) {
+		if (type.equals("micro")) {
 			_setReleaseSchemaVersion(
 				microBundleSymbolicName,
 				StringBundler.concat(
@@ -259,21 +253,19 @@ public class UpgradeStatusTest {
 		_setReleaseSchemaVersion(
 			microBundleSymbolicName, currentMicroSchemaVersion.toString());
 
-		Assert.assertEquals("Success", _upgradeStatus.getState());
+		Assert.assertEquals("success", _upgradeStatus.getState());
 
-		if (!type.equals("Qualifier")) {
+		if (!type.equals("qualifier")) {
 			Assert.assertEquals(type, _upgradeStatus.getType());
 		}
 		else {
-			Assert.assertEquals("Micro", _upgradeStatus.getType());
+			Assert.assertEquals("micro", _upgradeStatus.getType());
 		}
 	}
 
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;
-	private static Map<String, Object> _originalServletSchemaVersionsMap;
-	private static String _originalState;
+	private static Map<String, Object> _originalSchemaVersionsMap;
 	private static StopWatch _originalStopWatch;
-	private static String _originalType;
 	private static Map<String, ArrayList<String>>
 		_originalUpgradeProcessMessages;
 	private static Map<String, Map<String, Integer>> _originalWarningMessages;

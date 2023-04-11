@@ -110,6 +110,21 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
+	public void testNonupgradeProcessWhenAutoUpgradeDisabled()
+		throws Exception {
+
+		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN", false);
+
+		Assert.assertEquals(
+			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertFalse(_upgradeProcessRun);
+	}
+
+	@Test
 	public void testUpgradeProcessWhenAutoUpgradeEnabled() throws Exception {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 

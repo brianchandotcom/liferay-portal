@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
@@ -124,13 +123,10 @@ public class AssetListEntryUsagesManager {
 
 		Set<String> uniqueAssetListEntryUsagesKeys = new HashSet<>();
 
-		List<AssetListEntryUsage> assetListEntryUsages =
-			_assetListEntryUsageLocalService.getAssetEntryListUsagesByPlid(
-				plid);
+		for (AssetListEntryUsage assetListEntryUsage :
+				_assetListEntryUsageLocalService.getAssetEntryListUsagesByPlid(
+					plid)) {
 
-		String redirect = _getRedirect(httpServletRequest);
-
-		for (AssetListEntryUsage assetListEntryUsage : assetListEntryUsages) {
 			String uniqueKey = _generateUniqueLayoutClassedModelUsageKey(
 				assetListEntryUsage);
 
@@ -146,7 +142,8 @@ public class AssetListEntryUsagesManager {
 			mappedContentsJSONArray.put(
 				_getPageContentJSONObject(
 					assetListEntryUsage, httpServletRequest,
-					httpServletResponse, redirect, restrictedItemIds));
+					httpServletResponse, _getRedirect(httpServletRequest),
+					restrictedItemIds));
 
 			uniqueAssetListEntryUsagesKeys.add(uniqueKey);
 		}
@@ -164,10 +161,6 @@ public class AssetListEntryUsagesManager {
 		ServletContext servletContext =
 			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				httpServletRequest, portlet.getPortletId());
-
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
 
@@ -181,7 +174,8 @@ public class AssetListEntryUsagesManager {
 			portletConfig.getPortletContext(), WindowState.NORMAL,
 			PortletMode.VIEW,
 			_portletPreferencesLocalService.getStrictPreferences(
-				portletPreferencesIds),
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					httpServletRequest, portlet.getPortletId())),
 			themeDisplay.getPlid());
 
 		liferayRenderRequest.setPortletRequestDispatcherRequest(
@@ -273,12 +267,9 @@ public class AssetListEntryUsagesManager {
 
 		JSONArray addItemsJSONArray = _jsonFactory.createJSONArray();
 
-		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-			_getAssetPublisherAddItemHolders(
-				assetListEntry, httpServletRequest, httpServletResponse);
-
 		for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
-				assetPublisherAddItemHolders) {
+				_getAssetPublisherAddItemHolders(
+					assetListEntry, httpServletRequest, httpServletResponse)) {
 
 			addItemsJSONArray.put(
 				JSONUtil.put(

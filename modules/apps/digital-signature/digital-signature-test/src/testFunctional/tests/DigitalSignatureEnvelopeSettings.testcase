@@ -115,8 +115,6 @@ definition {
 	@priority = 5
 	test CannotCollectDSWithUnsupportedFileExtensions {
 		task ("Given that Digital Signature is enabled with credentials and multiple files are added--one of which is unsupported by Digital Envelopes") {
-			DigitalSignature.goToDigitalSignatureSettings();
-
 			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -126,6 +124,10 @@ definition {
 
 		task ("When all the files are selected for collecting Digital Signature for a Digital Envelope") {
 			PortletEntry.selectAll();
+
+			Click.javaScriptClick(
+				key_fieldName = "_com_liferay_document_library_web_portlet_DLAdminPortlet_rowIdsFolder",
+				locator1 = "Checkbox#CHECKBOX_NAME");
 
 			Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 		}
@@ -157,13 +159,11 @@ definition {
 		property solutions.acceptance = "true";
 
 		task ("Given that Digital Signature is enabled with proper credentials") {
-			DigitalSignature.goToDigitalSignatureSettings();
-
 			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 		}
 
 		task ("When a Digital Envelope is created with an unsupported file type attached") {
-			ApplicationsMenu.gotoSite(site = "Liferay DXP");
+			Navigator.openURL();
 
 			DigitalSignature.createEnvelope(
 				dmDocumentFile = "Document_2.mp4",

@@ -97,8 +97,6 @@ definition {
 	@description = "This is a test for LPS-131427. Verify if Digital Signature data persists in site settings after enabled with Always Inherit strategy"
 	@priority = 5
 	test DataPersistsAfterEnabledAlwaysInheritStrategy {
-		DigitalSignature.goToDigitalSignatureSettings();
-
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		Navigator.openURL();
@@ -148,8 +146,6 @@ definition {
 	@description = "This is a test for LPS-131427. Verify if Digital Signature data persists in site settings after enabled with Inherit or Override strategy"
 	@priority = 5
 	test DataPersistsAfterEnabledInheritOrOverrideStrategy {
-		DigitalSignature.goToDigitalSignatureSettings();
-
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Inherit or Override");
 
 		Navigator.openURL();

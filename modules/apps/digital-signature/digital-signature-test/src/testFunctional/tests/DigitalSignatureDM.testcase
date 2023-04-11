@@ -131,13 +131,17 @@ definition {
 
 		PortletEntry.selectAll();
 
+		Click.javaScriptClick(
+			key_fieldName = "_com_liferay_document_library_web_portlet_DLAdminPortlet_rowIdsFolder",
+			locator1 = "Checkbox#CHECKBOX_NAME");
+
 		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 
-		var modalTitle = "Maximum of 10 Files per Envelope";
+		var modalAlert = "You have exceeded the maximum amount of 10 files allowed per envelope.";
 
 		AssertElementPresent(
-			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE",
-			value1 = ${modalTitle});
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_ALERT",
+			value1 = ${modalAlert});
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

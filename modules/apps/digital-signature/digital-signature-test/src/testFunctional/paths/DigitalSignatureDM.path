@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIGITAL_SIGNATURE_MODAL_ALERT</td>
+	<td>//div[contains(@class, 'alert-warning') and contains(., '${modalAlert}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIGITAL_SIGNATURE_MODAL_TITLE</td>
 	<td>//div[contains(@class, 'modal-title') and contains(., '${modalTitle}')]</td>
 	<td></td>

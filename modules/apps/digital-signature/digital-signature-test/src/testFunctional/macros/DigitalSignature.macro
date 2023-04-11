@@ -63,8 +63,6 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_2.docx,Document_3.docx");
 
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Digital Signature");

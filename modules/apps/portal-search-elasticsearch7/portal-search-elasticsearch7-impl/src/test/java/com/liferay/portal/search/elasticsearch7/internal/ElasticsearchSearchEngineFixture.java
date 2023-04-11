@@ -91,6 +91,8 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 	public void tearDown() throws Exception {
 		_elasticsearchConnectionFixture.destroyNode();
 
+		_elasticsearchEngineAdapterFixture.tearDown();
+
 		if (_companyIndexFactory != null) {
 			ReflectionTestUtil.invoke(
 				_companyIndexFactory, "deactivate", new Class<?>[0]);
@@ -200,22 +202,24 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 	private SearchEngineAdapter _createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =
+		_elasticsearchEngineAdapterFixture =
 			new ElasticsearchEngineAdapterFixture() {
 				{
 					setElasticsearchClientResolver(elasticsearchClientResolver);
 				}
 			};
 
-		elasticsearchEngineAdapterFixture.setUp();
+		_elasticsearchEngineAdapterFixture.setUp();
 
-		return elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
+		return _elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
 	}
 
 	private CompanyIndexFactory _companyIndexFactory;
 	private final ElasticsearchConnectionFixture
 		_elasticsearchConnectionFixture;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private ElasticsearchEngineAdapterFixture
+		_elasticsearchEngineAdapterFixture;
 	private ElasticsearchSearchEngine _elasticsearchSearchEngine;
 	private IndexNameBuilder _indexNameBuilder;
 

@@ -43,6 +43,10 @@ public class ElasticsearchEngineAdapterFixture {
 			_facetProcessor);
 	}
 
+	public void tearDown() {
+		_searchRequestExecutorFixture.tearDown();
+	}
+
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory,
@@ -71,13 +75,12 @@ public class ElasticsearchEngineAdapterFixture {
 				}
 			};
 
-		SearchRequestExecutorFixture searchRequestExecutorFixture =
-			new SearchRequestExecutorFixture() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-					setFacetProcessor(facetProcessor);
-				}
-			};
+		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
+			{
+				setElasticsearchClientResolver(elasticsearchClientResolver);
+				setFacetProcessor(facetProcessor);
+			}
+		};
 
 		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
 			new SnapshotRequestExecutorFixture() {
@@ -89,7 +92,7 @@ public class ElasticsearchEngineAdapterFixture {
 		clusterRequestExecutorFixture.setUp();
 		documentRequestExecutorFixture.setUp();
 		indexRequestExecutorFixture.setUp();
-		searchRequestExecutorFixture.setUp();
+		_searchRequestExecutorFixture.setUp();
 		snapshotRequestExecutorFixture.setUp();
 
 		SearchEngineAdapter searchEngineAdapter =
@@ -110,7 +113,7 @@ public class ElasticsearchEngineAdapterFixture {
 			indexRequestExecutorFixture.getIndexRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_searchRequestExecutor",
-			searchRequestExecutorFixture.getSearchRequestExecutor());
+			_searchRequestExecutorFixture.getSearchRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			searchEngineAdapter, "_snapshotRequestExecutor",
 			snapshotRequestExecutorFixture.getSnapshotRequestExecutor());
@@ -143,6 +146,8 @@ public class ElasticsearchEngineAdapterFixture {
 
 		return new DefaultElasticsearchDocumentFactory();
 	}
+
+	private static SearchRequestExecutorFixture _searchRequestExecutorFixture;
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;

@@ -813,7 +813,7 @@ definition {
 		task ("And can see data set is filled with the following data in the preview modal and only eigth items are displayed") {
 			Pagination.changePagination(itemsPerPage = "8 Items");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 1 to 8 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 8 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "Premium Brake Pads",
@@ -833,7 +833,7 @@ definition {
 		}
 
 		task ("Then the remaining items are displayed") {
-			CommerceEntry.viewPaginationResults(results = "Showing 9 to 13 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 9 to 13 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "ABS Sensor",
@@ -867,7 +867,7 @@ definition {
 
 			Click(locator1 = "ACUtils#PREVIOUS_PAGES");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 1 to 8 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 8 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "Premium Brake Pads",
@@ -877,7 +877,7 @@ definition {
 				key_pageNumber = 2,
 				locator1 = "ACUtils#ANY_PAGE");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 9 to 13 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 9 to 13 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "ABS Sensor",
@@ -1290,7 +1290,7 @@ definition {
 		task ("Then only four wish lists are displayed") {
 			Pagination.changePagination(itemsPerPage = "4 Items");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6");
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6 entries.");
 
 			for (var wishListNumber : list "1,2,3,4") {
 				AssertVisible(
@@ -1312,7 +1312,7 @@ definition {
 		}
 
 		task ("Then only two wish lists are displayed") {
-			CommerceEntry.viewPaginationResults(results = "Showing 5 to 6 of 6");
+			CommerceEntry.viewPaginationResults(results = "Showing 5 to 6 of 6 entries.");
 
 			for (var wishListNumber : list "1,2,3,4") {
 				AssertElementNotPresent(

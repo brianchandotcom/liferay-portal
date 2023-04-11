@@ -300,7 +300,7 @@ definition {
 		task ("And can see data set is filled with the following data in the preview modal and only four items are displayed") {
 			Pagination.changePagination(itemsPerPage = "4 Items");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "ABS Sensor",
@@ -320,7 +320,7 @@ definition {
 		}
 
 		task ("Then four different items are displayed") {
-			CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "Calipers",
@@ -354,7 +354,7 @@ definition {
 
 			Click(locator1 = "ACUtils#PREVIOUS_PAGES");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "ABS Sensor",
@@ -364,7 +364,7 @@ definition {
 				key_pageNumber = 3,
 				locator1 = "ACUtils#ANY_PAGE");
 
-			CommerceEntry.viewPaginationResults(results = "Showing 9 to 12 of 13");
+			CommerceEntry.viewPaginationResults(results = "Showing 9 to 12 of 13 entries.");
 
 			CommerceOrders.assertOrderImportPreviewEntry(
 				productName = "Bearings",

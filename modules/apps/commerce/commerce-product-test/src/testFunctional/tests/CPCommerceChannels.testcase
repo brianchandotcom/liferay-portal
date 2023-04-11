@@ -839,7 +839,7 @@ definition {
 				task ("Then the admin can use pagination to change the list of countries shown on the page") {
 					Pagination.changePagination(itemsPerPage = "4 Items");
 
-					CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 247");
+					CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 247 entries.");
 
 					AssertElementNotPresent(
 						key_rowNumber = 5,
@@ -853,7 +853,7 @@ definition {
 
 					Click(locator1 = "ACUtils#NEXT_PAGES");
 
-					CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 247");
+					CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 247 entries.");
 
 					AssertElementNotPresent(
 						key_rowNumber = 5,

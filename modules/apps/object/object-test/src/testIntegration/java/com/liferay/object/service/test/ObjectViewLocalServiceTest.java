@@ -510,9 +510,9 @@ public class ObjectViewLocalServiceTest {
 			Assert.fail();
 		}
 		catch (PortalException portalException) {
-			if (expectedExceptionClass.isInstance(portalException)) {
-				Assert.assertEquals(message, portalException.getMessage());
-			}
+			Assert.assertEquals(message, portalException.getMessage());
+			Assert.assertTrue(
+				expectedExceptionClass.isInstance(portalException));
 		}
 	}
 

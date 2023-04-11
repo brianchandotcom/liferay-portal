@@ -26,6 +26,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OPTIONS_TAB_RELATIONSHIPS_LABEL_AND_RELATED_OBJECT</td>
+		<td>//div[contains(@class,'dnd-tr') and contains(.,'${key_label}')and contains(.,'${key_relatedObject}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OPTIONS_TAB_RELATIONSHIPS_TYPE_AND_HIERARCHY</td>
 		<td>//div[contains(@class,'dnd-tr') and contains(.,'${key_relationType}')and contains(.,'${key_relationHierarchy}')]</td>
 		<td></td>

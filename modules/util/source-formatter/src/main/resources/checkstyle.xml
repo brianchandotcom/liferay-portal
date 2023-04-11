@@ -284,6 +284,11 @@
 			<message key="configuration.policy.unnecessary" value="Remove ''configurationPolicy = {0}'' as it is unnecessary" />
 			<message key="osgi.jaxrs.name.incorrect" value="The value of ''osgi.jaxrs.name'' should end with ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ComponentExposureCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Avoid exposing static component." />
+			<message key="static.component.exposed" value="Do not expose private static field ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConcatCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks for correct use of `StringBundler.concat`." />

@@ -1413,9 +1413,35 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testUpdateSystemObjectDefinition() throws Exception {
 
-		// Update unmodifiable system object
+		// Update modifiable system object
 
 		ObjectDefinition objectDefinition =
+			_publishModifiableSystemObjectDefinition();
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
+				true, false, true, false, false,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
+				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
+				objectDefinition.getScope());
+
+		Assert.assertTrue(objectDefinition.isActive());
+		Assert.assertFalse(objectDefinition.isEnableCategorization());
+		Assert.assertTrue(objectDefinition.isEnableComments());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Charlie"),
+			objectDefinition.getLabelMap());
+		Assert.assertEquals("C_Test", objectDefinition.getName());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Charlies"),
+			objectDefinition.getPluralLabelMap());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Update unmodifiable system object
+
+		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
 				TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1444,31 +1470,6 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			"TEST-ERC", objectDefinition.getExternalReferenceCode());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		// Update modifiable system object
-
-		objectDefinition = _publishModifiableSystemObjectDefinition();
-
-		objectDefinition =
-			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
-				true, false, true, false, false,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
-				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
-				objectDefinition.getScope());
-
-		Assert.assertTrue(objectDefinition.isActive());
-		Assert.assertFalse(objectDefinition.isEnableCategorization());
-		Assert.assertTrue(objectDefinition.isEnableComments());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlie"),
-			objectDefinition.getLabelMap());
-		Assert.assertEquals("C_Test", objectDefinition.getName());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlies"),
-			objectDefinition.getPluralLabelMap());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

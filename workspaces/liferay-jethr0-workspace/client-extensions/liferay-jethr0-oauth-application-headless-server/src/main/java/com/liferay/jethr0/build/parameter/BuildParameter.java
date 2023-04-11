@@ -28,4 +28,6 @@ public interface BuildParameter extends Entity {
 
 	public String getValue();
 
+	public void setBuild(Build build);
+
 }

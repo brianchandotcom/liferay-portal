@@ -14,50 +14,24 @@
 
 package com.liferay.jethr0.build.parameter;
 
-import com.liferay.jethr0.build.Build;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
 import org.json.JSONObject;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class BuildParameterFactory {
+@Configuration
+public class BuildParameterFactory extends BaseEntityFactory<BuildParameter> {
 
-	public static BuildParameter newBuildParameter(
-		Build build, JSONObject jsonObject) {
-
-		long id = jsonObject.getLong("id");
-
-		BuildParameter buildParameter = null;
-
-		synchronized (_buildParameters) {
-			if (_buildParameters.containsKey(id)) {
-				return _buildParameters.get(id);
-			}
-
-			buildParameter = new DefaultBuildParameter(build, jsonObject);
-
-			_buildParameters.put(buildParameter.getId(), buildParameter);
-		}
-
-		return buildParameter;
+	@Override
+	public BuildParameter newEntity(JSONObject jsonObject) {
+		return new DefaultBuildParameter(jsonObject);
 	}
 
-	public static void removeBuildParameter(BuildParameter buildParameter) {
-		if (buildParameter == null) {
-			return;
-		}
-
-		synchronized (_buildParameters) {
-			_buildParameters.remove(buildParameter.getId());
-		}
+	protected BuildParameterFactory() {
+		super(BuildParameter.class);
 	}
-
-	private static final Map<Long, BuildParameter> _buildParameters =
-		Collections.synchronizedMap(new HashMap<>());
 
 }

@@ -55,16 +55,19 @@ public abstract class BaseBuildParameter
 		return _value;
 	}
 
-	protected BaseBuildParameter(Build build, JSONObject jsonObject) {
-		super(jsonObject);
-
+	@Override
+	public void setBuild(Build build) {
 		_build = build;
+	}
+
+	protected BaseBuildParameter(JSONObject jsonObject) {
+		super(jsonObject);
 
 		_name = jsonObject.getString("name");
 		_value = jsonObject.getString("value");
 	}
 
-	private final Build _build;
+	private Build _build;
 	private final String _name;
 	private final String _value;
 

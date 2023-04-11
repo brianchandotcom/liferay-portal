@@ -14,8 +14,6 @@
 
 package com.liferay.jethr0.build.parameter;
 
-import com.liferay.jethr0.build.Build;
-
 import org.json.JSONObject;
 
 /**
@@ -23,8 +21,8 @@ import org.json.JSONObject;
  */
 public class DefaultBuildParameter extends BaseBuildParameter {
 
-	protected DefaultBuildParameter(Build build, JSONObject jsonObject) {
-		super(build, jsonObject);
+	protected DefaultBuildParameter(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 }

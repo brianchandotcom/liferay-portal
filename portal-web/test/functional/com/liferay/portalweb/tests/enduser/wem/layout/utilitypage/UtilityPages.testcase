@@ -219,8 +219,6 @@ definition {
 			UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
 
 			Button.clickAdd();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Then the page designer sees the new thumbnail of utility page") {

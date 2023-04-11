@@ -1,0 +1,10 @@
+{
+	"devDependencies": {
+		"serve": "^14.2.0"
+	},
+	"name": "liferay-sample-multi-extension-container-with-shared-code",
+	"scripts": {
+		"start": "PORT=3001 serve --cors"
+	},
+	"type": "module"
+}

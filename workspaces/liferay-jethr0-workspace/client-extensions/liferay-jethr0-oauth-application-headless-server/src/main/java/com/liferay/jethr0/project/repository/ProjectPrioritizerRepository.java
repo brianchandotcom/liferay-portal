@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.jethr0.project.prioritizer;
+package com.liferay.jethr0.project.repository;
 
-import com.liferay.jethr0.dalo.ProjectPrioritizerToProjectComparatorsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.dalo.ProjectPrioritizerDALO;
+import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsDALO;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
 
 import java.util.Objects;
 import java.util.Set;

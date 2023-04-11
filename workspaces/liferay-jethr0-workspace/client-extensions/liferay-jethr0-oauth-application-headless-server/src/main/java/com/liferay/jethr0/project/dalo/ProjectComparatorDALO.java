@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.jethr0.project.prioritizer;
+package com.liferay.jethr0.project.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,14 +26,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerDALO extends BaseEntityDALO<ProjectPrioritizer> {
+public class ProjectComparatorDALO extends BaseEntityDALO<ProjectComparator> {
 
 	@Override
-	protected EntityFactory<ProjectPrioritizer> getEntityFactory() {
-		return _projectPrioritizerFactory;
+	public EntityFactory<ProjectComparator> getEntityFactory() {
+		return _projectComparatorFactory;
 	}
 
 	@Autowired
-	private ProjectPrioritizerFactory _projectPrioritizerFactory;
+	private ProjectComparatorFactory _projectComparatorFactory;
 
 }

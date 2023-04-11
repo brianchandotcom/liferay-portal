@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.jethr0.dalo;
+package com.liferay.jethr0.project.dalo;
 
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.BuildFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
+import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -28,28 +28,28 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerToProjectComparatorsDALO
-	extends BaseEntityRelationshipDALO<ProjectPrioritizer, ProjectComparator> {
+public class ProjectToBuildsDALO
+	extends BaseEntityRelationshipDALO<Project, Build> {
 
 	@Override
-	public EntityFactory<ProjectComparator> getChildEntityFactory() {
-		return _projectComparatorFactory;
+	public EntityFactory<Build> getChildEntityFactory() {
+		return _buildFactory;
 	}
 
 	@Override
-	public EntityFactory<ProjectPrioritizer> getParentEntityFactory() {
-		return _projectPrioritizerFactory;
+	public EntityFactory<Project> getParentEntityFactory() {
+		return _projectFactory;
 	}
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "projectPrioritizerToProjectComparators";
+		return "projectToBuilds";
 	}
 
 	@Autowired
-	private ProjectComparatorFactory _projectComparatorFactory;
+	private BuildFactory _buildFactory;
 
 	@Autowired
-	private ProjectPrioritizerFactory _projectPrioritizerFactory;
+	private ProjectFactory _projectFactory;
 
 }

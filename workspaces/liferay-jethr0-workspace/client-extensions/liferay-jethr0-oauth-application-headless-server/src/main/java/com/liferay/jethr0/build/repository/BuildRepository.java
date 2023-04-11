@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.jethr0.build;
+package com.liferay.jethr0.build.repository;
 
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.dalo.BuildDALO;
 import com.liferay.jethr0.dalo.BuildToBuildParametersDALO;
 import com.liferay.jethr0.dalo.BuildToBuildRunsDALO;
 import com.liferay.jethr0.dalo.BuildToTasksDALO;
-import com.liferay.jethr0.dalo.ProjectToBuildsDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

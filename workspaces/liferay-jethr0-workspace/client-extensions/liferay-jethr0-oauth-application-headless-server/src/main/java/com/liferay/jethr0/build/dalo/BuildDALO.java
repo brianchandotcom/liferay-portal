@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.jethr0.dalo;
+package com.liferay.jethr0.build.dalo;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.BuildFactory;
-import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -28,28 +26,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectToBuildsDALO
-	extends BaseEntityRelationshipDALO<Project, Build> {
+public class BuildDALO extends BaseEntityDALO<Build> {
 
 	@Override
-	public EntityFactory<Build> getChildEntityFactory() {
+	protected EntityFactory<Build> getEntityFactory() {
 		return _buildFactory;
-	}
-
-	@Override
-	public EntityFactory<Project> getParentEntityFactory() {
-		return _projectFactory;
-	}
-
-	@Override
-	protected String getObjectRelationshipName() {
-		return "projectToBuilds";
 	}
 
 	@Autowired
 	private BuildFactory _buildFactory;
-
-	@Autowired
-	private ProjectFactory _projectFactory;
 
 }

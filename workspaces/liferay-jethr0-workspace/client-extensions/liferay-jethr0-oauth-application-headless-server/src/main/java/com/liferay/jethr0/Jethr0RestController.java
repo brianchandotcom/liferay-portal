@@ -16,8 +16,8 @@ package com.liferay.jethr0;
 
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectFactory;
-import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.queue.ProjectQueue;
+import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import org.json.JSONObject;
 

@@ -19,12 +19,12 @@ import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.comparator.ProjectComparatorRepository;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerRepository;
 import com.liferay.jethr0.project.queue.ProjectQueue;
+import com.liferay.jethr0.project.repository.ProjectComparatorRepository;
+import com.liferay.jethr0.project.repository.ProjectPrioritizerRepository;
+import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

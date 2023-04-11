@@ -87,9 +87,11 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "No theme CSS client extension was loaded.");
 		}
@@ -98,7 +100,7 @@ definition {
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "FontFamily");
 
@@ -139,9 +141,11 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "No theme CSS client extension was loaded.");
 		}
@@ -150,7 +154,7 @@ definition {
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "FontFamily");
 
@@ -183,7 +187,7 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "No theme CSS client extension was loaded.");
 		}
@@ -192,7 +196,7 @@ definition {
 			PagesAdmin.addThemeCSSExtension(extensionName = "BackgroundColor");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "BackgroundColor");
 
@@ -261,6 +265,8 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			PortletEntry.save();
@@ -293,7 +299,7 @@ definition {
 			PagesAdmin.addThemeCSSExtension(extensionName = "BackgroundColor");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "BackgroundColor");
 
@@ -331,6 +337,8 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			PortletEntry.save();
@@ -361,14 +369,14 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "Theme CSS is inherited from master.");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "BackgroundColor");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "BackgroundColor");
 
@@ -420,16 +428,18 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "Theme CSS is inherited from Pages.");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "BackgroundColor");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "BackgroundColor");
 
@@ -482,6 +492,8 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			PortletEntry.save();
@@ -514,26 +526,26 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Theme.configureLookAndFeelSpecificLook();
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "FontFamily");
 
 			Click(
-				key_fieldLabel = "Client Extension",
+				key_fieldLabel = "Theme CSS",
 				key_text = "trash",
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "No theme CSS client extension was loaded.");
 
@@ -571,10 +583,12 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
+			Theme.configureLookAndFeelSpecificLook();
+
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "FontFamily");
 
@@ -597,18 +611,18 @@ definition {
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			Click(
-				key_fieldLabel = "Client Extension",
+				key_fieldLabel = "Theme CSS",
 				key_text = "trash",
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 			AssertTextEquals(
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_text = "Client Extension",
+				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
 				value1 = "No theme CSS client extension was loaded.");
 

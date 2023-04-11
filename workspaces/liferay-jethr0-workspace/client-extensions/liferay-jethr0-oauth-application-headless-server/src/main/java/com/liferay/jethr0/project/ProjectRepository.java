@@ -14,6 +14,8 @@
 
 package com.liferay.jethr0.project;
 
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.dalo.ProjectToBuildsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
 import java.util.ArrayList;
@@ -48,7 +50,30 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 		return _projectDALO;
 	}
 
+	@Override
+	public Project updateEntityRelationshipsInDatabase(Project project) {
+		_projectToBuildsDALO.updateChildEntities(project);
+
+		return project;
+	}
+
+	@Override
+	protected Project updateEntityRelationshipsFromDatabase(Project project) {
+		List<Build> builds = _projectToBuildsDALO.getChildEntities(project);
+
+		project.addBuilds(builds);
+
+		for (Build build : builds) {
+			build.setProject(project);
+		}
+
+		return project;
+	}
+
 	@Autowired
 	private ProjectDALO _projectDALO;
+
+	@Autowired
+	private ProjectToBuildsDALO _projectToBuildsDALO;
 
 }

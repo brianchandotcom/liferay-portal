@@ -14,8 +14,11 @@
 
 package com.liferay.jethr0.project.prioritizer;
 
+import com.liferay.jethr0.dalo.ProjectPrioritizerToProjectComparatorsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.project.comparator.ProjectComparator;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +48,38 @@ public class ProjectPrioritizerRepository
 		return _projectPrioritizerDALO;
 	}
 
+	@Override
+	public ProjectPrioritizer updateEntityRelationshipsInDatabase(
+		ProjectPrioritizer projectPrioritizer) {
+
+		_projectPrioritizerToProjectComparatorsDALO.updateChildEntities(
+			projectPrioritizer);
+
+		return projectPrioritizer;
+	}
+
+	@Override
+	protected ProjectPrioritizer updateEntityRelationshipsFromDatabase(
+		ProjectPrioritizer projectPrioritizer) {
+
+		List<ProjectComparator> projectComparators =
+			_projectPrioritizerToProjectComparatorsDALO.getChildEntities(
+				projectPrioritizer);
+
+		projectPrioritizer.addProjectComparators(projectComparators);
+
+		for (ProjectComparator projectComparator : projectComparators) {
+			projectComparator.setProjectPrioritizer(projectPrioritizer);
+		}
+
+		return projectPrioritizer;
+	}
+
 	@Autowired
 	private ProjectPrioritizerDALO _projectPrioritizerDALO;
+
+	@Autowired
+	private ProjectPrioritizerToProjectComparatorsDALO
+		_projectPrioritizerToProjectComparatorsDALO;
 
 }

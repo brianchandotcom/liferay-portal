@@ -21,7 +21,10 @@ import SearchContext from '../../shared/SearchContext';
 import InputSets, {useInputSets} from '../../shared/input_sets/index';
 import {ITEM_ID_PROPERTY} from '../../shared/input_sets/useInputSets';
 import cleanSuggestionsContributorConfiguration from '../../utils/clean_suggestions_contributor_configuration';
-import {CONTRIBUTOR_TYPES} from '../../utils/types/contributorTypes';
+import {
+	CONTRIBUTOR_TYPES,
+	CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES,
+} from '../../utils/types/contributorTypes';
 import SuggestionContributorAddButton from './SuggestionContributorAddButton';
 import ContributorInputSetItem from './contributor_input_set_item/index';
 
@@ -165,13 +168,10 @@ function SearchBarConfigurationSuggestions({
 				},
 				contributorName,
 				displayGroupName:
-					contributorName ===
-					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS
-						? 'trending-searches'
-						: contributorName ===
-						  CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS
-						? 'top-searches'
-						: '',
+					CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES[
+						contributorName
+					] || '',
+
 				size: '3',
 			});
 		}

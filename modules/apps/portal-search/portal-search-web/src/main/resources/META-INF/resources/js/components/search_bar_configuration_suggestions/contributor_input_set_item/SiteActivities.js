@@ -21,7 +21,10 @@ import React, {useContext} from 'react';
 
 import LearnMessage from '../../../shared/LearnMessage';
 import SearchContext from '../../../shared/SearchContext';
-import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
+import {
+	CONTRIBUTOR_TYPES,
+	CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES,
+} from '../../../utils/types/contributorTypes';
 import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
@@ -82,6 +85,10 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 	const _handleActivityInputClick = (contributorName) => () => {
 		onInputSetItemChange(index, {
 			contributorName,
+			displayGroupName:
+				CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES[
+					contributorName
+				] || '',
 		});
 	};
 

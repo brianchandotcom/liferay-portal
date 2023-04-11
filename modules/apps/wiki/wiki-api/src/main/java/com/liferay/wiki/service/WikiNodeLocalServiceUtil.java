@@ -498,12 +498,11 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	public static void importPages(
-			long userId, long nodeId, String importer,
-			InputStream[] inputStreams, Map<String, String[]> options)
+			long userId, long nodeId, InputStream[] inputStreams,
+			Map<String, String[]> options)
 		throws PortalException {
 
-		getService().importPages(
-			userId, nodeId, importer, inputStreams, options);
+		getService().importPages(userId, nodeId, inputStreams, options);
 	}
 
 	public static WikiNode moveNodeToTrash(long userId, long nodeId)

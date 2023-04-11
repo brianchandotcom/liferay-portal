@@ -147,11 +147,11 @@ public class WikiNodeServiceWrapper
 
 	@Override
 	public void importPages(
-			long nodeId, String importer, java.io.InputStream[] inputStreams,
+			long nodeId, java.io.InputStream[] inputStreams,
 			java.util.Map<String, String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_wikiNodeService.importPages(nodeId, importer, inputStreams, options);
+		_wikiNodeService.importPages(nodeId, inputStreams, options);
 	}
 
 	@Override

@@ -417,8 +417,8 @@ public interface WikiNodeLocalService
 	public int getWikiNodesCount();
 
 	public void importPages(
-			long userId, long nodeId, String importer,
-			InputStream[] inputStreams, Map<String, String[]> options)
+			long userId, long nodeId, InputStream[] inputStreams,
+			Map<String, String[]> options)
 		throws PortalException;
 
 	public WikiNode moveNodeToTrash(long userId, long nodeId)

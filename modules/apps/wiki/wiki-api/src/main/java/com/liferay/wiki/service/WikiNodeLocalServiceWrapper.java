@@ -568,13 +568,12 @@ public class WikiNodeLocalServiceWrapper
 
 	@Override
 	public void importPages(
-			long userId, long nodeId, String importer,
-			java.io.InputStream[] inputStreams,
+			long userId, long nodeId, java.io.InputStream[] inputStreams,
 			java.util.Map<String, String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_wikiNodeLocalService.importPages(
-			userId, nodeId, importer, inputStreams, options);
+			userId, nodeId, inputStreams, options);
 	}
 
 	@Override

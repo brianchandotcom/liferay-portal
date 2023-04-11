@@ -119,7 +119,7 @@ public interface WikiNodeService extends BaseService {
 		throws PortalException;
 
 	public void importPages(
-			long nodeId, String importer, InputStream[] inputStreams,
+			long nodeId, InputStream[] inputStreams,
 			Map<String, String[]> options)
 		throws PortalException;
 

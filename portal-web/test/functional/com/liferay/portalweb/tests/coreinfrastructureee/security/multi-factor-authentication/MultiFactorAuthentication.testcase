@@ -647,14 +647,16 @@ definition {
 		}
 
 		task ("Logout and login as new user") {
-			User.logoutPG();
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 
 		task ("Assert user doesn't have permissions to configure Instance Settings") {
+			var portalURL = PropsUtil.get("portal.url");
+
 			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
 			AssertTextEquals(

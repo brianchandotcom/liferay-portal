@@ -21,11 +21,17 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectDefinitionModifiableException extends PortalException {
 
-	public ObjectDefinitionModifiableException() {
-	}
-
 	public ObjectDefinitionModifiableException(String msg) {
 		super(msg);
+	}
+
+	public static class InvalidOperation
+		extends ObjectDefinitionModifiableException {
+
+		public InvalidOperation() {
+			super("The object definition must not be modifiable");
+		}
+
 	}
 
 	public static class MustBeModifiable

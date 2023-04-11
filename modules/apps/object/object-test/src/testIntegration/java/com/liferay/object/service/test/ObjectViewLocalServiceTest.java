@@ -115,6 +115,46 @@ public class ObjectViewLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Arrays.asList(_createObjectViewColumn("Able", "able")),
+			Collections.emptyList(), Collections.emptyList());
+
+		_assertFailureAddOrUpdateObjectView(
+			true, DefaultObjectViewException.class,
+			"There can only be one default object view", null,
+			Collections.emptyList(), Collections.emptyList(),
+			Collections.emptyList());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Test", null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		_assertFailureAddOrUpdateObjectView(
+			true, ObjectDefinitionModifiableException.class,
+			"A modifiable object definition is required", null, null,
+			Collections.emptyList(), null);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = _addCustomObjectDefinition();
+
+		_objectViewLocalService.addObjectView(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Arrays.asList(
 				_createObjectViewColumn("Able", "able"),
 				_createObjectViewColumn("Baker", "baker")),
@@ -127,16 +167,6 @@ public class ObjectViewLocalServiceTest {
 				_createObjectViewSortColumn("able", "asc"),
 				_createObjectViewSortColumn("baker", "asc")));
 
-		_assertFailureAddOrUpdateObjectView(
-			true, DefaultObjectViewException.class,
-			"There can only be one default object view", null,
-			Arrays.asList(
-				_createObjectViewColumn("Easy", "easy"),
-				_createObjectViewColumn("Fox", "fox")),
-			Collections.emptyList(),
-			Arrays.asList(
-				_createObjectViewSortColumn("easy", "asc"),
-				_createObjectViewSortColumn("fox", "asc")));
 		_assertFailureAddOrUpdateObjectView(
 			false, ObjectViewColumnFieldNameException.class,
 			"There is no object field with the name: zebra", null,
@@ -192,34 +222,6 @@ public class ObjectViewLocalServiceTest {
 			Collections.emptyList(),
 			Arrays.asList(_createObjectViewFilterColumn(null, null, "name")),
 			Collections.emptyList());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				_objectDefinitionLocalService,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-		_assertFailureAddOrUpdateObjectView(
-			true, ObjectDefinitionModifiableException.class,
-			"A modifiable object definition is required", null, null,
-			Collections.emptyList(), null);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition = _addCustomObjectDefinition();
-
 		_assertFailureAddOrUpdateObjectView(
 			false, ObjectViewSortColumnException.class,
 			"There is no object view column with the name: zulu", null,
@@ -237,8 +239,6 @@ public class ObjectViewLocalServiceTest {
 		_deleteObjectFields();
 
 		_testAddObjectViewRelationshipFilterColumn();
-
-		_assertObjectView(_addObjectView());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
@@ -510,9 +510,9 @@ public class ObjectViewLocalServiceTest {
 			Assert.fail();
 		}
 		catch (PortalException portalException) {
-			if (expectedExceptionClass.isInstance(portalException)) {
-				Assert.assertEquals(message, portalException.getMessage());
-			}
+			Assert.assertEquals(message, portalException.getMessage());
+			Assert.assertTrue(
+				expectedExceptionClass.isInstance(portalException));
 		}
 	}
 

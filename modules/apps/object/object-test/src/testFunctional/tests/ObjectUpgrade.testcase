@@ -102,6 +102,77 @@ definition {
 	}
 
 	@priority = 5
+	test ViewObjectRelationshipAfterUpgrade7413U33 {
+		property data.archive.type = "data-archive-object";
+		property database.types = "mariadb,mysql,postgresql,sqlserver";
+		property portal.version = "7.4.13.u33";
+
+		task ("View Object Relationships after Upgrade") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object1");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			AssertElementPresent(
+				key_label = "MTM - Custom Object",
+				key_relatedObject = "CustomObject2",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_LABEL_AND_RELATED_OBJECT");
+
+			AssertElementPresent(
+				key_relationHierarchy = "Parent",
+				key_relationType = "oneToMany",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_TYPE_AND_HIERARCHY");
+
+			AssertElementPresent(
+				key_label = "OTM - System Object",
+				key_relatedObject = "AccountEntry",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_LABEL_AND_RELATED_OBJECT");
+
+			AssertElementPresent(
+				key_relationHierarchy = "Parent",
+				key_relationType = "manyToMany",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_TYPE_AND_HIERARCHY");
+		}
+
+		task ("Edit Object Relationships after Upgrade") {
+			ObjectAdmin.goToRelationshipsDetails(fieldName = "MTM - Custom Object");
+
+			CreateObject.editLabel(labelName = "MTM - Custom Object Edit After Upgrade");
+
+			PortletEntry.save();
+
+			ObjectAdmin.goToRelationshipsDetails(fieldName = "OTM - System Object");
+
+			CreateObject.editLabel(labelName = "OTM - System Object Edit After Upgrade");
+
+			PortletEntry.save();
+
+			AssertElementPresent(
+				key_name = "MTM - Custom Object Edit After Upgrade",
+				locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+
+			AssertElementPresent(
+				key_name = "OTM - System Object Edit After Upgrade",
+				locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+		}
+
+		task ("Delete Object Relationships after Upgrade") {
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "MTM - Custom Object Edit After Upgrade",
+				relationshipName = "mTMCustomObject");
+
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "OTM - System Object",
+				relationshipName = "oTMSystemObject");
+
+			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "MTM - Custom Object Edit After Upgrade");
+
+			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "OTM - System Object Edit After Upgrade");
+		}
+	}
+
+	@priority = 5
 	test ViewPicklistAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
